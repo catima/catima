@@ -1,6 +1,17 @@
-<h1>Editing Instance</h1>
+<h1>Database instance: <%= @instance.name %></h1>
+<%= link_to '< Back', :sysadmin %><hr>
 
 <%= render 'form' %>
+<hr>
 
-<%= link_to 'Show', @instance %> |
-<%= link_to 'Back', instances_path %>
+<h2>Database schema</h2>
+<%= render 'schema_elements/list' %>
+<hr>
+
+<h2>Config</h2>
+<p>...</p>
+<hr>
+
+<h2>Services</h2>
+<p>...</p>
+<hr>

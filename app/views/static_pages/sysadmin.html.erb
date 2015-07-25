@@ -1,2 +1,20 @@
-<h1>StaticPages#sysadmin</h1>
-<p>Find me in app/views/static_pages/sysadmin.html.erb</p>
+<h1>viim system administration</h1>
+<hr>
+<% if notice %>
+<div class="alert alert-info"><%= notice %></div>
+<% end %>
+
+<h2>Landing page</h2>
+<p>...</p>
+<hr>
+
+<h2>Database instances</h2>
+<%= render 'instances/list' %>
+<hr>
+
+<h2>Users</h2>
+<p>...</p>
+<hr>
+
+<h2>Services</h2>
+<p>...</p>

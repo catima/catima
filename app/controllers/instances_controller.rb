@@ -28,7 +28,7 @@ class InstancesController < ApplicationController
 
     respond_to do |format|
       if @instance.save
-        format.html { redirect_to @instance, notice: 'Instance was successfully created.' }
+        format.html { redirect_to :sysadmin, notice: 'Instance was successfully created.' }
         format.json { render :show, status: :created, location: @instance }
       else
         format.html { render :new }
@@ -42,7 +42,7 @@ class InstancesController < ApplicationController
   def update
     respond_to do |format|
       if @instance.update(instance_params)
-        format.html { redirect_to @instance, notice: 'Instance was successfully updated.' }
+        format.html { redirect_to :sysadmin, notice: 'Instance was successfully updated.' }
         format.json { render :show, status: :ok, location: @instance }
       else
         format.html { render :edit }
@@ -65,6 +65,7 @@ class InstancesController < ApplicationController
     # Use callbacks to share common setup or constraints between actions.
     def set_instance
       @instance = Instance.find(params[:id])
+      @schema_elements = @instance.schema_elements
     end
 
     # Never trust parameters from the scary internet, only allow the white list through.
