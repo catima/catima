@@ -1,6 +1,7 @@
-<h1>Editing Schema Element</h1>
+<h1>Edit database element</h1>
 
-<%= render 'form' %>
+<%= form_for([@schema_element], html:{ class:'form-horizontal' }) do |f| %>
+  <%= render 'form', f: f %>
+<% end %>
 
-<%= link_to 'Show', @schema_element %> |
-<%= link_to 'Back', schema_elements_path %>
+<%= link_to '< Back', edit_instance_path(@schema_element.instance) %>

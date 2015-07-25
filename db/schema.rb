@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150725150837) do
+ActiveRecord::Schema.define(version: 20150725172928) do
 
   create_table "instances", force: :cascade do |t|
     t.string   "name"
@@ -25,8 +25,10 @@ ActiveRecord::Schema.define(version: 20150725150837) do
     t.string   "name"
     t.text     "description"
     t.integer  "instance_id"
-    t.datetime "created_at",  null: false
-    t.datetime "updated_at",  null: false
+    t.datetime "created_at",   null: false
+    t.datetime "updated_at",   null: false
+    t.string   "element_type"
+    t.text     "options"
   end
 
   add_index "schema_elements", ["instance_id"], name: "index_schema_elements_on_instance_id"

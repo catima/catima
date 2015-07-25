@@ -1,10 +1,10 @@
 <table>
   <thead>
     <tr>
-      <th>Name</th>
-      <th>Description</th>
-      <th>Instance</th>
-      <th colspan="3"></th>
+      <th>Database element</th>
+      <th>Type</th>
+      <th>Options</th>
+      <th></th>
     </tr>
   </thead>
 
@@ -12,12 +12,14 @@
     <% @schema_elements.each do |schema_element| %>
       <tr>
         <td><%= schema_element.name %></td>
-        <td><%= schema_element.description %></td>
-        <td><%= schema_element.instance %></td>
-        <td><%= link_to 'Show', schema_element %></td>
-        <td><%= link_to 'Edit', edit_schema_element_path(schema_element) %></td>
-        <td><%= link_to 'Destroy', schema_element, method: :delete, data: { confirm: 'Are you sure?' } %></td>
+        <td><%= schema_element.element_type %></td>
+        <td><%= schema_element.options %></td>
+        <td><%= link_to edit_schema_element_path(schema_element) do %><button title="Edit database element" class="btn btn-xs btn-default"><span class="glyphicon glyphicon-pencil"></span></button><% end %>
+        <%= link_to schema_element, method: :delete, data: { confirm: 'You are about to definitely delete this database element. Are you sure?' } do %><button title="Delete database element" class="btn btn-xs btn-default"><span class="glyphicon glyphicon-remove"></span></button><% end %></td>
       </tr>
     <% end %>
   </tbody>
 </table>
+
+
+<%= link_to  new_instance_schema_element_path @instance do %><button title="Add new schema element" class="btn btn-xs btn-default"><span class="glyphicon glyphicon-plus"></span></button><% end %>
