@@ -1,0 +1,19 @@
+<p id="notice"><%= notice %></p>
+
+<p>
+  <strong>Name:</strong>
+  <%= @instance.name %>
+</p>
+
+<p>
+  <strong>Url:</strong>
+  <%= @instance.url %>
+</p>
+
+<p>
+  <strong>Description:</strong>
+  <%= @instance.description %>
+</p>
+
+<%= link_to 'Edit', edit_instance_path(@instance) %> |
+<%= link_to 'Back', instances_path %>
