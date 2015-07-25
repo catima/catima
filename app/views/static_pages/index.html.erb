@@ -1,0 +1,13 @@
+<h1>List of available databases</h1>
+
+<hr>
+
+<% if @instances.count > 0 %>
+  <% @instances.each do |inst| %>
+    <h2><a href="/<%= inst.url %>"><%= inst.name %></a></h2>
+    <p><%= inst.description %></p>
+    <hr>
+  <% end %>
+<% else %>
+  <p>Currently, no database is defined.</p>
+<% end %>
