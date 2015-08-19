@@ -16,7 +16,13 @@
   </div>
   <div class="form-group">
     <%= f.label :element_type, class:'col-sm-3 control-label' %>
-    <div class="col-sm-9"><%= f.text_field :element_type, class:'form-control' %></div>
+    <div class="col-sm-3">
+      <%= f.select :element_type, [], {:class => 'form-control'}, { :class => 'form-control' } do %>
+        <% [['obj', 'Object'], ['cat', 'Category']].each do |c| %>
+          <%= content_tag(:option, c.last, value: c.first) %>
+        <% end %>
+      <% end %>
+    </div>
   </div>
   <div class="form-group">
     <%= f.label :options, class:'col-sm-3 control-label' %>

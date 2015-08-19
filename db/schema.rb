@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150725172928) do
+ActiveRecord::Schema.define(version: 20150725180034) do
 
   create_table "instances", force: :cascade do |t|
     t.string   "name"
@@ -32,5 +32,16 @@ ActiveRecord::Schema.define(version: 20150725172928) do
   end
 
   add_index "schema_elements", ["instance_id"], name: "index_schema_elements_on_instance_id"
+
+  create_table "schema_fields", force: :cascade do |t|
+    t.string   "name"
+    t.text     "definition"
+    t.text     "description"
+    t.integer  "schema_element_id"
+    t.datetime "created_at",        null: false
+    t.datetime "updated_at",        null: false
+  end
+
+  add_index "schema_fields", ["schema_element_id"], name: "index_schema_fields_on_schema_element_id"
 
 end

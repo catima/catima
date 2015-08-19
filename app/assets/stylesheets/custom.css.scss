@@ -66,3 +66,18 @@ footer{
   display: inline;
   width: 50%;
 }
+
+
+
+input[type=radio]{
+    margin-right: 5px;
+}
+
+.sysadmin-panel label {
+    font-weight: normal;
+}
+
+.sysadmin-panel td {
+    padding: 3px 10px 3px 0;
+    min-width: 250px;
+}

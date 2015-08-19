@@ -1,0 +1,11 @@
+<h1>New element property</h1>
+<p><b>Database element:</b> <%= @schema_element.name %></p>
+<hr>
+
+<p id="notice"><%= notice %></p>
+
+<%= form_for([@schema_element, @schema_field], url:schema_element_schema_fields_path(@schema_element), html:{ class:'form-horizontal' }) do |f| %>
+  <%= render 'form', f: f %>
+<% end %>
+
+<%= link_to '< Back', edit_schema_element_path(@schema_element) %>

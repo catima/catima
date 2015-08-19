@@ -1,0 +1,2 @@
+module SchemaFieldsHelper
+end

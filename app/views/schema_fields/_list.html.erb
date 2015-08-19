@@ -1,0 +1,23 @@
+<table>
+  <thead>
+    <tr>
+      <th>Property name</th>
+      <th>Definition</th>
+      <th></th>
+    </tr>
+  </thead>
+
+  <tbody>
+    <% @schema_element.schema_fields.each do |schema_field| %>
+      <tr>
+        <td><%= schema_field.name %></td>
+        <td><%= schema_field.definition %></td>
+        <td><%= link_to edit_schema_field_path(schema_field) do %><button title="Edit element property" class="btn btn-xs btn-default"><span class="glyphicon glyphicon-pencil"></span></button><% end %>
+        <%= link_to schema_field, method: :delete, data: { confirm: 'You are about to definitely delete this element property. Are you sure?' } do %><button title="Delete element property" class="btn btn-xs btn-default"><span class="glyphicon glyphicon-remove"></span></button><% end %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+
+<%= link_to  new_schema_element_schema_field_path(@schema_element) do %><button title="Add new element property" class="btn btn-xs btn-default"><span class="glyphicon glyphicon-plus"></span></button><% end %>
