@@ -1,5 +1,5 @@
 Rails.application.routes.draw do
-  
+
   root 'static_pages#index'
   get 'admin' => 'static_pages#sysadmin', as: :sysadmin
   
@@ -8,5 +8,7 @@ Rails.application.routes.draw do
       resources :schema_fields, shallow: true
     end
   end
+  
+  get ':catalog' => 'catalogs#show', as: :catalog_show
   
 end
