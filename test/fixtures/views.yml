@@ -1,0 +1,13 @@
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  view_type: MyString
+  slug: MyString
+  template: MyText
+  elements: MyText
+
+two:
+  view_type: MyString
+  slug: MyString
+  template: MyText
+  elements: MyText

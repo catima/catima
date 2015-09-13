@@ -17,7 +17,10 @@
   
   <footer>
     <%= link_to "main page", :root %> |
-    <%= link_to "admin", :sysadmin %>
+    <%= link_to "sysadmin", :sysadmin %> 
+    <% if @catalog %>|
+        <%= link_to "project admin", :catalog_admin %>
+    <% end %>
   </footer>
 </body>
 </html>

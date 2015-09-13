@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150725180034) do
+ActiveRecord::Schema.define(version: 20150911172614) do
 
   create_table "instances", force: :cascade do |t|
     t.string   "name"
@@ -20,6 +20,15 @@ ActiveRecord::Schema.define(version: 20150725180034) do
     t.datetime "created_at",  null: false
     t.datetime "updated_at",  null: false
   end
+
+  create_table "items", force: :cascade do |t|
+    t.integer  "schema_element_id"
+    t.text     "data"
+    t.datetime "created_at",        null: false
+    t.datetime "updated_at",        null: false
+  end
+
+  add_index "items", ["schema_element_id"], name: "index_items_on_schema_element_id"
 
   create_table "schema_elements", force: :cascade do |t|
     t.string   "name"
@@ -43,5 +52,17 @@ ActiveRecord::Schema.define(version: 20150725180034) do
   end
 
   add_index "schema_fields", ["schema_element_id"], name: "index_schema_fields_on_schema_element_id"
+
+  create_table "views", force: :cascade do |t|
+    t.string   "view_type"
+    t.integer  "instance_id"
+    t.string   "slug"
+    t.text     "template"
+    t.text     "elements"
+    t.datetime "created_at",  null: false
+    t.datetime "updated_at",  null: false
+  end
+
+  add_index "views", ["instance_id"], name: "index_views_on_instance_id"
 
 end
