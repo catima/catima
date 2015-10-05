@@ -1,0 +1,23 @@
+# == Schema Information
+#
+# Table name: catalog_permissions
+#
+#  catalog_id :integer
+#  created_at :datetime         not null
+#  id         :integer          not null, primary key
+#  role       :string
+#  updated_at :datetime         not null
+#  user_id    :integer
+#
+
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  catalog: one
+  user: one
+  role: user
+
+two:
+  catalog: two
+  user: two
+  role: editor
