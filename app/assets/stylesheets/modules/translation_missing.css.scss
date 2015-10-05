@@ -1,0 +1,10 @@
+.translation_missing {
+  &:before {
+    padding-right: .5em;
+    padding-left: .5em;
+    background-color: #ffdc00;
+    color: black;
+    font-weight: bold;
+    content: attr(title);
+  }
+}
