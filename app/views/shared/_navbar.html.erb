@@ -32,19 +32,19 @@
         <% if current_user.authenticated? %>
           <li>
             <%= link_to(
-                  "Log out",
+                  t("shared.log_out"),
                   destroy_user_session_path(:locale => I18n.locale),
                   :method => "delete") %>
           </li>
         <% else %>
           <li>
             <%= link_to(
-                  "Log in",
+                  t("shared.log_in"),
                   new_user_session_path(:locale => I18n.locale)) %>
           </li>
           <li>
             <%= link_to(
-                  "Sign up",
+                  t("shared.sign_up"),
                   new_user_registration_path(:locale => I18n.locale)) %>
           </li>
         <% end %>
