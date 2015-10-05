@@ -7,11 +7,18 @@
 # Ignore bundler config.
 /.bundle
 
-# Ignore the default SQLite database.
-/db/*.sqlite3
-/db/*.sqlite3-journal
-
 # Ignore all logfiles and tempfiles.
-/log/*
-!/log/.keep
+/log/*.log
+/log/*.log.*
 /tmp
+
+# Ignore test reports
+/brakeman-output.*
+/coverage
+
+# Ignore results of `rake assets:precompile`.
+/public/assets/
+
+# Never check passwords into source control!
+/config/database.yml
+/.env

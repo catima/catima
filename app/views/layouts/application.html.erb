@@ -1,26 +1,18 @@
-<!DOCTYPE html>
-<html>
-<head>
-  <title>Viim</title>
-  <%= stylesheet_link_tag    'application', media: 'all', 'data-turbolinks-track' => true %>
-  <%= javascript_include_tag 'application', 'data-turbolinks-track' => true %>
-  <%= csrf_meta_tags %>
-  <!--[if lt IE 9]>
-    <script src="//cdnjs.cloudflare.com/ajax/libs/html5shiv/r29/html5.min.js">
-    </script>
-  <![endif]-->
-</head>
-<body>
-  <div class="container">
-    <%= yield %>
-  </div>
-  
-  <footer>
-    <%= link_to "main page", :root %> |
-    <%= link_to "sysadmin", :sysadmin %> 
-    <% if @catalog %>|
-        <%= link_to "project admin", :catalog_admin %>
-    <% end %>
-  </footer>
-</body>
-</html>
+<%# The "application" layout is the default layout. It extends "base"  %>
+<%# to include things like header, footer, and alerts that are common  %>
+<%# to most (but not all) views.                                       %>
+
+<%= render("shared/navbar") %>
+
+<div class="container">
+
+  <%= render("shared/flash") %>
+  <%= render("shared/page_header") %>
+
+  <%= yield %>
+
+  <%= render("shared/footer") %>
+
+</div>
+
+<% parent_layout "base" %>

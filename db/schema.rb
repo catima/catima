@@ -11,58 +11,9 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20150911172614) do
+ActiveRecord::Schema.define(version: 0) do
 
-  create_table "instances", force: :cascade do |t|
-    t.string   "name"
-    t.string   "url"
-    t.text     "description"
-    t.datetime "created_at",  null: false
-    t.datetime "updated_at",  null: false
-  end
-
-  create_table "items", force: :cascade do |t|
-    t.integer  "schema_element_id"
-    t.text     "data"
-    t.datetime "created_at",        null: false
-    t.datetime "updated_at",        null: false
-  end
-
-  add_index "items", ["schema_element_id"], name: "index_items_on_schema_element_id"
-
-  create_table "schema_elements", force: :cascade do |t|
-    t.string   "name"
-    t.text     "description"
-    t.integer  "instance_id"
-    t.datetime "created_at",   null: false
-    t.datetime "updated_at",   null: false
-    t.string   "element_type"
-    t.text     "options"
-  end
-
-  add_index "schema_elements", ["instance_id"], name: "index_schema_elements_on_instance_id"
-
-  create_table "schema_fields", force: :cascade do |t|
-    t.string   "name"
-    t.text     "definition"
-    t.text     "description"
-    t.integer  "schema_element_id"
-    t.datetime "created_at",        null: false
-    t.datetime "updated_at",        null: false
-  end
-
-  add_index "schema_fields", ["schema_element_id"], name: "index_schema_fields_on_schema_element_id"
-
-  create_table "views", force: :cascade do |t|
-    t.string   "view_type"
-    t.integer  "instance_id"
-    t.string   "slug"
-    t.text     "template"
-    t.text     "elements"
-    t.datetime "created_at",  null: false
-    t.datetime "updated_at",  null: false
-  end
-
-  add_index "views", ["instance_id"], name: "index_views_on_instance_id"
+  # These are extensions that must be enabled in order to support this database
+  enable_extension "plpgsql"
 
 end

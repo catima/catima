@@ -1,50 +1,67 @@
-source 'https://rubygems.org'
+source "https://rubygems.org"
 
-gem 'rails', '4.2.0'
-gem 'bootstrap-sass'
-gem 'sass-rails', '~> 5.0'
-gem 'uglifier', '>= 1.3.0'
-gem 'coffee-rails', '~> 4.1.0'
-# gem 'therubyracer', platforms: :ruby
+gem "active_type", ">= 0.3.2"
+gem "autoprefixer-rails", ">= 5.0.0.1"
+gem "bcrypt", "~> 3.1.7"
+gem "bootstrap_form", "~> 2.3.0"
+gem "bootstrap-sass", "~> 3.2.0"
+gem "coffee-rails", "~> 4.1.0"
+gem "dotenv-rails", ">= 2.0.0"
+gem "font-awesome-rails"
+gem "jquery-rails"
+gem "jquery-turbolinks"
+gem "mail", ">= 2.6.3"
+gem "marco-polo"
+gem "pg", "~> 0.18"
+gem "rails", "4.2.4"
+gem "sass-rails", "~> 5.0"
+gem "secure_headers", ">= 2.1.0"
+gem "sidekiq"
+gem "sinatra", ">= 1.3.0", :require => false
+gem "turbolinks", ">= 2.5.2"
 
-gem 'jquery-rails'
-gem 'turbolinks'
-gem 'jbuilder', '~> 2.0'
-gem 'sdoc', '~> 0.4.0', group: :doc
-
-# for user-customizable layouts stored in database
-gem 'liquid'
-
-# Use ActiveModel has_secure_password
-# gem 'bcrypt', '~> 3.1.7'
-
-# Use Unicorn as the app server
-# gem 'unicorn'
-
-# Use Capistrano for deployment
-# gem 'capistrano-rails', group: :development
-
-group :development, :test do
-  # Call 'byebug' anywhere in the code to stop execution and get a debugger console
-  gem 'byebug'
-
-  # Access an IRB console on exception pages or by using <%= console %> in views
-  gem 'web-console', '~> 2.0'
-
-  # Spring speeds up development by keeping your application running in the background. Read more: https://github.com/rails/spring
-  gem 'spring'
-  gem 'sqlite3'
+group :production, :staging do
+  gem "unicorn"
+  gem "unicorn-worker-killer"
 end
 
+group :development do
+  gem "annotate", ">= 2.5.0"
+  gem "awesome_print"
+  gem "better_errors"
+  gem "binding_of_caller"
+  gem "letter_opener"
+  gem "quiet_assets"
+  gem "rack-livereload"
+  gem "spring"
+  gem "xray-rails", ">= 0.1.16"
+end
+
+group :development do
+  gem "airbrussh", :require => false
+  gem "brakeman", :require => false
+  gem "bundler-audit", :require => false
+  gem "capistrano", "~> 3.4.0", :require => false
+  gem "capistrano-bundler", :require => false
+  gem "capistrano-mb", ">= 0.22.2", :require => false
+  gem "capistrano-rails", :require => false
+  gem "guard", ">= 2.2.2", :require => false
+  gem "guard-livereload", :require => false
+  gem "guard-minitest", :require => false
+  gem "rb-fsevent", :require => false
+  gem "simplecov", :require => false
+  gem "sshkit", "~> 1.7.1", :require => false
+  gem "terminal-notifier-guard", :require => false
+  gem "thin", :require => false
+end
 
 group :test do
-  gem 'minitest-reporters'
-  gem 'mini_backtrace'
+  gem "capybara"
+  gem "connection_pool"
+  gem "launchy"
+  gem "minitest-reporters"
+  gem "mocha"
+  gem "poltergeist"
+  gem "shoulda"
+  gem "test_after_commit"
 end
-
-
-group :production do
-  gem 'pg'
-  gem 'rails_12factor'
-end
-

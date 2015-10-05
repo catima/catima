@@ -25,8 +25,13 @@ Rails.application.configure do
   config.serve_static_files = ENV['RAILS_SERVE_STATIC_FILES'].present?
 
   # Compress JavaScripts and CSS.
-  config.assets.js_compressor = :uglifier
+  # config.assets.js_compressor = :uglifier
   # config.assets.css_compressor = :sass
+
+  # Disable minification since it adds a *huge* amount of time to precompile.
+  # Anyway, gzip alone gets us about 70% of the benefits of minify+gzip.
+  config.assets.js_compressor = false
+  config.assets.css_compressor = false
 
   # Do not fallback to assets pipeline if a precompiled asset is missed.
   config.assets.compile = false
@@ -42,7 +47,7 @@ Rails.application.configure do
   # config.action_dispatch.x_sendfile_header = 'X-Accel-Redirect' # for NGINX
 
   # Force all access to the app over SSL, use Strict-Transport-Security, and use secure cookies.
-  # config.force_ssl = true
+  config.force_ssl = true
 
   # Use the lowest log level to ensure availability of diagnostic information
   # when problems arise.
@@ -63,6 +68,24 @@ Rails.application.configure do
   # Ignore bad email addresses and do not raise email delivery errors.
   # Set this to true and configure the email server for immediate delivery to raise delivery errors.
   # config.action_mailer.raise_delivery_errors = false
+
+  # Production Mandrill SMTP config
+  config.action_mailer.delivery_method = :smtp
+  config.action_mailer.smtp_settings = {
+    :address => "smtp.mandrillapp.com",
+    :port => 587,
+    :enable_starttls_auto => true,
+    :user_name => ENV.fetch("MANDRILL_USERNAME"),
+    :password => ENV.fetch("MANDRILL_API_KEY"),
+    :authentication => "login",
+    :domain => "v3.naxio.ch"
+  }
+  config.action_mailer.raise_delivery_errors = true
+  config.action_mailer.default_url_options = {
+    host: "v3.naxio.ch",
+    protocol: "https"
+  }
+  config.action_mailer.asset_host = "https://v3.naxio.ch"
 
   # Enable locale fallbacks for I18n (makes lookups for any locale fall back to
   # the I18n.default_locale when a translation cannot be found).
