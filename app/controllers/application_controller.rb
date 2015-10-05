@@ -13,4 +13,8 @@ class ApplicationController < ActionController::Base
       I18n.locale = I18n.default_locale
     end
   end
+
+  def current_user
+    @current_user ||= (super || Guest.new)
+  end
 end

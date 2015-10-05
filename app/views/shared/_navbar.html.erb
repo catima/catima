@@ -29,9 +29,25 @@
         </li>
       </ul>
       <ul class="nav navbar-nav navbar-right">
-        <li><a href="#">Log in</a></li>
-        <li><a href="#">Register</a></li>
-        <li><a href="#">Help</a></li>
+        <% if current_user.authenticated? %>
+          <li>
+            <%= link_to(
+                  "Log out",
+                  destroy_user_session_path(:locale => I18n.locale),
+                  :method => "delete") %>
+          </li>
+        <% else %>
+          <li>
+            <%= link_to(
+                  "Log in",
+                  new_user_session_path(:locale => I18n.locale)) %>
+          </li>
+          <li>
+            <%= link_to(
+                  "Sign up",
+                  new_user_registration_path(:locale => I18n.locale)) %>
+          </li>
+        <% end %>
       </ul>
     </div><!--/.nav-collapse -->
   </div>
