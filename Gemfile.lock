@@ -210,6 +210,7 @@ GEM
     notiffany (0.0.8)
       nenv (~> 0.1)
       shellany (~> 0.0)
+    oj (2.12.14)
     pg (0.18.3)
     poltergeist (1.7.0)
       capybara (~> 2.1)
@@ -261,6 +262,8 @@ GEM
     redis (3.2.1)
     redis-namespace (1.5.2)
       redis (~> 3.0, >= 3.0.4)
+    rollbar (2.3.0)
+      oj (~> 2.12.14)
     ruby-progressbar (1.7.5)
     ruby2ruby (2.2.0)
       ruby_parser (~> 3.1)
@@ -391,6 +394,7 @@ DEPENDENCIES
   rack-livereload
   rails (= 4.2.4)
   rb-fsevent
+  rollbar (~> 2.3)
   sass-rails (~> 5.0)
   secure_headers (>= 2.1.0)
   shoulda
