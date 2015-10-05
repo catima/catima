@@ -14,4 +14,24 @@
 #
 
 class Catalog < ActiveRecord::Base
+  validates_presence_of :name
+  validates_presence_of :primary_language
+  validates_presence_of :slug
+  validates_uniqueness_of :slug
+  validates_inclusion_of :primary_language, :in => :available_locales
+  validate :other_languages_included_in_available_locales
+
+  private
+
+  def other_languages_included_in_available_locales
+    return if ((other_languages || []) - available_locales).empty?
+    errors.add(
+      :other_languages,
+      "can only include #{available_locales.join(', ')}"
+    )
+  end
+
+  def available_locales
+    I18n.available_locales.map(&:to_s)
+  end
 end
