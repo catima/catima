@@ -1,0 +1,23 @@
+# == Schema Information
+#
+# Table name: item_types
+#
+#  catalog_id :integer
+#  created_at :datetime         not null
+#  id         :integer          not null, primary key
+#  label      :string
+#  slug       :string
+#  updated_at :datetime         not null
+#
+
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  catalog: one
+  label: One
+  slug: one
+
+two:
+  catalog: two
+  label: Two
+  slug: two
