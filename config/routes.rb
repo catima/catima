@@ -1,4 +1,5 @@
 Rails.application.routes.draw do
+  devise_for :users
   mount Sidekiq::Web => "/sidekiq" # monitoring console
 
   # The priority is based upon order of creation: first created -> highest priority.
