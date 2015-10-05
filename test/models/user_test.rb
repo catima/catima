@@ -1,7 +1,6 @@
-require 'test_helper'
+require "test_helper"
 
 class UserTest < ActiveSupport::TestCase
-  # test "the truth" do
-  #   assert true
-  # end
+  should validate_presence_of(:primary_language)
+  should validate_inclusion_of(:primary_language).in_array(%w(de en fr it))
 end

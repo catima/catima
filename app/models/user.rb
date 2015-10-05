@@ -10,16 +10,21 @@
 #  id                     :integer          not null, primary key
 #  last_sign_in_at        :datetime
 #  last_sign_in_ip        :inet
+#  primary_language       :string           default("en"), not null
 #  remember_created_at    :datetime
 #  reset_password_sent_at :datetime
 #  reset_password_token   :string
 #  sign_in_count          :integer          default(0), not null
+#  system_admin           :boolean          default(FALSE), not null
 #  updated_at             :datetime         not null
 #
 
 class User < ActiveRecord::Base
-  # Include default devise modules. Others available are:
-  # :confirmable, :lockable, :timeoutable and :omniauthable
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :trackable, :validatable
+
+  include AvailableLocales
+
+  validates_presence_of :primary_language
+  validates_inclusion_of :primary_language, :in => :available_locales
 end
