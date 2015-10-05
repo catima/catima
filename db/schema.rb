@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20151005201520) do
+ActiveRecord::Schema.define(version: 20151005203028) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -28,6 +28,17 @@ ActiveRecord::Schema.define(version: 20151005201520) do
   end
 
   add_index "catalogs", ["slug"], name: "index_catalogs_on_slug", unique: true, using: :btree
+
+  create_table "item_types", force: :cascade do |t|
+    t.integer  "catalog_id"
+    t.string   "label"
+    t.string   "slug"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  add_index "item_types", ["catalog_id"], name: "index_item_types_on_catalog_id", using: :btree
+  add_index "item_types", ["slug"], name: "index_item_types_on_slug", unique: true, using: :btree
 
   create_table "users", force: :cascade do |t|
     t.string   "email",                  default: "", null: false
@@ -47,4 +58,5 @@ ActiveRecord::Schema.define(version: 20151005201520) do
   add_index "users", ["email"], name: "index_users_on_email", unique: true, using: :btree
   add_index "users", ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true, using: :btree
 
+  add_foreign_key "item_types", "catalogs"
 end
