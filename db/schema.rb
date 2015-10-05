@@ -11,10 +11,23 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20151005181012) do
+ActiveRecord::Schema.define(version: 20151005201520) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
+
+  create_table "catalogs", force: :cascade do |t|
+    t.string   "name"
+    t.string   "slug"
+    t.string   "primary_language", default: "en",  null: false
+    t.json     "other_languages"
+    t.boolean  "requires_review",  default: false, null: false
+    t.datetime "deactivated_at"
+    t.datetime "created_at",                       null: false
+    t.datetime "updated_at",                       null: false
+  end
+
+  add_index "catalogs", ["slug"], name: "index_catalogs_on_slug", unique: true, using: :btree
 
   create_table "users", force: :cascade do |t|
     t.string   "email",                  default: "", null: false
