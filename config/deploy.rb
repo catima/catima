@@ -6,7 +6,9 @@ set :repo_url, "git@bitbucket.org:naxio/viim-core.git"
 # https://github.com/mattbrictson/capistrano-mb/blob/master/lib/capistrano/tasks/defaults.rake
 
 fetch(:mb_recipes) << "sidekiq"
+
 fetch(:mb_aptitude_packages).merge!(
+  "imagemagick" => :app,
   "redis-server@ppa:rwky/redis" => :redis
 )
 
