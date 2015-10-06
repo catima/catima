@@ -5,6 +5,10 @@ en:
       new:
         log_in: "Log in"
         submit: "Log in"
+    passwords:
+      new:
+        title: "Forgot your password?"
+        submit: "Send me reset password instructions"
     shared:
       links:
         log_in: "Log in"
