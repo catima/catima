@@ -26,3 +26,8 @@ two:
   catalog: two
   user: two
   role: editor
+
+two_admin:
+  catalog: two
+  user: two_admin
+  role: admin

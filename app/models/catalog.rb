@@ -25,6 +25,7 @@ class Catalog < ActiveRecord::Base
 
   has_many :catalog_permissions, :dependent => :destroy
   has_many :items
+  has_many :item_types
 
   private
 

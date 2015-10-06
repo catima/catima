@@ -17,6 +17,10 @@ class GuestTest < ActiveSupport::TestCase
     refute(Guest.new.editor_of_any_catalog?)
   end
 
+  test "#admin_catalog_ids" do
+    assert_empty(Guest.new.admin_catalog_ids)
+  end
+
   test "#editor_catalog_ids" do
     assert_empty(Guest.new.editor_catalog_ids)
   end

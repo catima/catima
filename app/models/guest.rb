@@ -19,6 +19,10 @@ class Guest
     false
   end
 
+  def admin_catalog_ids
+    []
+  end
+
   def editor_catalog_ids
     []
   end
