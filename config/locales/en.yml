@@ -1,5 +1,8 @@
 ---
 en:
+  common:
+    back: "Back"
+    minimum_characters: "%{length} characters minimum"
   devise:
     sessions:
       new:
@@ -12,14 +15,19 @@ en:
       edit:
         title: "Change your password"
         submit: "Change my password"
-        minimum: "%{length} characters minimum"
         new_password: "New password"
         new_password_confirmation: "Confirm new password"
     registrations:
         new:
           title: "Sign up"
           submit: "Sign up"
-          minimum: "%{length} characters minimum"
+        edit:
+          title: "My profile"
+          submit: "Save profile"
+          leave_blank: "Leave blank if you don’t want to change it"
+          need_to_confirm: "We need your current password to confirm your changes"
+          unhappy: "Unhappy?"
+          cancel_account: "Cancel my account"
     shared:
       links:
         log_in: "Log in"

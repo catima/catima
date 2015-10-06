@@ -13,7 +13,7 @@
   <%= f.password_field(
         :password,
         :autocomplete => "new-password",
-        :help => t(".minimum", :length => @minimum_password_length)) %>
+        :help => t("common.minimum_characters", :length => @minimum_password_length)) %>
 
   <%= f.password_field(
         :password_confirmation,
