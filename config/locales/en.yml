@@ -1,5 +1,24 @@
 ---
 en:
+  devise:
+    sessions:
+      new:
+        log_in: "Log in"
+        submit: "Log in"
+    shared:
+      links:
+        log_in: "Log in"
+        sign_up: "Sign up"
+        forgot_password: "Forgot your password?"
+  helpers:
+    label:
+      user:
+        email: "Email"
+        password: "Password"
+        remember_me: "Remember me"
+    submit:
+      user:
+        create: "Log in"
   shared:
     log_in: "Log in"
     log_out: "Log out"

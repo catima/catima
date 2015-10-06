@@ -24,8 +24,11 @@
     <%= csrf_meta_tags %>
 
     <title>
-      <%= strip_tags(yield(:title)) + " – " if content_for?(:title) %>
-      Viim Core
+      <% if content_for?(:title) %>
+        <%= yield(:title) %>
+      <% else %>
+        viim
+      <% end %>
     </title>
   </head>
   <body>
