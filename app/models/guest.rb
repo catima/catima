@@ -6,4 +6,8 @@ class Guest
   def authenticated?
     false
   end
+
+  def system_admin?
+    false
+  end
 end
