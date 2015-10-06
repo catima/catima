@@ -17,6 +17,11 @@ one:
   user: one
   role: user
 
+one_admin:
+  catalog: one
+  user: one_admin
+  role: admin
+
 two:
   catalog: two
   user: two

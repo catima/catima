@@ -1,0 +1,75 @@
+require "test_helper"
+
+class UserPolicyTest < ActiveSupport::TestCase
+  test "#index? allows only admins" do
+    assert(policy(users(:system_admin)).index?)
+    assert(policy(users(:one_admin)).index?)
+    refute(policy(users(:two)).index?)
+    refute(policy(Guest.new).index?)
+  end
+
+  test "#show? allows only admins" do
+    record = users(:one)
+    assert(policy(users(:system_admin), record).show?)
+    assert(policy(users(:one_admin), record).show?)
+    refute(policy(users(:two), record).show?)
+    refute(policy(Guest.new, record).show?)
+  end
+
+  test "#edit? allows only admins" do
+    record = users(:one)
+    assert(policy(users(:system_admin), record).edit?)
+    assert(policy(users(:one_admin), record).edit?)
+    refute(policy(users(:two), record).edit?)
+    refute(policy(Guest.new, record).edit?)
+  end
+
+  test "#update? allows only admins" do
+    record = users(:one)
+    assert(policy(users(:system_admin), record).update?)
+    assert(policy(users(:one_admin), record).update?)
+    refute(policy(users(:two), record).update?)
+    refute(policy(Guest.new, record).update?)
+  end
+
+  test "#new? allows only admins" do
+    record = users(:one)
+    assert(policy(users(:system_admin), record).new?)
+    assert(policy(users(:one_admin), record).new?)
+    refute(policy(users(:two), record).new?)
+    refute(policy(Guest.new, record).new?)
+  end
+
+  test "#create? allows only admins" do
+    record = users(:one)
+    assert(policy(users(:system_admin), record).create?)
+    assert(policy(users(:one_admin), record).create?)
+    refute(policy(users(:two), record).create?)
+    refute(policy(Guest.new, record).create?)
+  end
+
+  test "#destroy allows only system admins" do
+    record = users(:one)
+    assert(policy(users(:system_admin), record).destroy?)
+    refute(policy(users(:one_admin), record).destroy?)
+    refute(policy(users(:two), record).destroy?)
+    refute(policy(Guest.new, record).destroy?)
+  end
+
+  test "Scope shows all for admins, none for others" do
+    assert_equal(User.all.to_a, policy_scoped_records(users(:system_admin)))
+    assert_equal(User.all.to_a, policy_scoped_records(users(:one_admin)))
+    assert_empty(policy_scoped_records(users(:two)))
+    assert_empty(policy_scoped_records(Guest.new))
+  end
+
+  private
+
+  def policy(user, record=nil)
+    UserPolicy.new(user, record)
+  end
+
+  def policy_scoped_records(user)
+    UserPolicy::Scope.new(user, User).resolve.to_a
+  end
+end

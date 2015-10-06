@@ -10,4 +10,8 @@ class Guest
   def system_admin?
     false
   end
+
+  def admin_of_any_catalog?
+    false
+  end
 end

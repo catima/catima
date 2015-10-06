@@ -20,4 +20,9 @@ class UserTest < ActiveSupport::TestCase
     assert(user.catalog_role_at_least?(catalogs(:one), "user"))
     refute(user.catalog_role_at_least?(catalogs(:one), "editor"))
   end
+
+  test "#admin_of_any_catalog?" do
+    refute(users(:one).admin_of_any_catalog?)
+    assert(users(:one_admin).admin_of_any_catalog?)
+  end
 end
