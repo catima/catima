@@ -37,6 +37,10 @@ two:
   email: two@example.com
   encrypted_password: <%= BCrypt::Password.create("password") %>
 
+two_editor:
+  email: two-editor@example.com
+  encrypted_password: <%= BCrypt::Password.create("password") %>
+
 two_admin:
   email: two-admin@example.com
   encrypted_password: <%= BCrypt::Password.create("password") %>

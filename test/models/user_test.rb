@@ -9,7 +9,7 @@ class UserTest < ActiveSupport::TestCase
   end
 
   test "#catalog_role_at_least?" do
-    user = users(:two)
+    user = users(:two_editor)
     catalog = catalogs(:two)
 
     assert(user.catalog_role_at_least?(catalog, "user"))
@@ -28,6 +28,6 @@ class UserTest < ActiveSupport::TestCase
 
   test "#editor_of_any_catalog?" do
     refute(users(:one).editor_of_any_catalog?)
-    assert(users(:two).editor_of_any_catalog?)
+    assert(users(:two_editor).editor_of_any_catalog?)
   end
 end

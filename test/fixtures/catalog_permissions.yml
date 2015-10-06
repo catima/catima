@@ -25,6 +25,11 @@ one_admin:
 two:
   catalog: two
   user: two
+  role: user
+
+two_editor:
+  catalog: two
+  user: two_editor
   role: editor
 
 two_admin:

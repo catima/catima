@@ -25,8 +25,8 @@ two:
   item_type: two
   data:
 
-created_by_two:
+created_by_two_editor:
   catalog: two
   item_type: two
   data:
-  creator: two
+  creator: two_editor

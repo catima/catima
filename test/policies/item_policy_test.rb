@@ -4,52 +4,52 @@ class ItemPolicyTest < ActiveSupport::TestCase
   test "#index? allows editors and system admins" do
     refute(policy(users(:one), nil).index?)
     refute(policy(Guest.new, nil).index?)
-    assert(policy(users(:two), nil).index?)
+    assert(policy(users(:two_editor), nil).index?)
     assert(policy(users(:system_admin), nil).index?)
   end
 
   test "#create? allows editors and system admins" do
     refute(policy(users(:one), items(:one)).create?)
-    refute(policy(users(:two), items(:one)).create?)
-    assert(policy(users(:two), items(:two)).create?)
+    refute(policy(users(:two_editor), items(:one)).create?)
+    assert(policy(users(:two_editor), items(:two)).create?)
     assert(policy(users(:system_admin), items(:two)).create?)
   end
 
   test "#new? allows editors and system admins" do
     refute(policy(users(:one), items(:one)).new?)
-    refute(policy(users(:two), items(:one)).new?)
-    assert(policy(users(:two), items(:two)).new?)
+    refute(policy(users(:two_editor), items(:one)).new?)
+    assert(policy(users(:two_editor), items(:two)).new?)
     assert(policy(users(:system_admin), items(:two)).new?)
   end
 
   test "#show? allows editors and system admins" do
     refute(policy(users(:one), items(:one)).show?)
-    refute(policy(users(:two), items(:one)).show?)
-    assert(policy(users(:two), items(:two)).show?)
+    refute(policy(users(:two_editor), items(:one)).show?)
+    assert(policy(users(:two_editor), items(:two)).show?)
     assert(policy(users(:system_admin), items(:two)).show?)
   end
 
   test "#update? allows reviewers, system admins, and editors of own items" do
     refute(policy(users(:one), items(:one)).update?)
-    refute(policy(users(:two), items(:one)).update?)
-    refute(policy(users(:two), items(:two)).update?)
-    assert(policy(users(:two), items(:created_by_two)).update?)
+    refute(policy(users(:two_editor), items(:one)).update?)
+    refute(policy(users(:two_editor), items(:two)).update?)
+    assert(policy(users(:two_editor), items(:created_by_two_editor)).update?)
     assert(policy(users(:system_admin), items(:two)).update?)
   end
 
   test "#edit? allows reviewers, system admins, and editors of own items" do
     refute(policy(users(:one), items(:one)).edit?)
-    refute(policy(users(:two), items(:one)).edit?)
-    refute(policy(users(:two), items(:two)).edit?)
-    assert(policy(users(:two), items(:created_by_two)).edit?)
+    refute(policy(users(:two_editor), items(:one)).edit?)
+    refute(policy(users(:two_editor), items(:two)).edit?)
+    assert(policy(users(:two_editor), items(:created_by_two_editor)).edit?)
     assert(policy(users(:system_admin), items(:two)).edit?)
   end
 
   test "#destroy? allows reviewers, system admins, and editors of own items" do
     refute(policy(users(:one), items(:one)).destroy?)
-    refute(policy(users(:two), items(:one)).destroy?)
-    refute(policy(users(:two), items(:two)).destroy?)
-    assert(policy(users(:two), items(:created_by_two)).destroy?)
+    refute(policy(users(:two_editor), items(:one)).destroy?)
+    refute(policy(users(:two_editor), items(:two)).destroy?)
+    assert(policy(users(:two_editor), items(:created_by_two_editor)).destroy?)
     assert(policy(users(:system_admin), items(:two)).destroy?)
   end
 
@@ -63,7 +63,7 @@ class ItemPolicyTest < ActiveSupport::TestCase
   end
 
   test "Scope shows editor only items in her catalog" do
-    assert_equal(catalogs(:two).items.to_a, policy_scoped_items(users(:two)))
+    assert_equal(catalogs(:two).items.to_a, policy_scoped_items(users(:two_editor)))
   end
 
   private
