@@ -20,6 +20,15 @@ class UserPolicy
     user.system_admin?
   end
 
+  def permit(params)
+    allowed = [
+      :email,
+      { :catalog_permissions_attributes => [:id, :catalog_id, :role] }
+    ]
+    allowed.delete(:email) unless user.system_admin?
+    remove_prohibited_role_changes(params.permit(*allowed))
+  end
+
   class Scope
     attr_reader :user, :scope
 
@@ -32,5 +41,16 @@ class UserPolicy
       return scope.all if user.system_admin? || user.admin_of_any_catalog?
       scope.none
     end
+  end
+
+  private
+
+  def remove_prohibited_role_changes(params)
+    return params if user.system_admin?
+    admin_catalog_ids = user.admin_catalog_ids
+    params.fetch(:catalog_permissions_attributes, []).reject! do |perm|
+      perm[:role] == "admin" || !admin_catalog_ids.include?(perm["id"].to_i)
+    end
+    params
   end
 end

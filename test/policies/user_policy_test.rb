@@ -63,6 +63,36 @@ class UserPolicyTest < ActiveSupport::TestCase
     assert_empty(policy_scoped_records(Guest.new))
   end
 
+  test "#permitted_attributes allows email for system admins only" do
+    user = users(:one)
+    params = params_to_grant("admin", user)
+
+    refute_nil(permit(:system_admin, user, params)[:email])
+    assert_nil(permit(:one_admin, user, params)[:email])
+  end
+
+  test "#permitted_attributes prevents granting admin role unless sys admin" do
+    user = users(:one)
+    params = params_to_grant("admin", user)
+
+    assert_empty(
+      permit(:one_admin, user, params)[:catalog_permissions_attributes]
+    )
+    assert_equal(
+      params[:user][:catalog_permissions_attributes],
+      permit(:system_admin, user, params)[:catalog_permissions_attributes]
+    )
+  end
+
+  test "#permitted_attributes prevents catalog admin from granting role in non-administered catalog" do
+    user = users(:two)
+    params = params_to_grant("editor", user)
+
+    assert_empty(
+      permit(:one_admin, user, params)[:catalog_permissions_attributes]
+    )
+  end
+
   private
 
   def policy(user, record=nil)
@@ -71,5 +101,25 @@ class UserPolicyTest < ActiveSupport::TestCase
 
   def policy_scoped_records(user)
     UserPolicy::Scope.new(user, User).resolve.to_a
+  end
+
+  def permit(user_fixture, record, params)
+    policy(users(user_fixture), record).permit(params[:user])
+  end
+
+  def params_to_grant(role, user)
+    perm = user.catalog_permissions.first
+
+    ActionController::Parameters.new(
+      :user => {
+        :email => "changing-email@example.com",
+        :catalog_permissions_attributes => [
+          {
+            :id => perm.id,
+            :catalog_id => perm.catalog_id,
+            :role => role
+          }
+        ]
+      })
   end
 end

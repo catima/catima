@@ -38,11 +38,15 @@ class User < ActiveRecord::Base
     perm && perm.role_at_least?(role_requirement)
   end
 
-  def admin_of_any_catalog?
-    catalog_permissions.to_a.any? do |perm|
-      # TODO: only consider active catalogs
-      perm.role_at_least?("admin")
+  def admin_catalog_ids
+    # TODO: only consider active catalogs
+    catalog_permissions.to_a.each_with_object([]) do |perm, admin|
+      admin << perm.catalog_id if perm.role_at_least?("admin")
     end
+  end
+
+  def admin_of_any_catalog?
+    admin_catalog_ids.any?
   end
 
   def authenticated?
