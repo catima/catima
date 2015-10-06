@@ -15,6 +15,11 @@ en:
         minimum: "%{length} characters minimum"
         new_password: "New password"
         new_password_confirmation: "Confirm new password"
+    registrations:
+        new:
+          title: "Sign up"
+          submit: "Sign up"
+          minimum: "%{length} characters minimum"
     shared:
       links:
         log_in: "Log in"
@@ -30,4 +35,5 @@ en:
       user:
         email: "Email"
         password: "Password"
+        password_confirmation: "Password confirmation"
         remember_me: "Remember me"
