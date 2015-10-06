@@ -9,6 +9,12 @@ en:
       new:
         title: "Forgot your password?"
         submit: "Send me reset password instructions"
+      edit:
+        title: "Change your password"
+        submit: "Change my password"
+        minimum: "%{length} characters minimum"
+        new_password: "New password"
+        new_password_confirmation: "Confirm new password"
     shared:
       links:
         log_in: "Log in"
