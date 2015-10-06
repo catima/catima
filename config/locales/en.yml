@@ -10,6 +10,11 @@ en:
         log_in: "Log in"
         sign_up: "Sign up"
         forgot_password: "Forgot your password?"
+  shared:
+    navbar:
+      log_in: "Log in"
+      log_out: "Log out"
+      sign_up: "Sign up"
   helpers:
     label:
       user:
@@ -19,7 +24,3 @@ en:
     submit:
       user:
         create: "Log in"
-  shared:
-    log_in: "Log in"
-    log_out: "Log out"
-    sign_up: "Sign up"
