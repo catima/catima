@@ -21,6 +21,3 @@ en:
         email: "Email"
         password: "Password"
         remember_me: "Remember me"
-    submit:
-      user:
-        create: "Log in"
