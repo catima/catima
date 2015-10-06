@@ -25,4 +25,9 @@ class UserTest < ActiveSupport::TestCase
     refute(users(:one).admin_of_any_catalog?)
     assert(users(:one_admin).admin_of_any_catalog?)
   end
+
+  test "#editor_of_any_catalog?" do
+    refute(users(:one).editor_of_any_catalog?)
+    assert(users(:two).editor_of_any_catalog?)
+  end
 end

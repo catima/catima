@@ -1,3 +1,5 @@
+# Note that this policy is only for *management* of Catalogs. All users can
+# of course view catalogs, since they are public.
 class CatalogPolicy
   attr_reader :user, :catalog
 

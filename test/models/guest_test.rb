@@ -13,6 +13,14 @@ class GuestTest < ActiveSupport::TestCase
     refute(Guest.new.admin_of_any_catalog?)
   end
 
+  test "#editor_of_any_catalog?" do
+    refute(Guest.new.editor_of_any_catalog?)
+  end
+
+  test "#editor_catalog_ids" do
+    assert_empty(Guest.new.editor_catalog_ids)
+  end
+
   test "#catalog_role_at_least?" do
     refute(Guest.new.catalog_role_at_least?(catalogs(:one), "user"))
   end

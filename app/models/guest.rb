@@ -14,4 +14,12 @@ class Guest
   def admin_of_any_catalog?
     false
   end
+
+  def editor_of_any_catalog?
+    false
+  end
+
+  def editor_catalog_ids
+    []
+  end
 end

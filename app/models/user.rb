@@ -39,14 +39,26 @@ class User < ActiveRecord::Base
   end
 
   def admin_catalog_ids
+    role_catalog_ids("admin")
+  end
+
+  def editor_catalog_ids
+    role_catalog_ids("editor")
+  end
+
+  def role_catalog_ids(role)
     # TODO: only consider active catalogs
     catalog_permissions.to_a.each_with_object([]) do |perm, admin|
-      admin << perm.catalog_id if perm.role_at_least?("admin")
+      admin << perm.catalog_id if perm.role_at_least?(role)
     end
   end
 
   def admin_of_any_catalog?
     admin_catalog_ids.any?
+  end
+
+  def editor_of_any_catalog?
+    editor_catalog_ids.any?
   end
 
   def authenticated?

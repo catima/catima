@@ -24,3 +24,9 @@ two:
   catalog: two
   item_type: two
   data:
+
+created_by_two:
+  catalog: two
+  item_type: two
+  data:
+  creator: two

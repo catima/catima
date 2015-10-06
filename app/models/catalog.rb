@@ -23,6 +23,9 @@ class Catalog < ActiveRecord::Base
   validates_inclusion_of :primary_language, :in => :available_locales
   validate :other_languages_included_in_available_locales
 
+  has_many :catalog_permissions, :dependent => :destroy
+  has_many :items
+
   private
 
   def other_languages_included_in_available_locales
