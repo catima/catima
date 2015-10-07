@@ -8,6 +8,7 @@
 #  email                  :string           default(""), not null
 #  encrypted_password     :string           default(""), not null
 #  id                     :integer          not null, primary key
+#  invited_by_id          :integer
 #  last_sign_in_at        :datetime
 #  last_sign_in_ip        :inet
 #  primary_language       :string           default("en"), not null

@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20151005221339) do
+ActiveRecord::Schema.define(version: 20151007172059) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -89,6 +89,7 @@ ActiveRecord::Schema.define(version: 20151005221339) do
     t.datetime "updated_at",                             null: false
     t.boolean  "system_admin",           default: false, null: false
     t.string   "primary_language",       default: "en",  null: false
+    t.integer  "invited_by_id"
   end
 
   add_index "users", ["email"], name: "index_users_on_email", unique: true, using: :btree
@@ -102,4 +103,5 @@ ActiveRecord::Schema.define(version: 20151005221339) do
   add_foreign_key "items", "item_types"
   add_foreign_key "items", "users", column: "creator_id"
   add_foreign_key "items", "users", column: "reviewer_id"
+  add_foreign_key "users", "users", column: "invited_by_id"
 end

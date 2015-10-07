@@ -8,6 +8,7 @@
 #  email                  :string           default(""), not null
 #  encrypted_password     :string           default(""), not null
 #  id                     :integer          not null, primary key
+#  invited_by_id          :integer
 #  last_sign_in_at        :datetime
 #  last_sign_in_ip        :inet
 #  primary_language       :string           default("en"), not null
@@ -25,6 +26,7 @@ class User < ActiveRecord::Base
 
   include AvailableLocales
 
+  belongs_to :invited_by, :class_name => "User"
   has_many :catalog_permissions, :dependent => :destroy
 
   validates_presence_of :primary_language
