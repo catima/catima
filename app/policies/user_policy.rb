@@ -9,10 +9,8 @@ class UserPolicy
   def user_is_admin?
     user.system_admin? || user.admin_of_any_catalog?
   end
-  alias_method :create?, :user_is_admin?
   alias_method :edit?, :user_is_admin?
   alias_method :index?, :user_is_admin?
-  alias_method :new?, :user_is_admin?
   alias_method :show?, :user_is_admin?
   alias_method :update?, :user_is_admin?
 

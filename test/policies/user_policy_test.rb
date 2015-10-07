@@ -32,22 +32,6 @@ class UserPolicyTest < ActiveSupport::TestCase
     refute(policy(Guest.new, record).update?)
   end
 
-  test "#new? allows only admins" do
-    record = users(:one)
-    assert(policy(users(:system_admin), record).new?)
-    assert(policy(users(:one_admin), record).new?)
-    refute(policy(users(:two), record).new?)
-    refute(policy(Guest.new, record).new?)
-  end
-
-  test "#create? allows only admins" do
-    record = users(:one)
-    assert(policy(users(:system_admin), record).create?)
-    assert(policy(users(:one_admin), record).create?)
-    refute(policy(users(:two), record).create?)
-    refute(policy(Guest.new, record).create?)
-  end
-
   test "#destroy allows only system admins" do
     record = users(:one)
     assert(policy(users(:system_admin), record).destroy?)

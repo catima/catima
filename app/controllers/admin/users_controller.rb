@@ -3,12 +3,12 @@ class Admin::UsersController < Admin::BaseController
 
   def new
     build_user
-    # TODO: authorize(@user)
+    authorize(@user)
   end
 
   def create
     build_user
-    # TODO: authorize(@user)
+    authorize(@user)
     if @user.update(user_params)
       redirect_to(admin_dashboard_path, :notice => user_created_message)
     else

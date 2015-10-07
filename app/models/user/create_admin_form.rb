@@ -35,6 +35,10 @@ class User::CreateAdminForm < ActiveType::Record[User]
   after_commit :generate_token_and_deliver_invitation,
                :unless => :reset_password_token
 
+  def self.policy_class
+    User::CreateAdminFormPolicy
+  end
+
   def catalog_choices
     Catalog.active.sorted
   end
