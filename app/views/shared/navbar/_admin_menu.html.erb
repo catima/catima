@@ -21,7 +21,7 @@
 
     <% if policy(Configuration).update? %>
       <li role="separator" class="divider"></li>
-      <li><a href="javascript:;">viim admin</a></li>
+      <li><%= link_to("viim admin", admin_dashboard_path) %></li>
     <% end %>
   </ul>
 </li>
