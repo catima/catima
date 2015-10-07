@@ -36,6 +36,18 @@ class User::CreateAdminFormTest < ActiveSupport::TestCase
     assert_predicate(user.reset_password_sent_at, :present?)
   end
 
+  test "delivers invitation" do
+    mock = InvitationsMailer.expects(:admin).with do |user, token|
+      user.is_a?(User) &&
+      user.email == "create-form@example.com" &&
+      token.is_a?(String) &&
+      token.strip.present?
+    end
+    mock.returns(stub(:deliver_later))
+
+    create_form!
+  end
+
   test "requires a catalog_id be provided if not system admin" do
     assert_raises(ActiveRecord::RecordInvalid) do
       create_form!(:catalog_ids => [], :system_admin => false)

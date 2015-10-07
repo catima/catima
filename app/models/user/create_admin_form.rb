@@ -80,7 +80,6 @@ class User::CreateAdminForm < ActiveType::Record[User]
 
   def generate_token_and_deliver_invitation
     token = set_reset_password_token
-    # TODO
-    logger.debug("delivering invitation: #{token}")
+    InvitationsMailer.admin(self, token).deliver_later
   end
 end
