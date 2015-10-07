@@ -10,4 +10,6 @@ Rails.application.configure do
     :protocol => "https"
   }
   config.action_mailer.asset_host = "https://v3s.naxio.ch"
+
+  config.i18n.fallbacks = false
 end
