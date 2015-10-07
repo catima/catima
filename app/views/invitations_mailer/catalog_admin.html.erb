@@ -1,0 +1,13 @@
+<p>Hello,</p>
+
+<p>
+  <%= @invited_by.email %>
+  has invited you to be an administrator of the
+  <%# TODO: make these hyperlinks %>
+  <%= @catalogs.map(&:name).to_sentence %>
+  <%= @catalogs.many? ? "catalogs" : "catalog" %>.
+
+  As a catalog administrator, you will be able to add and edit records in the catalog, change the design of the catalog, and invite other users to collaborate as editors.
+</p>
+
+<%= render("account_information") %>

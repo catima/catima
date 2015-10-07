@@ -1,0 +1,19 @@
+<p>
+  Here is the account information you’ll need to log in:
+</p>
+
+<p>
+  <b>URL:</b>
+  <%= link_to(
+        new_user_session_url(:locale => "en"),
+        new_user_session_url(:locale => "en")) %>
+  <br>
+  <b>Email:</b> <%= @user.email %><br>
+  <b>Password:</b>
+  <%= link_to(
+        "Click here to set your password",
+        edit_user_password_url(
+          :locale => @user.primary_language,
+          :reset_password_token => @token
+        )) %>
+</p>

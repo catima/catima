@@ -26,6 +26,11 @@
 # model remove the '{}' from the fixture names and add the columns immediately
 # below each fixture, per the syntax in the comments below
 #
+system_admin:
+  email: system-admin@example.com
+  encrypted_password: <%= BCrypt::Password.create("password") %>
+  system_admin: true
+
 one:
   email: one@example.com
   encrypted_password: <%= BCrypt::Password.create("password") %>
@@ -45,8 +50,10 @@ two_editor:
 two_admin:
   email: two-admin@example.com
   encrypted_password: <%= BCrypt::Password.create("password") %>
+  invited_by: system_admin
 
-system_admin:
-  email: system-admin@example.com
+system_admin_invited_by_one:
+  email: system-admin-invited-by-one@example.com
   encrypted_password: <%= BCrypt::Password.create("password") %>
   system_admin: true
+  invited_by: one

@@ -40,6 +40,10 @@ class User < ActiveRecord::Base
     perm && perm.role_at_least?(role_requirement)
   end
 
+  def admin_catalogs
+    Catalog.where(:id => admin_catalog_ids)
+  end
+
   def admin_catalog_ids
     role_catalog_ids("admin")
   end

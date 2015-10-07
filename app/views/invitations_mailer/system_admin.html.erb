@@ -1,0 +1,11 @@
+<p>Hello,</p>
+
+<p>
+  <%= @invited_by.email %>
+  has invited you to be a system administrator at
+  <%= link_to(app_host, root_url) %>.
+
+  As a system administrator, you will be able to create catalogs, manage their contents, change application configuration, and send invitations to other administrators.
+</p>
+
+<%= render("account_information") %>
