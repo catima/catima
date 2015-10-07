@@ -35,9 +35,11 @@ en:
         forgot_password: "Forgot your password?"
   shared:
     navbar:
-      log_in: "Log in"
-      log_out: "Log out"
-      sign_up: "Sign up"
+      user_menu:
+        log_in: "Log in"
+        log_out: "Log out"
+        register: "Register"
+        my_profile: "My profile"
   helpers:
     label:
       user:

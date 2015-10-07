@@ -29,25 +29,9 @@
         </li>
       </ul>
       <ul class="nav navbar-nav navbar-right">
-        <% if current_user.authenticated? %>
-          <li>
-            <%= link_to(
-                  t(".log_out"),
-                  destroy_user_session_path(:locale => I18n.locale),
-                  :method => "delete") %>
-          </li>
-        <% else %>
-          <li>
-            <%= link_to(
-                  t(".log_in"),
-                  new_user_session_path(:locale => I18n.locale)) %>
-          </li>
-          <li>
-            <%= link_to(
-                  t(".sign_up"),
-                  new_user_registration_path(:locale => I18n.locale)) %>
-          </li>
-        <% end %>
+        <%= render("shared/navbar/locale_menu") if params[:locale] %>
+        <%= render("shared/navbar/admin_menu") if policy(Item).index? %>
+        <%= render("shared/navbar/user_menu") %>
       </ul>
     </div><!--/.nav-collapse -->
   </div>
