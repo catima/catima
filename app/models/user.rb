@@ -32,6 +32,10 @@ class User < ActiveRecord::Base
   validates_presence_of :primary_language
   validates_inclusion_of :primary_language, :in => :available_locales
 
+  def self.sorted
+    order(:email => "ASC")
+  end
+
   def catalog_role_at_least?(catalog, role_requirement)
     # Authenticated users are always considered at least "user" level.
     return true if role_requirement == "user"
