@@ -2,8 +2,6 @@
 
 <%= bootstrap_form_for([:admin, @user]) do |f| %>
 
-  <%= f.alert_message("Please review the problems below:") %>
-
   <%= f.text_field(:email, :autofocus => true, :autocomplete => "off") %>
   <%= locale_language_select(
         f,
