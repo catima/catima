@@ -1,2 +1,9 @@
 <% provide(:title, "Admin::Dashboard#index") %>
 <p>Find me in app/views/admin/dashboard/index.html.erb</p>
+
+<p>
+  <%= link_to(new_admin_user_path, :class => "btn btn-default") do %>
+    <%= fa_icon(:"user-plus") %>
+    Create an admin
+  <% end %>
+</p>
