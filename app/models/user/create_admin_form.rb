@@ -25,6 +25,7 @@ class User::CreateAdminForm < ActiveType::Record[User]
 
   after_initialize :set_system_admin_if_no_catalogs
 
+  before_validation :translate_catalog_ids_to_i
   before_validation :assign_random_password
   before_validation :assign_permissions
 
@@ -45,13 +46,17 @@ class User::CreateAdminForm < ActiveType::Record[User]
     self.system_admin = true
   end
 
+  def translate_catalog_ids_to_i
+    self.catalog_ids = (catalog_ids || []).reject(&:blank?).map(&:to_i)
+  end
+
   def assign_random_password
     self.password = SecureRandom.urlsafe_base64(16)
     self.password_confirmation = password
   end
 
   def assign_permissions
-    self.catalog_permissions = (catalog_ids || []).reject(&:blank?).map do |id|
+    self.catalog_permissions = catalog_ids.map do |id|
       CatalogPermission.new(
         :catalog_id => id,
         :user => self,
