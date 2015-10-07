@@ -53,9 +53,9 @@ class User::CreateAdminForm < ActiveType::Record[User]
   end
 
   def assign_permissions
-    self.catalog_permissions = (catalog_ids || []).map do |catalog_id|
+    self.catalog_permissions = (catalog_ids || []).reject(&:blank?).map do |id|
       CatalogPermission.new(
-        :catalog_id => catalog_id,
+        :catalog_id => id,
         :user => self,
         :role => "admin"
       )

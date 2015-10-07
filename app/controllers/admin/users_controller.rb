@@ -24,7 +24,7 @@ class Admin::UsersController < Admin::BaseController
 
   def user_params
     params.require(:user)
-      .permit(:email, :primary_language, :system_admin, :catalog_ids)
+      .permit(:email, :primary_language, :system_admin, :catalog_ids => [])
   end
 
   def user_created_message

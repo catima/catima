@@ -40,7 +40,7 @@ class User::CreateAdminFormTest < ActiveSupport::TestCase
   end
 
   test "doesn't require a catalog_id be provided if system admin" do
-    create_form!(:catalog_ids => [], :system_admin => true)
+    create_form!(:catalog_ids => [""], :system_admin => true)
   end
 
   private

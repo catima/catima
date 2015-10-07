@@ -20,7 +20,7 @@
 
   <% if @user.catalog_choices.any? %>
     <%= f.collection_check_boxes(
-          :catalog_id,
+          :catalog_ids,
           @user.catalog_choices,
           :id,
           :name,
