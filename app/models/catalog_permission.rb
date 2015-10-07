@@ -15,6 +15,8 @@ class CatalogPermission < ActiveRecord::Base
   # This is to help the implementation of `role_at_least?`.
   ROLE_OPTIONS = %w(user editor reviewer admin).freeze
 
+  delegate :active?, :to => :catalog
+
   belongs_to :catalog
   belongs_to :user
 

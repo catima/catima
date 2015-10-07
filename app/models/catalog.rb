@@ -27,8 +27,16 @@ class Catalog < ActiveRecord::Base
   has_many :items
   has_many :item_types
 
+  def self.active
+    where(:deactivated_at => nil)
+  end
+
   def self.sorted
     order("LOWER(catalogs.name) ASC")
+  end
+
+  def active?
+    deactivated_at.nil?
   end
 
   private

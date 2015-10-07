@@ -49,8 +49,8 @@ class User < ActiveRecord::Base
   end
 
   def role_catalog_ids(role)
-    # TODO: only consider active catalogs
     catalog_permissions.to_a.each_with_object([]) do |perm, admin|
+      next unless perm.active?
       admin << perm.catalog_id if perm.role_at_least?(role)
     end
   end
