@@ -17,4 +17,15 @@ module LocaleHelper
       [locale, locale_language(locale), locale == I18n.locale]
     end
   end
+
+  def locale_language_select(form, attrib, options={}, html_options={})
+    form.collection_select(
+      attrib,
+      locale_language_choices,
+      :first,
+      :second,
+      options,
+      html_options
+    )
+  end
 end

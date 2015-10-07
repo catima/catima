@@ -36,6 +36,7 @@ Rails.application.routes.draw do
 
   namespace "admin" do
     get "/" => "dashboard#index", :as => :dashboard
+    resources :users, :except => :index
   end
 
   mount Sidekiq::Web => "/sidekiq" # monitoring console

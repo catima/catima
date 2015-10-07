@@ -47,3 +47,4 @@ en:
         password: "Password"
         password_confirmation: "Password confirmation"
         remember_me: "Remember me"
+        primary_language: "Preferred language"
