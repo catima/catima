@@ -1,4 +1,6 @@
 class Admin::UsersController < Admin::BaseController
+  layout "admin/form"
+
   def new
     build_user
     # TODO: authorize
