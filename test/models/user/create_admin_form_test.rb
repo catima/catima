@@ -13,7 +13,7 @@ class User::CreateAdminFormTest < ActiveSupport::TestCase
   end
 
   test "#catalog_choices" do
-    assert_equal(Catalog.all, User::CreateAdminForm.new.catalog_choices)
+    assert_equal(Catalog.sorted, User::CreateAdminForm.new.catalog_choices)
   end
 
   test "assigns password" do

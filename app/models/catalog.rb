@@ -27,6 +27,10 @@ class Catalog < ActiveRecord::Base
   has_many :items
   has_many :item_types
 
+  def self.sorted
+    order("LOWER(catalogs.name) ASC")
+  end
+
   private
 
   def other_languages_included_in_available_locales

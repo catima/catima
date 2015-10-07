@@ -35,9 +35,8 @@ class User::CreateAdminForm < ActiveType::Record[User]
                :unless => :reset_password_token
 
   def catalog_choices
-    # TODO: sort
     # TODO: only consider active catalogs
-    Catalog.all
+    Catalog.sorted
   end
 
   private
