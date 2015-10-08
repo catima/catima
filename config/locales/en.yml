@@ -47,6 +47,8 @@ en:
         my_profile: "My profile"
   helpers:
     label:
+      catalog:
+        other_languages: Other supported languages
       user:
         email: "Email"
         password: "Password"

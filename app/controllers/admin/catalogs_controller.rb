@@ -1,6 +1,10 @@
 class Admin::CatalogsController < Admin::BaseController
   layout "admin/form"
 
+  def new
+    build_catalog
+  end
+
   def update
     find_catalog
     authorize(@catalog)
@@ -12,6 +16,10 @@ class Admin::CatalogsController < Admin::BaseController
   end
 
   private
+
+  def build_catalog
+    @catalog = Catalog.new
+  end
 
   def find_catalog
     @catalog = Catalog.find(params[:id])

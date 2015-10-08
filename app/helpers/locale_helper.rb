@@ -18,9 +18,19 @@ module LocaleHelper
     end
   end
 
-  def locale_language_select(form, attrib, options={}, html_options={})
+  def locale_language_check_boxes(form, method, options={})
+    form.collection_check_boxes(
+      method,
+      locale_language_choices,
+      :first,
+      :second,
+      options
+    )
+  end
+
+  def locale_language_select(form, method, options={}, html_options={})
     form.collection_select(
-      attrib,
+      method,
       locale_language_choices,
       :first,
       :second,
