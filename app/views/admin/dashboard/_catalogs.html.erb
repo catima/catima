@@ -10,7 +10,7 @@
   <tbody>
     <% @catalogs.each do |catalog| %>
       <tr>
-        <td><%= fa_icon(:database, :text => catalog.name) %></td>
+        <td><%= fa_icon(:book, :text => catalog.name) %></td>
         <td><%= link_to_if(catalog.active?, "/#{catalog.slug}", "/#{catalog.slug}") %></td>
         <td><%= catalog_status_label(catalog) %></td>
         <td style="text-align: right">

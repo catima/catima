@@ -1,6 +1,6 @@
 module Admin::UsersHelper
   def admin_catalogs(user)
-    return content_tag(:span, "System", :class => "label label-default") if user.system_admin?
+    return content_tag(:span, "System", :class => "label label-primary") if user.system_admin?
     user.admin_catalogs.map(&:name).to_sentence
   end
 
