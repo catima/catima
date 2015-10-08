@@ -39,6 +39,10 @@ class Catalog < ActiveRecord::Base
     deactivated_at.nil?
   end
 
+  def deactivated_at=(date)
+    super(date == "now" ? Time.zone.now : date)
+  end
+
   private
 
   def other_languages_included_in_available_locales
