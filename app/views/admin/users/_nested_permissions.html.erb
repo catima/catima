@@ -3,7 +3,7 @@
     <%= f.fields_for(:catalog_permissions, perm) do |f| %>
       <%= f.hidden_field(:catalog_id) %>
       <th style="vertical-align: middle"><%= perm.catalog.name %></th>
-      <td style="text-align: right;">
+      <td>
         <%= render_users_role_button_bar(f) %>
       </td>
     <% end %>

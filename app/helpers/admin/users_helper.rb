@@ -22,8 +22,10 @@ module Admin::UsersHelper
   end
 
   def render_users_role_button_bar(form)
-    roles = CatalogPermission::ROLE_OPTIONS.map do |role|
-      [role, form.object.role == role ? "active" : ""]
+    # TODO: hide admin role from non-system admins based on UserPolicy
+    roles = CatalogPermission::ROLE_OPTIONS.each_with_object([]) do |r, roles|
+      next if r == "reviewer" && !form.object.catalog.requires_review?
+      roles << [r, form.object.role == r ? "active" : ""]
     end
     render(
       :partial => "admin/users/role_button_bar",
