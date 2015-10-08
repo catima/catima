@@ -29,6 +29,8 @@ class User < ActiveRecord::Base
   belongs_to :invited_by, :class_name => "User"
   has_many :catalog_permissions, :dependent => :destroy
 
+  accepts_nested_attributes_for :catalog_permissions
+
   validates_presence_of :primary_language
   validates_inclusion_of :primary_language, :in => :available_locales
 

@@ -1,0 +1,4 @@
+// Tweak bootstrap styles to eliminate unwanted bottom margin
+.panel-body > *:last-child {
+  margin-bottom: 0;
+}

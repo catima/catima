@@ -21,9 +21,12 @@ class UserPolicy
   def permit(params)
     allowed = [
       :email,
+      :primary_language,
+      :system_admin,
       { :catalog_permissions_attributes => [:id, :catalog_id, :role] }
     ]
     allowed.delete(:email) unless user.system_admin?
+    allowed.delete(:system_admin) unless user.system_admin?
     remove_prohibited_role_changes(params.permit(*allowed))
   end
 

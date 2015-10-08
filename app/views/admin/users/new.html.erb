@@ -2,25 +2,7 @@
 
 <%= bootstrap_form_for([:admin, @user]) do |f| %>
 
-  <%= f.text_field(:email, :autofocus => true, :autocomplete => "off") %>
-  <%= locale_language_select(
-        f,
-        :primary_language,
-        :help => "Admin screens are only available in English, "\
-                 "but the user’s preferred language will be honored for login "\
-                 "pages and for the catalogs themselves.") %>
-  <hr>
-
-  <%= f.form_group(
-        :system_admin,
-        :help => "If <i>System admin</i> is checked, this user will be able "\
-                 "to administer all viim catalogs, including any new catalogs "\
-                 "that are created in the future. This user will also be able "\
-                 "to create other admins and modify the global viim "\
-                 "configuration.".html_safe
-      ) do %>
-    <%= f.check_box(:system_admin) %>
-  <% end %>
+  <%= render("common_form_fields", :f => f) %>
 
   <hr>
 

@@ -1,0 +1,49 @@
+<% provide(:title, "Edit user") %>
+
+<%= bootstrap_form_for([:admin, @user]) do |f| %>
+
+  <%= render("common_form_fields", :f => f) %>
+
+  <hr>
+
+  <%# TODO: hide this whole section when "system admin" is checked %>
+
+  <label>Catalog permissions</label>
+  <p class="help-block">
+    <b>Users</b> can view the public areas of a catalog.<br>
+    <b>Editors</b> can additionally create and edit items in the catalog.<br>
+    <b>Reviewers</b> are editors that can approve items to make them visible to the public.<br>
+    <b>Admins</b> can do all these things, plus change the catalog design and manage users.
+  </p>
+
+  <table class="table table-striped">
+    <tbody>
+      <%# TODO: ensure these are sorted %>
+      <%# TODO: hide "reviewer" if not applicable to the catalog %>
+      <% @user.catalog_permissions.each do |perm| %>
+        <tr>
+          <%= f.fields_for(:catalog_permissions, perm) do |f| %>
+            <th style="vertical-align: middle"><%= f.object.catalog.name %></th>
+            <td style="text-align: right;">
+              <%= f.hidden_field(:catalog_id) %>
+              <div class="btn-group" data-toggle="buttons">
+                <% CatalogPermission::ROLE_OPTIONS.each do |role| %>
+                  <label class="btn btn-default btn-xs <%= 'active' if role == f.object.role %>" style="padding-left: 1.5em; padding-right: 1.5em;">
+                    <%= f.radio_button_without_bootstrap(:role, role, :autocomplete => "off") %>
+                    <%= role.capitalize %>
+                  </label>
+                <% end %>
+              </div>
+            </td>
+          <% end %>
+        </tr>
+      <% end -%>
+    </tbody>
+  </table>
+
+  <hr>
+
+  <%= f.primary("Update user") %>
+  <%= link_to "Cancel", admin_dashboard_path, :class => "btn btn-link" %>
+
+<% end %>
