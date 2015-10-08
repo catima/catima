@@ -16,6 +16,8 @@
 class Catalog < ActiveRecord::Base
   include AvailableLocales
 
+  before_validation :strip_empty_language
+
   validates_presence_of :name
   validates_presence_of :primary_language
   validates_presence_of :slug
@@ -44,6 +46,10 @@ class Catalog < ActiveRecord::Base
   end
 
   private
+
+  def strip_empty_language
+    self.other_languages = (other_languages || []).reject(&:blank?)
+  end
 
   def other_languages_included_in_available_locales
     return if ((other_languages || []) - available_locales).empty?

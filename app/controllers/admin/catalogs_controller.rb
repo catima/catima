@@ -5,6 +5,16 @@ class Admin::CatalogsController < Admin::BaseController
     build_catalog
   end
 
+  def create
+    build_catalog
+    authorize(@catalog)
+    if @catalog.update(catalog_params)
+      redirect_to(admin_dashboard_path, :notice => created_message)
+    else
+      render("new")
+    end
+  end
+
   def update
     find_catalog
     authorize(@catalog)
@@ -26,7 +36,18 @@ class Admin::CatalogsController < Admin::BaseController
   end
 
   def catalog_params
-    params.require(:catalog).permit(:deactivated_at)
+    params.require(:catalog).permit(
+      :name,
+      :slug,
+      :primary_language,
+      :requires_review,
+      :deactivated_at,
+      :other_languages => []
+    )
+  end
+
+  def created_message
+    "Catalog “#{@catalog.name}” has been created."
   end
 
   def updated_message
