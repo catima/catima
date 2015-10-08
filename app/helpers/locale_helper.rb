@@ -1,3 +1,5 @@
+require "ostruct"
+
 module LocaleHelper
   def current_locale_language
     locale_language(I18n.locale)
@@ -21,9 +23,9 @@ module LocaleHelper
   def locale_language_check_boxes(form, method, options={})
     form.collection_check_boxes(
       method,
-      locale_language_choices,
-      :first,
-      :second,
+      locale_language_choices.map(&:first).map(&:to_s),
+      :itself,
+      ->(choice) { locale_language(choice) },
       options
     )
   end
@@ -31,9 +33,9 @@ module LocaleHelper
   def locale_language_select(form, method, options={}, html_options={})
     form.collection_select(
       method,
-      locale_language_choices,
-      :first,
-      :second,
+      locale_language_choices.map(&:first).map(&:to_s),
+      :itself,
+      ->(choice) { locale_language(choice) },
       options,
       html_options
     )

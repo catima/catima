@@ -1,0 +1,12 @@
+<% provide(:title, "Edit catalog") %>
+
+<%= bootstrap_form_for([:admin, @catalog]) do |f| %>
+
+  <%= render("common_form_fields", :f => f) %>
+
+  <hr>
+
+  <%= f.primary("Save catalog") %>
+  <%= link_to "Back", admin_dashboard_path, :class => "btn btn-link" %>
+
+<% end %>

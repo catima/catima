@@ -15,6 +15,11 @@ class Admin::CatalogsController < Admin::BaseController
     end
   end
 
+  def edit
+    find_catalog
+    authorize(@catalog)
+  end
+
   def update
     find_catalog
     authorize(@catalog)
@@ -47,14 +52,16 @@ class Admin::CatalogsController < Admin::BaseController
   end
 
   def created_message
-    "Catalog “#{@catalog.name}” has been created."
+    "The “#{@catalog.name}” catalog has been created."
   end
 
   def updated_message
+    message = "The “#{@catalog.name}” catalog has been "
     if catalog_params.key?(:deactivated_at)
-      @catalog.active? ? "Catalog reactivated." : "Catalog deactivated."
+      message << (@catalog.active? ? "reactivated." : "deactivated.")
     else
-      "Catalog updated."
+      message << "updated."
     end
+    message
   end
 end
