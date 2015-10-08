@@ -28,3 +28,11 @@ two:
   primary_language: en
   other_languages:
   requires_review: false
+
+inactive:
+  name: Inactive Catalog
+  slug: inactive
+  primary_language: en
+  other_languages:
+  requires_review: false
+  deactivated_at: <%= 10.minutes.ago %>
