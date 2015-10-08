@@ -33,6 +33,13 @@ class Admin::UsersController < Admin::BaseController
     end
   end
 
+  def destroy
+    find_user
+    authorize(@user)
+    @user.destroy
+    redirect_to(admin_dashboard_path, :notice => user_destroyed_message)
+  end
+
   private
 
   def build_admin_form
@@ -65,5 +72,9 @@ class Admin::UsersController < Admin::BaseController
 
   def user_updated_message
     "#{@user.email} has been saved."
+  end
+
+  def user_destroyed_message
+    "#{@user.email} has been deleted."
   end
 end
