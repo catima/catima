@@ -15,13 +15,14 @@
 
 class Catalog < ActiveRecord::Base
   include AvailableLocales
+  include HasSlug
 
   before_validation :strip_empty_language
 
   validates_presence_of :name
   validates_presence_of :primary_language
-  validates_presence_of :slug
-  validates_uniqueness_of :slug
+  validates_slug
+
   validates_inclusion_of :primary_language, :in => :available_locales
   validate :other_languages_included_in_available_locales
 
