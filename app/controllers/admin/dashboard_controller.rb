@@ -3,7 +3,7 @@ class Admin::DashboardController < Admin::BaseController
     authorize(Catalog, :index?)
     authorize(User, :index?)
 
-    @users = policy_scope(User).sorted
-    @catalogs = policy_scope(Catalog).sorted
+    @users = User.sorted
+    @catalogs = Catalog.sorted
   end
 end
