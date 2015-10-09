@@ -1,7 +1,9 @@
 <div class="navbar navbar-inverse navbar-static-top" role="navigation">
   <div class="container">
     <div class="navbar-header">
-      <%= link_to("viim admin", admin_dashboard_path, :class => "navbar-brand") %>
+      <%= link_to(admin_dashboard_path, :class => "navbar-brand") do %>
+        <%= fa_icon(:cogs, :text => "viim admin") %>
+      <% end %>
     </div>
     <ul class="nav navbar-nav navbar-right">
       <li>
