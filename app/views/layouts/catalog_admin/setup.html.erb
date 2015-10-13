@@ -1,0 +1,39 @@
+<div class="page-header">
+  <h1><%= fa_icon(:wrench, :text => "#{catalog.name} Setup") %></h1>
+</div>
+
+<div class="row">
+  <div class="col-sm-3">
+    <div class="panel panel-default">
+      <div class="panel-heading">Item Types / Categories</div>
+      <ul class="list-group">
+        <%= link_to("Authors", "javascript:;", :class => "list-group-item") %>
+        <%= link_to("Books", "javascript:;", :class => "list-group-item") %>
+      </ul>
+      <div class="panel-body">
+        <p>
+          <%= link_to("javascript:;") do %>
+            <%= fa_icon(:"plus-square", :text => "New item type") %>
+          <% end %>
+        </p>
+        <p>
+          <%= link_to("javascript:;") do %>
+            <%= fa_icon(:"plus-square", :text => "New category") %>
+          <% end %>
+        </p>
+      </div>
+    </div>
+
+    <hr>
+
+    <ul class="list-group">
+      <%= link_to("Options", "javascript:;", :class => "list-group-item") %>
+      <%= link_to("Users", "javascript:;", :class => "list-group-item") %>
+    </ul>
+  </div>
+  <div class="col-sm-9">
+    <%= yield %>
+  </div>
+</div>
+
+<% parent_layout "catalog_admin" %>
