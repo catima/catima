@@ -1,0 +1,16 @@
+<% provide(:title, "Edit item type") %>
+
+<%= bootstrap_form_for(@item_type,
+                       :url => catalog_admin_item_type_path) do |f| %>
+
+  <%= render("common_form_fields", :f => f) %>
+
+  <hr>
+
+  <%= f.primary("Save item type") %>
+  <%= link_to(
+        "Cancel",
+        catalog_admin_item_type_fields_path(catalog, @item_type),
+        :class => "btn btn-link") %>
+
+<% end %>

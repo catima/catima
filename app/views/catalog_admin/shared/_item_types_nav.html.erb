@@ -2,13 +2,7 @@
   <div class="panel-heading">Item Types / Categories</div>
   <ul class="list-group">
     <% catalog.item_types.sorted.each do |type| %>
-      <%= list_group_link_to(
-            type.name,
-            catalog_admin_item_type_fields_path(catalog, type),
-            :active_when => {
-              :controller => /item_types/,
-              :slug => type.slug
-            }) %>
+      <%= setup_item_type_nav_link(type) %>
     <% end %>
   </ul>
   <div class="panel-body">

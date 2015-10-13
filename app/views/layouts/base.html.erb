@@ -25,7 +25,7 @@
 
     <title>
       <% if content_for?(:title) %>
-        <%= yield(:title) %>
+        <%= strip_tags(yield(:title)) %>
       <% else %>
         viim
       <% end %>

@@ -16,10 +16,32 @@ class CatalogAdmin::ItemTypesController < CatalogAdmin::BaseController
     end
   end
 
+  def edit
+    find_item_type
+    authorize(@item_type)
+  end
+
+  def update
+    find_item_type
+    authorize(@item_type)
+    if @item_type.update(item_type_params)
+      redirect_to(
+        catalog_admin_item_type_fields_path(catalog, @item_type),
+        :notice => updated_message
+      )
+    else
+      render("edit")
+    end
+  end
+
   private
 
   def build_item_type
     @item_type = catalog.item_types.new
+  end
+
+  def find_item_type
+    @item_type = catalog.item_types.where(:slug => params[:slug]).first!
   end
 
   def item_type_params
@@ -34,6 +56,10 @@ class CatalogAdmin::ItemTypesController < CatalogAdmin::BaseController
   end
 
   def created_message
-    "Created item type “#{@item_type.name}”."
+    "The “#{@item_type.name}” item type has been created."
+  end
+
+  def updated_message
+    "The “#{@item_type.name}” item type has been updated."
   end
 end

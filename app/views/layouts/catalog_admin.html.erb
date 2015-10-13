@@ -1,5 +1,3 @@
-<%= provide(:title, "#{catalog.name} Admin") %>
-
 <div class="navbar navbar-inverse navbar-static-top" role="navigation">
   <div class="container">
     <div class="navbar-header">
@@ -24,7 +22,7 @@
                 fa_icon(:wrench, :text => "Setup"),
                 catalog_admin_dashboard_path,
                 :active_when => {
-                  :controller => /dashboard|item_types|choices|users/
+                  :controller => /dashboard|item_types|choices|fields|users/
                 }) %>
         <% end %>
       </ul>
