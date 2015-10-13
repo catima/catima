@@ -1,0 +1,21 @@
+# == Schema Information
+#
+# Table name: choice_sets
+#
+#  catalog_id     :integer
+#  created_at     :datetime         not null
+#  deactivated_at :datetime
+#  id             :integer          not null, primary key
+#  name           :string
+#  updated_at     :datetime         not null
+#
+
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  catalog: one
+  name: MyString
+
+two:
+  catalog: two
+  name: MyString
