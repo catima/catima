@@ -23,7 +23,7 @@ class CatalogAdmin::ItemTypesController < CatalogAdmin::BaseController
   end
 
   def item_type_params
-    params.require(:item_type).permit(:label, :slug)
+    params.require(:item_type).permit(:name, :slug)
   end
 
   def after_create_path
@@ -34,6 +34,6 @@ class CatalogAdmin::ItemTypesController < CatalogAdmin::BaseController
   end
 
   def created_message
-    "Created item type “#{@item_type.label}”."
+    "Created item type “#{@item_type.name}”."
   end
 end

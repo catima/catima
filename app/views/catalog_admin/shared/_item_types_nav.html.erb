@@ -3,7 +3,7 @@
   <ul class="list-group">
     <% catalog.item_types.sorted.each do |type| %>
       <%= list_group_link_to(
-            type.label,
+            type.name,
             edit_catalog_admin_item_type_path(catalog, type),
             :active_when => {
               :controller => /item_types/,

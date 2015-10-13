@@ -5,7 +5,7 @@
 #  catalog_id :integer
 #  created_at :datetime         not null
 #  id         :integer          not null, primary key
-#  label      :string
+#  name       :string
 #  slug       :string
 #  updated_at :datetime         not null
 #
@@ -14,10 +14,10 @@
 
 one:
   catalog: one
-  label: One
+  name: One
   slug: one
 
 two:
   catalog: two
-  label: Two
+  name: Two
   slug: two
