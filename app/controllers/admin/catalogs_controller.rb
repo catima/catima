@@ -3,6 +3,7 @@ class Admin::CatalogsController < Admin::BaseController
 
   def new
     build_catalog
+    authorize(@catalog)
   end
 
   def create
