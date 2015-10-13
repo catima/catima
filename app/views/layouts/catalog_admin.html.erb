@@ -17,7 +17,7 @@
               fa_icon(:book, :text => "Data"),
               "javascript://",
               :active_when => { :controller => /items/ }) %>
-        <% if policy(ItemType).new? %>
+        <% if policy(ItemType).index? %>
           <%= navbar_link_to(
                 fa_icon(:wrench, :text => "Setup"),
                 catalog_admin_dashboard_path,
