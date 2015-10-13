@@ -3,26 +3,48 @@
 <div class="navbar navbar-inverse navbar-static-top" role="navigation">
   <div class="container">
     <div class="navbar-header">
+      <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
+        <span class="sr-only">Toggle navigation</span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+        <span class="icon-bar"></span>
+      </button>
       <%= link_to(catalog_admin_dashboard_path, :class => "navbar-brand") do %>
         <%= catalog.name %> Admin
       <% end %>
     </div>
-    <ul class="nav navbar-nav navbar-right">
-      <li>
-        <%= link_to(root_path) do %>
-          <%= fa_icon(:"sign-out") %>
-          Return to site
+    <div class="navbar-collapse collapse">
+      <ul class="nav navbar-nav">
+        <%= navbar_link_to(
+              fa_icon(:book, :text => "Data"),
+              "javascript://",
+              :active_when => { :controller => /items/ }) %>
+        <% if policy(ItemType).new? %>
+          <%= navbar_link_to(
+                fa_icon(:wrench, :text => "Setup"),
+                catalog_admin_dashboard_path,
+                :active_when => {
+                  :controller => /dashboard|item_types|choices|users/
+                }) %>
         <% end %>
-      </li>
-      <% if policy(Configuration).update? %>
+      </ul>
+      <ul class="nav navbar-nav navbar-right">
         <li>
-          <%= link_to(admin_dashboard_path) do %>
-            <%= fa_icon(:cogs, :text => "viim admin") %>
+          <%= link_to(root_path) do %>
+            <%= fa_icon(:"sign-out") %>
+            Return to site
           <% end %>
         </li>
-      <% end %>
-      <%= render("shared/navbar/user_menu") %>
-    </ul>
+        <% if policy(Configuration).update? %>
+          <li>
+            <%= link_to(admin_dashboard_path) do %>
+              <%= fa_icon(:cogs, :text => "viim admin") %>
+            <% end %>
+          </li>
+        <% end %>
+        <%= render("shared/navbar/user_menu") %>
+      </ul>
+    </div>
   </div>
 </div>
 
