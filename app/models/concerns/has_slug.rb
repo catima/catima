@@ -1,6 +1,10 @@
 module HasSlug
   extend ActiveSupport::Concern
 
+  def to_param
+    slug
+  end
+
   module ClassMethods
     def validates_slug(options={})
       validates_presence_of :slug
