@@ -13,8 +13,18 @@
       <%= link_to("Users", "javascript:;", :class => "list-group-item") %>
     </ul>
   </div>
-  <div class="col-sm-9">
-    <%= yield %>
+  <div class="<%= content_for(:catalog_admin_width) || 'col-sm-9' %>">
+    <div class="panel panel-default">
+      <div class="panel-heading">
+        <% if content_for?(:actions) %>
+          <span class="pull-right"><%= content_for(:actions) %></span>
+        <% end %>
+        <%= content_for(:title) %>
+      </div>
+      <div class="panel-body">
+        <%= yield %>
+      </div>
+    </div>
   </div>
 </div>
 

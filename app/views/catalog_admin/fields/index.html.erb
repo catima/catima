@@ -1,0 +1,14 @@
+<% provide(:title) do %>
+  <b><%= @item_type.name %></b>
+  (plural: “<%= @item_type.name_plural %>”, slug: “<%= @item_type.slug %>”)
+<% end %>
+
+<% provide(:actions) do %>
+  <%= link_to(
+        "Edit name and slug",
+        edit_catalog_admin_item_type_path(catalog, @item_type)) %>
+<% end %>
+
+<p>
+  TODO: fields go here.
+</p>
