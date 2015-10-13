@@ -37,7 +37,7 @@ class Admin::CatalogsController < Admin::BaseController
   end
 
   def find_catalog
-    @catalog = Catalog.find(params[:id])
+    @catalog = Catalog.where(:slug => params[:slug]).first!
   end
 
   def catalog_params

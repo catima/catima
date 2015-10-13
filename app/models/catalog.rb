@@ -46,6 +46,10 @@ class Catalog < ActiveRecord::Base
     super(date == "now" ? Time.zone.now : date)
   end
 
+  def to_param
+    slug
+  end
+
   private
 
   def strip_empty_language

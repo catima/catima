@@ -15,6 +15,8 @@ class CatalogTest < ActiveSupport::TestCase
   should_not allow_value("café").for(:slug)
   should_not allow_value("admin").for(:slug)
   should_not allow_value("manage").for(:slug)
+  should_not allow_value("new").for(:slug)
+  should_not allow_value("edit").for(:slug)
   should_not allow_value("de").for(:slug)
   should_not allow_value("en").for(:slug)
   should_not allow_value("fr").for(:slug)
