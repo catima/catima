@@ -1,0 +1,55 @@
+# == Schema Information
+#
+# Table name: fields
+#
+#  category_item_type_id :integer
+#  choice_set_id         :integer
+#  comment               :text
+#  created_at            :datetime         not null
+#  default_value         :text
+#  i18n                  :boolean          default(FALSE), not null
+#  id                    :integer          not null, primary key
+#  item_type_id          :integer
+#  multiple              :boolean          default(FALSE), not null
+#  name                  :string
+#  name_plural           :string
+#  options               :json
+#  ordered               :boolean          default(FALSE), not null
+#  position              :integer          default(0), not null
+#  related_item_type_id  :integer
+#  required              :boolean          default(TRUE), not null
+#  slug                  :string
+#  type                  :string
+#  unique                :boolean          default(FALSE), not null
+#  updated_at            :datetime         not null
+#
+
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  item_type: one
+  name: MyString
+  name_plural: MyString
+  position: 1
+  slug: MyString
+  comment: MyText
+  multiple: false
+  ordered: false
+  required: false
+  i18n: false
+  unique: false
+  default_value: MyText
+
+two:
+  item_type: two
+  name: MyString
+  name_plural: MyString
+  position: 1
+  slug: MyString
+  comment: MyText
+  multiple: false
+  ordered: false
+  required: false
+  i18n: false
+  unique: false
+  default_value: MyText

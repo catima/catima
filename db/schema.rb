@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20151013232152) do
+ActiveRecord::Schema.define(version: 20151013232606) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -56,6 +56,34 @@ ActiveRecord::Schema.define(version: 20151013232152) do
     t.datetime "created_at",                             null: false
     t.datetime "updated_at",                             null: false
   end
+
+  create_table "fields", force: :cascade do |t|
+    t.integer  "item_type_id"
+    t.integer  "category_item_type_id"
+    t.integer  "related_item_type_id"
+    t.integer  "choice_set_id"
+    t.string   "type"
+    t.string   "name"
+    t.string   "name_plural"
+    t.string   "slug"
+    t.text     "comment"
+    t.integer  "position",              default: 0,     null: false
+    t.boolean  "multiple",              default: false, null: false
+    t.boolean  "ordered",               default: false, null: false
+    t.boolean  "required",              default: true,  null: false
+    t.boolean  "i18n",                  default: false, null: false
+    t.boolean  "unique",                default: false, null: false
+    t.text     "default_value"
+    t.json     "options"
+    t.datetime "created_at",                            null: false
+    t.datetime "updated_at",                            null: false
+  end
+
+  add_index "fields", ["category_item_type_id"], name: "index_fields_on_category_item_type_id", using: :btree
+  add_index "fields", ["choice_set_id"], name: "index_fields_on_choice_set_id", using: :btree
+  add_index "fields", ["item_type_id"], name: "index_fields_on_item_type_id", using: :btree
+  add_index "fields", ["related_item_type_id"], name: "index_fields_on_related_item_type_id", using: :btree
+  add_index "fields", ["slug"], name: "index_fields_on_slug", using: :btree
 
   create_table "item_types", force: :cascade do |t|
     t.integer  "catalog_id"
@@ -110,6 +138,10 @@ ActiveRecord::Schema.define(version: 20151013232152) do
   add_foreign_key "catalog_permissions", "users"
   add_foreign_key "choice_sets", "catalogs"
   add_foreign_key "configurations", "catalogs", column: "default_catalog_id"
+  add_foreign_key "fields", "choice_sets"
+  add_foreign_key "fields", "item_types"
+  add_foreign_key "fields", "item_types", column: "category_item_type_id"
+  add_foreign_key "fields", "item_types", column: "related_item_type_id"
   add_foreign_key "item_types", "catalogs"
   add_foreign_key "items", "catalogs"
   add_foreign_key "items", "item_types"
