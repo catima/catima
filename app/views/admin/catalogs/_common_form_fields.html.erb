@@ -1,9 +1,6 @@
 <%= f.text_field(:name, :autofocus => true) %>
 
-<%= f.text_field(
-      :slug,
-      :help => "Lower case letters, numbers, and hyphens only. "\
-               "No accented characters.") %>
+<%= f.text_field(:slug, :help => slug_help_text) %>
 
 <%= locale_language_select(f, :primary_language) %>
 <%= locale_language_check_boxes(f, :other_languages) %>

@@ -23,7 +23,7 @@ class CatalogAdmin::ItemTypesController < CatalogAdmin::BaseController
   end
 
   def item_type_params
-    params.require(:item_type).permit(:name, :slug)
+    params.require(:item_type).permit(:name, :name_plural, :slug)
   end
 
   def after_create_path

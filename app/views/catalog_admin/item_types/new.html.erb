@@ -3,7 +3,8 @@
 <%= bootstrap_form_for([:catalog_admin, @item_type]) do |f| %>
 
   <%= f.text_field(:name) %>
-  <%= f.text_field(:slug) %>
+  <%= f.text_field(:name_plural) %>
+  <%= f.text_field(:slug, :help => slug_help_text) %>
 
   <hr>
 
