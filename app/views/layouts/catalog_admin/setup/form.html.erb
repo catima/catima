@@ -1,0 +1,12 @@
+<div class="row">
+  <div class="col-md-8">
+    <div class="panel panel-default">
+      <div class="panel-heading"><%= content_for(:title) %></div>
+      <div class="panel-body">
+        <%= yield %>
+      </div>
+    </div>
+  </div>
+</div>
+
+<% parent_layout "catalog_admin/setup" %>

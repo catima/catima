@@ -1,0 +1,14 @@
+<% provide(:title, "New item type") %>
+
+<%= bootstrap_form_for([:catalog_admin, @item_type]) do |f| %>
+
+  <%= f.text_field(:label) %>
+  <%= f.text_field(:slug) %>
+
+  <hr>
+
+  <%= f.primary("Create item type") %>
+  <%= f.submit("Create and add another") %>
+  <%= link_to "Cancel", catalog_admin_dashboard_path, :class => "btn btn-link" %>
+
+<% end %>

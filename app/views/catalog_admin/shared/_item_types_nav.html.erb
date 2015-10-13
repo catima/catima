@@ -1,0 +1,26 @@
+<div class="panel panel-default">
+  <div class="panel-heading">Item Types / Categories</div>
+  <ul class="list-group">
+    <% catalog.item_types.sorted.each do |type| %>
+      <%= list_group_link_to(
+            type.label,
+            edit_catalog_admin_item_type_path(catalog, type),
+            :active_when => {
+              :controller => /item_types/,
+              :slug => type.slug
+            }) %>
+    <% end %>
+  </ul>
+  <div class="panel-body">
+    <p>
+      <%= link_to(new_catalog_admin_item_type_path) do %>
+        <%= fa_icon(:"plus-square", :text => "New item type") %>
+      <% end %>
+    </p>
+    <p>
+      <%= link_to("javascript:;") do %>
+        <%= fa_icon(:"plus-square", :text => "New category") %>
+      <% end %>
+    </p>
+  </div>
+</div>

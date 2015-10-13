@@ -48,5 +48,6 @@ Rails.application.routes.draw do
 
   namespace "catalog_admin", :path => ":catalog_slug/admin" do
     get "/" => "dashboard#index", :as => :dashboard
+    resources :item_types, :path => "item-types", :except => :index
   end
 end
