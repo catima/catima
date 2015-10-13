@@ -11,7 +11,12 @@
     <% @catalogs.each do |catalog| %>
       <tr>
         <td><%= fa_icon(:book, :text => catalog.name) %></td>
-        <td><%= link_to_if(catalog.active?, "/#{catalog.slug}", "/#{catalog.slug}") %></td>
+        <td>
+          <%= link_to_if(
+                catalog.active?,
+                "/#{catalog.slug}",
+                catalog_admin_dashboard_path(catalog)) %>
+        </td>
         <td><%= catalog_status_label(catalog) %></td>
         <td style="text-align: right">
           <%= link_to edit_admin_catalog_path(catalog), :class => "btn btn-xs btn-default" do %>

@@ -42,4 +42,11 @@ Rails.application.routes.draw do
 
   mount Sidekiq::Web => "/sidekiq" # monitoring console
   root "home#index"
+
+  # ===========================================================================
+  # Catalog administration
+
+  namespace "catalog_admin", :path => ":catalog_slug/admin" do
+    get "/" => "dashboard#index", :as => :dashboard
+  end
 end
