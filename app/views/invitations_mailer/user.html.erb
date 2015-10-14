@@ -1,0 +1,17 @@
+<p>Hello,</p>
+
+<p>
+  <%= @invited_by.email %>
+  has invited you to access
+  <%# TODO: make this hyperlink %>
+  <%= @catalog.name %>.
+
+  <% case(@role) %>
+  <% when "editor" %>
+    As a catalog editor, you will be able to add and edit records.
+  <% when "reviewer" %>
+    As a catalog reviewer, you will be able to add and edit records, as well as approve records to be published to the public.
+  <% end %>
+</p>
+
+<%= render("account_information") %>

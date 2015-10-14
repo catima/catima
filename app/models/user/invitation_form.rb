@@ -21,11 +21,13 @@
 #
 
 class User::InvitationForm < ActiveType::Record[User]
-  # TODO: test!
   # TODO: look for ways to share code with User::AdminInvitationForm
+
+  attr_accessor :catalog
 
   before_validation :assign_random_password
   before_validation :assign_self_to_permissions
+  validates_presence_of :catalog
   validates_presence_of :invited_by
 
   after_commit :generate_token_and_deliver_invitation,
@@ -50,6 +52,6 @@ class User::InvitationForm < ActiveType::Record[User]
 
   def generate_token_and_deliver_invitation
     token = set_reset_password_token
-    InvitationsMailer.user(self, token).deliver_later
+    InvitationsMailer.user(self, catalog, token).deliver_later
   end
 end

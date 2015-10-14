@@ -19,7 +19,21 @@ class InvitationsMailer < ApplicationMailer
     )
   end
 
-  def user(invited_user, token)
-    # TODO
+  def user(invited_user, catalog, token)
+    @token = token
+    @user = invited_user
+    @invited_by = invited_user.invited_by
+    @catalog = catalog
+    @role = invited_user.catalog_role(catalog)
+    subject = t(
+      "invitations_mailer.user.subject",
+      :host => app_host,
+      :catalog => @catalog.name)
+
+    mail(
+      :subject => subject,
+      :to => @user.email,
+      :reply_to => @invited_by.email
+    )
   end
 end

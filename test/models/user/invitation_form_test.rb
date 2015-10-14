@@ -1,6 +1,7 @@
 require "test_helper"
 
-class User::AdminInvitationFormTest < ActiveSupport::TestCase
+class User::InvitationFormTest < ActiveSupport::TestCase
+  should validate_presence_of(:catalog)
   should validate_presence_of(:invited_by)
 
   test "assigns password" do
@@ -20,11 +21,12 @@ class User::AdminInvitationFormTest < ActiveSupport::TestCase
   end
 
   test "delivers invitation" do
-    mock = InvitationsMailer.expects(:user).with do |user, token|
+    mock = InvitationsMailer.expects(:user).with do |user, catalog, token|
       user.is_a?(User) &&
       user.email == "invited@example.com" &&
       token.is_a?(String) &&
-      token.strip.present?
+      token.strip.present? &&
+      catalog == catalogs(:one)
     end
     mock.returns(stub(:deliver_later))
 
@@ -36,6 +38,7 @@ class User::AdminInvitationFormTest < ActiveSupport::TestCase
   def create_form!(attrs={})
     form = User::InvitationForm.create!(
       attrs.reverse_merge(
+        :catalog => catalogs(:one),
         :email => "invited@example.com",
         :primary_language => "en",
         :invited_by => users(:one_admin),

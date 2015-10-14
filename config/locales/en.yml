@@ -38,6 +38,8 @@ en:
       subject: "Your administrator invitation for %{catalog}"
     system_admin:
       subject: "Your system administrator invitation for %{host}"
+    user:
+      subject: "You are invited to join %{catalog}"
   shared:
     navbar:
       user_menu:

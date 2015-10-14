@@ -40,7 +40,10 @@ class CatalogAdmin::UsersController < CatalogAdmin::BaseController
   private
 
   def build_user
-    @user = User::InvitationForm.new(:invited_by => current_user)
+    @user = User::InvitationForm.new(
+      :catalog => catalog,
+      :invited_by => current_user
+    )
   end
 
   def find_user
