@@ -21,6 +21,13 @@ class UserTest < ActiveSupport::TestCase
     refute(user.catalog_role_at_least?(catalogs(:one), "editor"))
   end
 
+  test "#catalog_role" do
+    assert_equal("editor", users(:two_editor).catalog_role(catalogs(:two)))
+    assert_equal("user", users(:two_editor).catalog_role(catalogs(:one)))
+    assert_equal("admin", users(:one_admin).catalog_role(catalogs(:one)))
+    assert_equal("user", users(:one_admin).catalog_role(catalogs(:two)))
+  end
+
   test "#admin_of_any_catalog?" do
     refute(users(:one).admin_of_any_catalog?)
     assert(users(:one_admin).admin_of_any_catalog?)
