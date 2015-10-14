@@ -18,6 +18,10 @@ class Field::Text < ::Field
     [length_validator(field, attr)].compact
   end
 
+  def custom_permitted_attributes
+    %i(maximum minimum)
+  end
+
   private
 
   def default_value_passes_field_validations
