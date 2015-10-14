@@ -1,4 +1,4 @@
-module Admin::ItemTypesHelper
+module CatalogAdmin::ItemTypesHelper
   def setup_item_type_nav_link(item_type)
     slug = params[:item_type_slug] || params[:slug]
     active = params[:controller] =~ /item_types|fields/ &&

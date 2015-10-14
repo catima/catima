@@ -10,7 +10,7 @@
 
     <ul class="list-group">
       <%= link_to("Options", "javascript:;", :class => "list-group-item") %>
-      <%= link_to("Users", "javascript:;", :class => "list-group-item") %>
+      <%= setup_catalog_users_nav_link %>
     </ul>
   </div>
   <div class="<%= content_for(:catalog_admin_width) || 'col-sm-9' %>">
@@ -21,9 +21,7 @@
         <% end %>
         <%= content_for(:title) %>
       </div>
-      <div class="panel-body">
-        <%= yield %>
-      </div>
+      <%= yield %>
     </div>
   </div>
 </div>

@@ -54,5 +54,6 @@ Rails.application.routes.draw do
               :except => [:index, :show] do
       resources :fields, :only => :index
     end
+    resources :users
   end
 end

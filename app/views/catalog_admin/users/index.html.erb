@@ -1,0 +1,26 @@
+<% provide(:title, "Users") %>
+
+<table class="table">
+  <thead>
+    <tr>
+      <th>Email</th>
+      <th>Role</th>
+      <th>Invited</th>
+      <th>Last signed in</th>
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+    <% @users.each do |user| %>
+      <tr>
+        <td><%= fa_icon(:user, :text => user.email) %></td>
+        <td><%= user_role(user) %></td>
+        <td><%= l(user.created_at, :format => :long) %></td>
+        <td><%= last_signed_in(user) %></td>
+        <td style="text-align: right">
+          TODO
+        </td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
