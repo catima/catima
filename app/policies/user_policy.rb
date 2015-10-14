@@ -20,6 +20,7 @@ class UserPolicy
 
   def edit_in_catalog?(catalog)
     return false unless edit?
+    return false if record.system_admin?
     !record.admin_catalog_ids.include?(catalog.id)
   end
 

@@ -8,6 +8,8 @@ module CatalogAdmin::UsersHelper
   end
 
   def user_role(user)
+    return "Admin" if user.system_admin?
+
     options = CatalogPermission::ROLE_OPTIONS.reverse
     options.delete("reviewer") unless catalog.requires_review?
 

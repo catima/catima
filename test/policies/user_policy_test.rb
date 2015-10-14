@@ -40,10 +40,13 @@ class UserPolicyTest < ActiveSupport::TestCase
     refute(policy(Guest.new, record).destroy?)
   end
 
-  test "#edit_in_catalog? disallows editing another catalog admin" do
+  test "#edit_in_catalog? disallows editing another admin" do
     record = users(:two_admin)
     refute(policy(users(:two_admin), record).edit_in_catalog?(catalogs(:two)))
     assert(policy(users(:one_admin), record).edit_in_catalog?(catalogs(:one)))
+
+    record = users(:system_admin)
+    refute(policy(users(:one_admin), record).edit_in_catalog?(catalogs(:one)))
   end
 
   test "Scope shows all for admins, none for others" do
