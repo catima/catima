@@ -1,0 +1,37 @@
+<% provide(:title, "Edit #{@user.email}") %>
+
+<%= bootstrap_form_for(
+      @user,
+      :url => catalog_admin_user_path(catalog, @user)
+      ) do |f| %>
+
+  <%= locale_language_select(
+        f,
+        :primary_language,
+        :help => "Admin screens are only available in English, "\
+                 "but the user’s preferred language will be honored for login "\
+                 "pages and for the catalogs themselves.") %>
+
+  <hr>
+
+  <label><%= catalog.name %> role</label>
+  <p class="help-block">
+    <b>Users</b> can view the public areas of a catalog.<br>
+    <b>Editors</b> can additionally create and edit items in the catalog.<br>
+    <% if catalog.requires_review? %>
+      <b>Reviewers</b> are editors that can approve items to make them visible to the public.<br>
+    <% end %>
+  </p>
+
+  <table class="table table-striped">
+    <tbody>
+      <%= render_catalog_admin_users_permission(f) %>
+    </tbody>
+  </table>
+
+  <hr>
+
+  <%= f.primary("Update user") %>
+  <%= link_to "Cancel", catalog_admin_users_path, :class => "btn btn-link" %>
+
+<% end %>

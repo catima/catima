@@ -12,19 +12,25 @@ module Admin::UsersHelper
     sentence_case("#{distance_of_time_in_words_to_now(at)} ago") unless at.nil?
   end
 
-  def render_users_nested_permissions(form)
+  def render_admin_users_nested_permissions(form)
     render(
       :partial => "admin/users/nested_permissions",
       :locals => {
         :f => form,
-        :permissions => sorted_permissions_for_edit(form.object)
+        :permissions => sorted_permissions_for_edit(
+          form.object,
+          Catalog.active.sorted
+        )
       })
   end
 
-  def render_users_role_button_bar(form)
-    # TODO: hide admin role from non-system admins based on UserPolicy
+  def render_users_role_button_bar(form, exclude:nil)
     roles = CatalogPermission::ROLE_OPTIONS.each_with_object([]) do |r, roles|
-      next if r == "reviewer" && !form.object.catalog.requires_review?
+      next if r == exclude
+      unless form.object.catalog.requires_review?
+        next if r == "reviewer"
+        form.object.role = "editor" if form.object.role == "reviewer"
+      end
       roles << [r, form.object.role == r ? "active" : ""]
     end
     render(
@@ -35,8 +41,8 @@ module Admin::UsersHelper
       })
   end
 
-  def sorted_permissions_for_edit(user)
-    Catalog.active.sorted.map do |catalog|
+  def sorted_permissions_for_edit(user, catalogs)
+    catalogs.map do |catalog|
       exist = user.catalog_permissions.find { |p| p.catalog_id == catalog.id }
       exist || CatalogPermission.new(
         :user => user,

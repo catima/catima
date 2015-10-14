@@ -18,7 +18,12 @@
         <td><%= l(user.created_at, :format => :long) %></td>
         <td><%= last_signed_in(user) %></td>
         <td style="text-align: right">
-          TODO
+          <% if policy(user).edit_in_catalog?(catalog) %>
+            <%= link_to(
+                  fa_icon("pencil", :text => "Edit"),
+                  edit_catalog_admin_user_path(catalog, user),
+                  :class => "btn btn-default btn-xs") %>
+          <% end %>
         </td>
       </tr>
     <% end %>

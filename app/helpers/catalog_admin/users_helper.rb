@@ -16,4 +16,13 @@ module CatalogAdmin::UsersHelper
     end
     role.to_s.titleize
   end
+
+  def render_catalog_admin_users_permission(form)
+    render(
+      :partial => "catalog_admin/users/nested_permission",
+      :locals => {
+        :f => form,
+        :perm => sorted_permissions_for_edit(form.object, [catalog]).first
+      })
+  end
 end
