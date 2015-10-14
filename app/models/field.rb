@@ -36,4 +36,8 @@ class Field < ActiveRecord::Base
   validates_presence_of :name
   validates_presence_of :name_plural
   validates_slug :scope => :item_type_id
+
+  def self.sorted
+    order("fields.position ASC, LOWER(fields.name) ASC")
+  end
 end

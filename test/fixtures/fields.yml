@@ -26,30 +26,9 @@
 
 # Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
 
-one:
+one_title:
+  type: "Field::Text"
+  name: Title
+  name_plural: Titles
+  slug: title
   item_type: one
-  name: MyString
-  name_plural: MyString
-  position: 1
-  slug: MyString
-  comment: MyText
-  multiple: false
-  ordered: false
-  required: false
-  i18n: false
-  unique: false
-  default_value: MyText
-
-two:
-  item_type: two
-  name: MyString
-  name_plural: MyString
-  position: 1
-  slug: MyString
-  comment: MyText
-  multiple: false
-  ordered: false
-  required: false
-  i18n: false
-  unique: false
-  default_value: MyText
