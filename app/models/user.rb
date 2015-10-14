@@ -48,6 +48,7 @@ class User < ActiveRecord::Base
     perm && perm.role_at_least?(role_requirement)
   end
 
+  # TODO: test
   def catalog_role(catalog)
     perm = catalog_permissions.to_a.find { |p| p.catalog_id == catalog.id }
     perm ? perm.role : "user"

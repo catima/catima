@@ -1,4 +1,3 @@
-# TODO: test
 class User::InvitationFormPolicy
   attr_reader :user, :record
 

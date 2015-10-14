@@ -47,7 +47,7 @@ class UserPolicyTest < ActiveSupport::TestCase
     assert_empty(policy_scoped_records(Guest.new))
   end
 
-  test "#permitted_attributes allows email for system admins only" do
+  test "#permit allows email for system admins only" do
     user = users(:one)
     params = params_to_grant("admin", user)
 
@@ -55,7 +55,7 @@ class UserPolicyTest < ActiveSupport::TestCase
     assert_nil(permit(:one_admin, user, params)[:email])
   end
 
-  test "#permitted_attributes prevents granting admin role unless sys admin" do
+  test "#permit prevents granting admin role unless sys admin" do
     user = users(:one)
     params = params_to_grant("admin", user)
 
@@ -68,7 +68,7 @@ class UserPolicyTest < ActiveSupport::TestCase
     )
   end
 
-  test "#permitted_attributes prevents catalog admin from granting role in non-administered catalog" do
+  test "#permit prevents catalog admin from granting role in non-administered catalog" do
     user = users(:two)
     params = params_to_grant("editor", user)
 
