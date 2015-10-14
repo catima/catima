@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20151013232606) do
+ActiveRecord::Schema.define(version: 20151014232335) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -81,9 +81,9 @@ ActiveRecord::Schema.define(version: 20151013232606) do
 
   add_index "fields", ["category_item_type_id"], name: "index_fields_on_category_item_type_id", using: :btree
   add_index "fields", ["choice_set_id"], name: "index_fields_on_choice_set_id", using: :btree
+  add_index "fields", ["item_type_id", "slug"], name: "index_fields_on_item_type_id_and_slug", unique: true, using: :btree
   add_index "fields", ["item_type_id"], name: "index_fields_on_item_type_id", using: :btree
   add_index "fields", ["related_item_type_id"], name: "index_fields_on_related_item_type_id", using: :btree
-  add_index "fields", ["slug"], name: "index_fields_on_slug", using: :btree
 
   create_table "item_types", force: :cascade do |t|
     t.integer  "catalog_id"
@@ -94,8 +94,8 @@ ActiveRecord::Schema.define(version: 20151013232606) do
     t.string   "name_plural"
   end
 
+  add_index "item_types", ["catalog_id", "slug"], name: "index_item_types_on_catalog_id_and_slug", unique: true, using: :btree
   add_index "item_types", ["catalog_id"], name: "index_item_types_on_catalog_id", using: :btree
-  add_index "item_types", ["slug"], name: "index_item_types_on_slug", unique: true, using: :btree
 
   create_table "items", force: :cascade do |t|
     t.integer  "catalog_id"
