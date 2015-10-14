@@ -43,7 +43,7 @@ class Admin::UsersController < Admin::BaseController
   private
 
   def build_admin_form
-    @user = User::CreateAdminForm.new(:invited_by => current_user)
+    @user = User::AdminInvitationForm.new(:invited_by => current_user)
   end
 
   def find_user

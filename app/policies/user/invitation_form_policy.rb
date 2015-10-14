@@ -1,5 +1,5 @@
 # TODO: test
-class User::CreateFormPolicy
+class User::InvitationFormPolicy
   attr_reader :user, :record
 
   def initialize(user, record)

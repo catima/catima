@@ -1,4 +1,4 @@
-class User::CreateAdminFormPolicy
+class User::AdminInvitationFormPolicy
   attr_reader :user, :record
 
   def initialize(user, record)

@@ -1,21 +1,21 @@
 require "test_helper"
 
-class User::CreateAdminFormTest < ActiveSupport::TestCase
+class User::AdminInvitationFormTest < ActiveSupport::TestCase
   should validate_presence_of(:invited_by)
 
   test "system_admin defaults to false" do
-    refute(User::CreateAdminForm.new.system_admin?)
+    refute(User::AdminInvitationForm.new.system_admin?)
   end
 
   test "system_admin defaults to true if there are no catalogs" do
-    User::CreateAdminForm.any_instance.stubs(:catalog_choices => [])
-    assert(User::CreateAdminForm.new.system_admin?)
+    User::AdminInvitationForm.any_instance.stubs(:catalog_choices => [])
+    assert(User::AdminInvitationForm.new.system_admin?)
   end
 
   test "#catalog_choices" do
     assert_equal(
       Catalog.active.sorted,
-      User::CreateAdminForm.new.catalog_choices
+      User::AdminInvitationForm.new.catalog_choices
     )
   end
 
@@ -61,7 +61,7 @@ class User::CreateAdminFormTest < ActiveSupport::TestCase
   private
 
   def create_form!(attrs={})
-    form = User::CreateAdminForm.create!(
+    form = User::AdminInvitationForm.create!(
       attrs.reverse_merge(
         :email => "create-form@example.com",
         :primary_language => "en",

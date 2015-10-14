@@ -1,6 +1,6 @@
 require "test_helper"
 
-class User::CreateAdminFormPolicyTest < ActiveSupport::TestCase
+class User::AdminInvitationFormPolicyTest < ActiveSupport::TestCase
   test "#new? allows only system admins" do
     record = users(:one)
     assert(policy(users(:system_admin), record).new?)
@@ -20,6 +20,6 @@ class User::CreateAdminFormPolicyTest < ActiveSupport::TestCase
   private
 
   def policy(user, record=nil)
-    User::CreateAdminFormPolicy.new(user, record)
+    User::AdminInvitationFormPolicy.new(user, record)
   end
 end
