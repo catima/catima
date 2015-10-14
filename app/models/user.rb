@@ -38,6 +38,8 @@ class User < ActiveRecord::Base
     order(:email => "ASC")
   end
 
+  # TODO: refactor these methods into separate role-checker helper class?
+
   def catalog_role_at_least?(catalog, role_requirement)
     # Authenticated users are always considered at least "user" level.
     return true if role_requirement == "user"
