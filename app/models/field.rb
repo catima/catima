@@ -25,6 +25,10 @@
 #
 
 class Field < ActiveRecord::Base
+  TYPES = {
+    "text" => "Field::Text"
+  }.freeze
+
   include HasSlug
 
   belongs_to :item_type
@@ -39,6 +43,10 @@ class Field < ActiveRecord::Base
 
   def self.sorted
     order("fields.position ASC, LOWER(fields.name) ASC")
+  end
+
+  def self.policy_class
+    FieldPolicy
   end
 
   def type_name

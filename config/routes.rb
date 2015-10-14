@@ -52,7 +52,7 @@ Rails.application.routes.draw do
               :param => :slug,
               :path => "item-types",
               :except => [:index, :show] do
-      resources :fields, :only => :index
+      resources :fields, :except => :show
     end
     resources :users
   end

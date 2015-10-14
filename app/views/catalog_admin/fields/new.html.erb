@@ -1,0 +1,36 @@
+<% provide(:title, "New #{@field.type_name.downcase} field") %>
+
+<%= bootstrap_form_for(
+      @field,
+      :url => catalog_admin_item_type_fields_path(catalog, @item_type)
+      ) do |f| %>
+
+  <%= f.text_field(:name, :autofocus => true) %>
+  <%= f.text_field(:name_plural, :label => "Name (plural)") %>
+  <%= f.text_field(:slug, :label => "Slug (singular)", :help => slug_help_text) %>
+  <%= f.text_area(:comment, :label => "Comment (optional)") %>
+
+  <hr>
+  <h4>Data entry options</h4>
+
+  <%= f.form_group(:unique) do %>
+    <%= f.check_box(
+          :unique,
+          :label => "Must be unique (among all #{@item_type.name_plural})") %>
+  <% end %>
+
+  <%# TODO: this section will be type-specific, in its own partial %>
+  <%= f.text_field(:default_value, :label => "Default value (optional)") %>
+  <%= f.number_field(:minimum, :label => "Minimum length (optional)") %>
+  <%= f.number_field(:maximum, :label => "Maximum length (optional)") %>
+
+  <%= f.number_field(:position, :label => "Field position") %>
+
+  <hr>
+
+  <%= f.primary("Create field") %>
+  <%= link_to(
+        "Cancel",
+        catalog_admin_item_type_fields_path, :class => "btn btn-link") %>
+
+<% end %>

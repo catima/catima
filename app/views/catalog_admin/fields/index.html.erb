@@ -6,7 +6,26 @@
 <% provide(:actions) do %>
   <%= link_to(
         "Edit name and slug",
-        edit_catalog_admin_item_type_path(catalog, @item_type)) %>
+        edit_catalog_admin_item_type_path(catalog, @item_type),
+        :class => "btn btn-xs btn-text") %>
+
+  <span class="dropdown">
+    <button class="btn btn-xs btn-default dropdown-toggle" type="button" id="add-field-dropdown" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+      <%= fa_icon(:"plus-square", :text => "Add…") %>
+      <span class="caret"></span>
+    </button>
+    <ul class="dropdown-menu" aria-labelledby="add-field-dropdown">
+      <li>
+        <%= link_to(
+              "Text field",
+              new_catalog_admin_item_type_field_path(
+                catalog,
+                @item_type,
+                :type => "text"
+              )) %>
+      </li>
+    </ul>
+  </span>
 <% end %>
 
 <table class="table">
