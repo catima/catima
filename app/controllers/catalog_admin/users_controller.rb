@@ -1,14 +1,15 @@
 class CatalogAdmin::UsersController < CatalogAdmin::BaseController
-  layout "catalog_admin/setup", :only => :index
+  layout "catalog_admin/setup/form"
 
   def index
     authorize(User)
     @users = policy_scope(User).sorted
+    render("index", :layout => "catalog_admin/setup")
   end
 
   def new
     build_user
-    # authorize(@user)
+    authorize(@user)
   end
 
   def create

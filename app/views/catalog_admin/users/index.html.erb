@@ -1,5 +1,11 @@
 <% provide(:title, "Users") %>
 
+<% provide(:actions) do %>
+  <%= link_to(new_catalog_admin_user_path) do %>
+    <%= fa_icon(:"user-plus", :text => "New user") %>
+  <% end %>
+<% end %>
+
 <table class="table">
   <thead>
     <tr>
