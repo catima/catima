@@ -15,6 +15,7 @@ class ItemType < ActiveRecord::Base
   include HasSlug
 
   belongs_to :catalog
+  has_many :fields
 
   validates_presence_of :catalog
   validates_presence_of :name

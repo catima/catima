@@ -9,6 +9,25 @@
         edit_catalog_admin_item_type_path(catalog, @item_type)) %>
 <% end %>
 
-<p>
-  TODO: fields go here.
-</p>
+<table class="table">
+  <thead>
+    <tr>
+      <th style="width: 1em">Position</th>
+      <th>Name</th>
+      <th>Type</th>
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+    <% @fields.each do |field| %>
+      <tr>
+        <td><%= field.position %></td>
+        <td><%= field.name %></td>
+        <td><%= field.type_name %></td>
+        <td style="text-align: right">
+          TODO
+        </td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>

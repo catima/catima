@@ -40,4 +40,8 @@ class Field < ActiveRecord::Base
   def self.sorted
     order("fields.position ASC, LOWER(fields.name) ASC")
   end
+
+  def type_name
+    type.gsub(/Field::/, "")
+  end
 end

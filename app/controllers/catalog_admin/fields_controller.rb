@@ -4,6 +4,7 @@ class CatalogAdmin::FieldsController < CatalogAdmin::BaseController
 
   def index
     authorize(@item_type, :show?)
+    @fields = @item_type.fields.sorted
   end
 
   private
