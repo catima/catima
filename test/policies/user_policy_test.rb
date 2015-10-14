@@ -97,13 +97,13 @@ class UserPolicyTest < ActiveSupport::TestCase
     ActionController::Parameters.new(
       :user => {
         :email => "changing-email@example.com",
-        :catalog_permissions_attributes => [
-          {
+        :catalog_permissions_attributes => {
+          "0" => {
             :id => perm.id,
             :catalog_id => perm.catalog_id,
             :role => role
           }
-        ]
+        }
       })
   end
 end
