@@ -51,7 +51,7 @@ class CatalogAdmin::ItemTypesController < CatalogAdmin::BaseController
   def after_create_path
     case params[:commit]
     when /another/i then new_catalog_admin_item_type_path
-    else catalog_admin_dashboard_path
+    else catalog_admin_item_type_fields_path(catalog, @item_type)
     end
   end
 
