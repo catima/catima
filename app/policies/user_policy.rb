@@ -18,7 +18,6 @@ class UserPolicy
     user.system_admin?
   end
 
-  # TODO: test
   def edit_in_catalog?(catalog)
     return false unless edit?
     !record.admin_catalog_ids.include?(catalog.id)
