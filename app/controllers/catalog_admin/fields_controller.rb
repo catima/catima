@@ -10,12 +10,12 @@ class CatalogAdmin::FieldsController < CatalogAdmin::BaseController
 
   def new
     build_field
-    # TODO: authorize(@field)
+    authorize(@field)
   end
 
   def create
     build_field
-    # TODO: authorize(@field)
+    authorize(@field)
     if @field.update(field_params)
       redirect_to({ :action => "index" }, :notice => created_message)
     else
