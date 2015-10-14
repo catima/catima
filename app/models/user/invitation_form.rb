@@ -50,7 +50,6 @@ class User::InvitationForm < ActiveType::Record[User]
 
   def generate_token_and_deliver_invitation
     token = set_reset_password_token
-    # TODO
-    # InvitationsMailer.user(self, token).deliver_later
+    InvitationsMailer.user(self, token).deliver_later
   end
 end

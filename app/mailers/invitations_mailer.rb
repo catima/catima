@@ -18,4 +18,8 @@ class InvitationsMailer < ApplicationMailer
       :template_name => type
     )
   end
+
+  def user(invited_user, token)
+    # TODO
+  end
 end
