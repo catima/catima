@@ -28,6 +28,7 @@
 
 class Field < ActiveRecord::Base
   TYPES = {
+    "int" => "Field::Int",
     "text" => "Field::Text"
   }.freeze
 
@@ -52,6 +53,7 @@ class Field < ActiveRecord::Base
   validates_presence_of :item_type
   validates_presence_of :name
   validates_presence_of :name_plural
+  validate :default_value_passes_field_validations
   validates_slug :scope => :item_type_id
 
   after_save :remove_primary_from_other_fields, :if => :primary?
@@ -89,6 +91,18 @@ class Field < ActiveRecord::Base
   end
 
   private
+
+  # This can eventually be used to define validation rules for the dynamically-
+  # generated Item class.
+  def define_validators(field, attr)
+    []
+  end
+
+  def default_value_passes_field_validations
+    define_validators(self, :default_value).each do |validator|
+      validator.validate(self)
+    end
+  end
 
   def remove_primary_from_other_fields
     item_type.fields.where("fields.id != ?", id).update_all(:primary => false)

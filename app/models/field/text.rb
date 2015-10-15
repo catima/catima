@@ -37,25 +37,14 @@ class Field::Text < ::Field
                             :greater_than => 0,
                             :allow_blank => true
 
-  # TODO: move this to superclass?
-  validate :default_value_passes_field_validations
-
-  # This can eventually be used to define validation rules for the dynamically-
-  # generated Item class.
-  def define_validators(field, attr)
-    [length_validator(field, attr)].compact
-  end
-
   def custom_permitted_attributes
     %i(maximum minimum)
   end
 
   private
 
-  def default_value_passes_field_validations
-    define_validators(self, :default_value).each do |validator|
-      validator.validate(self)
-    end
+  def define_validators(field, attr)
+    [length_validator(field, attr)].compact
   end
 
   def length_validator(field, attr)
