@@ -8,4 +8,10 @@ module CatalogAdmin::FieldsHelper
       :hide_label => true
     )
   end
+
+  def render_catalog_admin_fields_option_inputs(form)
+    model_name = form.object.type_name.underscore
+    partial = "catalog_admin/fields/#{model_name}_option_inputs"
+    render(partial, :f => form)
+  end
 end

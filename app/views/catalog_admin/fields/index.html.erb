@@ -15,15 +15,17 @@
       <span class="caret"></span>
     </button>
     <ul class="dropdown-menu" aria-labelledby="add-field-dropdown">
-      <li>
-        <%= link_to(
-              "Text field",
-              new_catalog_admin_item_type_field_path(
-                catalog,
-                @item_type,
-                :type => "text"
-              )) %>
-      </li>
+      <% Field.type_choices.each do |key, label| %>
+        <li>
+          <%= link_to(
+                "#{label} field",
+                new_catalog_admin_item_type_field_path(
+                  catalog,
+                  @item_type,
+                  :type => key
+                )) %>
+        </li>
+      <% end %>
     </ul>
   </span>
 <% end %>

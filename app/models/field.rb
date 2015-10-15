@@ -66,6 +66,12 @@ class Field < ActiveRecord::Base
     FieldPolicy
   end
 
+  def self.type_choices
+    Field::TYPES.map do |key, class_name|
+      [key, class_name.constantize.new.type_name]
+    end
+  end
+
   def type_name
     type.gsub(/Field::/, "")
   end
