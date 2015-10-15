@@ -33,6 +33,9 @@ en:
         log_in: "Log in"
         sign_up: "Sign up"
         forgot_password: "Forgot your password?"
+  errors:
+    messages:
+      invalid_email: is not a valid email address
   invitations_mailer:
     catalog_admin:
       subject: "Your administrator invitation for %{catalog}"

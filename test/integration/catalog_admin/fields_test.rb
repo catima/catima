@@ -27,4 +27,55 @@ class CatalogAdmin::FieldsTest < ActionDispatch::IntegrationTest
     assert(field.required?)
     refute(field.multiple?)
   end
+
+  test "add an int field" do
+    log_in_as("two-admin@example.com", "password")
+    visit("/two/admin/item-types/authors/fields")
+    click_on("Int field")
+    fill_in("Name", :with => "Test")
+    fill_in("Name (plural)", :with => "Tests")
+    fill_in("Slug (singular)", :with => "test")
+    fill_in("Minimum value (optional)", :with => 3)
+    fill_in("Maximum value (optional)", :with => 50)
+
+    assert_difference("item_types(:two_author).fields.count") do
+      click_on("Create field")
+    end
+
+    field = item_types(:two_author).fields.where(:slug => "test").first!
+    assert_equal(3, field.minimum.to_i)
+    assert_equal(50, field.maximum.to_i)
+  end
+
+  test "add a decimal field" do
+    log_in_as("two-admin@example.com", "password")
+    visit("/two/admin/item-types/authors/fields")
+    click_on("Decimal field")
+    fill_in("Name", :with => "Test")
+    fill_in("Name (plural)", :with => "Tests")
+    fill_in("Slug (singular)", :with => "test")
+    fill_in("Minimum value (optional)", :with => "1.25")
+    fill_in("Maximum value (optional)", :with => "8.75")
+
+    assert_difference("item_types(:two_author).fields.count") do
+      click_on("Create field")
+    end
+
+    field = item_types(:two_author).fields.where(:slug => "test").first!
+    assert_equal("1.25", field.minimum)
+    assert_equal("8.75", field.maximum)
+  end
+
+  test "add an email field" do
+    log_in_as("two-admin@example.com", "password")
+    visit("/two/admin/item-types/authors/fields")
+    click_on("Email field")
+    fill_in("Name", :with => "Test")
+    fill_in("Name (plural)", :with => "Tests")
+    fill_in("Slug (singular)", :with => "test")
+
+    assert_difference("item_types(:two_author).fields.count") do
+      click_on("Create field")
+    end
+  end
 end
