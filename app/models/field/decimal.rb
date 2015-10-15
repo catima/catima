@@ -26,41 +26,30 @@
 #  updated_at            :datetime         not null
 #
 
-# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+class Field::Decimal < ::Field
+  store_accessor :options, :maximum
+  store_accessor :options, :minimum
 
-one_title:
-  type: "Field::Text"
-  name: Title
-  name_plural: Titles
-  slug: title
-  item_type: one
-  primary: true
+  # TODO: validate minimum is less than maximum?
 
-one_summary:
-  type: "Field::Text"
-  name: Summary
-  name_plural: Summaries
-  slug: summary
-  item_type: one
+  validates_numericality_of :maximum, :minimum, :allow_blank => true
 
-one_author_name:
-  type: "Field::Text"
-  name: Name
-  name_plural: Names
-  slug: name
-  item_type: one_author
-  primary: true
+  def custom_permitted_attributes
+    %i(maximum minimum)
+  end
 
-one_age:
-  type: "Field::Int"
-  name: Age
-  name_plural: Ages
-  slug: age
-  item_type: one_author
+  private
 
-one_price:
-  type: "Field::Decimal"
-  name: Price
-  name_plural: Prices
-  slug: price
-  item_type: one_author
+  def define_validators(field, attr)
+    [numericality_validator(field, attr)]
+  end
+
+  def numericality_validator(field, attr)
+    opts = { :attributes => attr, :allow_blank => true }
+    max = field.maximum
+    min = field.minimum
+    opts[:less_than_or_equal_to] = max.to_i unless max.blank?
+    opts[:greater_than_or_equal_to] = min.to_i unless min.blank?
+    ActiveModel::Validations::NumericalityValidator.new(opts)
+  end
+end

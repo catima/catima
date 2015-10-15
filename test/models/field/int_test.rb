@@ -3,6 +3,7 @@ require "test_helper"
 class Field::IntTest < ActiveSupport::TestCase
   should validate_numericality_of(:maximum).only_integer.allow_nil
   should validate_numericality_of(:minimum).only_integer.allow_nil
+  should validate_numericality_of(:default_value).only_integer.allow_nil
 
   test "default_value is validated against minimum and maximum" do
     int_field = fields(:one_age)
@@ -16,19 +17,6 @@ class Field::IntTest < ActiveSupport::TestCase
     refute(int_field.valid?)
 
     int_field.default_value = 29
-    assert(int_field.valid?)
-  end
-
-  test "default_value is validated to be an integer" do
-    int_field = fields(:one_age)
-
-    int_field.default_value = "no"
-    refute(int_field.valid?)
-
-    int_field.default_value = "1.25"
-    refute(int_field.valid?)
-
-    int_field.default_value = 1
     assert(int_field.valid?)
   end
 end

@@ -28,8 +28,9 @@
 
 class Field < ActiveRecord::Base
   TYPES = {
+    "text" => "Field::Text",
     "int" => "Field::Int",
-    "text" => "Field::Text"
+    "decimal" => "Field::Decimal"
   }.freeze
 
   STYLE_CHOICES = {
