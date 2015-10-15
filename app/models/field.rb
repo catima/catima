@@ -31,6 +31,7 @@ class Field < ActiveRecord::Base
     "text" => "Field::Text",
     "int" => "Field::Int",
     "decimal" => "Field::Decimal",
+    "file" => "Field::File",
     "email" => "Field::Email",
     "url" => "Field::URL"
   }.freeze
