@@ -105,4 +105,18 @@ class CatalogAdmin::FieldsTest < ActionDispatch::IntegrationTest
       click_on("Create field")
     end
   end
+
+  test "add a reference field" do
+    log_in_as("two-admin@example.com", "password")
+    visit("/two/admin/item-types/authors/fields")
+    click_on("Reference field")
+    fill_in("Name", :with => "Test")
+    fill_in("Name (plural)", :with => "Tests")
+    fill_in("Slug (singular)", :with => "test")
+    select("Two", :from => "Reference")
+
+    assert_difference("item_types(:two_author).fields.count") do
+      click_on("Create field")
+    end
+  end
 end

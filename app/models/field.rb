@@ -33,7 +33,8 @@ class Field < ActiveRecord::Base
     "decimal" => "Field::Decimal",
     "file" => "Field::File",
     "email" => "Field::Email",
-    "url" => "Field::URL"
+    "url" => "Field::URL",
+    "reference" => "Field::Reference",
   }.freeze
 
   STYLE_CHOICES = {
@@ -50,9 +51,6 @@ class Field < ActiveRecord::Base
   delegate :catalog, :to => :item_type
 
   belongs_to :item_type
-  belongs_to :category_item_type, :class_name => "ItemType"
-  belongs_to :related_item_type, :class_name => "ItemType"
-  belongs_to :choice_set
 
   validates_presence_of :item_type
   validates_presence_of :name

@@ -26,49 +26,23 @@
 #  updated_at            :datetime         not null
 #
 
-# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+class Field::Reference < ::Field
+  belongs_to :related_item_type, :class_name => "ItemType"
 
-one_title:
-  type: "Field::Text"
-  name: Title
-  name_plural: Titles
-  slug: title
-  item_type: one
-  primary: true
+  validates_presence_of :related_item_type
+  validates_inclusion_of :related_item_type,
+                         :in => :related_item_type_choices,
+                         :allow_nil => true
 
-one_summary:
-  type: "Field::Text"
-  name: Summary
-  name_plural: Summaries
-  slug: summary
-  item_type: one
+  def type_name
+    super + (related_item_type ? " (#{related_item_type.name})" : "")
+  end
 
-one_author_name:
-  type: "Field::Text"
-  name: Name
-  name_plural: Names
-  slug: name
-  item_type: one_author
-  primary: true
+  def related_item_type_choices
+    catalog.item_types.sorted
+  end
 
-one_age:
-  type: "Field::Int"
-  name: Age
-  name_plural: Ages
-  slug: age
-  item_type: one_author
-
-one_price:
-  type: "Field::Decimal"
-  name: Price
-  name_plural: Prices
-  slug: price
-  item_type: one_author
-
-one_parent:
-  type: "Field::Reference"
-  name: Parent
-  name_plural: Parents
-  slug: parent
-  item_type: one_author
-  related_item_type: one_author
+  def custom_permitted_attributes
+    %i(related_item_type_id)
+  end
+end
