@@ -43,7 +43,10 @@
     <% @fields.each do |field| %>
       <tr>
         <td><%= field.position %></td>
-        <td><%= field.name %></td>
+        <td>
+          <%= field.name %>
+          <%= field_primary_badge(field) %>
+        </td>
         <td><%= field.type_name %></td>
         <td style="text-align: right">
           TODO

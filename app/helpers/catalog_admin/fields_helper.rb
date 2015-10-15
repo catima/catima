@@ -14,4 +14,9 @@ module CatalogAdmin::FieldsHelper
     partial = "catalog_admin/fields/#{model_name}_option_inputs"
     render(partial, :f => form)
   end
+
+  def field_primary_badge(field)
+    return unless field.primary?
+    content_tag(:span, "Primary", :class => "label label-warning")
+  end
 end
