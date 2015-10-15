@@ -15,6 +15,7 @@
 
 class Catalog < ActiveRecord::Base
   include AvailableLocales
+  include HasDeactivation
   include HasSlug
 
   before_validation :strip_empty_language
@@ -27,23 +28,12 @@ class Catalog < ActiveRecord::Base
   validate :other_languages_included_in_available_locales
 
   has_many :catalog_permissions, :dependent => :destroy
+  has_many :choice_sets
   has_many :items
   has_many :item_types
 
-  def self.active
-    where(:deactivated_at => nil)
-  end
-
   def self.sorted
     order("LOWER(catalogs.name) ASC")
-  end
-
-  def active?
-    deactivated_at.nil?
-  end
-
-  def deactivated_at=(date)
-    super(date == "now" ? Time.zone.now : date)
   end
 
   private

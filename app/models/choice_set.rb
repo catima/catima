@@ -11,6 +11,8 @@
 #
 
 class ChoiceSet < ActiveRecord::Base
+  include HasDeactivation
+
   belongs_to :catalog
 
   validates_presence_of :catalog
