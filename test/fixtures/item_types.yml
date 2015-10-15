@@ -18,6 +18,11 @@ one:
   name: One
   slug: one
 
+one_author:
+  catalog: one
+  name: Author
+  slug: authors
+
 two:
   catalog: two
   name: Two

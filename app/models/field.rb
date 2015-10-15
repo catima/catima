@@ -54,6 +54,8 @@ class Field < ActiveRecord::Base
   validates_presence_of :name_plural
   validates_slug :scope => :item_type_id
 
+  after_save :remove_primary_from_other_fields, :if => :primary?
+
   def self.sorted
     order("fields.position ASC, LOWER(fields.name) ASC")
   end
@@ -84,5 +86,11 @@ class Field < ActiveRecord::Base
     key << "ordered" if multiple? && ordered?
     key << "required" if required?
     key.join("-")
+  end
+
+  private
+
+  def remove_primary_from_other_fields
+    item_type.fields.where("fields.id != ?", id).update_all(:primary => false)
   end
 end
