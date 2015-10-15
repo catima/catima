@@ -36,6 +36,7 @@ en:
   errors:
     messages:
       invalid_email: is not a valid email address
+      invalid_url: is an invalid or incomplete URL
   invitations_mailer:
     catalog_admin:
       subject: "Your administrator invitation for %{catalog}"
@@ -51,6 +52,9 @@ en:
         register: "Register"
         my_profile: "My profile"
   helpers:
+    help:
+      field/url:
+        default_value: A full URL, including the http part
     label:
       catalog:
         other_languages: Other supported languages

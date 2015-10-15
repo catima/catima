@@ -31,7 +31,8 @@ class Field < ActiveRecord::Base
     "text" => "Field::Text",
     "int" => "Field::Int",
     "decimal" => "Field::Decimal",
-    "email" => "Field::Email"
+    "email" => "Field::Email",
+    "url" => "Field::URL"
   }.freeze
 
   STYLE_CHOICES = {

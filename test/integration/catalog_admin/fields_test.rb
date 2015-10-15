@@ -78,4 +78,17 @@ class CatalogAdmin::FieldsTest < ActionDispatch::IntegrationTest
       click_on("Create field")
     end
   end
+
+  test "add a URL field" do
+    log_in_as("two-admin@example.com", "password")
+    visit("/two/admin/item-types/authors/fields")
+    click_on("URL field")
+    fill_in("Name", :with => "Test")
+    fill_in("Name (plural)", :with => "Tests")
+    fill_in("Slug (singular)", :with => "test")
+
+    assert_difference("item_types(:two_author).fields.count") do
+      click_on("Create field")
+    end
+  end
 end
