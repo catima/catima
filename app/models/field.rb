@@ -34,6 +34,7 @@ class Field < ActiveRecord::Base
     "file" => "Field::File",
     "email" => "Field::Email",
     "url" => "Field::URL",
+    "choice" => "Field::ChoiceSet",
     "reference" => "Field::Reference",
   }.freeze
 
@@ -76,6 +77,10 @@ class Field < ActiveRecord::Base
 
   def type_name
     type.gsub(/Field::/, "")
+  end
+
+  def partial_name
+    model_name.singular.sub(/^field_/, "")
   end
 
   def custom_permitted_attributes

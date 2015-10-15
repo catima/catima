@@ -26,57 +26,29 @@
 #  updated_at            :datetime         not null
 #
 
-# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+class Field::ChoiceSet < ::Field
+  belongs_to :choice_set, :class_name => "::ChoiceSet"
 
-one_title:
-  type: "Field::Text"
-  name: Title
-  name_plural: Titles
-  slug: title
-  item_type: one
-  primary: true
+  validates_presence_of :choice_set
+  validates_inclusion_of :choice_set,
+                         :in => :choice_set_choices,
+                         :allow_nil => true
 
-one_summary:
-  type: "Field::Text"
-  name: Summary
-  name_plural: Summaries
-  slug: summary
-  item_type: one
+  def type_name
+    "Choice set" + (choice_set ? " (#{choice_set.name})" : "")
+  end
 
-one_author_name:
-  type: "Field::Text"
-  name: Name
-  name_plural: Names
-  slug: name
-  item_type: one_author
-  primary: true
+  def choice_set_choices
+    catalog.choice_sets.active.sorted
+  end
 
-one_age:
-  type: "Field::Int"
-  name: Age
-  name_plural: Ages
-  slug: age
-  item_type: one_author
+  def custom_permitted_attributes
+    %i(choice_set_id)
+  end
 
-one_price:
-  type: "Field::Decimal"
-  name: Price
-  name_plural: Prices
-  slug: price
-  item_type: one_author
+  # private
 
-one_parent:
-  type: "Field::Reference"
-  name: Parent
-  name_plural: Parents
-  slug: parent
-  item_type: one_author
-  related_item_type: one_author
-
-one_language:
-  type: "Field::ChoiceSet"
-  name: Language
-  name_plural: Languages
-  slug: language
-  item_type: one_author
-  choice_set: one_languages
+  # TODO: validate choice belongs to specified ChoiceSet
+  # def define_validators(field, attr)
+  # end
+end

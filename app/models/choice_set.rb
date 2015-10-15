@@ -17,4 +17,8 @@ class ChoiceSet < ActiveRecord::Base
 
   validates_presence_of :catalog
   validates_presence_of :name
+
+  def self.sorted
+    order("LOWER(choice_sets.name)")
+  end
 end

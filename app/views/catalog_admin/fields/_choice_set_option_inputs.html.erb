@@ -1,0 +1,6 @@
+<%= f.collection_select(
+      :choice_set_id,
+      f.object.choice_set_choices,
+      :id,
+      :name,
+      :label => "Choice set") %>

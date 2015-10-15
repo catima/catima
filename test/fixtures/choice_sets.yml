@@ -12,10 +12,10 @@
 
 # Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
 
-one:
+one_languages:
   catalog: one
-  name: MyString
+  name: Languages
 
-two:
+two_languages:
   catalog: two
-  name: MyString
+  name: Languages
