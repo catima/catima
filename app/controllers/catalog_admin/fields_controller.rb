@@ -43,6 +43,8 @@ class CatalogAdmin::FieldsController < CatalogAdmin::BaseController
       :unique,
       :default_value,
       :position,
+      :primary,
+      :display_in_list,
       *@field.custom_permitted_attributes
     )
   end
