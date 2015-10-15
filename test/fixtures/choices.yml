@@ -1,0 +1,23 @@
+# == Schema Information
+#
+# Table name: choices
+#
+#  choice_set_id :integer
+#  created_at    :datetime         not null
+#  id            :integer          not null, primary key
+#  long_name     :text
+#  short_name    :string
+#  updated_at    :datetime         not null
+#
+
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one_english:
+  choice_set: one_languages
+  long_name: English
+  short_name: Eng
+
+two_english:
+  choice_set: two_languages
+  long_name: English
+  short_name: Eng
