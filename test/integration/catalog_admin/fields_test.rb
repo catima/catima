@@ -9,7 +9,7 @@ class CatalogAdmin::FieldsTest < ActionDispatch::IntegrationTest
     fill_in("Name (plural)", :with => "Birthplaces")
     fill_in("Slug (singular)", :with => "birthplace")
     check("Use this as the primary field for Authors")
-    select("Single value – required", :from => "field_text[style]")
+    select("Single value – required", :from => "field[style]")
     fill_in("Minimum length (optional)", :with => 3)
     fill_in("Maximum length (optional)", :with => 50)
 

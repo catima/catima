@@ -49,6 +49,9 @@ class Field < ActiveRecord::Base
   }.freeze
 
   include HasSlug
+  include RankedModel
+
+  ranks :row_order, :class_name => "Field", :with_same => :item_type_id
 
   delegate :catalog, :to => :item_type
 
@@ -63,7 +66,7 @@ class Field < ActiveRecord::Base
   after_save :remove_primary_from_other_fields, :if => :primary?
 
   def self.sorted
-    order("fields.position ASC, LOWER(fields.name) ASC")
+    rank(:row_order)
   end
 
   def self.policy_class

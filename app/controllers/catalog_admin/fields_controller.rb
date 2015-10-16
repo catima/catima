@@ -23,6 +23,22 @@ class CatalogAdmin::FieldsController < CatalogAdmin::BaseController
     end
   end
 
+  def edit
+    find_field
+    authorize(@field)
+  end
+
+  def update
+    find_field
+    authorize(@field)
+    if @field.update(field_params)
+      # TODO: support AJAX
+      redirect_to({ :action => "index" }, :notice => updated_message)
+    else
+      render("edit")
+    end
+  end
+
   private
 
   def build_field
@@ -33,8 +49,12 @@ class CatalogAdmin::FieldsController < CatalogAdmin::BaseController
     Field::TYPES.fetch(params[:type], "Field::Text").constantize
   end
 
+  def find_field
+    @field = @item_type.fields.where(:slug => params[:slug]).first!
+  end
+
   def field_params
-    params.require(@field.model_name.param_key).permit(
+    params.require(:field).permit(
       :name,
       :name_plural,
       :slug,
@@ -42,9 +62,9 @@ class CatalogAdmin::FieldsController < CatalogAdmin::BaseController
       :style,
       :unique,
       :default_value,
-      :position,
       :primary,
       :display_in_list,
+      :row_order_position,
       *@field.custom_permitted_attributes
     )
   end
@@ -56,5 +76,9 @@ class CatalogAdmin::FieldsController < CatalogAdmin::BaseController
 
   def created_message
     "The “#{@field.name}” field has been created."
+  end
+
+  def updated_message
+    "The “#{@field.name}” field has been saved."
   end
 end

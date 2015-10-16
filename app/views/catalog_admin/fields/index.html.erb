@@ -33,16 +33,20 @@
 <table class="table">
   <thead>
     <tr>
-      <th style="width: 1em">Position</th>
+      <th style="width: 5em">Position</th>
       <th>Name</th>
       <th>Type</th>
       <th></th>
     </tr>
   </thead>
   <tbody>
-    <% @fields.each do |field| %>
+    <% @fields.each_with_index do |field, index| %>
       <tr>
-        <td><%= field.position %></td>
+        <td>
+          <%= index + 1 %>
+          <%= field_move_up_link(field) %>
+          <%= field_move_down_link(field) %>
+        </td>
         <td>
           <%= field.name %>
           <%= field_primary_badge(field) %>

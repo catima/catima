@@ -2,6 +2,7 @@
 
 <%= bootstrap_form_for(
       @field,
+      :as => :field,
       :url => catalog_admin_item_type_fields_path(catalog, @item_type)
       ) do |f| %>
 
@@ -42,8 +43,6 @@
   <% end %>
 
   <%= render_catalog_admin_fields_option_inputs(f) %>
-
-  <%= f.number_field(:position, :label => "Field position") %>
 
   <hr>
 
