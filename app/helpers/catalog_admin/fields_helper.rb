@@ -21,17 +21,16 @@ module CatalogAdmin::FieldsHelper
   end
 
   def field_move_up_link(field)
-    field_move_link(field, "up", :if_not => :first)
+    field_move_link(field, "up")
   end
 
   def field_move_down_link(field)
-    field_move_link(field, "down", :if_not => :last)
+    field_move_link(field, "down")
   end
 
   private
 
-  def field_move_link(field, direction, if_not:)
-    return if field.item_type.fields.sorted.public_send(if_not) == field
+  def field_move_link(field, direction)
     link_to(
       fa_icon(:"caret-#{direction}"),
       {

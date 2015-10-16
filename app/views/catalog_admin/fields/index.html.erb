@@ -44,8 +44,8 @@
       <tr>
         <td>
           <%= index + 1 %>
-          <%= field_move_up_link(field) %>
-          <%= field_move_down_link(field) %>
+          <%= field_move_up_link(field) unless index == 0 %>
+          <%= field_move_down_link(field) unless index == @fields.size - 1 %>
         </td>
         <td>
           <%= field.name %>
