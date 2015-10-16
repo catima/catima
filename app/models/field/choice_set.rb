@@ -16,7 +16,6 @@
 #  name_plural           :string
 #  options               :json
 #  ordered               :boolean          default(FALSE), not null
-#  position              :integer          default(0), not null
 #  primary               :boolean          default(FALSE), not null
 #  related_item_type_id  :integer
 #  required              :boolean          default(TRUE), not null
