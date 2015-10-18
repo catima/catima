@@ -1,0 +1,69 @@
+---
+en:
+  common:
+    back: "Retour"
+    minimum_characters: "%{length} caractères au minimum"
+  devise:
+    sessions:
+      new:
+        log_in: "Login"
+        submit: "Connexion"
+    passwords:
+      new:
+        title: "Mot de passe oublié?"
+        submit: "Obtenir un nouveau mot de passe"
+      edit:
+        title: "Changez votre mot de passe"
+        submit: "Changer mon mot de passe"
+        new_password: "Nouveau mot de passe"
+        new_password_confirmation: "Confirmer le noveau mot de passe"
+    registrations:
+        new:
+          title: "Enregistrement"
+          submit: "S'enregistrer"
+        edit:
+          title: "Mon profil"
+          submit: "Enregistrer le profil"
+          leave_blank: "Laissez vide si vous ne voulez pas changer le mot de passe"
+          need_to_confirm: "Veuillez saisir votre mot de passe actuel pour confirmer vos modifications"
+          unhappy: "Mécontent?"
+          cancel_account: "Supprimer mon compte"
+    shared:
+      links:
+        log_in: "Login"
+        sign_up: "S'enregistrer"
+        forgot_password: "Oublié le mot de passe?"
+  errors:
+    messages:
+      invalid_email: n'est pas une adresse e-mail valide
+      invalid_url: est une URL invalide ou incomplète
+  invitations_mailer:
+    catalog_admin:
+      subject: "Votre invitation d'administrateur pour %{catalog}"
+    system_admin:
+      subject: "Votre invitation d'administrateur système pour %{host}"
+    user:
+      subject: "Vous êtes invité(e) à joindre %{catalog}"
+  shared:
+    navbar:
+      user_menu:
+        log_in: "Login"
+        log_out: "Logout"
+        register: "Enregistrement"
+        my_profile: "Mon profile"
+  helpers:
+    help:
+      field/url:
+        default_value: Une URL complète, y compris la partie http
+    label:
+      catalog:
+        other_languages: Autres langues supportées
+      item_type:
+        name_plural: "Nom (pluriel)"
+        slug: "Slug (pluriel)"
+      user:
+        email: "E-mail"
+        password: "Mot de passe"
+        password_confirmation: "Confirmation de mot de passe"
+        remember_me: "Rester connecté"
+        primary_language: "Langue préférée"
