@@ -1,17 +1,17 @@
 <p>
-  Here is the account information you’ll need to log in:
+  <%= t(".info_you_will_need") %>
 </p>
 
 <p>
-  <b>URL:</b>
+  <b><%= t(".url") %>:</b>
   <%= link_to(
-        new_user_session_url(:locale => "en"),
-        new_user_session_url(:locale => "en")) %>
+        new_user_session_url(:locale => @user.primary_language),
+        new_user_session_url(:locale => @user.primary_language)) %>
   <br>
-  <b>Email:</b> <%= @user.email %><br>
-  <b>Password:</b>
+  <b><%= t(".email") %>:</b> <%= @user.email %><br>
+  <b><%= t(".password") %>:</b>
   <%= link_to(
-        "Click here to set your password",
+        t(".set_your_password"),
         edit_user_password_url(
           :locale => @user.primary_language,
           :reset_password_token => @token

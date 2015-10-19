@@ -2,6 +2,7 @@
 en:
   common:
     back: "Back"
+    greeting: "Hello"
     minimum_characters: "%{length} characters minimum"
   devise:
     sessions:
@@ -38,11 +39,26 @@ en:
       invalid_email: is not a valid email address
       invalid_url: is an invalid or incomplete URL
   invitations_mailer:
+    account_information:
+      email: "Email"
+      info_you_will_need: "Here is the account information you’ll need to log in:"
+      password: "Password"
+      set_your_password: "Click here to set your password"
+      url: "URL"
     catalog_admin:
+      catalog_admin_role: "As a catalog administrator, you will be able to add and edit records in the catalog, change the design of the catalog, and invite other users to collaborate as editors."
+      invited_to_access_html:
+        one: "%{invited_by} has invited you to be an administrator of the %{catalogs} catalog."
+        other: "%{invited_by} has invited you to be an administrator of the %{catalogs} catalogs."
       subject: "Your administrator invitation for %{catalog}"
     system_admin:
+      invited_to_access_html: "%{invited_by} has invited you to be a system administrator at %{catalog}."
       subject: "Your system administrator invitation for %{host}"
+      system_admin_role: "As a system administrator, you will be able to create catalogs, manage their contents, change application configuration, and send invitations to other administrators."
     user:
+      editor_role: As a catalog editor, you will be able to add and edit records.
+      invited_to_access_html: "%{invited_by} has invited you to access %{catalog}."
+      reviewer_role: As a catalog reviewer, you will be able to add and edit records, as well as approve records to be published to the public.
       subject: "You are invited to join %{catalog}"
   shared:
     navbar:

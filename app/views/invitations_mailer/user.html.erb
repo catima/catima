@@ -1,16 +1,16 @@
-<p>Hello,</p>
+<p><%= t("common.greeting") %>,</p>
 
 <p>
-  <%= @invited_by.email %>
-  has invited you to access
-  <%# TODO: make this hyperlink %>
-  <%= @catalog.name %>.
+  <%# TODO: make catalog a hyperlink %>
+  <%= t(".invited_to_access_html",
+        :invited_by => @invited_by.email,
+        :catalog => @catalog.name) %>
 
   <% case(@role) %>
   <% when "editor" %>
-    As a catalog editor, you will be able to add and edit records.
+    <%= t(".editor_role") %>
   <% when "reviewer" %>
-    As a catalog reviewer, you will be able to add and edit records, as well as approve records to be published to the public.
+    <%= t(".reviewer_role") %>
   <% end %>
 </p>
 

@@ -1,11 +1,11 @@
-<p>Hello,</p>
+<p><%= t("common.greeting") %>,</p>
 
 <p>
-  <%= @invited_by.email %>
-  has invited you to be a system administrator at
-  <%= link_to(app_host, root_url) %>.
+  <%= t(".invited_to_access_html",
+        :invited_by => @invited_by.email,
+        :catalog => link_to(app_host, root_url)) %>
 
-  As a system administrator, you will be able to create catalogs, manage their contents, change application configuration, and send invitations to other administrators.
+  <%= t(".system_admin_role") %>
 </p>
 
 <%= render("account_information") %>
