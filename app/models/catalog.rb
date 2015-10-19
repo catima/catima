@@ -44,6 +44,10 @@ class Catalog < ActiveRecord::Base
     [primary_language, other_languages].flatten.compact.uniq
   end
 
+  def items_of_type(item_type)
+    items.merge(item_type.items)
+  end
+
   private
 
   def strip_empty_language

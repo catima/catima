@@ -16,6 +16,7 @@ class ItemType < ActiveRecord::Base
 
   belongs_to :catalog
   has_many :fields
+  has_many :items
 
   validates_presence_of :catalog
   validates_presence_of :name

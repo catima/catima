@@ -5,7 +5,7 @@
   </a>
 
   <ul class="dropdown-menu">
-    <%# Catalog management %>
+    <%# Catalog data entry %>
     <% if admin_menu_item_types.any? %>
       <li class="dropdown-header">
         <%= fa_icon(:book, :text => "Catalog data") %>
@@ -19,6 +19,7 @@
       <% end %>
     <% end %>
 
+    <%# Catalog setup %>
     <% if catalog_admin? %>
       <li role="separator" class="divider"></li>
       <li>

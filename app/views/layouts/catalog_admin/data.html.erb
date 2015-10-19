@@ -1,0 +1,11 @@
+<div class="page-header">
+  <h1><%= fa_icon(:book, :text => "#{catalog.name} Data") %></h1>
+</div>
+
+<div class="row">
+  <div class="col-sm-3">
+    <%= render("catalog_admin/shared/entry_item_types_nav") %>
+  </div>
+</div>
+
+<% parent_layout "catalog_admin" %>

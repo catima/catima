@@ -1,0 +1,7 @@
+<div class="panel panel-default">
+  <ul class="list-group">
+    <% catalog.item_types.sorted.each do |type| %>
+      <%= entry_item_type_nav_link(type) %>
+    <% end %>
+  </ul>
+</div>
