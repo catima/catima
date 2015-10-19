@@ -5,6 +5,12 @@ en:
     greeting: "Hello"
     minimum_characters: "%{length} characters minimum"
   devise:
+    mailer:
+      reset_password_instructions:
+        change_my_password: "Change my password"
+        please_ignore: "If you didn't request this, please ignore this email."
+        requested_a_link: "Someone has requested a link to change your password. You can do this through the link below."
+        wont_change: "Your password won't change until you access the link above and create a new one."
     sessions:
       new:
         log_in: "Log in"
