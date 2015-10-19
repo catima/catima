@@ -14,6 +14,10 @@ class CatalogAdmin::BaseController < ApplicationController
     {}
   end
 
+  def catalog_scoped?
+    true
+  end
+
   def find_and_authorize_catalog
     @catalog = Catalog.where(:slug => params[:catalog_slug]).first!
     authorize(@catalog, :show?)

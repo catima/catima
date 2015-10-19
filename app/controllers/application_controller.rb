@@ -14,6 +14,13 @@ class ApplicationController < ActionController::Base
 
   private
 
+  # Overridden in other controllers to indicate whether the controller is
+  # scoped to a specific catalog.
+  def catalog_scoped?
+    false
+  end
+  helper_method :catalog_scoped?
+
   def set_locale
     if I18n.locale_available?(params[:locale])
       I18n.locale = params[:locale]

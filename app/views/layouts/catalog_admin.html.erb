@@ -28,7 +28,9 @@
       </ul>
       <ul class="nav navbar-nav navbar-right">
         <li>
-          <%= link_to(root_path) do %>
+          <%= link_to(catalog_home_path(
+                        catalog,
+                        :locale => current_user.primary_language)) do %>
             <%= fa_icon(:"sign-out") %>
             Return to site
           <% end %>

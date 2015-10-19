@@ -6,6 +6,13 @@ class CatalogsController < ApplicationController
 
   private
 
+  attr_reader :catalog
+  helper_method :catalog
+
+  def catalog_scoped?
+    true
+  end
+
   def apply_default_locale
     return if @catalog.valid_locale?(params[:locale])
     redirect_to(:locale => @catalog.primary_language)
