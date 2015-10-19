@@ -55,6 +55,9 @@ Rails.application.routes.draw do
       resources :fields, :param => :slug, :except => :show
     end
     resources :users
+
+    # Data entry
+    resources :items, :path => ":item_type_slug"
   end
 
   # ===========================================================================
