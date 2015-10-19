@@ -49,7 +49,7 @@ Rails.application.routes.draw do
   namespace "catalog_admin", :path => ":catalog_slug/admin" do
     get "/" => "dashboard#index", :as => :dashboard
     resources :item_types,
-              :path => "item-types",
+              :path => "_item-types",
               :only => [:new, :create]
 
     resources :item_types,
@@ -63,7 +63,7 @@ Rails.application.routes.draw do
               :except => :show,
               :as => "item_type_fields"
 
-    resources :users
+    resources :users, :path => "_users"
 
     # Data entry
     resources :items, :path => ":item_type_slug"
