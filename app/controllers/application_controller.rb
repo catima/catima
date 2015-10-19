@@ -6,6 +6,12 @@ class ApplicationController < ActionController::Base
 
   before_action :set_locale
 
+  # This is a hook for Devise so that it knows to include the required :locale
+  # parameter in generated login page URLs.
+  def self.default_url_options
+    { :locale => I18n.locale }
+  end
+
   private
 
   def set_locale

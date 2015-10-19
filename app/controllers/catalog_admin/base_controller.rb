@@ -10,6 +10,10 @@ class CatalogAdmin::BaseController < ApplicationController
   attr_reader :catalog
   helper_method :catalog
 
+  def default_url_options
+    {}
+  end
+
   def find_and_authorize_catalog
     @catalog = Catalog.where(:slug => params[:catalog_slug]).first!
     authorize(@catalog, :show?)
