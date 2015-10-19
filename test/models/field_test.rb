@@ -25,4 +25,16 @@ class FieldTest < ActiveSupport::TestCase
     # Field in another item type is not affected
     assert(fields(:one_author_name).primary?)
   end
+
+  test "generates and assigns uuid" do
+    SecureRandom.stubs(:uuid => "ahoy!")
+
+    field = Field::Text.create!(
+      :item_type => item_types(:two_author),
+      :name => "Text",
+      :name_plural => "Texts",
+      :slug => "text"
+    )
+    assert_equal("ahoy!", field.uuid)
+  end
 end

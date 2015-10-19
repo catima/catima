@@ -24,6 +24,7 @@
 #  type                  :string
 #  unique                :boolean          default(FALSE), not null
 #  updated_at            :datetime         not null
+#  uuid                  :string
 #
 
 class Field::Decimal < ::Field

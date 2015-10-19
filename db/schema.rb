@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20151016001005) do
+ActiveRecord::Schema.define(version: 20151019204634) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -89,6 +89,7 @@ ActiveRecord::Schema.define(version: 20151016001005) do
     t.boolean  "primary",               default: false, null: false
     t.boolean  "display_in_list",       default: true,  null: false
     t.integer  "row_order"
+    t.string   "uuid"
   end
 
   add_index "fields", ["category_item_type_id"], name: "index_fields_on_category_item_type_id", using: :btree

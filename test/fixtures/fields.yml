@@ -24,6 +24,7 @@
 #  type                  :string
 #  unique                :boolean          default(FALSE), not null
 #  updated_at            :datetime         not null
+#  uuid                  :string
 #
 
 # Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
@@ -35,6 +36,7 @@ one_title:
   slug: title
   item_type: one
   primary: true
+  uuid: <%= SecureRandom.uuid %>
 
 one_summary:
   type: "Field::Text"
@@ -42,6 +44,7 @@ one_summary:
   name_plural: Summaries
   slug: summary
   item_type: one
+  uuid: <%= SecureRandom.uuid %>
 
 one_author_name:
   type: "Field::Text"
@@ -50,6 +53,7 @@ one_author_name:
   slug: name
   item_type: one_author
   primary: true
+  uuid: <%= SecureRandom.uuid %>
 
 one_age:
   type: "Field::Int"
@@ -57,6 +61,7 @@ one_age:
   name_plural: Ages
   slug: age
   item_type: one_author
+  uuid: <%= SecureRandom.uuid %>
 
 one_price:
   type: "Field::Decimal"
@@ -64,6 +69,7 @@ one_price:
   name_plural: Prices
   slug: price
   item_type: one_author
+  uuid: <%= SecureRandom.uuid %>
 
 one_parent:
   type: "Field::Reference"
@@ -72,6 +78,7 @@ one_parent:
   slug: parent
   item_type: one_author
   related_item_type: one_author
+  uuid: <%= SecureRandom.uuid %>
 
 one_language:
   type: "Field::ChoiceSet"
@@ -80,3 +87,4 @@ one_language:
   slug: language
   item_type: one_author
   choice_set: one_languages
+  uuid: <%= SecureRandom.uuid %>

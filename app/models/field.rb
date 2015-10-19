@@ -24,6 +24,7 @@
 #  type                  :string
 #  unique                :boolean          default(FALSE), not null
 #  updated_at            :datetime         not null
+#  uuid                  :string
 #
 
 class Field < ActiveRecord::Base
@@ -62,6 +63,7 @@ class Field < ActiveRecord::Base
   validate :default_value_passes_field_validations
   validates_slug :scope => :item_type_id
 
+  before_create :assign_uuid
   after_save :remove_primary_from_other_fields, :if => :primary?
 
   def self.sorted
@@ -118,6 +120,10 @@ class Field < ActiveRecord::Base
     define_validators(self, :default_value).each do |validator|
       validator.validate(self)
     end
+  end
+
+  def assign_uuid
+    self.uuid ||= SecureRandom.uuid
   end
 
   def remove_primary_from_other_fields
