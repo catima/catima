@@ -1,5 +1,6 @@
 class CatalogAdmin::BaseController < ApplicationController
   layout "catalog_admin"
+  skip_before_action :set_locale
   before_action :authenticate_user!
   before_action :find_and_authorize_catalog
   after_action :verify_authorized
