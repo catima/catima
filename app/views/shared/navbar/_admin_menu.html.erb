@@ -23,7 +23,7 @@
     <% if catalog_admin? %>
       <li role="separator" class="divider"></li>
       <li>
-        <%= link_to(catalog_admin_dashboard_path(catalog)) do %>
+        <%= link_to(catalog_admin_setup_path(catalog)) do %>
           <%= fa_icon(:wrench, :text => "Catalog setup") %>
         <% end %>
       </li>

@@ -47,7 +47,9 @@ Rails.application.routes.draw do
   # Catalog administration
 
   namespace "catalog_admin", :path => ":catalog_slug/admin" do
-    get "/" => "dashboard#index", :as => :dashboard
+    get "/" => "dashboard#setup", :as => :setup
+    get "/_data" => "dashboard#data", :as => :data
+
     resources :item_types,
               :path => "_item-types",
               :only => [:new, :create]

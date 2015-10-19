@@ -15,7 +15,7 @@
           <%= link_to_if(
                 catalog.active?,
                 "/#{catalog.slug}",
-                catalog_admin_dashboard_path(catalog)) %>
+                catalog_admin_setup_path(catalog)) %>
         </td>
         <td><%= catalog_status_label(catalog) %></td>
         <td style="text-align: right">

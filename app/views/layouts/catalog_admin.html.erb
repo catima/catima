@@ -7,20 +7,22 @@
         <span class="icon-bar"></span>
         <span class="icon-bar"></span>
       </button>
-      <%= link_to(catalog_admin_dashboard_path, :class => "navbar-brand") do %>
+      <span class="navbar-brand">
         <%= catalog.name %> Admin
-      <% end %>
+      </span>
     </div>
     <div class="navbar-collapse collapse">
       <ul class="nav navbar-nav">
         <%= navbar_link_to(
               fa_icon(:book, :text => "Data"),
-              "javascript://",
-              :active_when => { :controller => /items/ }) %>
+              catalog_admin_data_path,
+              :active_when => {
+                :controller => "catalog_admin/items"
+              }) %>
         <% if policy(ItemType).index? %>
           <%= navbar_link_to(
                 fa_icon(:wrench, :text => "Setup"),
-                catalog_admin_dashboard_path,
+                catalog_admin_setup_path,
                 :active_when => {
                   :controller => /dashboard|item_types|choices|fields|users/
                 }) %>
