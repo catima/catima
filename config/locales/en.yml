@@ -4,6 +4,9 @@ en:
     back: "Back"
     greeting: "Hello"
     minimum_characters: "%{length} characters minimum"
+  catalogs:
+    show:
+      welcome: "Welcome to %{catalog}!"
   devise:
     mailer:
       reset_password_instructions:

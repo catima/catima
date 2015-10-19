@@ -56,4 +56,9 @@ Rails.application.routes.draw do
     end
     resources :users
   end
+
+  # ===========================================================================
+  # Catalog viewing (public)
+
+  get ":catalog_slug/(:locale)" => "catalogs#show", :as => "catalog_home"
 end

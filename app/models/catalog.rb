@@ -36,6 +36,14 @@ class Catalog < ActiveRecord::Base
     order("LOWER(catalogs.name) ASC")
   end
 
+  def valid_locale?(locale)
+    valid_locales.include?(locale.to_s)
+  end
+
+  def valid_locales
+    [primary_language, other_languages].flatten.compact.uniq
+  end
+
   private
 
   def strip_empty_language
