@@ -53,15 +53,15 @@ one_author_name:
   slug: name
   item_type: one_author
   primary: true
-  uuid: <%= SecureRandom.uuid %>
+  uuid: one_author_name_uuid
 
-one_age:
+one_author_age:
   type: "Field::Int"
   name: Age
   name_plural: Ages
   slug: age
   item_type: one_author
-  uuid: <%= SecureRandom.uuid %>
+  uuid: one_author_age_uuid
 
 one_price:
   type: "Field::Decimal"

@@ -11,7 +11,7 @@
     <% @items.each do |item| %>
       <tr>
         <% @fields.each do |field| %>
-          <td>TODO</td>
+          <td><%= field_value(item, field) %></td>
         <% end %>
         <td style="text-align: right">
           TODO
