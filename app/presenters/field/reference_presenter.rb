@@ -7,7 +7,7 @@ class Field::ReferencePresenter < FieldPresenter
       related_item_type.sorted_items,
       :id,
       :display_name,
-      input_defaults(options)
+      input_defaults(options).reverse_merge(:include_blank => true)
     )
   end
 
