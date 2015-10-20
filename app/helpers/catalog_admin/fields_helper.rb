@@ -28,8 +28,16 @@ module CatalogAdmin::FieldsHelper
     field_move_link(field, "down")
   end
 
-  def field_input(form, field, method=field.uuid)
-    field_presenter(form.object, field).input(form, method)
+  def field_input(form, field)
+    field_presenter(form.object, field).input(form, field.uuid)
+  end
+
+  def field_default_value_input(form)
+    field_presenter(nil, form.object).input(
+      form,
+      :default_value,
+      :label => "Default value (optional)"
+    )
   end
 
   private

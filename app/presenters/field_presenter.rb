@@ -23,4 +23,10 @@ class FieldPresenter
     item.behaving_as_type.send(field.uuid)
   end
   alias_method :value, :raw_value
+
+  private
+
+  def input_defaults(options)
+    options.reverse_merge(:label => label)
+  end
 end
