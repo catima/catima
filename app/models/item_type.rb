@@ -16,7 +16,7 @@ class ItemType < ActiveRecord::Base
 
   belongs_to :catalog
 
-  has_many :fields
+  has_many :fields, -> { sorted }
   has_many :list_view_fields,
            -> { where(:display_in_list => true).sorted },
            :class_name => "Field"

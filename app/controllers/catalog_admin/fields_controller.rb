@@ -4,7 +4,7 @@ class CatalogAdmin::FieldsController < CatalogAdmin::BaseController
 
   def index
     authorize(@item_type, :show?)
-    @fields = @item_type.fields.sorted
+    @fields = @item_type.fields
     render("index", :layout => "catalog_admin/setup")
   end
 
