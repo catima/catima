@@ -14,6 +14,8 @@
 //= require jquery_ujs
 //= require jquery.turbolinks
 //= require turbolinks
+//= require mousetrap/mousetrap
+//= require mousetrap/plugins/global-bind/mousetrap-global-bind
 //= require_tree .
 
 Turbolinks.enableProgressBar();

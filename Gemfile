@@ -24,6 +24,10 @@ gem "sidekiq"
 gem "sinatra", ">= 1.3.0", :require => false
 gem "turbolinks", ">= 2.5.2"
 
+source "https://rails-assets.org" do
+  gem "rails-assets-mousetrap", "~> 1.5.3"
+end
+
 group :production, :staging do
   gem "unicorn"
   gem "unicorn-worker-killer"

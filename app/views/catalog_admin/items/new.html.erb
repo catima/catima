@@ -9,7 +9,7 @@
   <hr>
 
   <%= f.primary("Create #{@item.item_type.name}") %>
-  <%= f.submit("Create and add another") %>
+  <%= submit_and_add_another(f) %>
 
   <%= link_to(
         "Cancel",
