@@ -29,6 +29,13 @@ class Item < ActiveRecord::Base
                          :in => %w(ready rejected approved),
                          :allow_nil => true
 
+  def self.sorted_by_field(field)
+    sql = []
+    sql << "data->>'#{field.uuid}' ASC" unless field.nil?
+    sql << "created_at DESC"
+    order(sql.join(", "))
+  end
+
   def behaving_as_type
     @behaving_as_type ||= becomes(typed_item_class)
   end

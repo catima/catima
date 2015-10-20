@@ -15,10 +15,12 @@ class ItemType < ActiveRecord::Base
   include HasSlug
 
   belongs_to :catalog
+
   has_many :fields
-  has_many :visible_fields,
+  has_many :list_view_fields,
            -> { where(:display_in_list => true).sorted },
            :class_name => "Field"
+
   has_many :items
 
   validates_presence_of :catalog
@@ -28,5 +30,9 @@ class ItemType < ActiveRecord::Base
 
   def self.sorted
     order("LOWER(item_types.name) ASC")
+  end
+
+  def primary_field
+    fields.where(:primary => true).first
   end
 end

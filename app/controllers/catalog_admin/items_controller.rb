@@ -4,8 +4,8 @@ class CatalogAdmin::ItemsController < CatalogAdmin::BaseController
 
   def index
     # TODO: how to sort?
-    @items = policy_scope(item_scope)
-    @fields = @item_type.visible_fields
+    @items = policy_scope(item_scope).sorted_by_field(@item_type.primary_field)
+    @fields = @item_type.list_view_fields
     render("index", :layout => "catalog_admin/data")
   end
 
