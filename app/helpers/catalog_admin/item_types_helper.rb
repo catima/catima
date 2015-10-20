@@ -22,8 +22,15 @@ module CatalogAdmin::ItemTypesHelper
     klass = "list-group-item"
     klass << " active" if active
 
+    label = [h(item_type.name_plural)]
+    label << content_tag(
+      :span,
+      number_with_delimiter(item_type.items.count),
+      :class => "badge"
+    )
+
     link_to(
-      item_type.name_plural,
+      label.join(" ").html_safe,
       catalog_admin_items_path(item_type.catalog, item_type),
       :class => klass
     )
