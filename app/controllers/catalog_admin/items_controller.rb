@@ -22,7 +22,7 @@ class CatalogAdmin::ItemsController < CatalogAdmin::BaseController
   def create
     build_item
     if @item.update(item_params)
-      redirect_to({ :action => "index" }, :notice => created_message)
+      redirect_to(after_create_path, :notice => created_message)
     else
       render("new")
     end
@@ -53,6 +53,13 @@ class CatalogAdmin::ItemsController < CatalogAdmin::BaseController
 
   def item_params
     params.require(:item).permit(*@item.fields.map(&:uuid))
+  end
+
+  def after_create_path
+    case params[:commit]
+    when /another/i then { :action => "new" }
+    else { :action => "index" }
+    end
   end
 
   def created_message
