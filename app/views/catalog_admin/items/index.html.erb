@@ -1,3 +1,15 @@
+<% provide(:title) do %>
+  <b><%= @item_type.name_plural %></b>
+  (<%= number_with_delimiter(@items.count) %>)
+<% end %>
+
+<% provide(:actions) do %>
+  <%= link_to(
+        fa_icon(:"plus-square", :text => "New #{@item_type.name}"),
+        new_catalog_admin_item_path(catalog, @item_type),
+        :class => "btn btn-xs btn-default") %>
+<% end %>
+
 <table class="table">
   <thead>
     <tr>

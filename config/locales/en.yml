@@ -78,8 +78,7 @@ en:
         my_profile: "My profile"
   helpers:
     help:
-      field/url:
-        default_value: A full URL, including the http part
+      field/url: A full URL, including the http part
     label:
       catalog:
         other_languages: Other supported languages

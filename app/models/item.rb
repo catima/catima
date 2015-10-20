@@ -14,7 +14,7 @@
 #
 
 class Item < ActiveRecord::Base
-  delegate :fields, :to => :item_type
+  delegate :fields, :primary_field, :to => :item_type
 
   belongs_to :catalog
   belongs_to :item_type
@@ -40,6 +40,12 @@ class Item < ActiveRecord::Base
     @behaving_as_type ||= becomes(typed_item_class)
   end
 
+  def display_name
+    field = primary_field || fields.first
+    return to_s if field.nil?
+    behaving_as_type.public_send(field.uuid)
+  end
+
   private
 
   def typed_item_class
@@ -48,6 +54,7 @@ class Item < ActiveRecord::Base
     typed.define_singleton_method(:model_name) { Item.model_name }
     fields.each do |field|
       # TODO: allow field class to override/customize this
+      # TODO: validations!
       typed.send(:store_accessor, :data, field.uuid)
     end
     typed

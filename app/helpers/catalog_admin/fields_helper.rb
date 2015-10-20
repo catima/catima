@@ -28,6 +28,10 @@ module CatalogAdmin::FieldsHelper
     field_move_link(field, "down")
   end
 
+  def field_input(form, field, method=field.uuid)
+    field_presenter(form.object, field).input(form, method)
+  end
+
   private
 
   def field_move_link(field, direction)

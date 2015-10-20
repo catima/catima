@@ -35,4 +35,8 @@ class ItemType < ActiveRecord::Base
   def primary_field
     fields.where(:primary => true).first
   end
+
+  def sorted_items
+    items.sorted_by_field(primary_field)
+  end
 end

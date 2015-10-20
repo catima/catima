@@ -53,8 +53,7 @@ de:
         my_profile: "Mein Profil"
   helpers:
     help:
-      field/url:
-        default_value: Eine komplette URL, inklusive den http-Teil
+      field/url: Eine komplette URL, inklusive den http-Teil
     label:
       catalog:
         other_languages: Andere unterstützte Sprachen

@@ -1,0 +1,17 @@
+<% provide(:title, "New #{@item.item_type.name}") %>
+
+<%= bootstrap_form_for([:catalog_admin, @item]) do |f| %>
+
+  <% @item.fields.each do |field| %>
+    <%= field_input(f, field) %>
+  <% end %>
+
+  <hr>
+
+  <%= f.primary("Create #{@item.item_type.name}") %>
+
+  <%= link_to(
+        "Cancel",
+        catalog_admin_items_path,
+        :class => "btn btn-link") %>
+<% end %>

@@ -1,3 +1,5 @@
 class Field::EmailPresenter < FieldPresenter
-  # TODO
+  def input(form, method)
+    form.email_field(method, :label => label)
+  end
 end

@@ -2,6 +2,8 @@ class CatalogAdmin::ItemsController < CatalogAdmin::BaseController
   before_action :find_item_type
   layout "catalog_admin/data/form"
 
+  # TODO: authorization
+
   def index
     # TODO: how to sort?
     @items = policy_scope(item_scope).sorted_by_field(@item_type.primary_field)
@@ -11,6 +13,19 @@ class CatalogAdmin::ItemsController < CatalogAdmin::BaseController
 
   def show
     find_item
+  end
+
+  def new
+    build_item
+  end
+
+  def create
+    build_item
+    if @item.update(item_params)
+      redirect_to({ :action => "index" }, :notice => created_message)
+    else
+      render("new")
+    end
   end
 
   private
@@ -27,5 +42,20 @@ class CatalogAdmin::ItemsController < CatalogAdmin::BaseController
 
   def find_item
     @item = item_scope.find(params[:id])
+  end
+
+  def build_item
+    @item = @item_type.items.new.tap do |item|
+      item.catalog = catalog
+      item.creator = current_user
+    end.behaving_as_type
+  end
+
+  def item_params
+    params.require(:item).permit(*@item.fields.map(&:uuid))
+  end
+
+  def created_message
+    "#{@item_type.name} has been created."
   end
 end
