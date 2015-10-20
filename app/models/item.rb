@@ -37,7 +37,12 @@ class Item < ActiveRecord::Base
   end
 
   def behaving_as_type
-    @behaving_as_type ||= becomes(typed_item_class)
+    @behaving_as_type ||= begin
+      casted = becomes(typed_item_class)
+      # Clear errors so that it gets recreated pointed to the new casted item
+      casted.instance_variable_set(:@errors, nil)
+      casted
+    end
   end
 
   def display_name
@@ -52,11 +57,7 @@ class Item < ActiveRecord::Base
     typed = Class.new(Item)
     typed.define_singleton_method(:name) { Item.name }
     typed.define_singleton_method(:model_name) { Item.model_name }
-    fields.each do |field|
-      # TODO: allow field class to override/customize this
-      # TODO: validations!
-      typed.send(:store_accessor, :data, field.uuid)
-    end
+    fields.each { |f| f.decorate_item_class(typed) }
     typed
   end
 end

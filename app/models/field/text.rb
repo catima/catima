@@ -44,14 +44,14 @@ class Field::Text < ::Field
 
   private
 
-  def define_validators(field, attr)
-    [length_validator(field, attr)].compact
+  def define_validators(attr)
+    [length_validator(attr)].compact
   end
 
-  def length_validator(field, attr)
+  def length_validator(attr)
     opts = { :attributes => attr, :allow_blank => true }
-    opts[:maximum] = field.maximum.to_i if field.maximum.to_i > 0
-    opts[:minimum] = field.minimum.to_i if field.minimum.to_i > 0
+    opts[:maximum] = maximum.to_i if maximum.to_i > 0
+    opts[:minimum] = minimum.to_i if minimum.to_i > 0
     ActiveModel::Validations::LengthValidator.new(opts) if opts.size > 2
   end
 end

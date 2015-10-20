@@ -108,16 +108,28 @@ class Field < ActiveRecord::Base
     key.join("-")
   end
 
+  # Defines methods and runs class macros on the given item class in order to
+  # add validation rules, accessors, etc. for this field. The class in this
+  # case is an anonymous subclass of Item.
+  def decorate_item_class(klass)
+    klass.send(:store_accessor, :data, uuid)
+
+    validators = define_validators(uuid)
+    klass.send(:validate) do |item|
+      validators.each { |v| v.validate(item) }
+    end
+
+    klass.send(:validates_presence_of, uuid) if required?
+  end
+
   private
 
-  # This can eventually be used to define validation rules for the dynamically-
-  # generated Item class.
-  def define_validators(field, attr)
+  def define_validators(attr)
     []
   end
 
   def default_value_passes_field_validations
-    define_validators(self, :default_value).each do |validator|
+    define_validators(:default_value).each do |validator|
       validator.validate(self)
     end
   end

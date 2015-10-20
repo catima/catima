@@ -30,11 +30,11 @@
 class Field::Email < ::Field
   private
 
-  def define_validators(field, attr)
-    [email_validator(field, attr)]
+  def define_validators(attr)
+    [email_validator(attr)]
   end
 
-  def email_validator(_field, attr)
+  def email_validator(attr)
     ActiveModel::Validations::FormatValidator.new(
       :attributes => attr,
       :allow_blank => true,

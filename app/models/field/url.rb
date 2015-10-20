@@ -30,11 +30,11 @@
 class Field::URL < ::Field
   private
 
-  def define_validators(field, attr)
-    [url_validator(field, attr)]
+  def define_validators(attr)
+    [url_validator(attr)]
   end
 
-  def url_validator(_field, attr)
+  def url_validator(attr)
     ActiveModel::Validations::FormatValidator.new(
       :attributes => attr,
       :allow_blank => true,

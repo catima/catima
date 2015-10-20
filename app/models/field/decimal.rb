@@ -41,16 +41,14 @@ class Field::Decimal < ::Field
 
   private
 
-  def define_validators(field, attr)
-    [numericality_validator(field, attr)]
+  def define_validators(attr)
+    [numericality_validator(attr)]
   end
 
-  def numericality_validator(field, attr)
+  def numericality_validator(attr)
     opts = { :attributes => attr, :allow_blank => true }
-    max = field.maximum
-    min = field.minimum
-    opts[:less_than_or_equal_to] = max.to_i unless max.blank?
-    opts[:greater_than_or_equal_to] = min.to_i unless min.blank?
+    opts[:less_than_or_equal_to] = maximum.to_i unless maximum.blank?
+    opts[:greater_than_or_equal_to] = minimum.to_i unless minimum.blank?
     ActiveModel::Validations::NumericalityValidator.new(opts)
   end
 end
