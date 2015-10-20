@@ -1,1 +1,22 @@
-<p>TODO</p>
+<table class="table">
+  <thead>
+    <tr>
+      <% @fields.each do |field| %>
+        <th><%= field.name %></th>
+      <% end %>
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+    <% @items.each do |item| %>
+      <tr>
+        <% @fields.each do |field| %>
+          <td>TODO</td>
+        <% end %>
+        <td style="text-align: right">
+          TODO
+        </td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>

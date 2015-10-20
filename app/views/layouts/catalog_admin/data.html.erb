@@ -6,6 +6,17 @@
   <div class="col-sm-3">
     <%= render("catalog_admin/shared/entry_item_types_nav") %>
   </div>
+  <div class="<%= content_for(:catalog_admin_width) || 'col-sm-9' %>">
+    <div class="panel panel-default">
+      <div class="panel-heading">
+        <% if content_for?(:actions) %>
+          <span class="pull-right"><%= content_for(:actions) %></span>
+        <% end %>
+        <%= content_for(:title) %>
+      </div>
+      <%= yield %>
+    </div>
+  </div>
 </div>
 
 <% parent_layout "catalog_admin" %>

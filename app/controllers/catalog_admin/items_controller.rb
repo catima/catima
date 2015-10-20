@@ -5,6 +5,7 @@ class CatalogAdmin::ItemsController < CatalogAdmin::BaseController
   def index
     # TODO: how to sort?
     @items = policy_scope(item_scope)
+    @fields = @item_type.visible_fields
     render("index", :layout => "catalog_admin/data")
   end
 
