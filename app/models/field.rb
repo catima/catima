@@ -134,8 +134,12 @@ class Field < ActiveRecord::Base
     end
   end
 
+  # Used as the key in the `data` JSON to store the value for this field.
+  # For compatibility with third-party gems (e.g. refile), it has to be valid
+  # as a Ruby instance variable name (letters, numbers, underscores; can't
+  # start with a number).
   def assign_uuid
-    self.uuid ||= SecureRandom.uuid
+    self.uuid ||= "_#{SecureRandom.uuid.tr('-', '_')}"
   end
 
   def remove_primary_from_other_fields

@@ -27,7 +27,7 @@ class FieldTest < ActiveSupport::TestCase
   end
 
   test "generates and assigns uuid" do
-    SecureRandom.stubs(:uuid => "ahoy!")
+    SecureRandom.stubs(:uuid => "1234-abcd")
 
     field = Field::Text.create!(
       :item_type => item_types(:two_author),
@@ -35,6 +35,6 @@ class FieldTest < ActiveSupport::TestCase
       :name_plural => "Texts",
       :slug => "text"
     )
-    assert_equal("ahoy!", field.uuid)
+    assert_equal("_1234_abcd", field.uuid)
   end
 end
