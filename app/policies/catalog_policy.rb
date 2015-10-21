@@ -18,12 +18,12 @@ class CatalogPolicy
   alias_method :update?, :user_is_system_admin?
 
   def show?
-    user_is_system_admin? || user_is_catalog_admin?
+    user_is_system_admin? || user_is_at_least_an_editor?
   end
 
   private
 
-  def user_is_catalog_admin?
-    user.admin_catalog_ids.include?(catalog.id)
+  def user_is_at_least_an_editor?
+    user.editor_catalog_ids.include?(catalog.id)
   end
 end

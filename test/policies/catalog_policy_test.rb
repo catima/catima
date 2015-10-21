@@ -7,9 +7,10 @@ class CatalogPolicyTest < ActiveSupport::TestCase
     assert(policy(users(:system_admin)).edit?)
     assert(policy(users(:system_admin)).new?)
     assert(policy(users(:system_admin)).update?)
+    assert(policy(users(:system_admin)).show?)
   end
 
-  test "other users can do nothing" do
+  test "other users cannot manage" do
     refute(policy(users(:one_admin), nil).index?)
     refute(policy(users(:one_admin)).create?)
     refute(policy(users(:one_admin)).edit?)
@@ -21,6 +22,20 @@ class CatalogPolicyTest < ActiveSupport::TestCase
     refute(policy(Guest.new).edit?)
     refute(policy(Guest.new).new?)
     refute(policy(Guest.new).update?)
+  end
+
+  test "guests and regular users can't show" do
+    refute(policy(users(:one)).show?)
+    refute(policy(users(:two)).show?)
+    refute(policy(users(:two_editor)).show?)
+    refute(policy(users(:two_admin)).show?)
+    refute(policy(Guest.new).show?)
+  end
+
+  test "editors, reviewers, and admins of the catalog can show" do
+    assert(policy(users(:one_editor)).show?)
+    assert(policy(users(:one_reviewer)).show?)
+    assert(policy(users(:one_admin)).show?)
   end
 
   private

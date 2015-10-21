@@ -35,6 +35,14 @@ one:
   email: one@example.com
   encrypted_password: <%= BCrypt::Password.create("password") %>
 
+one_editor:
+  email: one-editor@example.com
+  encrypted_password: <%= BCrypt::Password.create("password") %>
+
+one_reviewer:
+  email: one-reviewer@example.com
+  encrypted_password: <%= BCrypt::Password.create("password") %>
+
 one_admin:
   email: one-admin@example.com
   encrypted_password: <%= BCrypt::Password.create("password") %>
