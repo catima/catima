@@ -56,4 +56,15 @@ class CatalogAdmin::ItemsTest < ActionDispatch::IntegrationTest
     author = Item.find(author_id).behaving_as_type
     assert_equal("Changed by test", author.public_send(:one_author_name_uuid))
   end
+
+  test "delete an item" do
+    log_in_as("one-admin@example.com", "password")
+    visit("/one/admin")
+    click_on("Data")
+    click_on("Authors")
+
+    assert_difference("Item.count", -1) do
+      first("a", :text => "Delete").click
+    end
+  end
 end
