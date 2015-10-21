@@ -6,7 +6,7 @@ class Field::DecimalTest < ActiveSupport::TestCase
   should validate_numericality_of(:default_value).allow_nil
 
   test "default_value is validated against minimum and maximum" do
-    decimal_field = fields(:one_price)
+    decimal_field = fields(:one_author_rank)
     decimal_field.minimum = 0
     decimal_field.maximum = 1
 

@@ -80,7 +80,7 @@ one_author_email:
   uuid: one_author_email_uuid
 
 one_author_rank:
-  type: "Field::URL"
+  type: "Field::Decimal"
   name: Rank
   name_plural: Ranks
   slug: rank
@@ -112,20 +112,3 @@ one_author_language:
   item_type: one_author
   uuid: one_author_language_uuid
   choice_set: one_languages
-
-one_price:
-  type: "Field::Decimal"
-  name: Price
-  name_plural: Prices
-  slug: price
-  item_type: one_author
-  uuid: <%= SecureRandom.uuid %>
-
-one_parent:
-  type: "Field::Reference"
-  name: Parent
-  name_plural: Parents
-  slug: parent
-  item_type: one_author
-  related_item_type: one_author
-  uuid: <%= SecureRandom.uuid %>
