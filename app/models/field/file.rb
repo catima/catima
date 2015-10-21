@@ -41,4 +41,40 @@ class Field::File < ::Field
       token.strip[/^\.?(\S+)/, 1]
     end
   end
+
+  def decorate_item_class(klass)
+    super
+    define_attachment_attrs(klass)
+    klass.send(:attachment, uuid)
+  end
+
+  %w(id filename size).each do |attr|
+    define_method("attachment_#{attr}") do |item|
+      attachment_metadata(item)[attr]
+    end
+    define_method("attachment_#{attr}=") do |item, value|
+      attachment_metadata(item)[attr] = value
+    end
+  end
+
+  def attachment_metadata(item)
+    item.data[uuid] ||= {}
+  end
+
+  private
+
+  def define_attachment_attrs(klass)
+    field = self
+    %w(id filename size).each do |attr|
+      klass.send(:define_method, "#{uuid}_#{attr}") do
+        field.public_send("attachment_#{attr}", self)
+      end
+      klass.send(:define_method, "#{uuid}_#{attr}=") do |value|
+        field.public_send("attachment_#{attr}=", self, value)
+      end
+      klass.send(:define_method, "#{uuid}_#{attr}_will_change!") do
+        nil
+      end
+    end
+  end
 end
