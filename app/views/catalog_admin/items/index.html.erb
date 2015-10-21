@@ -31,6 +31,17 @@
                   edit_catalog_admin_item_path(catalog, @item_type, item),
                   :class => "btn btn-default btn-xs") %>
           <% end %>
+          <% if policy(item).destroy? %>
+            <%= link_to(
+                  fa_icon("trash-o", :text => "Delete"),
+                  catalog_admin_item_path(catalog, @item_type, item),
+                  :class => "btn btn-xs btn-text",
+                  :method => :delete,
+                  :data => {
+                    :confirm => "Are you sure you want to delete "\
+                                "“#{item.display_name}”?"
+                  }) %>
+          <% end %>
         </td>
       </tr>
     <% end %>

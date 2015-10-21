@@ -2,6 +2,8 @@ class CatalogAdmin::ItemsController < CatalogAdmin::BaseController
   before_action :find_item_type
   layout "catalog_admin/data/form"
 
+  # TODO: arbitrary sorting
+  # TODO: pagination
   def index
     @items = policy_scope(item_scope).sorted_by_field(@item_type.primary_field)
     @fields = @item_type.list_view_fields
@@ -41,6 +43,13 @@ class CatalogAdmin::ItemsController < CatalogAdmin::BaseController
     else
       render("edit")
     end
+  end
+
+  def destroy
+    find_item
+    authorize(@item)
+    @item.destroy
+    redirect_to({ :action => "index" }, :notice => destroyed_message)
   end
 
   private
@@ -83,5 +92,9 @@ class CatalogAdmin::ItemsController < CatalogAdmin::BaseController
 
   def updated_message
     "#{@item_type.name} “#{@item.display_name}” has been saved."
+  end
+
+  def destroyed_message
+    "#{@item_type.name} “#{@item.display_name}” has been deleted."
   end
 end
