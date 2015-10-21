@@ -16,11 +16,13 @@
 one:
   catalog: one
   name: One
+  name_plural: Ones
   slug: one
 
 one_author:
   catalog: one
   name: Author
+  name_plural: Authors
   slug: authors
 
 two:
