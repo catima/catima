@@ -28,6 +28,21 @@ class CatalogAdmin::ItemsController < CatalogAdmin::BaseController
     end
   end
 
+  def edit
+    find_item
+    authorize(@item)
+  end
+
+  def update
+    find_item
+    authorize(@item)
+    if @item.update(item_params)
+      redirect_to({ :action => "index" }, :notice => updated_message)
+    else
+      render("edit")
+    end
+  end
+
   private
 
   def find_item_type
@@ -41,7 +56,7 @@ class CatalogAdmin::ItemsController < CatalogAdmin::BaseController
   end
 
   def find_item
-    @item = item_scope.find(params[:id])
+    @item = item_scope.find(params[:id]).behaving_as_type
   end
 
   def build_item
@@ -63,6 +78,10 @@ class CatalogAdmin::ItemsController < CatalogAdmin::BaseController
   end
 
   def created_message
-    "#{@item_type.name} has been created."
+    "#{@item_type.name} “#{@item.display_name}” has been created."
+  end
+
+  def updated_message
+    "#{@item_type.name} “#{@item.display_name}” has been saved."
   end
 end

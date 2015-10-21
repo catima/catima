@@ -68,7 +68,7 @@ Rails.application.routes.draw do
     resources :users, :path => "_users"
 
     # Data entry
-    resources :items, :path => ":item_type_slug"
+    resources :items, :path => ":item_type_slug", :except => :show
   end
 
   # ===========================================================================

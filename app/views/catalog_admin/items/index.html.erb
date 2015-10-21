@@ -25,7 +25,12 @@
           <td><%= field_value(item, field) %></td>
         <% end %>
         <td style="text-align: right">
-          TODO
+          <% if policy(item).edit? %>
+            <%= link_to(
+                  fa_icon("pencil", :text => "Edit"),
+                  edit_catalog_admin_item_path(catalog, @item_type, item),
+                  :class => "btn btn-default btn-xs") %>
+          <% end %>
         </td>
       </tr>
     <% end %>

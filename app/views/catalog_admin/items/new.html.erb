@@ -2,9 +2,7 @@
 
 <%= bootstrap_form_for([:catalog_admin, @item]) do |f| %>
 
-  <% @item.fields.each do |field| %>
-    <%= field_input(f, field) %>
-  <% end %>
+  <%= render("common_form_fields", :f => f) %>
 
   <hr>
 
