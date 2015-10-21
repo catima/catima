@@ -34,4 +34,26 @@ class CatalogAdmin::ItemsTest < ActionDispatch::IntegrationTest
       items(:one_author_stephen_king).id.to_s,
       author.public_send(:one_author_collaborator_uuid).to_s)
   end
+
+  test "edit an item" do
+    log_in_as("one-admin@example.com", "password")
+    visit("/one/admin")
+    click_on("Data")
+    click_on("Authors")
+    first("a", :text => "Edit").click
+
+    # Hack to get the ID of the author we're editing
+    author_id = current_path[%r{(\d+)/edit$}, 1]
+
+    fill_in("Name", :with => "Changed by test")
+    select("Very Old", :from => "Collaborator")
+    select("Eng", :from => "Language")
+
+    assert_no_difference("Item.count") do
+      click_on("Save Author")
+    end
+
+    author = Item.find(author_id).behaving_as_type
+    assert_equal("Changed by test", author.public_send(:one_author_name_uuid))
+  end
 end
