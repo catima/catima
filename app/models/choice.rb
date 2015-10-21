@@ -16,4 +16,8 @@ class Choice < ActiveRecord::Base
   validates_presence_of :choice_set
   validates_presence_of :long_name
   validates_presence_of :short_name
+
+  def self.sorted
+    order("LOWER(choices.short_name) ASC")
+  end
 end

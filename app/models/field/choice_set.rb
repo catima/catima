@@ -39,6 +39,11 @@ class Field::ChoiceSet < ::Field
     "Choice set" + (choice_set ? " (#{choice_set.name})" : "")
   end
 
+  def choices
+    return [] if choice_set.nil?
+    choice_set.choices.sorted
+  end
+
   def choice_set_choices
     catalog.choice_sets.active.sorted
   end

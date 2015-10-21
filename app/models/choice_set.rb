@@ -14,6 +14,7 @@ class ChoiceSet < ActiveRecord::Base
   include HasDeactivation
 
   belongs_to :catalog
+  has_many :choices
 
   validates_presence_of :catalog
   validates_presence_of :name
