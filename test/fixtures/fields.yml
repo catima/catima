@@ -87,6 +87,15 @@ one_author_rank:
   item_type: one_author
   uuid: one_author_rank_uuid
 
+one_author_collaborator:
+  type: "Field::Reference"
+  name: Collaborator
+  name_plural: Collaborators
+  slug: collaborator
+  item_type: one_author
+  related_item_type: one_author
+  uuid: one_author_collaborator_uuid
+
 one_price:
   type: "Field::Decimal"
   name: Price
