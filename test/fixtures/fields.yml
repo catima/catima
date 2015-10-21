@@ -104,6 +104,15 @@ one_author_bio:
   item_type: one_author
   uuid: one_author_bio_uuid
 
+one_author_language:
+  type: "Field::ChoiceSet"
+  name: Language
+  name_plural: Languages
+  slug: language
+  item_type: one_author
+  uuid: one_author_language_uuid
+  choice_set: one_languages
+
 one_price:
   type: "Field::Decimal"
   name: Price
@@ -119,13 +128,4 @@ one_parent:
   slug: parent
   item_type: one_author
   related_item_type: one_author
-  uuid: <%= SecureRandom.uuid %>
-
-one_language:
-  type: "Field::ChoiceSet"
-  name: Language
-  name_plural: Languages
-  slug: language
-  item_type: one_author
-  choice_set: one_languages
   uuid: <%= SecureRandom.uuid %>
