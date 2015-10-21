@@ -2,10 +2,7 @@ class CatalogAdmin::ItemsController < CatalogAdmin::BaseController
   before_action :find_item_type
   layout "catalog_admin/data/form"
 
-  # TODO: authorization
-
   def index
-    # TODO: how to sort?
     @items = policy_scope(item_scope).sorted_by_field(@item_type.primary_field)
     @fields = @item_type.list_view_fields
     render("index", :layout => "catalog_admin/data")
@@ -13,14 +10,17 @@ class CatalogAdmin::ItemsController < CatalogAdmin::BaseController
 
   def show
     find_item
+    authorize(@item)
   end
 
   def new
     build_item
+    authorize(@item)
   end
 
   def create
     build_item
+    authorize(@item)
     if @item.update(item_params)
       redirect_to(after_create_path, :notice => created_message)
     else
