@@ -29,6 +29,12 @@ two:
   other_languages:
   requires_review: false
 
+multilingual:
+  name: Multilingual
+  slug: multilingual
+  primary_language: fr
+  other_languages: [it, en, de]
+
 inactive:
   name: Inactive Catalog
   slug: inactive

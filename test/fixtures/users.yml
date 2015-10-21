@@ -65,3 +65,8 @@ system_admin_invited_by_one:
   encrypted_password: <%= BCrypt::Password.create("password") %>
   system_admin: true
   invited_by: one
+
+de:
+  email: de@example.com
+  encrypted_password: <%= BCrypt::Password.create("password") %>
+  primary_language: de
