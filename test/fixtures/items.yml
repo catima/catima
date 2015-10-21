@@ -34,8 +34,15 @@ created_by_two_editor:
 one_author_stephen_king:
   catalog: one
   creator: one_admin
-  data: '{"one_author_name_uuid": "Stephen King", "one_author_age_uuid": 68}'
   item_type: one_author
+  data: |
+    {
+      "one_author_name_uuid": "Stephen King",
+      "one_author_age_uuid": 68,
+      "one_author_site_uuid": "http://stephenking.com/index.html",
+      "one_author_email_uuid": "sk@stephenking.com",
+      "one_author_rank_uuid": "1.88891"
+    }
 
 one_author_very_old:
   catalog: one

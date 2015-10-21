@@ -1,4 +1,6 @@
 class Field::DecimalPresenter < FieldPresenter
+  delegate :number_with_delimiter, :to => :view
+
   def input(form, method, options={})
     form.number_field(method, input_defaults(options))
   end

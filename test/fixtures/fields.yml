@@ -63,6 +63,30 @@ one_author_age:
   item_type: one_author
   uuid: one_author_age_uuid
 
+one_author_site:
+  type: "Field::URL"
+  name: Site
+  name_plural: Sites
+  slug: site
+  item_type: one_author
+  uuid: one_author_site_uuid
+
+one_author_email:
+  type: "Field::URL"
+  name: Email
+  name_plural: Emails
+  slug: email
+  item_type: one_author
+  uuid: one_author_email_uuid
+
+one_author_rank:
+  type: "Field::URL"
+  name: Rank
+  name_plural: Ranks
+  slug: rank
+  item_type: one_author
+  uuid: one_author_rank_uuid
+
 one_price:
   type: "Field::Decimal"
   name: Price
