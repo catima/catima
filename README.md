@@ -18,6 +18,7 @@ This project requires:
 * PhantomJS (in order to use the [poltergeist][] gem)
 * PostgreSQL must be installed and accepting connections
 * [Redis][] must be installed and running on localhost with the default port
+* Imagemagick must be installed (`brew install imagemagick`)
 
 If you need help setting up a Ruby development environment, check out this [Rails OS X Setup Guide](https://mattbrictson.com/rails-osx-setup-guide).
 

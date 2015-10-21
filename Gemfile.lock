@@ -133,6 +133,8 @@ GEM
       thread_safe (~> 0.1)
       warden (~> 1.2.3)
     docile (1.1.5)
+    domain_name (0.5.25)
+      unf (>= 0.0.5, < 1.0.0)
     dotenv (2.0.2)
     dotenv-rails (2.0.2)
       dotenv (= 2.0.2)
@@ -172,6 +174,8 @@ GEM
       tilt
     highline (1.7.7)
     hitimes (1.2.3)
+    http-cookie (1.0.2)
+      domain_name (~> 0.5)
     http_parser.rb (0.6.0)
     i18n (0.7.0)
     jquery-rails (4.0.5)
@@ -199,6 +203,7 @@ GEM
     metaclass (0.0.4)
     method_source (0.8.2)
     mime-types (2.6.2)
+    mini_magick (4.3.6)
     mini_portile (0.6.2)
     minitest (5.8.1)
     minitest-reporters (1.1.2)
@@ -213,6 +218,7 @@ GEM
     net-scp (1.2.1)
       net-ssh (>= 2.6.5)
     net-ssh (3.0.1)
+    netrc (0.10.3)
     nokogiri (1.6.6.2)
       mini_portile (~> 0.6.0)
     notiffany (0.0.8)
@@ -276,8 +282,19 @@ GEM
     redis (3.2.1)
     redis-namespace (1.5.2)
       redis (~> 3.0, >= 3.0.4)
+    refile (0.6.1)
+      mime-types
+      rest-client (~> 1.8)
+      sinatra (~> 1.4.5)
+    refile-mini_magick (0.2.0)
+      mini_magick (~> 4.0)
+      refile (~> 0.5)
     responders (2.1.0)
       railties (>= 4.2.0, < 5)
+    rest-client (1.8.0)
+      http-cookie (>= 1.0.2, < 2.0)
+      mime-types (>= 1.16, < 3.0)
+      netrc (~> 0.7)
     rollbar (2.3.0)
       oj (~> 2.12.14)
     ruby-progressbar (1.7.5)
@@ -351,6 +368,9 @@ GEM
       coffee-rails
     tzinfo (1.2.2)
       thread_safe (~> 0.1)
+    unf (0.1.4)
+      unf_ext
+    unf_ext (0.0.7.1)
     unicorn (4.9.0)
       kgio (~> 2.6)
       rack
@@ -416,6 +436,8 @@ DEPENDENCIES
   rails-assets-mousetrap (~> 1.5.3)!
   ranked-model
   rb-fsevent
+  refile (~> 0.6.1)
+  refile-mini_magick
   rollbar (~> 2.3)
   sass-rails (~> 5.0)
   secure_headers (>= 2.1.0)
