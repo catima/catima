@@ -96,6 +96,14 @@ one_author_collaborator:
   related_item_type: one_author
   uuid: one_author_collaborator_uuid
 
+one_author_bio:
+  type: "Field::File"
+  name: Biography
+  name_plural: Biographies
+  slug: bio
+  item_type: one_author
+  uuid: one_author_bio_uuid
+
 one_price:
   type: "Field::Decimal"
   name: Price

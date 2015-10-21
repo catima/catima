@@ -41,7 +41,12 @@ one_author_stephen_king:
       "one_author_age_uuid": 68,
       "one_author_site_uuid": "http://stephenking.com/index.html",
       "one_author_email_uuid": "sk@stephenking.com",
-      "one_author_rank_uuid": "1.88891"
+      "one_author_rank_uuid": "1.88891",
+      "one_author_bio_uuid": {
+        "id": "dummy",
+        "filename": "bio.doc",
+        "size": 192000
+      }
     }
 
 one_author_very_old:
