@@ -8,6 +8,8 @@ class CatalogAdmin::DashboardController < CatalogAdmin::BaseController
   end
 
   def setup
+    return redirect_to(catalog_admin_data_path) unless policy(ItemType).index?
+
     if (first_type = catalog.item_types.first)
       redirect_to(catalog_admin_item_type_fields_path(catalog, first_type))
     else
