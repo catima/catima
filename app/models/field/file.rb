@@ -53,7 +53,6 @@ class Field::File < ::Field
       attachment_metadata(item)[attr]
     end
     define_method("attachment_#{attr}=") do |item, value|
-      item.data_will_change!
       attachment_metadata(item)[attr] = value
     end
   end

@@ -123,14 +123,11 @@ class Field < ActiveRecord::Base
   end
 
   def read_value(item)
-    item.data ||= {}
-    data_store(item.data).get
+    data_store(item).get
   end
 
   def write_value(item, value)
-    item.data ||= {}
-    item.data_will_change!
-    data_store(item.data).set(value)
+    data_store(item).set(value)
   end
 
   private
@@ -146,9 +143,10 @@ class Field < ActiveRecord::Base
     klass.send(:define_method, "#{uuid}=") { |v| field.write_value(self, v) }
   end
 
-  def data_store(data, locale=I18n.locale)
-    Item::DataStore.new(
-      :data => data,
+  def data_store(item, locale=I18n.locale)
+    item.data ||= {}
+    Item::DirtyAwareDataStore.new(
+      :item => item,
       :key => uuid,
       :multivalued => multiple?,
       :locale => (i18n? ? locale : nil)
