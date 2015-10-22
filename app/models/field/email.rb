@@ -30,7 +30,7 @@
 class Field::Email < ::Field
   private
 
-  def define_validators(attr)
+  def build_validators(attr)
     [email_validator(attr)]
   end
 

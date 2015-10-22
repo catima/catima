@@ -30,7 +30,7 @@
 class Field::URL < ::Field
   private
 
-  def define_validators(attr)
+  def build_validators(attr)
     [url_validator(attr)]
   end
 

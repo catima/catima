@@ -44,7 +44,7 @@ class Field::Text < ::Field
 
   private
 
-  def define_validators(attr)
+  def build_validators(attr)
     [length_validator(attr)].compact
   end
 

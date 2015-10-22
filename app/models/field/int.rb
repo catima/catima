@@ -43,7 +43,7 @@ class Field::Int < ::Field
 
   private
 
-  def define_validators(attr)
+  def build_validators(attr)
     [numericality_validator(attr)]
   end
 

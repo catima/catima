@@ -34,7 +34,7 @@ class Item::DataStore
   attr_reader :data, :key, :locale
 
   def initialize(data:, key:, multivalued:, locale:)
-    @data = data || {}
+    @data = data
     @key = key.to_s
     @multivalued = multivalued
     @locale = locale ? locale.to_s : nil

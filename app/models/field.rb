@@ -112,9 +112,9 @@ class Field < ActiveRecord::Base
   # add validation rules, accessors, etc. for this field. The class in this
   # case is an anonymous subclass of Item.
   def decorate_item_class(klass)
-    klass.send(:store_accessor, :data, uuid)
+    define_accessor(klass)
 
-    validators = define_validators(uuid)
+    validators = build_validators(uuid)
     klass.send(:validate) do |item|
       validators.each { |v| v.validate(item) }
     end
@@ -122,14 +122,41 @@ class Field < ActiveRecord::Base
     klass.send(:validates_presence_of, uuid) if required?
   end
 
+  def read_value(item)
+    item.data ||= {}
+    data_store(item.data).get
+  end
+
+  def write_value(item, value)
+    item.data ||= {}
+    item.data_will_change!
+    data_store(item.data).set(value)
+  end
+
   private
 
-  def define_validators(attr)
+  def build_validators(attr)
     []
   end
 
+  def define_accessor(klass)
+    # TODO: accessor per locale?
+    field = self
+    klass.send(:define_method, uuid) { field.read_value(self) }
+    klass.send(:define_method, "#{uuid}=") { |v| field.write_value(self, v) }
+  end
+
+  def data_store(data, locale=I18n.locale)
+    Item::DataStore.new(
+      :data => data,
+      :key => uuid,
+      :multivalued => multiple?,
+      :locale => (i18n? ? locale : nil)
+    )
+  end
+
   def default_value_passes_field_validations
-    define_validators(:default_value).each do |validator|
+    build_validators(:default_value).each do |validator|
       validator.validate(self)
     end
   end

@@ -55,6 +55,6 @@ class Field::ChoiceSet < ::Field
   # private
 
   # TODO: validate choice belongs to specified ChoiceSet
-  # def define_validators(field, attr)
+  # def build_validators(field, attr)
   # end
 end
