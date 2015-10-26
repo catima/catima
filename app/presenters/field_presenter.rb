@@ -19,10 +19,14 @@ class FieldPresenter
     t("helpers.help.#{i18n_key}")
   end
 
+  def value
+    return nil if raw_value.blank?
+    raw_value
+  end
+
   def raw_value
     item.behaving_as_type.send(field.uuid)
   end
-  alias_method :value, :raw_value
 
   private
 
