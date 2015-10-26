@@ -28,8 +28,8 @@ module CatalogAdmin::FieldsHelper
     field_move_link(field, "down")
   end
 
-  def field_input(form, field)
-    field_presenter(form.object, field).input(form, field.uuid)
+  def field_input(form, field, options={})
+    field_presenter(form.object, field).input(form, field.uuid, options)
   end
 
   def field_default_value_input(form)
