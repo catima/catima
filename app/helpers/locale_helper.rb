@@ -5,10 +5,6 @@ module LocaleHelper
     locale_language(I18n.locale)
   end
 
-  def current_locale_flag_and_language
-    locale_flag_and_language(I18n.locale)
-  end
-
   def locale_language(locale)
     case locale.to_s
     when "de" then "Deutsch"
@@ -18,12 +14,19 @@ module LocaleHelper
     end
   end
 
-  def locale_flag(locale)
-    retina_image_tag("flags/#{locale}", :alt => locale_language(locale))
+  def locale_symbol(locale)
+    content_tag(:span, :class => "label label-info") do
+      content_tag(
+        :span,
+        locale.to_s.upcase,
+        :style => "display: inline-block; width: 2em",
+        :title => locale_language(locale)
+      )
+    end
   end
 
-  def locale_flag_and_language(locale)
-    [locale_flag(locale), locale_language(locale)].join(" ").html_safe
+  def locale_symbol_and_language(locale)
+    [locale_symbol(locale), locale_language(locale)].join(" ").html_safe
   end
 
   def locale_language_choices
@@ -37,7 +40,7 @@ module LocaleHelper
       method,
       locale_language_choices.map(&:first).map(&:to_s),
       :itself,
-      ->(choice) { locale_flag_and_language(choice) },
+      ->(choice) { locale_symbol_and_language(choice) },
       options
     )
   end
