@@ -33,8 +33,8 @@
 
 one_title:
   type: "Field::Text"
-  name: Title
-  name_plural: Titles
+  name: '{ "name_en": "Title" }'
+  name_plural: '{ "name_plural_en": "Titles" }'
   slug: title
   item_type: one
   primary: true
@@ -42,16 +42,16 @@ one_title:
 
 one_summary:
   type: "Field::Text"
-  name: Summary
-  name_plural: Summaries
+  name: '{ "name_en": "Summary" }'
+  name_plural: '{ "name_plural_en": "Summaries" }'
   slug: summary
   item_type: one
   uuid: <%= SecureRandom.uuid %>
 
 one_author_name:
   type: "Field::Text"
-  name: Name
-  name_plural: Names
+  name: '{ "name_en": "Name" }'
+  name_plural: '{ "name_plural_en": "Names" }'
   slug: name
   item_type: one_author
   primary: true
@@ -59,40 +59,40 @@ one_author_name:
 
 one_author_age:
   type: "Field::Int"
-  name: Age
-  name_plural: Ages
+  name: '{ "name_en": "Age" }'
+  name_plural: '{ "name_plural_en": "Ages" }'
   slug: age
   item_type: one_author
   uuid: one_author_age_uuid
 
 one_author_site:
   type: "Field::URL"
-  name: Site
-  name_plural: Sites
+  name: '{ "name_en": "Site" }'
+  name_plural: '{ "name_plural_en": "Sites" }'
   slug: site
   item_type: one_author
   uuid: one_author_site_uuid
 
 one_author_email:
   type: "Field::Email"
-  name: Email
-  name_plural: Emails
+  name: '{ "name_en": "Email" }'
+  name_plural: '{ "name_plural_en": "Emails" }'
   slug: email
   item_type: one_author
   uuid: one_author_email_uuid
 
 one_author_rank:
   type: "Field::Decimal"
-  name: Rank
-  name_plural: Ranks
+  name: '{ "name_en": "Rank" }'
+  name_plural: '{ "name_plural_en": "Ranks" }'
   slug: rank
   item_type: one_author
   uuid: one_author_rank_uuid
 
 one_author_collaborator:
   type: "Field::Reference"
-  name: Collaborator
-  name_plural: Collaborators
+  name: '{ "name_en": "Collaborator" }'
+  name_plural: '{ "name_plural_en": "Collaborators" }'
   slug: collaborator
   item_type: one_author
   related_item_type: one_author
@@ -100,8 +100,8 @@ one_author_collaborator:
 
 one_author_bio:
   type: "Field::File"
-  name: Biography
-  name_plural: Biographies
+  name: '{ "name_en": "Biography" }'
+  name_plural: '{ "name_plural_en": "Biographies" }'
   slug: bio
   item_type: one_author
   required: false
@@ -109,8 +109,8 @@ one_author_bio:
 
 one_author_language:
   type: "Field::ChoiceSet"
-  name: Language
-  name_plural: Languages
+  name: '{ "name_en": "Language" }'
+  name_plural: '{ "name_plural_en": "Languages" }'
   slug: language
   item_type: one_author
   uuid: one_author_language_uuid

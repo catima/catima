@@ -50,18 +50,17 @@ class Field < ActiveRecord::Base
     "multiple-ordered-required" => "Multiple ordered values – at least one"
   }.freeze
 
+  include HasI18nNames
   include HasSlug
   include RankedModel
 
   ranks :row_order, :class_name => "Field", :with_same => :item_type_id
 
-  delegate :catalog, :to => :item_type
+  delegate :catalog, :to => :item_type, :allow_nil => true
 
   belongs_to :item_type
 
   validates_presence_of :item_type
-  validates_presence_of :name
-  validates_presence_of :name_plural
   validate :default_value_passes_field_validations
   validates_slug :scope => :item_type_id
 

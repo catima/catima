@@ -37,3 +37,21 @@ two_author:
   name: '{ "name_en": "Author" }'
   name_plural: '{ "name_plural_en": "Authors" }'
   slug: authors
+
+multilingual_author:
+  catalog: multilingual
+  slug: authors
+  name: |
+    {
+      "name_de": "Autor",
+      "name_en": "Author",
+      "name_fr": "Auteur",
+      "name_it": "Autore"
+    }
+  name_plural: |
+    {
+      "name_de": "Autoren",
+      "name_en": "Authors",
+      "name_fr": "Auteurs",
+      "name_it": "Autori"
+    }
