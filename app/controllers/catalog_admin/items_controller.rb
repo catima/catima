@@ -87,14 +87,14 @@ class CatalogAdmin::ItemsController < CatalogAdmin::BaseController
   end
 
   def created_message
-    "#{@item_type.name} “#{@item.display_name}” has been created."
+    "#{@item_type.name_primary} “#{@item.display_name}” has been created."
   end
 
   def updated_message
-    "#{@item_type.name} “#{@item.display_name}” has been saved."
+    "#{@item_type.name_primary} “#{@item.display_name}” has been saved."
   end
 
   def destroyed_message
-    "#{@item_type.name} “#{@item.display_name}” has been deleted."
+    "#{@item_type.name_primary} “#{@item.display_name}” has been deleted."
   end
 end

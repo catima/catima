@@ -20,7 +20,7 @@
   <%= f.form_group(:primary) do %>
     <%= f.check_box(
           :primary,
-          :label => "Use this as the primary field for #{@item_type.name_plural}"
+          :label => "Use this as the primary field for #{@item_type.name_plural_primary}"
         ) %>
   <% end %>
   <%= f.form_group(:display_in_list) do %>
@@ -39,7 +39,7 @@
   <%= f.form_group(:unique) do %>
     <%= f.check_box(
           :unique,
-          :label => "Must be unique (among all #{@item_type.name_plural})") %>
+          :label => "Must be unique (among all #{@item_type.name_plural_primary})") %>
   <% end %>
 
   <%= render_catalog_admin_fields_option_inputs(f) %>

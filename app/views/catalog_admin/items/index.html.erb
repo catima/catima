@@ -1,10 +1,10 @@
 <% provide(:title) do %>
-  <b><%= @item_type.name_plural %></b>
+  <b><%= @item_type.name_plural_primary %></b>
 <% end %>
 
 <% provide(:actions) do %>
   <%= link_to(
-        fa_icon(:"plus-square", :text => "New #{@item_type.name}"),
+        fa_icon(:"plus-square", :text => "New #{@item_type.name_primary}"),
         new_catalog_admin_item_path(catalog, @item_type),
         :class => "btn btn-xs btn-default") %>
 <% end %>
@@ -13,7 +13,7 @@
   <thead>
     <tr>
       <% @fields.each do |field| %>
-        <th><%= field.name %></th>
+        <th><%= field.name_primary %></th>
       <% end %>
       <th></th>
     </tr>

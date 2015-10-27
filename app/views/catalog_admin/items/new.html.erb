@@ -1,4 +1,4 @@
-<% provide(:title, "New #{@item.item_type.name}") %>
+<% provide(:title, "New #{@item.item_type.name_primary}") %>
 
 <%= bootstrap_form_for([:catalog_admin, @item]) do |f| %>
 
@@ -6,7 +6,7 @@
 
   <hr>
 
-  <%= f.primary("Create #{@item.item_type.name}") %>
+  <%= f.primary("Create #{@item.item_type.name_primary}") %>
   <%= submit_and_add_another(f) %>
 
   <%= link_to(

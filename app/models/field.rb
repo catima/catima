@@ -29,6 +29,7 @@
 #  uuid                  :string
 #
 
+# TODO: drop name_old and name_plural_old columns (no longer used)
 class Field < ActiveRecord::Base
   TYPES = {
     "text" => "Field::Text",

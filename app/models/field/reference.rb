@@ -38,7 +38,7 @@ class Field::Reference < ::Field
                          :allow_nil => true
 
   def type_name
-    super + (related_item_type ? " (#{related_item_type.name})" : "")
+    super + (related_item_type ? " (#{related_item_type.name_primary})" : "")
   end
 
   def related_item_type_choices

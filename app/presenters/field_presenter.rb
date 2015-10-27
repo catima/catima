@@ -10,8 +10,7 @@ class FieldPresenter
   end
 
   def label
-    # TODO: i18n
-    field.name
+    field.name_primary
   end
 
   def help

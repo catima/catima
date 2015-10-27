@@ -75,10 +75,10 @@ class CatalogAdmin::FieldsController < CatalogAdmin::BaseController
   end
 
   def created_message
-    "The “#{@field.name}” field has been created."
+    "The “#{@field.name_primary}” field has been created."
   end
 
   def updated_message
-    "The “#{@field.name}” field has been saved."
+    "The “#{@field.name_primary}” field has been saved."
   end
 end

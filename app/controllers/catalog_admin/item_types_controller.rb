@@ -56,10 +56,10 @@ class CatalogAdmin::ItemTypesController < CatalogAdmin::BaseController
   end
 
   def created_message
-    "The “#{@item_type.name}” item type has been created."
+    "The “#{@item_type.name_primary}” item type has been created."
   end
 
   def updated_message
-    "The “#{@item_type.name}” item type has been updated."
+    "The “#{@item_type.name_primary}” item type has been updated."
   end
 end

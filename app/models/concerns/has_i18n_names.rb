@@ -14,6 +14,14 @@
 #   name_plural_#{locale}
 #   name_plural_#{locale}
 #
+# And convenience methods for the catalog's primary locale and the current
+# locale:
+#
+#   name_primary
+#   name_plural_primary
+#   name_in_locale
+#   name_plural_in_locale
+#
 # Values are stored in the JSON column in this format:
 #
 #   `name` column:
@@ -50,5 +58,21 @@ module HasI18nNames
     validates_presence_of :name_plural_en, :if => ->(m) { m.valid_locale?(:en) }
     validates_presence_of :name_plural_fr, :if => ->(m) { m.valid_locale?(:fr) }
     validates_presence_of :name_plural_it, :if => ->(m) { m.valid_locale?(:it) }
+  end
+
+  def name_primary
+    public_send("name_#{catalog.primary_language}")
+  end
+
+  def name_plural_primary
+    public_send("name_plural_#{catalog.primary_language}")
+  end
+
+  def name_in_locale
+    public_send("name_#{I18n.locale}")
+  end
+
+  def name_plural_in_locale
+    public_send("name_plural_#{I18n.locale}")
   end
 end

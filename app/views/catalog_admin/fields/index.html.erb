@@ -1,6 +1,7 @@
 <% provide(:title) do %>
-  <b><%= @item_type.name %></b>
-  (plural: “<%= @item_type.name_plural %>”, slug: “<%= @item_type.slug %>”)
+  <b><%= @item_type.name_primary %></b>
+  (plural: “<%= @item_type.name_plural_primary %>”,
+  slug: “<%= @item_type.slug %>”)
 <% end %>
 
 <% provide(:actions) do %>
@@ -48,7 +49,7 @@
           <%= field_move_down_link(field) unless index == @fields.size - 1 %>
         </td>
         <td>
-          <%= field.name %>
+          <%= field.name_primary %>
           <%= field_primary_badge(field) %>
         </td>
         <td><%= field.type_name %></td>
