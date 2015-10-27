@@ -2,39 +2,39 @@
 #
 # Table name: fields
 #
-#  category_item_type_id :integer
-#  choice_set_id         :integer
-#  comment               :text
-#  created_at            :datetime         not null
-#  default_value         :text
-#  display_in_list       :boolean          default(TRUE), not null
-#  i18n                  :boolean          default(FALSE), not null
-#  id                    :integer          not null, primary key
-#  item_type_id          :integer
-#  multiple              :boolean          default(FALSE), not null
-#  name                  :json
-#  name_old              :string
-#  name_plural           :json
-#  name_plural_old       :string
-#  options               :json
-#  ordered               :boolean          default(FALSE), not null
-#  primary               :boolean          default(FALSE), not null
-#  related_item_type_id  :integer
-#  required              :boolean          default(TRUE), not null
-#  row_order             :integer
-#  slug                  :string
-#  type                  :string
-#  unique                :boolean          default(FALSE), not null
-#  updated_at            :datetime         not null
-#  uuid                  :string
+#  category_item_type_id    :integer
+#  choice_set_id            :integer
+#  comment                  :text
+#  created_at               :datetime         not null
+#  default_value            :text
+#  display_in_list          :boolean          default(TRUE), not null
+#  i18n                     :boolean          default(FALSE), not null
+#  id                       :integer          not null, primary key
+#  item_type_id             :integer
+#  multiple                 :boolean          default(FALSE), not null
+#  name_old                 :string
+#  name_plural_old          :string
+#  name_plural_translations :json
+#  name_translations        :json
+#  options                  :json
+#  ordered                  :boolean          default(FALSE), not null
+#  primary                  :boolean          default(FALSE), not null
+#  related_item_type_id     :integer
+#  required                 :boolean          default(TRUE), not null
+#  row_order                :integer
+#  slug                     :string
+#  type                     :string
+#  unique                   :boolean          default(FALSE), not null
+#  updated_at               :datetime         not null
+#  uuid                     :string
 #
 
 # Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
 
 one_title:
   type: "Field::Text"
-  name: '{ "name_en": "Title" }'
-  name_plural: '{ "name_plural_en": "Titles" }'
+  name_translations: '{ "name_en": "Title" }'
+  name_plural_translations: '{ "name_plural_en": "Titles" }'
   slug: title
   item_type: one
   primary: true
@@ -42,16 +42,16 @@ one_title:
 
 one_summary:
   type: "Field::Text"
-  name: '{ "name_en": "Summary" }'
-  name_plural: '{ "name_plural_en": "Summaries" }'
+  name_translations: '{ "name_en": "Summary" }'
+  name_plural_translations: '{ "name_plural_en": "Summaries" }'
   slug: summary
   item_type: one
   uuid: <%= SecureRandom.uuid %>
 
 one_author_name:
   type: "Field::Text"
-  name: '{ "name_en": "Name" }'
-  name_plural: '{ "name_plural_en": "Names" }'
+  name_translations: '{ "name_en": "Name" }'
+  name_plural_translations: '{ "name_plural_en": "Names" }'
   slug: name
   item_type: one_author
   primary: true
@@ -59,40 +59,40 @@ one_author_name:
 
 one_author_age:
   type: "Field::Int"
-  name: '{ "name_en": "Age" }'
-  name_plural: '{ "name_plural_en": "Ages" }'
+  name_translations: '{ "name_en": "Age" }'
+  name_plural_translations: '{ "name_plural_en": "Ages" }'
   slug: age
   item_type: one_author
   uuid: one_author_age_uuid
 
 one_author_site:
   type: "Field::URL"
-  name: '{ "name_en": "Site" }'
-  name_plural: '{ "name_plural_en": "Sites" }'
+  name_translations: '{ "name_en": "Site" }'
+  name_plural_translations: '{ "name_plural_en": "Sites" }'
   slug: site
   item_type: one_author
   uuid: one_author_site_uuid
 
 one_author_email:
   type: "Field::Email"
-  name: '{ "name_en": "Email" }'
-  name_plural: '{ "name_plural_en": "Emails" }'
+  name_translations: '{ "name_en": "Email" }'
+  name_plural_translations: '{ "name_plural_en": "Emails" }'
   slug: email
   item_type: one_author
   uuid: one_author_email_uuid
 
 one_author_rank:
   type: "Field::Decimal"
-  name: '{ "name_en": "Rank" }'
-  name_plural: '{ "name_plural_en": "Ranks" }'
+  name_translations: '{ "name_en": "Rank" }'
+  name_plural_translations: '{ "name_plural_en": "Ranks" }'
   slug: rank
   item_type: one_author
   uuid: one_author_rank_uuid
 
 one_author_collaborator:
   type: "Field::Reference"
-  name: '{ "name_en": "Collaborator" }'
-  name_plural: '{ "name_plural_en": "Collaborators" }'
+  name_translations: '{ "name_en": "Collaborator" }'
+  name_plural_translations: '{ "name_plural_en": "Collaborators" }'
   slug: collaborator
   item_type: one_author
   related_item_type: one_author
@@ -100,8 +100,8 @@ one_author_collaborator:
 
 one_author_bio:
   type: "Field::File"
-  name: '{ "name_en": "Biography" }'
-  name_plural: '{ "name_plural_en": "Biographies" }'
+  name_translations: '{ "name_en": "Biography" }'
+  name_plural_translations: '{ "name_plural_en": "Biographies" }'
   slug: bio
   item_type: one_author
   required: false
@@ -109,8 +109,8 @@ one_author_bio:
 
 one_author_language:
   type: "Field::ChoiceSet"
-  name: '{ "name_en": "Language" }'
-  name_plural: '{ "name_plural_en": "Languages" }'
+  name_translations: '{ "name_en": "Language" }'
+  name_plural_translations: '{ "name_plural_en": "Languages" }'
   slug: language
   item_type: one_author
   uuid: one_author_language_uuid

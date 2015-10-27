@@ -20,8 +20,8 @@ class CatalogAdmin::FieldsTest < ActionDispatch::IntegrationTest
     field = item_types(:two_author).fields.where(:slug => "birthplace").first!
     assert_equal(3, field.minimum.to_i)
     assert_equal(50, field.maximum.to_i)
-    assert_equal("Birthplace", field.name_primary)
-    assert_equal("Birthplaces", field.name_plural_primary)
+    assert_equal("Birthplace", field.name)
+    assert_equal("Birthplaces", field.name_plural)
     assert(field.display_in_list?)
     assert(field.primary?)
     assert(field.required?)

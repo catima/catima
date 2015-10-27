@@ -1,7 +1,7 @@
 <div class="panel panel-default">
   <div class="panel-heading">Item Types / Categories</div>
   <ul class="list-group">
-    <% catalog.item_types.sorted(catalog.primary_language).each do |type| %>
+    <% catalog.item_types.sorted.each do |type| %>
       <%= setup_item_type_nav_link(type) %>
     <% end %>
   </ul>

@@ -1,6 +1,6 @@
-# Provides an `i18n_accessors` macro that, given a JSON column name, defines
-# accessors and presence validation for storing translations in that JSON
-# column.
+# Provides an `store_translations` macro that, given a JSON column named
+# `<attrib>_translations`, defines accessors and presence validation for
+# storing translations of `<attrib>` in that JSON column.
 #
 # Presence of the names is validated based on the languages supported by the
 # catalog (the model must have a `catalog` accessor). For example, if the model
@@ -10,27 +10,25 @@
 #
 # Given this invocation:
 #
-#   i18n_accessors :name
+#   store_translations :name
 #
 # This will expose accessors in this format, for every supported locale:
 #
 #   name_#{locale}
 #   name_#{locale}=
 #
-# And convenience methods for the catalog's primary locale and the current
-# locale:
+# And a convenience method for the current locale (read-only):
 #
-#   name_primary
-#   name_in_locale
+#   name # uses I18n.locale
 #
-# Values are stored in the JSON column in this format:
+# Values are stored in the `name_translations` JSON column in this format:
 #
 #   {
 #     "name_en" => "person",
 #     "name_it" => "persona"
 #   }
 #
-module HasI18nAccessors
+module HasTranslations
   extend ActiveSupport::Concern
 
   included do
@@ -38,20 +36,18 @@ module HasI18nAccessors
   end
 
   module ClassMethods
-    def i18n_accessors(*attrs)
+    def store_translations(*attrs)
       attrs.each do |attr|
-        store_accessor attr,
+        store_accessor :"#{attr}_translations",
                        :"#{attr}_de",
                        :"#{attr}_en",
                        :"#{attr}_fr",
                        :"#{attr}_it"
 
-        define_method("#{attr}_primary") do
-          public_send("#{attr}_#{catalog.primary_language}")
-        end
-
-        define_method("#{attr}_in_locale") do
-          public_send("#{attr}_#{I18n.locale}")
+        define_method(attr) do
+          locale = I18n.locale
+          locale = catalog.primary_language unless valid_locale?(locale)
+          public_send("#{attr}_#{locale}")
         end
 
         validates_presence_of :"#{attr}_de",

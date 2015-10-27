@@ -13,7 +13,7 @@
       <% admin_menu_item_types.each do |item_type| %>
         <li>
           <%= link_to(
-                item_type.name_plural_in_locale,
+                item_type.name_plural,
                 catalog_admin_items_path(catalog, item_type)) %>
         </li>
       <% end %>

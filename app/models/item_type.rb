@@ -2,20 +2,20 @@
 #
 # Table name: item_types
 #
-#  catalog_id      :integer
-#  created_at      :datetime         not null
-#  id              :integer          not null, primary key
-#  name            :json
-#  name_old        :string
-#  name_plural     :json
-#  name_plural_old :string
-#  slug            :string
-#  updated_at      :datetime         not null
+#  catalog_id               :integer
+#  created_at               :datetime         not null
+#  id                       :integer          not null, primary key
+#  name_old                 :string
+#  name_plural_old          :string
+#  name_plural_translations :json
+#  name_translations        :json
+#  slug                     :string
+#  updated_at               :datetime         not null
 #
 
 # TODO: drop name_old and name_plural_old columns (no longer used)
 class ItemType < ActiveRecord::Base
-  include HasI18nAccessors
+  include HasTranslations
   include HasSlug
 
   belongs_to :catalog
@@ -27,13 +27,13 @@ class ItemType < ActiveRecord::Base
 
   has_many :items
 
-  i18n_accessors :name, :name_plural
+  store_translations :name, :name_plural
 
   validates_presence_of :catalog
   validates_slug :scope => :catalog_id
 
   def self.sorted(locale=I18n.locale)
-    order("LOWER(item_types.name->>'#{locale}') ASC")
+    order("LOWER(item_types.name_translations->>'#{locale}') ASC")
   end
 
   def primary_field

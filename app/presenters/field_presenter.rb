@@ -10,7 +10,7 @@ class FieldPresenter
   end
 
   def label
-    field.name_primary
+    field.name
   end
 
   def help

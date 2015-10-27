@@ -14,8 +14,8 @@ class CatalogAdmin::ItemTypesTest < ActionDispatch::IntegrationTest
     end
 
     type = catalogs(:two).item_types.where(:slug => "books").first!
-    assert_equal("Book", type.name_primary)
-    assert_equal("Books", type.name_plural_primary)
+    assert_equal("Book", type.name)
+    assert_equal("Books", type.name_plural)
   end
 
   test "edit an item type" do
@@ -30,6 +30,6 @@ class CatalogAdmin::ItemTypesTest < ActionDispatch::IntegrationTest
     end
 
     type = item_types(:two_author)
-    assert_equal("Writer", type.name_primary)
+    assert_equal("Writer", type.name)
   end
 end

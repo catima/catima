@@ -2,31 +2,31 @@
 #
 # Table name: fields
 #
-#  category_item_type_id :integer
-#  choice_set_id         :integer
-#  comment               :text
-#  created_at            :datetime         not null
-#  default_value         :text
-#  display_in_list       :boolean          default(TRUE), not null
-#  i18n                  :boolean          default(FALSE), not null
-#  id                    :integer          not null, primary key
-#  item_type_id          :integer
-#  multiple              :boolean          default(FALSE), not null
-#  name                  :json
-#  name_old              :string
-#  name_plural           :json
-#  name_plural_old       :string
-#  options               :json
-#  ordered               :boolean          default(FALSE), not null
-#  primary               :boolean          default(FALSE), not null
-#  related_item_type_id  :integer
-#  required              :boolean          default(TRUE), not null
-#  row_order             :integer
-#  slug                  :string
-#  type                  :string
-#  unique                :boolean          default(FALSE), not null
-#  updated_at            :datetime         not null
-#  uuid                  :string
+#  category_item_type_id    :integer
+#  choice_set_id            :integer
+#  comment                  :text
+#  created_at               :datetime         not null
+#  default_value            :text
+#  display_in_list          :boolean          default(TRUE), not null
+#  i18n                     :boolean          default(FALSE), not null
+#  id                       :integer          not null, primary key
+#  item_type_id             :integer
+#  multiple                 :boolean          default(FALSE), not null
+#  name_old                 :string
+#  name_plural_old          :string
+#  name_plural_translations :json
+#  name_translations        :json
+#  options                  :json
+#  ordered                  :boolean          default(FALSE), not null
+#  primary                  :boolean          default(FALSE), not null
+#  related_item_type_id     :integer
+#  required                 :boolean          default(TRUE), not null
+#  row_order                :integer
+#  slug                     :string
+#  type                     :string
+#  unique                   :boolean          default(FALSE), not null
+#  updated_at               :datetime         not null
+#  uuid                     :string
 #
 
 # TODO: drop name_old and name_plural_old columns (no longer used)
@@ -51,7 +51,7 @@ class Field < ActiveRecord::Base
     "multiple-ordered-required" => "Multiple ordered values – at least one"
   }.freeze
 
-  include HasI18nAccessors
+  include HasTranslations
   include HasSlug
   include RankedModel
 
@@ -61,7 +61,7 @@ class Field < ActiveRecord::Base
 
   belongs_to :item_type
 
-  i18n_accessors :name, :name_plural
+  store_translations :name, :name_plural
 
   validates_presence_of :item_type
   validate :default_value_passes_field_validations

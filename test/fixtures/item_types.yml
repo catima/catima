@@ -2,53 +2,53 @@
 #
 # Table name: item_types
 #
-#  catalog_id      :integer
-#  created_at      :datetime         not null
-#  id              :integer          not null, primary key
-#  name            :json
-#  name_old        :string
-#  name_plural     :json
-#  name_plural_old :string
-#  slug            :string
-#  updated_at      :datetime         not null
+#  catalog_id               :integer
+#  created_at               :datetime         not null
+#  id                       :integer          not null, primary key
+#  name_old                 :string
+#  name_plural_old          :string
+#  name_plural_translations :json
+#  name_translations        :json
+#  slug                     :string
+#  updated_at               :datetime         not null
 #
 
 # Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
 
 one:
   catalog: one
-  name: '{ "name_en": "One" }'
-  name_plural: '{ "name_plural_en": "Ones" }'
+  name_translations: '{ "name_en": "One" }'
+  name_plural_translations: '{ "name_plural_en": "Ones" }'
   slug: one
 
 one_author:
   catalog: one
-  name: '{ "name_en": "Author" }'
-  name_plural: '{ "name_plural_en": "Authors" }'
+  name_translations: '{ "name_en": "Author" }'
+  name_plural_translations: '{ "name_plural_en": "Authors" }'
   slug: authors
 
 two:
   catalog: two
-  name: '{ "name_en": "Two" }'
+  name_translations: '{ "name_en": "Two" }'
   slug: '{ "name_plural_en": "Twos" }'
 
 two_author:
   catalog: two
-  name: '{ "name_en": "Author" }'
-  name_plural: '{ "name_plural_en": "Authors" }'
+  name_translations: '{ "name_en": "Author" }'
+  name_plural_translations: '{ "name_plural_en": "Authors" }'
   slug: authors
 
 multilingual_author:
   catalog: multilingual
   slug: authors
-  name: |
+  name_translations: |
     {
       "name_de": "Autor",
       "name_en": "Author",
       "name_fr": "Auteur",
       "name_it": "Autore"
     }
-  name_plural: |
+  name_plural_translations: |
     {
       "name_de": "Autoren",
       "name_en": "Authors",

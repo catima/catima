@@ -8,7 +8,7 @@ module CatalogAdmin::ItemTypesHelper
     klass << " active" if active
 
     link_to(
-      item_type.name_primary,
+      item_type.name,
       catalog_admin_item_type_fields_path(item_type.catalog, item_type),
       :class => klass
     )
@@ -22,7 +22,7 @@ module CatalogAdmin::ItemTypesHelper
     klass = "list-group-item"
     klass << " active" if active
 
-    label = [h(item_type.name_plural_primary)]
+    label = [h(item_type.name_plural)]
     label << content_tag(
       :span,
       number_with_delimiter(item_type.items.count),

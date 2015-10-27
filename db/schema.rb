@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20151027213627) do
+ActiveRecord::Schema.define(version: 20151027221141) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -54,10 +54,10 @@ ActiveRecord::Schema.define(version: 20151027213627) do
     t.integer  "choice_set_id"
     t.text     "long_name_old"
     t.string   "short_name_old"
-    t.datetime "created_at",     null: false
-    t.datetime "updated_at",     null: false
-    t.json     "short_name"
-    t.json     "long_name"
+    t.datetime "created_at",              null: false
+    t.datetime "updated_at",              null: false
+    t.json     "short_name_translations"
+    t.json     "long_name_translations"
   end
 
   add_index "choices", ["choice_set_id"], name: "index_choices_on_choice_set_id", using: :btree
@@ -79,21 +79,21 @@ ActiveRecord::Schema.define(version: 20151027213627) do
     t.string   "name_plural_old"
     t.string   "slug"
     t.text     "comment"
-    t.boolean  "multiple",              default: false, null: false
-    t.boolean  "ordered",               default: false, null: false
-    t.boolean  "required",              default: true,  null: false
-    t.boolean  "i18n",                  default: false, null: false
-    t.boolean  "unique",                default: false, null: false
+    t.boolean  "multiple",                 default: false, null: false
+    t.boolean  "ordered",                  default: false, null: false
+    t.boolean  "required",                 default: true,  null: false
+    t.boolean  "i18n",                     default: false, null: false
+    t.boolean  "unique",                   default: false, null: false
     t.text     "default_value"
     t.json     "options"
-    t.datetime "created_at",                            null: false
-    t.datetime "updated_at",                            null: false
-    t.boolean  "primary",               default: false, null: false
-    t.boolean  "display_in_list",       default: true,  null: false
+    t.datetime "created_at",                               null: false
+    t.datetime "updated_at",                               null: false
+    t.boolean  "primary",                  default: false, null: false
+    t.boolean  "display_in_list",          default: true,  null: false
     t.integer  "row_order"
     t.string   "uuid"
-    t.json     "name"
-    t.json     "name_plural"
+    t.json     "name_translations"
+    t.json     "name_plural_translations"
   end
 
   add_index "fields", ["category_item_type_id"], name: "index_fields_on_category_item_type_id", using: :btree
@@ -106,11 +106,11 @@ ActiveRecord::Schema.define(version: 20151027213627) do
     t.integer  "catalog_id"
     t.string   "name_old"
     t.string   "slug"
-    t.datetime "created_at",      null: false
-    t.datetime "updated_at",      null: false
+    t.datetime "created_at",               null: false
+    t.datetime "updated_at",               null: false
     t.string   "name_plural_old"
-    t.json     "name"
-    t.json     "name_plural"
+    t.json     "name_translations"
+    t.json     "name_plural_translations"
   end
 
   add_index "item_types", ["catalog_id", "slug"], name: "index_item_types_on_catalog_id_and_slug", unique: true, using: :btree
