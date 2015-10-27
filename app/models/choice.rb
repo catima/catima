@@ -2,12 +2,14 @@
 #
 # Table name: choices
 #
-#  choice_set_id :integer
-#  created_at    :datetime         not null
-#  id            :integer          not null, primary key
-#  long_name     :text
-#  short_name    :string
-#  updated_at    :datetime         not null
+#  choice_set_id  :integer
+#  created_at     :datetime         not null
+#  id             :integer          not null, primary key
+#  long_name      :json
+#  long_name_old  :text
+#  short_name     :json
+#  short_name_old :string
+#  updated_at     :datetime         not null
 #
 
 class Choice < ActiveRecord::Base
@@ -17,7 +19,7 @@ class Choice < ActiveRecord::Base
   validates_presence_of :long_name
   validates_presence_of :short_name
 
-  def self.sorted
-    order("LOWER(choices.short_name) ASC")
+  def self.sorted(locale=I18n.locale)
+    order("LOWER(choices.short_name->>'#{locale}') ASC")
   end
 end

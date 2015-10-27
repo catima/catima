@@ -2,22 +2,24 @@
 #
 # Table name: choices
 #
-#  choice_set_id :integer
-#  created_at    :datetime         not null
-#  id            :integer          not null, primary key
-#  long_name     :text
-#  short_name    :string
-#  updated_at    :datetime         not null
+#  choice_set_id  :integer
+#  created_at     :datetime         not null
+#  id             :integer          not null, primary key
+#  long_name      :json
+#  long_name_old  :text
+#  short_name     :json
+#  short_name_old :string
+#  updated_at     :datetime         not null
 #
 
 # Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
 
 one_english:
   choice_set: one_languages
-  long_name: English
-  short_name: Eng
+  long_name: '{ "long_name_en": "English" }'
+  short_name: '{ "short_name_en": "Eng" }'
 
 two_english:
   choice_set: two_languages
-  long_name: English
-  short_name: Eng
+  long_name: '{ "long_name_en": "English" }'
+  short_name: '{ "short_name_en": "Eng" }'
