@@ -14,21 +14,6 @@ module LocaleHelper
     end
   end
 
-  def locale_symbol(locale)
-    content_tag(:span, :class => "label label-info") do
-      content_tag(
-        :span,
-        locale.to_s.upcase,
-        :style => "display: inline-block; width: 2em",
-        :title => locale_language(locale)
-      )
-    end
-  end
-
-  def locale_symbol_and_language(locale)
-    [locale_symbol(locale), locale_language(locale)].join(" ").html_safe
-  end
-
   def locale_language_choices
     I18n.available_locales.sort.map do |locale|
       [locale, locale_language(locale), locale == I18n.locale]
@@ -40,7 +25,7 @@ module LocaleHelper
       method,
       locale_language_choices.map(&:first).map(&:to_s),
       :itself,
-      ->(choice) { locale_symbol_and_language(choice) },
+      ->(choice) { locale_language(choice) },
       options
     )
   end
