@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20151027162712) do
+ActiveRecord::Schema.define(version: 20151027173025) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -73,8 +73,8 @@ ActiveRecord::Schema.define(version: 20151027162712) do
     t.integer  "related_item_type_id"
     t.integer  "choice_set_id"
     t.string   "type"
-    t.string   "name"
-    t.string   "name_plural"
+    t.string   "name_old"
+    t.string   "name_plural_old"
     t.string   "slug"
     t.text     "comment"
     t.boolean  "multiple",              default: false, null: false
@@ -90,6 +90,8 @@ ActiveRecord::Schema.define(version: 20151027162712) do
     t.boolean  "display_in_list",       default: true,  null: false
     t.integer  "row_order"
     t.string   "uuid"
+    t.json     "name"
+    t.json     "name_plural"
   end
 
   add_index "fields", ["category_item_type_id"], name: "index_fields_on_category_item_type_id", using: :btree

@@ -12,8 +12,10 @@
 #  id                    :integer          not null, primary key
 #  item_type_id          :integer
 #  multiple              :boolean          default(FALSE), not null
-#  name                  :string
-#  name_plural           :string
+#  name                  :json
+#  name_old              :string
+#  name_plural           :json
+#  name_plural_old       :string
 #  options               :json
 #  ordered               :boolean          default(FALSE), not null
 #  primary               :boolean          default(FALSE), not null
