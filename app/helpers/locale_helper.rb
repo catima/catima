@@ -55,4 +55,37 @@ module LocaleHelper
       html_options
     )
   end
+
+  # For a catalog that supports multiple languages, generates a form group
+  # with N form fields (one field per supported language). The label is
+  # displayed once, and the locale (e.g. "fr") is prefixed to each input.
+  #
+  # If the catalog only supports one language, builds a single field as if
+  # the default form helper was called.
+  #
+  def locale_form_group(form, method, builder_method, *args)
+    locales = form.object.catalog.valid_locales
+    return form.public_send(builder_method, method, *args) if locales.one?
+
+    options = args.extract_options!
+
+    form.form_group(method, :label => {}) do
+      locales.each_with_object([]) do |locale, inputs|
+        method_localized = "#{method}_#{locale}"
+        options_localized = options.reverse_merge(
+          :hide_label => true,
+          :placeholder => locale_language(locale),
+          :prepend => locale
+        )
+        options_localized.delete(:autofocus) unless inputs.empty?
+
+        inputs << form.public_send(
+          builder_method,
+          method_localized,
+          *args,
+          options_localized
+        )
+      end.join("\n").html_safe
+    end
+  end
 end
