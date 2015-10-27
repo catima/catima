@@ -2,15 +2,18 @@
 #
 # Table name: item_types
 #
-#  catalog_id  :integer
-#  created_at  :datetime         not null
-#  id          :integer          not null, primary key
-#  name        :string
-#  name_plural :string
-#  slug        :string
-#  updated_at  :datetime         not null
+#  catalog_id      :integer
+#  created_at      :datetime         not null
+#  id              :integer          not null, primary key
+#  name            :json
+#  name_old        :string
+#  name_plural     :json
+#  name_plural_old :string
+#  slug            :string
+#  updated_at      :datetime         not null
 #
 
+# TODO: drop name_old and name_plural_old columns (no longer used)
 class ItemType < ActiveRecord::Base
   include HasSlug
 

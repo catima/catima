@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20151021003024) do
+ActiveRecord::Schema.define(version: 20151027162712) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -100,11 +100,13 @@ ActiveRecord::Schema.define(version: 20151021003024) do
 
   create_table "item_types", force: :cascade do |t|
     t.integer  "catalog_id"
-    t.string   "name"
+    t.string   "name_old"
     t.string   "slug"
-    t.datetime "created_at",  null: false
-    t.datetime "updated_at",  null: false
-    t.string   "name_plural"
+    t.datetime "created_at",      null: false
+    t.datetime "updated_at",      null: false
+    t.string   "name_plural_old"
+    t.json     "name"
+    t.json     "name_plural"
   end
 
   add_index "item_types", ["catalog_id", "slug"], name: "index_item_types_on_catalog_id_and_slug", unique: true, using: :btree
