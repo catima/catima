@@ -15,7 +15,7 @@
 
 # TODO: drop name_old and name_plural_old columns (no longer used)
 class ItemType < ActiveRecord::Base
-  include HasI18nNames
+  include HasI18nAccessors
   include HasSlug
 
   belongs_to :catalog
@@ -26,6 +26,8 @@ class ItemType < ActiveRecord::Base
            :class_name => "Field"
 
   has_many :items
+
+  i18n_accessors :name, :name_plural
 
   validates_presence_of :catalog
   validates_slug :scope => :catalog_id

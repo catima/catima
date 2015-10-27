@@ -51,7 +51,7 @@ class Field < ActiveRecord::Base
     "multiple-ordered-required" => "Multiple ordered values – at least one"
   }.freeze
 
-  include HasI18nNames
+  include HasI18nAccessors
   include HasSlug
   include RankedModel
 
@@ -60,6 +60,8 @@ class Field < ActiveRecord::Base
   delegate :catalog, :to => :item_type, :allow_nil => true
 
   belongs_to :item_type
+
+  i18n_accessors :name, :name_plural
 
   validates_presence_of :item_type
   validate :default_value_passes_field_validations
