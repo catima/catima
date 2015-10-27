@@ -50,27 +50,35 @@ module LocaleHelper
   #
   def locale_form_group(form, method, builder_method, *args)
     locales = form.object.catalog.valid_locales
-    return form.public_send(builder_method, method, *args) if locales.one?
-
-    options = args.extract_options!
 
     form.form_group(method, :label => {}) do
       locales.each_with_object([]) do |locale, inputs|
-        method_localized = "#{method}_#{locale}"
-        options_localized = options.reverse_merge(
-          :hide_label => true,
-          :placeholder => locale_language(locale),
-          :prepend => locale
-        )
-        options_localized.delete(:autofocus) unless inputs.empty?
-
-        inputs << form.public_send(
-          builder_method,
-          method_localized,
-          *args,
-          options_localized
-        )
+        inputs << locale_form_input(form, method, builder_method, locale, *args)
       end.join("\n").html_safe
     end
+  end
+
+  private
+
+  def locale_form_input(form, method, builder_method, locale, *args)
+    options = args.extract_options!
+    locales = form.object.catalog.valid_locales
+
+    method_localized = "#{method}_#{locale}"
+    options_localized = locale_form_input_options(locales, locale, options)
+
+    form.public_send(builder_method, method_localized, *args, options_localized)
+  end
+
+  def locale_form_input_options(locales, locale, options)
+    options = options.reverse_merge(:hide_label => true)
+    if locales.many?
+      options.reverse_merge!(
+        :placeholder => locale_language(locale),
+        :prepend => locale
+      )
+    end
+    options.delete(:autofocus) unless locale == locales.first
+    options
   end
 end
