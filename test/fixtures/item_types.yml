@@ -17,23 +17,23 @@
 
 one:
   catalog: one
-  name: One
-  name_plural: Ones
+  name: '{ "name_en": "One" }'
+  name_plural: '{ "name_plural_en": "Ones" }'
   slug: one
 
 one_author:
   catalog: one
-  name: Author
-  name_plural: Authors
+  name: '{ "name_en": "Author" }'
+  name_plural: '{ "name_plural_en": "Authors" }'
   slug: authors
 
 two:
   catalog: two
-  name: Two
-  slug: two
+  name: '{ "name_en": "Two" }'
+  slug: '{ "name_plural_en": "Twos" }'
 
 two_author:
   catalog: two
-  name: Author
-  name_plural: Authors
+  name: '{ "name_en": "Author" }'
+  name_plural: '{ "name_plural_en": "Authors" }'
   slug: authors

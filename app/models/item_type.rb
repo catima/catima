@@ -15,6 +15,7 @@
 
 # TODO: drop name_old and name_plural_old columns (no longer used)
 class ItemType < ActiveRecord::Base
+  include HasI18nNames
   include HasSlug
 
   belongs_to :catalog
@@ -27,8 +28,6 @@ class ItemType < ActiveRecord::Base
   has_many :items
 
   validates_presence_of :catalog
-  validates_presence_of :name
-  validates_presence_of :name_plural
   validates_slug :scope => :catalog_id
 
   def self.sorted
