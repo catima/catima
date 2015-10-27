@@ -1,3 +1,23 @@
-<%= f.text_field(:name, :autofocus => true) %>
-<%= f.text_field(:name_plural) %>
+<%# TODO: generalize this %>
+<%= f.form_group(:name, :label => { :text => "Name" }) do %>
+  <% f.object.catalog.valid_locales.each_with_index do |locale, i| %>
+    <%= f.text_field(
+          :"name_#{locale}",
+          :hide_label => true,
+          :placeholder => locale_language(locale),
+          :prepend => locale,
+          :autofocus => (i == 0)) %>
+  <% end %>
+<% end %>
+
+<%= f.form_group(:name_plural, :label => { :text => "Name (plural)" }) do %>
+  <% f.object.catalog.valid_locales.each do |locale| %>
+    <%= f.text_field(
+          :"name_plural_#{locale}",
+          :hide_label => true,
+          :placeholder => locale_language(locale),
+          :prepend => locale) %>
+  <% end %>
+<% end %>
+
 <%= f.text_field(:slug, :help => slug_help_text) %>

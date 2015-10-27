@@ -45,7 +45,12 @@ class CatalogAdmin::ItemTypesController < CatalogAdmin::BaseController
   end
 
   def item_type_params
-    params.require(:item_type).permit(:name, :name_plural, :slug)
+    params.require(:item_type).permit(
+      :name_de, :name_plural_de,
+      :name_en, :name_plural_en,
+      :name_fr, :name_plural_fr,
+      :name_it, :name_plural_it,
+      :slug)
   end
 
   def after_create_path

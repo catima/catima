@@ -1,0 +1,4 @@
+// Override Bootstrap to ensure locale prefixes have equal widths
+.input-group-addon {
+  min-width: 3em;
+}
