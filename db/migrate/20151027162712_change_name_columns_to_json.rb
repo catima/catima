@@ -14,9 +14,10 @@ class ChangeNameColumnsToJson < ActiveRecord::Migration
 
     ItemType.find_each do |it|
       locale = it.catalog.primary_language
-      it.name = { "name_#{locale}" => it.name_old }
-      it.name_plural = { "name_plural_#{locale}" => it.name_plural_old }
-      it.save!
+      it.update_columns(
+        :name => { "name_#{locale}" => it.name_old },
+        :name_plural => { "name_plural_#{locale}" => it.name_plural_old }
+      )
     end
   end
 
