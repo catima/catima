@@ -1,0 +1,33 @@
+<% provide(:title, "Choice sets") %>
+
+<% provide(:actions) do %>
+  <%= link_to(new_catalog_admin_choice_set_path) do %>
+    <%= fa_icon(:"plus-square", :text => "New choice set") %>
+  <% end %>
+<% end %>
+
+<table class="table">
+  <thead>
+    <tr>
+      <th>Name</th>
+      <th>Choices</th>
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+    <% @choice_sets.each do |set| %>
+      <tr>
+        <td><%= set.name %></td>
+        <td><%= choice_set_abbreviated_choices(set) %></td>
+        <td style="text-align: right">
+          <% if policy(set).edit? %>
+            <%= link_to(
+                  fa_icon("pencil", :text => "Edit"),
+                  edit_catalog_admin_choice_set_path(catalog, set),
+                  :class => "btn btn-default btn-xs") %>
+          <% end %>
+        </td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
