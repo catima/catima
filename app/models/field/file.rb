@@ -44,7 +44,7 @@ class Field::File < ::Field
 
   def decorate_item_class(klass)
     super
-    define_attachment_attrs(klass)
+    define_attachment_accessors(klass)
     klass.send(:attachment, uuid)
   end
 
@@ -63,7 +63,7 @@ class Field::File < ::Field
 
   private
 
-  def define_attachment_attrs(klass)
+  def define_attachment_accessors(klass)
     field = self
     %w(id filename size).each do |attr|
       klass.send(:define_method, "#{uuid}_#{attr}") do
