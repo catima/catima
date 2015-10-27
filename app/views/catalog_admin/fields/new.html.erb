@@ -8,8 +8,8 @@
 
   <%= hidden_field_tag(:type, params[:type]) %>
 
-  <%= f.text_field(:name, :autofocus => true) %>
-  <%= f.text_field(:name_plural, :label => "Name (plural)") %>
+  <%= locale_form_group(f, :name, :text_field, :autofocus => true) %>
+  <%= locale_form_group(f, :name_plural, :text_field, :label => "Name (plural)") %>
   <%= f.text_field(:slug, :label => "Slug (singular)", :help => slug_help_text) %>
   <%= f.text_area(:comment, :label => "Comment (optional)") %>
 

@@ -55,8 +55,8 @@ class CatalogAdmin::FieldsController < CatalogAdmin::BaseController
 
   def field_params
     params.require(:field).permit(
-      :name,
-      :name_plural,
+      :name_de, :name_en, :name_fr, :name_it,
+      :name_plural_de, :name_plural_en, :name_plural_fr, :name_plural_it,
       :slug,
       :comment,
       :style,
