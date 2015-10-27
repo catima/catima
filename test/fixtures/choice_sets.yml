@@ -19,3 +19,7 @@ one_languages:
 two_languages:
   catalog: two
   name: Languages
+
+multilingual_languages:
+  catalog: multilingual
+  name: Languages

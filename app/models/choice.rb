@@ -13,11 +13,12 @@
 #
 
 class Choice < ActiveRecord::Base
-  belongs_to :choice_set
+  include HasI18nAccessors
 
+  belongs_to :choice_set
+  delegate :catalog, :to => :choice_set, :allow_nil => true
+  i18n_accessors :short_name, :long_name
   validates_presence_of :choice_set
-  validates_presence_of :long_name
-  validates_presence_of :short_name
 
   def self.sorted(locale=I18n.locale)
     order("LOWER(choices.short_name->>'#{locale}') ASC")
