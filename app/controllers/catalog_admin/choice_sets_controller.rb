@@ -7,21 +7,21 @@ class CatalogAdmin::ChoiceSetsController < CatalogAdmin::BaseController
     render("index", :layout => "catalog_admin/setup")
   end
 
-  # def new
-  #   build_choice_set
-  #   authorize(@choice_set)
-  # end
+  def new
+    build_choice_set
+    authorize(@choice_set)
+  end
 
-  # def create
-  #   build_choice_set
-  #   authorize(@choice_set)
-  #   if @choice_set.update(choice_set_params)
-  #     redirect_to(catalog_admin_choice_sets_path, :notice => choice_set_created_message)
-  #   else
-  #     logger.debug(@choice_set.errors.inspect)
-  #     render("new")
-  #   end
-  # end
+  def create
+    build_choice_set
+    authorize(@choice_set)
+    if @choice_set.update(choice_set_params)
+      redirect_to(after_create_path, :notice => created_message)
+    else
+      logger.debug(@choice_set.errors.inspect)
+      render("new")
+    end
+  end
 
   # def edit
   #   find_choice_set
@@ -32,33 +32,36 @@ class CatalogAdmin::ChoiceSetsController < CatalogAdmin::BaseController
   #   find_choice_set
   #   authorize(@choice_set)
   #   if @choice_set.update(choice_set_params)
-  #     redirect_to(catalog_admin_choice_sets_path, :notice => choice_set_updated_message)
+  #     redirect_to(catalog_admin_choice_sets_path, :notice => updated_message)
   #   else
   #     render("edit")
   #   end
   # end
 
-  # private
+  private
 
-  # def build_choice_set
-  #   @choice_set = ChoiceSet::InvitationForm.new(
-  #     :catalog => catalog,
-  #     :invited_by => current_choice_set
-  #   )
-  # end
+  def build_choice_set
+    @choice_set = catalog.choice_sets.new
+  end
 
   # def find_choice_set
   #   @choice_set = ChoiceSet.find(params[:id])
   # end
 
-  # def choice_set_params
-  #   policy(@choice_set).permit(...)
-  # end
+  def choice_set_params
+    params.require(:choice_set).permit(:name)
+  end
 
-  # def choice_set_created_message
-  #   "An invitation has been sent to #{@choice_set.email}."
-  # end
+  def created_message
+    "Choice set “#{@choice_set.name}” has been created."
+  end
 
+  def after_create_path
+    case params[:commit]
+    when /another/i then new_catalog_admin_choice_set_path
+    else catalog_admin_choice_sets_path(catalog, @item_type)
+    end
+  end
   # def choice_set_updated_message
   #   "#{@choice_set.email} has been saved."
   # end

@@ -1,0 +1,14 @@
+<% provide(:title, "New choice set") %>
+
+<%= bootstrap_form_for([:catalog_admin, @choice_set]) do |f| %>
+
+  <%= f.text_field(:name) %>
+
+  <%= f.primary("Create choice set") %>
+  <%= submit_and_add_another(f) %>
+  <%= link_to(
+        "Cancel",
+        catalog_admin_choice_sets_path,
+        :class => "btn btn-link") %>
+
+<% end %>
