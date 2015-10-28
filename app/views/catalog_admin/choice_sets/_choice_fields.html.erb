@@ -1,7 +1,14 @@
-<div class="nested-fields">
-  <%= locale_form_group(f, :short_name, :text_field) %>
-  <%= locale_form_group(f, :long_name, :text_field) %>
-  <%= link_to_remove_association(
-        fa_icon(:trash, :text => "Remove choice"),
-        f) %>
-</div>
+<tr class="nested-fields">
+  <td>
+    <%= locale_form_group(f, :short_name, :text_field, :hide_label => true) %>
+  </td>
+  <td>
+    <%= locale_form_group(f, :long_name, :text_field, :hide_label => true) %>
+  </td>
+  <td>
+    <%= link_to_remove_association(
+          fa_icon(:trash, :text => "Remove"),
+          f,
+          :class => "btn btn-text") %>
+  </td>
+</tr>

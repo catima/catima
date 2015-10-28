@@ -5,16 +5,26 @@
 <div id="choices">
   <label>Choices</label>
 
-  <%= f.fields_for(:choices) do |choice| %>
-    <%= render("choice_fields", :f => choice) %>
-  <% end %>
-
-  <div class="links">
-    <%= link_to_add_association(
-          fa_icon(:"plus-square", :text => "Add choice"),
-          f,
-          :choices)%>
-  </div>
+  <table class="table table-hover">
+    <thead>
+      <th>Short name</th>
+      <th>Long name</th>
+      <th></th>
+    </thead>
+    <tbody>
+      <%= f.fields_for(:choices) do |choice| %>
+        <%= render("choice_fields", :f => choice) %>
+      <% end %>
+      <tr data-link="choices">
+        <td colspan="3">
+          <%= link_to_add_association(
+                fa_icon(:"plus-square", :text => "Add choice"),
+                f,
+                :choices,
+                :class => "btn btn-text",
+                :"data-association-insertion-node" => "[data-link='choices']")%>
+        </td>
+      </tr>
+    </tbody>
+  </table>
 </div>
-
-<hr>

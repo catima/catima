@@ -1,0 +1,4 @@
+// Override Bootstrap remove trailing margin when group is in a table cell
+.table td .form-group:last-child {
+  margin-bottom: 0;
+}
