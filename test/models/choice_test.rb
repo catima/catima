@@ -2,7 +2,6 @@ require "test_helper"
 
 class ChoiceTest < ActiveSupport::TestCase
   should validate_presence_of(:catalog)
-  should validate_presence_of(:choice_set)
 
   test "given catalog supporting one locale, validates names for it" do
     set = choice_sets(:one_languages) # supports only :en

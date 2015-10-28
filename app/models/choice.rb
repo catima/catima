@@ -22,7 +22,6 @@ class Choice < ActiveRecord::Base
   store_translations :short_name, :long_name
 
   validates_presence_of :catalog
-  validates_presence_of :choice_set
 
   def self.sorted(locale=I18n.locale)
     order("LOWER(choices.short_name_translations->>'#{locale}') ASC")

@@ -15,10 +15,7 @@ class CatalogAdmin::ChoiceSetsController < CatalogAdmin::BaseController
   def create
     build_choice_set
     authorize(@choice_set)
-    @choice_set.attributes = choice_set_params
-    apply_choice_set_to_choices
-
-    if @choice_set.save
+    if @choice_set.update(choice_set_params)
       redirect_to(after_create_path, :notice => created_message)
     else
       logger.debug(@choice_set.errors.inspect)
@@ -59,10 +56,6 @@ class CatalogAdmin::ChoiceSetsController < CatalogAdmin::BaseController
         :short_name_de, :short_name_en, :short_name_fr, :short_name_it,
         :long_name_de, :long_name_en, :long_name_fr, :long_name_it
       ])
-  end
-
-  def apply_choice_set_to_choices
-    @choice_set.choices.each { |c| c.choice_set = @choice_set }
   end
 
   def created_message

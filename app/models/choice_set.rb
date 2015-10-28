@@ -14,7 +14,7 @@ class ChoiceSet < ActiveRecord::Base
   include HasDeactivation
 
   belongs_to :catalog
-  has_many :choices
+  has_many :choices, ->(set) { where(:catalog_id => set.catalog_id) }
 
   accepts_nested_attributes_for :choices,
                                 :reject_if => :all_blank,
