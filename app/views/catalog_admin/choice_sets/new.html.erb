@@ -3,26 +3,7 @@
 <div class="panel-body">
   <%= bootstrap_form_for([:catalog_admin, @choice_set]) do |f| %>
 
-    <%= f.text_field(:name) %>
-
-    <hr>
-
-    <div id="choices">
-      <label>Choices</label>
-
-      <%= f.fields_for(:choices) do |choice| %>
-        <%= render("choice_fields", :f => choice) %>
-      <% end %>
-
-      <div class="links">
-        <%= link_to_add_association(
-              fa_icon(:"plus-square", :text => "Add choice"),
-              f,
-              :choices)%>
-      </div>
-    </div>
-
-    <hr>
+    <%= render("common_form_fields", :f => f) %>
 
     <%= f.primary("Create choice set") %>
     <%= submit_and_add_another(f) %>

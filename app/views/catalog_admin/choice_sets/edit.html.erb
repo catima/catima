@@ -1,31 +1,11 @@
 <% provide(:title, "Edit choice set") %>
 
-<%# TODO: DRY up with new.html.erb %>
 <div class="panel-body">
   <%= bootstrap_form_for(
         @choice_set,
         :url => catalog_admin_choice_set_path) do |f| %>
 
-    <%= f.text_field(:name) %>
-
-    <hr>
-
-    <div id="choices">
-      <label>Choices</label>
-
-      <%= f.fields_for(:choices) do |choice| %>
-        <%= render("choice_fields", :f => choice) %>
-      <% end %>
-
-      <div class="links">
-        <%= link_to_add_association(
-              fa_icon(:"plus-square", :text => "Add choice"),
-              f,
-              :choices)%>
-      </div>
-    </div>
-
-    <hr>
+    <%= render("common_form_fields", :f => f) %>
 
     <%= f.primary("Update choice set") %>
     <%= link_to(
