@@ -10,6 +10,7 @@
   <thead>
     <tr>
       <th>Name</th>
+      <th>Status</th>
       <th>Choices</th>
       <th></th>
     </tr>
@@ -18,6 +19,7 @@
     <% @choice_sets.each do |set| %>
       <tr>
         <td><%= set.name %></td>
+        <td><%= deactivation_status_label(set) %></td>
         <td><%= choice_set_abbreviated_choices(set) %></td>
         <td style="text-align: right">
           <% if policy(set).edit? %>
@@ -25,6 +27,13 @@
                   fa_icon("pencil", :text => "Edit"),
                   edit_catalog_admin_choice_set_path(catalog, set),
                   :class => "btn btn-default btn-xs") %>
+
+            <%= deactivation_toggle(
+                  set,
+                  :catalog_admin_choice_set_path,
+                  catalog,
+                  set,
+                  :class => "btn btn-xs btn-text") %>
           <% end %>
         </td>
       </tr>

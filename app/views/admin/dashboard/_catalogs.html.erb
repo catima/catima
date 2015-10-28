@@ -17,12 +17,16 @@
                 "/#{catalog.slug}",
                 catalog_admin_setup_path(catalog)) %>
         </td>
-        <td><%= catalog_status_label(catalog) %></td>
+        <td><%= deactivation_status_label(catalog) %></td>
         <td style="text-align: right">
           <%= link_to edit_admin_catalog_path(catalog), :class => "btn btn-xs btn-default" do %>
             <%= fa_icon("pencil", :text => "Edit") %>
           <% end %>
-          <%= catalog_activation_toggle(catalog, :class => "btn btn-xs btn-text") %>
+          <%= deactivation_toggle(
+                catalog,
+                :admin_catalog_path,
+                catalog,
+                :class => "btn btn-xs btn-text") %>
         </td>
       </tr>
     <% end %>

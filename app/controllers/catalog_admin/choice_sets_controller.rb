@@ -49,6 +49,7 @@ class CatalogAdmin::ChoiceSetsController < CatalogAdmin::BaseController
   def choice_set_params
     params.require(:choice_set).permit(
       :name,
+      :deactivated_at,
       :choices_attributes => [
         :id, :_destroy,
         :short_name_de, :short_name_en, :short_name_fr, :short_name_it,
@@ -61,7 +62,13 @@ class CatalogAdmin::ChoiceSetsController < CatalogAdmin::BaseController
   end
 
   def updated_message
-    "Choice set “#{@choice_set.name}” has been saved."
+    message = "Choice set “#{@choice_set.name}” has been "
+    if choice_set_params.key?(:deactivated_at)
+      message << (@choice_set.active? ? "reactivated." : "deactivated.")
+    else
+      message << "updated."
+    end
+    message
   end
 
   def after_create_path
