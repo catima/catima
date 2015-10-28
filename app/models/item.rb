@@ -14,6 +14,8 @@
 #
 
 class Item < ActiveRecord::Base
+  include HasDataStore
+
   delegate :fields, :primary_field, :to => :item_type
 
   belongs_to :catalog

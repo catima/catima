@@ -46,37 +46,15 @@ class Field::File < ::Field
 
   def decorate_item_class(klass)
     super
-    define_attachment_accessors(klass)
+    klass.data_store_hash(uuid, :id, :filename, :size)
     klass.send(:attachment, uuid)
   end
 
-  %w(id filename size).each do |attr|
-    define_method("attachment_#{attr}") do |item|
-      attachment_metadata(item)[attr]
-    end
-    define_method("attachment_#{attr}=") do |item, value|
-      attachment_metadata(item)[attr] = value
-    end
+  def attachment_filename(item)
+    item.behaving_as_type.public_send("#{uuid}_filename")
   end
 
-  def attachment_metadata(item)
-    read_value(item) || write_value(item, {})
-  end
-
-  private
-
-  def define_attachment_accessors(klass)
-    field = self
-    %w(id filename size).each do |attr|
-      klass.send(:define_method, "#{uuid}_#{attr}") do
-        field.public_send("attachment_#{attr}", self)
-      end
-      klass.send(:define_method, "#{uuid}_#{attr}=") do |value|
-        field.public_send("attachment_#{attr}=", self, value)
-      end
-      klass.send(:define_method, "#{uuid}_#{attr}_will_change!") do
-        nil
-      end
-    end
+  def attachment_size(item)
+    item.behaving_as_type.public_send("#{uuid}_size")
   end
 end

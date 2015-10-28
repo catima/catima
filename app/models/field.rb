@@ -116,8 +116,7 @@ class Field < ActiveRecord::Base
   # add validation rules, accessors, etc. for this field. The class in this
   # case is an anonymous subclass of Item.
   def decorate_item_class(klass)
-    define_basic_accessor(klass)
-    define_i18n_accessors(klass) if i18n?
+    klass.data_store_attribute(uuid, :i18n => i18n?, :multiple => multiple?)
 
     validators = build_validators(uuid)
     klass.send(:validate) do |item|
@@ -127,47 +126,10 @@ class Field < ActiveRecord::Base
     klass.send(:validates_presence_of, uuid) if required?
   end
 
-  def read_value(item, locale=I18n.locale)
-    data_store(item, locale).get
-  end
-
-  def write_value(item, value, locale=I18n.locale)
-    data_store(item, locale).set(value)
-  end
-
   private
 
   def build_validators(attr)
     []
-  end
-
-  def define_basic_accessor(klass)
-    field = self
-    klass.send(:define_method, uuid) { field.read_value(self) }
-    klass.send(:define_method, "#{uuid}=") { |v| field.write_value(self, v) }
-  end
-
-  def define_i18n_accessors(klass)
-    field = self
-
-    catalog.valid_locales.each do |locale|
-      klass.send(:define_method, "#{uuid}_#{locale}") do
-        field.read_value(self, locale)
-      end
-      klass.send(:define_method, "#{uuid}_#{locale}=") do |v|
-        field.write_value(self, v, locale)
-      end
-    end
-  end
-
-  def data_store(item, locale=I18n.locale)
-    item.data ||= {}
-    Item::DirtyAwareDataStore.new(
-      :item => item,
-      :key => uuid,
-      :multivalued => multiple?,
-      :locale => (i18n? ? locale : nil)
-    )
   end
 
   def default_value_passes_field_validations
