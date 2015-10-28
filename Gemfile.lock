@@ -113,6 +113,7 @@ GEM
     celluloid-supervision (0.20.5)
       timers (>= 4.1.1)
     cliver (0.3.2)
+    cocoon (1.2.6)
     coderay (1.1.0)
     coffee-rails (4.1.0)
       coffee-script (>= 2.2.0)
@@ -411,6 +412,7 @@ DEPENDENCIES
   capistrano-mb (>= 0.22.2)
   capistrano-rails
   capybara
+  cocoon
   coffee-rails (~> 4.1.0)
   connection_pool
   devise
