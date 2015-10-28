@@ -1,7 +1,10 @@
-<% provide(:title, "New choice set") %>
+<% provide(:title, "Edit choice set") %>
 
+<%# TODO: DRY up with new.html.erb %>
 <div class="panel-body">
-  <%= bootstrap_form_for([:catalog_admin, @choice_set]) do |f| %>
+  <%= bootstrap_form_for(
+        @choice_set,
+        :url => catalog_admin_choice_set_path) do |f| %>
 
     <%= f.text_field(:name) %>
 
@@ -24,8 +27,7 @@
 
     <hr>
 
-    <%= f.primary("Create choice set") %>
-    <%= submit_and_add_another(f) %>
+    <%= f.primary("Update choice set") %>
     <%= link_to(
           "Cancel",
           catalog_admin_choice_sets_path,

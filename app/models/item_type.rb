@@ -33,7 +33,7 @@ class ItemType < ActiveRecord::Base
   validates_slug :scope => :catalog_id
 
   def self.sorted(locale=I18n.locale)
-    order("LOWER(item_types.name_translations->>'#{locale}') ASC")
+    order("LOWER(item_types.name_translations->>'name_#{locale}') ASC")
   end
 
   def primary_field

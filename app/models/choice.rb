@@ -24,6 +24,6 @@ class Choice < ActiveRecord::Base
   validates_presence_of :catalog
 
   def self.sorted(locale=I18n.locale)
-    order("LOWER(choices.short_name_translations->>'#{locale}') ASC")
+    order("LOWER(choices.short_name_translations->>'short_name_#{locale}') ASC")
   end
 end
