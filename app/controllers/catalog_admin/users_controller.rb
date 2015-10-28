@@ -18,7 +18,6 @@ class CatalogAdmin::UsersController < CatalogAdmin::BaseController
     if @user.update(user_params)
       redirect_to(catalog_admin_users_path, :notice => user_created_message)
     else
-      logger.debug(@user.errors.inspect)
       render("new")
     end
   end

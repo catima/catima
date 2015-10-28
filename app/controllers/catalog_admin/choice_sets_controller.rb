@@ -18,7 +18,6 @@ class CatalogAdmin::ChoiceSetsController < CatalogAdmin::BaseController
     if @choice_set.update(choice_set_params)
       redirect_to(after_create_path, :notice => created_message)
     else
-      logger.debug(@choice_set.errors.inspect)
       render("new")
     end
   end
