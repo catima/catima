@@ -65,7 +65,7 @@ Rails.application.routes.draw do
               :except => :show,
               :as => "item_type_fields"
 
-    resources :choice_sets, :path => "_choices"
+    resources :choice_sets, :path => "_choices", :except => :show
 
     resources :users, :path => "_users"
 

@@ -16,6 +16,10 @@ class ChoiceSet < ActiveRecord::Base
   belongs_to :catalog
   has_many :choices
 
+  accepts_nested_attributes_for :choices,
+                                :reject_if => :all_blank,
+                                :allow_destroy => true
+
   validates_presence_of :catalog
   validates_presence_of :name
 
