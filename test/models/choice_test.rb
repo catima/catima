@@ -1,11 +1,12 @@
 require "test_helper"
 
 class ChoiceTest < ActiveSupport::TestCase
+  should validate_presence_of(:catalog)
   should validate_presence_of(:choice_set)
 
   test "given catalog supporting one locale, validates names for it" do
     set = choice_sets(:one_languages) # supports only :en
-    choice = Choice.new(:choice_set => set)
+    choice = Choice.new(:choice_set => set, :catalog => set.catalog)
 
     refute(choice.valid?)
 
@@ -16,7 +17,7 @@ class ChoiceTest < ActiveSupport::TestCase
 
   test "given catalog supporting many locales, validates names for all" do
     set = choice_sets(:multilingual_languages)
-    ch = Choice.new(:choice_set => set)
+    ch = Choice.new(:choice_set => set, :catalog => set.catalog)
 
     refute(ch.valid?)
 

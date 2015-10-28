@@ -2,6 +2,7 @@
 #
 # Table name: choices
 #
+#  catalog_id              :integer
 #  choice_set_id           :integer
 #  created_at              :datetime         not null
 #  id                      :integer          not null, primary key
@@ -15,11 +16,13 @@
 # Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
 
 one_english:
+  catalog: one
   choice_set: one_languages
   long_name_translations: '{ "long_name_en": "English" }'
   short_name_translations: '{ "short_name_en": "Eng" }'
 
 two_english:
+  catalog: two
   choice_set: two_languages
   long_name_translations: '{ "long_name_en": "English" }'
   short_name_translations: '{ "short_name_en": "Eng" }'

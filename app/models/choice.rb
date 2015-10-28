@@ -2,6 +2,7 @@
 #
 # Table name: choices
 #
+#  catalog_id              :integer
 #  choice_set_id           :integer
 #  created_at              :datetime         not null
 #  id                      :integer          not null, primary key
@@ -15,9 +16,12 @@
 class Choice < ActiveRecord::Base
   include HasTranslations
 
+  belongs_to :catalog
   belongs_to :choice_set
-  delegate :catalog, :to => :choice_set, :allow_nil => true
+
   store_translations :short_name, :long_name
+
+  validates_presence_of :catalog
   validates_presence_of :choice_set
 
   def self.sorted(locale=I18n.locale)
