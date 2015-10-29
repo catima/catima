@@ -60,6 +60,10 @@ two_admin:
   encrypted_password: <%= BCrypt::Password.create("password") %>
   invited_by: system_admin
 
+multilingual_admin:
+  email: multilingual-admin@example.com
+  encrypted_password: <%= BCrypt::Password.create("password") %>
+
 system_admin_invited_by_one:
   email: system-admin-invited-by-one@example.com
   encrypted_password: <%= BCrypt::Password.create("password") %>

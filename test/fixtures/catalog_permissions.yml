@@ -46,3 +46,8 @@ two_admin:
   catalog: two
   user: two_admin
   role: admin
+
+multilingual_admin:
+  catalog: multilingual
+  user: multilingual_admin
+  role: admin

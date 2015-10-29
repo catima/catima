@@ -8,6 +8,10 @@ class ActionDispatch::IntegrationTest
   include Capybara::DSL
 
   setup { Capybara.current_session.driver.browser.clear_cookies }
+
+  def use_javascript_capybara_driver
+    Capybara.current_driver = Capybara.javascript_driver
+  end
 end
 
 # Monkey patch so that AR shares a single DB connection among all threads.
