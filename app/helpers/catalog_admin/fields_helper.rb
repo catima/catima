@@ -55,7 +55,8 @@ module CatalogAdmin::FieldsHelper
         :slug => field,
         :field => { :row_order_position => direction }
       },
-      :method => :patch
+      :method => :patch,
+      :remote => true
     )
   end
 end

@@ -4,7 +4,6 @@ class CatalogAdmin::FieldsController < CatalogAdmin::BaseController
 
   def index
     authorize(@item_type, :show?)
-    @fields = @item_type.fields
     render("index", :layout => "catalog_admin/setup")
   end
 
@@ -32,14 +31,23 @@ class CatalogAdmin::FieldsController < CatalogAdmin::BaseController
     find_field
     authorize(@field)
     if @field.update(field_params)
-      # TODO: support AJAX
-      redirect_to({ :action => "index" }, :notice => updated_message)
+      respond_to do |f|
+        f.js
+        f.html do
+          redirect_to({ :action => "index" }, :notice => updated_message)
+        end
+      end
     else
       render("edit")
     end
   end
 
   private
+
+  def fields
+    @fields = @item_type.fields
+  end
+  helper_method :fields
 
   def build_field
     @field = field_class.new(:item_type => @item_type)
