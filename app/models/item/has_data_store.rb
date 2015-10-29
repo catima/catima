@@ -41,6 +41,11 @@
 #   foo_filename
 #   foo_filename=
 #
+# Finally, all accessors defined using these macros are exposed via a
+# `data_store_attributes` class method.
+#
+#   data_store_attributes # => [:foo]
+#
 module Item::HasDataStore
   extend ActiveSupport::Concern
 
@@ -55,6 +60,8 @@ module Item::HasDataStore
 
     def data_store_hash(key, *attributes)
       attributes.each do |attr|
+        data_store_attributes << :"key_#{attr}"
+
         define_method("#{key}_#{attr}") do
           data_store_hash(key)[attr.to_s]
         end
@@ -65,6 +72,10 @@ module Item::HasDataStore
       end
     end
 
+    def data_store_attributes
+      @data_store_attributes ||= []
+    end
+
     private
 
     def data_store_attribute_i18n(key, multiple)
@@ -72,18 +83,22 @@ module Item::HasDataStore
         dirty_aware_store(key, multiple, true).get
       end
 
-      %w(de en fr it).each do |locale|
-        define_method(key) do
+      I18n.available_locales.each do |locale|
+        data_store_attributes << :"#{key}_#{locale}"
+
+        define_method("#{key}_#{locale}") do
           dirty_aware_store(key, multiple, true, locale).get
         end
 
-        define_method("#{key}=") do |value|
+        define_method("#{key}_#{locale}=") do |value|
           dirty_aware_store(key, multiple, true, locale).set(value)
         end
       end
     end
 
     def data_store_attribute_basic(key, multiple)
+      data_store_attributes << key.to_sym
+
       define_method(key) do
         dirty_aware_store(key, multiple).get
       end
@@ -92,6 +107,10 @@ module Item::HasDataStore
         dirty_aware_store(key, multiple).set(value)
       end
     end
+  end
+
+  def data_store_attributes
+    self.class.data_store_attributes
   end
 
   private

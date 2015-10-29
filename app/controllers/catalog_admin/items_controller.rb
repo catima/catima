@@ -76,7 +76,7 @@ class CatalogAdmin::ItemsController < CatalogAdmin::BaseController
   end
 
   def item_params
-    params.require(:item).permit(*@item.fields.map(&:uuid))
+    params.require(:item).permit(*@item.data_store_attributes)
   end
 
   def after_create_path
