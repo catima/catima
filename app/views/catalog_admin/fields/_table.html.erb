@@ -34,6 +34,17 @@
                   field),
                 :class => "btn btn-default btn-xs") %>
         <% end %>
+        <% if policy(field).destroy? %>
+          <%= link_to(
+                fa_icon("trash-o", :text => "Delete"),
+                { :action => :destroy, :slug => field },
+                :class => "btn btn-xs btn-text",
+                :method => :delete,
+                :data => {
+                  :confirm => "Are you sure you want to delete the "\
+                              "“#{field.name}” field?"
+                }) %>
+        <% end %>
       </td>
     </tr>
   <% end %>

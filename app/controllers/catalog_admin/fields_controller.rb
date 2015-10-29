@@ -42,6 +42,13 @@ class CatalogAdmin::FieldsController < CatalogAdmin::BaseController
     end
   end
 
+  def destroy
+    find_field
+    authorize(@field)
+    @field.destroy
+    redirect_to({ :action => "index" }, :notice => destroyed_message)
+  end
+
   private
 
   def fields
@@ -88,5 +95,9 @@ class CatalogAdmin::FieldsController < CatalogAdmin::BaseController
 
   def updated_message
     "The “#{@field.name}” field has been saved."
+  end
+
+  def destroyed_message
+    "The “#{@field.name}” field has been deleted."
   end
 end
