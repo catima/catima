@@ -20,6 +20,11 @@ module CatalogAdmin::FieldsHelper
     content_tag(:span, "Primary", :class => "label label-warning")
   end
 
+  def field_i18n_badge(field)
+    return unless field.i18n?
+    content_tag(:span, "i18n", :class => "label label-info")
+  end
+
   def field_move_up_link(field)
     field_move_link(field, "up")
   end

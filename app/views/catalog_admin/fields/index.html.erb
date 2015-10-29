@@ -37,6 +37,7 @@
       <th style="width: 5em">Position</th>
       <th>Name</th>
       <th>Type</th>
+      <th>Required?</th>
       <th></th>
     </tr>
   </thead>
@@ -52,7 +53,11 @@
           <%= field.name %>
           <%= field_primary_badge(field) %>
         </td>
-        <td><%= field.type_name %></td>
+        <td>
+          <%= field.type_name %>
+          <%= field_i18n_badge(field) %>
+        </td>
+        <td><%= fa_icon(:check) if field.required? %></td>
         <td style="text-align: right">
           TODO
         </td>
