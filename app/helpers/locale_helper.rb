@@ -51,9 +51,10 @@ module LocaleHelper
   def locale_form_group(form, method, builder_method, *args)
     options = args.extract_options!
     locales = form.object.catalog.valid_locales
-    hide_label = options.delete(:hide_label)
+    group_label = options.delete(:hide_label) ? nil : {}
+    group_label[:text] = options[:label] if group_label && options[:label]
 
-    form.form_group(method, :label => ({} unless hide_label)) do
+    form.form_group(method, :label => group_label) do
       locales.each_with_object([]) do |locale, inputs|
         inputs << locale_form_input(
           form,
