@@ -15,16 +15,16 @@
       <ul class="nav navbar-nav">
         <%= navbar_link_to(
               fa_icon(:book, :text => "Data"),
-              catalog_admin_data_path,
+              catalog_admin_contextual_data_path,
               :active_when => {
                 :controller => "catalog_admin/items"
               }) %>
         <% if policy(ItemType).index? %>
           <%= navbar_link_to(
                 fa_icon(:wrench, :text => "Setup"),
-                catalog_admin_setup_path,
+                catalog_admin_contextual_setup_path,
                 :active_when => {
-                  :controller => /dashboard|item_types|choices|fields|users/
+                  :controller => /dashboard|item_types|choice_sets|fields|users/
                 }) %>
         <% end %>
       </ul>
