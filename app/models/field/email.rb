@@ -32,16 +32,18 @@
 class Field::Email < ::Field
   private
 
-  def build_validators(attr)
-    [email_validator(attr)]
+  def build_validators
+    [email_validator]
   end
 
-  def email_validator(attr)
-    ActiveModel::Validations::FormatValidator.new(
-      :attributes => attr,
-      :allow_blank => true,
-      :with => Devise.email_regexp,
-      :message => :invalid_email
-    )
+  def email_validator
+    [
+      ActiveModel::Validations::FormatValidator,
+      {
+        :allow_blank => true,
+        :with => Devise.email_regexp,
+        :message => :invalid_email
+      }
+    ]
   end
 end

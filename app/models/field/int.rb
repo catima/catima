@@ -45,14 +45,14 @@ class Field::Int < ::Field
 
   private
 
-  def build_validators(attr)
-    [numericality_validator(attr)]
+  def build_validators
+    [numericality_validator]
   end
 
-  def numericality_validator(attr)
-    opts = { :attributes => attr, :allow_blank => true, :only_integer => true }
+  def numericality_validator
+    opts = { :allow_blank => true, :only_integer => true }
     opts[:less_than_or_equal_to] = maximum.to_i unless maximum.blank?
     opts[:greater_than_or_equal_to] = minimum.to_i unless minimum.blank?
-    ActiveModel::Validations::NumericalityValidator.new(opts)
+    [ActiveModel::Validations::NumericalityValidator, opts]
   end
 end

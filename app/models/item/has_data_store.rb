@@ -26,7 +26,14 @@
 #   foo_en=
 #   etc.
 #
-# Finally, a special `data_store_hash` macro allows a hash of data to be stored
+# Validations can also be attached to an attribute, with automatic handling
+# of the multiple i18n values:
+#
+#   data_store_validator :foo, MyValidatorClass, validator_opts, :i18n => true
+#
+# This will run the validator against all the locales supported by the catalog.
+#
+# Also, a special `data_store_hash` macro allows a hash of data to be stored
 # in the attribute, rather than a normal value. Accessors will be created for
 # each of the specified keys. This is typically used to support refile
 # attachments.
@@ -69,6 +76,13 @@ module Item::HasDataStore
         define_method("#{key}_#{attr}=") do |value|
           data_store_hash(key)[attr.to_s] = value
         end
+      end
+    end
+
+    def data_store_validator(key, validator, options={}, i18n:false)
+      validate do
+        attrs = i18n ? catalog.valid_locales.map { |l| "#{key}_#{l}" } : [key]
+        validates_with(validator, options.merge(:attributes => attrs))
       end
     end
 

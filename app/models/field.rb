@@ -118,23 +118,28 @@ class Field < ActiveRecord::Base
   def decorate_item_class(klass)
     klass.data_store_attribute(uuid, :i18n => i18n?, :multiple => multiple?)
 
-    validators = build_validators(uuid)
-    klass.send(:validate) do |item|
-      validators.each { |v| v.validate(item) }
-    end
+    # TODO: how does validation work for multi-valued?
+    validators = build_validators
+    validators << ActiveModel::Validations::PresenceValidator if required?
 
-    klass.send(:validates_presence_of, uuid) if required?
+    validators.each do |val|
+      val = Array.wrap(val)
+      options = val.extract_options!
+      klass.data_store_validator(uuid, val.first, options, :i18n => i18n?)
+    end
   end
 
   private
 
-  def build_validators(attr)
+  def build_validators
     []
   end
 
   def default_value_passes_field_validations
-    build_validators(:default_value).each do |validator|
-      validator.validate(self)
+    build_validators.each do |val|
+      val = Array.wrap(val)
+      options = val.extract_options!
+      validates_with(val.first, options.merge(:attributes => :default_value))
     end
   end
 

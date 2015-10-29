@@ -32,16 +32,14 @@
 class Field::URL < ::Field
   private
 
-  def build_validators(attr)
-    [url_validator(attr)]
+  def build_validators
+    [url_validator]
   end
 
-  def url_validator(attr)
-    ActiveModel::Validations::FormatValidator.new(
-      :attributes => attr,
-      :allow_blank => true,
-      :with => URI.regexp,
-      :message => :invalid_url
-    )
+  def url_validator
+    [
+      ActiveModel::Validations::FormatValidator,
+      { :allow_blank => true, :with => URI.regexp, :message => :invalid_url }
+    ]
   end
 end
