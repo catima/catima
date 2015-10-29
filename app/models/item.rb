@@ -14,7 +14,7 @@
 #
 
 class Item < ActiveRecord::Base
-  include HasDataStore
+  include DataStore::Macros
 
   delegate :fields, :primary_field, :to => :item_type
 

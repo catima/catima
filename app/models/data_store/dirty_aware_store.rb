@@ -1,7 +1,7 @@
 # Extends DataStore to add support for ActiveModel::Dirty. This allows
 # ActiveRecord to know when the data hash has changed and the item needs
 # to be saved to the database.
-class Item::DirtyAwareDataStore < Item::DataStore
+class DataStore::DirtyAwareStore < DataStore
   attr_reader :item
 
   def initialize(item:, key:, multivalued:, locale:)

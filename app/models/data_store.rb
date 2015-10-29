@@ -30,7 +30,7 @@
 #     }
 #   }
 #
-class Item::DataStore
+class DataStore
   attr_reader :data, :key, :locale
 
   def initialize(data:, key:, multivalued:, locale:)

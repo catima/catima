@@ -1,8 +1,13 @@
-# Adds a class-level macro `data_store_attribute` that defines accessors for
-# getting and setting data within the Item's JSON data. While the DataStore
-# class handles the actual storage logic, this mixin provides the meta-
-# programming magic that allows us to define accessors to that storage on the
-# fly.
+# Adds the following class-level macros:
+#
+#   data_store_attribute
+#   data_store_validator
+#   data_store_hash
+#
+# The `data_store_attribute` macro defines accessors for getting and setting
+# data within an Item's JSON data. While the DataStore class handles the actual
+# storage logic, this mixin provides the meta-programming magic that allows us
+# to define accessors to that storage on the fly.
 #
 # For example:
 #
@@ -53,7 +58,7 @@
 #
 #   data_store_attributes # => [:foo]
 #
-module Item::HasDataStore
+module DataStore::Macros
   extend ActiveSupport::Concern
 
   module ClassMethods
@@ -139,7 +144,7 @@ module Item::HasDataStore
 
   def dirty_aware_store(key, multivalued=false, i18n=false, locale=nil)
     self.data ||= {}
-    Item::DirtyAwareDataStore.new(
+    DataStore::DirtyAwareStore.new(
       :item => self,
       :key => key,
       :locale => (i18n ? locale || I18n.locale : nil),

@@ -1,6 +1,6 @@
 require "test_helper"
 
-class Item::DataStoreTest < ActiveSupport::TestCase
+class DataStoreTest < ActiveSupport::TestCase
   test "#get and #set single non-localized value" do
     assert_nil(single.get)
     single.set("hello")
@@ -134,6 +134,6 @@ class Item::DataStoreTest < ActiveSupport::TestCase
   end
 
   def store(**kwargs)
-    Item::DataStore.new(:data => data, :key => "key", **kwargs)
+    DataStore.new(:data => data, :key => "key", **kwargs)
   end
 end
