@@ -79,6 +79,7 @@ class CatalogAdmin::FieldsController < CatalogAdmin::BaseController
       :default_value,
       :primary,
       :display_in_list,
+      :i18n,
       :row_order_position,
       *@field.custom_permitted_attributes
     )

@@ -41,7 +41,8 @@ module CatalogAdmin::FieldsHelper
     field_presenter(nil, form.object).input(
       form,
       :default_value,
-      :label => "Default value (optional)"
+      :label => "Default value (optional)",
+      :i18n => false
     )
   end
 
