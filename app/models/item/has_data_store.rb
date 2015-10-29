@@ -76,6 +76,9 @@ module Item::HasDataStore
         define_method("#{key}_#{attr}=") do |value|
           data_store_hash(key)[attr.to_s] = value
         end
+
+        # Refile needs this
+        define_method("#{key}_#{attr}_will_change!") { nil }
       end
     end
 

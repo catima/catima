@@ -1,5 +1,5 @@
 require "test_helper"
-require_relative "../../../app/models/field/file.rb"
+require_dependency("field/file")
 
 class Field::FileTest < ActiveSupport::TestCase
   should validate_presence_of(:types)

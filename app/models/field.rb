@@ -35,11 +35,12 @@ class Field < ActiveRecord::Base
     "text" => "Field::Text",
     "int" => "Field::Int",
     "decimal" => "Field::Decimal",
+    "image" => "Field::Image",
     "file" => "Field::File",
     "email" => "Field::Email",
     "url" => "Field::URL",
     "choice" => "Field::ChoiceSet",
-    "reference" => "Field::Reference",
+    "reference" => "Field::Reference"
   }.freeze
 
   STYLE_CHOICES = {
