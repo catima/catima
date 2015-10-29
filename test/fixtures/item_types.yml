@@ -50,8 +50,8 @@ multilingual_author:
     }
   name_plural_translations: |
     {
-      "name_de": "Autoren",
-      "name_en": "Authors",
-      "name_fr": "Auteurs",
-      "name_it": "Autori"
+      "name_plural_de": "Autoren",
+      "name_plural_en": "Authors",
+      "name_plural_fr": "Auteurs",
+      "name_plural_it": "Autori"
     }
