@@ -4,8 +4,8 @@ module FieldsHelper
     t("helpers.help.#{model_key}")
   end
 
-  def field_value(item, field)
-    field_presenter(item, field).value
+  def field_value(item, field, style=:default)
+    field_presenter(item, field).value(style)
   end
 
   def field_presenter(item, field)

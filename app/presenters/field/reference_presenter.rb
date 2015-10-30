@@ -11,7 +11,7 @@ class Field::ReferencePresenter < FieldPresenter
     )
   end
 
-  def value
+  def value(_style)
     related_item_type.items.where(:id => raw_value).first.try(:display_name)
   end
 end

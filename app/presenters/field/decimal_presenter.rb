@@ -5,7 +5,7 @@ class Field::DecimalPresenter < FieldPresenter
     form.number_field(method, input_defaults(options))
   end
 
-  def value
+  def value(_style)
     number_with_delimiter(raw_value)
   end
 end

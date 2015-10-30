@@ -8,7 +8,7 @@ class Field::FilePresenter < FieldPresenter
     end
   end
 
-  def value
+  def value(_style)
     return nil if super.blank?
     info = [attachment_filename(item)]
     info << number_to_human_size(attachment_size(item), :prefix => :si)

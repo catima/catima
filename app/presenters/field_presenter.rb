@@ -18,7 +18,7 @@ class FieldPresenter
     t("helpers.help.#{i18n_key}")
   end
 
-  def value
+  def value(_style)
     return nil if raw_value.blank?
     raw_value
   end
