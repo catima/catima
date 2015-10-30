@@ -5,6 +5,6 @@ class LayoutHelperTest < ActionDispatch::IntegrationTest
     visit("/")
     assert(page.has_selector?("html>head+body"))
     assert(page.has_selector?("body p"))
-    assert_match(/Home/, page.title)
+    assert_match(/This is viim!/, page.title)
   end
 end
