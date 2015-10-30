@@ -118,19 +118,35 @@ one_author_language:
 
 multilingual_author_name:
   type: "Field::Text"
-  name_translations: '{ "name_en": "Name" }'
-  name_plural_translations: '{ "name_plural_en": "Names" }'
   slug: name
   item_type: multilingual_author
   primary: true
   uuid: multilingual_author_name_uuid
+  name_translations: |
+    {
+      "name_en": "Name",
+      "name_fr": "Nom"
+    }
+  name_plural_translations: |
+    {
+      "name_plural_en": "Names",
+      "name_plural_fr": "Noms"
+    }
 
 multilingual_author_bio:
   type: "Field::Text"
-  name_translations: '{ "name_en": "Biography" }'
-  name_plural_translations: '{ "name_plural_en": "Biographies" }'
   slug: bio
   item_type: multilingual_author
   primary: true
   i18n: true
   uuid: multilingual_author_bio_uuid
+  name_translations: |
+    {
+      "name_en": "Biography",
+      "name_fr": "Biographie"
+    }
+  name_plural_translations: |
+    {
+      "name_plural_en": "Biographies",
+      "name_plural_fr": "Biographies"
+    }
