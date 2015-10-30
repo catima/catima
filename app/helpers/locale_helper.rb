@@ -12,9 +12,11 @@ module LocaleHelper
     end
   end
 
-  def locale_language_choices
-    choices = catalog_scoped? ? catalog.valid_locales : I18n.available_locales
-    choices.sort.map do |locale|
+  def locale_language_choices(locales=:automatic)
+    if locales == :automatic
+      locales = catalog_scoped? ? catalog.valid_locales : I18n.available_locales
+    end
+    locales.sort.map do |locale|
       [locale, locale_language(locale), locale == I18n.locale]
     end
   end
@@ -32,7 +34,7 @@ module LocaleHelper
   def locale_language_select(form, method, options={}, html_options={})
     form.collection_select(
       method,
-      locale_language_choices.map(&:first).map(&:to_s),
+      locale_language_choices(I18n.available_locales).map(&:first).map(&:to_s),
       :itself,
       ->(choice) { locale_language(choice) },
       options,
