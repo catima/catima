@@ -35,6 +35,35 @@ class CatalogAdmin::ItemsTest < ActionDispatch::IntegrationTest
       author.public_send(:one_author_collaborator_uuid).to_s)
   end
 
+  test "create a multilingual item" do
+    log_in_as("multilingual-editor@example.com", "password")
+    visit("/multilingual/admin")
+    click_on("Data")
+    click_on("Authors")
+    click_on("New Author")
+
+    fill_in("Name", :with => "Test Author")
+    fill_in("item[multilingual_author_bio_uuid_de]", :with => "German")
+    fill_in("item[multilingual_author_bio_uuid_en]", :with => "English")
+    fill_in("item[multilingual_author_bio_uuid_fr]", :with => "French")
+    fill_in("item[multilingual_author_bio_uuid_it]", :with => "Italian")
+
+    assert_difference("item_types(:multilingual_author).items.count") do
+      click_on("Create Author")
+    end
+
+    author = item_types(:multilingual_author).items.last.behaving_as_type
+
+    assert_equal(
+      "Test Author",
+      author.public_send(:multilingual_author_name_uuid))
+
+    assert_equal("German", author.public_send(:multilingual_author_bio_uuid_de))
+    assert_equal("English", author.public_send(:multilingual_author_bio_uuid_en))
+    assert_equal("French", author.public_send(:multilingual_author_bio_uuid_fr))
+    assert_equal("Italian", author.public_send(:multilingual_author_bio_uuid_it))
+  end
+
   test "edit an item" do
     log_in_as("one-admin@example.com", "password")
     visit("/one/admin")

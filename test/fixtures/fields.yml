@@ -115,3 +115,22 @@ one_author_language:
   item_type: one_author
   uuid: one_author_language_uuid
   choice_set: one_languages
+
+multilingual_author_name:
+  type: "Field::Text"
+  name_translations: '{ "name_en": "Name" }'
+  name_plural_translations: '{ "name_plural_en": "Names" }'
+  slug: name
+  item_type: multilingual_author
+  primary: true
+  uuid: multilingual_author_name_uuid
+
+multilingual_author_bio:
+  type: "Field::Text"
+  name_translations: '{ "name_en": "Biography" }'
+  name_plural_translations: '{ "name_plural_en": "Biographies" }'
+  slug: bio
+  item_type: multilingual_author
+  primary: true
+  i18n: true
+  uuid: multilingual_author_bio_uuid
