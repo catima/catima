@@ -1,5 +1,3 @@
-require "ostruct"
-
 module LocaleHelper
   def current_locale_language
     locale_language(I18n.locale)
