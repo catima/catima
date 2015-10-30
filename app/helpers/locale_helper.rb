@@ -15,7 +15,8 @@ module LocaleHelper
   end
 
   def locale_language_choices
-    I18n.available_locales.sort.map do |locale|
+    choices = catalog_scoped? ? catalog.valid_locales : I18n.available_locales
+    choices.sort.map do |locale|
       [locale, locale_language(locale), locale == I18n.locale]
     end
   end
