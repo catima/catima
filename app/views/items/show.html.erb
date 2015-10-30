@@ -1,0 +1,12 @@
+<% provide(:title, @item.display_name) %>
+
+<table class="table">
+  <tbody>
+    <% item_type.list_view_fields.each do |field| %>
+      <tr>
+        <th><%= field.name %></th>
+        <td><%= field_value(@item, field) %></td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
