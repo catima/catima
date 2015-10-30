@@ -15,6 +15,9 @@
 
 class Item < ActiveRecord::Base
   include DataStore::Macros
+  include HasHumanId
+
+  human_id :display_name
 
   delegate :fields, :primary_field, :to => :item_type
 
