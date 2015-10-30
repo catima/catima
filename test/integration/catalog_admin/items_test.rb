@@ -72,7 +72,7 @@ class CatalogAdmin::ItemsTest < ActionDispatch::IntegrationTest
     first("a", :text => "Edit").click
 
     # Hack to get the ID of the author we're editing
-    author_id = current_path[%r{(\d+)/edit$}, 1]
+    author_id = current_path[%r{authors/(.+)/edit$}, 1]
 
     fill_in("Name", :with => "Changed by test")
     select("Very Old", :from => "Collaborator")
