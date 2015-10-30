@@ -7,10 +7,14 @@ class ActionDispatch::IntegrationTest
   # Make the Capybara DSL available in all integration tests
   include Capybara::DSL
 
-  setup { Capybara.current_session.driver.browser.clear_cookies }
+  setup do
+    Capybara.use_default_driver
+    Capybara.current_session.driver.browser.clear_cookies
+  end
 
   def use_javascript_capybara_driver
     Capybara.current_driver = Capybara.javascript_driver
+    Capybara.current_session.driver.browser.clear_cookies
   end
 end
 
