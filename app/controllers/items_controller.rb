@@ -13,7 +13,7 @@ class ItemsController < ApplicationController
   private
 
   attr_reader :item_type
-  helper_method :fields, :item_type
+  helper_method :item_type
 
   def find_item_type
     @item_type =
