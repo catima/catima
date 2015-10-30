@@ -1,2 +1,13 @@
-<% provide(:title, "Home") %>
-<p>Find me in app/views/home/index.html.erb</p>
+<% provide(:title, "This is viim!") %>
+
+<p>Visit a catalog:</p>
+<ul>
+  <% @catalogs.each do |catalog| %>
+    <li><%= link_to(catalog.name, catalog_home_path(catalog)) %></li>
+  <% end %>
+</ul>
+
+<p>
+  Or manage these catalogs with
+  <%= link_to("viim admin", admin_dashboard_path) %>.
+</p>
