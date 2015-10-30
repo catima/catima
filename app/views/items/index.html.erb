@@ -13,7 +13,7 @@
     <% @items.each do |item| %>
       <tr>
         <% item_type.list_view_fields.each do |field| %>
-          <td><%= field_value(item, field, :compact) %></td>
+          <td><%= field_value(item, field, :style => :compact) %></td>
         <% end %>
         <td><%= link_to("View", :action => :show, :id => item) %></td>
       </tr>

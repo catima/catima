@@ -11,7 +11,7 @@ class Field::ChoiceSetPresenter < FieldPresenter
     )
   end
 
-  def value(_style)
+  def value
     choices.except(:order).where(:id => raw_value).first.try(:long_name)
   end
 end

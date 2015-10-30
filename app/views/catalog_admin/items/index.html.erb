@@ -22,7 +22,7 @@
     <% @items.each do |item| %>
       <tr>
         <% @fields.each do |field| %>
-          <td><%= field_value(item, field, :compact) %></td>
+          <td><%= field_value(item, field, :style => :compact) %></td>
         <% end %>
         <td style="text-align: right">
           <% if policy(item).edit? %>

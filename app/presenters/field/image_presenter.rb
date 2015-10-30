@@ -1,9 +1,9 @@
 class Field::ImagePresenter < Field::FilePresenter
   delegate :image_tag, :attachment_url, :to => :view
 
-  def value(style)
+  def value
     return if raw_value.nil?
-    src_1x, src_2x = image_sources(style)
+    src_1x, src_2x = image_sources
 
     srcset = "#{src_1x} 1x,#{src_2x} 2x"
     options = { :srcset => srcset, :alt => attachment_filename(item) }
@@ -12,7 +12,11 @@ class Field::ImagePresenter < Field::FilePresenter
 
   private
 
-  def image_sources(style)
+  def style
+    options[:style]
+  end
+
+  def image_sources
     transform = transformation_args(style)
     src_1x = attachment_url(item.behaving_as_type, uuid, *transform)
     src_2x = attachment_url(

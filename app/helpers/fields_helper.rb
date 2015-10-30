@@ -4,11 +4,11 @@ module FieldsHelper
     t("helpers.help.#{model_key}")
   end
 
-  def field_value(item, field, style=:default)
-    field_presenter(item, field).value(style)
+  def field_value(item, field, options={})
+    field_presenter(item, field, options).value
   end
 
-  def field_presenter(item, field)
-    "#{field.class.name}Presenter".constantize.new(self, item, field)
+  def field_presenter(item, field, options={})
+    "#{field.class.name}Presenter".constantize.new(self, item, field, options)
   end
 end

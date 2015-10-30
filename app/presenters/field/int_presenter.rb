@@ -5,7 +5,7 @@ class Field::IntPresenter < FieldPresenter
     form.number_field(method, input_defaults(options))
   end
 
-  def value(_style)
+  def value
     number_with_delimiter(raw_value)
   end
 end
