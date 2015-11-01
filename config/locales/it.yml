@@ -2,8 +2,18 @@
 it:
   common:
     back: "Ritorno"
+    greeting: "Buongiorno"
     minimum_characters: "%{length} caratteri minima"
+  catalogs:
+    show:
+      welcome: "Benvenuti a %{catalog}!"
   devise:
+    mailer:
+      reset_password_instructions:
+        change_my_password: "Modificare la mia password"
+        please_ignore: "Se non hai richiesto questo cambiamento di password, ignorare questa email."
+        requested_a_link: "Qualcuno ha chiesto un link per cambiare la tua password. È possibilie farlo utilizzando il link sottostante."
+        wont_change: "La password non verrà modificato fino a quando si accede al link qui sopra e si crea una nuova password."
     sessions:
       new:
         log_in: "Login"
@@ -38,11 +48,26 @@ it:
       invalid_email: non è un indirizzo e-mail valito
       invalid_url: è un URL invalido o incompleto
   invitations_mailer:
+    account_information:
+      email: "E-mail"
+      info_you_will_need: "Ecco le informatzioni sul tuo account per procedere alla login:"
+      password: "Password"
+      set_your_password: "Clicca qui per impostare la password"
+      url: "URL"
     catalog_admin:
+      catalog_admin_role: "Come amministratore di catalogo, sarete in grado di aggingere e modificatre le registrazione nel catalogo, cambiare il layout, e invitare gli altri utenti di collaborare come redattori."
+      invited_to_access_html:
+        one: "%{invited_by} ti ha invitato a essere un amministratore del catalogo %{catalog}"
+        other: "%{invited_by} ti ha invitato a essere un amministratore dei cataloghi %{catalogs}."
       subject: "Il suo invito amministratore per %{catalog}"
     system_admin:
+      invited_to_access_html: "%{invited_by} ti ha invitato a essere un amministratore di sistema per %{catalog}."
       subject: "Il suo invito amministratore di sistema per %{host}"
+      system_admin_role: "Come amministratore di sistema sarà possibile creare cataloghi, gestire i contenuti, modificare la configurazione dell'applicazione, e inviare gli inviti ad altri amministratori."
     user:
+      editor_role: Come redattore di catalogo sarete in grado di aggingere e modificare le registrazione nel catalogo.
+      invited_to_access_html: "%{invited_by} ti ha invitato a accessere al catalogo %{catalog}."
+      reviewer_role: Come redattore di catalogo sarete in grado di agginguere e modificare le registrazione nel catalogo e di convalidare per la pubblicazione.
       subject: "Viene chiesto di unirsi %{catalog}"
   shared:
     navbar:

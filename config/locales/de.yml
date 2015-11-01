@@ -2,8 +2,18 @@
 de:
   common:
     back: "Zurück"
+    greeting: "Hallo"
     minimum_characters: "mindestens %{length} Zeichen"
+  catalogs:
+    show:
+      welcome: "Willkommen bei %{catalog}!"
   devise:
+    mailer:
+      reset_password_instructions:
+        change_my_password: "Mein Passwort ändern"
+        please_ignore: "Falls Sie keine Passwort-Änderungen beantragt haben, ignorien Sie bitte diese E-mail."
+        requested_a_link: "Jemand hat einen Link beantragt um Ihr Passwort zu ändern. Sie können den untenstehenden Link dafür verwenden."
+        wont_change: "Ihr Passwort will nicht geändert werden bis Sie den obenstehenden Link konsultieren und ein neues Passwort erstellen."
     sessions:
       new:
         log_in: "Login"
@@ -38,11 +48,26 @@ de:
       invalid_email: ist keine gültige E-mail-Adresse
       invalid_url: ist eine ungültige oder unvollständige URL
   invitations_mailer:
+    account_information:
+      email: "E-mail"
+      info_you_will_need: "Hier ist die Benutzerkonto-Information die Sie benötigen um sich einzuloggen:"
+      password: "Passwort"
+      set_your_password: "Klicken Sie hier um Ihr Passwort zu definieren"
+      url: "URL"
     catalog_admin:
+      catalog_admin_role: "Als Katalog-Administrator haben Sie das Recht Einträge im Katalog zu erstellen und zu editieren, das Design des Katalogs zu ändern, und andere Benutzer als Editoren einzuladen."
+      invited_to_access_html:
+        one: "%{invited_by} hat Sie als Administrator des %{catalogs}-Katalogs eingeladen."
+        other: "%{invited_by} hat Sie als Administrator eingeladen für die folgenden Kataloge: %{catalogs}."
       subject: "Ihre Administrator-Einladung für %{catalog}"
     system_admin:
+      invited_to_access_html: "%{invited_by} hat Sie als System-Administrator für %{catalog} eingeladen."
       subject: "Ihre System-Administrator-Einladung für %{host}"
+      system_admin_role: "Als System-Administrator können Sie neue Kataloge erstellen, die jeweiligen Inhalte verwalten, die Applikations-Konfiguration ändern, und Einladungen für andere Administratoren verschicken."
     user:
+      editor_role: Als Katalog-Editor können Sie Einträge erstellen und editieren.
+      invited_to_access_html: "%{invited_by} hat Sie eingeladen %{catalog} zu konsultieren."
+      reviewer_role: Als Katalog-Validator können Sie Einträge erstellen und editieren, sowie auch Einträge zur Publikation annehmen.
       subject: "Sie wurden eingeladen bei %{catalog} teilzunehmen"
   shared:
     navbar:

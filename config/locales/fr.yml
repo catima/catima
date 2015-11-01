@@ -2,8 +2,18 @@
 fr:
   common:
     back: "Retour"
+    greeting: "Bonjour"
     minimum_characters: "%{length} caractères au minimum"
+  catalogs:
+    show:
+      welcome: "Bienvenue chez %{catalog}!"
   devise:
+    mailer:
+      reset_password_instructions:
+        change_my_password: "Changer mon mot de passe"
+        please_ignore: "Si vous n'avez pas demandé ce changement de mot de passe, veuillez s.v.p. ignorer ce message."
+        requested_a_link: "Quelqu'un a demandé un lien pour changer votre mot de passe. Vous pouvez le faire à l'aide du lien ci-dessous."
+        wont_change: "Votre mot de passe ne sera pas changé jusqu'à ce que vous accéder au lien ci-dessus et que vous créez un nouveau mot de passe."
     sessions:
       new:
         log_in: "Login"
@@ -38,11 +48,26 @@ fr:
       invalid_email: n'est pas une adresse e-mail valide
       invalid_url: est une URL invalide ou incomplète
   invitations_mailer:
+    account_information:
+      email: "E-mail"
+      info_you_will_need: "Voici les informations sur votre compte pour procéder au login:"
+      password: "Mot de passe"
+      set_your_password: "Cliquez ici pour définir votre mot de passe"
+      url: "URL"
     catalog_admin:
+      catalog_admin_role: "Comme administrateur de catalogue, vous allez être en mesure d'ajouter et d'éditer des entrées dans le catalogue, en modifier la mise en page, et inviter d'autres utilisateurs à collaborer comme éditeurs."
+      invited_to_access_html:
+        one: "%{invited_by} vous a invité d'être un administrateur du catalogue %{catalogs}."
+        other: "%{invited_by} vous a invité d'être un administrateur des catalogues %{catalogs}."
       subject: "Votre invitation d'administrateur pour %{catalog}"
     system_admin:
+      invited_to_access_html: "%{invited_by} vous a invité d'être un administrateur système pour %{catalog}."
       subject: "Votre invitation d'administrateur système pour %{host}"
+      system_admin_role: "Comme administrateur système, vous allez pouvoir créer des catalogues, en gérer leurs contenus, modifier la configuration de l'application, et envoyer des invitations à d'autres administrateurs."
     user:
+      editor_role: Comme éditeur de catalogue vous allez pouvoir ajouter et éditer des entrées.
+      invited_to_access_html: "%{invited_by} vous a invité d'accéder %{catalog}."
+      reviewer_role: Comme validateur de catalogue, vous allez pouvoir ajouter et éditer des entrées, ainsi que de valider des entrées en vue de leur publication.
       subject: "Vous êtes invité(e) à joindre %{catalog}"
   shared:
     navbar:
