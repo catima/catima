@@ -21,6 +21,21 @@ set :mb_dotenv_keys, %w(
   sidekiq_web_password
 )
 
+# Re-index items on every deploy, just to be safe
+namespace :viim do
+  desc "Rebuild the search index for all item data"
+  task :reindex do
+    on release_roles(:all).first do
+      within current_path do
+        with :rails_env => fetch(:rails_env) do
+          execute :rails, "runner", "Item.reindex"
+        end
+      end
+    end
+  end
+end
+after "deploy:published", "viim:reindex"
+
 # Rollbar deployment notification
 task :notify_rollbar do
   on release_roles(:all).first do
