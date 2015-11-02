@@ -57,7 +57,7 @@ it:
     catalog_admin:
       catalog_admin_role: "Come amministratore di catalogo, sarete in grado di aggingere e modificatre le registrazione nel catalogo, cambiare il layout, e invitare gli altri utenti di collaborare come redattori."
       invited_to_access_html:
-        one: "%{invited_by} ti ha invitato a essere un amministratore del catalogo %{catalogs}"
+        one: "%{invited_by} ti ha invitato a essere un amministratore del catalogo %{catalogs}."
         other: "%{invited_by} ti ha invitato a essere un amministratore dei cataloghi %{catalogs}."
       subject: "Il suo invito amministratore per %{catalog}"
     system_admin:
