@@ -48,7 +48,7 @@ class Field::File < ::Field
   def decorate_item_class(klass)
     super
     klass.data_store_hash(uuid, :id, :filename, :size)
-    klass.send(:attachment, uuid)
+    klass.send(:attachment, uuid, :extension => allowed_extensions)
   end
 
   def attachment_filename(item)
