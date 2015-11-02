@@ -19,6 +19,7 @@
 
 class Item < ActiveRecord::Base
   include DataStore::Macros
+  include Search::Macros
   include HasHumanId
 
   human_id :display_name
