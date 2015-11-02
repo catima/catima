@@ -1,5 +1,15 @@
 Rails.application.routes.draw do
   # ===========================================================================
+  # Development
+
+  if Rails.env.development?
+    # This workaround won't be necessary in Rails 5
+    # https://github.com/rails/rails/commit/ccc3ddb7762bae0df7e2f8d643b19b6a4769d5be
+    get "/rails/mailers"       => "rails/mailers#index"
+    get "/rails/mailers/*path" => "rails/mailers#preview"
+  end
+
+  # ===========================================================================
   # Devise
 
   scope :path => ":locale" do
