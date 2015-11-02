@@ -40,7 +40,7 @@ class Field::Text < ::Field
                             :greater_than => 0,
                             :allow_blank => true
 
-  def custom_permitted_attributes
+  def custom_field_permitted_attributes
     %i(maximum minimum)
   end
 

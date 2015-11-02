@@ -35,8 +35,12 @@ class Field::File < ::Field
   after_initialize :set_default_types
   validates_presence_of :types
 
-  def custom_permitted_attributes
+  def custom_field_permitted_attributes
     %i(types)
+  end
+
+  def custom_item_permitted_attributes
+    [:"remove_#{uuid}"]
   end
 
   def allowed_extensions
@@ -49,6 +53,10 @@ class Field::File < ::Field
     super
     klass.data_store_hash(uuid, :id, :filename, :size)
     klass.send(:attachment, uuid, :extension => allowed_extensions)
+  end
+
+  def attachment_present?(item)
+    item.behaving_as_type.public_send("#{uuid}_id").present?
   end
 
   def attachment_filename(item)

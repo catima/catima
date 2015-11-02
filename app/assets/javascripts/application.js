@@ -17,6 +17,7 @@
 //= require cocoon
 //= require mousetrap/mousetrap
 //= require mousetrap/plugins/global-bind/mousetrap-global-bind
+//= require refile
 //= require_tree .
 
 Turbolinks.enableProgressBar();

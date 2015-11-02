@@ -45,7 +45,7 @@ class Field::Reference < ::Field
     catalog.item_types.sorted
   end
 
-  def custom_permitted_attributes
+  def custom_field_permitted_attributes
     %i(related_item_type_id)
   end
 end

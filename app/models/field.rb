@@ -93,7 +93,11 @@ class Field < ActiveRecord::Base
     model_name.singular.sub(/^field_/, "")
   end
 
-  def custom_permitted_attributes
+  def custom_field_permitted_attributes
+    []
+  end
+
+  def custom_item_permitted_attributes
     []
   end
 

@@ -2,7 +2,7 @@ class Field::ImagePresenter < Field::FilePresenter
   delegate :image_tag, :attachment_url, :to => :view
 
   def value
-    return if raw_value.nil?
+    return nil unless attachment_present?(item)
     src_1x, src_2x = image_sources
 
     srcset = "#{src_1x} 1x,#{src_2x} 2x"

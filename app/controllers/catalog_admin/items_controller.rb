@@ -76,7 +76,10 @@ class CatalogAdmin::ItemsController < CatalogAdmin::BaseController
   end
 
   def item_params
-    params.require(:item).permit(*@item.data_store_attributes)
+    params.require(:item).permit(
+      *@item.data_store_attributes,
+      *@item.fields.flat_map(&:custom_item_permitted_attributes)
+    )
   end
 
   def after_create_path

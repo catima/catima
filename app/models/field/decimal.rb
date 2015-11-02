@@ -37,7 +37,7 @@ class Field::Decimal < ::Field
 
   validates_numericality_of :maximum, :minimum, :allow_blank => true
 
-  def custom_permitted_attributes
+  def custom_field_permitted_attributes
     %i(maximum minimum)
   end
 

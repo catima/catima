@@ -50,7 +50,7 @@ class Field::ChoiceSet < ::Field
     catalog.choice_sets.active.sorted
   end
 
-  def custom_permitted_attributes
+  def custom_field_permitted_attributes
     %i(choice_set_id)
   end
 
