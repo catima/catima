@@ -42,6 +42,7 @@ one_author_stephen_king:
   data: |
     {
       "one_author_name_uuid": "Stephen King",
+      "one_author_nickname_uuid": "Steve",
       "one_author_age_uuid": 68,
       "one_author_site_uuid": "http://stephenking.com/index.html",
       "one_author_email_uuid": "sk@stephenking.com",

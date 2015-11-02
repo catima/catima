@@ -57,6 +57,15 @@ one_author_name:
   primary: true
   uuid: one_author_name_uuid
 
+one_author_nickname:
+  type: "Field::Text"
+  name_translations: '{ "name_en": "Nickname" }'
+  name_plural_translations: '{ "name_plural_en": "Nicknames" }'
+  slug: nickname
+  item_type: one_author
+  required: false
+  uuid: one_author_nickname_uuid
+
 one_author_age:
   type: "Field::Int"
   name_translations: '{ "name_en": "Age" }'
