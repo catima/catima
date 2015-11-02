@@ -34,4 +34,12 @@ require_dependency("field/file")
 # An image is indistinguishable on the back end from a generic file, but it is
 # a distinct field type so that we can display it differently in the UI.
 class Field::Image < ::Field::File
+  after_initialize :set_default_types
+
+  private
+
+  def set_default_types
+    return if persisted? || types.present?
+    self.types = "jpg jpeg png gif"
+  end
 end

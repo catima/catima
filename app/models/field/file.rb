@@ -32,7 +32,6 @@
 class Field::File < ::Field
   store_accessor :options, :types
 
-  after_initialize :set_default_types
   validates_presence_of :types
 
   def custom_field_permitted_attributes
@@ -65,12 +64,5 @@ class Field::File < ::Field
 
   def attachment_size(item)
     item.behaving_as_type.public_send("#{uuid}_size")
-  end
-
-  private
-
-  def set_default_types
-    return if persisted? || types.present?
-    self.types = "jpg jpeg png gif"
   end
 end
