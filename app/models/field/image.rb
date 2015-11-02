@@ -40,6 +40,6 @@ class Field::Image < ::Field::File
 
   def set_default_types
     return if persisted? || types.present?
-    self.types = "jpg jpeg png gif"
+    self.types = "jpg, jpeg, png, gif"
   end
 end
