@@ -2,15 +2,19 @@
 #
 # Table name: items
 #
-#  catalog_id   :integer
-#  created_at   :datetime         not null
-#  creator_id   :integer
-#  data         :json
-#  id           :integer          not null, primary key
-#  item_type_id :integer
-#  reviewer_id  :integer
-#  status       :string
-#  updated_at   :datetime         not null
+#  catalog_id     :integer
+#  created_at     :datetime         not null
+#  creator_id     :integer
+#  data           :json
+#  id             :integer          not null, primary key
+#  item_type_id   :integer
+#  reviewer_id    :integer
+#  search_data_de :text
+#  search_data_en :text
+#  search_data_fr :text
+#  search_data_it :text
+#  status         :string
+#  updated_at     :datetime         not null
 #
 
 # Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
