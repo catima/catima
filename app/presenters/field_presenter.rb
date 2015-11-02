@@ -25,7 +25,7 @@ class FieldPresenter
   end
 
   def raw_value
-    item.behaving_as_type.send(field.uuid)
+    field.raw_value(item)
   end
 
   private

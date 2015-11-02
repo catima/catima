@@ -101,6 +101,11 @@ class Field < ActiveRecord::Base
     []
   end
 
+  def raw_value(item, locale=I18n.locale)
+    attrib = i18n? ? "#{uuid}_#{locale}" : uuid
+    item.behaving_as_type.public_send(attrib)
+  end
+
   # TODO: test
   def style=(key)
     return if key.blank?
