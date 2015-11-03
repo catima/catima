@@ -1,5 +1,6 @@
 class ItemsController < ApplicationController
   include ControlsCatalog
+  include ControlsSearchResults
 
   before_action :find_item_type
 

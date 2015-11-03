@@ -1,0 +1,24 @@
+<p>
+  <%= link_to(
+        fa_icon(:"chevron-circle-left", :text => "Back to search results"),
+        search_path
+        ) %>
+
+  <span class="pull-right">
+    <% if nav.previous %>
+      <%= search_item_link(nav.previous, nav.previous_offset) do %>
+        <%= fa_icon(:"chevron-left") %>
+        Previous: <%= nav.previous.display_name %>
+      <% end %>
+    <% end %>
+    &nbsp;&nbsp;
+    <% if nav.next %>
+      <%= search_item_link(nav.next, nav.next_offset) do %>
+        Next: <%= nav.next.display_name %>
+        <%= fa_icon(:"chevron-right") %>
+      <% end %>
+    <% elsif nav.previous %>
+      No more results
+    <% end %>
+  </span>
+</p>

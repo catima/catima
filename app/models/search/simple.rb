@@ -6,14 +6,14 @@ class Search::Simple
     @query = query
   end
 
-  def sorted_items_by_type
+  def items_grouped_by_type
     return to_enum(__callee__) unless block_given?
 
     found_type_ids = items.pluck("items.item_type_id").uniq
 
     sorted_item_types.each do |type|
       next unless found_type_ids.include?(type.id)
-      yield(type, type.sorted_items.merge(items))
+      yield(type, type.items.merge(items))
     end
   end
 

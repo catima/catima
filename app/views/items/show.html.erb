@@ -1,5 +1,7 @@
 <% provide(:title, @item.display_name) %>
 
+<%= render_items_search_nav(search, @item) if search %>
+
 <table class="table">
   <tbody>
     <% item_type.list_view_fields.each do |field| %>
