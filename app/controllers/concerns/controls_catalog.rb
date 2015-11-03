@@ -1,6 +1,6 @@
 # Behavior that is common to all catalog-scoped public controllers. Handles
 # loading the catalog and setting the locale.
-module CatalogSite
+module ControlsCatalog
   extend ActiveSupport::Concern
 
   included do

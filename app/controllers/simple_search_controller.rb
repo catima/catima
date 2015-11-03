@@ -1,5 +1,5 @@
 class SimpleSearchController < ApplicationController
-  include CatalogSite
+  include ControlsCatalog
 
   def index
     @search = Search::Simple.new(catalog, params[:q])

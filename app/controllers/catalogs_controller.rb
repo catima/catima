@@ -1,5 +1,5 @@
 class CatalogsController < ApplicationController
-  include CatalogSite
+  include ControlsCatalog
 
   def show
   end
