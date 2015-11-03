@@ -89,6 +89,7 @@ Rails.application.routes.draw do
   get ":catalog_slug/(:locale)" => "catalogs#show", :as => "catalog_home"
 
   scope :path => ":catalog_slug/:locale" do
+    get "search" => "simple_search#index", :as => "simple_search"
     resources :items, :path => ":item_type_slug", :only => [:index, :show]
   end
 end

@@ -1,0 +1,16 @@
+<% provide(:title) do %>
+  Items matching: <%= @search.query %>
+<% end %>
+
+<ul>
+  <% @search.sorted_items_by_type do |type, items| %>
+    <li>
+      <%= type.name_plural %>
+      <ul>
+        <% items.each do |item| %>
+          <li><%= item.display_name %></li>
+        <% end %>
+      </ul>
+    </li>
+  <% end %>
+</ul>
