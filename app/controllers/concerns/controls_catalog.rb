@@ -36,6 +36,7 @@ module ControlsCatalog
   def remember_requested_locale
     return if params[:locale].nil?
     return unless current_user.authenticated?
+    return if current_user.primary_language == params[:locale]
     current_user.update_column(:primary_language, params[:locale])
     true
   end
