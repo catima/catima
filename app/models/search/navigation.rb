@@ -55,6 +55,12 @@ class Search::Navigation
   end
 
   def current_index
-    @current_index ||= window.index(current)
+    @current_index ||= begin
+      if current.respond_to?(:id)
+        window.map(&:id).index(current.id)
+      else
+        window.index(current)
+      end
+    end
   end
 end
