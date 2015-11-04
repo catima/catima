@@ -5,7 +5,8 @@ class SimpleSearchController < ApplicationController
     @search = Search::Simple.new(
       :catalog => catalog,
       :query => params[:q],
-      :page => params[:page]
+      :page => params[:page],
+      :item_type_slug => params[:type]
     )
   end
 end
