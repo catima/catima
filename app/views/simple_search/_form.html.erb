@@ -1,0 +1,19 @@
+<%= bootstrap_form_tag(
+      :url => { :controller => "simple_search", :action => "index" },
+      :method => "GET",
+      :layout => :inline,
+      :html => { :style => "text-align: center" }) do |f| %>
+
+  <%= f.search_field(
+        :q,
+        :value => params[:q],
+        :label => "Search",
+        :hide_label => true,
+        :autofocus => true,
+        :style => "width: 25em"
+        ) %>
+
+  <%= f.submit("Search") %>
+
+  <%= link_to("Advanced", "javascript:;", :class => "btn btn-link") %>
+<% end %>
