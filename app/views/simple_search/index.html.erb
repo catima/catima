@@ -1,3 +1,7 @@
+<% provide(:extra_nav) do %>
+  <%= render("simple_search/form") %>
+<% end %>
+
 <% provide(:title) do %>
   <%= pluralize_with_delimiter(@search.total_count, "result") %>
   for

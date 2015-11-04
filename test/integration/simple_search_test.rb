@@ -8,7 +8,7 @@ class SimpleSearchTest < ActionDispatch::IntegrationTest
   test "search for toyota finds 3 matches" do
     visit("/search/en")
     fill_in("q", :with => "Toyota")
-    click_on("Submit")
+    click_on("Search")
 
     assert(page.has_content?("Prius"))
     assert(page.has_content?("Highlander"))
@@ -18,7 +18,7 @@ class SimpleSearchTest < ActionDispatch::IntegrationTest
   test "search for honda finds no matches" do
     visit("/search/en")
     fill_in("q", :with => "Honda")
-    click_on("Submit")
+    click_on("Search")
 
     refute(page.has_content?("Prius"))
     refute(page.has_content?("Highlander"))
@@ -28,7 +28,7 @@ class SimpleSearchTest < ActionDispatch::IntegrationTest
   test "allows navigation from one result to another" do
     visit("/search/en")
     fill_in("q", :with => "Toyota")
-    click_on("Submit")
+    click_on("Search")
 
     click_on("Highlander")
     within("h1") { assert(page.has_content?("Highlander")) }
