@@ -1,17 +1,19 @@
-<li class="dropdown">
-  <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-    <%= current_locale_language %>
-    <b class="caret"></b>
-  </a>
+<% if locale_language_choices.many? %>
+  <li class="dropdown">
+    <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+      <%= current_locale_language %>
+      <b class="caret"></b>
+    </a>
 
-  <ul class="dropdown-menu">
-    <% locale_language_choices.each do |locale, language, current| %>
-      <%= content_tag(:li, :class => ("disabled" if current)) do %>
-        <%= link_to({ :locale => locale }) do %>
-          <%= fa_icon(:check) if current %>
-          <%= language %>
+    <ul class="dropdown-menu">
+      <% locale_language_choices.each do |locale, language, current| %>
+        <%= content_tag(:li, :class => ("disabled" if current)) do %>
+          <%= link_to({ :locale => locale }) do %>
+            <%= fa_icon(:check) if current %>
+            <%= language %>
+          <% end %>
         <% end %>
       <% end %>
-    <% end %>
-  </ul>
-</li>
+    </ul>
+  </li>
+<% end %>
