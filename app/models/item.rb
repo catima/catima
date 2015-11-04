@@ -24,7 +24,7 @@ class Item < ActiveRecord::Base
 
   human_id :display_name
 
-  delegate :fields, :primary_field, :to => :item_type
+  delegate :fields, :primary_field, :list_view_fields, :to => :item_type
 
   belongs_to :catalog
   belongs_to :item_type

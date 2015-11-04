@@ -1,5 +1,9 @@
 class Field::TextPresenter < FieldPresenter
-  delegate :locale_form_group, :to => :view
+  delegate :locale_form_group, :truncate, :to => :view
+
+  def value
+    compact? ? truncate(super.to_s, :length => 100) : super
+  end
 
   def input(form, method, options={})
     i18n = options.fetch(:i18n) { field.i18n? }

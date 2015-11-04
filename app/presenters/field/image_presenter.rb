@@ -7,17 +7,13 @@ class Field::ImagePresenter < Field::FilePresenter
 
     srcset = "#{src_1x} 1x,#{src_2x} 2x"
     options = { :srcset => srcset, :alt => attachment_filename(item) }
-    image_tag(src_1x, options)
+    image_tag(src_1x, options.merge(self.options))
   end
 
   private
 
-  def style
-    options[:style]
-  end
-
   def image_sources
-    transform = transformation_args(style)
+    transform = transformation_args
     src_1x = attachment_url(item.behaving_as_type, uuid, *transform)
     src_2x = attachment_url(
       item.behaving_as_type,
@@ -28,12 +24,7 @@ class Field::ImagePresenter < Field::FilePresenter
     [src_1x, src_2x]
   end
 
-  def transformation_args(style)
-    case style
-    when :compact
-      [:fill, 64, 64]
-    else
-      [:limit, 600, 600]
-    end
+  def transformation_args
+    compact? ? [:fill, 64, 64] : [:limit, 600, 600]
   end
 end

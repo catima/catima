@@ -30,6 +30,10 @@ class FieldPresenter
 
   private
 
+  def compact?
+    options[:style] == :compact
+  end
+
   def input_defaults(options)
     options.reverse_merge(:label => label)
   end

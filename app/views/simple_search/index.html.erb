@@ -4,29 +4,28 @@
   “<%= @search.query %>”
 <% end %>
 
-<p>
-  Tabs would look like this:
-</p>
-
-<ul>
-  <% @search.item_counts_by_type do |type, count| %>
-    <li>
-      <%= link_to(:type => type.slug, :q => @search.query) do %>
-        <%= type.name %>
-        <%= number_with_delimiter(count) %>
-        <%= "(active)" if @search.active?(type) %>
+<% if @search.item_counts_by_type.many? %>
+  <ul class="nav nav-tabs">
+    <% @search.item_counts_by_type do |type, count| %>
+      <%= content_tag(
+            :li,
+            :role => "presentation",
+            :class => ("active" if @search.active?(type))) do %>
+        <%= link_to(:type => type.slug, :q => @search.query) do %>
+          <%= type.name_plural %>
+          <span class="badge">
+            <%= number_with_delimiter(count) %>
+          </span>
+        <% end %>
       <% end %>
-    </li>
-  <% end %>
-</ul>
-
-<p>
-  Results
-</p>
+    <% end %>
+  </ul>
+<% end %>
 
 <%= render(
       "shared/search/results_list",
       :items => @search.items,
       :offset => @search.offset
     ) %>
+
 <%= paginate(@search.items) %>
