@@ -25,6 +25,10 @@ class Search
   end
 
   def items
-    unpaginaged_items.page(page).per(per)
+    unpaginaged_items
+      .includes(:item_type)
+      .includes(:item_type => :fields)
+      .page(page)
+      .per(per)
   end
 end
