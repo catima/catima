@@ -1,3 +1,10 @@
+GIT
+  remote: https://github.com/stympy/faker.git
+  revision: 42f5cb8877bc74eb9f249413e9437f91c2969548
+  specs:
+    faker (1.5.0)
+      i18n (~> 0.5)
+
 GEM
   remote: https://rubygems.org/
   remote: https://rails-assets.org/
@@ -423,6 +430,7 @@ DEPENDENCIES
   connection_pool
   devise
   dotenv-rails (>= 2.0.0)
+  faker!
   font-awesome-rails
   guard (>= 2.2.2)
   guard-livereload
@@ -448,6 +456,7 @@ DEPENDENCIES
   refile (~> 0.6.1)
   refile-mini_magick
   rollbar (~> 2.3)
+  ruby-progressbar
   sass-rails (~> 5.0)
   secure_headers (>= 2.1.0)
   shoulda

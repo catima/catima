@@ -57,9 +57,11 @@ group :development do
   gem "capistrano-bundler", :require => false
   gem "capistrano-mb", ">= 0.22.2", :require => false
   gem "capistrano-rails", :require => false
+  gem "faker", :require => false, :git => "https://github.com/stympy/faker.git"
   gem "guard", ">= 2.2.2", :require => false
   gem "guard-livereload", :require => false
   gem "guard-minitest", :require => false
+  gem "ruby-progressbar", :require => false
   gem "rb-fsevent", :require => false
   gem "simplecov", :require => false
   gem "sshkit", "~> 1.7.1", :require => false
