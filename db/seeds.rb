@@ -2,6 +2,15 @@
 Configuration.first_or_create!
 
 if Rails.env.development?
+  # Ensure at least one user
+  admin = User.first_or_create!(
+    :email => "admin@example.com",
+    :password => "admin123",
+    :password_confirmation => "admin123",
+    :system_admin => true,
+    :primary_language => "en"
+  )
+
   # Create a "Library" catalog with lots of fake books for search testing.
   library = Catalog.where(:slug => "library").first_or_create!(
     :name => "Library",
@@ -28,8 +37,6 @@ if Rails.env.development?
     require "faker"
     require "ruby-progressbar"
 
-    creator = User.first!
-
     puts "Creating books..."
 
     bar = ProgressBar.create(
@@ -41,7 +48,7 @@ if Rails.env.development?
     1_000.times do
       book = books.items.new.behaving_as_type
       book.catalog = library
-      book.creator = creator
+      book.creator = admin
 
       fields.each do |field|
         fake_value = Faker::Book.public_send(field.slug)
