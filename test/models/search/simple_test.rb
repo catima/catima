@@ -6,12 +6,12 @@ class Search::SimpleTest < ActiveSupport::TestCase
   end
 
   test "finds nothing if query is blank" do
-    simple = Search::Simple.new(catalogs(:search), " ")
+    simple = simple_search(catalogs(:search), " ")
     assert_empty(simple.items.to_a)
   end
 
   test "groups results by item type" do
-    simple = Search::Simple.new(catalogs(:search), "toyota")
+    simple = simple_search(catalogs(:search), "toyota")
     grouped = simple.items_grouped_by_type.to_a
 
     assert_equal(1, grouped.size)
@@ -22,7 +22,13 @@ class Search::SimpleTest < ActiveSupport::TestCase
   end
 
   test "items_grouped_by_type is scoped to catalog" do
-    simple = Search::Simple.new(catalogs(:one), "toyota")
+    simple = simple_search(catalogs(:one), "toyota")
     assert_empty(simple.items_grouped_by_type.to_a)
+  end
+
+  private
+
+  def simple_search(catalog, query)
+    Search::Simple.new(:catalog => catalog, :query => query)
   end
 end

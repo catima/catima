@@ -2,17 +2,9 @@
   Items matching: <%= @search.query %>
 <% end %>
 
-<ul>
-  <% @search.items_grouped_by_type do |type, items| %>
-    <li>
-      <%= type.name_plural %>
-      <ul>
-        <% items.each_with_index do |item, i| %>
-          <li>
-            <%= search_item_link(item, i, item.display_name) %>
-          </li>
-        <% end %>
-      </ul>
-    </li>
-  <% end %>
-</ul>
+<%= render(
+      "shared/search/results_list",
+      :items => @search.items,
+      :offset => @search.offset
+    ) %>
+<%= paginate(@search.items) %>

@@ -20,7 +20,10 @@ module ItemsHelper
       :locals => {
         :nav => nav,
         :search => search,
-        :search_path => simple_search_path(:q => search.query)
+        :search_path => simple_search_path(
+          :q => search.query,
+          :page => search.page_for_offset(nav.offset_actual)
+        )
       }
     )
   end

@@ -1,0 +1,7 @@
+<ul>
+  <% items.each_with_index do |item, i| %>
+    <li>
+      <%= search_item_link(item, offset + i, item.display_name) %>
+    </li>
+  <% end %>
+</ul>

@@ -10,6 +10,6 @@ module ControlsSearchResults
   def search
     # TODO: handle advanced search
     return nil if params[:q].blank?
-    @search ||= Search::Simple.new(catalog, params[:q])
+    @search ||= Search::Simple.new(:catalog => catalog, :query => params[:q])
   end
 end
