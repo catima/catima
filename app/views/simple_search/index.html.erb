@@ -2,6 +2,26 @@
   Items matching: <%= @search.query %>
 <% end %>
 
+<p>
+  Tabs would look like this:
+</p>
+
+<ul>
+  <% @search.item_counts_by_type do |type, count| %>
+    <li>
+      <%= link_to(:type => @search.active_item_type.slug, :q => @search.query) do %>
+        <%= type.name %>
+        <%= number_with_delimiter(count) %>
+        <%= "(active)" if @search.active?(type) %>
+      <% end %>
+    </li>
+  <% end %>
+</ul>
+
+<p>
+  Results
+</p>
+
 <%= render(
       "shared/search/results_list",
       :items => @search.items,

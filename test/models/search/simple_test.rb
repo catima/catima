@@ -10,20 +10,20 @@ class Search::SimpleTest < ActiveSupport::TestCase
     assert_empty(simple.items.to_a)
   end
 
-  test "groups results by item type" do
+  test "counts results by item type" do
     simple = simple_search(catalogs(:search), "toyota")
-    grouped = simple.items_grouped_by_type.to_a
+    counts = simple.item_counts_by_type.to_a
 
-    assert_equal(1, grouped.size)
+    assert_equal(1, counts.size)
 
-    item_type, items = grouped.first
+    item_type, count = counts.first
     assert_equal(item_types(:search_vehicle).id, item_type.id)
-    assert_includes(items.map(&:id), items(:search_vehicle_toyota_prius).id)
+    assert_equal(3, count)
   end
 
-  test "items_grouped_by_type is scoped to catalog" do
+  test "items is scoped to catalog" do
     simple = simple_search(catalogs(:one), "toyota")
-    assert_empty(simple.items_grouped_by_type.to_a)
+    assert_empty(simple.items.to_a)
   end
 
   private

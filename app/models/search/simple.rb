@@ -1,11 +1,12 @@
 class Search::Simple
-  attr_reader :catalog, :query, :page, :per
+  attr_reader :catalog, :query, :item_type_slug, :page, :per
 
-  def initialize(catalog:, query:, page:1, per:20)
+  def initialize(catalog:, query:, item_type_slug:nil, page:1, per:20)
     @catalog = catalog
     @query = query
     @page = [1, page.to_i].max
     @per = per
+    @item_type_slug = item_type_slug
   end
 
   # TODO: test
@@ -18,24 +19,37 @@ class Search::Simple
     1 + (an_offset / per)
   end
 
-  def items_grouped_by_type
+  # TODO: test
+  def active_item_type
+    sorted_item_types.find(&method(:active?))
+  end
+
+  # TODO: test
+  def active?(item_type)
+    return item_type.slug == item_type_slug if item_type_slug.present?
+
+    most_results = item_counts_by_type.max_by(&:last)
+    item_type.id == most_results.first.id unless most_results.nil?
+  end
+
+  def item_counts_by_type
     return to_enum(__callee__) unless block_given?
 
-    found_type_ids = unpaginated_items.pluck("items.item_type_id").uniq
-
+    found_type_ids = relation.pluck("items.item_type_id").uniq
     sorted_item_types.each do |type|
       next unless found_type_ids.include?(type.id)
-      yield(type, type.items.merge(items))
+      yield(type, type.items.merge(relation).count)
     end
   end
 
   def items
-    unpaginated_items.page(page).per(per)
+    scope = active_item_type ? active_item_type.items : Item.none
+    scope.merge(relation.page(page).per(per))
   end
 
   private
 
-  def unpaginated_items
+  def relation
     return Item.none if query.blank?
     catalog.items.simple_search(query)
   end
