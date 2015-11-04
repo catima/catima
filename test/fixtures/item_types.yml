@@ -55,3 +55,15 @@ multilingual_author:
       "name_plural_fr": "Auteurs",
       "name_plural_it": "Autori"
     }
+
+search_vehicle:
+  catalog: search
+  slug: search
+  name_translations: |
+    {
+      "name_en": "Vehicle"
+    }
+  name_plural_translations: |
+    {
+      "name_plural_en": "Vehicles"
+    }

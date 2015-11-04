@@ -63,3 +63,30 @@ one_author_very_old:
       "one_author_age_uuid": 2456,
       "one_author_name_uuid": "Very Old"
     }
+
+search_vehicle_toyota_prius:
+  catalog: search
+  item_type: search_vehicle
+  data: |
+    {
+      "search_vehicle_make_uuid": "Toyota",
+      "search_vehicle_model_uuid": "Prius"
+    }
+
+search_vehicle_toyota_highlander:
+  catalog: search
+  item_type: search_vehicle
+  data: |
+    {
+      "search_vehicle_make_uuid": "Toyota",
+      "search_vehicle_model_uuid": "Highlander"
+    }
+
+search_vehicle_toyota_camry:
+  catalog: search
+  item_type: search_vehicle
+  data: |
+    {
+      "search_vehicle_make_uuid": "Toyota",
+      "search_vehicle_model_uuid": "Camry"
+    }

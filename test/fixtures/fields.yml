@@ -159,3 +159,32 @@ multilingual_author_bio:
       "name_plural_en": "Biographies",
       "name_plural_fr": "Biographies"
     }
+
+search_vehicle_make:
+  type: "Field::Text"
+  slug: make
+  item_type: search_vehicle
+  uuid: search_vehicle_make_uuid
+  name_translations: |
+    {
+      "name_en": "Make"
+    }
+  name_plural_translations: |
+    {
+      "name_plural_en": "Makes"
+    }
+
+search_vehicle_model:
+  type: "Field::Text"
+  slug: model
+  item_type: search_vehicle
+  uuid: search_vehicle_model_uuid
+  primary: true
+  name_translations: |
+    {
+      "name_en": "Model"
+    }
+  name_plural_translations: |
+    {
+      "name_plural_en": "Models"
+    }

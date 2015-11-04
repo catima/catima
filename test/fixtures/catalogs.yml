@@ -42,3 +42,8 @@ inactive:
   other_languages:
   requires_review: false
   deactivated_at: <%= 10.minutes.ago %>
+
+search:
+  name: Catalog with Search Data
+  slug: search
+  primary_language: en
