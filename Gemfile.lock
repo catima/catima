@@ -196,6 +196,9 @@ GEM
       railties (>= 3.1.0)
       turbolinks
     json (1.8.3)
+    kaminari (0.16.3)
+      actionpack (>= 3.0.0)
+      activesupport (>= 3.0.0)
     kgio (2.10.0)
     launchy (2.4.3)
       addressable (~> 2.3)
@@ -437,6 +440,7 @@ DEPENDENCIES
   guard-minitest
   jquery-rails
   jquery-turbolinks
+  kaminari
   launchy
   letter_opener
   mail (>= 2.6.3)
