@@ -1,22 +1,10 @@
-class Search::Simple
-  attr_reader :catalog, :query, :item_type_slug, :page, :per
+class Search::Simple < Search
+  attr_reader :query, :item_type_slug
 
-  def initialize(catalog:, query:, item_type_slug:nil, page:1, per:20)
-    @catalog = catalog
+  def initialize(catalog:, query:, item_type_slug:nil, page:nil, per:nil)
+    super(catalog, page, per)
     @query = query
-    @page = [1, page.to_i].max
-    @per = per
     @item_type_slug = item_type_slug
-  end
-
-  # TODO: test
-  def offset
-    per * (page - 1)
-  end
-
-  # TODO: test
-  def page_for_offset(an_offset)
-    1 + (an_offset / per)
   end
 
   # TODO: test
@@ -42,9 +30,9 @@ class Search::Simple
     end
   end
 
-  def items
+  def unpaginaged_items
     scope = active_item_type ? active_item_type.items : Item.none
-    scope.merge(relation.page(page).per(per))
+    scope.merge(relation)
   end
 
   private
