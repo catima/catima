@@ -1,0 +1,29 @@
+# == Schema Information
+#
+# Table name: advanced_searches
+#
+#  catalog_id   :integer
+#  created_at   :datetime         not null
+#  creator_id   :integer
+#  criteria     :json
+#  id           :integer          not null, primary key
+#  item_type_id :integer
+#  updated_at   :datetime         not null
+#  uuid         :string
+#
+
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  uuid: MyString
+  item_type_id:
+  catalog_id:
+  creator_id: 1
+  criteria:
+
+two:
+  uuid: MyString
+  item_type_id:
+  catalog_id:
+  creator_id: 1
+  criteria:

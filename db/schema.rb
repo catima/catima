@@ -11,10 +11,23 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20151102213009) do
+ActiveRecord::Schema.define(version: 20151105175029) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
+
+  create_table "advanced_searches", force: :cascade do |t|
+    t.string   "uuid"
+    t.integer  "item_type_id"
+    t.integer  "catalog_id"
+    t.integer  "creator_id"
+    t.json     "criteria"
+    t.datetime "created_at",   null: false
+    t.datetime "updated_at",   null: false
+  end
+
+  add_index "advanced_searches", ["catalog_id"], name: "index_advanced_searches_on_catalog_id", using: :btree
+  add_index "advanced_searches", ["item_type_id"], name: "index_advanced_searches_on_item_type_id", using: :btree
 
   create_table "catalog_permissions", force: :cascade do |t|
     t.integer  "catalog_id"
@@ -159,6 +172,8 @@ ActiveRecord::Schema.define(version: 20151102213009) do
   add_index "users", ["email"], name: "index_users_on_email", unique: true, using: :btree
   add_index "users", ["reset_password_token"], name: "index_users_on_reset_password_token", unique: true, using: :btree
 
+  add_foreign_key "advanced_searches", "catalogs"
+  add_foreign_key "advanced_searches", "item_types"
   add_foreign_key "catalog_permissions", "catalogs"
   add_foreign_key "catalog_permissions", "users"
   add_foreign_key "choice_sets", "catalogs"
