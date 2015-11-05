@@ -14,6 +14,7 @@
 
 class AdvancedSearch < ActiveRecord::Base
   belongs_to :catalog
+  belongs_to :creator, :class_name => "User"
   belongs_to :item_type
 
   validates_presence_of :catalog
