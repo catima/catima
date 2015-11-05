@@ -1,0 +1,6 @@
+<% provide(:title, "Advanced search") %>
+
+<%= bootstrap_form_for(@advanced_search) do |f| %>
+  <%= f.hidden_field(:criteria) %>
+  <%= f.primary("Search") %>
+<% end %>

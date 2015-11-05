@@ -90,6 +90,12 @@ Rails.application.routes.draw do
 
   scope :path => ":catalog_slug/:locale" do
     get "search" => "simple_search#index", :as => "simple_search"
+
+    resources :advanced_searches,
+              :path => "search/advanced",
+              :param => :uuid,
+              :only => [:new, :create, :show]
+
     resources :items, :path => ":item_type_slug", :only => [:index, :show]
   end
 end
