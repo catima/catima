@@ -1,7 +1,6 @@
-require 'test_helper'
+require "test_helper"
 
 class AdvancedSearchTest < ActiveSupport::TestCase
-  # test "the truth" do
-  #   assert true
-  # end
+  should validate_presence_of(:catalog)
+  should validate_presence_of(:item_type)
 end

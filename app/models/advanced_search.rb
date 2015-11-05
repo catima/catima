@@ -13,6 +13,9 @@
 #
 
 class AdvancedSearch < ActiveRecord::Base
-  belongs_to :item_type
   belongs_to :catalog
+  belongs_to :item_type
+
+  validates_presence_of :catalog
+  validates_presence_of :item_type
 end
