@@ -16,7 +16,7 @@ gem "kaminari"
 gem "mail", ">= 2.6.3"
 gem "marco-polo"
 gem "pg", "~> 0.18"
-gem "pg_search", "~> 1.0.5"
+gem "pg_search", "~> 1.0"
 gem "pundit"
 gem "rails", "4.2.4"
 gem "ranked-model"
@@ -27,7 +27,7 @@ gem "sass-rails", "~> 5.0"
 gem "secure_headers", ">= 2.1.0"
 gem "sidekiq"
 gem "sinatra", ">= 1.3.0", :require => false
-gem "turbolinks", ">= 2.5.2"
+gem "turbolinks", "~> 2.5"
 
 source "https://rails-assets.org" do
   gem "rails-assets-mousetrap", "~> 1.5.3"

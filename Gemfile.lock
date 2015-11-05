@@ -204,7 +204,7 @@ GEM
       addressable (~> 2.3)
     letter_opener (1.4.1)
       launchy (~> 2.2)
-    listen (3.0.3)
+    listen (3.0.4)
       rb-fsevent (>= 0.9.3)
       rb-inotify (>= 0.9)
     loofah (2.0.3)
@@ -219,7 +219,7 @@ GEM
     mini_magick (4.3.6)
     mini_portile (0.6.2)
     minitest (5.8.2)
-    minitest-reporters (1.1.4)
+    minitest-reporters (1.1.5)
       ansi
       builder
       minitest (>= 5.0)
@@ -448,7 +448,7 @@ DEPENDENCIES
   minitest-reporters
   mocha
   pg (~> 0.18)
-  pg_search (~> 1.0.5)
+  pg_search (~> 1.0)
   poltergeist
   pundit
   quiet_assets
@@ -472,7 +472,7 @@ DEPENDENCIES
   terminal-notifier-guard
   test_after_commit
   thin
-  turbolinks (>= 2.5.2)
+  turbolinks (~> 2.5)
   unicorn
   unicorn-worker-killer
   xray-rails (>= 0.1.16)
