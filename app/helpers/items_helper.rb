@@ -11,7 +11,6 @@ module ItemsHelper
       ))
   end
 
-  # TODO: handle advanced search
   def render_items_search_nav(search, item)
     nav = search_navigation(search, item)
     return if nav.nil?
