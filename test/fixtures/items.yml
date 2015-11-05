@@ -64,6 +64,15 @@ one_author_very_old:
       "one_author_name_uuid": "Very Old"
     }
 
+search_vehicle_honda_accord:
+  catalog: search
+  item_type: search_vehicle
+  data: |
+    {
+      "search_vehicle_make_uuid": "Honda",
+      "search_vehicle_model_uuid": "Accord"
+    }
+
 search_vehicle_toyota_prius:
   catalog: search
   item_type: search_vehicle

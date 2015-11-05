@@ -37,7 +37,6 @@ class Search::TextStrategyTest < ActiveSupport::TestCase
     strategy = Search::TextStrategy.new(field)
 
     results = strategy.search(scope, criteria)
-    puts results.to_sql
     assert_includes(results.to_a, items(:search_vehicle_toyota_camry_hybrid))
     refute_includes(results.to_a, items(:search_vehicle_toyota_camry))
   end
