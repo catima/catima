@@ -9,7 +9,7 @@ class Search::Index
   end
 
   def data
-    keywords = strategies.flat_map(&:keywords_for_index)
+    keywords = strategies.flat_map { |s| s.keywords_for_index(item, locale) }
     keywords.compact.join(" ")
   end
 
@@ -18,7 +18,7 @@ class Search::Index
   def strategies
     item.fields.map do |field|
       klass = "Search::#{field.class.name.sub(/^Field::/, '')}Strategy"
-      klass.constantize.new(item, field, locale)
+      klass.constantize.new(field)
     end
   end
 end

@@ -18,7 +18,7 @@ class Search::SimpleTest < ActiveSupport::TestCase
 
     item_type, count = counts.first
     assert_equal(item_types(:search_vehicle).id, item_type.id)
-    assert_equal(3, count)
+    assert_equal(4, count)
   end
 
   test "items is scoped to catalog" do

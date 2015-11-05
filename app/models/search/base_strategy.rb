@@ -1,21 +1,19 @@
 # A strategy defines how a field is indexed and searched.
 class Search::BaseStrategy
-  attr_reader :item, :field, :locale
+  attr_reader :field
 
-  def initialize(item, field, locale)
-    @item = item
+  def initialize(field)
     @field = field
-    @locale = locale
   end
 
   # Returns an array of string keywords for full-text search.
-  def keywords_for_index
+  def keywords_for_index(item, locale)
     []
   end
 
   private
 
-  def raw_value
+  def raw_value(item, locale)
     field.raw_value(item, locale)
   end
 end

@@ -90,3 +90,12 @@ search_vehicle_toyota_camry:
       "search_vehicle_make_uuid": "Toyota",
       "search_vehicle_model_uuid": "Camry"
     }
+
+search_vehicle_toyota_camry_hybrid:
+  catalog: search
+  item_type: search_vehicle
+  data: |
+    {
+      "search_vehicle_make_uuid": "Toyota",
+      "search_vehicle_model_uuid": "Camry Hybrid"
+    }
