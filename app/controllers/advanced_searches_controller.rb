@@ -28,8 +28,10 @@ class AdvancedSearchesController < ApplicationController
   end
 
   def find_advanced_search_or_redirect
-    @advanced_search = scope.where(:uuid => params[:uuid]).first
-    redirect_to(:action => :new) if @advanced_search.nil?
+    model = scope.where(:uuid => params[:uuid]).first
+    redirect_to(:action => :new) if model.nil?
+
+    @search = Search::Advanced.new(:model => model, :page => params[:page])
   end
 
   def advanced_search_params

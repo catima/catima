@@ -12,6 +12,10 @@
 #  uuid         :string
 #
 
+# Note: This is the ActiveRecord model for storing advanced search criteria.
+# The actual logic for performing advanced searches is in a separate class
+# called Search::Advanced.
+#
 class AdvancedSearch < ActiveRecord::Base
   belongs_to :catalog
   belongs_to :creator, :class_name => "User"

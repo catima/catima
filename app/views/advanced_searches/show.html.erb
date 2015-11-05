@@ -1,3 +1,7 @@
-<p>
-  TODO: Results go here.
-</p>
+<%= render(
+      "shared/search/results_list",
+      :items => @search.items,
+      :offset => @search.offset
+    ) %>
+
+<%= paginate(@search.items) %>
