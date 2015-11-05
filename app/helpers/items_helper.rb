@@ -6,7 +6,8 @@ module ItemsHelper
         :item_type_slug => item.item_type,
         :id => item,
         :offset => offset,
-        :q => params[:q]
+        :q => params[:q],
+        :search => params[:uuid] || params[:search]
       ))
   end
 
@@ -20,13 +21,25 @@ module ItemsHelper
       :locals => {
         :nav => nav,
         :search => search,
-        :search_path => simple_search_path(
-          :q => search.query,
-          :page => search.page_for_offset(nav.offset_actual),
-          :type => item.item_type.slug
-        )
+        :search_path => search_path(search, item, nav)
       }
     )
+  end
+
+  def search_path(search, item, nav)
+    case search
+    when Search::Simple
+      simple_search_path(
+        :q => search.query,
+        :page => search.page_for_offset(nav.offset_actual),
+        :type => item.item_type.slug
+      )
+    when Search::Advanced
+      advanced_search_path(
+        :uuid => search.model.uuid,
+        :page => search.page_for_offset(nav.offset_actual)
+      )
+    end
   end
 
   def item_has_thumbnail?(item)

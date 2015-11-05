@@ -8,8 +8,17 @@ module ControlsSearchResults
   private
 
   def search
-    # TODO: handle advanced search
-    return nil if params[:q].blank?
+    return advanced_search if params[:search].present?
+    return simple_search if params[:q].present?
+  end
+
+  def advanced_search
+    model = catalog.advanced_searches.where(:uuid => params[:search]).first
+    return nil if model.nil?
+    @search ||= Search::Advanced.new(:model => model)
+  end
+
+  def simple_search
     @search ||= Search::Simple.new(
       :catalog => catalog,
       :query => params[:q],

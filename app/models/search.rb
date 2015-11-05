@@ -21,7 +21,7 @@ class Search
   end
 
   def page_for_offset(an_offset)
-    1 + (an_offset / per)
+    1 + (an_offset.to_i / per)
   end
 
   def items
