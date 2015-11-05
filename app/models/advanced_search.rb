@@ -17,6 +17,8 @@
 # called Search::Advanced.
 #
 class AdvancedSearch < ActiveRecord::Base
+  delegate :fields, :to => :item_type
+
   belongs_to :catalog
   belongs_to :creator, :class_name => "User"
   belongs_to :item_type

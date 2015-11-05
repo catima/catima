@@ -35,8 +35,8 @@ class AdvancedSearchesController < ApplicationController
   end
 
   def advanced_search_params
-    # TODO
-    params.require(:advanced_search).permit(:criteria)
+    search = Search::Advanced.new(:model => @advanced_search)
+    search.permit_criteria(params.require(:advanced_search))
   end
 
   def scope

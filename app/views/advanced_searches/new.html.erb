@@ -1,6 +1,13 @@
 <% provide(:title, "Advanced search") %>
 
 <%= bootstrap_form_for(@advanced_search) do |f| %>
-  <%= f.hidden_field(:criteria) %>
+  <% @advanced_search.fields.each do |field| %>
+    <% next unless field.is_a?(Field::Text) %>
+    <%= f.fields_for(:criteria) do |f| %>
+      <%= f.fields_for(field.uuid) do |f| %>
+        <%= f.text_field("exact", :label => field.name) %>
+      <% end %>
+    <% end %>
+  <% end %>
   <%= f.primary("Search") %>
 <% end %>

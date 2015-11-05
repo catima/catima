@@ -13,6 +13,14 @@ class Search::Advanced < Search
     @model = model
   end
 
+  def permit_criteria(params)
+    permitted = {}
+    strategies.each do |strategy|
+      permitted[strategy.field.uuid] = strategy.criteria_keys
+    end
+    params.permit(:criteria => permitted)
+  end
+
   private
 
   def unpaginaged_items
