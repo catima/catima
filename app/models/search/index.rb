@@ -12,7 +12,7 @@ class Search::Index
   end
 
   def data
-    keywords = strategies.flat_map { |s| s.keywords_for_index(item, locale) }
+    keywords = strategies.flat_map { |s| s.keywords_for_index(item) }
     keywords.compact.join(" ")
   end
 end

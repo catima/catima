@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20151105175029) do
+ActiveRecord::Schema.define(version: 20151106003745) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -22,8 +22,9 @@ ActiveRecord::Schema.define(version: 20151105175029) do
     t.integer  "catalog_id"
     t.integer  "creator_id"
     t.json     "criteria"
-    t.datetime "created_at",   null: false
-    t.datetime "updated_at",   null: false
+    t.datetime "created_at",                  null: false
+    t.datetime "updated_at",                  null: false
+    t.string   "locale",       default: "en", null: false
   end
 
   add_index "advanced_searches", ["catalog_id"], name: "index_advanced_searches_on_catalog_id", using: :btree

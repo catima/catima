@@ -4,7 +4,7 @@ module Search::Strategies
   def strategies
     fields.map do |field|
       klass = "Search::#{field.class.name.sub(/^Field::/, '')}Strategy"
-      klass.constantize.new(field)
+      klass.constantize.new(field, locale)
     end
   end
 end

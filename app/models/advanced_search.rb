@@ -8,6 +8,7 @@
 #  criteria     :json
 #  id           :integer          not null, primary key
 #  item_type_id :integer
+#  locale       :string           default("en"), not null
 #  updated_at   :datetime         not null
 #  uuid         :string
 #
@@ -26,6 +27,7 @@ class AdvancedSearch < ActiveRecord::Base
   validates_presence_of :catalog
   validates_presence_of :item_type
 
+  before_create :assign_locale
   before_create :assign_uuid
 
   def to_param
@@ -33,6 +35,10 @@ class AdvancedSearch < ActiveRecord::Base
   end
 
   private
+
+  def assign_locale
+    self.locale = I18n.locale
+  end
 
   def assign_uuid
     self.uuid ||= SecureRandom.uuid

@@ -1,6 +1,6 @@
 class Search::TextStrategy < Search::BaseStrategy
-  def keywords_for_index(item, locale)
-    raw_value(item, locale)
+  def keywords_for_index(item)
+    raw_value(item)
   end
 
   def criteria_keys
@@ -39,7 +39,7 @@ class Search::TextStrategy < Search::BaseStrategy
 
   def data_field_expr
     # TODO: move this to Field?
-    locale = "_#{I18n.locale}" if field.i18n?
-    "items.data->>'#{field.uuid}#{locale}'"
+    locale_suffix = "_#{locale}" if field.i18n?
+    "items.data->>'#{field.uuid}#{locale_suffix}'"
   end
 end

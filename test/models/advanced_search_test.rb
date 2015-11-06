@@ -13,4 +13,13 @@ class AdvancedSearchTest < ActiveSupport::TestCase
     )
     assert_equal("1234-abcd", search.uuid)
   end
+
+  test "assigns current locale" do
+    search = AdvancedSearch.new(
+      :catalog => catalogs(:two),
+      :item_type => item_types(:two_author)
+    )
+    I18n.with_locale(:it) { search.save! }
+    assert_equal("it", search.locale)
+  end
 end
