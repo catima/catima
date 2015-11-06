@@ -32,6 +32,6 @@ class Search::Advanced < Search
   end
 
   def field_criteria(field)
-    (criteria || {}).fetch(field.uuid, {})
+    (criteria || {}).fetch(field.uuid, {}).with_indifferent_access
   end
 end

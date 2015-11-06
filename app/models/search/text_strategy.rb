@@ -6,9 +6,9 @@ class Search::TextStrategy < Search::BaseStrategy
   end
 
   def search(scope, criteria)
-    scope = exact_search(scope, criteria["exact"])
-    scope = contains_search(scope, criteria["contains"])
-    scope = excludes_search(scope, criteria["excludes"])
+    scope = exact_search(scope, criteria[:exact])
+    scope = contains_search(scope, criteria[:contains])
+    scope = excludes_search(scope, criteria[:excludes])
     scope
   end
 

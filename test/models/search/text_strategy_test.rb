@@ -9,7 +9,11 @@ class Search::TextStrategyTest < ActiveSupport::TestCase
   end
 
   test "search contains and excludes terms" do
-    criteria = { "contains" => "camry", "excludes" => "hybrid" }
+    criteria = {
+      "contains" => "camry",
+      "excludes" => "hybrid"
+    }.with_indifferent_access
+
     scope = catalogs(:search).items
     field = fields(:search_vehicle_model)
     strategy = Search::TextStrategy.new(field, :en)
@@ -20,7 +24,7 @@ class Search::TextStrategyTest < ActiveSupport::TestCase
   end
 
   test "search exact" do
-    criteria = { "exact" => "camry hybrid" }
+    criteria = { "exact" => "camry hybrid" }.with_indifferent_access
     scope = catalogs(:search).items
     field = fields(:search_vehicle_model)
     strategy = Search::TextStrategy.new(field, :en)
@@ -31,7 +35,7 @@ class Search::TextStrategyTest < ActiveSupport::TestCase
   end
 
   test "search multiple terms" do
-    criteria = { "contains" => "hybrid camry" }
+    criteria = { "contains" => "hybrid camry" }.with_indifferent_access
     scope = catalogs(:search).items
     field = fields(:search_vehicle_model)
     strategy = Search::TextStrategy.new(field, :en)
@@ -42,7 +46,7 @@ class Search::TextStrategyTest < ActiveSupport::TestCase
   end
 
   test "search obeys scope" do
-    criteria = { "exact" => "camry hybrid" }
+    criteria = { "exact" => "camry hybrid" }.with_indifferent_access
     scope = Item.none
     field = fields(:search_vehicle_model)
     strategy = Search::TextStrategy.new(field, :en)
