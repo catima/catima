@@ -3,6 +3,13 @@
 # Search::Simple classes. This module serves as the glue between those classes
 # and the Item model.
 module Search::Macros
+  PG_DICTIONARIES = {
+    "de" => "german",
+    "en" => "english",
+    "fr" => "french",
+    "it" => "italian"
+  }.freeze
+
   extend ActiveSupport::Concern
   include PgSearch
 
@@ -25,7 +32,16 @@ module Search::Macros
     private
 
     def simple_search_config(query)
-      { :against => "search_data_#{I18n.locale}", :query => query }
+      {
+        :query => query,
+        :against => "search_data_#{I18n.locale}",
+        :using => {
+          :tsearch => {
+            :prefix => true,
+            :dictionary => PG_DICTIONARIES.fetch(I18n.locale.to_s, "simple")
+          }
+        }
+      }
     end
   end
 
