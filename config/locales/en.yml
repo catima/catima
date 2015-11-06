@@ -47,6 +47,12 @@ en:
     messages:
       invalid_email: is not a valid email address
       invalid_url: is an invalid or incomplete URL
+  items:
+    search_nav:
+      back: "Back to search results"
+      next: "Next: %{item}"
+      no_more: "No more results"
+      previous: "Previous: %{item}"
   invitations_mailer:
     account_information:
       email: "Email"
@@ -76,6 +82,15 @@ en:
         log_out: "Log out"
         register: "Register"
         my_profile: "My profile"
+  simple_search:
+    form:
+      advanced: "Advanced"
+      submit: "Search"
+    index:
+      title:
+        zero: "Nothing found for “%{query}”"
+        one: "1 result for “%{query}”"
+        other: "%{count_delimited} results for “%{query}”"
   helpers:
     help:
       field/url: A full URL, including the http part

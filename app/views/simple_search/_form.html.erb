@@ -13,7 +13,10 @@
         :style => "width: 25em"
         ) %>
 
-  <%= f.submit("Search") %>
+  <%= f.submit(t(".submit")) %>
 
-  <%= link_to("Advanced", new_advanced_search_path, :class => "btn btn-link") %>
+  <%= link_to(
+        t(".advanced"),
+        new_advanced_search_path,
+        :class => "btn btn-link") %>
 <% end %>

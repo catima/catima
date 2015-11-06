@@ -3,9 +3,10 @@
 <% end %>
 
 <% provide(:title) do %>
-  <%= pluralize_with_delimiter(@search.total_count, "result") %>
-  for
-  “<%= @search.query %>”
+  <%= t(".title",
+        :query => @search.query,
+        :count => @search.total_count,
+        :count_delimited => number_with_delimiter(@search.total_count)) %>
 <% end %>
 
 <% if @search.item_counts_by_type.many? %>
