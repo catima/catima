@@ -1,5 +1,5 @@
 class Field::ChoiceSetPresenter < FieldPresenter
-  delegate :choices, :to => :field
+  delegate :choices, :selected_choice, :to => :field
 
   def input(form, method, options={})
     form.collection_select(
@@ -12,6 +12,6 @@ class Field::ChoiceSetPresenter < FieldPresenter
   end
 
   def value
-    choices.except(:order).where(:id => raw_value).first.try(:long_name)
+    selected_choice(item).try(:long_name)
   end
 end

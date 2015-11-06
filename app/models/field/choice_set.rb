@@ -42,7 +42,7 @@ class Field::ChoiceSet < ::Field
   end
 
   def choices
-    return [] if choice_set.nil?
+    return Choice.none if choice_set.nil?
     choice_set.choices.sorted
   end
 
@@ -52,6 +52,10 @@ class Field::ChoiceSet < ::Field
 
   def custom_field_permitted_attributes
     %i(choice_set_id)
+  end
+
+  def selected_choice(item)
+    choices.except(:order).where(:id => raw_value(item)).first
   end
 
   # private
