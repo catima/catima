@@ -1,10 +1,8 @@
 class Search::TextStrategy < Search::BaseStrategy
+  permit_criteria :exact, :contains, :excludes
+
   def keywords_for_index(item)
     raw_value(item)
-  end
-
-  def criteria_keys
-    %w(exact contains excludes)
   end
 
   def search(scope, criteria)

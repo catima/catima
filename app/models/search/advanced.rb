@@ -16,7 +16,7 @@ class Search::Advanced < Search
   def permit_criteria(params)
     permitted = {}
     strategies.each do |strategy|
-      permitted[strategy.field.uuid] = strategy.criteria_keys
+      permitted[strategy.field.uuid] = strategy.permitted_keys
     end
     params.permit(:criteria => permitted)
   end
