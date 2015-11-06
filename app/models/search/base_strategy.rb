@@ -14,8 +14,14 @@ class Search::BaseStrategy
   end
 
   # Returns an array of string keywords for full-text search.
-  def keywords_for_index(item)
+  def keywords_for_index(_item)
     []
+  end
+
+  # Appends field-specific clauses to the given Item scope based on a hash of
+  # search criteria.
+  def search(scope, _criteria)
+    scope
   end
 
   private

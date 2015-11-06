@@ -1,6 +1,23 @@
 <% provide(:title, "Advanced search") %>
 
+<% if @advanced_search.item_types.many? %>
+  <ul class="nav nav-tabs">
+    <% @advanced_search.item_types.each do |type| %>
+      <%= content_tag(
+            :li,
+            :role => "presentation",
+            :class => ("active" if @advanced_search.item_type == type)) do %>
+        <%= link_to(:type => type.slug) do %>
+          <%= type.name %> search
+        <% end %>
+      <% end %>
+    <% end %>
+  </ul>
+<% end %>
+
 <%= bootstrap_form_for(@advanced_search) do |f| %>
+  <%= hidden_field_tag(:type, params[:type]) %>
+
   <table class="table">
     <tbody>
       <% @advanced_search.fields.each do |field| %>

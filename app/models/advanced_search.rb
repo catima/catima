@@ -19,6 +19,7 @@
 #
 class AdvancedSearch < ActiveRecord::Base
   delegate :fields, :to => :item_type
+  delegate :item_types, :to => :catalog
 
   belongs_to :catalog
   belongs_to :creator, :class_name => "User"

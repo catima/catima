@@ -21,8 +21,9 @@ class AdvancedSearchesController < ApplicationController
   private
 
   def build_advanced_search
+    type = catalog.item_types.where(:slug => params[:type]).first
     @advanced_search = scope.new do |model|
-      model.item_type = catalog.item_types.sorted.first
+      model.item_type = type || catalog.item_types.sorted.first
       model.creator = current_user if current_user.authenticated?
     end
   end
