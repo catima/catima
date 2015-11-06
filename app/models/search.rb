@@ -1,5 +1,7 @@
 # Base class for simple and advanced searches.
 class Search
+  delegate :total_count, :to => :items
+
   attr_reader :catalog, :page, :per
 
   def initialize(catalog, page, per)

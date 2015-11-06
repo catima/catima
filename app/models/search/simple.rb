@@ -20,10 +20,6 @@ class Search::Simple < Search
     item_type.id == most_results.first.id unless most_results.nil?
   end
 
-  def total_count
-    relation.count
-  end
-
   def item_counts_by_type
     return to_enum(__callee__) unless block_given?
 
