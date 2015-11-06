@@ -55,6 +55,7 @@ class Field::ChoiceSet < ::Field
   end
 
   def selected_choice(item)
+    return nil if raw_value(item).blank?
     choices.except(:order).where(:id => raw_value(item)).first
   end
 

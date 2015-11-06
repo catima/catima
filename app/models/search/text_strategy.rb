@@ -34,10 +34,4 @@ class Search::TextStrategy < Search::BaseStrategy
     sql = words.map { |_| "#{data_field_expr} ILIKE ?" }.join(" OR ")
     scope.where("NOT (#{sql})", *words.map { |w| "%#{w}%" })
   end
-
-  def data_field_expr
-    # TODO: move this to Field?
-    locale_suffix = "_#{locale}" if field.i18n?
-    "items.data->>'#{field.uuid}#{locale_suffix}'"
-  end
 end

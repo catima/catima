@@ -33,4 +33,10 @@ class Search::BaseStrategy
   def raw_value(item)
     field.raw_value(item, locale)
   end
+
+  def data_field_expr
+    # TODO: move this to Field?
+    locale_suffix = "_#{locale}" if field.i18n?
+    "items.data->>'#{field.uuid}#{locale_suffix}'"
+  end
 end

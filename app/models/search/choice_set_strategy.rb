@@ -1,5 +1,5 @@
 class Search::ChoiceSetStrategy < Search::BaseStrategy
-  permit_criteria :any
+  permit_criteria :any => []
 
   def keywords_for_index(item)
     choice = field.selected_choice(item)
@@ -7,7 +7,8 @@ class Search::ChoiceSetStrategy < Search::BaseStrategy
   end
 
   def search(scope, criteria)
-    # TODO
-    scope
+    any_ids = criteria.fetch(:any, []).select(&:present?)
+    return scope if any_ids.empty?
+    scope.where("#{data_field_expr} IN (?)", any_ids)
   end
 end
