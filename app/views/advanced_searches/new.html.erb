@@ -1,4 +1,4 @@
-<% provide(:title, "Advanced search") %>
+<% provide(:title, t(".title")) %>
 
 <% if @advanced_search.item_types.many? %>
   <ul class="nav nav-tabs">
@@ -7,9 +7,7 @@
             :li,
             :role => "presentation",
             :class => ("active" if @advanced_search.item_type == type)) do %>
-        <%= link_to(:type => type.slug) do %>
-          <%= type.name %> search
-        <% end %>
+        <%= link_to(t(".tab", :type => type.name), :type => type.slug) %>
       <% end %>
     <% end %>
   </ul>
@@ -28,9 +26,9 @@
           <td>
             <%= f.fields_for(:criteria) do |f| %>
               <%= f.fields_for(field.uuid) do |f| %>
-                <%= f.text_field("exact", :label => "has exact phrase") %>
-                <%= f.text_field("contains", :label => "contains words") %>
-                <%= f.text_field("excludes", :label => "excludes words") %>
+                <%= f.text_field("exact", :label => t(".has_exact_phrase")) %>
+                <%= f.text_field("contains", :label => t(".contains_words")) %>
+                <%= f.text_field("excludes", :label => t(".excludes_words")) %>
               <% end %>
             <% end %>
           </td>
@@ -38,6 +36,9 @@
       <% end %>
     </tbody>
   </table>
-  <%= f.primary("Search") %>
-  <%= link_to("Start over", {}, :class => "btn btn-text") %>
+  <%= f.primary(t(".submit")) %>
+  <%= link_to(
+        t(".start_over"),
+        { :type => params[:type] },
+        :class => "btn btn-text") %>
 <% end %>

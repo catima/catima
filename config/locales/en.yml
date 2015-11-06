@@ -1,5 +1,19 @@
 ---
 en:
+  advanced_searches:
+    new:
+      contains_words: "contains words"
+      excludes_words: "excludes words"
+      has_exact_phrase: "has exact phrase"
+      tab: "%{type} search"
+      title: "Advanced search"
+      start_over: "Start over"
+      submit: "Search"
+    show:
+      title:
+        zero: "Your advanced search found no results"
+        one: "1 advanced search result"
+        other: "%{count_delimited} advanced search results"
   common:
     back: "Back"
     greeting: "Hello"

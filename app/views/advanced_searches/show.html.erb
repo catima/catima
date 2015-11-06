@@ -1,3 +1,9 @@
+<% provide(:title) do %>
+  <%= t(".title",
+        :count => @search.total_count,
+        :count_delimited => number_with_delimiter(@search.total_count)) %>
+<% end %>
+
 <%= render(
       "shared/search/results_list",
       :items => @search.items,
