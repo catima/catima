@@ -18,6 +18,7 @@
 //= require mousetrap/mousetrap
 //= require mousetrap/plugins/global-bind/mousetrap-global-bind
 //= require refile
+//= require select2
 //= require_tree .
 
 Turbolinks.enableProgressBar();

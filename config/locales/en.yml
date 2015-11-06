@@ -2,6 +2,7 @@
 en:
   advanced_searches:
     new:
+      any: "is any of"
       contains_words: "contains words"
       excludes_words: "excludes words"
       has_exact_phrase: "has exact phrase"
