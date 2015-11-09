@@ -1,15 +1,5 @@
 Rails.application.routes.draw do
   # ===========================================================================
-  # Development
-
-  if Rails.env.development?
-    # This workaround won't be necessary in Rails 5
-    # https://github.com/rails/rails/commit/ccc3ddb7762bae0df7e2f8d643b19b6a4769d5be
-    get "/rails/mailers"       => "rails/mailers#index"
-    get "/rails/mailers/*path" => "rails/mailers#preview"
-  end
-
-  # ===========================================================================
   # Devise
 
   scope :path => ":locale" do
@@ -86,9 +76,12 @@ Rails.application.routes.draw do
   # ===========================================================================
   # Catalog viewing (public)
 
-  get ":catalog_slug/(:locale)" => "catalogs#show", :as => "catalog_home"
+  get ":catalog_slug/(:locale)" => "catalogs#show",
+      :as => "catalog_home",
+      :constraints => CatalogsController::Constraint
 
-  scope :path => ":catalog_slug/:locale" do
+  scope :path => ":catalog_slug/:locale",
+        :constraints => CatalogsController::Constraint do
     get "search" => "simple_search#index", :as => "simple_search"
 
     resources :advanced_searches,
@@ -96,6 +89,9 @@ Rails.application.routes.draw do
               :param => :uuid,
               :only => [:new, :create, :show]
 
-    resources :items, :path => ":item_type_slug", :only => [:index, :show]
+    resources :items,
+              :path => ":item_type_slug",
+              :only => [:index, :show],
+              :constraints => ItemsController::Constraint
   end
 end
