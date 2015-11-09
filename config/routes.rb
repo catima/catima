@@ -89,6 +89,8 @@ Rails.application.routes.draw do
               :param => :uuid,
               :only => [:new, :create, :show]
 
+    get ":slug" => "pages#show", :constraints => PagesController::Constraint
+
     resources :items,
               :path => ":item_type_slug",
               :only => [:index, :show],

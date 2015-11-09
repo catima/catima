@@ -32,6 +32,7 @@ class Catalog < ActiveRecord::Base
   has_many :choice_sets
   has_many :items
   has_many :item_types
+  has_many :pages
 
   def self.sorted
     order("LOWER(catalogs.name) ASC")
