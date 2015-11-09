@@ -1,6 +1,6 @@
 GIT
   remote: https://github.com/stympy/faker.git
-  revision: 42f5cb8877bc74eb9f249413e9437f91c2969548
+  revision: fdbd1bd3262b738f84f96605ec228ee593a2b87c
   specs:
     faker (1.5.0)
       i18n (~> 0.5)
@@ -54,7 +54,7 @@ GEM
       rake (~> 10.4)
     ansi (1.5.0)
     arel (6.0.3)
-    autoprefixer-rails (6.0.3)
+    autoprefixer-rails (6.1.0.1)
       execjs
       json
     awesome_print (1.6.1)
@@ -400,7 +400,7 @@ GEM
     user_agent_parser (2.3.0)
     warden (1.2.3)
       rack (>= 1.0)
-    websocket-driver (0.6.2)
+    websocket-driver (0.6.3)
       websocket-extensions (>= 0.1.0)
     websocket-extensions (0.1.2)
     xpath (2.0.0)
