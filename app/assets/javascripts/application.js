@@ -19,6 +19,7 @@
 //= require mousetrap/plugins/global-bind/mousetrap-global-bind
 //= require refile
 //= require select2
+//= require summernote
 //= require_tree .
 
 Turbolinks.enableProgressBar();
