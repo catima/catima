@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20151106003745) do
+ActiveRecord::Schema.define(version: 20151109224327) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -152,6 +152,23 @@ ActiveRecord::Schema.define(version: 20151106003745) do
   add_index "items", ["item_type_id"], name: "index_items_on_item_type_id", using: :btree
   add_index "items", ["reviewer_id"], name: "index_items_on_reviewer_id", using: :btree
 
+  create_table "pages", force: :cascade do |t|
+    t.integer  "catalog_id"
+    t.integer  "creator_id"
+    t.integer  "reviewer_id"
+    t.string   "slug"
+    t.text     "title"
+    t.text     "content"
+    t.string   "locale"
+    t.string   "status"
+    t.datetime "created_at",  null: false
+    t.datetime "updated_at",  null: false
+  end
+
+  add_index "pages", ["catalog_id"], name: "index_pages_on_catalog_id", using: :btree
+  add_index "pages", ["creator_id"], name: "index_pages_on_creator_id", using: :btree
+  add_index "pages", ["reviewer_id"], name: "index_pages_on_reviewer_id", using: :btree
+
   create_table "users", force: :cascade do |t|
     t.string   "email",                  default: "",    null: false
     t.string   "encrypted_password",     default: "",    null: false
@@ -188,5 +205,10 @@ ActiveRecord::Schema.define(version: 20151106003745) do
   add_foreign_key "item_types", "catalogs"
   add_foreign_key "items", "catalogs"
   add_foreign_key "items", "item_types"
+  add_foreign_key "items", "users", column: "creator_id"
+  add_foreign_key "items", "users", column: "reviewer_id"
+  add_foreign_key "pages", "catalogs"
+  add_foreign_key "pages", "users", column: "creator_id"
+  add_foreign_key "pages", "users", column: "reviewer_id"
   add_foreign_key "users", "users", column: "invited_by_id"
 end
