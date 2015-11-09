@@ -7,6 +7,7 @@ module ControlsCatalog
     before_action :find_active_catalog
     before_action :redirect_to_valid_locale
     before_action :remember_requested_locale
+    before_action :remember_current_page_for_login_logout
     helper_method :catalog
   end
 
@@ -39,5 +40,9 @@ module ControlsCatalog
     return if current_user.primary_language == params[:locale]
     current_user.update_column(:primary_language, params[:locale])
     true
+  end
+
+  def remember_current_page_for_login_logout
+    store_location_for(:user, request.path)
   end
 end

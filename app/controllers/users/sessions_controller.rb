@@ -1,25 +1,13 @@
 class Users::SessionsController < Devise::SessionsController
-# before_filter :configure_sign_in_params, only: [:create]
-
-  # GET /resource/sign_in
-  # def new
-  #   super
-  # end
-
-  # POST /resource/sign_in
-  # def create
-  #   super
-  # end
-
-  # DELETE /resource/sign_out
-  # def destroy
-  #   super
-  # end
-
-  # protected
-
-  # If you have extra params to permit, append them to the sanitizer.
-  # def configure_sign_in_params
-  #   devise_parameter_sanitizer.for(:sign_in) << :attribute
-  # end
+  # This small hack lets us remember the stored location when the user logs out.
+  # Normally, since Devise clears the session upon logout, the stored location
+  # is wiped. To work around this, we re-store the value after logout but before
+  # the redirect.
+  def destroy
+    after_path = stored_location_for(:user)
+    super do
+      # This blocks executes after logout, but before redirect.
+      store_location_for(:user, after_path)
+    end
+  end
 end

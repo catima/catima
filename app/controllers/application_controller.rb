@@ -32,4 +32,13 @@ class ApplicationController < ActionController::Base
   def current_user
     @current_user ||= (super || Guest.new)
   end
+
+  # If we've store an explicit redirect path, use it. This allows us to
+  # maintain the current page when logging in/out.
+  def after_devise_action_for(resource)
+    stored_location_for(resource) || root_url
+  end
+  alias_method :after_sign_in_path_for, :after_devise_action_for
+  alias_method :after_sign_out_path_for, :after_devise_action_for
+  alias_method :after_sign_up_path_for, :after_devise_action_for
 end
