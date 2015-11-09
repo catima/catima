@@ -94,6 +94,9 @@ GEM
     capistrano-mb (0.25.0)
       capistrano (>= 3.3.5)
       sshkit (>= 1.6.1)
+    capistrano-nc (0.1.4)
+      capistrano (~> 3.0)
+      terminal-notifier (~> 1.6)
     capistrano-rails (1.1.5)
       capistrano (~> 3.1)
       capistrano-bundler (~> 1.1)
@@ -370,6 +373,7 @@ GEM
       net-scp (>= 1.1.2)
       net-ssh (>= 2.8.0)
     temple (0.7.6)
+    terminal-notifier (1.6.3)
     terminal-notifier-guard (1.6.4)
     terminal-table (1.5.2)
     test_after_commit (0.4.1)
@@ -428,6 +432,7 @@ DEPENDENCIES
   capistrano (~> 3.4.0)
   capistrano-bundler
   capistrano-mb (>= 0.22.2)
+  capistrano-nc
   capistrano-rails
   capybara
   cocoon

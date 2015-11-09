@@ -58,6 +58,7 @@ group :development do
   gem "capistrano", "~> 3.4.0", :require => false
   gem "capistrano-bundler", :require => false
   gem "capistrano-mb", ">= 0.22.2", :require => false
+  gem "capistrano-nc", :require => false
   gem "capistrano-rails", :require => false
   gem "faker", :require => false, :git => "https://github.com/stympy/faker.git"
   gem "guard", ">= 2.2.2", :require => false
