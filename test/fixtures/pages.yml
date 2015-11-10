@@ -1,0 +1,28 @@
+# == Schema Information
+#
+# Table name: pages
+#
+#  catalog_id  :integer
+#  content     :text
+#  created_at  :datetime         not null
+#  creator_id  :integer
+#  id          :integer          not null, primary key
+#  locale      :string
+#  reviewer_id :integer
+#  slug        :string
+#  status      :string
+#  title       :text
+#  updated_at  :datetime         not null
+#
+
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  catalog: one
+
+two:
+  catalog: two
+
+created_by_two_editor:
+  catalog: two
+  creator: two_editor

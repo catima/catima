@@ -1,10 +1,11 @@
 <% provide(:extra_nav) do %>
-  <%# TODO: authorize %>
-  <div class="alert alert-info" style="text-align: center">
-    <%= link_to(edit_catalog_admin_page_path) do %>
-      <%= fa_icon(:pencil, :text => "Edit this page") %>
-    <% end %>
-  </div>
+  <% if policy(@page).edit? %>
+    <div class="alert alert-info" style="text-align: center">
+      <%= link_to(edit_catalog_admin_page_path) do %>
+        <%= fa_icon(:pencil, :text => "Edit this page") %>
+      <% end %>
+    </div>
+  <% end %>
 <% end %>
 
 <% provide(:title, @page.title) %>

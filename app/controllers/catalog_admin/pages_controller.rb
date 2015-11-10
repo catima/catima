@@ -1,21 +1,19 @@
 class CatalogAdmin::PagesController < CatalogAdmin::BaseController
   layout "catalog_admin/setup"
 
-  # TODO: authorization
-
   def index
-    # authorize(Page)
+    authorize(Page)
     @pages = catalog.pages.sorted
   end
 
   def new
     build_page
-    # authorize(@page)
+    authorize(@page)
   end
 
   def create
     build_page
-    # authorize(@page)
+    authorize(@page)
     if @page.update(page_params)
       redirect_to(after_create_path, :notice => created_message)
     else
@@ -25,12 +23,12 @@ class CatalogAdmin::PagesController < CatalogAdmin::BaseController
 
   def edit
     find_page
-    # authorize(@page)
+    authorize(@page)
   end
 
   def update
     find_page
-    # authorize(@page)
+    authorize(@page)
     if @page.update(page_params)
       redirect_to(catalog_admin_pages_path, :notice => updated_message)
     else
@@ -40,7 +38,7 @@ class CatalogAdmin::PagesController < CatalogAdmin::BaseController
 
   def destroy
     find_page
-    # authorize(@page)
+    authorize(@page)
     @page.destroy
     redirect_to(catalog_admin_pages_path, :notice => destroyed_message)
   end

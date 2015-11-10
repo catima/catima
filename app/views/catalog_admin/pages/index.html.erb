@@ -20,15 +20,14 @@
         <td><%= link_to(page_path(page), page_path(page)) %></td>
         <td><%= page.title %></td>
         <td style="text-align: right">
-          <%# TODO: authorization %>
-          <%# if policy(page).edit? %>
+          <% if policy(page).edit? %>
             <%= link_to(
                   fa_icon("pencil", :text => "Edit"),
                   edit_catalog_admin_page_path(catalog, page),
                   :class => "btn btn-default btn-xs") %>
 
-          <%# end %>
-          <%# if policy(page).destroy? %>
+          <% end %>
+          <% if policy(page).destroy? %>
             <%= link_to(
                   fa_icon("trash-o", :text => "Delete"),
                   catalog_admin_page_path(catalog, page),
@@ -38,7 +37,7 @@
                     :confirm => "Are you sure you want to delete "\
                                 "“#{page.title}”?"
                   }) %>
-          <%# end %>
+          <% end %>
         </td>
       </tr>
     <% end %>
