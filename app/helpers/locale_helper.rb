@@ -32,9 +32,11 @@ module LocaleHelper
   end
 
   def locale_language_select(form, method, options={}, html_options={})
+    locales = options.fetch(:locales, I18n.available_locales)
+
     form.collection_select(
       method,
-      locale_language_choices(I18n.available_locales).map(&:first).map(&:to_s),
+      locale_language_choices(locales).map(&:first).map(&:to_s),
       :itself,
       ->(choice) { locale_language(choice) },
       options,

@@ -1,0 +1,36 @@
+<% provide(:title, "Pages") %>
+
+<% provide(:actions) do %>
+  <%= link_to(new_catalog_admin_page_path) do %>
+    <%= fa_icon(:file, :text => "New page") %>
+  <% end %>
+<% end %>
+
+<table class="table">
+  <thead>
+    <tr>
+      <th>URL</th>
+      <th>Title</th>
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+    <% @pages.each do |page| %>
+      <tr>
+        <td><%= link_to(page_path(page), page_path(page)) %></td>
+        <td><%= page.title %></td>
+        <td style="text-align: right">
+          <%# TODO: authorization %>
+          <%# if policy(page).edit? %>
+            <%= link_to(
+                  fa_icon("pencil", :text => "Edit"),
+                  edit_catalog_admin_page_path(catalog, page),
+                  :class => "btn btn-default btn-xs") %>
+
+            <%# TODO: delete %>
+          <%# end %>
+        </td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>

@@ -13,6 +13,8 @@ class PagesController < ApplicationController
   include ControlsCatalog
 
   def show
+    locale = request[:locale]
+    slug = request[:slug]
     @page = catalog.pages.where(:locale => locale, :slug => slug).first!
   end
 end

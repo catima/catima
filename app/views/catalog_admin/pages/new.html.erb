@@ -1,0 +1,16 @@
+<% provide(:title, "New page") %>
+
+<div class="panel-body">
+  <%= bootstrap_form_for([:catalog_admin, @page]) do |f| %>
+
+    <%= render("common_form_fields", :f => f) %>
+
+    <%= f.primary("Create page") %>
+    <%= submit_and_add_another(f) %>
+    <%= link_to(
+          "Cancel",
+          catalog_admin_pages_path,
+          :class => "btn btn-link") %>
+
+  <% end %>
+</div>

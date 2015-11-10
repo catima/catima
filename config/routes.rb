@@ -66,7 +66,7 @@ Rails.application.routes.draw do
               :as => "item_type_fields"
 
     resources :choice_sets, :path => "_choices", :except => :show
-
+    resources :pages, :path => "_pages", :param => :slug
     resources :users, :path => "_users"
 
     # Data entry

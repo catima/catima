@@ -1,0 +1,11 @@
+<% if catalog.valid_locales.many? %>
+  <%= locale_language_select(
+        f,
+        :locale,
+        :locales => catalog.valid_locales,
+        :label => "Language") %>
+<% end %>
+
+<%= f.text_field(:slug, :help => slug_help_text, :autofocus => true) %>
+<%= f.text_field(:title) %>
+<%= f.text_area(:content, :rows => 16, :data => { :provider => "summernote" }) %>

@@ -24,7 +24,7 @@
                 fa_icon(:wrench, :text => "Setup"),
                 catalog_admin_contextual_setup_path,
                 :active_when => {
-                  :controller => /dashboard|item_types|choice_sets|fields|users/
+                  :controller => /$(?<!items)/
                 }) %>
         <% end %>
       </ul>

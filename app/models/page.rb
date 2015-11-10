@@ -28,4 +28,12 @@ class Page < ActiveRecord::Base
   validates_presence_of :title
 
   validates_slug
+
+  def self.sorted
+    order(:slug => :asc, :locale => :asc)
+  end
+
+  def to_param
+    slug
+  end
 end
