@@ -27,7 +27,7 @@ class Page < ActiveRecord::Base
   validates_presence_of :locale
   validates_presence_of :title
 
-  validates_slug
+  validates_slug :scope => [:catalog_id, :locale]
 
   def self.sorted
     order(:slug => :asc, :locale => :asc)
