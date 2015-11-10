@@ -10,42 +10,16 @@ class PagePolicy
   end
 
   def index?
-    user.system_admin? || user.editor_of_any_catalog?
+    user.system_admin? || user.admin_of_any_catalog?
   end
 
-  def create?
-    role_at_least?("editor")
+  def user_is_catalog_admin?
+    user.system_admin? || user.catalog_role_at_least?(catalog, "admin")
   end
-  alias_method :new?, :create?
-  alias_method :show?, :create?
-
-  def update?
-    role_at_least?(owned_page? ? "editor" : "reviewer")
-  end
-  alias_method :edit?, :update?
-  alias_method :destroy?, :update?
-
-  class Scope
-    attr_reader :user, :scope
-
-    def initialize(user, scope)
-      @user = user
-      @scope = scope
-    end
-
-    def resolve
-      return scope.all if user.system_admin?
-      Page.where(:catalog_id => user.editor_catalog_ids).merge(scope.all)
-    end
-  end
-
-  private
-
-  def role_at_least?(role)
-    user.system_admin? || user.catalog_role_at_least?(catalog, role)
-  end
-
-  def owned_page?
-    page.creator == user
-  end
+  alias_method :create?, :user_is_catalog_admin?
+  alias_method :destroy?, :user_is_catalog_admin?
+  alias_method :edit?, :user_is_catalog_admin?
+  alias_method :new?, :user_is_catalog_admin?
+  alias_method :show?, :user_is_catalog_admin?
+  alias_method :update?, :user_is_catalog_admin?
 end
