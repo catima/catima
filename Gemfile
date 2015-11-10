@@ -80,6 +80,9 @@ group :test do
   gem "minitest-reporters"
   gem "mocha"
   gem "poltergeist"
-  gem "shoulda"
+  gem "shoulda-context"
+  gem "shoulda-matchers",
+      :git => "https://github.com/CheckMateIO/shoulda-matchers.git",
+      :branch => "bugfix/numericality-of-virtual-attributes"
   gem "test_after_commit"
 end
