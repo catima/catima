@@ -27,7 +27,17 @@
                   edit_catalog_admin_page_path(catalog, page),
                   :class => "btn btn-default btn-xs") %>
 
-            <%# TODO: delete %>
+          <%# end %>
+          <%# if policy(page).destroy? %>
+            <%= link_to(
+                  fa_icon("trash-o", :text => "Delete"),
+                  catalog_admin_page_path(catalog, page),
+                  :class => "btn btn-xs btn-text",
+                  :method => :delete,
+                  :data => {
+                    :confirm => "Are you sure you want to delete "\
+                                "“#{page.title}”?"
+                  }) %>
           <%# end %>
         </td>
       </tr>
