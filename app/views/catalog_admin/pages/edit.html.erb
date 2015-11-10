@@ -1,0 +1,15 @@
+<% provide(:title, "Edit page") %>
+
+<div class="panel-body">
+  <%= bootstrap_form_for(@page, :url => catalog_admin_page_path) do |f| %>
+
+    <%= render("common_form_fields", :f => f) %>
+
+    <%= f.primary("Update page") %>
+    <%= link_to(
+          "Cancel",
+          catalog_admin_pages_path,
+          :class => "btn btn-link") %>
+
+  <% end %>
+</div>
