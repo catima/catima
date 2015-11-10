@@ -18,10 +18,18 @@
 # Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
 
 one:
+  title: Page for Catalog One
+  content: Test
   catalog: one
+  locale: en
+  slug: one
 
 two:
+  title: Page for Catalog Two
+  content: Test
   catalog: two
+  locale: en
+  slug: one
 
 created_by_two_editor:
   catalog: two
