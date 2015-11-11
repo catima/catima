@@ -8,6 +8,7 @@ module ControlsCatalog
     before_action :redirect_to_valid_locale
     before_action :remember_requested_locale
     before_action :remember_current_page_for_login_logout
+    before_action :prepend_catalog_view_path
     helper_method :catalog
   end
 
@@ -44,5 +45,12 @@ module ControlsCatalog
 
   def remember_current_page_for_login_logout
     store_location_for(:user, request.path)
+  end
+
+  # This is the magic that allows views in the `catalogs` directory to
+  # override those in the app. So for example, if the slug of the catalog is
+  # "viatimages", overrides could be placed in `catalogs/viatimages/views`.
+  def prepend_catalog_view_path
+    prepend_view_path(Rails.root.join("catalogs", catalog.slug, "views"))
   end
 end

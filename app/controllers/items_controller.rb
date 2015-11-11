@@ -13,6 +13,7 @@ class ItemsController < ApplicationController
   include ControlsSearchResults
 
   before_action :find_item_type
+  before_action :set_item_type_variant
 
   def index
     @items = item_type.sorted_items
@@ -30,5 +31,14 @@ class ItemsController < ApplicationController
   def find_item_type
     @item_type =
       catalog.item_types.where(:slug => params[:item_type_slug]).first!
+  end
+
+  # If an item type-specific view is desired, it can be specified by naming
+  # the view with a special syntax, making use of the item type slug.
+  # For example: `show.html+vehicles.erb`
+  def set_item_type_variant
+    # The slug should already be sanitized, but we do this just in case.
+    safe_slug = item_type.slug.downcase.gsub(/[^a-z0-9\-]/, "")
+    request.variant = safe_slug.to_sym
   end
 end
