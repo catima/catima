@@ -484,6 +484,7 @@ DEPENDENCIES
   spring
   sshkit (~> 1.7.1)
   summernote-rails (~> 0.6.16)
+  terminal-notifier
   terminal-notifier-guard
   test_after_commit
   thin
