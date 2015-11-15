@@ -36,7 +36,7 @@ GEM
       erubis (~> 2.7.0)
       rails-dom-testing (~> 1.0, >= 1.0.5)
       rails-html-sanitizer (~> 1.0, >= 1.0.2)
-    active_type (0.4.2)
+    active_type (0.4.3)
       activerecord (>= 3.2)
     activejob (4.2.5)
       activesupport (= 4.2.5)
@@ -140,7 +140,7 @@ GEM
     coffee-script (2.4.1)
       coffee-script-source
       execjs
-    coffee-script-source (1.9.1.1)
+    coffee-script-source (1.10.0)
     colorize (0.7.7)
     connection_pool (2.2.0)
     daemons (1.2.3)
@@ -249,12 +249,12 @@ GEM
       nenv (~> 0.1)
       shellany (~> 0.0)
     orm_adapter (0.5.0)
-    pg (0.18.3)
+    pg (0.18.4)
     pg_search (1.0.5)
       activerecord (>= 3.1)
       activesupport (>= 3.1)
       arel
-    poltergeist (1.7.0)
+    poltergeist (1.8.0)
       capybara (~> 2.1)
       cliver (~> 0.3.1)
       multi_json (~> 1.0)
@@ -322,7 +322,7 @@ GEM
       http-cookie (>= 1.0.2, < 2.0)
       mime-types (>= 1.16, < 3.0)
       netrc (~> 0.7)
-    rollbar (2.5.2)
+    rollbar (2.6.0)
       multi_json
     ruby-progressbar (1.7.5)
     ruby2ruby (2.2.0)
@@ -399,13 +399,13 @@ GEM
     unf (0.1.4)
       unf_ext
     unf_ext (0.0.7.1)
-    unicorn (4.9.0)
+    unicorn (5.0.0)
       kgio (~> 2.6)
       rack
       raindrops (~> 0.7)
-    unicorn-worker-killer (0.4.3)
+    unicorn-worker-killer (0.4.4)
       get_process_mem (~> 0)
-      unicorn (~> 4)
+      unicorn (>= 4, < 6)
     user_agent_parser (2.3.0)
     warden (1.2.3)
       rack (>= 1.0)
