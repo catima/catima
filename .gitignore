@@ -25,3 +25,6 @@
 
 # Ignore refile uploads
 /public/system/
+
+# Ignore catalog-specific overrides
+/catalogs/
