@@ -455,6 +455,7 @@ DEPENDENCIES
   kaminari
   launchy
   letter_opener
+  listen
   mail (>= 2.6.3)
   marco-polo
   minitest-reporters
