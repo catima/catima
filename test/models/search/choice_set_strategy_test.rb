@@ -22,6 +22,19 @@ class Search::ChoiceSetStrategyTest < ActiveSupport::TestCase
     assert_includes(results.to_a, author)
   end
 
+  test "items can be browsed by choice" do
+    author = author_with_english_choice
+    author.save!
+
+    language_field = fields(:one_author_language)
+    strategy = Search::ChoiceSetStrategy.new(language_field, :en)
+
+    results = strategy.browse(Item, "en-Eng")
+
+    assert_equal(1, results.count)
+    assert_includes(results.to_a, author)
+  end
+
   private
 
   def author_with_english_choice

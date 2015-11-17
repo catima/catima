@@ -28,6 +28,13 @@ class Search::BaseStrategy
     scope
   end
 
+  # Appends field-specific clauses to the given Item scope based on a specific
+  # value. This is so users can "browse" all items of a particular e.g. choice
+  # or keyword. By default, fields are not browseable. Subclasses can override.
+  def browse(scope, _value)
+    scope.none
+  end
+
   private
 
   def raw_value(item)

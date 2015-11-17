@@ -26,4 +26,8 @@ class Choice < ActiveRecord::Base
   def self.sorted(locale=I18n.locale)
     order("LOWER(choices.short_name_translations->>'short_name_#{locale}') ASC")
   end
+
+  def self.short_named(name, locale=I18n.locale)
+    where("choices.short_name_translations->>'short_name_#{locale}' = ?", name)
+  end
 end
