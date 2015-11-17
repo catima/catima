@@ -95,5 +95,7 @@ Rails.application.routes.draw do
               :path => ":item_type_slug",
               :only => [:index, :show],
               :constraints => ItemsController::Constraint
+
+    get ":slug" => "custom#show", :constraints => CustomController::Constraint
   end
 end
