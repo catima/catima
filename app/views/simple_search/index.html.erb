@@ -27,10 +27,5 @@
   </ul>
 <% end %>
 
-<%= render(
-      "shared/search/results_list",
-      :items => @search.items,
-      :offset => @search.offset
-    ) %>
-
+<%= render("shared/search/results_list", :search => @search) %>
 <%= paginate(@search.items) %>

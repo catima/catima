@@ -1,14 +1,14 @@
 module ItemsHelper
-  def search_item_link(item, offset, label=nil, &block)
+  # TODO: refactor search-related helpers in presenters
+
+  def search_item_link(search, item, offset, label=nil, &block)
+    context = item_context_params(search)
+    context[:offset] = search.offset + offset if context.present?
+
     link_to(
       block ? capture(&block) : label,
-      item_path(
-        :item_type_slug => item.item_type,
-        :id => item,
-        :offset => offset,
-        :q => params[:q],
-        :search => params[:uuid] || params[:search]
-      ))
+      item_path(context.merge(:item_type_slug => item.item_type, :id => item))
+    )
   end
 
   def render_items_search_nav(search, item)
@@ -25,6 +25,18 @@ module ItemsHelper
     )
   end
 
+  def item_context_params(search)
+    context = case search
+              when Search::Simple
+                { :q => search.to_param }
+              when Search::Advanced
+                { :search => search.to_param }
+              when Search::Browse
+                { :browse => search.to_param }
+              end
+    context.delete_if { |_, v| v.blank? }
+  end
+
   def search_path(search, item, nav)
     case search
     when Search::Simple
@@ -38,6 +50,8 @@ module ItemsHelper
         :uuid => search.model.uuid,
         :page => search.page_for_offset(nav.offset_actual)
       )
+    when Search::Browse
+      items_path(search.field.slug => search.value) if search.field
     end
   end
 

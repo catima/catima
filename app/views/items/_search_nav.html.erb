@@ -6,14 +6,14 @@
 
   <span class="pull-right">
     <% if nav.previous %>
-      <%= search_item_link(nav.previous, nav.previous_offset) do %>
+      <%= search_item_link(search, nav.previous, nav.previous_offset) do %>
         <%= fa_icon(:"chevron-left") %>
         <%= t(".previous", :item => nav.previous.display_name) %>
       <% end %>
     <% end %>
     &nbsp;&nbsp;
     <% if nav.next %>
-      <%= search_item_link(nav.next, nav.next_offset) do %>
+      <%= search_item_link(search, nav.next, nav.next_offset) do %>
         <%= t(".next", :item => nav.next.display_name) %>
         <%= fa_icon(:"chevron-right") %>
       <% end %>

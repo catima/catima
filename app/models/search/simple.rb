@@ -35,6 +35,10 @@ class Search::Simple < Search
     scope.merge(relation)
   end
 
+  def to_param
+    query
+  end
+
   private
 
   def relation

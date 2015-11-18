@@ -5,7 +5,7 @@ class Search::Advanced < Search
   include Search::Strategies
 
   attr_reader :model
-  delegate :catalog, :item_type, :criteria, :locale, :to => :model
+  delegate :catalog, :item_type, :criteria, :locale, :to_param, :to => :model
   delegate :fields, :to => :item_type
 
   def initialize(model:, page:nil, per:nil)
