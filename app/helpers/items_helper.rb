@@ -1,6 +1,17 @@
 module ItemsHelper
   # TODO: refactor search-related helpers in presenters
 
+  def browse_similar_items_link(label, item, field, value)
+    link_to(
+      label,
+      items_path(
+        :catalog_slug => item.catalog,
+        :item_type_slug => item.item_type,
+        :locale => I18n.locale,
+        field.slug => value
+      ))
+  end
+
   def search_item_link(search, item, offset, label=nil, &block)
     context = item_context_params(search)
     context[:offset] = search.offset + offset if context.present?

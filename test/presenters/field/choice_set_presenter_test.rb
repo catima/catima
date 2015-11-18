@@ -1,6 +1,8 @@
 require "test_helper"
 
 class Field::ChoiceSetPresenterTest < ActionView::TestCase
+  include ItemsHelper
+
   test "#value" do
     author = items(:one_author_stephen_king)
     english = choices(:one_english)
