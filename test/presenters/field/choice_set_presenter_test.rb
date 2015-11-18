@@ -9,6 +9,9 @@ class Field::ChoiceSetPresenterTest < ActionView::TestCase
     author.data["one_author_language_uuid"] = english.id
 
     presenter = Field::ChoiceSetPresenter.new(self, author, language_field)
-    assert_equal("English", presenter.value)
+    assert_equal(
+      '<a href="/one/en/authors?language=en-Eng">English</a>',
+      presenter.value
+    )
   end
 end
