@@ -1,6 +1,8 @@
 require "test_helper"
 
 class Field::ReferencePresenterTest < ActionView::TestCase
+  include ItemsHelper
+
   test "#value" do
     author = items(:one_author_stephen_king)
     collaborator = items(:one_author_very_old)
@@ -9,6 +11,9 @@ class Field::ReferencePresenterTest < ActionView::TestCase
     author.data["one_author_collaborator_uuid"] = collaborator.id
 
     presenter = Field::ReferencePresenter.new(self, author, collaborator_field)
-    assert_equal("Very Old", presenter.value)
+    assert_equal(
+      '<a href="/one/en/authors/42941060-very-old">Very Old</a>',
+      presenter.value
+    )
   end
 end
