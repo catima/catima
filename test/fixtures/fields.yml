@@ -146,7 +146,7 @@ multilingual_author_bio:
   type: "Field::Text"
   slug: bio
   item_type: multilingual_author
-  primary: true
+  primary: false
   i18n: true
   uuid: multilingual_author_bio_uuid
   name_translations: |
