@@ -1,5 +1,20 @@
 ---
 de:
+  advanced_searches:
+    new:
+      any: "ist einer von"
+      contains_words: "enhält Wörter"
+      excludes_words: "ohne Wörer"
+      has_exact_phrase: "enthält den exakten Ausdruck"
+      tab: "%{type} Suche"
+      title: "Erweiterte Suche"
+      start_over: "Neue Suche"
+      submit: "Suchen"
+    show:
+      title:
+        zero: "Ihre erweiterte Suche gab kein Resultat"
+        one: "1 Resultat der erweiterten Suche"
+        other: "%{count_delimited} Resultate der erweiterten Suche"
   common:
     back: "Zurück"
     greeting: "Hallo"
@@ -47,6 +62,12 @@ de:
     messages:
       invalid_email: ist keine gültige E-mail-Adresse
       invalid_url: ist eine ungültige oder unvollständige URL
+  items:
+    search_nav:
+      back: "Zurück yu den Suchresultaten"
+      next: "Nächster: %{item}"
+      no_more: "Keine weiteren Resultate"
+      previous: "Vorheriger: %{item}"
   invitations_mailer:
     account_information:
       email: "E-mail"
@@ -76,6 +97,15 @@ de:
         log_out: "Logout"
         register: "Registeren"
         my_profile: "Mein Profil"
+  simple_search:
+    form:
+      advanced: "Erweitert"
+      submit: "Suchen"
+    index:
+      title:
+        zero: "Kein Resultat gefunden für “%{query}”"
+        one: "1 Resultat für “%{query}”"
+        other: "%{count_delimited} Resultate für “%{query}”"
   helpers:
     help:
       field/url: Eine komplette URL, inklusive den http-Teil

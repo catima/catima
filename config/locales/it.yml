@@ -1,5 +1,20 @@
 ---
 it:
+  advanced_searches:
+    new:
+      any: "è uno di"
+      contains_words: "contiene le parole"
+      excludes_words: "non contiene le parole"
+      has_exact_phrase: "ha frase esatta"
+      tab: "%{type} ricerca"
+      title: "Ricerca avanzata"
+      start_over: "Nuova ricerca"
+      submit: "Ricerca"
+    show:
+      title:
+        zero: "Your advanced search found no results"
+        one: "1 advanced search result"
+        other: "%{count_delimited} advanced search results"
   common:
     back: "Ritorno"
     greeting: "Buongiorno"
@@ -47,6 +62,12 @@ it:
     messages:
       invalid_email: non è un indirizzo e-mail valito
       invalid_url: è un URL invalido o incompleto
+  items:
+    search_nav:
+      back: "Torna ai risultati di ricerca"
+      next: "Prossimo: %{item}"
+      no_more: "Nessun altri risultati"
+      previous: "Precedente: %{item}"
   invitations_mailer:
     account_information:
       email: "E-mail"
@@ -76,6 +97,15 @@ it:
         log_out: "Logout"
         register: "Iscrizione"
         my_profile: "Il mio profilo"
+  simple_search:
+    form:
+      advanced: "Avanzata"
+      submit: "Ricerca"
+    index:
+      title:
+        zero: "Non abbiamo trovato nulla per “%{query}”"
+        one: "1 risultato per “%{query}”"
+        other: "%{count_delimited} risultati per “%{query}”"
   helpers:
     help:
       field/url: Un URL completo, compresa la parte http
