@@ -64,6 +64,19 @@ one_author_very_old:
       "one_author_name_uuid": "Very Old"
     }
 
+multilingual_author_example:
+  catalog: multilingual
+  item_type: multilingual_author
+  data: |
+    {
+      "multilingual_author_bio_uuid": {
+        "_translations": {
+          "en": "English",
+          "fr": "Français"
+        }
+      }
+    }
+
 search_vehicle_honda_accord:
   catalog: search
   item_type: search_vehicle

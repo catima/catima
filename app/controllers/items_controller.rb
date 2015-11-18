@@ -16,7 +16,12 @@ class ItemsController < ApplicationController
   before_action :set_item_type_variant
 
   def index
-    @items = item_type.sorted_items
+    @browse = Search::Browse.new(
+      :item_type => item_type,
+      :field => browse_field,
+      :value => browse_value,
+      :page => params[:page]
+    )
   end
 
   def show
@@ -31,6 +36,17 @@ class ItemsController < ApplicationController
   def find_item_type
     @item_type =
       catalog.item_types.where(:slug => params[:item_type_slug]).first!
+  end
+
+  def browse_field
+    @browse_field ||= item_type.fields.find do |field|
+      params[field.slug].present?
+    end
+  end
+
+  def browse_value
+    return if browse_field.nil?
+    params[browse_field.slug]
   end
 
   # If an item type-specific view is desired, it can be specified by naming

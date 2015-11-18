@@ -3,8 +3,7 @@ require "test_helper"
 class ItemsTest < ActionDispatch::IntegrationTest
   test "view items" do
     visit("/one/en/authors")
-    within("thead") do
-      assert(page.has_content?("Name"))
+    within("body>.container") do
       assert(page.has_content?("Age"))
       assert(page.has_content?("Site"))
       assert(page.has_content?("Email"))
@@ -13,14 +12,12 @@ class ItemsTest < ActionDispatch::IntegrationTest
 
   test "view items in different languages" do
     visit("/multilingual/fr/authors")
-    within("thead") do
-      assert(page.has_content?("Nom"))
+    within("body>.container") do
       assert(page.has_content?("Biographie"))
     end
 
     visit("/multilingual/en/authors")
-    within("thead") do
-      assert(page.has_content?("Name"))
+    within("body>.container") do
       assert(page.has_content?("Biography"))
     end
   end
