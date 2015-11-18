@@ -188,3 +188,18 @@ search_vehicle_model:
     {
       "name_plural_en": "Models"
     }
+
+search_vehicle_style:
+  type: "Field::ChoiceSet"
+  slug: style
+  item_type: search_vehicle
+  choice_set: search_car_styles
+  uuid: search_vehicle_style_uuid
+  name_translations: |
+    {
+      "name_en": "Style"
+    }
+  name_plural_translations: |
+    {
+      "name_plural_en": "Styles"
+    }

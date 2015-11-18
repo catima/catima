@@ -78,6 +78,7 @@ multilingual_author_example:
     }
 
 search_vehicle_honda_accord:
+  creator: system_admin_invited_by_one
   catalog: search
   item_type: search_vehicle
   data: |
@@ -87,6 +88,7 @@ search_vehicle_honda_accord:
     }
 
 search_vehicle_toyota_prius:
+  creator: system_admin_invited_by_one
   catalog: search
   item_type: search_vehicle
   data: |
@@ -96,6 +98,7 @@ search_vehicle_toyota_prius:
     }
 
 search_vehicle_toyota_highlander:
+  creator: system_admin_invited_by_one
   catalog: search
   item_type: search_vehicle
   data: |
@@ -105,6 +108,7 @@ search_vehicle_toyota_highlander:
     }
 
 search_vehicle_toyota_camry:
+  creator: system_admin_invited_by_one
   catalog: search
   item_type: search_vehicle
   data: |
@@ -114,6 +118,7 @@ search_vehicle_toyota_camry:
     }
 
 search_vehicle_toyota_camry_hybrid:
+  creator: system_admin_invited_by_one
   catalog: search
   item_type: search_vehicle
   data: |

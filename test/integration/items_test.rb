@@ -73,4 +73,50 @@ class ItemsTest < ActionDispatch::IntegrationTest
     assert(page.has_content?("1.88891"))
     assert(page.has_content?("bio.doc"))
   end
+
+  test "view items belonging to a choice" do
+    apply_vehicle_styles
+    visit("/search/en/vehicles?style=en-Sedan")
+
+    assert(page.has_content?("Accord"))
+    assert(page.has_content?("Prius"))
+    assert(page.has_content?("Camry"))
+    refute(page.has_content?("Highlander"))
+  end
+
+  test "allows navigation from one browsed item to another" do
+    apply_vehicle_styles
+    visit("/search/en/vehicles?style=en-Sedan")
+
+    click_on("Accord")
+    within("h1") { assert(page.has_content?("Accord")) }
+    refute(page.has_content?("Previous:"))
+
+    click_on("Next: Camry")
+    within("h1") { assert(page.has_content?("Camry")) }
+    assert(page.has_content?("Previous: Accord"))
+
+    click_on("Back to search results")
+    assert_match(%r{/search/en/vehicles\?style=en-Sedan$}, current_url)
+  end
+
+  private
+
+  def apply_vehicle_styles
+    sedan = choices(:search_sedan)
+    %w(honda_accord toyota_prius toyota_camry).each do |name|
+      item = items(:"search_vehicle_#{name}")
+      item.data_will_change!
+      item.data["search_vehicle_style_uuid"] = sedan.id
+      item.save!
+    end
+
+    suv = choices(:search_suv)
+    %w(toyota_highlander).each do |name|
+      item = items(:"search_vehicle_#{name}")
+      item.data_will_change!
+      item.data["search_vehicle_style_uuid"] = suv.id
+      item.save!
+    end
+  end
 end

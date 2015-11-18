@@ -58,7 +58,7 @@ multilingual_author:
 
 search_vehicle:
   catalog: search
-  slug: search
+  slug: vehicles
   name_translations: |
     {
       "name_en": "Vehicle"

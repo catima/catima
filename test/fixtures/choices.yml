@@ -26,3 +26,15 @@ two_english:
   choice_set: two_languages
   long_name_translations: '{ "long_name_en": "English" }'
   short_name_translations: '{ "short_name_en": "Eng" }'
+
+search_sedan:
+  catalog: search
+  choice_set: search_car_styles
+  long_name_translations: '{ "long_name_en": "Sedan" }'
+  short_name_translations: '{ "short_name_en": "Sedan" }'
+
+search_suv:
+  catalog: search
+  choice_set: search_car_styles
+  long_name_translations: '{ "long_name_en": "SUV" }'
+  short_name_translations: '{ "short_name_en": "SUV" }'

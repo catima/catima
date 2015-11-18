@@ -23,3 +23,7 @@ two_languages:
 multilingual_languages:
   catalog: multilingual
   name: Languages
+
+search_car_styles:
+  catalog: search
+  name: Car Styles
