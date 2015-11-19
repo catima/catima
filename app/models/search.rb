@@ -11,6 +11,10 @@ class Search
     self.per = per || 20
   end
 
+  def more?
+    total_count > page * per
+  end
+
   def page=(value)
     @page = [1, value.to_i].max
   end

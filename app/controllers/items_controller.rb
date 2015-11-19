@@ -54,7 +54,8 @@ class ItemsController < ApplicationController
       browse = Search::Browse.new(
         :item_type => field.item_type,
         :field => field,
-        :value => @item.id.to_s
+        :value => @item.id.to_s,
+        :per => 8
       )
       next if browse.empty?
       result[field] = browse

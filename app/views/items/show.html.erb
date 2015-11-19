@@ -16,4 +16,14 @@
 <% items_referenced_by_fields do |field, browse| %>
   <h3><%= field.item_type.name_plural %></h3>
   <%= render("shared/search/results_list", :search => browse) %>
+  <% if browse.more? %>
+    <%= link_to(items_path(
+          :item_type_slug => browse.item_type,
+          browse.field.slug => browse.value
+        )) do %>
+      <%# TODO: i18n %>
+      View more
+      (<%= pluralize(browse.total_count, "item") %>)
+    <% end %>
+  <% end %>
 <% end %>
