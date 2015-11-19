@@ -42,6 +42,8 @@ module ItemsHelper
                 { :q => search.to_param }
               when Search::Advanced
                 { :search => search.to_param }
+              when Search::References
+                {}
               when Search::Browse
                 { :browse => search.to_param }
               end

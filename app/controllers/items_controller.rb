@@ -51,12 +51,7 @@ class ItemsController < ApplicationController
 
   def items_referenced_by_fields
     @item.referenced_by_fields.each_with_object({}) do |field, result|
-      browse = Search::Browse.new(
-        :item_type => field.item_type,
-        :field => field,
-        :value => @item.id.to_s,
-        :per => 8
-      )
+      browse = Search::References.new(:item => @item, :field => field)
       next if browse.empty?
       result[field] = browse
       yield(field, browse) if block_given?
