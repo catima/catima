@@ -12,3 +12,8 @@
     <% end %>
   </tbody>
 </table>
+
+<% items_referenced_by_fields do |field, browse| %>
+  <h3><%= field.item_type.name_plural %></h3>
+  <%= render("shared/search/results_list", :search => browse) %>
+<% end %>
