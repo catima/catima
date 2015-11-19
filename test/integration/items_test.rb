@@ -22,6 +22,19 @@ class ItemsTest < ActionDispatch::IntegrationTest
     end
   end
 
+  test "switch language and remain on same page" do
+    author = items(:multilingual_author_example)
+    visit("/multilingual/fr/authors/#{author.to_param}?key=value")
+    within("body>.container") { assert(page.has_content?("Français")) }
+    within(".navbar-static-top") { click_on("English") }
+    within("body>.container") { assert(page.has_content?("English")) }
+    # Note that we expect the query param to be preserved
+    assert_match(
+      %r{/multilingual/en/authors/#{author.to_param}\?key=value$},
+      current_url
+    )
+  end
+
   test "view item details" do
     author = items(:one_author_stephen_king)
     visit("/one/en/authors/#{author.to_param}")
