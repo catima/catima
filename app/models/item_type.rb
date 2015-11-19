@@ -24,8 +24,10 @@ class ItemType < ActiveRecord::Base
   has_many :list_view_fields,
            -> { where(:display_in_list => true).sorted },
            :class_name => "Field"
-
   has_many :items
+  has_many :referenced_by_fields,
+           :foreign_key => "related_item_type_id",
+           :class_name => "Field"
 
   store_translations :name, :name_plural
 

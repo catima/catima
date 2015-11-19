@@ -1,6 +1,7 @@
 # Base class for simple and advanced searches.
 class Search
   delegate :total_count, :to => :items
+  delegate :empty?, :to => :unpaginaged_items
 
   attr_reader :catalog, :page, :per
 

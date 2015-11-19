@@ -31,7 +31,7 @@ class ItemsController < ApplicationController
   private
 
   attr_reader :item_type
-  helper_method :item_type
+  helper_method :item_type, :items_referenced_by_fields
 
   def find_item_type
     @item_type =
@@ -47,6 +47,19 @@ class ItemsController < ApplicationController
   def browse_value
     return if browse_field.nil?
     params[browse_field.slug]
+  end
+
+  def items_referenced_by_fields
+    @item.referenced_by_fields.each_with_object({}) do |field, result|
+      browse = Search::Browse.new(
+        :item_type => field.item_type,
+        :field => field,
+        :value => @item.id.to_s
+      )
+      next if browse.empty?
+      result[field] = browse
+      yield(field, browse) if block_given?
+    end
   end
 
   # If an item type-specific view is desired, it can be specified by naming
