@@ -63,7 +63,7 @@ fr:
       invalid_email: n'est pas une adresse e-mail valide
       invalid_url: est une URL invalide ou incomplète
   items:
-    search_nav:
+    item_list_nav:
       back: "Retour au résultat de recherche"
       next: "Suivant: %{item}"
       no_more: "Pas de résultats supplémentaires"

@@ -63,7 +63,7 @@ en:
       invalid_email: is not a valid email address
       invalid_url: is an invalid or incomplete URL
   items:
-    search_nav:
+    item_list_nav:
       back: "Back to search results"
       next: "Next: %{item}"
       no_more: "No more results"

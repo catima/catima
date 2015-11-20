@@ -125,7 +125,7 @@ class ItemsTest < ActionDispatch::IntegrationTest
     assert(page.has_content?("Previous: Accord"))
 
     click_on("Back to search results")
-    assert_match(%r{/search/en/vehicles\?style=en-Sedan$}, current_url)
+    assert_match(%r{/search/en/vehicles\?page=1&style=en-Sedan$}, current_url)
   end
 
   private
