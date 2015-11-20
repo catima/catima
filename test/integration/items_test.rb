@@ -97,6 +97,21 @@ class ItemsTest < ActionDispatch::IntegrationTest
     refute(page.has_content?("Highlander"))
   end
 
+  test "view item with references from other items" do
+    apply_book_references
+    author = items(:one_author_stephen_king)
+    visit("/one/en/authors/#{author.to_param}")
+
+    within("body>.container") do
+      assert(page.has_content?("Books"))
+      assert(page.has_content?("End of Watch"))
+      assert(page.has_content?("Finders Keepers"))
+    end
+
+    click_on("Finders Keepers")
+    within("h1") { assert(page.has_content?("Finders Keepers")) }
+  end
+
   test "allows navigation from one browsed item to another" do
     apply_vehicle_styles
     visit("/search/en/vehicles?style=en-Sedan")
@@ -119,7 +134,6 @@ class ItemsTest < ActionDispatch::IntegrationTest
     sedan = choices(:search_sedan)
     %w(honda_accord toyota_prius toyota_camry).each do |name|
       item = items(:"search_vehicle_#{name}")
-      item.data_will_change!
       item.data["search_vehicle_style_uuid"] = sedan.id
       item.save!
     end
@@ -127,9 +141,17 @@ class ItemsTest < ActionDispatch::IntegrationTest
     suv = choices(:search_suv)
     %w(toyota_highlander).each do |name|
       item = items(:"search_vehicle_#{name}")
-      item.data_will_change!
       item.data["search_vehicle_style_uuid"] = suv.id
       item.save!
+    end
+  end
+
+  def apply_book_references
+    author = items(:one_author_stephen_king)
+    %w(end_of_watch finders_keepers).each do |name|
+      book = items(:"one_book_#{name}")
+      book.data["one_book_author_uuid"] = author.id
+      book.save!
     end
   end
 end

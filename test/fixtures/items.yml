@@ -64,6 +64,24 @@ one_author_very_old:
       "one_author_name_uuid": "Very Old"
     }
 
+one_book_end_of_watch:
+  catalog: one
+  creator: one_admin
+  item_type: one_book
+  data: |
+    {
+      "one_book_title_uuid": "End of Watch"
+    }
+
+one_book_finders_keepers:
+  catalog: one
+  creator: one_admin
+  item_type: one_book
+  data: |
+    {
+      "one_book_title_uuid": "Finders Keepers"
+    }
+
 multilingual_author_example:
   catalog: multilingual
   item_type: multilingual_author

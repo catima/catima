@@ -125,6 +125,24 @@ one_author_language:
   uuid: one_author_language_uuid
   choice_set: one_languages
 
+one_book_title:
+  type: "Field::Text"
+  name_translations: '{ "name_en": "Title" }'
+  name_plural_translations: '{ "name_plural_en": "Titles" }'
+  slug: title
+  primary: true
+  item_type: one_book
+  uuid: one_book_title_uuid
+
+one_book_author:
+  type: "Field::Reference"
+  name_translations: '{ "name_en": "Author" }'
+  name_plural_translations: '{ "name_plural_en": "Authors" }'
+  slug: author
+  item_type: one_book
+  uuid: one_book_author_uuid
+  related_item_type: one_author
+
 multilingual_author_name:
   type: "Field::Text"
   slug: name

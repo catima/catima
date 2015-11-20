@@ -27,6 +27,12 @@ one_author:
   name_plural_translations: '{ "name_plural_en": "Authors" }'
   slug: authors
 
+one_book:
+  catalog: one
+  name_translations: '{ "name_en": "Book" }'
+  name_plural_translations: '{ "name_plural_en": "Books" }'
+  slug: books
+
 two:
   catalog: two
   name_translations: '{ "name_en": "Two" }'
