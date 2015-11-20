@@ -14,10 +14,10 @@ module ControlsSearchResults
   end
 
   def browse
-    browse_data = Search::Browse.parse_param(params[:browse])
+    browse_data = ItemList::Filter.parse_param(params[:browse])
     field_slug = browse_data[:field_slug]
     return nil if field_slug.nil?
-    @search ||= Search::Browse.new(
+    @search ||= ItemList::Filter.new(
       :item_type => item_type,
       :field => item_type.fields.where(:slug => field_slug).first,
       :value => browse_data[:value]
@@ -27,11 +27,11 @@ module ControlsSearchResults
   def advanced_search
     model = catalog.advanced_searches.where(:uuid => params[:search]).first
     return nil if model.nil?
-    @search ||= Search::Advanced.new(:model => model)
+    @search ||= ItemList::AdvancedSearchResult.new(:model => model)
   end
 
   def simple_search
-    @search ||= Search::Simple.new(
+    @search ||= ItemList::SimpleSearchResult.new(
       :catalog => catalog,
       :query => params[:q],
       :item_type_slug => params[:item_type_slug]

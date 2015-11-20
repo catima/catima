@@ -1,6 +1,6 @@
 require "test_helper"
 
-class Search::SimpleTest < ActiveSupport::TestCase
+class ItemList::SimpleSearchResultTest < ActiveSupport::TestCase
   setup do
     Item.reindex
   end
@@ -29,6 +29,6 @@ class Search::SimpleTest < ActiveSupport::TestCase
   private
 
   def simple_search(catalog, query)
-    Search::Simple.new(:catalog => catalog, :query => query)
+    ItemList::SimpleSearchResult.new(:catalog => catalog, :query => query)
   end
 end

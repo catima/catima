@@ -1,4 +1,4 @@
-class ItemList::AdvancedSearchResultsPresenter < ItemListPresenter
+class ItemList::AdvancedSearchResultPresenter < ItemListPresenter
   delegate :advanced_search_path, :to => :view
 
   private

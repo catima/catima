@@ -1,6 +1,6 @@
 require "test_helper"
 
-class Search::AdvancedTest < ActiveSupport::TestCase
+class ItemList::AdvancedSearchResultTest < ActiveSupport::TestCase
   test "search multiple fields" do
     criteria = {
       "search_vehicle_make_uuid" => { "exact" => "toyota" },
@@ -11,7 +11,7 @@ class Search::AdvancedTest < ActiveSupport::TestCase
       :item_type => item_types(:search_vehicle),
       :criteria => criteria
     )
-    search = Search::Advanced.new(:model => model)
+    search = ItemList::AdvancedSearchResult.new(:model => model)
 
     results = search.items
     assert_includes(results.to_a, items(:search_vehicle_toyota_highlander))

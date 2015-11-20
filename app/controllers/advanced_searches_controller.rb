@@ -32,11 +32,14 @@ class AdvancedSearchesController < ApplicationController
     model = scope.where(:uuid => params[:uuid]).first
     redirect_to(:action => :new) if model.nil?
 
-    @search = Search::Advanced.new(:model => model, :page => params[:page])
+    @search = ItemList::AdvancedSearchResult.new(
+      :model => model,
+      :page => params[:page]
+    )
   end
 
   def advanced_search_params
-    search = Search::Advanced.new(:model => @advanced_search)
+    search = ItemList::AdvancedSearchResult.new(:model => @advanced_search)
     search.permit_criteria(params.require(:advanced_search))
   end
 

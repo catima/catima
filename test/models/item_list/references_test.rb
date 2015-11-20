@@ -1,11 +1,11 @@
 require "test_helper"
 
-class Search::ReferencesTest < ActiveSupport::TestCase
+class ItemList::ReferencesTest < ActiveSupport::TestCase
   test "finds referencing items" do
     parent, child = parent_and_child_authors
 
     field = fields(:one_author_collaborator)
-    references = Search::References.new(:item => parent, :field => field)
+    references = ItemList::References.new(:item => parent, :field => field)
     results = references.items
 
     assert_equal(1, results.count)

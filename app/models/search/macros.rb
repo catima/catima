@@ -1,7 +1,7 @@
 # Mixin that adds search functionality using the pg_search macro. Actual
 # indexing and searching logic is delegated to the Search::Index and
-# Search::Simple classes. This module serves as the glue between those classes
-# and the Item model.
+# ItemList::AdvancedSearchResult classes. This module serves as the glue
+# between those classes and the Item model.
 module Search::Macros
   PG_DICTIONARIES = {
     "de" => "german",

@@ -1,4 +1,4 @@
-class ItemList::SimpleSearchResultsPresenter < ItemListPresenter
+class ItemList::SimpleSearchResultPresenter < ItemListPresenter
   delegate :simple_search_path, :to => :view
 
   private

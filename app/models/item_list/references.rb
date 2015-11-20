@@ -1,4 +1,4 @@
-class Search::References < Search::Browse
+class ItemList::References < ItemList::Filter
   attr_reader :item
   delegate :to_param, :to => :item
 

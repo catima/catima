@@ -16,7 +16,7 @@ class ItemsController < ApplicationController
   before_action :set_item_type_variant
 
   def index
-    @browse = Search::Browse.new(
+    @browse = ItemList::Filter.new(
       :item_type => item_type,
       :field => browse_field,
       :value => browse_value,
@@ -51,7 +51,7 @@ class ItemsController < ApplicationController
 
   def items_referenced_by_fields
     @item.referenced_by_fields.each_with_object({}) do |field, result|
-      browse = Search::References.new(:item => @item, :field => field)
+      browse = ItemList::References.new(:item => @item, :field => field)
       next if browse.empty?
       result[field] = browse
       yield(field, browse) if block_given?

@@ -1,4 +1,4 @@
-class Search::Browse < Search
+class ItemList::Filter < ItemList
   # This is the inverse of the to_param method, below.
   def self.parse_param(param)
     field_slug, value = param.to_s.split("_", 2)

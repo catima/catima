@@ -1,7 +1,7 @@
 # Wraps the AdvancedSearch ActiveRecord model with all the actual logic for
 # performing the search and paginating the results.
 #
-class Search::Advanced < Search
+class ItemList::AdvancedSearchResult < ItemList
   include Search::Strategies
 
   attr_reader :model

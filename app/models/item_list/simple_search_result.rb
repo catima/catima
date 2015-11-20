@@ -1,4 +1,4 @@
-class Search::Simple < Search
+class ItemList::SimpleSearchResult < ItemList
   attr_reader :query, :item_type_slug
 
   def initialize(catalog:, query:, item_type_slug:nil, page:nil, per:nil)

@@ -15,7 +15,7 @@
 
 # Note: This is the ActiveRecord model for storing advanced search criteria.
 # The actual logic for performing advanced searches is in a separate class
-# called Search::Advanced.
+# called ItemList::AdvancedSearchResult.
 #
 class AdvancedSearch < ActiveRecord::Base
   delegate :fields, :to => :item_type
