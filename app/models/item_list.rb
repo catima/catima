@@ -8,7 +8,7 @@ class ItemList
   def initialize(catalog, page, per)
     @catalog = catalog
     self.page = page
-    self.per = per || 20
+    self.per = per || 24
   end
 
   def more?

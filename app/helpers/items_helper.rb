@@ -11,13 +11,13 @@ module ItemsHelper
   end
 
   def item_has_thumbnail?(item)
-    !!item_thumbnail(item)
+    item.image?
   end
 
   def item_thumbnail(item, options={})
     field = item.list_view_fields.find { |f| f.is_a?(Field::Image) }
     return if field.nil?
-    field_value(item, field, options.merge(:style => :compact))
+    field_value(item, field, options.reverse_merge(:style => :compact))
   end
 
   def item_summary(item)

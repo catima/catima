@@ -56,6 +56,14 @@ class Item < ActiveRecord::Base
     end
   end
 
+  # True if this item has an image as one of its list view fields.
+  def image?
+    list_view_fields.any? do |f|
+      next unless f.is_a?(Field::Image)
+      f.attachment_present?(self)
+    end
+  end
+
   # FIXME: this doesn't work for any field more complicated than a
   # non-localized string, because it is not using a presenter for formatting.
   def display_name

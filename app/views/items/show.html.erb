@@ -15,7 +15,7 @@
 
 <% fields_and_item_references(@item) do |field, browse| %>
   <h3><%= field.item_type.name_plural %></h3>
-  <%= render("shared/search/results_list", :item_list => browse) %>
+  <%= render_item_list(browse) %>
   <% if browse.more? %>
     <%= link_to(items_path(
           :item_type_slug => browse.item_type,
