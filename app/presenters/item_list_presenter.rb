@@ -67,7 +67,7 @@ class ItemListPresenter
   def nav
     return nil if offset.blank?
 
-    @nav ||= Search::Navigation.new(
+    @nav ||= ItemList::Navigation.new(
       :results => list.items,
       :offset => offset,
       :current => item

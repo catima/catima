@@ -10,7 +10,7 @@
 # If the offset of the current item is still in the result but has shifted,
 # its new offset can be obtained by calling `offset_actual`.
 #
-class Search::Navigation
+class ItemList::Navigation
   attr_reader :results, :current, :offset
 
   def initialize(results:, current:, offset:)

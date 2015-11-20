@@ -1,6 +1,6 @@
 require "test_helper"
 
-class Search::NavigationTest < ActiveSupport::TestCase
+class ItemList::NavigationTest < ActiveSupport::TestCase
   class MockResults
     attr_reader :array
 
@@ -154,7 +154,7 @@ class Search::NavigationTest < ActiveSupport::TestCase
   private
 
   def build_nav(array, current, offset)
-    Search::Navigation.new(
+    ItemList::Navigation.new(
       :results => MockResults.new(array),
       :current => current,
       :offset => offset
