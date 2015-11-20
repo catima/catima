@@ -37,8 +37,8 @@ class ItemListPresenter
       :partial => "items/item_list_nav",
       :locals => {
         :nav => nav,
-        :search => list,
-        :search_path => path
+        :item_list => list,
+        :item_list_path => path
       }
     )
   end

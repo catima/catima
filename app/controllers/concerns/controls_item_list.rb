@@ -1,13 +1,14 @@
-module ControlsSearchResults
+module ControlsItemList
   extend ActiveSupport::Concern
 
   included do
-    helper_method :search
+    helper_method :item_list
   end
 
   private
 
-  def search
+  def item_list
+    # TODO: references?
     return browse if params[:browse].present?
     return advanced_search if params[:search].present?
     return simple_search if params[:q].present?

@@ -10,7 +10,7 @@ class ItemsController < ApplicationController
   end
 
   include ControlsCatalog
-  include ControlsSearchResults
+  include ControlsItemList
 
   before_action :find_item_type
   before_action :set_item_type_variant

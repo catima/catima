@@ -2,5 +2,5 @@
 
 <%# TODO: customize page title based on field being browsed? %>
 
-<%= render("shared/search/results_list", :search => @browse) %>
+<%= render("shared/search/results_list", :item_list => @browse) %>
 <%= paginate(@browse.items) %>

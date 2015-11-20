@@ -1,15 +1,15 @@
-<% search.items.each_with_index do |item, i| %>
+<% item_list.items.each_with_index do |item, i| %>
   <div class="media">
     <% if item_has_thumbnail?(item) %>
       <div class="pull-left">
-        <%= item_list_link(search, item, i) do %>
+        <%= item_list_link(item_list, item, i) do %>
           <%= item_thumbnail(item, :class => "media-object") %>
         <% end %>
       </div>
     <% end %>
     <div class="media-body">
       <h4 class="media-heading">
-        <%= item_list_link(search, item, i, item.display_name) %>
+        <%= item_list_link(item_list, item, i, item.display_name) %>
       </h4>
       <%= item_summary(item) %>
     </div>

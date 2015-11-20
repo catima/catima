@@ -1,6 +1,6 @@
 <% provide(:title, @item.display_name) %>
 
-<%= render_item_list_nav(search, @item) if search %>
+<%= render_item_list_nav(item_list, @item) if item_list %>
 
 <table class="table">
   <tbody>
@@ -15,7 +15,7 @@
 
 <% items_referenced_by_fields do |field, browse| %>
   <h3><%= field.item_type.name_plural %></h3>
-  <%= render("shared/search/results_list", :search => browse) %>
+  <%= render("shared/search/results_list", :item_list => browse) %>
   <% if browse.more? %>
     <%= link_to(items_path(
           :item_type_slug => browse.item_type,

@@ -4,5 +4,5 @@
         :count_delimited => number_with_delimiter(@search.total_count)) %>
 <% end %>
 
-<%= render("shared/search/results_list", :search => @search) %>
+<%= render("shared/search/results_list", :item_list => @search) %>
 <%= paginate(@search.items) %>
