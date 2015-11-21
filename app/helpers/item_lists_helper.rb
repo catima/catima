@@ -3,9 +3,13 @@ module ItemListsHelper
     item_list_presenter(list, item, offset).item_link(label, &block)
   end
 
-  def render_item_list(list)
+  def item_list_has_images?(list)
     first = list.items.to_a.first
-    partial = first.try(:image?) ? "items/thumbnails" : "items/list"
+    first.try(:image?)
+  end
+
+  def render_item_list(list)
+    partial = item_list_has_images?(list) ? "items/thumbnails" : "items/list"
     render(partial, :item_list => list)
   end
 
