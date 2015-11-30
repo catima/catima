@@ -8,12 +8,12 @@
 #  data           :json
 #  id             :integer          not null, primary key
 #  item_type_id   :integer
+#  review_status  :string
 #  reviewer_id    :integer
 #  search_data_de :text
 #  search_data_en :text
 #  search_data_fr :text
 #  search_data_it :text
-#  status         :string
 #  updated_at     :datetime         not null
 #
 
@@ -36,7 +36,7 @@ class Item < ActiveRecord::Base
   validates_presence_of :creator
   validates_presence_of :item_type
 
-  validates_inclusion_of :status,
+  validates_inclusion_of :review_status,
                          :in => %w(ready rejected approved),
                          :allow_nil => true
 
