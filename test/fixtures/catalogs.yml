@@ -43,6 +43,12 @@ inactive:
   requires_review: false
   deactivated_at: <%= 10.minutes.ago %>
 
+reviewed:
+  name: Reviewed Catalog
+  slug: reviewed
+  primary_language: en
+  requires_review: true
+
 search:
   name: Catalog with Search Data
   slug: search

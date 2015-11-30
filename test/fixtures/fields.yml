@@ -178,6 +178,15 @@ multilingual_author_bio:
       "name_plural_fr": "Biographies"
     }
 
+reviewed_book_title:
+  type: "Field::Text"
+  name_translations: '{ "name_en": "Title" }'
+  name_plural_translations: '{ "name_plural_en": "Titles" }'
+  slug: title
+  primary: true
+  item_type: reviewed_book
+  uuid: reviewed_book_title_uuid
+
 search_vehicle_make:
   type: "Field::Text"
   slug: make

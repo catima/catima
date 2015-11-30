@@ -19,6 +19,7 @@
 
 class Item < ActiveRecord::Base
   include DataStore::Macros
+  include Review::Macros
   include Search::Macros
   include HasHumanId
 
@@ -30,15 +31,10 @@ class Item < ActiveRecord::Base
   belongs_to :catalog
   belongs_to :item_type
   belongs_to :creator, :class_name => "User"
-  belongs_to :reviewer, :class_name => "User"
 
   validates_presence_of :catalog
   validates_presence_of :creator
   validates_presence_of :item_type
-
-  validates_inclusion_of :review_status,
-                         :in => %w(ready rejected approved),
-                         :allow_nil => true
 
   def self.sorted_by_field(field)
     sql = []

@@ -56,3 +56,8 @@ multilingual_editor:
   catalog: multilingual
   user: multilingual_editor
   role: editor
+
+reviewed_editor:
+  catalog: reviewed
+  user: reviewed_editor
+  role: editor

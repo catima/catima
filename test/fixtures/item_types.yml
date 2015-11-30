@@ -33,6 +33,12 @@ one_book:
   name_plural_translations: '{ "name_plural_en": "Books" }'
   slug: books
 
+reviewed_book:
+  catalog: reviewed
+  name_translations: '{ "name_en": "Book" }'
+  name_plural_translations: '{ "name_plural_en": "Books" }'
+  slug: books
+
 two:
   catalog: two
   name_translations: '{ "name_en": "Two" }'

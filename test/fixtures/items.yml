@@ -95,6 +95,15 @@ multilingual_author_example:
       }
     }
 
+reviewed_book_end_of_watch:
+  catalog: reviewed
+  creator: reviewed_editor
+  item_type: reviewed_book
+  data: |
+    {
+      "reviewed_book_title_uuid": "End of Watch"
+    }
+
 search_vehicle_honda_accord:
   creator: system_admin_invited_by_one
   catalog: search
