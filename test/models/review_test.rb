@@ -1,6 +1,12 @@
 require "test_helper"
 
 class ReviewTest < ActiveSupport::TestCase
+  test ".public_items_in_catalog" do
+    items = catalogs(:reviewed).public_items.to_a
+    assert_includes(items, items(:reviewed_book_finders_keepers_approved))
+    refute_includes(items, items(:reviewed_book_end_of_watch))
+  end
+
   test "#pending_submission?" do
     assert(item_review(:review_status => "not-ready").pending_submission?)
     assert(item_review(:review_status => "rejected").pending_submission?)

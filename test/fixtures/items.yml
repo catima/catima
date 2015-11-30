@@ -104,6 +104,16 @@ reviewed_book_end_of_watch:
       "reviewed_book_title_uuid": "End of Watch"
     }
 
+reviewed_book_finders_keepers_approved:
+  catalog: reviewed
+  creator: reviewed_editor
+  item_type: reviewed_book
+  review_status: approved
+  data: |
+    {
+      "reviewed_book_title_uuid": "Finders Keepers"
+    }
+
 search_vehicle_honda_accord:
   creator: system_admin_invited_by_one
   catalog: search

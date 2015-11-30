@@ -31,4 +31,16 @@ class CatalogTest < ActiveSupport::TestCase
     catalog.other_languages = %w(en es)
     refute(catalog.valid?)
   end
+
+  test "#public_items for non-reviewed catalog" do
+    catalog = catalogs(:one)
+    Review.expects(:public_items_in_catalog).never
+    assert_equal(catalog.items, catalog.public_items)
+  end
+
+  test "#public_items for reviewed catalog" do
+    catalog = catalogs(:reviewed)
+    Review.stubs(:public_items_in_catalog).with(catalog).returns(:filtered)
+    assert_equal(:filtered, catalog.public_items)
+  end
 end

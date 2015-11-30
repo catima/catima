@@ -38,6 +38,10 @@ class Catalog < ActiveRecord::Base
     order("LOWER(catalogs.name) ASC")
   end
 
+  def public_items
+    requires_review? ? Review.public_items_in_catalog(self) : items
+  end
+
   def valid_locale?(locale)
     valid_locales.include?(locale.to_s)
   end
