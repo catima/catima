@@ -8,9 +8,9 @@ GIT
 
 GIT
   remote: https://github.com/stympy/faker.git
-  revision: fdbd1bd3262b738f84f96605ec228ee593a2b87c
+  revision: e8c4314a4347c6a530311b4a542c37a768ef1a59
   specs:
-    faker (1.5.0)
+    faker (1.6.1)
       i18n (~> 0.5)
 
 GEM
@@ -55,14 +55,14 @@ GEM
       thread_safe (~> 0.3, >= 0.3.4)
       tzinfo (~> 1.1)
     addressable (2.3.8)
-    airbrussh (0.7.0)
+    airbrussh (0.8.0)
       sshkit (>= 1.6.1, != 1.7.0)
     annotate (2.6.10)
       activerecord (>= 3.2, <= 4.3)
       rake (~> 10.4)
     ansi (1.5.0)
     arel (6.0.3)
-    autoprefixer-rails (6.1.0.1)
+    autoprefixer-rails (6.1.2)
       execjs
       json
     awesome_print (1.6.1)
@@ -151,7 +151,7 @@ GEM
     execjs (2.6.0)
     fastercsv (1.5.5)
     ffi (1.9.10)
-    font-awesome-rails (4.4.0.0)
+    font-awesome-rails (4.5.0.0)
       railties (>= 3.2, < 5.0)
     formatador (0.2.5)
     get_process_mem (0.2.0)
@@ -209,11 +209,11 @@ GEM
     marco-polo (1.2.1)
     metaclass (0.0.4)
     method_source (0.8.2)
-    mime-types (2.6.2)
+    mime-types (2.99)
     mini_magick (4.3.6)
-    mini_portile (0.6.2)
+    mini_portile2 (2.0.0)
     minitest (5.8.3)
-    minitest-reporters (1.1.5)
+    minitest-reporters (1.1.7)
       ansi
       builder
       minitest (>= 5.0)
@@ -226,8 +226,8 @@ GEM
       net-ssh (>= 2.6.5)
     net-ssh (3.0.1)
     netrc (0.11.0)
-    nokogiri (1.6.6.3)
-      mini_portile (~> 0.6.0)
+    nokogiri (1.6.7)
+      mini_portile2 (~> 2.0.0.rc2)
     notiffany (0.0.8)
       nenv (~> 0.1)
       shellany (~> 0.0)
@@ -237,7 +237,7 @@ GEM
       activerecord (>= 3.1)
       activesupport (>= 3.1)
       arel
-    poltergeist (1.8.0)
+    poltergeist (1.8.1)
       capybara (~> 2.1)
       cliver (~> 0.3.1)
       multi_json (~> 1.0)
@@ -305,7 +305,7 @@ GEM
       http-cookie (>= 1.0.2, < 2.0)
       mime-types (>= 1.16, < 3.0)
       netrc (~> 0.7)
-    rollbar (2.6.0)
+    rollbar (2.6.3)
       multi_json
     ruby-progressbar (1.7.5)
     ruby2ruby (2.2.0)
@@ -333,7 +333,7 @@ GEM
       connection_pool (~> 2.2, >= 2.2.0)
       json (~> 1.0)
       redis (~> 3.2, >= 3.2.1)
-    simplecov (0.10.0)
+    simplecov (0.11.0)
       docile (~> 1.1.0)
       json (~> 1.8)
       simplecov-html (~> 0.10.0)
@@ -346,8 +346,8 @@ GEM
       temple (~> 0.7.3)
       tilt (>= 1.3.3, < 2.1)
     slop (3.6.0)
-    spring (1.4.3)
-    sprockets (3.4.0)
+    spring (1.5.0)
+    sprockets (3.4.1)
       rack (> 1, < 3)
     sprockets-rails (2.3.3)
       actionpack (>= 3.0)
