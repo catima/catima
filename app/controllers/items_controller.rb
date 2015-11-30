@@ -25,7 +25,7 @@ class ItemsController < ApplicationController
   end
 
   def show
-    @item = item_type.items.find(params[:id]).behaving_as_type
+    @item = item_type.public_items.find(params[:id]).behaving_as_type
   end
 
   private

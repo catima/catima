@@ -55,6 +55,13 @@ class ItemsTest < ActionDispatch::IntegrationTest
     end
   end
 
+  test "can't see item that isn't approved" do
+    book = items(:reviewed_book_end_of_watch)
+    assert_raises(ActiveRecord::RecordNotFound) do
+      visit("/reviewed/en/books/#{book.to_param}")
+    end
+  end
+
   test "view item details with template override" do
     author = items(:one_author_stephen_king)
     with_customized_file("test/custom/items/show_author.html.erb",

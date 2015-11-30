@@ -24,7 +24,7 @@ class ItemList::AdvancedSearchResult < ItemList
   private
 
   def unpaginaged_items
-    scope = item_type.sorted_items
+    scope = item_type.public_sorted_items
     strategies.each do |strategy|
       scope = strategy.search(scope, field_criteria(strategy.field))
     end

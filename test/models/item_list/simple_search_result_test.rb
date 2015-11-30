@@ -26,6 +26,14 @@ class ItemList::SimpleSearchResultTest < ActiveSupport::TestCase
     assert_empty(simple.items.to_a)
   end
 
+  test "only shows public items" do
+    simple = simple_search(catalogs(:reviewed), "book")
+
+    results = simple.items.to_a
+    assert_includes(results, items(:reviewed_book_finders_keepers_approved))
+    refute_includes(results, items(:reviewed_book_end_of_watch))
+  end
+
   private
 
   def simple_search(catalog, query)

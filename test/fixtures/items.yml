@@ -101,7 +101,7 @@ reviewed_book_end_of_watch:
   item_type: reviewed_book
   data: |
     {
-      "reviewed_book_title_uuid": "End of Watch"
+      "reviewed_book_title_uuid": "End of Watch (book)"
     }
 
 reviewed_book_finders_keepers_approved:
@@ -111,7 +111,7 @@ reviewed_book_finders_keepers_approved:
   review_status: approved
   data: |
     {
-      "reviewed_book_title_uuid": "Finders Keepers"
+      "reviewed_book_title_uuid": "Finders Keepers (book)"
     }
 
 search_vehicle_honda_accord:

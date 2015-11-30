@@ -20,7 +20,7 @@ class ItemList::Filter < ItemList
   end
 
   def unpaginaged_items
-    scope = item_type.sorted_items
+    scope = item_type.public_sorted_items
     return scope if strategy.nil?
 
     strategy.browse(scope, value)

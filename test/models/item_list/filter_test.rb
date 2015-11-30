@@ -33,6 +33,15 @@ class ItemList::FilterTest < ActiveSupport::TestCase
     assert_includes(results.to_a, author)
   end
 
+  test "only shows public items" do
+    book = item_types(:reviewed_book)
+    browse = ItemList::Filter.new(:item_type => book)
+
+    results = browse.items.to_a
+    assert_includes(results, items(:reviewed_book_finders_keepers_approved))
+    refute_includes(results, items(:reviewed_book_end_of_watch))
+  end
+
   private
 
   def author_with_english_choice

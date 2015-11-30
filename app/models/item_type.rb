@@ -42,6 +42,14 @@ class ItemType < ActiveRecord::Base
     @primary_field ||= fields.to_a.find(&:primary?)
   end
 
+  def public_items
+    items.merge(catalog.public_items)
+  end
+
+  def public_sorted_items
+    public_items.merge(sorted_items)
+  end
+
   def sorted_items
     items.sorted_by_field(primary_field)
   end
