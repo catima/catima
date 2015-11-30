@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20151130193143) do
+ActiveRecord::Schema.define(version: 20151130214821) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -136,11 +136,11 @@ ActiveRecord::Schema.define(version: 20151130193143) do
     t.integer  "catalog_id"
     t.integer  "item_type_id"
     t.json     "data"
-    t.string   "review_status"
+    t.string   "review_status",  default: "not-ready", null: false
     t.integer  "creator_id"
     t.integer  "reviewer_id"
-    t.datetime "created_at",     null: false
-    t.datetime "updated_at",     null: false
+    t.datetime "created_at",                           null: false
+    t.datetime "updated_at",                           null: false
     t.text     "search_data_de"
     t.text     "search_data_en"
     t.text     "search_data_fr"

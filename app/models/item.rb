@@ -8,7 +8,7 @@
 #  data           :json
 #  id             :integer          not null, primary key
 #  item_type_id   :integer
-#  review_status  :string
+#  review_status  :string           default("not-ready"), not null
 #  reviewer_id    :integer
 #  search_data_de :text
 #  search_data_en :text
