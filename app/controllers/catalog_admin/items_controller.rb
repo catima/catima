@@ -77,6 +77,7 @@ class CatalogAdmin::ItemsController < CatalogAdmin::BaseController
 
   def item_params
     params.require(:item).permit(
+      :submit_for_review,
       *@item.data_store_attributes,
       *@item.fields.flat_map(&:custom_item_permitted_attributes)
     )

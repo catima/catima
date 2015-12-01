@@ -14,7 +14,7 @@ class Review
     @item = item
   end
 
-  def pending_submission?
+  def submit_allowed?
     %w(not-ready rejected).include?(review_status)
   end
 
@@ -24,6 +24,11 @@ class Review
 
   def rejected?
     review_status == "rejected"
+  end
+
+  # TODO: test
+  def pending?
+    review_status == "ready"
   end
 
   def approved(by:)
@@ -37,7 +42,7 @@ class Review
   end
 
   def submitted
-    return unless pending_submission?
+    return unless submit_allowed?
     self.review_status = "ready"
   end
 end

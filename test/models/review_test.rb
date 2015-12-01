@@ -7,11 +7,11 @@ class ReviewTest < ActiveSupport::TestCase
     refute_includes(items, items(:reviewed_book_end_of_watch))
   end
 
-  test "#pending_submission?" do
-    assert(item_review(:review_status => "not-ready").pending_submission?)
-    assert(item_review(:review_status => "rejected").pending_submission?)
-    refute(item_review(:review_status => "ready").pending_submission?)
-    refute(item_review(:review_status => "approved").pending_submission?)
+  test "#submit_allowed?" do
+    assert(item_review(:review_status => "not-ready").submit_allowed?)
+    assert(item_review(:review_status => "rejected").submit_allowed?)
+    refute(item_review(:review_status => "ready").submit_allowed?)
+    refute(item_review(:review_status => "approved").submit_allowed?)
   end
 
   test "#approved?" do
@@ -48,7 +48,7 @@ class ReviewTest < ActiveSupport::TestCase
     review = item_review(:review_status => "not-ready")
     review.submitted
 
-    refute(review.pending_submission?)
+    refute(review.submit_allowed?)
     assert("ready", review.item.review_status)
   end
 

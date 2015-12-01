@@ -4,8 +4,6 @@
 
   <%= render("common_form_fields", :f => f) %>
 
-  <hr>
-
   <%= f.primary("Create #{@item.item_type.name}") %>
   <%= submit_and_add_another(f) %>
 
