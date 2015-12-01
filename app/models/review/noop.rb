@@ -14,6 +14,10 @@ class Review::Noop
     false
   end
 
+  # TODO: test
+  def pending?
+  end
+
   def approved(*)
   end
 

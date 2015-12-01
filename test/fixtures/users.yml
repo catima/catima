@@ -72,6 +72,10 @@ reviewed_editor:
   email: reviewed-editor@example.com
   encrypted_password: <%= BCrypt::Password.create("password") %>
 
+reviewed_reviewer:
+  email: reviewed-reviewer@example.com
+  encrypted_password: <%= BCrypt::Password.create("password") %>
+
 system_admin_invited_by_one:
   email: system-admin-invited-by-one@example.com
   encrypted_password: <%= BCrypt::Password.create("password") %>

@@ -114,6 +114,16 @@ reviewed_book_finders_keepers_approved:
       "reviewed_book_title_uuid": "Finders Keepers (book)"
     }
 
+reviewed_book_harry_potter_pending:
+  catalog: reviewed
+  creator: reviewed_editor
+  item_type: reviewed_book
+  review_status: ready
+  data: |
+    {
+      "reviewed_book_title_uuid": "Harry Potter (book)"
+    }
+
 search_vehicle_honda_accord:
   creator: system_admin_invited_by_one
   catalog: search

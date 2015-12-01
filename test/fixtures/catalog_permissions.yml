@@ -61,3 +61,8 @@ reviewed_editor:
   catalog: reviewed
   user: reviewed_editor
   role: editor
+
+reviewed_reviewer:
+  catalog: reviewed
+  user: reviewed_reviewer
+  role: reviewer
