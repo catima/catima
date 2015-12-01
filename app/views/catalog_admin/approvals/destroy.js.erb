@@ -1,0 +1,3 @@
+$("#item_approval").html("<b><%= j(@item_type.name) %> rejected.</b>");
+<% form = bootstrap_form_for(@item, :url => "") { |f| break(f) } %>
+$("#item_review").html("<%= j(render_items_review(@item, form)) %>");

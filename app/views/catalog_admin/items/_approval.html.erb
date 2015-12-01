@@ -1,4 +1,4 @@
-<div class="alert alert-warning">
+<div id="item_approval" class="alert alert-warning">
   <p>
     <b>This <%= item_type.name %> is awaiting your review.</b>
     Approve it to make it visible to the public.
@@ -8,12 +8,16 @@
           fa_icon(:check, :text => "Approve"),
           { :controller => "catalog_admin/approvals", :action => "create" },
           :class => "btn btn-success",
-          :method => "POST") %>
+          :data => { :disable_with_spinner => true },
+          :method => "POST",
+          :remote => true) %>
 
     <%= link_to(
           "Reject",
           { :controller => "catalog_admin/approvals", :action => "create" },
           :class => "btn btn-default",
-          :method => "DELETE") %>
+          :data => { :disable_with_spinner => true },
+          :method => "DELETE",
+          :remote => true) %>
   </p>
 </div>

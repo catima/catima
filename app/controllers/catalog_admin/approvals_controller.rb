@@ -5,16 +5,28 @@ class CatalogAdmin::ApprovalsController < CatalogAdmin::BaseController
   def create
     @item.review.approved(:by => current_user)
     @item.save!
-    redirect_to(edit_catalog_admin_item_path(catalog, @item_type, @item))
+
+    respond_to do |f|
+      f.html { redirect_to_item_edit }
+      f.js
+    end
   end
 
   def destroy
     @item.review.rejected(:by => current_user)
     @item.save!
-    redirect_to(edit_catalog_admin_item_path(catalog, @item_type, @item))
+
+    respond_to do |f|
+      f.html { redirect_to_item_edit }
+      f.js
+    end
   end
 
   private
+
+  def redirect_to_item_edit
+    redirect_to(edit_catalog_admin_item_path(catalog, @item_type, @item))
+  end
 
   # TODO: DRY this up with CatalogAdmin::ItemsController
 

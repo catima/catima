@@ -16,10 +16,9 @@ module CatalogAdmin::ReviewsHelper
     render("catalog_admin/items/approval", :item_type => item.item_type)
   end
 
-  def render_items_review(form)
+  def render_items_review(item, form=nil)
     return unless catalog.requires_review?
 
-    item = form.object
     render(
       "catalog_admin/items/review",
       :f => form,
