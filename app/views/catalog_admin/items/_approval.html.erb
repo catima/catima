@@ -1,0 +1,19 @@
+<div class="alert alert-warning">
+  <p>
+    <b>This <%= item_type.name %> is awaiting your review.</b>
+    Approve it to make it visible to the public.
+  </p>
+  <p style="margin-top: 14px;">
+    <%= link_to(
+          fa_icon(:check, :text => "Approve"),
+          { :controller => "catalog_admin/approvals", :action => "create" },
+          :class => "btn btn-success",
+          :method => "POST") %>
+
+    <%= link_to(
+          "Reject",
+          { :controller => "catalog_admin/approvals", :action => "create" },
+          :class => "btn btn-default",
+          :method => "DELETE") %>
+  </p>
+</div>

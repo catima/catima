@@ -11,7 +11,14 @@ module CatalogAdmin::ReviewsHelper
     content_tag(:span, text, :class => "label label-#{klass}")
   end
 
+  def render_items_approval(item)
+    return unless item.review.pending?
+    render("catalog_admin/items/approval", :item_type => item.item_type)
+  end
+
   def render_items_review(form)
+    return unless catalog.requires_review?
+
     item = form.object
     render(
       "catalog_admin/items/review",

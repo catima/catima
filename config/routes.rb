@@ -70,7 +70,12 @@ Rails.application.routes.draw do
     resources :users, :path => "_users"
 
     # Data entry
-    resources :items, :path => ":item_type_slug", :except => :show
+    resources :items, :path => ":item_type_slug", :except => :show do
+      member do
+        post "approval" => "approvals#create"
+        delete "approval" => "approvals#destroy"
+      end
+    end
   end
 
   # ===========================================================================
