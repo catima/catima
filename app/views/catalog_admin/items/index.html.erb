@@ -15,6 +15,9 @@
       <% @fields.each do |field| %>
         <th><%= field.name %></th>
       <% end %>
+      <% if catalog.requires_review? %>
+        <th>Status</th>
+      <% end %>
       <th></th>
     </tr>
   </thead>
@@ -23,6 +26,9 @@
       <tr>
         <% @fields.each do |field| %>
           <td><%= field_value(item, field, :style => :compact) %></td>
+        <% end %>
+        <% if catalog.requires_review? %>
+          <td><%= review_status_label(item) %></td>
         <% end %>
         <td style="text-align: right">
           <% if policy(item).edit? %>
