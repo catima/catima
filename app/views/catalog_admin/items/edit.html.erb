@@ -2,6 +2,20 @@
 
 <%= bootstrap_form_for(@item, :url => catalog_admin_item_path) do |f| %>
 
+  <%# TODO: move to partial %>
+  <div class="alert alert-warning">
+    <p>
+      <b>This <%= @item.item_type.name %> is awaiting your review.</b>
+      Approve it to make it visible to the public.
+    </p>
+    <p style="margin-top: 14px;">
+      <a href="javascript:;" class="btn btn-success">
+        <%= fa_icon(:check, :text => "Approve") %>
+      </a>
+      <a href="javascript:;" class="btn btn-default">Reject</a>
+    </p>
+  </div>
+
   <%= render("common_form_fields", :f => f) %>
 
   <%= f.primary("Save #{@item.item_type.name}") %>
