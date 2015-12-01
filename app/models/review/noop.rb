@@ -2,6 +2,12 @@
 # That is to say: do nothing.
 #
 class Review::Noop
+  attr_reader :item
+
+  def initialize(item)
+    @item = item
+  end
+
   def pending_submission?
     false
   end

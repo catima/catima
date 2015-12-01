@@ -13,6 +13,7 @@ module CatalogAdmin::ReviewsHelper
 
   def render_items_approval(item)
     return unless item.review.pending?
+    return unless policy(item.review).approve?
     render("catalog_admin/items/approval", :item_type => item.item_type)
   end
 

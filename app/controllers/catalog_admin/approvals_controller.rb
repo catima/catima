@@ -3,6 +3,7 @@ class CatalogAdmin::ApprovalsController < CatalogAdmin::BaseController
   before_action :find_item
 
   def create
+    authorize(@item.review, :approve?)
     @item.review.approved(:by => current_user)
     @item.save!
 
@@ -13,6 +14,7 @@ class CatalogAdmin::ApprovalsController < CatalogAdmin::BaseController
   end
 
   def destroy
+    authorize(@item.review, :reject?)
     @item.review.rejected(:by => current_user)
     @item.save!
 

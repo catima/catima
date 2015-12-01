@@ -28,6 +28,6 @@ class Review::NoopTest < ActiveSupport::TestCase
   private
 
   def review
-    Review::Noop.new
+    Review::Noop.new(Item.new)
   end
 end
