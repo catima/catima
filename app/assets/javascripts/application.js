@@ -15,6 +15,7 @@
 //= require jquery.turbolinks
 //= require turbolinks
 //= require cocoon
+//= require spinner
 //= require mousetrap/mousetrap
 //= require mousetrap/plugins/global-bind/mousetrap-global-bind
 //= require refile

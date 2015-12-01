@@ -136,6 +136,7 @@ GEM
       responders
       thread_safe (~> 0.1)
       warden (~> 1.2.3)
+    disable_with_spinner (0.0.3)
     docile (1.1.5)
     domain_name (0.5.25)
       unf (>= 0.0.5, < 1.0.0)
@@ -424,6 +425,7 @@ DEPENDENCIES
   coffee-rails (~> 4.1.0)
   connection_pool
   devise
+  disable_with_spinner (~> 0.0.3)
   dotenv-rails (>= 2.0.0)
   faker!
   font-awesome-rails
