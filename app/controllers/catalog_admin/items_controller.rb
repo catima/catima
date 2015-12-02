@@ -3,9 +3,9 @@ class CatalogAdmin::ItemsController < CatalogAdmin::BaseController
   layout "catalog_admin/data/form"
 
   # TODO: arbitrary sorting
-  # TODO: pagination
   def index
     @items = policy_scope(item_scope).sorted_by_field(@item_type.primary_field)
+    @items = @items.page(params[:page]).per(25)
     @fields = @item_type.list_view_fields
     render("index", :layout => "catalog_admin/data")
   end
