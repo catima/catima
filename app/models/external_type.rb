@@ -2,7 +2,7 @@ class ExternalType
   attr_reader :url, :client
 
   def initialize(url, client: ExternalType::ClientWithCache.new)
-    @url = url + (url.ends_with?("/") ? "" : "/")
+    @url = url
     @client = client
   end
 
@@ -37,7 +37,10 @@ class ExternalType
   private
 
   def get(*path)
-    client.get(url + path.join("/"))
+    full_url = url
+    full_url << "/" if path.present? && !url.ends_with?("/")
+    full_url << path.join("/")
+    client.get(full_url)
   end
 
   def json
