@@ -86,6 +86,15 @@ class CatalogAdmin::ItemsTest < ActionDispatch::IntegrationTest
     assert_equal("Changed by test", author.public_send(:one_author_name_uuid))
   end
 
+  test "mark an item as ready for review" do
+    log_in_as("reviewed-editor@example.com", "password")
+    book = items(:reviewed_book_end_of_watch)
+    visit("/reviewed/admin/books/#{book.to_param}/edit")
+    check("Ready for review")
+    click_on("Save Book")
+    assert(book.reload.review.pending?)
+  end
+
   test "delete an item" do
     log_in_as("one-admin@example.com", "password")
     visit("/one/admin")
