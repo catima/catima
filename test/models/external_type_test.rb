@@ -1,8 +1,15 @@
 require "test_helper"
 
 class ExternalTypeTest < ActiveSupport::TestCase
+  test "uses 5 minute cache by default" do
+    ext = ExternalType.new("foo")
+
+    assert_instance_of(ExternalType::ClientWithCache, ext.client)
+    assert_equal(Rails.cache, ext.client.cache)
+    assert_equal(5.minutes, ext.client.options[:expires_in])
+  end
+
   test "#valid?" do
-    vss = external_type("http://vss.naxio.ch/keywords/default/api/v1")
     github = external_type("https://api.github.com/repos/rails/rails")
     non_existent = external_type("http://vss.naxio.ch/does-not-exist")
 
@@ -11,7 +18,26 @@ class ExternalTypeTest < ActiveSupport::TestCase
     refute(non_existent.valid?)
   end
 
+  test "#name" do
+    assert_equal("Keyword", vss.name)
+    assert_equal("Keyword", vss.name(:en))
+    assert_equal("Schlüsselwort", vss.name(:de))
+    assert_equal("Mot-clé", vss.name(:fr))
+  end
+
+  test "#locales" do
+    assert_equal(%w(fr de en), vss.locales)
+  end
+
+  # TODO: test once API is responding correctly to these endpoints
+  # test "#find_item"
+  # test "#all_items"
+
   private
+
+  def vss
+    external_type("http://vss.naxio.ch/keywords/default/api/v1")
+  end
 
   def external_type(url)
     ExternalType.new(url, :client => ExternalType::Client.new)

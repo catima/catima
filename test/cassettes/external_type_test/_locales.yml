@@ -1,0 +1,70 @@
+---
+http_interactions:
+- request:
+    method: get
+    uri: http://vss.naxio.ch/keywords/default/api/v1
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      User-Agent:
+      - Faraday v0.9.2
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+  response:
+    status:
+      code: 200
+      message: OK
+    headers:
+      Server:
+      - nginx/1.8.0
+      Date:
+      - Wed, 02 Dec 2015 21:34:53 GMT
+      Content-Type:
+      - application/json; charset=utf-8
+      Transfer-Encoding:
+      - chunked
+      Connection:
+      - keep-alive
+      X-Frame-Options:
+      - SAMEORIGIN
+      X-Xss-Protection:
+      - 1; mode=block
+      X-Content-Type-Options:
+      - nosniff
+      X-Permitted-Cross-Domain-Policies:
+      - none
+      Etag:
+      - W/"57b7f9fc1c8709faa41114ae7350869c"
+      Cache-Control:
+      - max-age=0, private, must-revalidate
+      X-Request-Id:
+      - 496f693e-15c0-4b78-9dce-e0ecc20ff943
+      X-Runtime:
+      - '0.009831'
+      X-Cache-Status:
+      - MISS
+    body:
+      encoding: ASCII-8BIT
+      string: !binary |-
+        ewogICJsb2NhbGVzIjogWyJmciIsImRlIiwiZW4iXSwKICAiaXRlbV9uYW1l
+        IjogeyJmciI6Ik1vdC1jbMOpIiwiZGUiOiJTY2hsw7xzc2Vsd29ydCIsImVu
+        IjoiS2V5d29yZCJ9LAogICJpdGVtX25hbWVfcGx1cmFsIjogeyJmciI6Ik1v
+        dHMtY2zDqXMiLCJkZSI6IlNjaGzDvHNzZWx3w7ZydGVyIiwiZW4iOiJLZXl3
+        b3JkcyJ9LAogICJmaWVsZHMiOiBbeyJzbHVnIjoibmFtZSIsImZpZWxkX25h
+        bWUiOnsiZnIiOiJOb20iLCJkZSI6Ik5hbWUiLCJlbiI6Ik5hbWUifSwiZmll
+        bGRfbmFtZV9wbHVyYWwiOnsiZnIiOiJOb21zIiwiZGUiOiJOYW1lbiIsImVu
+        IjoiTmFtZXMifX0seyJzbHVnIjoiZXh0ZW5kZWQtbmFtZSIsImZpZWxkX25h
+        bWUiOnsiZnIiOiJOb20gw6l0ZW5kdSIsImRlIjoiRXJ3ZWl0ZXJ0ZXIgTmFt
+        ZW4iLCJlbiI6IkV4dGVuZGVkIE5hbWUifSwiZmllbGRfbmFtZV9wbHVyYWwi
+        OnsiZnIiOiJOb21zIMOpdGVuZHVzIiwiZGUiOiJFcndlaXRlcnRlIE5hbWVu
+        IiwiZW4iOiJFeHRlbmRlZCBuYW1lcyJ9fSx7InNsdWciOiJjYXRlZ29yeSIs
+        ImZpZWxkX25hbWUiOnsiZnIiOiJDYXTDqWdvcmllIiwiZGUiOiJLYXRlZ29y
+        aWUiLCJlbiI6IkNhdGVvZ3J5In0sImZpZWxkX25hbWVfcGx1cmFsIjp7ImZy
+        IjoiQ2F0w6lnb3JpZXMiLCJkZSI6IkthdGVnb3JpZW4iLCJlbiI6IkNhdGVn
+        b3JpZXMifX1dCn0=
+    http_version: 
+  recorded_at: Wed, 02 Dec 2015 21:34:53 GMT
+recorded_with: VCR 3.0.0
