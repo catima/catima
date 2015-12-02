@@ -6,6 +6,13 @@ class ExternalType
     @client = client
   end
 
+  def valid?
+    expected = %w(locales item_name fields)
+    (expected - json.keys).empty?
+  rescue ExternalType::Client::NotFound
+    false
+  end
+
   def name(locale=I18n.locale)
     json["item_name"][locale.to_s]
   end

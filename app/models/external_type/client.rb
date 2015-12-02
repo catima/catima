@@ -1,6 +1,10 @@
 class ExternalType::Client
+  NotFound = Class.new(StandardError)
+
   def get(uri)
     conn.get(uri).body
+  rescue Faraday::ResourceNotFound => e
+    raise NotFound, e.message
   end
 
   private
