@@ -127,6 +127,8 @@ GEM
     colorize (0.7.7)
     concurrent-ruby (1.0.0)
     connection_pool (2.2.0)
+    crack (0.4.2)
+      safe_yaml (~> 1.0.0)
     daemons (1.2.3)
     debug_inspector (0.0.2)
     devise (3.5.2)
@@ -182,6 +184,7 @@ GEM
       minitest (>= 3.0)
     haml (4.0.7)
       tilt
+    hashdiff (0.2.3)
     highline (1.7.8)
     http-cookie (1.0.2)
       domain_name (~> 0.5)
@@ -394,8 +397,13 @@ GEM
       get_process_mem (~> 0)
       unicorn (>= 4, < 6)
     user_agent_parser (2.3.0)
+    vcr (3.0.0)
     warden (1.2.3)
       rack (>= 1.0)
+    webmock (1.22.3)
+      addressable (>= 2.3.6)
+      crack (>= 0.3.2)
+      hashdiff
     websocket-driver (0.6.3)
       websocket-extensions (>= 0.1.0)
     websocket-extensions (0.1.2)
@@ -484,6 +492,8 @@ DEPENDENCIES
   turbolinks (~> 2.5)
   unicorn
   unicorn-worker-killer
+  vcr (~> 3.0)
+  webmock
   xray-rails (>= 0.1.16)
 
 BUNDLED WITH

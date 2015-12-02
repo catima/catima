@@ -92,4 +92,6 @@ group :test do
       :git => "https://github.com/CheckMateIO/shoulda-matchers.git",
       :branch => "bugfix/numericality-of-virtual-attributes"
   gem "test_after_commit"
+  gem "vcr", "~> 3.0"
+  gem "webmock"
 end
