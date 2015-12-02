@@ -34,6 +34,7 @@ gem "summernote-rails", "~> 0.6.16"
 gem "turbolinks", "~> 2.5"
 
 source "https://rails-assets.org" do
+  gem "rails-assets-autosize", "~> 3.0.14"
   gem "rails-assets-mousetrap", "~> 1.5.3"
 end
 

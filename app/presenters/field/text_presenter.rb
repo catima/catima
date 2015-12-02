@@ -8,7 +8,7 @@ class Field::TextPresenter < FieldPresenter
   def input(form, method, options={})
     i18n = options.fetch(:i18n) { field.i18n? }
     return i18n_input(form, method, options) if i18n
-    form.text_field(method, input_defaults(options))
+    form.text_area(method, input_defaults(options).merge(:rows => 1))
   end
 
   def i18n_input(form, method, options={})
