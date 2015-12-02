@@ -2,7 +2,7 @@ class ExternalType
   attr_reader :url, :client
 
   def initialize(url, client: ExternalType::ClientWithCache.new)
-    @url = url
+    @url = url + (url.ends_with?("/") ? "" : "/")
     @client = client
   end
 
@@ -14,18 +14,26 @@ class ExternalType
     json["locales"]
   end
 
-  def items
+  def find_item(id)
+    item_json = get("items", id)
+    ExternalType::Item.from_json(item_json)
+  end
+
+  def all_items
     # TODO: support pagination
     @items ||= begin
-      items_url = url + (url.ends_with?("/") ? "" : "/") + "items"
-      items_json = client.get(items_url)
+      items_json = get("items")
       items_json["results"].map(&ExternalType::Item.method(:from_json))
     end
   end
 
   private
 
+  def get(*path)
+    client.get(url + path.join("/"))
+  end
+
   def json
-    @json ||= client.get(url)
+    @json ||= get
   end
 end
