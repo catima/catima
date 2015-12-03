@@ -40,7 +40,8 @@ class Field < ActiveRecord::Base
     "email" => "Field::Email",
     "url" => "Field::URL",
     "choice" => "Field::ChoiceSet",
-    "reference" => "Field::Reference"
+    "reference" => "Field::Reference",
+    "xref" => "Field::Xref"
   }.freeze
 
   STYLE_CHOICES = {

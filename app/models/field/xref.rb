@@ -34,11 +34,13 @@ class Field::Xref < ::Field
     if xref !~ URI.regexp
       errors.add(:xref, :invalid_url)
     elsif external_type.nil?
-      errors.add(:xref, "does not point to a valid xref service")
+      errors.add(:xref, "must point to a valid xref service")
     end
   end
 
   def external_type
+    return nil if xref.blank?
+
     @external_type ||= begin
       ext = ExternalType.new(xref)
       ext.valid? ? ext : nil
