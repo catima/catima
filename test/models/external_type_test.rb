@@ -29,9 +29,19 @@ class ExternalTypeTest < ActiveSupport::TestCase
     assert_equal(%w(fr de en), vss.locales)
   end
 
-  # TODO: test once API is responding correctly to these endpoints
+  # TODO: test once API is responding correctly to this endpoints
   # test "#find_item"
-  # test "#all_items"
+
+  test "#all_items" do
+    items = vss.all_items
+
+    assert_instance_of(Array, items)
+    refute_empty(items)
+    birds = items.find { |i| i.name(:en) == "Birds" }
+    refute_nil(birds.id)
+    assert_equal("Vögel", birds.name(:de))
+    assert_equal("oiseaux", birds.name(:fr))
+  end
 
   private
 
