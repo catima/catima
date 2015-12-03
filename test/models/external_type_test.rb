@@ -31,8 +31,20 @@ class ExternalTypeTest < ActiveSupport::TestCase
     assert_equal(%w(fr de en), vss.locales)
   end
 
-  # TODO: test once API is responding correctly to this endpoints
-  # test "#find_item"
+  test "#find_item" do
+    item = vss.find_item("25-pretty-id") # should be interpreted as 25
+
+    assert_equal(25, item.id)
+    assert_equal("Wolken", item.name(:de))
+    assert_equal("Clouds", item.name(:en))
+    assert_equal("nuages", item.name(:fr))
+  end
+
+  test "#find_item raises for non-existent ID" do
+    assert_raises(ExternalType::Client::NotFound) do
+      vss.find_item("99999999")
+    end
+  end
 
   test "#all_items" do
     items = vss.all_items

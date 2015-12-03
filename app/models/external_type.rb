@@ -22,9 +22,10 @@ class ExternalType
   end
 
   def find_item(id)
-    # TODO: use this more efficient endpoint once it is working
-    # item_json = get("items", id.to_i.to_s)
-    # ExternalType::Item.from_json(item_json)
+    # The service API supports loading an item by ID, but to deal with N+1
+    # performance issues, we instead load all items and then find the item by
+    # ID in memory. Assuming the underlying list of items is cached, this
+    # should be faster in most cases where it matters.
     id = id.to_i
     all_items.find(-> { fail ExternalType::Client::NotFound }) do |item|
       item.id == id
