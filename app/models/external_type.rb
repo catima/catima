@@ -22,7 +22,7 @@ class ExternalType
   end
 
   def find_item(id)
-    item_json = get("items", id)
+    item_json = get("items", id.to_i.to_s)
     ExternalType::Item.from_json(item_json)
   end
 
