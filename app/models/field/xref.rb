@@ -18,6 +18,10 @@ class Field::Xref < ::Field
     external_type ? external_type.all_items : []
   end
 
+  def choice_by_id(id)
+    external_type && external_type.find_item(id)
+  end
+
   def selected_choice(item)
     id = raw_value(item)
     return nil if id.blank?

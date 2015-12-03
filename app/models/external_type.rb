@@ -22,8 +22,13 @@ class ExternalType
   end
 
   def find_item(id)
-    item_json = get("items", id.to_i.to_s)
-    ExternalType::Item.from_json(item_json)
+    # TODO: use this more efficient endpoint once it is working
+    # item_json = get("items", id.to_i.to_s)
+    # ExternalType::Item.from_json(item_json)
+    id = id.to_i
+    all_items.find(-> { fail ExternalType::Client::NotFound }) do |item|
+      item.id == id
+    end
   end
 
   def all_items

@@ -15,7 +15,7 @@ class Field::XrefPresenter < FieldPresenter
   def value
     choice = selected_choice(item)
     return if choice.nil?
-    value_slug = [I18n.locale, choice.name].join("-")
-    browse_similar_items_link(choice.long_name, item, field, value_slug)
+    value_slug = [choice.id, choice.name].join("-")
+    browse_similar_items_link(choice.name, item, field, value_slug)
   end
 end
