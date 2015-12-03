@@ -51,10 +51,10 @@ class ExternalTypeTest < ActiveSupport::TestCase
 
     assert_instance_of(Array, items)
     refute_empty(items)
-    birds = items.find { |i| i.name(:en) == "Birds" }
-    refute_nil(birds.id)
-    assert_equal("Vögel", birds.name(:de))
-    assert_equal("oiseaux", birds.name(:fr))
+    merch = items.find { |i| i.name(:en) == "Merchandise" }
+    refute_nil(merch.id)
+    assert_equal("Ware", merch.name(:de))
+    assert_equal("marchandises", merch.name(:fr))
   end
 
   private
