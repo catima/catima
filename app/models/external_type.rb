@@ -47,3 +47,5 @@ class ExternalType
     @json ||= get
   end
 end
+
+require_dependency("external_type/item")
