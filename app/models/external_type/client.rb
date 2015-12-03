@@ -1,8 +1,9 @@
 class ExternalType::Client
+  InvalidFormat = Class.new(StandardError)
   NotFound = Class.new(StandardError)
 
   def get(uri)
-    parse_json_with_workaround(conn.get(uri).body)
+    parse_json_with_workaround(conn.get(uri))
   rescue Faraday::ResourceNotFound => e
     raise NotFound, e.message
   end
@@ -11,8 +12,9 @@ class ExternalType::Client
 
   # TODO: remove!
   # This remove the malformed next/previous keys before parsing.
-  def parse_json_with_workaround(body)
-    JSON.parse(body.gsub(/"(next|previous)": [^\s",]+,/, ""))
+  def parse_json_with_workaround(response)
+    fail InvalidFormat unless response[:content_type] =~ /\bjson\b/
+    JSON.parse(response.body.gsub(/"(next|previous)": [^\s",]+,/, ""))
   end
 
   def conn
