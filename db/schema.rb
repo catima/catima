@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20151130214821) do
+ActiveRecord::Schema.define(version: 20151205003146) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -53,6 +53,15 @@ ActiveRecord::Schema.define(version: 20151130214821) do
   end
 
   add_index "catalogs", ["slug"], name: "index_catalogs_on_slug", unique: true, using: :btree
+
+  create_table "categories", force: :cascade do |t|
+    t.integer  "catalog_id"
+    t.string   "name"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
+
+  add_index "categories", ["catalog_id"], name: "index_categories_on_catalog_id", using: :btree
 
   create_table "choice_sets", force: :cascade do |t|
     t.integer  "catalog_id"
@@ -194,6 +203,7 @@ ActiveRecord::Schema.define(version: 20151130214821) do
   add_foreign_key "advanced_searches", "item_types"
   add_foreign_key "catalog_permissions", "catalogs"
   add_foreign_key "catalog_permissions", "users"
+  add_foreign_key "categories", "catalogs"
   add_foreign_key "choice_sets", "catalogs"
   add_foreign_key "choices", "catalogs"
   add_foreign_key "choices", "choice_sets"

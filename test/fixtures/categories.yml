@@ -1,0 +1,20 @@
+# == Schema Information
+#
+# Table name: categories
+#
+#  catalog_id :integer
+#  created_at :datetime         not null
+#  id         :integer          not null, primary key
+#  name       :string
+#  updated_at :datetime         not null
+#
+
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  catalog: one
+  name: MyString
+
+two:
+  catalog: two
+  name: MyString
