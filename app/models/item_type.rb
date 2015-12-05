@@ -15,23 +15,12 @@
 
 # TODO: drop name_old and name_plural_old columns (no longer used)
 class ItemType < ActiveRecord::Base
+  include HasFields
   include HasTranslations
   include HasSlug
 
-  belongs_to :catalog
-
-  has_many :fields, -> { sorted }
-  has_many :list_view_fields,
-           -> { where(:display_in_list => true).sorted },
-           :class_name => "Field"
   has_many :items
-  has_many :referenced_by_fields,
-           :foreign_key => "related_item_type_id",
-           :class_name => "Field"
-
   store_translations :name, :name_plural
-
-  validates_presence_of :catalog
   validates_slug :scope => :catalog_id
 
   def self.sorted(locale=I18n.locale)

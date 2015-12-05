@@ -10,5 +10,11 @@
 #
 
 class Category < ActiveRecord::Base
-  belongs_to :catalog
+  include HasFields
+
+  validates_presence_of :name
+
+  def self.sorted
+    order("LOWER(categories.name) ASC")
+  end
 end
