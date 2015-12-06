@@ -3,6 +3,7 @@
 # Table name: choices
 #
 #  catalog_id              :integer
+#  category_id             :integer
 #  choice_set_id           :integer
 #  created_at              :datetime         not null
 #  id                      :integer          not null, primary key
@@ -17,6 +18,7 @@ class Choice < ActiveRecord::Base
   include HasTranslations
 
   belongs_to :catalog
+  belongs_to :category
   belongs_to :choice_set
 
   store_translations :short_name, :long_name
