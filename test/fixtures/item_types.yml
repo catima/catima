@@ -15,6 +15,12 @@
 
 # Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
 
+nested_vehicle:
+  catalog: nested
+  name_translations: '{ "name_en": "Vehicle" }'
+  name_plural_translations: '{ "name_plural_en": "Vehicles" }'
+  slug: vehicles
+
 one:
   catalog: one
   name_translations: '{ "name_en": "One" }'

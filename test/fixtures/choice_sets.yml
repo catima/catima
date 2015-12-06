@@ -12,6 +12,10 @@
 
 # Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
 
+nested_vehicle_types:
+  catalog: nested
+  name: Vehicle Types
+
 one_languages:
   catalog: one
   name: Languages

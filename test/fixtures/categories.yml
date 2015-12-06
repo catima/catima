@@ -11,6 +11,14 @@
 
 # Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
 
+nested_bicycle:
+  catalog: nested
+  name: Bicycle
+
+nested_car:
+  catalog: nested
+  name: Car
+
 one:
   catalog: one
   name: MyString

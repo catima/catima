@@ -32,6 +32,40 @@
 
 # Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
 
+nested_vehicle_name:
+  type: "Field::Text"
+  name_translations: '{ "name_en": "Name" }'
+  name_plural_translations: '{ "name_plural_en": "Names" }'
+  slug: name
+  field_set: nested_vehicle (ItemType)
+  primary: true
+  uuid: nested_vehicle_name_uuid
+
+nested_vehicle_type:
+  type: "Field::ChoiceSet"
+  name_translations: '{ "name_en": "Type" }'
+  name_plural_translations: '{ "name_plural_en": "Types" }'
+  slug: type
+  field_set: nested_vehicle (ItemType)
+  uuid: nested_vehicle_type_uuid
+  choice_set: nested_vehicle_types
+
+nested_car_cupholders:
+  type: "Field::Int"
+  name_translations: '{ "name_en": "Number of cup holders" }'
+  name_plural_translations: '{ "name_plural_en": "Numbers of cup holders" }'
+  slug: cupholders
+  field_set: nested_car (Category)
+  uuid: nested_car_cupholders_uuid
+
+nested_bicycle_speeds:
+  type: "Field::Int"
+  name_translations: '{ "name_en": "Number of speeds" }'
+  name_plural_translations: '{ "name_plural_en": "Numbers of speeds" }'
+  slug: speeds
+  field_set: nested_bicycle (Category)
+  uuid: nested_bicycle_speeds_uuid
+
 one_title:
   type: "Field::Text"
   name_translations: '{ "name_en": "Title" }'

@@ -15,6 +15,13 @@
 
 # Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
 
+nested:
+  name: nested
+  slug: nested
+  primary_language: en
+  other_languages:
+  requires_review: false
+
 one:
   name: one
   slug: one

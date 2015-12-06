@@ -16,6 +16,20 @@
 
 # Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
 
+nested_bicycle:
+  catalog: nested
+  category: nested_bicycle
+  choice_set: nested_vehicle_types
+  long_name_translations: '{ "long_name_en": "Bicycle" }'
+  short_name_translations: '{ "short_name_en": "Bicycle" }'
+
+nested_car:
+  catalog: nested
+  category: nested_car
+  choice_set: nested_vehicle_types
+  long_name_translations: '{ "long_name_en": "Car" }'
+  short_name_translations: '{ "short_name_en": "Car" }'
+
 one_english:
   catalog: one
   choice_set: one_languages
