@@ -1,10 +1,10 @@
 require "test_helper"
 
 class FieldTest < ActiveSupport::TestCase
-  should validate_presence_of(:item_type)
+  should validate_presence_of(:field_set)
   should validate_presence_of(:slug)
 
-  should validate_uniqueness_of(:slug).scoped_to(:item_type_id)
+  should validate_uniqueness_of(:slug).scoped_to(:field_set_id)
   should allow_value("hey").for(:slug)
   should_not allow_value("under_score").for(:slug)
 
@@ -28,7 +28,7 @@ class FieldTest < ActiveSupport::TestCase
     SecureRandom.stubs(:uuid => "1234-abcd")
 
     field = Field::Text.create!(
-      :item_type => item_types(:two_author),
+      :field_set => item_types(:two_author),
       :name_en => "Text",
       :name_plural_en => "Texts",
       :slug => "text"
@@ -38,7 +38,7 @@ class FieldTest < ActiveSupport::TestCase
 
   test "given catalog supporting one locale, validates names for it" do
     it = item_types(:one_author) # supports only :en
-    field = Field::Text.new(:item_type => it, :slug => "test-validation")
+    field = Field::Text.new(:field_set => it, :slug => "test-validation")
 
     refute(field.valid?)
 
@@ -49,7 +49,7 @@ class FieldTest < ActiveSupport::TestCase
 
   test "given catalog supporting many locales, validates names for all" do
     it = item_types(:multilingual_author)
-    field = Field::Text.new(:item_type => it, :slug => "test-validation")
+    field = Field::Text.new(:field_set => it, :slug => "test-validation")
 
     refute(field.valid?)
 

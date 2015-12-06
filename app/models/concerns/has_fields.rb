@@ -5,10 +5,23 @@ module HasFields
   included do
     belongs_to :catalog
 
-    has_many :fields, -> { sorted }
+    class_name = name
+
+    has_many :fields,
+             -> { where(:field_set_type => class_name).sorted },
+             :foreign_key => :field_set_id
+
     has_many :list_view_fields,
-             -> { where(:display_in_list => true).sorted },
+             lambda {
+               where(
+                 :field_set_type => class_name,
+                 :display_in_list => true
+               ).sorted
+             },
+             :foreign_key => :field_set_id,
+             :foreign_type => :field_set_type,
              :class_name => "Field"
+
     has_many :referenced_by_fields,
              :foreign_key => "related_item_type_id",
              :class_name => "Field"

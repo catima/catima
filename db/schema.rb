@@ -11,7 +11,7 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20151205003146) do
+ActiveRecord::Schema.define(version: 20151205011325) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
@@ -95,7 +95,7 @@ ActiveRecord::Schema.define(version: 20151205003146) do
   end
 
   create_table "fields", force: :cascade do |t|
-    t.integer  "item_type_id"
+    t.integer  "field_set_id"
     t.integer  "category_item_type_id"
     t.integer  "related_item_type_id"
     t.integer  "choice_set_id"
@@ -119,12 +119,13 @@ ActiveRecord::Schema.define(version: 20151205003146) do
     t.string   "uuid"
     t.json     "name_translations"
     t.json     "name_plural_translations"
+    t.string   "field_set_type"
   end
 
   add_index "fields", ["category_item_type_id"], name: "index_fields_on_category_item_type_id", using: :btree
   add_index "fields", ["choice_set_id"], name: "index_fields_on_choice_set_id", using: :btree
-  add_index "fields", ["item_type_id", "slug"], name: "index_fields_on_item_type_id_and_slug", unique: true, using: :btree
-  add_index "fields", ["item_type_id"], name: "index_fields_on_item_type_id", using: :btree
+  add_index "fields", ["field_set_id", "slug"], name: "index_fields_on_field_set_id_and_slug", unique: true, using: :btree
+  add_index "fields", ["field_set_id"], name: "index_fields_on_field_set_id", using: :btree
   add_index "fields", ["related_item_type_id"], name: "index_fields_on_related_item_type_id", using: :btree
 
   create_table "item_types", force: :cascade do |t|
@@ -209,7 +210,6 @@ ActiveRecord::Schema.define(version: 20151205003146) do
   add_foreign_key "choices", "choice_sets"
   add_foreign_key "configurations", "catalogs", column: "default_catalog_id"
   add_foreign_key "fields", "choice_sets"
-  add_foreign_key "fields", "item_types"
   add_foreign_key "fields", "item_types", column: "category_item_type_id"
   add_foreign_key "fields", "item_types", column: "related_item_type_id"
   add_foreign_key "item_types", "catalogs"

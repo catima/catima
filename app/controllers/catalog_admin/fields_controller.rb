@@ -57,7 +57,7 @@ class CatalogAdmin::FieldsController < CatalogAdmin::BaseController
   helper_method :fields
 
   def build_field
-    @field = field_class.new(:item_type => @item_type)
+    @field = field_class.new(:field_set => @item_type)
   end
 
   def field_class

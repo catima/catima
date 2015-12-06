@@ -8,9 +8,10 @@
 #  created_at               :datetime         not null
 #  default_value            :text
 #  display_in_list          :boolean          default(TRUE), not null
+#  field_set_id             :integer
+#  field_set_type           :string
 #  i18n                     :boolean          default(FALSE), not null
 #  id                       :integer          not null, primary key
-#  item_type_id             :integer
 #  multiple                 :boolean          default(FALSE), not null
 #  name_old                 :string
 #  name_plural_old          :string
@@ -57,17 +58,17 @@ class Field < ActiveRecord::Base
   include HasSlug
   include RankedModel
 
-  ranks :row_order, :class_name => "Field", :with_same => :item_type_id
+  ranks :row_order, :class_name => "Field", :with_same => :field_set_id
 
-  delegate :catalog, :to => :item_type, :allow_nil => true
+  delegate :catalog, :to => :field_set, :allow_nil => true
 
-  belongs_to :item_type
+  belongs_to :field_set, :polymorphic => true
 
   store_translations :name, :name_plural
 
-  validates_presence_of :item_type
+  validates_presence_of :field_set
   validate :default_value_passes_field_validations
-  validates_slug :scope => :item_type_id
+  validates_slug :scope => :field_set_id
 
   before_create :assign_uuid
   after_save :remove_primary_from_other_fields, :if => :primary?
@@ -85,6 +86,8 @@ class Field < ActiveRecord::Base
       [key, class_name.constantize.new.type_name]
     end
   end
+
+  alias_method :item_type, :field_set
 
   def type_name
     type.gsub(/Field::/, "")
@@ -163,6 +166,6 @@ class Field < ActiveRecord::Base
   end
 
   def remove_primary_from_other_fields
-    item_type.fields.where("fields.id != ?", id).update_all(:primary => false)
+    field_set.fields.where("fields.id != ?", id).update_all(:primary => false)
   end
 end

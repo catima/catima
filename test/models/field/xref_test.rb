@@ -7,7 +7,7 @@ class Field::XrefTest < ActiveSupport::TestCase
   test "checks that xref is a valid service" do
     field = Field::Xref.new(
       :slug => "xref",
-      :item_type => item_types(:one),
+      :field_set => item_types(:one),
       :name_en => "test",
       :name_plural_en => "tests"
     )

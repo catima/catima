@@ -1,5 +1,4 @@
 require_dependency("field/file")
-
 # == Schema Information
 #
 # Table name: fields
@@ -10,9 +9,10 @@ require_dependency("field/file")
 #  created_at               :datetime         not null
 #  default_value            :text
 #  display_in_list          :boolean          default(TRUE), not null
+#  field_set_id             :integer
+#  field_set_type           :string
 #  i18n                     :boolean          default(FALSE), not null
 #  id                       :integer          not null, primary key
-#  item_type_id             :integer
 #  multiple                 :boolean          default(FALSE), not null
 #  name_old                 :string
 #  name_plural_old          :string

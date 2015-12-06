@@ -25,6 +25,6 @@ class FieldPolicyTest < ActiveSupport::TestCase
   private
 
   def policy(user, item_type)
-    FieldPolicy.new(user, Field.new(:item_type => item_type))
+    FieldPolicy.new(user, Field.new(:field_set => item_type))
   end
 end
