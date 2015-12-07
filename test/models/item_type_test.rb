@@ -35,4 +35,14 @@ class ItemTypeTest < ActiveSupport::TestCase
     it.name_plural_it = "Persone"
     assert(it.valid?)
   end
+
+  test "#all_fields includes fields belonging to nested categories" do
+    fields = item_types(:nested_vehicle).all_fields
+    assert_instance_of(Array, fields)
+    assert_equal(4, fields.size)
+    assert_includes(fields, fields(:nested_vehicle_name))
+    assert_includes(fields, fields(:nested_vehicle_type))
+    assert_includes(fields, fields(:nested_car_cupholders))
+    assert_includes(fields, fields(:nested_bicycle_speeds))
+  end
 end
