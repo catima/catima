@@ -1,0 +1,16 @@
+<% provide(:title, "Edit category") %>
+
+<%= bootstrap_form_for(@category,
+                       :url => catalog_admin_category_path) do |f| %>
+
+  <%= render("common_form_fields", :f => f) %>
+
+  <hr>
+
+  <%= f.primary("Save category") %>
+  <%= link_to(
+        "Cancel",
+        catalog_admin_category_fields_path(catalog, @category),
+        :class => "btn btn-link") %>
+
+<% end %>

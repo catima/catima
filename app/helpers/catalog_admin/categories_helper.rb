@@ -1,6 +1,6 @@
 module CatalogAdmin::CategoriesHelper
   def setup_category_nav_link(category)
-    id = params[:item_type_id] || params[:id]
+    id = params[:category_id] || params[:id]
     active = params[:controller] =~ /categories|fields/ &&
              id == category.to_param
 

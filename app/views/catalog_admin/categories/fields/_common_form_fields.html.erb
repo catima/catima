@@ -1,0 +1,38 @@
+<%= hidden_field_tag(:type, params[:type]) if params[:type] %>
+
+<%= locale_form_group(f, :name, :text_field, :autofocus => true) %>
+<%= locale_form_group(f, :name_plural, :text_field, :label => "Name (plural)") %>
+<%= f.text_field(:slug, :label => "Slug (singular)", :help => slug_help_text) %>
+<%= f.text_area(:comment, :label => "Comment (optional)") %>
+
+<hr>
+
+<h4>Display options</h4>
+
+<%= f.form_group(:display_in_list) do %>
+  <%= f.check_box(
+        :display_in_list,
+        :label => "Include this field in list view"
+      ) %>
+<% end %>
+
+<hr>
+
+<h4>Data entry options</h4>
+
+<%= field_style_select(f) %>
+
+<%= f.form_group(:unique) do %>
+  <%= f.check_box(
+        :unique,
+        :label => "Must be unique") %>
+<% end %>
+
+<%= render_catalog_admin_fields_option_inputs(f) %>
+
+<hr>
+
+<%= f.primary("#{@field.persisted? ? 'Save' : 'Create'} field") %>
+<%= link_to(
+      "Cancel",
+      catalog_admin_category_fields_path, :class => "btn btn-link") %>

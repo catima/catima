@@ -11,7 +11,9 @@
 
 class Category < ActiveRecord::Base
   include HasFields
+  include HasHumanId
 
+  human_id :name
   validates_presence_of :name
 
   def self.sorted
