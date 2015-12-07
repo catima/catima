@@ -3,7 +3,7 @@ class ExternalType::ClientWithCache < ExternalType::Client
 
   def initialize(cache=Rails.cache, options={})
     @cache = cache
-    @options = options.reverse_merge(:expires_in => 5.minutes)
+    @options = options.reverse_merge(:expires_in => 1.hour)
   end
 
   def get(uri)

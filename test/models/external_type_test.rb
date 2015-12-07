@@ -6,7 +6,7 @@ class ExternalTypeTest < ActiveSupport::TestCase
 
     assert_instance_of(ExternalType::ClientWithCache, ext.client)
     assert_equal(Rails.cache, ext.client.cache)
-    assert_equal(5.minutes, ext.client.options[:expires_in])
+    assert_equal(1.hour, ext.client.options[:expires_in])
   end
 
   test "#valid?" do
