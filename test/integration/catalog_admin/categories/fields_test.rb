@@ -1,6 +1,6 @@
 require "test_helper"
 
-class CatalogAdmin::Categories::FieldsTest < ActionDispatch::IntegrationTest
+class CatalogAdmin::CategoriesFieldsTest < ActionDispatch::IntegrationTest
   test "add an int field" do
     log_in_as("one-admin@example.com", "password")
     visit("/one/admin")
