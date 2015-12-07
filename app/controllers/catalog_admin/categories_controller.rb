@@ -1,16 +1,14 @@
 class CatalogAdmin::CategoriesController < CatalogAdmin::BaseController
   layout "catalog_admin/setup/form"
 
-  # TODO: Pundit-based authorization
-  #
   def new
     build_category
-    # authorize(@category)
+    authorize(@category)
   end
 
   def create
     build_category
-    # authorize(@category)
+    authorize(@category)
     if @category.update(category_params)
       redirect_to(after_create_path, :notice => created_message)
     else
