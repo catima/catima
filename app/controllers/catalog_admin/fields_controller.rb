@@ -1,9 +1,9 @@
 class CatalogAdmin::FieldsController < CatalogAdmin::BaseController
   layout "catalog_admin/setup/form"
-  before_action :find_item_type
+  before_action :find_field_set
 
   def index
-    authorize(@item_type, :show?)
+    authorize(@field_set, :show?)
     render("index", :layout => "catalog_admin/setup")
   end
 
@@ -52,12 +52,12 @@ class CatalogAdmin::FieldsController < CatalogAdmin::BaseController
   private
 
   def fields
-    @fields = @item_type.fields
+    @fields = @field_set.fields
   end
   helper_method :fields
 
   def build_field
-    @field = field_class.new(:field_set => @item_type)
+    @field = field_class.new(:field_set => @field_set)
   end
 
   def field_class
@@ -65,7 +65,7 @@ class CatalogAdmin::FieldsController < CatalogAdmin::BaseController
   end
 
   def find_field
-    @field = @item_type.fields.where(:slug => params[:slug]).first!
+    @field = @field_set.fields.where(:slug => params[:slug]).first!
   end
 
   def field_params
@@ -85,8 +85,8 @@ class CatalogAdmin::FieldsController < CatalogAdmin::BaseController
     )
   end
 
-  def find_item_type
-    @item_type = \
+  def find_field_set
+    @field_set = \
       catalog.item_types.where(:slug => params[:item_type_slug]).first!
   end
 

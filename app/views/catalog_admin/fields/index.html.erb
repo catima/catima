@@ -1,13 +1,13 @@
 <% provide(:title) do %>
-  <b><%= @item_type.name %></b>
-  (plural: “<%= @item_type.name_plural %>”,
-  slug: “<%= @item_type.slug %>”)
+  <b><%= @field_set.name %></b>
+  (plural: “<%= @field_set.name_plural %>”,
+  slug: “<%= @field_set.slug %>”)
 <% end %>
 
 <% provide(:actions) do %>
   <%= link_to(
         "Edit name and slug",
-        edit_catalog_admin_item_type_path(catalog, @item_type),
+        edit_catalog_admin_item_type_path(catalog, @field_set),
         :class => "btn btn-xs btn-text") %>
 
   <span class="dropdown">
@@ -22,7 +22,7 @@
                 "#{label} field",
                 new_catalog_admin_item_type_field_path(
                   catalog,
-                  @item_type,
+                  @field_set,
                   :type => key
                 )) %>
         </li>

@@ -1,9 +1,9 @@
-<% provide(:title, "Edit #{@category.name} “#{@field.name}” field") %>
+<% provide(:title, "Edit #{@field_set.name} “#{@field.name}” field") %>
 
 <%= bootstrap_form_for(
       @field,
       :as => :field,
-      :url => catalog_admin_category_field_path(catalog, @category, @field)
+      :url => catalog_admin_category_field_path(catalog, @field_set, @field)
       ) do |f| %>
   <%= render("common_form_fields", :f => f) %>
 <% end %>

@@ -3,7 +3,7 @@
 <%= bootstrap_form_for(
       @field,
       :as => :field,
-      :url => catalog_admin_item_type_fields_path(catalog, @item_type)
+      :url => catalog_admin_item_type_fields_path(catalog, @field_set)
       ) do |f| %>
   <%= render("common_form_fields", :f => f) %>
 <% end %>
