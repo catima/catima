@@ -1,6 +1,14 @@
 class CatalogAdmin::CategoriesController < CatalogAdmin::BaseController
   layout "catalog_admin/setup/form"
 
+  def index
+    # Redirect to the first category if one exists.
+    # Otherwise redirect to the default admin URL.
+    first_category = catalog.categories.first
+    return redirect_to(catalog_admin_setup_path) if first_category.nil?
+    redirect_to(catalog_admin_category_fields_path(catalog, first_category))
+  end
+
   def new
     build_category
     authorize(@category)
