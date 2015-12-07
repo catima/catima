@@ -50,6 +50,8 @@ Rails.application.routes.draw do
     get "/" => "dashboard#setup", :as => :setup
     get "/_data" => "dashboard#data", :as => :data
 
+    resources :categories, :path => "_categories", :except => :show
+
     resources :item_types,
               :path => "_item-types",
               :only => [:new, :create]
