@@ -22,7 +22,7 @@ class CatalogAdmin::ItemTypesTest < ActionDispatch::IntegrationTest
     log_in_as("two-admin@example.com", "password")
     visit("/two/admin")
     click_on("Author")
-    click_on("Edit name and slug")
+    click_on("Edit item type")
     fill_in("item_type[name_en]", :with => "Writer")
 
     assert_no_difference("catalogs(:two).item_types.count") do

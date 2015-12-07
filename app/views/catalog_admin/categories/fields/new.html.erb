@@ -1,9 +1,0 @@
-<% provide(:title, "New #{@field.type_name.downcase} field") %>
-
-<%= bootstrap_form_for(
-      @field,
-      :as => :field,
-      :url => catalog_admin_category_fields_path(catalog, @field_set)
-      ) do |f| %>
-  <%= render("common_form_fields", :f => f) %>
-<% end %>

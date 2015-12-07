@@ -16,7 +16,7 @@ class CatalogAdmin::CategoriesTest < ActionDispatch::IntegrationTest
     log_in_as("one-admin@example.com", "password")
     visit("/one/admin")
     click_on("Category One")
-    click_on("Edit name")
+    click_on("Edit category")
     fill_in("Name", :with => "Edited by test")
 
     assert_no_difference("catalogs(:two).categories.count") do

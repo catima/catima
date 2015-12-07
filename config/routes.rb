@@ -51,10 +51,7 @@ Rails.application.routes.draw do
     get "/_data" => "dashboard#data", :as => :data
 
     resources :categories, :path => "_categories", :except => [:show] do
-      resources :fields,
-                :controller => "categories/fields",
-                :param => :slug,
-                :except => :show
+      resources :fields, :param => :slug, :except => :show
     end
 
     resources :item_types,

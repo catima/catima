@@ -87,7 +87,11 @@ class CatalogAdmin::FieldsController < CatalogAdmin::BaseController
 
   def find_field_set
     @field_set = \
-      catalog.item_types.where(:slug => params[:item_type_slug]).first!
+      if params[:item_type_slug]
+        catalog.item_types.where(:slug => params[:item_type_slug]).first!
+      else
+        catalog.categories.find(params[:category_id])
+      end
   end
 
   def created_message
