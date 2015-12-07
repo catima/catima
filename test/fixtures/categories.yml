@@ -21,7 +21,7 @@ nested_car:
 
 one:
   catalog: one
-  name: MyString
+  name: Category One
 
 two:
   catalog: two
