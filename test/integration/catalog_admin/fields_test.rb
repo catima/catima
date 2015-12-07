@@ -16,7 +16,7 @@ class CatalogAdmin::FieldsTest < ActionDispatch::IntegrationTest
     fill_in("field[name_plural_it]", :with => "Luoghi di nascita")
 
     fill_in("Slug (singular)", :with => "birthplace")
-    check("Use this as the primary field for Authors")
+    check("Use this as the primary field")
     check("Enable i18n")
     select("Single value – required", :from => "field[style]")
     fill_in("Minimum length (optional)", :with => 3)

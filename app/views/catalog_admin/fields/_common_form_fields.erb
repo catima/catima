@@ -9,11 +9,13 @@
 
 <h4>Display options</h4>
 
-<%= f.form_group(:primary) do %>
-  <%= f.check_box(
-        :primary,
-        :label => "Use this as the primary field for #{@field_set.name_plural}"
-      ) %>
+<% unless f.object.is_a?(Category) %>
+  <%= f.form_group(:primary) do %>
+    <%= f.check_box(
+          :primary,
+          :label => "Use this as the primary field"
+        ) %>
+  <% end %>
 <% end %>
 <%= f.form_group(:display_in_list) do %>
   <%= f.check_box(
@@ -31,7 +33,7 @@
 <%= f.form_group(:unique) do %>
   <%= f.check_box(
         :unique,
-        :label => "Must be unique (among all #{@field_set.name_plural})") %>
+        :label => "Must be unique") %>
 <% end %>
 
 <%= render_catalog_admin_fields_option_inputs(f) %>
@@ -39,6 +41,4 @@
 <hr>
 
 <%= f.primary("#{@field.persisted? ? 'Save' : 'Create'} field") %>
-<%= link_to(
-      "Cancel",
-      catalog_admin_item_type_fields_path, :class => "btn btn-link") %>
+<%= link_to("Cancel", { :action => :index }, :class => "btn btn-link") %>

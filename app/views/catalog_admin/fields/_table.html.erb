@@ -28,10 +28,7 @@
         <% if policy(field).edit? %>
           <%= link_to(
                 fa_icon("pencil", :text => "Edit"),
-                edit_catalog_admin_item_type_field_path(
-                  catalog,
-                  @field_set,
-                  field),
+                { :action => :edit, :slug => field },
                 :class => "btn btn-default btn-xs") %>
         <% end %>
         <% if policy(field).destroy? %>
