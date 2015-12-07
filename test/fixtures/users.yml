@@ -31,6 +31,10 @@ system_admin:
   encrypted_password: <%= BCrypt::Password.create("password") %>
   system_admin: true
 
+nested_admin:
+  email: nested-admin@example.com
+  encrypted_password: <%= BCrypt::Password.create("password") %>
+
 one:
   email: one@example.com
   encrypted_password: <%= BCrypt::Password.create("password") %>

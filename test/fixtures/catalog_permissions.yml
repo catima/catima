@@ -12,6 +12,11 @@
 
 # Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
 
+nested_admin:
+  catalog: nested
+  user: nested_admin
+  role: admin
+
 one:
   catalog: one
   user: one
