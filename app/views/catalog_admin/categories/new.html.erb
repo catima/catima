@@ -1,0 +1,13 @@
+<% provide(:title, "New category") %>
+
+<%= bootstrap_form_for([:catalog_admin, @category]) do |f| %>
+
+  <%= render("common_form_fields", :f => f) %>
+
+  <hr>
+
+  <%= f.primary("Create category") %>
+  <%= submit_and_add_another(f) %>
+  <%= link_to "Cancel", catalog_admin_setup_path, :class => "btn btn-link" %>
+
+<% end %>
