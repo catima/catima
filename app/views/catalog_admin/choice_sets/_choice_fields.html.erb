@@ -6,6 +6,11 @@
     <%= locale_form_group(f, :long_name, :text_field, :hide_label => true) %>
   </td>
   <td>
+    <% if catalog.categories.any? %>
+      <%= choice_category_select(f, :hide_label => true) %>
+    <% end %>
+  </td>
+  <td>
     <%= link_to_remove_association(
           fa_icon(:trash, :text => "Remove"),
           f,

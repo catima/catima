@@ -13,4 +13,14 @@ module CatalogAdmin::ChoiceSetsHelper
     names[10..-1] = "and #{set.choices.count - 10} more" if names.size > 12
     names.join(", ")
   end
+
+  def choice_category_select(form, options={})
+    form.collection_select(
+      :category_id,
+      catalog.categories.sorted,
+      :id,
+      :name,
+      options.reverse_merge(:include_blank => true)
+      )
+  end
 end

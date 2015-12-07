@@ -9,6 +9,11 @@
     <thead>
       <th>Short name</th>
       <th>Long name</th>
+      <th>
+        <% if catalog.categories.any? %>
+          Category
+        <% end %>
+      </th>
       <th></th>
     </thead>
     <tbody>
@@ -16,7 +21,7 @@
         <%= render("choice_fields", :f => choice) %>
       <% end %>
       <tr data-link="choices">
-        <td colspan="3">
+        <td colspan="4">
           <%= link_to_add_association(
                 fa_icon(:"plus-square", :text => "Add choice"),
                 f,

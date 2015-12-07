@@ -52,6 +52,7 @@ class CatalogAdmin::ChoiceSetsController < CatalogAdmin::BaseController
       :deactivated_at,
       :choices_attributes => [
         :id, :_destroy,
+        :category_id,
         :short_name_de, :short_name_en, :short_name_fr, :short_name_it,
         :long_name_de, :long_name_en, :long_name_fr, :long_name_it
       ])

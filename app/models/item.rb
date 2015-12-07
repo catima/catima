@@ -25,7 +25,8 @@ class Item < ActiveRecord::Base
 
   human_id :display_name
 
-  delegate :fields, :primary_field, :list_view_fields, :referenced_by_fields,
+  delegate :primary_field, :referenced_by_fields,
+           :fields, :list_view_fields, :all_fields, :all_list_view_fields,
            :to => :item_type
 
   belongs_to :catalog
@@ -74,7 +75,7 @@ class Item < ActiveRecord::Base
     typed = Class.new(Item)
     typed.define_singleton_method(:name) { Item.name }
     typed.define_singleton_method(:model_name) { Item.model_name }
-    fields.each { |f| f.decorate_item_class(typed) }
+    all_fields.each { |f| f.decorate_item_class(typed) }
     typed
   end
 end
