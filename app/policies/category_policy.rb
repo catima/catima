@@ -1,0 +1,2 @@
+class CategoryPolicy < FieldSetPolicy
+end

@@ -22,34 +22,9 @@ class ItemTypePolicyTest < ActiveSupport::TestCase
     end
   end
 
-  test "Scope shows all for system admins" do
-    assert_equal(ItemType.all.to_a, policy_scoped_records(users(:system_admin)))
-  end
-
-  test "Scope shows none for plain users, editors, and guests" do
-    assert_empty(policy_scoped_records(users(:one)))
-    assert_empty(policy_scoped_records(users(:two)))
-    assert_empty(policy_scoped_records(Guest.new))
-  end
-
-  test "Scope shows catalog admin only items in her catalog" do
-    assert_equal(
-      catalogs(:one).item_types.to_a,
-      policy_scoped_records(users(:one_admin))
-    )
-    assert_equal(
-      catalogs(:two).item_types.to_a,
-      policy_scoped_records(users(:two_admin))
-    )
-  end
-
   private
 
   def policy(user, item_type)
     ItemTypePolicy.new(user, item_type)
-  end
-
-  def policy_scoped_records(user)
-    ItemTypePolicy::Scope.new(user, ItemType).resolve.to_a
   end
 end
