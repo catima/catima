@@ -29,6 +29,7 @@ class Catalog < ActiveRecord::Base
 
   has_many :advanced_searches
   has_many :catalog_permissions, :dependent => :destroy
+  has_many :categories
   has_many :choice_sets
   has_many :items
   has_many :item_types

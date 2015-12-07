@@ -1,0 +1,16 @@
+module CatalogAdmin::CategoriesHelper
+  def setup_category_nav_link(category)
+    id = params[:item_type_id] || params[:id]
+    active = params[:controller] =~ /categories|fields/ &&
+             id == category.to_param
+
+    klass = "list-group-item"
+    klass << " active" if active
+
+    link_to(
+      category.name,
+      catalog_admin_category_fields_path(category.catalog, category),
+      :class => klass
+    )
+  end
+end

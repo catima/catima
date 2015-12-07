@@ -1,5 +1,5 @@
 <div class="panel panel-default">
-  <div class="panel-heading">Item Types / Categories</div>
+  <div class="panel-heading">Item Types</div>
   <ul class="list-group">
     <% catalog.item_types.sorted.each do |type| %>
       <%= setup_item_type_nav_link(type) %>
@@ -9,11 +9,6 @@
     <p>
       <%= link_to(new_catalog_admin_item_type_path) do %>
         <%= fa_icon(:"plus-square", :text => "New item type") %>
-      <% end %>
-    </p>
-    <p>
-      <%= link_to("javascript:;") do %>
-        <%= fa_icon(:"plus-square", :text => "New category") %>
       <% end %>
     </p>
   </div>
