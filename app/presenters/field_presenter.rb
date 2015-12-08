@@ -35,6 +35,12 @@ class FieldPresenter
   end
 
   def input_defaults(options)
-    options.reverse_merge(:label => label)
+    data = input_data_defaults(options.fetch(:data, {}))
+    options.reverse_merge(:label => label, :data => data)
+  end
+
+  def input_data_defaults(data)
+    return data unless field.belongs_to_category?
+    data.reverse_merge("field-category" => field.category_id)
   end
 end

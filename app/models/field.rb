@@ -89,6 +89,14 @@ class Field < ActiveRecord::Base
 
   alias_method :item_type, :field_set
 
+  def belongs_to_category?
+    !!category_id
+  end
+
+  def category_id
+    field_set.is_a?(Category) ? field_set.id : nil
+  end
+
   def type_name
     type.gsub(/Field::/, "")
   end
