@@ -123,8 +123,12 @@ class Field < ActiveRecord::Base
   # always returns true.
   def appropriate_to_item?(item)
     return true unless belongs_to_category?
-    # TODO: implement logic based on choice value
-    return false
+
+    item.fields.any? do |field|
+      next unless field.is_a?(ChoiceSet)
+      choice = field.selected_choice(item)
+      choice && choice.category_id == category_id
+    end
   end
 
   # TODO: test
