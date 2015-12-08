@@ -27,6 +27,24 @@ class ItemType < ActiveRecord::Base
     order("LOWER(item_types.name_translations->>'name_#{locale}') ASC")
   end
 
+  # An array of all fields in this item type, plus any nested fields included
+  # by way of categories. Note that this only descends one level: it does not
+  # recurse.
+  def all_fields
+    fields.each_with_object([]) do |field, all|
+      all << field
+      next unless field.is_a?(Field::ChoiceSet)
+      field.choices.each do |choice|
+        all.concat(choice.category.fields) if choice.category
+      end
+    end
+  end
+
+  # Same as all_fields, but limited to display_in_list=>true.
+  def all_list_view_fields
+    all_fields.select(&:display_in_list)
+  end
+
   def primary_field
     @primary_field ||= fields.to_a.find(&:primary?)
   end

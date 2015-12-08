@@ -28,23 +28,4 @@ module HasFields
 
     validates_presence_of :catalog
   end
-
-  # An array of all fields in this field set, plus any nested fields included
-  # by way of categories. Note that this could recurse forever given bad data,
-  # so a recursion limit is imposed.
-  def all_fields(max_depth=3)
-    return [] if max_depth < 1
-    fields.each_with_object([]) do |field, all|
-      all << field
-      next unless field.is_a?(Field::ChoiceSet)
-      field.choices.each do |choice|
-        all.concat(choice.category.all_fields(max_depth - 1)) if choice.category
-      end
-    end
-  end
-
-  # Same as all_fields, but limited to display_in_list=>true.
-  def all_list_view_fields(max_depth=3)
-    all_fields(max_depth).select(&:display_in_list)
-  end
 end
