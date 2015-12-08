@@ -114,6 +114,7 @@ class Field < ActiveRecord::Base
   end
 
   def raw_value(item, locale=I18n.locale)
+    return nil unless appropriate_to_item?(item)
     attrib = i18n? ? "#{uuid}_#{locale}" : uuid
     item.behaving_as_type.public_send(attrib)
   end
