@@ -118,6 +118,15 @@ class Field < ActiveRecord::Base
     item.behaving_as_type.public_send(attrib)
   end
 
+  # Tests whether this field is appropriate to display/validate for the given
+  # item. This only makes sense for category fields. For non-category fields,
+  # always returns true.
+  def appropriate_to_item?(item)
+    return true unless belongs_to_category?
+    # TODO: implement logic based on choice value
+    return false
+  end
+
   # TODO: test
   def style=(key)
     return if key.blank?
@@ -147,7 +156,13 @@ class Field < ActiveRecord::Base
     validators.each do |val|
       val = Array.wrap(val)
       options = val.extract_options!
-      klass.data_store_validator(uuid, val.first, options, :i18n => i18n?)
+      klass.data_store_validator(
+        uuid,
+        val.first,
+        options,
+        :i18n => i18n?,
+        :prerequisite => method(:appropriate_to_item?)
+      )
     end
   end
 

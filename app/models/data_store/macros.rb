@@ -87,8 +87,13 @@ module DataStore::Macros
       end
     end
 
-    def data_store_validator(key, validator, options={}, i18n:false)
+    def data_store_validator(key,
+                             validator,
+                             options={},
+                             i18n:false,
+                             prerequisite:nil)
       validate do
+        next if prerequisite && !prerequisite.call(self)
         attrs = i18n ? catalog.valid_locales.map { |l| "#{key}_#{l}" } : [key]
         validates_with(validator, options.merge(:attributes => attrs))
       end
