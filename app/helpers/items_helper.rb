@@ -21,7 +21,7 @@ module ItemsHelper
   end
 
   def item_summary(item)
-    item.list_view_fields.each_with_object([]) do |field, html|
+    item.applicable_list_view_fields.each_with_object([]) do |field, html|
       next if field == item.primary_field
       value = strip_tags(field_value(item, field, :style => :compact))
       next if value.blank?

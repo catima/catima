@@ -114,7 +114,7 @@ class Field < ActiveRecord::Base
   end
 
   def raw_value(item, locale=I18n.locale)
-    return nil unless appropriate_to_item?(item)
+    return nil unless applicable_to_item(item)
     attrib = i18n? ? "#{uuid}_#{locale}" : uuid
     item.behaving_as_type.public_send(attrib)
   end
@@ -122,7 +122,7 @@ class Field < ActiveRecord::Base
   # Tests whether this field is appropriate to display/validate for the given
   # item. This only makes sense for category fields. For non-category fields,
   # always returns true.
-  def appropriate_to_item?(item)
+  def applicable_to_item(item)
     return true unless belongs_to_category?
 
     item.fields.any? do |field|
@@ -166,7 +166,7 @@ class Field < ActiveRecord::Base
         val.first,
         options,
         :i18n => i18n?,
-        :prerequisite => method(:appropriate_to_item?)
+        :prerequisite => method(:applicable_to_item)
       )
     end
   end

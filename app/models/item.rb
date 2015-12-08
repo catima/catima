@@ -44,6 +44,18 @@ class Item < ActiveRecord::Base
     order(sql.join(", "))
   end
 
+  # The same as `all_fields`, but removes category-based fields that do not
+  # apply to this item.
+  def applicable_fields
+    all_fields.select { |f| f.applicable_to_item(self) }
+  end
+
+  # The same as `all_list_view_fields`, but removes category-based fields that
+  # do not apply to this item.
+  def applicable_list_view_fields
+    all_list_view_fields.select { |f| f.applicable_to_item(self) }
+  end
+
   def behaving_as_type
     @behaving_as_type ||= begin
       casted = becomes(typed_item_class)
