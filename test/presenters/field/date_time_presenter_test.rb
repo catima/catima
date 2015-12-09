@@ -11,6 +11,16 @@ class Field::DateTimePresenterTest < ActionView::TestCase
     assert_equal("21 September, 1947 00:00", presenter.value)
   end
 
+  test "#value honors locale" do
+    author = items(:one_author_stephen_king)
+    born_field = fields(:one_author_born)
+    presenter = Field::DateTimePresenter.new(self, author, born_field)
+
+    I18n.with_locale(:fr) do
+      assert_equal("dimanche 21 septembre 1947 00h00", presenter.value)
+    end
+  end
+
   test "#input" do
     author = items(:one_author_stephen_king).behaving_as_type
     born_field = fields(:one_author_born)
