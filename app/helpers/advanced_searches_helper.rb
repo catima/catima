@@ -17,7 +17,7 @@ module AdvancedSearchesHelper
         partial_rendered = render(partial, :f => f, :field => field)
       end
     end
-    result = capture { block.call(content) }
+    result = capture(content, &block)
     strip_tags(partial_rendered).blank? ? nil : result
   end
 end
