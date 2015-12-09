@@ -3,6 +3,9 @@ en:
   advanced_searches:
     choice_set_search_field:
       any: "is any of"
+    date_time_search_field:
+      after: "after"
+      before: "before"
     new:
       tab: "%{type} search"
       title: "Advanced search"
