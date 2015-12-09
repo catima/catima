@@ -1,2 +1,10 @@
-<%= f.viim_datetime_select("after", :label => t(".after")) %>
-<%= f.viim_datetime_select("before", :label => t(".before")) %>
+<%= f.viim_datetime_select(
+      "after",
+      :label => t(".after"),
+      :format => field.format
+      ) %>
+<%= f.viim_datetime_select(
+      "before",
+      :label => t(".before"),
+      :format => field.format
+      ) %>
