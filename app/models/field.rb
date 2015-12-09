@@ -36,6 +36,7 @@ class Field < ActiveRecord::Base
     "text" => "Field::Text",
     "int" => "Field::Int",
     "decimal" => "Field::Decimal",
+    "datetime" => "Field::DateTime",
     "image" => "Field::Image",
     "file" => "Field::File",
     "email" => "Field::Email",
