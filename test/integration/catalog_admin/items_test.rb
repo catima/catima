@@ -15,6 +15,12 @@ class CatalogAdmin::ItemsTest < ActionDispatch::IntegrationTest
     fill_in("Rank", :with => "1.25")
     select("Stephen King", :from => "Collaborator")
     select("Eng", :from => "Language")
+    select("2015", :from => "item[one_author_born_uuid_time(1i)]")
+    select("December", :from => "item[one_author_born_uuid_time(2i)]")
+    select("31", :from => "item[one_author_born_uuid_time(3i)]")
+    select("14", :from => "item[one_author_born_uuid_time(4i)]")
+    select("30", :from => "item[one_author_born_uuid_time(5i)]")
+    select("17", :from => "item[one_author_born_uuid_time(6i)]")
 
     assert_difference("item_types(:one_author).items.count") do
       click_on("Create Author")
@@ -33,6 +39,10 @@ class CatalogAdmin::ItemsTest < ActionDispatch::IntegrationTest
     assert_equal(
       items(:one_author_stephen_king).id.to_s,
       author.public_send(:one_author_collaborator_uuid).to_s)
+    assert_equal(
+      Time.zone.local(2015, 12, 31, 14, 30, 17),
+      author.public_send(:one_author_born_uuid_time)
+    )
   end
 
   test "create a multilingual item" do

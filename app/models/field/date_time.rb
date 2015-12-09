@@ -35,7 +35,7 @@ class Field::DateTime < ::Field
   # individual attributes, like "#{uuid}_time(1i)", "#{uuid}_time(2i)", etc.
   # We need to explicitly permit them.
   def custom_item_permitted_attributes
-    (1...6).map { |i| :"#{uuid}_time(#{i}i)" }
+    (1..6).map { |i| :"#{uuid}_time(#{i}i)" }
   end
 
   # The raw value in the JSON is stored as an integer. This translates it to
