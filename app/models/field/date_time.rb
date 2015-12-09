@@ -37,6 +37,14 @@ class Field::DateTime < ::Field
   after_initialize :set_default_format
   validates_inclusion_of :format, :in => FORMATS
 
+  def type_name
+    "DateTime (#{format})"
+  end
+
+  def custom_field_permitted_attributes
+    %i(format)
+  end
+
   # The Rails datetime form helpers submit components of the datetime as
   # individual attributes, like "#{uuid}_time(1i)", "#{uuid}_time(2i)", etc.
   # We need to explicitly permit them.
