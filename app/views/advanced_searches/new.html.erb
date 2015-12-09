@@ -19,36 +19,10 @@
   <table class="table">
     <tbody>
       <% @advanced_search.fields.each do |field| %>
-        <%# TODO: DRY up and move this logic into presenters and partials %>
-        <% if field.is_a?(Field::Text) %>
+        <%= render_advanced_search_field(f, field) do |content| %>
           <tr>
             <th><%= field.name %></th>
-            <td>
-              <%= f.fields_for(:criteria) do |f| %>
-                <%= f.fields_for(field.uuid) do |f| %>
-                  <%= f.text_field("exact", :label => t(".has_exact_phrase")) %>
-                  <%= f.text_field("contains", :label => t(".contains_words")) %>
-                  <%= f.text_field("excludes", :label => t(".excludes_words")) %>
-                <% end %>
-              <% end %>
-            </td>
-          </tr>
-        <% elsif field.is_a?(Field::ChoiceSet) %>
-          <tr>
-            <th><%= field.name %></th>
-            <td>
-              <%= f.fields_for(:criteria) do |f| %>
-                <%= f.fields_for(field.uuid) do |f| %>
-                  <%= f.collection_select(
-                        :any,
-                        field.choices,
-                        :id,
-                        :short_name,
-                        { :label => t(".any") },
-                        :multiple => true) %>
-                <% end %>
-              <% end %>
-            </td>
+            <td><%= content %></td>
           </tr>
         <% end %>
       <% end %>
