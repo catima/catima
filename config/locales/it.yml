@@ -1,11 +1,9 @@
 ---
 it:
   advanced_searches:
-    new:
+    choice_set_search_field:
       any: "è uno di"
-      contains_words: "contiene le parole"
-      excludes_words: "non contiene le parole"
-      has_exact_phrase: "ha frase esatta"
+    new:
       tab: "%{type} ricerca"
       title: "Ricerca avanzata"
       start_over: "Nuova ricerca"
@@ -15,6 +13,10 @@ it:
         zero: "Your advanced search found no results"
         one: "1 advanced search result"
         other: "%{count_delimited} advanced search results"
+    text_search_field:
+      contains_words: "contiene le parole"
+      excludes_words: "non contiene le parole"
+      has_exact_phrase: "ha frase esatta"
   common:
     back: "Ritorno"
     greeting: "Buongiorno"

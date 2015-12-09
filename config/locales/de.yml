@@ -1,11 +1,9 @@
 ---
 de:
   advanced_searches:
-    new:
+    choice_set_search_field:
       any: "ist einer von"
-      contains_words: "enhält Wörter"
-      excludes_words: "ohne Wörer"
-      has_exact_phrase: "enthält den exakten Ausdruck"
+    new:
       tab: "%{type} Suche"
       title: "Erweiterte Suche"
       start_over: "Neue Suche"
@@ -15,6 +13,10 @@ de:
         zero: "Ihre erweiterte Suche gab kein Resultat"
         one: "1 Resultat der erweiterten Suche"
         other: "%{count_delimited} Resultate der erweiterten Suche"
+    text_search_field:
+      contains_words: "enhält Wörter"
+      excludes_words: "ohne Wörer"
+      has_exact_phrase: "enthält den exakten Ausdruck"
   common:
     back: "Zurück"
     greeting: "Hallo"
