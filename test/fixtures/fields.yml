@@ -167,6 +167,27 @@ one_author_born:
   slug: born
   field_set: one_author (ItemType)
   uuid: one_author_born_uuid
+  required: false
+
+one_author_birth_time:
+  type: "Field::DateTime"
+  name_translations: '{ "name_en": "Birth Time" }'
+  name_plural_translations: '{ "name_plural_en": "Birth Times" }'
+  slug: birth-time
+  field_set: one_author (ItemType)
+  uuid: one_author_birth_time_uuid
+  required: false
+  options: '{ "format": "YMDhms" }'
+
+one_author_birth_month:
+  type: "Field::DateTime"
+  name_translations: '{ "name_en": "Birth Month" }'
+  name_plural_translations: '{ "name_plural_en": "Birth Months" }'
+  slug: birth-month
+  field_set: one_author (ItemType)
+  uuid: one_author_birth_month_uuid
+  required: false
+  options: '{ "format": "YM" }'
 
 one_book_title:
   type: "Field::Text"

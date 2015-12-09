@@ -31,6 +31,12 @@
 #
 
 class Field::DateTime < ::Field
+  FORMATS = %w(Y YM YMD YMDh YMDhm YMDhms).freeze
+
+  store_accessor :options, :format
+  after_initialize :set_default_format
+  validates_inclusion_of :format, :in => FORMATS
+
   # The Rails datetime form helpers submit components of the datetime as
   # individual attributes, like "#{uuid}_time(1i)", "#{uuid}_time(2i)", etc.
   # We need to explicitly permit them.
@@ -57,6 +63,9 @@ class Field::DateTime < ::Field
     values = coerce_to_array(values)
     return nil if values.empty?
 
+    # Discard precision not required by format
+    values = values[0...format.length]
+
     # Pad out datetime components with default values, as needed
     defaults = [Time.current.year, 1, 1, 0, 0, 0]
     values += defaults[values.length..-1]
@@ -79,6 +88,10 @@ class Field::DateTime < ::Field
   end
 
   private
+
+  def set_default_format
+    self.format ||= "YMD"
+  end
 
   def coerce_to_array(values)
     return [] if values.nil?
