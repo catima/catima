@@ -55,10 +55,10 @@ class Field::DateTime < ::Field
   def decorate_item_class(klass)
     super
     field = self
-    klass.send(:define_method, "#{uuid}_components") do
-      field.value_as_components(self)
+    klass.send(:define_method, "#{uuid}_time") do
+      field.value_as_time_with_zone(self)
     end
-    klass.send(:define_method, "#{uuid}_components=") do |values|
+    klass.send(:define_method, "#{uuid}_time=") do |values|
       field.assign_value_from_components(self, values)
     end
   end
