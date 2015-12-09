@@ -46,18 +46,22 @@ class Field::DateTime < ::Field
     Time.zone.at(value)
   end
 
-  # Rails submits the datetime from the UI as a hash of component values.
-  # Translate the submission into an appropriate datetime value and store it.
   def assign_value_from_form(item, values)
+    time_with_zone = form_submission_as_time_with_zone(values)
+    item.public_send("#{uuid}=", time_with_zone.try(:to_i))
+  end
+
+  # Rails submits the datetime from the UI as a hash of component values.
+  # Translate the submission into an appropriate datetime value.
+  def form_submission_as_time_with_zone(values)
     values = coerce_to_array(values)
-    return item.public_send("#{uuid}=", nil) if values.empty?
+    return nil if values.empty?
 
     # Pad out datetime components with default values, as needed
     defaults = [Time.current.year, 1, 1, 0, 0, 0]
     values += defaults[values.length..-1]
 
-    time_with_zone = Time.zone.local(*values)
-    item.public_send("#{uuid}=", time_with_zone.to_i)
+    Time.zone.local(*values)
   end
 
   # To facilitate form helpers, we need to create a virtual attribute that
