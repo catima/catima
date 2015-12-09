@@ -9,12 +9,6 @@ class Field::DateTimePresenter < FieldPresenter
 
   def input(form, method, options={})
     # TODO: format according to granularity of the field
-    form.datetime_select(
-      "#{method}_time",
-      input_defaults(options).merge(
-        :include_seconds => true,
-        :include_blank => true
-      )
-    )
+    form.viim_datetime_select("#{method}_time", input_defaults(options))
   end
 end

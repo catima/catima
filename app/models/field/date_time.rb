@@ -86,6 +86,6 @@ class Field::DateTime < ::Field
     # Rails datetime form helpers send data as e.g. { 1 => "2015", 2 => "12" }.
     values.keys.sort.each_with_object([]) do |key, array|
       array << values[key]
-    end
+    end.compact
   end
 end
