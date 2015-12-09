@@ -9,9 +9,12 @@ class Field::DateTimePresenter < FieldPresenter
 
   def input(form, method, options={})
     # TODO: format according to granularity of the field
-    form.time_select(
+    form.datetime_select(
       "#{method}_time",
-      input_defaults(options).merge(:include_seconds => true)
+      input_defaults(options).merge(
+        :include_seconds => true,
+        :include_blank => true
+      )
     )
   end
 end
