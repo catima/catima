@@ -4,7 +4,7 @@ class Field::DateTimePresenter < FieldPresenter
   def value
     # TODO: format according to granularity of the field
     date = field.value_as_time_with_zone(item)
-    date && l(date, :format => :long)
+    date && l(date, :format => field.format.to_sym)
   end
 
   def input(form, method, options={})

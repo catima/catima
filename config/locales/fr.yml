@@ -123,3 +123,11 @@ fr:
         password_confirmation: "Confirmation de mot de passe"
         remember_me: "Rester connecté"
         primary_language: "Langue préférée"
+  time:
+    formats:
+      Y: "%Y"
+      YM: "%B %Y"
+      YMD: "%d %B %Y"
+      YMDh: "%d %B %Y %Hh"
+      YMDhm: "%d %B %Y %Hh %Mmin"
+      YMDhms: "%d %B %Y %Hh %Mmin %Ss"
