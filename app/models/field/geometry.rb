@@ -61,4 +61,21 @@ class Field::Geometry < ::Field
       field.assign_value_from_json_string(self, json)
     end
   end
+
+  private
+
+  def build_validators
+    [JsonValidator]
+  end
+
+  class JsonValidator < ActiveModel::Validator
+    def validate(record)
+      attrib = Array.wrap(options[:attributes]).first
+      attrib = "#{attrib}_json" unless attrib == :default_value
+      value = record.public_send(attrib)
+      return if value.blank?
+      return unless RGeo::GeoJSON.decode(value, :json_parser => :json).nil?
+      record.errors.add(attrib, "does not appear to be valid GeoJSON format")
+    end
+  end
 end
