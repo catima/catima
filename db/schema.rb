@@ -226,8 +226,6 @@ ActiveRecord::Schema.define(version: 20151210000035) do
   add_foreign_key "item_types", "catalogs"
   add_foreign_key "items", "catalogs"
   add_foreign_key "items", "item_types"
-  add_foreign_key "items", "users", column: "creator_id"
-  add_foreign_key "items", "users", column: "reviewer_id"
   add_foreign_key "pages", "catalogs"
   add_foreign_key "pages", "users", column: "creator_id"
   add_foreign_key "pages", "users", column: "reviewer_id"
