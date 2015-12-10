@@ -9,7 +9,8 @@ fetch(:mb_recipes) << "sidekiq"
 
 fetch(:mb_aptitude_packages).merge!(
   "imagemagick" => :app,
-  "redis-server@ppa:rwky/redis" => :redis
+  "redis-server@ppa:rwky/redis" => :redis,
+  "postgis" => :db
 )
 
 set :mb_dotenv_keys, %w(
