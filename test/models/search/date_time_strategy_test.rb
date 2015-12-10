@@ -1,11 +1,11 @@
 require "test_helper"
 
 class Search::TextStrategyTest < ActiveSupport::TestCase
-  test "#keywords_for_index is nil" do
+  test "#keywords_for_index is empty" do
     author = items(:one_author_stephen_king)
     field = fields(:one_author_born)
     strategy = Search::DateTimeStrategy.new(field, :en)
-    assert_nil(strategy.keywords_for_index(author))
+    assert_empty(strategy.keywords_for_index(author))
   end
 
   test "search finds item within range" do

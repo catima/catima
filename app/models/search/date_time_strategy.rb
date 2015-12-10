@@ -1,11 +1,6 @@
 class Search::DateTimeStrategy < Search::BaseStrategy
   permit_criteria :before, :after
 
-  def keywords_for_index(_item)
-    # It is not possible to search for datetime values by keyword.
-    nil
-  end
-
   def search(scope, criteria)
     criteria = transform_datetime_keys(criteria)
     scope = append_where(scope, "<", criteria[:before])
