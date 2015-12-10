@@ -11,10 +11,11 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20151206234336) do
+ActiveRecord::Schema.define(version: 20151210000035) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
+  enable_extension "postgis"
 
   create_table "advanced_searches", force: :cascade do |t|
     t.string   "uuid"
@@ -180,6 +181,13 @@ ActiveRecord::Schema.define(version: 20151206234336) do
   add_index "pages", ["catalog_id"], name: "index_pages_on_catalog_id", using: :btree
   add_index "pages", ["creator_id"], name: "index_pages_on_creator_id", using: :btree
   add_index "pages", ["reviewer_id"], name: "index_pages_on_reviewer_id", using: :btree
+
+  create_table "spatial_ref_sys", primary_key: "srid", force: :cascade do |t|
+    t.string  "auth_name", limit: 256
+    t.integer "auth_srid"
+    t.string  "srtext",    limit: 2048
+    t.string  "proj4text", limit: 2048
+  end
 
   create_table "users", force: :cascade do |t|
     t.string   "email",                  default: "",    null: false
