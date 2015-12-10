@@ -315,6 +315,9 @@ GEM
       http-cookie (>= 1.0.2, < 2.0)
       mime-types (>= 1.16, < 3.0)
       netrc (~> 0.7)
+    rgeo (0.5.1)
+    rgeo-geojson (0.3.2)
+      rgeo (~> 0.5)
     rollbar (2.6.3)
       multi_json
     ruby-progressbar (1.7.5)
@@ -472,6 +475,7 @@ DEPENDENCIES
   redis-namespace
   refile (~> 0.6.1)
   refile-mini_magick
+  rgeo-geojson (~> 0.3)
   rollbar (~> 2.3)
   ruby-progressbar
   sass-rails (~> 5.0)
