@@ -189,6 +189,15 @@ one_author_birth_month:
   required: false
   options: '{ "format": "YM" }'
 
+one_author_birthplace:
+  type: "Field::Geometry"
+  name_translations: '{ "name_en": "Birthplace" }'
+  name_plural_translations: '{ "name_plural_en": "Birthplaces" }'
+  slug: birthplace
+  field_set: one_author (ItemType)
+  uuid: one_author_birthplace_uuid
+  required: false
+
 one_book_title:
   type: "Field::Text"
   name_translations: '{ "name_en": "Title" }'
