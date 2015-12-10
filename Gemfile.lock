@@ -1,7 +1,7 @@
 GIT
-  remote: https://github.com/CheckMateIO/shoulda-matchers.git
-  revision: 1cf0b8521cfecc1bf6c2b84c7448131f7d90ff4d
-  branch: bugfix/numericality-of-virtual-attributes
+  remote: https://github.com/mattbrictson/shoulda-matchers.git
+  revision: 92eb90473c15fb23032b9cc385d874cc64e0eab3
+  branch: with-fixes
   specs:
     shoulda-matchers (3.0.1)
       activesupport (>= 4.0.0)
@@ -497,4 +497,4 @@ DEPENDENCIES
   xray-rails (>= 0.1.16)
 
 BUNDLED WITH
-   1.11.0.pre.1
+   1.11.0.pre.2

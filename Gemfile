@@ -89,8 +89,8 @@ group :test do
   gem "poltergeist"
   gem "shoulda-context"
   gem "shoulda-matchers",
-      :git => "https://github.com/CheckMateIO/shoulda-matchers.git",
-      :branch => "bugfix/numericality-of-virtual-attributes"
+      :git => "https://github.com/mattbrictson/shoulda-matchers.git",
+      :branch => "with-fixes"
   gem "test_after_commit"
   gem "vcr", "~> 3.0"
   gem "webmock"
