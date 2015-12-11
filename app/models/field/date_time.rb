@@ -38,7 +38,7 @@ class Field::DateTime < ::Field
   validates_inclusion_of :format, :in => FORMATS
 
   def type_name
-    "DateTime (#{format})"
+    "Date time" + (persisted? ? " (#{format})" : "")
   end
 
   def custom_field_permitted_attributes
