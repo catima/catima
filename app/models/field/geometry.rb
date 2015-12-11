@@ -33,6 +33,10 @@
 class Field::Geometry < ::Field
   # TODO: CRS?
 
+  def custom_item_permitted_attributes
+    [:"#{uuid}_json"]
+  end
+
   def value_as_json_string(item)
     existing_input = item.instance_variable_get("@#{uuid}_json_string")
     return existing_input unless existing_input.nil?
