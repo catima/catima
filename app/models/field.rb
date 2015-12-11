@@ -33,18 +33,18 @@
 # TODO: drop name_old and name_plural_old columns (no longer used)
 class Field < ActiveRecord::Base
   TYPES = {
-    "text" => "Field::Text",
-    "int" => "Field::Int",
-    "decimal" => "Field::Decimal",
-    "datetime" => "Field::DateTime",
-    "image" => "Field::Image",
-    "file" => "Field::File",
-    "email" => "Field::Email",
-    "url" => "Field::URL",
     "choice" => "Field::ChoiceSet",
+    "datetime" => "Field::DateTime",
+    "decimal" => "Field::Decimal",
+    "email" => "Field::Email",
+    "file" => "Field::File",
+    "geometry" => "Field::Geometry",
+    "image" => "Field::Image",
+    "int" => "Field::Int",
     "reference" => "Field::Reference",
-    "xref" => "Field::Xref",
-    "geometry" => "Field::Geometry"
+    "text" => "Field::Text",
+    "url" => "Field::URL",
+    "xref" => "Field::Xref"
   }.freeze
 
   STYLE_CHOICES = {
@@ -86,7 +86,7 @@ class Field < ActiveRecord::Base
   def self.type_choices
     Field::TYPES.map do |key, class_name|
       [key, class_name.constantize.new.type_name]
-    end
+    end.sort_by(&:last)
   end
 
   alias_method :item_type, :field_set
