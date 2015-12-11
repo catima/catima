@@ -43,7 +43,8 @@ class Field < ActiveRecord::Base
     "url" => "Field::URL",
     "choice" => "Field::ChoiceSet",
     "reference" => "Field::Reference",
-    "xref" => "Field::Xref"
+    "xref" => "Field::Xref",
+    "geometry" => "Field::Geometry"
   }.freeze
 
   STYLE_CHOICES = {
