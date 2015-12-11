@@ -38,7 +38,7 @@ class Field::Geometry < ::Field
     return existing_input unless existing_input.nil?
 
     hash = raw_value(item)
-    hash && hash.to_json
+    hash && JSON.pretty_generate(hash)
   end
 
   def assign_value_from_json_string(item, json)
