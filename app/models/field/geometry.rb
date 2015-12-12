@@ -78,8 +78,18 @@ class Field::Geometry < ::Field
       attrib = "#{attrib}_json" unless attrib == :default_value
       value = record.public_send(attrib)
       return if value.blank?
-      return unless RGeo::GeoJSON.decode(value, :json_parser => :json).nil?
+      return if postgis_valid_json?(value)
       record.errors.add(attrib, "does not appear to be valid GeoJSON format")
+    end
+
+    private
+
+    def postgis_valid_json?(value)
+      value_sql = ::Field::Geometry.send(:sanitize_sql, ["'%s'", value])
+      result = ::Field::Geometry.connection.select_value(<<-SQL)
+        SELECT validate_geojson(#{value_sql})
+      SQL
+      result == "t"
     end
   end
 end
