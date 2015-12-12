@@ -19,6 +19,9 @@ module ViimCore
     # Do not swallow errors in after_commit/after_rollback callbacks.
     config.active_record.raise_in_transactional_callbacks = true
 
+    # We are defining custom procedures, so the default Ruby format won't work.
+    config.active_record.schema_format = :sql
+
     # Ensure non-standard paths are eager-loaded in production
     # (these paths are also autoloaded in development mode)
     # config.eager_load_paths += %W(#{config.root}/lib)
