@@ -5,5 +5,6 @@ class Admin::DashboardController < Admin::BaseController
 
     @users = User.sorted
     @catalogs = Catalog.sorted
+    @configuration = ::Configuration.first!
   end
 end

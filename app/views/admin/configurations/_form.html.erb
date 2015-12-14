@@ -1,0 +1,7 @@
+<div class="panel-body">
+  <%= bootstrap_form_for([:admin, @configuration]) do |f| %>
+    <%= configuration_root_mode_choices(f) %>
+    <%= configuration_redirect_choices(f) %>
+    <%= f.primary("Save") %>
+  <% end %>
+</div>
