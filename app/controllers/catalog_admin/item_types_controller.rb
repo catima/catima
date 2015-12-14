@@ -34,6 +34,13 @@ class CatalogAdmin::ItemTypesController < CatalogAdmin::BaseController
     end
   end
 
+  def destroy
+    find_item_type
+    authorize(@item_type)
+    @item_type.update!(:deactivated_at => Time.current)
+    redirect_to(catalog_admin_setup_path(catalog), :notice => deleted_message)
+  end
+
   private
 
   def build_item_type
@@ -60,11 +67,9 @@ class CatalogAdmin::ItemTypesController < CatalogAdmin::BaseController
     end
   end
 
-  def created_message
-    "The “#{@item_type.name}” item type has been created."
-  end
-
-  def updated_message
-    "The “#{@item_type.name}” item type has been updated."
+  %w(created updated deleted).each do |verb|
+    define_method("#{verb}_message") do
+      "The “#{@item_type.name}” item type has been #{verb}."
+    end
   end
 end
