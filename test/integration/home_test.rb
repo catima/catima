@@ -27,12 +27,7 @@ class HomeTest < ActionDispatch::IntegrationTest
     config.update!(:root_mode => "listing")
 
     visit("/")
-
-    ["nested", "one", "two", "Multilingual", "Reviewed Catalog"].each do |name|
-      assert(page.has_selector?("a", :text => name))
-    end
-
-    refute(page.has_content?("Inactive Catalog"))
+    assert_listing_content
   end
 
   test "redirects to catalog" do
@@ -42,5 +37,27 @@ class HomeTest < ActionDispatch::IntegrationTest
     visit("/")
 
     assert_equal("/two/en", current_path)
+  end
+
+  test "doesn't redirect to inactive catalog" do
+    config = Configuration.first!
+    config.update!(
+      :root_mode => "redirect",
+      :default_catalog => catalogs(:inactive)
+    )
+
+    visit("/")
+    assert_equal("/", current_path)
+    assert_listing_content
+  end
+
+  private
+
+  def assert_listing_content
+    ["nested", "one", "two", "Multilingual", "Reviewed Catalog"].each do |name|
+      assert(page.has_selector?("a", :text => name))
+    end
+
+    refute(page.has_content?("Inactive Catalog"))
   end
 end

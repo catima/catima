@@ -15,6 +15,12 @@ class Configuration < ActiveRecord::Base
   validates_inclusion_of :root_mode, :in => %w(listing custom redirect)
   validate :cannot_redirect_if_no_active_catalogs
 
+  def active_redirect_catalog
+    return nil unless root_mode == "redirect"
+    return nil unless default_catalog && default_catalog.active?
+    default_catalog
+  end
+
   private
 
   def cannot_redirect_if_no_active_catalogs

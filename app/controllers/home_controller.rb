@@ -3,13 +3,12 @@ class HomeController < ApplicationController
     @config = ::Configuration.first!
     @catalogs = Catalog.active.sorted
 
-    case @config.root_mode
-    when "listing"
-      render("listing")
-    when "redirect"
-      redirect_to_catalog(@config.default_catalog)
-    else
+    if (catalog = @config.active_redirect_catalog)
+      redirect_to_catalog(catalog)
+    elsif @config.root_mode == "custom"
       render_custom_root
+    else
+      render("listing")
     end
   end
 
