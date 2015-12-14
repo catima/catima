@@ -42,6 +42,13 @@ class CatalogAdmin::CategoriesController < CatalogAdmin::BaseController
     end
   end
 
+  def destroy
+    find_category
+    authorize(@category)
+    @category.update!(:deactivated_at => Time.current)
+    redirect_to({ :action => "index" }, :notice => deleted_message)
+  end
+
   private
 
   def build_category
@@ -63,11 +70,9 @@ class CatalogAdmin::CategoriesController < CatalogAdmin::BaseController
     end
   end
 
-  def created_message
-    "The “#{@category.name}” category has been created."
-  end
-
-  def updated_message
-    "The “#{@category.name}” category has been updated."
+  %w(created updated deleted).each do |verb|
+    define_method("#{verb}_message") do
+      "The “#{@category.name}” category has been #{verb}."
+    end
   end
 end

@@ -37,7 +37,8 @@ class ItemType < ActiveRecord::Base
       all << field
       next unless field.is_a?(Field::ChoiceSet)
       field.choices.each do |choice|
-        all.concat(choice.category.fields) if choice.category
+        category = choice.category
+        all.concat(category.fields) if category && category.active?
       end
     end
   end
