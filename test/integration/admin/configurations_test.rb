@@ -7,7 +7,7 @@ class Admin::ConfigurationsTest < ActionDispatch::IntegrationTest
 
     log_in_as("system-admin@example.com", "password")
     visit("admin")
-    select("Catalog list (default)", :from => "Home page")
+    select("Catalog list (default)", :from => "configuration[root_mode]")
     click_on("Save")
 
     assert_equal("listing", config.reload.root_mode)
@@ -19,7 +19,7 @@ class Admin::ConfigurationsTest < ActionDispatch::IntegrationTest
 
     log_in_as("system-admin@example.com", "password")
     visit("admin")
-    select("Custom", :from => "Home page")
+    select("Custom", :from => "configuration[root_mode]")
     click_on("Save")
 
     assert_equal("custom", config.reload.root_mode)
@@ -31,7 +31,7 @@ class Admin::ConfigurationsTest < ActionDispatch::IntegrationTest
 
     log_in_as("system-admin@example.com", "password")
     visit("admin")
-    select("Redirect to a catalog", :from => "Home page")
+    select("Redirect to a catalog", :from => "configuration[root_mode]")
     select("Multilingual", :from => "configuration[default_catalog_id]")
     click_on("Save")
 

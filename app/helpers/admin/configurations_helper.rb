@@ -14,7 +14,7 @@ module Admin::ConfigurationsHelper
       choices,
       :first,
       :second,
-      :label => "Home page"
+      :hide_label => true
     )
   end
 
@@ -23,7 +23,8 @@ module Admin::ConfigurationsHelper
       :default_catalog_id,
       Catalog.active.sorted,
       :id,
-      :name
+      :name,
+      :hide_label => true
     )
   end
 end
