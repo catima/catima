@@ -172,7 +172,8 @@ CREATE TABLE categories (
     catalog_id integer,
     name character varying,
     created_at timestamp without time zone NOT NULL,
-    updated_at timestamp without time zone NOT NULL
+    updated_at timestamp without time zone NOT NULL,
+    deactivated_at timestamp without time zone
 );
 
 
@@ -363,7 +364,8 @@ CREATE TABLE item_types (
     updated_at timestamp without time zone NOT NULL,
     name_plural_old character varying,
     name_translations json,
-    name_plural_translations json
+    name_plural_translations json,
+    deactivated_at timestamp without time zone
 );
 
 
@@ -1144,4 +1146,6 @@ INSERT INTO schema_migrations (version) VALUES ('20151206234336');
 INSERT INTO schema_migrations (version) VALUES ('20151210000035');
 
 INSERT INTO schema_migrations (version) VALUES ('20151212000308');
+
+INSERT INTO schema_migrations (version) VALUES ('20151214213046');
 

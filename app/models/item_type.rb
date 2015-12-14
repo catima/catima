@@ -4,6 +4,7 @@
 #
 #  catalog_id               :integer
 #  created_at               :datetime         not null
+#  deactivated_at           :datetime
 #  id                       :integer          not null, primary key
 #  name_old                 :string
 #  name_plural_old          :string
@@ -15,6 +16,7 @@
 
 # TODO: drop name_old and name_plural_old columns (no longer used)
 class ItemType < ActiveRecord::Base
+  include HasDeactivation
   include HasFields
   include HasTranslations
   include HasSlug
