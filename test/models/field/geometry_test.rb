@@ -24,6 +24,23 @@ class Field::GeometryTest < ActiveSupport::TestCase
     refute_nil(item.errors[:one_author_birthplace_uuid_json].first)
   end
 
+  test "rejects invalid geometry this is nonetheless syntactically OK" do
+    text = <<-JSON
+      {
+        "type": "Polygon",
+        "coordinates": [
+          [[0,0], [2,1], [2,2], [0,0]],
+          [[0,0], [-1,-1], [-1,1], [0,0]]
+        ]
+      }
+    JSON
+    item = Item.new(:item_type => item_types(:one_author)).behaving_as_type
+    item.one_author_birthplace_uuid_json = text
+
+    refute(item.valid?)
+    refute_nil(item.errors[:one_author_birthplace_uuid_json].first)
+  end
+
   test "doesn't store JSON if invalid" do
     text = '{"type":"Point","coordinates":[-48.23456,20.12345}'
     item = Item.new(:item_type => item_types(:one_author))

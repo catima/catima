@@ -77,9 +77,14 @@ class Field::Geometry < ::Field
       attrib = Array.wrap(options[:attributes]).first
       attrib = "#{attrib}_json" unless attrib == :default_value
       value = record.public_send(attrib)
+
       return if value.blank?
       return if postgis_valid_json?(value)
-      record.errors.add(attrib, "does not appear to be valid GeoJSON format")
+
+      record.errors.add(
+        attrib,
+        "does not appear to a valid geometry in GeoJSON format"
+      )
     end
 
     private
