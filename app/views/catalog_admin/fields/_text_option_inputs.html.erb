@@ -1,14 +1,4 @@
 <%= field_default_value_input(f) %>
 <%= f.number_field(:minimum, :label => "Minimum length (optional)") %>
 <%= f.number_field(:maximum, :label => "Maximum length (optional)") %>
-
-<% if catalog.valid_locales.many? %>
-  <%= f.form_group(
-        :i18n,
-        :help => "With i18n enabled, editors will be able to specify a "\
-                 "translation of this field for each language "\
-                 "(#{@catalog.valid_locales.to_sentence})"
-      ) do %>
-    <%= f.check_box(:i18n, :label => "Enable i18n") %>
-  <% end %>
-<% end %>
+<%= field_i18n_check_box(f) %>

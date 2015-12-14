@@ -47,6 +47,19 @@ module CatalogAdmin::FieldsHelper
     )
   end
 
+  def field_i18n_check_box(form)
+    return unless catalog.valid_locales.many?
+
+    form.form_group(
+      :i18n,
+      :help => "With i18n enabled, editors will be able to specify a "\
+               "translation of this field for each language "\
+               "(#{catalog.valid_locales.to_sentence})"
+    ) do
+      form.check_box(:i18n, :label => "Enable i18n")
+    end
+  end
+
   private
 
   def field_move_link(field, direction)
