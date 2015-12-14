@@ -32,4 +32,18 @@ class CatalogAdmin::ItemTypesTest < ActionDispatch::IntegrationTest
     type = item_types(:two_author)
     assert_equal("Writer", type.name)
   end
+
+  test "delete an item type" do
+    log_in_as("two-admin@example.com", "password")
+    visit("/two/admin")
+    click_on("Author")
+    click_on("Edit item type")
+
+    assert_difference("catalogs(:two).item_types.count", -1) do
+      click_on("Delete this item type")
+    end
+
+    type = item_types(:two_author)
+    refute(type.active?)
+  end
 end

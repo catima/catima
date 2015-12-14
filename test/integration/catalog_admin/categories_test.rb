@@ -26,4 +26,18 @@ class CatalogAdmin::CategoriesTest < ActionDispatch::IntegrationTest
     category = categories(:one)
     assert_equal("Edited by test", category.name)
   end
+
+  test "delete a category" do
+    log_in_as("one-admin@example.com", "password")
+    visit("/one/admin")
+    click_on("Category One")
+    click_on("Edit category")
+
+    assert_difference("catalogs(:one).categories.count", -1) do
+      click_on("Delete this category")
+    end
+
+    category = categories(:one)
+    refute(category.active?)
+  end
 end
