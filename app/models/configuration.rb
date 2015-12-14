@@ -13,4 +13,14 @@ class Configuration < ActiveRecord::Base
   belongs_to :default_catalog, :class_name => "Catalog"
   validates_presence_of :root_mode
   validates_inclusion_of :root_mode, :in => %w(listing custom redirect)
+  validate :cannot_redirect_if_no_active_catalogs
+
+  private
+
+  def cannot_redirect_if_no_active_catalogs
+    return unless root_mode == "redirect"
+    return if Catalog.active.any?
+
+    errors.add(:root_mode, "no catalogs to redirect to")
+  end
 end
