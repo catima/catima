@@ -29,10 +29,10 @@ class Catalog < ActiveRecord::Base
 
   has_many :advanced_searches
   has_many :catalog_permissions, :dependent => :destroy
-  has_many :categories
+  has_many :categories, -> { active }
   has_many :choice_sets
   has_many :items
-  has_many :item_types
+  has_many :item_types, -> { active }
   has_many :pages
 
   def self.sorted

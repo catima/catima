@@ -11,6 +11,7 @@
 #
 
 class Category < ActiveRecord::Base
+  include HasDeactivation
   include HasFields
   include HasHumanId
 
