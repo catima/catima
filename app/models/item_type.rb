@@ -23,7 +23,7 @@ class ItemType < ActiveRecord::Base
 
   has_many :items
   store_translations :name, :name_plural
-  validates_slug :scope => :catalog_id
+  validates_slug :scope => [:catalog_id, :deactivated_at]
 
   def self.sorted(locale=I18n.locale)
     order("LOWER(item_types.name_translations->>'name_#{locale}') ASC")
