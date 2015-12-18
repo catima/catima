@@ -10,7 +10,6 @@ class ChoiceTest < ActiveSupport::TestCase
     refute(choice.valid?)
 
     choice.short_name_en = "Eng"
-    choice.long_name_en = "English"
     assert(choice.valid?)
   end
 
@@ -29,5 +28,13 @@ class ChoiceTest < ActiveSupport::TestCase
     ch.short_name_it = "Persona"
     ch.long_name_it = "Persone"
     assert(ch.valid?)
+  end
+
+  test "#long_display_name uses short name if long name is absent" do
+    ch = Choice.new(:short_name_en => "short", :long_name_en => "")
+    assert_equal("short", ch.long_display_name_en)
+
+    ch.long_name_en = "long"
+    assert_equal("long", ch.long_display_name_en)
   end
 end

@@ -21,9 +21,22 @@ class Choice < ActiveRecord::Base
   belongs_to :category
   belongs_to :choice_set
 
-  store_translations :short_name, :long_name
+  store_translations :short_name, :required => true
+  store_translations :long_name, :required => false
 
   validates_presence_of :catalog
+
+  %w(de en fr it).each do |locale|
+    define_method("long_display_name_#{locale}") do
+      long_name = public_send("long_name_#{locale}")
+      short_name = public_send("short_name_#{locale}")
+      long_name.present? ? long_name : short_name
+    end
+  end
+
+  def long_display_name(locale=I18n.locale)
+    public_send("long_display_name_#{locale}")
+  end
 
   def self.sorted(locale=I18n.locale)
     order("LOWER(choices.short_name_translations->>'short_name_#{locale}') ASC")
