@@ -36,7 +36,7 @@ module HasTranslations
   end
 
   module ClassMethods
-    def store_translations(*attrs)
+    def store_translations(*attrs, required:true)
       attrs.each do |attr|
         store_accessor :"#{attr}_translations",
                        :"#{attr}_de",
@@ -50,17 +50,19 @@ module HasTranslations
           public_send("#{attr}_#{locale}")
         end
 
-        validates_presence_of :"#{attr}_de",
-                              :if => ->(m) { m.valid_locale?(:de) }
+        if required
+          validates_presence_of :"#{attr}_de",
+                                :if => ->(m) { m.valid_locale?(:de) }
 
-        validates_presence_of :"#{attr}_en",
-                              :if => ->(m) { m.valid_locale?(:en) }
+          validates_presence_of :"#{attr}_en",
+                                :if => ->(m) { m.valid_locale?(:en) }
 
-        validates_presence_of :"#{attr}_fr",
-                              :if => ->(m) { m.valid_locale?(:fr) }
+          validates_presence_of :"#{attr}_fr",
+                                :if => ->(m) { m.valid_locale?(:fr) }
 
-        validates_presence_of :"#{attr}_it",
-                              :if => ->(m) { m.valid_locale?(:it) }
+          validates_presence_of :"#{attr}_it",
+                                :if => ->(m) { m.valid_locale?(:it) }
+        end
       end
     end
   end
