@@ -15,7 +15,7 @@ class Field::ChoiceSetPresenter < FieldPresenter
     choice = selected_choice(item)
     return if choice.nil?
     value_slug = [I18n.locale, choice.short_name].join("-")
-    browse_similar_items_link(choice.long_name, item, field, value_slug)
+    browse_similar_items_link(choice.long_display_name, item, field, value_slug)
   end
 
   private
