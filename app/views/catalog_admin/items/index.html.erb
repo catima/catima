@@ -3,6 +3,7 @@
 <% end %>
 
 <% provide(:actions) do %>
+  <%= render("sort_menu") if sort_field_choices.any? %>
   <%= link_to(
         fa_icon(:"plus-square", :text => "New #{@item_type.name}"),
         new_catalog_admin_item_path(catalog, @item_type),

@@ -1,10 +1,10 @@
 class CatalogAdmin::ItemsController < CatalogAdmin::BaseController
+  include ControlsItemSorting
   before_action :find_item_type
   layout "catalog_admin/data/form"
 
-  # TODO: arbitrary sorting
   def index
-    @items = policy_scope(item_scope).sorted_by_field(@item_type.primary_field)
+    @items = apply_sort(policy_scope(item_scope))
     @items = @items.page(params[:page]).per(25)
     @fields = @item_type.all_list_view_fields
     render("index", :layout => "catalog_admin/data")
@@ -53,6 +53,8 @@ class CatalogAdmin::ItemsController < CatalogAdmin::BaseController
   end
 
   private
+
+  attr_reader :item_type
 
   def find_item_type
     @item_type = catalog.item_types

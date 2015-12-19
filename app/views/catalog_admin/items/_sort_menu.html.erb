@@ -1,0 +1,15 @@
+<span class="dropdown">
+  <button class="btn btn-xs btn-text dropdown-toggle" type="button" id="choose-sort-dropdown" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+    Sorted by <%= current_sort_field.name %>
+    <span class="caret"></span>
+  </button>
+  <ul class="dropdown-menu" aria-labelledby="choose-sort-dropdown">
+    <% sort_field_choices.each do |field| %>
+      <li>
+        <%= link_to(:params => param_for_sort(field)) do %>
+          <%= prepend_icon_if(field == current_sort_field, :check, field.name) %>
+        <% end %>
+      </li>
+    <% end %>
+  </ul>
+</span>

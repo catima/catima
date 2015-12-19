@@ -48,6 +48,11 @@ class ItemType < ActiveRecord::Base
     all_fields.select(&:display_in_list)
   end
 
+  # Same as all_list_view_fields, but limited human_readable?.
+  def sortable_list_view_fields
+    all_list_view_fields.select(&:human_readable?)
+  end
+
   def primary_field
     @primary_field ||= fields.to_a.find(&:primary?)
   end
