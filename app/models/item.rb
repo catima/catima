@@ -73,14 +73,6 @@ class Item < ActiveRecord::Base
     end
   end
 
-  # FIXME: this doesn't work for any field more complicated than a
-  # non-localized string, because it is not using a presenter for formatting.
-  def display_name
-    field = primary_field || fields.first
-    return to_s if field.nil?
-    behaving_as_type.public_send(field.uuid)
-  end
-
   private
 
   def primary_text_value
