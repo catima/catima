@@ -14,8 +14,9 @@ module ControlsItemSorting
   end
 
   def current_sort_field
+    current_slug = params[:sort] || item_type.primary_field.try(:slug)
     default = -> { sort_field_choices.first }
-    sort_field_choices.find(default) { |field| field.slug == params[:sort] }
+    sort_field_choices.find(default) { |field| field.slug == current_slug }
   end
 
   def sort_field_choices
