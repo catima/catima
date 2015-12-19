@@ -1,4 +1,4 @@
-<% provide(:title, @item.display_name) %>
+<% provide(:title, item_display_name(@item)) %>
 
 <%= render_item_list_nav(item_list, @item) if item_list %>
 

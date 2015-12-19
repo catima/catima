@@ -8,13 +8,13 @@
     <% if nav.previous %>
       <%= item_list_link(item_list, nav.previous, nav.previous_offset) do %>
         <%= fa_icon(:"chevron-left") %>
-        <%= t(".previous", :item => nav.previous.display_name) %>
+        <%= t(".previous", :item => item_display_name(nav.previous)) %>
       <% end %>
     <% end %>
     &nbsp;&nbsp;
     <% if nav.next %>
       <%= item_list_link(item_list, nav.next, nav.next_offset) do %>
-        <%= t(".next", :item => nav.next.display_name) %>
+        <%= t(".next", :item => item_display_name(nav.next)) %>
         <%= fa_icon(:"chevron-right") %>
       <% end %>
     <% elsif nav.previous %>

@@ -49,7 +49,7 @@ class CatalogAdmin::ItemsController < CatalogAdmin::BaseController
     find_item
     authorize(@item)
     @item.destroy
-    redirect_to({ :action => "index" }, :notice => destroyed_message)
+    redirect_to({ :action => "index" }, :notice => deleted_message)
   end
 
   private
@@ -90,15 +90,10 @@ class CatalogAdmin::ItemsController < CatalogAdmin::BaseController
     end
   end
 
-  def created_message
-    "#{@item_type.name} “#{@item.display_name}” has been created."
-  end
-
-  def updated_message
-    "#{@item_type.name} “#{@item.display_name}” has been saved."
-  end
-
-  def destroyed_message
-    "#{@item_type.name} “#{@item.display_name}” has been deleted."
+  %w(created updated deleted).each do |verb|
+    define_method("#{verb}_message") do
+      "#{@item_type.name} “#{view_context.item_display_name(@item)}” "\
+      "has been #{verb}."
+    end
   end
 end

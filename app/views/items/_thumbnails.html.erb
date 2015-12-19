@@ -7,7 +7,7 @@
             <%= item_thumbnail(item, :style => :medium) %>
           <% end %>
           <div class="caption">
-            <%= item_list_link(item_list, item, row * col, item.display_name) %>
+            <%= item_list_link(item_list, item, row * col, item_display_name(item)) %>
           </div>
         </div>
       </div>

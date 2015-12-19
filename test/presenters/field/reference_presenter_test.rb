@@ -1,6 +1,7 @@
 require "test_helper"
 
 class Field::ReferencePresenterTest < ActionView::TestCase
+  include FieldsHelper
   include ItemsHelper
 
   test "#value" do

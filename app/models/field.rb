@@ -115,6 +115,19 @@ class Field < ActiveRecord::Base
     []
   end
 
+  # Whether or not this field holds a human-readable value, e.g. text, number,
+  # etc. An image or geometry would not qualify, as those are displayed as non-
+  # text.
+  #
+  # This is used primarily by Item#field_for_select to choose a field suitable
+  # for a drop-down menu.
+  #
+  # Default is true, and subclasses can override.
+  #
+  def human_readable?
+    true
+  end
+
   def raw_value(item, locale=I18n.locale)
     return nil unless applicable_to_item(item)
     attrib = i18n? ? "#{uuid}_#{locale}" : uuid

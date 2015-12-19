@@ -33,6 +33,10 @@
 class Field::Geometry < ::Field
   # TODO: CRS?
 
+  def human_readable?
+    false
+  end
+
   def custom_item_permitted_attributes
     [:"#{uuid}_json"]
   end

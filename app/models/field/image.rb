@@ -36,6 +36,10 @@ require_dependency("field/file")
 class Field::Image < ::Field::File
   after_initialize :set_default_types
 
+  def human_readable?
+    false
+  end
+
   private
 
   def set_default_types

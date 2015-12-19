@@ -52,6 +52,20 @@ class ItemType < ActiveRecord::Base
     @primary_field ||= fields.to_a.find(&:primary?)
   end
 
+  # Field most appropriate for describing this item in a select (i.e. drop-down)
+  # menu. This is usually the primary_field, but may be something different if
+  # the primary field is not human_readable?.
+  def field_for_select
+    candidate_fields = [primary_field, list_view_fields, fields].flatten.compact
+    candidate_fields.find(&:human_readable?)
+  end
+
+  # The primary or first text field. Used to generate Item slugs.
+  def primary_text_field
+    candidate_fields = [primary_field, list_view_fields, fields].flatten.compact
+    candidate_fields.find { |f| f.is_a?(Field::Text) }
+  end
+
   def public_items
     items.merge(catalog.public_items)
   end

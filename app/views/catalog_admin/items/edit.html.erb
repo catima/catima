@@ -1,4 +1,4 @@
-<% provide(:title, "Edit #{@item.display_name}") %>
+<% provide(:title, "Edit #{item_display_name(@item)}") %>
 
 <%= bootstrap_form_for(@item, :url => catalog_admin_item_path) do |f| %>
 

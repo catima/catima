@@ -23,9 +23,9 @@ class Item < ActiveRecord::Base
   include Search::Macros
   include HasHumanId
 
-  human_id :display_name
+  human_id :primary_text_value
 
-  delegate :primary_field, :referenced_by_fields,
+  delegate :field_for_select, :primary_field, :referenced_by_fields,
            :fields, :list_view_fields, :all_fields, :all_list_view_fields,
            :to => :item_type
 
@@ -82,6 +82,11 @@ class Item < ActiveRecord::Base
   end
 
   private
+
+  def primary_text_value
+    field = item_type.primary_text_field
+    field && field.raw_value(self)
+  end
 
   def typed_item_class
     typed = Class.new(Item)
