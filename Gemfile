@@ -76,7 +76,7 @@ group :development do
   gem "ruby-progressbar", :require => false
   gem "rb-fsevent", :require => false
   gem "simplecov", :require => false
-  gem "sshkit", "~> 1.7.1", :require => false
+  gem "sshkit", "~> 1.7", :require => false
   gem "terminal-notifier", :require => false
   gem "terminal-notifier-guard", :require => false
   gem "thin", :require => false
