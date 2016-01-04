@@ -60,9 +60,17 @@ class Field::ChoiceSet < ::Field
     %i(choice_set_id)
   end
 
+  def selected_choice?(item, choice)
+    selected_choices(item).map(&:id).include?(choice.id)
+  end
+
   def selected_choice(item)
-    return nil if raw_value(item).blank?
-    choices.except(:order).where(:id => raw_value(item)).first
+    selected_choices(item).first
+  end
+
+  def selected_choices(item)
+    return [] if raw_value(item).blank?
+    choices.except(:order).where(:id => raw_value(item))
   end
 
   def decorate_item_class(klass)
