@@ -54,4 +54,6 @@ class Search::TextStrategyTest < ActiveSupport::TestCase
     results = strategy.search(scope, criteria)
     assert_empty(results.to_a)
   end
+
+  # TODO: test i18n search!
 end

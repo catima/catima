@@ -15,10 +15,18 @@ class Search::ChoiceSetStrategy < Search::BaseStrategy
   def search(scope, criteria)
     any_ids = criteria.fetch(:any, []).select(&:present?)
     return scope if any_ids.empty?
-    scope.where("#{data_field_expr} IN (?)", any_ids)
+    if field.multiple?
+      scope.where("#{data_field_jsonb_expr} ?| array[:ids]", :ids => any_ids)
+    else
+      scope.where("#{data_field_expr} IN (?)", any_ids)
+    end
   end
 
   private
+
+  def data_field_jsonb_expr
+    "(items.data->'#{field.uuid}')::jsonb"
+  end
 
   def choice_from_slug(slug)
     locale, name = slug.split("-", 2)
