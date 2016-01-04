@@ -8,4 +8,4 @@
 
 <%= f.text_field(:slug, :help => slug_help_text, :autofocus => true) %>
 <%= f.text_field(:title) %>
-<%= f.text_area(:content, :rows => 16, :data => { :provider => "summernote" }) %>
+<%= summernote_text_area(f, :content) %>
