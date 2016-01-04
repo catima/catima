@@ -216,6 +216,16 @@ one_book_author:
   uuid: one_book_author_uuid
   related_item_type: one_author
 
+one_required_choice_set:
+  type: "Field::ChoiceSet"
+  name_translations: '{ "name_en": "Choice" }'
+  name_plural_translations: '{ "name_plural_en": "Choices" }'
+  field_set: one_with_required_choice_set (ItemType)
+  uuid: required_choice_set
+  choice_set: one_languages
+  multiple: true
+  required: true
+
 multilingual_author_name:
   type: "Field::Text"
   slug: name

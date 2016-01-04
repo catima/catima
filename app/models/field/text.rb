@@ -34,6 +34,14 @@ class Field::Text < ::Field
   store_accessor :options, :maximum
   store_accessor :options, :minimum
 
+  # TODO: register validations declaratively like this?
+  # item_callbacks do |field, attrib|
+  #   next unless field.validates_length?
+  #   validates_length_of attrib,
+  #                       :maximum => field.maximum,
+  #                       :minimum => field.minimum
+  # end
+
   # TODO: validate minimum is less than maximum?
 
   validates_numericality_of :maximum, :minimum,

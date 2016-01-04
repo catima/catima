@@ -40,6 +40,12 @@ one_book:
   name_plural_translations: '{ "name_plural_en": "Books" }'
   slug: books
 
+one_with_required_choice_set:
+  catalog: one
+  name_translations: '{ "name_en": "With Required Choice Set" }'
+  name_plural_translations: '{ "name_plural_en": "With Required Choice Sets" }'
+  slug: with-required-choice-set
+
 reviewed_book:
   catalog: reviewed
   name_translations: '{ "name_en": "Book" }'

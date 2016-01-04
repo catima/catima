@@ -11,4 +11,20 @@ class Field::ChoiceSetTest < ActiveSupport::TestCase
     choice_set_field.choice_set = choice_sets(:two_languages)
     refute(choice_set_field.valid?)
   end
+
+  test "required multivalued choice set field validates presence of value" do
+    item = Item.new(
+      :creator => users(:one_editor),
+      :catalog => catalogs(:one),
+      :item_type => item_types(:one_with_required_choice_set)
+    ).behaving_as_type
+
+    choice = choices(:one_english)
+
+    refute(item.valid?)
+    item.public_send(:required_choice_set=, [""])
+    refute(item.valid?)
+    item.public_send(:required_choice_set=, ["", choice.id.to_s])
+    assert(item.valid?)
+  end
 end
