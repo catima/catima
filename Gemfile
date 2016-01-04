@@ -34,7 +34,7 @@ gem "sidekiq"
 gem "sinatra", ">= 1.3.0", :require => false
 gem "sprockets", "~> 3.4.1"
 gem "sprockets-rails", "~> 2.3"
-gem "summernote-rails", "~> 0.6.16"
+gem "summernote-rails", "~> 0.7.1"
 gem "turbolinks", "~> 2.5"
 
 source "https://rails-assets.org" do
