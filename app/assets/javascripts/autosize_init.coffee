@@ -1,4 +1,4 @@
 init = ->
-  autosize($("textarea"))
+  autosize($("textarea:not([data-provider=summernote])"))
 
 $(document).ready(init)
