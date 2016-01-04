@@ -36,6 +36,12 @@ one_english:
   long_name_translations: '{ "long_name_en": "English" }'
   short_name_translations: '{ "short_name_en": "Eng" }'
 
+one_spanish:
+  catalog: one
+  choice_set: one_languages
+  long_name_translations: '{ "long_name_en": "Spanish" }'
+  short_name_translations: '{ "short_name_en": "Spanish" }'
+
 two_english:
   catalog: two
   choice_set: two_languages

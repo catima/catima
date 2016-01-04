@@ -27,4 +27,19 @@ class Field::ChoiceSetTest < ActiveSupport::TestCase
     item.public_send(:required_choice_set=, ["", choice.id.to_s])
     assert(item.valid?)
   end
+
+  test "persists multiple choices" do
+    item = Item.new(
+      :creator => users(:one_editor),
+      :catalog => catalogs(:one),
+      :item_type => item_types(:one_with_required_choice_set)
+    ).behaving_as_type
+
+    choice_ids = [choices(:one_english).id.to_s, choices(:one_spanish).id.to_s]
+
+    item.public_send(:required_choice_set=, ["", *choice_ids])
+    item.save!
+
+    assert_equal(choice_ids, item.reload.data["required_choice_set"])
+  end
 end
