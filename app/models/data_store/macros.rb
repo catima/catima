@@ -53,10 +53,11 @@
 #   foo_filename
 #   foo_filename=
 #
-# Finally, all accessors defined using these macros are exposed via a
-# `data_store_attributes` class method.
+# Finally, all accessors defined using these macros are exposed in a way
+# suitable for passing to StrongParameters' `permit` via a
+# `data_store_permitted_attributes` class method.
 #
-#   data_store_attributes # => [:foo]
+#   data_store_permitted_attributes # => [:foo]
 #
 module DataStore::Macros
   extend ActiveSupport::Concern
@@ -72,7 +73,7 @@ module DataStore::Macros
 
     def data_store_hash(key, *attributes)
       attributes.each do |attr|
-        data_store_attributes << :"key_#{attr}"
+        data_store_permit_attribute("key_#{attr}")
 
         define_method("#{key}_#{attr}") do
           data_store_hash(key)[attr.to_s]
@@ -99,11 +100,11 @@ module DataStore::Macros
       end
     end
 
-    def data_store_attributes
-      @data_store_attributes ||= []
-    end
-
     private
+
+    def data_store_permit_attribute(key_or_hash)
+      (@data_store_permitted_attributes ||= []) << key_or_hash
+    end
 
     def data_store_attribute_i18n(key, multiple)
       define_method(key) do
@@ -111,7 +112,7 @@ module DataStore::Macros
       end
 
       I18n.available_locales.each do |locale|
-        data_store_attributes << :"#{key}_#{locale}"
+        data_store_permit_attribute("#{key}_#{locale}")
 
         define_method("#{key}_#{locale}") do
           dirty_aware_store(key, multiple, true, locale).get
@@ -124,7 +125,7 @@ module DataStore::Macros
     end
 
     def data_store_attribute_basic(key, multiple)
-      data_store_attributes << key.to_sym
+      data_store_permit_attribute(multiple ? { key => [] } : key)
 
       define_method(key) do
         dirty_aware_store(key, multiple).get
@@ -136,8 +137,8 @@ module DataStore::Macros
     end
   end
 
-  def data_store_attributes
-    self.class.data_store_attributes
+  def data_store_permitted_attributes
+    self.class.instance_variable_get(:@data_store_permitted_attributes)
   end
 
   private
