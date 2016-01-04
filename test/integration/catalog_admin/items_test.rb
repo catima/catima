@@ -15,6 +15,8 @@ class CatalogAdmin::ItemsTest < ActionDispatch::IntegrationTest
     fill_in("Rank", :with => "1.25")
     select("Stephen King", :from => "Collaborator")
     select("Eng", :from => "Language")
+    select("Eng", :from => "Other Languages")
+    select("Spanish", :from => "Other Languages")
     select("2015", :from => "item[one_author_birth_time_uuid_time(1i)]")
     select("December", :from => "item[one_author_birth_time_uuid_time(2i)]")
     select("31", :from => "item[one_author_birth_time_uuid_time(3i)]")
@@ -36,6 +38,9 @@ class CatalogAdmin::ItemsTest < ActionDispatch::IntegrationTest
     assert_equal(
       choices(:one_english).id.to_s,
       author.public_send(:one_author_language_uuid).to_s)
+    assert_equal(
+      [choices(:one_english).id.to_s, choices(:one_spanish).id.to_s],
+      author.public_send(:one_author_other_language_uuid))
     assert_equal(
       items(:one_author_stephen_king).id.to_s,
       author.public_send(:one_author_collaborator_uuid).to_s)

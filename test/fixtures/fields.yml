@@ -160,6 +160,17 @@ one_author_language:
   uuid: one_author_language_uuid
   choice_set: one_languages
 
+one_author_other_language:
+  type: "Field::ChoiceSet"
+  name_translations: '{ "name_en": "Other Language" }'
+  name_plural_translations: '{ "name_plural_en": "Other Languages" }'
+  slug: other-language
+  field_set: one_author (ItemType)
+  uuid: one_author_other_language_uuid
+  choice_set: one_languages
+  required: false
+  multiple: true
+
 one_author_born:
   type: "Field::DateTime"
   name_translations: '{ "name_en": "Born" }'
