@@ -32,7 +32,7 @@ gem "secure_headers", ">= 2.1.0"
 gem "select2-rails", "~> 4.0"
 gem "sidekiq"
 gem "sinatra", ">= 1.3.0", :require => false
-gem "sprockets", "~> 3.4.1"
+gem "sprockets", "~> 3.4"
 gem "sprockets-rails", "~> 2.3"
 gem "summernote-rails", "~> 0.7.1"
 gem "turbolinks", "~> 2.5"
