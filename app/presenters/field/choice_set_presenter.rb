@@ -1,5 +1,5 @@
 class Field::ChoiceSetPresenter < FieldPresenter
-  delegate :choices, :selected_choice, :selected_choice?, :to => :field
+  delegate :choices, :selected_choices, :selected_choice?, :to => :field
   delegate :browse_similar_items_link, :content_tag, :to => :view
 
   def input(form, method, options={})
@@ -13,10 +13,15 @@ class Field::ChoiceSetPresenter < FieldPresenter
   end
 
   def value
-    choice = selected_choice(item)
-    return if choice.nil?
-    value_slug = [I18n.locale, choice.short_name].join("-")
-    browse_similar_items_link(choice.long_display_name, item, field, value_slug)
+    choices = selected_choices(item)
+    return if choices.empty?
+
+    choices.map do |choice|
+      value_slug = [I18n.locale, choice.short_name].join("-")
+      browse_similar_items_link(
+        choice.long_display_name, item, field, value_slug
+      )
+    end.join(", ").html_safe
   end
 
   private

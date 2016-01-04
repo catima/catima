@@ -70,7 +70,7 @@ class Field::ChoiceSet < ::Field
 
   def selected_choices(item)
     return [] if raw_value(item).blank?
-    choices.except(:order).where(:id => raw_value(item))
+    choices.where(:id => raw_value(item))
   end
 
   def decorate_item_class(klass)

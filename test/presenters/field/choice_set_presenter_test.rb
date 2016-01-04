@@ -16,4 +16,19 @@ class Field::ChoiceSetPresenterTest < ActionView::TestCase
       presenter.value
     )
   end
+
+  test "#value for multiple" do
+    author = items(:one_author_stephen_king)
+    choices = [choices(:one_english), choices(:one_spanish)]
+    languages_field = fields(:one_author_other_language)
+    # Have to set this manually because fixture doesn't know IDs ahead of time
+    author.data["one_author_other_language_uuid"] = choices.map(&:id)
+
+    presenter = Field::ChoiceSetPresenter.new(self, author, languages_field)
+    assert_equal(
+      '<a href="/one/en/authors?other-language=en-Eng">English</a>, '\
+      '<a href="/one/en/authors?other-language=en-Spanish">Spanish</a>',
+      presenter.value
+    )
+  end
 end
