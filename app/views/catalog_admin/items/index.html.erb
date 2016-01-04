@@ -14,7 +14,7 @@
   <thead>
     <tr>
       <% @fields.each do |field| %>
-        <th><%= field.name %></th>
+        <th><%= field.label %></th>
       <% end %>
       <% if catalog.requires_review? %>
         <th>Status</th>

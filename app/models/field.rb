@@ -115,6 +115,10 @@ class Field < ActiveRecord::Base
     []
   end
 
+  def label
+    multiple? ? name_plural : name
+  end
+
   # Whether or not this field holds a human-readable value, e.g. text, number,
   # etc. An image or geometry would not qualify, as those are displayed as non-
   # text.

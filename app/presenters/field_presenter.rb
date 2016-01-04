@@ -1,17 +1,13 @@
 class FieldPresenter
   attr_reader :view, :item, :field, :options
   delegate :t, :to => I18n
-  delegate :uuid, :to => :field
+  delegate :uuid, :label, :to => :field
 
   def initialize(view, item, field, options={})
     @view = view
     @item = item
     @field = field
     @options = options
-  end
-
-  def label
-    field.name
   end
 
   def help
