@@ -3,6 +3,9 @@ it:
   advanced_searches:
     choice_set_search_field:
       any: "è uno di"
+    date_time_search_field:
+      after: "prima"
+      before: "dopo"
     new:
       tab: "%{type} ricerca"
       title: "Ricerca avanzata"
@@ -123,3 +126,11 @@ it:
         password_confirmation: "Conferma password"
         remember_me: "Resta connesso"
         primary_language: "Lingua preferita"
+  time:
+    formats:
+      Y: "%Y"
+      YM: "%B %Y"
+      YMD: "%-d %B %Y"
+      YMDh: "%-d %B %Y %H ore"
+      YMDhm: "%-d %B %Y %H:%M"
+      YMDhms: "%-d %B %Y %H:%M:%S"

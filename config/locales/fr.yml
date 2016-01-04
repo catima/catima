@@ -3,6 +3,9 @@ fr:
   advanced_searches:
     choice_set_search_field:
       any: "est l'un de"
+    date_time_search_field:
+      after: "après"
+      before: "avant"
     new:
       tab: "Recherche %{type}"
       title: "Recherche avancée"
@@ -127,7 +130,7 @@ fr:
     formats:
       Y: "%Y"
       YM: "%B %Y"
-      YMD: "%d %B %Y"
-      YMDh: "%d %B %Y %Hh"
-      YMDhm: "%d %B %Y %Hh %Mmin"
-      YMDhms: "%d %B %Y %Hh %Mmin %Ss"
+      YMD: "%-d %B %Y"
+      YMDh: "%-d %B %Y %Hh"
+      YMDhm: "%-d %B %Y %Hh%M"
+      YMDhms: "%-d %B %Y %H:%M:%S"
