@@ -142,6 +142,17 @@ one_author_collaborator:
   related_item_type: one_author
   uuid: one_author_collaborator_uuid
 
+one_author_other_collaborators:
+  type: "Field::Reference"
+  name_translations: '{ "name_en": "Other Collaborator" }'
+  name_plural_translations: '{ "name_plural_en": "Other Collaborators" }'
+  slug: other-collaborator
+  field_set: one_author (ItemType)
+  related_item_type: one_author
+  uuid: one_author_other_collaborators_uuid
+  multiple: true
+  required: false
+
 one_author_bio:
   type: "Field::File"
   name_translations: '{ "name_en": "Biography" }'

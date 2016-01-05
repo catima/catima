@@ -13,7 +13,25 @@ class Field::ReferencePresenterTest < ActionView::TestCase
 
     presenter = Field::ReferencePresenter.new(self, author, collaborator_field)
     assert_equal(
-      '<a href="/one/en/authors/42941060-very-old">Very Old</a>',
+      %(<a href="/one/en/authors/#{collaborator.id}-very-old">Very Old</a>),
+      presenter.value
+    )
+  end
+
+  test "#value for multiple" do
+    author = items(:one_author_stephen_king)
+    collaborators_field = fields(:one_author_other_collaborators)
+    ids = [
+      items(:one_author_very_old),
+      items(:one_author_very_young)
+    ].map { |i| i.id.to_s }
+    # Have to set this manually because fixture doesn't know IDs ahead of time
+    author.data["one_author_other_collaborators_uuid"] = ids
+
+    presenter = Field::ReferencePresenter.new(self, author, collaborators_field)
+    assert_equal(
+      %(<a href="/one/en/authors/#{ids.first}-very-old">Very Old</a>, ) +
+      %(<a href="/one/en/authors/#{ids.second}-very-young">Very Young</a>),
       presenter.value
     )
   end

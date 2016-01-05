@@ -51,4 +51,14 @@ class Field::Reference < ::Field
   def custom_field_permitted_attributes
     %i(related_item_type_id)
   end
+
+  def references
+    return Item.none if related_item_type.nil?
+    related_item_type.sorted_items
+  end
+
+  def selected_references(item)
+    return [] if raw_value(item).blank?
+    references.where(:id => raw_value(item))
+  end
 end
