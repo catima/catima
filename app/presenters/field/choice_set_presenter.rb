@@ -1,12 +1,11 @@
 class Field::ChoiceSetPresenter < FieldPresenter
   delegate :choices, :selected_choices, :selected_choice?, :to => :field
-  delegate :with_select2_options, :browse_similar_items_link, :content_tag,
+  delegate :select2_select, :browse_similar_items_link, :content_tag,
            :to => :view
 
   def input(form, method, options={})
-    with_select2_options(
+    select2_select(
       form,
-      :select,
       method,
       nil,
       input_defaults(options).merge(:multiple => field.multiple?),

@@ -1,12 +1,11 @@
 class Field::ReferencePresenter < FieldPresenter
   delegate :references, :selected_references, :to => :field
-  delegate :with_select2_options, :item_path, :link_to, :item_display_name,
+  delegate :select2_collection_select, :item_path, :link_to, :item_display_name,
            :to => :view
 
   def input(form, method, options={})
-    with_select2_options(
+    select2_collection_select(
       form,
-      :collection_select,
       method,
       references,
       :id,
