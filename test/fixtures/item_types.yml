@@ -46,6 +46,12 @@ one_with_required_choice_set:
   name_plural_translations: '{ "name_plural_en": "With Required Choice Sets" }'
   slug: with-required-choice-set
 
+one_with_required_reference:
+  catalog: one
+  name_translations: '{ "name_en": "With Required Reference" }'
+  name_plural_translations: '{ "name_plural_en": "With Required References" }'
+  slug: with-required-reference
+
 reviewed_book:
   catalog: reviewed
   name_translations: '{ "name_en": "Book" }'

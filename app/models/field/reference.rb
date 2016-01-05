@@ -31,6 +31,8 @@
 #
 
 class Field::Reference < ::Field
+  include ::Field::AllowsMultipleValues
+
   belongs_to :related_item_type, :class_name => "ItemType"
 
   validates_presence_of :related_item_type

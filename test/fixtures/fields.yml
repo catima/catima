@@ -237,6 +237,16 @@ one_required_choice_set:
   multiple: true
   required: true
 
+one_required_choice_set:
+  type: "Field::Reference"
+  name_translations: '{ "name_en": "Reference" }'
+  name_plural_translations: '{ "name_plural_en": "References" }'
+  field_set: one_with_required_reference (ItemType)
+  uuid: required_reference
+  related_item_type: one_author
+  multiple: true
+  required: true
+
 multilingual_author_name:
   type: "Field::Text"
   slug: name
