@@ -31,6 +31,8 @@
 #
 
 class Field::ChoiceSet < ::Field
+  include ::Field::AllowsMultipleValues
+
   belongs_to :choice_set, :class_name => "::ChoiceSet"
 
   validates_presence_of :choice_set
@@ -40,10 +42,6 @@ class Field::ChoiceSet < ::Field
 
   def type_name
     "Choice set" + (choice_set ? " (#{choice_set.name})" : "")
-  end
-
-  def allows_multiple?
-    true
   end
 
   def choices
@@ -70,20 +68,6 @@ class Field::ChoiceSet < ::Field
   def selected_choices(item)
     return [] if raw_value(item).blank?
     choices.where(:id => raw_value(item))
-  end
-
-  def decorate_item_class(klass)
-    super
-    field = self
-    klass.public_send(:before_validation) do
-      field.strip_empty_values(self)
-    end
-  end
-
-  def strip_empty_values(item)
-    values = raw_value(item)
-    return unless values.is_a?(Array)
-    values.reject!(&:blank?)
   end
 
   private
