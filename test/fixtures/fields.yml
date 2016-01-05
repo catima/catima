@@ -248,7 +248,7 @@ one_required_choice_set:
   multiple: true
   required: true
 
-one_required_choice_set:
+one_required_reference:
   type: "Field::Reference"
   name_translations: '{ "name_en": "Reference" }'
   name_plural_translations: '{ "name_plural_en": "References" }'
