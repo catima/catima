@@ -1,4 +1,5 @@
 class Search::ChoiceSetStrategy < Search::BaseStrategy
+  include Search::MultivaluedSearch
   permit_criteria :any => []
 
   def keywords_for_index(item)
@@ -13,20 +14,10 @@ class Search::ChoiceSetStrategy < Search::BaseStrategy
   end
 
   def search(scope, criteria)
-    any_ids = criteria.fetch(:any, []).select(&:present?)
-    return scope if any_ids.empty?
-    if field.multiple?
-      scope.where("#{data_field_jsonb_expr} ?| array[:ids]", :ids => any_ids)
-    else
-      scope.where("#{data_field_expr} IN (?)", any_ids)
-    end
+    search_data_matching_one_or_more(scope, criteria[:any])
   end
 
   private
-
-  def data_field_jsonb_expr
-    "(items.data->'#{field.uuid}')::jsonb"
-  end
 
   def choice_from_slug(slug)
     locale, name = slug.split("-", 2)
