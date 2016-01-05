@@ -33,11 +33,6 @@
 class Field::ChoiceSet < ::Field
   belongs_to :choice_set, :class_name => "::ChoiceSet"
 
-  # TODO: register validations declaratively like this?
-  # item_callbacks do |field, attrib|
-  #   before_validation -> { field.strip_empty_values(self) }
-  # end
-
   validates_presence_of :choice_set
   validates_inclusion_of :choice_set,
                          :in => :choice_set_choices,
