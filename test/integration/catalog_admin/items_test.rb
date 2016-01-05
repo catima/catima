@@ -14,6 +14,8 @@ class CatalogAdmin::ItemsTest < ActionDispatch::IntegrationTest
     fill_in("Email", :with => "test@example.com")
     fill_in("Rank", :with => "1.25")
     select("Stephen King", :from => "Collaborator")
+    select("Very Old", :from => "Other Collaborators")
+    select("Very Young", :from => "Other Collaborators")
     select("Eng", :from => "Language")
     select("Eng", :from => "Other Languages")
     select("Spanish", :from => "Other Languages")
@@ -44,6 +46,12 @@ class CatalogAdmin::ItemsTest < ActionDispatch::IntegrationTest
     assert_equal(
       items(:one_author_stephen_king).id.to_s,
       author.public_send(:one_author_collaborator_uuid).to_s)
+    assert_equal(
+      %i(
+        one_author_very_old
+        one_author_very_young
+      ).map { |i| items(i).id.to_s },
+      author.public_send(:one_author_other_collaborators_uuid))
     assert_equal(
       Time.zone.local(2015, 12, 31, 14, 30, 17),
       author.public_send(:one_author_birth_time_uuid_time)

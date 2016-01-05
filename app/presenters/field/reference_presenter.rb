@@ -1,14 +1,15 @@
 class Field::ReferencePresenter < FieldPresenter
-  delegate :related_item_type, :selected_references, :to => :field
+  delegate :references, :selected_references, :to => :field
   delegate :item_path, :link_to, :item_display_name, :to => :view
 
   def input(form, method, options={})
     form.collection_select(
       method,
-      related_item_type.sorted_items,
+      references,
       :id,
       method(:item_display_name),
-      input_defaults(options).reverse_merge(:include_blank => true)
+      input_defaults(options),
+      input_defaults(options)
     )
   end
 
@@ -26,5 +27,17 @@ class Field::ReferencePresenter < FieldPresenter
           :id => ref
         ))
     end.join(", ").html_safe
+  end
+
+  private
+
+  # TODO: DRY up with ChoiceSetPresenter
+  def input_defaults(options)
+    super.reverse_merge(:include_blank => true, :multiple => field.multiple?)
+  end
+
+  def input_data_defaults(data)
+    return super unless field.multiple?
+    super.reverse_merge("select2-tagging" => true)
   end
 end
