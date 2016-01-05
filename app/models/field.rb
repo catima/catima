@@ -124,6 +124,13 @@ class Field < ActiveRecord::Base
     true
   end
 
+  # Whether or not this field supports the `multiple` option. Most fields do
+  # not. This method exists so that the UI can show or hide the appropriate
+  # configuration controls for the field. Subclasses may override.
+  def allows_multiple?
+    false
+  end
+
   def raw_value(item, locale=I18n.locale)
     return nil unless applicable_to_item(item)
     attrib = i18n? ? "#{uuid}_#{locale}" : uuid

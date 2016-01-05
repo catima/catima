@@ -1,3 +1,5 @@
+# rubocop:disable Style/AsciiComments
+
 # Module mixed into Field that encapsulates all the style logic (single,
 # multiple, required, optional, etc.).
 module Field::Style
@@ -6,12 +8,15 @@ module Field::Style
     "single-required" => "Single value – required",
     "multiple" => "Multiple values – optional",
     "multiple-required" => "Multiple values – at least one",
-    "multiple-ordered" => "Multiple ordered values – optional",
-    "multiple-ordered-required" => "Multiple ordered values – at least one"
+    # TODO: uncomment once ordering behavior is supported
+    # "multiple-ordered" => "Multiple ordered values – optional",
+    # "multiple-ordered-required" => "Multiple ordered values – at least one"
   }.freeze
 
   def style_choices
-    CHOICES
+    CHOICES.select do |key, _name|
+      key =~ /single/ || allows_multiple?
+    end
   end
 
   # TODO: test

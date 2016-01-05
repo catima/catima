@@ -42,6 +42,10 @@ class Field::ChoiceSet < ::Field
     "Choice set" + (choice_set ? " (#{choice_set.name})" : "")
   end
 
+  def allows_multiple?
+    true
+  end
+
   def choices
     return Choice.none if choice_set.nil?
     choice_set.choices.sorted
