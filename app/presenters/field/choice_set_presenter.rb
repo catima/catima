@@ -1,13 +1,15 @@
 class Field::ChoiceSetPresenter < FieldPresenter
   delegate :choices, :selected_choices, :selected_choice?, :to => :field
-  delegate :browse_similar_items_link, :content_tag, :to => :view
+  delegate :with_select2_options, :browse_similar_items_link, :content_tag,
+           :to => :view
 
   def input(form, method, options={})
-    form.select(
+    with_select2_options(
+      form,
+      :select,
       method,
       nil,
-      input_defaults(options),
-      input_defaults(options),
+      input_defaults(options).merge(:multiple => field.multiple?),
       &method(:options_for_select)
     )
   end
@@ -25,16 +27,6 @@ class Field::ChoiceSetPresenter < FieldPresenter
   end
 
   private
-
-  def input_defaults(options)
-    super.reverse_merge(:include_blank => true, :multiple => field.multiple?)
-  end
-
-  def input_data_defaults(data)
-    return super unless field.multiple?
-    super.reverse_merge("select2-tagging" => true)
-  end
-
 
   # Add a data attribute to each option of the select to indicate which
   # category the choice is linked to, if any. This allows us to show and hide
