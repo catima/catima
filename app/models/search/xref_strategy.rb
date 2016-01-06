@@ -1,9 +1,10 @@
 class Search::XrefStrategy < Search::BaseStrategy
+  include Search::MultivaluedSearch
   permit_criteria :any => []
 
   def keywords_for_index(item)
-    choice = field.selected_choice(item)
-    choice ? choice.name(locale) : []
+    choices = field.selected_choices(item)
+    choices.map { |c| c.name(locale) }
   end
 
   def browse(scope, choice_slug)
@@ -13,8 +14,6 @@ class Search::XrefStrategy < Search::BaseStrategy
   end
 
   def search(scope, criteria)
-    any_ids = criteria.fetch(:any, []).select(&:present?)
-    return scope if any_ids.empty?
-    scope.where("#{data_field_expr} IN (?)", any_ids)
+    search_data_matching_one_or_more(scope, criteria[:any])
   end
 end

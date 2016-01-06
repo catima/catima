@@ -1,21 +1,25 @@
 class Field::XrefPresenter < FieldPresenter
-  delegate :choices, :selected_choice, :to => :field
-  delegate :browse_similar_items_link, :to => :view
+  delegate :choices, :selected_choices, :to => :field
+  delegate :select2_collection_select, :browse_similar_items_link, :to => :view
 
   def input(form, method, options={})
-    form.collection_select(
+    select2_collection_select(
+      form,
       method,
       choices,
       :id,
       :name,
-      input_defaults(options).reverse_merge(:include_blank => true)
+      input_defaults(options).merge(:multiple => field.multiple?)
     )
   end
 
   def value
-    choice = selected_choice(item)
-    return if choice.nil?
-    value_slug = [choice.id, choice.name].join("-")
-    browse_similar_items_link(choice.name, item, field, value_slug)
+    choices = selected_choices(item)
+    return if choices.empty?
+
+    choices.map do |choice|
+      value_slug = [choice.id, choice.name].join("-")
+      browse_similar_items_link(choice.name, item, field, value_slug)
+    end.join(", ").html_safe
   end
 end

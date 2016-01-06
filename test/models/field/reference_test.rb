@@ -11,7 +11,7 @@ class Field::ReferenceTest < ActiveSupport::TestCase
     refute(ref_type.valid?)
   end
 
-  test "required multivalued choice set field validates presence of value" do
+  test "required multivalued reference field validates presence of value" do
     item = Item.new(
       :creator => users(:one_editor),
       :catalog => catalogs(:one),
@@ -27,7 +27,7 @@ class Field::ReferenceTest < ActiveSupport::TestCase
     assert(item.valid?)
   end
 
-  test "persists multiple choices" do
+  test "persists multiple references" do
     item = Item.new(
       :creator => users(:one_editor),
       :catalog => catalogs(:one),

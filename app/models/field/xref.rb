@@ -31,6 +31,8 @@
 #
 
 class Field::Xref < ::Field
+  include ::Field::AllowsMultipleValues
+
   # TODO: support :only and :exclude options
 
   store_accessor :options, :xref
@@ -54,12 +56,15 @@ class Field::Xref < ::Field
     external_type && external_type.find_item(id)
   end
 
-  def selected_choice(item)
-    id = raw_value(item)
-    return nil if id.blank?
-    external_type && external_type.find_item(id)
-  rescue ExternalType::Client::NotFound
-    nil
+  def selected_choices(item)
+    return [] if raw_value(item).blank? || external_type.nil?
+    Array.wrap(raw_value(item)).map do |id|
+      begin
+        external_type.find_item(id)
+      rescue ExternalType::Client::NotFound
+        nil
+      end
+    end.compact
   end
 
   private
