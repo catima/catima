@@ -100,8 +100,14 @@ multilingual_author_example:
     {
       "multilingual_author_bio_uuid": {
         "_translations": {
-          "en": "English",
-          "fr": "Français"
+          "en": "Biography in English",
+          "fr": "Biographie en français"
+        }
+      },
+      "multilingual_author_site_uuid": {
+        "_translations": {
+          "en": "https://www.google.com/",
+          "fr": "https://www.google.fr/"
         }
       }
     }

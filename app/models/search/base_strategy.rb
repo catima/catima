@@ -43,7 +43,6 @@ class Search::BaseStrategy
 
   def data_field_expr
     # TODO: move this to Field?
-    locale_suffix = "_#{locale}" if field.i18n?
-    "items.data->>'#{field.uuid}#{locale_suffix}'"
+    "items.data->>'#{field.uuid}'"
   end
 end

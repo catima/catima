@@ -55,5 +55,17 @@ class Search::TextStrategyTest < ActiveSupport::TestCase
     assert_empty(results.to_a)
   end
 
-  # TODO: test i18n search!
+  test "search i18n field" do
+    criteria = { "exact" => "biographie en français" }.with_indifferent_access
+    scope = catalogs(:multilingual).items
+    field = fields(:multilingual_author_bio)
+
+    en_strategy = Search::TextStrategy.new(field, :en)
+    fr_strategy = Search::TextStrategy.new(field, :fr)
+
+    assert_empty(en_strategy.search(scope, criteria))
+
+    fr_results = fr_strategy.search(scope, criteria)
+    assert_includes(fr_results.to_a, items(:multilingual_author_example))
+  end
 end

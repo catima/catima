@@ -1,4 +1,6 @@
 class Search::TextStrategy < Search::BaseStrategy
+  include Search::I18nSearch
+
   permit_criteria :exact, :contains, :excludes
 
   def keywords_for_index(item)

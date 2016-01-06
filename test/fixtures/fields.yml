@@ -293,6 +293,25 @@ multilingual_author_bio:
       "name_plural_fr": "Biographies"
     }
 
+multilingual_author_site:
+  type: "Field::Text"
+  slug: site
+  field_set: multilingual_author (ItemType)
+  primary: false
+  i18n: true
+  required: false
+  uuid: multilingual_author_site_uuid
+  name_translations: |
+    {
+      "name_en": "Home page",
+      "name_fr": "Page d'accueil"
+    }
+  name_plural_translations: |
+    {
+      "name_plural_en": "Home pages",
+      "name_plural_fr": "Pages d'accueil"
+    }
+
 reviewed_book_title:
   type: "Field::Text"
   name_translations: '{ "name_en": "Title" }'
