@@ -32,8 +32,8 @@ class CSVImport < ActiveType::Object
   attr_accessor :creator
   attr_accessor :item_type
   attribute :file_id
-  attribute :filename
-  attribute :size, :integer
+  attribute :file_filename
+  attribute :file_size, :integer
 
   attr_reader :failures, :success_count
 
@@ -45,6 +45,13 @@ class CSVImport < ActiveType::Object
   delegate :column_fields, :mapped_fields, :unrecognized_columns,
            :to => :field_mapper
 
+  validates_presence_of :creator
+  validates_presence_of :item_type
+  validates_presence_of :file
+  validate :file_must_not_be_malformed
+  validate :file_must_have_at_least_one_row, :if => :file_is_csv?
+  validate :at_least_one_column_must_be_mapped, :if => :file_is_csv?
+
   before_save :process_import
 
   def initialize(*)
@@ -54,12 +61,33 @@ class CSVImport < ActiveType::Object
   end
 
   def columns
-    rows.first.headers
+    rows.first&.headers || []
   end
 
   private
 
   attr_writer :success_count
+
+  def file_is_csv?
+    return false if file.nil?
+    rows # trigger CSV parse
+    true
+  rescue CSV::MalformedCSVError
+    false
+  end
+
+  def file_must_not_be_malformed
+    return if file.nil? || file_is_csv?
+    errors.add(:file, "does not appear to be in CSV format")
+  end
+
+  def file_must_have_at_least_one_row
+    errors.add(:file, "must have at least one row of data") if rows.empty?
+  end
+
+  def at_least_one_column_must_be_mapped
+    errors.add(:file, "no column names were recognized") if mapped_fields.empty?
+  end
 
   def process_import
     Item.transaction do

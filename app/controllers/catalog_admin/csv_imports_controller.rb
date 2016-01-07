@@ -8,9 +8,12 @@ class CatalogAdmin::CSVImportsController < CatalogAdmin::BaseController
     build_csv_import
     authorize(@csv_import)
     @csv_import.file = params.require(:csv_import)[:file]
-    # TODO: validation
-    @csv_import.save!
-    redirect_to(catalog_admin_items_path, :notice => import_created_message)
+
+    if @csv_import.save
+      redirect_to(catalog_admin_items_path, :notice => import_created_message)
+    else
+      render("new")
+    end
   end
 
   private

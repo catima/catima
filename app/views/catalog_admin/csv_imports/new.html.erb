@@ -1,7 +1,9 @@
 <% provide(:title, "Import #{item_type.name_plural} from CSV") %>
 
 <%= bootstrap_form_for([:catalog_admin, @csv_import]) do |f| %>
-  <%= f.attachment_field(:file, :direct => true) %>
+  <%= f.form_group(:file) do %>
+    <%= f.attachment_field(:file, :direct => true) %>
+  <% end %>
   <%= f.primary("Import") %>
   <%= link_to("Cancel", catalog_admin_items_path, :class => "btn btn-link") %>
 <% end %>
