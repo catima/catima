@@ -72,8 +72,7 @@ Rails.application.routes.draw do
 
     resources :csv_imports,
               :path => ":item_type_slug/import",
-              :only => [:new, :create],
-              :as => "item_type_csv_import"
+              :only => [:new, :create]
 
     resources :choice_sets, :path => "_choices", :except => :show
     resources :pages, :path => "_pages", :param => :slug
