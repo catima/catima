@@ -31,8 +31,8 @@ class CSVImportTest < ActiveSupport::TestCase
 
     import.save!
 
-    assert_equal(2, import.success_count)
-    assert_empty(import.failures)
+    assert_equal(3, import.success_count)
+    assert_equal(1, import.failures.count)
 
     items = Item.order(:id => "DESC").limit(2).map(&:behaving_as_type)
 
@@ -58,6 +58,7 @@ class CSVImportTest < ActiveSupport::TestCase
       name,nickname,ignore
       Matthew,Matt,3
       Jenny,Jen,6
+      ,No name,10
     CSV
   end
 

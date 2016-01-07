@@ -52,9 +52,16 @@ class CSVImport::ItemBuilder
   # property is set to an `CSVImport::Failure` object explaining the reason.
   #
   def valid?
-    # TODO
     @failure = nil
-    true
+
+    item.validate
+    column_errors = collect_column_errors
+
+    if column_errors.values.flatten.any?
+      @failure = CSVImport::Failure.new(row, column_errors)
+    end
+
+    ! @failure
   end
 
   # Saves the underlying Item record to the database, raising an exception if
@@ -62,5 +69,14 @@ class CSVImport::ItemBuilder
   # care to explicitly check `valid?` before calling `save!`.
   def save!
     item.save!(:validate => false)
+  end
+
+  private
+
+  def collect_column_errors
+    Hash[column_fields.map do |column, field|
+      errors = field ? item.errors[field.attribute_name] : []
+      [column, errors]
+    end]
   end
 end
