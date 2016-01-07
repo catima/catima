@@ -1,3 +1,33 @@
+# CSVImport is a Form object that allows a user to upload a CSV file and import
+# its rows as new Item records. The columns in the CSV are mapped to particular
+# Fields, and each row is validated before being imported.
+#
+# For specific rules and more details about the import behavior, refer to the
+# documentation in the following helper classes:
+#
+# * CSVImport::Reader
+# * CSVImport::FieldMapper
+# * CSVImport::ItemBuilder
+#
+# To use CSVImport, a controller must set the following attributes:
+#
+# * file (the CSV file uploaded by the user, must have a .csv extension)
+# * item_type (the ItemType that the created Items will belong to)
+# * creator (the User that will be recorded as the creator of each Item)
+#
+# The controller should then call `save` to perform the import.
+#
+# The results of the import are made available in two properties:
+#
+# * success_count (number of rows that were successfully imported as new Items)
+# * failures (an Array of CSVImport::Failure object representing skipped rows)
+#
+# The following properties are also available to display in the UI:
+#
+# * encoding (the character encoding used to interpret the CSV file)
+# * columns (all column names as parsed from the CSV)
+# * unrecognized_columns (the column names that could not be mapped)
+#
 class CSVImport < ActiveType::Object
   attr_accessor :creator
   attr_accessor :item_type

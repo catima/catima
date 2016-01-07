@@ -21,6 +21,10 @@ class CSVImport::FieldMapperTest < ActiveSupport::TestCase
     assert_equal(fields(:one_author_nickname), mapped_fields.second.__getobj__)
   end
 
+  test "unrecognized_columns" do
+    assert_equal(%w(age wut make), mapper.unrecognized_columns)
+  end
+
   test "column_fields with i18n" do
     column_fields = i18n_mapper.column_fields
     assert_equal(["bio", "bio (en)"], column_fields.keys)
