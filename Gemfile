@@ -28,7 +28,7 @@ gem "refile", "~> 0.6.1", :require => "refile/rails"
 gem "refile-mini_magick"
 gem "rollbar", "~> 2.3"
 gem "sass-rails", "~> 5.0"
-gem "secure_headers", ">= 2.1.0"
+gem "secure_headers", "~> 2.4.4"
 gem "select2-rails", "~> 4.0"
 gem "sidekiq"
 gem "sinatra", ">= 1.3.0", :require => false
