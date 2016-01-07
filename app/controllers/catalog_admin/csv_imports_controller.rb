@@ -1,12 +1,12 @@
 class CatalogAdmin::CSVImportsController < CatalogAdmin::BaseController
-  # TODO: authorization
-
   def new
     build_csv_import
+    authorize(@csv_import)
   end
 
   def create
     build_csv_import
+    authorize(@csv_import)
     @csv_import.file = params.require(:csv_import)[:file]
     # TODO: validation
     @csv_import.save!
