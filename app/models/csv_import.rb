@@ -1,7 +1,9 @@
 class CSVImport < ActiveType::Object
   attr_accessor :creator
   attr_accessor :item_type
-  attr_accessor :file_id, :filename, :size
+  attribute :file_id
+  attribute :filename
+  attribute :size, :integer
 
   attr_reader :failures, :success_count
 
@@ -32,11 +34,12 @@ class CSVImport < ActiveType::Object
   def process_import
     Item.transaction do
       rows.each do |row|
-        builder = CSVImporter::ItemBuilder.new(row, column_fields, item)
+        builder = CSVImport::ItemBuilder.new(row, column_fields, build_item)
         builder.assign_row_values
         validate_and_save_item(builder)
       end
     end
+    true
   end
 
   def validate_and_save_item(builder)

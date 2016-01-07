@@ -21,4 +21,8 @@ class CSVImport::ItemBuilder
     @failure = nil
     true
   end
+
+  def save!
+    item.save!(:validate => false)
+  end
 end
