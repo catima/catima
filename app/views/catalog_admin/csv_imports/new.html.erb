@@ -1,7 +1,7 @@
 <% provide(:title, "Import #{item_type.name_plural} from CSV") %>
 
 <%= bootstrap_form_for([:catalog_admin, @csv_import]) do |f| %>
-  <%= f.form_group(:file) do %>
+  <%= f.form_group(:file, :label => { :text => "File" }) do %>
     <%= f.attachment_field(:file, :direct => true) %>
   <% end %>
   <%= f.primary("Import") %>

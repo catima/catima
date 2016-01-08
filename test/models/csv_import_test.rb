@@ -1,6 +1,8 @@
 require "test_helper"
 
 class CSVImportTest < ActiveSupport::TestCase
+  include CSVFixtures
+
   should validate_presence_of(:creator)
   should validate_presence_of(:item_type)
 
@@ -31,7 +33,7 @@ class CSVImportTest < ActiveSupport::TestCase
 
     import.save!
 
-    assert_equal(3, import.success_count)
+    assert_equal(2, import.success_count)
     assert_equal(1, import.failures.count)
 
     items = Item.order(:id => "DESC").limit(2).map(&:behaving_as_type)
@@ -73,12 +75,5 @@ class CSVImportTest < ActiveSupport::TestCase
       ignore1,ignore2
       value,value
     CSV
-  end
-
-  def csv_file_with_data(data)
-    file = Tempfile.new(["test", ".csv"])
-    file.write(data)
-    file.rewind
-    file
   end
 end
