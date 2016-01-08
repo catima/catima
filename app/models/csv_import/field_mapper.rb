@@ -17,8 +17,8 @@
 # Any columns that cannot be mapped are ignored. These ignored columns can be
 # obtained by calling `unrecognized_columns`.
 #
-# CURRENTLY ONLY TEXT FIELDS ARE ELIGIBLE FOR MAPPING. Other Field types (int,
-# reference, xref, choice set, etc.) are ignored.
+# CURRENTLY ONLY TEXT, INT, DECIMAL, EMAIL, AND URL FIELDS ARE ELIGIBLE FOR
+# MAPPING. Other Field types (reference, xref, choice set, etc.) are ignored.
 #
 class CSVImport::FieldMapper
   attr_reader :fields, :columns, :default_locale
@@ -59,13 +59,20 @@ class CSVImport::FieldMapper
 
   def field_with_slug(slug, locale=primary_language)
     field = fields.find { |f| f.slug == slug }
-    # TODO: remove this restriction
-    return nil unless field.is_a?(Field::Text)
+    return nil unless eligible_type?(field)
 
     CSVImport::FieldWithLocale.new(field, locale) unless field.nil?
   end
 
   def parse_localized_column(column)
     column.match(/^(.+?)(?:\s*\(\s*(\w{2})\s*\))?\s*$/)[1..2]
+  end
+
+  def eligible_type?(field)
+    [
+      Field::Text, Field::Email, Field::Int, Field::Decimal, Field::URL
+    ].any? do |t|
+      field.is_a?(t)
+    end
   end
 end
