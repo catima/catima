@@ -1,4 +1,6 @@
 class CatalogAdmin::CSVImportsController < CatalogAdmin::BaseController
+  layout "catalog_admin/data/form"
+
   def new
     build_csv_import
     authorize(@csv_import)
