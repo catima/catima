@@ -78,14 +78,14 @@ Rails.application.configure do
     :user_name => ENV.fetch("MANDRILL_USERNAME"),
     :password => ENV.fetch("MANDRILL_API_KEY"),
     :authentication => "login",
-    :domain => "v3.naxio.ch"
+    :domain => "catima.unil.ch"
   }
   config.action_mailer.raise_delivery_errors = true
   config.action_mailer.default_url_options = {
-    host: "v3.naxio.ch",
+    host: "catima.unil.ch",
     protocol: "https"
   }
-  config.action_mailer.asset_host = "https://v3.naxio.ch"
+  config.action_mailer.asset_host = "https://catima.unil.ch"
 
   # Enable locale fallbacks for I18n (makes lookups for any locale fall back to
   # the I18n.default_locale when a translation cannot be found).

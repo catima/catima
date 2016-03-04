@@ -1,5 +1,5 @@
 class ApplicationMailer < ActionMailer::Base
-  default :from => "viim@naxio.ch"
+  default :from => "catima@unil.ch"
   layout "mailer"
 
   private

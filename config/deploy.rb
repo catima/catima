@@ -1,5 +1,5 @@
 set :application, "viim-core"
-set :repo_url, "git@bitbucket.org:naxio/viim-core.git"
+set :repo_url, "git@bitbucket.org:catima/viim-core.git"
 
 # Project-specific overrides go here.
 # For list of variables that can be customized, see:
