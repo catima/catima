@@ -1,3 +1,18 @@
+# == Schema Information
+#
+# Table name: advanced_searches
+#
+#  catalog_id   :integer
+#  created_at   :datetime         not null
+#  creator_id   :integer
+#  criteria     :json
+#  id           :integer          not null, primary key
+#  item_type_id :integer
+#  locale       :string           default("en"), not null
+#  updated_at   :datetime         not null
+#  uuid         :string
+#
+
 module AdvancedSearchesHelper
   # Renders the contents of the `_#{field_type}_search_field.html.erb` partial
   # and then yields it to the given block. If the partial doesn't render

@@ -1,3 +1,22 @@
+# == Schema Information
+#
+# Table name: items
+#
+#  catalog_id     :integer
+#  created_at     :datetime         not null
+#  creator_id     :integer
+#  data           :json
+#  id             :integer          not null, primary key
+#  item_type_id   :integer
+#  review_status  :string           default("not-ready"), not null
+#  reviewer_id    :integer
+#  search_data_de :text
+#  search_data_en :text
+#  search_data_fr :text
+#  search_data_it :text
+#  updated_at     :datetime         not null
+#
+
 module ItemsHelper
   def browse_similar_items_link(label, item, field, value)
     link_to(

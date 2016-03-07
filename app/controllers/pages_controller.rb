@@ -1,3 +1,20 @@
+# == Schema Information
+#
+# Table name: pages
+#
+#  catalog_id  :integer
+#  content     :text
+#  created_at  :datetime         not null
+#  creator_id  :integer
+#  id          :integer          not null, primary key
+#  locale      :string
+#  reviewer_id :integer
+#  slug        :string
+#  status      :string
+#  title       :text
+#  updated_at  :datetime         not null
+#
+
 class PagesController < ApplicationController
   # We use this constraint to make the route less "greedy" by restricting the
   # wildcard to valid page slugs.
