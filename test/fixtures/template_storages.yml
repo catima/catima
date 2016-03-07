@@ -1,0 +1,33 @@
+# == Schema Information
+#
+# Table name: template_storages
+#
+#  body       :text
+#  created_at :datetime         not null
+#  format     :string
+#  handler    :string
+#  id         :integer          not null, primary key
+#  locale     :string
+#  partial    :boolean
+#  path       :string
+#  updated_at :datetime         not null
+#
+
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+erb_template:
+  body: My custom page
+  path: home/custom_page
+  locale: en
+  handler: erb
+  partial: false
+  format: html
+
+liquid_template:
+  body: Hello {{ 'world' | upcase }} has {{ 'world' | size }} letters!
+  path: home/liquid_tpl
+  locale: en
+  handler: liquid
+  partial: false
+  format: html
+

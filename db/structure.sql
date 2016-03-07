@@ -476,6 +476,42 @@ CREATE TABLE schema_migrations (
 
 
 --
+-- Name: template_storages; Type: TABLE; Schema: public; Owner: -; Tablespace: 
+--
+
+CREATE TABLE template_storages (
+    id integer NOT NULL,
+    body text,
+    path character varying,
+    locale character varying,
+    handler character varying,
+    partial boolean,
+    format character varying,
+    created_at timestamp without time zone NOT NULL,
+    updated_at timestamp without time zone NOT NULL
+);
+
+
+--
+-- Name: template_storages_id_seq; Type: SEQUENCE; Schema: public; Owner: -
+--
+
+CREATE SEQUENCE template_storages_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+--
+-- Name: template_storages_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
+--
+
+ALTER SEQUENCE template_storages_id_seq OWNED BY template_storages.id;
+
+
+--
 -- Name: users; Type: TABLE; Schema: public; Owner: -; Tablespace: 
 --
 
@@ -599,6 +635,13 @@ ALTER TABLE ONLY pages ALTER COLUMN id SET DEFAULT nextval('pages_id_seq'::regcl
 -- Name: id; Type: DEFAULT; Schema: public; Owner: -
 --
 
+ALTER TABLE ONLY template_storages ALTER COLUMN id SET DEFAULT nextval('template_storages_id_seq'::regclass);
+
+
+--
+-- Name: id; Type: DEFAULT; Schema: public; Owner: -
+--
+
 ALTER TABLE ONLY users ALTER COLUMN id SET DEFAULT nextval('users_id_seq'::regclass);
 
 
@@ -688,6 +731,14 @@ ALTER TABLE ONLY items
 
 ALTER TABLE ONLY pages
     ADD CONSTRAINT pages_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: template_storages_pkey; Type: CONSTRAINT; Schema: public; Owner: -; Tablespace: 
+--
+
+ALTER TABLE ONLY template_storages
+    ADD CONSTRAINT template_storages_pkey PRIMARY KEY (id);
 
 
 --
@@ -1000,14 +1051,6 @@ ALTER TABLE ONLY pages
 
 
 --
--- Name: fk_rails_abba16b043; Type: FK CONSTRAINT; Schema: public; Owner: -
---
-
-ALTER TABLE ONLY items
-    ADD CONSTRAINT fk_rails_abba16b043 FOREIGN KEY (creator_id) REFERENCES users(id);
-
-
---
 -- Name: fk_rails_ac675f13b9; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
@@ -1029,14 +1072,6 @@ ALTER TABLE ONLY users
 
 ALTER TABLE ONLY choices
     ADD CONSTRAINT fk_rails_baa6b9a371 FOREIGN KEY (choice_set_id) REFERENCES choice_sets(id);
-
-
---
--- Name: fk_rails_bf173d5998; Type: FK CONSTRAINT; Schema: public; Owner: -
---
-
-ALTER TABLE ONLY items
-    ADD CONSTRAINT fk_rails_bf173d5998 FOREIGN KEY (reviewer_id) REFERENCES users(id);
 
 
 --
@@ -1148,4 +1183,6 @@ INSERT INTO schema_migrations (version) VALUES ('20151210000035');
 INSERT INTO schema_migrations (version) VALUES ('20151212000308');
 
 INSERT INTO schema_migrations (version) VALUES ('20151214213046');
+
+INSERT INTO schema_migrations (version) VALUES ('20160307163846');
 

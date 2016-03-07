@@ -205,6 +205,11 @@ GEM
       addressable (~> 2.3)
     letter_opener (1.4.1)
       launchy (~> 2.2)
+    liquid (3.0.6)
+    liquid-rails (0.1.3)
+      kaminari (~> 0.16.1)
+      liquid (>= 3.0.0)
+      rails (>= 3.2)
     listen (3.0.5)
       rb-fsevent (>= 0.9.3)
       rb-inotify (>= 0.9)
@@ -240,6 +245,8 @@ GEM
       nenv (~> 0.1)
       shellany (~> 0.0)
     orm_adapter (0.5.0)
+    panoramic (0.0.6)
+      rails (>= 3.0.7)
     pg (0.18.4)
     pg_search (1.0.5)
       activerecord (>= 3.1)
@@ -451,11 +458,13 @@ DEPENDENCIES
   kaminari
   launchy
   letter_opener
+  liquid-rails (>= 0.1.3)
   listen
   mail (>= 2.6.3)
   marco-polo
   minitest-reporters
   mocha
+  panoramic (>= 0.0.6)
   pg (~> 0.18)
   pg_search (~> 1.0)
   poltergeist
