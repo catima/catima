@@ -1,0 +1,20 @@
+site_name: CATIMA
+site_url: https://catima.unil.ch
+site_description: CATIMA - créateur de catalogues interactifs
+site_author: Université de Lausanne - Christian Kaiser
+
+#repo_url: https://bitbucket.org/catima/viim-core
+
+pages:
+- Accueil: index.md
+- Guide d'utilisateur:
+    - Démarrer avec CATIMA: user-guide/index.md
+- Référence:
+    - Aperçu: reference/index.md
+    - Rôles d'utilisateurs: reference/user-roles.md
+- À propos:
+    - L'équipe CATIMA: about/team.md
+
+
+copyright: Copyright &copy; 2016 <a href="https://unil.ch">Université de Lausanne</a> - <a href="http://igd.unil.ch/ckaiser">Christian Kaiser</a>.
+
