@@ -67,7 +67,7 @@ class Admin::UsersController < Admin::BaseController
   end
 
   def user_created_message
-    "viim admin created! An invitation has been sent to #{@user.email}."
+    "CATIMA admin created! An invitation has been sent to #{@user.email}."
   end
 
   def user_updated_message

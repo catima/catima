@@ -1,13 +1,18 @@
-<% provide(:title, "This is viim!") %>
+<% provide(:title, "Bienvenue chez CATIMA") %>
 
-<p>Visit a catalog:</p>
-<ul>
-  <% @catalogs.each do |catalog| %>
-    <li><%= link_to(catalog.name, catalog_home_path(catalog)) %></li>
-  <% end %>
-</ul>
 
-<p>
-  Or manage these catalogs with
-  <%= link_to("viim admin", admin_dashboard_path) %>.
-</p>
+<div class="row">
+  <div class="col-xs-10">
+    <p>Visitez un catalogue::</p>
+    <ul>
+      <% @catalogs.each do |catalog| %>
+        <li><%= link_to(catalog.name, catalog_home_path(catalog)) %></li>
+      <% end %>
+    </ul>
+  </div>
+  <div class="col-xs-2 text-right">
+    <p>
+      <%= link_to("CATIMA admin", admin_dashboard_path) %>
+    </p>
+  </div>
+</div>

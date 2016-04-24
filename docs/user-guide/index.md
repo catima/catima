@@ -6,9 +6,7 @@ Le mieux pour apprendre à utiliser CATIMA est de créer un catalogue. Dans ce p
 
 <!-- **TODO** Il faudrait probablement d'abord faire une partie sur la modélisation de données. Décrire la structure du catalogue d'abord sur papier. -->
 
-Pour commencer, nous nous rendons sur [catima.unil.ch](https://catima.unil.ch), et nous devons d'abord nous authentifier (cliquer sur *viim admin*).
-
-> *viim* est l'ancien nom de CATIMA et il apparaît encore à plusieurs endroits dans l'interface. Ceci sera changé au fur et à mesure.
+Pour commencer, nous nous rendons sur [catima.unil.ch](https://catima.unil.ch), et nous devons d'abord nous authentifier (cliquer sur *CATIMA admin*).
 
 
 ## Créer un nouveau catalogue
