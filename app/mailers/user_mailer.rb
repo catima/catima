@@ -3,7 +3,7 @@ class UserMailer < Devise::Mailer
   default :template_path => "devise/mailer"
 
   # Override the devise action to set the appropriate locale
-  def reset_password_instructions(user, token)
+  def reset_password_instructions(user, token, opts={})
     I18n.locale = user.primary_language
     super
   ensure
