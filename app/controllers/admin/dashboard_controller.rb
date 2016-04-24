@@ -6,5 +6,6 @@ class Admin::DashboardController < Admin::BaseController
     @users = User.sorted
     @catalogs = Catalog.sorted
     @configuration = ::Configuration.first!
+    @template_storages = TemplateStorage.all
   end
 end

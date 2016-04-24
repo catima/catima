@@ -1,0 +1,12 @@
+<% provide(:title, "New template") %>
+
+<%= bootstrap_form_for([:admin, @template_storage]) do |f| %>
+
+  <%= render("common_form_fields", :f => f) %>
+
+  <hr>
+
+  <%= f.primary("Create template") %>
+  <%= link_to "Cancel", admin_dashboard_path, :class => "btn btn-link" %>
+
+<% end %>
