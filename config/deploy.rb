@@ -15,11 +15,11 @@ fetch(:mb_aptitude_packages).merge!(
 
 set :mb_dotenv_keys, %w(
   rails_secret_key_base
-  mandrill_username
-  mandrill_api_key
   rollbar_access_token
   sidekiq_web_username
   sidekiq_web_password
+  sendgrid_username
+  sendgrid_password
 )
 
 # Re-index items on every deploy, just to be safe

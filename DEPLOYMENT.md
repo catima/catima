@@ -24,7 +24,7 @@ Capistrano runs on your local machine and uses SSH to perform the deployment on 
 
 ### Performing a graceful deployment (no migrations)
 
-This will deploy the latest code from `development`. Make sure to `git push` your changes first, or they will not apply.
+This will deploy the latest code from `master`. Make sure to `git push` your changes first, or they will not apply.
 
 ```
 bundle exec cap production deploy
