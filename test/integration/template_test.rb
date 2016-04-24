@@ -11,6 +11,8 @@ class DatabaseTemplateTest < ActionDispatch::IntegrationTest
 
     visit("/")
     assert(page.has_content?(/My custom page/i))
+    tpl.path = 'home/index2'
+    tpl.save!
   end
 
   test "shows custom liquid template for home page" do
@@ -23,6 +25,8 @@ class DatabaseTemplateTest < ActionDispatch::IntegrationTest
 
     visit("/")
     assert(page.has_content?(/Hello WORLD has 5 letters!/i))
+    tpl.path = 'home/index3'
+    tpl.save!
   end
 end
 
