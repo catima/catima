@@ -78,6 +78,7 @@ Rails.application.routes.draw do
     resources :choice_sets, :path => "_choices", :except => :show
     resources :pages, :path => "_pages", :param => :slug
     resources :users, :path => "_users"
+    resources :menu_items, path: '_menu_items'
 
     # Data entry
     resources :items, :path => ":item_type_slug", :except => :show do
@@ -104,7 +105,9 @@ Rails.application.routes.draw do
               :param => :uuid,
               :only => [:new, :create, :show]
 
-    get ":slug" => "pages#show", :constraints => PagesController::Constraint
+    get ":slug" => "pages#show", 
+        :constraints => PagesController::Constraint,
+        :as => :page
 
     resources :items,
               :path => ":item_type_slug",

@@ -22,4 +22,9 @@ class MenuItem < ActiveRecord::Base
 
   validates_presence_of :catalog
   validates_presence_of :title
+
+
+  def self.sorted
+    order("menu_items.rank ASC")
+  end
 end

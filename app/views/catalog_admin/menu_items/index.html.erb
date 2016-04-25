@@ -1,0 +1,47 @@
+<% provide(:title, "Menu items") %>
+
+<% provide(:actions) do %>
+  <%= link_to(new_catalog_admin_menu_item_path) do %>
+    <%= fa_icon(:plus, :text => "New menu item") %>
+  <% end %>
+<% end %>
+
+<table class="table">
+  <thead>
+    <tr>
+      <th>Slug</th>
+      <th>Title</th>
+      <th>Rank</th>
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+    <% @menu_items.sorted.each do |menu_item| %>
+      <tr>
+        <td><%= menu_item.slug %></td>
+        <td><%= menu_item.title %></td>
+        <td><%= menu_item.rank %></td>
+        <td style="text-align: right">
+          <% if policy(menu_item).edit? %>
+            <%= link_to(
+                  fa_icon("pencil", :text => "Edit"),
+                  edit_catalog_admin_menu_item_path(catalog, menu_item),
+                  :class => "btn btn-default btn-xs") %>
+
+          <% end %>
+          <% if policy(menu_item).destroy? %>
+            <%= link_to(
+                  fa_icon("trash-o", :text => "Delete"),
+                  catalog_admin_menu_item_path(catalog, menu_item),
+                  :class => "btn btn-xs btn-text",
+                  :method => :delete,
+                  :data => {
+                    :confirm => "Are you sure you want to delete "\
+                                "“#{menu_item.title}”?"
+                  }) %>
+          <% end %>
+        </td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>

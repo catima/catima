@@ -1,0 +1,30 @@
+<%= f.text_field(:slug, :help => slug_help_text, :autofocus => true) %>
+<%= f.text_field(:title) %>
+
+<%= f.select(
+  :item_type_id,
+  options_from_collection_for_select(
+    @catalog.item_types, "id", "name", @menu_item.item_type_id
+  ),
+  { include_blank: true }
+) %>
+
+<%= f.select(
+  :page_id,
+  options_from_collection_for_select(
+    @catalog.pages, "id", "title", @menu_item.page_id
+  ),
+  { include_blank: true }
+) %>
+
+<%= f.text_field(:url) %>
+
+<%= f.number_field(:rank) %>
+
+<%= f.select(
+  :parent_id,
+  options_from_collection_for_select(
+    @catalog.menu_items, "id", "title", @menu_item.parent_id
+  ),
+  { include_blank: true }
+) %>

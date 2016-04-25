@@ -34,6 +34,8 @@ class Catalog < ActiveRecord::Base
   has_many :items
   has_many :item_types, -> { active }
   has_many :pages
+  has_many :menu_items
+
 
   def self.sorted
     order("LOWER(catalogs.name) ASC")

@@ -11,11 +11,30 @@
     </div>
     <div class="navbar-collapse collapse">
       <ul class="nav navbar-nav">
-        <% catalog.item_types.sorted.each do |type| %>
-          <%= navbar_link_to(
-                type.name_plural,
-                items_path(:item_type_slug => type),
-                :active_when => { :item_type_slug => type.slug }) %>
+
+        <% if catalog.menu_items.count > 0 %>
+
+          <% catalog.menu_items.sorted.each do |menu_item| %>
+            <li>
+              <% if not menu_item.item_type.nil? %>
+                <a href="<%= items_path(catalog, locale, menu_item.item_type.slug) %>"><%= menu_item.title %></a>
+              <% elsif not menu_item.page.nil? %>
+                <a href="<%= page_path(menu_item.page) %>"><%= menu_item.title %></a>
+              <% else %>
+                <a href="<%= menu_item.url %>"><%= menu_item.title %></a>
+              <% end %>
+            </li>
+          <% end %>
+
+        <% else %>
+
+          <% catalog.item_types.sorted.each do |type| %>
+            <%= navbar_link_to(
+                  type.name_plural,
+                  items_path(:item_type_slug => type),
+                  :active_when => { :item_type_slug => type.slug }) %>
+          <% end %>
+
         <% end %>
       </ul>
       <ul class="nav navbar-nav navbar-right">
