@@ -1,0 +1,37 @@
+# == Schema Information
+#
+# Table name: menu_items
+#
+#  catalog_id   :integer
+#  created_at   :datetime         not null
+#  id           :integer          not null, primary key
+#  item_type_id :integer
+#  page_id      :integer
+#  parent_id    :integer
+#  rank         :integer
+#  slug         :string
+#  title        :string
+#  updated_at   :datetime         not null
+#  url          :text
+#
+
+
+one:
+  slug: one
+  title: One
+  catalog_id: 1
+  item_type_id: 1
+  page_id:
+  url: 
+  parent_id: 
+  rank: 1
+
+two:
+  slug: two
+  title: Two
+  catalog_id: 1
+  item_type_id: 
+  page_id: 1
+  url: http://catima.unil.ch
+  parent_id: 
+  rank: 2

@@ -429,6 +429,44 @@ ALTER SEQUENCE items_id_seq OWNED BY items.id;
 
 
 --
+-- Name: menu_items; Type: TABLE; Schema: public; Owner: -; Tablespace: 
+--
+
+CREATE TABLE menu_items (
+    id integer NOT NULL,
+    catalog_id integer,
+    slug character varying,
+    title character varying,
+    item_type_id integer,
+    page_id integer,
+    url text,
+    parent_id integer,
+    rank integer,
+    created_at timestamp without time zone NOT NULL,
+    updated_at timestamp without time zone NOT NULL
+);
+
+
+--
+-- Name: menu_items_id_seq; Type: SEQUENCE; Schema: public; Owner: -
+--
+
+CREATE SEQUENCE menu_items_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+--
+-- Name: menu_items_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
+--
+
+ALTER SEQUENCE menu_items_id_seq OWNED BY menu_items.id;
+
+
+--
 -- Name: pages; Type: TABLE; Schema: public; Owner: -; Tablespace: 
 --
 
@@ -628,6 +666,13 @@ ALTER TABLE ONLY items ALTER COLUMN id SET DEFAULT nextval('items_id_seq'::regcl
 -- Name: id; Type: DEFAULT; Schema: public; Owner: -
 --
 
+ALTER TABLE ONLY menu_items ALTER COLUMN id SET DEFAULT nextval('menu_items_id_seq'::regclass);
+
+
+--
+-- Name: id; Type: DEFAULT; Schema: public; Owner: -
+--
+
 ALTER TABLE ONLY pages ALTER COLUMN id SET DEFAULT nextval('pages_id_seq'::regclass);
 
 
@@ -723,6 +768,14 @@ ALTER TABLE ONLY item_types
 
 ALTER TABLE ONLY items
     ADD CONSTRAINT items_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: menu_items_pkey; Type: CONSTRAINT; Schema: public; Owner: -; Tablespace: 
+--
+
+ALTER TABLE ONLY menu_items
+    ADD CONSTRAINT menu_items_pkey PRIMARY KEY (id);
 
 
 --
@@ -897,6 +950,34 @@ CREATE INDEX index_items_on_reviewer_id ON items USING btree (reviewer_id);
 
 
 --
+-- Name: index_menu_items_on_catalog_id; Type: INDEX; Schema: public; Owner: -; Tablespace: 
+--
+
+CREATE INDEX index_menu_items_on_catalog_id ON menu_items USING btree (catalog_id);
+
+
+--
+-- Name: index_menu_items_on_item_type_id; Type: INDEX; Schema: public; Owner: -; Tablespace: 
+--
+
+CREATE INDEX index_menu_items_on_item_type_id ON menu_items USING btree (item_type_id);
+
+
+--
+-- Name: index_menu_items_on_page_id; Type: INDEX; Schema: public; Owner: -; Tablespace: 
+--
+
+CREATE INDEX index_menu_items_on_page_id ON menu_items USING btree (page_id);
+
+
+--
+-- Name: index_menu_items_on_parent_id; Type: INDEX; Schema: public; Owner: -; Tablespace: 
+--
+
+CREATE INDEX index_menu_items_on_parent_id ON menu_items USING btree (parent_id);
+
+
+--
 -- Name: index_pages_on_catalog_id; Type: INDEX; Schema: public; Owner: -; Tablespace: 
 --
 
@@ -952,6 +1033,14 @@ ALTER TABLE ONLY catalog_permissions
 
 ALTER TABLE ONLY pages
     ADD CONSTRAINT fk_rails_06ecc03a0b FOREIGN KEY (reviewer_id) REFERENCES users(id);
+
+
+--
+-- Name: fk_rails_0bf5ba9c7e; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY menu_items
+    ADD CONSTRAINT fk_rails_0bf5ba9c7e FOREIGN KEY (catalog_id) REFERENCES catalogs(id);
 
 
 --
@@ -1011,6 +1100,14 @@ ALTER TABLE ONLY choices
 
 
 --
+-- Name: fk_rails_55a0ee63e5; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY menu_items
+    ADD CONSTRAINT fk_rails_55a0ee63e5 FOREIGN KEY (parent_id) REFERENCES menu_items(id);
+
+
+--
 -- Name: fk_rails_58a0bde7fb; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
@@ -1043,6 +1140,14 @@ ALTER TABLE ONLY fields
 
 
 --
+-- Name: fk_rails_7075222f77; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY menu_items
+    ADD CONSTRAINT fk_rails_7075222f77 FOREIGN KEY (page_id) REFERENCES pages(id);
+
+
+--
 -- Name: fk_rails_73cabaed53; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
@@ -1072,6 +1177,14 @@ ALTER TABLE ONLY users
 
 ALTER TABLE ONLY choices
     ADD CONSTRAINT fk_rails_baa6b9a371 FOREIGN KEY (choice_set_id) REFERENCES choice_sets(id);
+
+
+--
+-- Name: fk_rails_d05e957707; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY menu_items
+    ADD CONSTRAINT fk_rails_d05e957707 FOREIGN KEY (item_type_id) REFERENCES item_types(id);
 
 
 --
@@ -1185,4 +1298,6 @@ INSERT INTO schema_migrations (version) VALUES ('20151212000308');
 INSERT INTO schema_migrations (version) VALUES ('20151214213046');
 
 INSERT INTO schema_migrations (version) VALUES ('20160307163846');
+
+INSERT INTO schema_migrations (version) VALUES ('20160425072020');
 
