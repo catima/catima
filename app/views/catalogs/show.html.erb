@@ -1,8 +1,17 @@
-<% provide(:title, @catalog.name) %>
 <% provide(:extra_nav) do %>
   <%= render("simple_search/form") %>
 <% end %>
 
-<p>
-  <%= t(".welcome", :catalog => @catalog.name) %>
-</p>
+<% if @catalog.custom_root_page.nil? %>
+
+  <% provide(:title, @catalog.name) %>
+  <p>
+    <%= t(".welcome", :catalog => @catalog.name) %>
+  </p>
+
+<% else %>
+
+  <% provide(:title, @catalog.custom_root_page.title) %>
+  <%= raw(@catalog.custom_root_page.content) %>
+
+<% end %>

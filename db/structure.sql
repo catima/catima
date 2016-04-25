@@ -140,7 +140,8 @@ CREATE TABLE catalogs (
     requires_review boolean DEFAULT false NOT NULL,
     deactivated_at timestamp without time zone,
     created_at timestamp without time zone NOT NULL,
-    updated_at timestamp without time zone NOT NULL
+    updated_at timestamp without time zone NOT NULL,
+    custom_root_page_id integer
 );
 
 
@@ -1148,6 +1149,14 @@ ALTER TABLE ONLY menu_items
 
 
 --
+-- Name: fk_rails_72a75a77ca; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY catalogs
+    ADD CONSTRAINT fk_rails_72a75a77ca FOREIGN KEY (custom_root_page_id) REFERENCES pages(id);
+
+
+--
 -- Name: fk_rails_73cabaed53; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
@@ -1300,4 +1309,6 @@ INSERT INTO schema_migrations (version) VALUES ('20151214213046');
 INSERT INTO schema_migrations (version) VALUES ('20160307163846');
 
 INSERT INTO schema_migrations (version) VALUES ('20160425072020');
+
+INSERT INTO schema_migrations (version) VALUES ('20160425125350');
 

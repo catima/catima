@@ -15,3 +15,13 @@
       ) do %>
   <%= f.check_box(:requires_review) %>
 <% end %>
+
+<hr>
+
+<%= f.select(
+  :custom_root_page_id,
+  options_from_collection_for_select(
+    @catalog.pages, "id", "title", @catalog.custom_root_page_id
+  ),
+  { include_blank: true }
+) %>
