@@ -7,7 +7,7 @@ class Field::ImagePresenter < Field::FilePresenter
 
     srcset = "#{src_1x} 1x,#{src_2x} 2x"
     options = { :srcset => srcset, :alt => attachment_filename(item) }
-    image_tag(src_1x, options.merge(self.options))
+    content_tag(:a, image_tag(src_1x, options.merge(self.options)), { href:file_url(item), target:"_blank" })
   end
 
   private

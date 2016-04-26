@@ -5,6 +5,6 @@ class Field::FilePresenterTest < ActionView::TestCase
     author = items(:one_author_stephen_king)
     bio_field = fields(:one_author_bio)
     presenter = Field::FilePresenter.new(self, author, bio_field)
-    assert_equal("bio.doc, 192 KB", presenter.value)
+    assert_match("bio.doc</a>, 192 KB", presenter.value)
   end
 end

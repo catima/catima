@@ -19,17 +19,21 @@ class Field::FilePresenter < FieldPresenter
 
   def file_info
     return unless (name = attachment_filename(item))
-    info = [name]
+    info = ["<a href=\"#{file_url(item)}\" target=\"_blank\"><i class=\"fa fa-file\"></i> #{name}</a>"]
     info << number_to_human_size(attachment_size(item), :prefix => :si)
-    info.join(", ")
+    info.join(", ").html_safe
   end
 
   def existing_file(form)
     return unless (image = value)
     [
-      content_tag(:p, image),
+      content_tag(:p, content_tag(:a, image, { href:file_url(item), target:"_blank" })),
       form.check_box("remove_#{uuid}", :label => "Remove this file")
     ].join.html_safe
+  end
+
+  def file_url(item)
+    item.behaving_as_type.public_send("#{uuid}_url")
   end
 
   def unsaved_file
