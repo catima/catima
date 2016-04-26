@@ -29,3 +29,6 @@
 # Ignore catalog-specific overrides
 /catalogs/
 /public/upload/
+
+# Ignore generated documentation
+/public/doc/

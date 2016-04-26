@@ -1,0 +1,2 @@
+#!/usr/bin/env bash
+mkdocs build -d public/doc -c -t mkdocs
