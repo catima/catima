@@ -1,0 +1,580 @@
+{
+  "type": "viim-catalog",
+  "name": "Viatimages",
+  "slug": "viatimages5",
+  "primary_language": "fr",
+  "other_languages": ["en", "de", "it"],
+  "requires_review": true,
+  "structure": {
+    "choice_sets": [
+      {
+        "slug": "domaines",
+        "name": {"fr": "Domaines", "de": "Domänen", "en": "Domains", "it": "Domani"},
+        "choices": [
+          { 
+            "name": { "fr": "Agriculture, vie rurale, chasse, pêche, sylviculture", "de": "Landwirtschaft, Landleben, Jagd, Fischerei, Forstwirtschaft", "en": "Agriculture, rural life, hunting, fishing, forestry", "it": "Agricoltura, vita rurale, caccia, pesca, silvicoltura" },
+            "long_name": { "fr": "Agriculture, vie rurale, chasse, pêche, sylviculture", "de": "Landwirtschaft, Landleben, Jagd, Fischerei, Forstwirtschaft", "en": "Agriculture, rural life, hunting, fishing, forestry", "it": "Agricoltura, vita rurale, caccia, pesca, silvicoltura" }
+          }, { 
+            "name": { "fr": "Alimentation et boissons", "de": "Lebensmittel und Getränke", "en": "Food and drink", "it": "Alimentazione e bevande" },
+            "long_name": { "fr": "Alimentation et boissons", "de": "Lebensmittel und Getränke", "en": "Food and drink", "it": "Alimentazione e bevande" }
+          }, { 
+            "name": { "fr": "Animaux", "de": "Tiere", "en": "Animals", "it": "Animali" },
+            "long_name": { "fr": "Animaux", "de": "Tiere", "en": "Animals", "it": "Animali" }
+          }, { 
+            "name": { "fr": "Archéologie, préhistoire, protohistoire", "de": "Archeologie, Vorgeschichte, Frühgeschichte", "en": "Archeology, prehistory, protohistory", "it": "Archeologia, preistoria, protostoria" },
+            "long_name": { "fr": "Archéologie, préhistoire, protohistoire", "de": "Archeologie, Vorgeschichte, Frühgeschichte", "en": "Archeology, prehistory, protohistory", "it": "Arheologia, preistoria, protostoria" }
+          }, { 
+            "name": { "fr": "Architecture et monuments", "de": "Architekture und Monumente", "en": "Architecture and monuments", "it": "Architettura e monumenti" },
+            "long_name": { "fr": "Architecture et monuments (civile, militaire, religieuse, etc.)", "de": "Architekture und Monumente", "en": "Architecture and monuments", "it": "Architettura e monumenti" }
+          }, { 
+            "name": { "fr": "Arts et artisanat", "de": "Kunst und Handwerk", "en": "Arts and crafts", "it": "Arte e artigianato" },
+            "long_name": { "fr": "Arts et artisanat (sculpture, peinture, etc.)", "de": "Kunst und Handwerk", "en": "Arts and crafts", "it": "Arte e artigianato" }
+          }, { 
+            "name": { "fr": "Événements et phénomènes naturels", "de": "Naturereignisse und -phänomene", "en": "Natural events and phenomena", "it": "Avvenimenti e fenomeni naturali" },
+            "long_name": { "fr": "Événements et phénomènes naturels (éruptions, avalanches, naufrages, etc.)", "de": "Naturereignisse und -phänomene", "en": "Natural events and phenomena", "it": "Avvenimenti e fenomeni naturali" }
+          }, { 
+            "name": { "fr": "Économie", "de": "Wirtschaft", "en": "Economy", "it": "Economia" },
+            "long_name": { "fr": "Économie (industrie, commerce, marché et finances, monnaie, trésor, etc.)", "de": "Wirtschaft", "en": "Economy", "it": "Economia" }
+          }, { 
+            "name": { "fr": "Justice et criminalité", "de": "Justiz und Kriminalität", "en": "Crime and justice", "it": "Giustizia e criminalità" },
+            "long_name": { "fr": "Justice et criminalité (vols, meurtres, brigandage, exécutions, etc.)", "de": "Justiz und Kriminalität", "en": "Crime and justice", "it": "Giustizia e criminalità" }
+          }, { 
+            "name": { "fr": "Culture, érudition, éducation", "de": "Kulture, Gelehrsamkeit und Bildung", "en": "Culture, learning, education", "it": "Cultura, educazione, erudizione" },
+            "long_name": { "fr": "Culture, érudition, éducation", "de": "Kulture, Gelehrsamkeit und Bildung", "en": "Culture, learning, education", "it": "Cultura, educzione, erudizione" }
+          }, { 
+            "name": { "fr": "Paysage", "de": "Landschaft", "en": "Landscape", "it": "Paesaggio" },
+            "long_name": { "fr": "Paysage (environnement, climat, météo, lacs, fleuves, cascades, etc.)", "de": "Landschaft", "en": "Landscape", "it": "Paesaggio" }
+          }, { 
+            "name": { "fr": "État et politique", "de": "Staat und Politik", "en": "State and politics", "it": "Stato e politica" },
+            "long_name": { "fr": "État et politique (gouvernement, diplomatie, droit civile, administration, etc.)", "de": "Staat und Politik", "en": "State and politics", "it": "Stato e politica" }
+          }, { 
+            "name": { "fr": "Espaces et territoires", "de": "Räume und Territorien", "en": "Space and territory", "it": "Spazi e territori" },
+            "long_name": { "fr": "Espaces et territoires (frontières, lieux saints, sites et lieux dits, villages, ports, jardins, parcs, etc.)", "de": "Räume und Territorien", "en": "Space and territory", "it": "Spazi e territori" }
+          }, { 
+            "name": { "fr": "Peuples, groupe social, individu", "de": "Völker, Soziale Gruppen, Individuen", "en": "Populations, social groups, individuals", "it": "Popoli, gruppi sociali, individui" },
+            "long_name": { "fr": "Peuples, groupe social, individu (contacts, migrations, famille, clan, tribu, esclaves, prisonniers, chefs, etc.)", "de": "Völker, Soziale Gruppen, Individuen", "en": "Populations, social groups, individuals", "it": "Popoli, gruppi sociali, individui" }
+          }, { 
+            "name": { "fr": "Habillement", "de": "Bekleidung", "en": "Clothing", "it": "Abbigliamento" },
+            "long_name": { "fr": "Habillement (costumes, modes, accessoires, maquillage, tatou, etc.)", "de": "Bekleidung", "en": "Clothing", "it": "Abbigliamento" }
+          }, { 
+            "name": { "fr": "Médecine, hygiène, santé", "de": "Medizin, Hygiene, Gesundheit", "en": "Medicine, hygiene, health", "it": "Medicina, igiene, salute" },
+            "long_name": { "fr": "Médecine, hygiène, santé", "de": "Medizin, Hygiene, Gesundheit", "en": "Medicine, hygiene, health", "it": "Medicina, igiene, salute" }
+          }, { 
+            "name": { "fr": "Langues, communication, signes", "de": "Sprache, Kommunikation, Zeichen", "en": "Languages, communication, signs", "it": "Lingua, comunicazione e segni" },
+            "long_name": { "fr": "Langues, communication, signes (écriture, symbole, inscription, geste, etc.)", "de": "Sprache, Kommunikation, Zeichen", "en": "Languages, communication, signs", "it": "Lingua, comunicazione e segni" }
+          }, { 
+            "name": { "fr": "Machines, techniques, ustensiles, objets", "de": "Maschinen, Techniken, Werkzeuge, Objekte", "en": "Machines, technology, utensiles, objects", "it": "Macchine, tecniche, utensili, oggetti" },
+            "long_name": { "fr": "Machines, techniques, ustensiles, objets (armes, instruments, outils, etc.)", "de": "Maschinen, Techniken, Werkzeuge, Objekte", "en": "Machines, technology, utensiles, objects", "it": "Macchine, tecniche, utensili, oggetti" }
+          }, { 
+            "name": { "fr": "Métiers, profession, travail", "de": "Gewerbe, Berufe, Arbeit", "en": "Trades, professions, work", "it": "Mestieri, professioni, lavoro" },
+            "long_name": { "fr": "Métiers, profession, travail", "de": "Gewerbe, Berufe, Arbeit", "en": "Trades, professions, work", "it": "Mestieri, professioni, lavoro" }
+          }, { 
+            "name": { "fr": "Minéraux", "de": "Mineralien", "en": "Minerals", "it": "Minerali" },
+            "long_name": { "fr": "Minéraux", "de": "Mineralien", "en": "Minerals", "it": "Minerali" }
+          }, { 
+            "name": { "fr": "Religions, mythes, croyances", "de": "Religionen, Mythen, Glauben", "en": "Religions, mythology, beliefs", "it": "Religioni, miti, credenze" },
+            "long_name": { "fr": "Religions, mythes, croyances (rites, cérémonie, phénomène surnaturel, etc.)", "de": "Religionen, Mythen, Glauben", "en": "Religions, mythology, beliefs", "it": "Religioni, miti, credenze" }
+          }, { 
+            "name": { "fr": "Sciences naturelles", "de": "Naturwissenschaften", "en": "Natural sciences", "it": "Scienze naturali" },
+            "long_name": { "fr": "Sciences naturelles (sciences de la terre et sciences de la vie )", "de": "Naturwissenschaften", "en": "Natural sciences", "it": "Scienze naturali" }
+          }, { 
+            "name": { "fr": "Conflits", "de": "Konflikte", "en": "Conflict", "it": "Conflitti" },
+            "long_name": { "fr": "Conflits (armée, guerre, rébellion, émeute, etc.)", "de": "Konflikte", "en": "Conflict", "it": "Conflitti" }
+          }, { 
+            "name": { "fr": "Sexualité et érotisme", "de": "Sexualität und Erotik", "en": "Sexuality and eroticism", "it": "Sessualità e erotismo" },
+            "long_name": { "fr": "Sexualité et érotisme", "de": "Sexualität und Erotik", "en": "Sexuality and eroticism", "it": "Sessualità e erotismo" }
+          }, { 
+            "name": { "fr": "Sport, compétition, jeux", "de": "Sport, Wettkampf, Spiele", "en": "Sport, competition, games", "it": "Sport, competizione, giochi" },
+            "long_name": { "fr": "Sport, compétition, jeux", "de": "Sport, Wettkampf, Spiele", "en": "Sport, competition, games", "it": "Sport, competizione, giochi" }
+          }, { 
+            "name": { "fr": "Transports et routes", "de": "Transport und Strassen", "en": "Transport and roads", "it": "Trasporti e strade" },
+            "long_name": { "fr": "Transports et routes (y compris voies et moyens de communication)", "de": "Transport und Strassen", "en": "Transport and roads", "it": "Trasporti e strade" }
+          }, { 
+            "name": { "fr": "Us et Coutumes", "de": "Sitten und Gebräuche", "en": "Tradition and customs", "it": "Usi e costumi" },
+            "long_name": { "fr": "Us et Coutumes (musique, danses, spectacles, fêtes, cannibalisme, etc.)", "de": "Sitten und Gebräuche", "en": "Tradition and customs", "it": "Usi e costumi" }
+          }, { 
+            "name": { "fr": "Végétaux", "de": "Pflanzen", "en": "Plants", "it": "Vegetali" },
+            "long_name": { "fr": "Végétaux", "de": "Pflanzen", "en": "Plants", "it": "Vegetali" }
+          }, { 
+            "name": { "fr": "Vie domestique et quotidienne", "de": "Tägliches und häusliches Leben", "en": "Daily and domestic life", "it": "Vita domestica e quotidiana" },
+            "long_name": { "fr": "Vie domestique et quotidienne (logement, mobiliers, textile maison, etc.,)", "de": "Tägliches und häusliches Leben", "en": "Daily and domestic life", "it": "Vita domestica e quotidiana" }
+          }, { 
+            "name": { "fr": "Voyage et voyageur", "de": "Reisen und Reisende", "en": "Travel and travellers", "it": "Viaggi e viaggiatori" },
+            "long_name": { "fr": "Voyage et voyageur (missions, explorations, tourisme, etc.)", "de": "Reisen und Reisende", "en": "Travel and travellers", "it": "Viaggi e viaggiatori" }
+          }, { 
+            "name": { "fr": "Sciences exactes", "de": "Genaue Wissenschaften", "en": "Exact sciences", "it": "Scienze esatte" },
+            "long_name": { "fr": "Sciences exactes", "de": "Genaue Wissenschaften", "en": "Exact sciences", "it": "Scienze esatte" }
+          }, { 
+            "name": { "fr": "Histoire et événements historiques", "de": "Geschichte und historische Ereignisse", "en": "History and historical events", "it": "Storia e avvenimenti storici" },
+            "long_name": { "fr": "Histoire et événements historiques", "de": "Geschichte und historische Ereignisse", "en": "History and historical events", "it": "Storia e avvenimenti storici" }
+          }, { 
+            "name": { "fr": "Urbanisme et vie urbaine", "de": "Urbanismus und Stadtleben", "en": "Town planning and urban life", "it": "Urbanistica e vita urbana" },
+            "long_name": { "fr": "Urbanisme et vie urbaine", "de": "Urbanismus und Stadtleben", "en": "Town planning and urban life", "it": "Urbanismo e vita urbana" }
+          }, { 
+            "name": { "fr": "Géographie, cartographie et topographie", "de": "Geographie, Kartographie und Topographie", "en": "Geography, cartography and topography", "it": "Geografia, cartografia, topografia" },
+            "long_name": { "fr": "Géographie, cartographie et topographie", "de": "Geographie, Kartographie und Topographie", "en": "Geography, cartography and topography", "it": "Geografia, cartografia, topografia" }
+          }, { 
+            "name": { "fr": "Corps humain", "de": "Menschlicher Körper", "en": "Human body", "it": "Corpo umano" },
+            "long_name": { "fr": "Corps humain", "de": "Menschlicher Körper", "en": "Human body", "it": "Corpo umano" }
+          }
+        ]
+      },{
+        "slug": "types-dc",
+        "name": {"fr": "Types DC", "de": "DC-Typen", "en": "DC types", "it": "Tipi DC"},
+        "choices": [
+          { 
+            "name": { "fr": "Image", "de": "Bild", "en": "Image", "it": "Imagini" }
+          },{
+            "name": { "fr": "Texte", "de": "Text", "en": "Text", "it": "Testo" }
+          }
+        ]
+      },{
+        "slug": "pays",
+        "name": {"fr": "Pays", "de": "Pays", "en": "Pays", "it": "Pays"},
+        "choices": [
+          { "name": {"fr": "Belgique", "en": "Belgium", "de": "Belgique", "it": "Belgio"} },
+          { "name": {"fr": "Canada", "en": "Canada",  "de": "Canada", "it": "Canada"} },
+          { "name": {"fr": "Suisse", "en": "Switzerland", "de": "Suisse", "it": "Svizzera"} },
+          { "name": {"fr": "Espagne", "en": "Spain", "de": "Espagne", "it":"Spagna"} },
+          { "name": {"fr": "France", "en": "France",  "de": "France", "it": "Francia"} },
+          { "name": {"fr": "Italie", "en": "Italy", "de": "Italie", "it": "Italia"} }
+        ]
+      },{
+        "slug": "langues",
+        "name": {"fr": "Langues", "de": "Langues", "en": "Langues", "it": "Langues"},
+        "choices": [
+          { "name": {"fr": "Anglais", "de": "Englisch", "en": "English", "it": "Inglese"} },
+          { "name": {"fr": "Français", "de": "Französisch", "en": "French", "it": "Francese"} },
+          { "name": {"fr": "Allemand", "de": "Deutsch", "en": "German", "it": "Tedesco"} },
+          { "name": {"fr": "Romanche", "de": "Romanisch", "en": "Romanch", "it": "Romancio"} },
+          { "name": {"fr": "Italien", "de": "Italienisch", "en": "Italian", "it": "Italiano"} },
+          { "name": {"fr": "Latin", "de": "Lateinisch", "en": "Latin", "it": "Latino"} },
+          { "name": {"fr": "Polonais", "de": "Polnisch", "en": "Polish", "it": "Polacco"} },
+          { "name": {"fr": "Espagnol", "de": "Spanisch", "en": "Spanish", "it": "Spagnolo"} },
+          { "name": {"fr": "Afrikaans", "de": "Afrikaans", "en": "Afrikaans", "it": "Afrikaans"} },
+          { "name": {"fr": "Catalan", "de": "Katalanisch", "en": "Catalan", "it": "Catalano"} },
+          { "name": {"fr": "Corse", "de": "Korsisch", "en": "Corsican", "it": "Corso"} },
+          { "name": {"fr": "Tchèque", "de": "Tschechisch", "en": "Czech", "it": "Ceco"} },
+          { "name": {"fr": "Gallois", "de": "Wallisisch", "en": "Welsh", "it": "Gallese"} },
+          { "name": {"fr": "Danois", "de": "Dänisch", "en": "Fanish", "it": "Danese"} },
+          { "name": {"fr": "Esperanto", "de": "Esperanto", "en": "Esperanto", "it": "Esperanto"} },
+          { "name": {"fr": "Estonien", "de": "Estnisch", "en": "Estonian", "it": "Estone"} },
+          { "name": {"fr": "Basque", "de": "Baskisch", "en": "Basque", "it": "Basco"} },
+          { "name": {"fr": "Finlandais", "de": "Finnisch", "en": "Finnish", "it": "Finlandese"} },
+          { "name": {"fr": "Philippin", "de": "Phillippinisch", "en": "Filipino", "it": "Filippino"} },
+          { "name": {"fr": "Gaélique", "de": "Gälisch", "en": "Gaelic", "it": "Gaelico"} },
+          { "name": {"fr": "Galice", "de": "Galizisch", "en": "Galician", "it": "Galiziano"} },
+          { "name": {"fr": "Croate", "de": "Kroatisch", "en": "Croatian", "it": "Croato"} },
+          { "name": {"fr": "Hongrois", "de": "Ungarisch", "en": "Hungarian", "it": "Ungherese"} },
+          { "name": {"fr": "Luxembourgeois", "de": "Luxemburgisch", "en": "Luxembourgish", "it": "Lussemburghese"} },
+          { "name": {"fr": "Lituanien", "de": "Lituanisch", "en": "Lithuanian", "it": "Lituano"} },
+          { "name": {"fr": "Néerlandais", "de": "Holländisch", "en": "Dutch", "it": "Olandese"} },
+          { "name": {"fr": "Norvégien", "de": "Norwegisch", "en": "Norwegian", "it": "Norvegese"} },
+          { "name": {"fr": "Portugais", "de": "Portugiesisch", "en": "Portuguese", "it": "Portoghese"} },
+          { "name": {"fr": "Slovène", "de": "Slovenisch", "en": "Slovenian", "it": "Sloveno"} },
+          { "name": {"fr": "Roumain", "de": "Rumänisch", "en": "Romanian", "it": "Rumeno"} },
+          { "name": {"fr": "Sundanais", "de": "Sundanesisch", "en": "Sundanese", "it": "Sudanese"} },
+          { "name": {"fr": "Suédois", "de": "Schwedisch", "en": "Swedish", "it": "Svedese"} },
+          { "name": {"fr": "Turque", "de": "Türkisch", "en": "Turkish", "it": "Turco"} },
+          { "name": {"fr": "Vietnamien", "de": "Vietnamesisch", "en": "Vietnamese", "it": "Vietnamita"} },
+          { "name": {"fr": "Arabe", "de": "Arabisch", "en": "Arabic", "it": "Arabo"} },
+          { "name": {"fr": "Chinois", "de": "Chinesisch", "en": "Chinese", "it": "Cinese"} },
+          { "name": {"fr": "Russe", "de": "Russisch", "en": "Russian", "it": "Russo"} },
+          { "name": {"fr": "Grec", "de": "Griechisch", "en": "Greek", "it": "Greco"} },
+          { "name": {"fr": "Hindi", "de": "Hindi", "en": "Hindi", "it": "Indi"} },
+          { "name": {"fr": "Serbe", "de": "Serbisch", "en": "Serbian", "it": "Serbo"} },
+          { "name": {"fr": "Japonais", "de": "Japanisch", "en": "Japanese", "it": "Giapponese"} },
+          { "name": {"fr": "Hébreu", "de": "Hebräisch", "en": "Hebrew", "it": "Ebraico"} },
+          { "name": {"fr": "Persan", "de": "Persisch", "en": "Persian", "it": "Persiano"} }
+
+        ]
+      }
+    ],
+    "item_types": [
+      {
+        "slug": "etablissements",
+        "name": {"fr": "Établissement", "en": "Établissement", "de": "Établissement", "it": "Établissement"},
+        "name_plural": {"fr": "Établissements", "en": "Établissements", "de": "Établissements", "it": "Établissements"},
+        "fields": [
+          {
+            "slug": "nom",
+            "type": "text",
+            "name": {"fr": "Nom", "en": "Nom", "de": "Nom", "it": "Nom"},
+            "name_plural": {"fr": "Noms", "en": "Noms", "de": "Noms", "it": "Noms"},
+            "comment": "",
+            "primary": true,
+            "display_in_list": true,
+            "multiple": false,
+            "required": true,
+            "i18n": true
+          },{
+            "slug": "abbreviation",
+            "type": "text",
+            "name": {"fr": "Abbréviation", "en": "Abbréviation", "de": "Abbréviation", "it": "Abbréviation"},
+            "name_plural": {"fr": "Abbréviations", "en": "Abbréviations", "de": "Abbréviations", "it": "Abbréviations"},
+            "comment": "",
+            "primary": false,
+            "display_in_list": false,
+            "multiple": false,
+            "required": false,
+            "i18n": true
+          },{
+            "slug": "adresse",
+            "type": "text",
+            "name": {"fr": "Adresse", "en": "Adresse", "de": "Adresse", "it": "Adresse"},
+            "name_plural": {"fr": "Adresses", "en": "Adresses", "de": "Adresses", "it": "Adresses"},
+            "comment": "",
+            "primary": false,
+            "display_in_list": false,
+            "multiple": false,
+            "required": false,
+            "i18n": false
+          },{
+            "slug": "npa",
+            "type": "text",
+            "name": {"fr": "Code postal", "en": "Code postal", "de": "Code postal", "it": "Code postal"},
+            "name_plural": {"fr": "Codes postaux", "en": "Codes postaux", "de": "Codes postaux", "it": "Codes postaux"},
+            "comment": "",
+            "primary": false,
+            "display_in_list": false,
+            "multiple": false,
+            "required": false,
+            "i18n": false
+          },{
+            "slug": "ville",
+            "type": "text",
+            "name": {"fr": "Ville", "en": "Ville", "de": "Ville", "it": "Ville"},
+            "name_plural": {"fr": "Villes", "en": "Villes", "de": "Villes", "it": "Villes"},
+            "comment": "",
+            "primary": false,
+            "display_in_list": false,
+            "multiple": false,
+            "required": false,
+            "i18n": false
+          },{
+            "slug": "pays",
+            "type": "choice",
+            "choice_set": "pays",
+            "name": {"fr": "Pays", "en": "Pays", "de": "Pays", "it": "Pays"},
+            "name_plural": {"fr": "Pays", "en": "Pays", "de": "Pays", "it": "Pays"},
+            "comment": "",
+            "primary": false,
+            "display_in_list": false,
+            "multiple": false,
+            "required": false,
+            "i18n": false
+          },{
+            "slug": "email",
+            "type": "email",
+            "name": {"fr": "E-mail", "en": "E-mail", "de": "E-mail", "it": "E-mail"},
+            "name_plural": {"fr": "E-mail", "en": "E-mail", "de": "E-mail", "it": "E-mail"},
+            "comment": "",
+            "primary": false,
+            "display_in_list": false,
+            "multiple": false,
+            "required": false,
+            "i18n": false
+          },{
+            "slug": "web",
+            "type": "url",
+            "name": {"fr": "Web", "en": "Web", "de": "Web", "it": "Web"},
+            "name_plural": {"fr": "Web", "en": "Web", "de": "Web", "it": "Web"},
+            "comment": "",
+            "primary": false,
+            "display_in_list": false,
+            "multiple": false,
+            "required": false,
+            "i18n": false
+          },{
+            "slug": "contact",
+            "type": "text",
+            "name": {"fr": "Contact", "en": "Contact", "de": "Contact", "it": "Contact"},
+            "name_plural": {"fr": "Contact", "en": "Contact", "de": "Contact", "it": "Contact"},
+            "comment": "",
+            "primary": false,
+            "display_in_list": false,
+            "multiple": false,
+            "required": false,
+            "i18n": false
+          },{
+            "slug": "remarques",
+            "type": "text",
+            "name": {"fr": "Remarques", "en": "Remarques", "de": "Remarques", "it": "Remarques"},
+            "name_plural": {"fr": "Remarques", "en": "Remarques", "de": "Remarques", "it": "Remarques"},
+            "comment": "",
+            "primary": false,
+            "display_in_list": false,
+            "multiple": false,
+            "required": false,
+            "i18n": false
+          }
+        ]
+      }, {
+        "slug": "corpus",
+        "name": {"fr": "Corpus", "en": "Corpus", "de": "Corpus", "it": "Corpus"},
+        "name_plural": {"fr": "Corpus", "en": "Corpus", "de": "Corpus", "it": "Corpus"},
+        "fields": [
+          {
+            "slug": "pid",
+            "type": "int",
+            "name": {"fr": "Permanent ID", "en": "Permanent ID", "de": "Permanent ID", "it": "Permanent ID"},
+            "name_plural": {"fr": "Permanent ID", "en": "Permanent ID", "de": "Permanent ID", "it": "Permanent ID"},
+            "comment": "",
+            "primary": false,
+            "display_in_list": true,
+            "multiple": false,
+            "required": true
+          },{
+            "slug": "titre-original",
+            "type": "text",
+            "name": {"fr": "Titre original", "en": "Original title", "de": "Ursprünglicher Titel", "it": "Titolo originale"},
+            "name_plural": {"fr": "Titres originiaux", "en": "Original titles", "de": "Ursrpüngliche Titel", "it": "Titoli orignali"},
+            "comment": "",
+            "primary": true,
+            "display_in_list": true,
+            "multiple": false,
+            "required": true,
+            "i18n": false
+          },{
+            "slug": "titre",
+            "type": "text",
+            "name": {"fr": "Titre", "en": "Title", "de": "Titel", "it": "Titolo"},
+            "name_plural": {"fr": "Titres", "en": "Titles", "de": "Titel", "it": "Titoli"},
+            "comment": "",
+            "primary": false,
+            "display_in_list": false,
+            "multiple": false,
+            "required": false,
+            "i18n": true
+          },{
+            "slug": "titre-long",
+            "type": "text",
+            "name": {"fr": "Titre", "en": "Title", "de": "Titel", "it": "Titolo"},
+            "name_plural": {"fr": "Titres", "en": "Titles", "de": "Titel", "it": "Titoli"},
+            "comment": "",
+            "primary": true,
+            "display_in_list": true,
+            "multiple": false,
+            "required": true,
+            "i18n": true
+          },{
+            "slug": "type-dc",
+            "type": "choice",
+            "choice_set": "types-dc",
+            "name": {"fr": "Type DC", "en": "DC type", "de": "DC-Typ", "it": "Tipo DC"},
+            "name_plural": {"fr": "Types DC", "en": "DC types", "de": "DC-Typen", "it": "Tipi DC"},
+            "comment": "",
+            "primary": false,
+            "display_in_list": false,
+            "multiple": false,
+            "required": true
+          },{
+            "slug": "etablissement",
+            "type": "reference",
+            "reference": "etablissements",
+            "name": {"fr": "Établissement", "en": "Établissement", "de": "Établissement", "it": "Établissement"},
+            "name_plural": {"fr": "Établissements", "en": "Établissements", "de": "Établissements", "it": "Établissements"},
+            "comment": "",
+            "primary": false,
+            "display_in_list": false,
+            "multiple": false,
+            "required": false
+          },{
+            "slug": "cote",
+            "type": "text",
+            "name": {"fr": "Cote", "en": "Cote", "de": "Cote", "it": "Cote"},
+            "name_plural": {"fr": "Cote", "en": "Cote", "de": "Cote", "it": "Cote"},
+            "comment": "",
+            "primary": false,
+            "display_in_list": false,
+            "multiple": false,
+            "required": false
+          },{
+            "slug": "url-catalogue",
+            "type": "url",
+            "name": {"fr": "Numéro d'inventaire DC", "en": "Numéro d'inventaire DC", "de": "Numéro d'inventaire DC", "it": "Numéro d'inventaire DC"},
+            "name_plural": {"fr": "Numéro d'inventaire DC", "en": "Numéro d'inventaire DC", "de": "Numéro d'inventaire DC", "it": "Numéro d'inventaire DC"},
+            "comment": "URL dans le catalogue de l'établissement",
+            "primary": false,
+            "display_in_list": false,
+            "multiple": false,
+            "required": false
+          },{
+            "slug": "annee-debut",
+            "type": "int",
+            "name": {"fr": "Année début", "en": "Année début", "de": "Année début", "it": "Année début"},
+            "name_plural": {"fr": "Année début", "en": "Année début", "de": "Année début", "it": "Année début"},
+            "comment": "",
+            "primary": false,
+            "display_in_list": false,
+            "multiple": false,
+            "required": false
+          },{
+            "slug": "annee-fin",
+            "type": "int",
+            "name": {"fr": "Année fin", "en": "Année fin", "de": "Année fin", "it": "Année fin"},
+            "name_plural": {"fr": "Année fin", "en": "Année fin", "de": "Année fin", "it": "Année fin"},
+            "comment": "",
+            "primary": false,
+            "display_in_list": false,
+            "multiple": false,
+            "required": false
+          },{
+            "slug": "nbre-illustrations",
+            "type": "int",
+            "name": {"fr": "Nombre d'illustrations", "en": "Nombre d'illustrations", "de": "Nombre d'illustrations", "it": "Nombre d'illustrations"},
+            "name_plural": {"fr": "Nombre d'illustrations", "en": "Nombre d'illustrations", "de": "Nombre d'illustrations", "it": "Nombre d'illustrations"},
+            "comment": "",
+            "primary": false,
+            "display_in_list": false,
+            "multiple": false,
+            "required": false
+          },{
+            "slug": "format",
+            "type": "text",
+            "name": {"fr": "Format", "en": "Format", "de": "Format", "it": "Format"},
+            "name_plural": {"fr": "Format", "en": "Format", "de": "Format", "it": "Format"},
+            "comment": "",
+            "primary": false,
+            "display_in_list": false,
+            "multiple": false,
+            "required": false
+          },{
+            "slug": "nbre-volumes",
+            "type": "int",
+            "name": {"fr": "Volumes/Tomes", "en": "Volumes/Tomes", "de": "Volumes/Tomes", "it": "Volumes/Tomes"},
+            "name_plural": {"fr": "Volumes/Tomes", "en": "Volumes/Tomes", "de": "Volumes/Tomes", "it": "Volumes/Tomes"},
+            "comment": "",
+            "primary": false,
+            "display_in_list": false,
+            "multiple": false,
+            "required": false
+          },{
+            "slug": "langue",
+            "type": "choice",
+            "choice_set": "langues",
+            "name": {"fr": "Langue", "en": "Langue", "de": "Langue", "it": "Langue"},
+            "name_plural": {"fr": "Langue", "en": "Langue", "de": "Langue", "it": "Langue"},
+            "comment": "",
+            "primary": false,
+            "display_in_list": false,
+            "multiple": false,
+            "required": false
+          },{
+            "slug": "remarque",
+            "type": "text",
+            "name": {"fr": "Remarques", "en": "Remarques", "de": "Remarques", "it": "Remarques"},
+            "name_plural": {"fr": "Remarques", "en": "Remarques", "de": "Remarques", "it": "Remarques"},
+            "comment": "",
+            "primary": false,
+            "display_in_list": false,
+            "multiple": false,
+            "required": false
+          }
+        ]
+      }, {
+        "slug": "images",
+        "name": {"fr": "Image", "en": "Image", "de": "Image", "it": "Image"},
+        "name_plural": {"fr": "Images", "en": "Images", "de": "Images", "it": "Images"},
+        "fields": [
+          {
+            "slug": "pid",
+            "type": "int",
+            "name": {"fr": "Permanent ID", "en": "Permanent ID", "de": "Permanent ID", "it": "Permanent ID"},
+            "name_plural": {"fr": "Permanent IDs", "en": "Permanent IDs", "de": "Permanent IDs", "it": "Permanent IDs"},
+            "comment": "",
+            "primary": false,
+            "display_in_list": true,
+            "multiple": false,
+            "required": true
+          },{
+            "slug": "titre-original",
+            "type": "text",
+            "name": {"fr": "Titre original", "en": "Original title", "de": "Ursprünglicher Titel", "it": "Titolo originale"},
+            "name_plural": {"fr": "Titres originiaux", "en": "Original titles", "de": "Ursrpüngliche Titel", "it": "Titoli orignali"},
+            "comment": "",
+            "primary": true,
+            "display_in_list": true,
+            "multiple": false,
+            "required": true,
+            "i18n": false
+          },{
+            "slug": "image",
+            "type": "image",
+            "name": {"fr": "Image", "en": "Image", "de": "Image", "it": "Image"},
+            "name_plural": {"fr": "Images", "en": "Images", "de": "Images", "it": "Images"},
+            "comment": "",
+            "primary": false,
+            "display_in_list": true,
+            "multiple": false,
+            "required": true
+          },{
+            "slug": "corpus",
+            "type": "reference",
+            "reference": "corpus",
+            "name": {"fr": "Corpus", "en": "Corpus", "de": "Corpus", "it": "Corpus"},
+            "name_plural": {"fr": "Corpus", "en": "Corpus", "de": "Corpus", "it": "Corpus"},
+            "comment": "",
+            "primary": false,
+            "display_in_list": false,
+            "multiple": false,
+            "required": true
+          },{
+            "slug": "langue-titre",
+            "type": "choice",
+            "choice_set": "langues",
+            "name": {"fr": "Langue titre", "en": "Langue titre", "de": "Langue titre", "it": "Langue titre"},
+            "name_plural": {"fr": "Langues titre", "en": "Langues titre", "de": "Langues titre", "it": "Langues titre"},
+            "comment": "",
+            "primary": false,
+            "display_in_list": false,
+            "multiple": false,
+            "required": false
+          },{
+            "slug": "domaine",
+            "type": "choice",
+            "choice_set": "domaines",
+            "name": {"fr": "Domaine", "en": "Domaine", "de": "Domaine", "it": "Domaine"},
+            "name_plural": {"fr": "Domaines", "en": "Domaines", "de": "Domaines", "it": "Domaines"},
+            "comment": "",
+            "primary": false,
+            "display_in_list": false,
+            "multiple": true,
+            "required": false
+          },{
+            "slug": "description",
+            "type": "text",
+            "name": {"fr": "Description", "en": "Description", "de": "Description", "it": "Description"},
+            "name_plural": {"fr": "Description", "en": "Description", "de": "Description", "it": "Description"},
+            "comment": "",
+            "primary": false,
+            "display_in_list": false,
+            "multiple": false,
+            "required": false
+          },{
+            "slug": "remarque",
+            "type": "text",
+            "name": {"fr": "Remarques", "en": "Remarques", "de": "Remarques", "it": "Remarques"},
+            "name_plural": {"fr": "Remarques", "en": "Remarques", "de": "Remarques", "it": "Remarques"},
+            "comment": "",
+            "primary": false,
+            "display_in_list": false,
+            "multiple": false,
+            "required": false
+          },{
+            "slug": "legende-image",
+            "type": "text",
+            "name": {"fr": "Légende de l'image", "en": "Légende de l'image", "de": "Légende de l'image", "it": "Légende de l'image"},
+            "name_plural": {"fr": "Légende de l'image", "en": "Légende de l'image", "de": "Légende de l'image", "it": "Légende de l'image"},
+            "comment": "",
+            "primary": false,
+            "display_in_list": false,
+            "multiple": false,
+            "required": false
+          }
+        ]
+      }
+    ],
+    "categories": []
+  }
+}

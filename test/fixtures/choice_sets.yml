@@ -7,6 +7,7 @@
 #  deactivated_at :datetime
 #  id             :integer          not null, primary key
 #  name           :string
+#  slug           :string
 #  updated_at     :datetime         not null
 #
 

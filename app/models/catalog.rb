@@ -40,6 +40,19 @@ class Catalog < ActiveRecord::Base
   has_many :menu_items
 
 
+  def remove
+    # advanced_searches.destroy_all
+    # catalog_permissions.destroy_all
+    # categories.destroy_all
+    # choice_sets.destroy_all
+    # items.destroy_all
+    # item_types.destroy_all
+    # pages.destroy_all
+    # menu_items.destroy_all
+    # destroy
+  end
+
+
   def self.sorted
     order("LOWER(catalogs.name) ASC")
   end

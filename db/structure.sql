@@ -207,7 +207,8 @@ CREATE TABLE choice_sets (
     name character varying,
     deactivated_at timestamp without time zone,
     created_at timestamp without time zone NOT NULL,
-    updated_at timestamp without time zone NOT NULL
+    updated_at timestamp without time zone NOT NULL,
+    slug character varying
 );
 
 
@@ -1311,4 +1312,6 @@ INSERT INTO schema_migrations (version) VALUES ('20160307163846');
 INSERT INTO schema_migrations (version) VALUES ('20160425072020');
 
 INSERT INTO schema_migrations (version) VALUES ('20160425125350');
+
+INSERT INTO schema_migrations (version) VALUES ('20160509095147');
 
