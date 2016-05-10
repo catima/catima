@@ -1,0 +1,35 @@
+{
+  "type": "viim-data",
+  "catalog": "viatimages5",
+
+  "item_types": [
+    {
+      "item_type": "etablissements",
+      "items": [
+        { "nom": {"fr": "Université de Lausanne", "en": "Lausanne University", "de": "Universität Lausanne", "it": "Università di Losanna"}, "abbreviation": {"fr": "UNIL", "en": "UNIL", "de": "UNIL", "it": "UNIL"}, "adresse": "Dorigny", "npa": "1015", "ville": "Lausanne", "pays": {"nom":{"fr":"Suisse"}}, "email": "", "web": "http://www.unil.ch", "remarques": "", "contact": "" },
+        { "nom": {"fr": "Bibliothèque municipale de Nice", "en": "Nice Municipal Library", "de": "Stadtbibliothek Nizza", "it": "Biblioteca municipale di Nizza"}, "abbreviation": {"fr": "", "en": "", "de": "", "it": ""}, "adresse": "bld Dubouchage", "npa": "", "ville": "Nice", "pays": {"nom":{"fr":"France"}}, "email": "maryvonne.pesteil@ville-nice.fr", "web": "http://www.bmvr-nice.com.fr/opacwebaloes/index.aspx?IdPage=92", "remarques": "", "contact": "Maryvonne Pesteil" },
+        { "nom": {"fr": "Collection privée T. M.", "en": "Private collection T. M.", "de": "Privatsammlung T. M.", "it": "Collezione privata T. M."}, "abbreviation": {"fr": "", "en": "", "de": "", "it": ""}, "adresse": "66, rue Greneta", "npa": "75002", "ville": "Paris", "pays": {"nom":{"fr":"France"}}, "email": "tantib@free.fr", "web": "", "remarques": "", "contact": "" },
+        { "nom": {"fr": "Biblioteca Sebastiano Satta", "en": "Sebastiano Satta Library", "de": "Bibliothek Sebastiano Satta", "it": "Biblioteca Sebastiano Satta"}, "abbreviation": {"fr": "", "en": "", "de": "", "it": ""}, "adresse": "Piazza", "npa": "08100", "ville": "Nuoro", "pays": {"nom":{"fr":"Italie"}}, "email": "", "web": "", "remarques": " ", "contact": "" },
+        { "nom": {"fr": "Bibliothèque cantonale et universitaire de Lausanne", "en": "Lausanne Cantonal and University Library", "de": "Kantons- und Universitätsbibliothek Lausanne", "it": "Biblioteca cantonale e universitaria, Losanna"}, "abbreviation": {"fr": "", "en": "", "de": "", "it": ""}, "adresse": "Unithèque, Dorigny", "npa": "1015", "ville": "Lausanne", "pays": {"nom":{"fr":"Suisse"}}, "email": "Silvio.Corsini@bcu.unil.ch", "web": "http://www.bcu-lausanne.ch/", "remarques": "Conservateur responsable du projet Viaticalpes à la BCUL", "contact": "Corsini Silvio" },
+        { "nom": {"fr": "Bibliothèque Nationale de France", "en": "French National Library", "de": "Französische Nationalbiblithek", "it": "Biblioteca nazionale di Francia"}, "abbreviation": {"fr": "", "en": "", "de": "", "it": ""}, "adresse": "", "npa": "", "ville": "Paris", "pays": {"nom":{"fr":"France"}}, "email": "", "web": "http://www.bnf.fr", "remarques": " ", "contact": "" },
+        { "nom": {"fr": "Bibliothèque d'histoire de la médecine et d'éthique médicale", "en": "", "de": "", "it": ""}, "abbreviation": {"fr": "IUHM", "en": "IUHM", "de": "IUHM", "it": "IUHM"}, "adresse": "av de Provence 82", "npa": "1007", "ville": "Lausanne", "pays": {"nom":{"fr":"Suisse"}}, "email": "daniela.vaj@chuv.ch", "web": "http://www.chuv.ch/iuhmsp/ihm_home/ihm_bibliotheque.htm", "remarques": "", "contact": "Daniela Vaj" },
+        { "nom": {"fr": "Médiathèque Valais", "en": "Valais Media Library", "de": "Mediathek Wallis", "it": "Mediateca del Vallese"}, "abbreviation": {"fr": "", "en": "", "de": "", "it": ""}, "adresse": "Rue des Vergers 9", "npa": "1950", "ville": "Sion", "pays": {"nom":{"fr":"Suisse"}}, "email": "Simon.Roth@mediatheque.ch", "web": "http://www.mediatheque.ch", "remarques": "Conservateur responsable du projet Viaticalpes à la BCV. La Médiathèque Valais se compose de 4 site, dont celui de Sion, d'où proviennent les images numérisées", "contact": "Simon Roth" },
+        { "nom": {"fr": "Bibliothèque de Genève", "en": "Geneva Library", "de": "Bibliothek Genf", "it": "Biblioteca di Ginevra"}, "abbreviation": {"fr": "", "en": "", "de": "", "it": ""}, "adresse": "Promenade des Bastions 1", "npa": "1211", "ville": "Genève", "pays": {"nom":{"fr":"Suisse"}}, "email": "Alexis.Rivier@ville-ge.ch", "web": "http://www.ville-ge.ch/bge/", "remarques": "Conservateur responsable du projet Viaticalpes à la BGE", "contact": "Alexis Rivier" },
+        { "nom": {"fr": "Bibliothèque publique et universitaire de Neuchâtel", "en": "Neuchâtel Public and University Library", "de": "Öffentliche und universitäre Bibliothek Neuenburg", "it": "Biblioteca pubblica e universitaria di Neuchâtel"}, "abbreviation": {"fr": "", "en": "", "de": "", "it": ""}, "adresse": "Place Numa-Droz 3, Case postale 1916", "npa": "2000", "ville": "Neuchâtel", "pays": {"nom":{"fr":"Suisse"}}, "email": "Michel.Schlup@unine.ch", "web": "http://bpun.unine.ch/index.asp", "remarques": "Directeur, responsable du projet Viaticalpes à la bibliothèque", "contact": "Michel Schlup" },
+        { "nom": {"fr": "Bibliothèque nationale suisse", "en": "Swiss National Library", "de": "Schweizer Nationalbibliothek", "it": "Biblioteca nazionale svizzera"}, "abbreviation": {"fr": "", "en": "", "de": "", "it": ""}, "adresse": "Hallwylstrasse 15", "npa": "3003", "ville": "Berne", "pays": {"nom":{"fr":"Suisse"}}, "email": "info@nb.admin.ch", "web": "http://www.nb.admin.ch", "remarques": "", "contact": "" },
+        { "nom": {"fr": "Bibliothèque de la Bourgeoisie de Berne", "en": "Bern City Library", "de": "Burgerbibliothek Bern", "it": "Biblioteca della borghesia Berna"}, "abbreviation": {"fr": "", "en": "", "de": "", "it": ""}, "adresse": "Münstergasse 63", "npa": "3000", "ville": "Berne", "pays": {"nom":{"fr":"Suisse"}}, "email": "bbb@burgerbib.ch", "web": "http://www.burgerbib.ch", "remarques": "", "contact": "" },
+        { "nom": {"fr": "Université Paris-Sorbonne", "en": "Paris-Sorbonne University", "de": "Universität Paris-Sorbonne", "it": "Università Parigi IV (Paris-Sorbonne)"}, "abbreviation": {"fr": "", "en": "", "de": "", "it": ""}, "adresse": "", "npa": "", "ville": "Paris", "pays": {"nom":{"fr":"France"}}, "email": "", "web": "", "remarques": "", "contact": "" },
+        { "nom": {"fr": "Fond National Suisse de la Recherche Scientifique", "en": "Swiss National Science Foundation", "de": "Schweizer Nationalfonds zur Förderung der wissenschaftlichen Forschung", "it": "Fondo nazionale svizzero per la ricerca scientifica"}, "abbreviation": {"fr": "", "en": "", "de": "", "it": ""}, "adresse": "", "npa": "", "ville": "", "pays": {"nom":{"fr":"Suisse"}}, "email": "", "web": "", "remarques": "", "contact": "" },
+        { "nom": {"fr": "Celat", "en": "Celat", "de": "Celat", "it": "Celat"}, "abbreviation": {"fr": "FNS", "en": "FNS", "de": "FNS", "it": "FNS"}, "adresse": "", "npa": "", "ville": "Berne", "pays": {"nom":{"fr":"Suisse"}}, "email": "", "web": "", "remarques": "", "contact": "" }
+      ]
+    },{
+      "item_type": "corpus",
+      "items": [
+      ]
+    },{
+      "item_type": "images",
+      "items": [
+      ]
+    }
+  ]
+}
