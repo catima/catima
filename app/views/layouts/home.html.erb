@@ -23,7 +23,7 @@
     <div class="col-xs-4" style="padding-top: 70px;">
       
       <p><b>Catalogues disponibles:</b><br/>
-      <% @catalogs.each do |catalog| %>
+      <% @catalogs.where({advertize: true}).each do |catalog| %>
         <%= link_to(catalog.name, catalog_home_path(catalog)) %><br/>
       <% end %>
       </p>
@@ -32,7 +32,7 @@
 
   </div>
 
-  <div class="row" style="background-color: #dedede; border-top: 1px solid #999; height: 80px; margin: 20px 0;">
+  <div class="row" style="background-color: #dedede; border-top: 1px solid #999; height: 80px; margin: 40px 0;">
 
     <div class="col-xs-12" style="text-align: center; font-size: 80%; padding-top: 55px;">
       <a href="/admin" style="color: #000; margin: 0 10px;">Admin</a>

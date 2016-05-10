@@ -2,6 +2,7 @@
 #
 # Table name: catalogs
 #
+#  advertize           :boolean
 #  created_at          :datetime         not null
 #  custom_root_page_id :integer
 #  deactivated_at      :datetime

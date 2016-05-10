@@ -16,6 +16,14 @@
   <%= f.check_box(:requires_review) %>
 <% end %>
 
+<%= f.form_group(
+      :advertize,
+      :help => "If checked, this catalog will be publicly listed "\
+               "on the welcome page."
+      ) do %>
+  <%= f.check_box(:advertize) %>
+<% end %>
+
 <hr>
 
 <%= f.select(

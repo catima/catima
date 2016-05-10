@@ -141,7 +141,8 @@ CREATE TABLE catalogs (
     deactivated_at timestamp without time zone,
     created_at timestamp without time zone NOT NULL,
     updated_at timestamp without time zone NOT NULL,
-    custom_root_page_id integer
+    custom_root_page_id integer,
+    advertize boolean
 );
 
 
@@ -1314,4 +1315,6 @@ INSERT INTO schema_migrations (version) VALUES ('20160425072020');
 INSERT INTO schema_migrations (version) VALUES ('20160425125350');
 
 INSERT INTO schema_migrations (version) VALUES ('20160509095147');
+
+INSERT INTO schema_migrations (version) VALUES ('20160509194619');
 
