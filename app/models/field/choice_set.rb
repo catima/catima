@@ -70,6 +70,22 @@ class Field::ChoiceSet < ::Field
     choices.where(:id => raw_value(item))
   end
 
+  def prepare_value(value)
+    k = 'short_name'
+    l = catalog.primary_language
+    v = value
+    if value.is_a? Hash
+      k = 'long_name' unless value['long_name'].nil?
+      l = value[k].keys[0]
+      v = value[k][l].sub("'", "''")
+    elsif value.is_a? String
+      v = value.sub("'", "''")
+    end
+    c = choices.where("#{k}_translations->>'#{k}_#{l}'='#{v}'").first
+    cid = c.id unless c.nil?
+    {uuid => cid}
+  end
+
   private
 
   # TODO: validate choice belongs to specified ChoiceSet

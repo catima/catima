@@ -137,6 +137,14 @@ class Field < ActiveRecord::Base
     item.behaving_as_type.public_send(attrib)
   end
 
+  # Takes the input value and tries to prepare value for setting the field.
+  # This can be a localized hash, or a hash describing a referenced item.
+  # It returns a hash that can be used to update the item with the correct
+  # field uuids.
+  def prepare_value(value)
+    {uuid => value}
+  end
+
   # Tests whether this field is appropriate to display/validate for the given
   # item. This only makes sense for category fields. For non-category fields,
   # always returns true.

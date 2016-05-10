@@ -197,6 +197,17 @@
         "name_plural": {"fr": "Établissements", "en": "Établissements", "de": "Établissements", "it": "Établissements"},
         "fields": [
           {
+            "slug": "pid",
+            "type": "int",
+            "name": {"fr": "PID", "en": "PID", "de": "PID", "it": "PID"},
+            "name_plural": {"fr": "PID", "en": "PID", "de": "PID", "it": "PID"},
+            "comment": "",
+            "primary": false,
+            "display_in_list": false,
+            "multiple": false,
+            "required": true,
+            "i18n": false
+          },{
             "slug": "nom",
             "type": "text",
             "name": {"fr": "Nom", "en": "Nom", "de": "Nom", "it": "Nom"},
@@ -325,24 +336,13 @@
             "multiple": false,
             "required": true
           },{
-            "slug": "titre-original",
-            "type": "text",
-            "name": {"fr": "Titre original", "en": "Original title", "de": "Ursprünglicher Titel", "it": "Titolo originale"},
-            "name_plural": {"fr": "Titres originiaux", "en": "Original titles", "de": "Ursrpüngliche Titel", "it": "Titoli orignali"},
-            "comment": "",
-            "primary": true,
-            "display_in_list": true,
-            "multiple": false,
-            "required": true,
-            "i18n": false
-          },{
             "slug": "titre",
             "type": "text",
             "name": {"fr": "Titre", "en": "Title", "de": "Titel", "it": "Titolo"},
             "name_plural": {"fr": "Titres", "en": "Titles", "de": "Titel", "it": "Titoli"},
             "comment": "",
-            "primary": false,
-            "display_in_list": false,
+            "primary": true,
+            "display_in_list": true,
             "multiple": false,
             "required": false,
             "i18n": true
@@ -352,8 +352,8 @@
             "name": {"fr": "Titre", "en": "Title", "de": "Titel", "it": "Titolo"},
             "name_plural": {"fr": "Titres", "en": "Titles", "de": "Titel", "it": "Titoli"},
             "comment": "",
-            "primary": true,
-            "display_in_list": true,
+            "primary": false,
+            "display_in_list": false,
             "multiple": false,
             "required": true,
             "i18n": true
