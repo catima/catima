@@ -61,4 +61,12 @@ class Field::Reference < ::Field
     return [] if raw_value(item).blank?
     references.where(:id => raw_value(item))
   end
+
+  def prepare_value(value)
+    k = value.keys[0]
+    v = value[k]
+    v = v.sub("'", "''") if v.is_a?(String)
+    i = related_item_type.items.where("data->>'#{uuid}'='#{v}'").first
+    {uuid => (i.id unless i.nil?)}
+  end
 end

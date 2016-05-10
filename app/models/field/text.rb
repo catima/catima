@@ -45,6 +45,17 @@ class Field::Text < ::Field
     %i(maximum minimum)
   end
 
+  def prepare_value(value)
+    if value.is_a? Hash
+      d = {}
+      value.each do |k,v|
+        d.merge!({uuid+'_'+k => v}) if catalog.valid_locale?(k)
+      end
+      return d
+    end
+    {uuid => value}
+  end
+
   private
 
   def build_validators

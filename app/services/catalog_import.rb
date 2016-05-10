@@ -8,7 +8,18 @@ class CatalogImport
     f = File.open(jsonfile)
     i = JSON.parse(f.read)
     f.close
-    if i['type'] != 'viim-catalog' || !i['slug']
+    if i['type'] == 'viim-catalog'
+      import_structure(i)
+    elsif i['type'] == 'viim-data'
+      import_data(i)
+    else
+      raise "ERROR. '#{jsonfile}' is not a valid catalog dump."
+    end
+  end
+
+
+  def import_structure(i)
+    if !i['slug']
       raise "ERROR. '#{jsonfile}' is not a valid catalog dump."
     end
     existing_catalog = Catalog.find_by({slug: i['slug']})
@@ -20,6 +31,20 @@ class CatalogImport
     create_choice_sets(c, i['structure']['choice_sets'])
     create_item_types(c, i['structure']['item_types'], i['structure']['choice_sets'])
   end
+
+
+  def import_data(i)
+    if !i['catalog']
+      raise "ERROR. '#{jsonfile}' is not a valid catalog dump."
+    end
+    catalog = Catalog.find_by({slug: i['catalog']})
+    if catalog.nil?
+      raise "ERROR. Catalog '#{i['slug']}' does not exist. Aborting."
+    end
+
+    load_item_types(catalog, i['item_types'])
+  end
+
 
   private
 
@@ -124,6 +149,35 @@ class CatalogImport
         fld.save
       end
     end
+  end
+
+
+
+  def load_item_types(catalog, item_types)
+    item_types.each do |item_type_json|
+      item_type = catalog.item_types.find_by({slug: item_type_json['item_type']})
+      puts "   loading item type #{item_type.slug}..."
+      item_type_json['items'].each do |item_json|
+        load_item(item_type, item_json)
+      end
+    end
+  end
+
+
+  def load_item(item_type, item_json)
+    item = item_type.items.new.tap do |item|
+      item.catalog = item_type.catalog
+      item.creator = User.first
+    end.behaving_as_type
+    d = {}
+    item_json.each do |k,v|
+      f = item.fields.find_by({slug:k})
+      puts "   Warning: field #{k} not found" if f.nil?
+      d.merge!(f.prepare_value(v)) unless f.nil?
+    end
+    item.update(d)
+    ok = item.save({validate:false})
+    puts "   Warning: item #{item_json} could not be imported" if !ok
   end
 
 end
