@@ -68,6 +68,8 @@ module FieldsHelper
 
   def fields_and_item_references(item)
     item.referenced_by_fields.each_with_object({}) do |field, result|
+      # skip if we have a category
+      next if field.item_type.is_a?(Category)
       list = field_item_references(field.item_type, field, item)
       next if list.empty?
       result[field] = list
