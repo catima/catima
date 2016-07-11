@@ -33,6 +33,7 @@
 class Field::Int < ::Field
   store_accessor :options, :maximum
   store_accessor :options, :minimum
+  store_accessor :options, :auto_increment
 
   # TODO: validate minimum is less than maximum?
 
@@ -41,7 +42,7 @@ class Field::Int < ::Field
                             :allow_blank => true
 
   def custom_field_permitted_attributes
-    %i(maximum minimum)
+    %i(maximum minimum auto_increment)
   end
 
   private

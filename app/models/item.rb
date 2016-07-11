@@ -36,6 +36,11 @@ class Item < ActiveRecord::Base
   validates_presence_of :catalog
   validates_presence_of :creator
   validates_presence_of :item_type
+  validate :unique_value_fields
+
+  # assign default and auto-increment field values
+  after_initialize :assign_default_values
+  before_validation :assign_autoincrement_values
 
   def self.sorted_by_field(field)
     sql = []
@@ -73,6 +78,28 @@ class Item < ActiveRecord::Base
     end
   end
 
+
+  def unique_value_fields
+    return if self.item_type.nil?
+    conn = ActiveRecord::Base.connection.raw_connection
+    fields.each do |f|
+      if f.unique
+        sql = "SELECT COUNT(*) FROM items WHERE data->>'#{f.uuid}' = $1 AND item_type_id = $2"
+        sql_data = [ self.data[f.uuid], self.item_type_id ]
+        if self.id
+          sql << " AND id <> $3"
+          sql_data << self.id
+        end
+        res = conn.exec(sql, sql_data)
+        n = res.getvalue(0,0).to_i
+        if n > 0
+          errors.add("#{f.uuid}".to_sym, "must be unique")
+        end
+      end
+    end
+  end
+
+
   private
 
   def primary_text_value
@@ -87,4 +114,28 @@ class Item < ActiveRecord::Base
     all_fields.each { |f| f.decorate_item_class(typed) }
     typed
   end
+
+  def assign_autoincrement_values
+    return if item_type.nil?
+    self.data = {} if self.data.nil?
+    conn = ActiveRecord::Base.connection.raw_connection
+    fields.each do |f|
+      if f.type == 'Field::Int' and !f.options.nil? and f.options['auto_increment'] and self.data[f.uuid].empty?
+        st = conn.exec(
+          "SELECT MAX(data->>'#{f.uuid}') FROM items WHERE item_type_id = $1",
+          [ self.item_type_id, ]
+        )
+        self.data[f.uuid] = st.getvalue(0,0).to_i + 1
+      end
+    end
+  end
+
+  def assign_default_values
+    return if self.id or self.item_type.nil?
+    self.data = {} if self.data.nil?
+    fields.each do |f|
+      self.data[f.uuid] = f.default_value if f.default_value and !f.default_value.empty?
+    end
+  end
+
 end

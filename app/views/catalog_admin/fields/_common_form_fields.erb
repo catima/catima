@@ -30,6 +30,12 @@
 
 <%= field_style_select(f) %>
 
+<%= f.form_group(:unique) do %>
+  <%= f.check_box(
+        :unique,
+        :label => "Must be unique") %>
+<% end %>
+
 <%= render_catalog_admin_fields_option_inputs(f) %>
 
 <hr>

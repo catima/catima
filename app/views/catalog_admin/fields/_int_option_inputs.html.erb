@@ -1,2 +1,24 @@
 <%= f.number_field(:minimum, :label => "Minimum value (optional)") %>
 <%= f.number_field(:maximum, :label => "Maximum value (optional)") %>
+<%= field_default_value_input(f) %>
+<%= f.form_group(:auto_increment) do %>
+  <%= f.check_box(
+        :auto_increment,
+        :label => "Auto increment"
+      ) %>
+<% end %>
+
+<script>
+$(function(){
+  if ($('#field_auto_increment')[0].checked){
+    $('#field_default_value').attr('disabled', 'disabled');
+  }
+  $('#field_auto_increment').on('change', function(e){
+    if ($('#field_auto_increment')[0].checked){
+      $('#field_default_value').attr('disabled', 'disabled');
+    } else {
+      $('#field_default_value').attr('disabled', null);
+    }
+  })
+})
+</script>
