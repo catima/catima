@@ -1,6 +1,6 @@
 <% provide(:extra_nav) do %>
   <% if policy(@page).edit? %>
-    <div class="alert alert-info" style="text-align: center">
+    <div style="float:right;">
       <%= link_to(edit_catalog_admin_page_path) do %>
         <%= fa_icon(:pencil, :text => "Edit this page") %>
       <% end %>
@@ -9,4 +9,9 @@
 <% end %>
 
 <% provide(:title, @page.title) %>
-<%= raw(@page.content) %>
+
+<% @page.containers.each do |c| %>
+  <% if c.slug %><a name="<%= c.slug %>"></a><% end %>
+  <%= raw(c.render) %>
+<% end %>
+

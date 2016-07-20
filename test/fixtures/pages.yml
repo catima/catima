@@ -19,14 +19,12 @@
 
 one:
   title: Page for Catalog One
-  content: Test
   catalog: one
   locale: en
   slug: one
 
 two:
   title: Page for Catalog Two
-  content: Test
   catalog: two
   locale: en
   slug: one

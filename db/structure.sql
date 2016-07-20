@@ -2,12 +2,16 @@
 -- PostgreSQL database dump
 --
 
+-- Dumped from database version 9.5.3
+-- Dumped by pg_dump version 9.5.3
+
 SET statement_timeout = 0;
 SET lock_timeout = 0;
 SET client_encoding = 'UTF8';
 SET standard_conforming_strings = on;
 SET check_function_bodies = false;
 SET client_min_messages = warning;
+SET row_security = off;
 
 --
 -- Name: plpgsql; Type: EXTENSION; Schema: -; Owner: -
@@ -59,7 +63,7 @@ SET default_tablespace = '';
 SET default_with_oids = false;
 
 --
--- Name: advanced_searches; Type: TABLE; Schema: public; Owner: -; Tablespace: 
+-- Name: advanced_searches; Type: TABLE; Schema: public; Owner: -
 --
 
 CREATE TABLE advanced_searches (
@@ -95,7 +99,7 @@ ALTER SEQUENCE advanced_searches_id_seq OWNED BY advanced_searches.id;
 
 
 --
--- Name: catalog_permissions; Type: TABLE; Schema: public; Owner: -; Tablespace: 
+-- Name: catalog_permissions; Type: TABLE; Schema: public; Owner: -
 --
 
 CREATE TABLE catalog_permissions (
@@ -128,7 +132,7 @@ ALTER SEQUENCE catalog_permissions_id_seq OWNED BY catalog_permissions.id;
 
 
 --
--- Name: catalogs; Type: TABLE; Schema: public; Owner: -; Tablespace: 
+-- Name: catalogs; Type: TABLE; Schema: public; Owner: -
 --
 
 CREATE TABLE catalogs (
@@ -166,7 +170,7 @@ ALTER SEQUENCE catalogs_id_seq OWNED BY catalogs.id;
 
 
 --
--- Name: categories; Type: TABLE; Schema: public; Owner: -; Tablespace: 
+-- Name: categories; Type: TABLE; Schema: public; Owner: -
 --
 
 CREATE TABLE categories (
@@ -199,7 +203,7 @@ ALTER SEQUENCE categories_id_seq OWNED BY categories.id;
 
 
 --
--- Name: choice_sets; Type: TABLE; Schema: public; Owner: -; Tablespace: 
+-- Name: choice_sets; Type: TABLE; Schema: public; Owner: -
 --
 
 CREATE TABLE choice_sets (
@@ -233,7 +237,7 @@ ALTER SEQUENCE choice_sets_id_seq OWNED BY choice_sets.id;
 
 
 --
--- Name: choices; Type: TABLE; Schema: public; Owner: -; Tablespace: 
+-- Name: choices; Type: TABLE; Schema: public; Owner: -
 --
 
 CREATE TABLE choices (
@@ -270,7 +274,7 @@ ALTER SEQUENCE choices_id_seq OWNED BY choices.id;
 
 
 --
--- Name: configurations; Type: TABLE; Schema: public; Owner: -; Tablespace: 
+-- Name: configurations; Type: TABLE; Schema: public; Owner: -
 --
 
 CREATE TABLE configurations (
@@ -302,7 +306,42 @@ ALTER SEQUENCE configurations_id_seq OWNED BY configurations.id;
 
 
 --
--- Name: fields; Type: TABLE; Schema: public; Owner: -; Tablespace: 
+-- Name: containers; Type: TABLE; Schema: public; Owner: -
+--
+
+CREATE TABLE containers (
+    id integer NOT NULL,
+    page_id integer,
+    type character varying,
+    slug character varying,
+    row_order integer,
+    content jsonb,
+    created_at timestamp without time zone NOT NULL,
+    updated_at timestamp without time zone NOT NULL
+);
+
+
+--
+-- Name: containers_id_seq; Type: SEQUENCE; Schema: public; Owner: -
+--
+
+CREATE SEQUENCE containers_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+--
+-- Name: containers_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
+--
+
+ALTER SEQUENCE containers_id_seq OWNED BY containers.id;
+
+
+--
+-- Name: fields; Type: TABLE; Schema: public; Owner: -
 --
 
 CREATE TABLE fields (
@@ -355,7 +394,7 @@ ALTER SEQUENCE fields_id_seq OWNED BY fields.id;
 
 
 --
--- Name: item_types; Type: TABLE; Schema: public; Owner: -; Tablespace: 
+-- Name: item_types; Type: TABLE; Schema: public; Owner: -
 --
 
 CREATE TABLE item_types (
@@ -392,7 +431,7 @@ ALTER SEQUENCE item_types_id_seq OWNED BY item_types.id;
 
 
 --
--- Name: items; Type: TABLE; Schema: public; Owner: -; Tablespace: 
+-- Name: items; Type: TABLE; Schema: public; Owner: -
 --
 
 CREATE TABLE items (
@@ -432,7 +471,7 @@ ALTER SEQUENCE items_id_seq OWNED BY items.id;
 
 
 --
--- Name: menu_items; Type: TABLE; Schema: public; Owner: -; Tablespace: 
+-- Name: menu_items; Type: TABLE; Schema: public; Owner: -
 --
 
 CREATE TABLE menu_items (
@@ -470,7 +509,7 @@ ALTER SEQUENCE menu_items_id_seq OWNED BY menu_items.id;
 
 
 --
--- Name: pages; Type: TABLE; Schema: public; Owner: -; Tablespace: 
+-- Name: pages; Type: TABLE; Schema: public; Owner: -
 --
 
 CREATE TABLE pages (
@@ -508,7 +547,7 @@ ALTER SEQUENCE pages_id_seq OWNED BY pages.id;
 
 
 --
--- Name: schema_migrations; Type: TABLE; Schema: public; Owner: -; Tablespace: 
+-- Name: schema_migrations; Type: TABLE; Schema: public; Owner: -
 --
 
 CREATE TABLE schema_migrations (
@@ -517,7 +556,7 @@ CREATE TABLE schema_migrations (
 
 
 --
--- Name: template_storages; Type: TABLE; Schema: public; Owner: -; Tablespace: 
+-- Name: template_storages; Type: TABLE; Schema: public; Owner: -
 --
 
 CREATE TABLE template_storages (
@@ -553,7 +592,7 @@ ALTER SEQUENCE template_storages_id_seq OWNED BY template_storages.id;
 
 
 --
--- Name: users; Type: TABLE; Schema: public; Owner: -; Tablespace: 
+-- Name: users; Type: TABLE; Schema: public; Owner: -
 --
 
 CREATE TABLE users (
@@ -648,6 +687,13 @@ ALTER TABLE ONLY configurations ALTER COLUMN id SET DEFAULT nextval('configurati
 -- Name: id; Type: DEFAULT; Schema: public; Owner: -
 --
 
+ALTER TABLE ONLY containers ALTER COLUMN id SET DEFAULT nextval('containers_id_seq'::regclass);
+
+
+--
+-- Name: id; Type: DEFAULT; Schema: public; Owner: -
+--
+
 ALTER TABLE ONLY fields ALTER COLUMN id SET DEFAULT nextval('fields_id_seq'::regclass);
 
 
@@ -694,7 +740,7 @@ ALTER TABLE ONLY users ALTER COLUMN id SET DEFAULT nextval('users_id_seq'::regcl
 
 
 --
--- Name: advanced_searches_pkey; Type: CONSTRAINT; Schema: public; Owner: -; Tablespace: 
+-- Name: advanced_searches_pkey; Type: CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY advanced_searches
@@ -702,7 +748,7 @@ ALTER TABLE ONLY advanced_searches
 
 
 --
--- Name: catalog_permissions_pkey; Type: CONSTRAINT; Schema: public; Owner: -; Tablespace: 
+-- Name: catalog_permissions_pkey; Type: CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY catalog_permissions
@@ -710,7 +756,7 @@ ALTER TABLE ONLY catalog_permissions
 
 
 --
--- Name: catalogs_pkey; Type: CONSTRAINT; Schema: public; Owner: -; Tablespace: 
+-- Name: catalogs_pkey; Type: CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY catalogs
@@ -718,7 +764,7 @@ ALTER TABLE ONLY catalogs
 
 
 --
--- Name: categories_pkey; Type: CONSTRAINT; Schema: public; Owner: -; Tablespace: 
+-- Name: categories_pkey; Type: CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY categories
@@ -726,7 +772,7 @@ ALTER TABLE ONLY categories
 
 
 --
--- Name: choice_sets_pkey; Type: CONSTRAINT; Schema: public; Owner: -; Tablespace: 
+-- Name: choice_sets_pkey; Type: CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY choice_sets
@@ -734,7 +780,7 @@ ALTER TABLE ONLY choice_sets
 
 
 --
--- Name: choices_pkey; Type: CONSTRAINT; Schema: public; Owner: -; Tablespace: 
+-- Name: choices_pkey; Type: CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY choices
@@ -742,7 +788,7 @@ ALTER TABLE ONLY choices
 
 
 --
--- Name: configurations_pkey; Type: CONSTRAINT; Schema: public; Owner: -; Tablespace: 
+-- Name: configurations_pkey; Type: CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY configurations
@@ -750,7 +796,15 @@ ALTER TABLE ONLY configurations
 
 
 --
--- Name: fields_pkey; Type: CONSTRAINT; Schema: public; Owner: -; Tablespace: 
+-- Name: containers_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY containers
+    ADD CONSTRAINT containers_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: fields_pkey; Type: CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY fields
@@ -758,7 +812,7 @@ ALTER TABLE ONLY fields
 
 
 --
--- Name: item_types_pkey; Type: CONSTRAINT; Schema: public; Owner: -; Tablespace: 
+-- Name: item_types_pkey; Type: CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY item_types
@@ -766,7 +820,7 @@ ALTER TABLE ONLY item_types
 
 
 --
--- Name: items_pkey; Type: CONSTRAINT; Schema: public; Owner: -; Tablespace: 
+-- Name: items_pkey; Type: CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY items
@@ -774,7 +828,7 @@ ALTER TABLE ONLY items
 
 
 --
--- Name: menu_items_pkey; Type: CONSTRAINT; Schema: public; Owner: -; Tablespace: 
+-- Name: menu_items_pkey; Type: CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY menu_items
@@ -782,7 +836,7 @@ ALTER TABLE ONLY menu_items
 
 
 --
--- Name: pages_pkey; Type: CONSTRAINT; Schema: public; Owner: -; Tablespace: 
+-- Name: pages_pkey; Type: CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY pages
@@ -790,7 +844,7 @@ ALTER TABLE ONLY pages
 
 
 --
--- Name: template_storages_pkey; Type: CONSTRAINT; Schema: public; Owner: -; Tablespace: 
+-- Name: template_storages_pkey; Type: CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY template_storages
@@ -798,7 +852,7 @@ ALTER TABLE ONLY template_storages
 
 
 --
--- Name: users_pkey; Type: CONSTRAINT; Schema: public; Owner: -; Tablespace: 
+-- Name: users_pkey; Type: CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY users
@@ -806,217 +860,231 @@ ALTER TABLE ONLY users
 
 
 --
--- Name: index_advanced_searches_on_catalog_id; Type: INDEX; Schema: public; Owner: -; Tablespace: 
+-- Name: index_advanced_searches_on_catalog_id; Type: INDEX; Schema: public; Owner: -
 --
 
 CREATE INDEX index_advanced_searches_on_catalog_id ON advanced_searches USING btree (catalog_id);
 
 
 --
--- Name: index_advanced_searches_on_item_type_id; Type: INDEX; Schema: public; Owner: -; Tablespace: 
+-- Name: index_advanced_searches_on_item_type_id; Type: INDEX; Schema: public; Owner: -
 --
 
 CREATE INDEX index_advanced_searches_on_item_type_id ON advanced_searches USING btree (item_type_id);
 
 
 --
--- Name: index_catalog_permissions_on_catalog_id; Type: INDEX; Schema: public; Owner: -; Tablespace: 
+-- Name: index_catalog_permissions_on_catalog_id; Type: INDEX; Schema: public; Owner: -
 --
 
 CREATE INDEX index_catalog_permissions_on_catalog_id ON catalog_permissions USING btree (catalog_id);
 
 
 --
--- Name: index_catalog_permissions_on_user_id; Type: INDEX; Schema: public; Owner: -; Tablespace: 
+-- Name: index_catalog_permissions_on_user_id; Type: INDEX; Schema: public; Owner: -
 --
 
 CREATE INDEX index_catalog_permissions_on_user_id ON catalog_permissions USING btree (user_id);
 
 
 --
--- Name: index_catalogs_on_slug; Type: INDEX; Schema: public; Owner: -; Tablespace: 
+-- Name: index_catalogs_on_slug; Type: INDEX; Schema: public; Owner: -
 --
 
 CREATE UNIQUE INDEX index_catalogs_on_slug ON catalogs USING btree (slug);
 
 
 --
--- Name: index_categories_on_catalog_id; Type: INDEX; Schema: public; Owner: -; Tablespace: 
+-- Name: index_categories_on_catalog_id; Type: INDEX; Schema: public; Owner: -
 --
 
 CREATE INDEX index_categories_on_catalog_id ON categories USING btree (catalog_id);
 
 
 --
--- Name: index_choice_sets_on_catalog_id; Type: INDEX; Schema: public; Owner: -; Tablespace: 
+-- Name: index_choice_sets_on_catalog_id; Type: INDEX; Schema: public; Owner: -
 --
 
 CREATE INDEX index_choice_sets_on_catalog_id ON choice_sets USING btree (catalog_id);
 
 
 --
--- Name: index_choices_on_catalog_id; Type: INDEX; Schema: public; Owner: -; Tablespace: 
+-- Name: index_choices_on_catalog_id; Type: INDEX; Schema: public; Owner: -
 --
 
 CREATE INDEX index_choices_on_catalog_id ON choices USING btree (catalog_id);
 
 
 --
--- Name: index_choices_on_category_id; Type: INDEX; Schema: public; Owner: -; Tablespace: 
+-- Name: index_choices_on_category_id; Type: INDEX; Schema: public; Owner: -
 --
 
 CREATE INDEX index_choices_on_category_id ON choices USING btree (category_id);
 
 
 --
--- Name: index_choices_on_choice_set_id; Type: INDEX; Schema: public; Owner: -; Tablespace: 
+-- Name: index_choices_on_choice_set_id; Type: INDEX; Schema: public; Owner: -
 --
 
 CREATE INDEX index_choices_on_choice_set_id ON choices USING btree (choice_set_id);
 
 
 --
--- Name: index_fields_on_category_item_type_id; Type: INDEX; Schema: public; Owner: -; Tablespace: 
+-- Name: index_containers_on_page_id; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX index_containers_on_page_id ON containers USING btree (page_id);
+
+
+--
+-- Name: index_containers_on_slug; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX index_containers_on_slug ON containers USING btree (slug);
+
+
+--
+-- Name: index_fields_on_category_item_type_id; Type: INDEX; Schema: public; Owner: -
 --
 
 CREATE INDEX index_fields_on_category_item_type_id ON fields USING btree (category_item_type_id);
 
 
 --
--- Name: index_fields_on_choice_set_id; Type: INDEX; Schema: public; Owner: -; Tablespace: 
+-- Name: index_fields_on_choice_set_id; Type: INDEX; Schema: public; Owner: -
 --
 
 CREATE INDEX index_fields_on_choice_set_id ON fields USING btree (choice_set_id);
 
 
 --
--- Name: index_fields_on_field_set_id; Type: INDEX; Schema: public; Owner: -; Tablespace: 
+-- Name: index_fields_on_field_set_id; Type: INDEX; Schema: public; Owner: -
 --
 
 CREATE INDEX index_fields_on_field_set_id ON fields USING btree (field_set_id);
 
 
 --
--- Name: index_fields_on_field_set_id_and_slug; Type: INDEX; Schema: public; Owner: -; Tablespace: 
+-- Name: index_fields_on_field_set_id_and_slug; Type: INDEX; Schema: public; Owner: -
 --
 
 CREATE UNIQUE INDEX index_fields_on_field_set_id_and_slug ON fields USING btree (field_set_id, slug);
 
 
 --
--- Name: index_fields_on_related_item_type_id; Type: INDEX; Schema: public; Owner: -; Tablespace: 
+-- Name: index_fields_on_related_item_type_id; Type: INDEX; Schema: public; Owner: -
 --
 
 CREATE INDEX index_fields_on_related_item_type_id ON fields USING btree (related_item_type_id);
 
 
 --
--- Name: index_item_types_on_catalog_id; Type: INDEX; Schema: public; Owner: -; Tablespace: 
+-- Name: index_item_types_on_catalog_id; Type: INDEX; Schema: public; Owner: -
 --
 
 CREATE INDEX index_item_types_on_catalog_id ON item_types USING btree (catalog_id);
 
 
 --
--- Name: index_item_types_on_catalog_id_and_slug; Type: INDEX; Schema: public; Owner: -; Tablespace: 
+-- Name: index_item_types_on_catalog_id_and_slug; Type: INDEX; Schema: public; Owner: -
 --
 
 CREATE UNIQUE INDEX index_item_types_on_catalog_id_and_slug ON item_types USING btree (catalog_id, slug);
 
 
 --
--- Name: index_items_on_catalog_id; Type: INDEX; Schema: public; Owner: -; Tablespace: 
+-- Name: index_items_on_catalog_id; Type: INDEX; Schema: public; Owner: -
 --
 
 CREATE INDEX index_items_on_catalog_id ON items USING btree (catalog_id);
 
 
 --
--- Name: index_items_on_creator_id; Type: INDEX; Schema: public; Owner: -; Tablespace: 
+-- Name: index_items_on_creator_id; Type: INDEX; Schema: public; Owner: -
 --
 
 CREATE INDEX index_items_on_creator_id ON items USING btree (creator_id);
 
 
 --
--- Name: index_items_on_item_type_id; Type: INDEX; Schema: public; Owner: -; Tablespace: 
+-- Name: index_items_on_item_type_id; Type: INDEX; Schema: public; Owner: -
 --
 
 CREATE INDEX index_items_on_item_type_id ON items USING btree (item_type_id);
 
 
 --
--- Name: index_items_on_reviewer_id; Type: INDEX; Schema: public; Owner: -; Tablespace: 
+-- Name: index_items_on_reviewer_id; Type: INDEX; Schema: public; Owner: -
 --
 
 CREATE INDEX index_items_on_reviewer_id ON items USING btree (reviewer_id);
 
 
 --
--- Name: index_menu_items_on_catalog_id; Type: INDEX; Schema: public; Owner: -; Tablespace: 
+-- Name: index_menu_items_on_catalog_id; Type: INDEX; Schema: public; Owner: -
 --
 
 CREATE INDEX index_menu_items_on_catalog_id ON menu_items USING btree (catalog_id);
 
 
 --
--- Name: index_menu_items_on_item_type_id; Type: INDEX; Schema: public; Owner: -; Tablespace: 
+-- Name: index_menu_items_on_item_type_id; Type: INDEX; Schema: public; Owner: -
 --
 
 CREATE INDEX index_menu_items_on_item_type_id ON menu_items USING btree (item_type_id);
 
 
 --
--- Name: index_menu_items_on_page_id; Type: INDEX; Schema: public; Owner: -; Tablespace: 
+-- Name: index_menu_items_on_page_id; Type: INDEX; Schema: public; Owner: -
 --
 
 CREATE INDEX index_menu_items_on_page_id ON menu_items USING btree (page_id);
 
 
 --
--- Name: index_menu_items_on_parent_id; Type: INDEX; Schema: public; Owner: -; Tablespace: 
+-- Name: index_menu_items_on_parent_id; Type: INDEX; Schema: public; Owner: -
 --
 
 CREATE INDEX index_menu_items_on_parent_id ON menu_items USING btree (parent_id);
 
 
 --
--- Name: index_pages_on_catalog_id; Type: INDEX; Schema: public; Owner: -; Tablespace: 
+-- Name: index_pages_on_catalog_id; Type: INDEX; Schema: public; Owner: -
 --
 
 CREATE INDEX index_pages_on_catalog_id ON pages USING btree (catalog_id);
 
 
 --
--- Name: index_pages_on_creator_id; Type: INDEX; Schema: public; Owner: -; Tablespace: 
+-- Name: index_pages_on_creator_id; Type: INDEX; Schema: public; Owner: -
 --
 
 CREATE INDEX index_pages_on_creator_id ON pages USING btree (creator_id);
 
 
 --
--- Name: index_pages_on_reviewer_id; Type: INDEX; Schema: public; Owner: -; Tablespace: 
+-- Name: index_pages_on_reviewer_id; Type: INDEX; Schema: public; Owner: -
 --
 
 CREATE INDEX index_pages_on_reviewer_id ON pages USING btree (reviewer_id);
 
 
 --
--- Name: index_users_on_email; Type: INDEX; Schema: public; Owner: -; Tablespace: 
+-- Name: index_users_on_email; Type: INDEX; Schema: public; Owner: -
 --
 
 CREATE UNIQUE INDEX index_users_on_email ON users USING btree (email);
 
 
 --
--- Name: index_users_on_reset_password_token; Type: INDEX; Schema: public; Owner: -; Tablespace: 
+-- Name: index_users_on_reset_password_token; Type: INDEX; Schema: public; Owner: -
 --
 
 CREATE UNIQUE INDEX index_users_on_reset_password_token ON users USING btree (reset_password_token);
 
 
 --
--- Name: unique_schema_migrations; Type: INDEX; Schema: public; Owner: -; Tablespace: 
+-- Name: unique_schema_migrations; Type: INDEX; Schema: public; Owner: -
 --
 
 CREATE UNIQUE INDEX unique_schema_migrations ON schema_migrations USING btree (version);
@@ -1167,6 +1235,14 @@ ALTER TABLE ONLY pages
 
 
 --
+-- Name: fk_rails_8a017573a6; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY containers
+    ADD CONSTRAINT fk_rails_8a017573a6 FOREIGN KEY (page_id) REFERENCES pages(id);
+
+
+--
 -- Name: fk_rails_ac675f13b9; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
@@ -1226,7 +1302,7 @@ ALTER TABLE ONLY choice_sets
 -- PostgreSQL database dump complete
 --
 
-SET search_path TO "$user",public;
+SET search_path TO "$user", public;
 
 INSERT INTO schema_migrations (version) VALUES ('20151005181012');
 
@@ -1317,4 +1393,6 @@ INSERT INTO schema_migrations (version) VALUES ('20160425125350');
 INSERT INTO schema_migrations (version) VALUES ('20160509095147');
 
 INSERT INTO schema_migrations (version) VALUES ('20160509194619');
+
+INSERT INTO schema_migrations (version) VALUES ('20160720053135');
 

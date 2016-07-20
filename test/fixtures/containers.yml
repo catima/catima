@@ -1,0 +1,29 @@
+# == Schema Information
+#
+# Table name: containers
+#
+#  content    :jsonb
+#  created_at :datetime         not null
+#  id         :integer          not null, primary key
+#  page_id    :integer
+#  row_order  :integer
+#  slug       :string
+#  type       :string
+#  updated_at :datetime         not null
+#
+
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  type: Container::HTML
+  slug: content1
+  row_order: 1
+  page_id: 1
+  content: {html: "<h1>hello world</h1>"}
+
+two:
+  type: Container::Markdown
+  slug: content2
+  row_order: 0
+  page_id: 1
+  content: {markdown: "#hello world"}
