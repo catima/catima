@@ -76,7 +76,12 @@ Rails.application.routes.draw do
               :only => [:new, :create]
 
     resources :choice_sets, :path => "_choices", :except => :show
-    resources :pages, :path => "_pages", :param => :slug
+    resources :pages, :path => "_pages", :param => :slug do
+      resources :containers, 
+                :shallow => true,
+                :param => :id,
+                :except => :show
+    end
     resources :users, :path => "_users"
     resources :menu_items, path: '_menu_items'
 

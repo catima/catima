@@ -1,0 +1,44 @@
+<thead>
+  <tr>
+    <th style="width: 5em">Position</th>
+    <th>Type</th>
+    <th>Slug</th>
+    <th></th>
+  </tr>
+</thead>
+<tbody>
+  <% @page.containers.each_with_index do |container, index| %>
+    <tr>
+      <td>
+        <%= index + 1 %>
+        <%= container_move_up_link(container) unless index == 0 %>
+        <%= container_move_down_link(container) unless index == @page.containers.size - 1 %>
+      </td>
+      <td>
+        <%= container.type_name %>
+      </td>
+      <td>
+        <%= container.slug %>
+      </td>
+      <td style="text-align: right">
+        <% if policy(container).edit? %>
+          <%= link_to(
+                fa_icon("pencil", :text => "Edit"),
+                edit_catalog_admin_container_path(@page.catalog, container),
+                :class => "btn btn-default btn-xs") %>
+        <% end %>
+        <% if policy(container).destroy? %>
+          <%= link_to(
+                fa_icon("trash-o", :text => "Delete"),
+                { :action => :destroy, :slug => container },
+                :class => "btn btn-xs btn-text",
+                :method => :delete,
+                :data => {
+                  :confirm => "Are you sure you want to delete the "\
+                              "“#{container.slug}” container?"
+                }) %>
+        <% end %>
+      </td>
+    </tr>
+  <% end %>
+</tbody>

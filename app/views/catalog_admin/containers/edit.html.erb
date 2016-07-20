@@ -1,0 +1,12 @@
+<% provide(:title, "Edit #{@container.slug} container") %>
+
+<div class="panel-body">
+  <%= bootstrap_form_for(
+      @container,
+      :as => :container,
+      :url => { :action => :update }
+      ) do |f| %>
+
+    <%= render("common_form_fields", :f => f) %>
+  <% end %>
+</div>

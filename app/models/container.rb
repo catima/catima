@@ -19,17 +19,23 @@ class Container < ActiveRecord::Base
     itemlist: "Container::ItemList"
   }.freeze
 
-  include HasSlug
+  #include HasSlug
   include RankedModel
+
+  belongs_to :page
 
   ranks :row_order, :with_same => :page_id
 
   validates_presence_of :page_id
   validates_presence_of :content
-  validates_slug :scope => :page_id
+  #validates_slug :scope => :page_id
 
   def self.sorted
     rank(:row_order)
+  end
+
+  def self.policy_class
+    ContainerPolicy
   end
 
   def self.type_choices
@@ -39,11 +45,15 @@ class Container < ActiveRecord::Base
   end
 
   def type_name
-    type.gsub(/Field::/, '')
+    type.gsub(/Container::/, '')
   end
 
   def partial_name
     model_name.singular.sub(/^container_/, '')
+  end
+
+  def custom_container_permitted_attributes
+    []
   end
 
   def render
