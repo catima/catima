@@ -1,0 +1,11 @@
+<% provide(:title, "New #{@container.type_name} container") %>
+
+<div class="panel-body">
+  <%= bootstrap_form_for(
+        @container,
+        :as => :container,
+        :url => { :action => :index }
+        ) do |f| %>
+    <%= render("common_form_fields", :f => f) %>
+  <% end %>
+</div>

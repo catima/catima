@@ -14,9 +14,9 @@
 
 class Container < ActiveRecord::Base
   TYPES = {
-    html: 'Container::HTML',
-    markdown: 'Container::Markdown',
-    itemlist: "Container::ItemList"
+    "html" => 'Container::HTML',
+    "markdown" => 'Container::Markdown',
+    "itemlist" => 'Container::ItemList'
   }.freeze
 
   #include HasSlug

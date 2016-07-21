@@ -78,6 +78,7 @@ Rails.application.routes.draw do
     resources :choice_sets, :path => "_choices", :except => :show
     resources :pages, :path => "_pages", :param => :slug do
       resources :containers, 
+                :path => "_containers",
                 :shallow => true,
                 :param => :id,
                 :except => :show

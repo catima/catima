@@ -307,6 +307,7 @@ GEM
     rb-fsevent (0.9.7)
     rb-inotify (0.9.5)
       ffi (>= 0.5.0)
+    redcarpet (3.3.4)
     redis (3.2.2)
     redis-namespace (1.5.2)
       redis (~> 3.0, >= 3.0.4)
@@ -478,6 +479,7 @@ DEPENDENCIES
   rails-assets-mousetrap (~> 1.5.3)!
   ranked-model
   rb-fsevent
+  redcarpet
   redis-namespace
   refile (~> 0.6.1)
   refile-mini_magick

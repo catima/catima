@@ -1,5 +1,9 @@
 <% provide(:title, "Edit page") %>
 
+<% provide(:actions) do %>
+  <%= link_to("View page", page_path(@page), :target => '_blank') %>
+<% end %>
+
 <div class="panel-body">
   <%= bootstrap_form_for(@page, :url => catalog_admin_page_path) do |f| %>
 
@@ -16,7 +20,28 @@
 
 <hr/>
 <div class="panel-body">
+  
   <h4>Containers</h4>
+
+  <div style="float: right;">
+    <span class="dropdown">
+      <button class="btn btn-xs btn-default dropdown-toggle" type="button" id="add-field-dropdown" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+        <%= fa_icon(:"plus-square", :text => "Add…") %>
+        <span class="caret"></span>
+      </button>
+      <ul class="dropdown-menu" aria-labelledby="add-field-dropdown">
+        <% Container.type_choices.each do |key, label| %>
+          <li>
+            <%= link_to(
+                  "#{label} container", 
+                  new_catalog_admin_page_container_path(page_slug:@page.slug, type:key)
+                ) %>
+          </li>
+        <% end %>
+      </ul>
+    </span>
+  </div>
+
   <table class="table">
     <%= render("container_table") %>
   </table>
