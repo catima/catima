@@ -56,7 +56,8 @@ class Container < ActiveRecord::Base
     []
   end
 
-  def render
+  def render_view(options={})
+    # TODO: delegate rendering to a presenter class outside of the model
     '<p style="color:#f00;">Subclasses of Container must implement a render method'
   end
 end

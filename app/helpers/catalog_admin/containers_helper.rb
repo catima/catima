@@ -13,6 +13,16 @@ module CatalogAdmin::ContainersHelper
     container_move_link(container, "down")
   end
 
+  def item_type_select(form, options={})
+    form.collection_select(
+      :item_type,
+      catalog.item_types.sorted,
+      :id,
+      :name,
+      options.reverse_merge(:include_blank => true)
+    )
+  end
+
   private
 
   def container_move_link(container, direction)

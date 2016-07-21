@@ -5,7 +5,7 @@ class Container::HTML < ::Container
     %i(html)
   end
 
-  def render
+  def render_view(options={})
     content['html']
   end
 

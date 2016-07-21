@@ -5,11 +5,10 @@ class Container::Markdown < ::Container
     %i(markdown)
   end
 
-  def render
-    markdown = Redcarpet::Markdown.new(
+  def renderer(options={})
+    Redcarpet::Markdown.new(
       Redcarpet::Render::HTML, 
       { autolink: true, tables: true }
     )
-    markdown.render(content['markdown'])
   end
 end
