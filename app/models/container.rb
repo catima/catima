@@ -21,10 +21,9 @@ class Container < ActiveRecord::Base
 
   #include HasSlug
   include RankedModel
+  ranks :row_order, :class_name => "Container", :with_same => :page_id
 
   belongs_to :page
-
-  ranks :row_order, :with_same => :page_id
 
   validates_presence_of :page_id
   validates_presence_of :content
@@ -42,6 +41,10 @@ class Container < ActiveRecord::Base
     Container::TYPES.map do |key, class_name|
       [key, class_name.constantize.new.type_name]
     end.sort_by(&:last)
+  end
+
+  def catalog
+    page.catalog
   end
 
   def type_name

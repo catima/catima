@@ -7,7 +7,7 @@
   </tr>
 </thead>
 <tbody>
-  <% @page.containers.each_with_index do |container, index| %>
+  <% @page.containers.sorted.each_with_index do |container, index| %>
     <tr>
       <td>
         <%= index + 1 %>
@@ -30,7 +30,7 @@
         <% if policy(container).destroy? %>
           <%= link_to(
                 fa_icon("trash-o", :text => "Delete"),
-                { :action => :destroy, :slug => container },
+                catalog_admin_container_path(@page.catalog, container),
                 :class => "btn btn-xs btn-text",
                 :method => :delete,
                 :data => {

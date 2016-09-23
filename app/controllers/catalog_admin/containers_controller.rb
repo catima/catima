@@ -1,6 +1,6 @@
 class CatalogAdmin::ContainersController < CatalogAdmin::BaseController
   layout "catalog_admin/setup"
-  
+
   def new
     build_container
     authorize(@container)
@@ -42,6 +42,13 @@ class CatalogAdmin::ContainersController < CatalogAdmin::BaseController
     end
   end
 
+  def destroy
+    find_container
+    authorize(@container)
+    @container.destroy
+    redirect_to(edit_catalog_admin_page_path(@page.catalog, @page), :notice => destroyed_message)
+  end
+
   private
 
   def build_container
@@ -57,6 +64,8 @@ class CatalogAdmin::ContainersController < CatalogAdmin::BaseController
     @container = nil
     c = Container.find(params[:id])
     @container = c if catalog.id == c.page.catalog.id
+    @page = nil
+    @page = @container.page if @container
   end
 
   def container_params

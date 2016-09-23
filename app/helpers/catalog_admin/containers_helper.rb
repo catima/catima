@@ -30,10 +30,9 @@ module CatalogAdmin::ContainersHelper
       fa_icon(:"caret-#{direction}"),
       catalog_admin_container_path(@catalog, container, {
         :action => "update",
-        :container => { :row_order_position => direction },
-        :method => :patch
+        :container => { :row_order_position => direction }
       }),
-      
+      :method => :patch,
       :remote => true
     )
   end
