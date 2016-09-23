@@ -10,7 +10,7 @@
 
 <% provide(:title, @page.title) %>
 
-<% @page.containers.each do |c| %>
+<% @page.containers.sorted.each do |c| %>
   <% if c.slug %><a name="<%= c.slug %>"></a><% end %>
   <%= container_html(c) %>
 <% end %>
