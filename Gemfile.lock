@@ -36,7 +36,7 @@ GEM
       erubis (~> 2.7.0)
       rails-dom-testing (~> 1.0, >= 1.0.5)
       rails-html-sanitizer (~> 1.0, >= 1.0.2)
-    active_type (0.4.3)
+    active_type (0.6.0)
       activerecord (>= 3.2)
     activejob (4.2.6)
       activesupport (= 4.2.6)
@@ -62,9 +62,8 @@ GEM
       rake (~> 10.4)
     ansi (1.5.0)
     arel (6.0.3)
-    autoprefixer-rails (6.2.3)
+    autoprefixer-rails (6.4.1.1)
       execjs
-      json
     awesome_print (1.6.1)
     bcrypt (3.1.10)
     better_errors (2.1.1)
@@ -99,7 +98,7 @@ GEM
     capistrano-bundler (1.1.4)
       capistrano (~> 3.1)
       sshkit (~> 1.2)
-    capistrano-mb (0.25.0)
+    capistrano-mb (0.30.0)
       capistrano (>= 3.3.5)
       sshkit (>= 1.6.1)
     capistrano-nc (0.1.4)
@@ -248,8 +247,8 @@ GEM
     orm_adapter (0.5.0)
     panoramic (0.0.6)
       rails (>= 3.0.7)
-    pg (0.18.4)
-    pg_search (1.0.5)
+    pg (0.19.0)
+    pg_search (1.0.6)
       activerecord (>= 3.1)
       activesupport (>= 3.1)
       arel
@@ -324,7 +323,7 @@ GEM
       http-cookie (>= 1.0.2, < 2.0)
       mime-types (>= 1.16, < 3.0)
       netrc (~> 0.7)
-    rollbar (2.7.1)
+    rollbar (2.13.1)
       multi_json
     ruby-progressbar (1.7.5)
     ruby2ruby (2.2.0)
@@ -425,12 +424,12 @@ PLATFORMS
   ruby
 
 DEPENDENCIES
-  active_type (>= 0.3.2)
+  active_type (>= 0.6.0)
   airbrussh
   annotate (>= 2.5.0)
-  autoprefixer-rails (>= 5.0.0.1)
+  autoprefixer-rails (>= 6.4.1.1)
   awesome_print
-  bcrypt (~> 3.1.7)
+  bcrypt (~> 3.1.10)
   better_errors
   binding_of_caller
   bootstrap-sass (~> 3.2.0)
@@ -468,7 +467,7 @@ DEPENDENCIES
   minitest-reporters
   mocha
   panoramic (>= 0.0.6)
-  pg (~> 0.18)
+  pg (~> 0.19)
   pg_search (~> 1.0)
   poltergeist
   pundit
@@ -483,7 +482,7 @@ DEPENDENCIES
   redis-namespace
   refile (~> 0.6.1)
   refile-mini_magick
-  rollbar (~> 2.3)
+  rollbar (~> 2.12)
   ruby-progressbar
   sass-rails (~> 5.0)
   secure_headers (~> 2.4.4)
