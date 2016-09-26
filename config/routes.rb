@@ -122,4 +122,10 @@ Rails.application.routes.draw do
 
     get ":slug" => "custom#show", :constraints => CustomController::Constraint
   end
+
+  get '/404', to:'errors#error_404'
+  get '/422', to:'errors#error_404'
+  get '/500', to:'errors#error_500'
+  get '/505', to:'errors#error_500'
+
 end
