@@ -72,11 +72,11 @@ Rails.application.configure do
   # Production Sendgrid SMTP config
   config.action_mailer.delivery_method = :smtp
   config.action_mailer.smtp_settings = {
-    :address => "smtp.sendgrid.net",
+    :address => ENV.fetch("MAIL_SMTP_ADDRESS"),
     :port => 587,
     :enable_starttls_auto => true,
-    :user_name => ENV.fetch("SENDGRID_USERNAME"),
-    :password => ENV.fetch("SENDGRID_PASSWORD"),
+    :user_name => ENV.fetch("MAIL_SMTP_USERNAME"),
+    :password => ENV.fetch("MAIL_SMTP_PASSWORD"),
     :authentication => "login",
     :domain => "catima.unil.ch"
   }

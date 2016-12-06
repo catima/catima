@@ -1,5 +1,5 @@
 class ApplicationMailer < ActionMailer::Base
-  default :from => "catima@unil.ch"
+  default :from => ENV.fetch("MAIL_SENDER")
   layout "mailer"
 
   private
