@@ -44,7 +44,13 @@ class ItemsController < ApplicationController
   end
 
   def show
-    @item = item_type.public_items.find(params[:id]).behaving_as_type
+    begin
+      @item = item_type.public_items.find(params[:id]).behaving_as_type
+    rescue ActiveRecord::RecordNotFound => e
+      @item_type = item_type
+      @item_id = params[:id]
+      render 'missing'
+    end
   end
 
   private

@@ -73,6 +73,10 @@ en:
       next: "Next: %{item}"
       no_more: "No more results"
       previous: "Previous: %{item}"
+    missing:
+      missing_element: "Oops. Such an item doesn't exist."
+      missing_element_detail: "The item with ID %{item_id} of type «%{item_type}» does not exist in this catalog."
+      link_to_item_type: "See all items of type «%{item_type}»"
   invitations_mailer:
     account_information:
       email: "Email"

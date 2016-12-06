@@ -73,6 +73,10 @@ fr:
       next: "Suivant: %{item}"
       no_more: "Pas de résultats supplémentaires"
       previous: "Précédent: %{item}"
+    missing:
+      missing_element: "Oups. Un tel élément n'existe pas."
+      missing_element_detail: "L'élément avec ID %{item_id} de type «%{item_type}» n'existe pas dans ce catalogue."
+      link_to_item_type: "Voir tous les éléments de type «%{item_type}»"
   invitations_mailer:
     account_information:
       email: "E-mail"
