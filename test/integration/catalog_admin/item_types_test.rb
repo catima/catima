@@ -46,4 +46,17 @@ class CatalogAdmin::ItemTypesTest < ActionDispatch::IntegrationTest
     type = item_types(:two_author)
     refute(type.active?)
   end
+
+  test "data entry without item types defined" do
+    log_in_as("system-admin@example.com", "password")
+    visit("/admin")
+    click_on("New catalog")
+    fill_in("Name", :with => "Integration test empty catalog")
+    fill_in("Slug", :with => "int-test-empty-catalog")
+    select("English", :from => "Primary language")
+    click_on("Create catalog")
+    visit('/int-test-empty-catalog/admin')
+    click_on("Data")
+    assert(page.has_content?("No item types are defined yet."))
+  end
 end
