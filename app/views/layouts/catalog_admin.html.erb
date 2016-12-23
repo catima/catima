@@ -17,14 +17,14 @@
               fa_icon(:book, :text => "Data"),
               catalog_admin_contextual_data_path,
               :active_when => {
-                :controller => "catalog_admin/items"
+                :controller => /$?(dashboard)|(items)/
               }) %>
         <% if policy(ItemType).index? %>
           <%= navbar_link_to(
                 fa_icon(:wrench, :text => "Setup"),
                 catalog_admin_contextual_setup_path,
                 :active_when => {
-                  :controller => /$(?<!items)/
+                  :controller => /$(?<!items|dashboard)/
                 }) %>
         <% end %>
         <li><a href="/doc/"><%= fa_icon("question-circle", text:"Help") %></a></li>
