@@ -57,9 +57,8 @@ class ItemsTest < ActionDispatch::IntegrationTest
 
   test "can't see item that isn't approved" do
     book = items(:reviewed_book_end_of_watch)
-    assert_raises(ActiveRecord::RecordNotFound) do
-      visit("/reviewed/en/books/#{book.to_param}")
-    end
+    visit("/reviewed/en/books/#{book.to_param}")
+    assert(page.has_content?("Oops. Such an item doesn't exist."))
   end
 
   test "view item details with template override" do
