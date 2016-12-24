@@ -2,72 +2,82 @@
   <b><%= @item_type.name_plural %></b>
 <% end %>
 
-<% provide(:actions) do %>
-  <%= render("sort_menu") if sort_field_choices.any? %>
-  <div class="btn-group">
-    <%= link_to(
-          fa_icon(:"plus-square", :text => "New #{@item_type.name}"),
-          new_catalog_admin_item_path(catalog, @item_type),
-          :class => "btn btn-xs btn-default") %>
-    <button type="button"
-            class="btn btn-xs btn-default dropdown-toggle"
-            data-toggle="dropdown"
-            aria-haspopup="true"
-            aria-expanded="false">
-      <span class="caret"></span>
-      <span class="sr-only">Toggle Dropdown</span>
-    </button>
-    <ul class="dropdown-menu">
-      <li>
-        <%= link_to("Import from CSV", new_catalog_admin_csv_import_path) %>
-      </li>
-    </ul>
+<% if @item_type.fields.count == 0 %>
+  <div class="alert alert-warning" style="margin-bottom: 0;">
+  This item type does not have any fields.<br>Please add first one or more fields in the item type setup.
   </div>
 <% end %>
 
-<table class="table">
-  <thead>
-    <tr>
-      <% @fields.each do |field| %>
-        <th><%= field.label %></th>
-      <% end %>
-      <% if catalog.requires_review? %>
-        <th>Status</th>
-      <% end %>
-      <th></th>
-    </tr>
-  </thead>
-  <tbody>
-    <% @items.each do |item| %>
+<% if @item_type.fields.count > 0 %>
+
+  <% provide(:actions) do %>
+    <%= render("sort_menu") if sort_field_choices.any? %>
+    <div class="btn-group">
+      <%= link_to(
+            fa_icon(:"plus-square", :text => "New #{@item_type.name}"),
+            new_catalog_admin_item_path(catalog, @item_type),
+            :class => "btn btn-xs btn-default") %>
+      <button type="button"
+              class="btn btn-xs btn-default dropdown-toggle"
+              data-toggle="dropdown"
+              aria-haspopup="true"
+              aria-expanded="false">
+        <span class="caret"></span>
+        <span class="sr-only">Toggle Dropdown</span>
+      </button>
+      <ul class="dropdown-menu">
+        <li>
+          <%= link_to("Import from CSV", new_catalog_admin_csv_import_path) %>
+        </li>
+      </ul>
+    </div>
+  <% end %>
+
+  <table class="table">
+    <thead>
       <tr>
         <% @fields.each do |field| %>
-          <td><%= field_value(item, field, :style => :compact) %></td>
+          <th><%= field.label %></th>
         <% end %>
         <% if catalog.requires_review? %>
-          <td><%= review_status_label(item) %></td>
+          <th>Status</th>
         <% end %>
-        <td style="text-align: right">
-          <% if policy(item).edit? %>
-            <%= link_to(
-                  fa_icon("pencil", :text => "Edit"),
-                  edit_catalog_admin_item_path(catalog, @item_type, item),
-                  :class => "btn btn-default btn-xs") %>
-          <% end %>
-          <% if policy(item).destroy? %>
-            <%= link_to(
-                  fa_icon("trash-o", :text => "Delete"),
-                  catalog_admin_item_path(catalog, @item_type, item),
-                  :class => "btn btn-xs btn-text",
-                  :method => :delete,
-                  :data => {
-                    :confirm => "Are you sure you want to delete "\
-                                "“#{item_display_name(item)}”?"
-                  }) %>
-          <% end %>
-        </td>
+        <th></th>
       </tr>
-    <% end %>
-  </tbody>
-</table>
+    </thead>
+    <tbody>
+      <% @items.each do |item| %>
+        <tr>
+          <% @fields.each do |field| %>
+            <td><%= field_value(item, field, :style => :compact) %></td>
+          <% end %>
+          <% if catalog.requires_review? %>
+            <td><%= review_status_label(item) %></td>
+          <% end %>
+          <td style="text-align: right">
+            <% if policy(item).edit? %>
+              <%= link_to(
+                    fa_icon("pencil", :text => "Edit"),
+                    edit_catalog_admin_item_path(catalog, @item_type, item),
+                    :class => "btn btn-default btn-xs") %>
+            <% end %>
+            <% if policy(item).destroy? %>
+              <%= link_to(
+                    fa_icon("trash-o", :text => "Delete"),
+                    catalog_admin_item_path(catalog, @item_type, item),
+                    :class => "btn btn-xs btn-text",
+                    :method => :delete,
+                    :data => {
+                      :confirm => "Are you sure you want to delete "\
+                                  "“#{item_display_name(item)}”?"
+                    }) %>
+            <% end %>
+          </td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
 
-<% content_for(:pager, paginate(@items)) %>
+  <% content_for(:pager, paginate(@items)) %>
+
+<% end %>

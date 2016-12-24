@@ -128,4 +128,22 @@ class CatalogAdmin::ItemsTest < ActionDispatch::IntegrationTest
       first("a", :text => "Delete").click
     end
   end
+
+  test "creating items for item types without fields is not enabled" do
+    log_in_as("one-admin@example.com", "password")
+    
+    visit("/one/admin")
+    click_on("New item type")
+    fill_in("item_type[name_en]", :with => "Computer")
+    fill_in("item_type[name_plural_en]", :with => "Computers")
+    fill_in("Slug (plural)", :with => "computers")
+
+    assert_difference("catalogs(:one).item_types.count") do
+      click_on("Create item type")
+    end
+
+    click_on('Data')
+    click_on('Computers')
+    assert(page.has_content?('This item type does not have any fields.'))
+  end
 end
