@@ -22,7 +22,8 @@ class Page < ActiveRecord::Base
   belongs_to :creator, :class_name => "User"
   belongs_to :reviewer, :class_name => "User"
 
-  has_many :containers
+  has_many :containers, :dependent => :destroy
+  has_many :menu_items, :dependent => :destroy
 
   validates_presence_of :catalog
   #validates_presence_of :content

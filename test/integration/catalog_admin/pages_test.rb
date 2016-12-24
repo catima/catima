@@ -72,7 +72,7 @@ class CatalogAdmin::PagesTest < ActionDispatch::IntegrationTest
     assert_equal("Changed by test", model.title)
   end
 
-  test "delete an item" do
+  test "delete a page" do
     log_in_as("one-admin@example.com", "password")
     visit("/one/admin")
     click_on("Setup")
@@ -82,4 +82,39 @@ class CatalogAdmin::PagesTest < ActionDispatch::IntegrationTest
       first("a", :text => "Delete").click
     end
   end
+
+  test "delete a page with menu item" do
+    log_in_as("one-admin@example.com", "password")
+    visit("/one/admin")
+    click_on("Setup")
+    click_on("Pages")
+
+    while page.has_content?('Delete') do
+      first('a', :text => 'Delete').click
+    end
+
+    click_on("New page")
+    fill_in("Slug", :with => "hello")
+    fill_in("Title", :with => "Hello")
+    click_on("Create page")
+
+    click_on("Menu items")
+    click_on('New menu item')
+    fill_in('Slug', :with => 'hello-menu')
+    fill_in('Title', :with => 'Hello menu')
+    fill_in('Rank', :with => '10')
+    select('Hello', :from => 'Page')
+    click_on('Create menu item')
+
+    visit('/one')
+    within("div.navbar-collapse") { assert(page.has_content?("Hello menu")) }
+
+    visit('/one/admin')
+    click_on('Pages')
+    assert_difference("Page.count", -1) do
+      first("a", :text => "Delete").click
+    end
+  end
 end
+
+
