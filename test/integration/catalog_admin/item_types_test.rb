@@ -59,4 +59,36 @@ class CatalogAdmin::ItemTypesTest < ActionDispatch::IntegrationTest
     click_on("Data")
     assert(page.has_content?("No item types are defined yet."))
   end
+
+  test "create an item type with the same slug as a deleted item type" do
+    log_in_as("two-admin@example.com", "password")
+    
+    visit("/two/admin")
+    click_on("New item type")
+    fill_in("item_type[name_en]", :with => "Computer")
+    fill_in("item_type[name_plural_en]", :with => "Computers")
+    fill_in("Slug (plural)", :with => "computers")
+
+    assert_difference("catalogs(:two).item_types.count") do
+      click_on("Create item type")
+    end
+
+    visit("/two/admin")
+    click_on("Computer")
+    click_on("Edit item type")
+
+    assert_difference("catalogs(:two).item_types.count", -1) do
+      click_on("Delete this item type")
+    end
+
+    visit("/two/admin")
+    click_on("New item type")
+    fill_in("item_type[name_en]", :with => "Computer")
+    fill_in("item_type[name_plural_en]", :with => "Computers")
+    fill_in("Slug (plural)", :with => "computers")
+
+    assert_difference("catalogs(:two).item_types.count") do
+      click_on("Create item type")
+    end
+  end
 end

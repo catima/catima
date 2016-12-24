@@ -37,7 +37,8 @@ class CatalogAdmin::ItemTypesController < CatalogAdmin::BaseController
   def destroy
     find_item_type
     authorize(@item_type)
-    @item_type.update!(:deactivated_at => Time.current)
+    # change item type slug to enable user creating a new one with the same slug
+    @item_type.update!(:deactivated_at => Time.current, :slug => "#{@item_type.slug}-#{SecureRandom.uuid}")
     redirect_to(catalog_admin_setup_path(catalog), :notice => deleted_message)
   end
 
