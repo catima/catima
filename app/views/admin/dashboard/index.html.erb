@@ -1,25 +1,30 @@
 <% provide(:title, "CATIMA admin") %>
 
 
+<% if @configuration %>
 <div class="panel panel-default">
   <div class="panel-heading">
     Global settings
   </div>
   <%= render("admin/configurations/form") %>
 </div>
+<% end %>
 
 <div class="panel panel-default">
   <div class="panel-heading">
-    <span class="pull-right">
-      <%= link_to(new_admin_catalog_path) do %>
-        <%= fa_icon(:"plus-square", :text => "New catalog") %>
-      <% end %>
-    </span>
+    <% if current_user.system_admin? %>
+      <span class="pull-right">
+        <%= link_to(new_admin_catalog_path) do %>
+          <%= fa_icon(:"plus-square", :text => "New catalog") %>
+        <% end %>
+      </span>
+    <% end %>
     Catalogs
   </div>
   <%= render("catalogs") %>
 </div>
 
+<% if @users %>
 <div class="panel panel-default">
   <div class="panel-heading">
     <span class="pull-right">
@@ -31,7 +36,9 @@
   </div>
   <%= render("users") %>
 </div>
+<% end %>
 
+<% if @template_storages %>
 <div class="panel panel-default">
   <div class="panel-heading">
     <span class="pull-right">
@@ -43,4 +50,4 @@
   </div>
   <%= render("template_storages") %>
 </div>
-
+<% end %>
