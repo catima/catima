@@ -32,42 +32,10 @@
 
 class Field::Geometry < ::Field
   # TODO: CRS?
+  include ::Field::HasJsonRepresentation
 
   def human_readable?
     false
-  end
-
-  def custom_item_permitted_attributes
-    [:"#{uuid}_json"]
-  end
-
-  def value_as_json_string(item)
-    existing_input = item.instance_variable_get("@#{uuid}_json_string")
-    return existing_input unless existing_input.nil?
-
-    hash = raw_value(item)
-    hash && JSON.pretty_generate(hash)
-  end
-
-  def assign_value_from_json_string(item, json)
-    item.instance_variable_set("@#{uuid}_json_string", json)
-    item.public_send("#{uuid}=", JSON.parse(json))
-  rescue JSON::ParserError
-    # ignore
-  end
-
-  # The actual geometry data is stored as a Hash, but to facilitate user input,
-  # we need to create a virtual attribute that is a string. This virtual
-  # attribute gets the name "#{uuid}_json".
-  def decorate_item_class(klass)
-    super
-    field = self
-    klass.send(:define_method, "#{uuid}_json") do
-      field.value_as_json_string(self)
-    end
-    klass.send(:define_method, "#{uuid}_json=") do |json|
-      field.assign_value_from_json_string(self, json)
-    end
   end
 
   private

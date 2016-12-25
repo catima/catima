@@ -1,43 +1,36 @@
 class Field::FilePresenter < FieldPresenter
-  delegate :attachment_filename, :attachment_size, :attachment_present?,
-           :to => :field
-
   delegate :content_tag, :number_to_human_size, :to => :view
 
   def input(form, method, options={})
-    form.form_group(method, :label => { :text => label }) do
-      html = [existing_file(form) || unsaved_file]
-      html << form.attachment_field(method, options.merge(:direct => true))
-      html.compact.join.html_safe
-    end
+    form.text_area(
+      "#{method}_json",
+      input_defaults(options).reverse_merge(:rows => 1)
+    )
   end
 
   def value
-    return nil unless attachment_present?(item)
     file_info
   end
 
   def file_info
-    return unless (name = attachment_filename(item))
-    info = ["<a href=\"#{file_url(item)}\" target=\"_blank\"><i class=\"fa fa-file\"></i> #{name}</a>"]
-    info << number_to_human_size(attachment_size(item), :prefix => :si)
-    info.join(", ").html_safe
+    return nil if raw_value.nil?
+    info = files_as_array.map do |file|
+      "<div class=\"file-link\">" \
+        "<a href=\"#{file_url(file)}\" target=\"_blank\">" \
+          "<i class=\"fa fa-file\"></i> #{file['name']}" \
+        "</a>" \
+        ", #{number_to_human_size(file['size'], :prefix => :si)}" \
+      "</div>"
+    end
+    info.join().html_safe
   end
 
-  def existing_file(form)
-    return unless (image = value)
-    [
-      content_tag(:p, content_tag(:a, image, { href:file_url(item), target:"_blank" })),
-      form.check_box("remove_#{uuid}", :label => "Remove this file")
-    ].join.html_safe
+  def file_url(file)
+    file['path'].nil? ? nil : file['path'].sub('public', '')
   end
 
-  def file_url(item)
-    item.behaving_as_type.public_send("#{uuid}_url")
+  def files_as_array
+    raw_value.is_a?(Array) ? raw_value : [ raw_value ]
   end
 
-  def unsaved_file
-    return unless (info = file_info)
-    content_tag(:p, info)
-  end
 end

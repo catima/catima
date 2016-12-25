@@ -74,7 +74,7 @@ class Item < ActiveRecord::Base
   def image?
     list_view_fields.any? do |f|
       next unless f.is_a?(Field::Image)
-      f.attachment_present?(self)
+      f.file_count(self) > 0
     end
   end
 

@@ -49,8 +49,11 @@ one_author_stephen_king:
       "one_author_rank_uuid": "1.88891",
       "one_author_bio_uuid": {
         "id": "dummy",
+        "name": "bio.doc",
+        "path": "public/upload/one/authors/Steve/bio.doc",
         "filename": "bio.doc",
-        "size": 192000
+        "size": 192000,
+        "type": "document/doc"
       },
       "one_author_born_uuid": -703130400
     }

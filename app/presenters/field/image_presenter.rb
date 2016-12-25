@@ -1,34 +1,21 @@
 class Field::ImagePresenter < Field::FilePresenter
-  delegate :image_tag, :attachment_url, :to => :view
+  delegate :image_tag, :to => :view
 
   def value
-    return nil unless attachment_present?(item)
-    src_1x, src_2x = image_sources
-
-    srcset = "#{src_1x} 1x,#{src_2x} 2x"
-    options = { :srcset => srcset, :alt => attachment_filename(item) }
-    content_tag(:a, image_tag(src_1x, options.merge(self.options)), { href:file_url(item), target:"_blank" })
+    return nil if raw_value.nil?
+    options[:class] = options[:style] ? options[:style] : :full
+    images = files_as_array.map do |image|
+      image_tag(file_url(image), options.merge(self.options))
+    end
+    images.join(' ').html_safe
   end
 
   private
 
-  def image_sources
-    transform = transformation_args
-    src_1x = attachment_url(item.behaving_as_type, uuid, *transform)
-    src_2x = attachment_url(
-      item.behaving_as_type,
-      uuid,
-      transform.first,
-      *transform[1..-1].map { |i| i * 2 }
-    )
-    [src_1x, src_2x]
-  end
-
-  def transformation_args
-    case options[:style]
-    when :compact then [:fill, 64, 64]
-    when :medium then [:fill, 250, 250]
-    else [:limit, 600, 600]
-    end
-  end
+  # TODO: transform image
+  #   case options[:style]
+  #   when :compact then [:fill, 64, 64]
+  #   when :medium then [:fill, 250, 250]
+  #   else [:limit, 600, 600]
+  #   end
 end

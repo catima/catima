@@ -31,6 +31,9 @@
 #
 
 class Field::File < ::Field
+  include ::Field::AllowsMultipleValues
+  include ::Field::HasJsonRepresentation
+
   store_accessor :options, :types
 
   validates_presence_of :types
@@ -39,31 +42,15 @@ class Field::File < ::Field
     %i(types)
   end
 
-  def custom_item_permitted_attributes
-    [:"remove_#{uuid}"]
-  end
-
   def allowed_extensions
     types.to_s.split(/[,\s]+/).map do |token|
       token.strip[/^\.?(\S+)/, 1]
     end
   end
 
-  def decorate_item_class(klass)
-    super
-    klass.data_store_hash(uuid, :id, :filename, :size)
-    klass.send(:attachment, uuid, :extension => allowed_extensions)
-  end
-
-  def attachment_present?(item)
-    item.behaving_as_type.public_send("#{uuid}_id").present?
-  end
-
-  def attachment_filename(item)
-    item.behaving_as_type.public_send("#{uuid}_filename")
-  end
-
-  def attachment_size(item)
-    item.behaving_as_type.public_send("#{uuid}_size")
+  def file_count(item)
+    files = raw_value(item)
+    return 0 if files.nil?
+    files.is_a?(Array) ? files.count : 1
   end
 end
