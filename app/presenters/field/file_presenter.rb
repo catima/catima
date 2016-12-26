@@ -2,10 +2,22 @@ class Field::FilePresenter < FieldPresenter
   delegate :content_tag, :number_to_human_size, :to => :view
 
   def input(form, method, options={})
-    form.text_area(
-      "#{method}_json",
-      input_defaults(options).reverse_merge(:rows => 1)
-    )
+    html = [
+      form.text_area(
+        "#{method}_json",
+        input_defaults(options).reverse_merge(:rows => 1, 'data-field-type' => 'file')
+      ),
+      "<div class=\"form-group form-group-dropzone\">",
+      "<div " \
+        "id=\"dropzone_#{method}\" " \
+        "class=\"dropzone #{field.multiple ? 'dropzone-multiple' : ''}\" " \
+        "data-field=\"#{method}\" " \
+        "data-multiple=\"#{field.multiple}\" " \
+        "data-file-types=\"#{field.types}\"></div>",
+      "<div id=\"dz_msg_#{method}\"></div>",
+      "</div>"
+    ]
+    html.compact.join.html_safe
   end
 
   def value
@@ -26,7 +38,7 @@ class Field::FilePresenter < FieldPresenter
   end
 
   def file_url(file)
-    file['path'].nil? ? nil : file['path'].sub('public', '')
+    file['path'].nil? ? nil : "/#{file['path']}"
   end
 
   def files_as_array

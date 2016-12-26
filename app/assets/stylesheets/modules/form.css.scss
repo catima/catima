@@ -2,3 +2,25 @@
 .table td .form-group:last-child {
   margin-bottom: 0;
 }
+
+div.dropzone {
+  background-color: #f0f0f0;
+  border: 1px solid #ccc;
+  max-width: 200px;
+}
+div.dropzone-multiple {
+  width: 100%;
+  max-width: 100%;
+}
+.dz-message {
+  color: #999;
+}
+.dropzone .dz-preview.dz-image-preview {
+  background-color: #f0f0f0;
+}
+textarea[data-field-type="file"] {
+  display: none;
+}
+.form-group-dropzone {
+  margin-top: -15px;
+}

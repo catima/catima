@@ -24,6 +24,7 @@ class ItemPolicy
   end
   alias_method :edit?, :update?
   alias_method :destroy?, :update?
+  alias_method :upload?, :update?
 
   class Scope
     attr_reader :user, :scope

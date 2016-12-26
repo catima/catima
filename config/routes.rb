@@ -92,6 +92,7 @@ Rails.application.routes.draw do
         post "approval" => "approvals#create"
         delete "approval" => "approvals#destroy"
       end
+      post "upload" => "items#upload"
     end
   end
 

@@ -52,6 +52,36 @@ class CatalogAdmin::ItemsController < CatalogAdmin::BaseController
     redirect_to({ :action => "index" }, :notice => deleted_message)
   end
 
+  def upload
+    build_item
+    authorize(@item)
+    uploaded_files = params[:file]
+    uploaded_files = uploaded_files.is_a?(ActionDispatch::Http::UploadedFile) ? [['files',uploaded_files]] : uploaded_files
+    fld_id = params[:field].sub('dropzone_', '')
+    upload_dir = File.join(
+      'upload', params[:catalog_slug], 
+      params[:item_type_slug], fld_id
+    )
+    upload_path = File.join('public', upload_dir)
+    FileUtils.mkdir_p(upload_path)
+    timestamp = Time.now.to_i.to_formatted_s(:number)
+    processed_files = uploaded_files.map do |file|
+      file_path = File.join upload_dir, "#{timestamp}_#{file[1].original_filename}"
+      File.open(Rails.root.join('public', file_path), 'wb') do |fp|
+        fp.write(file[1].read)
+      end
+      { 
+        :name => file[1].original_filename, :path => file_path,
+        :type => file[1].content_type, :size => file[1].size
+      }
+    end
+    render :json => {
+      :status => 'ok', :processed_files => processed_files,
+      :catalog => params[:catalog_slug],
+      :item_type => params[:item_type_slug], :field => fld_id
+    }
+  end
+
   private
 
   attr_reader :item_type

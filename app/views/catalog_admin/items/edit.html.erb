@@ -1,15 +1,13 @@
 <% provide(:title, "Edit #{item_display_name(@item)}") %>
 
-<%= bootstrap_form_for(@item, :url => catalog_admin_item_path) do |f| %>
-
-  <%= render_items_approval(@item) %>
-
-  <%= render("common_form_fields", :f => f) %>
-
-  <%= f.primary("Save #{@item.item_type.name}") %>
-
-  <%= link_to(
-        "Cancel",
-        catalog_admin_items_path,
-        :class => "btn btn-link") %>
-<% end %>
+<div id="item-form">
+  <%= bootstrap_form_for(@item, :url => catalog_admin_item_path) do |f| %>
+    <%= render_items_approval(@item) %>
+    <%= render("common_form_fields", :f => f) %>
+    <%= f.primary("Save #{@item.item_type.name}") %>
+    <%= link_to(
+          "Cancel",
+          catalog_admin_items_path,
+          :class => "btn btn-link") %>
+  <% end %>
+</div>
