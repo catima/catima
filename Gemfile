@@ -20,6 +20,7 @@ gem "kaminari"
 gem "liquid-rails", ">= 0.1.3"
 gem "mail", ">= 2.6.3"
 gem "marco-polo"
+gem 'mini_magick', '~> 4.3.6'
 gem "panoramic", ">= 0.0.6"
 gem "pg", "~> 0.19"
 gem "pg_search", "~> 1.0"

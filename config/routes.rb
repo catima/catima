@@ -124,6 +124,18 @@ Rails.application.routes.draw do
     get ":slug" => "custom#show", :constraints => CustomController::Constraint
   end
 
+
+  # ===========================================================================
+  # Image thumbnails
+
+  get '/thumbs/:catalog_slug/:size/:mode/:field_uuid/:image.:ext', 
+    :to => 'images#thumbnail',
+    :constraints => CatalogsController::Constraint
+
+
+  # ===========================================================================
+  # Error pages
+
   get '/404', to:'errors#error_404'
   get '/422', to:'errors#error_404'
   get '/500', to:'errors#error_500'

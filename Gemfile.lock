@@ -467,6 +467,7 @@ DEPENDENCIES
   listen
   mail (>= 2.6.3)
   marco-polo
+  mini_magick (~> 4.3.6)
   minitest-reporters
   mocha
   panoramic (>= 0.0.6)

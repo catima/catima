@@ -58,10 +58,7 @@ class CatalogAdmin::ItemsController < CatalogAdmin::BaseController
     uploaded_files = params[:file]
     uploaded_files = uploaded_files.is_a?(ActionDispatch::Http::UploadedFile) ? [['files',uploaded_files]] : uploaded_files
     fld_id = params[:field].sub('dropzone_', '')
-    upload_dir = File.join(
-      'upload', params[:catalog_slug], 
-      params[:item_type_slug], fld_id
-    )
+    upload_dir = File.join('upload', params[:catalog_slug], fld_id)
     upload_path = File.join('public', upload_dir)
     FileUtils.mkdir_p(upload_path)
     timestamp = Time.now.to_i.to_formatted_s(:number)
