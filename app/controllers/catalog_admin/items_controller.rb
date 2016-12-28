@@ -63,7 +63,8 @@ class CatalogAdmin::ItemsController < CatalogAdmin::BaseController
     FileUtils.mkdir_p(upload_path)
     timestamp = Time.now.to_i.to_formatted_s(:number)
     processed_files = uploaded_files.map do |file|
-      file_path = File.join upload_dir, "#{timestamp}_#{file[1].original_filename}"
+      local_fname = "#{timestamp}_" + format_filename(file[1].original_filename)
+      file_path = File.join upload_dir, local_fname
       File.open(Rails.root.join('public', file_path), 'wb') do |fp|
         fp.write(file[1].read)
       end
@@ -124,5 +125,11 @@ class CatalogAdmin::ItemsController < CatalogAdmin::BaseController
       "#{@item_type.name} “#{view_context.item_display_name(@item)}” "\
       "has been #{verb}."
     end
+  end
+
+  def format_filename(fname)
+    ext = File.extname(fname)
+    basename = fname.slice(0, fname.length - ext.length)
+    basename.gsub(/[^0-9_\-a-zA-Z]/, '') + ext
   end
 end
