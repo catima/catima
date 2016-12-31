@@ -1396,3 +1396,5 @@ INSERT INTO schema_migrations (version) VALUES ('20160509194619');
 
 INSERT INTO schema_migrations (version) VALUES ('20160720053135');
 
+INSERT INTO schema_migrations (version) VALUES ('20161231140032');
+

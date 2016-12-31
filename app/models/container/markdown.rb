@@ -1,3 +1,17 @@
+# == Schema Information
+#
+# Table name: containers
+#
+#  content    :jsonb
+#  created_at :datetime         not null
+#  id         :integer          not null, primary key
+#  page_id    :integer
+#  row_order  :integer
+#  slug       :string
+#  type       :string
+#  updated_at :datetime         not null
+#
+
 class Container::Markdown < ::Container
   store_accessor :content, :markdown
 
