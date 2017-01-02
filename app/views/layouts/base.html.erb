@@ -1,5 +1,4 @@
 <%# The "base" layout contains boilerplate common to *all* views. %>
-
 <!DOCTYPE html>
 <html>
   <head>
@@ -35,5 +34,6 @@
 
     <%= yield %>
 
+    <% if Rails.env.development? %><script type="text/javascript">DBG = {};</script><% end %>
   </body>
 </html>

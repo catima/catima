@@ -26,8 +26,8 @@ init_dropzones = ->
   $dz_containers = $('div.dropzone')
   for $dz in $dz_containers
     $dropzones.push(build_dropzone($dz))
-  $('item-form form').submit (e) ->
-    if uploadsInProgress()
+  $('#item-form form').submit (e) ->
+    if dz_uploads_in_progress() || dz_validate_all() == false
       e.preventDefault()
       return false
 
@@ -57,7 +57,6 @@ build_dropzone = ($dz) ->
       field: $dz.id
     },
     successmultiple: ($data, $response) ->
-      console.log(['successmultiple', $data, $response])
       $fld = $response.field
       add_files_to_field($response.processed_files, $fld)
 
@@ -70,6 +69,30 @@ build_dropzone = ($dz) ->
   dz_add_existing_files($new_dz, $field)
   return $new_dz
 
+dz_uploads_in_progress = ->
+  for $dz in $dropzones
+    if $dz.getUploadingFiles().length > 0 || $dz.getQueuedFiles().length > 0
+      return true
+  return false
+
+dz_validate_all = ->
+  for $dz in $dropzones
+    if dz_validate($dz) == false
+      return false
+  return true
+
+dz_validate = ($dz) ->
+  if $($dz.element).attr('data-required') == 'true' && $dz.files.length == 0
+    $($dz.element).css('border', '2px solid #f00')
+    field_uuid = $($dz.element).attr('data-field')
+    $('#dz_msg_'+field_uuid).html('This field is required')
+    $('#dz_msg_'+field_uuid).addClass('red')
+    fname = $($dz.element).attr('data-fieldname')
+    $($dz.element).closest('.col-sm-6').prepend(
+      '<div class="alert alert-danger">Field «'+fname+'» is required.</div>'
+    )
+    return false
+  return true
 
 dz_multiple = ($dz) ->
   return ($($dz).attr('data-multiple') == 'true')
@@ -78,9 +101,9 @@ dz_add_existing_files = ($dz, $field) ->
   $files = get_files_for_field($field)
   for $file in $files
     $dz.emit 'addedfile', $file
+    $dz.emit 'success', $file
     $dz.emit 'complete', $file
-  if $dz.options.maxFiles
-    $dz.options.maxFiles - $files.length
+    $dz.files.push($file)
 
 add_files_to_field = ($files, $field) ->
   $current_files = get_files_for_field($field)
@@ -94,7 +117,6 @@ remove_file_from_field = ($file, $field) ->
   for $f in $current_files
     if $f.name != $file.name || $f.size != $file.size
       $files_to_keep.push($f)
-  console.log(['remove_file_from_field', $file, $field, $current_files, $files_to_keep])
   set_files_for_field($files_to_keep, $field)
 
 get_files_for_field = ($field) ->
@@ -111,7 +133,6 @@ set_files_for_field = ($files, $field) ->
     $('#item_'+$field+'_json').html('')
     return  
   $files = if dz_multiple('#dropzone_'+$field) then $files else $files[0]
-  console.log(['set_files_for_field', $files, $field])
   $('#item_'+$field+'_json').html(JSON.stringify($files))
 
 

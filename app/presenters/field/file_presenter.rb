@@ -13,6 +13,8 @@ class Field::FilePresenter < FieldPresenter
         "class=\"dropzone #{field.multiple ? 'dropzone-multiple' : ''}\" " \
         "data-field=\"#{method}\" " \
         "data-multiple=\"#{field.multiple}\" " \
+        "data-required=\"#{field.required?}\" " \
+        "data-fieldname=\"#{field.name}\" " \
         "data-file-types=\"#{field.types}\"></div>",
       "<div id=\"dz_msg_#{method}\"></div>",
       "</div>"
