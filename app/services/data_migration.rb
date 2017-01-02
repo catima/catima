@@ -23,8 +23,10 @@ class DataMigration
     file_image_fields.each do |field|
       field.item_type.items.each do |item|
         file_data = field.raw_value(item)
-        if file_data.is_a?(Array) == false && file_data.has_key?('id')
-          migrate_file_field_for_item(field, item) unless file_data['id'].nil?
+        unless file_data.nil?
+          if file_data.is_a?(Array) == false && file_data.has_key?('id')
+            migrate_file_field_for_item(field, item) unless file_data['id'].nil?
+          end
         end
       end
     end
