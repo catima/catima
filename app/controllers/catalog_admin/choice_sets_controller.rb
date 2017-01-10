@@ -36,6 +36,23 @@ class CatalogAdmin::ChoiceSetsController < CatalogAdmin::BaseController
     end
   end
 
+  def create_choice
+    choice_set = catalog.choice_sets.find(params[:choice_set_id])
+    authorize(choice_set)
+    choice = choice_set.choices.new
+    if choice.update(choice_params)
+      render json: {
+        catalog: catalog.id, choice_set: choice_set.id,
+        choice: choice
+      }
+    else
+      render json: { 
+        errors: choice.errors.full_messages.join(', '),
+        catalog: catalog.id, choice_set: choice_set.id
+      }, status: :unprocessable_entity
+    end
+  end
+
   private
 
   def build_choice_set
@@ -56,6 +73,13 @@ class CatalogAdmin::ChoiceSetsController < CatalogAdmin::BaseController
         :short_name_de, :short_name_en, :short_name_fr, :short_name_it,
         :long_name_de, :long_name_en, :long_name_fr, :long_name_it
       ])
+  end
+
+  def choice_params
+    params.require(:choice).permit(
+      :short_name_de, :short_name_en, :short_name_fr, :short_name_it,
+      :long_name_de, :long_name_en, :long_name_fr, :long_name_it
+    )
   end
 
   def created_message

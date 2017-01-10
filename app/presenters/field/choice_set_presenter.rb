@@ -4,13 +4,24 @@ class Field::ChoiceSetPresenter < FieldPresenter
            :to => :view
 
   def input(form, method, options={})
-    select2_select(
-      form,
-      method,
-      nil,
-      input_defaults(options).merge(:multiple => field.multiple?),
-      &method(:options_for_select)
-    )
+    [
+      "<div class=\"row\" data-choice-set=\"#{field.choice_set.id}\">",
+        '<div class="col-xs-8">',
+          select2_select(
+            form,
+            method,
+            nil,
+            input_defaults(options).merge(:multiple => field.multiple?),
+            &method(:options_for_select)
+          ),
+        '</div>',
+        '<div class="col-xs-4" style="padding-top: 25px; margin-left: -15px;">',
+          '<a class="btn btn-sm btn-default" style="color: #aaa;" data-toggle="modal" data-target="#choice-modal-'+method+'" href="#">',
+            '<span class="glyphicon glyphicon-plus"></span>',
+          '</a>',
+        '</div>',
+      '</div>'
+    ].join.html_safe
   end
 
   def value
@@ -43,5 +54,13 @@ class Field::ChoiceSetPresenter < FieldPresenter
         :data => data
       )
     end.join.html_safe
+  end
+
+  def choice_modal(method)
+    field = Field.where(:uuid => method).first!
+    ActionController::Base.new.render_to_string(
+      :partial => 'catalog_admin/choice_sets/choice_modal', 
+      :locals => { field: field }
+    )
   end
 end

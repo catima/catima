@@ -17,6 +17,11 @@ class ChoiceSetPolicy
     user.system_admin? || user.catalog_role_at_least?(catalog, "admin")
   end
   alias_method :create?, :user_is_catalog_admin?
+
+  def create_choice?
+    user.system_admin? || user.catalog_role_at_least?(catalog, "editor")
+  end
+
   alias_method :destroy?, :user_is_catalog_admin?
   alias_method :edit?, :user_is_catalog_admin?
   alias_method :new?, :user_is_catalog_admin?
