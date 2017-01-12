@@ -34,7 +34,7 @@ init_dropzones = ->
 build_dropzone = ($dz) ->
   $field = $($dz).attr('data-field')
   $new_dz = new Dropzone('#'+$dz.id, {
-    url: $('#item-form form').attr('action') + '/upload',
+    url: $('#'+$dz.id).attr('data-upload-url'),
     autoProcessQueue: true,
     uploadMultiple: true,
     addRemoveLinks: true,

@@ -15,6 +15,7 @@ class Field::FilePresenter < FieldPresenter
         "data-multiple=\"#{field.multiple}\" " \
         "data-required=\"#{field.required?}\" " \
         "data-fieldname=\"#{field.name}\" " \
+        "data-upload-url=\"/#{field.catalog.slug}/admin/#{field.item_type.slug}/upload\" " \
         "data-file-types=\"#{field.types}\"></div>",
       "<div id=\"dz_msg_#{method}\"></div>",
       "</div>"
