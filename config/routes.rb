@@ -95,8 +95,8 @@ Rails.application.routes.draw do
         post "approval" => "approvals#create"
         delete "approval" => "approvals#destroy"
       end
-      post "upload" => "items#upload"
     end
+    post ":item_type_slug/upload" => "items#upload", :as => 'item_file_upload'
   end
 
   # ===========================================================================
