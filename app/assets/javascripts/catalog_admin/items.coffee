@@ -82,16 +82,18 @@ dz_validate_all = ->
   return true
 
 dz_validate = ($dz) ->
-  if $($dz.element).attr('data-required') == 'true' && $dz.files.length == 0
-    $($dz.element).css('border', '2px solid #f00')
+  if $($dz.element).attr('data-required') == 'true'
     field_uuid = $($dz.element).attr('data-field')
-    $('#dz_msg_'+field_uuid).html('This field is required')
-    $('#dz_msg_'+field_uuid).addClass('red')
-    fname = $($dz.element).attr('data-fieldname')
-    $($dz.element).closest('.col-sm-6').prepend(
-      '<div class="alert alert-danger">Field «'+fname+'» is required.</div>'
-    )
-    return false
+    $files = get_files_for_field(field_uuid)
+    if $files.length == 0
+      $($dz.element).css('border', '2px solid #f00')
+      $('#dz_msg_'+field_uuid).html('This field is required')
+      $('#dz_msg_'+field_uuid).addClass('red')
+      fname = $($dz.element).attr('data-fieldname')
+      $($dz.element).closest('.col-sm-6').prepend(
+        '<div class="alert alert-danger">Field «'+fname+'» is required.</div>'
+      )
+      return false
   return true
 
 dz_multiple = ($dz) ->
