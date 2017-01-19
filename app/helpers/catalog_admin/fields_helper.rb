@@ -15,6 +15,16 @@ module CatalogAdmin::FieldsHelper
     render(partial, :f => form)
   end
 
+  def render_catalog_admin_fields_modals(field)
+    model_name = field.partial_name
+    partial = "catalog_admin/fields/#{model_name}_modals"
+    begin
+      render(partial, :field => field)
+    rescue ActionView::MissingTemplate => e
+      nil
+    end
+  end
+
   def field_primary_badge(field)
     return unless field.primary?
     content_tag(:span, "Primary", :class => "label label-warning")

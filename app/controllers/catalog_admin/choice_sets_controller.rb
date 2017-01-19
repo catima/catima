@@ -15,9 +15,17 @@ class CatalogAdmin::ChoiceSetsController < CatalogAdmin::BaseController
     build_choice_set
     authorize(@choice_set)
     if @choice_set.update(choice_set_params)
-      redirect_to(after_create_path, :notice => created_message)
+      if request.xhr?
+        render json: { choice_set: @choice_set }
+      else
+        redirect_to(after_create_path, :notice => created_message)
+      end
     else
-      render("new")
+      if request.xhr?
+        render json: { errors: @choice_set.errors.full_messages.join(', ') }, status: :unprocessable_entity
+      else
+        render("new")
+      end
     end
   end
 

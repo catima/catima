@@ -1,6 +1,13 @@
+<div class="row">
+  <div class="col-xs-8">
 <%= f.collection_select(
       :choice_set_id,
       f.object.choice_set_choices,
       :id,
       :name,
       :label => "Choice set") %>
+  </div>
+  <div class="col-xs-4" style="padding-top: 25px; margin-left: -15px;">
+    <a class="btn btn-sm btn-default" data-toggle="modal" data-target="#new-choice-set-modal" href="#"><span class="glyphicon glyphicon-plus"></span> New choice set</a>
+  </div>
+</div>

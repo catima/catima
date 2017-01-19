@@ -18,7 +18,7 @@
     </thead>
     <tbody>
       <%= f.fields_for(:choices) do |choice| %>
-        <%= render("choice_fields", :f => choice) %>
+        <%= render("catalog_admin/choice_sets/choice_fields", :f => choice) %>
       <% end %>
       <tr data-link="choices">
         <td colspan="4">
@@ -27,7 +27,9 @@
                 f,
                 :choices,
                 :class => "btn btn-text",
-                :"data-association-insertion-node" => "[data-link='choices']")%>
+                :"data-association-insertion-node" => "[data-link='choices']",
+                :partial => 'catalog_admin/choice_sets/choice_fields'
+              ) %>
         </td>
       </tr>
     </tbody>

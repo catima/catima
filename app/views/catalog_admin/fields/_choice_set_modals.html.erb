@@ -1,0 +1,26 @@
+<div class="modal fade" id="new-choice-set-modal" tabindex="-1" role="dialog" aria-labelledby="Create a new choice set">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+
+      <% choice_set = field.catalog.choice_sets.new %>
+      <%= bootstrap_form_for([:catalog_admin, choice_set], remote: true) do |f| %>
+
+        <div class="modal-header">
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+          <h4 class="modal-title">Create new choice set</h4>
+        </div>
+        <div class="modal-body">
+          <div class="panel-body">
+            <%= render("catalog_admin/choice_sets/common_form_fields", :f => f) %>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-default" data-dismiss="modal">Cancel</button>
+          <%= f.submit 'Create', class: 'btn btn-success' %>
+        </div>
+
+      <% end %>
+
+    </div>
+  </div>
+</div>
