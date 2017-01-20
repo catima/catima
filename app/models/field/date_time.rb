@@ -47,11 +47,77 @@ class Field::DateTime < ::Field
     %i(format)
   end
 
+  def raw_value(item, locale=I18n.locale)
+    # Converts the old datetime field value to the new hash style if required
+    v = super(item, locale)
+    return nil if v.nil?
+    return v if v.is_a?(Hash) and v.has_key?('raw_value') == false
+    v = {'raw_value' => v} if v.is_a?(Fixnum)
+    return nil if v['raw_value'].nil?
+    dt = Time.zone.at(v['raw_value'])
+    new_value = {}
+    dt_complete = { Y: dt.year, M: dt.mon, D: dt.day, h: dt.hour, m: dt.min, s: dt.sec }
+    format.split('').each do |c|
+      new_value[c.to_s] = dt_complete[c.to_sym]
+    end
+    new_value
+  end
+
+  # Translates timestamp integer to a ActiveSupport::TimeWithZone object (or nil).
+  def value_as_time_with_zone(item)
+    value = raw_value(item)
+    return nil if value.nil? or value['raw_value'].nil?
+    Time.zone.at(value['raw_value'])
+  end
+
+  def assign_value_from_form(item, values)
+    time_with_zone = form_submission_as_time_with_zone(values)
+    item.public_send("#{uuid}=", time_with_zone.try(:to_i))
+  end
+
+  # Rails submits the datetime from the UI as a hash of component values.
+  # Translate the submission into an appropriate datetime value.
+  def form_submission_as_time_with_zone(values)
+    values = coerce_to_array(values)
+    return nil if values.empty?
+
+    # Discard precision not required by format
+    values = values[0...format.length]
+
+    # Pad out datetime components with default values, as needed
+    defaults = [Time.current.year, 1, 1, 0, 0, 0]
+    values += defaults[values.length..-1]
+
+    Time.zone.local(*values)
+  end
+
+  # To facilitate form helpers, we need to create a virtual attribute that
+  # handles translation to and from the actual stored value. This virtual
+  # attribute gets the name "#{uuid}_time".
+  def decorate_item_class(klass)
+    super
+    field = self
+    klass.send(:define_method, "#{uuid}_time") do
+      field.value_as_time_with_zone(self)
+    end
+    klass.send(:define_method, "#{uuid}_time=") do |values|
+      field.assign_value_from_form(self, values)
+    end
+  end
 
   private
 
   def set_default_format
     self.format ||= "YMD"
+  end
+
+  def coerce_to_array(values)
+    return [] if values.nil?
+    return values if values.is_a?(Array)
+    # Rails datetime form helpers send data as e.g. { 1 => "2015", 2 => "12" }.
+    values.keys.sort.each_with_object([]) do |key, array|
+      array << values[key]
+    end.compact
   end
 
 end

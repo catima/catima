@@ -27,6 +27,7 @@ gem "pg_search", "~> 1.0"
 gem "pundit"
 gem "rails", "4.2.6"
 gem "ranked-model"
+gem 'react-rails', '~> 1.10.0'
 gem "redis-namespace"
 gem "redcarpet"
 gem "refile", "~> 0.6.1", :require => "refile/rails"

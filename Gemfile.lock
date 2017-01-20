@@ -65,6 +65,10 @@ GEM
     autoprefixer-rails (6.4.1.1)
       execjs
     awesome_print (1.6.1)
+    babel-source (5.8.35)
+    babel-transpiler (0.7.0)
+      babel-source (>= 4.0, < 6)
+      execjs (~> 2.0)
     bcrypt (3.1.10)
     better_errors (2.1.1)
       coderay (>= 1.0.0)
@@ -308,6 +312,13 @@ GEM
     rb-fsevent (0.9.7)
     rb-inotify (0.9.5)
       ffi (>= 0.5.0)
+    react-rails (1.10.0)
+      babel-transpiler (>= 0.7.0)
+      coffee-script-source (~> 1.8)
+      connection_pool
+      execjs
+      railties (>= 3.2)
+      tilt
     redcarpet (3.3.4)
     redis (3.2.2)
     redis-namespace (1.5.2)
@@ -482,6 +493,7 @@ DEPENDENCIES
   rails-assets-mousetrap (~> 1.5.3)!
   ranked-model
   rb-fsevent
+  react-rails (~> 1.10.0)
   redcarpet
   redis-namespace
   refile (~> 0.6.1)

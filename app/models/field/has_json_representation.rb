@@ -1,7 +1,6 @@
 module Field::HasJsonRepresentation
   
   def custom_item_permitted_attributes
-    puts '*** custom item permitted attributes ***', uuid
     super + [:"#{uuid}_json"]
   end
 

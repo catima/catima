@@ -21,9 +21,32 @@ div.dropzone-multiple {
 textarea[data-field-type="file"] {
   display: none;
 }
+textarea[data-field-type="datetime"] {
+  display: none;
+}
 .form-group-dropzone {
   margin-top: -15px;
 }
 .red {
   color: #f00;
+}
+
+.date-time-input-wrapper {
+  margin-top: -15px;
+}
+
+
+.rails-bootstrap-forms-datetime-select input {
+  display: inline-block;
+  margin: 3px;
+}
+
+input.input-2 {
+  width: 60px;
+}
+input.input-4 {
+  width: 80px;
+}
+input.margin-right {
+  margin-right: 10px;
 }

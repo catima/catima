@@ -23,6 +23,9 @@
 //= require dropzone
 //= require select2
 //= require summernote
+//= require react
+//= require react_ujs
+//= require components
 //= require_tree .
 
 Turbolinks.enableProgressBar();
