@@ -34,8 +34,12 @@
 
   <div class="row" style="background-color: #dedede; border-top: 1px solid #999; height: 80px; margin: 40px 0;">
 
-    <div class="col-xs-12" style="text-align: center; font-size: 80%; padding-top: 55px;">
-      <a href="/admin" style="color: #000; margin: 0 10px;">Admin</a>
+    <div class="col-xs-6" style="text-align: left; font-size: 80%; padding-top: 55px;">
+      <% if ENV["APP_VERSION"] %>Version <%= ENV["APP_VERSION"] %> · <%= Time.zone.now.strftime("%Y") %><% end %>
+    </div>
+    <div class="col-xs-6" style="text-align: right; font-size: 80%; padding-top: 40px;">
+      <a href="/doc/" style="color: #000; margin: 0 10px;">Documentation</a><br>
+      <a href="/admin/" style="color: #000; margin: 0 10px;">Admin</a>
     </div>
 
     </div>

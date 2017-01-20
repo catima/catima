@@ -7,14 +7,14 @@ site_author: Université de Lausanne - Christian Kaiser
 
 pages:
 - Accueil: index.md
-- Guide d'utilisateur:
-    - Démarrer avec CATIMA: user-guide/index.md
-- Référence:
-    - Aperçu: reference/index.md
-    - Rôles d'utilisateurs: reference/user-roles.md
-- À propos:
-    - L'équipe CATIMA: about/team.md
+- Mode d'emploi: user-guide/index.md
+#    - Démarrer avec CATIMA: user-guide/index.md
+#- Référence:
+#    - Aperçu: reference/index.md
+#    - Rôles d'utilisateurs: reference/user-roles.md
+#- À propos:
+#    - L'équipe CATIMA: about/team.md
 
 
-copyright: Copyright &copy; 2016 <a href="https://unil.ch">Université de Lausanne</a>
+copyright: Copyright &copy; 2017 <a href="https://unil.ch">Université de Lausanne</a>
 
