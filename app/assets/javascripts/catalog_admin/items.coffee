@@ -138,6 +138,9 @@ set_files_for_field = ($files, $field) ->
   $('#item_'+$field+'_json').html(JSON.stringify($files))
 
 
+
+
+
 $(document).ready(init_category_triggers)
 $(document).ready(init_multivalued_selects)
 $(document).ready(init_dropzones)
