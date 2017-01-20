@@ -4,7 +4,7 @@ module CatalogAdmin::MenuItemsHelper
     klass = "list-group-item"
     klass << " active" if active
 
-    link_to("Menu items", catalog_admin_menu_items_path, :class => klass)
+    link_to(t('menu_items'), catalog_admin_menu_items_path, :class => klass)
   end
 
   # def menu_item_path(page)

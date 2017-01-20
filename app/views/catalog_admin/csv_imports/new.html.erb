@@ -1,10 +1,10 @@
-<% provide(:title, "Import #{item_type.name_plural} from CSV") %>
+<% provide(:title, t('.import_from_csv', item_types: item_type.name_plural) %>
 
 <%= bootstrap_form_for([:catalog_admin, @csv_import]) do |f| %>
-  <%= f.form_group(:file, :label => { :text => "File" }) do %>
+  <%= f.form_group(:file, :label => { :text => t(".file") }) do %>
     <%= f.attachment_field(:file, :direct => true) %>
   <% end %>
   <hr>
-  <%= f.primary("Import") %>
-  <%= link_to("Cancel", catalog_admin_items_path, :class => "btn btn-link") %>
+  <%= f.primary(t(".import")) %>
+  <%= link_to(t("cancel"), catalog_admin_items_path, :class => "btn btn-link") %>
 <% end %>

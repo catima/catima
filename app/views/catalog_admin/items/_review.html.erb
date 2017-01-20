@@ -3,32 +3,30 @@
     <%= review_status_label(item) %>
   </p>
   <p>
-    This <%= item_type.name %> is approved and publicly visible.
+    <%= t('.approved', item_type: item_type.name) %>
   </p>
 <% elsif review.rejected? %>
   <p>
     <%= review_status_label(item) %>
   </p>
   <p>
-    This <%= item_type.name %> was rejected. You can resubmit it for
-    approval by checking the box below.
+    <%= t('.rejected', item_type: item_type.name) %>
   </p>
 <% elsif review.pending? %>
   <p>
     <%= review_status_label(item) %>
   </p>
   <p>
-    This <%= item_type.name %> is awaiting review. It will be publicly visible
-    once a reviewer has approved it.
+    <%= t('.pending', item_type: item_type.name) %>
   </p>
 <% end %>
 <% if review.submit_allowed? %>
   <%= f.form_group(
         :submit_for_review,
-        :help => "Check this box to submit this #{item_type.name} for "\
-                 "approval by a reviewer. All #{item_type.name_plural} must "\
-                 "be approved before they can be seen on the public "\
-                 "#{catalog.name} site.") do %>
-    <%= f.check_box(:submit_for_review, :label => "Ready for review") %>
+        :help => t('.approval_help', 
+                    item_type: item_type.name, 
+                    item_type_plural: item_type.name_plural,
+                    catalog: catalog.name)) do %>
+    <%= f.check_box(:submit_for_review, :label => t('.ready_for_review')) %>
   <% end %>
 <% end %>

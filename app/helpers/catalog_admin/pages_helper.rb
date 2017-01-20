@@ -4,7 +4,7 @@ module CatalogAdmin::PagesHelper
     klass = "list-group-item"
     klass << " active" if active
 
-    link_to("Pages", catalog_admin_pages_path, :class => klass)
+    link_to(t("pages"), catalog_admin_pages_path, :class => klass)
   end
 
   def page_path(page)

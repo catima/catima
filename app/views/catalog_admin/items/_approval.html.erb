@@ -1,11 +1,11 @@
 <div id="item_approval" class="alert alert-warning">
   <p>
-    <b>This <%= item_type.name %> is awaiting your review.</b>
-    Approve it to make it visible to the public.
+    <b><%= t('.item_waiting_for_review', item_type: item_type.name) %></b>
+    <%= t('.item_approve') %>
   </p>
   <p style="margin-top: 14px;">
     <%= link_to(
-          fa_icon(:check, :text => "Approve"),
+          fa_icon(:check, :text => t(".approve")),
           { :controller => "catalog_admin/approvals", :action => "create" },
           :class => "btn btn-success",
           :data => { :disable_with_spinner => true },
@@ -13,7 +13,7 @@
           :remote => true) %>
 
     <%= link_to(
-          "Reject",
+          t(".reject"),
           { :controller => "catalog_admin/approvals", :action => "create" },
           :class => "btn btn-default",
           :data => { :disable_with_spinner => true },

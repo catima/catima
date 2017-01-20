@@ -4,7 +4,7 @@ module CatalogAdmin::UsersHelper
     klass = "list-group-item"
     klass << " active" if active
 
-    link_to("Users", catalog_admin_users_path, :class => klass)
+    link_to(t("users"), catalog_admin_users_path, :class => klass)
   end
 
   def user_role(user)

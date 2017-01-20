@@ -1,6 +1,6 @@
 <span class="dropdown">
   <button class="btn btn-xs btn-link dropdown-toggle" type="button" id="choose-sort-dropdown" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
-    Sorted by <%= current_sort_field.name %>
+    <%= t('.sorted_by', field: current_sort_field.name) %>
     <span class="caret"></span>
   </button>
   <ul class="dropdown-menu" aria-labelledby="choose-sort-dropdown">

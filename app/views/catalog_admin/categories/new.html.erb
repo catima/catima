@@ -1,4 +1,4 @@
-<% provide(:title, "New category") %>
+<% provide(:title, t('.new_category')) %>
 
 <%= bootstrap_form_for([:catalog_admin, @category]) do |f| %>
 
@@ -6,8 +6,8 @@
 
   <hr>
 
-  <%= f.primary("Create category") %>
+  <%= f.primary(t('.create_category')) %>
   <%= submit_and_add_another(f) %>
-  <%= link_to "Cancel", catalog_admin_categories_path, :class => "btn btn-link" %>
+  <%= link_to t("cancel"), catalog_admin_categories_path, :class => "btn btn-link" %>
 
 <% end %>

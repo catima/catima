@@ -1,14 +1,14 @@
-<% provide(:title, "New menu item") %>
+<% provide(:title, t('.new')) %>
 
 <div class="panel-body">
   <%= bootstrap_form_for([:catalog_admin, @menu_item]) do |f| %>
 
     <%= render("common_form_fields", :f => f) %>
 
-    <%= f.primary("Create menu item") %>
+    <%= f.primary(t('.create')) %>
     <%= submit_and_add_another(f) %>
     <%= link_to(
-          "Cancel",
+          t("cancel"),
           catalog_admin_menu_items_path,
           :class => "btn btn-link") %>
 

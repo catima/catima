@@ -1,6 +1,6 @@
 <div class="page-header">
-  <h1><%= fa_icon(:book, :text => "#{catalog.name} Data") %></h1>
+  <h1><%= fa_icon(:book, :text => t('.catalog_data', catalog: catalog.name)) %></h1>
 </div>
 
-<p>No item types are defined yet.</p>
-<p>Please define catalog item types in setup first.</p>
+<p><%= t('.no_item_types_defined') %></p>
+<p><%= t('.define_item_types') %></p>

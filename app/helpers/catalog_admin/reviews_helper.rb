@@ -1,14 +1,14 @@
 module CatalogAdmin::ReviewsHelper
   STATUSES = {
-    "not-ready" => ["Draft", "default"],
-    "ready" => ["Review", "info"],
-    "approved" => ["Approved", "success"],
-    "rejected" => ["Rejected", "warning"]
+    "not-ready" => ["draft", "default"],
+    "ready" => ["review", "info"],
+    "approved" => ["approved", "success"],
+    "rejected" => ["rejected", "warning"]
   }.freeze
 
   def review_status_label(item)
     text, klass = STATUSES[item.review_status]
-    content_tag(:span, text, :class => "label label-#{klass}")
+    content_tag(:span, t(text), :class => "label label-#{klass}")
   end
 
   def render_items_approval(item)

@@ -1,17 +1,17 @@
-<% provide(:title, "Menu items") %>
+<% provide(:title, t('.menu_items')) %>
 
 <% provide(:actions) do %>
   <%= link_to(new_catalog_admin_menu_item_path) do %>
-    <%= fa_icon(:plus, :text => "New menu item") %>
+    <%= fa_icon(:plus, :text => t('.new')) %>
   <% end %>
 <% end %>
 
 <table class="table">
   <thead>
     <tr>
-      <th>Slug</th>
-      <th>Title</th>
-      <th>Rank</th>
+      <th><%= t('.slug') %></th>
+      <th><%= t('.title') %></th>
+      <th><%= t('.rank') %></th>
       <th></th>
     </tr>
   </thead>
@@ -24,20 +24,19 @@
         <td style="text-align: right">
           <% if policy(menu_item).edit? %>
             <%= link_to(
-                  fa_icon("pencil", :text => "Edit"),
+                  fa_icon("pencil", :text => t("edit")),
                   edit_catalog_admin_menu_item_path(catalog, menu_item),
                   :class => "btn btn-default btn-xs") %>
 
           <% end %>
           <% if policy(menu_item).destroy? %>
             <%= link_to(
-                  fa_icon("trash-o", :text => "Delete"),
+                  fa_icon("trash-o", :text => t("delete")),
                   catalog_admin_menu_item_path(catalog, menu_item),
                   :class => "btn btn-xs btn-text",
                   :method => :delete,
                   :data => {
-                    :confirm => "Are you sure you want to delete "\
-                                "“#{menu_item.title}”?"
+                    :confirm => t('.delete_confirm', {menu: menu_item.title})
                   }) %>
           <% end %>
         </td>

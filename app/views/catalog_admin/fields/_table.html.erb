@@ -2,10 +2,10 @@
   <tr>
     <th style="width: 5em">Position</th>
     <th>Slug</th>
-    <th>Name</th>
-    <th>Type</th>
-    <th>Required?</th>
-    <th>List view?</th>
+    <th><%= t '.name' %></th>
+    <th><%= t '.type' %></th>
+    <th><%= t '.required?' %></th>
+    <th><%= t '.list_view?' %></th>
     <th></th>
   </tr>
 </thead>
@@ -33,19 +33,18 @@
       <td style="text-align: right">
         <% if policy(field).edit? %>
           <%= link_to(
-                fa_icon("pencil", :text => "Edit"),
+                fa_icon("pencil", :text => t("edit")),
                 { :action => :edit, :slug => field },
                 :class => "btn btn-default btn-xs") %>
         <% end %>
         <% if policy(field).destroy? %>
           <%= link_to(
-                fa_icon("trash-o", :text => "Delete"),
+                fa_icon("trash-o", :text => t("delete")),
                 { :action => :destroy, :slug => field },
                 :class => "btn btn-xs btn-text",
                 :method => :delete,
                 :data => {
-                  :confirm => "Are you sure you want to delete the "\
-                              "“#{field.name}” field?"
+                  :confirm => t('.delete_sure?', field: field.name)
                 }) %>
         <% end %>
       </td>

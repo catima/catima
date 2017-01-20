@@ -1,10 +1,10 @@
-<%= f.number_field(:minimum, :label => "Minimum value (optional)") %>
-<%= f.number_field(:maximum, :label => "Maximum value (optional)") %>
+<%= f.number_field(:minimum, :label => t('.min_value')) %>
+<%= f.number_field(:maximum, :label => t('.max_value')) %>
 <%= field_default_value_input(f) %>
 <%= f.form_group(:auto_increment) do %>
   <%= f.check_box(
         :auto_increment,
-        :label => "Auto increment"
+        :label => t('.auto_increment')
       ) %>
 <% end %>
 

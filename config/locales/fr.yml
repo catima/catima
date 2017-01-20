@@ -138,3 +138,223 @@ fr:
       YMDh: "%-d %B %Y %Hh"
       YMDhm: "%-d %B %Y %Hh%M"
       YMDhms: "%-d %B %Y %H:%M:%S"
+
+  cancel: 'Annuler'
+  choices: Ensembles de choix
+  create: 'Créer'
+  default_value_optional: "Valeur par défaut (optionnel)"
+  delete: 'Supprimer'
+  edit: 'Éditer'
+  i18n: Multilingue
+  i18n_help: "Avec l'option multilingue activée, les éditeurs du catalogue vont pouvoir saisir une valeur par langue pour ce champ (pour chaque langue du catalogue: %{languages})"
+  i18n_enable: "Activer l'option multilingue"
+  menu_items: Menus
+  pages: Pages
+  primary: Primaire
+  slug: 'Slug'
+  draft: Brouillon
+  review: Attente de validation
+  approved: Validé
+  rejected: Rejeté
+
+  catalog_admin:
+
+    approvals:
+      create:
+        approved: 'approuvé'
+      destroy:
+        rejected: 'rejeté'
+
+    categories:
+      edit:
+        edit_category: 'Éditer sous-fiche'
+        delete_this_category: 'Supprimer cette sous-fiche'
+        delete_confirmation: 'Vous voulez vraiment supprimer la catégorie «%{category}»? Cette action ne peut pas être annulée.'
+        save_category: 'Enregistrer sous-fiche'
+      new:
+        new_category: Nouvelle sous-fiche
+        create_category: Créer sous-fiche
+
+    choice_sets:
+      choice_fields:
+        remove: "Supprimer"
+      choice_modal:
+        create_new_field: Créer nouvelle entrée dans «%{field}»
+      common_form_fields:
+        choices: 'Choix'
+        short_name: 'Nom court'
+        long_name_optional: 'Nom long (optionnel)'
+        category_optional: 'Sous-fiche (optionnel)'
+        add_choice: 'Ajouter choix'
+      edit:
+        edit_choice_set: Edit choice set
+        update_choice_set: Update choice set
+      index:
+        choice_sets: Ensembles de choix
+        new_choice_set: "Nouvel ensemble de choix"
+        name: Nom
+        status: Statut
+        choices: Choix
+      new:
+        new_choice_set: "Nouvel ensemble de choix"
+        create_choice_set: Créer ensemble de choix
+
+    containers:
+      common_form_fields:
+        save_container: Enregistrer conteneur
+        create_container: Créer conteneur
+      edit:
+        edit_container: "Éditer conteneur «%{container}»"
+      new:
+        new_container: "Nouveau conteneur «%{container}»"
+
+    csv_imports:
+      new:
+        import_from_csv: "Importer %{item_types} d'un fichier CSV"
+        import: Importer
+        file: Fichier
+
+    dashboard:
+      data:
+        catalog_data: "Données %{catalog}"
+        no_item_types_defined: Aucun type de fiche a été défini.
+        define_item_types: Veuillez s.v.p. d'abord définir au moins un type de fichier dans l'interface d'administration du catalogue.
+
+
+    fields:
+      choice_set_modals:
+        create_new_choice_set: Créer nouvel ensemble de choix
+      choice_set_option_inputs:
+        choice_set: Ensemble de choix
+        new_choice_set: Nouvel ensemble de choix
+      common_form_fields:
+        name_plural: Nom (pluriel)
+        slug_singular: Slug (singulier)
+        comment_optional: Commentaire (optionnel)
+        display_options: Options d'affichage
+        use_as_primary_field: Utiliser comme champ primaire
+        include_in_list_view: Inclure le champ dans la liste des fiches
+        data_entry_options: Options de saisie des données
+        must_be_unique: Doit être unique
+        save_field: Enregistrer le champ
+        create_field: Créer le champ
+      decimal_option_inputs:
+        min_value: "Valeur minimale (optionnel)"
+        max_value: "Valeur maximale (optionnel)"
+      file_option_inputs:
+        types: 'Types'
+        types_help: "Une liste d'extension de fichiers permis (avec séparateur virgule): p.ex. «doc, pdf»"
+      image_option_inputs:
+        types: 'Types'
+        types_help: "Une liste d'extension de fichiers permis (avec séparateur virgule): p.ex. png, jpg»"
+      int_option_inputs:
+        min_value: "Valeur minimale (optionnel)"
+        max_value: "Valeur maximale (optionnel)"
+        auto_increment: "Numéro de série automatique"
+      reference_option_inputs:
+        reference: Référence
+      table:
+        name: 'Nom'
+        type: 'Type'
+        required?: 'Exigé?'
+        list_view?: 'Dans liste?'
+        delete_sure?: "Vous voulez vraiment supprimer le champ «%{field}»?"
+      text_option_inputs:
+        min_length: "Longueur minimale (optionnel)"
+        max_length: "Longueur maximale (optionnel)"
+      xref_option_inputs:
+        url: "URL Xref"
+        url_help: "URL complète du service externe"
+      edit:
+        edit_field: "Éditer champ %{field_set} “%{field}”"
+      index:
+        add_field: "Ajouter…"
+        edit_field_set: "Éditer %{field_set}"
+        choice_set_field: Champ ensemble de choix
+        date_time_field: Champ date / heure
+        decimal_field: Champ décimal
+        email_field: Champ e-mail
+        file_field: Champ fichier
+        geometry_field: Champ géographique
+        image_field: Champ image
+        int_field: Champ nombre entier
+        reference_field: Champ référence
+        text_field: Champ de texte
+        url_field: Champ URL
+        xref_field: Champ Xref
+      new:
+        new_field: "Nouveau champ «%{field}»"
+    
+    item_types:
+      edit: 
+        edit: "Éditer type de fiche"
+        delete: "Supprimer ce type de fiche"
+        delete_confirmation: "Vous voulez vraiment supprimer le type de fiche «%{item_type}»? Cette action ne peut pas être annulée."
+        save: "Enregistrer type de fiche"
+      new:
+        new: "Nouveau type de fiche"
+        create: "Créer type de fiche"
+
+    items:
+      approval:
+        item_waiting_for_review: Cette fiche de type %{item_type} attend votre validation.
+        item_approve: Approuvez-la pour la rendre visible pour le public.
+        approve: Valider
+        reject: Rejeter
+      review:
+        approved: Cette fiche de type «%{item_type}» est validée et visible pour le public.
+        rejected: Cette fiche de type «%{item_type}» a été rejetée. Vous pouvez la resoumettre pour validation en cochant la case ci-dessous.
+        pending: Cette fiche de type «%{item_type}» attend la validation. Elle sera visible pour le publique une fois un validateur l'a approuvé.
+        approval_help: Cochez cette case pour soumettre cette fiche de type %{item_type} pour validation. Toutes les fiches de type %{item_type} doivent être approuvées avant d'être visibles pour le public sur le site du catalogue %{catalog}.
+        ready_for_review: "Prêt pour la validation"
+      sort_menu:
+        sorted_by: "Trié par: %{field}"
+      edit:
+        edit_item: Éditer %{item}
+        save_item: Enregistrer %{item}
+      index:
+        no_fields_warning: Ce type de fiche n'a aucun champ.
+        add_fields: Veuillez s.v.p. d'abord ajouter un ou plusieurs champs dans l'interface de définition des types de fiche.
+        new_item_type: "Nouveau type de fiche «%{item_type}»"
+        import_csv: "Importer depuis un fichier CSV"
+        status: Statut
+        delete_confirm: "Vous voulez vraiment supprimer “%{item}”?"
+      new:
+        new_item: Nouvelle fiche de type %{item_type}
+        create_item: Créer fiche de type %{item_type}
+
+    menu_items:
+      common_form_fields:
+        rank_help: Le rang définit l'ordre des différentes entrées dans la barre de menu (ou à l'intérieur d'un menu déroulant si un menu parent est défini).
+        parent_help: Choisissez le menu parent pour les sous-menus. Laissez vide si votre menu n'est pas à l'intérieur d'un menu déroulant.
+        help_block_intro: "Il y a quatre types de menus:"
+        help_block_item_1: "<b>Menu pour un type de fiche</b> (pour afficher la liste avec toutes les fiches du type spécifié): choisissez un type de fiche dans le menu déroulant ci-dessous."
+        help_block_item_2: "<b>Menu pour une page personnalisée</b>. Vous pouvez définir les pages personnalisées dans l'admin du catalogue. Choisissez alors votre page personnalisée dans le menu déroulant ci-dessous."
+        help_block_item_3: "<b>Menu pour une URL spécifique</b>. Indiquez l'URL ci-dessous. Ceci peut être une URL interne au catalogue, ou externe."
+        help_block_item_4: "<b>Menu déroulant.</b> Ne spécifiez aucune option ci-dessous. Pour chaque sous-menu qui doit être affiché à l'intérieur de ce menu, choisissez ce menu comme menu parent. Veuillez noter qu'il n'est pas possible d'avoir des sous-menus à l'intérieur d'un sous-menu (menus imbriqués)."
+      edit:
+        edit: Éditer le menu
+        update: "Mettre à jour le menu"
+      index:
+        menu_items: "Menus"
+        new: "Nouveau menu"
+        slug: Slug
+        title: Titre
+        rank: Rang
+        delete_confirm: "Vous voulez vraiment supprimer le menu “%{menu}”?"
+      new:
+        new: Nouveau menu
+        create: Créer le menu
+
+    shared:
+      setup_categories_nav:
+        categories: 'Sous-fiches'
+        new_category: 'Nouvelle sous-fiche'
+      setup_item_types_nav:
+        item_types: 'Types de fiche'
+        new_item_type: 'Nouveau type de fiche'
+
+        
+
+
+

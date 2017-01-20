@@ -1,4 +1,4 @@
-<% provide(:title, "Edit category") %>
+<% provide(:title, t(".edit_category")) %>
 
 <%= bootstrap_form_for(@category,
                        :url => catalog_admin_category_path) do |f| %>
@@ -8,18 +8,17 @@
   <hr>
 
   <%= link_to(
-        fa_icon(:trash, :text => "Delete this category"),
+        fa_icon(:trash, :text => t('.delete_this_category')),
         { :action => "destroy" },
         :method => "delete",
         :class => "pull-right btn btn-link",
         :data => {
-          :confirm => "Are you sure you want to delete the #{@category.name} "\
-                      "category? This cannot be undone."
+          :confirm => t('.delete_confirmation', category: @category.name)
         }) %>
 
-  <%= f.primary("Save category") %>
+  <%= f.primary(t('.save_category')) %>
   <%= link_to(
-        "Cancel",
+        t("cancel"),
         catalog_admin_category_fields_path(catalog, @category),
         :class => "btn btn-link") %>
 

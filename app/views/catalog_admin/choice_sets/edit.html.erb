@@ -1,4 +1,4 @@
-<% provide(:title, "Edit choice set") %>
+<% provide(:title, t(".edit_choice_set")) %>
 
 <div class="panel-body">
   <%= bootstrap_form_for(
@@ -7,9 +7,9 @@
 
     <%= render("common_form_fields", :f => f) %>
 
-    <%= f.primary("Update choice set") %>
+    <%= f.primary(t(".update_choice_set")) %>
     <%= link_to(
-          "Cancel",
+          t("cancel"),
           catalog_admin_choice_sets_path,
           :class => "btn btn-link") %>
 

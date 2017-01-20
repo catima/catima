@@ -3,15 +3,15 @@
 <hr>
 
 <div id="choices">
-  <label>Choices</label>
+  <label><%= t('.choices') %></label>
 
   <table class="table table-hover">
     <thead>
-      <th>Short name</th>
-      <th>Long name (optional)</th>
+      <th><%= t('.short_name') %></th>
+      <th><%= t('.long_name_optional') %></th>
       <th>
         <% if catalog.categories.any? %>
-          Category (optional)
+          <%= t('.category_optional') %>
         <% end %>
       </th>
       <th></th>
@@ -23,7 +23,7 @@
       <tr data-link="choices">
         <td colspan="4">
           <%= link_to_add_association(
-                fa_icon(:"plus-square", :text => "Add choice"),
+                fa_icon(:"plus-square", :text => t(".add_choice")),
                 f,
                 :choices,
                 :class => "btn btn-text",

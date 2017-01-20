@@ -4,7 +4,7 @@ module CatalogAdmin::ChoiceSetsHelper
     klass = "list-group-item"
     klass << " active" if active
 
-    link_to("Choices", catalog_admin_choice_sets_path, :class => klass)
+    link_to(t("choices"), catalog_admin_choice_sets_path, :class => klass)
   end
 
   def choice_set_abbreviated_choices(set)

@@ -1,4 +1,4 @@
-<% provide(:title, "Edit item type") %>
+<% provide(:title, t('.edit')) %>
 
 <%= bootstrap_form_for(@item_type,
                        :url => catalog_admin_item_type_path) do |f| %>
@@ -8,18 +8,17 @@
   <hr>
 
   <%= link_to(
-        fa_icon(:trash, :text => "Delete this item type"),
+        fa_icon(:trash, :text => t('.delete')),
         { :action => "destroy" },
         :method => "delete",
         :class => "pull-right btn btn-link",
         :data => {
-          :confirm => "Are you sure you want to delete the #{@item_type.name} "\
-                      "item type? This cannot be undone."
+          :confirm => t('.delete_confirmation', item_type: @item_type.name)
         }) %>
 
-  <%= f.primary("Save item type") %>
+  <%= f.primary(t('.save')) %>
   <%= link_to(
-        "Cancel",
+        t("cancel"),
         catalog_admin_item_type_fields_path(catalog, @item_type),
         :class => "btn btn-link") %>
 

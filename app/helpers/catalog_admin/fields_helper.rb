@@ -27,12 +27,12 @@ module CatalogAdmin::FieldsHelper
 
   def field_primary_badge(field)
     return unless field.primary?
-    content_tag(:span, "Primary", :class => "label label-warning")
+    content_tag(:span, t("primary"), :class => "label label-warning")
   end
 
   def field_i18n_badge(field)
     return unless field.i18n?
-    content_tag(:span, "i18n", :class => "label label-info")
+    content_tag(:span, t("i18n"), :class => "label label-info")
   end
 
   def field_move_up_link(field)
@@ -52,7 +52,7 @@ module CatalogAdmin::FieldsHelper
     field_presenter(nil, form.object).input(
       form,
       :default_value,
-      :label => "Default value (optional)",
+      :label => t('default_value_optional'),
       :i18n => false
     )
   end
@@ -62,11 +62,9 @@ module CatalogAdmin::FieldsHelper
 
     form.form_group(
       :i18n,
-      :help => "With i18n enabled, editors will be able to specify a "\
-               "translation of this field for each language "\
-               "(#{catalog.valid_locales.to_sentence})"
+      :help => t('i18n_help', languages: catalog.valid_locales.to_sentence)
     ) do
-      form.check_box(:i18n, :label => "Enable i18n")
+      form.check_box(:i18n, :label => t('i18n_enable'))
     end
   end
 

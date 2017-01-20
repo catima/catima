@@ -1,14 +1,14 @@
-<% provide(:title, "New choice set") %>
+<% provide(:title, t('.new_choice_set')) %>
 
 <div class="panel-body">
   <%= bootstrap_form_for([:catalog_admin, @choice_set]) do |f| %>
 
     <%= render("common_form_fields", :f => f) %>
 
-    <%= f.primary("Create choice set") %>
+    <%= f.primary(t(".create_choice_set")) %>
     <%= submit_and_add_another(f) %>
     <%= link_to(
-          "Cancel",
+          t("cancel"),
           catalog_admin_choice_sets_path,
           :class => "btn btn-link") %>
 

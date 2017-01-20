@@ -1,4 +1,4 @@
-<%= f.number_field(:minimum, :label => "Minimum length (optional)") %>
-<%= f.number_field(:maximum, :label => "Maximum length (optional)") %>
+<%= f.number_field(:minimum, :label => t('.min_length')) %>
+<%= f.number_field(:maximum, :label => t('.max_length')) %>
 <%= field_default_value_input(f) %>
 <%= field_i18n_check_box(f) %>

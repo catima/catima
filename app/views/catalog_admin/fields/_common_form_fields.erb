@@ -1,44 +1,44 @@
 <%= hidden_field_tag(:type, params[:type]) if params[:type] %>
 
 <%= locale_form_group(f, :name, :text_field, :autofocus => true) %>
-<%= locale_form_group(f, :name_plural, :text_field, :label => "Name (plural)") %>
-<%= f.text_field(:slug, :label => "Slug (singular)", :help => slug_help_text) %>
-<%= f.text_area(:comment, :label => "Comment (optional)") %>
+<%= locale_form_group(f, :name_plural, :text_field, :label => t(".name_plural")) %>
+<%= f.text_field(:slug, :label => t(".slug_singular"), :help => slug_help_text) %>
+<%= f.text_area(:comment, :label => t(".comment_optional")) %>
 
 <hr>
 
-<h4>Display options</h4>
+<h4><%= t('.display_options') %></h4>
 
 <% unless f.object.is_a?(Category) %>
   <%= f.form_group(:primary) do %>
     <%= f.check_box(
           :primary,
-          :label => "Use this as the primary field"
+          :label => t('.use_as_primary_field')
         ) %>
   <% end %>
 <% end %>
 <%= f.form_group(:display_in_list) do %>
   <%= f.check_box(
         :display_in_list,
-        :label => "Include this field in list view"
+        :label => t('.include_in_list_view')
       ) %>
 <% end %>
 
 <hr>
 
-<h4>Data entry options</h4>
+<h4><%= t('.data_entry_options') %></h4>
 
 <%= field_style_select(f) %>
 
 <%= f.form_group(:unique) do %>
   <%= f.check_box(
         :unique,
-        :label => "Must be unique") %>
+        :label => t('.must_be_unique')) %>
 <% end %>
 
 <%= render_catalog_admin_fields_option_inputs(f) %>
 
 <hr>
 
-<%= f.primary("#{@field.persisted? ? 'Save' : 'Create'} field") %>
-<%= link_to("Cancel", { :action => :index }, :class => "btn btn-link") %>
+<%= f.primary(t(".#{@field.persisted? ? 'save' : 'create'}_field")) %>
+<%= link_to(t("cancel"), { :action => :index }, :class => "btn btn-link") %>

@@ -1,4 +1,4 @@
-<% provide(:title, "New #{@field.type_name.downcase} field") %>
+<% provide(:title, t('.new_field', field: @field.type_name.downcase)) %>
 
 <%= bootstrap_form_for(
       @field,

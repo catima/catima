@@ -1,4 +1,4 @@
-<% provide(:title, "New item type") %>
+<% provide(:title, t('.new')) %>
 
 <%= bootstrap_form_for([:catalog_admin, @item_type]) do |f| %>
 
@@ -6,8 +6,8 @@
 
   <hr>
 
-  <%= f.primary("Create item type") %>
+  <%= f.primary(t('.create')) %>
   <%= submit_and_add_another(f) %>
-  <%= link_to "Cancel", catalog_admin_setup_path, :class => "btn btn-link" %>
+  <%= link_to t("cancel"), catalog_admin_setup_path, :class => "btn btn-link" %>
 
 <% end %>

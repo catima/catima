@@ -1,4 +1,4 @@
-<% provide(:title, "Edit #{@field_set.name} “#{@field.name}” field") %>
+<% provide(:title, t('.edit_field', field_set: @field.field_set.name, field: @field.name)) %>
 
 <%= bootstrap_form_for(
       @field,

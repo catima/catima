@@ -1,10 +1,10 @@
 <%= hidden_field_tag(:type, params[:type]) if params[:type] %>
 
-<%= f.text_field(:slug, :label => "Slug", :help => slug_help_text) %>
+<%= f.text_field(:slug, :label => t("slug"), :help => slug_help_text) %>
 
 <%= render_catalog_admin_container_inputs(f) %>
 
 <hr>
 
-<%= f.primary("#{@container.persisted? ? 'Save' : 'Create'} container") %>
+<%= f.primary(t(".#{@container.persisted? ? 'save' : 'create'}_container")) %>
 <%= link_to("Cancel", edit_catalog_admin_page_path(@container.page.catalog, @container.page), :class => "btn btn-link") %>

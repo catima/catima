@@ -1,5 +1,5 @@
 <div class="panel panel-default">
-  <div class="panel-heading">Categories</div>
+  <div class="panel-heading"><%= t '.categories' %></div>
   <ul class="list-group">
     <% catalog.categories.sorted.each do |type| %>
       <%= setup_category_nav_link(type) %>
@@ -8,7 +8,7 @@
   <div class="panel-body">
     <p>
       <%= link_to(new_catalog_admin_category_path) do %>
-        <%= fa_icon(:"plus-square", :text => "New category") %>
+        <%= fa_icon(:"plus-square", :text => t('.new_category')) %>
       <% end %>
     </p>
   </div>

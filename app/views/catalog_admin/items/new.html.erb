@@ -1,12 +1,12 @@
-<% provide(:title, "New #{@item.item_type.name}") %>
+<% provide(:title, t('.new_item', item_type: @item.item_type.name)) %>
 
 <div id="item-form">
   <%= bootstrap_form_for([:catalog_admin, @item]) do |f| %>
     <%= render("common_form_fields", :f => f) %>
-    <%= f.primary("Create #{@item.item_type.name}") %>
+    <%= f.primary(t('.create_item', item_type: @item.item_type.name)) %>
     <%= submit_and_add_another(f) %>
     <%= link_to(
-          "Cancel",
+          t("cancel"),
           catalog_admin_items_path,
           :class => "btn btn-link") %>
   <% end %>

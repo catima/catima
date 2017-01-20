@@ -1,13 +1,13 @@
-<% provide(:title, "Edit menu_item") %>
+<% provide(:title, t('.edit')) %>
 
 <div class="panel-body">
   <%= bootstrap_form_for(@menu_item, :url => catalog_admin_menu_item_path) do |f| %>
 
     <%= render("common_form_fields", :f => f) %>
 
-    <%= f.primary("Update menu item") %>
+    <%= f.primary(t('.update')) %>
     <%= link_to(
-          "Cancel",
+          t("cancel"),
           catalog_admin_menu_items_path,
           :class => "btn btn-link") %>
 

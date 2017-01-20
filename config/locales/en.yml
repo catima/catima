@@ -138,3 +138,223 @@ en:
       YMDh: "%d %B, %Y %Hh"
       YMDhm: "%d %B, %Y %H:%M"
       YMDhms: "%d %B, %Y %H:%M:%S"
+
+  cancel: 'Cancel'
+  choices: Choices
+  create: 'Create'
+  default_value_optional: "Default value (optional)"
+  delete: 'Delete'
+  edit: 'Edit'
+  i18n: i18n
+  i18n_help: "With i18n enabled, editors will be able to specify a translation of this field for each language (%{languages})"
+  i18n_enable: "Enable i18n"
+  menu_items: Menu items
+  pages: Pages
+  primary: Primary
+  slug: 'Slug'
+  draft: Draft
+  review: Review
+  approved: Approved
+  rejected: Rejected
+  users: Users
+  
+
+  catalog_admin:
+
+    approvals:
+      create:
+        approved: 'approved'
+      destroy:
+        rejected: 'rejected'
+
+    categories:
+      edit:
+        edit_category: 'Edit category'
+        delete_this_category: 'Delete this category'
+        delete_confirmation: 'Are you sure you want to delete the %{category} category? This cannot be undone.'
+        save_category: 'Save category'
+      new:
+        new_category: New category
+        create_category: Create category
+
+    choice_sets:
+      choice_fields:
+        remove: "Remove"
+      choice_modal:
+        create_new_field: Create new «%{field}»
+      common_form_fields:
+        choices: 'Choices'
+        short_name: 'Short name'
+        long_name_optional: 'Long name (optional)'
+        category_optional: 'Category (optional)'
+        add_choice: 'Add choice'
+      edit:
+        edit_choice_set: Edit choice set
+        update_choice_set: Update choice set
+      index:
+        choice_sets: Choice sets
+        new_choice_set: "New choice set"
+        name: Name
+        status: Status
+        choices: Choices
+      new:
+        new_choice_set: "New choice set"
+        create_choice_set: Create choice set
+    
+    containers:
+      common_form_fields:
+        save_container: Save container
+        create_container: Create container
+      edit:
+        edit_container: "Edit %{container} container"
+      new:
+        new_container: "New %{container} container"
+
+    csv_imports:
+      new:
+        import_from_csv: "Import %{item_types} from CSV"
+        import: Import
+        file: File
+
+    dashboard:
+      data:
+        catalog_data: "%{catalog} Data"
+        no_item_types_defined: No item types are defined yet.
+        define_item_types: Please define catalog item types in setup first.
+
+    fields:
+      choice_set_modals:
+        create_new_choice_set: Create new choice set
+      choice_set_option_inputs:
+        choice_set: "Choice set"
+        new_choice_set: New choice set
+      common_form_fields:
+        name_plural: Name (plural)
+        slug_singular: Slug (singular)
+        comment_optional: Comment (optional)
+        display_options: Display options
+        use_as_primary_field: "Use this as the primary field"
+        include_in_list_view: "Include this field in list view"
+        data_entry_options: Data entry options
+        must_be_unique: "Must be unique"
+        save_field: Save field
+        create_field: Create field
+      decimal_option_inputs:
+        min_value: "Minimum value (optional)"
+        max_value: "Maximum value (optional)"
+      file_option_inputs:
+        types: 'Types'
+        types_help: "A comma-separated list of allowed file extensions: e.g. “doc, pdf”"
+      image_option_inputs:
+        types: 'Types'
+        types_help: "A comma-separated list of allowed file extensions: e.g. “png, jpg”"
+      int_option_inputs:
+        min_value: "Minimum value (optional)"
+        max_value: "Maximum value (optional)"
+        auto_increment: "Auto increment"
+      reference_option_inputs:
+        reference: Reference
+      table:
+        name: 'Name'
+        type: 'Type'
+        required?: 'Required?'
+        list_view?: 'List view?'
+        delete_sure?: "Are you sure you want to delete the «%{field}» field?"
+      text_option_inputs:
+        min_length: "Minimum length (optional)"
+        max_length: "Maximum length (optional)"
+      xref_option_inputs:
+        url: "Xref URL"
+        url_help: "Full URL of the external service"
+      edit:
+        edit_field: "Edit %{field_set} “%{field}” field"
+      index:
+        add_field: "Add…"
+        edit_field_set: "Edit %{field_set}"
+        choice_set_field: Choice set field
+        date_time_field: Date time field
+        decimal_field: Decimal field
+        email_field: Email field
+        file_field: File field
+        geometry_field: Geographic field
+        image_field: Image field
+        int_field: Int field
+        reference_field: Reference field
+        text_field: Text field
+        url_field: URL field
+        xref_field: Xref field
+      new:
+        new_field: "New %{field} field"
+
+    item_types:
+      edit: 
+        edit: "Edit item type"
+        delete: "Delete this item type"
+        delete_confirmation: "Are you sure you want to delete the %{item_type} item type? This cannot be undone."
+        save: "Save item type"
+      new:
+        new: "New item type"
+        create: "Create item type"
+
+    items:
+      approval:
+        item_waiting_for_review: This %{item_type} is awaiting your review.
+        item_approve: Approve it to make it visible to the public.
+        approve: Approve
+        reject: Reject
+      review:
+        approved: This %{item_type} is approved and publicly visible.
+        rejected: This %{item_type} was rejected. You can resubmit it for approval by checking the box below.
+        pending: This %{item_type} is awaiting review. It will be publicly visible once a reviewer has approved it.
+        approval_help: Check this box to submit this %{item_type} for approval by a reviewer. All %{item_type_plural} must be approved before they can be seen on the public %{catalog} site.
+        ready_for_review: "Ready for review"
+      sort_menu:
+        sorted_by: Sorted by %{field}
+      edit:
+        edit_item: Edit %{item}
+        save_item: Save %{item}
+      index:
+        no_fields_warning: This item type does not have any fields.
+        add_fields: Please add first one or more fields in the item type setup.
+        new_item_type: "New %{item_type}"
+        import_csv: "Import from CSV"
+        status: Status
+        delete_confirm: "Are you sure you want to delete “%{item}”?"
+      new:
+        new_item: New %{item_type}
+        create_item: Create %{item_type}
+    
+    menu_items:
+      common_form_fields:
+        rank_help: The rank defines the order of the menu items in the menu bar (or within a dropdown menu if a parent is defined.
+        parent_help: Choose the parent menu item for submenus. Leave empty if this menu item is not a submenu.
+        help_block_intro: "There are four types of possible menus:"
+        help_block_item_1: "<b>Menu for an item type</b> (to display the list with all items of a given type): choose an item type from the dropdown menu below."
+        help_block_item_2: "<b>Menu for your custom page</b>. You can define a custom page in the catalog admin. Choose your custom page in the dropdown menu below."
+        help_block_item_3: "<b>Menu for a specific URL</b>. Just provide the URL below. This can be an internal or an external URL."
+        help_block_item_4: "<b>A dropdown menu.</b> Don't specify any of the options below. For each submenu that should be displayed within this dropdown menu, choose this menu as parent in the submenu definition form. It is not possible to have a dropdown menu within another dropdown menu (nested menus)."
+      edit:
+        edit: Edit menu item
+        update: "Update menu item"
+      index:
+        menu_items: "Menu items"
+        new: "New menu item"
+        slug: Slug
+        title: Title
+        rank: Rank
+        delete_confirm: "Are you sure you want to delete “%{menu}”?"
+      new:
+        new: "New menu item"
+        create: "Create menu item"
+
+
+    shared:
+      setup_categories_nav:
+        categories: 'Categories'
+        new_category: 'New category'
+      setup_item_types_nav:
+        item_types: 'Item types'
+        new_item_type: 'New item type'
+    
+
+

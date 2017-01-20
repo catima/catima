@@ -1,4 +1,4 @@
-<% provide(:title, "Edit #{@container.slug} container") %>
+<% provide(:title, t('.edit_container', container: @container.slug)) %>
 
 <div class="panel-body">
   <%= bootstrap_form_for(
