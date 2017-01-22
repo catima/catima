@@ -485,7 +485,8 @@ CREATE TABLE menu_items (
     parent_id integer,
     rank integer,
     created_at timestamp without time zone NOT NULL,
-    updated_at timestamp without time zone NOT NULL
+    updated_at timestamp without time zone NOT NULL,
+    locale character varying DEFAULT 'fr'::character varying
 );
 
 
@@ -1397,4 +1398,6 @@ INSERT INTO schema_migrations (version) VALUES ('20160509194619');
 INSERT INTO schema_migrations (version) VALUES ('20160720053135');
 
 INSERT INTO schema_migrations (version) VALUES ('20161231140032');
+
+INSERT INTO schema_migrations (version) VALUES ('20170121055843');
 

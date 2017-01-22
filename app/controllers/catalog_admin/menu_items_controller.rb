@@ -56,7 +56,7 @@ class CatalogAdmin::MenuItemsController < CatalogAdmin::BaseController
 
   def menu_item_params
     params.require(:menu_item).permit(
-      :id, :item_type_id, :page_id, :parent_id, :rank, :slug, :title, :url
+      :id, :item_type_id, :locale, :page_id, :parent_id, :rank, :slug, :title, :url
     )
   end
 

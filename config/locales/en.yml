@@ -148,6 +148,7 @@ en:
   i18n: i18n
   i18n_help: "With i18n enabled, editors will be able to specify a translation of this field for each language (%{languages})"
   i18n_enable: "Enable i18n"
+  locale: Locale
   menu_items: Menu items
   pages: Pages
   primary: Primary
@@ -333,6 +334,7 @@ en:
         help_block_item_2: "<b>Menu for your custom page</b>. You can define a custom page in the catalog admin. Choose your custom page in the dropdown menu below."
         help_block_item_3: "<b>Menu for a specific URL</b>. Just provide the URL below. This can be an internal or an external URL."
         help_block_item_4: "<b>A dropdown menu.</b> Don't specify any of the options below. For each submenu that should be displayed within this dropdown menu, choose this menu as parent in the submenu definition form. It is not possible to have a dropdown menu within another dropdown menu (nested menus)."
+        locale: Locale
       edit:
         edit: Edit menu item
         update: "Update menu item"
@@ -342,6 +344,7 @@ en:
         slug: Slug
         title: Title
         rank: Rank
+        locale: Locale
         delete_confirm: "Are you sure you want to delete “%{menu}”?"
       new:
         new: "New menu item"

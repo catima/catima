@@ -1,4 +1,11 @@
 <%= f.text_field(:slug, :help => slug_help_text, :autofocus => true) %>
+
+<%= locale_language_select(
+  f,
+  :locale,
+  :locales => catalog.valid_locales,
+  :label => t('.locale')) %>
+
 <%= f.text_field(:title) %>
 <%= f.number_field(:rank, help: t('.rank_help')) %>
 
@@ -33,8 +40,12 @@
 
 <%= f.select(
   :page_id,
-  options_from_collection_for_select(
-    @catalog.pages, "id", "title", @menu_item.page_id
+  # options_from_collection_for_select(
+  #   @catalog.pages, "id", "slug", @menu_item.page_id
+  # ),
+  options_for_select(
+    @catalog.pages.order('locale, slug').collect { |p| [ "#{p.locale}/#{p.slug} - #{p.title}", p.id ] },
+    @menu_item.page_id
   ),
   { include_blank: true }
 ) %>
@@ -68,5 +79,32 @@ $('#menu_item_item_type_id').on('change', updateFieldDisplay);
 $('#menu_item_page_id').on('change', updateFieldDisplay);
 $('#menu_item_url').on('change', updateFieldDisplay);
 updateFieldDisplay();
+
+
+/* 
+Update the page dropdown menu to have only pages in the currently
+selected locale
+*/
+function updatePageDropdown(){
+  var currentLocale = $('#menu_item_locale')[0].value;
+  var pages = $('#menu_item_page_id option');
+  for (var i=1; i < pages.length; i++){
+    var p = $(pages[i]);
+    if (p.html().substr(0,2) == currentLocale){
+      p.css('display','block')
+    } else {
+      p.css('display','none')
+    }
+  }
+  if ($('#menu_item_page_id option:selected').html().substr(0,2) != currentLocale){
+    // if a page with another locale is selected unselect this page
+    $('#menu_item_page_id').val('');
+    updateFieldDisplay();
+  }
+}
+
+$('#menu_item_locale').on('change', updatePageDropdown);
+updatePageDropdown();
+
 
 </script>

@@ -148,6 +148,7 @@ fr:
   i18n: Multilingue
   i18n_help: "Avec l'option multilingue activée, les éditeurs du catalogue vont pouvoir saisir une valeur par langue pour ce champ (pour chaque langue du catalogue: %{languages})"
   i18n_enable: "Activer l'option multilingue"
+  locale: Langue
   menu_items: Menus
   pages: Pages
   primary: Primaire
@@ -333,6 +334,7 @@ fr:
         help_block_item_2: "<b>Menu pour une page personnalisée</b>. Vous pouvez définir les pages personnalisées dans l'admin du catalogue. Choisissez alors votre page personnalisée dans le menu déroulant ci-dessous."
         help_block_item_3: "<b>Menu pour une URL spécifique</b>. Indiquez l'URL ci-dessous. Ceci peut être une URL interne au catalogue, ou externe."
         help_block_item_4: "<b>Menu déroulant.</b> Ne spécifiez aucune option ci-dessous. Pour chaque sous-menu qui doit être affiché à l'intérieur de ce menu, choisissez ce menu comme menu parent. Veuillez noter qu'il n'est pas possible d'avoir des sous-menus à l'intérieur d'un sous-menu (menus imbriqués)."
+        locale: Langue
       edit:
         edit: Éditer le menu
         update: "Mettre à jour le menu"
@@ -342,6 +344,7 @@ fr:
         slug: Slug
         title: Titre
         rank: Rang
+        locale: Langue
         delete_confirm: "Vous voulez vraiment supprimer le menu “%{menu}”?"
       new:
         new: Nouveau menu
