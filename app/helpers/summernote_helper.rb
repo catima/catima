@@ -17,7 +17,7 @@ module SummernoteHelper
   def summernote_safe_value(value)
     value.gsub(%r{"data:image/jpeg;base64,([^"]*)"}) do
       base64_data = $1.scan(/.{1,76}/).join("\n")
-      %("data:image/jpeg;base64,#{base64_data}")
+      %Q("data:image/jpeg;base64,#{base64_data}")
     end
   end
 end

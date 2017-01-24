@@ -29,7 +29,6 @@ class MenuItem < ActiveRecord::Base
 
   include Rails.application.routes.url_helpers
 
-
   def self.sorted
     order("menu_items.rank ASC")
   end

@@ -1,5 +1,5 @@
 module Field::HasJsonRepresentation
-  
+
   def custom_item_permitted_attributes
     super + [:"#{uuid}_json"]
   end
@@ -9,7 +9,7 @@ module Field::HasJsonRepresentation
     return existing_input unless existing_input.nil?
 
     hash = raw_value(item)
-    hash = {raw_value: hash} unless hash.is_a?(Array) or hash.is_a?(Hash)
+    hash = {raw_value: hash} unless hash.is_a?(Array) || hash.is_a?(Hash)
     hash && JSON.pretty_generate(hash)
   end
 

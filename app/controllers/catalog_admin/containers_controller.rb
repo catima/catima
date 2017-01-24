@@ -11,7 +11,7 @@ class CatalogAdmin::ContainersController < CatalogAdmin::BaseController
     authorize(@container)
     if @container.update(container_params)
       redirect_to(
-        edit_catalog_admin_page_path(@catalog, @page.slug), 
+        edit_catalog_admin_page_path(@catalog, @page.slug),
         :notice => created_message
       )
     else
@@ -87,5 +87,4 @@ class CatalogAdmin::ContainersController < CatalogAdmin::BaseController
   def destroyed_message
     "The “#{@container.slug}” container has been deleted."
   end
-
 end

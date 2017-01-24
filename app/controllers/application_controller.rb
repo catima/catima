@@ -5,7 +5,7 @@ class ApplicationController < ActionController::Base
   ensure_security_headers
 
   prepend_view_path TemplateStorage.resolver
-  
+
   before_action :set_locale
 
   # This is a hook for Devise so that it knows to include the required :locale

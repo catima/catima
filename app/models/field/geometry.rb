@@ -41,7 +41,7 @@ class Field::Geometry < ::Field
   private
 
   def build_validators
-    [] #[JsonValidator]
+    [] # [JsonValidator]
   end
 
   class JsonValidator < ActiveModel::Validator

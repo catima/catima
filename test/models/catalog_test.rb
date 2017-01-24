@@ -5,7 +5,6 @@ class CatalogTest < ActiveSupport::TestCase
   should validate_presence_of(:slug)
   should validate_presence_of(:primary_language)
 
-
   should validate_uniqueness_of(:slug)
   should allow_value("hey").for(:slug)
   should allow_value("good-times").for(:slug)

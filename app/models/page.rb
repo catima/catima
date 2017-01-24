@@ -26,7 +26,7 @@ class Page < ActiveRecord::Base
   has_many :menu_items, :dependent => :destroy
 
   validates_presence_of :catalog
-  #validates_presence_of :content
+  # validates_presence_of :content
   validates_presence_of :locale
   validates_presence_of :title
 

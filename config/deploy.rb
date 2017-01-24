@@ -43,7 +43,7 @@ task :notify_rollbar do
     with fetch(:git_environmental_variables) do
       within repo_path do
         branch = fetch(:branch)
-        set :rollbar_sha, capture(:git, %(log #{branch} -n 1 --pretty=format:"%H"))
+        set :rollbar_sha, capture(:git, %Q(log #{branch} -n 1 --pretty=format:"%H"))
         set :rollbar_token, capture("grep ROLLBAR_ACCESS_TOKEN #{shared_dotenv_path} | awk '{print substr($0, 22)}'")
       end
     end

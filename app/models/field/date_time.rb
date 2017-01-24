@@ -51,7 +51,7 @@ class Field::DateTime < ::Field
     # Converts the old datetime field value to the new hash style if required
     v = super(item, locale)
     return nil if v.nil?
-    return v if v.is_a?(Hash) and v.has_key?('raw_value') == false
+    return v if v.is_a?(Hash) && (v.has_key?('raw_value') == false)
     v = {'raw_value' => v} if v.is_a?(Fixnum)
     return nil if v['raw_value'].nil?
     dt = Time.zone.at(v['raw_value'])
@@ -66,7 +66,7 @@ class Field::DateTime < ::Field
   # Translates timestamp integer to a ActiveSupport::TimeWithZone object (or nil).
   def value_as_time_with_zone(item)
     value = raw_value(item)
-    return nil if value.nil? or value['raw_value'].nil?
+    return nil if value.nil? || value['raw_value'].nil?
     Time.zone.at(value['raw_value'])
   end
 
@@ -119,5 +119,4 @@ class Field::DateTime < ::Field
       array << values[key]
     end.compact
   end
-
 end

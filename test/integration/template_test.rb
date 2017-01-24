@@ -29,4 +29,3 @@ class DatabaseTemplateTest < ActionDispatch::IntegrationTest
     tpl.save!
   end
 end
-

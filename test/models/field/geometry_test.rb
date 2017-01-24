@@ -2,8 +2,8 @@ require "test_helper"
 require_dependency("field/geometry")
 
 class Field::GeometryTest < ActiveSupport::TestCase
-  #should_not allow_value('{"malformed"').for(:default_value)
-  #should_not allow_value('{"not": "GeoJSON"}').for(:default_value)
+  # should_not allow_value('{"malformed"').for(:default_value)
+  # should_not allow_value('{"not": "GeoJSON"}').for(:default_value)
 
   test "stores JSON text as Hash" do
     text = '{"type":"Point","coordinates":[-48.23456,20.12345]}'

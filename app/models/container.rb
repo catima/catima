@@ -19,7 +19,7 @@ class Container < ActiveRecord::Base
     "itemlist" => 'Container::ItemList'
   }.freeze
 
-  #include HasSlug
+  # include HasSlug
   include RankedModel
   ranks :row_order, :class_name => "Container", :with_same => :page_id
 
@@ -27,7 +27,7 @@ class Container < ActiveRecord::Base
 
   validates_presence_of :page_id
   validates_presence_of :content
-  #validates_slug :scope => :page_id
+  # validates_slug :scope => :page_id
 
   def self.sorted
     rank(:row_order)

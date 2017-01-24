@@ -21,5 +21,4 @@ class Field::ImagePresenter < Field::FilePresenter
     path_parts = file['path'].split('/')
     "/thumbs/#{path_parts[1]}/#{size}/#{mode}/#{path_parts[2]}/#{path_parts[3]}"
   end
-  
 end

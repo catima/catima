@@ -21,7 +21,7 @@ class Catalog < ActiveRecord::Base
   include HasSlug
 
   belongs_to :custom_root_page, class_name: "Page"
-  
+
   before_validation :strip_empty_language
 
   validates_presence_of :name
@@ -40,7 +40,6 @@ class Catalog < ActiveRecord::Base
   has_many :pages
   has_many :menu_items
 
-
   def remove
     # advanced_searches.destroy_all
     # catalog_permissions.destroy_all
@@ -52,7 +51,6 @@ class Catalog < ActiveRecord::Base
     # menu_items.destroy_all
     # destroy
   end
-
 
   def self.sorted
     order("LOWER(catalogs.name) ASC")

@@ -68,7 +68,7 @@ class CatalogAdmin::ItemsController < CatalogAdmin::BaseController
       File.open(Rails.root.join('public', file_path), 'wb') do |fp|
         fp.write(file[1].read)
       end
-      { 
+      {
         :name => file[1].original_filename, :path => file_path,
         :type => file[1].content_type, :size => file[1].size
       }

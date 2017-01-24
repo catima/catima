@@ -62,7 +62,7 @@ class CatalogAdmin::ItemTypesTest < ActionDispatch::IntegrationTest
 
   test "create an item type with the same slug as a deleted item type" do
     log_in_as("two-admin@example.com", "password")
-    
+
     visit("/two/admin")
     click_on("New item type")
     fill_in("item_type[name_en]", :with => "Computer")

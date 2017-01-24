@@ -1,5 +1,4 @@
 class Container::ItemListPresenter < ContainerPresenter
-
   include ItemListsHelper
 
   def html

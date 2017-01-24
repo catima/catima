@@ -54,7 +54,7 @@ class CatalogAdmin::ChoiceSetsController < CatalogAdmin::BaseController
         choice: choice
       }
     else
-      render json: { 
+      render json: {
         errors: choice.errors.full_messages.join(', '),
         catalog: catalog.id, choice_set: choice_set.id
       }, status: :unprocessable_entity
@@ -96,11 +96,11 @@ class CatalogAdmin::ChoiceSetsController < CatalogAdmin::BaseController
 
   def updated_message
     message = "Choice set “#{@choice_set.name}” has been "
-    if choice_set_params.key?(:deactivated_at)
-      message << (@choice_set.active? ? "reactivated." : "deactivated.")
-    else
-      message << "updated."
-    end
+    message << if choice_set_params.key?(:deactivated_at)
+                 (@choice_set.active? ? "reactivated." : "deactivated.")
+               else
+                 "updated."
+               end
     message
   end
 

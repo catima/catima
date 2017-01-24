@@ -47,5 +47,4 @@ class Field::FilePresenter < FieldPresenter
   def files_as_array
     raw_value.is_a?(Array) ? raw_value : [ raw_value ]
   end
-
 end
