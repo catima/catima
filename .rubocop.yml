@@ -16,28 +16,28 @@ AllCops:
     - Guardfile
     - Rakefile
 
-Metrics/AbcSize:
-  Exclude:
-    - "test/**/*"
+# Metrics/AbcSize:
+#   Exclude:
+#     - "test/**/*"
 
-Metrics/BlockLength:
-  Exclude:
-    - "config/**/*"
-    - "test/**/*"
+# Metrics/BlockLength:
+#   Exclude:
+#     - "config/**/*"
+#     - "test/**/*"
 
-Metrics/ClassLength:
-  Exclude:
-    - "test/**/*"
+# Metrics/ClassLength:
+#   Exclude:
+#     - "test/**/*"
 
-Metrics/LineLength:
-  Exclude:
-    - "config/**/*"
-    - "db/**/*"
+# Metrics/LineLength:
+#   Exclude:
+#     - "config/**/*"
+#     - "db/**/*"
 
-Metrics/MethodLength:
-  Exclude:
-    - "db/migrate/*"
-    - "test/**/*"
+# Metrics/MethodLength:
+#   Exclude:
+#     - "db/migrate/*"
+#     - "test/**/*"
 
 Performance/Casecmp:
   Enabled: false
