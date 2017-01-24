@@ -25,7 +25,7 @@ gem "panoramic", ">= 0.0.6"
 gem "pg", "~> 0.19"
 gem "pg_search", "~> 1.0"
 gem "pundit"
-gem "rails", "4.2.6"
+gem "rails", "~> 4.2.7.1"
 gem "ranked-model"
 gem 'react-rails', '~> 1.10.0'
 gem "redis-namespace"
