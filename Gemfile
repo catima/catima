@@ -55,20 +55,11 @@ group :production, :staging do
 end
 
 group :development do
+  gem "airbrussh", :require => false
   gem "annotate", ">= 2.5.0"
   gem "awesome_print"
   gem "better_errors"
   gem "binding_of_caller"
-  gem "letter_opener"
-  gem "listen"
-  gem "quiet_assets"
-  gem "rack-livereload"
-  gem "spring"
-  gem "xray-rails", ">= 0.1.16"
-end
-
-group :development do
-  gem "airbrussh", :require => false
   gem "brakeman", :require => false
   gem "bundler-audit", :require => false
   gem "capistrano", "~> 3.4.0", :require => false
@@ -80,16 +71,22 @@ group :development do
   gem "guard", ">= 2.2.2", :require => false
   gem "guard-livereload", :require => false
   gem "guard-minitest", :require => false
+  gem "letter_opener"
+  gem "listen"
   gem "overcommit", :require => false
+  gem "quiet_assets"
+  gem "rack-livereload"
   gem "rainbow", "~> 2.1.0", :require => false
+  gem "rb-fsevent", :require => false
   gem "rubocop", :require => false
   gem "ruby-progressbar", :require => false
-  gem "rb-fsevent", :require => false
   gem "simplecov", :require => false
+  gem "spring"
   gem "sshkit", "~> 1.7", :require => false
   gem "terminal-notifier", :require => false
   gem "terminal-notifier-guard", :require => false
   gem "thin", :require => false
+  gem "xray-rails", ">= 0.1.16"
 end
 
 group :test do
