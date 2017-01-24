@@ -2,7 +2,7 @@
 <div class="container" style="min-width: 740px; margin-top: 40px;">
 
   <%= render("shared/flash") %>
-  
+
   <div class="row">
     <div class="col-xs-8">
     <%= image_tag('catima-logo-500x58.png', alt:'CATIMA') %>
@@ -21,7 +21,7 @@
     </div>
     <div class="col-xs-1"></div>
     <div class="col-xs-4" style="padding-top: 70px;">
-      
+
       <p><b>Catalogues disponibles:</b><br/>
       <% @catalogs.where({advertize: true}).each do |catalog| %>
         <%= link_to(catalog.name, catalog_home_path(catalog)) %><br/>

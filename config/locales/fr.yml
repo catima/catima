@@ -286,9 +286,9 @@ fr:
         xref_field: Champ Xref
       new:
         new_field: "Nouveau champ «%{field}»"
-    
+
     item_types:
-      edit: 
+      edit:
         edit: "Éditer type de fiche"
         delete: "Supprimer ce type de fiche"
         delete_confirmation: "Vous voulez vraiment supprimer le type de fiche «%{item_type}»? Cette action ne peut pas être annulée."
@@ -358,7 +358,7 @@ fr:
         item_types: 'Types de fiche'
         new_item_type: 'Nouveau type de fiche'
 
-        
+
 
 
 

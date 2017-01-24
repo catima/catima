@@ -19,7 +19,7 @@ The available resources are now described in detail.
 
 ## GET /
 
-Complete example URL: 
+Complete example URL:
 `https://vss.naxio.ch/keywords/viatimages/api/v1/`
 
 Returns the name, description and localization information on the service. An example result would be:
@@ -69,7 +69,7 @@ The **locale** of the response can be defined using the `locale` parameter which
 
 ## GET items
 
-Represents the service items, such as the keywords. It returns a paginated list of the items. 
+Represents the service items, such as the keywords. It returns a paginated list of the items.
 
 Results are paginated using an `offset` and a `limit` parameter.
 Default page size is 100 items. A possible response:

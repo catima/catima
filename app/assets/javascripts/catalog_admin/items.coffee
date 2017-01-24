@@ -133,7 +133,7 @@ set_files_for_field = ($files, $field) ->
   $files = if $.isArray($files) then $files else [$files]
   if $files.length == 0
     $('#item_'+$field+'_json').html('')
-    return  
+    return
   $files = if dz_multiple('#dropzone_'+$field) then $files else $files[0]
   $('#item_'+$field+'_json').html(JSON.stringify($files))
 

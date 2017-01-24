@@ -23,8 +23,8 @@
 <% if review.submit_allowed? %>
   <%= f.form_group(
         :submit_for_review,
-        :help => t('.approval_help', 
-                    item_type: item_type.name, 
+        :help => t('.approval_help',
+                    item_type: item_type.name,
                     item_type_plural: item_type.name_plural,
                     catalog: catalog.name)) do %>
     <%= f.check_box(:submit_for_review, :label => t('.ready_for_review')) %>

@@ -14,7 +14,7 @@
   options_from_collection_for_select(
     @catalog.menu_items, "id", "title", @menu_item.parent_id
   ),
-  { 
+  {
     include_blank: true,
     help: t('.parent_help')
   }
@@ -81,7 +81,7 @@ $('#menu_item_url').on('change', updateFieldDisplay);
 updateFieldDisplay();
 
 
-/* 
+/*
 Update the page dropdown menu to have only pages in the currently
 selected locale
 */

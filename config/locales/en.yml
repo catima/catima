@@ -158,7 +158,7 @@ en:
   approved: Approved
   rejected: Rejected
   users: Users
-  
+
 
   catalog_admin:
 
@@ -201,7 +201,7 @@ en:
       new:
         new_choice_set: "New choice set"
         create_choice_set: Create choice set
-    
+
     containers:
       common_form_fields:
         save_container: Save container
@@ -288,7 +288,7 @@ en:
         new_field: "New %{field} field"
 
     item_types:
-      edit: 
+      edit:
         edit: "Edit item type"
         delete: "Delete this item type"
         delete_confirmation: "Are you sure you want to delete the %{item_type} item type? This cannot be undone."
@@ -324,7 +324,7 @@ en:
       new:
         new_item: New %{item_type}
         create_item: Create %{item_type}
-    
+
     menu_items:
       common_form_fields:
         rank_help: The rank defines the order of the menu items in the menu bar (or within a dropdown menu if a parent is defined.
@@ -358,6 +358,6 @@ en:
       setup_item_types_nav:
         item_types: 'Item types'
         new_item_type: 'New item type'
-    
+
 
 
