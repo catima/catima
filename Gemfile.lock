@@ -133,12 +133,11 @@ GEM
       safe_yaml (~> 1.0.0)
     daemons (1.2.3)
     debug_inspector (0.0.2)
-    devise (3.5.3)
+    devise (4.2.0)
       bcrypt (~> 3.0)
       orm_adapter (~> 0.1)
-      railties (>= 3.2.6, < 5)
+      railties (>= 4.1.0, < 5.1)
       responders
-      thread_safe (~> 0.1)
       warden (~> 1.2.3)
     disable_with_spinner (0.0.3)
     docile (1.1.5)
@@ -330,7 +329,7 @@ GEM
     refile-mini_magick (0.2.0)
       mini_magick (~> 4.0)
       refile (~> 0.5)
-    responders (2.1.1)
+    responders (2.3.0)
       railties (>= 4.2.0, < 5.1)
     rest-client (1.8.0)
       http-cookie (>= 1.0.2, < 2.0)
@@ -418,7 +417,7 @@ GEM
       unicorn (>= 4, < 6)
     user_agent_parser (2.3.0)
     vcr (3.0.1)
-    warden (1.2.4)
+    warden (1.2.6)
       rack (>= 1.0)
     webmock (1.22.5)
       addressable (< 2.4.0)
@@ -458,7 +457,7 @@ DEPENDENCIES
   cocoon
   coffee-rails (~> 4.1.0)
   connection_pool
-  devise
+  devise (~> 4.2)
   disable_with_spinner (~> 0.0.3)
   dotenv-rails (>= 2.0.0)
   dropzonejs-rails (~> 0.7.3)
