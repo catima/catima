@@ -24,6 +24,7 @@ gem 'mini_magick', '~> 4.3.6'
 gem "panoramic", ">= 0.0.6"
 gem "pg", "~> 0.19"
 gem "pg_search", "~> 1.0"
+gem "pgcli-rails", "~> 0.2.1"
 gem "pundit"
 gem "rails", "~> 4.2.7.1"
 gem "ranked-model"
