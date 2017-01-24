@@ -41,6 +41,8 @@ PreCommit:
     enabled: true
     exclude:
       - "**/db/structure.sql"
+      - "docs/**/*"
+      - "test/cassettes/**/*"
 
   YamlSyntax:
     enabled: true
