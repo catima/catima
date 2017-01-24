@@ -62,7 +62,7 @@ group :development do
   gem "binding_of_caller"
   gem "brakeman", :require => false
   gem "bundler-audit", :require => false
-  gem "capistrano", "~> 3.4.0", :require => false
+  gem "capistrano", "~> 3.4", :require => false
   gem "capistrano-bundler", :require => false
   gem "capistrano-mb", ">= 0.22.2", :require => false
   gem "capistrano-nc", :require => false
