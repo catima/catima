@@ -1,7 +1,9 @@
+inherit_from: .rubocop_todo.yml
+
 AllCops:
-  RunRailsCops: true
   DisplayCopNames: true
   DisplayStyleGuide: true
+  TargetRubyVersion: 2.3
   Exclude:
     - "bin/*"
     - Capfile
@@ -9,31 +11,66 @@ AllCops:
     - config/environment.rb
     - config/initializers/version.rb
     - db/schema.rb
+    - "tmp/**/*"
     - Gemfile
     - Guardfile
     - Rakefile
 
+Metrics/AbcSize:
+  Exclude:
+    - "test/**/*"
+
+Metrics/BlockLength:
+  Exclude:
+    - "config/**/*"
+    - "test/**/*"
+
+Metrics/ClassLength:
+  Exclude:
+    - "test/**/*"
+
 Metrics/LineLength:
   Exclude:
     - "config/**/*"
+    - "db/**/*"
 
-Style/ClassAndModuleChildren:
+Metrics/MethodLength:
+  Exclude:
+    - "db/migrate/*"
+    - "test/**/*"
+
+Performance/Casecmp:
   Enabled: false
 
-Style/Documentation:
+Rails:
+  Enabled: true
+
+Rails/Validation:
+  Enabled: false
+
+Style/BarePercentLiterals:
+  EnforcedStyle: percent_q
+
+Style/ClassAndModuleChildren:
   Enabled: false
 
 Style/DoubleNegation:
   Enabled: false
 
-Style/HashSyntax:
-  EnforcedStyle: hash_rockets
+Style/EmptyMethod:
+  Enabled: false
+
+Style/FrozenStringLiteralComment:
+  Enabled: false
+
+Style/NumericPredicate:
+  Enabled: false
 
 Style/SpaceAroundEqualsInParameterDefault:
   EnforcedStyle: no_space
 
-Style/StringLiterals:
-  EnforcedStyle: double_quotes
-
 Style/TrivialAccessors:
   AllowPredicates: true
+
+Style/VariableNumber:
+  Enabled: false
