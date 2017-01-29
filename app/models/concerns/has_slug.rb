@@ -15,7 +15,7 @@ module HasSlug
                           :with => /\A[a-z0-9\-]*\z/,
                           :message => "must contain only a-z, 0-9, and hyphens"
 
-      %w(admin manage new edit).each do |reserved|
+      %w(admin manage new edit api).each do |reserved|
         validates_format_of \
           :slug,
           :without => /\A#{reserved}\z/,
