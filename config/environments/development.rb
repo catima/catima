@@ -48,3 +48,6 @@ Rails.application.configure do
   # Automatically inject JavaScript needed for LiveReload.
   config.middleware.insert_after(ActionDispatch::Static, Rack::LiveReload)
 end
+
+# For building URLs in API resource links
+Rails.application.routes.default_url_options = { :host => "localhost:3000" }
