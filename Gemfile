@@ -1,5 +1,6 @@
 source "https://rubygems.org"
 
+gem "active_model_serializers", "~> 0.10.4"
 gem "active_type", ">= 0.6.0"
 gem "autoprefixer-rails", ">= 6.4.1.1"
 gem "bcrypt", "~> 3.1.10"
