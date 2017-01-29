@@ -1,5 +1,14 @@
 Rails.application.routes.draw do
   # ===========================================================================
+  # API
+
+  namespace :api do
+    namespace :v1 do
+      resources :catalogs, :only => %w(index show)
+    end
+  end
+
+  # ===========================================================================
   # Devise
 
   scope :path => ":locale" do
