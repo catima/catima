@@ -1,6 +1,8 @@
 class API::V1::PageSerializer < ActiveModel::Serializer
   include Rails.application.routes.url_helpers
 
+  belongs_to :catalog, :serializer => API::V1::CatalogReferenceSerializer
+
   attributes :id, :slug, :title, :locale
   attribute(:_links) do
     {
