@@ -1,7 +1,5 @@
 class API::V1::CatalogSerializer < ActiveModel::Serializer
-  attributes :id, :deactivated_at, :name, :primary_language, :other_languages,
-             :slug
-  attribute(:active) { object.active? }
+  attributes :id, :name, :primary_language, :other_languages, :slug
   attribute(:advertize) { object.advertize? }
 
   link(:self) { api_v1_catalog_url(object.slug) }
