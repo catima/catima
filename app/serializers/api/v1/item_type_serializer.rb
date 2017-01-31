@@ -6,6 +6,6 @@ class API::V1::ItemTypeSerializer < ActiveModel::Serializer
   private
 
   def translation_hash(data)
-    data.transform_keys { |key| key[/_([^_]+)$/, 1] }
+    data&.transform_keys { |key| key[/_([^_]+)$/, 1] }
   end
 end

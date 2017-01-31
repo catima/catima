@@ -1,0 +1,43 @@
+{
+  "type": "array",
+  "items": {
+    "type": "object",
+    "properties": {
+      "advertize": {
+        "type": "boolean"
+      },
+      "name": {
+        "type": "string"
+      },
+      "other_languages": {
+        "type": "array",
+        "items": {
+          "type": "string",
+          "enum": ["de", "en", "fr", "it"]
+        }
+      },
+      "primary_language": {
+        "type": "string",
+        "enum": ["de", "en", "fr", "it"]
+      },
+      "_links": {
+        "type": "object",
+        "properties": {
+          "self": { "type": "string" },
+          "pages": { "type": "string" },
+          "html": { "type": "string" }
+        },
+        "required": ["self", "pages", "html"]
+      }
+    },
+    "required": [
+      "advertize",
+      "name",
+      "primary_language",
+      "other_languages",
+      "slug",
+      "item_types",
+      "_links"
+    ]
+  }
+}

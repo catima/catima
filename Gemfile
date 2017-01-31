@@ -93,6 +93,7 @@ end
 group :test do
   gem "capybara"
   gem "connection_pool"
+  gem "json_schema", "~> 0.16.1"
   gem "launchy"
   gem "minitest-reporters"
   gem "mocha"

@@ -202,6 +202,7 @@ GEM
       railties (>= 3.1.0)
       turbolinks
     json (1.8.6)
+    json_schema (0.16.1)
     jsonapi (0.1.1.beta6)
       jsonapi-parser (= 0.1.1.beta3)
       jsonapi-renderer (= 0.1.1.beta1)
@@ -482,6 +483,7 @@ DEPENDENCIES
   guard-minitest
   jquery-rails
   jquery-turbolinks
+  json_schema (~> 0.16.1)
   kaminari
   launchy
   letter_opener

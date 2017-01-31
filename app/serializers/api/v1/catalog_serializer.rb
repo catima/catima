@@ -3,8 +3,9 @@ class API::V1::CatalogSerializer < ActiveModel::Serializer
 
   has_many :item_types
 
-  attributes :name, :primary_language, :other_languages, :slug
+  attributes :name, :primary_language, :slug
   attribute(:advertize) { object.advertize? }
+  attribute(:other_languages) { object.other_languages || [] }
 
   attribute(:_links) do
     {
