@@ -23,7 +23,9 @@ guard :minitest, :spring => true do
   watch(%r{^app/workers/(.+)\.rb$})                       { |m| "test/unit/workers/#{m[1]}_test.rb" }
   watch(%r{^lib/(.+)\.rb$})                               { |m| "test/unit/lib/#{m[1]}_test.rb" }
   watch(%r{^lib/tasks/(.+)\.rake$})                       { |m| "test/unit/lib/tasks/#{m[1]}_test.rb" }
+  watch(%r{^app/serializers/api/([^/]+)})                 { |m| "test/integration/api/#{m[1]}" }
   watch(%r{^test/.+_test\.rb$})
   watch(%r{^test/test_helper\.rb$}) { "test" }
   watch(%r{^test/support/.+\.rb}) { "test" }
+  watch(%r{^test/support/schemas/([^/]+)})                { |m| "test/integration/api/#{m[1]}" }
 end
