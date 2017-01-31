@@ -10,7 +10,6 @@ class API::V1::CatalogSerializer < ActiveModel::Serializer
   attribute(:_links) do
     {
       :self => api_v1_catalog_url(object.slug),
-      :pages => api_v1_catalog_pages_url(object.slug),
       :html => catalog_home_url(object.slug)
     }
   end

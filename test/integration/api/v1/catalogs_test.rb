@@ -5,7 +5,7 @@ class API::V1::UsersTest < ActionDispatch::IntegrationTest
 
   test "GET catalogs conforms to JSON schema" do
     get("/api/v1/catalogs")
-    assert_response_schema("catalogs.json")
+    assert_response_schema("v1/catalogs.json")
   end
 
   test "GET catalogs includes valid links" do
@@ -14,10 +14,6 @@ class API::V1::UsersTest < ActionDispatch::IntegrationTest
     assert_equal(
       "http://localhost:3000/api/v1/catalogs/#{catalog['slug']}",
       catalog["_links"]["self"]
-    )
-    assert_equal(
-      "http://localhost:3000/api/v1/catalogs/#{catalog['slug']}/pages",
-      catalog["_links"]["pages"]
     )
     assert_equal(
       "http://localhost:3000/#{catalog['slug']}",

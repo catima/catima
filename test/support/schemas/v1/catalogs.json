@@ -24,10 +24,9 @@
         "type": "object",
         "properties": {
           "self": { "type": "string" },
-          "pages": { "type": "string" },
           "html": { "type": "string" }
         },
-        "required": ["self", "pages", "html"]
+        "required": ["self", "html"]
       }
     },
     "required": [
