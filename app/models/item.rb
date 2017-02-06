@@ -49,6 +49,11 @@ class Item < ActiveRecord::Base
     order(sql.join(", "))
   end
 
+  # TODO: test!
+  def self.with_type_slug(slug)
+    joins(:item_type).merge(ItemType.active.where(:slug => slug))
+  end
+
   # The same as `all_fields`, but removes category-based fields that do not
   # apply to this item.
   def applicable_fields

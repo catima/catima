@@ -4,7 +4,9 @@ Rails.application.routes.draw do
 
   namespace :api, :format => "json", :only => %w(index show) do
     namespace :v1 do
-      resources :catalogs, :param => :slug
+      resources :catalogs, :param => :slug do
+        resources :items
+      end
     end
   end
 
