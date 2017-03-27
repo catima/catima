@@ -68,7 +68,7 @@ group :development do
   gem "capistrano-mb", ">= 0.22.2", :require => false
   gem "capistrano-nc", :require => false
   gem "capistrano-rails", :require => false
-  gem "faker", :require => false, :git => "https://github.com/stympy/faker.git"
+  gem "faker", "~> 1.7", :require => false
   gem "guard", ">= 2.2.2", :require => false
   gem "guard-livereload", :require => false
   gem "guard-minitest", :require => false
@@ -79,7 +79,7 @@ group :development do
   gem "rack-livereload"
   gem "rainbow", "~> 2.1.0", :require => false
   gem "rb-fsevent", :require => false
-  gem "rubocop", :require => false
+  gem "rubocop", "~> 0.47.1", :require => false
   gem "ruby-progressbar", :require => false
   gem "simplecov", :require => false
   gem "spring"

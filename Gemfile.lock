@@ -6,13 +6,6 @@ GIT
     shoulda-matchers (3.0.1)
       activesupport (>= 4.0.0)
 
-GIT
-  remote: https://github.com/stympy/faker.git
-  revision: 613b5c5b4cf157fe083eb87971bacee04d8516c4
-  specs:
-    faker (1.7.2)
-      i18n (~> 0.5)
-
 GEM
   remote: https://rubygems.org/
   remote: https://rails-assets.org/
@@ -159,6 +152,8 @@ GEM
     erubis (2.7.0)
     eventmachine (1.2.1)
     execjs (2.7.0)
+    faker (1.7.3)
+      i18n (~> 0.5)
     faraday (0.9.2)
       multipart-post (>= 1.2, < 3)
     faraday_middleware (0.10.0)
@@ -474,7 +469,7 @@ DEPENDENCIES
   disable_with_spinner (~> 0.0.3)
   dotenv-rails (>= 2.0.0)
   dropzonejs-rails (~> 0.7.3)
-  faker!
+  faker (~> 1.7)
   faraday (~> 0.9.2)
   faraday_middleware (~> 0.10.0)
   font-awesome-rails
@@ -515,7 +510,7 @@ DEPENDENCIES
   refile (~> 0.6.1)
   refile-mini_magick
   rollbar (~> 2.12)
-  rubocop
+  rubocop (~> 0.47.1)
   ruby-progressbar
   sass-rails (~> 5.0)
   secure_headers (~> 2.4.4)
@@ -542,4 +537,4 @@ DEPENDENCIES
   xray-rails (>= 0.1.16)
 
 BUNDLED WITH
-   1.14.3
+   1.14.6
