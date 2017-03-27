@@ -8,14 +8,46 @@ class API::V1::ItemsTest < ActionDispatch::IntegrationTest
     assert_response_schema("v1/items.json")
   end
 
+  test "GET items with bad item_type results in 400 error" do
+    get("/api/v1/catalogs/#{catalogs(:one).slug}/items?item_type=bad-slug")
+    assert_response(400)
+  end
+
+  test "GET items with bad catalog results in 404 error" do
+    assert_raises(ActiveRecord::RecordNotFound) do
+      get("/api/v1/catalogs/bad-catalog-slug/items")
+    end
+  end
+
+  test "GET items with inactive catalog results in 404 error" do
+    assert_raises(ActiveRecord::RecordNotFound) do
+      get("/api/v1/catalogs/#{catalogs(:inactive).id}/items")
+    end
+  end
+
+  test "GET items can be filtered by item type" do
+    catalog = catalogs(:one)
+    desired_type = item_types(:one_book)
+    other_type = item_types(:one_author)
+
+    get("/api/v1/catalogs/#{catalog.slug}/items?item_type=#{desired_type.slug}")
+    assert_response_schema("v1/items.json")
+    assert_match(/"item_type_id":#{desired_type.id}\b/, response.body)
+    refute_match(/"item_type_id":#{other_type.id}\b/, response.body)
+  end
+
   test "GET item conforms to JSON schema" do
     item = items(:one_author_stephen_king)
     get("/api/v1/catalogs/#{item.catalog.slug}/items/#{item.id}")
     assert_response_schema("v1/item.json")
   end
 
-  # TODO: test 400 scenario
-  # TODO: test 404 scenario
-  # TODO: test inactive catalog scenario
-  # TODO: test filter by item_type
+  test "GET item with wrong catalog results in in 404 error" do
+    item = items(:one_author_stephen_king)
+    other_catalog = catalogs(:two)
+
+    assert_raises(ActiveRecord::RecordNotFound) do
+      get("/api/v1/catalogs/#{other_catalog.slug}/items/#{item.id}")
+    end
+  end
 end

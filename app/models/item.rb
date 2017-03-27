@@ -49,7 +49,6 @@ class Item < ActiveRecord::Base
     order(sql.join(", "))
   end
 
-  # TODO: test!
   def self.with_type(type)
     return all if type.nil?
     where(:item_type => type)
