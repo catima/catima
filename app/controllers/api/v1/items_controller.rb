@@ -1,11 +1,18 @@
 class API::V1::ItemsController < ActionController::Base
-  def index
-    items = if (type_slug = params[:item_type]).present?
-              items_scope.with_type_slug(type_slug)
-            else
-              items_scope
-            end
+  InvalidItemType = Class.new(RuntimeError)
 
+  rescue_from InvalidItemType do |exception|
+    status = 400
+    error = {
+      :status => status,
+      :error => "Bad request",
+      :message => exception.message
+    }
+    render(:json => error, :status => status)
+  end
+
+  def index
+    items = items_scope.with_type(item_type)
     render(:json => items)
   end
 
@@ -16,9 +23,22 @@ class API::V1::ItemsController < ActionController::Base
 
   private
 
+  def item_type
+    return nil if params[:item_type].blank?
+
+    item_type = catalog.item_types.where(:slug => params[:item_type]).first
+    if item_type.nil?
+      raise InvalidItemType, "item_type not found: #{params[:item_type]}"
+    end
+    item_type
+  end
+
+  def catalog
+    @_catalog ||= Catalog.active.find_by!(:slug => params[:catalog_slug])
+  end
+
   def items_scope
     @_items_scope ||= begin
-      catalog = Catalog.active.find_by!(:slug => params[:catalog_slug])
       catalog.public_items
              .includes(:catalog)
              .includes(:item_type)
