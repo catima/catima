@@ -1,6 +1,6 @@
 {
   "type": "array",
   "items": {
-    "$ref": "file://v1/catalog.json#"
+    "$ref": "file://v1/item.json#"
   }
 }

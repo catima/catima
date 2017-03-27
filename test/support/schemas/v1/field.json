@@ -1,0 +1,28 @@
+{
+  "id": "file://v1/field.json#",
+  "type": "object",
+  "properties": {
+    "i18n": {
+      "type": "boolean"
+    },
+    "label": {
+      "$ref": "file://v1/localized_string.json#"
+    },
+    "multiple": {
+      "type": "boolean"
+    },
+    "type": {
+      "type": "string"
+    },
+    "uuid": {
+      "type": "string"
+    }
+  },
+  "required": [
+    "i18n",
+    "label",
+    "multiple",
+    "type",
+    "uuid"
+  ]
+}

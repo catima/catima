@@ -5,7 +5,7 @@ class API::V1::ItemSerializer < ActiveModel::Serializer
 
   attribute(:attributes) do
     object.applicable_fields.each_with_object({}) do |field, attrs|
-      attrs[field.uuid] = object.data[field.uuid]
+      attrs[field.uuid] = (object.data || {})[field.uuid]
     end
   end
 

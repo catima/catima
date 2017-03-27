@@ -1,0 +1,48 @@
+{
+  "id": "file://v1/item.json#",
+  "type": "object",
+  "properties": {
+    "attributes": {
+      "type": "object"
+    },
+    "created_at": {
+      "type": "string"
+    },
+    "id": {
+      "type": "integer"
+    },
+    "item_type_id": {
+      "type": "integer"
+    },
+    "updated_at": {
+      "type": "string"
+    },
+    "_links": {
+      "type": "object",
+      "properties": {
+        "catalog": {
+          "type": "string"
+        },
+        "html": {
+          "type": "string"
+        },
+        "self": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "catalog",
+        "html",
+        "self"
+      ]
+    }
+  },
+  "required": [
+    "attributes",
+    "created_at",
+    "id",
+    "item_type_id",
+    "updated_at",
+    "_links"
+  ]
+}

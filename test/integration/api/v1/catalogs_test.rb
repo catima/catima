@@ -1,6 +1,6 @@
 require "test_helper"
 
-class API::V1::UsersTest < ActionDispatch::IntegrationTest
+class API::V1::CatalogsTest < ActionDispatch::IntegrationTest
   include APITestHelpers
 
   test "GET catalogs conforms to JSON schema" do
@@ -24,5 +24,10 @@ class API::V1::UsersTest < ActionDispatch::IntegrationTest
   test "GET catalogs doesn't include inactive catalogs" do
     get("/api/v1/catalogs")
     assert_nil(json_response.find { |c| c["slug"] == "inactive" })
+  end
+
+  test "GET catalog conforms to JSON schema" do
+    get("/api/v1/catalogs/#{catalogs(:one).slug}")
+    assert_response_schema("v1/catalog.json")
   end
 end
