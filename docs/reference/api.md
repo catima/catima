@@ -53,7 +53,7 @@ Returns a JSON representation of a catalog identified by its `slug`.
 {
     "_links": {
         "html": "http://localhost:3000/library",
-        "pages": "http://localhost:3000/api/v1/catalogs/library/pages",
+        "items": "http://localhost:3000/api/v1/catalogs/library/items",
         "self": "http://localhost:3000/api/v1/catalogs/library"
     },
     "advertize": false,

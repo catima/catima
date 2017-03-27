@@ -1,7 +1,7 @@
 class API::V1::CatalogSerializer < ActiveModel::Serializer
   include Rails.application.routes.url_helpers
 
-  has_many :item_types
+  has_many :item_types, :serializer => API::V1::ItemTypeSerializer
 
   attributes :name, :primary_language, :slug
   attribute(:advertize) { object.advertize? }
@@ -10,6 +10,7 @@ class API::V1::CatalogSerializer < ActiveModel::Serializer
   attribute(:_links) do
     {
       :self => api_v1_catalog_url(object.slug),
+      :items => api_v1_catalog_items_url(object.slug),
       :html => catalog_home_url(object.slug)
     }
   end
