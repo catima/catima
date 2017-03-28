@@ -44,10 +44,3 @@ if bundle show bundler-audit &> /dev/null; then
   bundle exec bundle-audit update
   bundle exec bundle-audit -v
 fi
-
-# Run a capistrano deploy if we just built the "development" branch.
-if bundle show capistrano &> /dev/null; then
-  if [[ $GIT_BRANCH == origin/development ]]; then
-    SSHKIT_COLOR=1 bundle exec cap staging deploy:migrate_and_restart
-  fi
-fi
