@@ -50,4 +50,12 @@ class API::V1::ItemsTest < ActionDispatch::IntegrationTest
       get("/api/v1/catalogs/#{other_catalog.slug}/items/#{item.id}")
     end
   end
+
+  test "GET item pending review results in in 404 error" do
+    item = items(:reviewed_book_harry_potter_pending)
+
+    assert_raises(ActiveRecord::RecordNotFound) do
+      get("/api/v1/catalogs/#{item.catalog.slug}/items/#{item.id}")
+    end
+  end
 end
