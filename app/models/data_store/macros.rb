@@ -2,7 +2,6 @@
 #
 #   data_store_attribute
 #   data_store_validator
-#   data_store_hash
 #
 # The `data_store_attribute` macro defines accessors for getting and setting
 # data within an Item's JSON data. While the DataStore class handles the actual
@@ -38,21 +37,6 @@
 #
 # This will run the validator against all the locales supported by the catalog.
 #
-# Also, a special `data_store_hash` macro allows a hash of data to be stored
-# in the attribute, rather than a normal value. Accessors will be created for
-# each of the specified keys. This is typically used to support refile
-# attachments.
-#
-#   data_store_hash :foo, :id, :filename
-#
-# This generates the following accessors, which put their values in the "foo"
-# entry of the data store:
-#
-#   foo_id
-#   foo_id=
-#   foo_filename
-#   foo_filename=
-#
 # Finally, all accessors defined using these macros are exposed in a way
 # suitable for passing to StrongParameters' `permit` via a
 # `data_store_permitted_attributes` class method.
@@ -68,23 +52,6 @@ module DataStore::Macros
         data_store_attribute_i18n(key, multiple)
       else
         data_store_attribute_basic(key, multiple)
-      end
-    end
-
-    def data_store_hash(key, *attributes)
-      attributes.each do |attr|
-        data_store_permit_attribute("key_#{attr}")
-
-        define_method("#{key}_#{attr}") do
-          data_store_hash(key)[attr.to_s]
-        end
-
-        define_method("#{key}_#{attr}=") do |value|
-          data_store_hash(key)[attr.to_s] = value
-        end
-
-        # Refile needs this
-        define_method("#{key}_#{attr}_will_change!") { nil }
       end
     end
 
@@ -142,11 +109,6 @@ module DataStore::Macros
   end
 
   private
-
-  def data_store_hash(key)
-    store = dirty_aware_store(key)
-    store.get || store.set({})
-  end
 
   def dirty_aware_store(key, multivalued=false, i18n=false, locale=nil)
     self.data ||= {}
