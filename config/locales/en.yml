@@ -262,6 +262,7 @@ en:
         list_view?: 'List view?'
         delete_sure?: "Are you sure you want to delete the «%{field}» field?"
       text_option_inputs:
+        has_formatted_text: "Has formatted text"
         min_length: "Minimum length (optional)"
         max_length: "Maximum length (optional)"
       xref_option_inputs:

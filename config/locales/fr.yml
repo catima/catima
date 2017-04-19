@@ -262,6 +262,7 @@ fr:
         list_view?: 'Dans liste?'
         delete_sure?: "Vous voulez vraiment supprimer le champ «%{field}»?"
       text_option_inputs:
+        has_formatted_text: "Contient du texte formaté"
         min_length: "Longueur minimale (optionnel)"
         max_length: "Longueur maximale (optionnel)"
       xref_option_inputs:
