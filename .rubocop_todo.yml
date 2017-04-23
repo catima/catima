@@ -435,6 +435,14 @@ Style/Not:
   Exclude:
     - 'app/models/menu_item.rb'
 
+Style/PercentLiteralDelimiters:
+  # Specify the default preferred delimiter for all types with the 'default' key
+  # Override individual delimiters (even with default specified) by specifying
+  # an individual key
+  PreferredDelimiters:
+    '%i': '()'
+    '%w': '()'
+
 # Offense count: 3
 # Cop supports --auto-correct.
 Style/PerlBackrefs:
