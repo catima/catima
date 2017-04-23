@@ -1,6 +1,8 @@
 class API::V1::CatalogsController < ActionController::Base
   def index
-    render(:json => catalogs_scope)
+    render(:json => API::V1::PaginationSerializer.new(
+      "catalogs", catalogs_scope, params
+    ))
   end
 
   def show

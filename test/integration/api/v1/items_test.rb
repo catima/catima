@@ -25,6 +25,16 @@ class API::V1::ItemsTest < ActionDispatch::IntegrationTest
     end
   end
 
+  test "GET items honors page size" do
+    get("/api/v1/catalogs/#{catalogs(:one).slug}/items?page_size=1")
+    assert_equal(1, json_response["page_size"])
+    assert_equal(1, json_response["items"].size)
+
+    get("/api/v1/catalogs/#{catalogs(:one).slug}/items?page_size=2")
+    assert_equal(2, json_response["page_size"])
+    assert_equal(2, json_response["items"].size)
+  end
+
   test "GET items can be filtered by item type" do
     catalog = catalogs(:one)
     desired_type = item_types(:one_book)

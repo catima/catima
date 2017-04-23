@@ -13,7 +13,7 @@ class API::V1::ItemsController < ActionController::Base
 
   def index
     items = items_scope.with_type(item_type)
-    render(:json => items)
+    render(:json => API::V1::PaginationSerializer.new("items", items, params))
   end
 
   def show
