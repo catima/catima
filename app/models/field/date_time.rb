@@ -52,7 +52,7 @@ class Field::DateTime < ::Field
     v = super(item, locale)
     return nil if v.nil?
     return v if v.is_a?(Hash) && (v.has_key?('raw_value') == false)
-    v = {'raw_value' => v} if v.is_a?(Fixnum)
+    v = {'raw_value' => v} if v.is_a?(Integer)
     return nil if v['raw_value'].nil?
     dt = Time.zone.at(v['raw_value'])
     new_value = {}
