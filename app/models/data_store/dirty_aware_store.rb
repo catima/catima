@@ -4,13 +4,14 @@
 class DataStore::DirtyAwareStore < DataStore
   attr_reader :item
 
-  def initialize(item:, key:, multivalued:, locale:)
+  def initialize(item:, key:, multivalued:, locale:, transformer: nil)
     @item = item
     super(
       :data => item.data,
       :key => key,
       :multivalued => multivalued,
-      :locale => locale
+      :locale => locale,
+      :transformer => transformer
     )
   end
 

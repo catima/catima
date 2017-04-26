@@ -32,7 +32,6 @@
 
 class Field::Geometry < ::Field
   # TODO: CRS?
-  include ::Field::HasJsonRepresentation
 
   def human_readable?
     false

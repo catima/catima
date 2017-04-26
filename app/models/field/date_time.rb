@@ -31,8 +31,6 @@
 #
 
 class Field::DateTime < ::Field
-  include ::Field::HasJsonRepresentation
-
   FORMATS = %w(Y YM YMD YMDh YMDhm YMDhms).freeze
 
   store_accessor :options, :format
@@ -45,22 +43,6 @@ class Field::DateTime < ::Field
 
   def custom_field_permitted_attributes
     %i(format)
-  end
-
-  def raw_value(item, locale=I18n.locale)
-    # Converts the old datetime field value to the new hash style if required
-    v = super(item, locale)
-    return nil if v.nil?
-    return v if v.is_a?(Hash) && (v.has_key?('raw_value') == false)
-    v = {'raw_value' => v} if v.is_a?(Integer)
-    return nil if v['raw_value'].nil?
-    dt = Time.zone.at(v['raw_value'])
-    new_value = {}
-    dt_complete = { Y: dt.year, M: dt.mon, D: dt.day, h: dt.hour, m: dt.min, s: dt.sec }
-    format.split('').each do |c|
-      new_value[c.to_s] = dt_complete[c.to_sym]
-    end
-    new_value
   end
 
   # Translates timestamp integer to a ActiveSupport::TimeWithZone object (or nil).
@@ -106,6 +88,20 @@ class Field::DateTime < ::Field
   end
 
   private
+
+  def transform_value(v)
+    return nil if v.nil?
+    return v if v.is_a?(Hash) && !v.key?("raw_value")
+    v = { "raw_value" => v } if v.is_a?(Integer)
+    return nil if v["raw_value"].nil?
+    dt = Time.zone.at(v["raw_value"])
+    new_value = {}
+    dt_complete = { Y: dt.year, M: dt.mon, D: dt.day, h: dt.hour, m: dt.min, s: dt.sec }
+    format.split("").each do |c|
+      new_value[c.to_s] = dt_complete[c.to_sym]
+    end
+    new_value
+  end
 
   def set_default_format
     self.format ||= "YMD"

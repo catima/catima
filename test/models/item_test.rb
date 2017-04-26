@@ -17,4 +17,20 @@ class ItemTest < ActiveSupport::TestCase
     assert_includes(found, items(:one_book_end_of_watch))
     refute_includes(found, items(:one_author_stephen_king))
   end
+
+  test "#behaving_as_type returns object with field UUID accessors" do
+    item = items(:one_book_end_of_watch).behaving_as_type
+    %i(one_book_title one_book_author).map(&method(:fields)).each do |field|
+      assert(item.respond_to?(field.uuid))
+      assert(item.respond_to?("#{field.uuid}="))
+    end
+  end
+
+  test "#behaving_as_type returns object with json accessors" do
+    item = items(:one_book_end_of_watch).behaving_as_type
+    %i(one_book_title one_book_author).map(&method(:fields)).each do |field|
+      assert(item.respond_to?("#{field.uuid}_json"))
+      assert(item.respond_to?("#{field.uuid}_json="))
+    end
+  end
 end

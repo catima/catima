@@ -33,11 +33,12 @@
 class DataStore
   attr_reader :data, :key, :locale
 
-  def initialize(data:, key:, multivalued:, locale:)
+  def initialize(data:, key:, multivalued:, locale:, transformer: nil)
     @data = data
     @key = key.to_s
     @multivalued = multivalued
     @locale = locale ? locale.to_s : nil
+    @transformer = transformer || :itself.to_proc
   end
 
   def localized?
@@ -49,7 +50,8 @@ class DataStore
   end
 
   def get
-    multivalued? ? all_in_locale : all_in_locale.first
+    value = multivalued? ? all_in_locale : all_in_locale.first
+    transformer.call(value)
   end
 
   def set(value)
@@ -58,6 +60,8 @@ class DataStore
   end
 
   private
+
+  attr_reader :transformer
 
   def all_in_locale
     Array.wrap(translate(data[key]))

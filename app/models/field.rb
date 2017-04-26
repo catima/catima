@@ -103,10 +103,6 @@ class Field < ActiveRecord::Base
     []
   end
 
-  def custom_item_permitted_attributes
-    []
-  end
-
   def label
     multiple? ? name_plural : name
   end
@@ -162,7 +158,12 @@ class Field < ActiveRecord::Base
   # add validation rules, accessors, etc. for this field. The class in this
   # case is an anonymous subclass of Item.
   def decorate_item_class(klass)
-    klass.data_store_attribute(uuid, :i18n => i18n?, :multiple => multiple?)
+    klass.data_store_attribute(
+      uuid,
+      :i18n => i18n?,
+      :multiple => multiple?,
+      :transformer => method(:transform_value)
+    )
 
     # TODO: how does validation work for multi-valued?
     validators = build_validators
@@ -205,5 +206,9 @@ class Field < ActiveRecord::Base
 
   def remove_primary_from_other_fields
     field_set.fields.where("fields.id != ?", id).update_all(:primary => false)
+  end
+
+  def transform_value(value)
+    value
   end
 end

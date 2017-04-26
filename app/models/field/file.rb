@@ -32,7 +32,6 @@
 
 class Field::File < ::Field
   include ::Field::AllowsMultipleValues
-  include ::Field::HasJsonRepresentation
 
   store_accessor :options, :types
 
