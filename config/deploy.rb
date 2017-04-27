@@ -18,8 +18,10 @@ set :mb_dotenv_keys, %w(
   rollbar_access_token
   sidekiq_web_username
   sidekiq_web_password
-  sendgrid_username
-  sendgrid_password
+  mail_smtp_address
+  mail_smtp_username
+  mail_smtp_password
+  mail_sender
 )
 
 # Re-index items on every deploy, just to be safe
