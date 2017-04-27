@@ -24,8 +24,8 @@ set :mb_dotenv_keys, %w(
   mail_sender
 )
 
-# Re-index items on every deploy, just to be safe
 namespace :viim do
+  # Re-index items on every deploy, just to be safe
   desc "Rebuild the search index for all item data"
   task :reindex do
     on release_roles(:all).first do
@@ -36,8 +36,15 @@ namespace :viim do
       end
     end
   end
+
+  task :enable_postgis do
+    privileged_on primary(:db) do
+      execute "sudo -u postgres psql -c 'CREATE EXTENSION postgis'"
+    end
+  end
 end
 after "deploy:published", "viim:reindex"
+after "mb:postgresql:create_database", "viim:enable_postgis"
 
 # Rollbar deployment notification
 task :notify_rollbar do
