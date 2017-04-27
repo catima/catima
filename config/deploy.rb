@@ -9,7 +9,7 @@ fetch(:mb_recipes) << "sidekiq"
 
 fetch(:mb_aptitude_packages).merge!(
   "imagemagick" => :app,
-  "redis-server@ppa:rwky/redis" => :redis,
+  "redis-server@ppa:chris-lea/redis-server" => :redis,
   "postgis" => :db
 )
 
