@@ -1,6 +1,8 @@
 require "test_helper"
 
 class Field::XrefTest < ActiveSupport::TestCase
+  include WithVCR
+
   should validate_presence_of(:xref)
   should_not allow_value("not a URL").for(:xref)
 
@@ -12,10 +14,12 @@ class Field::XrefTest < ActiveSupport::TestCase
       :name_plural_en => "tests"
     )
 
-    field.xref = "https://api.github.com/repos/rails/rails"
-    refute(field.valid?)
+    with_expiring_vcr_cassette do
+      field.xref = "https://api.github.com/repos/rails/rails"
+      refute(field.valid?)
 
-    field.xref = "http://vss.naxio.ch/keywords/default/api/v1"
-    assert(field.valid?)
+      field.xref = "http://vss.naxio.ch/keywords/default/api/v1"
+      assert(field.valid?)
+    end
   end
 end
