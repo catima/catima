@@ -1,16 +1,16 @@
 # Ensure that there is one (and only one) configuration
 Configuration.first_or_create!
 
-if Rails.env.development?
-  # Ensure at least one user
-  admin = User.first_or_create!(
-    :email => "admin@example.com",
-    :password => "admin123",
-    :password_confirmation => "admin123",
-    :system_admin => true,
-    :primary_language => "en"
-  )
+# Ensure at least one user
+admin = User.first_or_create!(
+  :email => "admin@example.com",
+  :password => "admin123",
+  :password_confirmation => "admin123",
+  :system_admin => true,
+  :primary_language => "en"
+)
 
+if Rails.env.development?
   # Create a "Library" catalog with lots of fake books for search testing.
   library = Catalog.where(:slug => "library").first_or_create!(
     :name => "Library",
