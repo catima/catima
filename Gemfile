@@ -60,6 +60,7 @@ group :development do
   gem "airbrussh", :require => false
   gem "annotate", ">= 2.5.0"
   gem "awesome_print"
+  gem "bcrypt_pbkdf", :require => false
   gem "better_errors"
   gem "binding_of_caller"
   gem "brakeman", :require => false
@@ -80,6 +81,8 @@ group :development do
   gem "rack-livereload"
   gem "rainbow", "~> 2.1.0", :require => false
   gem "rb-fsevent", :require => false
+  gem "rbnacl", "~> 3.4", :require => false
+  gem "rbnacl-libsodium", :require => false
   gem "rubocop", "~> 0.47.1", :require => false
   gem "ruby-progressbar", :require => false
   gem "simplecov", :require => false

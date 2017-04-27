@@ -69,6 +69,7 @@ GEM
       babel-source (>= 4.0, < 6)
       execjs (~> 2.0)
     bcrypt (3.1.11)
+    bcrypt_pbkdf (1.0.0)
     better_errors (2.1.1)
       coderay (>= 1.0.0)
       erubis (>= 2.6.6)
@@ -314,6 +315,10 @@ GEM
     rb-fsevent (0.9.8)
     rb-inotify (0.9.8)
       ffi (>= 0.5.0)
+    rbnacl (3.4.0)
+      ffi
+    rbnacl-libsodium (1.0.11)
+      rbnacl (>= 3.0.1)
     react-rails (1.10.0)
       babel-transpiler (>= 0.7.0)
       coffee-script-source (~> 1.8)
@@ -443,6 +448,7 @@ DEPENDENCIES
   autoprefixer-rails (>= 6.4.1.1)
   awesome_print
   bcrypt (~> 3.1.10)
+  bcrypt_pbkdf
   better_errors
   binding_of_caller
   bootstrap-sass (~> 3.2.0)
@@ -498,6 +504,8 @@ DEPENDENCIES
   rainbow (~> 2.1.0)
   ranked-model
   rb-fsevent
+  rbnacl (~> 3.4)
+  rbnacl-libsodium
   react-rails (~> 1.10.0)
   redcarpet
   redis-namespace
