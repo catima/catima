@@ -1,28 +1,25 @@
-require "vcr"
 
 VCR.configure do |config|
   config.allow_http_connections_when_no_cassette = false
   config.cassette_library_dir = File.expand_path("../../cassettes", __FILE__)
   config.hook_into :webmock
-  config.ignore_request { ENV["DISABLE_VCR"] }
   config.ignore_localhost = true
-  config.default_cassette_options = {
-    :record => :new_episodes
-  }
+  config.default_cassette_options = { :record => :new_episodes }
 end
 
-class ActiveSupport::TestCase
-  def self.test(test_name, &block)
-    return super if block.nil?
+module WithVCR
+  private
 
-    cassette = [name, test_name].map do |str|
-      str.underscore.gsub(/[^A-Z]+/i, "_")
-    end.join("/")
+  def with_expiring_vcr_cassette
+    names = self.class.name.split("::")
+    cassette_path = names.map { |s| s.gsub(/[^A-Z0-9]+/i, "_") }.join("/")
 
-    super(test_name) do
-      VCR.use_cassette(cassette) do
-        instance_eval(&block)
+    VCR.use_cassette(cassette_path) do |cassette|
+      if File.exist?(cassette.file)
+        age = Time.current - File.mtime(cassette.file)
+        FileUtils.rm(cassette.file) if age > 24.hours
       end
+      yield(cassette)
     end
   end
 end
