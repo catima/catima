@@ -54,7 +54,11 @@ var DateTimeInput = React.createClass({
   },
 
   getData: function(){
-    return JSON.parse($('#item_'+this.props.field+"_json").val());
+    var value = $('#item_'+this.props.field+"_json").val();
+    if (value === "") {
+      return {};
+    }
+    return JSON.parse(value);
   },
 
   setData: function(d){
