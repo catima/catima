@@ -3,5 +3,5 @@ class API::V1::FieldSerializer < ActiveModel::Serializer
 
   attributes :uuid, :i18n, :multiple
   attribute(:label) { translation_hash(object.name_translations) }
-  attribute(:type) { ::Field::TYPES.to_a.rassoc(object.class.to_s).first }
+  attribute(:type) { object.short_type_name }
 end

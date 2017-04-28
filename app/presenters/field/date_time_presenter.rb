@@ -1,5 +1,5 @@
 class Field::DateTimePresenter < FieldPresenter
-  delegate :l, :react_component, :to => :view
+  delegate :l, :content_tag, :json_react_component, :to => :view
 
   def value
     # TODO: move this logic down to Field::DateTime?
@@ -9,22 +9,9 @@ class Field::DateTimePresenter < FieldPresenter
     dt && l(dt, format: field.format.to_sym)
   end
 
-  def input(form, method, options={})
-    html = [
-      form.text_area(
-        "#{method}_json",
-        input_defaults(options).reverse_merge(
-          :rows => 1,
-          :format => field.format,
-          'data-field-type' => 'datetime'
-        )
-      ),
-      '<div class="date-time-input-wrapper">',
-      react_component('DateTimeInput', {
-        field: method, granularity: field.format, date: raw_value
-      }),
-      '</div>'
-    ]
-    html.compact.join.html_safe
+  def input(form, method, _options={})
+    form.form_group(method, :label => { :text => label }) do
+      json_react_component("DateTimeInput", form, field)
+    end
   end
 end

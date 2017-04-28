@@ -95,6 +95,10 @@ class Field < ActiveRecord::Base
     type.gsub(/Field::/, "")
   end
 
+  def short_type_name
+    ::Field::TYPES.to_a.rassoc(self.class.to_s).first
+  end
+
   def partial_name
     model_name.singular.sub(/^field_/, "")
   end
