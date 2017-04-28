@@ -1,7 +1,5 @@
-include React::Rails::ViewHelper
-
 class Field::DateTimePresenter < FieldPresenter
-  delegate :l, :to => :view
+  delegate :l, :react_component, :to => :view
 
   def value
     return nil if raw_value.nil?
