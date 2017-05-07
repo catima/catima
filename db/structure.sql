@@ -2,8 +2,8 @@
 -- PostgreSQL database dump
 --
 
--- Dumped from database version 9.6.1
--- Dumped by pg_dump version 9.6.1
+-- Dumped from database version 9.6.2
+-- Dumped by pg_dump version 9.6.2
 
 SET statement_timeout = 0;
 SET lock_timeout = 0;
@@ -371,7 +371,8 @@ CREATE TABLE fields (
     uuid character varying,
     name_translations json,
     name_plural_translations json,
-    field_set_type character varying
+    field_set_type character varying,
+    ui_component character varying
 );
 
 
@@ -1401,4 +1402,6 @@ INSERT INTO schema_migrations (version) VALUES ('20160720053135');
 INSERT INTO schema_migrations (version) VALUES ('20161231140032');
 
 INSERT INTO schema_migrations (version) VALUES ('20170121055843');
+
+INSERT INTO schema_migrations (version) VALUES ('20170507231151');
 

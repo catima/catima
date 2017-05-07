@@ -25,6 +25,7 @@
 #  row_order                :integer
 #  slug                     :string
 #  type                     :string
+#  ui_component             :string
 #  unique                   :boolean          default(FALSE), not null
 #  updated_at               :datetime         not null
 #  uuid                     :string
