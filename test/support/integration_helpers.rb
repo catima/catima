@@ -1,6 +1,10 @@
 class ActionDispatch::IntegrationTest
   private
 
+  def fill_in_hidden(id, with:)
+    find("##{id}", :visible => :all).set(with)
+  end
+
   def log_in_as(email, password)
     visit("/en/login")
     fill_in("Email", :with => email)

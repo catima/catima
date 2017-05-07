@@ -19,7 +19,7 @@ class CatalogAdmin::ItemsTest < ActionDispatch::IntegrationTest
     select("Eng", :from => "Language")
     select("Eng", :from => "Other Languages")
     select("Spanish", :from => "Other Languages")
-    fill_in("item[one_author_birth_time_uuid_json]", :with => '{"Y":2015, "M":12, "D":31, "h":14, "m":30, "s":17}')
+    fill_in_hidden("item_one_author_birth_time_uuid_json", :with => '{"Y":2015, "M":12, "D":31, "h":14, "m":30, "s":17}')
     # select("2015", :from => "item[one_author_birth_time_uuid_time(1i)]")
     # select("December", :from => "item[one_author_birth_time_uuid_time(2i)]")
     # select("31", :from => "item[one_author_birth_time_uuid_time(3i)]")
