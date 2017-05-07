@@ -107,6 +107,10 @@ class Field < ActiveRecord::Base
     []
   end
 
+  def custom_item_permitted_attributes
+    []
+  end
+
   def label
     multiple? ? name_plural : name
   end

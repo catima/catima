@@ -45,16 +45,27 @@ class Field::DateTime < ::Field
     %i(format)
   end
 
-  # Translates timestamp integer to a ActiveSupport::TimeWithZone object (or nil).
-  def value_as_time_with_zone(item)
+  # The Rails datetime form helpers submit components of the datetime as
+  # individual attributes, like "#{uuid}_time(1i)", "#{uuid}_time(2i)", etc.
+  # We need to explicitly permit them.
+  def custom_item_permitted_attributes
+    (1..6).map { |i| :"#{uuid}_time(#{i}i)" }
+  end
+
+  # Translates YMD.. hash into ActiveSupport::TimeWithZone object (or nil).
+  def value_as_datetime(item)
     value = raw_value(item)
-    return nil if value.nil? || value['raw_value'].nil?
-    Time.zone.at(value['raw_value'])
+    return nil if value.nil?
+    defaults = { "Y" => 0, "M" => 1, "D" => 1, "h" => 0, "m" => 0, "s" => 0 }
+    components = defaults.map do |key, default_value|
+      value[key] || default_value
+    end
+    ::DateTime.civil_from_format(:local, *components)
   end
 
   def assign_value_from_form(item, values)
     time_with_zone = form_submission_as_time_with_zone(values)
-    item.public_send("#{uuid}=", time_with_zone.try(:to_i))
+    item.public_send("#{uuid}=", transform_value(time_with_zone&.to_i))
   end
 
   # Rails submits the datetime from the UI as a hash of component values.
@@ -80,7 +91,7 @@ class Field::DateTime < ::Field
     super
     field = self
     klass.send(:define_method, "#{uuid}_time") do
-      field.value_as_time_with_zone(self)
+      field.value_as_datetime(self)
     end
     klass.send(:define_method, "#{uuid}_time=") do |values|
       field.assign_value_from_form(self, values)
