@@ -36,6 +36,7 @@ class Field::DateTime < ::Field
 
   store_accessor :options, :format
   after_initialize :set_default_format
+  after_initialize :set_default_ui_component
   validates_inclusion_of :format, :in => FORMATS
 
   def type_name
@@ -117,6 +118,11 @@ class Field::DateTime < ::Field
 
   def set_default_format
     self.format ||= "YMD"
+  end
+
+  def set_default_ui_component
+    return if persisted?
+    self.ui_component ||= "DateTimeInput"
   end
 
   def coerce_to_array(values)
