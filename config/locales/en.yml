@@ -240,6 +240,8 @@ en:
         must_be_unique: "Must be unique"
         save_field: Save field
         create_field: Create field
+        ui_component: UI Component
+        ui_component_help: Specify the name of a React JS component that will be used for data entry. Leave blank for the default HTML form input.
       decimal_option_inputs:
         min_value: "Minimum value (optional)"
         max_value: "Maximum value (optional)"

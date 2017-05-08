@@ -28,6 +28,11 @@
 
 <h4><%= t('.data_entry_options') %></h4>
 
+<%= f.text_field(
+      :ui_component,
+      :label => t(".ui_component"),
+      :help => t(".ui_component_help")) %>
+
 <%= field_style_select(f) %>
 
 <%= f.form_group(:unique) do %>
