@@ -1,5 +1,5 @@
 class Field::DateTimePresenter < FieldPresenter
-  delegate :l, :content_tag, :json_react_component, :to => :view
+  delegate :l, :to => :view
 
   def value
     dt = field.value_as_datetime(item)
@@ -7,8 +7,9 @@ class Field::DateTimePresenter < FieldPresenter
   end
 
   def input(form, method, _options={})
-    form.form_group(method, :label => { :text => label }) do
-      json_react_component("DateTimeInput", form, field)
-    end
+    form.viim_datetime_select(
+      "#{method}_time",
+      input_defaults(options).merge(:format => field.format)
+    )
   end
 end
