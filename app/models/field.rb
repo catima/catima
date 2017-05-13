@@ -119,15 +119,17 @@ class Field < ActiveRecord::Base
 
   # Whether or not this field holds a human-readable value, e.g. text, number,
   # etc. An image or geometry would not qualify, as those are displayed as non-
-  # text.
+  # text. Any field that uses a display_component would not qualify, because the
+  # field is rendered via JavaScript.
   #
   # This is used primarily by Item#field_for_select to choose a field suitable
   # for a drop-down menu.
   #
-  # Default is true, and subclasses can override.
+  # Default depends on the presence of display_component, and subclasses can
+  # override.
   #
   def human_readable?
-    true
+    display_component.blank?
   end
 
   # Whether or not this field supports the `multiple` option. Most fields do
