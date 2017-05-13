@@ -9,6 +9,12 @@ class Field::DateTimeTest < ActiveSupport::TestCase
     assert_equal("YMD", field.format)
   end
 
+  test "assigns default editor_component" do
+    field = Field::DateTime.new
+    field.valid? # force before_validation to happen
+    assert_equal("DateTimeInput", field.editor_component)
+  end
+
   test "stores date components as a hash" do
     date = [2015, 12, 31]
     item = Item.new(:item_type => item_types(:one_author))

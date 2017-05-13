@@ -57,6 +57,9 @@ class Field < ActiveRecord::Base
   ranks :row_order, :class_name => "Field", :with_same => :field_set_id
 
   delegate :catalog, :to => :field_set, :allow_nil => true
+  delegate :component_choice?, :components_are_valid, :component_choices,
+           :assign_default_components,
+           :to => :component_config
 
   belongs_to :field_set, :polymorphic => true
 
@@ -64,8 +67,10 @@ class Field < ActiveRecord::Base
 
   validates_presence_of :field_set
   validate :default_value_passes_field_validations
+  validate :components_are_valid
   validates_slug :scope => :field_set_id
 
+  before_validation :assign_default_components
   before_create :assign_uuid
   after_save :remove_primary_from_other_fields, :if => :primary?
 
@@ -199,6 +204,10 @@ class Field < ActiveRecord::Base
   end
 
   private
+
+  def component_config
+    @_component_config ||= ComponentConfig.new(self)
+  end
 
   def build_validators
     []

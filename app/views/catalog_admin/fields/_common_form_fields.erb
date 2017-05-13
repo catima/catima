@@ -9,6 +9,14 @@
 
 <h4><%= t('.display_options') %></h4>
 
+<% if f.object.component_choice?(:display) %>
+  <%= f.select(
+        :display_component,
+        f.object.component_choices(:display),
+        :label => t(".display_component"),
+        :help => t(".display_component_help")) %>
+<% end %>
+
 <% unless f.object.is_a?(Category) %>
   <%= f.form_group(:primary) do %>
     <%= f.check_box(
@@ -28,15 +36,13 @@
 
 <h4><%= t('.data_entry_options') %></h4>
 
-<%= f.text_field(
-      :editor_component,
-      :label => t(".editor_component"),
-      :help => t(".editor_component_help")) %>
-
-<%= f.text_field(
-      :display_component,
-      :label => t(".display_component"),
-      :help => t(".display_component_help")) %>
+<% if f.object.component_choice?(:editor) %>
+  <%= f.select(
+        :editor_component,
+        f.object.component_choices(:editor),
+        :label => t(".editor_component"),
+        :help => t(".editor_component_help")) %>
+<% end %>
 
 <%= field_style_select(f) %>
 
