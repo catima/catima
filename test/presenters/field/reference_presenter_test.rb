@@ -3,6 +3,7 @@ require "test_helper"
 class Field::ReferencePresenterTest < ActionView::TestCase
   include FieldsHelper
   include ItemsHelper
+  include JsonHelper
 
   test "#value" do
     author = items(:one_author_stephen_king)

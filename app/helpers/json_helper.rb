@@ -1,9 +1,14 @@
-module JsonInputHelper
-  def json_react_component(component_name, form, field, props={})
+module JsonHelper
+  def json_react_display_component(item, field, props={})
+    props = json_display_props(item, field).merge(props)
+    react_component(field.display_component, props)
+  end
+
+  def json_react_input_component(form, field, props={})
     props = props.merge(:input => "##{json_hidden_field_id(form, field)}")
     html = [
       json_hidden_field(form, field),
-      react_component(component_name, props)
+      react_component(field.editor_component, props)
     ]
     safe_join(html)
   end
@@ -11,11 +16,15 @@ module JsonInputHelper
   def json_hidden_field(form, field, options={})
     method = "#{field.uuid}_json"
     id = json_hidden_field_id(form, field)
-    data = options.fetch(:data, {}).merge(json_field_data(field))
+    data = options.fetch(:data, {}).merge(json_input_data(field))
     form.hidden_field(method, options.merge(:data => data, :id => id))
   end
 
-  def json_field_data(field)
+  def json_display_props(item, field)
+    json_input_data(field).merge(:value => field.raw_json_value(item))
+  end
+
+  def json_input_data(field)
     {
       :field_uuid => field.uuid,
       :field_options => field.options,

@@ -139,10 +139,14 @@ class Field < ActiveRecord::Base
     false
   end
 
-  def raw_value(item, locale=I18n.locale)
+  def raw_value(item, locale=I18n.locale, suffix="")
     return nil unless applicable_to_item(item)
-    attrib = i18n? ? "#{uuid}_#{locale}" : uuid
+    attrib = i18n? ? "#{uuid}_#{locale}#{suffix}" : uuid
     item.behaving_as_type.public_send(attrib)
+  end
+
+  def raw_json_value(item, locale=I18n.locale)
+    raw_value(item, locale, "_json")
   end
 
   # Takes the input value and tries to prepare value for setting the field.

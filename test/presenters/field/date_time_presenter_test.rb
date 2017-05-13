@@ -1,7 +1,7 @@
 require "test_helper"
 
 class Field::DateTimePresenterTest < ActionView::TestCase
-  include JsonInputHelper
+  include JsonHelper
   include BootstrapForm::Helper
   include React::Rails::ViewHelper
 
