@@ -9,6 +9,7 @@ require_dependency("field/file")
 #  created_at               :datetime         not null
 #  default_value            :text
 #  display_in_list          :boolean          default(TRUE), not null
+#  editor_component         :string
 #  field_set_id             :integer
 #  field_set_type           :string
 #  i18n                     :boolean          default(FALSE), not null
@@ -26,7 +27,6 @@ require_dependency("field/file")
 #  row_order                :integer
 #  slug                     :string
 #  type                     :string
-#  ui_component             :string
 #  unique                   :boolean          default(FALSE), not null
 #  updated_at               :datetime         not null
 #  uuid                     :string

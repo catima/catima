@@ -8,6 +8,7 @@
 #  created_at               :datetime         not null
 #  default_value            :text
 #  display_in_list          :boolean          default(TRUE), not null
+#  editor_component         :string
 #  field_set_id             :integer
 #  field_set_type           :string
 #  i18n                     :boolean          default(FALSE), not null
@@ -25,7 +26,6 @@
 #  row_order                :integer
 #  slug                     :string
 #  type                     :string
-#  ui_component             :string
 #  unique                   :boolean          default(FALSE), not null
 #  updated_at               :datetime         not null
 #  uuid                     :string
@@ -36,7 +36,7 @@ class Field::DateTime < ::Field
 
   store_accessor :options, :format
   after_initialize :set_default_format
-  after_initialize :set_default_ui_component
+  after_initialize :set_default_editor_component
   validates_inclusion_of :format, :in => FORMATS
 
   def type_name
@@ -120,9 +120,9 @@ class Field::DateTime < ::Field
     self.format ||= "YMD"
   end
 
-  def set_default_ui_component
+  def set_default_editor_component
     return if persisted?
-    self.ui_component ||= "DateTimeInput"
+    self.editor_component ||= "DateTimeInput"
   end
 
   def coerce_to_array(values)
