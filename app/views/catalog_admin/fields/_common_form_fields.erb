@@ -33,6 +33,11 @@
       :label => t(".editor_component"),
       :help => t(".editor_component_help")) %>
 
+<%= f.text_field(
+      :display_component,
+      :label => t(".display_component"),
+      :help => t(".display_component_help")) %>
+
 <%= field_style_select(f) %>
 
 <%= f.form_group(:unique) do %>
