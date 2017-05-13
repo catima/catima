@@ -372,7 +372,8 @@ CREATE TABLE fields (
     name_translations json,
     name_plural_translations json,
     field_set_type character varying,
-    editor_component character varying
+    editor_component character varying,
+    display_component character varying
 );
 
 
@@ -1408,4 +1409,6 @@ INSERT INTO schema_migrations (version) VALUES ('20170507231151');
 INSERT INTO schema_migrations (version) VALUES ('20170507231610');
 
 INSERT INTO schema_migrations (version) VALUES ('20170513155612');
+
+INSERT INTO schema_migrations (version) VALUES ('20170513160403');
 

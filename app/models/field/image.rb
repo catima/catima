@@ -8,6 +8,7 @@ require_dependency("field/file")
 #  comment                  :text
 #  created_at               :datetime         not null
 #  default_value            :text
+#  display_component        :string
 #  display_in_list          :boolean          default(TRUE), not null
 #  editor_component         :string
 #  field_set_id             :integer
