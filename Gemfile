@@ -45,6 +45,7 @@ gem "sprockets", "~> 3.4"
 gem "sprockets-rails", "~> 2.3"
 gem "summernote-rails", "~> 0.7.1"
 gem "turbolinks", "~> 2.5"
+gem "zaru", "~> 0.1.0"
 
 source "https://rails-assets.org" do
   gem "rails-assets-autosize", "~> 3.0.14"

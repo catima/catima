@@ -72,6 +72,11 @@ class Catalog < ActiveRecord::Base
     items.merge(item_type.items)
   end
 
+  def customization_root
+    safe_slug = Zaru.sanitize!(slug)
+    Rails.root.join("catalogs", safe_slug)
+  end
+
   private
 
   def strip_empty_language

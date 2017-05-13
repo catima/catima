@@ -51,6 +51,6 @@ module ControlsCatalog
   # override those in the app. So for example, if the slug of the catalog is
   # "viatimages", overrides could be placed in `catalogs/viatimages/views`.
   def prepend_catalog_view_path
-    prepend_view_path(Rails.root.join("catalogs", catalog.slug, "views"))
+    prepend_view_path(catalog.customization_root.join("views"))
   end
 end
