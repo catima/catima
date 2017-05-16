@@ -2,7 +2,6 @@
 # field, including whether the field supports them at all. This is based on the
 # "fields.json" configuration file.
 #
-# TODO: test
 class Field::ComponentConfig
   def initialize(field)
     @field = field

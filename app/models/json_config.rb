@@ -9,7 +9,6 @@
 # In non-development environments the resulting JSON data will be cached until
 # the server is restarted.
 #
-# TODO: test
 class JsonConfig
   module Cache
     def self.store
