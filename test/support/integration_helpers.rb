@@ -1,3 +1,5 @@
+require_relative "./customized_files"
+
 class ActionDispatch::IntegrationTest
   include CustomizedFiles
 
