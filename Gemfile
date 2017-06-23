@@ -79,6 +79,7 @@ group :development do
   gem "guard", ">= 2.2.2", :require => false
   gem "guard-livereload", :require => false
   gem "guard-minitest", :require => false
+  gem "overcommit", :require => false
   gem "ruby-progressbar", :require => false
   gem "rb-fsevent", :require => false
   gem "simplecov", :require => false
