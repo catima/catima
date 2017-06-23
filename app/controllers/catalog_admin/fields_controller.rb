@@ -81,6 +81,8 @@ class CatalogAdmin::FieldsController < CatalogAdmin::BaseController
       :display_in_list,
       :i18n,
       :row_order_position,
+      :editor_component,
+      :display_component,
       *@field.custom_field_permitted_attributes
     )
   end

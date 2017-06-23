@@ -2,11 +2,12 @@
 -- PostgreSQL database dump
 --
 
--- Dumped from database version 9.5.3
--- Dumped by pg_dump version 9.5.3
+-- Dumped from database version 9.6.2
+-- Dumped by pg_dump version 9.6.2
 
 SET statement_timeout = 0;
 SET lock_timeout = 0;
+SET idle_in_transaction_session_timeout = 0;
 SET client_encoding = 'UTF8';
 SET standard_conforming_strings = on;
 SET check_function_bodies = false;
@@ -370,7 +371,9 @@ CREATE TABLE fields (
     uuid character varying,
     name_translations json,
     name_plural_translations json,
-    field_set_type character varying
+    field_set_type character varying,
+    editor_component character varying,
+    display_component character varying
 );
 
 
@@ -636,112 +639,112 @@ ALTER SEQUENCE users_id_seq OWNED BY users.id;
 
 
 --
--- Name: id; Type: DEFAULT; Schema: public; Owner: -
+-- Name: advanced_searches id; Type: DEFAULT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY advanced_searches ALTER COLUMN id SET DEFAULT nextval('advanced_searches_id_seq'::regclass);
 
 
 --
--- Name: id; Type: DEFAULT; Schema: public; Owner: -
+-- Name: catalog_permissions id; Type: DEFAULT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY catalog_permissions ALTER COLUMN id SET DEFAULT nextval('catalog_permissions_id_seq'::regclass);
 
 
 --
--- Name: id; Type: DEFAULT; Schema: public; Owner: -
+-- Name: catalogs id; Type: DEFAULT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY catalogs ALTER COLUMN id SET DEFAULT nextval('catalogs_id_seq'::regclass);
 
 
 --
--- Name: id; Type: DEFAULT; Schema: public; Owner: -
+-- Name: categories id; Type: DEFAULT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY categories ALTER COLUMN id SET DEFAULT nextval('categories_id_seq'::regclass);
 
 
 --
--- Name: id; Type: DEFAULT; Schema: public; Owner: -
+-- Name: choice_sets id; Type: DEFAULT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY choice_sets ALTER COLUMN id SET DEFAULT nextval('choice_sets_id_seq'::regclass);
 
 
 --
--- Name: id; Type: DEFAULT; Schema: public; Owner: -
+-- Name: choices id; Type: DEFAULT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY choices ALTER COLUMN id SET DEFAULT nextval('choices_id_seq'::regclass);
 
 
 --
--- Name: id; Type: DEFAULT; Schema: public; Owner: -
+-- Name: configurations id; Type: DEFAULT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY configurations ALTER COLUMN id SET DEFAULT nextval('configurations_id_seq'::regclass);
 
 
 --
--- Name: id; Type: DEFAULT; Schema: public; Owner: -
+-- Name: containers id; Type: DEFAULT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY containers ALTER COLUMN id SET DEFAULT nextval('containers_id_seq'::regclass);
 
 
 --
--- Name: id; Type: DEFAULT; Schema: public; Owner: -
+-- Name: fields id; Type: DEFAULT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY fields ALTER COLUMN id SET DEFAULT nextval('fields_id_seq'::regclass);
 
 
 --
--- Name: id; Type: DEFAULT; Schema: public; Owner: -
+-- Name: item_types id; Type: DEFAULT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY item_types ALTER COLUMN id SET DEFAULT nextval('item_types_id_seq'::regclass);
 
 
 --
--- Name: id; Type: DEFAULT; Schema: public; Owner: -
+-- Name: items id; Type: DEFAULT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY items ALTER COLUMN id SET DEFAULT nextval('items_id_seq'::regclass);
 
 
 --
--- Name: id; Type: DEFAULT; Schema: public; Owner: -
+-- Name: menu_items id; Type: DEFAULT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY menu_items ALTER COLUMN id SET DEFAULT nextval('menu_items_id_seq'::regclass);
 
 
 --
--- Name: id; Type: DEFAULT; Schema: public; Owner: -
+-- Name: pages id; Type: DEFAULT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY pages ALTER COLUMN id SET DEFAULT nextval('pages_id_seq'::regclass);
 
 
 --
--- Name: id; Type: DEFAULT; Schema: public; Owner: -
+-- Name: template_storages id; Type: DEFAULT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY template_storages ALTER COLUMN id SET DEFAULT nextval('template_storages_id_seq'::regclass);
 
 
 --
--- Name: id; Type: DEFAULT; Schema: public; Owner: -
+-- Name: users id; Type: DEFAULT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY users ALTER COLUMN id SET DEFAULT nextval('users_id_seq'::regclass);
 
 
 --
--- Name: advanced_searches_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+-- Name: advanced_searches advanced_searches_pkey; Type: CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY advanced_searches
@@ -749,7 +752,7 @@ ALTER TABLE ONLY advanced_searches
 
 
 --
--- Name: catalog_permissions_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+-- Name: catalog_permissions catalog_permissions_pkey; Type: CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY catalog_permissions
@@ -757,7 +760,7 @@ ALTER TABLE ONLY catalog_permissions
 
 
 --
--- Name: catalogs_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+-- Name: catalogs catalogs_pkey; Type: CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY catalogs
@@ -765,7 +768,7 @@ ALTER TABLE ONLY catalogs
 
 
 --
--- Name: categories_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+-- Name: categories categories_pkey; Type: CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY categories
@@ -773,7 +776,7 @@ ALTER TABLE ONLY categories
 
 
 --
--- Name: choice_sets_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+-- Name: choice_sets choice_sets_pkey; Type: CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY choice_sets
@@ -781,7 +784,7 @@ ALTER TABLE ONLY choice_sets
 
 
 --
--- Name: choices_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+-- Name: choices choices_pkey; Type: CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY choices
@@ -789,7 +792,7 @@ ALTER TABLE ONLY choices
 
 
 --
--- Name: configurations_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+-- Name: configurations configurations_pkey; Type: CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY configurations
@@ -797,7 +800,7 @@ ALTER TABLE ONLY configurations
 
 
 --
--- Name: containers_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+-- Name: containers containers_pkey; Type: CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY containers
@@ -805,7 +808,7 @@ ALTER TABLE ONLY containers
 
 
 --
--- Name: fields_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+-- Name: fields fields_pkey; Type: CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY fields
@@ -813,7 +816,7 @@ ALTER TABLE ONLY fields
 
 
 --
--- Name: item_types_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+-- Name: item_types item_types_pkey; Type: CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY item_types
@@ -821,7 +824,7 @@ ALTER TABLE ONLY item_types
 
 
 --
--- Name: items_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+-- Name: items items_pkey; Type: CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY items
@@ -829,7 +832,7 @@ ALTER TABLE ONLY items
 
 
 --
--- Name: menu_items_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+-- Name: menu_items menu_items_pkey; Type: CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY menu_items
@@ -837,7 +840,7 @@ ALTER TABLE ONLY menu_items
 
 
 --
--- Name: pages_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+-- Name: pages pages_pkey; Type: CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY pages
@@ -845,7 +848,7 @@ ALTER TABLE ONLY pages
 
 
 --
--- Name: template_storages_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+-- Name: template_storages template_storages_pkey; Type: CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY template_storages
@@ -853,7 +856,7 @@ ALTER TABLE ONLY template_storages
 
 
 --
--- Name: users_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+-- Name: users users_pkey; Type: CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY users
@@ -1092,7 +1095,7 @@ CREATE UNIQUE INDEX unique_schema_migrations ON schema_migrations USING btree (v
 
 
 --
--- Name: fk_rails_025bd80d15; Type: FK CONSTRAINT; Schema: public; Owner: -
+-- Name: catalog_permissions fk_rails_025bd80d15; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY catalog_permissions
@@ -1100,7 +1103,7 @@ ALTER TABLE ONLY catalog_permissions
 
 
 --
--- Name: fk_rails_06ecc03a0b; Type: FK CONSTRAINT; Schema: public; Owner: -
+-- Name: pages fk_rails_06ecc03a0b; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY pages
@@ -1108,7 +1111,7 @@ ALTER TABLE ONLY pages
 
 
 --
--- Name: fk_rails_0bf5ba9c7e; Type: FK CONSTRAINT; Schema: public; Owner: -
+-- Name: menu_items fk_rails_0bf5ba9c7e; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY menu_items
@@ -1116,7 +1119,7 @@ ALTER TABLE ONLY menu_items
 
 
 --
--- Name: fk_rails_117ec28f50; Type: FK CONSTRAINT; Schema: public; Owner: -
+-- Name: advanced_searches fk_rails_117ec28f50; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY advanced_searches
@@ -1124,7 +1127,7 @@ ALTER TABLE ONLY advanced_searches
 
 
 --
--- Name: fk_rails_19ef1c4b26; Type: FK CONSTRAINT; Schema: public; Owner: -
+-- Name: configurations fk_rails_19ef1c4b26; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY configurations
@@ -1132,7 +1135,7 @@ ALTER TABLE ONLY configurations
 
 
 --
--- Name: fk_rails_2ab8ce6cc4; Type: FK CONSTRAINT; Schema: public; Owner: -
+-- Name: pages fk_rails_2ab8ce6cc4; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY pages
@@ -1140,7 +1143,7 @@ ALTER TABLE ONLY pages
 
 
 --
--- Name: fk_rails_2cdcd0ff03; Type: FK CONSTRAINT; Schema: public; Owner: -
+-- Name: choices fk_rails_2cdcd0ff03; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY choices
@@ -1148,7 +1151,7 @@ ALTER TABLE ONLY choices
 
 
 --
--- Name: fk_rails_30b4814118; Type: FK CONSTRAINT; Schema: public; Owner: -
+-- Name: catalog_permissions fk_rails_30b4814118; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY catalog_permissions
@@ -1156,7 +1159,7 @@ ALTER TABLE ONLY catalog_permissions
 
 
 --
--- Name: fk_rails_32125ce034; Type: FK CONSTRAINT; Schema: public; Owner: -
+-- Name: item_types fk_rails_32125ce034; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY item_types
@@ -1164,7 +1167,7 @@ ALTER TABLE ONLY item_types
 
 
 --
--- Name: fk_rails_36cea7cc6d; Type: FK CONSTRAINT; Schema: public; Owner: -
+-- Name: choices fk_rails_36cea7cc6d; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY choices
@@ -1172,7 +1175,7 @@ ALTER TABLE ONLY choices
 
 
 --
--- Name: fk_rails_55a0ee63e5; Type: FK CONSTRAINT; Schema: public; Owner: -
+-- Name: menu_items fk_rails_55a0ee63e5; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY menu_items
@@ -1180,7 +1183,7 @@ ALTER TABLE ONLY menu_items
 
 
 --
--- Name: fk_rails_58a0bde7fb; Type: FK CONSTRAINT; Schema: public; Owner: -
+-- Name: advanced_searches fk_rails_58a0bde7fb; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY advanced_searches
@@ -1188,7 +1191,7 @@ ALTER TABLE ONLY advanced_searches
 
 
 --
--- Name: fk_rails_630f019a5a; Type: FK CONSTRAINT; Schema: public; Owner: -
+-- Name: fields fk_rails_630f019a5a; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY fields
@@ -1196,7 +1199,7 @@ ALTER TABLE ONLY fields
 
 
 --
--- Name: fk_rails_6bed0f90a5; Type: FK CONSTRAINT; Schema: public; Owner: -
+-- Name: items fk_rails_6bed0f90a5; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY items
@@ -1204,7 +1207,7 @@ ALTER TABLE ONLY items
 
 
 --
--- Name: fk_rails_6f848ad005; Type: FK CONSTRAINT; Schema: public; Owner: -
+-- Name: fields fk_rails_6f848ad005; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY fields
@@ -1212,7 +1215,7 @@ ALTER TABLE ONLY fields
 
 
 --
--- Name: fk_rails_7075222f77; Type: FK CONSTRAINT; Schema: public; Owner: -
+-- Name: menu_items fk_rails_7075222f77; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY menu_items
@@ -1220,7 +1223,7 @@ ALTER TABLE ONLY menu_items
 
 
 --
--- Name: fk_rails_72a75a77ca; Type: FK CONSTRAINT; Schema: public; Owner: -
+-- Name: catalogs fk_rails_72a75a77ca; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY catalogs
@@ -1228,7 +1231,7 @@ ALTER TABLE ONLY catalogs
 
 
 --
--- Name: fk_rails_73cabaed53; Type: FK CONSTRAINT; Schema: public; Owner: -
+-- Name: pages fk_rails_73cabaed53; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY pages
@@ -1236,7 +1239,7 @@ ALTER TABLE ONLY pages
 
 
 --
--- Name: fk_rails_8a017573a6; Type: FK CONSTRAINT; Schema: public; Owner: -
+-- Name: containers fk_rails_8a017573a6; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY containers
@@ -1244,7 +1247,7 @@ ALTER TABLE ONLY containers
 
 
 --
--- Name: fk_rails_ac675f13b9; Type: FK CONSTRAINT; Schema: public; Owner: -
+-- Name: items fk_rails_ac675f13b9; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY items
@@ -1252,7 +1255,7 @@ ALTER TABLE ONLY items
 
 
 --
--- Name: fk_rails_ae14a5013f; Type: FK CONSTRAINT; Schema: public; Owner: -
+-- Name: users fk_rails_ae14a5013f; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY users
@@ -1260,7 +1263,7 @@ ALTER TABLE ONLY users
 
 
 --
--- Name: fk_rails_baa6b9a371; Type: FK CONSTRAINT; Schema: public; Owner: -
+-- Name: choices fk_rails_baa6b9a371; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY choices
@@ -1268,7 +1271,7 @@ ALTER TABLE ONLY choices
 
 
 --
--- Name: fk_rails_d05e957707; Type: FK CONSTRAINT; Schema: public; Owner: -
+-- Name: menu_items fk_rails_d05e957707; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY menu_items
@@ -1276,7 +1279,7 @@ ALTER TABLE ONLY menu_items
 
 
 --
--- Name: fk_rails_e090108a07; Type: FK CONSTRAINT; Schema: public; Owner: -
+-- Name: categories fk_rails_e090108a07; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY categories
@@ -1284,7 +1287,7 @@ ALTER TABLE ONLY categories
 
 
 --
--- Name: fk_rails_fd9a6168ac; Type: FK CONSTRAINT; Schema: public; Owner: -
+-- Name: fields fk_rails_fd9a6168ac; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY fields
@@ -1292,7 +1295,7 @@ ALTER TABLE ONLY fields
 
 
 --
--- Name: fk_rails_ff3358b0ed; Type: FK CONSTRAINT; Schema: public; Owner: -
+-- Name: choice_sets fk_rails_ff3358b0ed; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY choice_sets
@@ -1400,4 +1403,12 @@ INSERT INTO schema_migrations (version) VALUES ('20160720053135');
 INSERT INTO schema_migrations (version) VALUES ('20161231140032');
 
 INSERT INTO schema_migrations (version) VALUES ('20170121055843');
+
+INSERT INTO schema_migrations (version) VALUES ('20170507231151');
+
+INSERT INTO schema_migrations (version) VALUES ('20170507231610');
+
+INSERT INTO schema_migrations (version) VALUES ('20170513155612');
+
+INSERT INTO schema_migrations (version) VALUES ('20170513160403');
 

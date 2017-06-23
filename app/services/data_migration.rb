@@ -1,22 +1,22 @@
 class DataMigration
-  
   def initialize
   end
-  
+
   # The structure for storing files and images in items has changed.
   # Previously, the file uploads were handled by refile and a hash with content:
-  # {"size":123,"filename":"name.pdf","id":456} has been stored in the database,
+  # {"size":123,"filename":"name.pdf","id":456} has been stored in the database,
   # where "id" was the filename on the viim server. "id" can be null.
   #
-  # The new file upload is handled by an action in a controller, enabling 
-  # multifile uploads.
+  # The new file upload is handled by an action in a controller, enabling
+  # multifile uploads.
   # The new structure in the database for single-file fields is as follows:
   # {
   #   "name": "filename.pdf",
   #   "path": "upload/:catalog_slug/:field_uuid/:datetime_:filename.pdf",
   #   "type": "application/pdf", "size": 123
   # }
-  # The upload path needs to be inferred from the item type and the file
+  #
+  # The upload path needs to be inferred from the item type and the file
   # copied to the new location.
   def migrate_file_field_structure
     puts "migrating file field structure..."
@@ -30,9 +30,7 @@ class DataMigration
         end
       end
     end
-    
   end
-
 
   private
 
@@ -68,7 +66,7 @@ class DataMigration
     item.data[field.uuid] = new_file_data
     item.save
 
-    # output information
+    #  output information
     puts '', 'File updated:', file_data, new_file_data
   end
 
@@ -94,6 +92,4 @@ class DataMigration
     }
     mime_types[ext.downcase]
   end
-
 end
-

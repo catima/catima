@@ -158,7 +158,7 @@ en:
   approved: Approved
   rejected: Rejected
   users: Users
-  
+
 
   catalog_admin:
 
@@ -201,7 +201,7 @@ en:
       new:
         new_choice_set: "New choice set"
         create_choice_set: Create choice set
-    
+
     containers:
       common_form_fields:
         save_container: Save container
@@ -240,6 +240,10 @@ en:
         must_be_unique: "Must be unique"
         save_field: Save field
         create_field: Create field
+        editor_component: React component
+        editor_component_help: Choose a React JS component that will be used for data entry.
+        display_component: React component
+        display_component_help: Choose a React JS component that will be used for display on the public site.
       decimal_option_inputs:
         min_value: "Minimum value (optional)"
         max_value: "Maximum value (optional)"
@@ -262,6 +266,7 @@ en:
         list_view?: 'List view?'
         delete_sure?: "Are you sure you want to delete the «%{field}» field?"
       text_option_inputs:
+        has_formatted_text: "Has formatted text"
         min_length: "Minimum length (optional)"
         max_length: "Maximum length (optional)"
       xref_option_inputs:
@@ -288,7 +293,7 @@ en:
         new_field: "New %{field} field"
 
     item_types:
-      edit: 
+      edit:
         edit: "Edit item type"
         delete: "Delete this item type"
         delete_confirmation: "Are you sure you want to delete the %{item_type} item type? This cannot be undone."
@@ -324,7 +329,7 @@ en:
       new:
         new_item: New %{item_type}
         create_item: Create %{item_type}
-    
+
     menu_items:
       common_form_fields:
         rank_help: The rank defines the order of the menu items in the menu bar (or within a dropdown menu if a parent is defined.
@@ -358,6 +363,6 @@ en:
       setup_item_types_nav:
         item_types: 'Item types'
         new_item_type: 'New item type'
-    
+
 
 

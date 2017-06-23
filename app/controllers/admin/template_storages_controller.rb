@@ -31,13 +31,12 @@ class Admin::TemplateStoragesController < Admin::BaseController
     end
   end
 
-   def destroy
+  def destroy
     find_template_storage
     authorize(@template_storage)
     @template_storage.destroy
     redirect_to(admin_dashboard_path, :notice => destroyed_message)
   end
-
 
   private
 
@@ -71,5 +70,4 @@ class Admin::TemplateStoragesController < Admin::BaseController
   def destroyed_message
     "#{@template_storage.path} has been deleted."
   end
-
 end

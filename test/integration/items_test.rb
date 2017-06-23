@@ -63,7 +63,7 @@ class ItemsTest < ActionDispatch::IntegrationTest
 
   test "view item details with template override" do
     author = items(:one_author_stephen_king)
-    with_customized_file("test/custom/items/show_author.html.erb",
+    with_customized_file("test/custom/views/items/show_author.html.erb",
                          "catalogs/one/views/items/show.html+authors.erb") do
       visit("/one/en/authors/#{author.to_param}")
     end
@@ -79,7 +79,7 @@ class ItemsTest < ActionDispatch::IntegrationTest
 
   test "view item details with custom layout" do
     author = items(:one_author_stephen_king)
-    with_customized_file("test/custom/layouts/application.html.erb",
+    with_customized_file("test/custom/views/layouts/application.html.erb",
                          "catalogs/one/views/layouts/application.html.erb") do
       visit("/one/en/authors/#{author.to_param}")
     end

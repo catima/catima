@@ -100,3 +100,9 @@ Rails.application.configure do
   # Do not dump schema after migrations.
   config.active_record.dump_schema_after_migration = false
 end
+
+# For building URLs in API resource links
+Rails.application.routes.default_url_options = {
+  :host => "catima.unil.ch",
+  :protocol => "https"
+}

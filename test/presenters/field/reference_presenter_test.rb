@@ -3,6 +3,7 @@ require "test_helper"
 class Field::ReferencePresenterTest < ActionView::TestCase
   include FieldsHelper
   include ItemsHelper
+  include JsonHelper
 
   test "#value" do
     author = items(:one_author_stephen_king)
@@ -13,7 +14,7 @@ class Field::ReferencePresenterTest < ActionView::TestCase
 
     presenter = Field::ReferencePresenter.new(self, author, collaborator_field)
     assert_equal(
-      %(<a href="/one/en/authors/#{collaborator.id}-very-old">Very Old</a>),
+      %Q(<a href="/one/en/authors/#{collaborator.id}-very-old">Very Old</a>),
       presenter.value
     )
   end
@@ -30,8 +31,8 @@ class Field::ReferencePresenterTest < ActionView::TestCase
 
     presenter = Field::ReferencePresenter.new(self, author, collaborators_field)
     assert_equal(
-      %(<a href="/one/en/authors/#{ids.first}-very-old">Very Old</a>, ) +
-      %(<a href="/one/en/authors/#{ids.second}-very-young">Very Young</a>),
+      %Q(<a href="/one/en/authors/#{ids.first}-very-old">Very Old</a>, ) +
+      %Q(<a href="/one/en/authors/#{ids.second}-very-young">Very Young</a>),
       presenter.value
     )
   end

@@ -7,7 +7,9 @@
 #  comment                  :text
 #  created_at               :datetime         not null
 #  default_value            :text
+#  display_component        :string
 #  display_in_list          :boolean          default(TRUE), not null
+#  editor_component         :string
 #  field_set_id             :integer
 #  field_set_type           :string
 #  i18n                     :boolean          default(FALSE), not null
@@ -55,6 +57,9 @@ class Field < ActiveRecord::Base
   ranks :row_order, :class_name => "Field", :with_same => :field_set_id
 
   delegate :catalog, :to => :field_set, :allow_nil => true
+  delegate :component_choice?, :components_are_valid, :component_choices,
+           :assign_default_components,
+           :to => :component_config
 
   belongs_to :field_set, :polymorphic => true
 
@@ -62,8 +67,10 @@ class Field < ActiveRecord::Base
 
   validates_presence_of :field_set
   validate :default_value_passes_field_validations
+  validate :components_are_valid
   validates_slug :scope => :field_set_id
 
+  before_validation :assign_default_components
   before_create :assign_uuid
   after_save :remove_primary_from_other_fields, :if => :primary?
 
@@ -95,6 +102,10 @@ class Field < ActiveRecord::Base
     type.gsub(/Field::/, "")
   end
 
+  def short_type_name
+    ::Field::TYPES.to_a.rassoc(self.class.to_s).first
+  end
+
   def partial_name
     model_name.singular.sub(/^field_/, "")
   end
@@ -113,15 +124,17 @@ class Field < ActiveRecord::Base
 
   # Whether or not this field holds a human-readable value, e.g. text, number,
   # etc. An image or geometry would not qualify, as those are displayed as non-
-  # text.
+  # text. Any field that uses a display_component would not qualify, because the
+  # field is rendered via JavaScript.
   #
   # This is used primarily by Item#field_for_select to choose a field suitable
   # for a drop-down menu.
   #
-  # Default is true, and subclasses can override.
+  # Default depends on the presence of display_component, and subclasses can
+  # override.
   #
   def human_readable?
-    true
+    display_component.blank?
   end
 
   # Whether or not this field supports the `multiple` option. Most fields do
@@ -131,10 +144,14 @@ class Field < ActiveRecord::Base
     false
   end
 
-  def raw_value(item, locale=I18n.locale)
+  def raw_value(item, locale=I18n.locale, suffix="")
     return nil unless applicable_to_item(item)
-    attrib = i18n? ? "#{uuid}_#{locale}" : uuid
+    attrib = i18n? ? "#{uuid}_#{locale}#{suffix}" : uuid
     item.behaving_as_type.public_send(attrib)
+  end
+
+  def raw_json_value(item, locale=I18n.locale)
+    raw_value(item, locale, "_json")
   end
 
   # Takes the input value and tries to prepare value for setting the field.
@@ -162,7 +179,12 @@ class Field < ActiveRecord::Base
   # add validation rules, accessors, etc. for this field. The class in this
   # case is an anonymous subclass of Item.
   def decorate_item_class(klass)
-    klass.data_store_attribute(uuid, :i18n => i18n?, :multiple => multiple?)
+    klass.data_store_attribute(
+      uuid,
+      :i18n => i18n?,
+      :multiple => multiple?,
+      :transformer => method(:transform_value)
+    )
 
     # TODO: how does validation work for multi-valued?
     validators = build_validators
@@ -182,6 +204,10 @@ class Field < ActiveRecord::Base
   end
 
   private
+
+  def component_config
+    @_component_config ||= ComponentConfig.new(self)
+  end
 
   def build_validators
     []
@@ -205,5 +231,9 @@ class Field < ActiveRecord::Base
 
   def remove_primary_from_other_fields
     field_set.fields.where("fields.id != ?", id).update_all(:primary => false)
+  end
+
+  def transform_value(value)
+    value
   end
 end

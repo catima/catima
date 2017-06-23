@@ -1,9 +1,9 @@
 module CatalogAdmin::ReviewsHelper
   STATUSES = {
-    "not-ready" => ["draft", "default"],
-    "ready" => ["review", "info"],
-    "approved" => ["approved", "success"],
-    "rejected" => ["rejected", "warning"]
+    "not-ready" => %w(draft default),
+    "ready" => %w(review info),
+    "approved" => %w(approved success),
+    "rejected" => %w(rejected warning)
   }.freeze
 
   def review_status_label(item)

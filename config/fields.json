@@ -1,0 +1,16 @@
+// This file configures the React components that are used for editing or
+// display of each field type. If a single value is listed here, it will always
+// be used to render that particular type of field. If multiple values are
+// listed, the catalog administrator will be shown a drop-down list so they can
+// decide which one to use.
+//
+// This is the default configuration used for all catalogs. Each catalog may
+// override it by supplying their own file in the following location:
+//
+// catalogs/<slug>/config/fields.json
+{
+  "DateTime": {
+    "display_components": [],
+    "editor_components": ["DateTimeInput"]
+  }
+}

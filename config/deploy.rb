@@ -9,7 +9,7 @@ fetch(:mb_recipes) << "sidekiq"
 
 fetch(:mb_aptitude_packages).merge!(
   "imagemagick" => :app,
-  "redis-server@ppa:rwky/redis" => :redis,
+  "redis-server@ppa:chris-lea/redis-server" => :redis,
   "postgis" => :db
 )
 
@@ -18,12 +18,14 @@ set :mb_dotenv_keys, %w(
   rollbar_access_token
   sidekiq_web_username
   sidekiq_web_password
-  sendgrid_username
-  sendgrid_password
+  mail_smtp_address
+  mail_smtp_username
+  mail_smtp_password
+  mail_sender
 )
 
-# Re-index items on every deploy, just to be safe
 namespace :viim do
+  # Re-index items on every deploy, just to be safe
   desc "Rebuild the search index for all item data"
   task :reindex do
     on release_roles(:all).first do
@@ -34,8 +36,15 @@ namespace :viim do
       end
     end
   end
+
+  task :enable_postgis do
+    privileged_on primary(:db) do
+      execute "sudo -u postgres psql -c 'CREATE EXTENSION postgis'"
+    end
+  end
 end
 after "deploy:published", "viim:reindex"
+after "mb:postgresql:create_database", "viim:enable_postgis"
 
 # Rollbar deployment notification
 task :notify_rollbar do
@@ -43,7 +52,7 @@ task :notify_rollbar do
     with fetch(:git_environmental_variables) do
       within repo_path do
         branch = fetch(:branch)
-        set :rollbar_sha, capture(:git, %(log #{branch} -n 1 --pretty=format:"%H"))
+        set :rollbar_sha, capture(:git, %Q(log #{branch} -n 1 --pretty=format:"%H"))
         set :rollbar_token, capture("grep ROLLBAR_ACCESS_TOKEN #{shared_dotenv_path} | awk '{print substr($0, 22)}'")
       end
     end

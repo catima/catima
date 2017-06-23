@@ -49,6 +49,11 @@ class Item < ActiveRecord::Base
     order(sql.join(", "))
   end
 
+  def self.with_type(type)
+    return all if type.nil?
+    where(:item_type => type)
+  end
+
   # The same as `all_fields`, but removes category-based fields that do not
   # apply to this item.
   def applicable_fields
@@ -78,7 +83,6 @@ class Item < ActiveRecord::Base
     end
   end
 
-
   def unique_value_fields
     return if self.item_type.nil?
     conn = ActiveRecord::Base.connection.raw_connection
@@ -98,7 +102,6 @@ class Item < ActiveRecord::Base
       end
     end
   end
-
 
   private
 
@@ -120,7 +123,7 @@ class Item < ActiveRecord::Base
     self.data = {} if self.data.nil?
     conn = ActiveRecord::Base.connection.raw_connection
     fields.each do |f|
-      if f.type == 'Field::Int' and !f.options.nil? and f.options['auto_increment'] and self.data[f.uuid].empty?
+      if (f.type == 'Field::Int') && !f.options.nil? && f.options['auto_increment'] && self.data[f.uuid].empty?
         st = conn.exec(
           "SELECT MAX(data->>'#{f.uuid}') FROM items WHERE item_type_id = $1",
           [ self.item_type_id, ]
@@ -131,11 +134,10 @@ class Item < ActiveRecord::Base
   end
 
   def assign_default_values
-    return if self.id or self.item_type.nil?
+    return if self.id || self.item_type.nil?
     self.data = {} if self.data.nil?
     fields.each do |f|
-      self.data[f.uuid] = f.default_value if f.default_value and !f.default_value.empty?
+      self.data[f.uuid] = f.default_value if f.default_value && !f.default_value.empty?
     end
   end
-
 end

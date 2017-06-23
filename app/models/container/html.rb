@@ -8,5 +8,4 @@ class Container::HTML < ::Container
   def render_view(options={})
     content['html']
   end
-
 end

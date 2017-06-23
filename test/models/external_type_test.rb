@@ -1,6 +1,8 @@
 require "test_helper"
 
 class ExternalTypeTest < ActiveSupport::TestCase
+  include WithVCR
+
   test "uses 5 minute cache by default" do
     ext = ExternalType.new("foo")
 
@@ -14,25 +16,33 @@ class ExternalTypeTest < ActiveSupport::TestCase
     github_html = external_type("https://github.com/")
     non_existent = external_type("http://vss.naxio.ch/does-not-exist")
 
-    assert(vss.valid?)
-    refute(github_api.valid?)
-    refute(github_html.valid?)
-    refute(non_existent.valid?)
+    with_expiring_vcr_cassette do
+      assert(vss.valid?)
+      refute(github_api.valid?)
+      refute(github_html.valid?)
+      refute(non_existent.valid?)
+    end
   end
 
   test "#name" do
-    assert_equal("Keyword", vss.name)
-    assert_equal("Keyword", vss.name(:en))
-    assert_equal("Schlüsselwort", vss.name(:de))
-    assert_equal("Mot-clé", vss.name(:fr))
+    with_expiring_vcr_cassette do
+      assert_equal("Keyword", vss.name)
+      assert_equal("Keyword", vss.name(:en))
+      assert_equal("Schlüsselwort", vss.name(:de))
+      assert_equal("Mot-clé", vss.name(:fr))
+    end
   end
 
   test "#locales" do
-    assert_equal(%w(fr de en), vss.locales)
+    with_expiring_vcr_cassette do
+      assert_equal(%w(fr de en), vss.locales)
+    end
   end
 
   test "#find_item" do
-    item = vss.find_item("25-pretty-id") # should be interpreted as 25
+    item = with_expiring_vcr_cassette do
+      vss.find_item("25-pretty-id") # should be interpreted as 25
+    end
 
     assert_equal(25, item.id)
     assert_equal("Wolken", item.name(:de))
@@ -42,12 +52,16 @@ class ExternalTypeTest < ActiveSupport::TestCase
 
   test "#find_item raises for non-existent ID" do
     assert_raises(ExternalType::Client::NotFound) do
-      vss.find_item("99999999")
+      with_expiring_vcr_cassette do
+        vss.find_item("99999999")
+      end
     end
   end
 
   test "#all_items" do
-    items = vss.all_items
+    items = with_expiring_vcr_cassette do
+      vss.all_items
+    end
 
     assert_instance_of(Array, items)
     refute_empty(items)

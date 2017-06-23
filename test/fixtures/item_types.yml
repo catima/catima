@@ -61,7 +61,8 @@ reviewed_book:
 two:
   catalog: two
   name_translations: '{ "name_en": "Two" }'
-  slug: '{ "name_plural_en": "Twos" }'
+  name_plural_translations: '{ "name_plural_en": "Twos" }'
+  slug: twos
 
 two_author:
   catalog: two

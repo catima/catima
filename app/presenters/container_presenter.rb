@@ -12,5 +12,4 @@ class ContainerPresenter
       container:@container, presenter:self
     })
   end
-
 end

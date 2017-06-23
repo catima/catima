@@ -59,7 +59,7 @@ class Field::ChoiceSetPresenter < FieldPresenter
   def choice_modal(method)
     field = Field.where(:uuid => method).first!
     ActionController::Base.new.render_to_string(
-      :partial => 'catalog_admin/choice_sets/choice_modal', 
+      :partial => 'catalog_admin/choice_sets/choice_modal',
       :locals => { field: field }
     )
   end

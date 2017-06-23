@@ -1,5 +1,16 @@
 Rails.application.routes.draw do
   # ===========================================================================
+  # API
+
+  namespace :api, :format => "json", :only => %w(index show) do
+    namespace :v1 do
+      resources :catalogs, :param => :slug do
+        resources :items
+      end
+    end
+  end
+
+  # ===========================================================================
   # Devise
 
   scope :path => ":locale" do
@@ -80,7 +91,7 @@ Rails.application.routes.draw do
     end
 
     resources :pages, :path => "_pages", :param => :slug do
-      resources :containers, 
+      resources :containers,
                 :path => "_containers",
                 :shallow => true,
                 :param => :id,
@@ -115,7 +126,7 @@ Rails.application.routes.draw do
               :param => :uuid,
               :only => [:new, :create, :show]
 
-    get ":slug" => "pages#show", 
+    get ":slug" => "pages#show",
         :constraints => PagesController::Constraint,
         :as => :page
 
@@ -127,14 +138,12 @@ Rails.application.routes.draw do
     get ":slug" => "custom#show", :constraints => CustomController::Constraint
   end
 
-
   # ===========================================================================
   # Image thumbnails
 
-  get '/thumbs/:catalog_slug/:size/:mode/:field_uuid/:image.:ext', 
+  get '/thumbs/:catalog_slug/:size/:mode/:field_uuid/:image.:ext',
     :to => 'images#thumbnail',
     :constraints => CatalogsController::Constraint
-
 
   # ===========================================================================
   # Error pages
@@ -143,5 +152,4 @@ Rails.application.routes.draw do
   get '/422', to:'errors#error_404'
   get '/500', to:'errors#error_500'
   get '/505', to:'errors#error_500'
-
 end

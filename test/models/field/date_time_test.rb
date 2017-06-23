@@ -9,13 +9,19 @@ class Field::DateTimeTest < ActiveSupport::TestCase
     assert_equal("YMD", field.format)
   end
 
-  test "stores date components as integer" do
+  test "assigns default editor_component" do
+    field = Field::DateTime.new
+    field.valid? # force before_validation to happen
+    assert_equal("DateTimeInput", field.editor_component)
+  end
+
+  test "stores date components as a hash" do
     date = [2015, 12, 31]
     item = Item.new(:item_type => item_types(:one_author))
     item.behaving_as_type.one_author_born_uuid_time = date
 
     stored = item.behaving_as_type.one_author_born_uuid
-    assert_equal(1_451_516_400, stored)
+    assert_equal({ "Y" => 2015, "M" => 12, "D" => 31 }, stored)
   end
 
   test "stores nil" do
@@ -32,7 +38,10 @@ class Field::DateTimeTest < ActiveSupport::TestCase
     item.behaving_as_type.one_author_birth_time_uuid_time = datetime
 
     stored = item.behaving_as_type.one_author_birth_time_uuid
-    assert_equal(1_451_568_619, stored)
+    assert_equal(
+      { "Y" => 2015, "M" => 12, "D" => 31, "h" => 14, "m" => 30, "s" => 19 },
+      stored
+    )
   end
 
   test "stores years and months only, removing unnecessary precision" do
@@ -41,16 +50,16 @@ class Field::DateTimeTest < ActiveSupport::TestCase
     item.behaving_as_type.one_author_birth_month_uuid_time = datetime
 
     stored = item.behaving_as_type.one_author_birth_month_uuid
-    assert_equal(1_448_924_400, stored)
+    assert_equal({ "Y" => 2015, "M" => 12 }, stored)
   end
 
-  test "stores date components as integer when provided as hash" do
+  test "stores date components as YMD hash when provided as Rails hash" do
     date = { 2 => 12, 1 => 2015, 3 => 31 }
     item = Item.new(:item_type => item_types(:one_author))
     item.behaving_as_type.one_author_born_uuid_time = date
 
     stored = item.behaving_as_type.one_author_born_uuid
-    assert_equal(1_451_516_400, stored)
+    assert_equal({ "Y" => 2015, "M" => 12, "D" => 31 }, stored)
   end
 
   # TODO: Update to JSON datetime format

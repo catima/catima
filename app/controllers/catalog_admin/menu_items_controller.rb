@@ -71,5 +71,4 @@ class CatalogAdmin::MenuItemsController < CatalogAdmin::BaseController
   def destroyed_message
     "Menu item “#{@menu_item.title}” has been deleted."
   end
-
 end

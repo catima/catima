@@ -33,3 +33,6 @@
 
 # Ignore generated documentation
 /public/doc/
+
+# Ignore VCR's cache of HTTP responses used to speed up local tests
+/test/cassettes/

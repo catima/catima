@@ -7,7 +7,9 @@
 #  comment                  :text
 #  created_at               :datetime         not null
 #  default_value            :text
+#  display_component        :string
 #  display_in_list          :boolean          default(TRUE), not null
+#  editor_component         :string
 #  field_set_id             :integer
 #  field_set_type           :string
 #  i18n                     :boolean          default(FALSE), not null
@@ -33,6 +35,7 @@
 class Field::Text < ::Field
   store_accessor :options, :maximum
   store_accessor :options, :minimum
+  store_accessor :options, :formatted_text
 
   # TODO: validate minimum is less than maximum?
 
@@ -42,7 +45,7 @@ class Field::Text < ::Field
                             :allow_blank => true
 
   def custom_field_permitted_attributes
-    %i(maximum minimum)
+    %i(maximum minimum formatted_text)
   end
 
   def prepare_value(value)

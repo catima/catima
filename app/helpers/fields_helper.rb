@@ -37,7 +37,13 @@ module FieldsHelper
   end
 
   def field_value(item, field, options={})
-    field_presenter(item, field, options).value
+    presenter = field_presenter(item, field, options)
+
+    if presenter.field.display_component.present?
+      json_react_display_component(item, presenter.field)
+    else
+      presenter.value
+    end
   end
 
   def field_presenter(item, field, options={})

@@ -1,0 +1,67 @@
+{
+  "id": "file://v1/catalog.json#",
+  "type": "object",
+  "properties": {
+    "advertize": {
+      "type": "boolean"
+    },
+    "item_types": {
+      "type": "array",
+      "items": {
+        "$ref": "file://v1/item_type.json#"
+      }
+    },
+    "name": {
+      "type": "string"
+    },
+    "other_languages": {
+      "type": "array",
+      "items": {
+        "type": "string",
+        "enum": [
+          "de",
+          "en",
+          "fr",
+          "it"
+        ]
+      }
+    },
+    "primary_language": {
+      "type": "string",
+      "enum": [
+        "de",
+        "en",
+        "fr",
+        "it"
+      ]
+    },
+    "_links": {
+      "type": "object",
+      "properties": {
+        "html": {
+          "type": "string"
+        },
+        "items": {
+          "type": "string"
+        },
+        "self": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "html",
+        "items",
+        "self"
+      ]
+    }
+  },
+  "required": [
+    "advertize",
+    "name",
+    "primary_language",
+    "other_languages",
+    "slug",
+    "item_types",
+    "_links"
+  ]
+}

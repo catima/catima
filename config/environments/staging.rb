@@ -4,7 +4,6 @@
 require_relative "./production"
 
 Rails.application.configure do
-
   config.action_mailer.default_url_options = {
     :host => "v3s.naxio.ch",
     :protocol => "https"
@@ -13,3 +12,8 @@ Rails.application.configure do
 
   config.i18n.fallbacks = false
 end
+
+Rails.application.routes.default_url_options = {
+  :host => "v3s.naxio.ch",
+  :protocol => "https"
+}

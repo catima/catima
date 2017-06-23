@@ -1,11 +1,11 @@
 <% provide(:title, t('.missing_element')) %>
 
-<p><b><%= t('.missing_element_detail', 
-  :item_id => @item_id, 
+<p><b><%= t('.missing_element_detail',
+  :item_id => @item_id,
   :item_type => @item_type.name) %></b></p>
 
 <%= link_to(
-    t('.link_to_item_type', :item_type => @item_type.name), 
+    t('.link_to_item_type', :item_type => @item_type.name),
     items_path(@item_type.catalog, @item_type.slug),
     class: 'btn btn-primary'
   )

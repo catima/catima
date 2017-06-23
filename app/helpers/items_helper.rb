@@ -42,6 +42,7 @@ module ItemsHelper
   def item_summary(item)
     item.applicable_list_view_fields.each_with_object([]) do |field, html|
       next if field == item.primary_field
+      next unless field.human_readable?
       value = strip_tags(field_value(item, field, :style => :compact))
       next if value.blank?
       html << [content_tag(:b, "#{field.name}:"), value].join(" ")

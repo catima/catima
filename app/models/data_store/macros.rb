@@ -2,7 +2,6 @@
 #
 #   data_store_attribute
 #   data_store_validator
-#   data_store_hash
 #
 # The `data_store_attribute` macro defines accessors for getting and setting
 # data within an Item's JSON data. While the DataStore class handles the actual
@@ -19,7 +18,10 @@
 #
 # The macro also accepts options:
 #
-#   data_store_attribute :foo, :i18n => true, :multiple => true
+#   data_store_attribute :foo,
+#                        :i18n => true,
+#                        :multiple => true,
+#                        :transformer => nil
 #
 # If :i18n is true, a pair of methods will be created per locale. Furthermore,
 # a read-only attribute will be created that implicitly uses the current locale.
@@ -31,27 +33,24 @@
 #   foo_en=
 #   etc.
 #
+# If a :transformer proc is provided, it will be called on the value loaded from
+# the database, prior to be returned by the accessor. This allows data to be
+# gracefully migrated from an old format, for example.
+#
+# JSON equivalents of all methods will also be defined. This allows a raw JSON
+# string representation to be read from or written to the attribute.
+#
+#   foo_json
+#   foo_de_json
+#   foo_de_json=
+#   etc.
+#
 # Validations can also be attached to an attribute, with automatic handling
 # of the multiple i18n values:
 #
 #   data_store_validator :foo, MyValidatorClass, validator_opts, :i18n => true
 #
 # This will run the validator against all the locales supported by the catalog.
-#
-# Also, a special `data_store_hash` macro allows a hash of data to be stored
-# in the attribute, rather than a normal value. Accessors will be created for
-# each of the specified keys. This is typically used to support refile
-# attachments.
-#
-#   data_store_hash :foo, :id, :filename
-#
-# This generates the following accessors, which put their values in the "foo"
-# entry of the data store:
-#
-#   foo_id
-#   foo_id=
-#   foo_filename
-#   foo_filename=
 #
 # Finally, all accessors defined using these macros are exposed in a way
 # suitable for passing to StrongParameters' `permit` via a
@@ -63,28 +62,14 @@ module DataStore::Macros
   extend ActiveSupport::Concern
 
   module ClassMethods
-    def data_store_attribute(key, i18n:false, multiple:false)
+    def data_store_attribute(key,
+                             i18n:false,
+                             multiple:false,
+                             transformer:nil)
       if i18n
-        data_store_attribute_i18n(key, multiple)
+        data_store_attribute_i18n(key, multiple, transformer)
       else
-        data_store_attribute_basic(key, multiple)
-      end
-    end
-
-    def data_store_hash(key, *attributes)
-      attributes.each do |attr|
-        data_store_permit_attribute("key_#{attr}")
-
-        define_method("#{key}_#{attr}") do
-          data_store_hash(key)[attr.to_s]
-        end
-
-        define_method("#{key}_#{attr}=") do |value|
-          data_store_hash(key)[attr.to_s] = value
-        end
-
-        # Refile needs this
-        define_method("#{key}_#{attr}_will_change!") { nil }
+        data_store_attribute_basic(key, multiple, transformer)
       end
     end
 
@@ -106,34 +91,44 @@ module DataStore::Macros
       (@data_store_permitted_attributes ||= []) << key_or_hash
     end
 
-    def data_store_attribute_i18n(key, multiple)
+    def data_store_attribute_i18n(key, multiple, transformer)
       define_method(key) do
-        dirty_aware_store(key, multiple, true).get
+        dirty_aware_store(key, transformer, multiple, true).get
       end
+      data_store_json_attribute(key)
 
       I18n.available_locales.each do |locale|
         data_store_permit_attribute("#{key}_#{locale}")
 
         define_method("#{key}_#{locale}") do
-          dirty_aware_store(key, multiple, true, locale).get
+          dirty_aware_store(key, transformer, multiple, true, locale).get
         end
 
         define_method("#{key}_#{locale}=") do |value|
-          dirty_aware_store(key, multiple, true, locale).set(value)
+          dirty_aware_store(key, transformer, multiple, true, locale).set(value)
         end
+
+        data_store_json_attribute("#{key}_#{locale}")
       end
     end
 
-    def data_store_attribute_basic(key, multiple)
+    def data_store_attribute_basic(key, multiple, transformer)
       data_store_permit_attribute(multiple ? { key => [] } : key)
 
       define_method(key) do
-        dirty_aware_store(key, multiple).get
+        dirty_aware_store(key, transformer, multiple).get
       end
 
       define_method("#{key}=") do |value|
-        dirty_aware_store(key, multiple).set(value)
+        dirty_aware_store(key, transformer, multiple).set(value)
       end
+
+      data_store_json_attribute(key)
+    end
+
+    def data_store_json_attribute(attr)
+      DataStore::JsonAttribute.define(self, attr)
+      data_store_permit_attribute("#{attr}_json")
     end
   end
 
@@ -143,18 +138,15 @@ module DataStore::Macros
 
   private
 
-  def data_store_hash(key)
-    store = dirty_aware_store(key)
-    store.get || store.set({})
-  end
-
-  def dirty_aware_store(key, multivalued=false, i18n=false, locale=nil)
+  def dirty_aware_store(key, transformer,
+                        multivalued=false, i18n=false, locale=nil)
     self.data ||= {}
     DataStore::DirtyAwareStore.new(
       :item => self,
       :key => key,
       :locale => (i18n ? locale || I18n.locale : nil),
-      :multivalued => multivalued
+      :multivalued => multivalued,
+      :transformer => transformer
     )
   end
 end

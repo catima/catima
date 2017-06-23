@@ -1,8 +1,7 @@
 class CatalogImport
-  
   def initialize
   end
-  
+
   def import(jsonfile)
     puts "importing catalog from '#{jsonfile}..."
     f = File.open(jsonfile)
@@ -16,7 +15,6 @@ class CatalogImport
       raise "ERROR. '#{jsonfile}' is not a valid catalog dump."
     end
   end
-
 
   def import_structure(i)
     if !i['slug']
@@ -32,7 +30,6 @@ class CatalogImport
     create_item_types(c, i['structure']['item_types'], i['structure']['choice_sets'])
   end
 
-
   def import_data(i)
     if !i['catalog']
       raise "ERROR. '#{jsonfile}' is not a valid catalog dump."
@@ -44,7 +41,6 @@ class CatalogImport
 
     load_item_types(catalog, i['item_types'])
   end
-
 
   private
 
@@ -151,8 +147,6 @@ class CatalogImport
     end
   end
 
-
-
   def load_item_types(catalog, item_types)
     item_types.each do |item_type_json|
       item_type = catalog.item_types.find_by({slug: item_type_json['item_type']})
@@ -162,7 +156,6 @@ class CatalogImport
       end
     end
   end
-
 
   def load_item(item_type, item_json)
     item = item_type.items.new.tap do |item|
@@ -179,5 +172,4 @@ class CatalogImport
     ok = item.save({validate:false})
     puts "   Warning: item #{item_json} could not be imported" if !ok
   end
-
 end

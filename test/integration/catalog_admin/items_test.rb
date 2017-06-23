@@ -19,13 +19,13 @@ class CatalogAdmin::ItemsTest < ActionDispatch::IntegrationTest
     select("Eng", :from => "Language")
     select("Eng", :from => "Other Languages")
     select("Spanish", :from => "Other Languages")
-    fill_in("item[one_author_birth_time_uuid_json]", :with => '{"Y":2015, "M":12, "D":31, "h":14, "m":30, "s":17}')
-    #select("2015", :from => "item[one_author_birth_time_uuid_time(1i)]")
-    #select("December", :from => "item[one_author_birth_time_uuid_time(2i)]")
-    #select("31", :from => "item[one_author_birth_time_uuid_time(3i)]")
-    #select("14", :from => "item[one_author_birth_time_uuid_time(4i)]")
-    #select("30", :from => "item[one_author_birth_time_uuid_time(5i)]")
-    #select("17", :from => "item[one_author_birth_time_uuid_time(6i)]")
+    fill_in_hidden("item_one_author_birth_time_uuid_json", :with => '{"Y":2015, "M":12, "D":31, "h":14, "m":30, "s":17}')
+    # select("2015", :from => "item[one_author_birth_time_uuid_time(1i)]")
+    # select("December", :from => "item[one_author_birth_time_uuid_time(2i)]")
+    # select("31", :from => "item[one_author_birth_time_uuid_time(3i)]")
+    # select("14", :from => "item[one_author_birth_time_uuid_time(4i)]")
+    # select("30", :from => "item[one_author_birth_time_uuid_time(5i)]")
+    # select("17", :from => "item[one_author_birth_time_uuid_time(6i)]")
 
     assert_difference("item_types(:one_author).items.count") do
       click_on("Create Author")
@@ -132,7 +132,7 @@ class CatalogAdmin::ItemsTest < ActionDispatch::IntegrationTest
 
   test "creating items for item types without fields is not enabled" do
     log_in_as("one-admin@example.com", "password")
-    
+
     visit("/one/admin")
     click_on("New item type")
     fill_in("item_type[name_en]", :with => "Computer")

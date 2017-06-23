@@ -23,7 +23,7 @@ class ImagesController < ApplicationController
 
     redirect_to([
       '/thumbs', params[:catalog_slug],
-      params[:size], mode.to_s, params[:field_uuid], 
+      params[:size], mode.to_s, params[:field_uuid],
       filename
     ].join('/'))
   end

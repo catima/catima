@@ -1,0 +1,18 @@
+{
+  "id": "file://v1/localized_string.json#",
+  "type": "object",
+  "properties": {
+    "de": {
+      "type": "string"
+    },
+    "en": {
+      "type": "string"
+    },
+    "fr": {
+      "type": "string"
+    },
+    "it": {
+      "type": "string"
+    }
+  }
+}

@@ -1,0 +1,43 @@
+{
+  "id": "file://v1/item_type.json#",
+  "type": "object",
+  "properties": {
+    "fields": {
+      "type": "array",
+      "items": {
+        "$ref": "file://v1/field.json#"
+      }
+    },
+    "id": {
+      "type": "integer"
+    },
+    "name": {
+      "$ref": "file://v1/localized_string.json#"
+    },
+    "name_plural": {
+      "$ref": "file://v1/localized_string.json#"
+    },
+    "slug": {
+      "type": "string"
+    },
+    "_links": {
+      "type": "object",
+      "properties": {
+        "items": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "items"
+      ]
+    }
+  },
+  "required": [
+    "fields",
+    "id",
+    "name",
+    "name_plural",
+    "slug",
+    "_links"
+  ]
+}

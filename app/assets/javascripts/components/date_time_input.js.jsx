@@ -2,9 +2,10 @@ var DateTimeInput = React.createClass({
 
   getInitialState: function() {
     var s = {};
-    var date = this.props.date || {};
-    for (var i in this.props.granularity){
-      var k = this.props.granularity[i];
+    var date = this.getData();
+    var granularity = this.getFieldOptions().format;
+    for (var i in granularity){
+      var k = granularity[i];
       s[k] = date[k] || ({Y:2000, M:1, D:1, h:0, m:0, s:0})[k];
     }
     return s;
@@ -54,11 +55,23 @@ var DateTimeInput = React.createClass({
   },
 
   getData: function(){
-    return JSON.parse($('#item_'+this.props.field+"_json").val());
+    var value = this.getInput().val();
+    if (value === "") {
+      return {};
+    }
+    return JSON.parse(value);
   },
 
   setData: function(d){
-    $('#item_'+this.props.field+"_json").val(JSON.stringify(d));
+    this.getInput().val(JSON.stringify(d));
+  },
+
+  getInput: function() {
+    return $(this.props.input);
+  },
+
+  getFieldOptions: function() {
+    return this.getInput().data("field-options");
   },
 
   render: function(){

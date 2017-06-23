@@ -7,7 +7,9 @@
 #  comment                  :text
 #  created_at               :datetime         not null
 #  default_value            :text
+#  display_component        :string
 #  display_in_list          :boolean          default(TRUE), not null
+#  editor_component         :string
 #  field_set_id             :integer
 #  field_set_type           :string
 #  i18n                     :boolean          default(FALSE), not null
@@ -31,8 +33,6 @@
 #
 
 class Field::DateTime < ::Field
-  include ::Field::HasJsonRepresentation
-
   FORMATS = %w(Y YM YMD YMDh YMDhm YMDhms).freeze
 
   store_accessor :options, :format
@@ -47,32 +47,27 @@ class Field::DateTime < ::Field
     %i(format)
   end
 
-  def raw_value(item, locale=I18n.locale)
-    # Converts the old datetime field value to the new hash style if required
-    v = super(item, locale)
-    return nil if v.nil?
-    return v if v.is_a?(Hash) and v.has_key?('raw_value') == false
-    v = {'raw_value' => v} if v.is_a?(Fixnum)
-    return nil if v['raw_value'].nil?
-    dt = Time.zone.at(v['raw_value'])
-    new_value = {}
-    dt_complete = { Y: dt.year, M: dt.mon, D: dt.day, h: dt.hour, m: dt.min, s: dt.sec }
-    format.split('').each do |c|
-      new_value[c.to_s] = dt_complete[c.to_sym]
-    end
-    new_value
+  # The Rails datetime form helpers submit components of the datetime as
+  # individual attributes, like "#{uuid}_time(1i)", "#{uuid}_time(2i)", etc.
+  # We need to explicitly permit them.
+  def custom_item_permitted_attributes
+    (1..6).map { |i| :"#{uuid}_time(#{i}i)" }
   end
 
-  # Translates timestamp integer to a ActiveSupport::TimeWithZone object (or nil).
-  def value_as_time_with_zone(item)
+  # Translates YMD.. hash into ActiveSupport::TimeWithZone object (or nil).
+  def value_as_datetime(item)
     value = raw_value(item)
-    return nil if value.nil? or value['raw_value'].nil?
-    Time.zone.at(value['raw_value'])
+    return nil if value.nil?
+    defaults = { "Y" => 0, "M" => 1, "D" => 1, "h" => 0, "m" => 0, "s" => 0 }
+    components = defaults.map do |key, default_value|
+      value[key] || default_value
+    end
+    ::DateTime.civil_from_format(:local, *components)
   end
 
   def assign_value_from_form(item, values)
     time_with_zone = form_submission_as_time_with_zone(values)
-    item.public_send("#{uuid}=", time_with_zone.try(:to_i))
+    item.public_send("#{uuid}=", transform_value(time_with_zone&.to_i))
   end
 
   # Rails submits the datetime from the UI as a hash of component values.
@@ -98,7 +93,7 @@ class Field::DateTime < ::Field
     super
     field = self
     klass.send(:define_method, "#{uuid}_time") do
-      field.value_as_time_with_zone(self)
+      field.value_as_datetime(self)
     end
     klass.send(:define_method, "#{uuid}_time=") do |values|
       field.assign_value_from_form(self, values)
@@ -106,6 +101,20 @@ class Field::DateTime < ::Field
   end
 
   private
+
+  def transform_value(v)
+    return nil if v.nil?
+    return v if v.is_a?(Hash) && !v.key?("raw_value")
+    v = { "raw_value" => v } if v.is_a?(Integer)
+    return nil if v["raw_value"].nil?
+    dt = Time.zone.at(v["raw_value"])
+    new_value = {}
+    dt_complete = { Y: dt.year, M: dt.mon, D: dt.day, h: dt.hour, m: dt.min, s: dt.sec }
+    format.split("").each do |c|
+      new_value[c.to_s] = dt_complete[c.to_sym]
+    end
+    new_value
+  end
 
   def set_default_format
     self.format ||= "YMD"
@@ -119,5 +128,4 @@ class Field::DateTime < ::Field
       array << values[key]
     end.compact
   end
-
 end
