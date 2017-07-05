@@ -18,7 +18,7 @@ class Field::XrefTest < ActiveSupport::TestCase
       field.xref = "https://api.github.com/repos/rails/rails"
       refute(field.valid?)
 
-      field.xref = "http://vss.naxio.ch/keywords/default/api/v1"
+      field.xref = "https://catima-xref.herokuapp.com/api/v1"
       assert(field.valid?)
     end
   end

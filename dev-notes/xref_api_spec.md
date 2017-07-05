@@ -20,7 +20,7 @@ The available resources are now described in detail.
 ## GET /
 
 Complete example URL:
-`https://vss.naxio.ch/keywords/viatimages/api/v1/`
+`https://catima-xref.herokuapp.com/api/v1`
 
 Returns the name, description and localization information on the service. An example result would be:
 
@@ -78,7 +78,7 @@ Default page size is 100 items. A possible response:
 		"count": 4578,
 		"offset": 0,
 		"limit": 100,
-		"next": "https://vss.naxio.ch/keywords/viatimages/api/v1/items?limit=100&offset=100",
+		"next": "https://catima-xref.herokuapp.com/api/v1/items?limit=100&offset=100",
 		"previous": null,
 		"results": [
 			{

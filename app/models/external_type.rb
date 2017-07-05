@@ -7,7 +7,7 @@ class ExternalType
   end
 
   def valid?
-    expected = %w(locales item_name fields)
+    expected = %w(locales item_name item_name_plural fields)
     (expected - json.keys).empty?
   rescue ExternalType::Client::InvalidFormat, ExternalType::Client::NotFound
     false

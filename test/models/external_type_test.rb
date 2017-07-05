@@ -14,7 +14,7 @@ class ExternalTypeTest < ActiveSupport::TestCase
   test "#valid?" do
     github_api = external_type("https://api.github.com/repos/rails/rails")
     github_html = external_type("https://github.com/")
-    non_existent = external_type("http://vss.naxio.ch/does-not-exist")
+    non_existent = external_type("https://catima-xref.herokuapp.com/does-not-exist")
 
     with_expiring_vcr_cassette do
       assert(vss.valid?)
@@ -74,7 +74,7 @@ class ExternalTypeTest < ActiveSupport::TestCase
   private
 
   def vss
-    external_type("http://vss.naxio.ch/keywords/default/api/v1")
+    external_type("https://catima-xref.herokuapp.com/api/v1")
   end
 
   def external_type(url)
