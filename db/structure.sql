@@ -441,7 +441,7 @@ CREATE TABLE items (
     id integer NOT NULL,
     catalog_id integer,
     item_type_id integer,
-    data json,
+    data jsonb,
     review_status character varying DEFAULT 'not-ready'::character varying NOT NULL,
     creator_id integer,
     reviewer_id integer,
@@ -1411,4 +1411,6 @@ INSERT INTO schema_migrations (version) VALUES ('20170507231610');
 INSERT INTO schema_migrations (version) VALUES ('20170513155612');
 
 INSERT INTO schema_migrations (version) VALUES ('20170513160403');
+
+INSERT INTO schema_migrations (version) VALUES ('20170705191550');
 

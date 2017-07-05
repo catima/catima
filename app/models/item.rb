@@ -5,7 +5,7 @@
 #  catalog_id     :integer
 #  created_at     :datetime         not null
 #  creator_id     :integer
-#  data           :json
+#  data           :jsonb
 #  id             :integer          not null, primary key
 #  item_type_id   :integer
 #  review_status  :string           default("not-ready"), not null
