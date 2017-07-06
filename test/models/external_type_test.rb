@@ -26,16 +26,16 @@ class ExternalTypeTest < ActiveSupport::TestCase
 
   test "#name" do
     with_expiring_vcr_cassette do
-      assert_equal("Keyword", vss.name)
-      assert_equal("Keyword", vss.name(:en))
-      assert_equal("Schlüsselwort", vss.name(:de))
-      assert_equal("Mot-clé", vss.name(:fr))
+      assert_equal("keyword", vss.name)
+      assert_equal("keyword", vss.name(:en))
+      assert_equal("Schlagwort", vss.name(:de))
+      assert_equal("mot-clé", vss.name(:fr))
     end
   end
 
   test "#locales" do
     with_expiring_vcr_cassette do
-      assert_equal(%w(fr de en), vss.locales)
+      assert_equal(%w(de en fr), vss.locales)
     end
   end
 
@@ -45,9 +45,9 @@ class ExternalTypeTest < ActiveSupport::TestCase
     end
 
     assert_equal(25, item.id)
-    assert_equal("Wolken", item.name(:de))
-    assert_equal("Clouds", item.name(:en))
-    assert_equal("nuages", item.name(:fr))
+    assert_equal("Wasserfälle", item.name(:de))
+    assert_equal("Waterfalls", item.name(:en))
+    assert_equal("chutes d'eau", item.name(:fr))
   end
 
   test "#find_item raises for non-existent ID" do

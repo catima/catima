@@ -10,11 +10,9 @@ class ExternalType::Client
 
   private
 
-  # TODO: remove!
-  # This remove the malformed next/previous keys before parsing.
   def parse_json_with_workaround(response)
     fail InvalidFormat unless response[:content_type] =~ /\bjson\b/
-    JSON.parse(response.body.gsub(/"(next|previous)": [^\s",]+,/, ""))
+    JSON.parse(response.body)
   end
 
   def conn
