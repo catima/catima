@@ -52,7 +52,7 @@ class CatalogAdmin::ContainersController < CatalogAdmin::BaseController
   private
 
   def build_container
-    @page = Page.find_by(slug:params[:page_slug])
+    @page = Page.find_by(slug:params[:page_slug], catalog:@catalog)
     @container = container_class.new(:page => @page)
   end
 
