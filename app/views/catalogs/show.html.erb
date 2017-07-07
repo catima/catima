@@ -10,8 +10,5 @@
   </p>
 
 <% else %>
-
-  <% provide(:title, @catalog.custom_root_page.title) %>
-  <%= raw(@catalog.custom_root_page.content) %>
-
+  <%= render partial:'pages/content', locals: {page: @catalog.custom_root_page} %>
 <% end %>
