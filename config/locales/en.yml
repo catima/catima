@@ -232,7 +232,7 @@ en:
       common_form_fields:
         name_plural: Name (plural)
         slug_singular: Slug (singular)
-        comment_optional: Comment (optional)
+        comment_optional: Data editing help text (optional)
         display_options: Display options
         use_as_primary_field: "Use this as the primary field"
         include_in_list_view: "Include this field in list view"

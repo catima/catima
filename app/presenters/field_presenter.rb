@@ -1,7 +1,7 @@
 class FieldPresenter
   attr_reader :view, :item, :field, :options
   delegate :t, :to => I18n
-  delegate :uuid, :label, :to => :field
+  delegate :uuid, :label, :comment, :to => :field
 
   def initialize(view, item, field, options={})
     @view = view
@@ -32,7 +32,7 @@ class FieldPresenter
 
   def input_defaults(options)
     data = input_data_defaults(options.fetch(:data, {}))
-    options.reverse_merge(:label => label, :data => data)
+    options.reverse_merge(:label => label, :data => data, :help => comment)
   end
 
   def input_data_defaults(data)

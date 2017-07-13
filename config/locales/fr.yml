@@ -232,7 +232,7 @@ fr:
       common_form_fields:
         name_plural: Nom (pluriel)
         slug_singular: Slug (singulier)
-        comment_optional: Commentaire (optionnel)
+        comment_optional: Texte d'aide à la saisie (optionnel)
         display_options: Options d'affichage
         use_as_primary_field: Utiliser comme champ primaire
         include_in_list_view: Inclure le champ dans la liste des fiches
