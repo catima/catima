@@ -148,8 +148,8 @@ Rails.application.routes.draw do
   # ===========================================================================
   # Error pages
 
-  get '/404', to:'errors#error_404'
-  get '/422', to:'errors#error_404'
-  get '/500', to:'errors#error_500'
-  get '/505', to:'errors#error_500'
+  match '/404', to:'errors#error_404', :via => :all
+  match '/422', to:'errors#error_404', :via => :all
+  match '/500', to:'errors#error_500', :via => :all
+  match '/505', to:'errors#error_500', :via => :all
 end
