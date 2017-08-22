@@ -1,20 +1,27 @@
-# viim-core
+# CATIMA
 
-This is a Rails 4.2.4 app.
+CATIMA is a Web app to create easily and quickly online catalogs of structured documents, by defining the data schema of the documents.
+
+Each document is described by several data fields and represents a specific object. Many different types of objects can be created. The content of the document is used to make links between the different objects. CATIMA has also an integrated search option to search for different documents, as well as list views for each object type.
+
+For some applications, CATIMA can be a replacement for databases such as FileMaker, but without offering many of the more advanced features. CATIMA is inteded to just work out of the box after defining the structure of the documents. CATIMA offers by purpose only relatively few personalization options. It still allows for creating custom content pages along with the catalog content.
 
 ## Documentation
 
+CATIMA is a Rails 4.2.8 app.
+
 This README describes the purpose of this repository and how to set up a development environment. Other sources of documentation are as follows:
 
-* UI and API designs are in `doc/`
 * Server setup instructions are in `PROVISIONING.md`
 * Staging and production deployment instructions are in `DEPLOYMENT.md`
+* End-user documentation is in [docs](docs)
+
 
 ## Prerequisites
 
 This project requires:
 
-* Ruby 2.2.3, preferably managed using [rbenv][]
+* Ruby 2.4.1, preferably managed using [rbenv][]
 * PhantomJS (in order to use the [poltergeist][] gem)
 * PostgreSQL must be installed and accepting connections
 * [Redis][] must be installed and running on localhost with the default port
@@ -42,3 +49,5 @@ Run the `bin/setup` script. This script will:
 [rbenv]:https://github.com/sstephenson/rbenv
 [poltergeist]:https://github.com/teampoltergeist/poltergeist
 [redis]:http://redis.io
+
+
