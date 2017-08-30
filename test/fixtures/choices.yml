@@ -12,6 +12,7 @@
 #  short_name_old          :string
 #  short_name_translations :json
 #  updated_at              :datetime         not null
+#  uuid                    :string
 #
 
 # Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html

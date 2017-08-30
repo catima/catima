@@ -8,6 +8,7 @@
 #  id             :integer          not null, primary key
 #  name           :string
 #  updated_at     :datetime         not null
+#  uuid           :string
 #
 
 class Category < ActiveRecord::Base
@@ -20,5 +21,9 @@ class Category < ActiveRecord::Base
 
   def self.sorted
     order("LOWER(categories.name) ASC")
+  end
+
+  def describe
+    as_json(only: %i(name uuid)).merge({"fields": fields.map { |f| f.describe }})
   end
 end

@@ -17,11 +17,14 @@ class CatalogDump
     write_meta directory
 
     # Export structure
+    puts " |-- Dumping structure"
     dump_structure(catalog, directory)
 
     # TODO: Export data
+    puts " |-- Dumping data"
 
     # TODO: Dump pages and menu items
+    puts " |-- Dumping pages and menus"
 
     puts "\n\rDone!"
   end
@@ -47,11 +50,11 @@ class CatalogDump
     cat = Catalog.find_by({ slug:catalog })
     raise "ERROR. Catalog '#{catalog}' not found." if cat.nil?
 
-    puts " |-- Dumping structure..."
     struct_dir = File.join(dir, 'structure')
     Dir.mkdir struct_dir
 
     # Dump the catalog information
+    puts "   |-- Dumping catalog information"
     cat_json = cat.as_json(only: [
       :slug, :name, :primary_language, :other_languages, 
       :advertize, :requires_review
@@ -59,14 +62,26 @@ class CatalogDump
     File.write(File.join(struct_dir, 'catalog.json'), JSON.pretty_generate(cat_json))
 
     # Dump all the item types
+    puts "   |-- Dumping item types"
     item_type_dir = File.join(struct_dir, 'item-types')
     Dir.mkdir item_type_dir
     cat.item_types.each do |it|
       dump_item_type_structure(it, item_type_dir)
     end
 
-    # TODO: Dump categories
-    # TODO: Dump choice sets
+    # Dump categories
+    puts "   |-- Dumping categories"
+    File.write(
+      File.join(struct_dir, 'categories.json'), 
+      JSON.pretty_generate({"categories": cat.categories.map { |cg| cg.describe }})
+    )
+
+    # Dump choice sets
+    puts "   |-- Dumping choice sets"
+    File.write(
+      File.join(struct_dir, 'choice-sets.json'),
+      JSON.pretty_generate({"choice-sets": cat.choice_sets.map { |cs| cs.describe }})
+    )
   end
 
 

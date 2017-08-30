@@ -12,6 +12,7 @@
 #  short_name_old          :string
 #  short_name_translations :json
 #  updated_at              :datetime         not null
+#  uuid                    :string
 #
 
 class Choice < ActiveRecord::Base
@@ -44,5 +45,10 @@ class Choice < ActiveRecord::Base
 
   def self.short_named(name, locale=I18n.locale)
     where("choices.short_name_translations->>'short_name_#{locale}' = ?", name)
+  end
+
+  def describe
+    as_json(only: %i(uuid short_name_translations long_name_translations)) \
+      .merge({"category": category.nil? ? nil : category.uuid })
   end
 end

@@ -89,7 +89,7 @@ class Field::ChoiceSet < ::Field
   end
 
   def describe
-    super.merge({"choice_set": choice_set.name})
+    super.merge({"choice_set": choice_set.uuid})
   end
 
   private

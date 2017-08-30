@@ -9,6 +9,7 @@
 #  name           :string
 #  slug           :string
 #  updated_at     :datetime         not null
+#  uuid           :string
 #
 
 class ChoiceSet < ActiveRecord::Base
@@ -26,5 +27,9 @@ class ChoiceSet < ActiveRecord::Base
 
   def self.sorted
     order("LOWER(choice_sets.name)")
+  end
+
+  def describe
+    as_json(only: %i(uuid name)).merge({"choices": choices.map { |ch| ch.describe }})
   end
 end

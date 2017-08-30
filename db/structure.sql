@@ -2,8 +2,8 @@
 -- PostgreSQL database dump
 --
 
--- Dumped from database version 9.6.2
--- Dumped by pg_dump version 9.6.2
+-- Dumped from database version 9.6.1
+-- Dumped by pg_dump version 9.6.1
 
 SET statement_timeout = 0;
 SET lock_timeout = 0;
@@ -180,7 +180,8 @@ CREATE TABLE categories (
     name character varying,
     created_at timestamp without time zone NOT NULL,
     updated_at timestamp without time zone NOT NULL,
-    deactivated_at timestamp without time zone
+    deactivated_at timestamp without time zone,
+    uuid character varying
 );
 
 
@@ -214,7 +215,8 @@ CREATE TABLE choice_sets (
     deactivated_at timestamp without time zone,
     created_at timestamp without time zone NOT NULL,
     updated_at timestamp without time zone NOT NULL,
-    slug character varying
+    slug character varying,
+    uuid character varying
 );
 
 
@@ -251,7 +253,8 @@ CREATE TABLE choices (
     short_name_translations json,
     long_name_translations json,
     catalog_id integer,
-    category_id integer
+    category_id integer,
+    uuid character varying
 );
 
 
@@ -906,10 +909,24 @@ CREATE INDEX index_categories_on_catalog_id ON categories USING btree (catalog_i
 
 
 --
+-- Name: index_categories_on_uuid; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE UNIQUE INDEX index_categories_on_uuid ON categories USING btree (uuid);
+
+
+--
 -- Name: index_choice_sets_on_catalog_id; Type: INDEX; Schema: public; Owner: -
 --
 
 CREATE INDEX index_choice_sets_on_catalog_id ON choice_sets USING btree (catalog_id);
+
+
+--
+-- Name: index_choice_sets_on_uuid; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE UNIQUE INDEX index_choice_sets_on_uuid ON choice_sets USING btree (uuid);
 
 
 --
@@ -931,6 +948,13 @@ CREATE INDEX index_choices_on_category_id ON choices USING btree (category_id);
 --
 
 CREATE INDEX index_choices_on_choice_set_id ON choices USING btree (choice_set_id);
+
+
+--
+-- Name: index_choices_on_uuid; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE UNIQUE INDEX index_choices_on_uuid ON choices USING btree (uuid);
 
 
 --
@@ -1413,4 +1437,10 @@ INSERT INTO schema_migrations (version) VALUES ('20170513155612');
 INSERT INTO schema_migrations (version) VALUES ('20170513160403');
 
 INSERT INTO schema_migrations (version) VALUES ('20170705191550');
+
+INSERT INTO schema_migrations (version) VALUES ('20170830180816');
+
+INSERT INTO schema_migrations (version) VALUES ('20170830181451');
+
+INSERT INTO schema_migrations (version) VALUES ('20170830182339');
 
