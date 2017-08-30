@@ -48,6 +48,10 @@ class Field::Text < ::Field
     %i(maximum minimum formatted_text)
   end
 
+  def describe
+    super.merge({"i18n": i18n})
+  end
+
   def prepare_value(value)
     if value.is_a? Hash
       d = {}

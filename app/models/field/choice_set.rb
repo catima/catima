@@ -88,6 +88,10 @@ class Field::ChoiceSet < ::Field
     {uuid => cid}
   end
 
+  def describe
+    super.merge({"choice_set": choice_set.name})
+  end
+
   private
 
   # TODO: validate choice belongs to specified ChoiceSet

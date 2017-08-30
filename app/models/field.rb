@@ -175,6 +175,18 @@ class Field < ActiveRecord::Base
     end
   end
 
+  # Returns a JSON description of this field. By default, it returns all
+  # attributes. Subclasses can override this method to provide a more
+  # specific description.
+  def describe
+    as_json(only: [
+      :type, :uuid, :slug,
+      :name_translations, :name_plural_translations,
+      :comment, :default_value, :primary, :required, :unique,
+      :options, :display_in_list
+    ]).merge(allows_multiple? ? as_json(only:[:multiple]) : {})
+  end
+
   # Defines methods and runs class macros on the given item class in order to
   # add validation rules, accessors, etc. for this field. The class in this
   # case is an anonymous subclass of Item.

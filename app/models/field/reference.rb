@@ -64,6 +64,10 @@ class Field::Reference < ::Field
     references.where(:id => raw_value(item))
   end
 
+  def describe
+    super.merge({"related_item_type": related_item_type.slug})
+  end
+
   def prepare_value(value)
     k = value.keys[0]
     v = value[k]
