@@ -453,7 +453,8 @@ CREATE TABLE items (
     search_data_de text,
     search_data_en text,
     search_data_fr text,
-    search_data_it text
+    search_data_it text,
+    uuid character varying
 );
 
 
@@ -1049,6 +1050,13 @@ CREATE INDEX index_items_on_reviewer_id ON items USING btree (reviewer_id);
 
 
 --
+-- Name: index_items_on_uuid; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE UNIQUE INDEX index_items_on_uuid ON items USING btree (uuid);
+
+
+--
 -- Name: index_menu_items_on_catalog_id; Type: INDEX; Schema: public; Owner: -
 --
 
@@ -1443,4 +1451,6 @@ INSERT INTO schema_migrations (version) VALUES ('20170830180816');
 INSERT INTO schema_migrations (version) VALUES ('20170830181451');
 
 INSERT INTO schema_migrations (version) VALUES ('20170830182339');
+
+INSERT INTO schema_migrations (version) VALUES ('20170831075823');
 

@@ -15,8 +15,10 @@
 #  search_data_fr :text
 #  search_data_it :text
 #  updated_at     :datetime         not null
+#  uuid           :string
 #
 
+# rubocop:disable ClassLength
 class Item < ActiveRecord::Base
   include DataStore::Macros
   include Review::Macros
@@ -41,6 +43,7 @@ class Item < ActiveRecord::Base
   # assign default and auto-increment field values
   after_initialize :assign_default_values
   before_validation :assign_autoincrement_values
+  before_create :assign_uuid
 
   def self.sorted_by_field(field)
     sql = []
@@ -103,6 +106,35 @@ class Item < ActiveRecord::Base
     end
   end
 
+  def assign_uuid
+    self.uuid ||= SecureRandom.uuid
+  end
+
+  # Returns the value of the provided field for this item
+  # field can be an instance of a field, a field UUID, or a field slug
+  def get_value(field)
+    field = item_type.find_field(field) unless field.is_a? Field
+    field.value_for_item(self)
+  end
+
+  # Returns the value of the provided field for this item
+  # if it is a simple item, or a ID (e.g. UUID or slug) for complex
+  # fields. By default, it returns the same as get_value, but
+  # subclasses can override this method
+  def get_value_or_id(field)
+    field = item_type.find_field(field) unless field.is_a? Field
+    field.value_or_id_for_item(self)
+  end
+
+  # Returns a JSON representation of the item content.
+  # It contains the field values for simple fields,
+  # and an identifier for complex fields.
+  def describe
+    Hash[applicable_fields.collect { |f| [f.slug, get_value_or_id(f)] }] \
+      .merge(catalog.requires_review ? { "review_status": review_status } : {}) \
+      .merge("uuid": uuid)
+  end
+
   private
 
   def primary_text_value
@@ -123,7 +155,7 @@ class Item < ActiveRecord::Base
     self.data = {} if self.data.nil?
     conn = ActiveRecord::Base.connection.raw_connection
     fields.each do |f|
-      if (f.type == 'Field::Int') && !f.options.nil? && f.options['auto_increment'] && self.data[f.uuid].empty?
+      if (f.type == 'Field::Int') && !f.options.nil? && f.options['auto_increment'] && self.data[f.uuid].nil?
         st = conn.exec(
           "SELECT MAX(data->>'#{f.uuid}') FROM items WHERE item_type_id = $1",
           [ self.item_type_id, ]

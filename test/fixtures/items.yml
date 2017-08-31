@@ -15,6 +15,7 @@
 #  search_data_fr :text
 #  search_data_it :text
 #  updated_at     :datetime         not null
+#  uuid           :string
 #
 
 # Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html

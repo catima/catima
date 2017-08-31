@@ -1,5 +1,5 @@
 class AddUuidToCategories < ActiveRecord::Migration
-    def up
+  def up
     add_column :categories, :uuid, :string
     add_index :categories, :uuid, :unique => true
 

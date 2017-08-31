@@ -65,7 +65,7 @@ class Field::Reference < ::Field
   end
 
   def describe
-    super.merge({"related_item_type": related_item_type.slug})
+    super.merge("related_item_type": related_item_type.slug)
   end
 
   def prepare_value(value)
@@ -74,5 +74,18 @@ class Field::Reference < ::Field
     v = v.sub("'", "''") if v.is_a?(String)
     i = related_item_type.items.where("data->>'#{uuid}'='#{v}'").first
     {uuid => (i.id unless i.nil?)}
+  end
+
+  def value_for_item(it)
+    multiple? ? selected_references(it) : selected_references(it).first
+  end
+
+  def value_or_id_for_item(it)
+    refs = selected_references(it)
+    if multiple?
+      refs.map(&:uuid)
+    else
+      refs.first.nil? ? nil : refs.first.uuid
+    end
   end
 end

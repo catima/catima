@@ -19,11 +19,17 @@ class Category < ActiveRecord::Base
   human_id :name
   validates_presence_of :name
 
+  before_create :assign_uuid
+
   def self.sorted
     order("LOWER(categories.name) ASC")
   end
 
   def describe
-    as_json(only: %i(name uuid)).merge({"fields": fields.map { |f| f.describe }})
+    as_json(only: %i(name uuid)).merge("fields": fields.map(&:describe))
+  end
+
+  def assign_uuid
+    self.uuid ||= SecureRandom.uuid
   end
 end

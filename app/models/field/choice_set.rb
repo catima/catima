@@ -89,7 +89,15 @@ class Field::ChoiceSet < ::Field
   end
 
   def describe
-    super.merge({"choice_set": choice_set.uuid})
+    super.merge("choice_set": choice_set.uuid)
+  end
+
+  def value_for_item(it)
+    multiple? ? selected_choices(it) : selected_choice(it)
+  end
+
+  def value_or_id_for_item(it)
+    multiple? ? selected_choices(it).map(&:uuid) : selected_choice(it).uuid
   end
 
   private

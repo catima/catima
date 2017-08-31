@@ -179,12 +179,24 @@ class Field < ActiveRecord::Base
   # attributes. Subclasses can override this method to provide a more
   # specific description.
   def describe
-    as_json(only: [
-      :type, :uuid, :slug,
-      :name_translations, :name_plural_translations,
-      :comment, :default_value, :primary, :required, :unique,
-      :options, :display_in_list
-    ]).merge(allows_multiple? ? as_json(only:[:multiple]) : {})
+    as_json(only: [:type, :uuid, :slug,
+                   :name_translations, :name_plural_translations,
+                   :comment, :default_value, :primary, :required, :unique,
+                   :options, :display_in_list]
+           ).merge(allows_multiple? ? as_json(only: [:multiple]) : {})
+  end
+
+  # Returns the field value for a given item
+  # For simple field types, it returns the database representation
+  # For more complex field types, it returns the item type instance,
+  # or another adapted representation. In this case, this method
+  # is overridden by the field subclasses.
+  def value_for_item(it)
+    it.data[uuid]
+  end
+
+  def value_or_id_for_item(it)
+    value_for_item(it)
   end
 
   # Defines methods and runs class macros on the given item class in order to

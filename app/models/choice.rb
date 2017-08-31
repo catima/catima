@@ -27,6 +27,8 @@ class Choice < ActiveRecord::Base
 
   validates_presence_of :catalog
 
+  before_create :assign_uuid
+
   %w(de en fr it).each do |locale|
     define_method("long_display_name_#{locale}") do
       long_name = public_send("long_name_#{locale}")
@@ -49,6 +51,10 @@ class Choice < ActiveRecord::Base
 
   def describe
     as_json(only: %i(uuid short_name_translations long_name_translations)) \
-      .merge({"category": category.nil? ? nil : category.uuid })
+      .merge("category": category.nil? ? nil : category.uuid)
+  end
+
+  def assign_uuid
+    self.uuid ||= SecureRandom.uuid
   end
 end

@@ -25,11 +25,17 @@ class ChoiceSet < ActiveRecord::Base
   validates_presence_of :catalog
   validates_presence_of :name
 
+  before_create :assign_uuid
+
   def self.sorted
     order("LOWER(choice_sets.name)")
   end
 
   def describe
-    as_json(only: %i(uuid name)).merge({"choices": choices.map { |ch| ch.describe }})
+    as_json(only: %i(uuid name)).merge("choices": choices.map(&:describe))
+  end
+
+  def assign_uuid
+    self.uuid ||= SecureRandom.uuid
   end
 end

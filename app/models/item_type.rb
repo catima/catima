@@ -82,4 +82,9 @@ class ItemType < ActiveRecord::Base
   def sorted_items
     items.sorted_by_field(primary_field)
   end
+
+  # Finds a field based on the slug or UUID
+  def find_field(field_id)
+    fields.find_by(field_id.starts_with?('_') ? :uuid : :slug => field_id)
+  end
 end
