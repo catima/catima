@@ -50,6 +50,14 @@ class MenuItem < ActiveRecord::Base
     end
   end
 
+  def describe
+    as_json(only: %i(slug title rank locale url)) \
+      .merge("parent": parent_id.nil? ? nil : Page.find(parent_id).slug,
+             "page": page.nil? ? nil : page.slug,
+             "item-type": item_type.nil? ? nil : item_type.slug
+            )
+  end
+
   private
 
   def ensure_locale

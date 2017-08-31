@@ -39,4 +39,8 @@ class Page < ActiveRecord::Base
   def to_param
     slug
   end
+
+  def describe
+    as_json(only: %i(slug title locale)).merge("containers": containers.map(&:describe))
+  end
 end

@@ -63,4 +63,8 @@ class Container < ActiveRecord::Base
     # TODO: delegate rendering to a presenter class outside of the model
     '<p style="color:#f00;">Subclasses of Container must implement a render method'
   end
+
+  def describe
+    as_json(only: %i(type slug content row_order))
+  end
 end

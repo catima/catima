@@ -14,6 +14,8 @@
 #  updated_at               :datetime         not null
 #
 
+require_dependency 'field/choice_set'
+
 # TODO: drop name_old and name_plural_old columns (no longer used)
 class ItemType < ActiveRecord::Base
   include HasDeactivation

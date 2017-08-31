@@ -5,6 +5,9 @@ class CatalogDump
   end
 
   def dump(catalog, directory)
+    cat = Catalog.find_by(slug: catalog)
+    raise "ERROR. Catalog '#{catalog}' not found." if cat.nil?
+
     # Check if directory exists; create if necessary,
     # if not empty raise an error.
     create_output_dir directory
@@ -14,14 +17,15 @@ class CatalogDump
     write_meta directory
 
     # Export structure
-    dump_structure(catalog, directory)
+    dump_structure(cat, directory)
 
     # Export data & files
-    dump_data(catalog, directory)
-    dump_files(catalog, directory)
+    dump_data(cat, directory)
+    dump_files(cat, directory)
 
     # Dump pages and menu items
-    dump_pages(catalog, directory)
+    dump_pages(cat, directory)
+    dump_menu_items(cat, directory)
   end
 
   def write_meta(dir)
@@ -39,10 +43,7 @@ class CatalogDump
     FileUtils.mkdir_p(d) unless File.exist?(d)
   end
 
-  def dump_structure(catalog, dir)
-    cat = Catalog.find_by(slug: catalog)
-    raise "ERROR. Catalog '#{catalog}' not found." if cat.nil?
-
+  def dump_structure(cat, dir)
     struct_dir = File.join(dir, 'structure')
     Dir.mkdir struct_dir
 
@@ -94,16 +95,10 @@ class CatalogDump
     )
   end
 
-  def dump_data(catalog, dir)
-    cat = Catalog.find_by(slug: catalog)
-    raise "ERROR. Catalog '#{catalog}' not found." if cat.nil?
-
+  def dump_data(cat, dir)
     data_dir = File.join(dir, 'data')
     Dir.mkdir data_dir
-
-    cat.item_types.each do |it|
-      dump_items(it, data_dir)
-    end
+    cat.item_types.each { |it| dump_items(it, data_dir) }
   end
 
   def dump_items(item_type, dir)
@@ -113,11 +108,29 @@ class CatalogDump
     )
   end
 
-  def dump_files(catalog, dir)
-    # TODO
+  def dump_files(cat, dir)
+    files_dir = File.join(dir, 'files')
+    Dir.mkdir files_dir
+    FileUtils.cp_r(
+      Dir.glob(File.join(Rails.public_path, 'upload', cat.slug, '*')),
+      files_dir
+    )
   end
 
-  def dump_pages(catalog, dir)
-    # TODO
+  def dump_pages(cat, dir)
+    pages_dir = File.join(dir, 'pages')
+    Dir.mkdir pages_dir
+    cat.pages.each { |p| dump_page(p, pages_dir) }
+  end
+
+  def dump_page(p, dir)
+    File.write(File.join(dir, "#{p.slug}.json"), JSON.pretty_generate(p.describe))
+  end
+
+  def dump_menu_items(cat, dir)
+    File.write(
+      File.join(dir, "menus.json"),
+      JSON.pretty_generate("menu-items": cat.menu_items.map(&:describe))
+    )
   end
 end
