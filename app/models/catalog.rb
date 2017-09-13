@@ -31,26 +31,14 @@ class Catalog < ActiveRecord::Base
   validates_inclusion_of :primary_language, :in => :available_locales
   validate :other_languages_included_in_available_locales
 
-  has_many :advanced_searches
+  has_many :advanced_searches, :dependent => :destroy
   has_many :catalog_permissions, :dependent => :destroy
-  has_many :categories, -> { active }
-  has_many :choice_sets
-  has_many :items
-  has_many :item_types, -> { active }
-  has_many :pages
-  has_many :menu_items
-
-  def remove
-    # advanced_searches.destroy_all
-    # catalog_permissions.destroy_all
-    # categories.destroy_all
-    # choice_sets.destroy_all
-    # items.destroy_all
-    # item_types.destroy_all
-    # pages.destroy_all
-    # menu_items.destroy_all
-    # destroy
-  end
+  has_many :categories, -> { active }, :dependent => :destroy
+  has_many :choice_sets, :dependent => :destroy
+  has_many :items, :dependent => :destroy
+  has_many :item_types, -> { active }, :dependent => :destroy
+  has_many :pages, :dependent => :destroy
+  has_many :menu_items, :dependent => :destroy
 
   def self.sorted
     order("LOWER(catalogs.name) ASC")

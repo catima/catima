@@ -9,7 +9,8 @@ module HasFields
 
     has_many :fields,
              -> { where(:field_set_type => class_name).sorted },
-             :foreign_key => :field_set_id
+             :foreign_key => :field_set_id,
+             :dependent => :destroy
 
     has_many :list_view_fields,
              lambda {
@@ -20,11 +21,13 @@ module HasFields
              },
              :foreign_key => :field_set_id,
              :foreign_type => :field_set_type,
-             :class_name => "Field"
+             :class_name => "Field",
+             :dependent => :destroy
 
     has_many :referenced_by_fields,
              :foreign_key => "related_item_type_id",
-             :class_name => "Field"
+             :class_name => "Field",
+             :dependent => :destroy
 
     validates_presence_of :catalog
   end
