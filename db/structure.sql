@@ -910,10 +910,10 @@ CREATE INDEX index_categories_on_catalog_id ON categories USING btree (catalog_i
 
 
 --
--- Name: index_categories_on_uuid; Type: INDEX; Schema: public; Owner: -
+-- Name: index_categories_on_uuid_and_catalog_id; Type: INDEX; Schema: public; Owner: -
 --
 
-CREATE UNIQUE INDEX index_categories_on_uuid ON categories USING btree (uuid);
+CREATE UNIQUE INDEX index_categories_on_uuid_and_catalog_id ON categories USING btree (uuid, catalog_id);
 
 
 --
@@ -924,10 +924,10 @@ CREATE INDEX index_choice_sets_on_catalog_id ON choice_sets USING btree (catalog
 
 
 --
--- Name: index_choice_sets_on_uuid; Type: INDEX; Schema: public; Owner: -
+-- Name: index_choice_sets_on_uuid_and_catalog_id; Type: INDEX; Schema: public; Owner: -
 --
 
-CREATE UNIQUE INDEX index_choice_sets_on_uuid ON choice_sets USING btree (uuid);
+CREATE UNIQUE INDEX index_choice_sets_on_uuid_and_catalog_id ON choice_sets USING btree (uuid, catalog_id);
 
 
 --
@@ -952,10 +952,10 @@ CREATE INDEX index_choices_on_choice_set_id ON choices USING btree (choice_set_i
 
 
 --
--- Name: index_choices_on_uuid; Type: INDEX; Schema: public; Owner: -
+-- Name: index_choices_on_uuid_and_choice_set_id; Type: INDEX; Schema: public; Owner: -
 --
 
-CREATE UNIQUE INDEX index_choices_on_uuid ON choices USING btree (uuid);
+CREATE UNIQUE INDEX index_choices_on_uuid_and_choice_set_id ON choices USING btree (uuid, choice_set_id);
 
 
 --
@@ -1050,10 +1050,10 @@ CREATE INDEX index_items_on_reviewer_id ON items USING btree (reviewer_id);
 
 
 --
--- Name: index_items_on_uuid; Type: INDEX; Schema: public; Owner: -
+-- Name: index_items_on_uuid_and_catalog_id; Type: INDEX; Schema: public; Owner: -
 --
 
-CREATE UNIQUE INDEX index_items_on_uuid ON items USING btree (uuid);
+CREATE UNIQUE INDEX index_items_on_uuid_and_catalog_id ON items USING btree (uuid, catalog_id);
 
 
 --
@@ -1453,4 +1453,6 @@ INSERT INTO schema_migrations (version) VALUES ('20170830181451');
 INSERT INTO schema_migrations (version) VALUES ('20170830182339');
 
 INSERT INTO schema_migrations (version) VALUES ('20170831075823');
+
+INSERT INTO schema_migrations (version) VALUES ('20170913085323');
 
