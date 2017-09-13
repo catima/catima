@@ -20,6 +20,7 @@ class Category < ActiveRecord::Base
   validates_presence_of :name
 
   before_create :assign_uuid
+  before_destroy :unset_category_in_choice_sets
 
   def self.sorted
     order("LOWER(categories.name) ASC")
@@ -31,5 +32,9 @@ class Category < ActiveRecord::Base
 
   def assign_uuid
     self.uuid ||= SecureRandom.uuid
+  end
+
+  def unset_category_in_choice_sets
+    Choice.where(category_id: id).find_each { |ch| ch.update(category_id: nil) }
   end
 end
