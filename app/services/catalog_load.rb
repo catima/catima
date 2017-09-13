@@ -39,6 +39,8 @@ class CatalogLoad
     load_categories(catalog, File.join(@load_dir, 'structure', 'categories.json'))
 
     # Load the choice sets
+    load_choice_sets(catalog, File.join(@load_dir, 'structure', 'choice-sets.json'))
+
     # Load the item types
   end
 
@@ -54,5 +56,23 @@ class CatalogLoad
                                           created_at: DateTime.current, updated_at: DateTime.current))
     category.save
     category_info['fields'].each { |fld_info| category.fields.build(fld_info).save }
+  end
+
+  def load_choice_sets(catalog, choice_sets_file)
+    return unless File.exist?(choice_sets_file)
+    File.open(choice_sets_file) do |f|
+      JSON.parse(f.read)['choice-sets'].each { |cs| load_choice_set(catalog, cs) }
+    end
+  end
+
+  def load_choice_set(catalog, cs_info)
+    choice_set = catalog.choice_sets.build(cs_info.slice("name", "uuid"))
+    choice_set.save
+    cs_info['choices'].each { |choice| build_choice(choice_set, choice) }
+  end
+
+  def build_choice(cs, ch_info)
+    cat = cs.catalog.categories.where(uuid: ch_info['category']).first
+    cs.choices.build(ch_info.merge('category': cat)).save
   end
 end
