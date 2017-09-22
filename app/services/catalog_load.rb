@@ -13,7 +13,7 @@ class CatalogLoad
     end
     load_structure
     load_data
-    # load_pages
+    load_pages
     copy_files
   end
 
@@ -47,6 +47,11 @@ class CatalogLoad
 
   def load_data
     CatalogLoadData.new(File.join(@load_dir, 'data'), @slug).load
+  end
+
+  def load_pages
+    CatalogLoadPages.new(File.join(@load_dir, 'pages'), @slug).load
+    CatalogLoadMenus.new(File.join(@load_dir, 'menus.json'), @slug).load
   end
 
   def copy_files

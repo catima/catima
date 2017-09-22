@@ -58,6 +58,13 @@ class MenuItem < ActiveRecord::Base
             )
   end
 
+  def update_from_json(d)
+    d['item_type'] = catalog.item_types.find_by(slug: d['item-type']) unless d['item-type'].nil?
+    d['page'] = catalog.pages.find_by(slug: d['page']) unless d['page'].nil?
+    d['parent_id'] = catalog.pages.find_by(slug: d['parent']).id unless d['parent'].nil?
+    update(d.except('item-type', 'parent'))
+  end
+
   private
 
   def ensure_locale
