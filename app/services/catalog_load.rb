@@ -1,3 +1,5 @@
+require 'fileutils'
+
 class CatalogLoad
   def initialize(dir, slug)
     @load_dir = dir
@@ -12,7 +14,7 @@ class CatalogLoad
     load_structure
     load_data
     # load_pages
-    # copy_files
+    copy_files
   end
 
   private
@@ -45,5 +47,14 @@ class CatalogLoad
 
   def load_data
     CatalogLoadData.new(File.join(@load_dir, 'data'), @slug).load
+  end
+
+  def copy_files
+    dest_dir = File.join(Rails.public_path, 'upload', @slug)
+    FileUtils.mkdir_p dest_dir
+    FileUtils.cp_r(
+      Dir.glob(File.join(@load_dir, 'files', '*')),
+      dest_dir
+    )
   end
 end
