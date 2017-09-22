@@ -30,4 +30,8 @@ class Container::ItemList < ::Container
     )
     render_item_list(@browse)
   end
+
+  def describe
+    super.merge('content' => { 'item_type' => item_type.nil? ? nil : ItemType.find(item_type).slug })
+  end
 end
