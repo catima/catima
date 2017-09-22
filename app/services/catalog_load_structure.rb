@@ -14,15 +14,6 @@ class CatalogLoadStructure
 
   private
 
-  # Creates a new empty catalog
-  def create_catalog(catalog_info)
-    @slug ||= catalog_info['slug']
-    # Check if such a catalog already exists
-    catalog = Catalog.find_by(slug: @slug)
-    raise "ERROR. Catalog '#{@slug}' already exists. Please specify a unique catalog slug." unless catalog.nil?
-    Catalog.new(catalog_info.merge(slug: @slug)).save
-  end
-
   def load_categories(catalog, categories_file)
     return unless File.exist?(categories_file)
     @categories = []

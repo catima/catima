@@ -135,6 +135,11 @@ class Item < ActiveRecord::Base
       .merge("uuid": uuid)
   end
 
+  # Sets the value of an item field by UUID
+  def set_by_uuid(uuid, value)
+    behaving_as_type.update(uuid => value)
+  end
+
   private
 
   def primary_text_value
