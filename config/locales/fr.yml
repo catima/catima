@@ -167,6 +167,11 @@ fr:
       destroy:
         rejected: 'rejeté'
 
+    catalog:
+      settings: 'Catalogue'
+      edit_settings: 'Éditer les paramètres du catalogue'
+      save_settings: 'Enregistrer'
+
     categories:
       edit:
         edit_category: 'Éditer sous-fiche'

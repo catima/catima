@@ -63,6 +63,9 @@ Rails.application.routes.draw do
     get "/" => "dashboard#setup", :as => :setup
     get "/_data" => "dashboard#data", :as => :data
 
+    get "/_settings" => "catalogs#edit", :as => :settings
+    patch "/_settings" => "catalogs#update"
+
     resources :categories, :path => "_categories", :except => [:show] do
       resources :fields, :param => :slug, :except => :show
     end

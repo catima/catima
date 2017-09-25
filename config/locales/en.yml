@@ -168,6 +168,11 @@ en:
       destroy:
         rejected: 'rejected'
 
+    catalog:
+      settings: 'Catalog settings'
+      edit_settings: 'Edit catalog settings'
+      save_settings: 'Save'
+
     categories:
       edit:
         edit_category: 'Edit category'
