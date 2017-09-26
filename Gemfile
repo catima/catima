@@ -57,6 +57,10 @@ group :production, :staging do
   gem "unicorn-worker-killer"
 end
 
+group :development, :test do
+  gem 'simplecov', :require => false
+end
+
 group :development do
   gem "airbrussh", :require => false
   gem "annotate", ">= 2.5.0"
@@ -86,7 +90,6 @@ group :development do
   gem "rbnacl-libsodium", :require => false
   gem "rubocop", "~> 0.47.1", :require => false
   gem "ruby-progressbar", :require => false
-  gem "simplecov", :require => false
   gem "spring"
   gem "sshkit", "~> 1.7", :require => false
   gem "terminal-notifier", :require => false
