@@ -43,4 +43,26 @@ class CatalogTest < ActiveSupport::TestCase
     Review.stubs(:public_items_in_catalog).with(catalog).returns(:filtered)
     assert_equal(:filtered, catalog.public_items)
   end
+
+  test "slug has suffix after deactivation and no suffix otherwise" do
+    catalog = catalogs(:one)
+    catalog.update(deactivated_at: DateTime.current)
+    assert(catalog.inactive_suffix?)
+    catalog.update(deactivated_at: nil)
+    assert_not(catalog.inactive_suffix?)
+  end
+
+  test "slug updated to unique value on reactivation" do
+    c1 = catalogs(:one)
+    c2 = catalogs(:two)
+    new_slug = c1.slug
+    # Deactivate the first catalog
+    c1.update(deactivated_at: DateTime.current)
+    assert(c1.inactive_suffix?)
+    # Set the slug of the second catalog to the first one
+    c2.update(slug: new_slug)
+    # Reactivate the first catalog; slug should be different from initial slug
+    c1.update(deactivated_at: nil)
+    assert_not_equal(c1.slug, new_slug)
+  end
 end
