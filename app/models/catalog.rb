@@ -23,6 +23,7 @@ class Catalog < ActiveRecord::Base
   belongs_to :custom_root_page, class_name: "Page"
 
   before_validation :strip_empty_language
+  before_validation :check_activation_status
 
   validates_presence_of :name
   validates_presence_of :primary_language
@@ -42,6 +43,19 @@ class Catalog < ActiveRecord::Base
 
   def self.sorted
     order("LOWER(catalogs.name) ASC")
+  end
+
+  def self.unique_inactive_slug(active_slug)
+    slug = nil
+    loop do
+      slug = active_slug + "-inactive#{Random.rand.to_s[2, 4]}"
+      break if Catalog.slug_unique?(slug)
+    end
+    slug
+  end
+
+  def self.slug_unique?(slug)
+    Catalog.find_by(slug: slug).nil?
   end
 
   def public_items
@@ -65,10 +79,39 @@ class Catalog < ActiveRecord::Base
     Rails.root.join("catalogs", safe_slug)
   end
 
+  def inactive_suffix?
+    !(slug =~ /([a-z0-9\-]+)-inactive[0-9][0-9][0-9][0-9]$/).nil?
+  end
+
   private
 
   def strip_empty_language
     self.other_languages = (other_languages || []).reject(&:blank?)
+  end
+
+  def check_activation_status
+    if deactivated_at.nil?
+      remove_inactive_suffix_from_slug
+    else
+      add_inactive_suffix_to_slug
+    end
+  end
+
+  def add_inactive_suffix_to_slug
+    return if inactive_suffix?
+    update(slug: Catalog.unique_inactive_slug(slug))
+  end
+
+  def remove_inactive_suffix_from_slug
+    return unless inactive_suffix?
+    m = /([a-z0-9\-]+)(-inactive[0-9][0-9][0-9][0-9])$/.match(slug)
+    new_slug = m[1]
+    n = 0
+    until Catalog.slug_unique?(new_slug)
+      n += 1
+      new_slug = m[1] + n.to_s
+    end
+    update(slug: new_slug)
   end
 
   def other_languages_included_in_available_locales
