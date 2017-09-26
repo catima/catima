@@ -32,12 +32,13 @@ class Search::DateTimeStrategy < Search::BaseStrategy
   end
 
   def append_where(scope, operator, value)
-    time_with_zone = field.form_submission_as_time_with_zone(value)
-    return scope if time_with_zone.nil?
-
+    dt_int = value.collect { |k, v| (v.nil? ? 0 : v) * 10**(10 - 2 * (k - 1)) }.sum
+    # time_with_zone = field.form_submission_as_time_with_zone(value)
+    # return scope if time_with_zone.nil?
+    return scope if dt_int == 0
     scope.where(
-      "cast(#{data_field_expr} AS integer) #{operator} ?",
-      time_with_zone.to_i
+      "bigdate_to_num(cast(#{data_field_expr} AS json)) #{operator} ?",
+      dt_int
     )
   end
 end

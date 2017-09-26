@@ -54,25 +54,37 @@ class Field::DateTime < ::Field
     (1..6).map { |i| :"#{uuid}_time(#{i}i)" }
   end
 
-  # Translates YMD.. hash into ActiveSupport::TimeWithZone object (or nil).
-  def value_as_datetime(item)
+  # Translates YMD.. hash into an array [Y, M, D, h, m, s] (or nil).
+  def value_as_array(item)
     value = raw_value(item)
     return nil if value.nil?
     defaults = { "Y" => 0, "M" => 1, "D" => 1, "h" => 0, "m" => 0, "s" => 0 }
     components = defaults.map do |key, default_value|
       value[key] || default_value
     end
-    ::DateTime.civil_from_format(:local, *components)
+    components
   end
 
+  # Translates YMD.. hash into an integer number (or nil).
+  def value_as_int(item)
+    components = value_as_array(item)
+    return nil if components.nil?
+    (0..(components.length - 1)).collect { |i| components[i] * 10**(10 - 2 * i) }.sum
+  end
+
+  # The form provides the datetime values as hash like
+  # { 2 => 12, 1 => 2015, 3 => 31 }. This method transforms this value
+  # to the internal storage representation.
   def assign_value_from_form(item, values)
-    time_with_zone = form_submission_as_time_with_zone(values)
-    item.public_send("#{uuid}=", transform_value(time_with_zone&.to_i))
+    time_hash = form_submission_as_time_hash(values)
+    item.public_send("#{uuid}=", time_hash)
   end
 
-  # Rails submits the datetime from the UI as a hash of component values.
-  # Translate the submission into an appropriate datetime value.
-  def form_submission_as_time_with_zone(values)
+  # Rails submits the datetime from the UI as a hash of component values,
+  # e.g. { 2 => 12, 1 => 2015, 3 => 31 }
+  # Translate the submission into an appropriate hash,
+  # e.g. { "Y" => 2015, "M" => 12, "D" => 31 }
+  def form_submission_as_time_hash(values)
     values = coerce_to_array(values)
     return nil if values.empty?
 
@@ -83,20 +95,26 @@ class Field::DateTime < ::Field
     defaults = [Time.current.year, 1, 1, 0, 0, 0]
     values += defaults[values.length..-1]
 
-    Time.zone.local(*values)
+    k = %w(Y M D h m s)[0...format.length]
+    Hash[k.zip values]
   end
 
   # To facilitate form helpers, we need to create a virtual attribute that
   # handles translation to and from the actual stored value. This virtual
   # attribute gets the name "#{uuid}_time".
+  # Another virtual attribute allows retrieving the time value as an integer
+  # value for date comparisons. This attribute is "#{uuid}_int".
   def decorate_item_class(klass)
     super
     field = self
     klass.send(:define_method, "#{uuid}_time") do
-      field.value_as_datetime(self)
+      field.value_as_array(self)
     end
     klass.send(:define_method, "#{uuid}_time=") do |values|
       field.assign_value_from_form(self, values)
+    end
+    klass.send(:define_method, "#{uuid}_int") do
+      field.value_as_int(self)
     end
   end
 
@@ -106,14 +124,7 @@ class Field::DateTime < ::Field
     return nil if v.nil?
     return v if v.is_a?(Hash) && !v.key?("raw_value")
     v = { "raw_value" => v } if v.is_a?(Integer)
-    return nil if v["raw_value"].nil?
-    dt = Time.zone.at(v["raw_value"])
-    new_value = {}
-    dt_complete = { Y: dt.year, M: dt.mon, D: dt.day, h: dt.hour, m: dt.min, s: dt.sec }
-    format.split("").each do |c|
-      new_value[c.to_s] = dt_complete[c.to_sym]
-    end
-    new_value
+    v["raw_value"].nil? ? nil : v
   end
 
   def set_default_format

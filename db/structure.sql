@@ -45,6 +45,22 @@ COMMENT ON EXTENSION postgis IS 'PostGIS geometry, geography, and raster spatial
 SET search_path = public, pg_catalog;
 
 --
+-- Name: bigdate_to_num(json); Type: FUNCTION; Schema: public; Owner: -
+--
+
+CREATE FUNCTION bigdate_to_num(json) RETURNS numeric
+    LANGUAGE sql IMMUTABLE STRICT
+    AS $_$SELECT (
+            CASE WHEN $1->>'Y' IS NULL THEN 0 ELSE ($1->>'Y')::INTEGER * POWER(10, 10) END + 
+            CASE WHEN $1->>'M' IS NULL THEN 0 ELSE ($1->>'M')::INTEGER * POWER(10, 8) END + 
+            CASE WHEN $1->>'D' IS NULL THEN 0 ELSE ($1->>'D')::INTEGER * POWER(10, 6) END + 
+            CASE WHEN $1->>'h' IS NULL THEN 0 ELSE ($1->>'h')::INTEGER * POWER(10, 4) END + 
+            CASE WHEN $1->>'m' IS NULL THEN 0 ELSE ($1->>'m')::INTEGER * POWER(10, 2) END + 
+            CASE WHEN $1->>'s' IS NULL THEN 0 ELSE ($1->>'s')::INTEGER END
+          )::NUMERIC;$_$;
+
+
+--
 -- Name: validate_geojson(text); Type: FUNCTION; Schema: public; Owner: -
 --
 
@@ -1455,4 +1471,6 @@ INSERT INTO schema_migrations (version) VALUES ('20170830182339');
 INSERT INTO schema_migrations (version) VALUES ('20170831075823');
 
 INSERT INTO schema_migrations (version) VALUES ('20170913085323');
+
+INSERT INTO schema_migrations (version) VALUES ('20170926095141');
 

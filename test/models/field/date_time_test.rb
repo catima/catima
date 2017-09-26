@@ -26,7 +26,7 @@ class Field::DateTimeTest < ActiveSupport::TestCase
 
   test "stores nil" do
     item = Item.new(:item_type => item_types(:one_author))
-    item.behaving_as_type.one_author_born_uuid_time = nil
+    item.behaving_as_type.one_author_born_uuid = nil
 
     stored = item.behaving_as_type.one_author_born_uuid
     assert_nil(stored)
@@ -60,6 +60,24 @@ class Field::DateTimeTest < ActiveSupport::TestCase
 
     stored = item.behaving_as_type.one_author_born_uuid
     assert_equal({ "Y" => 2015, "M" => 12, "D" => 31 }, stored)
+  end
+
+  test "transform internal datetime hash into integer representation" do
+    item = Item.new(:item_type => item_types(:one_author))
+    item = item.behaving_as_type
+    item.one_author_born_uuid = { "Y" => 2015, "M" => 12, "D" => 31 }
+
+    date_int = item.one_author_born_uuid_int
+    assert_equal(20_151_231_000_000, date_int)
+  end
+
+  test "transform internal datetime hash into array representation" do
+    item = Item.new(:item_type => item_types(:one_author))
+    item = item.behaving_as_type
+    item.one_author_born_uuid = { "Y" => 2015, "M" => 12, "D" => 31 }
+
+    date_arr = item.one_author_born_uuid_time
+    assert_equal([2015, 12, 31, 0, 0, 0].join('-'), date_arr.join('-'))
   end
 
   # TODO: Update to JSON datetime format

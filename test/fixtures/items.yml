@@ -56,7 +56,7 @@ one_author_stephen_king:
         "size": 192000,
         "type": "document/doc"
       },
-      "one_author_born_uuid": -703130400
+      "one_author_born_uuid": {"Y": 1947, "M": 9, "D": 21}
     }
 
 one_author_very_old:
