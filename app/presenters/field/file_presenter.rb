@@ -7,18 +7,15 @@ class Field::FilePresenter < FieldPresenter
         "#{method}_json",
         input_defaults(options).reverse_merge(:rows => 1, 'data-field-type' => 'file')
       ),
-      "<div class=\"form-group form-group-dropzone\">",
-      "<div " \
-        "id=\"dropzone_#{method}\" " \
-        "class=\"dropzone #{field.multiple ? 'dropzone-multiple' : ''}\" " \
-        "data-field=\"#{method}\" " \
-        "data-multiple=\"#{field.multiple}\" " \
-        "data-required=\"#{field.required?}\" " \
-        "data-fieldname=\"#{field.name}\" " \
-        "data-upload-url=\"/#{field.catalog.slug}/admin/#{field.item_type.slug}/upload\" " \
-        "data-file-types=\"#{field.types}\"></div>",
-      "<div id=\"dz_msg_#{method}\"></div>",
-      "</div>"
+      "<div class=\"form-group file-upload\" " \
+          "id=\"fileupload_#{method}\" " \
+          "data-field=\"#{method}\" " \
+          "data-multiple=\"#{field.multiple}\" " \
+          "data-required=\"#{field.required?}\" " \
+          "data-fieldname=\"#{field.name}\" " \
+          "data-upload-url=\"/#{field.catalog.slug}/admin/#{field.item_type.slug}/upload\" " \
+          "data-file-types=\"#{field.types}\" " \
+          "data-button-text=\"" + (field.multiple == true ? 'Add files' : "Add file") + "\"></div>"
     ]
     html.compact.join.html_safe
   end

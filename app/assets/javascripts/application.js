@@ -20,7 +20,7 @@
 //= require mousetrap/mousetrap
 //= require mousetrap/plugins/global-bind/mousetrap-global-bind
 //= require refile
-//= require dropzone
+//= require jquery-fileupload/basic
 //= require select2
 //= require summernote
 //= require react

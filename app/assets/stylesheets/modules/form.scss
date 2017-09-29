@@ -3,7 +3,7 @@
   margin-bottom: 0;
 }
 
-div.dropzone {
+/*div.dropzone {
   background-color: #f0f0f0;
   border: 1px solid #ccc;
   max-width: 200px;
@@ -17,16 +17,27 @@ div.dropzone-multiple {
 }
 .dropzone .dz-preview.dz-image-preview {
   background-color: #f0f0f0;
+}*/
+.file-upload td {
+  padding: 5px 15px 5px 5px;
 }
+.file-upload tr:hover {
+  background-color: #eee;
+}
+
+.file-upload path {
+  fill: '#f00';
+}
+
 textarea[data-field-type="file"] {
   display: none;
 }
 textarea[data-field-type="datetime"] {
   display: none;
 }
-.form-group-dropzone {
+/*.form-group-dropzone {
   margin-top: -15px;
-}
+}*/
 .red {
   color: #f00;
 }

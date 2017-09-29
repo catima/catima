@@ -55,26 +55,24 @@ class CatalogAdmin::ItemsController < CatalogAdmin::BaseController
   def upload
     build_item
     authorize(@item)
-    uploaded_files = params[:file]
-    uploaded_files = uploaded_files.is_a?(ActionDispatch::Http::UploadedFile) ? [['files',uploaded_files]] : uploaded_files
-    fld_id = params[:field].sub('dropzone_', '')
+    uploaded_file = params[:files]
+    uploaded_file = uploaded_file[0]
+    fld_id = params[:field]
     upload_dir = File.join('upload', params[:catalog_slug], fld_id)
     upload_path = File.join('public', upload_dir)
     FileUtils.mkdir_p(upload_path)
     timestamp = Time.now.to_i.to_formatted_s(:number)
-    processed_files = uploaded_files.map do |file|
-      local_fname = "#{timestamp}_" + format_filename(file[1].original_filename)
-      file_path = File.join upload_dir, local_fname
-      File.open(Rails.root.join('public', file_path), 'wb') do |fp|
-        fp.write(file[1].read)
-      end
-      {
-        :name => file[1].original_filename, :path => file_path,
-        :type => file[1].content_type, :size => file[1].size
-      }
+    local_fname = "#{timestamp}_" + format_filename(uploaded_file.original_filename)
+    file_path = File.join(upload_dir, local_fname)
+    File.open(Rails.root.join('public', file_path), 'wb') do |fp|
+      fp.write(uploaded_file.read)
     end
+    processed_file = {
+      :name => uploaded_file.original_filename, :path => file_path,
+      :type => uploaded_file.content_type, :size => uploaded_file.size
+    }
     render :json => {
-      :status => 'ok', :processed_files => processed_files,
+      :status => 'ok', :processed_file => processed_file,
       :catalog => params[:catalog_slug],
       :item_type => params[:item_type_slug], :field => fld_id
     }
