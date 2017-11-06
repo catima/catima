@@ -172,6 +172,7 @@ en:
       settings: 'Catalog settings'
       edit_settings: 'Edit catalog settings'
       save_settings: 'Save'
+      save_style: 'Save style'
 
     categories:
       edit:

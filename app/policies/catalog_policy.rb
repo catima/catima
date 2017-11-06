@@ -25,6 +25,7 @@ class CatalogPolicy
   alias_method :index?, :user_is_system_admin?
   alias_method :new?, :user_is_system_admin?
   alias_method :update?, :user_is_catalog_admin?
+  alias_method :update_style?, :user_is_catalog_admin?
 
   def show?
     user_is_at_least_an_editor?

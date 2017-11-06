@@ -189,6 +189,9 @@ GEM
       actionpack (>= 3.1)
       railties (>= 3.1)
       sass (>= 3.2)
+    jquery-minicolors-rails (2.2.6.0)
+      jquery-rails
+      rails (>= 3.2.8)
     jquery-rails (4.3.1)
       rails-dom-testing (>= 1, < 3)
       railties (>= 4.2.0)
@@ -479,6 +482,7 @@ DEPENDENCIES
   guard-livereload
   guard-minitest
   jquery-fileupload-rails
+  jquery-minicolors-rails
   jquery-rails
   jquery-turbolinks
   json_schema (~> 0.16.1)

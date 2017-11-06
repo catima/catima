@@ -151,6 +151,7 @@ de:
       settings: 'Catalog settings'
       edit_settings: 'Edit catalog settings'
       save_settings: 'Save'
+      save_style: 'Stil sichern'
 
     categories:
       edit:

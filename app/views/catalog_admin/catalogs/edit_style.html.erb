@@ -1,0 +1,84 @@
+<% provide(:title, "Customize catalog style") %>
+
+<div class="panel-body">
+
+  <%= bootstrap_form_for(@catalog, url: catalog_admin_style_path) do |f| %>
+
+    <%= f.hidden_field(:style) %>
+
+    <ul class="nav nav-tabs" role="tablist" style="margin-bottom: 20px;">
+      <li role="presentation" class="active"><a href="#general" aria-controls="general" role="tab" data-toggle="tab">General</a></li>
+      <li role="presentation"><a href="#logo" aria-controls="logo" role="tab" data-toggle="tab">Logo</a></li>
+      <li role="presentation"><a href="#itemlist" aria-controls="itemlist" role="tab" data-toggle="tab">Items</a></li>
+    </ul>
+
+    <!-- Tab panes -->
+    <div class="tab-content">
+
+      <!-- General pane -->
+      <div role="tabpanel" class="tab-pane active" id="general">
+        <div class="form-group">
+          <label class="control-label">Base font</label>
+          <%= react_component 'StyleControl', { input: '#catalog_style', element: 'base-font' } %>
+        </div>
+
+        <div class="form-group">
+          <label class="control-label">Link color</label>
+          <input class="form-control" type="text" id="catalog_link_color" value="#428bca" placeholder="#428bca">
+        </div>
+
+        <div class="form-group">
+          <label class="control-label">Navbar</label>
+          <%= react_component 'StyleControl', { input: '#catalog_style', element: 'navbar' } %>
+        </div>
+      </div>
+
+      <!-- Catalog logo pane -->
+      <div role="tabpanel" class="tab-pane" id="logo">
+          <div class="form-group">
+              <label class="control-label" for="catalog_logo">Catalog logo</label>
+              <input class="form-control" type="file" id="catalog_logo">
+              <span class="help-block">Logo located at the bottom right, maximum width: 200 pixels, maximum height: 100 pixels</span>
+          </div>
+          <div class="form-group">
+              <label class="control-label" for="catalog_nav_logo">Logo navigation bar</label>
+              <input class="form-control" type="file" id="catalog_nav_logo">
+              <span class="help-block">Logo located at the top left, maximum height: 50 pixels</span>
+          </div>
+      </div>
+
+      <!-- Headings pane -->
+      <div role="tabpanel" class="tab-pane" id="itemlist">
+
+        <h4>Headings</h4>
+
+        <div class="form-group">
+          <label class="control-label">Main title</label>
+          <%= react_component 'StyleControl', { input: '#catalog_style', element: 'main-title' } %>
+        </div>
+
+        <div class="form-group">
+          <label class="control-label">Sub title</label>
+          <%= react_component 'StyleControl', { input: '#catalog_style', element: 'sub-title' } %>
+        </div>
+
+        <hr/>
+
+        <h4>Items</h4>
+
+        <div class="form-group">
+          <label class="control-label">Item labels</label>
+          <%= react_component 'StyleControl', { input: '#catalog_style', element: 'item-labels' } %>
+        </div>
+
+        <div class="form-group">
+          <label class="control-label">Item text</label>
+          <%= react_component 'StyleControl', { input: '#catalog_style', element: 'item-text' } %>
+        </div>
+      </div>
+    </div>
+
+    <hr/>
+    <%= f.primary(t("catalog_admin.catalog.save_style")) %>
+  <% end %>
+</div>

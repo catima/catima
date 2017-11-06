@@ -163,7 +163,8 @@ CREATE TABLE catalogs (
     created_at timestamp without time zone NOT NULL,
     updated_at timestamp without time zone NOT NULL,
     custom_root_page_id integer,
-    advertize boolean
+    advertize boolean,
+    style jsonb
 );
 
 
@@ -1473,4 +1474,6 @@ INSERT INTO schema_migrations (version) VALUES ('20170831075823');
 INSERT INTO schema_migrations (version) VALUES ('20170913085323');
 
 INSERT INTO schema_migrations (version) VALUES ('20170926095141');
+
+INSERT INTO schema_migrations (version) VALUES ('20171106080707');
 

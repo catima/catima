@@ -12,6 +12,7 @@
 #  primary_language    :string           default("en"), not null
 #  requires_review     :boolean          default(FALSE), not null
 #  slug                :string
+#  style               :jsonb
 #  updated_at          :datetime         not null
 #
 
@@ -31,6 +32,8 @@ class Catalog < ActiveRecord::Base
 
   validates_inclusion_of :primary_language, :in => :available_locales
   validate :other_languages_included_in_available_locales
+
+  serialize :style, HashSerializer
 
   has_many :advanced_searches, :dependent => :destroy
   has_many :catalog_permissions, :dependent => :destroy

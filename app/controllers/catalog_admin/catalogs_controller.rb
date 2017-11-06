@@ -11,6 +11,16 @@ class CatalogAdmin::CatalogsController < CatalogAdmin::BaseController
     end
   end
 
+  def update_style
+    find_catalog
+    authorize(@catalog)
+    if @catalog.update(catalog_params)
+      redirect_to(catalog_admin_style_path, :notice => updated_message)
+    else
+      render("edit_style")
+    end
+  end
+
   private
 
   def find_catalog
@@ -26,7 +36,8 @@ class CatalogAdmin::CatalogsController < CatalogAdmin::BaseController
       :name,
       :requires_review,
       :advertize,
-      :custom_root_page_id
+      :custom_root_page_id,
+      :style
     )
   end
 end

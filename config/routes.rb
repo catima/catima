@@ -66,6 +66,9 @@ Rails.application.routes.draw do
     get "/_settings" => "catalogs#edit", :as => :settings
     patch "/_settings" => "catalogs#update"
 
+    get "/_style" => "catalogs#edit_style", :as => :style
+    patch "/_style" => "catalogs#update_style"
+
     resources :categories, :path => "_categories", :except => [:show] do
       resources :fields, :param => :slug, :except => :show
     end

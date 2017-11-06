@@ -171,6 +171,7 @@ fr:
       settings: 'Catalogue'
       edit_settings: 'Éditer les paramètres du catalogue'
       save_settings: 'Enregistrer'
+      save_style: 'Enregistrer le style'
 
     categories:
       edit:
