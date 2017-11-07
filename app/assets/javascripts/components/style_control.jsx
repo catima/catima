@@ -3,8 +3,8 @@ var StyleControl = React.createClass({
   getInitialState: function(){
     return $.extend(
       {
-        font: '', 'fontSize': '',
-        bold: '', italic: '', underline: '',
+        fontFamily: '', 'fontSize': '',
+        fontWeight: 'normal', fontStyle: 'normal', textDecoration: 'none',
         color: '', 'backgroundColor': ''
       },
       this.getData()
@@ -43,13 +43,13 @@ var StyleControl = React.createClass({
   render: function(){
     return (
       <div>
-        <p>StyleControl: {this.state.font}</p>
-        <FontMenu value={this.state.font} onChange={this.handleChange} />
+        <p>StyleControl: {this.state.fontFamily}</p>
+        <FontMenu value={this.state.fontFamily} onChange={this.handleChange} />
         <FontSize value={this.state.fontSize} onChange={this.handleChange} />
         <FontStyle
-          bold={this.state.bold}
-          italic={this.state.italic}
-          underline={this.state.underline}
+          fontWeight={this.state.bold}
+          fontStyle={this.state.italic}
+          textDecoration={this.state.underline}
           onChange={this.handleChange}
         />
         <FontColorButton
@@ -65,11 +65,11 @@ var StyleControl = React.createClass({
           onChange={this.handleChange}
         />
         <FontExample
-          font={this.state.font}
+          fontFamily={this.state.font}
           fontSize={this.state.fontSize}
-          bold={this.state.bold}
-          italic={this.state.italic}
-          underline={this.state.underline}
+          fontWeight={this.state.bold}
+          fontStyle={this.state.italic}
+          textDecoration={this.state.underline}
           color={this.state.color}
           backgroundColor={this.state.backgroundColor}
         />

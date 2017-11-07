@@ -1,28 +1,28 @@
 var FontStyle = React.createClass({
   getInitialState: function(){
     return {
-      bold: this.props.bold || false,
-      italic: this.props.italic || false,
-      underline: this.props.underline || false
+      bold: (this.props.fontWeight == 'bold') || false,
+      italic: (this.props.fontStyle == 'italic') || false,
+      underline: (this.props.textDecoration == 'underline') || false
     };
   },
 
   handleBoldChange: function(e){
     var newState = !this.state.bold;
     this.setState({bold: newState});
-    this.props.onChange({bold: newState});
+    this.props.onChange({fontWeight: newState ? 'bold' : 'normal'});
   },
 
   handleItalicChange: function(e){
     var newState = !this.state.italic;
     this.setState({italic: newState});
-    this.props.onChange({italic: newState});
+    this.props.onChange({fontStyle: newState ? 'italic' : 'normal'});
   },
 
   handleUnderlineChange: function(e){
     var newState = !this.state.underline;
     this.setState({underline: newState});
-    this.props.onChange({underline: newState});
+    this.props.onChange({textDecoration: newState ? 'underline' : 'none'});
   },
 
   render: function(){

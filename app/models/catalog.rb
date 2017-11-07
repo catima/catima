@@ -86,6 +86,11 @@ class Catalog < ActiveRecord::Base
     !(slug =~ /([a-z0-9\-]+)-inactive[0-9][0-9][0-9][0-9]$/).nil?
   end
 
+  def custom_style(elem)
+    stl = JSON.parse(style)
+    stl[elem] || {}
+  end
+
   private
 
   def strip_empty_language

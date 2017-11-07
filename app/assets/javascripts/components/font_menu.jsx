@@ -1,7 +1,7 @@
 var FontMenu = React.createClass({
 
   handleChange: function(e){
-    this.props.onChange({font: e.target.value})
+    this.props.onChange({fontFamily: e.target.value})
   },
 
   render: function(){

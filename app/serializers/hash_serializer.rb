@@ -1,9 +1,10 @@
 class HashSerializer
-  def self.dump(hash)
-    hash.to_json
+  def self.dump(str)
+    JSON.parse str
   end
 
   def self.load(hash)
-    (hash || {})
+    return '{}' if hash.nil?
+    hash.empty? ? '{}' : hash.to_json
   end
 end

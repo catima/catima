@@ -18,4 +18,14 @@ class CatalogsTest < ActionDispatch::IntegrationTest
     visit("/multilingual")
     assert_equal("/multilingual/it", current_path)
   end
+
+  test "renders correctly without custom style" do
+    visit("/one")
+    assert(page.has_content?(/one/i))
+  end
+
+  test "renders correctly with custom style" do
+    visit("/two")
+    assert(page.has_content?(/two/i))
+  end
 end
