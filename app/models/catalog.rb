@@ -7,7 +7,9 @@
 #  custom_root_page_id :integer
 #  deactivated_at      :datetime
 #  id                  :integer          not null, primary key
+#  logo_id             :string
 #  name                :string
+#  navlogo_id          :string
 #  other_languages     :json
 #  primary_language    :string           default("en"), not null
 #  requires_review     :boolean          default(FALSE), not null
@@ -43,6 +45,9 @@ class Catalog < ActiveRecord::Base
   has_many :item_types, -> { active }, :dependent => :destroy
   has_many :pages, :dependent => :destroy
   has_many :menu_items, :dependent => :destroy
+
+  attachment :logo, type: :image
+  attachment :navlogo, type: :image
 
   def self.sorted
     order("LOWER(catalogs.name) ASC")

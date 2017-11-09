@@ -37,7 +37,8 @@ class CatalogAdmin::CatalogsController < CatalogAdmin::BaseController
       :requires_review,
       :advertize,
       :custom_root_page_id,
-      :style
+      :style,
+      :logo, :remove_logo, :navlogo, :remove_navlogo
     )
   end
 end

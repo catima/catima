@@ -164,7 +164,9 @@ CREATE TABLE catalogs (
     updated_at timestamp without time zone NOT NULL,
     custom_root_page_id integer,
     advertize boolean,
-    style jsonb
+    style jsonb,
+    logo_id character varying,
+    navlogo_id character varying
 );
 
 
@@ -1476,4 +1478,6 @@ INSERT INTO schema_migrations (version) VALUES ('20170913085323');
 INSERT INTO schema_migrations (version) VALUES ('20170926095141');
 
 INSERT INTO schema_migrations (version) VALUES ('20171106080707');
+
+INSERT INTO schema_migrations (version) VALUES ('20171109063607');
 
