@@ -29,4 +29,7 @@
   .item-table td {
     <%= render('shared/css_properties', stl: catalog.custom_style('text')) %>
   }
+  a,a:hover,a:visited {
+    color: <%= catalog.custom_style('link-color') %>;
+  }
 </style>

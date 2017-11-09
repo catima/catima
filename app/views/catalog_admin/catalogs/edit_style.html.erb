@@ -4,7 +4,7 @@
 
   <%= bootstrap_form_for(@catalog, url: catalog_admin_style_path) do |f| %>
 
-    <%= f.hidden_field(:style) %>
+    <%= f.text_field(:style) %>
 
     <ul class="nav nav-tabs" role="tablist" style="margin-bottom: 20px;">
       <li role="presentation" class="active"><a href="#general" aria-controls="general" role="tab" data-toggle="tab">General</a></li>
@@ -24,7 +24,17 @@
 
         <div class="form-group">
           <label class="control-label">Link color</label>
-          <input class="form-control" type="text" id="catalog_link_color" value="#428bca" placeholder="#428bca">
+          <input class="form-control" type="text" id="catalog_link_color" value="<%= @catalog.custom_style('link-color') || '#428bca' %>">
+          <script>
+            $('#catalog_link_color').minicolors({
+              theme: 'bootstrap',
+            });
+            $('#catalog_link_color').on('change', function(e){
+              var stl = JSON.parse($('#catalog_style').val());
+              stl['link-color'] = $('#catalog_link_color').val();
+              $('#catalog_style').val(JSON.stringify(stl));
+            });
+          </script>
         </div>
 
         <div class="form-group">
