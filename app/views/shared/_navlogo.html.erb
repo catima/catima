@@ -1,0 +1,8 @@
+<% if catalog.navlogo %>
+  <%= link_to(
+        attachment_image_tag(catalog, :navlogo, :limit, 300, 50),
+        catalog_home_path
+      ) %>
+<% else %>
+  <%= link_to(catalog.name, catalog_home_path, :class => "navbar-brand") %>
+<% end %>

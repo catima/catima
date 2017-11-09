@@ -6,8 +6,8 @@
       <p style="font-size: 80%;">Powered by CATIMA<br>
       <% if ENV["APP_VERSION"] %>Version <%= ENV["APP_VERSION"] %> · <%= Time.zone.now.strftime("%Y") %><% end %></p>
     </div>
-    <div class="col-xs-6 text-right">
-      <%= image_tag('unilogo_noir_72dpi.png', alt:'UNIL') %>
+    <div class="col-xs-6 text-right" style="margin-bottom: 20px;">
+      <%= render("shared/logo") if catalog_scoped? %>
     </div>
   </div>
 </footer>

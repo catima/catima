@@ -7,8 +7,16 @@
         <span class="icon-bar"></span>
         <span class="icon-bar"></span>
       </button>
-      <%= link_to(catalog.name, catalog_home_path, :class => "navbar-brand") %>
+      <%= render("shared/navlogo") if catalog_scoped? %>
     </div>
+    <script>
+      // Center the navlogo vertically.
+      var h = $('img.navlogo').height();
+      if (h > 0) {
+        var pad = (50 - h) / 2;
+        $('.navbar-header').css('padding-top', pad+'px');
+      }
+    </script>
     <div class="navbar-collapse collapse">
       <ul class="nav navbar-nav">
 

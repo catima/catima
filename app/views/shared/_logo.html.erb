@@ -1,0 +1,5 @@
+<% if catalog.logo %>
+  <%= attachment_image_tag(catalog, :logo, :limit, 200, 100) %>
+<% else %>
+  <%= image_tag('unilogo_noir_72dpi.png', alt:'UNIL') %>
+<% end %>
