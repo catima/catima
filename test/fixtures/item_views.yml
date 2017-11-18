@@ -1,0 +1,22 @@
+# == Schema Information
+#
+# Table name: item_views
+#
+#  created_at            :datetime         not null
+#  default_for_item_view :boolean
+#  default_for_list_view :boolean
+#  id                    :integer          not null, primary key
+#  item_type_id          :integer
+#  name                  :string
+#  template              :jsonb
+#  updated_at            :datetime         not null
+#
+
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one_author_list_view:
+  name: One author custom list view
+  item_type: one_author_list_view
+  default_for_list_view: true
+  default_for_item_view: false
+  template: '{ "en": "{{ name }}", "fr": "{{ name }}" }'

@@ -456,6 +456,41 @@ ALTER SEQUENCE item_types_id_seq OWNED BY item_types.id;
 
 
 --
+-- Name: item_views; Type: TABLE; Schema: public; Owner: -
+--
+
+CREATE TABLE item_views (
+    id integer NOT NULL,
+    name character varying,
+    item_type_id integer,
+    template jsonb,
+    default_for_list_view boolean,
+    default_for_item_view boolean,
+    created_at timestamp without time zone NOT NULL,
+    updated_at timestamp without time zone NOT NULL
+);
+
+
+--
+-- Name: item_views_id_seq; Type: SEQUENCE; Schema: public; Owner: -
+--
+
+CREATE SEQUENCE item_views_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+--
+-- Name: item_views_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
+--
+
+ALTER SEQUENCE item_views_id_seq OWNED BY item_views.id;
+
+
+--
 -- Name: items; Type: TABLE; Schema: public; Owner: -
 --
 
@@ -732,6 +767,13 @@ ALTER TABLE ONLY item_types ALTER COLUMN id SET DEFAULT nextval('item_types_id_s
 
 
 --
+-- Name: item_views id; Type: DEFAULT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY item_views ALTER COLUMN id SET DEFAULT nextval('item_views_id_seq'::regclass);
+
+
+--
 -- Name: items id; Type: DEFAULT; Schema: public; Owner: -
 --
 
@@ -844,6 +886,14 @@ ALTER TABLE ONLY fields
 
 ALTER TABLE ONLY item_types
     ADD CONSTRAINT item_types_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: item_views item_views_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY item_views
+    ADD CONSTRAINT item_views_pkey PRIMARY KEY (id);
 
 
 --
@@ -1038,6 +1088,13 @@ CREATE INDEX index_item_types_on_catalog_id ON item_types USING btree (catalog_i
 --
 
 CREATE UNIQUE INDEX index_item_types_on_catalog_id_and_slug ON item_types USING btree (catalog_id, slug);
+
+
+--
+-- Name: index_item_views_on_item_type_id; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX index_item_views_on_item_type_id ON item_views USING btree (item_type_id);
 
 
 --
@@ -1298,6 +1355,14 @@ ALTER TABLE ONLY containers
 
 
 --
+-- Name: item_views fk_rails_9310522ec6; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY item_views
+    ADD CONSTRAINT fk_rails_9310522ec6 FOREIGN KEY (item_type_id) REFERENCES item_types(id);
+
+
+--
 -- Name: items fk_rails_ac675f13b9; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
@@ -1480,4 +1545,6 @@ INSERT INTO schema_migrations (version) VALUES ('20170926095141');
 INSERT INTO schema_migrations (version) VALUES ('20171106080707');
 
 INSERT INTO schema_migrations (version) VALUES ('20171109063607');
+
+INSERT INTO schema_migrations (version) VALUES ('20171118121553');
 
