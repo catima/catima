@@ -1,0 +1,42 @@
+<div class="form-group">
+  <%= f.label('Item type') %>
+  <div><%= @item_view.item_type.slug %></div>
+</div>
+
+<%= f.text_field(:name) %>
+
+<%= f.check_box(:default_for_item_view) %>
+<%= f.check_box(:default_for_list_view) %>
+
+<hr>
+<%= f.text_field(:template) %>
+<hr>
+<%= f.label(:template) %>
+
+<div id="template-tabs">
+
+  <ul class="nav nav-tabs" style="margin-bottom: 15px;">
+    <% @item_view.item_type.catalog.valid_locales.each_with_index do |l, i| %>
+      <li role="presentation" class="<% if i==0 %>active<% end %>"><a href="#<%= l %>"><%= l %></a></li>
+    <% end %>
+  </ul>
+
+  <div class="tab-content">
+    <% @item_view.item_type.catalog.valid_locales.each_with_index do |l, i| %>
+    <div role="tabpanel" class="tab-pane <% if i==0 %>active<% end %>" id="<%= l %>">
+      <div class="tabcontent">
+        ...
+      </div>
+    </div>
+    <% end %>
+  </div>
+
+</div>
+<script>
+  $('#template-tabs .nav-tabs a').click(function (e) {
+    e.preventDefault()
+    $(this).tab('show')
+  });
+</script>
+
+<hr>

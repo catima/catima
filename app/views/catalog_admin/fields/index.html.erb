@@ -24,6 +24,11 @@
   </span>
 <% end %>
 
+<% provide(:extra_setup) do %>
+  <%= render('catalog_admin/item_views/index') %>
+<% end %>
+
 <table class="table" id="fields">
   <%= render("table") %>
 </table>
+

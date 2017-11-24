@@ -1,0 +1,48 @@
+<div class="panel panel-default">
+  <div class="panel-heading">
+    <span class="pull-right">
+      <%= link_to(new_catalog_admin_item_view_path) do %>
+        <%= fa_icon('plus-square', text: "New item view") %>
+      <% end %>
+    </span>
+    Item views
+  </div>
+
+  <table class="table" id="fields">
+
+    <% if @field_set.item_views.count == 0 %>
+      <tr>
+        <td>Currently no item views.</td>
+        <td></td>
+      </tr>
+    <% end %>
+
+    <% @field_set.item_views.each_with_index do |item_view, index| %>
+      <tr>
+        <td>
+          <%= item_view.name %>
+          <%= item_view_list_view_badge(item_view) %>
+          <%= item_view_item_view_badge(item_view) %>
+        </td>
+        <td style="text-align: right">
+          <%= link_to(
+                fa_icon('pencil', text: t('edit')),
+                { action: :edit, controller: 'catalog_admin/item_views',
+                  item_type_slug: item_view.item_type.slug, id: item_view.id },
+                :class => 'btn btn-default btn-xs')%>
+
+          <%= link_to(
+                  fa_icon("trash-o", :text => "Delete"),
+                  catalog_admin_item_view_path(catalog, item_view.item_type.slug, item_view),
+                  :class => "btn btn-xs btn-text",
+                  :method => :delete,
+                  :data => {
+                    :confirm => "Are you sure you want to delete "\
+                                "“#{item_view.name}”?"
+                  }) %>
+        </td>
+      </tr>
+    <% end %>
+
+  </table>
+</div>

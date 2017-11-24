@@ -1,0 +1,2 @@
+class ItemViewPolicy < ItemTypePolicy
+end

@@ -88,6 +88,11 @@ Rails.application.routes.draw do
               :except => :show,
               :as => "item_type_fields"
 
+    resources :item_views,
+              :path => ":item_type_slug/views",
+              :except => [:index, :show],
+              :as => "item_views"
+
     resources :csv_imports,
               :path => ":item_type_slug/import",
               :only => [:new, :create]
