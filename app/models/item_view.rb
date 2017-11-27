@@ -31,4 +31,9 @@ class ItemView < ActiveRecord::Base
   def remove_default_list_view_from_other_views
     item_type.item_views.where("item_views.id != ?", id).update_all(:default_for_list_view => false)
   end
+
+  def props(locale)
+    p = JSON.parse(template)
+    { content: p[locale] || '', locale: locale }
+  end
 end
