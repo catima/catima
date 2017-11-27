@@ -36,3 +36,6 @@
 
 # Ignore VCR's cache of HTTP responses used to speed up local tests
 /test/cassettes/
+/public/packs
+/public/packs-test
+/node_modules

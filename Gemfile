@@ -31,6 +31,7 @@ gem "pgcli-rails", "~> 0.2.1"
 gem "pundit"
 gem "rails", "~> 4.2.8.0"
 gem "ranked-model"
+gem 'react_on_rails', '10.0.2'
 gem "redcarpet"
 gem "redis-namespace"
 gem "refile", "~> 0.6.1", :require => "refile/rails"
@@ -46,6 +47,7 @@ gem "sprockets-rails", "~> 2.3"
 gem "summernote-rails", "~> 0.7.1"
 gem "turbolinks", "~> 2.5"
 gem "zaru", "~> 0.1.0"
+gem 'webpacker', '~> 3.0'
 
 source "https://rails-assets.org" do
   gem "rails-assets-autosize", "~> 3.0.14"
@@ -84,7 +86,7 @@ group :development do
   gem "overcommit", :require => false
   gem "quiet_assets"
   gem "rack-livereload"
-  gem "rainbow", "~> 2.1.0", :require => false
+  gem "rainbow", "~> 2.2.0", :require => false
   gem "rb-fsevent", :require => false
   gem "rbnacl", "~> 3.4", :require => false
   gem "rbnacl-libsodium", :require => false
