@@ -46,7 +46,6 @@ gem "sinatra", ">= 1.3.0", :require => false
 gem "sprockets", "~> 3.4"
 gem "sprockets-rails", "~> 2.3"
 gem "summernote-rails", "~> 0.7.1"
-gem "turbolinks", "~> 2.5"
 gem "zaru", "~> 0.1.0"
 gem 'webpacker', '~> 3.0'
 

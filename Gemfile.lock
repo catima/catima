@@ -545,7 +545,6 @@ DEPENDENCIES
   terminal-notifier-guard
   test_after_commit
   thin
-  turbolinks (~> 2.5)
   unicorn
   unicorn-worker-killer
   vcr (~> 3.0)

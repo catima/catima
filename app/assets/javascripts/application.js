@@ -12,9 +12,7 @@
 //
 //= require jquery
 //= require jquery_ujs
-//= require jquery.turbolinks
 //= require jquery.minicolors
-//= require turbolinks
 //= require autosize
 //= require cocoon
 //= require spinner
@@ -25,5 +23,3 @@
 //= require select2
 //= require summernote
 //= require_tree .
-
-Turbolinks.enableProgressBar();
