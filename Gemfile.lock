@@ -64,10 +64,6 @@ GEM
     autoprefixer-rails (7.0.1)
       execjs
     awesome_print (1.7.0)
-    babel-source (5.8.35)
-    babel-transpiler (0.7.0)
-      babel-source (>= 4.0, < 6)
-      execjs (~> 2.0)
     bcrypt (3.1.11)
     bcrypt_pbkdf (1.0.0)
     better_errors (2.1.1)
@@ -324,13 +320,6 @@ GEM
       ffi
     rbnacl-libsodium (1.0.11)
       rbnacl (>= 3.0.1)
-    react-rails (1.10.0)
-      babel-transpiler (>= 0.7.0)
-      coffee-script-source (~> 1.8)
-      connection_pool
-      execjs
-      railties (>= 3.2)
-      tilt
     redcarpet (3.4.0)
     redis (3.3.3)
     redis-namespace (1.5.3)
@@ -514,7 +503,6 @@ DEPENDENCIES
   rb-fsevent
   rbnacl (~> 3.4)
   rbnacl-libsodium
-  react-rails (~> 1.10.0)
   redcarpet
   redis-namespace
   refile (~> 0.6.1)
