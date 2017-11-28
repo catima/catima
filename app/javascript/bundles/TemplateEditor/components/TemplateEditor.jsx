@@ -2,8 +2,10 @@ import 'es6-shim';
 import PropTypes from 'prop-types';
 import React from 'react';
 import {
+  CompositeDecorator,
   Editor,
   EditorState,
+  Modifier,
   RichUtils,
 } from 'draft-js';
 import {
@@ -22,9 +24,18 @@ class TemplateEditor extends React.Component {
   constructor(props){
     super(props);
     const self = this;
+
+    const compositeDecorator = new CompositeDecorator([
+      {
+        strategy: fieldStrategy,
+        component: FieldSpan,
+      },
+    ]);
+
     this.state = {
       editorState: EditorState.createWithContent(
-        convertFromHTML(this._loadContent(this.props.contentRef))
+        convertFromHTML(this._loadContent(this.props.contentRef)),
+        compositeDecorator
       ),
     };
     this.focus = () => this.refs.editor.focus();
@@ -36,6 +47,9 @@ class TemplateEditor extends React.Component {
     this.onTab = this._onTab.bind(this);
     this.toggleBlockType = this._toggleBlockType.bind(this);
     this.toggleInlineStyle = this._toggleInlineStyle.bind(this);
+    this.addField = this._addField.bind(this);
+    this.onFieldChange = this._confirmField.bind(this);
+    this.onFieldInputKeyDown = this._onFieldInputKeyDown.bind(this);
   }
 
   _handleKeyCommand(command, editorState) {
@@ -71,9 +85,64 @@ class TemplateEditor extends React.Component {
     document.getElementById(ref).value = JSON.stringify(v);
   }
 
+  _addField(e){
+    e.preventDefault();
+    const {editorState, fieldName} = this.state;
+    this.setState({
+      showFieldInput: true,
+      fieldName: fieldName,
+    }, () => {
+      setTimeout(() => this.refs.fieldName.focus(), 0);
+    });
+  }
+
+  _onFieldInputKeyDown(e){
+    if (e.which === 27) {
+      this.setState({
+        showFieldInput: false,
+        fieldName: '',
+      });
+    }
+  }
+
+  _confirmField(e){
+    e.preventDefault();
+    let fieldName = e.target.value;
+    const {editorState} = this.state;
+    const selection = editorState.getSelection();
+    const contentState = editorState.getCurrentContent();
+    const ncs = Modifier.insertText(contentState, selection, " {{"+fieldName+"}} ");
+    const es = EditorState.push(editorState, ncs, 'insert-fragment');
+    this.setState({
+      editorState: es,
+      showFieldInput: false,
+      fieldName: '',
+    }, () => {
+      setTimeout(() => this.refs.editor.focus(), 0);
+    });
+  }
+
   render(){
     const {editorState} = this.state;
     let className = 'RichEditor-editor';
+
+    let fieldInput;
+    if (this.state.showFieldInput){
+      fieldInput =
+        <div style={styles.fieldInputContainer}>
+          <select
+            onChange={this.onFieldChange}
+            ref="fieldName"
+            style={styles.fieldInput}
+            type="text"
+            value={this.state.fieldName}
+            onKeyDown={this.onFieldInputKeyDown}
+          >
+            <option value="">---</option>
+            <option value="test">Test</option>
+          </select>
+        </div>
+    }
 
     return (
       <div className="RichEditor-root">
@@ -85,6 +154,10 @@ class TemplateEditor extends React.Component {
           editorState={editorState}
           onToggle={this.toggleInlineStyle}
         />
+        <div className="RichEditor-controls">
+          <span className="RichEditor-styleButton" onMouseDown={this.addField} style={{marginRight: 10}}>Add field</span>
+          {fieldInput}
+        </div>
         <div className={className} onClick={this.focus}>
           <Editor
             blockStyleFn={getBlockStyle}
@@ -133,6 +206,8 @@ const BLOCK_TYPES = [
   {label: 'H2', style: 'header-two'},
   {label: 'H3', style: 'header-three'},
   {label: 'H4', style: 'header-four'},
+  {label: 'H5', style: 'header-five'},
+  {label: 'H6', style: 'header-six'},
   {label: 'UL', style: 'unordered-list-item'},
   {label: 'OL', style: 'ordered-list-item'},
 ];
@@ -180,6 +255,50 @@ const InlineStyleControls = (props) => {
       )}
     </div>
   );
+};
+
+
+const FIELD_REGEX = /{{[\w\-]+}}/g;
+
+function fieldStrategy(contentBlock, callback, contentState) {
+  findWithRegex(FIELD_REGEX, contentBlock, callback);
+}
+
+function findWithRegex(regex, contentBlock, callback) {
+  const text = contentBlock.getText();
+  let matchArr, start;
+  while ((matchArr = regex.exec(text)) !== null) {
+    start = matchArr.index;
+    callback(start, start + matchArr[0].length);
+  }
+}
+
+const FieldSpan = (props) => {
+  return (
+    <span
+      style={styles.field}
+      data-offset-key={props.offsetKey}
+    >
+      {props.children}
+    </span>
+  );
+};
+
+const styles = {
+  field: {
+    color: '#000',
+    backgroundColor: '#eef',
+    border: '1px solid #00f',
+    padding: 4,
+    fontFamily: 'monospace',
+    fontSize: '90%',
+    fontWeight: 800,
+    cursor: 'pointer',
+  },
+  fieldInputContainer: {
+    display: 'inline-block',
+  },
+  fieldInput: {},
 };
 
 export default TemplateEditor;
