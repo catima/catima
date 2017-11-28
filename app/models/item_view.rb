@@ -12,6 +12,7 @@
 #  updated_at            :datetime         not null
 #
 
+# rubocop:disable Rails/SkipsModelValidations
 class ItemView < ActiveRecord::Base
   belongs_to :item_type
 
