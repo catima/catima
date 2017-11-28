@@ -1,48 +1,36 @@
 import PropTypes from 'prop-types';
 import React from 'react';
 import {
-  CompositeDecorator,
-  ContentState,
   Editor,
   EditorState,
   RichUtils,
-  convertFromHTML,
-  convertToRaw
 } from 'draft-js';
+import {
+  convertFromHTML,
+  convertToHTML,
+} from 'draft-convert';
+
+
 
 class TemplateEditor extends React.Component {
   static propTypes = {
-    content: PropTypes.string.isRequired,
+    contentRef: PropTypes.string.isRequired,
     locale: PropTypes.string.isRequired,
   };
 
   constructor(props){
     super(props);
-
     const self = this;
-
-    const decorator = new CompositeDecorator([]);
-
-    const blocksFromHTML = convertFromHTML(this.props.content);
-
-    const state = ContentState.createFromBlockArray(
-      blocksFromHTML.contentBlocks,
-      blocksFromHTML.entityMap,
-    );
-
     this.state = {
       editorState: EditorState.createWithContent(
-        state,
-        decorator,
+        convertFromHTML(this.loadContent(this.props.contentRef))
       ),
     };
-
     this.focus = () => this.refs.editor.focus();
-
     this.onChange = function(editorState){
+      self.updateContent(self.props.contentRef, convertToHTML(editorState.getCurrentContent()));
       self.setState({editorState});
     }
-
     this.handleKeyCommand = this.handleKeyCommand.bind(this);
   }
 
@@ -53,6 +41,17 @@ class TemplateEditor extends React.Component {
       return 'handled';
     }
     return 'not-handled';
+  }
+
+  loadContent(ref){
+    let v = JSON.parse(document.getElementById(ref).value || {});
+    return v[this.props.locale] || '';
+  }
+
+  updateContent(ref, html){
+    let v = JSON.parse(document.getElementById(ref).value || {});
+    v[this.props.locale] = html;
+    document.getElementById(ref).value = JSON.stringify(v);
   }
 
   render(){
