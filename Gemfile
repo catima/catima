@@ -90,7 +90,7 @@ group :development do
   gem "rb-fsevent", :require => false
   gem "rbnacl", "~> 3.4", :require => false
   gem "rbnacl-libsodium", :require => false
-  gem "rubocop", "~> 0.47.1", :require => false
+  gem "rubocop", "~> 0.51.0", :require => false
   gem "ruby-progressbar", :require => false
   gem "spring"
   gem "sshkit", "~> 1.7", :require => false
