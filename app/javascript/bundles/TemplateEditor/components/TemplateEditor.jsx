@@ -137,9 +137,12 @@ class TemplateEditor extends React.Component {
             type="text"
             value={this.state.fieldName}
             onKeyDown={this.onFieldInputKeyDown}
+            className="form-control templateEditorFieldSelect"
           >
             <option value="">---</option>
-            <option value="test">Test</option>
+            {this.props.fields.map((f) =>
+              <option value={f.slug}>{f.name}</option>
+            )}
           </select>
         </div>
     }
@@ -287,13 +290,12 @@ const FieldSpan = (props) => {
 const styles = {
   field: {
     color: '#000',
-    backgroundColor: '#eef',
-    border: '1px solid #00f',
-    padding: 4,
+    backgroundColor: '#f4f4ff',
+    border: '1px solid #eef',
+    padding: 2,
     fontFamily: 'monospace',
     fontSize: '90%',
     fontWeight: 800,
-    cursor: 'pointer',
   },
   fieldInputContainer: {
     display: 'inline-block',

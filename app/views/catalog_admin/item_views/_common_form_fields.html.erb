@@ -26,7 +26,11 @@
     <% @item_view.item_type.catalog.valid_locales.each_with_index do |l, i| %>
     <div role="tabpanel" class="tab-pane <% if i==0 %>active<% end %>" id="<%= l %>">
       <div class="tabcontent">
-        <%= react_component("TemplateEditor", props: { :contentRef => "item_view_template", :locale => l }, prerender: false) %>
+        <%= react_component("TemplateEditor", props: {
+          :contentRef => "item_view_template",
+          :locale => l,
+          :fields => @item_view.item_type.fields.map { |f| {slug: f.slug, name: f.name} }
+        }, prerender: false) %>
       </div>
     </div>
     <% end %>
