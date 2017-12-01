@@ -6,7 +6,6 @@ module JsonHelper
 
   def json_react_input_component(form, field, props={})
     props = props.merge(:input => "##{json_hidden_field_id(form, field)}")
-    puts '*** json_react_input_component ***', props
     html = [
       json_hidden_field(form, field),
       react_component(field.editor_component, props: props, prerender: false)
