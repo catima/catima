@@ -3,6 +3,14 @@ require "capybara/rails"
 require "capybara/poltergeist"
 Capybara.javascript_driver = :poltergeist
 
+# We deactivate Javascript errors due to the lack of integration
+# of react_on_rails with Minitest by only supporting RSpec tests.
+options = { js_errors: false }
+Capybara.register_driver :poltergeist do |app|
+  Capybara::Poltergeist::Driver.new(app, options)
+end
+# TODO: Activate Javascript errors again for tests
+
 class ActionDispatch::IntegrationTest
   # Make the Capybara DSL available in all integration tests
   include Capybara::DSL
