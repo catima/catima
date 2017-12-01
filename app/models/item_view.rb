@@ -18,7 +18,6 @@ class ItemView < ActiveRecord::Base
 
   validates_presence_of :item_type
   validates_presence_of :name
-  validates_presence_of :template
 
   serialize :template, HashSerializer
 
