@@ -16,7 +16,7 @@ class DateTimeInput extends React.Component {
     const granularity = this.getFieldOptions().format;
     for (let i in granularity){
       let k = granularity[i];
-      this.state[k] = date[k] || ({Y:2000, M:1, D:1, h:0, m:0, s:0})[k];
+      this.state[k] = date[k] || ({Y:0, M:1, D:1, h:0, m:0, s:0})[k];
     }
     this.handleChangeDay = this._handleChangeDay.bind(this);
     this.handleChangeMonth = this._handleChangeMonth.bind(this);
