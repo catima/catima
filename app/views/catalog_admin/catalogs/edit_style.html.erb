@@ -1,5 +1,7 @@
 <% provide(:title, "Customize catalog style") %>
 
+<%= javascript_pack_tag 'style-control-bundle' %>
+
 <div class="panel-body">
 
   <%= bootstrap_form_for(@catalog, url: catalog_admin_style_path) do |f| %>
@@ -19,7 +21,7 @@
       <div role="tabpanel" class="tab-pane active" id="general">
         <div class="form-group">
           <label class="control-label">Base font</label>
-          <%= react_component 'StyleControl', { input: '#catalog_style', element: 'base-font' } %>
+          <%= react_component 'StyleControl', props: { input: '#catalog_style', element: 'base-font' }, prerender: false %>
         </div>
 
         <div class="form-group">
@@ -39,7 +41,7 @@
 
         <div class="form-group">
           <label class="control-label">Navbar</label>
-          <%= react_component 'StyleControl', { input: '#catalog_style', element: 'navbar' } %>
+          <%= react_component 'StyleControl', props: { input: '#catalog_style', element: 'navbar' }, prerender: false %>
         </div>
       </div>
 
@@ -98,12 +100,12 @@
 
         <div class="form-group">
           <label class="control-label">Main title</label>
-          <%= react_component 'StyleControl', { input: '#catalog_style', element: 'main-title' } %>
+          <%= react_component 'StyleControl', props: { input: '#catalog_style', element: 'main-title' }, prerender: false %>
         </div>
 
         <div class="form-group">
           <label class="control-label">Sub title</label>
-          <%= react_component 'StyleControl', { input: '#catalog_style', element: 'sub-title' } %>
+          <%= react_component 'StyleControl', props: { input: '#catalog_style', element: 'sub-title' }, prerender: false %>
         </div>
 
         <hr/>
@@ -112,12 +114,12 @@
 
         <div class="form-group">
           <label class="control-label">Item labels</label>
-          <%= react_component 'StyleControl', { input: '#catalog_style', element: 'item-labels' } %>
+          <%= react_component 'StyleControl', props: { input: '#catalog_style', element: 'item-labels' }, prerender: false %>
         </div>
 
         <div class="form-group">
           <label class="control-label">Item text</label>
-          <%= react_component 'StyleControl', { input: '#catalog_style', element: 'item-text' } %>
+          <%= react_component 'StyleControl', props: { input: '#catalog_style', element: 'item-text' }, prerender: false %>
         </div>
       </div>
     </div>

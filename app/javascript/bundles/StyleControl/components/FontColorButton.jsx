@@ -1,40 +1,46 @@
+import 'es6-shim';
+import PropTypes from 'prop-types';
+import React from 'react';
+
+
 function uuidv4() {
   return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function(c) {
-    var r = Math.random() * 16 | 0, v = c == 'x' ? r : (r & 0x3 | 0x8);
+    let r = Math.random() * 16 | 0, v = c == 'x' ? r : (r & 0x3 | 0x8);
     return v.toString(16);
   });
 }
 
 
-var FontColorButton = React.createClass({
-
-  getInitialState: function(){
-    return {
+class FontColorButton extends React.Component {
+  constructor(props){
+    super(props)
+    this.state = {
       colorInputId: uuidv4()
-    };
-  },
+    }
+    this.handleChange = this._handleChange.bind(this);
+  }
 
-  componentDidMount: function(){
-    var self = this;
+  componentDidMount(){
+    let self = this;
     $('#'+this.state.colorInputId).minicolors({
       theme: 'bootstrap',
       change: function(value, opacity){
         self.handleChange(value);
       }
     });
-  },
+  }
 
-  componentWillUnmount: function(){
+  componentWillUnmount(){
     $('#'+this.state.colorInputId).minicolors('destroy');
-  },
+  }
 
-  handleChange: function(val){
-    var newVal = {};
+  _handleChange(val){
+    let newVal = {};
     newVal[this.props.elem] = val;
     this.props.onChange(newVal);
-  },
+  }
 
-  render: function(){
+  render(){
     return (
       <div className="colorButtonWrapper">
         {this.props.name}
@@ -44,4 +50,6 @@ var FontColorButton = React.createClass({
       </div>
     );
   }
-});
+};
+
+export default FontColorButton;

@@ -1,7 +1,17 @@
-var StyleControl = React.createClass({
+import 'es6-shim';
+import PropTypes from 'prop-types';
+import React from 'react';
+import FontMenu from './FontMenu';
+import FontSize from './FontSize';
+import FontStyle from './FontStyle';
+import FontColorButton from './FontColorButton';
+import FontExample from './FontExample';
 
-  getInitialState: function(){
-    return $.extend(
+
+class StyleControl extends React.Component {
+  constructor(props){
+    super(props)
+    this.state = $.extend(
       {
         fontFamily: '', 'fontSize': '',
         fontWeight: 'normal', fontStyle: 'normal', textDecoration: 'none',
@@ -9,38 +19,39 @@ var StyleControl = React.createClass({
       },
       this.getData()
     );
-  },
+    this.handleChange = this._handleChange.bind(this);
+  }
 
-  getData: function(){
-    var value = this.getInput().val();
+  getData(){
+    const value = this.getInput().val();
     if (value === '') {
       return {};
     }
-    var v = JSON.parse(value);
+    const v = JSON.parse(value);
     return (this.props.element ? v[this.props.element] : v);
-  },
+  }
 
-  setData: function(d){
-    var dobj = $.extend(this.getData(), d);
-    var s = JSON.parse(this.getInput().val() || {});
+  setData(d){
+    const dobj = $.extend(this.getData(), d);
+    let s = JSON.parse(this.getInput().val() || {});
     if (this.props.element) {
       s[this.props.element] = dobj;
     } else {
       s = dobj
     }
     this.getInput().val(JSON.stringify(s));
-  },
+  }
 
-  getInput: function(){
+  getInput(){
     return $(this.props.input);
-  },
+  }
 
-  handleChange: function(d){
+  _handleChange(d){
     this.setState(d);
     this.setData(d);
-  },
+  }
 
-  render: function(){
+  render(){
     return (
       <div>
         <p>StyleControl: {this.state.fontFamily}</p>
@@ -77,4 +88,6 @@ var StyleControl = React.createClass({
       </div>
     );
   }
-});
+};
+
+export default StyleControl;

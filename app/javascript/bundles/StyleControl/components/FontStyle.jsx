@@ -1,31 +1,39 @@
-var FontStyle = React.createClass({
-  getInitialState: function(){
-    return {
+import 'es6-shim';
+import PropTypes from 'prop-types';
+import React from 'react';
+
+class FontStyle extends React.Component {
+  constructor(props){
+    super(props)
+    this.state = {
       bold: (this.props.fontWeight == 'bold') || false,
       italic: (this.props.fontStyle == 'italic') || false,
       underline: (this.props.textDecoration == 'underline') || false
     };
-  },
+    this.handleBoldChange = this._handleBoldChange.bind(this);
+    this.handleItalicChange = this._handleItalicChange.bind(this);
+    this.handleUnderlineChange = this._handleUnderlineChange.bind(this);
+  }
 
-  handleBoldChange: function(e){
-    var newState = !this.state.bold;
+  _handleBoldChange(e){
+    let newState = !this.state.bold;
     this.setState({bold: newState});
     this.props.onChange({fontWeight: newState ? 'bold' : 'normal'});
-  },
+  }
 
-  handleItalicChange: function(e){
-    var newState = !this.state.italic;
+  _handleItalicChange(e){
+    let newState = !this.state.italic;
     this.setState({italic: newState});
     this.props.onChange({fontStyle: newState ? 'italic' : 'normal'});
-  },
+  }
 
-  handleUnderlineChange: function(e){
-    var newState = !this.state.underline;
+  _handleUnderlineChange(e){
+    let newState = !this.state.underline;
     this.setState({underline: newState});
     this.props.onChange({textDecoration: newState ? 'underline' : 'none'});
-  },
+  }
 
-  render: function(){
+  render(){
     return (
       <div className="btn-group" role="group" aria-label="Font style">
         <button type="button" onClick={this.handleBoldChange} data-active={this.state.bold} className="btn btn-sm btn-default"><b>B</b></button>
@@ -34,4 +42,6 @@ var FontStyle = React.createClass({
       </div>
     )
   }
-});
+};
+
+export default FontStyle;

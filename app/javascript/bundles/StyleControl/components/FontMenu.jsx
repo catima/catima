@@ -1,10 +1,18 @@
-var FontMenu = React.createClass({
+import 'es6-shim';
+import PropTypes from 'prop-types';
+import React from 'react';
 
-  handleChange: function(e){
+class FontMenu extends React.Component {
+  constructor(props){
+    super(props)
+    this.handleChange = this._handleChange.bind(this);
+  }
+
+  _handleChange(e){
     this.props.onChange({fontFamily: e.target.value})
-  },
+  }
 
-  render: function(){
+  render(){
     return (
       <select className="form-control btn btn-sm btn-default"
         value={this.props.value}
@@ -29,4 +37,6 @@ var FontMenu = React.createClass({
       </select>
     )
   }
-});
+};
+
+export default FontMenu;

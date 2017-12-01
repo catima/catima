@@ -1,10 +1,19 @@
-var FontSize = React.createClass({
+import 'es6-shim';
+import PropTypes from 'prop-types';
+import React from 'react';
 
-  handleChange: function(e){
+
+class FontSize extends React.Component {
+  constructor(props){
+    super(props)
+    this.handleChange = this._handleChange.bind(this);
+  }
+
+  _handleChange(e){
     this.props.onChange({fontSize: e.target.value})
-  },
+  }
 
-  render: function(){
+  render(){
     return (
       <select className="form-control btn btn-sm btn-default"
         value={this.props.value}
@@ -37,4 +46,6 @@ var FontSize = React.createClass({
       </select>
     )
   }
-});
+};
+
+export default FontSize;
