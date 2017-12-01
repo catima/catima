@@ -90,4 +90,12 @@ class ItemType < ActiveRecord::Base
   def find_field(field_id)
     fields.find_by(field_id.starts_with?('_') ? :uuid : :slug => field_id)
   end
+
+  def default_list_view
+    item_views.find_by(default_for_list_view: true)
+  end
+
+  def default_item_view
+    item_views.find_by(default_for_item_view: true)
+  end
 end

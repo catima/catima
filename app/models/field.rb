@@ -33,6 +33,7 @@
 #
 
 # TODO: drop name_old and name_plural_old columns (no longer used)
+# rubocop:disable Metrics/ClassLength
 class Field < ActiveRecord::Base
   TYPES = {
     "choice" => "Field::ChoiceSet",
@@ -197,6 +198,12 @@ class Field < ActiveRecord::Base
 
   def value_or_id_for_item(it)
     value_for_item(it)
+  end
+
+  def display_value(it, _locale)
+    # TODO
+    # implement something more sensible
+    it.data[uuid].to_s
   end
 
   # Defines methods and runs class macros on the given item class in order to

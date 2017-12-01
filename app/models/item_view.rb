@@ -13,6 +13,7 @@
 #
 
 # rubocop:disable Rails/SkipsModelValidations
+# rubocop:disable Rails/OutputSafety
 class ItemView < ActiveRecord::Base
   belongs_to :item_type
 
@@ -30,5 +31,14 @@ class ItemView < ActiveRecord::Base
 
   def remove_default_list_view_from_other_views
     item_type.item_views.where("item_views.id != ?", id).update_all(:default_for_list_view => false)
+  end
+
+  def render(item, locale)
+    tpl = JSON.parse(template)
+    local_tpl = tpl[locale.to_s] || ''
+    item.fields.each do |field|
+      local_tpl = local_tpl.sub('{{' + field.slug + '}}', item.display_value(field, locale))
+    end
+    local_tpl.html_safe
   end
 end

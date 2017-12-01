@@ -40,6 +40,8 @@ module ItemsHelper
   end
 
   def item_summary(item)
+    item_view = item.item_type.default_list_view
+    return item_view.render(item, I18n.locale) unless item_view.nil?
     item.applicable_list_view_fields.each_with_object([]) do |field, html|
       next if field == item.primary_field
       next unless field.human_readable?
