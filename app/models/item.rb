@@ -18,7 +18,6 @@
 #  uuid           :string
 #
 
-# rubocop:disable ClassLength
 class Item < ActiveRecord::Base
   include DataStore::Macros
   include Review::Macros

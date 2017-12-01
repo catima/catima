@@ -66,11 +66,11 @@ Style/FrozenStringLiteralComment:
 Style/NumericPredicate:
   Enabled: false
 
-Style/SpaceAroundEqualsInParameterDefault:
+Layout/SpaceAroundEqualsInParameterDefault:
   EnforcedStyle: no_space
 
 Style/TrivialAccessors:
   AllowPredicates: true
 
-Style/VariableNumber:
+Naming/VariableNumber:
   Enabled: false
