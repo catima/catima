@@ -2,3 +2,7 @@
 .panel-body > *:last-child {
   margin-bottom: 0;
 }
+
+.panel.panel-default {
+  overflow-y: auto;
+}
