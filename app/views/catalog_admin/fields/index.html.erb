@@ -25,7 +25,11 @@
 <% end %>
 
 <% provide(:extra_setup) do %>
-  <%= render('catalog_admin/item_views/index') %>
+  <% if @field_set.class == ItemType %>
+    <hr>
+    <h3>Item views</h3>
+    <%= render('catalog_admin/item_views/index') %>
+  <% end %>
 <% end %>
 
 <table class="table" id="fields">
