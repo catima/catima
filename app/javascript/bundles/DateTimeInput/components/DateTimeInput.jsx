@@ -1,80 +1,95 @@
-var DateTimeInput = React.createClass({
+import 'es6-shim';
+import PropTypes from 'prop-types';
+import React from 'react';
 
-  getInitialState: function() {
-    var s = {};
-    var date = this.getData();
-    var granularity = this.getFieldOptions().format;
-    for (var i in granularity){
-      var k = granularity[i];
-      s[k] = date[k] || ({Y:2000, M:1, D:1, h:0, m:0, s:0})[k];
+
+class DateTimeInput extends React.Component {
+
+  static propTypes = {
+    input: PropTypes.string.isRequired,
+  };
+
+  constructor(props){
+    super(props);
+    this.state = {};
+    const date = this.getData();
+    const granularity = this.getFieldOptions().format;
+    for (let i in granularity){
+      let k = granularity[i];
+      this.state[k] = date[k] || ({Y:2000, M:1, D:1, h:0, m:0, s:0})[k];
     }
-    return s;
-  },
+    this.handleChangeDay = this._handleChangeDay.bind(this);
+    this.handleChangeMonth = this._handleChangeMonth.bind(this);
+    this.handleChangeYear = this._handleChangeYear.bind(this);
+    this.handleChangeHours = this._handleChangeHours.bind(this);
+    this.handleChangeMinutes = this._handleChangeMinutes.bind(this);
+    this.handleChangeSeconds = this._handleChangeSeconds.bind(this);
+  }
 
-  handleChangeDay: function(e){
-    var v = parseInt(e.target.value);
+  _handleChangeDay(e){
+    const v = parseInt(e.target.value);
     if (v < 1 || v > 31) return;
     this.updateData({D: v});
-  },
+  }
 
-  handleChangeMonth: function(e){
-    var v = parseInt(e.target.value);
+  _handleChangeMonth(e){
+    const v = parseInt(e.target.value);
     if (v < 1 || v > 12) return;
     this.updateData({M: v});
-  },
+  }
 
-  handleChangeYear: function(e){
-    var v = parseInt(e.target.value);
+  _handleChangeYear(e){
+    const v = parseInt(e.target.value);
     if (isNaN(v)) return;
     this.updateData({Y: v});
-  },
+  }
 
-  handleChangeHours: function(e){
-    var v = parseInt(e.target.value);
+  _handleChangeHours(e){
+    const v = parseInt(e.target.value);
     if (v < 0 || v > 23) return;
     this.updateData({h: v});
-  },
+  }
 
-  handleChangeMinutes: function(e){
-    var v = parseInt(e.target.value);
+  _handleChangeMinutes(e){
+    const v = parseInt(e.target.value);
     if (v < 0 || v > 59) return;
     this.updateData({m: v});
-  },
+  }
 
-  handleChangeSeconds: function(e){
-    var v = parseInt(e.target.value);
+  _handleChangeSeconds(e){
+    const v = parseInt(e.target.value);
     if (v < 0 || v > 59) return;
     this.updateData({s: v});
-  },
+  }
 
-  updateData: function(h){
+  updateData(h){
     this.setState(h);
-    var d = this.getData();
-    for (var k in h) d[k] = h[k];
+    const d = this.getData();
+    for (let k in h) d[k] = h[k];
     this.setData(d);
-  },
+  }
 
-  getData: function(){
-    var value = this.getInput().val();
-    if (value === "") {
+  getData(){
+    const value = this.getInput().val();
+    if (typeof(value) === 'undefined' || value === "") {
       return {};
     }
     return JSON.parse(value);
-  },
+  }
 
-  setData: function(d){
+  setData(d){
     this.getInput().val(JSON.stringify(d));
-  },
+  }
 
-  getInput: function() {
+  getInput() {
     return $(this.props.input);
-  },
+  }
 
-  getFieldOptions: function() {
-    return this.getInput().data("field-options");
-  },
+  getFieldOptions() {
+    return this.getInput().data("field-options") || {format: 'YMD'};
+  }
 
-  render: function(){
+  render(){
     return (
       <div className="dateTimeInput rails-bootstrap-forms-datetime-select">
         {this.state.D != null ? (
@@ -114,4 +129,7 @@ var DateTimeInput = React.createClass({
     );
   }
 
-});
+};
+
+export default DateTimeInput;
+
