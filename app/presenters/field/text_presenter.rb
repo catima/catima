@@ -19,6 +19,7 @@ class Field::TextPresenter < FieldPresenter
   end
 
   def render_markdown(t)
+    t ||= ''
     v = Redcarpet::Markdown.new(
       Redcarpet::Render::HTML,
       autolink: true, tables: true
