@@ -3,8 +3,6 @@
     "@rails/webpacker": "^3.0.2",
     "babel-preset-react": "^6.24.1",
     "coffeescript": "1.12.7",
-    "draft-convert": "^2.0.1",
-    "draft-js": "^0.10.4",
     "es6-shim": "^0.35.3",
     "prop-types": "^15.6.0",
     "react": "^16.1.1",
