@@ -3,6 +3,7 @@ class Field::ImagePresenter < Field::FilePresenter
 
   def value
     return nil if raw_value.nil?
+    return image_viewer unless options[:style]
     options[:class] = options[:style] ? options[:style] : :full
     transform = case options[:class]
     when :compact then [:fill, '100x100']
@@ -20,5 +21,13 @@ class Field::ImagePresenter < Field::FilePresenter
     return "/#{file['path']}" if size.nil?
     path_parts = file['path'].split('/')
     "/thumbs/#{path_parts[1]}/#{size}/#{mode}/#{path_parts[2]}/#{path_parts[3]}"
+  end
+
+  def image_viewer
+    thumbs = files_as_array.map do |image|
+      file_url(image, '300x200', :resize)
+    end
+    images = files_as_array.map { |img| '/' + img['path'] }
+    @view.render('fields/images', thumbnails: thumbs, images: images)
   end
 end

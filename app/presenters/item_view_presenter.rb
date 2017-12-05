@@ -1,8 +1,5 @@
 # rubocop:disable Rails/OutputSafety
 class ItemViewPresenter
-  attr_reader :view, :item_view, :options
-  delegate :item_path, :to => :view
-
   def initialize(view, item_view, item, locale, options={})
     @view = view
     @item_view = item_view
@@ -11,16 +8,19 @@ class ItemViewPresenter
     @options = options
   end
 
+  def item_link
+    "/#{@item.catalog.slug}/#{I18n.locale}/#{@item.item_type.slug}/#{@item.id}"
+  end
+
   def render
     tpl = JSON.parse(@item_view.template)
     local_tpl = tpl[@locale.to_s] || ''
-    item_link = item_path(item_type_slug: @item.item_type, id: @item)
     local_tpl = local_tpl.sub('{{_itemLink}}', item_link)
     @item.fields.each do |field|
       presenter = "#{field.class.name}Presenter".constantize.new(@view, @item, field, {})
       local_tpl = local_tpl.sub('{{' + field.slug + '}}', presenter.value || '')
     end
-    (options[:strip_p] == true ? strip_p(local_tpl) : local_tpl).html_safe
+    (@options[:strip_p] == true ? strip_p(local_tpl) : local_tpl).html_safe
   end
 
   def strip_p(html)
