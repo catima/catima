@@ -98,4 +98,8 @@ class ItemType < ActiveRecord::Base
   def default_item_view
     item_views.find_by(default_for_item_view: true)
   end
+
+  def default_display_name_view
+    item_views.find_by(default_for_display_name: true)
+  end
 end

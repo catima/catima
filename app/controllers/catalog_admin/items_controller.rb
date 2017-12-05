@@ -120,7 +120,7 @@ class CatalogAdmin::ItemsController < CatalogAdmin::BaseController
 
   %w(created updated deleted).each do |verb|
     define_method("#{verb}_message") do
-      "#{@item_type.name} “#{view_context.item_display_name(@item)}” "\
+      "#{@item_type.name} “#{view_context.default_display_name(@item)}” "\
       "has been #{verb}."
     end
   end

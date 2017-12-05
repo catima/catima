@@ -1,4 +1,4 @@
-<% provide(:title, t('.edit_item', item: item_display_name(@item))) %>
+<% provide(:title, t('.edit_item', item: default_display_name(@item))) %>
 
 <div id="item-form">
   <%= bootstrap_form_for(@item, :url => catalog_admin_item_path) do |f| %>
