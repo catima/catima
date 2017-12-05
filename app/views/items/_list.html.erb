@@ -8,10 +8,14 @@
       </div>
     <% end %>
     <div class="media-body">
-      <h4 class="media-heading">
-        <%= item_list_link(item_list, item, i, item_display_name(item)) %>
-      </h4>
-      <%= item_summary(item) %>
+      <% if item.item_type.default_list_view.nil? == true %>
+        <h4 class="media-heading">
+          <%= item_list_link(item_list, item, i, item_display_name(item)) %>
+        </h4>
+        <%= item_summary(item) %>
+      <% else %>
+        <%= item_list_view(item) %>
+      <% end %>
     </div>
   </div>
 <% end %>

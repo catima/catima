@@ -5,7 +5,7 @@ class Field::TextPresenter < FieldPresenter
 
   def value
     v = compact? ? truncate(super.to_s, :length => 100) : super
-    field.formatted_text ? render_markdown(v) : v
+    field.formatted_text == 1 ? render_markdown(v) : v
   end
 
   def input(form, method, options={})

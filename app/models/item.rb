@@ -139,14 +139,6 @@ class Item < ActiveRecord::Base
     behaving_as_type.update(uuid => value)
   end
 
-  # Returns a human-friendly representation of the provided field
-  # The field can be a field instance, a UUID or a slug.
-  # The locale might be ignored for some field types.
-  def display_value(field, locale)
-    field = item_type.find_field(field) unless field.is_a? Field
-    field.display_value(self, locale)
-  end
-
   private
 
   def primary_text_value

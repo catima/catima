@@ -39,9 +39,14 @@ module ItemsHelper
     field_value(item, field, options.reverse_merge(:style => :compact))
   end
 
-  def item_summary(item)
+  def item_list_view(item, options={})
     item_view = item.item_type.default_list_view
-    return item_view.render(item, I18n.locale) unless item_view.nil?
+    return item_display_name if item_view.nil?
+    presenter = ItemViewPresenter.new(self, item_view, item, I18n.locale, options)
+    presenter.render
+  end
+
+  def item_summary(item)
     item.applicable_list_view_fields.each_with_object([]) do |field, html|
       next if field == item.primary_field
       next unless field.human_readable?
