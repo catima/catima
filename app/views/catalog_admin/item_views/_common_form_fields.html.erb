@@ -7,8 +7,35 @@
 
 <%= f.text_field(:name) %>
 
-<%= f.check_box(:default_for_item_view) %>
-<%= f.check_box(:default_for_list_view) %>
+<table>
+  <tr>
+    <td style="padding-right: 10px;">
+      <%= f.check_box(
+        :default_for_item_view,
+        label: 'Use as item view'
+      ) %>
+    </td>
+    <td><span style="color: #666;" data-toggle="popover" title="What is an item view?" data-content="The item view is how the details of an individual item are shown to the user."><i class="fa fa-question-circle-o"></i></span></td>
+  </tr>
+  <tr>
+    <td style="padding-right: 10px;">
+      <%= f.check_box(
+        :default_for_list_view,
+        :label => 'Use as list view'
+      ) %>
+    </td>
+    <td><span style="color: #666;" data-toggle="popover" title="What is a list view?" data-content="The list view shows a short description of a series of items, along with a link to the item view."><i class="fa fa-question-circle-o"></i></span></td>
+  </tr>
+  <tr>
+    <td style="padding-right: 10px;">
+      <%= f.check_box(
+        :default_for_display_name,
+        :label => 'Use as display name'
+      ) %>
+    </td>
+    <td><span style="color: #666;" data-toggle="popover" title="What is the display name?" data-content="The display name is used to show a simple name of the item, for example as a reference with a link to the item view. By default, the primary field is used."><i class="fa fa-question-circle-o"></i></span></td>
+  </tr>
+</table>
 
 <hr>
 <%= f.hidden_field(:template) %>
@@ -42,6 +69,7 @@
     e.preventDefault()
     $(this).tab('show')
   });
+  $('[data-toggle="popover"]').popover();
 </script>
 
 <hr>

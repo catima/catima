@@ -69,6 +69,7 @@ class CatalogAdmin::ItemViewsController < CatalogAdmin::BaseController
       :name,
       :default_for_item_view,
       :default_for_list_view,
+      :default_for_display_name,
       :template
     )
   end

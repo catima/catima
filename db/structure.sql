@@ -467,7 +467,8 @@ CREATE TABLE item_views (
     default_for_list_view boolean,
     default_for_item_view boolean,
     created_at timestamp without time zone NOT NULL,
-    updated_at timestamp without time zone NOT NULL
+    updated_at timestamp without time zone NOT NULL,
+    default_for_display_name boolean DEFAULT false
 );
 
 
@@ -1547,4 +1548,6 @@ INSERT INTO schema_migrations (version) VALUES ('20171106080707');
 INSERT INTO schema_migrations (version) VALUES ('20171109063607');
 
 INSERT INTO schema_migrations (version) VALUES ('20171118121553');
+
+INSERT INTO schema_migrations (version) VALUES ('20171205064929');
 

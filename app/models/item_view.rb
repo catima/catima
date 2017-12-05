@@ -2,14 +2,15 @@
 #
 # Table name: item_views
 #
-#  created_at            :datetime         not null
-#  default_for_item_view :boolean
-#  default_for_list_view :boolean
-#  id                    :integer          not null, primary key
-#  item_type_id          :integer
-#  name                  :string
-#  template              :jsonb
-#  updated_at            :datetime         not null
+#  created_at               :datetime         not null
+#  default_for_display_name :boolean          default(FALSE)
+#  default_for_item_view    :boolean
+#  default_for_list_view    :boolean
+#  id                       :integer          not null, primary key
+#  item_type_id             :integer
+#  name                     :string
+#  template                 :jsonb
+#  updated_at               :datetime         not null
 #
 
 # rubocop:disable Rails/SkipsModelValidations
