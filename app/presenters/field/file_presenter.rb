@@ -1,5 +1,5 @@
 class Field::FilePresenter < FieldPresenter
-  delegate :content_tag, :number_to_human_size, :to => :view
+  delegate :content_tag, :number_to_human_size, :react_component, :to => :view
 
   def input(form, method, options={})
     html = [
@@ -15,7 +15,12 @@ class Field::FilePresenter < FieldPresenter
           "data-fieldname=\"#{field.name}\" " \
           "data-upload-url=\"/#{field.catalog.slug}/admin/#{field.item_type.slug}/upload\" " \
           "data-file-types=\"#{field.types}\" " \
-          "data-button-text=\"" + (field.multiple == true ? 'Add files' : "Add file") + "\"></div>"
+          "data-button-text=\"" + (field.multiple == true ? 'Add files' : "Add file") + "\"></div>",
+      react_component(
+        'ThumbnailControl',
+        props: { srcRef: "item_#{method}_json" },
+        prerender: false
+      )
     ]
     html.compact.join.html_safe
   end

@@ -4429,6 +4429,10 @@ react-dom@^16.1.1:
     object-assign "^4.1.1"
     prop-types "^15.6.0"
 
+react-image-crop@^3.0.7:
+  version "3.0.7"
+  resolved "https://registry.yarnpkg.com/react-image-crop/-/react-image-crop-3.0.7.tgz#8f7f1f03031c76c8b6306d11f7d1b8bf3007ab8c"
+
 react-image-lightbox@^4.3.0:
   version "4.3.0"
   resolved "https://registry.yarnpkg.com/react-image-lightbox/-/react-image-lightbox-4.3.0.tgz#961e99cc7eea6db24c2a75ab9dbd46f632c1ed8a"

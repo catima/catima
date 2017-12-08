@@ -132,6 +132,16 @@ activate_jquery_fileupload = ($file_field)->
     progressall: (e, data)-> fileupload_progressall(data)
   })
 
+# Keep track of the file fields we have modified so far.
+window.modified_file_fields = [];
+
+check_thumbnail_button_display = ($file_field)->
+  console.log('check_thumbnail_button_display')
+  if nfiles($file_field) == 0 or $.inArray($file_field, modified_file_fields) >= 0
+    $("#fileupload_#{$file_field} ~ div").addClass('hidden')
+  else
+    $("#fileupload_#{$file_field} ~ div").removeClass('hidden')
+
 # Check if we should display or not the upload button
 display_upload_button = ($file_field)->
   m = multiple($file_field)
@@ -139,6 +149,7 @@ display_upload_button = ($file_field)->
     $("#fileupload_#{$file_field} .fileinput-button").removeClass('hidden')
   else
     $("#fileupload_#{$file_field} .fileinput-button").addClass('hidden')
+  check_thumbnail_button_display($file_field)
 
 fileupload_add_for = ($field, $data)->
   # Validate if file is acceptable for field. If yes, submit.
@@ -164,6 +175,7 @@ extension_for = ($filename)->
   return /(?:\.([^.]+))?$/.exec($filename)[1]
 
 fileupload_done_for = ($field, $result)->
+  modified_file_fields.push($field)
   control = $("#fileupload_#{$field}")
   file_id = file_hash($result.processed_file)
   new_presenter = file_presenter_upload_finished($result.processed_file)
@@ -224,6 +236,7 @@ activate_delete_file_buttons_for = ($field)->
   $control.find('.delete-file-btn').on('click', (e)-> delete_file($field, e.target))
 
 delete_file = ($field, $target)->
+  modified_file_fields.push($field)
   file_id = $($target).closest('tr').attr('data-file')
   files = files_for($field)
   files_to_keep = []
