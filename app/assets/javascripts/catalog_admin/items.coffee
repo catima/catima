@@ -136,7 +136,6 @@ activate_jquery_fileupload = ($file_field)->
 window.modified_file_fields = [];
 
 check_thumbnail_button_display = ($file_field)->
-  console.log('check_thumbnail_button_display')
   if nfiles($file_field) == 0 or $.inArray($file_field, modified_file_fields) >= 0
     $("#fileupload_#{$file_field} ~ div").addClass('hidden')
   else

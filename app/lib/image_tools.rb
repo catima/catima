@@ -12,8 +12,8 @@ module ImageTools
     if mode == :fill
       # Convert cropping from image percentages to pixels
       # and make sure it is squared
-      width = i.width * (cr[2] - cr[0])
-      height = i.height * (cr[3] - cr[1])
+      width = i.width * cr[2]
+      height = i.height * cr[3]
       x_offset = i.width * cr[0]
       x_offset += (width - height) / 2 if width > height
       y_offset = i.height * cr[1]
