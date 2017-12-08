@@ -1,3 +1,4 @@
+# rubocop:disable Metrics/BlockLength
 Rails.application.routes.draw do
   # ===========================================================================
   # API
@@ -152,7 +153,15 @@ Rails.application.routes.draw do
   # ===========================================================================
   # Image thumbnails
 
-  get '/thumbs/:catalog_slug/:size/:mode/:field_uuid/:image.:ext',
+  get '/thumbs/:catalog_slug/:size/fill/:crop/:field_uuid/:image.:ext',
+    :to => 'images#thumbnail_cropped',
+    :constraints => CatalogsController::Constraint
+
+  get '/thumbs/:catalog_slug/:size/fill/:field_uuid/:image.:ext',
+    :to => 'images#thumbnail_default_cropped',
+    :constraints => CatalogsController::Constraint
+
+  get '/thumbs/:catalog_slug/:size/resize/:field_uuid/:image.:ext',
     :to => 'images#thumbnail',
     :constraints => CatalogsController::Constraint
 
