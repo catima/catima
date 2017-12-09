@@ -17,7 +17,7 @@ class ImagesController < ApplicationController
     FileUtils.mkdir_p(dest_dir)
     dest = File.join(dest_dir, filename)
 
-    ImageTools.thumbnail(src, dest, size, :resize, crop)
+    ImageTools.thumbnail(src, dest, size, :resize)
     raise ActiveRecord::RecordNotFound unless File.exists? dest
 
     redirect_to([
