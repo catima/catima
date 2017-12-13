@@ -6,11 +6,13 @@ import ReactCrop from 'react-image-crop';
 class ThumbnailControl extends React.Component {
   static propTypes = {
     srcRef: PropTypes.string.isRequired,
+    srcId: PropTypes.string.isRequired,
   };
 
   constructor(props){
     super(props);
     this.srcRef = props.srcRef;
+    this._id = props.srcId + '_thumbnail_control';
     const src = this._loadSrc();
     this.state = {
       controlClass: (src.length == 0) ? 'hide' : 'show',
@@ -52,7 +54,7 @@ class ThumbnailControl extends React.Component {
 
   render(){
     return (
-      <div className={this.state.controlClass}>
+      <div id={this._id} className={this.state.controlClass}>
         <span
           className="btn btn-sm btn-default"
           onClick={this.toggleModal}>

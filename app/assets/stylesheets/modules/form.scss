@@ -3,21 +3,6 @@
   margin-bottom: 0;
 }
 
-/*div.dropzone {
-  background-color: #f0f0f0;
-  border: 1px solid #ccc;
-  max-width: 200px;
-}
-div.dropzone-multiple {
-  width: 100%;
-  max-width: 100%;
-}
-.dz-message {
-  color: #999;
-}
-.dropzone .dz-preview.dz-image-preview {
-  background-color: #f0f0f0;
-}*/
 .file-upload td {
   padding: 5px 15px 5px 5px;
 }
@@ -35,9 +20,15 @@ textarea[data-field-type="file"] {
 textarea[data-field-type="datetime"] {
   display: none;
 }
-/*.form-group-dropzone {
-  margin-top: -15px;
-}*/
+
+form > .form-group {
+  margin-top: 15px;
+}
+
+.form-group.file-upload {
+  margin-top: 0;
+}
+
 .red {
   color: #f00;
 }

@@ -60,7 +60,7 @@ auth_token = ->
   $('input[name=authenticity_token]').val()
 
 display_existing_files = ($files, $control)->
-  h = (file_presenter file for file in $files).join()
+  h = (file_presenter file for file in $files).join('')
   $control.append("<table>"+h+"</table>")
 
 file_presenter = ($file, $new=false, $uploading=false)->
@@ -136,10 +136,14 @@ activate_jquery_fileupload = ($file_field)->
 window.modified_file_fields = [];
 
 check_thumbnail_button_display = ($file_field)->
+  shown = 1
+  ctrl = $("##{$file_field}_thumbnail_control")
   if nfiles($file_field) == 0 or $.inArray($file_field, modified_file_fields) >= 0
-    $("#fileupload_#{$file_field} ~ div").addClass('hidden')
+    ctrl.addClass('hidden')
+    shown = 0
   else
-    $("#fileupload_#{$file_field} ~ div").removeClass('hidden')
+    ctrl.removeClass('hidden')
+    shown = 1
 
 # Check if we should display or not the upload button
 display_upload_button = ($file_field)->
