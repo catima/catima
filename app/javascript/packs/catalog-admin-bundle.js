@@ -2,6 +2,8 @@ import ReactOnRails from 'react-on-rails';
 
 import DateTimeInput from '../bundles/DateTimeInput/components/DateTimeInput';
 
+import GeoEditor from '../bundles/GeoEditor/components/GeoEditor';
+
 import StyleControl from '../bundles/StyleControl/components/StyleControl';
 import FontColorButton from '../bundles/StyleControl/components/FontColorButton';
 import FontExample from '../bundles/StyleControl/components/FontExample';
@@ -16,6 +18,7 @@ import ThumbnailControl from '../bundles/ThumbnailControl/components/ThumbnailCo
 
 ReactOnRails.register({
   DateTimeInput,
+  GeoEditor,
   StyleControl, FontColorButton, FontExample, FontMenu, FontSize, FontStyle,
   TemplateEditor,
   ThumbnailControl,
