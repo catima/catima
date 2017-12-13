@@ -54,7 +54,6 @@ class StyleControl extends React.Component {
   render(){
     return (
       <div>
-        <p>StyleControl: {this.state.fontFamily}</p>
         <FontMenu value={this.state.fontFamily} onChange={this.handleChange} />
         <FontSize value={this.state.fontSize} onChange={this.handleChange} />
         <FontStyle
@@ -76,7 +75,7 @@ class StyleControl extends React.Component {
           onChange={this.handleChange}
         />
         <FontExample
-          fontFamily={this.state.font}
+          fontFamily={this.state.fontFamily}
           fontSize={this.state.fontSize}
           fontWeight={this.state.bold}
           fontStyle={this.state.italic}
