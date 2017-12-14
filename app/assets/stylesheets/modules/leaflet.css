@@ -1,0 +1,8 @@
+/* For leaflet-draw */
+.sr-only {
+  display: none;
+}
+
+.leaflet-container {
+  height: 100%;
+}
