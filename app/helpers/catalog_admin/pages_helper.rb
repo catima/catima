@@ -8,6 +8,6 @@ module CatalogAdmin::PagesHelper
   end
 
   def page_path(page)
-    ["", page.catalog.slug, page.locale, page.slug].join("/")
+    ["", page.catalog.slug, I18n.locale, page.slug].join("/")
   end
 end

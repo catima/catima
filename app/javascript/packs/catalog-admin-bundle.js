@@ -15,6 +15,8 @@ import TemplateEditor from '../bundles/TemplateEditor/components/TemplateEditor'
 
 import ThumbnailControl from '../bundles/ThumbnailControl/components/ThumbnailControl';
 
+import TranslatedTextField from '../bundles/TranslatedTextField/components/TranslatedTextField';
+
 
 ReactOnRails.register({
   DateTimeInput,
@@ -22,4 +24,5 @@ ReactOnRails.register({
   StyleControl, FontColorButton, FontExample, FontMenu, FontSize, FontStyle,
   TemplateEditor,
   ThumbnailControl,
+  TranslatedTextField,
 });

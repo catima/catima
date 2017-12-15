@@ -12,7 +12,6 @@
       <th>Slug</th>
       <th>URL</th>
       <th>Title</th>
-      <th><%= t('locale') %></th>
       <th></th>
     </tr>
   </thead>
@@ -22,7 +21,6 @@
         <td><%= page.slug %></td>
         <td><%= link_to(page_path(page), page_path(page)) %></td>
         <td><%= page.title %></td>
-        <td><%= page.locale %></td>
         <td style="text-align: right">
           <% if policy(page).edit? %>
             <%= link_to(
@@ -39,7 +37,7 @@
                   :method => :delete,
                   :data => {
                     :confirm => "Are you sure you want to delete "\
-                                "“#{page.title}”?"
+                                "“#{page.slug}”?"
                   }) %>
           <% end %>
         </td>

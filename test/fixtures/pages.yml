@@ -3,30 +3,28 @@
 # Table name: pages
 #
 #  catalog_id  :integer
-#  content     :text
 #  created_at  :datetime         not null
 #  creator_id  :integer
 #  id          :integer          not null, primary key
-#  locale      :string
+#  locale_old  :string
 #  reviewer_id :integer
 #  slug        :string
 #  status      :string
-#  title       :text
+#  title       :jsonb
+#  title_old   :text
 #  updated_at  :datetime         not null
 #
 
 # Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
 
 one:
-  title: Page for Catalog One
+  title: '{"en": "Page for Catalog One"}'
   catalog: one
-  locale: en
   slug: one
 
 two:
-  title: Page for Catalog Two
+  title: '{"en": "Page for Catalog Two"}'
   catalog: two
-  locale: en
   slug: one
 
 created_by_two_editor:

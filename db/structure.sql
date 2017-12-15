@@ -581,12 +581,12 @@ CREATE TABLE pages (
     creator_id integer,
     reviewer_id integer,
     slug character varying,
-    title text,
-    content text,
-    locale character varying,
+    title_old text,
+    locale_old character varying,
     status character varying,
     created_at timestamp without time zone NOT NULL,
-    updated_at timestamp without time zone NOT NULL
+    updated_at timestamp without time zone NOT NULL,
+    title jsonb
 );
 
 
@@ -1550,4 +1550,6 @@ INSERT INTO schema_migrations (version) VALUES ('20171109063607');
 INSERT INTO schema_migrations (version) VALUES ('20171118121553');
 
 INSERT INTO schema_migrations (version) VALUES ('20171205064929');
+
+INSERT INTO schema_migrations (version) VALUES ('20171214171741');
 

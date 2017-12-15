@@ -21,17 +21,15 @@ class PagesController < ApplicationController
   module Constraint
     def self.matches?(request)
       catalog = Catalog.active.where(:slug => request[:catalog_slug]).first!
-      locale = request[:locale]
       slug = request[:slug]
-      catalog.pages.where(:locale => locale, :slug => slug).exists?
+      catalog.pages.where(:slug => slug).exists?
     end
   end
 
   include ControlsCatalog
 
   def show
-    locale = request[:locale]
     slug = request[:slug]
-    @page = catalog.pages.where(:locale => locale, :slug => slug).first!
+    @page = catalog.pages.where(:slug => slug).first!
   end
 end

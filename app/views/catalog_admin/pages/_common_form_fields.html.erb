@@ -1,11 +1,4 @@
-<% if catalog.valid_locales.many? %>
-  <%= locale_language_select(
-        f,
-        :locale,
-        :locales => catalog.valid_locales,
-        :label => "Language") %>
-<% end %>
+<%= f.text_field(:slug, :help => slug_help_text) %>
 
-<%= f.text_field(:slug, :help => slug_help_text, :autofocus => true) %>
-<%= f.text_field(:title) %>
-
+<%= f.text_field(:title, :class => 'hide', :value => @page.title_str) %>
+<%= react_component('TranslatedTextField', props: { input: 'page_title', locales: catalog.valid_locales }, prerender: false) %>

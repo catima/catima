@@ -48,7 +48,6 @@ class CatalogAdmin::PagesController < CatalogAdmin::BaseController
   def build_page
     @page = catalog.pages.new do |model|
       model.creator = current_user
-      model.locale = catalog.primary_language
     end
   end
 
@@ -57,19 +56,19 @@ class CatalogAdmin::PagesController < CatalogAdmin::BaseController
   end
 
   def page_params
-    params.require(:page).permit(:content, :locale, :slug, :title)
+    params.require(:page).permit(:slug, :title)
   end
 
   def created_message
-    "Page “#{@page.title}” has been created."
+    "Page “#{@page.slug}” has been created."
   end
 
   def updated_message
-    "Page “#{@page.title}” has been saved."
+    "Page “#{@page.slug}” has been saved."
   end
 
   def destroyed_message
-    "Page “#{@page.title}” has been deleted."
+    "Page “#{@page.slug}” has been deleted."
   end
 
   def after_create_path
