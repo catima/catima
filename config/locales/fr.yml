@@ -99,6 +99,11 @@ fr:
       invited_to_access_html: "%{invited_by} vous a invité d'accéder %{catalog}."
       reviewer_role: Comme validateur de catalogue, vous allez pouvoir ajouter et éditer des entrées, ainsi que de valider des entrées en vue de leur publication.
       subject: "Vous êtes invité(e) à joindre %{catalog}"
+  locales:
+    de: Allemand
+    en: Anglais
+    fr: Français
+    it: Italien
   shared:
     navbar:
       user_menu:

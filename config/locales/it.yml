@@ -95,6 +95,11 @@ it:
       invited_to_access_html: "%{invited_by} ti ha invitato a accessere al catalogo %{catalog}."
       reviewer_role: Come redattore di catalogo sarete in grado di agginguere e modificare le registrazione nel catalogo e di convalidare per la pubblicazione.
       subject: "Viene chiesto di unirsi %{catalog}"
+  locales:
+    de: Tedesco
+    en: Inglese
+    fr: Francese
+    it: Italiano
   shared:
     navbar:
       user_menu:

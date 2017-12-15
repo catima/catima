@@ -5,6 +5,7 @@
 #  content    :jsonb
 #  created_at :datetime         not null
 #  id         :integer          not null, primary key
+#  locale     :string
 #  page_id    :integer
 #  row_order  :integer
 #  slug       :string

@@ -7,7 +7,7 @@
   </tr>
 </thead>
 <tbody>
-  <% @page.containers.sorted.each_with_index do |container, index| %>
+  <% @page.containers.where(:locale => locale).sorted.each_with_index do |container, index| %>
     <tr>
       <td>
         <%= index + 1 %>

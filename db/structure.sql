@@ -340,7 +340,8 @@ CREATE TABLE containers (
     row_order integer,
     content jsonb,
     created_at timestamp without time zone NOT NULL,
-    updated_at timestamp without time zone NOT NULL
+    updated_at timestamp without time zone NOT NULL,
+    locale character varying
 );
 
 

@@ -99,6 +99,11 @@ en:
       invited_to_access_html: "%{invited_by} has invited you to access %{catalog}."
       reviewer_role: As a catalog reviewer, you will be able to add and edit records, as well as approve records to be published to the public.
       subject: "You are invited to join %{catalog}"
+  locales:
+    de: German
+    en: English
+    fr: French
+    it: Italian
   shared:
     navbar:
       user_menu:

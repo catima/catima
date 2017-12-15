@@ -99,6 +99,11 @@ de:
       invited_to_access_html: "%{invited_by} hat Sie eingeladen %{catalog} zu konsultieren."
       reviewer_role: Als Katalog-Validator können Sie Einträge erstellen und editieren, sowie auch Einträge zur Publikation annehmen.
       subject: "Sie wurden eingeladen bei %{catalog} teilzunehmen"
+  locales:
+    de: Deutsch
+    en: Englisch
+    fr: Französisch
+    it: Italienisch
   shared:
     navbar:
       user_menu:

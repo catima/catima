@@ -23,26 +23,34 @@
 
   <h4>Containers</h4>
 
-  <div style="float: right;">
-    <span class="dropdown">
-      <button class="btn btn-xs btn-default dropdown-toggle" type="button" id="add-field-dropdown" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
-        <%= fa_icon(:"plus-square", :text => "Add…") %>
-        <span class="caret"></span>
-      </button>
-      <ul class="dropdown-menu" aria-labelledby="add-field-dropdown">
-        <% Container.type_choices.each do |key, label| %>
-          <li>
-            <%= link_to(
-                  "#{label} container",
-                  new_catalog_admin_page_container_path(page_slug:@page.slug, type:key)
-                ) %>
-          </li>
-        <% end %>
-      </ul>
-    </span>
-  </div>
+  <% @page.catalog.valid_locales.each do |locale| %>
 
-  <table id="containers" class="table">
-    <%= render("container_table") %>
-  </table>
+    <div class="container-list" pid="containers-<%= locale %>">
+      <div style="float: right;">
+        <span class="dropdown">
+          <button class="btn btn-xs btn-default dropdown-toggle" type="button" id="add-field-dropdown" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+            <%= fa_icon(:"plus-square", :text => "Add…") %>
+            <span class="caret"></span>
+          </button>
+          <ul class="dropdown-menu" style="right: 0; left: auto;" aria-labelledby="add-field-dropdown">
+            <% Container.type_choices.each do |key, label| %>
+              <li>
+                <%= link_to(
+                      "#{label} container",
+                      new_catalog_admin_page_container_path(page_slug:@page.slug, type:key)
+                    ) %>
+              </li>
+            <% end %>
+          </ul>
+        </span>
+      </div>
+
+      <div class="container-locale"><%= t("locales.#{locale}") %></div>
+
+      <table id="container-table-<%= locale %>" class="table">
+        <%= render("container_table", locale: locale) %>
+      </table>
+    </div>
+  <% end %>
+
 </div>
