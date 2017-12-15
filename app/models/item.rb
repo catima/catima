@@ -41,7 +41,7 @@ class Item < ActiveRecord::Base
 
   # assign default and auto-increment field values
   after_initialize :assign_default_values
-  before_validation :assign_autoincrement_values
+  after_initialize :assign_autoincrement_values
   before_create :assign_uuid
 
   def self.sorted_by_field(field)
