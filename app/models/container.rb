@@ -22,12 +22,13 @@ class Container < ActiveRecord::Base
 
   # include HasSlug
   include RankedModel
-  ranks :row_order, :class_name => "Container", :with_same => :page_id
+  ranks :row_order, :class_name => "Container", :with_same => %i(page_id locale)
 
   belongs_to :page
 
   validates_presence_of :page_id
   validates_presence_of :content
+  validates_presence_of :locale
   # validates_slug :scope => :page_id
 
   def self.sorted

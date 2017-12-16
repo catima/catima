@@ -27,6 +27,7 @@ class CatalogAdmin::ContainersController < CatalogAdmin::BaseController
   def update
     find_container
     authorize(@container)
+    @locales = @container.page.catalog.valid_locales
     if @container.update(container_params)
       respond_to do |f|
         f.js
@@ -53,7 +54,7 @@ class CatalogAdmin::ContainersController < CatalogAdmin::BaseController
 
   def build_container
     @page = Page.find_by(slug:params[:page_slug], catalog:@catalog)
-    @container = container_class.new(:page => @page)
+    @container = container_class.new(page: @page, locale: params[:locale])
   end
 
   def container_class
@@ -72,6 +73,7 @@ class CatalogAdmin::ContainersController < CatalogAdmin::BaseController
     params.require(:container).permit(
       :slug,
       :row_order_position,
+      :lcoale,
       *@container.custom_container_permitted_attributes
     )
   end

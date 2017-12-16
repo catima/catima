@@ -1,1 +1,3 @@
-$("#containers").html("<%= j(render('catalog_admin/pages/container_table')) %>");
+<% @locales.each do |l| %>
+$("#container-table-<%= l %>").html("<%= j(render('catalog_admin/pages/container_table', locale: l)) %>");
+<% end %>

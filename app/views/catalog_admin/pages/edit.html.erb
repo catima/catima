@@ -37,7 +37,7 @@
               <li>
                 <%= link_to(
                       "#{label} container",
-                      new_catalog_admin_page_container_path(page_slug:@page.slug, type:key)
+                      new_catalog_admin_page_container_path(page_slug:@page.slug, type:key, l:locale)
                     ) %>
               </li>
             <% end %>
