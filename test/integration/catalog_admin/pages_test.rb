@@ -9,22 +9,20 @@ class CatalogAdmin::PagesTest < ActionDispatch::IntegrationTest
     click_on("New page")
 
     fill_in("Slug", :with => "hello")
-    fill_in("Title", :with => "Hello, World!")
-    # fill_in("Content", :with => "<p>Some HTML content</p>")
+    fill_in("Title", :with => '{"en": "Hello, World!"}')
 
     assert_difference("catalogs(:one).pages.count") do
       click_on("Create page")
     end
 
     model = catalogs(:one).pages.where(:slug => "hello").first!
-    assert_equal("en", model.locale)
     assert_equal(users(:one_admin), model.creator)
     assert_equal("Hello, World!", model.title)
-    # assert_equal("<p>Some HTML content</p>", model.content)
+    assert_equal('{"en":"Hello, World!"}', model.title_str)
+    assert_equal("Hello, World!", model.title_json['en'])
 
     visit("/one/en/hello")
     within("h1") { assert(page.has_content?("Hello, World!")) }
-    # assert(page.has_selector?("p", :text => "Some HTML content"))
   end
 
   test "create pages for two languages" do
@@ -34,25 +32,15 @@ class CatalogAdmin::PagesTest < ActionDispatch::IntegrationTest
     click_on("Pages")
     click_on("New page")
 
-    select("Français", :from => "Language")
     fill_in("Slug", :with => "hello")
-    fill_in("Title", :with => "Bonjour")
-    # fill_in("Content", :with => "<p>French content</p>")
-    click_on("Create and add another")
-
-    select("English", :from => "Language")
-    fill_in("Slug", :with => "hello")
-    fill_in("Title", :with => "Hello")
-    # fill_in("Content", :with => "<p>English content</p>")
+    fill_in("Title", :with => '{"fr": "Bonjour", "en": "Hello"}')
     click_on("Create page")
 
     visit("/multilingual/fr/hello")
     within("h1") { assert(page.has_content?("Bonjour")) }
-    # assert(page.has_selector?("p", :text => "French content"))
 
     visit("/multilingual/en/hello")
     within("h1") { assert(page.has_content?("Hello")) }
-    # assert(page.has_selector?("p", :text => "English content"))
   end
 
   test "edit a page" do
@@ -62,7 +50,7 @@ class CatalogAdmin::PagesTest < ActionDispatch::IntegrationTest
     click_on("Pages")
     first("a", :text => "Edit").click
 
-    fill_in("Title", :with => "Changed by test")
+    fill_in("Title", :with => '{"en": "Changed by test"}')
 
     assert_no_difference("Page.count") do
       click_on("Update page")
@@ -95,7 +83,7 @@ class CatalogAdmin::PagesTest < ActionDispatch::IntegrationTest
 
     click_on("New page")
     fill_in("Slug", :with => "hello")
-    fill_in("Title", :with => "Hello")
+    fill_in("Title", :with => '{"en": "Hello"}')
     click_on("Create page")
 
     click_on("Menu items")

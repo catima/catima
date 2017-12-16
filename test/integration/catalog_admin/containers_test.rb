@@ -9,7 +9,7 @@ class CatalogAdmin::ContainersTest < ActionDispatch::IntegrationTest
     click_on('New page')
 
     fill_in('Slug', :with => 'container-test')
-    fill_in('Title', :with => 'Container test page')
+    fill_in('Title', :with => '{"en": "Container test page"}')
     click_on('Create page')
 
     visit('/one/en/container-test')
