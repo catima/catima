@@ -26,7 +26,7 @@ class CatalogAdmin::ItemTypesController < CatalogAdmin::BaseController
     authorize(@item_type)
     if @item_type.update(item_type_params)
       redirect_to(
-        catalog_admin_item_type_fields_path(catalog, @item_type),
+        catalog_admin_item_type_fields_path(catalog, I18n.locale, @item_type),
         :notice => updated_message
       )
     else
@@ -39,7 +39,7 @@ class CatalogAdmin::ItemTypesController < CatalogAdmin::BaseController
     authorize(@item_type)
     # change item type slug to enable user creating a new one with the same slug
     @item_type.update!(:deactivated_at => Time.current, :slug => "#{@item_type.slug}-#{SecureRandom.uuid}")
-    redirect_to(catalog_admin_setup_path(catalog), :notice => deleted_message)
+    redirect_to(catalog_admin_setup_path(catalog, I18n.locale), :notice => deleted_message)
   end
 
   private
@@ -64,7 +64,7 @@ class CatalogAdmin::ItemTypesController < CatalogAdmin::BaseController
   def after_create_path
     case params[:commit]
     when /another/i then new_catalog_admin_item_type_path
-    else catalog_admin_item_type_fields_path(catalog, @item_type)
+    else catalog_admin_item_type_fields_path(catalog, I18n.locale, @item_type)
     end
   end
 

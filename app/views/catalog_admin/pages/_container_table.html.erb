@@ -24,13 +24,13 @@
         <% if policy(container).edit? %>
           <%= link_to(
                 fa_icon("pencil", :text => "Edit"),
-                edit_catalog_admin_container_path(@page.catalog, container),
+                edit_catalog_admin_container_path(@page.catalog, I18n.locale, container),
                 :class => "btn btn-default btn-xs") %>
         <% end %>
         <% if policy(container).destroy? %>
           <%= link_to(
                 fa_icon("trash-o", :text => "Delete"),
-                catalog_admin_container_path(@page.catalog, container),
+                catalog_admin_container_path(@page.catalog, I18n.locale, container),
                 :class => "btn btn-xs btn-text",
                 :method => :delete,
                 :data => {

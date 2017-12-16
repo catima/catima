@@ -74,7 +74,7 @@ class CatalogAdmin::PagesController < CatalogAdmin::BaseController
   def after_create_path
     case params[:commit]
     when /another/i then new_catalog_admin_page_path
-    else catalog_admin_pages_path(catalog)
+    else catalog_admin_pages_path(catalog, I18n.locale)
     end
   end
 end

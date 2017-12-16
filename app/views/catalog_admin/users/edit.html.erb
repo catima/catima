@@ -2,7 +2,7 @@
 
 <%= bootstrap_form_for(
       @user,
-      :url => catalog_admin_user_path(catalog, @user)
+      :url => catalog_admin_user_path(catalog, I18n.locale, @user)
       ) do |f| %>
 
   <%= render("common_form_fields", :f => f) %>

@@ -3,7 +3,7 @@
 module FieldSetsHelper
   def edit_field_set_path(field_set)
     helper = "edit_catalog_admin_#{field_set.model_name.singular}_path"
-    send(helper, field_set.catalog, field_set)
+    send(helper, field_set.catalog, I18n.locale, field_set)
   end
 
   def field_set_metadata(field_set)

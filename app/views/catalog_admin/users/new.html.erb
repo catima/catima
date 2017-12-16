@@ -2,7 +2,7 @@
 
 <%= bootstrap_form_for(
       @user,
-      :url => catalog_admin_users_path(catalog)
+      :url => catalog_admin_users_path(catalog, I18n.locale)
       ) do |f| %>
 
   <%= f.email_field(:email, :autofocus => true, :autocomplete => "off") %>

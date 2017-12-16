@@ -11,7 +11,7 @@ class CatalogAdmin::ContainersController < CatalogAdmin::BaseController
     authorize(@container)
     if @container.update(container_params)
       redirect_to(
-        edit_catalog_admin_page_path(@catalog, @page.slug),
+        edit_catalog_admin_page_path(@catalog, I18n.locale, @page.slug),
         :notice => created_message
       )
     else
@@ -33,7 +33,7 @@ class CatalogAdmin::ContainersController < CatalogAdmin::BaseController
         f.js
         f.html do
           redirect_to(
-            edit_catalog_admin_page_path(@container.page.catalog, @container.page),
+            edit_catalog_admin_page_path(@container.page.catalog, I18n.locale, @container.page),
             :notice => updated_message
           )
         end
@@ -47,7 +47,7 @@ class CatalogAdmin::ContainersController < CatalogAdmin::BaseController
     find_container
     authorize(@container)
     @container.destroy
-    redirect_to(edit_catalog_admin_page_path(@page.catalog, @page), :notice => destroyed_message)
+    redirect_to(edit_catalog_admin_page_path(@page.catalog, I18n.locale, @page), :notice => destroyed_message)
   end
 
   private

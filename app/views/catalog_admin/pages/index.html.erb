@@ -25,14 +25,14 @@
           <% if policy(page).edit? %>
             <%= link_to(
                   fa_icon("pencil", :text => "Edit"),
-                  edit_catalog_admin_page_path(catalog, page),
+                  edit_catalog_admin_page_path(catalog, I18n.locale, page),
                   :class => "btn btn-default btn-xs") %>
 
           <% end %>
           <% if policy(page).destroy? %>
             <%= link_to(
                   fa_icon("trash-o", :text => "Delete"),
-                  catalog_admin_page_path(catalog, page),
+                  catalog_admin_page_path(catalog, I18n.locale, page),
                   :class => "btn btn-xs btn-text",
                   :method => :delete,
                   :data => {

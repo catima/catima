@@ -107,7 +107,7 @@ class CatalogAdmin::ChoiceSetsController < CatalogAdmin::BaseController
   def after_create_path
     case params[:commit]
     when /another/i then new_catalog_admin_choice_set_path
-    else catalog_admin_choice_sets_path(catalog, @item_type)
+    else catalog_admin_choice_sets_path(catalog, I18n.locale, @item_type)
     end
   end
 end

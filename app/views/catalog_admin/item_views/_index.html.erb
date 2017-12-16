@@ -34,7 +34,7 @@
 
           <%= link_to(
                   fa_icon("trash-o", :text => "Delete"),
-                  catalog_admin_item_view_path(catalog, item_view.item_type.slug, item_view),
+                  catalog_admin_item_view_path(catalog, I18n.locale, item_view.item_type.slug, item_view),
                   :class => "btn btn-xs btn-text",
                   :method => :delete,
                   :data => {

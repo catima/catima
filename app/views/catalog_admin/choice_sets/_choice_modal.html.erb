@@ -5,7 +5,7 @@
       <% choice = field.choice_set.choices.new %>
       <%= bootstrap_form_for(
                   choice,
-                  url: catalog_admin_choice_set_create_choice_path(field.catalog, field.choice_set),
+                  url: catalog_admin_choice_set_create_choice_path(field.catalog, I18n.locale, field.choice_set),
                   remote: true) do |f| %>
 
         <div class="modal-header">

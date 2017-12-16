@@ -25,13 +25,14 @@
           <% if policy(set).edit? %>
             <%= link_to(
                   fa_icon("pencil", :text => t("edit")),
-                  edit_catalog_admin_choice_set_path(catalog, set),
+                  edit_catalog_admin_choice_set_path(catalog, I18n.locale, set),
                   :class => "btn btn-default btn-xs") %>
 
             <%= deactivation_toggle(
                   set,
                   :catalog_admin_choice_set_path,
                   catalog,
+                  I18n.locale,
                   set,
                   :class => "btn btn-xs btn-text") %>
           <% end %>

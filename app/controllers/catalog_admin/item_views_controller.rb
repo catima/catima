@@ -12,7 +12,7 @@ class CatalogAdmin::ItemViewsController < CatalogAdmin::BaseController
     authorize(@item_view)
     if @item_view.update(item_view_params)
       redirect_to(
-        catalog_admin_item_type_fields_path(@item_type.catalog, @item_type),
+        catalog_admin_item_type_fields_path(@item_type.catalog, I18n.locale, @item_type),
         notice: created_message)
     else
       render("new")
@@ -32,7 +32,7 @@ class CatalogAdmin::ItemViewsController < CatalogAdmin::BaseController
         f.js
         f.html do
           redirect_to(
-            catalog_admin_item_type_fields_path(@item_type.catalog, @item_type),
+            catalog_admin_item_type_fields_path(@item_type.catalog, I18n.locale, @item_type),
             notice: updated_message)
         end
       end
@@ -46,7 +46,7 @@ class CatalogAdmin::ItemViewsController < CatalogAdmin::BaseController
     authorize(@item_view)
     @item_view.destroy
     redirect_to(
-      catalog_admin_item_type_fields_path(@item_type.catalog, @item_type),
+      catalog_admin_item_type_fields_path(@item_type.catalog, I18n.locale, @item_type),
       notice: destroyed_message)
   end
 

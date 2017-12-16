@@ -27,7 +27,7 @@
           <% if policy(user).edit_in_catalog?(catalog) %>
             <%= link_to(
                   fa_icon("pencil", :text => "Edit"),
-                  edit_catalog_admin_user_path(catalog, user),
+                  edit_catalog_admin_user_path(catalog, I18n.locale, user),
                   :class => "btn btn-default btn-xs") %>
           <% end %>
         </td>

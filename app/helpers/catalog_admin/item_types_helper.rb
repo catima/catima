@@ -9,7 +9,7 @@ module CatalogAdmin::ItemTypesHelper
 
     link_to(
       item_type.name,
-      catalog_admin_item_type_fields_path(item_type.catalog, item_type),
+      catalog_admin_item_type_fields_path(item_type.catalog, I18n.locale, item_type),
       :class => klass
     )
   end
@@ -31,7 +31,7 @@ module CatalogAdmin::ItemTypesHelper
 
     link_to(
       label.join(" ").html_safe,
-      catalog_admin_items_path(item_type.catalog, item_type),
+      catalog_admin_items_path(item_type.catalog, I18n.locale, item_type),
       :class => klass
     )
   end

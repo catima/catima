@@ -28,7 +28,7 @@ module CatalogAdmin::ContainersHelper
   def container_move_link(container, direction)
     link_to(
       fa_icon(:"caret-#{direction}"),
-      catalog_admin_container_path(@catalog, container, {
+      catalog_admin_container_path(@catalog, I18n.locale, container, {
         :action => "update",
         :container => { :row_order_position => direction }
       }),

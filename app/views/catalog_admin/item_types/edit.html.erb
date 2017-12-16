@@ -19,7 +19,7 @@
   <%= f.primary(t('.save')) %>
   <%= link_to(
         t("cancel"),
-        catalog_admin_item_type_fields_path(catalog, @item_type),
+        catalog_admin_item_type_fields_path(catalog, I18n.locale, @item_type),
         :class => "btn btn-link") %>
 
 <% end %>

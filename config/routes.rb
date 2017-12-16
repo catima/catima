@@ -60,7 +60,7 @@ Rails.application.routes.draw do
   # ===========================================================================
   # Catalog administration
 
-  namespace "catalog_admin", :path => ":catalog_slug/admin" do
+  namespace "catalog_admin", :path => ":catalog_slug/:locale/admin" do
     get "/" => "dashboard#setup", :as => :setup
     get "/_data" => "dashboard#data", :as => :data
 

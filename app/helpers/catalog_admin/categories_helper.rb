@@ -9,7 +9,7 @@ module CatalogAdmin::CategoriesHelper
 
     link_to(
       category.name,
-      catalog_admin_category_fields_path(category.catalog, category),
+      catalog_admin_category_fields_path(category.catalog, I18n.locale, category),
       :class => klass
     )
   end

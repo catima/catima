@@ -16,7 +16,7 @@
     <div class="btn-group">
       <%= link_to(
             fa_icon(:"plus-square", :text => t('.new_item_type', item_type: @item_type.name)),
-            new_catalog_admin_item_path(catalog, @item_type),
+            new_catalog_admin_item_path(catalog, I18n.locale, @item_type),
             :class => "btn btn-xs btn-default") %>
       <button type="button"
               class="btn btn-xs btn-default dropdown-toggle"
@@ -59,13 +59,13 @@
             <% if policy(item).edit? %>
               <%= link_to(
                     fa_icon("pencil", :text => t("edit")),
-                    edit_catalog_admin_item_path(catalog, @item_type, item),
+                    edit_catalog_admin_item_path(catalog, I18n.locale, @item_type, item),
                     :class => "btn btn-default btn-xs") %>
             <% end %>
             <% if policy(item).destroy? %>
               <%= link_to(
                     fa_icon("trash-o", :text => t("delete")),
-                    catalog_admin_item_path(catalog, @item_type, item),
+                    catalog_admin_item_path(catalog, locale, @item_type, item),
                     :class => "btn btn-xs btn-text",
                     :method => :delete,
                     :data => {

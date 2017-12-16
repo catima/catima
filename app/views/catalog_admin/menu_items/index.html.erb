@@ -27,14 +27,14 @@
           <% if policy(menu_item).edit? %>
             <%= link_to(
                   fa_icon("pencil", :text => t("edit")),
-                  edit_catalog_admin_menu_item_path(catalog, menu_item),
+                  edit_catalog_admin_menu_item_path(catalog, I18n.locale, menu_item),
                   :class => "btn btn-default btn-xs") %>
 
           <% end %>
           <% if policy(menu_item).destroy? %>
             <%= link_to(
                   fa_icon("trash-o", :text => t("delete")),
-                  catalog_admin_menu_item_path(catalog, menu_item),
+                  catalog_admin_menu_item_path(catalog, I18n.locale, menu_item),
                   :class => "btn btn-xs btn-text",
                   :method => :delete,
                   :data => {

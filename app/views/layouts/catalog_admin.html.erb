@@ -47,6 +47,7 @@
             <% end %>
           </li>
         <% end %>
+        <%= render("shared/navbar/locale_menu") if params[:locale] %>
         <%= render("shared/navbar/user_menu") %>
       </ul>
     </div>
