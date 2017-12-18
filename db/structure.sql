@@ -541,15 +541,16 @@ CREATE TABLE menu_items (
     id integer NOT NULL,
     catalog_id integer,
     slug character varying,
-    title character varying,
+    title_old character varying,
     item_type_id integer,
     page_id integer,
-    url text,
+    url_old text,
     parent_id integer,
     rank integer,
     created_at timestamp without time zone NOT NULL,
     updated_at timestamp without time zone NOT NULL,
-    locale character varying DEFAULT 'fr'::character varying
+    title jsonb,
+    url jsonb
 );
 
 
@@ -1553,4 +1554,6 @@ INSERT INTO schema_migrations (version) VALUES ('20171118121553');
 INSERT INTO schema_migrations (version) VALUES ('20171205064929');
 
 INSERT INTO schema_migrations (version) VALUES ('20171214171741');
+
+INSERT INTO schema_migrations (version) VALUES ('20171216182821');
 

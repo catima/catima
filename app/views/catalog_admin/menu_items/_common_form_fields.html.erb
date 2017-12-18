@@ -1,12 +1,9 @@
 <%= f.text_field(:slug, :help => slug_help_text, :autofocus => true) %>
 
-<%= locale_language_select(
-  f,
-  :locale,
-  :locales => catalog.valid_locales,
-  :label => t('.locale')) %>
+<%= f.text_field(:title, :class => 'hide', :value => @menu_item.title_str) %>
+<%= react_component('TranslatedTextField', props: { input: 'menu_item_title', locales: catalog.valid_locales }, prerender: false) %>
 
-<%= f.text_field(:title) %>
+
 <%= f.number_field(:rank, help: t('.rank_help')) %>
 
 <%= f.select(
@@ -47,33 +44,52 @@
   { include_blank: true }
 ) %>
 
-<%= f.text_field(:url) %>
-
 
 <script>
+function url_field_is_empty(){
+  var v = $('#menu_item_url').val();
+  if (v == '' || v == null) return true;
+  var obj = JSON.parse(v);
+  for (var k in obj){
+    if (obj[k] != '' && obj[k] != null) return false;
+  }
+  return true;
+}
+
 function updateFieldDisplay(){
   $('#menu_item_item_type_id').attr('disabled', null);
   $('#menu_item_page_id').attr('disabled', null);
-  $('#menu_item_url').attr('disabled', null);
+  urlFieldComponent.setState({'disabled': ''});
 
   if ($('#menu_item_item_type_id').val()){
     $('#menu_item_page_id').attr('disabled', 'disabled');
-    $('#menu_item_url').attr('disabled', 'disabled');
+    urlFieldComponent.setState({'disabled': 'disabled'});
   }
 
   if ($('#menu_item_page_id').val()){
     $('#menu_item_item_type_id').attr('disabled', 'disabled');
-    $('#menu_item_url').attr('disabled', 'disabled');
+    urlFieldComponent.setState({'disabled': 'disabled'});
   }
 
-  if ($('#menu_item_url').val()){
+  if (url_field_is_empty() == false){
     $('#menu_item_item_type_id').attr('disabled', 'disabled');
     $('#menu_item_page_id').attr('disabled', 'disabled');
   }
 }
+</script>
 
+<%= f.text_field(:url, :class => 'hide', :value => @menu_item.url_str) %>
+<div id="url_component"></div>
+<script>
+  var urlFieldComponent = ReactOnRails.render(
+    'TranslatedTextField',
+    { input: 'menu_item_url', locales: <%= JSON.dump(catalog.valid_locales).html_safe %>, onChange: updateFieldDisplay },
+    'url_component'
+  );
+</script>
+
+<script>
 $('#menu_item_item_type_id').on('change', updateFieldDisplay);
 $('#menu_item_page_id').on('change', updateFieldDisplay);
-$('#menu_item_url').on('change', updateFieldDisplay);
 updateFieldDisplay();
 </script>

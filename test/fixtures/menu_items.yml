@@ -6,14 +6,15 @@
 #  created_at   :datetime         not null
 #  id           :integer          not null, primary key
 #  item_type_id :integer
-#  locale       :string           default("fr")
 #  page_id      :integer
 #  parent_id    :integer
 #  rank         :integer
 #  slug         :string
-#  title        :string
+#  title        :jsonb
+#  title_old    :string
 #  updated_at   :datetime         not null
-#  url          :text
+#  url          :jsonb
+#  url_old      :text
 #
 
 one:

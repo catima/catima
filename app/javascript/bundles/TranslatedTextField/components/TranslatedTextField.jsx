@@ -14,8 +14,10 @@ class TranslatedTextField extends React.Component {
     super(props);
     this.input = props.input;
     this.locales = props.locales;
+    this._value = this._inputValue();
+    this._onChangeCallback = props.onChange;
     this.state = {
-      value: this._inputValue(),
+      disabled: this.props.disabled ? 'disabled' : '',
     };
     this.handleChange = this._handleChange.bind(this);
   }
@@ -27,15 +29,14 @@ class TranslatedTextField extends React.Component {
   }
 
   _save(){
-    document.getElementById(this.input).value = JSON.stringify(this.state.value);
+    document.getElementById(this.input).value = JSON.stringify(this._value);
   }
 
   _handleChange(e){
     const locale = e.target.getAttribute('data-locale');
-    const newValue = this.state.value;
-    newValue[locale] = e.target.value;
-    this.setState({value: newValue});
+    this._value[locale] = e.target.value;
     this._save();
+    if (this._onChangeCallback) this._onChangeCallback(this._value);
   }
 
   render(){
@@ -45,7 +46,7 @@ class TranslatedTextField extends React.Component {
           (
             <div key={i} className="input-group">
               <span className="input-group-addon">{locale}</span>
-              <input className="form-control" data-locale={locale} type="text" value={this.state.value[locale]} onChange={this.handleChange} />
+              <input className="form-control" data-locale={locale} type="text" value={this._value[locale]} onChange={this.handleChange} disabled={this.state.disabled} />
             </div>
           )
         )}
