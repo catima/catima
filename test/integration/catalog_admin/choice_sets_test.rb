@@ -5,7 +5,7 @@ class CatalogAdmin::ChoiceSetsTest < ActionDispatch::IntegrationTest
 
   test "add a choice set with choices" do
     log_in_as("one-admin@example.com", "password")
-    visit("/one/admin/_choices")
+    visit("/one/en/admin/_choices")
     click_on("New choice set")
     fill_in("Name", :with => "Test Set")
     click_on("Add choice")
@@ -26,7 +26,7 @@ class CatalogAdmin::ChoiceSetsTest < ActionDispatch::IntegrationTest
 
   test "add a choice set with a multilingual choice" do
     log_in_as("multilingual-admin@example.com", "password")
-    visit("/multilingual/admin/_choices")
+    visit("/multilingual/en/admin/_choices")
     click_on("New choice set")
     fill_in("Name", :with => "Test Set")
     click_on("Add choice")
@@ -61,7 +61,7 @@ class CatalogAdmin::ChoiceSetsTest < ActionDispatch::IntegrationTest
 
   test "edit a choice" do
     log_in_as("one-admin@example.com", "password")
-    visit("/one/admin/_choices")
+    visit("/one/en/admin/_choices")
     first("a", :text => "Edit").click
     fill_in("Name", :with => "Changed")
 
@@ -75,7 +75,7 @@ class CatalogAdmin::ChoiceSetsTest < ActionDispatch::IntegrationTest
 
   test "delete a choice" do
     log_in_as("one-admin@example.com", "password")
-    visit("/one/admin/_choices")
+    visit("/one/en/admin/_choices")
 
     assert_difference("catalogs(:one).choice_sets.active.count", -1) do
       first("a", :text => "Deactivate").click

@@ -3,7 +3,7 @@ require "test_helper"
 class CatalogAdmin::PagesTest < ActionDispatch::IntegrationTest
   test "create a page" do
     log_in_as("one-admin@example.com", "password")
-    visit("/one/admin")
+    visit("/one/en/admin")
     click_on("Setup")
     click_on("Pages")
     click_on("New page")
@@ -27,7 +27,7 @@ class CatalogAdmin::PagesTest < ActionDispatch::IntegrationTest
 
   test "create pages for two languages" do
     log_in_as("multilingual-admin@example.com", "password")
-    visit("/multilingual/admin")
+    visit("/multilingual/en/admin")
     click_on("Setup")
     click_on("Pages")
     click_on("New page")
@@ -45,7 +45,7 @@ class CatalogAdmin::PagesTest < ActionDispatch::IntegrationTest
 
   test "edit a page" do
     log_in_as("one-admin@example.com", "password")
-    visit("/one/admin")
+    visit("/one/en/admin")
     click_on("Setup")
     click_on("Pages")
     first("a", :text => "Edit").click
@@ -62,7 +62,7 @@ class CatalogAdmin::PagesTest < ActionDispatch::IntegrationTest
 
   test "delete a page" do
     log_in_as("one-admin@example.com", "password")
-    visit("/one/admin")
+    visit("/one/en/admin")
     click_on("Setup")
     click_on("Pages")
 
@@ -73,7 +73,7 @@ class CatalogAdmin::PagesTest < ActionDispatch::IntegrationTest
 
   test "delete a page with menu item" do
     log_in_as("one-admin@example.com", "password")
-    visit("/one/admin")
+    visit("/one/en/admin")
     click_on("Setup")
     click_on("Pages")
 
@@ -89,7 +89,7 @@ class CatalogAdmin::PagesTest < ActionDispatch::IntegrationTest
     click_on("Menu items")
     click_on('New menu item')
     fill_in('Slug', :with => 'hello-menu')
-    fill_in('Title', :with => 'Hello menu')
+    fill_in('Title', :with => '{"en": "Hello menu"}')
     fill_in('Rank', :with => '10')
     select('Hello', :from => 'Page')
     click_on('Create menu item')
@@ -97,7 +97,7 @@ class CatalogAdmin::PagesTest < ActionDispatch::IntegrationTest
     visit('/one')
     within("div.navbar-collapse") { assert(page.has_content?("Hello menu")) }
 
-    visit('/one/admin')
+    visit('/one/en/admin')
     click_on('Pages')
     assert_difference("Page.count", -1) do
       first("a", :text => "Delete").click

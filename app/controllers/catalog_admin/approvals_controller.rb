@@ -27,7 +27,7 @@ class CatalogAdmin::ApprovalsController < CatalogAdmin::BaseController
   private
 
   def redirect_to_item_edit
-    redirect_to(edit_catalog_admin_item_path(catalog, @item_type, @item))
+    redirect_to(edit_catalog_admin_item_path(catalog, I18n.locale, @item_type, @item))
   end
 
   # TODO: DRY this up with CatalogAdmin::ItemsController

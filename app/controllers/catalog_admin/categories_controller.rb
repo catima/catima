@@ -6,7 +6,7 @@ class CatalogAdmin::CategoriesController < CatalogAdmin::BaseController
     # Otherwise redirect to the default admin URL.
     first_category = catalog.categories.first
     return redirect_to(catalog_admin_setup_path) if first_category.nil?
-    redirect_to(catalog_admin_category_fields_path(catalog, first_category))
+    redirect_to(catalog_admin_category_fields_path(catalog, I18n.locale, first_category))
   end
 
   def new
@@ -34,7 +34,7 @@ class CatalogAdmin::CategoriesController < CatalogAdmin::BaseController
     authorize(@category)
     if @category.update(category_params)
       redirect_to(
-        catalog_admin_category_fields_path(catalog, @category),
+        catalog_admin_category_fields_path(catalog, I18n.locale, @category),
         :notice => updated_message
       )
     else
@@ -66,7 +66,7 @@ class CatalogAdmin::CategoriesController < CatalogAdmin::BaseController
   def after_create_path
     case params[:commit]
     when /another/i then new_catalog_admin_category_path
-    else catalog_admin_category_fields_path(catalog, @category)
+    else catalog_admin_category_fields_path(catalog, I18n.locale, @category)
     end
   end
 

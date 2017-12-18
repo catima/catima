@@ -3,7 +3,7 @@ require "test_helper"
 class CatalogAdmin::ItemTypesTest < ActionDispatch::IntegrationTest
   test "create an item type" do
     log_in_as("two-admin@example.com", "password")
-    visit("/two/admin")
+    visit("/two/en/admin")
     click_on("New item type")
     fill_in("item_type[name_en]", :with => "Book")
     fill_in("item_type[name_plural_en]", :with => "Books")
@@ -20,7 +20,7 @@ class CatalogAdmin::ItemTypesTest < ActionDispatch::IntegrationTest
 
   test "edit an item type" do
     log_in_as("two-admin@example.com", "password")
-    visit("/two/admin")
+    visit("/two/en/admin")
     click_on("Author")
     click_on("Edit item type")
     fill_in("item_type[name_en]", :with => "Writer")
@@ -35,7 +35,7 @@ class CatalogAdmin::ItemTypesTest < ActionDispatch::IntegrationTest
 
   test "delete an item type" do
     log_in_as("two-admin@example.com", "password")
-    visit("/two/admin")
+    visit("/two/en/admin")
     click_on("Author")
     click_on("Edit item type")
 
@@ -55,7 +55,7 @@ class CatalogAdmin::ItemTypesTest < ActionDispatch::IntegrationTest
     fill_in("Slug", :with => "int-test-empty-catalog")
     select("English", :from => "Primary language")
     click_on("Create catalog")
-    visit('/int-test-empty-catalog/admin')
+    visit('/int-test-empty-catalog/en/admin')
     click_on("Data")
     assert(page.has_content?("No item types are defined yet."))
   end
@@ -63,7 +63,7 @@ class CatalogAdmin::ItemTypesTest < ActionDispatch::IntegrationTest
   test "create an item type with the same slug as a deleted item type" do
     log_in_as("two-admin@example.com", "password")
 
-    visit("/two/admin")
+    visit("/two/en/admin")
     click_on("New item type")
     fill_in("item_type[name_en]", :with => "Computer")
     fill_in("item_type[name_plural_en]", :with => "Computers")
@@ -73,7 +73,7 @@ class CatalogAdmin::ItemTypesTest < ActionDispatch::IntegrationTest
       click_on("Create item type")
     end
 
-    visit("/two/admin")
+    visit("/two/en/admin")
     click_on("Computer")
     click_on("Edit item type")
 
@@ -81,7 +81,7 @@ class CatalogAdmin::ItemTypesTest < ActionDispatch::IntegrationTest
       click_on("Delete this item type")
     end
 
-    visit("/two/admin")
+    visit("/two/en/admin")
     click_on("New item type")
     fill_in("item_type[name_en]", :with => "Computer")
     fill_in("item_type[name_plural_en]", :with => "Computers")

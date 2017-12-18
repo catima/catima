@@ -3,7 +3,7 @@ require "test_helper"
 class CatalogAdmin::FieldsTest < ActionDispatch::IntegrationTest
   test "add a multilingual text field" do
     log_in_as("multilingual-admin@example.com", "password")
-    visit("/multilingual/admin/authors/fields")
+    visit("/multilingual/en/admin/authors/fields")
     click_on("Text field")
 
     fill_in("field[name_de]", :with => "Geburtsort")
@@ -40,7 +40,7 @@ class CatalogAdmin::FieldsTest < ActionDispatch::IntegrationTest
 
   test "add an int field" do
     log_in_as("two-admin@example.com", "password")
-    visit("/two/admin/authors/fields")
+    visit("/two/en/admin/authors/fields")
     click_on("Int field")
     fill_in("field[name_en]", :with => "Test")
     fill_in("field[name_plural_en]", :with => "Tests")
@@ -59,7 +59,7 @@ class CatalogAdmin::FieldsTest < ActionDispatch::IntegrationTest
 
   test "add a decimal field" do
     log_in_as("two-admin@example.com", "password")
-    visit("/two/admin/authors/fields")
+    visit("/two/en/admin/authors/fields")
     click_on("Decimal field")
     fill_in("field[name_en]", :with => "Test")
     fill_in("field[name_plural_en]", :with => "Tests")
@@ -78,7 +78,7 @@ class CatalogAdmin::FieldsTest < ActionDispatch::IntegrationTest
 
   test "add an email field" do
     log_in_as("two-admin@example.com", "password")
-    visit("/two/admin/authors/fields")
+    visit("/two/en/admin/authors/fields")
     click_on("Email field")
     fill_in("field[name_en]", :with => "Test")
     fill_in("field[name_plural_en]", :with => "Tests")
@@ -91,7 +91,7 @@ class CatalogAdmin::FieldsTest < ActionDispatch::IntegrationTest
 
   test "add a URL field" do
     log_in_as("two-admin@example.com", "password")
-    visit("/two/admin/authors/fields")
+    visit("/two/en/admin/authors/fields")
     click_on("URL field")
     fill_in("field[name_en]", :with => "Test")
     fill_in("field[name_plural_en]", :with => "Tests")
@@ -104,7 +104,7 @@ class CatalogAdmin::FieldsTest < ActionDispatch::IntegrationTest
 
   test "add a file field" do
     log_in_as("two-admin@example.com", "password")
-    visit("/two/admin/authors/fields")
+    visit("/two/en/admin/authors/fields")
     click_on("File field")
     fill_in("field[name_en]", :with => "Test")
     fill_in("field[name_plural_en]", :with => "Tests")
@@ -118,7 +118,7 @@ class CatalogAdmin::FieldsTest < ActionDispatch::IntegrationTest
 
   test "add a reference field" do
     log_in_as("two-admin@example.com", "password")
-    visit("/two/admin/authors/fields")
+    visit("/two/en/admin/authors/fields")
     click_on("Reference field")
     fill_in("field[name_en]", :with => "Test")
     fill_in("field[name_plural_en]", :with => "Tests")
@@ -132,7 +132,7 @@ class CatalogAdmin::FieldsTest < ActionDispatch::IntegrationTest
 
   test "add a choice set field" do
     log_in_as("two-admin@example.com", "password")
-    visit("/two/admin/authors/fields")
+    visit("/two/en/admin/authors/fields")
     click_on("Choice set field")
     fill_in("field[name_en]", :with => "Test")
     fill_in("field[name_plural_en]", :with => "Tests")
@@ -146,7 +146,7 @@ class CatalogAdmin::FieldsTest < ActionDispatch::IntegrationTest
 
   test "edit a field" do
     log_in_as("one-admin@example.com", "password")
-    visit("/one/admin/authors/fields")
+    visit("/one/en/admin/authors/fields")
     first("table a", :text => "Edit").click
     fill_in("field[name_en]", :with => "Changed!")
     fill_in("Slug", :with => "changed")
@@ -161,7 +161,7 @@ class CatalogAdmin::FieldsTest < ActionDispatch::IntegrationTest
 
   test "delete a field" do
     log_in_as("one-admin@example.com", "password")
-    visit("/one/admin/authors/fields")
+    visit("/one/en/admin/authors/fields")
 
     assert_difference("item_types(:one_author).fields.count", -1) do
       first("table a", :text => "Delete").click

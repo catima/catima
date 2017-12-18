@@ -3,7 +3,7 @@ require "test_helper"
 class CatalogAdmin::CategoriesFieldsTest < ActionDispatch::IntegrationTest
   test "add an int field" do
     log_in_as("one-admin@example.com", "password")
-    visit("/one/admin")
+    visit("/one/en/admin")
     click_on("Category One")
     click_on("Int field")
     fill_in("field[name_en]", :with => "Test")
@@ -23,7 +23,7 @@ class CatalogAdmin::CategoriesFieldsTest < ActionDispatch::IntegrationTest
 
   test "edit a field" do
     log_in_as("nested-admin@example.com", "password")
-    visit("/nested/admin")
+    visit("/nested/en/admin")
     click_on("Bicycle")
     first("table a", :text => "Edit").click
     fill_in("field[name_en]", :with => "Changed!")
@@ -39,7 +39,7 @@ class CatalogAdmin::CategoriesFieldsTest < ActionDispatch::IntegrationTest
 
   test "delete a field" do
     log_in_as("nested-admin@example.com", "password")
-    visit("/nested/admin")
+    visit("/nested/en/admin")
     click_on("Bicycle")
 
     assert_difference("categories(:nested_bicycle).fields.count", -1) do

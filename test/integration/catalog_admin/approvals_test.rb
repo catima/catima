@@ -27,11 +27,11 @@ class CatalogAdmin::ApprovalsTest < ActionDispatch::IntegrationTest
 
   def visit_draft_item
     book = items(:reviewed_book_end_of_watch)
-    visit("/reviewed/admin/books/#{book.to_param}/edit")
+    visit("/reviewed/en/admin/books/#{book.to_param}/edit")
   end
 
   def visit_in_pending_item
     book = items(:reviewed_book_harry_potter_pending)
-    visit("/reviewed/admin/books/#{book.to_param}/edit")
+    visit("/reviewed/en/admin/books/#{book.to_param}/edit")
   end
 end

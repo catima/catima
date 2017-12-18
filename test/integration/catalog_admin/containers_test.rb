@@ -3,7 +3,7 @@ require "test_helper"
 class CatalogAdmin::ContainersTest < ActionDispatch::IntegrationTest
   test "create a container" do
     log_in_as("one-admin@example.com", "password")
-    visit("/one/admin")
+    visit("/one/en/admin")
     click_on("Setup")
     click_on('Pages')
     click_on('New page')

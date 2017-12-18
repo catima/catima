@@ -5,7 +5,7 @@ class CatalogAdmin::ItemsTest < ActionDispatch::IntegrationTest
 
   test "import items from CSV" do
     log_in_as("one-editor@example.com", "password")
-    visit("/one/admin/authors/import/new")
+    visit("/one/en/admin/authors/import/new")
 
     attach_file("File", sample_csv_file.path)
 

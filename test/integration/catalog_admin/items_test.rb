@@ -3,7 +3,7 @@ require "test_helper"
 class CatalogAdmin::ItemsTest < ActionDispatch::IntegrationTest
   test "create an item" do
     log_in_as("one-editor@example.com", "password")
-    visit("/one/admin")
+    visit("/one/en/admin")
     click_on("Data")
     click_on("Authors")
     click_on("New Author")
@@ -61,7 +61,7 @@ class CatalogAdmin::ItemsTest < ActionDispatch::IntegrationTest
 
   test "create a multilingual item" do
     log_in_as("multilingual-editor@example.com", "password")
-    visit("/multilingual/admin")
+    visit("/multilingual/en/admin")
     click_on("Data")
     click_on("Authors")
     click_on("New Author")
@@ -90,7 +90,7 @@ class CatalogAdmin::ItemsTest < ActionDispatch::IntegrationTest
 
   test "edit an item" do
     log_in_as("one-admin@example.com", "password")
-    visit("/one/admin")
+    visit("/one/en/admin")
     click_on("Data")
     click_on("Authors")
     first("a", :text => "Edit").click
@@ -113,7 +113,7 @@ class CatalogAdmin::ItemsTest < ActionDispatch::IntegrationTest
   test "mark an item as ready for review" do
     log_in_as("reviewed-editor@example.com", "password")
     book = items(:reviewed_book_end_of_watch)
-    visit("/reviewed/admin/books/#{book.to_param}/edit")
+    visit("/reviewed/en/admin/books/#{book.to_param}/edit")
     check("Ready for review")
     click_on("Save Book")
     assert(book.reload.review.pending?)
@@ -121,7 +121,7 @@ class CatalogAdmin::ItemsTest < ActionDispatch::IntegrationTest
 
   test "delete an item" do
     log_in_as("one-admin@example.com", "password")
-    visit("/one/admin")
+    visit("/one/en/admin")
     click_on("Data")
     click_on("Authors")
 
@@ -133,7 +133,7 @@ class CatalogAdmin::ItemsTest < ActionDispatch::IntegrationTest
   test "creating items for item types without fields is not enabled" do
     log_in_as("one-admin@example.com", "password")
 
-    visit("/one/admin")
+    visit("/one/en/admin")
     click_on("New item type")
     fill_in("item_type[name_en]", :with => "Computer")
     fill_in("item_type[name_plural_en]", :with => "Computers")
