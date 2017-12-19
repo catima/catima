@@ -10,8 +10,6 @@ class MakePagesMultilingual < ActiveRecord::Migration
     rename_column :pages, :locale, :locale_old
     rename_column :pages, :title, :title_old
     add_column :pages, :title, :jsonb
-
-    # TODO: migrate content of pages with same slug but different slug
   end
 
   def down

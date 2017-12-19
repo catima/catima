@@ -375,8 +375,6 @@ CREATE TABLE fields (
     related_item_type_id integer,
     choice_set_id integer,
     type character varying,
-    name_old character varying,
-    name_plural_old character varying,
     slug character varying,
     comment text,
     multiple boolean DEFAULT false NOT NULL,
@@ -426,11 +424,9 @@ ALTER SEQUENCE fields_id_seq OWNED BY fields.id;
 CREATE TABLE item_types (
     id integer NOT NULL,
     catalog_id integer,
-    name_old character varying,
     slug character varying,
     created_at timestamp without time zone NOT NULL,
     updated_at timestamp without time zone NOT NULL,
-    name_plural_old character varying,
     name_translations json,
     name_plural_translations json,
     deactivated_at timestamp without time zone
@@ -1556,4 +1552,6 @@ INSERT INTO schema_migrations (version) VALUES ('20171205064929');
 INSERT INTO schema_migrations (version) VALUES ('20171214171741');
 
 INSERT INTO schema_migrations (version) VALUES ('20171216182821');
+
+INSERT INTO schema_migrations (version) VALUES ('20171219054741');
 

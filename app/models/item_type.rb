@@ -6,8 +6,6 @@
 #  created_at               :datetime         not null
 #  deactivated_at           :datetime
 #  id                       :integer          not null, primary key
-#  name_old                 :string
-#  name_plural_old          :string
 #  name_plural_translations :json
 #  name_translations        :json
 #  slug                     :string
@@ -16,7 +14,6 @@
 
 require_dependency 'field/choice_set'
 
-# TODO: drop name_old and name_plural_old columns (no longer used)
 class ItemType < ActiveRecord::Base
   include HasDeactivation
   include HasFields

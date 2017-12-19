@@ -4,13 +4,11 @@ class RemoveLocaleFromMenuItems < ActiveRecord::Migration
     add_column :menu_items, :title, :jsonb
     rename_column :menu_items, :url, :url_old
     add_column :menu_items, :url, :jsonb
-    # TODO: migrate data
     remove_column :menu_items, :locale
   end
 
   def down
     add_column :menu_items, :locale, :string, default: 'fr'
-    # TODO: migrate data
     remove_column :menu_items, :url
     rename_column :menu_items, :url_old, :url
     remove_column :menu_items, :title

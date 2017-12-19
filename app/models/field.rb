@@ -15,8 +15,6 @@
 #  i18n                     :boolean          default(FALSE), not null
 #  id                       :integer          not null, primary key
 #  multiple                 :boolean          default(FALSE), not null
-#  name_old                 :string
-#  name_plural_old          :string
 #  name_plural_translations :json
 #  name_translations        :json
 #  options                  :json
@@ -32,7 +30,6 @@
 #  uuid                     :string
 #
 
-# TODO: drop name_old and name_plural_old columns (no longer used)
 class Field < ActiveRecord::Base
   TYPES = {
     "choice" => "Field::ChoiceSet",
