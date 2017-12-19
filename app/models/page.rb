@@ -44,7 +44,9 @@ class Page < ActiveRecord::Base
   end
 
   def describe
-    # TODO: Fix catalog import and export
-    # as_json(only: %i(slug title locale)).merge("containers": containers.map(&:describe))
+    as_json(only: %i(slug)).merge(
+      "title": title_json,
+      "containers": containers.map(&:describe)
+    )
   end
 end

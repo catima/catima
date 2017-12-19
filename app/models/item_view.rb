@@ -42,4 +42,15 @@ class ItemView < ActiveRecord::Base
     end
     local_tpl.html_safe
   end
+
+  def template_json
+    JSON.parse template
+  end
+
+  def describe
+    as_json(only: %i(name default_for_display_name default_for_item_view default_for_list_view)).merge(
+      "item_type": item_type.slug,
+      "template": template_json
+    )
+  end
 end

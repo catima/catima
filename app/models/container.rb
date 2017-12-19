@@ -67,7 +67,7 @@ class Container < ActiveRecord::Base
   end
 
   def describe
-    as_json(only: %i(type slug content row_order))
+    as_json(only: %i(type slug content locale row_order))
   end
 
   def update_from_json(d)

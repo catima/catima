@@ -78,6 +78,7 @@ class CatalogDump
   def dump_item_type_structure(it, dir)
     dmp = it.as_json(only: %i(slug name_translations name_plural_translations))
     dmp["fields"] = it.fields.map(&:describe)
+    dmp['item-views'] = it.item_views.map(&:describe)
     File.write(File.join(dir, "#{it.slug}.json"), JSON.pretty_generate(dmp))
   end
 

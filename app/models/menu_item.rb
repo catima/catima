@@ -55,10 +55,12 @@ class MenuItem < ActiveRecord::Base
   end
 
   def describe
-    as_json(only: %i(slug title rank url)) \
+    as_json(only: %i(slug rank)) \
       .merge("parent": parent_id.nil? ? nil : Page.find(parent_id).slug,
              "page": page.nil? ? nil : page.slug,
-             "item-type": item_type.nil? ? nil : item_type.slug
+             "item-type": item_type.nil? ? nil : item_type.slug,
+             "title": title_json,
+             "url": url_json
             )
   end
 
