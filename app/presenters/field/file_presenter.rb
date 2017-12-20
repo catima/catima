@@ -13,7 +13,7 @@ class Field::FilePresenter < FieldPresenter
           "data-multiple=\"#{field.multiple}\" " \
           "data-required=\"#{field.required?}\" " \
           "data-fieldname=\"#{field.name}\" " \
-          "data-upload-url=\"/#{field.catalog.slug}/admin/#{field.item_type.slug}/upload\" " \
+          "data-upload-url=\"/#{field.catalog.slug}/#{I18n.locale}/admin/#{field.item_type.slug}/upload\" " \
           "data-file-types=\"#{field.types}\" " \
           "data-button-text=\"" + (field.multiple == true ? 'Add files' : "Add file") + "\"></div>"
     ]
