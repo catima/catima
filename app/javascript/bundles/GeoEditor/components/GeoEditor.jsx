@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import React from 'react';
 import { Map, TileLayer, FeatureGroup, Marker } from 'react-leaflet';
 import { EditControl } from 'react-leaflet-draw';
+import $ from 'jquery';
 
 
 const subs = ['a', 'b', 'c'];

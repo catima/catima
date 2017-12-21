@@ -1,9 +1,9 @@
 import 'es6-shim';
 import PropTypes from 'prop-types';
 import React from 'react';
+import $ from 'jquery';
 
 const uuidv4 = require('uuid/v4');
-
 
 class TemplateEditor extends React.Component {
   static propTypes = {
