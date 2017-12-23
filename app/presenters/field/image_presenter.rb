@@ -41,7 +41,7 @@ class Field::ImagePresenter < Field::FilePresenter
     thumbs = files_as_array.map do |image|
       file_url(image, '300x200', :resize)
     end
-    images = files_as_array.map { |img| '/' + img['path'] }
+    images = files_as_array.map { |img| "/#{img['path']}" }
     @view.render('fields/images', thumbnails: thumbs, images: images)
   end
 end
