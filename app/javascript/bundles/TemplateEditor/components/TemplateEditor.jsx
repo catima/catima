@@ -1,7 +1,12 @@
 import 'es6-shim';
 import PropTypes from 'prop-types';
 import React from 'react';
-import $ from 'jquery';
+import 'jquery';
+import 'bootstrap/js/modal';
+import 'bootstrap/js/dropdown';
+import 'bootstrap/js/tooltip';
+import 'bootstrap/dist/css/bootstrap.css';
+import 'summernote';
 
 const uuidv4 = require('uuid/v4');
 

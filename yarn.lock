@@ -2,6 +2,12 @@
 # yarn lockfile v1
 
 
+"@claviska/jquery-minicolors@^2.2.6":
+  version "2.2.6"
+  resolved "https://registry.yarnpkg.com/@claviska/jquery-minicolors/-/jquery-minicolors-2.2.6.tgz#00b4c1e4e31e4da483501785d5c2ed3fccfdedc9"
+  dependencies:
+    jquery ">= 1.7.x"
+
 "@rails/webpacker@^3.0.2":
   version "3.0.2"
   resolved "https://registry.yarnpkg.com/@rails/webpacker/-/webpacker-3.0.2.tgz#574b021c1f3d700b40a934576c9bdac5c9f9c744"
@@ -956,6 +962,16 @@ boom@5.x.x:
   dependencies:
     hoek "4.x.x"
 
+bootstrap-tooltip@^3.1.1:
+  version "3.1.1"
+  resolved "https://registry.yarnpkg.com/bootstrap-tooltip/-/bootstrap-tooltip-3.1.1.tgz#6f03bdffdfc397e76b07828473d1ee3e7bdfe45c"
+  dependencies:
+    jquery "~2.1.0"
+
+bootstrap@^3.3.7:
+  version "3.3.7"
+  resolved "https://registry.yarnpkg.com/bootstrap/-/bootstrap-3.3.7.tgz#5a389394549f23330875a3b150656574f8a9eb71"
+
 brace-expansion@^1.1.7:
   version "1.1.8"
   resolved "https://registry.yarnpkg.com/brace-expansion/-/brace-expansion-1.1.8.tgz#c07b211c7c952ec1f8efd51a77ef0d1d3990a292"
@@ -1221,6 +1237,10 @@ coa@~1.0.1:
 code-point-at@^1.0.0:
   version "1.1.0"
   resolved "https://registry.yarnpkg.com/code-point-at/-/code-point-at-1.1.0.tgz#0d070b4d043a5bea33a2f1a40e2edb3d9a4ccf77"
+
+codemirror@^5.33.0:
+  version "5.33.0"
+  resolved "https://registry.yarnpkg.com/codemirror/-/codemirror-5.33.0.tgz#462ad9a6fe8d38b541a9536a3997e1ef93b40c6a"
 
 coffee-loader@^0.8.0:
   version "0.8.0"
@@ -2803,9 +2823,13 @@ javascript-natural-sort@0.7.1:
   version "0.7.1"
   resolved "https://registry.yarnpkg.com/javascript-natural-sort/-/javascript-natural-sort-0.7.1.tgz#f9e2303d4507f6d74355a73664d1440fb5a0ef59"
 
-jquery@^3.2.1:
+"jquery@>= 1.7.x", jquery@^3.2.1:
   version "3.2.1"
   resolved "https://registry.yarnpkg.com/jquery/-/jquery-3.2.1.tgz#5c4d9de652af6cd0a770154a631bba12b015c787"
+
+jquery@~2.1.0:
+  version "2.1.4"
+  resolved "https://registry.yarnpkg.com/jquery/-/jquery-2.1.4.tgz#228bde698a0c61431dc2630a6a154f15890d2317"
 
 js-base64@^2.1.8, js-base64@^2.1.9:
   version "2.3.2"
@@ -5218,6 +5242,12 @@ sugarss@^1.0.0:
   resolved "https://registry.yarnpkg.com/sugarss/-/sugarss-1.0.1.tgz#be826d9003e0f247735f92365dc3fd7f1bae9e44"
   dependencies:
     postcss "^6.0.14"
+
+summernote@^0.8.8:
+  version "0.8.8"
+  resolved "https://registry.yarnpkg.com/summernote/-/summernote-0.8.8.tgz#3244ff945e5ac1670519d4b0c418e403411cae3e"
+  dependencies:
+    bootstrap "^3.3.7"
 
 supports-color@^2.0.0:
   version "2.0.0"
