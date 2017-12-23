@@ -6,7 +6,6 @@ import FontSize from './FontSize';
 import FontStyle from './FontStyle';
 import FontColorButton from './FontColorButton';
 import FontExample from './FontExample';
-import 'jquery';
 
 class StyleControl extends React.Component {
   constructor(props){

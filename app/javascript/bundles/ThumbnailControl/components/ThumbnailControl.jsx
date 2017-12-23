@@ -2,7 +2,6 @@ import 'es6-shim';
 import React from 'react';
 import PropTypes from 'prop-types';
 import ReactCrop from 'react-image-crop';
-import 'jquery';
 
 class ThumbnailControl extends React.Component {
   static propTypes = {

@@ -1,7 +1,6 @@
 import 'es6-shim';
 import PropTypes from 'prop-types';
 import React from 'react';
-import 'jquery';
 import 'bootstrap/js/modal';
 import 'bootstrap/js/dropdown';
 import 'bootstrap/js/tooltip';
