@@ -12,5 +12,9 @@
   "DateTime": {
     "display_components": [],
     "editor_components": ["DateTimeInput"]
+  },
+  "Geometry": {
+    "display_components": [],
+    "editor_components": ["GeoEditor"]
   }
 }

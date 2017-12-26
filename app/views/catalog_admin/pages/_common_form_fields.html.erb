@@ -1,3 +1,6 @@
+<%= javascript_pack_tag 'catalog-admin-bundle' %>
+<%= stylesheet_pack_tag 'catalog-admin-bundle' %>
+
 <%= f.text_field(:slug, :help => slug_help_text) %>
 
 <%= f.text_field(:title, :class => 'hide', :value => @page.title_str) %>
