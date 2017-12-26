@@ -61,6 +61,7 @@ end
 
 group :development, :test do
   gem 'simplecov', :require => false
+  gem 'rspec-rails', '~> 3.6'
 end
 
 group :development do
@@ -78,14 +79,10 @@ group :development do
   gem "capistrano-nc", :require => false
   gem "capistrano-rails", :require => false
   gem "faker", "~> 1.7", :require => false
-  gem "guard", ">= 2.2.2", :require => false
-  gem "guard-livereload", :require => false
-  gem "guard-minitest", :require => false
   gem "letter_opener"
   gem "listen"
   gem "overcommit", :require => false
   gem "quiet_assets"
-  gem "rack-livereload"
   gem "rainbow", "~> 2.2.0", :require => false
   gem "rb-fsevent", :require => false
   gem "rbnacl", "~> 3.4", :require => false

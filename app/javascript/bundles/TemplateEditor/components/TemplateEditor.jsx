@@ -1,12 +1,11 @@
 import 'es6-shim';
 import PropTypes from 'prop-types';
 import React from 'react';
-import 'bootstrap/dist/css/bootstrap.css';
-import 'summernote/dist/summernote.css';
+import 'bootstrap/dist/css/bootstrap';
+import 'summernote/dist/summernote';
 import 'bootstrap/js/modal';
 import 'bootstrap/js/dropdown';
 import 'bootstrap/js/tooltip';
-import 'bootstrap/dist/css/bootstrap.css';
 import 'summernote';
 
 

@@ -42,9 +42,11 @@ Run the `bin/setup` script. This script will:
 
 ### Run it!
 
-1. Run `rake test` to make sure everything works.
-2. Run `rails s` to start the Rails app.
-3. In a separate console, run `bundle exec sidekiq` to start the Sidekiq background job processor.
+1. Install NPM packages using `yarn install`
+2. Run `rake test` and `bin/rspec` to make sure everything works.
+3. Install [foreman](https://github.com/ddollar/foreman) with `gem install foreman`
+4. Run `foreman start -f Procfile.dev` to start the Rails app.
+5. In a separate console, run `bundle exec sidekiq` to start the Sidekiq background job processor.
 
 [rbenv]:https://github.com/sstephenson/rbenv
 [poltergeist]:https://github.com/teampoltergeist/poltergeist
