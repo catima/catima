@@ -1,0 +1,11 @@
+{
+  "name": "Photo library",
+  "slug": "photo-library",
+  "primary_language": "en",
+  "other_languages": [
+    "de",
+    "fr"
+  ],
+  "requires_review": false,
+  "advertize": true
+}

@@ -1,0 +1,144 @@
+{
+  "slug": "trip",
+  "name_translations": {
+    "name_de": "Reise",
+    "name_en": "Trip",
+    "name_fr": "Voyage"
+  },
+  "name_plural_translations": {
+    "name_plural_de": "Reisen",
+    "name_plural_en": "Trips",
+    "name_plural_fr": "Voyages"
+  },
+  "fields": [
+    {
+      "type": "Field::Text",
+      "slug": "name",
+      "comment": "",
+      "required": true,
+      "unique": true,
+      "default_value": "",
+      "options": {
+        "maximum": "",
+        "minimum": "",
+        "formatted_text": "0"
+      },
+      "primary": true,
+      "display_in_list": true,
+      "uuid": "_64e55597_8f4a_4fc4_b467_39978c80c621",
+      "name_translations": {
+        "name_de": "Name",
+        "name_en": "Name",
+        "name_fr": "Nom"
+      },
+      "name_plural_translations": {
+        "name_plural_de": "Namen",
+        "name_plural_en": "Names",
+        "name_plural_fr": "Noms"
+      },
+      "i18n": true
+    },
+    {
+      "type": "Field::Text",
+      "slug": "desc",
+      "comment": "",
+      "required": false,
+      "unique": false,
+      "default_value": "",
+      "options": {
+        "maximum": "",
+        "minimum": "",
+        "formatted_text": "1"
+      },
+      "primary": false,
+      "display_in_list": false,
+      "uuid": "_526c25ff_2710_41f8_9204_474e8858a112",
+      "name_translations": {
+        "name_de": "Beschreibung",
+        "name_en": "Description",
+        "name_fr": "Description"
+      },
+      "name_plural_translations": {
+        "name_plural_de": "Beschreibungen",
+        "name_plural_en": "Descriptions",
+        "name_plural_fr": "Descriptions"
+      },
+      "i18n": true
+    },
+    {
+      "type": "Field::DateTime",
+      "slug": "start",
+      "comment": "",
+      "required": true,
+      "unique": false,
+      "default_value": null,
+      "options": {
+        "format": "YMD"
+      },
+      "primary": false,
+      "display_in_list": true,
+      "uuid": "_8101378b_6a2d_454e_af16_6d593af5a3c0",
+      "name_translations": {
+        "name_de": "Beginn",
+        "name_en": "Start date",
+        "name_fr": "Date de début"
+      },
+      "name_plural_translations": {
+        "name_plural_de": "Beginn",
+        "name_plural_en": "Start dates",
+        "name_plural_fr": "Dates de fin"
+      }
+    },
+    {
+      "type": "Field::DateTime",
+      "slug": "end",
+      "comment": "",
+      "required": true,
+      "unique": false,
+      "default_value": null,
+      "options": {
+        "format": "YMD"
+      },
+      "primary": false,
+      "display_in_list": true,
+      "uuid": "_07c06c40_0e01_4026_9d86_1a76dd573c5f",
+      "name_translations": {
+        "name_de": "Ende",
+        "name_en": "End date",
+        "name_fr": "Date de fin"
+      },
+      "name_plural_translations": {
+        "name_plural_de": "Ende",
+        "name_plural_en": "End dates",
+        "name_plural_fr": "Dates de fin"
+      }
+    },
+    {
+      "type": "Field::Reference",
+      "slug": "place",
+      "comment": "",
+      "required": false,
+      "unique": false,
+      "default_value": null,
+      "options": null,
+      "primary": false,
+      "display_in_list": false,
+      "uuid": "_3d03d006_e66f_4b91_86c1_ee7f9659c4b3",
+      "name_translations": {
+        "name_de": "Attraktion",
+        "name_en": "Visited place",
+        "name_fr": "Attraction"
+      },
+      "name_plural_translations": {
+        "name_plural_de": "Attraktionen",
+        "name_plural_en": "Visited places",
+        "name_plural_fr": "Attractions"
+      },
+      "multiple": true,
+      "related_item_type": "places"
+    }
+  ],
+  "item-views": [
+
+  ]
+}

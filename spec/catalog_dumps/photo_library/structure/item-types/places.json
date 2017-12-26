@@ -1,0 +1,92 @@
+{
+  "slug": "places",
+  "name_translations": {
+    "name_de": "Attraktion",
+    "name_en": "Visited place",
+    "name_fr": "Attraction"
+  },
+  "name_plural_translations": {
+    "name_plural_de": "Attraktionen",
+    "name_plural_en": "Visited places",
+    "name_plural_fr": "Attractions"
+  },
+  "fields": [
+    {
+      "type": "Field::Text",
+      "slug": "name",
+      "comment": "",
+      "required": true,
+      "unique": false,
+      "default_value": "",
+      "options": {
+        "maximum": "",
+        "minimum": "",
+        "formatted_text": "0"
+      },
+      "primary": true,
+      "display_in_list": true,
+      "uuid": "_81f5b0ac_43d5_4fe3_bd2c_2aa38c940c84",
+      "name_translations": {
+        "name_de": "Name",
+        "name_en": "Place name",
+        "name_fr": "Nom"
+      },
+      "name_plural_translations": {
+        "name_plural_de": "Namen",
+        "name_plural_en": "Place names",
+        "name_plural_fr": "Noms"
+      },
+      "i18n": true
+    },
+    {
+      "type": "Field::Geometry",
+      "slug": "geo",
+      "comment": "",
+      "required": false,
+      "unique": false,
+      "default_value": null,
+      "options": null,
+      "primary": false,
+      "display_in_list": false,
+      "uuid": "_9f00230b_d385_4d3a_8e3b_f28032d7d736",
+      "name_translations": {
+        "name_de": "Ort",
+        "name_en": "Location",
+        "name_fr": "Localisation"
+      },
+      "name_plural_translations": {
+        "name_plural_de": "Orte",
+        "name_plural_en": "Locations",
+        "name_plural_fr": "Localisations"
+      }
+    },
+    {
+      "type": "Field::Image",
+      "slug": "photo",
+      "comment": "",
+      "required": false,
+      "unique": false,
+      "default_value": null,
+      "options": {
+        "types": "jpg, jpeg, png, gif"
+      },
+      "primary": false,
+      "display_in_list": true,
+      "uuid": "_26358aec_6d41_4715_b6b9_1f23811f1c73",
+      "name_translations": {
+        "name_de": "Foto",
+        "name_en": "Photo",
+        "name_fr": "Photo"
+      },
+      "name_plural_translations": {
+        "name_plural_de": "Fotos",
+        "name_plural_en": "Photos",
+        "name_plural_fr": "Photos"
+      },
+      "multiple": true
+    }
+  ],
+  "item-views": [
+
+  ]
+}

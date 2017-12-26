@@ -1,0 +1,239 @@
+{
+  "item-type": "places",
+  "items": [
+    {
+      "name": {
+        "_translations": {
+          "de": "Schiras",
+          "en": "Shiraz",
+          "fr": "Chiraz"
+        }
+      },
+      "geo": {
+        "type": "FeatureCollection",
+        "features": [
+          {
+            "type": "Feature",
+            "geometry": {
+              "type": "Point",
+              "coordinates": [
+                52.534218,
+                29.600178
+              ]
+            },
+            "properties": {
+            }
+          }
+        ]
+      },
+      "photo": [
+        {
+          "crop": {
+            "x": 30.49645390070922,
+            "y": 11.987381703470032,
+            "width": 51.30023640661938,
+            "aspect": 1,
+            "height": 68.45425867507886
+          },
+          "name": "Imamzadeh-ye_Ali_Ebn-e_Hamze_(Shiraz)_001.jpg",
+          "path": "upload/photo-library/_26358aec_6d41_4715_b6b9_1f23811f1c73/1514304832_Imamzadeh-ye_Ali_Ebn-e_Hamze_Shiraz_001.jpg",
+          "size": 359942,
+          "type": "image/jpeg"
+        },
+        {
+          "name": "1600px-Darvazeghoran,_Iran_shiraz.jpg",
+          "path": "upload/photo-library/_26358aec_6d41_4715_b6b9_1f23811f1c73/1514304837_1600px-Darvazeghoran_Iran_shiraz.jpg",
+          "size": 361274,
+          "type": "image/jpeg"
+        },
+        {
+          "name": "Afif-Abad_Garden,_Shiraz.jpg",
+          "path": "upload/photo-library/_26358aec_6d41_4715_b6b9_1f23811f1c73/1514304840_Afif-Abad_Garden_Shiraz.jpg",
+          "size": 408014,
+          "type": "image/jpeg"
+        },
+        {
+          "name": "Baghe_Eram_Shiraz_edit.jpg",
+          "path": "upload/photo-library/_26358aec_6d41_4715_b6b9_1f23811f1c73/1514304847_Baghe_Eram_Shiraz_edit.jpg",
+          "size": 513869,
+          "type": "image/jpeg"
+        },
+        {
+          "name": "Ghavam_Garden,_Shiraz.jpg",
+          "path": "upload/photo-library/_26358aec_6d41_4715_b6b9_1f23811f1c73/1514304852_Ghavam_Garden_Shiraz.jpg",
+          "size": 471730,
+          "type": "image/jpeg"
+        },
+        {
+          "name": "Hafezova_hrobka.jpg",
+          "path": "upload/photo-library/_26358aec_6d41_4715_b6b9_1f23811f1c73/1514304867_Hafezova_hrobka.jpg",
+          "size": 460483,
+          "type": "image/jpeg"
+        },
+        {
+          "name": "Mausoleo_de_Saadi.jpg",
+          "path": "upload/photo-library/_26358aec_6d41_4715_b6b9_1f23811f1c73/1514304885_Mausoleo_de_Saadi.jpg",
+          "size": 507991,
+          "type": "image/jpeg"
+        },
+        {
+          "name": "Persian-Gulf-Shiraz.jpg",
+          "path": "upload/photo-library/_26358aec_6d41_4715_b6b9_1f23811f1c73/1514304888_Persian-Gulf-Shiraz.jpg",
+          "size": 237786,
+          "type": "image/jpeg"
+        },
+        {
+          "name": "Shahpouri-House-in-Shiraz-Persia-Photo-by-Hossein-Amini.jpg",
+          "path": "upload/photo-library/_26358aec_6d41_4715_b6b9_1f23811f1c73/1514304891_Shahpouri-House-in-Shiraz-Persia-Photo-by-Hossein-Amini.jpg",
+          "size": 356139,
+          "type": "image/jpeg"
+        }
+      ],
+      "uuid": "df684928-623b-4923-99e7-a1cda6120132"
+    },
+    {
+      "name": {
+        "_translations": {
+          "de": "Isfahan",
+          "en": "Isfahan",
+          "fr": "Isphahan"
+        }
+      },
+      "geo": {
+        "type": "FeatureCollection",
+        "features": [
+          {
+            "type": "Feature",
+            "geometry": {
+              "type": "Point",
+              "coordinates": [
+                51.670418,
+                32.665102
+              ]
+            },
+            "properties": {
+            }
+          }
+        ]
+      },
+      "photo": [
+        {
+          "crop": {
+            "x": 0,
+            "y": 0,
+            "width": 72.81323877068559,
+            "aspect": 1,
+            "height": 100
+          },
+          "name": "Si-o-se-Pol.jpg",
+          "path": "upload/photo-library/_26358aec_6d41_4715_b6b9_1f23811f1c73/1514304571_Si-o-se-Pol.jpg",
+          "size": 285042,
+          "type": "image/jpeg"
+        },
+        {
+          "name": "Naghshe_Jahan_Square_Isfahan_modified.jpg",
+          "path": "upload/photo-library/_26358aec_6d41_4715_b6b9_1f23811f1c73/1514304575_Naghshe_Jahan_Square_Isfahan_modified.jpg",
+          "size": 410167,
+          "type": "image/jpeg"
+        },
+        {
+          "name": "Khaju_Bridje_at_night.jpg",
+          "path": "upload/photo-library/_26358aec_6d41_4715_b6b9_1f23811f1c73/1514304579_Khaju_Bridje_at_night.jpg",
+          "size": 229700,
+          "type": "image/jpeg"
+        },
+        {
+          "name": "Khaju_Bridge_-_Isfahan-Iran-ninara07.jpg",
+          "path": "upload/photo-library/_26358aec_6d41_4715_b6b9_1f23811f1c73/1514304582_Khaju_Bridge_-_Isfahan-Iran-ninara07.jpg",
+          "size": 570572,
+          "type": "image/jpeg"
+        },
+        {
+          "name": "Carpet_bazzar.jpg",
+          "path": "upload/photo-library/_26358aec_6d41_4715_b6b9_1f23811f1c73/1514304586_Carpet_bazzar.jpg",
+          "size": 789340,
+          "type": "image/jpeg"
+        },
+        {
+          "name": "Ali-qapu-rooz.jpg",
+          "path": "upload/photo-library/_26358aec_6d41_4715_b6b9_1f23811f1c73/1514304590_Ali-qapu-rooz.jpg",
+          "size": 267398,
+          "type": "image/jpeg"
+        }
+      ],
+      "uuid": "683d61bf-3edf-45ce-95ed-068ab1fd07b4"
+    },
+    {
+      "name": {
+        "_translations": {
+          "de": "Teheran",
+          "en": "Tehran",
+          "fr": "Teheran"
+        }
+      },
+      "geo": {
+        "type": "FeatureCollection",
+        "features": [
+          {
+            "type": "Feature",
+            "geometry": {
+              "type": "Point",
+              "coordinates": [
+                51.409149,
+                35.701359
+              ]
+            },
+            "properties": {
+            }
+          }
+        ]
+      },
+      "photo": [
+        {
+          "crop": {
+            "x": 22.93144208037825,
+            "y": 17.034700315457414,
+            "width": 38.061465721040186,
+            "aspect": 1,
+            "height": 50.78864353312302
+          },
+          "name": "Aerial_View_of_Tehran_26.11.2008_04-35-03.jpg",
+          "path": "upload/photo-library/_26358aec_6d41_4715_b6b9_1f23811f1c73/1514304092_Aerial_View_of_Tehran_26112008_04-35-03.jpg",
+          "size": 483895,
+          "type": "image/jpeg"
+        },
+        {
+          "name": "Damavand_from_dizin.jpg",
+          "path": "upload/photo-library/_26358aec_6d41_4715_b6b9_1f23811f1c73/1514304096_Damavand_from_dizin.jpg",
+          "size": 198137,
+          "type": "image/jpeg"
+        },
+        {
+          "name": "Golestan_Palace,_Tehran,_Iran_(1249288212).jpg",
+          "path": "upload/photo-library/_26358aec_6d41_4715_b6b9_1f23811f1c73/1514304099_Golestan_Palace_Tehran_Iran_1249288212.jpg",
+          "size": 99599,
+          "type": "image/jpeg"
+        },
+        {
+          "name": "Mezquita_Shah.jpg",
+          "path": "upload/photo-library/_26358aec_6d41_4715_b6b9_1f23811f1c73/1514304130_Mezquita_Shah.jpg",
+          "size": 616766,
+          "type": "image/jpeg"
+        },
+        {
+          "name": "Tehran's_Nature_Bridge.jpg",
+          "path": "upload/photo-library/_26358aec_6d41_4715_b6b9_1f23811f1c73/1514304135_Tehrans_Nature_Bridge.jpg",
+          "size": 118093,
+          "type": "image/jpeg"
+        },
+        {
+          "name": "7Tir_Tehran.jpg",
+          "path": "upload/photo-library/_26358aec_6d41_4715_b6b9_1f23811f1c73/1514304161_7Tir_Tehran.jpg",
+          "size": 502729,
+          "type": "image/jpeg"
+        }
+      ],
+      "uuid": "fbcb229c-782e-4156-bec1-f0cdf74fffcb"
+    }
+  ]
+}

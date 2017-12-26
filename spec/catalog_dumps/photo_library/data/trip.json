@@ -1,0 +1,37 @@
+{
+  "item-type": "trip",
+  "items": [
+    {
+      "name": {
+        "_translations": {
+          "de": "Die Schönheit des Irans",
+          "en": "The beauty of Iran",
+          "fr": "La beauté de l'Iran"
+        }
+      },
+      "desc": {
+        "_translations": {
+          "de": "Der Iran ist einer der schönsten Orte für eine Entdeckungsreise. Erstaunliche Landschaften, freundliche Menschen und eine ausserordentlich reiche Kultur und Geschichte.",
+          "en": "Iran is one of the most beautiful places for a discovery. Amazing landscapes, friendly people and a extremely rich culture and history.",
+          "fr": "L'Iran est l'un des plus beaux endroits pour une découverte. Des paysages étonnants, des gens accueillants et une culture et une histoire extrêmement riches."
+        }
+      },
+      "start": {
+        "D": 14,
+        "M": 3,
+        "Y": 2016
+      },
+      "end": {
+        "D": 24,
+        "M": 4,
+        "Y": 2016
+      },
+      "place": [
+        "683d61bf-3edf-45ce-95ed-068ab1fd07b4",
+        "df684928-623b-4923-99e7-a1cda6120132",
+        "fbcb229c-782e-4156-bec1-f0cdf74fffcb"
+      ],
+      "uuid": "18831724-dac1-4b5a-bb48-0a307fca954f"
+    }
+  ]
+}
