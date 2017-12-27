@@ -9,6 +9,10 @@ class JsonConfigTest < ActiveSupport::TestCase
       "DateTime" => {
         "display_components" => [],
         "editor_components" => ["DateTimeInput"]
+      },
+      "Geometry" => {
+        "display_components" => [],
+        "editor_components" => ["GeoEditor"]
       }
     }
     assert_equal(expected_config, config)
@@ -21,6 +25,10 @@ class JsonConfigTest < ActiveSupport::TestCase
       "DateTime" => {
         "display_components" => [],
         "editor_components" => ["DateTimeInput"]
+      },
+      "Geometry" => {
+        "display_components" => [],
+        "editor_components" => ["GeoEditor"]
       }
     }
     assert_equal(expected_config, config)
