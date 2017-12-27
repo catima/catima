@@ -2,6 +2,8 @@ import ReactOnRails from 'react-on-rails';
 
 import DateTimeInput from '../bundles/DateTimeInput/components/DateTimeInput';
 
+import FormattedTextEditor from '../bundles/FormattedTextEditor/components/FormattedTextEditor';
+
 import GeoEditor from '../bundles/GeoEditor/components/GeoEditor';
 
 import StyleControl from '../bundles/StyleControl/components/StyleControl';
@@ -20,6 +22,7 @@ import TranslatedTextField from '../bundles/TranslatedTextField/components/Trans
 
 ReactOnRails.register({
   DateTimeInput,
+  FormattedTextEditor,
   GeoEditor,
   StyleControl, FontColorButton, FontExample, FontMenu, FontSize, FontStyle,
   TemplateEditor,

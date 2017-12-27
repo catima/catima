@@ -61,6 +61,10 @@ class Field::Text < ::Field
     {uuid => value}
   end
 
+  def formatted?
+    options["formatted_text"].to_i == 1
+  end
+
   private
 
   def build_validators
