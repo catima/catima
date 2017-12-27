@@ -98,7 +98,7 @@ thumbnail_path = ($img_path, $size)->
 # Calculates a base64 value with the file name and size, used as a file id
 file_hash = ($file)->
   file_id = "#{$file.name}_#{$file.size}"
-  return (if typeof(btoa) == 'function' then btoa(file_id) else file_id)
+  return (if typeof(btoa) == 'function' then btoa(unescape(encodeURIComponent(file_id))) else file_id)
 
 format_file_size = (bytes, decimals)->
   return '0 Bytes' if bytes == 0
