@@ -20,12 +20,20 @@ class FormattedTextEditor extends React.Component {
   }
 
   _loadContent(){
-    return (document.getElementById(this.props.contentRef).value || '');
+    const v = document.getElementById(this.props.contentRef).value;
+    try {
+      return JSON.parse(v);
+    } catch(err) {}
+    return {format: 'html', content: v};
   }
 
-  _updateContent(content){
+  _updateContent(){
     const el = document.getElementById(this.props.contentRef)
-    el.value = content;
+    el.value = JSON.stringify({
+      format: 'html',
+      doc: this.editor.getContents(),
+      content: this.editor.root.innerHTML
+    });
   }
 
   componentDidMount(){
@@ -39,11 +47,15 @@ class FormattedTextEditor extends React.Component {
       theme: 'snow',
     });
 
-    const content = this._loadContent();
-    this.editor.clipboard.dangerouslyPasteHTML(content);
+    const c = this._loadContent();
+    if (c.format == 'html' && typeof(c.doc) !== 'undefined'){
+      this.editor.setContents(c.doc);
+    } else {
+      this.editor.clipboard.dangerouslyPasteHTML(c.content);
+    }
 
     this.editor.on('text-change', function(delta, oldDelta, source) {
-      self._updateContent(self.editor.root.innerHTML);
+      self._updateContent();
     });
   }
 

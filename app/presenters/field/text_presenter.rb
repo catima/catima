@@ -1,11 +1,24 @@
 include ActionView::Helpers::OutputSafetyHelper
 
 class Field::TextPresenter < FieldPresenter
-  delegate :locale_form_group, :truncate, :react_component, :to => :view
+  delegate :locale_form_group, :truncate, :react_component, :strip_tags, :to => :view
 
   def value
-    v = compact? ? truncate(super.to_s, :length => 100) : super
-    field.formatted_text.to_i == 1 ? render_markdown(v) : v
+    v = begin
+      JSON.parse(super || '') || { 'format': 'raw', 'content': '' }
+    rescue JSON::ParserError
+      {
+        'format' => field.formatted_text.to_i == 1 ? 'markdown' : 'raw',
+        'content' => super
+      }
+    end
+    c = v['format'] == 'markdown' ? render_markdown(v['content']) : v['content']
+    c ||= ''
+    compact? ? compact_value(c) : sanitize(c)
+  end
+
+  def compact_value(v)
+    truncate(strip_tags(v), length: 100).html_safe
   end
 
   def input(form, method, options={})
@@ -55,11 +68,16 @@ class Field::TextPresenter < FieldPresenter
 
   def render_markdown(t)
     t ||= ''
-    v = Redcarpet::Markdown.new(
+    Redcarpet::Markdown.new(
       Redcarpet::Render::HTML,
       autolink: true, tables: true
     ).render(t)
-    white_list_sanitizer = Rails::Html::WhiteListSanitizer.new
-    safe_join([white_list_sanitizer.sanitize(v).html_safe])
+  end
+
+  private
+
+  def sanitize(v)
+    @white_list_sanitizer ||= Rails::Html::WhiteListSanitizer.new
+    safe_join([@white_list_sanitizer.sanitize(v).html_safe])
   end
 end

@@ -62,7 +62,7 @@ class Field::Text < ::Field
   end
 
   def formatted?
-    options["formatted_text"].to_i == 1
+    (options && options['formatted_text'] && options['formatted_text'].to_i) == 1
   end
 
   private
