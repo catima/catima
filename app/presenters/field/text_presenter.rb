@@ -9,8 +9,22 @@ class Field::TextPresenter < FieldPresenter
   end
 
   def input(form, method, options={})
-    return formatted_text_input(form, method, options) if field.formatted?
     i18n = options.fetch(:i18n) { field.i18n? }
+    inp = raw_input(form, method, options, i18n)
+    return inp unless field.formatted?
+    [
+      '<div class="hidden-children-inputs">',
+      inp,
+      '</div>',
+      '<div class="formatted-text-input">',
+      i18n ? '<table class="formatted-text-table">' : '',
+      formatted_text_input(form, method, options, i18n),
+      i18n ? '</table>' : '',
+      '</div>'
+    ].compact.join.html_safe
+  end
+
+  def raw_input(form, method, options={}, i18n=false)
     return i18n_input(form, method, options) if i18n
     form.text_area(method, input_defaults(options).merge(:rows => 1))
   end
@@ -19,18 +33,24 @@ class Field::TextPresenter < FieldPresenter
     locale_form_group(form, method, :text_field, input_defaults(options))
   end
 
-  def formatted_text_input(form, method, options={})
-    [
-      form.text_area(
-        method.to_s,
-        input_defaults(options).merge(:rows => 1, :class => 'hide')
-      ),
-      react_component(
-        'FormattedTextEditor',
-        props: { contentRef: "item_#{method}" },
-        prerender: false
-      )
-    ].compact.join.html_safe
+  def formatted_text_input(_form, method, _options={}, i18n=false)
+    if i18n
+      field.catalog.valid_locales.map do |l|
+        "<tr><td>#{l}</td><td>" + \
+          formatted_text_component("item_#{method}_#{l}") + \
+          "</td></tr>"
+      end.compact.join
+    else
+      formatted_text_component("item_#{method}")
+    end
+  end
+
+  def formatted_text_component(content_ref)
+    react_component(
+      'FormattedTextEditor',
+      props: { contentRef: content_ref },
+      prerender: false
+    )
   end
 
   def render_markdown(t)

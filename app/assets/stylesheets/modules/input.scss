@@ -2,3 +2,27 @@
 .input-group-addon {
   min-width: 3em;
 }
+
+.hidden-children-inputs .form-group .form-group {
+  display: none;
+}
+.hidden-children-inputs textarea {
+  display: none;
+}
+
+.formatted-text-input {
+  margin-top: -15px;
+  margin-bottom: 15px;
+}
+
+.formatted-text-table tr td:nth-of-type(1) {
+  background-color: #eee;
+  min-width: 40px;
+  text-align: center;
+  padding-top: 10px;
+}
+
+.formatted-text-table tr td {
+  border-bottom: 4px solid white;
+  vertical-align: top;
+}
