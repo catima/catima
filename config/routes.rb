@@ -166,6 +166,12 @@ Rails.application.routes.draw do
     :constraints => CatalogsController::Constraint
 
   # ===========================================================================
+  # Service URLs
+
+  # Service for converting DOCX to HTML
+  post "s/docx2html" => "docx#convert_to_html", :as => 'docx2html'
+
+  # ===========================================================================
   # Error pages
 
   match '/404', to:'errors#error_404', :via => :all
