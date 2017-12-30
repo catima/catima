@@ -3220,9 +3220,9 @@ make-dir@^1.0.0:
   dependencies:
     pify "^3.0.0"
 
-mammoth@^1.4.3:
+"mammoth@https://github.com/catima/mammoth.js":
   version "1.4.3"
-  resolved "https://registry.yarnpkg.com/mammoth/-/mammoth-1.4.3.tgz#78b1e96b413a63540f89e020c10aa9bb74f114e8"
+  resolved "https://github.com/catima/mammoth.js#f762fdebc74057faf9df86439645784d42ce6045"
   dependencies:
     argparse "~1.0.3"
     bluebird "~3.4.0"
