@@ -139,6 +139,17 @@
     }
   ],
   "item-views": [
-
+    {
+      "name": "trip-name",
+      "default_for_list_view": false,
+      "default_for_item_view": false,
+      "default_for_display_name": true,
+      "item_type": "trip",
+      "template": {
+        "de": "<b>{{name}}</b> ({{start}} - {{end}})",
+        "en": "<b>{{name}}</b> ({{start}} - {{end}})",
+        "fr": "<b>{{name}}</b> ({{start}} - {{end}})"
+      }
+    }
   ]
 }

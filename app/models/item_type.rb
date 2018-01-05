@@ -21,7 +21,7 @@ class ItemType < ActiveRecord::Base
   include HasSlug
 
   has_many :items
-  has_many :item_views
+  has_many :item_views, :dependent => :destroy
   store_translations :name, :name_plural
   validates_slug :scope => [:catalog_id, :deactivated_at]
 

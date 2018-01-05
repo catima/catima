@@ -1,6 +1,6 @@
 class HashSerializer
-  def self.dump(str)
-    JSON.parse str
+  def self.dump(val)
+    val.is_a?(Hash) ? val : JSON.parse(val)
   end
 
   def self.load(hash)

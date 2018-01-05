@@ -90,7 +90,11 @@ class CatalogLoadStructure
   end
 
   def load_item_views(it, it_info)
-    # TODO : catalog_load_structure.rb:load_item_views
+    it_info['item-views'].each { |ivw_def| build_item_view(it, ivw_def) }
+  end
+
+  def build_item_view(it, ivw_def)
+    it.item_views.build(ivw_def.except('item_type')).save
   end
 
   def build_field(field_set, fld_info)
