@@ -94,9 +94,13 @@ class CatalogLoadData
   end
 
   def convert_file_path(path, new_slug)
-    path_elems = path['path'].split('/')
-    path_elems[1] = new_slug
-    path['path'] = path_elems.join('/')
-    path
+    paths = path.class == Array ? path : [path]
+    paths = paths.map do |p|
+      path_elems = p['path'].split('/')
+      path_elems[1] = new_slug
+      p['path'] = path_elems.join('/')
+      p
+    end
+    path.class == Array ? paths : paths[0]
   end
 end

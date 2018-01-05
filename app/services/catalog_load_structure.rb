@@ -71,18 +71,26 @@ class CatalogLoadStructure
         items.append([it, it_json])
       end
     end
+
     # And now we can build the fields
     items.each { |arr| load_item_type_fields(arr[0], arr[1]) }
+
+    # Load the item views
+    items.each { |arr| load_item_views(arr[0], arr[1]) }
   end
 
   def load_item_type(catalog, it_info)
-    it = catalog.item_types.build(it_info.except("fields"))
+    it = catalog.item_types.build(it_info.except("fields", 'item-views'))
     it.save
     it
   end
 
   def load_item_type_fields(it, it_info)
     it_info['fields'].each { |fld_info| build_field(it, fld_info) }
+  end
+
+  def load_item_views(it, it_info)
+    # TODO : catalog_load_structure.rb:load_item_views
   end
 
   def build_field(field_set, fld_info)
