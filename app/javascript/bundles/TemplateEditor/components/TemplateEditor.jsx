@@ -1,13 +1,10 @@
 import 'es6-shim';
 import PropTypes from 'prop-types';
 import React from 'react';
-import 'bootstrap/dist/css/bootstrap.css';
 import 'summernote/dist/summernote.css';
-import 'bootstrap/js/modal';
-import 'bootstrap/js/dropdown';
-import 'bootstrap/js/tooltip';
 import 'summernote';
 
+require('bootstrap-loader');
 
 const uuidv4 = require('uuid/v4');
 
@@ -63,6 +60,7 @@ class TemplateEditor extends React.Component {
     this.editor.summernote(this.options);
     this.editor.summernote('code', html);
     $('.note-link-popover').css('display', 'none');
+    $('.dropdown-toggle').dropdown();
   }
 
   componentWillUnmount(){
