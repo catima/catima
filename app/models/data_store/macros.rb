@@ -95,6 +95,11 @@ module DataStore::Macros
       define_method(key) do
         dirty_aware_store(key, transformer, multiple, true).get
       end
+
+      define_method("#{key}=") do |value|
+        dirty_aware_store(key, transformer, multiple).set(value)
+      end
+
       data_store_json_attribute(key)
 
       I18n.available_locales.each do |locale|
