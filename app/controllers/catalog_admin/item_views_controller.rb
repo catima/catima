@@ -53,7 +53,8 @@ class CatalogAdmin::ItemViewsController < CatalogAdmin::BaseController
   private
 
   def find_item_type
-    @item_type = ItemType.where(:slug => params[:item_type_slug]).first!
+    @catalog = Catalog.where(:slug => params[:catalog_slug]).first!
+    @item_type = @catalog.item_types.where(:slug => params[:item_type_slug]).first!
   end
 
   def build_item_view
