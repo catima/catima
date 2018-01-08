@@ -4,17 +4,21 @@ class Field::TextPresenter < FieldPresenter
   delegate :locale_form_group, :truncate, :react_component, :strip_tags, :to => :view
 
   def value
+    return super if field.formatted_text.to_i == 0
+    c = formatted_value(super) || ''
+    compact? ? compact_value(c) : sanitize(c)
+  end
+
+  def formatted_value(value)
     v = begin
-      JSON.parse(super || '') || { 'format': 'raw', 'content': '' }
+      JSON.parse(value || '') || { 'format': 'raw', 'content': '' }
     rescue JSON::ParserError
       {
         'format' => field.formatted_text.to_i == 1 ? 'markdown' : 'raw',
-        'content' => super
+        'content' => value
       }
     end
-    c = v['format'] == 'markdown' ? render_markdown(v['content']) : v['content']
-    c ||= ''
-    compact? ? compact_value(c) : sanitize(c)
+    v['format'] == 'markdown' ? render_markdown(v['content']) : v['content']
   end
 
   def compact_value(v)
