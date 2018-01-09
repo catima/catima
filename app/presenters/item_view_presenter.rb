@@ -15,6 +15,9 @@ class ItemViewPresenter
   def render
     tpl = JSON.parse(@item_view.template)
     local_tpl = tpl[@locale.to_s] || ''
+    # Filter away http and https before item link
+    local_tpl = local_tpl.sub('http://{{_itemLink}}', '{{_itemLink}}')
+    local_tpl = local_tpl.sub('https://{{_itemLink}}', '{{_itemLink}}')
     local_tpl = local_tpl.sub('{{_itemLink}}', item_link)
     @item.fields.each do |field|
       presenter = "#{field.class.name}Presenter".constantize.new(@view, @item, field, {})
