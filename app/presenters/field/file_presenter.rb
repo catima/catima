@@ -17,11 +17,6 @@ class Field::FilePresenter < FieldPresenter
           "data-file-types=\"#{field.types}\" " \
           "data-button-text=\"" + (field.multiple == true ? 'Add files' : "Add file") + "\"></div>"
     ]
-    if field.type == 'Field::Image'
-      html.push(
-        react_component('ThumbnailControl', props: { srcRef: "item_#{method}_json", srcId: method }, prerender: false)
-      )
-    end
     html.compact.join.html_safe
   end
 

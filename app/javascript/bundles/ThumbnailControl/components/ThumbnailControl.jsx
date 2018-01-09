@@ -13,6 +13,7 @@ class ThumbnailControl extends React.Component {
     super(props);
     this.srcRef = props.srcRef;
     this._id = props.srcId + '_thumbnail_control';
+    this.multiple = props.multiple || false;
     const src = this._loadSrc();
     this.state = {
       controlClass: (src.length == 0) ? 'hide' : 'show',
@@ -27,8 +28,12 @@ class ThumbnailControl extends React.Component {
 
   _loadSrc(){
     const d = document.getElementById(this.srcRef).innerText;
-    const j = JSON.parse(d);
-    return $.isArray(j) ? j : [j,];
+    try {
+      const j = JSON.parse(d);
+      return $.isArray(j) ? j : [j,];
+    } catch (e) {
+      return [];
+    }
   }
 
   _saveSrc(src){

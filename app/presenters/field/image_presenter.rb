@@ -8,6 +8,19 @@ class Field::ImagePresenter < Field::FilePresenter
     options[:class] == :full ? image_full : image_cropped
   end
 
+  def input(form, method, options={})
+    html = super(form, method, options)
+    (html + thumbnail_control(method)).html_safe
+  end
+
+  def thumbnail_control(method)
+    react_component('ThumbnailControl', props: {
+      srcRef: "item_#{method}_json",
+      srcId: method,
+      multiple: field.multiple
+    }, prerender: false)
+  end
+
   def image_full
     images = files_as_array.map do |image|
       image_tag(file_url(image, '600x600', :resize), options.merge(self.options))
