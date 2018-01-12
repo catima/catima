@@ -2,7 +2,7 @@ class Field::DecimalPresenter < FieldPresenter
   delegate :number_with_delimiter, :to => :view
 
   def input(form, method, options={})
-    form.number_field(method, input_defaults(options))
+    form.number_field(method, input_defaults(options).merge(:step => "any"))
   end
 
   def value
