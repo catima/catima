@@ -66,6 +66,6 @@ module ItemsHelper
   def default_display_name(item)
     field = item.field_for_select
     return item.to_s if field.nil?
-    strip_tags(field_value(item, field, :style => :compact)).html_safe
+    strip_tags(field_value(item, field, :style => :compact)) || ''.html_safe
   end
 end
