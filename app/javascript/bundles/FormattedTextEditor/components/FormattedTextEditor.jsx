@@ -6,6 +6,15 @@ import Quill from 'quill';
 import "quill/dist/quill.core.css";
 import "quill/dist/quill.snow.css";
 
+var icons = Quill.import('ui/icons');
+icons['footnote'] = 'Add footnote';
+icons['import_docx'] = 'Import DOCX';
+
+import "../modules/footnote";
+
+const noties = require('noties'),
+      Noties = noties.Noties;
+
 // Ajax library for uploading DOCX files
 import axios from 'axios';
 
@@ -24,6 +33,8 @@ class FormattedTextEditor extends React.Component {
     this.updateContent = this._updateContent.bind(this);
     this.docxUpload = this._docxUpload.bind(this);
 
+    this.handleFootnote = this.handleFootnote.bind(this);
+
     const self = this;
 
     this.toolbarOptions = {
@@ -33,9 +44,10 @@ class FormattedTextEditor extends React.Component {
         [{ 'script': 'sub'}, { 'script': 'super' }],
         ['link', 'image'],
         [{ 'list': 'ordered'}, { 'list': 'bullet' }],
-        ['import_docx'],
+        ['footnote', 'import_docx'],
       ],
       handlers: {
+        'footnote': this.handleFootnote,
         'import_docx': this.importDocxCallback(),
       }
     };
@@ -69,6 +81,12 @@ class FormattedTextEditor extends React.Component {
       theme: 'snow',
     });
 
+    this.footnoteRenderer = Noties(
+      function(){ return self.editor.root.querySelectorAll('.footnote'); },   // footnotes
+      function(){ return self.editor.root.querySelectorAll('.footnote span'); }, // reference nodes
+      null  // footnote pane (we don't have any in the editor)
+    );
+
     const c = this._loadContent();
     if (c.format == 'html' && typeof(c.doc) !== 'undefined'){
       this.editor.setContents(c.doc);
@@ -79,6 +97,8 @@ class FormattedTextEditor extends React.Component {
     this.editor.on('text-change', function(delta, oldDelta, source) {
       self._updateContent();
     });
+
+    this.footnoteRenderer.render();
   }
 
   componentWillUnmount(){}
@@ -107,18 +127,36 @@ class FormattedTextEditor extends React.Component {
 
     axios.post('/s/docx2html', data, { headers: {'X-CSRF-Token': csrfToken} })
     .then(function(response){
-      const html = response.data.html;
+      let html = response.data.html;
       if (html.length < 1){
         alert('Error while importing Word file. Only DOCX files are supported.');
         return;
       }
 
+      html = self.convertDocxHtml(html);
       const range = self.editor.getSelection();
       self.editor.clipboard.dangerouslyPasteHTML(range.index, html);
     })
     .catch(function(err){
       alert('Error while importing Word file.')
     });
+  }
+
+  // Takes the HTML as produced from a custom version of Mammoth.js
+  // and converts it into HTML code compatible with the text editor.
+  convertDocxHtml(html){
+    return html;
+  }
+
+  handleFootnote(){
+    // The footnote reference is the child tag of the footnote
+    // which is by default the selection and editable.
+    var range = this.editor.getSelection();
+    if (range) {
+      let value = prompt('Enter footnote:');
+      this.editor.insertEmbed(range.index, "footnote", value, "user");
+    }
+    this.footnoteRenderer.render();
   }
 
   render(){

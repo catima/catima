@@ -1,4 +1,9 @@
-button.ql-import_docx {
-  background-image: url('data:image/svg+xml;base64,PHN2ZyB4bWxucz0iaHR0cDovL3d3dy53My5vcmcvMjAwMC9zdmciIHhtbG5zOnhsaW5rPSJodHRwOi8vd3d3LnczLm9yZy8xOTk5L3hsaW5rIiB4PSIwcHgiIHk9IjBweCIgdmlld0JveD0iMCAwIDI4IDI0Ij48cG9seWdvbiBmaWxsPSIjZmZmZmZmIiBzdHJva2U9IiMwMDAwMDAiIHBvaW50cz0iMjAuNSw4LjUgMjAuNSwyMC41IDguNSwyMC41IDguNSwzLjUgMTYuNSwzLjUiLz48cG9seWxpbmUgZmlsbD0ibm9uZSIgc3Ryb2tlPSIjMDAwMDAwIiBwb2ludHM9IjE2LjUsMy41IDE2LjUsOC41IDIwLjUsOC41Ii8+PHBhdGggZmlsbD0iIzAwMDAwMCIgZD0iTTE1LjEsMTAuOXYyLjhoMi43VjE1aC0yLjd2Mi45aC0xLjJWMTVoLTIuOHYtMS4yaDIuN3YtMi45SDE1LjF6Ii8+PC9zdmc+') !important;
-  background-repeat: no-repeat;
+button.ql-import_docx, button.ql-footnote {
+  border: 1px solid #ddd !important;
+  font-size: 85%;
+  width: 100px !important;
+  margin-right: 5px;
+}
+button.ql-import_docx:hover, button.ql-footnote:hover {
+  background-color: #f0f0f0;
 }
