@@ -7,3 +7,16 @@ button.ql-import_docx, button.ql-footnote {
 button.ql-import_docx:hover, button.ql-footnote:hover {
   background-color: #f0f0f0;
 }
+span.footnote {
+  cursor: pointer;
+}
+.noteEditor {
+  position: absolute;
+  border: 1px solid #ddd;
+  padding: 10px;
+  background-color: #fff;
+  z-index: 10000;
+}
+.noteEditor textarea {
+  width: 100%;
+}

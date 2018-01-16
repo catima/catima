@@ -22,6 +22,31 @@ import "../css/formatted-text-editor.css";
 
 const uuidv4 = require('uuid/v4');
 
+
+// Function to return closest element based on a selector.
+// If self attribute is true, search is also applied to the element itself
+function closest(el, selector, self=false) {
+    var matchesFn;
+    ['matches','webkitMatchesSelector','mozMatchesSelector','msMatchesSelector','oMatchesSelector'].some(function(fn) {
+        if (typeof document.body[fn] == 'function') {
+            matchesFn = fn;
+            return true;
+        }
+        return false;
+    })
+    if (self && el[matchesFn](selector)) return el;
+    var parent;
+    while (el) {
+        parent = el.parentElement;
+        if (parent && parent[matchesFn](selector)) {
+            return parent;
+        }
+        el = parent;
+    }
+    return null;
+}
+
+
 class FormattedTextEditor extends React.Component {
   static propTypes = {
     contentRef: PropTypes.string.isRequired
@@ -34,6 +59,17 @@ class FormattedTextEditor extends React.Component {
     this.docxUpload = this._docxUpload.bind(this);
 
     this.handleFootnote = this.handleFootnote.bind(this);
+    this.handleFootnoteClick = this.handleFootnoteClick.bind(this);
+    this.saveFootnote = this.saveFootnote.bind(this);
+    this.handleFootnoteTextChange = this.handleFootnoteTextChange.bind(this);
+
+    this.state = {
+      footnoteDisplayDialog: 'none',
+      footnoteDialogWidth: 100,
+      footnoteDialogHeight: 50,
+      currentFootnoteText: '',
+      currentFootnoteEl: null
+    };
 
     const self = this;
 
@@ -98,7 +134,7 @@ class FormattedTextEditor extends React.Component {
       self._updateContent();
     });
 
-    this.footnoteRenderer.render();
+    this.renderFootnotes();
   }
 
   componentWillUnmount(){}
@@ -156,13 +192,49 @@ class FormattedTextEditor extends React.Component {
       let value = prompt('Enter footnote:');
       this.editor.insertEmbed(range.index, "footnote", value, "user");
     }
+    this.renderFootnotes();
+  }
+
+  renderFootnotes(){
     this.footnoteRenderer.render();
+    const footnotesRefs = document.querySelectorAll('#' + this.uid + ' span.footnote');
+    for (let i=0; i < footnotesRefs.length; i++) {
+      footnotesRefs[i].addEventListener('click', this.handleFootnoteClick);
+    }
+  }
+
+  handleFootnoteClick(e){
+    const el = document.getElementById(this.uid + '-editor')
+    const footnoteEl = closest(e.target, '.footnote');
+    this.setState({currentFootnoteEl: footnoteEl});
+    this.setState({currentFootnoteText: footnoteEl.getAttribute('data-note')});
+    this.setState({footnoteDialogWidth: el.offsetWidth});
+    this.setState({footnoteDialogHeight: el.offsetHeight});
+    this.showFootnoteEditDialog();
+  }
+
+  showFootnoteEditDialog(){
+    this.setState({footnoteDisplayDialog: 'block'});
+  }
+
+  saveFootnote(){
+    this.state.currentFootnoteEl.setAttribute('data-note', this.state.currentFootnoteText);
+    this.setState({footnoteDisplayDialog: 'none'});
+  }
+
+  handleFootnoteTextChange(e){
+    this.setState({currentFootnoteText: e.target.value});
   }
 
   render(){
     return (
-      <div className="formattedTextEditor">
+      <div className="formattedTextEditor" id={this.uid + '-editor'}>
         <input id={this.uid + '-fileInput'} accept="application/vnd.openxmlformats-officedocument.wordprocessingml.document" type="file" onChange={this.docxUpload} className="hide" />
+        <div id={this.uid + '-noteEditor'} className="noteEditor" style={{'display': this.state.footnoteDisplayDialog, 'width': this.state.footnoteDialogWidth, 'height': this.state.footnoteDialogHeight }}>
+          <label>Edit footnote:</label><br/>
+          <textarea onChange={this.handleFootnoteTextChange} value={this.state.currentFootnoteText}></textarea><br/>
+          <span onClick={this.saveFootnote} className="btn btn-sm btn-default">Save</span>
+        </div>
         <div id={this.uid}></div>
       </div>
     );
