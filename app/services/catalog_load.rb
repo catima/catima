@@ -1,3 +1,4 @@
+# rubocop:disable Rails/Output
 require 'fileutils'
 
 class CatalogLoad
@@ -11,9 +12,13 @@ class CatalogLoad
     File.open(File.join(@load_dir, 'structure', 'catalog.json')) do |f|
       create_catalog(JSON.parse(f.read))
     end
+    puts "Loading catalog structure..."
     load_structure
+    puts "Loading catalog data..."
     load_data
+    puts "Loading pages..."
     load_pages
+    puts "Copying files..."
     copy_files
   end
 
