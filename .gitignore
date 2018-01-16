@@ -42,3 +42,6 @@
 
 # Ignore RSpec internal files
 spec/examples.txt
+
+# Ignore RubyMine files
+.idea
