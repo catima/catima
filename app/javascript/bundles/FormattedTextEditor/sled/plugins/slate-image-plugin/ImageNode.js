@@ -4,7 +4,6 @@ import classnames from 'classnames'
 import ImageDataModal from './ImageDataModal'
 import ImageEditLayer from './ImageEditLayer'
 
-// FIXME: Needs to handle assets files to work with SSR
 if (require('exenv').canUseDOM) require('./ImageNode.css')
 
 class ImageNode extends Component {

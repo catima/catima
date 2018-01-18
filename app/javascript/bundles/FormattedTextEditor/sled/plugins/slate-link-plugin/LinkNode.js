@@ -3,7 +3,6 @@ import { hasLinks, getLink, unlink } from './LinkUtils'
 import Tooltip from '../../components/tooltip'
 import LinkDataModal from './LinkDataModal'
 
-// FIXME: Needs to handle assets files to work with SSR
 if (require('exenv').canUseDOM) require('./LinkNode.css')
 
 class LinkNode extends Component {

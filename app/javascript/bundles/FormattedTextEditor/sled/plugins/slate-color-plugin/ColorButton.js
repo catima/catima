@@ -5,7 +5,6 @@ import classnames from 'classnames'
 import { Button} from '../../components/button'
 import DraggableColorPicker from './DraggableColorPicker'
 
-// FIXME: Needs to handle assets files to work with SSR
 if (require('exenv').canUseDOM) require('./ColorButton.css')
 
 class ColorButton extends Component {

@@ -1,6 +1,5 @@
 import React from 'react'
 
-// FIXME: Needs to handle assets files to work with SSR
 if (require('exenv').canUseDOM) require('./ModalButton.css')
 
 const Container = ({ children }) => (

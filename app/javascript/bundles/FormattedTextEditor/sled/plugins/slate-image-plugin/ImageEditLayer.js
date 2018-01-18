@@ -2,7 +2,6 @@ import React from 'react'
 
 import { Button} from '../../components/button'
 
-// FIXME: Needs to handle assets files to work with SSR
 if (require('exenv').canUseDOM) require('./ImageEditLayer.css')
 
 const ImageEditLayer = ({ changeModalState, text }) => (
