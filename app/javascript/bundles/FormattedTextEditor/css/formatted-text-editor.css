@@ -1,22 +1,50 @@
-button.ql-import_docx, button.ql-footnote {
-  border: 1px solid #ddd !important;
-  font-size: 85%;
-  width: 100px !important;
-  margin-right: 5px;
-}
-button.ql-import_docx:hover, button.ql-footnote:hover {
-  background-color: #f0f0f0;
-}
-span.footnote {
-  cursor: pointer;
-}
-.noteEditor {
-  position: absolute;
-  border: 1px solid #ddd;
-  padding: 10px;
-  background-color: #fff;
-  z-index: 10000;
-}
-.noteEditor textarea {
+.fte {
   width: 100%;
+  min-height: 50px;
+  border: 1px solid #ddd;
+  padding: 5px;
+}
+
+.editor--toolbar {
+  padding-bottom: 5px;
+  border-bottom: 1px solid #eee;
+  margin-bottom: 5px;
+}
+
+.not-rounded {
+  border-radius: 0;
+}
+
+span.footnote {
+  background-color: #fdd;
+}
+span.endnote {
+  background-color: #ddf;
+}
+
+.slate-footnote-plugin--button {
+  background-color: #fdd;
+}
+.slate-endnote-plugin--button {
+  background-color: #ddf;
+}
+
+.editor--toolbar button {
+  margin-bottom: 4px;
+  margin-right: -1px;
+}
+.slate-bold-plugin--button {
+  margin-left: 8px;
+}
+.slate-alignment-plugin--button-bar {
+  margin-left: 8px;
+  margin-right: 8px;
+}
+.slate-list-plugin--button-bar {
+  margin-left: 8px;
+  margin-right: 8px;
+}
+
+.slate-import-docx-plugin--button {
+  margin-left: 8px;
 }

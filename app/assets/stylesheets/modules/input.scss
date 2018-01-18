@@ -22,6 +22,10 @@
   padding-top: 10px;
 }
 
+.formatted-text-table tr td:nth-of-type(2) {
+  width: 100%;
+}
+
 .formatted-text-table tr td {
   border-bottom: 4px solid white;
   vertical-align: top;
