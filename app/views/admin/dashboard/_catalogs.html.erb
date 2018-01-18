@@ -15,19 +15,19 @@
           <%= link_to_if(
                 catalog.active?,
                 "/#{catalog.slug}",
-                catalog_admin_setup_path(catalog, I18n.locale)) %>
+                catalog_admin_setup_path(catalog, catalog.primary_language)) %>
         </td>
         <td><%= deactivation_status_label(catalog) %></td>
         <td style="text-align: right">
           <% if current_user.system_admin? %>
-            <%= link_to edit_admin_catalog_path(catalog, I18n.locale), :class => "btn btn-xs btn-default" do %>
+            <%= link_to edit_admin_catalog_path(catalog, catalog.primary_language), :class => "btn btn-xs btn-default" do %>
               <%= fa_icon("pencil", :text => "Edit") %>
             <% end %>
             <%= deactivation_toggle(
                   catalog,
                   :admin_catalog_path,
                   catalog,
-                  I18n.locale,
+                  catalog.primary_language,
                   :class => "btn btn-xs btn-text") %>
           <% end %>
         </td>
