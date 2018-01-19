@@ -487,6 +487,7 @@ DEPENDENCIES
   mini_racer
   minitest-reporters
   mocha
+  nokogiri
   overcommit
   panoramic (>= 0.0.6)
   pg (~> 0.19)
