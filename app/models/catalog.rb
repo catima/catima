@@ -78,6 +78,14 @@ class Catalog < ActiveRecord::Base
     [primary_language, other_languages].flatten.compact.uniq
   end
 
+  def get_valid_locale(locale)
+    if valid_locale?(locale)
+      locale.to_s
+    else
+      primary_language
+    end
+  end
+
   def items_of_type(item_type)
     items.merge(item_type.items)
   end
