@@ -79,7 +79,7 @@ class Catalog < ActiveRecord::Base
   end
 
   def valid_locale(locale=I18n.locale)
-    valid_locale?(locale) ? locale_to_s : primary_language
+    valid_locale?(locale) ? locale.to_s : primary_language
   end
 
   def items_of_type(item_type)
