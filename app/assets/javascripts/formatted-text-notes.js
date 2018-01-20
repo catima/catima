@@ -1,12 +1,8 @@
 $(document).on('ready', function(){
   var ftFields = $('div.formatted-text');
-
-  $('body').append('<a tabindex="0" class="btn btn-lg btn-danger" role="button" data-toggle="popover" data-trigger="focus" title="Dismissible popover" data-content="And heres some amazing content. Its very engaging. Right?">Dismissible popover</a>')
-  $('a.btn').popover();
   for (var i=0; i < ftFields.length; i++){
     prepareFootnotesForTextField(ftFields[i]);
   }
-
   $('sup.footnote-ref').popover();
 });
 
