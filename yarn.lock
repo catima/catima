@@ -3647,9 +3647,9 @@ normalize-url@^1.4.0:
     query-string "^4.1.0"
     sort-keys "^1.0.0"
 
-"noties@https://github.com/catima/noties":
+"noties@git://github.com/catima/noties.git#46d6dc2":
   version "0.1.0"
-  resolved "https://github.com/catima/noties#68fe5925fdfeeec9418a041e6d5a191341a8af82"
+  resolved "git://github.com/catima/noties.git#46d6dc23cb2953530c4820a14d43e15d306c3176"
 
 npm-run-path@^2.0.0:
   version "2.0.2"

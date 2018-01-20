@@ -8,9 +8,11 @@ import "quill/dist/quill.snow.css";
 
 var icons = Quill.import('ui/icons');
 icons['footnote'] = 'Add footnote';
+icons['endnote'] = 'Add endnote';
 icons['import_docx'] = 'Import DOCX';
 
 import "../modules/footnote";
+import "../modules/endnote";
 
 const noties = require('noties'),
       Noties = noties.Noties;
@@ -59,16 +61,18 @@ class FormattedTextEditor extends React.Component {
     this.docxUpload = this._docxUpload.bind(this);
 
     this.handleFootnote = this.handleFootnote.bind(this);
+    this.handleEndnote = this.handleEndnote.bind(this);
     this.handleFootnoteClick = this.handleFootnoteClick.bind(this);
-    this.saveFootnote = this.saveFootnote.bind(this);
-    this.handleFootnoteTextChange = this.handleFootnoteTextChange.bind(this);
+    this.handleEndnoteClick = this.handleEndnoteClick.bind(this);
+    this.saveNote = this.saveNote.bind(this);
+    this.handleNoteTextChange = this.handleNoteTextChange.bind(this);
 
     this.state = {
-      footnoteDisplayDialog: 'none',
-      footnoteDialogWidth: 100,
-      footnoteDialogHeight: 50,
-      currentFootnoteText: '',
-      currentFootnoteEl: null
+      noteLabel: '',
+      noteElement: null,
+      noteText: '',
+      noteDialogDisplay: 'none',
+      mainEditorDisplay: 'block',
     };
 
     const self = this;
@@ -80,10 +84,11 @@ class FormattedTextEditor extends React.Component {
         [{ 'script': 'sub'}, { 'script': 'super' }],
         ['link', 'image'],
         [{ 'list': 'ordered'}, { 'list': 'bullet' }],
-        ['footnote', 'import_docx'],
+        ['footnote', 'endnote', 'import_docx'],
       ],
       handlers: {
         'footnote': this.handleFootnote,
+        'endnote': this.handleEndnote,
         'import_docx': this.importDocxCallback(),
       }
     };
@@ -102,8 +107,13 @@ class FormattedTextEditor extends React.Component {
     el.value = JSON.stringify({
       format: 'html',
       doc: this.editor.getContents(),
-      content: this.editor.root.innerHTML
+      content: this._prepareHtmlForSaving(this.editor.root.innerHTML)
     });
+  }
+
+  _prepareHtmlForSaving(html){
+    // FIXME !!!
+    return html;
   }
 
   componentDidMount(){
@@ -125,10 +135,25 @@ class FormattedTextEditor extends React.Component {
       return delta;
     });
 
+    this.editor.clipboard.addMatcher('SPAN', function(node, delta){
+      if (node.classList.contains('endnote')) {
+        delta.ops = [];
+        return delta.insert({ endnote: node.innerHTML });
+      }
+      return delta;
+    });
+
     this.footnoteRenderer = Noties(
       function(){ return self.editor.root.querySelectorAll('.footnote'); },   // footnotes
       function(){ return self.editor.root.querySelectorAll('.footnote span'); }, // reference nodes
       null  // footnote pane (we don't have any in the editor)
+    );
+
+    this.endnoteRenderer = Noties(
+      function(){ return self.editor.root.querySelectorAll('.endnote'); },   // endnotes
+      function(){ return self.editor.root.querySelectorAll('.endnote span'); }, // reference nodes
+      null,  // endnote pane (we don't have any in the editor)
+      function(v){ return '['+v+']'; }    // reference formatter
     );
 
     const c = this._loadContent();
@@ -140,10 +165,10 @@ class FormattedTextEditor extends React.Component {
 
     this.editor.on('text-change', function(delta, oldDelta, source) {
       self._updateContent();
-      self.renderFootnotes();
+      self.renderNotes();
     });
 
-    this.renderFootnotes();
+    this.renderNotes();
   }
 
   componentWillUnmount(){}
@@ -194,53 +219,74 @@ class FormattedTextEditor extends React.Component {
     var range = this.editor.getSelection();
     if (range) {
       let value = prompt('Enter footnote:');
-      this.editor.insertEmbed(range.index, "footnote", value, "user");
+      if (value) this.editor.insertEmbed(range.index, "footnote", value, "user");
     }
-    this.renderFootnotes();
+    this.renderNotes();
   }
 
-  renderFootnotes(){
+  handleEndnote(){
+    var range = this.editor.getSelection();
+    if (range) {
+      let value = prompt('Enter endnote:');
+      if (value) this.editor.insertEmbed(range.index, "endnote", value, "user");
+    }
+    this.renderNotes();
+  }
+
+  renderNotes(){
     this.footnoteRenderer.render();
     const footnotesRefs = document.querySelectorAll('#' + this.uid + ' span.footnote');
     for (let i=0; i < footnotesRefs.length; i++) {
       footnotesRefs[i].addEventListener('click', this.handleFootnoteClick);
     }
+    this.endnoteRenderer.render();
+    const endnotesRefs = document.querySelectorAll('#' + this.uid + ' span.endnote');
+    for (let i=0; i < endnotesRefs.length; i++) {
+      endnotesRefs[i].addEventListener('click', this.handleEndnoteClick);
+    }
   }
 
   handleFootnoteClick(e){
-    const el = document.getElementById(this.uid + '-editor')
     const footnoteEl = closest(e.target, '.footnote');
-    this.setState({currentFootnoteEl: footnoteEl});
-    this.setState({currentFootnoteText: footnoteEl.getAttribute('data-note')});
-    this.setState({footnoteDialogWidth: el.offsetWidth});
-    this.setState({footnoteDialogHeight: el.offsetHeight});
-    this.showFootnoteEditDialog();
+    this.editNote(footnoteEl, 'Edit footnote');
   }
 
-  showFootnoteEditDialog(){
-    this.setState({footnoteDisplayDialog: 'block'});
+  handleEndnoteClick(e){
+    const endnoteEl = closest(e.target, '.endnote');
+    this.editNote(endnoteEl, 'Edit endnote');
   }
 
-  saveFootnote(){
-    this.state.currentFootnoteEl.setAttribute('data-note', this.state.currentFootnoteText);
-    this.setState({footnoteDisplayDialog: 'none'});
+  editNote(noteEl, lbl){
+    const el = document.getElementById(this.uid + '-editor');
+    this.setState({noteLabel: lbl});
+    this.setState({noteElement: noteEl});
+    this.setState({noteText: noteEl.getAttribute('data-note')});
+    this.setState({noteDialogDisplay: 'block'});
+    this.setState({mainEditorDisplay: 'none'});
   }
 
-  handleFootnoteTextChange(e){
-    this.setState({currentFootnoteText: e.target.value});
+  saveNote(){
+    this.state.noteElement.setAttribute('data-note', this.state.noteText);
+    this.setState({noteDialogDisplay: 'none'});
+    this.setState({mainEditorDisplay: 'block'});
+  }
+
+  handleNoteTextChange(e){
+    this.setState({noteText: e.target.value});
   }
 
   render(){
     return (
       <div className="formattedTextEditor" id={this.uid + '-editor'}>
         <input id={this.uid + '-fileInput'} accept="application/vnd.openxmlformats-officedocument.wordprocessingml.document" type="file" onChange={this.docxUpload} className="hide" />
-        <div id={this.uid + '-noteEditor'} className="noteEditor" style={{'display': this.state.footnoteDisplayDialog, 'width': this.state.footnoteDialogWidth, 'height': this.state.footnoteDialogHeight }}>
-          <label>Edit footnote:</label><br/>
-          <textarea onChange={this.handleFootnoteTextChange} value={this.state.currentFootnoteText}></textarea><br/>
-          <span onClick={this.saveFootnote} className="btn btn-sm btn-default">Save</span>
+        <div id={this.uid + '-noteEditor'} className="noteEditor" style={{'display': this.state.noteDialogDisplay}}>
+          <label>{this.state.noteLabel}</label><br/>
+          <textarea onChange={this.handleNoteTextChange} value={this.state.noteText}></textarea><br/>
+          <span onClick={this.saveNote} className="btn btn-sm btn-default">Save</span>
         </div>
-        <div id={this.uid}></div>
-        <div id={this.uid + '-dommod'} style={{'display': 'none'}}></div>
+        <div style={{'display': this.state.mainEditorDisplay}}>
+          <div id={this.uid}></div>
+        </div>
       </div>
     );
   }
