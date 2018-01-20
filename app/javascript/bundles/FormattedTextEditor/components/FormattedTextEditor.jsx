@@ -179,62 +179,13 @@ class FormattedTextEditor extends React.Component {
         return;
       }
 
-      html = self.convertDocxHtml(html);
       const range = self.editor.getSelection();
-      console.log('inserting html');
       self.editor.clipboard.dangerouslyPasteHTML(range.index, html);
     })
     .catch(function(err){
       console.log('Error while importing Word file', err);
       alert('Error while importing Word file.')
     })
-  }
-
-  // Takes the HTML as produced from a custom version of Mammoth.js
-  // and converts it into HTML code compatible with the text editor.
-  convertDocxHtml(html){
-    // Insert the HTML into our dommod element.
-    const dommod = document.getElementById(this.uid + '-dommod');
-    dommod.innerHTML = html;
-
-    // Extract first the notes.
-    const notesElements = dommod.querySelectorAll('ol.notes li');
-    const notes = {};
-    for (let i = 0; i < notesElements.length; i++){
-      let el = notesElements[i];
-      let note = {};
-      el.classList.remove('note');
-      note.type = el.className;
-
-      // Find all links, extract the last one and remove it (backlink to note reference)
-      let anchors = el.querySelectorAll('a');
-      let lastAnchor = anchors[anchors.length-1];
-      note.id = lastAnchor.getAttribute('href').replace('#','').replace('-ref-','-');
-      let noteEl = lastAnchor.parentNode;
-      noteEl.removeChild(lastAnchor);
-      note.content = noteEl.innerHTML.trim();
-      notes[note.id] = note;
-    }
-    const notesListEl = dommod.querySelector('ol.notes');
-    dommod.removeChild(notesListEl);
-
-    // Insert notes into actual HTML
-    for (let k in notes){
-      let note = notes[k];
-      let refEl = dommod.querySelector("a[href='#" + k + "']");
-      let refRoot = closest(refEl, 'span.note-reference');
-      let newRefEl = document.createElement('span');
-      newRefEl.classList.add('note');
-      newRefEl.setAttribute('data-note', note.content);
-      newRefEl.innerText = 'abc';
-      // Insert element2 as child of element 1, right before element3
-      refRoot.insertBefore(newRefEl, refEl);
-      refRoot.removeChild(refEl);
-    }
-
-    let newHtml = dommod.innerHTML;
-    //dommod.innerHTML = '';
-    return newHtml;
   }
 
   handleFootnote(){
