@@ -86,6 +86,8 @@ class Field::TextPresenter < FieldPresenter
 
   def sanitize(v)
     @white_list_sanitizer ||= Rails::Html::WhiteListSanitizer.new
-    safe_join([@white_list_sanitizer.sanitize(v).html_safe])
+    # @white_listed_tags ||= Loofah::HTML5::WhiteList::ALLOWED_ELEMENTS_WITH_LIBXML2
+    @white_listed_attrs ||= Loofah::HTML5::WhiteList::ALLOWED_ATTRIBUTES.add('data-note')
+    safe_join([@white_list_sanitizer.sanitize(v, attributes: @white_listed_attrs).html_safe])
   end
 end

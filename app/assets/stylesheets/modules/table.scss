@@ -11,10 +11,31 @@
 div.formatted-text span.footnote {
   display: none;
 }
+div.formatted-text sup.footnote-ref {
+  cursor: pointer;
+  color: #428bca;
+}
 div.formatted-text span.endnote {
   display: none;
 }
 div.formatted-text {
   max-height: 500px;
   overflow: scroll;
+}
+
+table.endnotes td:nth-of-type(1) {
+  padding-right: 5px;
+}
+table.endnotes tr:nth-of-type(1) td:nth-of-type(1) {
+  border-top: 1px solid #999;
+}
+
+table.endnotes td {
+  padding-top: 5px;
+}
+table.endnotes td p {
+  margin-bottom: 5px;
+}
+table.endnotes td p:nth-of-type(1) {
+  margin: 0;
 }
