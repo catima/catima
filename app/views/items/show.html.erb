@@ -7,7 +7,7 @@
     <% @item.applicable_fields.each do |field| %>
       <tr>
         <th><%= field.label %></th>
-        <td><%= field_value(@item, field) %></td>
+        <td class="<%= field.type %>"><%= field_value(@item, field) %></td>
       </tr>
     <% end %>
   </tbody>

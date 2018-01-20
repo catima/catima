@@ -18,7 +18,11 @@ class Field::TextPresenter < FieldPresenter
         'content' => value
       }
     end
-    v['format'] == 'markdown' ? render_markdown(v['content']) : v['content']
+    [
+      '<div class="formatted-text">',
+      v['format'] == 'markdown' ? render_markdown(v['content']) : v['content'],
+      '</div>'
+    ].compact.join.html_safe
   end
 
   def compact_value(v)

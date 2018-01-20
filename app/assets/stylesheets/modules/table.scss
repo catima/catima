@@ -6,3 +6,15 @@
 .panel.panel-default {
   overflow-y: auto;
 }
+
+
+div.formatted-text span.footnote {
+  display: none;
+}
+div.formatted-text span.endnote {
+  display: none;
+}
+div.formatted-text {
+  max-height: 500px;
+  overflow: scroll;
+}
