@@ -65,7 +65,6 @@ class FormattedTextEditor extends React.Component {
     this.handleFootnoteClick = this.handleFootnoteClick.bind(this);
     this.handleEndnoteClick = this.handleEndnoteClick.bind(this);
     this.saveNote = this.saveNote.bind(this);
-    this.handleNoteTextChange = this.handleNoteTextChange.bind(this);
 
     this.state = {
       noteLabel: '',
@@ -169,6 +168,25 @@ class FormattedTextEditor extends React.Component {
     });
 
     this.renderNotes();
+
+    // Initialize the note editor
+    this.noteEditor = new Quill(`#${this.uid}-noteEditorInstance`, {
+      modules: {
+        clipboard: true,
+        toolbar: {
+          container: [
+            ['bold', 'italic', 'underline', 'strike'],
+            ['link'], [{ 'list': 'ordered'}, { 'list': 'bullet' }],
+          ],
+        }
+      },
+      theme: 'snow',
+    });
+
+    this.noteEditor.on('text-change', function(delta, oldDelta, source){
+      self.setState({noteText: self.noteEditor.root.innerHTML});
+    })
+
   }
 
   componentWillUnmount(){}
@@ -257,12 +275,14 @@ class FormattedTextEditor extends React.Component {
   }
 
   editNote(noteEl, lbl){
-    const el = document.getElementById(this.uid + '-editor');
+    const noteHtml = noteEl.getAttribute('data-note');
     this.setState({noteLabel: lbl});
     this.setState({noteElement: noteEl});
-    this.setState({noteText: noteEl.getAttribute('data-note')});
+    this.setState({noteText: noteHtml});
     this.setState({noteDialogDisplay: 'block'});
     this.setState({mainEditorDisplay: 'none'});
+    this.noteEditor.setText('');
+    this.noteEditor.clipboard.dangerouslyPasteHTML(noteHtml);
   }
 
   saveNote(){
@@ -271,17 +291,18 @@ class FormattedTextEditor extends React.Component {
     this.setState({mainEditorDisplay: 'block'});
   }
 
-  handleNoteTextChange(e){
-    this.setState({noteText: e.target.value});
-  }
+  // handleNoteTextChange(e){
+  //   this.setState({noteText: e.target.value});
+  // }
 
   render(){
+    // onChange={this.handleNoteTextChange} value={this.state.noteText}
     return (
       <div className="formattedTextEditor" id={this.uid + '-editor'}>
         <input id={this.uid + '-fileInput'} accept="application/vnd.openxmlformats-officedocument.wordprocessingml.document" type="file" onChange={this.docxUpload} className="hide" />
         <div id={this.uid + '-noteEditor'} className="noteEditor" style={{'display': this.state.noteDialogDisplay}}>
           <label>{this.state.noteLabel}</label><br/>
-          <textarea onChange={this.handleNoteTextChange} value={this.state.noteText}></textarea><br/>
+          <div id={this.uid + '-noteEditorInstance'}></div><br/>
           <span onClick={this.saveNote} className="btn btn-sm btn-default">Save</span>
         </div>
         <div style={{'display': this.state.mainEditorDisplay}}>
