@@ -111,8 +111,17 @@ class FormattedTextEditor extends React.Component {
   }
 
   _prepareHtmlForSaving(html){
-    // FIXME !!!
-    return html;
+    const el = document.createElement('div');
+    el.innerHTML = html;
+    const footnotes = el.querySelectorAll('span.footnote');
+    for (let i=0; i < footnotes.length; i++){
+      footnotes[i].innerHTML = '';
+    }
+    const endnotes = el.querySelectorAll('span.endnote');
+    for (let i=0; i < endnotes.length; i++){
+      endnotes[i].innerHTML = '';
+    }
+    return el.innerHTML;
   }
 
   componentDidMount(){
@@ -128,16 +137,20 @@ class FormattedTextEditor extends React.Component {
 
     this.editor.clipboard.addMatcher('SPAN', function(node, delta){
       if (node.classList.contains('footnote')) {
+        let noteText = node.innerHTML;
+        if (node.hasAttribute('data-note')) noteText = node.getAttribute('data-note');
         delta.ops = [];
-        return delta.insert({ footnote: node.innerHTML });
+        return delta.insert({ footnote: noteText });
       }
       return delta;
     });
 
     this.editor.clipboard.addMatcher('SPAN', function(node, delta){
       if (node.classList.contains('endnote')) {
+        let noteText = node.innerHTML;
+        if (node.hasAttribute('data-note')) noteText = node.getAttribute('data-note');
         delta.ops = [];
-        return delta.insert({ endnote: node.innerHTML });
+        return delta.insert({ endnote: noteText });
       }
       return delta;
     });
