@@ -13,9 +13,7 @@ icons['import_docx'] = 'Import DOCX';
 
 import "../modules/footnote";
 import "../modules/endnote";
-
-const noties = require('noties'),
-      Noties = noties.Noties;
+import Noties from "../modules/noties";
 
 // Ajax library for uploading DOCX files
 import axios from 'axios';

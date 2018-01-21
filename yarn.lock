@@ -3647,10 +3647,6 @@ normalize-url@^1.4.0:
     query-string "^4.1.0"
     sort-keys "^1.0.0"
 
-"noties@git://github.com/catima/noties.git#46d6dc2":
-  version "0.1.0"
-  resolved "git://github.com/catima/noties.git#46d6dc23cb2953530c4820a14d43e15d306c3176"
-
 npm-run-path@^2.0.0:
   version "2.0.2"
   resolved "https://registry.yarnpkg.com/npm-run-path/-/npm-run-path-2.0.2.tgz#35a9232dfa35d7067b4cb2ddf2357b1871536c5f"
