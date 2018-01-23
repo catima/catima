@@ -54,7 +54,7 @@ class CatalogAdmin::ContainersController < CatalogAdmin::BaseController
 
   def build_container
     @page = Page.find_by(slug:params[:page_slug], catalog:@catalog)
-    @container = container_class.new(page: @page, locale: params[:locale])
+    @container = container_class.new(page: @page, locale: params[:l])
   end
 
   def container_class
@@ -73,7 +73,7 @@ class CatalogAdmin::ContainersController < CatalogAdmin::BaseController
     params.require(:container).permit(
       :slug,
       :row_order_position,
-      :lcoale,
+      :locale,
       *@container.custom_container_permitted_attributes
     )
   end
