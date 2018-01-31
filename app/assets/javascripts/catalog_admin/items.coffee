@@ -67,9 +67,11 @@ file_presenter = ($file, $new=false, $uploading=false)->
   return if $uploading then file_presenter_upload_inprogress($file) else file_presenter_upload_finished($file)
 
 file_presenter_upload_finished = ($file)->
+  $is_img = ($file.type.substr(0,5) == 'image')
+  $file_icon = if $is_img then "#{icon_for($file, 50)}" else '<i class="fa fa-file"></i>'
   return """
     <tr data-file="#{file_hash($file)}">
-      <td>#{icon_for($file, 50)}</td>
+      <td>#{$file_icon}</td>
       <td><a href="/#{$file.path}">#{$file.name}</a></td>
       <td>#{format_file_size($file.size,1)}</td>
       <td>

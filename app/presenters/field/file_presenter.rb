@@ -10,6 +10,7 @@ class Field::FilePresenter < FieldPresenter
       "<div class=\"form-group file-upload\" " \
           "id=\"fileupload_#{method}\" " \
           "data-field=\"#{method}\" " \
+          "data-field-type=\"#{field.type}\" " \
           "data-multiple=\"#{field.multiple}\" " \
           "data-required=\"#{field.required?}\" " \
           "data-fieldname=\"#{field.name}\" " \
