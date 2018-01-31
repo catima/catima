@@ -32,6 +32,9 @@ class Field::FilePresenter < FieldPresenter
           "<i class=\"fa fa-file\"></i> #{file['name']}" \
         "</a>" \
         ", #{number_to_human_size(file['size'], :prefix => :si)}" \
+        "<a style=\"margin-left: 7px;\" href=\"#{file_url(file)}\" download=\"#{file['name']}\">" \
+          "<i class=\"fa fa-download\"></i>" \
+        "</a>" \
       "</div>"
     end
     info.join().html_safe
