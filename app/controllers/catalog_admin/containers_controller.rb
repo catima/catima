@@ -73,7 +73,6 @@ class CatalogAdmin::ContainersController < CatalogAdmin::BaseController
     params.require(:container).permit(
       :slug,
       :row_order_position,
-      :locale,
       *@container.custom_container_permitted_attributes
     )
   end
