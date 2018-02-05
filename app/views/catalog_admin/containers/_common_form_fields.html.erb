@@ -1,5 +1,5 @@
 <%= hidden_field_tag(:type, params[:type]) if params[:type] %>
-<%= hidden_field_tag(:locale, params[:l]) if params[:l] %>
+<%= hidden_field_tag(:l, params[:l]) if params[:l] %>
 
 <%= f.text_field(:slug, :label => t("slug"), :help => slug_help_text) %>
 
