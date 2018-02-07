@@ -20,7 +20,7 @@ div.formatted-text span.endnote {
 }
 div.formatted-text {
   max-height: 500px;
-  overflow: scroll;
+  overflow: hidden;
 }
 
 table.endnotes td:nth-of-type(1) {
