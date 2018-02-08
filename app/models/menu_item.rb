@@ -24,6 +24,9 @@ class MenuItem < ActiveRecord::Base
   belongs_to :item_type
   belongs_to :page
 
+  has_many :children, class_name: 'MenuItem', foreign_key: 'parent_id', :dependent => :destroy
+  belongs_to :parent, class_name: 'MenuItem'
+
   validates_presence_of :catalog
   validates_presence_of :title
 
