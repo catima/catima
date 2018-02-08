@@ -15,4 +15,5 @@ class TemplateStoragePolicy
   alias_method :new?, :user_is_system_admin?
   alias_method :update?, :user_is_system_admin?
   alias_method :show?, :user_is_system_admin?
+  alias_method :destroy?, :user_is_system_admin?
 end
