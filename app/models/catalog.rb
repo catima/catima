@@ -66,6 +66,15 @@ class Catalog < ActiveRecord::Base
     Catalog.find_by(slug: slug).nil?
   end
 
+  def self.valid?(slug)
+    c = Catalog.find_by(slug: slug)
+    !c.nil? && c.active?
+  end
+
+  def self.overrides
+    Dir.exist?(Rails.root.join('catalogs')) ? Dir.entries(Rails.root.join('catalogs')).select { |f| Catalog.valid? f } : []
+  end
+
   def public_items
     requires_review? ? Review.public_items_in_catalog(self) : items
   end
