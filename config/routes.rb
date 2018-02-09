@@ -125,7 +125,17 @@ Rails.application.routes.draw do
   # ===========================================================================
   # Catalog viewing (public)
 
-  get ":catalog_slug/(:locale)" => "catalogs#show",
+  Catalog.active.each do |catalog|
+    # Check if a custom controller exists for this catalog.
+    controller = File.exist?(Rails.root.join('catalogs', catalog.slug, 'controllers', "#{catalog.slug}_catalogs_controller.rb")) ? "#{catalog.slug}_catalogs" : 'catalogs'
+    get "#{catalog.slug}/(:locale)",
+        :controller => controller,
+        :action => :show,
+        :catalog_slug => catalog.slug,
+        :as => "catalog_#{catalog.slug}"
+  end
+
+  get ":catalog_slug/(:locale)/home" => "catalogs#home",
       :as => "catalog_home",
       :constraints => CatalogsController::Constraint
 

@@ -24,7 +24,15 @@ module ViimCore
 
     # Ensure non-standard paths are eager-loaded in production
     # (these paths are also autoloaded in development mode)
-    # config.eager_load_paths += %W(#{config.root}/lib)
+
+    # Add catalog-specific controllers to the eager-load path
+    if Dir.exist?(config.root.join('catalogs'))
+      Dir.entries(config.root.join('catalogs')).each do |catalog|
+        if (catalog =~ /[^a-z\-]/).nil? && Dir.exist?(config.root.join('catalogs', catalog, 'controllers'))
+          config.eager_load_paths += %W(#{config.root}/catalogs/#{catalog}/controllers)
+        end
+      end
+    end
 
     # Custom error pages
     config.exceptions_app = routes

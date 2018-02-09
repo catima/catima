@@ -11,7 +11,7 @@ class API::V1::CatalogSerializer < ActiveModel::Serializer
     {
       :self => api_v1_catalog_url(object.slug),
       :items => api_v1_catalog_items_url(object.slug),
-      :html => catalog_home_url(object.slug)
+      :html => send("catalog_#{object.slug}_url")
     }
   end
 end

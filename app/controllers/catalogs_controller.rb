@@ -29,4 +29,8 @@ class CatalogsController < ApplicationController
 
   def show
   end
+
+  def home
+    redirect_to send("catalog_#{catalog.slug}_url")
+  end
 end
