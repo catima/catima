@@ -20,6 +20,14 @@ fr:
       contains_words: "contient les mots"
       excludes_words: "ne contient pas les mots"
       has_exact_phrase: "possède l'expression exacte"
+    int_search_field:
+      contains_number: "possède chiffre/nombre exact"
+    decimal_search_field:
+      contains_number: "possède chiffre/nombre exact"
+    email_search_field:
+      contains_words: "contient les mots"
+      excludes_words: "ne contient pas les mots"
+      has_exact_phrase: "possède l'expression exacte"
   common:
     back: "Retour"
     greeting: "Bonjour"
