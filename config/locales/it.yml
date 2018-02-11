@@ -20,6 +20,14 @@ it:
       contains_words: "contiene le parole"
       excludes_words: "non contiene le parole"
       has_exact_phrase: "ha frase esatta"
+    int_search_field:
+      contains_number: "ha il numero esatto"
+    decimal_search_field:
+      contains_number: "ha il numero esatto"
+    email_search_field:
+      contains_words: "contiene le parole"
+      excludes_words: "non contiene le parole"
+      has_exact_phrase: "ha frase esatta"
   common:
     back: "Ritorno"
     greeting: "Buongiorno"

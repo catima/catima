@@ -20,6 +20,14 @@ de:
       contains_words: "enhält Wörter"
       excludes_words: "ohne Wörer"
       has_exact_phrase: "enthält den exakten Ausdruck"
+    int_search_field:
+      contains_number: "enthält die exakte Nummer"
+    decimal_search_field:
+      contains_number: "enthält die exakte Nummer"
+    email_search_field:
+      contains_words: "enhält Wörter"
+      excludes_words: "ohne Wörer"
+      has_exact_phrase: "enthält den exakten Ausdruck"
   common:
     back: "Zurück"
     greeting: "Hallo"

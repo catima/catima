@@ -20,6 +20,14 @@ en:
       contains_words: "contains words"
       excludes_words: "excludes words"
       has_exact_phrase: "has exact phrase"
+    int_search_field:
+      contains_number: "has exact number"
+    decimal_search_field:
+      contains_number: "has exact number"
+    email_search_field:
+      contains_words: "contains words"
+      excludes_words: "excludes words"
+      has_exact_phrase: "has exact phrase"
   common:
     back: "Back"
     greeting: "Hello"
