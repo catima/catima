@@ -9,6 +9,6 @@ class Search::IntStrategy < Search::BaseStrategy
 
   def exact_search(scope, exact_phrase)
     return scope if exact_phrase.blank?
-    scope.where("#{data_field_expr} ILIKE ?", "#{exact_phrase.strip}")
+    scope.where("#{data_field_expr} ILIKE ?", exact_phrase.strip.to_s)
   end
 end
