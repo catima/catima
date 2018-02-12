@@ -28,4 +28,10 @@ class CatalogsTest < ActionDispatch::IntegrationTest
     visit("/two")
     assert(page.has_content?(/two/i))
   end
+
+  test "redirects correctly with dash in slug" do
+    visit('/with-dash/en/home')
+    assert(page.has_content?("Catalog with a dash in the slug"))
+    assert(page.current_url.ends_with?('/with-dash/en'))
+  end
 end

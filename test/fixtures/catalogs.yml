@@ -43,6 +43,13 @@ two:
   requires_review: false
   style: {"base-font": {"font": "Arial, Helvetica, sans-serif"}}
 
+with_dash:
+  name: Catalog with a dash in the slug
+  slug: with-dash
+  primary_language: en
+  other_languages:
+  requires_review: false
+
 multilingual:
   name: Multilingual
   slug: multilingual

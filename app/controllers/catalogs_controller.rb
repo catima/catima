@@ -31,6 +31,6 @@ class CatalogsController < ApplicationController
   end
 
   def home
-    redirect_to send("catalog_#{catalog.slug}_url")
+    redirect_to send("catalog_#{catalog.snake_slug}_url")
   end
 end

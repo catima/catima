@@ -132,7 +132,7 @@ Rails.application.routes.draw do
         :controller => controller,
         :action => :show,
         :catalog_slug => catalog.slug,
-        :as => "catalog_#{catalog.slug}"
+        :as => "catalog_#{catalog.snake_slug}"
   end
 
   get ":catalog_slug/(:locale)/home" => "catalogs#home",

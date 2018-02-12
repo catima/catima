@@ -109,6 +109,10 @@ class Catalog < ActiveRecord::Base
     stl[elem] || {}
   end
 
+  def snake_slug
+    slug.sub('-', '_')
+  end
+
   private
 
   def strip_empty_language
