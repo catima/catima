@@ -50,6 +50,13 @@ with_dash:
   other_languages:
   requires_review: false
 
+custom_with_dash:
+  name: Custom catalog controller with a dash in the catalog slug
+  slug: custom-with-dash
+  primary_language: en
+  other_languages:
+  requires_review: false
+
 multilingual:
   name: Multilingual
   slug: multilingual

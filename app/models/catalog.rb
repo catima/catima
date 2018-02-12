@@ -110,7 +110,7 @@ class Catalog < ActiveRecord::Base
   end
 
   def snake_slug
-    slug.sub('-', '_')
+    slug.tr('-', '_')
   end
 
   private

@@ -127,7 +127,7 @@ Rails.application.routes.draw do
 
   Catalog.active.each do |catalog|
     # Check if a custom controller exists for this catalog.
-    controller = File.exist?(Rails.root.join('catalogs', catalog.slug, 'controllers', "#{catalog.slug}_catalogs_controller.rb")) ? "#{catalog.slug}_catalogs" : 'catalogs'
+    controller = File.exist?(Rails.root.join('catalogs', catalog.slug, 'controllers', "#{catalog.snake_slug}_catalogs_controller.rb")) ? "#{catalog.snake_slug}_catalogs" : 'catalogs'
     get "#{catalog.slug}/(:locale)",
         :controller => controller,
         :action => :show,
