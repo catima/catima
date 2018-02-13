@@ -125,8 +125,18 @@ Rails.application.routes.draw do
   # ===========================================================================
   # Catalog viewing (public)
 
+  # Public catalog views can be customized, along with the controllers.
+  # Controllers are referred to in the routes, so we check for each public
+  # route if a customized controller exists. If so, we use the customized
+  # controller instead of the default one for the catalog.
+
+  # This feature leads to a bit clunky route definitions, especially because
+  # the custom controllers might not yet have been loaded (especially in
+  # development due to auto-loading). However, custom controllers need to
+  # be subclasses of the default controller. Hence, we can simply rely on
+  # the existence of a file with the appropriate name.
+
   Catalog.active.each do |catalog|
-    # Check if a custom controller exists for this catalog.
     controller = File.exist?(Rails.root.join('catalogs', catalog.slug, 'controllers', "#{catalog.snake_slug}_catalogs_controller.rb")) ? "#{catalog.snake_slug}_catalogs" : 'catalogs'
     get "#{catalog.slug}/(:locale)",
         :controller => controller,
@@ -135,9 +145,35 @@ Rails.application.routes.draw do
         :as => "catalog_#{catalog.snake_slug}"
   end
 
+  # Catalog home is a shared route for all catalogs. It is mainly used for
+  # backwards compatibility where some routes use the catalog_home_url
+  # to refer to the catalog welcome page. Hence, we cannot customize the home
+  # controller. It is anyway a mere redirection to catalogs#show.
   get ":catalog_slug/(:locale)/home" => "catalogs#home",
-      :as => "catalog_home",
-      :constraints => CatalogsController::Constraint
+        :as => "catalog_home",
+        :constraints => CatalogsController::Constraint
+
+  # Create per-catalog routes for item type views, enabling custom items controllers.
+  Catalog.active.each do |catalog|
+    scope :path => "#{catalog.slug}/:locale",
+          :constraints => CatalogsController::Constraint do
+      items_controller = File.exist?(Rails.root.join('catalogs', catalog.slug, 'controllers', "#{catalog.snake_slug}_items_controller.rb")) ? "#{catalog.snake_slug}_items" : 'items'
+
+      get ":item_type_slug",
+          :controller => items_controller,
+          :action => :index,
+          :as => "items_#{catalog.snake_slug}",
+          :catalog_slug => catalog.slug,
+          :constraints => ItemsController::Constraint
+
+      get ":item_type_slug/:id",
+          :controller => items_controller,
+          :action => :show,
+          :as => "item_#{catalog.snake_slug}",
+          :catalog_slug => catalog.slug,
+          :constraints => ItemsController::Constraint
+    end
+  end
 
   scope :path => ":catalog_slug/:locale",
         :constraints => CatalogsController::Constraint do
@@ -152,10 +188,15 @@ Rails.application.routes.draw do
         :constraints => PagesController::Constraint,
         :as => :page
 
-    resources :items,
-              :path => ":item_type_slug",
-              :only => [:index, :show],
-              :constraints => ItemsController::Constraint
+    # Creating items routes with global controller for compatibility
+    # We only use these routes for URL generation.
+    # They will never be actually invoked.
+    get ":item_type_slug" => "items#index_global",
+        :as => "items",
+        :constraints => ItemsController::Constraint
+    get ":item_type_slug/:id" => "items#show_global",
+        :as => "item",
+        :constraints => ItemsController::Constraint
 
     get ":slug" => "custom#show", :constraints => CustomController::Constraint
   end

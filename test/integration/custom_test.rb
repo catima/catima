@@ -11,8 +11,14 @@ class CustomTest < ActionDispatch::IntegrationTest
     assert(page.has_content?("Very Old"))
   end
 
-  test "custom controller is invoked correctly for catalog with a dash in slug" do
+  test "custom catalog controller is invoked correctly for catalog with a dash in slug" do
     visit("/custom-with-dash/en")
     assert(page.has_content?(/one/i))
+  end
+
+  test "custom items controller is invoked instead of default controller" do
+    visit('/custom-with-dash/en/authors')
+    assert(page.has_content?("Stephen King"))
+    assert(page.has_content?("Very Old"))
   end
 end

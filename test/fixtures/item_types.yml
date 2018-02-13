@@ -68,6 +68,12 @@ two_author:
   name_plural_translations: '{ "name_plural_en": "Authors" }'
   slug: authors
 
+custom_with_dash_author:
+  catalog: custom_with_dash
+  name_translations: '{ "name_en": "Author" }'
+  name_plural_translations: '{ "name_plural_en": "Authors" }'
+  slug: authors
+
 multilingual_author:
   catalog: multilingual
   slug: authors

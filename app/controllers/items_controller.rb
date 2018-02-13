@@ -53,6 +53,12 @@ class ItemsController < ApplicationController
     end
   end
 
+  def index_global
+  end
+
+  def show_global
+  end
+
   private
 
   attr_reader :item_type
