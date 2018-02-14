@@ -162,16 +162,24 @@ Rails.application.routes.draw do
       get ":item_type_slug",
           :controller => items_controller,
           :action => :index,
-          :as => "items_#{catalog.snake_slug}",
+          :as => "#{catalog.snake_slug}_items",
           :catalog_slug => catalog.slug,
           :constraints => ItemsController::Constraint
 
       get ":item_type_slug/:id",
           :controller => items_controller,
           :action => :show,
-          :as => "item_#{catalog.snake_slug}",
+          :as => "#{catalog.snake_slug}_item",
           :catalog_slug => catalog.slug,
           :constraints => ItemsController::Constraint
+
+      custom_simple_search_controller = File.exist?(Rails.root.join('catalogs', catalog.slug, 'controllers', "#{catalog.snake_slug}_simple_search_controller.rb"))
+      search_controller = custom_simple_search_controller ? "#{catalog.snake_slug}_simple_search" : 'simple_search'
+      get "search",
+          :controller => search_controller,
+          :action => :index,
+          :as => "#{catalog.snake_slug}_simple_search",
+          :catalog_slug => catalog.slug
     end
   end
 
@@ -190,7 +198,6 @@ Rails.application.routes.draw do
 
     # Creating items routes with global controller for compatibility
     # We only use these routes for URL generation.
-    # They will never be actually invoked.
     get ":item_type_slug" => "items#index_global",
         :as => "items",
         :constraints => ItemsController::Constraint
