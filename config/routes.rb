@@ -127,8 +127,8 @@ Rails.application.routes.draw do
 
   # Public catalog views can be customized, along with the controllers.
   # Controllers are referred to in the routes, so we check for each public
-  # route if a customized controller exists. If so, we use the customized
-  # controller instead of the default one for the catalog.
+  # route if a customized controller exists. If so, we create a separate route
+  # with the customized controller instead of the default one for the catalog.
 
   # This feature leads to a bit clunky route definitions, especially because
   # the custom controllers might not yet have been loaded (especially in
@@ -137,49 +137,51 @@ Rails.application.routes.draw do
   # the existence of a file with the appropriate name.
 
   Catalog.active.each do |catalog|
-    controller = File.exist?(Rails.root.join('catalogs', catalog.slug, 'controllers', "#{catalog.snake_slug}_catalogs_controller.rb")) ? "#{catalog.snake_slug}_catalogs" : 'catalogs'
+    next unless File.exist?(Rails.root.join('catalogs', catalog.slug, 'controllers', "#{catalog.snake_slug}_catalogs_controller.rb"))
     get "#{catalog.slug}/(:locale)",
-        :controller => controller,
+        :controller => "#{catalog.snake_slug}_catalogs",
         :action => :show,
         :catalog_slug => catalog.slug,
         :as => "catalog_#{catalog.snake_slug}"
   end
 
-  # Fallback route for newly created catalogs and for URL generation
+  # Default catalog index route
   get ":catalog_slug/(:locale)" => "catalogs#show",
       :as => "catalog_home",
       :constraints => CatalogsController::Constraint
 
-  # Create per-catalog routes for item type views, enabling custom items controllers.
+  # Create per-catalog routes for item type views for customized items controllers.
   Catalog.active.each do |catalog|
     scope :path => "#{catalog.slug}/:locale",
           :constraints => CatalogsController::Constraint do
-      items_controller = File.exist?(Rails.root.join('catalogs', catalog.slug, 'controllers', "#{catalog.snake_slug}_items_controller.rb")) ? "#{catalog.snake_slug}_items" : 'items'
 
-      get ":item_type_slug",
-          :controller => items_controller,
-          :action => :index,
-          :as => "#{catalog.snake_slug}_items",
-          :catalog_slug => catalog.slug,
-          :constraints => ItemsController::Constraint
+      if File.exist?(Rails.root.join('catalogs', catalog.slug, 'controllers', "#{catalog.snake_slug}_items_controller.rb"))
+        get ":item_type_slug",
+            :controller => "#{catalog.snake_slug}_items",
+            :action => :index,
+            :as => "#{catalog.snake_slug}_items",
+            :catalog_slug => catalog.slug,
+            :constraints => ItemsController::Constraint
 
-      get ":item_type_slug/:id",
-          :controller => items_controller,
-          :action => :show,
-          :as => "#{catalog.snake_slug}_item",
-          :catalog_slug => catalog.slug,
-          :constraints => ItemsController::Constraint
+        get ":item_type_slug/:id",
+            :controller => "#{catalog.snake_slug}_items",
+            :action => :show,
+            :as => "#{catalog.snake_slug}_item",
+            :catalog_slug => catalog.slug,
+            :constraints => ItemsController::Constraint
+      end
 
-      custom_simple_search_controller = File.exist?(Rails.root.join('catalogs', catalog.slug, 'controllers', "#{catalog.snake_slug}_simple_search_controller.rb"))
-      search_controller = custom_simple_search_controller ? "#{catalog.snake_slug}_simple_search" : 'simple_search'
-      get "search",
-          :controller => search_controller,
-          :action => :index,
-          :as => "#{catalog.snake_slug}_simple_search",
-          :catalog_slug => catalog.slug
+      if File.exist?(Rails.root.join('catalogs', catalog.slug, 'controllers', "#{catalog.snake_slug}_simple_search_controller.rb"))
+        get "search",
+            :controller => "#{catalog.snake_slug}_simple_search",
+            :action => :index,
+            :as => "#{catalog.snake_slug}_simple_search",
+            :catalog_slug => catalog.slug
+      end
     end
   end
 
+  # Generating the default routes.
   scope :path => ":catalog_slug/:locale",
         :constraints => CatalogsController::Constraint do
     get "search" => "simple_search#index", :as => "simple_search"
@@ -193,14 +195,10 @@ Rails.application.routes.draw do
         :constraints => PagesController::Constraint,
         :as => :page
 
-    # Creating fallback items routes.
-    # These routes are used by default for new catalogs and for URL generation.
-    get ":item_type_slug" => "items#index",
-        :as => "items",
-        :constraints => ItemsController::Constraint
-    get ":item_type_slug/:id" => "items#show",
-        :as => "item",
-        :constraints => ItemsController::Constraint
+    resources :items,
+              :path => ":item_type_slug",
+              :only => [:index, :show],
+              :constraints => ItemsController::Constraint
 
     get ":slug" => "custom#show", :constraints => CustomController::Constraint
   end
