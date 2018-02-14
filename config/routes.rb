@@ -155,6 +155,37 @@ Rails.application.routes.draw do
     scope :path => "#{catalog.slug}/:locale",
           :constraints => CatalogsController::Constraint do
 
+      if File.exist?(Rails.root.join('catalogs', catalog.slug, 'controllers', "#{catalog.snake_slug}_simple_search_controller.rb"))
+        get "search",
+            :controller => "#{catalog.snake_slug}_simple_search",
+            :action => :index,
+            :as => "#{catalog.snake_slug}_simple_search",
+            :catalog_slug => catalog.slug
+      end
+
+      if File.exist?(Rails.root.join('catalogs', catalog.slug, 'controllers', "#{catalog.snake_slug}_advanced_searches_controller.rb"))
+        get 'search/advanced/new',
+            :controller => "#{catalog.snake_slug}_advanced_searches",
+            :action => :new,
+            :as => "#{catalog.snake_slug}_new_advanced_search",
+            :catalog_slug => catalog.slug
+
+        get 'search/advanced/:uuid',
+            :controller => "#{catalog.snake_slug}_advanced_searches",
+            :action => :show,
+            :as => "#{catalog.snake_slug}_advanced_search",
+            :catalog_slug => catalog.slug
+      end
+
+      if File.exist?(Rails.root.join('catalogs', catalog.slug, 'controllers', "#{catalog.snake_slug}_pages_controller.rb"))
+        get ":slug",
+            :controller => "#{catalog.snake_slug}_pages",
+            :action => :show,
+            :as => "#{catalog.snake_slug}_pages",
+            :catalog_slug => catalog.slug,
+            :constraints => PagesController::Constraint
+      end
+
       if File.exist?(Rails.root.join('catalogs', catalog.slug, 'controllers', "#{catalog.snake_slug}_items_controller.rb"))
         get ":item_type_slug",
             :controller => "#{catalog.snake_slug}_items",
@@ -169,14 +200,6 @@ Rails.application.routes.draw do
             :as => "#{catalog.snake_slug}_item",
             :catalog_slug => catalog.slug,
             :constraints => ItemsController::Constraint
-      end
-
-      if File.exist?(Rails.root.join('catalogs', catalog.slug, 'controllers', "#{catalog.snake_slug}_simple_search_controller.rb"))
-        get "search",
-            :controller => "#{catalog.snake_slug}_simple_search",
-            :action => :index,
-            :as => "#{catalog.snake_slug}_simple_search",
-            :catalog_slug => catalog.slug
       end
     end
   end
