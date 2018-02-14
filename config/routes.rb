@@ -145,13 +145,10 @@ Rails.application.routes.draw do
         :as => "catalog_#{catalog.snake_slug}"
   end
 
-  # Catalog home is a shared route for all catalogs. It is mainly used for
-  # backwards compatibility where some routes use the catalog_home_url
-  # to refer to the catalog welcome page. Hence, we cannot customize the home
-  # controller. It is anyway a mere redirection to catalogs#show.
-  get ":catalog_slug/(:locale)/home" => "catalogs#home",
-        :as => "catalog_home",
-        :constraints => CatalogsController::Constraint
+  # Fallback route for newly created catalogs and for URL generation
+  get ":catalog_slug/(:locale)" => "catalogs#show",
+      :as => "catalog_home",
+      :constraints => CatalogsController::Constraint
 
   # Create per-catalog routes for item type views, enabling custom items controllers.
   Catalog.active.each do |catalog|
@@ -196,12 +193,12 @@ Rails.application.routes.draw do
         :constraints => PagesController::Constraint,
         :as => :page
 
-    # Creating items routes with global controller for compatibility
-    # We only use these routes for URL generation.
-    get ":item_type_slug" => "items#index_global",
+    # Creating fallback items routes.
+    # These routes are used by default for new catalogs and for URL generation.
+    get ":item_type_slug" => "items#index",
         :as => "items",
         :constraints => ItemsController::Constraint
-    get ":item_type_slug/:id" => "items#show_global",
+    get ":item_type_slug/:id" => "items#show",
         :as => "item",
         :constraints => ItemsController::Constraint
 

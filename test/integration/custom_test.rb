@@ -27,4 +27,20 @@ class CustomTest < ActionDispatch::IntegrationTest
     assert(page.has_content?("Stephen King"))
     assert(page.has_content?("Very Old"))
   end
+
+  test "creating new catalog does not break routes with customizable controllers" do
+    log_in_as("system-admin@example.com", "password")
+    visit("/admin")
+    click_on("New catalog")
+    fill_in("Name", :with => "Customizable controllers test catalog")
+    fill_in("Slug", :with => "custom-test-catalog")
+    select("English", :from => "Primary language")
+
+    assert_difference("Catalog.count") do
+      click_on("Create catalog")
+    end
+
+    visit('/custom-test-catalog/en')
+    assert(page.has_content?("Customizable controllers test catalog"))
+  end
 end
