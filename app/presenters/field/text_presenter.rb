@@ -34,6 +34,7 @@ class Field::TextPresenter < FieldPresenter
     inp = raw_input(form, method, options, i18n)
     return inp unless field.formatted?
     [
+      '<div class="form-component">',
       '<div class="hidden-children-inputs">',
       inp,
       '</div>',
@@ -41,6 +42,7 @@ class Field::TextPresenter < FieldPresenter
       i18n ? '<table class="formatted-text-table">' : '',
       formatted_text_input(form, method, options, i18n),
       i18n ? '</table>' : '',
+      '</div>',
       '</div>'
     ].compact.join.html_safe
   end

@@ -17,6 +17,7 @@ module JsonHelper
     method = "#{field.uuid}_json"
     id = json_hidden_field_id(form, field)
     data = options.fetch(:data, {}).merge(json_input_data(field))
+    data = data.reverse_merge("field-category" => field.category_id) if field.belongs_to_category?
     form.hidden_field(method, options.merge(:data => data, :id => id))
   end
 

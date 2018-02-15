@@ -2,21 +2,25 @@ class Field::FilePresenter < FieldPresenter
   delegate :content_tag, :number_to_human_size, :react_component, :to => :view
 
   def input(form, method, options={})
+    item_type = options[:item_type] || field.item_type.slug
+    field_category = field.belongs_to_category? ? "data-field-category=\"#{field.category_id}\"" : ''
     html = [
       form.text_area(
         "#{method}_json",
         input_defaults(options).reverse_merge(:rows => 1, 'data-field-type' => 'file')
       ),
-      "<div class=\"form-group file-upload\" " \
+      '<div class="form-component">',
+      "<div class=\"form-group file-upload\" #{field_category} " \
           "id=\"fileupload_#{method}\" " \
           "data-field=\"#{method}\" " \
           "data-field-type=\"#{field.type}\" " \
           "data-multiple=\"#{field.multiple}\" " \
           "data-required=\"#{field.required?}\" " \
           "data-fieldname=\"#{field.name}\" " \
-          "data-upload-url=\"/#{field.catalog.slug}/#{I18n.locale}/admin/#{field.item_type.slug}/upload\" " \
+          "data-upload-url=\"/#{field.catalog.slug}/#{I18n.locale}/admin/#{item_type}/upload\" " \
           "data-file-types=\"#{field.types}\" " \
-          "data-button-text=\"" + (field.multiple == true ? 'Add files' : "Add file") + "\"></div>"
+          "data-button-text=\"" + (field.multiple == true ? 'Add files' : "Add file") + "\"></div>",
+      '</div>'
     ]
     html.compact.join.html_safe
   end

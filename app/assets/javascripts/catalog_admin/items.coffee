@@ -12,9 +12,11 @@ show_selected_category_fields = ($form, $choice_set)->
   $choice = $choice_set.find("option:selected")
   category = $choice.data("choice-category")
   $form.find("[data-field-category=#{category}]").parent(".form-group").show()
+  $form.find("[data-field-category=#{category}]").closest(".form-component").show()
 
 hide_all_category_fields = ($form)->
   $form.find("[data-field-category]").parent(".form-group").hide()
+  $form.find("[data-field-category]").closest(".form-component").hide()
 
 init_multivalued_selects = ->
   $("select[data-select2-tagging]").select2(theme: "bootstrap")

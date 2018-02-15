@@ -4,14 +4,21 @@ class Field::ReferencePresenter < FieldPresenter
            :to => :view
 
   def input(form, method, options={})
-    select2_collection_select(
-      form,
-      method,
-      references,
-      :id,
-      method(:item_display_name),
-      input_defaults(options).merge(:multiple => field.multiple?)
-    )
+    field_category = field.belongs_to_category? ? "data-field-category=\"#{field.category_id}\"" : ''
+    [
+      '<div class="form-component">',
+      "<div #{field_category}>",
+      select2_collection_select(
+        form,
+        method,
+        references,
+        :id,
+        method(:item_display_name),
+        input_defaults(options).merge(:multiple => field.multiple?)
+      ),
+      '</div>',
+      '</div>'
+    ].join.html_safe
   end
 
   def value
