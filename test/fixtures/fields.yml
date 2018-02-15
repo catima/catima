@@ -239,6 +239,16 @@ one_book_author:
   uuid: one_book_author_uuid
   related_item_type: one_author
 
+one_book_notes:
+  type: "Field::Text"
+  name_translations: '{ "name_en": "Notes" }'
+  name_plural_translations: '{ "name_plural_en": "Notes" }'
+  slug: notes
+  primary: false
+  field_set: one_book (ItemType)
+  uuid: one_book_notes_uuid
+  options: '{"maximum":"","minimum":"","formatted_text":"1"}'
+
 one_required_choice_set:
   type: "Field::ChoiceSet"
   name_translations: '{ "name_en": "Choice" }'
