@@ -22,10 +22,10 @@ This README describes the purpose of this repository and how to set up a develop
 This project requires:
 
 * Ruby 2.4.1, preferably managed using [rbenv][]
-* PhantomJS (in order to use the [poltergeist][] gem)
 * PostgreSQL must be installed and accepting connections
 * [Redis][] must be installed and running on localhost with the default port
 * Imagemagick must be installed (`brew install imagemagick`)
+* Chrome (for testing with Selenium)
 
 If you need help setting up a Ruby development environment, check out this [Rails OS X Setup Guide](https://mattbrictson.com/rails-osx-setup-guide).
 
@@ -49,7 +49,4 @@ Run the `bin/setup` script. This script will:
 5. In a separate console, run `bundle exec sidekiq` to start the Sidekiq background job processor.
 
 [rbenv]:https://github.com/sstephenson/rbenv
-[poltergeist]:https://github.com/teampoltergeist/poltergeist
 [redis]:http://redis.io
-
-

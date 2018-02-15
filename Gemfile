@@ -100,12 +100,13 @@ end
 
 group :test do
   gem "capybara"
+  gem 'chromedriver-helper'
   gem "connection_pool"
   gem "json_schema", "~> 0.16.1"
   gem "launchy"
   gem "minitest-reporters"
   gem "mocha"
-  gem "poltergeist"
+  gem 'selenium-webdriver'
   gem "shoulda-context"
   gem "shoulda-matchers",
       :git => "https://github.com/mattbrictson/shoulda-matchers.git",

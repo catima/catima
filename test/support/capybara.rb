@@ -1,15 +1,11 @@
-# Capybara + poltergeist allow JS testing via headless webkit
+# Capybara + Selenium Chrome allow JS testing via headless webkit
 require "capybara/rails"
-require "capybara/poltergeist"
-Capybara.javascript_driver = :poltergeist
+Capybara.javascript_driver = :chrome
 
-# We deactivate Javascript errors due to the lack of integration
-# of react_on_rails with Minitest by only supporting RSpec tests.
-options = { js_errors: false }
-Capybara.register_driver :poltergeist do |app|
-  Capybara::Poltergeist::Driver.new(app, options)
+Capybara.register_driver :chrome do |app|
+  opts = ENV['HEADLESS'] == '0' ? {} : Selenium::WebDriver::Chrome::Options.new(args: %w[headless disable-gpu])
+  Capybara::Selenium::Driver.new(app, browser: :chrome, options: opts)
 end
-# TODO: Activate Javascript errors again for tests
 
 class ActionDispatch::IntegrationTest
   # Make the Capybara DSL available in all integration tests
@@ -22,7 +18,10 @@ class ActionDispatch::IntegrationTest
 
   def use_javascript_capybara_driver
     Capybara.current_driver = Capybara.javascript_driver
-    Capybara.current_session.driver.browser.clear_cookies
+    browser = Capybara.current_session.driver.browser
+    browser.manage.window.resize_to(1200, 800)
+    Capybara.default_max_wait_time = 12
+    browser.manage.delete_all_cookies
   end
 end
 
