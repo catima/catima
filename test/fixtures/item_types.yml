@@ -74,6 +74,24 @@ custom_with_dash_author:
   name_plural_translations: '{ "name_plural_en": "Authors" }'
   slug: authors
 
+multilingual_book:
+  catalog: multilingual
+  slug: books
+  name_translations: |
+    {
+      "name_de": "Buch",
+      "name_en": "Book",
+      "name_fr": "Livre",
+      "name_it": "Libro"
+    }
+  name_plural_translations: |
+    {
+      "name_plural_de": "Bücher",
+      "name_plural_en": "Books",
+      "name_plural_fr": "Livres",
+      "name_plural_it": "Libri"
+    }
+
 multilingual_author:
   catalog: multilingual
   slug: authors

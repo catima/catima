@@ -323,6 +323,26 @@ multilingual_author_site:
       "name_plural_fr": "Pages d'accueil"
     }
 
+multilingual_book_required_i18n_notes:
+  type: "Field::Text"
+  slug: notes
+  field_set: multilingual_book (ItemType)
+  primary: false
+  i18n: true
+  required: true
+  uuid: multilingual_book_notes_uuid
+  options: '{"maximum":"","minimum":"","formatted_text":"1"}'
+  name_translations: |
+    {
+      "name_en": "Notes",
+      "name_fr": "Notes"
+    }
+  name_plural_translations: |
+    {
+      "name_plural_en": "Notes",
+      "name_plural_fr": "Notes"
+    }
+
 reviewed_book_title:
   type: "Field::Text"
   name_translations: '{ "name_en": "Title" }'
