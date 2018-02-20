@@ -85,6 +85,8 @@ fr:
       missing_element: "Oups. Un tel élément n'existe pas."
       missing_element_detail: "L'élément avec ID %{item_id} de type «%{item_type}» n'existe pas dans ce catalogue."
       link_to_item_type: "Voir tous les éléments de type «%{item_type}»"
+    show:
+      delete_confirm: "Vous voulez vraiment supprimer “%{item}”?"
   invitations_mailer:
     account_information:
       email: "E-mail"

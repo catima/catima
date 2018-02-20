@@ -81,6 +81,8 @@ it:
       next: "Prossimo: %{item}"
       no_more: "Nessun altri risultati"
       previous: "Precedente: %{item}"
+    show:
+      delete_confirm: "Sei sicuro di voler eliminare “%{item}”?"
   invitations_mailer:
     account_information:
       email: "E-mail"
