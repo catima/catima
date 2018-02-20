@@ -2,8 +2,8 @@
 -- PostgreSQL database dump
 --
 
--- Dumped from database version 9.6.1
--- Dumped by pg_dump version 9.6.1
+-- Dumped from database version 10.1
+-- Dumped by pg_dump version 10.1
 
 SET statement_timeout = 0;
 SET lock_timeout = 0;
@@ -28,20 +28,6 @@ CREATE EXTENSION IF NOT EXISTS plpgsql WITH SCHEMA pg_catalog;
 COMMENT ON EXTENSION plpgsql IS 'PL/pgSQL procedural language';
 
 
---
--- Name: postgis; Type: EXTENSION; Schema: -; Owner: -
---
-
-CREATE EXTENSION IF NOT EXISTS postgis WITH SCHEMA public;
-
-
---
--- Name: EXTENSION postgis; Type: COMMENT; Schema: -; Owner: -
---
-
-COMMENT ON EXTENSION postgis IS 'PostGIS geometry, geography, and raster spatial types and functions';
-
-
 SET search_path = public, pg_catalog;
 
 --
@@ -51,11 +37,11 @@ SET search_path = public, pg_catalog;
 CREATE FUNCTION bigdate_to_num(json) RETURNS numeric
     LANGUAGE sql IMMUTABLE STRICT
     AS $_$SELECT (
-            CASE WHEN $1->>'Y' IS NULL THEN 0 ELSE ($1->>'Y')::INTEGER * POWER(10, 10) END + 
-            CASE WHEN $1->>'M' IS NULL THEN 0 ELSE ($1->>'M')::INTEGER * POWER(10, 8) END + 
-            CASE WHEN $1->>'D' IS NULL THEN 0 ELSE ($1->>'D')::INTEGER * POWER(10, 6) END + 
-            CASE WHEN $1->>'h' IS NULL THEN 0 ELSE ($1->>'h')::INTEGER * POWER(10, 4) END + 
-            CASE WHEN $1->>'m' IS NULL THEN 0 ELSE ($1->>'m')::INTEGER * POWER(10, 2) END + 
+            CASE WHEN $1->>'Y' IS NULL THEN 0 ELSE ($1->>'Y')::INTEGER * POWER(10, 10) END +
+            CASE WHEN $1->>'M' IS NULL THEN 0 ELSE ($1->>'M')::INTEGER * POWER(10, 8) END +
+            CASE WHEN $1->>'D' IS NULL THEN 0 ELSE ($1->>'D')::INTEGER * POWER(10, 6) END +
+            CASE WHEN $1->>'h' IS NULL THEN 0 ELSE ($1->>'h')::INTEGER * POWER(10, 4) END +
+            CASE WHEN $1->>'m' IS NULL THEN 0 ELSE ($1->>'m')::INTEGER * POWER(10, 2) END +
             CASE WHEN $1->>'s' IS NULL THEN 0 ELSE ($1->>'s')::INTEGER END
           )::NUMERIC;$_$;
 
@@ -101,6 +87,7 @@ CREATE TABLE advanced_searches (
 --
 
 CREATE SEQUENCE advanced_searches_id_seq
+    AS integer
     START WITH 1
     INCREMENT BY 1
     NO MINVALUE
@@ -134,6 +121,7 @@ CREATE TABLE catalog_permissions (
 --
 
 CREATE SEQUENCE catalog_permissions_id_seq
+    AS integer
     START WITH 1
     INCREMENT BY 1
     NO MINVALUE
@@ -175,6 +163,7 @@ CREATE TABLE catalogs (
 --
 
 CREATE SEQUENCE catalogs_id_seq
+    AS integer
     START WITH 1
     INCREMENT BY 1
     NO MINVALUE
@@ -209,6 +198,7 @@ CREATE TABLE categories (
 --
 
 CREATE SEQUENCE categories_id_seq
+    AS integer
     START WITH 1
     INCREMENT BY 1
     NO MINVALUE
@@ -244,6 +234,7 @@ CREATE TABLE choice_sets (
 --
 
 CREATE SEQUENCE choice_sets_id_seq
+    AS integer
     START WITH 1
     INCREMENT BY 1
     NO MINVALUE
@@ -282,6 +273,7 @@ CREATE TABLE choices (
 --
 
 CREATE SEQUENCE choices_id_seq
+    AS integer
     START WITH 1
     INCREMENT BY 1
     NO MINVALUE
@@ -314,6 +306,7 @@ CREATE TABLE configurations (
 --
 
 CREATE SEQUENCE configurations_id_seq
+    AS integer
     START WITH 1
     INCREMENT BY 1
     NO MINVALUE
@@ -350,6 +343,7 @@ CREATE TABLE containers (
 --
 
 CREATE SEQUENCE containers_id_seq
+    AS integer
     START WITH 1
     INCREMENT BY 1
     NO MINVALUE
@@ -403,6 +397,7 @@ CREATE TABLE fields (
 --
 
 CREATE SEQUENCE fields_id_seq
+    AS integer
     START WITH 1
     INCREMENT BY 1
     NO MINVALUE
@@ -429,7 +424,8 @@ CREATE TABLE item_types (
     updated_at timestamp without time zone NOT NULL,
     name_translations json,
     name_plural_translations json,
-    deactivated_at timestamp without time zone
+    deactivated_at timestamp without time zone,
+    empty_fields boolean DEFAULT true NOT NULL
 );
 
 
@@ -438,6 +434,7 @@ CREATE TABLE item_types (
 --
 
 CREATE SEQUENCE item_types_id_seq
+    AS integer
     START WITH 1
     INCREMENT BY 1
     NO MINVALUE
@@ -474,6 +471,7 @@ CREATE TABLE item_views (
 --
 
 CREATE SEQUENCE item_views_id_seq
+    AS integer
     START WITH 1
     INCREMENT BY 1
     NO MINVALUE
@@ -515,6 +513,7 @@ CREATE TABLE items (
 --
 
 CREATE SEQUENCE items_id_seq
+    AS integer
     START WITH 1
     INCREMENT BY 1
     NO MINVALUE
@@ -555,6 +554,7 @@ CREATE TABLE menu_items (
 --
 
 CREATE SEQUENCE menu_items_id_seq
+    AS integer
     START WITH 1
     INCREMENT BY 1
     NO MINVALUE
@@ -593,6 +593,7 @@ CREATE TABLE pages (
 --
 
 CREATE SEQUENCE pages_id_seq
+    AS integer
     START WITH 1
     INCREMENT BY 1
     NO MINVALUE
@@ -638,6 +639,7 @@ CREATE TABLE template_storages (
 --
 
 CREATE SEQUENCE template_storages_id_seq
+    AS integer
     START WITH 1
     INCREMENT BY 1
     NO MINVALUE
@@ -681,6 +683,7 @@ CREATE TABLE users (
 --
 
 CREATE SEQUENCE users_id_seq
+    AS integer
     START WITH 1
     INCREMENT BY 1
     NO MINVALUE
@@ -1497,8 +1500,6 @@ INSERT INTO schema_migrations (version) VALUES ('20151205011325');
 
 INSERT INTO schema_migrations (version) VALUES ('20151206234336');
 
-INSERT INTO schema_migrations (version) VALUES ('20151210000035');
-
 INSERT INTO schema_migrations (version) VALUES ('20151212000308');
 
 INSERT INTO schema_migrations (version) VALUES ('20151214213046');
@@ -1514,8 +1515,6 @@ INSERT INTO schema_migrations (version) VALUES ('20160509095147');
 INSERT INTO schema_migrations (version) VALUES ('20160509194619');
 
 INSERT INTO schema_migrations (version) VALUES ('20160720053135');
-
-INSERT INTO schema_migrations (version) VALUES ('20161231140032');
 
 INSERT INTO schema_migrations (version) VALUES ('20170121055843');
 
@@ -1554,4 +1553,6 @@ INSERT INTO schema_migrations (version) VALUES ('20171214171741');
 INSERT INTO schema_migrations (version) VALUES ('20171216182821');
 
 INSERT INTO schema_migrations (version) VALUES ('20171219054741');
+
+INSERT INTO schema_migrations (version) VALUES ('20180220093412');
 
