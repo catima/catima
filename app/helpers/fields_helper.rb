@@ -46,6 +46,10 @@ module FieldsHelper
     end
   end
 
+  def field_check_display(item, field)
+    item.item_type.empty_fields ? true : strip_tags(field_value(item, field)).present?
+  end
+
   def field_presenter(item, field, options={})
     field = resolve_field(item.try(:item_type), field)
     "#{field.class.name}Presenter".constantize.new(self, item, field, options)

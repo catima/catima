@@ -316,6 +316,10 @@ fr:
       new:
         new: "Nouveau type de fiche"
         create: "Créer type de fiche"
+      common_form_fields:
+        display-options: "Options d'affichage"
+        show-empty-fields: "Afficher les champs vides pour ce type de fiche"
+        empty-fields: "Champs vides"
 
     items:
       approval:

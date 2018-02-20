@@ -1,3 +1,10 @@
 <%= locale_form_group(f, :name, :text_field, :autofocus => true) %>
 <%= locale_form_group(f, :name_plural, :text_field) %>
 <%= f.text_field(:slug, :help => slug_help_text) %>
+<hr>
+<h4><%= t(".display-options") %></h4>
+<%= f.form_group(
+    :empty_fields,
+    :help => t(".show-empty-fields")) do %>
+    <%= f.check_box(:empty_fields, :label => t(".empty-fields")) %>
+<% end %>
