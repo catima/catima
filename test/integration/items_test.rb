@@ -64,6 +64,16 @@ class ItemsTest < ActionDispatch::IntegrationTest
     refute(page.has_content?("Age"))
     refute(page.has_content?("Site"))
     refute(page.has_content?("Email"))
+    refute(page.has_content?("Rank"))
+    refute(page.has_content?("Collaborator"))
+    refute(page.has_content?("Other Collaborator"))
+    refute(page.has_content?("Biography"))
+    refute(page.has_content?("Language"))
+    refute(page.has_content?("Other Language"))
+    refute(page.has_content?("Born"))
+    refute(page.has_content?("Birth Time"))
+    refute(page.has_content?("Birth Month"))
+    refute(page.has_content?("Birthplace"))
   end
 
   test "can't see item that isn't approved" do
