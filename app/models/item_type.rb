@@ -5,7 +5,7 @@
 #  catalog_id               :integer
 #  created_at               :datetime         not null
 #  deactivated_at           :datetime
-#  empty_fields             :boolean          default(TRUE), not null
+#  display_emtpy_fields     :boolean          default(TRUE), not null
 #  id                       :integer          not null, primary key
 #  name_plural_translations :json
 #  name_translations        :json

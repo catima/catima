@@ -323,7 +323,7 @@ en:
       common_form_fields:
         display-options: "Display options"
         show-empty-fields: "Display empty fields for this item type"
-        empty-fields: "Empty fields"
+        display-empty-fields: "Display empty fields"
 
     items:
       approval:

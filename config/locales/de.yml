@@ -302,7 +302,7 @@ de:
       common_form_fields:
         display-options: "Anzeigeoptionen"
         show-empty-fields: "Zeigen Sie leere Felder für diesen Elementtyp an"
-        empty-fields: "Leerfelder"
+        display-empty-fields: "Zeigen Sie leere Felder an"
 
     items:
       approval:

@@ -153,4 +153,4 @@ it:
       common_form_fields:
         display-options: "Opzioni di visualizzazione"
         show-empty-fields: "Mostra campi vuoti per questo tipo di oggetto"
-        empty-fields: "Campi vuoti"
+        display-empty-fields: "Mostra campi vuoti"

@@ -28,6 +28,20 @@ CREATE EXTENSION IF NOT EXISTS plpgsql WITH SCHEMA pg_catalog;
 COMMENT ON EXTENSION plpgsql IS 'PL/pgSQL procedural language';
 
 
+--
+-- Name: postgis; Type: EXTENSION; Schema: -; Owner: -
+--
+
+CREATE EXTENSION IF NOT EXISTS postgis WITH SCHEMA public;
+
+
+--
+-- Name: EXTENSION postgis; Type: COMMENT; Schema: -; Owner: -
+--
+
+COMMENT ON EXTENSION postgis IS 'PostGIS geometry, geography, and raster spatial types and functions';
+
+
 SET search_path = public, pg_catalog;
 
 --
@@ -87,7 +101,6 @@ CREATE TABLE advanced_searches (
 --
 
 CREATE SEQUENCE advanced_searches_id_seq
-    AS integer
     START WITH 1
     INCREMENT BY 1
     NO MINVALUE
@@ -121,7 +134,6 @@ CREATE TABLE catalog_permissions (
 --
 
 CREATE SEQUENCE catalog_permissions_id_seq
-    AS integer
     START WITH 1
     INCREMENT BY 1
     NO MINVALUE
@@ -163,7 +175,6 @@ CREATE TABLE catalogs (
 --
 
 CREATE SEQUENCE catalogs_id_seq
-    AS integer
     START WITH 1
     INCREMENT BY 1
     NO MINVALUE
@@ -198,7 +209,6 @@ CREATE TABLE categories (
 --
 
 CREATE SEQUENCE categories_id_seq
-    AS integer
     START WITH 1
     INCREMENT BY 1
     NO MINVALUE
@@ -234,7 +244,6 @@ CREATE TABLE choice_sets (
 --
 
 CREATE SEQUENCE choice_sets_id_seq
-    AS integer
     START WITH 1
     INCREMENT BY 1
     NO MINVALUE
@@ -273,7 +282,6 @@ CREATE TABLE choices (
 --
 
 CREATE SEQUENCE choices_id_seq
-    AS integer
     START WITH 1
     INCREMENT BY 1
     NO MINVALUE
@@ -306,7 +314,6 @@ CREATE TABLE configurations (
 --
 
 CREATE SEQUENCE configurations_id_seq
-    AS integer
     START WITH 1
     INCREMENT BY 1
     NO MINVALUE
@@ -343,7 +350,6 @@ CREATE TABLE containers (
 --
 
 CREATE SEQUENCE containers_id_seq
-    AS integer
     START WITH 1
     INCREMENT BY 1
     NO MINVALUE
@@ -397,7 +403,6 @@ CREATE TABLE fields (
 --
 
 CREATE SEQUENCE fields_id_seq
-    AS integer
     START WITH 1
     INCREMENT BY 1
     NO MINVALUE
@@ -425,7 +430,7 @@ CREATE TABLE item_types (
     name_translations json,
     name_plural_translations json,
     deactivated_at timestamp without time zone,
-    empty_fields boolean DEFAULT true NOT NULL
+    display_emtpy_fields boolean DEFAULT true NOT NULL
 );
 
 
@@ -434,7 +439,6 @@ CREATE TABLE item_types (
 --
 
 CREATE SEQUENCE item_types_id_seq
-    AS integer
     START WITH 1
     INCREMENT BY 1
     NO MINVALUE
@@ -471,7 +475,6 @@ CREATE TABLE item_views (
 --
 
 CREATE SEQUENCE item_views_id_seq
-    AS integer
     START WITH 1
     INCREMENT BY 1
     NO MINVALUE
@@ -513,7 +516,6 @@ CREATE TABLE items (
 --
 
 CREATE SEQUENCE items_id_seq
-    AS integer
     START WITH 1
     INCREMENT BY 1
     NO MINVALUE
@@ -554,7 +556,6 @@ CREATE TABLE menu_items (
 --
 
 CREATE SEQUENCE menu_items_id_seq
-    AS integer
     START WITH 1
     INCREMENT BY 1
     NO MINVALUE
@@ -593,7 +594,6 @@ CREATE TABLE pages (
 --
 
 CREATE SEQUENCE pages_id_seq
-    AS integer
     START WITH 1
     INCREMENT BY 1
     NO MINVALUE
@@ -639,7 +639,6 @@ CREATE TABLE template_storages (
 --
 
 CREATE SEQUENCE template_storages_id_seq
-    AS integer
     START WITH 1
     INCREMENT BY 1
     NO MINVALUE
@@ -683,7 +682,6 @@ CREATE TABLE users (
 --
 
 CREATE SEQUENCE users_id_seq
-    AS integer
     START WITH 1
     INCREMENT BY 1
     NO MINVALUE
