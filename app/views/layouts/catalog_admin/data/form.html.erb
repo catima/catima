@@ -2,7 +2,7 @@
   <%= link_to(
           "View item",
           item_path(:item_type_slug => @item.item_type.slug, :id => @item),
-          :target => '_blank') if @item.id %>
+          :target => '_blank') if params['action'] == 'edit' %>
 <% end %>
 
 <% content_for(:catalog_admin_width, "col-sm-6") %>
