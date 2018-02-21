@@ -55,6 +55,17 @@ class ItemsTest < ActionDispatch::IntegrationTest
     end
   end
 
+  test "view item details without empty fields" do
+    author = items(:one_author_empty_fields)
+    visit("/one/en/authors/#{author.to_param}")
+
+    assert(page.has_content?("Empty Author"))
+    refute(page.has_content?("Name"))
+    refute(page.has_content?("Age"))
+    refute(page.has_content?("Site"))
+    refute(page.has_content?("Email"))
+  end
+
   test "can't see item that isn't approved" do
     book = items(:reviewed_book_end_of_watch)
     visit("/reviewed/en/books/#{book.to_param}")
