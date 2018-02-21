@@ -1,5 +1,27 @@
 <% provide(:title, item_display_name(@item)) %>
 
+<% if policy(@item).edit? or policy(@item).destroy? %>
+  <div class="item-admin" style="margin-bottom: 20px;">
+    <% if policy(@item).edit? %>
+      <%= link_to(
+              fa_icon("pencil", :text => t("edit")),
+              edit_catalog_admin_item_path(catalog, I18n.locale, @item_type, @item),
+              :class => "btn btn-default btn-xs",
+              :target => '_blank') %>
+    <% end %>
+    <% if policy(@item).destroy? %>
+      <%= link_to(
+              fa_icon("trash-o", :text => t("delete")),
+              catalog_admin_item_path(catalog, locale, @item_type, @item),
+              :class => "btn btn-default btn-xs",
+              :method => :delete,
+              :data => {
+                  :confirm => t('.delete_confirm', item: default_display_name(@item))
+              }) %>
+    <% end %>
+  </div>
+<% end %>
+
 <%= render_item_list_nav(item_list, @item) if item_list %>
 
 <table class="table item-table">
