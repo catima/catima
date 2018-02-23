@@ -301,6 +301,10 @@ de:
       new:
         new: "New item type"
         create: "Create item type"
+      common_form_fields:
+        display-options: "Anzeigeoptionen"
+        show-empty-fields: "Zeigen Sie leere Felder für diesen Elementtyp an"
+        display-empty-fields: "Zeigen Sie leere Felder an"
 
     items:
       approval:

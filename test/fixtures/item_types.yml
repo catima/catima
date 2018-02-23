@@ -5,6 +5,7 @@
 #  catalog_id               :integer
 #  created_at               :datetime         not null
 #  deactivated_at           :datetime
+#  display_emtpy_fields     :boolean          default(TRUE), not null
 #  id                       :integer          not null, primary key
 #  name_plural_translations :json
 #  name_translations        :json
@@ -31,6 +32,7 @@ one_author:
   name_translations: '{ "name_en": "Author" }'
   name_plural_translations: '{ "name_plural_en": "Authors" }'
   slug: authors
+  display_emtpy_fields: false
 
 one_book:
   catalog: one

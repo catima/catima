@@ -46,6 +46,13 @@ module FieldsHelper
     end
   end
 
+  # Returns a boolean value whether the field should be displayed or not.
+  # Option to hide or show empty fields is available in the catalog admin
+  # item type edition view.
+  def field_check_display(item, field)
+    item.item_type.display_emtpy_fields ? true : strip_tags(field_value(item, field)).present?
+  end
+
   def field_presenter(item, field, options={})
     field = resolve_field(item.try(:item_type), field)
     "#{field.class.name}Presenter".constantize.new(self, item, field, options)

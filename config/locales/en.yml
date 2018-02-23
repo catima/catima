@@ -322,6 +322,10 @@ en:
       new:
         new: "New item type"
         create: "Create item type"
+      common_form_fields:
+        display-options: "Display options"
+        show-empty-fields: "Display empty fields for this item type"
+        display-empty-fields: "Display empty fields"
 
     items:
       approval:

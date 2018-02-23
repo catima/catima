@@ -2,8 +2,8 @@
 -- PostgreSQL database dump
 --
 
--- Dumped from database version 9.6.1
--- Dumped by pg_dump version 9.6.1
+-- Dumped from database version 10.1
+-- Dumped by pg_dump version 10.1
 
 SET statement_timeout = 0;
 SET lock_timeout = 0;
@@ -51,11 +51,11 @@ SET search_path = public, pg_catalog;
 CREATE FUNCTION bigdate_to_num(json) RETURNS numeric
     LANGUAGE sql IMMUTABLE STRICT
     AS $_$SELECT (
-            CASE WHEN $1->>'Y' IS NULL THEN 0 ELSE ($1->>'Y')::INTEGER * POWER(10, 10) END + 
-            CASE WHEN $1->>'M' IS NULL THEN 0 ELSE ($1->>'M')::INTEGER * POWER(10, 8) END + 
-            CASE WHEN $1->>'D' IS NULL THEN 0 ELSE ($1->>'D')::INTEGER * POWER(10, 6) END + 
-            CASE WHEN $1->>'h' IS NULL THEN 0 ELSE ($1->>'h')::INTEGER * POWER(10, 4) END + 
-            CASE WHEN $1->>'m' IS NULL THEN 0 ELSE ($1->>'m')::INTEGER * POWER(10, 2) END + 
+            CASE WHEN $1->>'Y' IS NULL THEN 0 ELSE ($1->>'Y')::INTEGER * POWER(10, 10) END +
+            CASE WHEN $1->>'M' IS NULL THEN 0 ELSE ($1->>'M')::INTEGER * POWER(10, 8) END +
+            CASE WHEN $1->>'D' IS NULL THEN 0 ELSE ($1->>'D')::INTEGER * POWER(10, 6) END +
+            CASE WHEN $1->>'h' IS NULL THEN 0 ELSE ($1->>'h')::INTEGER * POWER(10, 4) END +
+            CASE WHEN $1->>'m' IS NULL THEN 0 ELSE ($1->>'m')::INTEGER * POWER(10, 2) END +
             CASE WHEN $1->>'s' IS NULL THEN 0 ELSE ($1->>'s')::INTEGER END
           )::NUMERIC;$_$;
 
@@ -429,7 +429,8 @@ CREATE TABLE item_types (
     updated_at timestamp without time zone NOT NULL,
     name_translations json,
     name_plural_translations json,
-    deactivated_at timestamp without time zone
+    deactivated_at timestamp without time zone,
+    display_emtpy_fields boolean DEFAULT true NOT NULL
 );
 
 
@@ -1497,8 +1498,6 @@ INSERT INTO schema_migrations (version) VALUES ('20151205011325');
 
 INSERT INTO schema_migrations (version) VALUES ('20151206234336');
 
-INSERT INTO schema_migrations (version) VALUES ('20151210000035');
-
 INSERT INTO schema_migrations (version) VALUES ('20151212000308');
 
 INSERT INTO schema_migrations (version) VALUES ('20151214213046');
@@ -1514,8 +1513,6 @@ INSERT INTO schema_migrations (version) VALUES ('20160509095147');
 INSERT INTO schema_migrations (version) VALUES ('20160509194619');
 
 INSERT INTO schema_migrations (version) VALUES ('20160720053135');
-
-INSERT INTO schema_migrations (version) VALUES ('20161231140032');
 
 INSERT INTO schema_migrations (version) VALUES ('20170121055843');
 
@@ -1554,4 +1551,6 @@ INSERT INTO schema_migrations (version) VALUES ('20171214171741');
 INSERT INTO schema_migrations (version) VALUES ('20171216182821');
 
 INSERT INTO schema_migrations (version) VALUES ('20171219054741');
+
+INSERT INTO schema_migrations (version) VALUES ('20180220093412');
 

@@ -58,7 +58,8 @@ class CatalogAdmin::ItemTypesController < CatalogAdmin::BaseController
       :name_en, :name_plural_en,
       :name_fr, :name_plural_fr,
       :name_it, :name_plural_it,
-      :slug)
+      :slug,
+      :display_emtpy_fields)
   end
 
   def after_create_path
