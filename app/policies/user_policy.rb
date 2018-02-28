@@ -56,7 +56,7 @@ class UserPolicy
     return params if user.system_admin?
     admin_catalog_ids = user.admin_catalog_ids
     params.fetch(:catalog_permissions_attributes, {}).delete_if do |_, perm|
-      perm[:role] == "admin" || !admin_catalog_ids.include?(perm["id"].to_i)
+      perm[:role] == "admin" || !admin_catalog_ids.include?(perm[:catalog_id].to_i)
     end
     params
   end

@@ -25,4 +25,13 @@ class CatalogAdmin::UsersTest < ActionDispatch::IntegrationTest
     click_on("Update user")
     assert(page.has_content?("has been saved"))
   end
+
+  test "edit a user role" do
+    log_in_as("one-admin@example.com", "password")
+    visit("/one/en/admin/_users")
+    first("a", :text => "Edit").click
+    first("label", :text => "Editor").click
+    click_on("Update user")
+    assert(page.has_content?("has been saved"))
+  end
 end
