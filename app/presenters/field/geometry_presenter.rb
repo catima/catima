@@ -10,13 +10,17 @@ class Field::GeometryPresenter < FieldPresenter
 
   def value
     json = raw_value
-    return if json.blank?
-    content_tag(:span, "", :data => { "geo-json" => json })
+    return nil if json.blank?
+    geo_viewer
   end
 
   private
 
   def input_data_defaults(data)
     super.reverse_merge("geo-input" => true)
+  end
+
+  def geo_viewer
+    @view.render('fields/geometries', features: raw_value['features'])
   end
 end
