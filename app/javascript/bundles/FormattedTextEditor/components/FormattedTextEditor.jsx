@@ -15,6 +15,9 @@ import "../modules/footnote";
 import "../modules/endnote";
 import Noties from "../modules/noties";
 
+// Table module for Quill
+import "../modules/table";
+
 // Ajax library for uploading DOCX files
 import axios from 'axios';
 
@@ -81,6 +84,7 @@ class FormattedTextEditor extends React.Component {
         [{ 'script': 'sub'}, { 'script': 'super' }],
         ['link', 'image'],
         [{ 'list': 'ordered'}, { 'list': 'bullet' }],
+        [{ table: FormattedTextEditor.tableOptions() }, { table: 'append-row' }, { table: 'append-col' }],
         ['footnote', 'endnote', 'import_docx'],
       ],
       handlers: {
@@ -129,6 +133,7 @@ class FormattedTextEditor extends React.Component {
       modules: {
         clipboard: true,
         toolbar: this.toolbarOptions,
+        table: true
       },
       theme: 'snow',
     });
@@ -305,6 +310,17 @@ class FormattedTextEditor extends React.Component {
   // handleNoteTextChange(e){
   //   this.setState({noteText: e.target.value});
   // }
+
+  // Return options array for Quill table module
+  static tableOptions(maxRows = 10, maxCols = 5){
+    let tableOptions = [];
+    for (let r = 1; r <= maxRows; r++) {
+      for (let c = 1; c <= maxCols; c++) {
+        tableOptions.push('newtable_' + r + '_' + c);
+      }
+    }
+    return tableOptions;
+  }
 
   render(){
     // onChange={this.handleNoteTextChange} value={this.state.noteText}
