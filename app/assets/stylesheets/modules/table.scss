@@ -46,7 +46,7 @@ table[table_id] {
   border-collapse: collapse;
 }
 td[cell_id] {
-  border: 1px solid black;
+  border: 1px solid #ddd !important;
   padding: 0px 5px;
   line-height: normal;
 }
