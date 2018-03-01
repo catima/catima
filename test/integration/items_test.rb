@@ -1,5 +1,6 @@
 require "test_helper"
 
+# rubocop:disable Metrics/ClassLength
 class ItemsTest < ActionDispatch::IntegrationTest
   test "view items" do
     visit("/one/en/authors")
