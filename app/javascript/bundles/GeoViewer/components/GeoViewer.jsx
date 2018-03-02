@@ -19,6 +19,7 @@ class GeoViewer extends React.Component {
     this.state = {
       mapHeight: 300,
     };
+    this._mapInitialized = false;
   }
 
   componentDidMount(){
@@ -34,15 +35,18 @@ class GeoViewer extends React.Component {
         self.mapBecomesVisible();
       });
     });
-    observer.observe(el, { attributes : true, attributeFilter : ['style'] });
+    observer.observe(el, { attributes : true, attributeFilter : ['style', 'class'] });
   }
 
   mapBecomesVisible(){
+    if (this._mapInitialized) return;
     const mapHideElement = this.isMapHidden();
+    window.mapEl = mapHideElement;
     if (mapHideElement == null){
       // Map is visible. Fix the map viewport.
       setTimeout(this.resetMapView.bind(this), 500);
       setTimeout(this.resetMapView.bind(this), 1500);
+      this._mapInitialized = true;
     } else {
       // Map is invisible. Define an event on the element that
       // hides the map to fix the viewport once the map becomes visible.
@@ -57,7 +61,7 @@ class GeoViewer extends React.Component {
    */
   isMapHidden(){
     const mapDiv = this._mapElement.container;
-    if (mapDiv.style.display != 'none') {
+    if (getComputedStyle(mapDiv).display != 'none') {
       return this._isAnyParentHidden(mapDiv);
     }
     return mapDiv;
@@ -65,7 +69,7 @@ class GeoViewer extends React.Component {
 
   _isAnyParentHidden(el){
     if (el.tagName == 'BODY') return null;
-    if (el.parentElement.style.display == 'none') return el.parentElement;
+    if (getComputedStyle(el.parentElement).display == 'none') return el.parentElement;
     return this._isAnyParentHidden(el.parentElement);
   }
 
