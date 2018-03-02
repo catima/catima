@@ -23,8 +23,50 @@ class GeoViewer extends React.Component {
 
   componentDidMount(){
     this._map = this.refs.map.leafletElement;
-    setTimeout(this.resetMapView.bind(this), 500);
-    setTimeout(this.resetMapView.bind(this), 1500);
+    this._mapElement = this.refs.map;
+    this.mapBecomesVisible();
+  }
+
+  waitForMapDisplay(el){
+    const self = this;
+    const observer = new MutationObserver(function(mutations) {
+      mutations.forEach(function(mutationRecord) {
+        self.mapBecomesVisible();
+      });
+    });
+    observer.observe(el, { attributes : true, attributeFilter : ['style'] });
+  }
+
+  mapBecomesVisible(){
+    const mapHideElement = this.isMapHidden();
+    if (mapHideElement == null){
+      // Map is visible. Fix the map viewport.
+      setTimeout(this.resetMapView.bind(this), 500);
+      setTimeout(this.resetMapView.bind(this), 1500);
+    } else {
+      // Map is invisible. Define an event on the element that
+      // hides the map to fix the viewport once the map becomes visible.
+      console.log('Map is hidden. Waiting for map to show up.');
+      this.waitForMapDisplay(mapHideElement);
+    }
+  }
+
+  /**
+   * Returns the element that makes the map hidden,
+   * or if the map is shown, null.
+   */
+  isMapHidden(){
+    const mapDiv = this._mapElement.container;
+    if (mapDiv.style.display != 'none') {
+      return this._isAnyParentHidden(mapDiv);
+    }
+    return mapDiv;
+  }
+
+  _isAnyParentHidden(el){
+    if (el.tagName == 'BODY') return null;
+    if (el.parentElement.style.display == 'none') return el.parentElement;
+    return this._isAnyParentHidden(el.parentElement);
   }
 
   resetMapView(){
@@ -44,7 +86,10 @@ class GeoViewer extends React.Component {
 
   bbox(){
     const coords = this.features.map(function(feat, i){ return feat.geometry.coordinates; });
-    return this._minmax(coords);
+    const minmax = this._minmax(coords);
+    // Check if there are non valid numbers in the minmax. If so, we return a default bbox
+    if (minmax.map((a) => isNaN(a)).reduce((a, b) => a || b, false)) return [-60, 60, -120, 120];
+    return minmax;
   }
 
   _minmax(coords){
