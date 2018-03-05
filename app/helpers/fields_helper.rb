@@ -50,7 +50,13 @@ module FieldsHelper
   # Option to hide or show empty fields is available in the catalog admin
   # item type edition view.
   def field_check_display(item, field)
-    item.item_type.display_emtpy_fields ? true : strip_tags(field_value(item, field)).present?
+    return true if item.item_type.display_emtpy_fields
+
+    if %w[Field::Geometry Field::Image].include?(field.type)
+      field_value(item, field).present?
+    else
+      strip_tags(field_value(item, field)).present?
+    end
   end
 
   def field_presenter(item, field, options={})

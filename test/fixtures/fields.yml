@@ -221,6 +221,15 @@ one_author_birthplace:
   uuid: one_author_birthplace_uuid
   required: false
 
+one_author_picture:
+  type: "Field::Image"
+  name_translations: '{ "name_en": "Picture" }'
+  name_plural_translations: '{ "name_plural_en": "Pictures" }'
+  slug: picture
+  field_set: one_author (ItemType)
+  uuid: one_author_picture_uuid
+  required: false
+
 one_book_title:
   type: "Field::Text"
   name_translations: '{ "name_en": "Title" }'
