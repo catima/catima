@@ -75,6 +75,7 @@ class ItemsTest < ActionDispatch::IntegrationTest
     refute(page.has_content?("Birth Time"))
     refute(page.has_content?("Birth Month"))
     refute(page.has_content?("Birthplace"))
+    refute(page.has_content?("Picture"))
   end
 
   test "can't see item that isn't approved" do
