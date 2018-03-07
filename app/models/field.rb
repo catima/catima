@@ -32,6 +32,7 @@
 
 class Field < ActiveRecord::Base
   TYPES = {
+    "boolean" => "Field::Boolean",
     "choice" => "Field::ChoiceSet",
     "datetime" => "Field::DateTime",
     "decimal" => "Field::Decimal",
@@ -200,12 +201,7 @@ class Field < ActiveRecord::Base
   # add validation rules, accessors, etc. for this field. The class in this
   # case is an anonymous subclass of Item.
   def decorate_item_class(klass)
-    klass.data_store_attribute(
-      uuid,
-      :i18n => i18n?,
-      :multiple => multiple?,
-      :transformer => method(:transform_value)
-    )
+    klass.data_store_attribute(uuid, :i18n => i18n?, :multiple => multiple?, :transformer => method(:transform_value))
 
     # TODO: how does validation work for multi-valued?
     validators = build_validators

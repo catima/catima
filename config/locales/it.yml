@@ -1,5 +1,7 @@
 ---
 it:
+  "yes": "Si"
+  "no": "No"
   advanced_searches:
     choice_set_search_field:
       any: "è uno di"

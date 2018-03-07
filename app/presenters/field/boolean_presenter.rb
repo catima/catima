@@ -1,0 +1,13 @@
+class Field::BooleanPresenter < FieldPresenter
+  def value
+    raw_value.to_i == 1 ? t('yes') : t('no')
+  end
+
+  def input(form, method, options={})
+    form.select(
+      method,
+      { t("yes") => "1", t("no") => "0" },
+      input_defaults(options).merge(:selected => raw_value, :include_blank => !@field.required)
+    )
+  end
+end

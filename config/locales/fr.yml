@@ -1,5 +1,7 @@
 ---
 fr:
+  "yes": "Oui"
+  "no": "Non"
   advanced_searches:
     choice_set_search_field:
       any: "est l'un de"
@@ -294,6 +296,7 @@ fr:
       index:
         add_field: "Ajouter…"
         edit_field_set: "Éditer %{field_set}"
+        boolean_field: Champ booléen (oui/non)
         choice_set_field: Champ ensemble de choix
         date_time_field: Champ date / heure
         decimal_field: Champ décimal

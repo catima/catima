@@ -1,5 +1,7 @@
 ---
 en:
+  "yes": "Yes"
+  "no": "No"
   advanced_searches:
     choice_set_search_field:
       any: "is any of"
@@ -298,6 +300,7 @@ en:
       index:
         add_field: "Add…"
         edit_field_set: "Edit %{field_set}"
+        boolean_field: Boolean field (Yes/No)
         choice_set_field: Choice set field
         date_time_field: Date time field
         decimal_field: Decimal field

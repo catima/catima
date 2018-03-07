@@ -1,5 +1,7 @@
 ---
 de:
+  "yes": "Ja"
+  "no": "Nein"
   advanced_searches:
     choice_set_search_field:
       any: "ist einer von"
@@ -154,6 +156,25 @@ de:
       YMDhm: "%-d. %B %Y %H:%M"
       YMDhms: "%-d. %B %Y %H:%M:%S"
 
+  cancel: Abbrechen
+  choices: Auswahl
+  create: Erstellen
+  default_value_optional: "Standardwert (optional)"
+  delete: Löschen
+  edit: Ändern
+  i18n: i18n
+  i18n_help: "Wenn i18n aktiviert ist können Sie einen Wert für jede Sprache eingeben (%{languages})"
+  i18n_enable: "i18n aktivieren"
+  locale: Sprache
+  menu_items: Menüs
+  pages: Seiten
+  slug: Slug
+  draft: Entwurf
+  review: Überprüfung
+  approved: Geprüft
+  rejected: Abgelehnt
+  users: Benutzer
+
   catalog_admin:
 
     approvals:
@@ -278,6 +299,7 @@ de:
         add_field: "Add…"
         edit_field_set: "Edit %{field_set}"
         choice_set_field: Choice set field
+        boolean_field: Ja/Nein Feld
         date_time_field: Date time field
         decimal_field: Decimal field
         email_field: Email field
@@ -367,4 +389,3 @@ de:
       setup_item_types_nav:
         item_types: 'Item types'
         new_item_type: 'New item type'
-
