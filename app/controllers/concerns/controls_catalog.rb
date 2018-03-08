@@ -8,6 +8,7 @@ module ControlsCatalog
     before_action :redirect_to_valid_locale
     before_action :remember_requested_locale
     before_action :remember_current_page_for_login_logout
+    before_action :visibility
     before_action :prepend_catalog_view_path
     helper_method :catalog
   end
@@ -15,6 +16,15 @@ module ControlsCatalog
   private
 
   attr_reader :catalog
+
+  def visibility
+    return if catalog.visible
+    if current_user.authenticated?
+      return if current_user.system_admin
+      return if current_user.catalog_role_at_least?(catalog, "editor")
+    end
+    redirect_to(root_path, :alert => t("catalogs.not_visible", :catalog_name => catalog.name))
+  end
 
   def catalog_scoped?
     true

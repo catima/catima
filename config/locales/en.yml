@@ -35,6 +35,7 @@ en:
     greeting: "Hello"
     minimum_characters: "%{length} characters minimum"
   catalogs:
+    not_visible: "“%{catalog_name}” is only visible by the catalog staff"
     show:
       welcome: "Welcome to %{catalog}!"
   devise:

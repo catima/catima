@@ -166,7 +166,8 @@ CREATE TABLE catalogs (
     advertize boolean,
     style jsonb,
     logo_id character varying,
-    navlogo_id character varying
+    navlogo_id character varying,
+    visible boolean DEFAULT true NOT NULL
 );
 
 
@@ -1553,4 +1554,6 @@ INSERT INTO schema_migrations (version) VALUES ('20171216182821');
 INSERT INTO schema_migrations (version) VALUES ('20171219054741');
 
 INSERT INTO schema_migrations (version) VALUES ('20180220093412');
+
+INSERT INTO schema_migrations (version) VALUES ('20180308085259');
 

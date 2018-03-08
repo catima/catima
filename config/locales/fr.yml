@@ -35,6 +35,7 @@ fr:
     greeting: "Bonjour"
     minimum_characters: "%{length} caractères au minimum"
   catalogs:
+    not_visible: "“%{catalog_name}” est seulement visible par l'équipe du catalogue"
     show:
       welcome: "Bienvenue chez %{catalog}!"
   devise:

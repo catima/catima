@@ -35,6 +35,7 @@ it:
     greeting: "Buongiorno"
     minimum_characters: "%{length} caratteri minima"
   catalogs:
+    not_visible: "“%{catalog_name}” è visibile solo dallo staff del catalogo"
     show:
       welcome: "Benvenuti a %{catalog}!"
   devise:
