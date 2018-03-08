@@ -1,6 +1,6 @@
 class CatalogLoadOutput
   def self.msg(txt)
-    puts txt
+    puts txt unless Rails.env.test?
   end
 
   def self.print_usage

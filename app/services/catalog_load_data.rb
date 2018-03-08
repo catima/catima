@@ -5,6 +5,10 @@ class CatalogLoadData
     @slug = slug
   end
 
+  def msg(txt)
+    puts txt unless Rails.env.test?
+  end
+
   def load
     catalog = Catalog.find_by(slug: @slug)
     return unless File.directory?(@data_dir)
@@ -19,7 +23,7 @@ class CatalogLoadData
   def load_item_types(catalog)
     Dir[File.join(@data_dir, '*.json')].each do |data_file|
       File.open(data_file) do |f|
-        puts "   Loading data from #{data_file}..."
+        msg "   Loading data from #{data_file}..."
         data_json = JSON.parse(f.read)
         load_items(catalog, data_json)
       end
@@ -43,13 +47,13 @@ class CatalogLoadData
     begin
       item.update(Hash[item_json.except('uuid', 'review_status').collect { |k, v| [item_type.fields.where(slug: k).first!.uuid, v] }])
     rescue ActiveRecord::RecordNotFound
-      puts "Error. Not all fields can be found for item type '#{item_type.slug}': #{item_json.keys.join(', ')}"
+      msg "Error. Not all fields can be found for item type '#{item_type.slug}': #{item_json.keys.join(', ')}"
     end
   end
 
   # Builds the references between items based on the UUIDs stored instead.
   def build_references(catalog)
-    puts "   Building references..."
+    msg "   Building references..."
     catalog.item_types.each { |it| build_references_for_item_type(it) }
   end
 

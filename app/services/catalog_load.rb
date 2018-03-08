@@ -7,18 +7,22 @@ class CatalogLoad
     @slug = slug
   end
 
+  def msg(txt)
+    puts txt unless Rails.env.test?
+  end
+
   def load
     check_load_dir
     File.open(File.join(@load_dir, 'structure', 'catalog.json')) do |f|
       create_catalog(JSON.parse(f.read))
     end
-    puts "Loading catalog structure..."
+    msg "Loading catalog structure..."
     load_structure
-    puts "Loading catalog data..."
+    msg "Loading catalog data..."
     load_data
-    puts "Loading pages..."
+    msg "Loading pages..."
     load_pages
-    puts "Copying files..."
+    msg "Copying files..."
     copy_files
   end
 
@@ -43,7 +47,7 @@ class CatalogLoad
     # Check if such a catalog already exists
     catalog = Catalog.find_by(slug: @slug)
     raise "ERROR. Catalog '#{@slug}' already exists. Please specify a unique catalog slug." unless catalog.nil?
-    Catalog.new(catalog_info.merge(slug: @slug)).save
+    Catalog.new(catalog_info.merge("slug" => @slug)).save
   end
 
   def load_structure
