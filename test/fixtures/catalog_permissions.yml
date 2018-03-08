@@ -71,3 +71,23 @@ reviewed_reviewer:
   catalog: reviewed
   user: reviewed_reviewer
   role: reviewer
+
+not_visible:
+  catalog: not_visible
+  user: one
+  role: user
+
+not_visible_editor:
+  catalog: not_visible
+  user: one_editor
+  role: editor
+
+not_visible_reviewer:
+  catalog: not_visible
+  user: one_reviewer
+  role: reviewer
+
+not_visible_admin:
+  catalog: not_visible
+  user: one_admin
+  role: admin
