@@ -159,3 +159,9 @@ it:
         display-options: "Opzioni di visualizzazione"
         show-empty-fields: "Mostra campi vuoti per questo tipo di oggetto"
         display-empty-fields: "Mostra campi vuoti"
+
+    catalogs:
+      common_form_fields:
+        visible: "Visibile"
+        display-options: "Opzioni di visualizzazione"
+        change-catalog-visibility: "Se selezionato, questo catalogo sarà disponibile per tutti. Altrimenti solo il personale del catalogo sarà in grado di vedere il contenuto."

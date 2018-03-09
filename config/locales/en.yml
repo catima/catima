@@ -192,6 +192,12 @@ en:
       save_settings: 'Save'
       save_style: 'Save style'
 
+    catalogs:
+      common_form_fields:
+        display-options: "Display options"
+        visible: "Visible"
+        change-catalog-visibility: "If checked, this catalog will be available for everyone. Otherwise only catalog staff will be able to see the content."
+
     categories:
       edit:
         edit_category: 'Edit category'

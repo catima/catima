@@ -190,6 +190,12 @@ de:
       save_settings: 'Save'
       save_style: 'Stil sichern'
 
+    catalogs:
+      common_form_fields:
+        display-options: "Anzeigeoptionen"
+        visible: "Sichtbar"
+        change-catalog-visibility: "Wenn diese Option aktiviert ist, ist dieser Katalog für alle verfügbar. Andernfalls können nur die Katalogmitarbeiter den Inhalt sehen."
+
     categories:
       edit:
         edit_category: 'Edit category'
