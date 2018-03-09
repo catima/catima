@@ -191,12 +191,6 @@ fr:
       save_settings: 'Enregistrer'
       save_style: 'Enregistrer le style'
 
-    catalogs:
-      common_form_fields:
-        display-options: "Options d'affichage"
-        visible: "Visible"
-        change-catalog-visibility: "Si coché, ce catalogue sera disponible pour tout le monde. Sinon, seul l'équipe du catalogue pourra voir le contenu."
-
     categories:
       edit:
         edit_category: 'Éditer sous-fiche'

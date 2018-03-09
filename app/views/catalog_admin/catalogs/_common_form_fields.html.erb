@@ -20,9 +20,11 @@
 
 <hr>
 
-<h4><%= t(".display-options") %></h4>
+<h4>Display options</h4>
 <%= f.form_group(
     :visible,
-    :help => t(".change-catalog-visibility")) do %>
-  <%= f.check_box(:visible, :label => t(".visible")) %>
+    :help => "If checked, this catalog will be available for everyone. "\
+             "Otherwise only catalog staff will be able to see the content."
+    ) do %>
+  <%= f.check_box(:visible) %>
 <% end %>
