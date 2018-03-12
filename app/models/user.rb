@@ -61,8 +61,20 @@ class User < ActiveRecord::Base
     role_catalog_ids("admin")
   end
 
+  def reviewer_catalog_ids
+    role_catalog_ids("reviewer")
+  end
+
+  def super_editor_catalog_ids
+    role_catalog_ids("super-editor")
+  end
+
   def editor_catalog_ids
     role_catalog_ids("editor")
+  end
+
+  def member_catalog_ids
+    role_catalog_ids("member")
   end
 
   def role_catalog_ids(role)
@@ -76,8 +88,20 @@ class User < ActiveRecord::Base
     admin_catalog_ids.any?
   end
 
+  def reviewer_of_any_catalog?
+    reviewer_catalog_ids.any?
+  end
+
+  def super_editor_of_any_catalog?
+    super_editor_catalog_ids.any?
+  end
+
   def editor_of_any_catalog?
     editor_catalog_ids.any?
+  end
+
+  def member_of_any_catalog?
+    member_catalog_ids.any?
   end
 
   def authenticated?

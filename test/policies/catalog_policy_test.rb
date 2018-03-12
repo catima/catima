@@ -30,16 +30,18 @@ class CatalogPolicyTest < ActiveSupport::TestCase
     refute(policy(Guest.new).update?)
   end
 
-  test "guests and regular users can't show" do
+  test "guests, users and members can't show" do
     refute(policy(users(:one)).show?)
+    refute(policy(users(:one_member)).show?)
     refute(policy(users(:two)).show?)
     refute(policy(users(:two_editor)).show?)
     refute(policy(users(:two_admin)).show?)
     refute(policy(Guest.new).show?)
   end
 
-  test "editors, reviewers, and admins of the catalog can show" do
+  test "editors, super-editors, reviewers, and admins of the catalog can show" do
     assert(policy(users(:one_editor)).show?)
+    assert(policy(users(:one_super_editor)).show?)
     assert(policy(users(:one_reviewer)).show?)
     assert(policy(users(:one_admin)).show?)
   end
