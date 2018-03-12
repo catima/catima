@@ -103,9 +103,11 @@ it:
       subject: "Il suo invito amministratore di sistema per %{host}"
       system_admin_role: "Come amministratore di sistema sarà possibile creare cataloghi, gestire i contenuti, modificare la configurazione dell'applicazione, e inviare gli inviti ad altri amministratori."
     user:
-      editor_role: Come redattore di catalogo sarete in grado di aggingere e modificare le registrazione nel catalogo.
+      member_role: Come membro sarete in grado di vedere le aree pubbliche di un catalogo limitato.
+      editor_role: Come redattore di catalogo sarete in grado di aggiungere e modificarle registrazioni nel catalogo.
+      super_editor_role: Come super-redattore di catalogo sarete in grado di aggingere e modificare tutte le registrazione nel catalogo.
       invited_to_access_html: "%{invited_by} ti ha invitato a accessere al catalogo %{catalog}."
-      reviewer_role: Come redattore di catalogo sarete in grado di agginguere e modificare le registrazione nel catalogo e di convalidare per la pubblicazione.
+      reviewer_role: Come validatore di catalogo sarete in grado di agginguere e modificare tutte le registrazione nel catalogo e di convalidare per la pubblicazione.
       subject: "Viene chiesto di unirsi %{catalog}"
   locales:
     de: Tedesco

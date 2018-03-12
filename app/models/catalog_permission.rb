@@ -13,7 +13,7 @@
 class CatalogPermission < ActiveRecord::Base
   # Note that the roles are purposely in ascending order of privilege.
   # This is to help the implementation of `role_at_least?`.
-  ROLE_OPTIONS = %w(user editor reviewer admin).freeze
+  ROLE_OPTIONS = %w(user member editor super-editor reviewer admin).freeze
 
   delegate :active?, :to => :catalog
 

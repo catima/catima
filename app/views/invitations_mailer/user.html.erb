@@ -7,8 +7,12 @@
         :catalog => @catalog.name) %>
 
   <% case(@role) %>
+  <% when "member" %>
+    <%= t(".member_role") %>
   <% when "editor" %>
     <%= t(".editor_role") %>
+  <% when "super_editor" %>
+    <%= t(".super_editor_role") %>
   <% when "reviewer" %>
     <%= t(".reviewer_role") %>
   <% end %>

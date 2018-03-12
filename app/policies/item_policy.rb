@@ -20,7 +20,7 @@ class ItemPolicy
   alias_method :show?, :create?
 
   def update?
-    role_at_least?(owned_item? ? "editor" : "reviewer")
+    role_at_least?(owned_item? ? "editor" : "super-editor")
   end
   alias_method :edit?, :update?
   alias_method :destroy?, :update?

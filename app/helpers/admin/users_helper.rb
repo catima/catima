@@ -29,7 +29,7 @@ module Admin::UsersHelper
       next if r == exclude
       unless form.object.catalog.requires_review?
         next if r == "reviewer"
-        form.object.role = "editor" if form.object.role == "reviewer"
+        form.object.role = "super-editor" if form.object.role == "reviewer"
       end
       roles << [r, form.object.role == r ? "active" : ""]
     end

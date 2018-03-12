@@ -107,7 +107,9 @@ de:
       subject: "Ihre System-Administrator-Einladung für %{host}"
       system_admin_role: "Als System-Administrator können Sie neue Kataloge erstellen, die jeweiligen Inhalte verwalten, die Applikations-Konfiguration ändern, und Einladungen für andere Administratoren verschicken."
     user:
+      member_role: Als Mitglied können Sie die öffentlichen Bereiche eines eingeschränkten Katalogs sehen.
       editor_role: Als Katalog-Editor können Sie Einträge erstellen und editieren.
+      super_editor_role: Als Katalog-Super-Editor können Sie alle Einträge erstellen und editieren.
       invited_to_access_html: "%{invited_by} hat Sie eingeladen %{catalog} zu konsultieren."
       reviewer_role: Als Katalog-Validator können Sie Einträge erstellen und editieren, sowie auch Einträge zur Publikation annehmen.
       subject: "Sie wurden eingeladen bei %{catalog} teilzunehmen"
