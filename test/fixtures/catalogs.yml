@@ -16,6 +16,7 @@
 #  slug                :string
 #  style               :jsonb
 #  updated_at          :datetime         not null
+#  visible             :boolean          default(TRUE), not null
 #
 
 # Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
@@ -81,3 +82,9 @@ search:
   name: Catalog with Search Data
   slug: search
   primary_language: en
+
+not_visible:
+  name: Catalog without visibility
+  slug: not-visible
+  primary_language: en
+  visible: false

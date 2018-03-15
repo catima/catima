@@ -16,6 +16,7 @@
 #  slug                :string
 #  style               :jsonb
 #  updated_at          :datetime         not null
+#  visible             :boolean          default(TRUE), not null
 #
 
 class Catalog < ActiveRecord::Base
