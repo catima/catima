@@ -22,6 +22,11 @@ one:
   user: one
   role: user
 
+one_member:
+  catalog: one
+  user: one_member
+  role: member
+
 one_admin:
   catalog: one
   user: one_admin
@@ -31,6 +36,11 @@ one_editor:
   catalog: one
   user: one_editor
   role: editor
+
+one_super_editor:
+  catalog: one
+  user: one_super_editor
+  role: super-editor
 
 one_reviewer:
   catalog: one

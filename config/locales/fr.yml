@@ -108,9 +108,11 @@ fr:
       subject: "Votre invitation d'administrateur système pour %{host}"
       system_admin_role: "Comme administrateur système, vous allez pouvoir créer des catalogues, en gérer leurs contenus, modifier la configuration de l'application, et envoyer des invitations à d'autres administrateurs."
     user:
-      editor_role: Comme éditeur de catalogue vous allez pouvoir ajouter et éditer des entrées.
+      member_role: Comme membre vous allez pouvoir voir les zones publiques d'un catalogue restreint.
+      editor_role: Comme éditeur de catalogue vous allez pouvoir ajouter et éditer vos propres entrées.
+      super_editor_role: Comme super-éditeur de catalogue vous allez pouvoir ajouter et éditer toutes les entrées.
       invited_to_access_html: "%{invited_by} vous a invité d'accéder %{catalog}."
-      reviewer_role: Comme validateur de catalogue, vous allez pouvoir ajouter et éditer des entrées, ainsi que de valider des entrées en vue de leur publication.
+      reviewer_role: Comme validateur de catalogue, vous allez pouvoir ajouter des entrées, éditer toutes les entrées, mais également valider des entrées en vue de leur publication.
       subject: "Vous êtes invité(e) à joindre %{catalog}"
   locales:
     de: Allemand
