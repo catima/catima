@@ -42,6 +42,13 @@ class CatalogsTest < ActionDispatch::IntegrationTest
     assert(page.has_content?(/is only visible by the catalog staff/i))
   end
 
+  test "check catalog visibility as member" do
+    log_in_as("one-member@example.com", "password")
+    visit("/not-visible")
+    assert_equal("/", current_path)
+    assert(page.has_content?(/is only visible by the catalog staff/i))
+  end
+
   test "check catalog visibility as editor" do
     log_in_as("one-editor@example.com", "password")
     visit("/not-visible")
@@ -49,8 +56,22 @@ class CatalogsTest < ActionDispatch::IntegrationTest
     assert(page.has_content?(/Catalog without visibility/i))
   end
 
+  test "check catalog visibility as super-editor" do
+    log_in_as("one-super-editor@example.com", "password")
+    visit("/not-visible")
+    assert_equal("/not-visible/en", current_path)
+    assert(page.has_content?(/Catalog without visibility/i))
+  end
+
   test "check catalog visibility as reviewer" do
     log_in_as("one-reviewer@example.com", "password")
+    visit("/not-visible")
+    assert_equal("/not-visible/en", current_path)
+    assert(page.has_content?(/Catalog without visibility/i))
+  end
+
+  test "check catalog visibility as admin" do
+    log_in_as("one-admin@example.com", "password")
     visit("/not-visible")
     assert_equal("/not-visible/en", current_path)
     assert(page.has_content?(/Catalog without visibility/i))
