@@ -87,10 +87,20 @@ not_visible:
   user: one
   role: user
 
+not_visible_member:
+  catalog: not_visible
+  user: one_member
+  role: member
+
 not_visible_editor:
   catalog: not_visible
   user: one_editor
   role: editor
+
+not_visible_super_editor:
+  catalog: not_visible
+  user: one_super_editor
+  role: super-editor
 
 not_visible_reviewer:
   catalog: not_visible
