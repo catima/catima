@@ -78,6 +78,15 @@ module CatalogAdmin::FieldsHelper
     end
   end
 
+  def field_legend_check_box(form)
+    form.form_group(
+      :legend,
+      :help => t('legend_help')
+    ) do
+      form.check_box(:legend, :label => t('legend_enable'))
+    end
+  end
+
   private
 
   def field_move_link(field, direction)

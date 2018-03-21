@@ -168,6 +168,8 @@ fr:
   i18n: Multilingue
   i18n_help: "Avec l'option multilingue activée, les éditeurs du catalogue vont pouvoir saisir une valeur par langue pour ce champ (pour chaque langue du catalogue: %{languages})"
   i18n_enable: "Activer l'option multilingue"
+  legend_help: "Si cette case est cochée, une légende peut être ajoutée à l'image."
+  legend_enable: "Ajouter une légende"
   locale: Langue
   menu_items: Menus
   pages: Pages
