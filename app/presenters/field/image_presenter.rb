@@ -51,7 +51,10 @@ class Field::ImagePresenter < Field::FilePresenter
   end
 
   def image_viewer
-    size = options[:size] ? options[:size] : '300x200'
+    size = '300x200'
+    if options[:size]
+      size = options[:size] if /^\d+x\d+$/.match?(options[:size])
+    end
     thumbs = files_as_array.map do |image|
       file_url(image, size, :resize)
     end
