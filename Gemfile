@@ -105,6 +105,7 @@ group :test do
   gem "launchy"
   gem "minitest-reporters"
   gem "mocha"
+  gem 'pry'
   gem 'selenium-webdriver'
   gem "shoulda-context"
   gem "shoulda-matchers",

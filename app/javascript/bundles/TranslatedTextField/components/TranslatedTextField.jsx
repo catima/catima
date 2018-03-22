@@ -15,7 +15,6 @@ class TranslatedTextField extends React.Component {
     this.input = props.input;
     this.locales = props.locales;
     this._value = this._inputValue();
-    this._onChangeCallback = props.onChange;
     this.state = {
       disabled: this.props.disabled ? 'disabled' : '',
     };
@@ -35,8 +34,8 @@ class TranslatedTextField extends React.Component {
   _handleChange(e){
     const locale = e.target.getAttribute('data-locale');
     this._value[locale] = e.target.value;
+    this.setState({name: e.target.value});
     this._save();
-    if (this._onChangeCallback) this._onChangeCallback(this._value);
   }
 
   render(){
