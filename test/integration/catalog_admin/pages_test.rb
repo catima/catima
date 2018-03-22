@@ -1,6 +1,9 @@
 require "test_helper"
+require 'pry'
 
 class CatalogAdmin::PagesTest < ActionDispatch::IntegrationTest
+  setup { use_javascript_capybara_driver }
+
   test "create a page" do
     log_in_as("one-admin@example.com", "password")
     visit("/one/en/admin")
@@ -9,7 +12,7 @@ class CatalogAdmin::PagesTest < ActionDispatch::IntegrationTest
     click_on("New page")
 
     fill_in("Slug", :with => "hello")
-    fill_in("Title", :with => '{"en": "Hello, World!"}')
+    find('div.translatedTextField input[data-locale=en]').base.send_keys('Hello, World...')
 
     assert_difference("catalogs(:one).pages.count") do
       click_on("Create page")
@@ -17,12 +20,12 @@ class CatalogAdmin::PagesTest < ActionDispatch::IntegrationTest
 
     model = catalogs(:one).pages.where(:slug => "hello").first!
     assert_equal(users(:one_admin), model.creator)
-    assert_equal("Hello, World!", model.title)
-    assert_equal('{"en":"Hello, World!"}', model.title_str)
-    assert_equal("Hello, World!", model.title_json['en'])
+    assert_equal("Hello, World...", model.title)
+    assert_equal('{"en":"Hello, World..."}', model.title_str)
+    assert_equal("Hello, World...", model.title_json['en'])
 
     visit("/one/en/hello")
-    within("h1") { assert(page.has_content?("Hello, World!")) }
+    within("h1") { assert(page.has_content?("Hello, World...")) }
   end
 
   test "create pages for two languages" do
@@ -33,7 +36,8 @@ class CatalogAdmin::PagesTest < ActionDispatch::IntegrationTest
     click_on("New page")
 
     fill_in("Slug", :with => "hello")
-    fill_in("Title", :with => '{"fr": "Bonjour", "en": "Hello"}')
+    find('div.translatedTextField input[data-locale=en]').base.send_keys('Hello')
+    find('div.translatedTextField input[data-locale=fr]').base.send_keys('Bonjour')
     click_on("Create page")
 
     visit("/multilingual/fr/hello")
@@ -50,7 +54,7 @@ class CatalogAdmin::PagesTest < ActionDispatch::IntegrationTest
     click_on("Pages")
     first("a", :text => "Edit").click
 
-    fill_in("Title", :with => '{"en": "Changed by test"}')
+    find('div.translatedTextField input[data-locale=en]').base.send_keys([:backspace] * 22, 'Changed by test')
 
     assert_no_difference("Page.count") do
       click_on("Update page")
@@ -65,9 +69,11 @@ class CatalogAdmin::PagesTest < ActionDispatch::IntegrationTest
     visit("/one/en/admin")
     click_on("Setup")
     click_on("Pages")
-
     assert_difference("Page.count", -1) do
-      first("a", :text => "Delete").click
+      page.accept_alert(:wait => 2) do
+        first("a", :text => "Delete").click
+      end
+      sleep 2 # Wait for page count to be correct
     end
   end
 
@@ -78,18 +84,21 @@ class CatalogAdmin::PagesTest < ActionDispatch::IntegrationTest
     click_on("Pages")
 
     while page.has_content?('Delete') do
-      first('a', :text => 'Delete').click
+      page.accept_alert(:wait => 2) do
+        first("a", :text => "Delete").click
+      end
     end
 
     click_on("New page")
     fill_in("Slug", :with => "hello")
-    fill_in("Title", :with => '{"en": "Hello"}')
+    find('div.translatedTextField input[data-locale=en]').base.send_keys('Hello')
     click_on("Create page")
 
     click_on("Menu items")
     click_on('New menu item')
     fill_in('Slug', :with => 'hello-menu')
-    fill_in('Title', :with => '{"en": "Hello menu"}')
+    first('div.translatedTextField input[data-locale=en]').base.send_keys('Hello menu')
+
     fill_in('Rank', :with => '10')
     select('Hello', :from => 'Page')
     click_on('Create menu item')
@@ -99,8 +108,12 @@ class CatalogAdmin::PagesTest < ActionDispatch::IntegrationTest
 
     visit('/one/en/admin')
     click_on('Pages')
+
     assert_difference("Page.count", -1) do
-      first("a", :text => "Delete").click
+      page.accept_alert(:wait => 2) do
+        first("a", :text => "Delete").click
+      end
+      sleep 2
     end
   end
 end
