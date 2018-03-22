@@ -17,8 +17,13 @@ class Field::ImagePresenter < Field::FilePresenter
     react_component('ThumbnailControl', props: {
       srcRef: "item_#{method}_json",
       srcId: method,
-      multiple: field.multiple
+      multiple: field.multiple,
+      legend: legend_active?
     }, prerender: false)
+  end
+
+  def legend_active?
+    field.options.key?("legend") ? !field.options["legend"].to_i.zero? : false
   end
 
   def image_full
@@ -54,7 +59,8 @@ class Field::ImagePresenter < Field::FilePresenter
     thumbs = files_as_array.map do |image|
       file_url(image, '300x200', :resize)
     end
+    legends = legend_active? ? files_as_array.map { |image| image['legend'] } : ''
     images = files_as_array.map { |img| "/#{img['path']}" }
-    @view.render('fields/images', thumbnails: thumbs, images: images)
+    @view.render('fields/images', thumbnails: thumbs, images: images, legends: legends)
   end
 end

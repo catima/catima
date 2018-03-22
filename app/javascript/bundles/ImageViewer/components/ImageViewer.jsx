@@ -17,7 +17,7 @@ class ImageViewer extends Component {
 
   render() {
     const { idx, isOpen } = this.state;
-    const { thumbnails, images } = this.props;
+    const { thumbnails, images, legends } = this.props;
     const thumb = thumbnails[0],
           image = images[0];
     return (
@@ -38,6 +38,7 @@ class ImageViewer extends Component {
           <Lightbox
             ariaHideApp={false}
             mainSrc={images[idx]}
+            imageCaption={legends[idx]}
             nextSrc={images.length == 1 ? null : images[(idx + 1) % images.length]}
             prevSrc={images.length == 1 ? null : images[(idx + images.length - 1) % images.length]}
             onCloseRequest={() => this.setState({ isOpen: false })}
