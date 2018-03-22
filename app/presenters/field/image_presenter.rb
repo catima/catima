@@ -51,8 +51,12 @@ class Field::ImagePresenter < Field::FilePresenter
   end
 
   def image_viewer
+    size = '300x200'
+    if options[:size]
+      size = options[:size] if /^\d+x\d+$/.match?(options[:size])
+    end
     thumbs = files_as_array.map do |image|
-      file_url(image, '300x200', :resize)
+      file_url(image, size, :resize)
     end
     images = files_as_array.map { |img| "/#{img['path']}" }
     @view.render('fields/images', thumbnails: thumbs, images: images)
