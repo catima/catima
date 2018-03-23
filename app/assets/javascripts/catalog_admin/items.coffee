@@ -202,6 +202,7 @@ fileupload_done_for = ($field, $result)->
   new_presenter = file_presenter_upload_finished($field, $result.processed_file)
   control.find("tr[data-file='#{file_id}']").replaceWith(new_presenter)
   activate_delete_file_buttons_for $field
+  activate_legend_image_input_for $field
   add_file_to_field($result.processed_file, $field)
 
 fileupload_error_for = ($field, $err)->
