@@ -10,6 +10,7 @@ class Field::ImagePresenter < Field::FilePresenter
 
   def input(form, method, options={})
     html = super(form, method, options)
+    html = add_legend_attribute(html) if legend_active?
     (html + thumbnail_control(method)).html_safe
   end
 
@@ -17,13 +18,8 @@ class Field::ImagePresenter < Field::FilePresenter
     react_component('ThumbnailControl', props: {
       srcRef: "item_#{method}_json",
       srcId: method,
-      multiple: field.multiple,
-      legend: legend_active?
+      multiple: field.multiple
     }, prerender: false)
-  end
-
-  def legend_active?
-    field.options.key?("legend") ? !field.options["legend"].to_i.zero? : false
   end
 
   def image_full
@@ -66,5 +62,17 @@ class Field::ImagePresenter < Field::FilePresenter
     legends = legend_active? ? files_as_array.map { |image| image['legend'] } : ''
     images = files_as_array.map { |img| "/#{img['path']}" }
     @view.render('fields/images', thumbnails: thumbs, images: images, legends: legends)
+  end
+
+  private
+
+  def add_legend_attribute(html)
+    content = Nokogiri::HTML(html)
+    content.at_css("div.file-upload").set_attribute("data-legend", legend_active?)
+    content.to_html
+  end
+
+  def legend_active?
+    field.options.key?("legend") ? !field.options["legend"].to_i.zero? : false
   end
 end
