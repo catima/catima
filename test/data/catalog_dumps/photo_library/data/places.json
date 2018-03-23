@@ -89,6 +89,11 @@
           "type": "image/jpeg"
         }
       ],
+      "topic-of-interest": [
+        "65655353-88ff-4c6e-8320-d8e744382fa9",
+        "15d890bd-56f4-4d53-933d-574e335bb45b",
+        "ccdd7dfd-a27c-43ba-bdad-03c45063b3da"
+      ],
       "uuid": "df684928-623b-4923-99e7-a1cda6120132"
     },
     {
@@ -161,6 +166,10 @@
           "type": "image/jpeg"
         }
       ],
+      "topic-of-interest": [
+        "65655353-88ff-4c6e-8320-d8e744382fa9",
+        "15d890bd-56f4-4d53-933d-574e335bb45b"
+      ],
       "uuid": "683d61bf-3edf-45ce-95ed-068ab1fd07b4"
     },
     {
@@ -232,6 +241,10 @@
           "size": 502729,
           "type": "image/jpeg"
         }
+      ],
+      "topic-of-interest": [
+        "ccdd7dfd-a27c-43ba-bdad-03c45063b3da",
+        "06198cca-da7f-43a4-8e8f-376fbc239935"
       ],
       "uuid": "fbcb229c-782e-4156-bec1-f0cdf74fffcb"
     }

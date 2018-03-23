@@ -84,6 +84,30 @@
         "name_plural_fr": "Photos"
       },
       "multiple": true
+    },
+    {
+      "type": "Field::ChoiceSet",
+      "slug": "topic-of-interest",
+      "comment": "",
+      "required": false,
+      "unique": false,
+      "default_value": null,
+      "options": null,
+      "primary": false,
+      "display_in_list": true,
+      "uuid": "_999d3dfe_253b_4689_b9bb_c55d201224d3",
+      "name_translations": {
+        "name_de": "Schwerpunktthema",
+        "name_en": "Topic of interest",
+        "name_fr": "Sujet d'intérêt"
+      },
+      "name_plural_translations": {
+        "name_plural_de": "Schwerpunktthemen",
+        "name_plural_en": "Topics of interest",
+        "name_plural_fr": "Sujets d'intérêt"
+      },
+      "multiple": true,
+      "choice_set": "8527761b-6790-4189-9b35-b5938a37ec6e"
     }
   ],
   "item-views": [
