@@ -10,6 +10,7 @@ class Field::ImagePresenter < Field::FilePresenter
 
   def input(form, method, options={})
     html = super(form, method, options)
+    html = add_legend_attribute(html) if legend_active?
     (html + thumbnail_control(method)).html_safe
   end
 
@@ -58,7 +59,22 @@ class Field::ImagePresenter < Field::FilePresenter
     thumbs = files_as_array.map do |image|
       file_url(image, size, :resize)
     end
+    legends = legend_active? ? files_as_array.map { |image| image['legend'] } : ''
     images = files_as_array.map { |img| "/#{img['path']}" }
-    @view.render('fields/images', thumbnails: thumbs, images: images)
+    @view.render('fields/images', thumbnails: thumbs, images: images, legends: legends)
+  end
+
+  private
+
+  def add_legend_attribute(html)
+    content = Nokogiri::HTML(html)
+    content.at_css("div.file-upload").set_attribute("data-legend", legend_active?)
+    content.to_html
+  end
+
+  def legend_active?
+    return false unless field.options
+    return false unless field.options.key?("legend")
+    !field.options["legend"].to_i.zero?
   end
 end

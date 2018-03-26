@@ -32,8 +32,10 @@ init_file_upload_controls = ->
 init_file_upload_field = ($file_field)->
   $files = files_for $file_field
   $control = $("#fileupload_#{$file_field}")
-  display_existing_files($files, $control)
+  display_existing_files($file_field, $files, $control)
   activate_delete_file_buttons_for($file_field)
+  activate_legend_image_input_for $file_field
+  add_legends_for $file_field
   add_upload_button_for $file_field
   activate_jquery_fileupload $file_field
   check_filerequired $file_field
@@ -48,6 +50,9 @@ nfiles = ($field)->
 multiple = ($file_field)->
   return ($("#fileupload_#{$file_field}").attr('data-multiple') == 'true')
 
+legend = ($file_field)->
+  return ($("#fileupload_#{$file_field}").attr('data-legend') == 'true')
+
 required = ($field)->
   return ($("#fileupload_#{$field}").attr('data-required') == 'true')
 
@@ -61,17 +66,17 @@ allowed_extensions = ($field)->
 auth_token = ->
   $('input[name=authenticity_token]').val()
 
-display_existing_files = ($files, $control)->
-  h = (file_presenter file for file in $files).join('')
+display_existing_files = ($file_field, $files, $control)->
+  h = (file_presenter $file_field, file for file in $files).join('')
   $control.append("<table>"+h+"</table>")
 
-file_presenter = ($file, $new=false, $uploading=false)->
-  return if $uploading then file_presenter_upload_inprogress($file) else file_presenter_upload_finished($file)
+file_presenter = ($file_field, $file, $new=false, $uploading=false)->
+  return if $uploading then file_presenter_upload_inprogress($file) else file_presenter_upload_finished($file_field, $file)
 
-file_presenter_upload_finished = ($file)->
+file_presenter_upload_finished = ($file_field, $file)->
   $is_img = ($file.type.substr(0,5) == 'image')
   $file_icon = if $is_img then "#{icon_for($file, 50)}" else '<i class="fa fa-file"></i>'
-  return """
+  $html = """
     <tr data-file="#{file_hash($file)}">
       <td>#{$file_icon}</td>
       <td><a href="/#{$file.path}">#{$file.name}</a></td>
@@ -79,7 +84,16 @@ file_presenter_upload_finished = ($file)->
       <td>
         <button type="button" class="delete-file-btn btn btn-sm btn-danger"><span class="glyphicon glyphicon-trash"></span></button>
       </td>
+    </tr>
+    """
+  if legend $file_field
+    $html += """
+    <tr data-file="#{file_hash($file)}">
+      <td colspan="4">
+        <input class="form-control image-legend-input" placeholder="Add legend here" type="text"/>
+      </td>
     </tr>"""
+  return $html
 
 file_presenter_upload_inprogress = ($file)->
   return """
@@ -185,9 +199,10 @@ fileupload_done_for = ($field, $result)->
   modified_file_fields.push($field)
   control = $("#fileupload_#{$field}")
   file_id = file_hash($result.processed_file)
-  new_presenter = file_presenter_upload_finished($result.processed_file)
+  new_presenter = file_presenter_upload_finished($field, $result.processed_file)
   control.find("tr[data-file='#{file_id}']").replaceWith(new_presenter)
   activate_delete_file_buttons_for $field
+  activate_legend_image_input_for $field
   add_file_to_field($result.processed_file, $field)
 
 fileupload_error_for = ($field, $err)->
@@ -207,7 +222,7 @@ show_progress = ($file, $prop)->
   $file_display.find('.upload-progress').html("#{parseInt($prop*100)}%")
 
 insert_new_file = ($file, $field_id)->
-  h = file_presenter($file, true, true)
+  h = file_presenter($field_id, $file, true, true)
   $control = $("#fileupload_#{$field_id}")
   window.H = h
   window.C = $control
@@ -242,6 +257,25 @@ activate_delete_file_buttons_for = ($field)->
   $control = $("#fileupload_#{$field}")
   $control.find('.delete-file-btn').on('click', (e)-> delete_file($field, e.target))
 
+activate_legend_image_input_for = ($field)->
+  $control = $("#fileupload_#{$field}")
+  $control.find('.image-legend-input').on('input', (e)-> update_legend($field, e.target))
+
+update_legend = ($field, $target)->
+  file_id = $($target).closest('tr').attr('data-file')
+  files = files_for($field)
+  $.each files, (index, file) ->
+    if file_hash(file) == file_id
+      file.legend = $target.value
+  save_files(files, $field)
+
+add_legends_for = ($field)->
+  files = files_for($field)
+  $.each files, (index, file) ->
+    if file.legend
+      file_id = file_hash(file)
+      $("tr[data-file='#{file_id}'] .image-legend-input").val file.legend
+
 delete_file = ($field, $target)->
   modified_file_fields.push($field)
   file_id = $($target).closest('tr').attr('data-file')
@@ -250,7 +284,7 @@ delete_file = ($field, $target)->
   for f in files
     files_to_keep.push(f) if file_hash(f) != file_id
   save_files(files_to_keep, $field)
-  $($target).closest('tr').remove()
+  $("tr[data-file='#{file_id}']").remove()
   display_upload_button($field)
   check_filerequired($field)
 

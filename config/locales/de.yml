@@ -168,6 +168,8 @@ de:
   i18n: i18n
   i18n_help: "Wenn i18n aktiviert ist können Sie einen Wert für jede Sprache eingeben (%{languages})"
   i18n_enable: "i18n aktivieren"
+  legend_help: "Wenn diese Option aktiviert ist, kann dem Bild eine Legende hinzugefügt werden."
+  legend_enable: "Fügen Sie eine Legende hinzu"
   locale: Sprache
   menu_items: Menüs
   pages: Seiten

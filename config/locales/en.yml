@@ -168,6 +168,8 @@ en:
   i18n: i18n
   i18n_help: "With i18n enabled, editors will be able to specify a translation of this field for each language (%{languages})"
   i18n_enable: "Enable i18n"
+  legend_help: "If checked, a legend can be added to the image."
+  legend_enable: "Add a legend"
   locale: Locale
   menu_items: Menu items
   pages: Pages
