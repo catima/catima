@@ -133,37 +133,43 @@
           "name": "Si-o-se-Pol.jpg",
           "path": "upload/photo-library/_26358aec_6d41_4715_b6b9_1f23811f1c73/1514304571_Si-o-se-Pol.jpg",
           "size": 285042,
-          "type": "image/jpeg"
+          "type": "image/jpeg",
+          "legend": "Khaju Bridge"
         },
         {
           "name": "Naghshe_Jahan_Square_Isfahan_modified.jpg",
           "path": "upload/photo-library/_26358aec_6d41_4715_b6b9_1f23811f1c73/1514304575_Naghshe_Jahan_Square_Isfahan_modified.jpg",
           "size": 410167,
-          "type": "image/jpeg"
+          "type": "image/jpeg",
+          "legend": "The historic Naqsh-e Jahan square"
         },
         {
           "name": "Khaju_Bridje_at_night.jpg",
           "path": "upload/photo-library/_26358aec_6d41_4715_b6b9_1f23811f1c73/1514304579_Khaju_Bridje_at_night.jpg",
           "size": 229700,
-          "type": "image/jpeg"
+          "type": "image/jpeg",
+          "legend": "Khaju Bridge"
         },
         {
           "name": "Khaju_Bridge_-_Isfahan-Iran-ninara07.jpg",
           "path": "upload/photo-library/_26358aec_6d41_4715_b6b9_1f23811f1c73/1514304582_Khaju_Bridge_-_Isfahan-Iran-ninara07.jpg",
           "size": 570572,
-          "type": "image/jpeg"
+          "type": "image/jpeg",
+          "legend": "Khaju Bridge"
         },
         {
           "name": "Carpet_bazzar.jpg",
           "path": "upload/photo-library/_26358aec_6d41_4715_b6b9_1f23811f1c73/1514304586_Carpet_bazzar.jpg",
           "size": 789340,
-          "type": "image/jpeg"
+          "type": "image/jpeg",
+          "legend": "Typical carpet shop in the bazar"
         },
         {
           "name": "Ali-qapu-rooz.jpg",
           "path": "upload/photo-library/_26358aec_6d41_4715_b6b9_1f23811f1c73/1514304590_Ali-qapu-rooz.jpg",
           "size": 267398,
-          "type": "image/jpeg"
+          "type": "image/jpeg",
+          "legend": "Ali Qapu palace on Naqsh-e Jahan square"
         }
       ],
       "topic-of-interest": [
@@ -209,19 +215,22 @@
           "name": "Aerial_View_of_Tehran_26.11.2008_04-35-03.jpg",
           "path": "upload/photo-library/_26358aec_6d41_4715_b6b9_1f23811f1c73/1514304092_Aerial_View_of_Tehran_26112008_04-35-03.jpg",
           "size": 483895,
-          "type": "image/jpeg"
+          "type": "image/jpeg",
+          "legend": "View of Tehran with Milad tower in the center"
         },
         {
           "name": "Damavand_from_dizin.jpg",
           "path": "upload/photo-library/_26358aec_6d41_4715_b6b9_1f23811f1c73/1514304096_Damavand_from_dizin.jpg",
           "size": 198137,
-          "type": "image/jpeg"
+          "type": "image/jpeg",
+          "legend": "Damavand, the highest mountain of Iran, north of Teheran"
         },
         {
           "name": "Golestan_Palace,_Tehran,_Iran_(1249288212).jpg",
           "path": "upload/photo-library/_26358aec_6d41_4715_b6b9_1f23811f1c73/1514304099_Golestan_Palace_Tehran_Iran_1249288212.jpg",
           "size": 99599,
-          "type": "image/jpeg"
+          "type": "image/jpeg",
+          "legend": "Golestan Palace"
         },
         {
           "name": "Mezquita_Shah.jpg",
@@ -233,7 +242,8 @@
           "name": "Tehran's_Nature_Bridge.jpg",
           "path": "upload/photo-library/_26358aec_6d41_4715_b6b9_1f23811f1c73/1514304135_Tehrans_Nature_Bridge.jpg",
           "size": 118093,
-          "type": "image/jpeg"
+          "type": "image/jpeg",
+          "legend": "Nature bridge"
         },
         {
           "name": "7Tir_Tehran.jpg",

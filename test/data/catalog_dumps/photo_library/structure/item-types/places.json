@@ -68,7 +68,8 @@
       "unique": false,
       "default_value": null,
       "options": {
-        "types": "jpg, jpeg, png, gif"
+        "types": "jpg, jpeg, png, gif",
+        "legend": "1"
       },
       "primary": false,
       "display_in_list": true,
