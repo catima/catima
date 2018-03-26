@@ -1,9 +1,23 @@
+class CatalogDumpOutput
+  def self.msg(txt)
+    puts txt unless Rails.env.test?
+  end
+
+  def self.print_usage
+    puts 'rake catalog:dump catalog=<slug> dir=<path>'
+  end
+end
+
 namespace :catalog do
   desc "Dump a catalog to a directory"
-  DUMP_USAGE = 'rake catalog:dump catalog=<slug> dir=<path>'.freeze
   task :dump => [:environment] do
-    (catalog = ENV['catalog']) || raise("No catalog specified. \n\rUSAGE: #{DUMP_USAGE}")
-    (directory = ENV['dir']) || raise("No output directory specified. \n\rUSAGE: #{DUMP_USAGE}")
-    CatalogDump.new.dump(catalog, directory)
+    catalog = ENV['catalog']
+    directory = ENV['dir']
+    if catalog.nil? || directory.nil?
+      CatalogDumpOutput.print_usage
+    else
+      CatalogDump.new.dump(catalog, directory)
+      CatalogDumpOutput.msg "Catalog #{catalog} dumped to #{directory}."
+    end
   end
 end

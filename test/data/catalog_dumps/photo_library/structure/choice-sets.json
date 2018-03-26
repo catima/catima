@@ -1,5 +1,66 @@
 {
   "choice-sets": [
-
+    {
+      "name": "Topics of interest",
+      "uuid": "8527761b-6790-4189-9b35-b5938a37ec6e",
+      "choices": [
+        {
+          "short_name_translations": {
+            "short_name_de": "Politik",
+            "short_name_en": "Politics",
+            "short_name_fr": "Politique"
+          },
+          "long_name_translations": {
+            "long_name_de": "",
+            "long_name_en": "",
+            "long_name_fr": ""
+          },
+          "uuid": "06198cca-da7f-43a4-8e8f-376fbc239935",
+          "category": null
+        },
+        {
+          "short_name_translations": {
+            "short_name_de": "Landschaft",
+            "short_name_en": "Landscape",
+            "short_name_fr": "Paysage"
+          },
+          "long_name_translations": {
+            "long_name_de": "",
+            "long_name_en": "",
+            "long_name_fr": ""
+          },
+          "uuid": "ccdd7dfd-a27c-43ba-bdad-03c45063b3da",
+          "category": null
+        },
+        {
+          "short_name_translations": {
+            "short_name_de": "Geschichte",
+            "short_name_en": "History",
+            "short_name_fr": "Histoire"
+          },
+          "long_name_translations": {
+            "long_name_de": "",
+            "long_name_en": "",
+            "long_name_fr": ""
+          },
+          "uuid": "15d890bd-56f4-4d53-933d-574e335bb45b",
+          "category": null
+        },
+        {
+          "short_name_translations": {
+            "short_name_de": "Kultur",
+            "short_name_en": "Culture",
+            "short_name_fr": "Culture"
+          },
+          "long_name_translations": {
+            "long_name_de": "",
+            "long_name_en": "",
+            "long_name_fr": ""
+          },
+          "uuid": "65655353-88ff-4c6e-8320-d8e744382fa9",
+          "category": null
+        }
+      ]
+    }
   ]
 }

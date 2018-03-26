@@ -40,10 +40,12 @@ class Catalog < ActiveRecord::Base
 
   has_many :advanced_searches, :dependent => :destroy
   has_many :catalog_permissions, :dependent => :destroy
-  has_many :categories, -> { active }, :dependent => :destroy
+  has_many :categories, -> { active }
+  has_many :all_categories, :class_name => "Category", :dependent => :destroy
   has_many :choice_sets, :dependent => :destroy
   has_many :items, :dependent => :destroy
-  has_many :item_types, -> { active }, :dependent => :destroy
+  has_many :item_types, -> { active }
+  has_many :all_item_types, :class_name => "ItemType", :dependent => :destroy
   has_many :pages, :dependent => :destroy
   has_many :menu_items, :dependent => :destroy
 
