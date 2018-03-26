@@ -73,6 +73,8 @@ class Field::ImagePresenter < Field::FilePresenter
   end
 
   def legend_active?
-    field.options.key?("legend") ? !field.options["legend"].to_i.zero? : false
+    return false unless field.options
+    return false unless field.options.key?("legend")
+    !field.options["legend"].to_i.zero?
   end
 end
