@@ -32,7 +32,7 @@ class FieldPresenter
 
   def input_defaults(options)
     data = input_data_defaults(options.fetch(:data, {}))
-    options.reverse_merge(:label => label, :data => data, :help => comment)
+    options.reverse_merge(:label => label, :data => data, :help => comment, :include_blank => !field.required)
   end
 
   def input_data_defaults(data)
