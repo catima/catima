@@ -95,7 +95,12 @@ class Field::ChoiceSet < ::Field
   end
 
   def value_or_id_for_item(it)
-    multiple? ? selected_choices(it).map(&:uuid) : selected_choice(it).uuid
+    if multiple?
+      selected_choices(it).map(&:uuid)
+    else
+      ch = selected_choice(it)
+      ch.nil? ? nil : ch.uuid
+    end
   end
 
   private
