@@ -1,5 +1,86 @@
 {
   "categories": [
-
+    {
+      "name": "Type of accommodation",
+      "uuid": "dbcd2685-535f-4b76-9566-dae410cd0bd8",
+      "fields": [
+        {
+          "type": "Field::Text",
+          "slug": "accommodation-name",
+          "comment": "",
+          "required": true,
+          "unique": false,
+          "default_value": "",
+          "options": {
+            "maximum": "",
+            "minimum": "",
+            "formatted_text": "0"
+          },
+          "primary": false,
+          "display_in_list": false,
+          "uuid": "_99a9cad6_a0e8_4d50_9a25_3c9b33314e0a",
+          "name_translations": {
+            "name_de": "Name",
+            "name_en": "Name",
+            "name_fr": "Nom"
+          },
+          "name_plural_translations": {
+            "name_plural_de": "Namen",
+            "name_plural_en": "Names",
+            "name_plural_fr": "Noms"
+          },
+          "i18n": false
+        },
+        {
+          "type": "Field::Email",
+          "slug": "accommodation-mail",
+          "comment": "",
+          "required": false,
+          "unique": false,
+          "default_value": "",
+          "options": null,
+          "primary": false,
+          "display_in_list": false,
+          "uuid": "_68b99a41_69c1_49b3_a5b5_c1a47b6970fd",
+          "name_translations": {
+            "name_de": "E-mail",
+            "name_en": "Mail",
+            "name_fr": "E-mail"
+          },
+          "name_plural_translations": {
+            "name_plural_de": "E-mails",
+            "name_plural_en": "Mails",
+            "name_plural_fr": "E-mails"
+          }
+        },
+        {
+          "type": "Field::Text",
+          "slug": "accommodation-phone",
+          "comment": "",
+          "required": false,
+          "unique": false,
+          "default_value": "",
+          "options": {
+            "maximum": "",
+            "minimum": "",
+            "formatted_text": "0"
+          },
+          "primary": false,
+          "display_in_list": false,
+          "uuid": "_a02c8480_81bc_4b62_9138_d7def1e99d71",
+          "name_translations": {
+            "name_de": "Telefon",
+            "name_en": "Phone",
+            "name_fr": "Téléphone"
+          },
+          "name_plural_translations": {
+            "name_plural_de": "Telefon",
+            "name_plural_en": "Phone",
+            "name_plural_fr": "Téléphonoe"
+          },
+          "i18n": false
+        }
+      ]
+    }
   ]
 }

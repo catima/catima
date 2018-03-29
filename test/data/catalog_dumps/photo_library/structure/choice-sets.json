@@ -61,6 +61,68 @@
           "category": null
         }
       ]
+    },
+    {
+      "name": "Type of accommodation",
+      "uuid": "cc9b0520-7c02-4518-a333-4e73a4a15495",
+      "choices": [
+        {
+          "short_name_translations": {
+            "short_name_de": "Camping",
+            "short_name_en": "Camping",
+            "short_name_fr": "Camping"
+          },
+          "long_name_translations": {
+            "long_name_de": "",
+            "long_name_en": "",
+            "long_name_fr": ""
+          },
+          "uuid": "b42af0b4-c146-4abb-997f-0f56398bc61d",
+          "category": null
+        },
+        {
+          "short_name_translations": {
+            "short_name_de": "B&B",
+            "short_name_en": "B&B",
+            "short_name_fr": "B&B"
+          },
+          "long_name_translations": {
+            "long_name_de": "",
+            "long_name_en": "",
+            "long_name_fr": ""
+          },
+          "uuid": "965b1c0c-c391-4b0e-8979-2c5fb4bab0a8",
+          "category": null
+        },
+        {
+          "short_name_translations": {
+            "short_name_de": "Hotel",
+            "short_name_en": "Hotel",
+            "short_name_fr": "Hôtel"
+          },
+          "long_name_translations": {
+            "long_name_de": "",
+            "long_name_en": "",
+            "long_name_fr": ""
+          },
+          "uuid": "47bd7326-f743-4efc-a5ec-b5ece195395d",
+          "category": "dbcd2685-535f-4b76-9566-dae410cd0bd8"
+        },
+        {
+          "short_name_translations": {
+            "short_name_de": "Privat",
+            "short_name_en": "Private",
+            "short_name_fr": "Privé"
+          },
+          "long_name_translations": {
+            "long_name_de": "",
+            "long_name_en": "",
+            "long_name_fr": ""
+          },
+          "uuid": "e2289a2b-fd0b-40cd-ad2f-9e79d0107f2c",
+          "category": null
+        }
+      ]
     }
   ]
 }

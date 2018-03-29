@@ -94,6 +94,7 @@
         "15d890bd-56f4-4d53-933d-574e335bb45b",
         "ccdd7dfd-a27c-43ba-bdad-03c45063b3da"
       ],
+      "accommodation-type": null,
       "uuid": "df684928-623b-4923-99e7-a1cda6120132"
     },
     {
@@ -176,6 +177,7 @@
         "65655353-88ff-4c6e-8320-d8e744382fa9",
         "15d890bd-56f4-4d53-933d-574e335bb45b"
       ],
+      "accommodation-type": "965b1c0c-c391-4b0e-8979-2c5fb4bab0a8",
       "uuid": "683d61bf-3edf-45ce-95ed-068ab1fd07b4"
     },
     {
@@ -256,6 +258,10 @@
         "ccdd7dfd-a27c-43ba-bdad-03c45063b3da",
         "06198cca-da7f-43a4-8e8f-376fbc239935"
       ],
+      "accommodation-type": "47bd7326-f743-4efc-a5ec-b5ece195395d",
+      "accommodation-name": "Parsian Esteghlal International Hotel",
+      "accommodation-mail": "info@esteghlalhotel.ir",
+      "accommodation-phone": "+98-21-22660011-25",
       "uuid": "fbcb229c-782e-4156-bec1-f0cdf74fffcb"
     }
   ]

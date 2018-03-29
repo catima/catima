@@ -109,6 +109,30 @@
       },
       "multiple": true,
       "choice_set": "8527761b-6790-4189-9b35-b5938a37ec6e"
+    },
+    {
+      "type": "Field::ChoiceSet",
+      "slug": "accommodation-type",
+      "comment": "",
+      "required": false,
+      "unique": false,
+      "default_value": null,
+      "options": null,
+      "primary": false,
+      "display_in_list": false,
+      "uuid": "_eee7e686_63c6_462b_8197_29cbed255842",
+      "name_translations": {
+        "name_de": "Art der Unterkunft",
+        "name_en": "Type of accommodation",
+        "name_fr": "Type d'hébergement"
+      },
+      "name_plural_translations": {
+        "name_plural_de": "Art der Unterkunften",
+        "name_plural_en": "Types of accommodations",
+        "name_plural_fr": "Types d'hébergements"
+      },
+      "multiple": false,
+      "choice_set": "cc9b0520-7c02-4518-a333-4e73a4a15495"
     }
   ],
   "item-views": [
