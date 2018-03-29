@@ -152,12 +152,9 @@ en:
         primary_language: "Preferred language"
   time:
     formats:
-      Y: "%Y"
-      YM: "%B %Y"
-      YMD: "%d %B, %Y"
-      YMDh: "%d %B, %Y %Hh"
-      YMDhm: "%d %B, %Y %H:%M"
-      YMDhms: "%d %B, %Y %H:%M:%S"
+      m: 'm'
+      s: 's'
+      h: 'h'
 
   cancel: 'Cancel'
   choices: Choices

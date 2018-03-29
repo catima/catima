@@ -148,12 +148,10 @@ it:
         primary_language: "Lingua preferita"
   time:
     formats:
-      Y: "%Y"
-      YM: "%B %Y"
-      YMD: "%-d %B %Y"
-      YMDh: "%-d %B %Y %H ore"
-      YMDhm: "%-d %B %Y %H:%M"
-      YMDhms: "%-d %B %Y %H:%M:%S"
+      m: 'm'
+      s: 's'
+      h: 'o'
+
   legend_help: "Se selezionato, è possibile aggiungere una legenda all'immagine."
   legend_enable: "Aggiungi una legenda"
   catalog_admin:

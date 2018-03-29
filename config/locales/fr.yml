@@ -152,12 +152,9 @@ fr:
         primary_language: "Langue préférée"
   time:
     formats:
-      Y: "%Y"
-      YM: "%B %Y"
-      YMD: "%-d %B %Y"
-      YMDh: "%-d %B %Y %Hh"
-      YMDhm: "%-d %B %Y %Hh%M"
-      YMDhms: "%-d %B %Y %H:%M:%S"
+      m: 'm'
+      s: 's'
+      h: 'h'
 
   cancel: 'Annuler'
   choices: Ensembles de choix

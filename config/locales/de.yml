@@ -152,12 +152,9 @@ de:
         primary_language: "Bevorzugte Sprache"
   time:
     formats:
-      Y: "%Y"
-      YM: "%B %Y"
-      YMD: "%-d. %B %Y"
-      YMDh: "%-d. %B %Y %H Uhr"
-      YMDhm: "%-d. %B %Y %H:%M"
-      YMDhms: "%-d. %B %Y %H:%M:%S"
+      m: 'Min'
+      s: 'Sek'
+      h: 'Std'
 
   cancel: Abbrechen
   choices: Auswahl

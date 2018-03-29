@@ -16,7 +16,7 @@ class DateTimeInput extends React.Component {
     const granularity = this.getFieldOptions().format;
     for (let i in granularity){
       let k = granularity[i];
-      this.state[k] = date[k] || ({Y:0, M:1, D:1, h:0, m:0, s:0})[k];
+      this.state[k] = date[k] || ({Y:0, M:0, D:0, h:0, m:0, s:0})[k];
     }
     this.handleChangeDay = this._handleChangeDay.bind(this);
     this.handleChangeMonth = this._handleChangeMonth.bind(this);
@@ -28,19 +28,19 @@ class DateTimeInput extends React.Component {
 
   _handleChangeDay(e){
     const v = parseInt(e.target.value);
-    if (v < 1 || v > 31) return;
+    if (v < 0 || v > 31) return;
     this.updateData({D: v});
   }
 
   _handleChangeMonth(e){
     const v = parseInt(e.target.value);
-    if (v < 1 || v > 12) return;
+    if (v < 0 || v > 12) return;
     this.updateData({M: v});
   }
 
   _handleChangeYear(e){
-    const v = parseInt(e.target.value);
-    if (isNaN(v)) return;
+    let v = parseInt(e.target.value);
+    if (isNaN(v)) v = null;
     this.updateData({Y: v});
   }
 
@@ -93,11 +93,12 @@ class DateTimeInput extends React.Component {
     return (
       <div className="dateTimeInput rails-bootstrap-forms-datetime-select">
         {this.state.D != null ? (
-            <input type="number" min="1" max="31" className="input-2 form-control" value={this.state.D} onChange={this.handleChangeDay} />
+            <input type="number" min="0" max="31" className="input-2 form-control" value={this.state.D} onChange={this.handleChangeDay} />
           ) : null
         }
         {this.state.M != null ? (
           <select className="form-control" value={this.state.M} onChange={this.handleChangeMonth}>
+            <option value="null">-</option>
             <option value="1">January</option>
             <option value="2">February</option>
             <option value="3">March</option>

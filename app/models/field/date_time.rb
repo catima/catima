@@ -56,7 +56,7 @@ class Field::DateTime < ::Field
   def value_as_array(item)
     value = raw_value(item)
     return nil if value.nil?
-    defaults = { "Y" => 0, "M" => 1, "D" => 1, "h" => 0, "m" => 0, "s" => 0 }
+    defaults = { "Y" => nil, "M" => nil, "D" => nil, "h" => nil, "m" => nil, "s" => nil }
     components = defaults.map do |key, default_value|
       value[key] || default_value
     end
@@ -67,7 +67,7 @@ class Field::DateTime < ::Field
   def value_as_int(item)
     components = value_as_array(item)
     return nil if components.nil?
-    (0..(components.length - 1)).collect { |i| components[i] * 10**(10 - 2 * i) }.sum
+    (0..(components.length - 1)).collect { |i| components[i] ? components[i] * 10**(10 - 2 * i) : 0 }.sum
   end
 
   # The form provides the datetime values as hash like
