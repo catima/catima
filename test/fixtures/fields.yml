@@ -241,6 +241,15 @@ one_author_picture_inactive_legend:
   required: false
   options: '{"types":"jpg","legend":"0"}'
 
+one_author_deceased:
+  type: "Field::Boolean"
+  name_translations: '{ "name_en": "Deceased" }'
+  name_plural_translations: '{ "name_plural_en": "Deceased" }'
+  slug: deceased
+  field_set: one_author (ItemType)
+  uuid: one_author_deceased_uuid
+  required: false
+
 one_book_title:
   type: "Field::Text"
   name_translations: '{ "name_en": "Title" }'
