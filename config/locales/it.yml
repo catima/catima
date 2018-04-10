@@ -30,6 +30,8 @@ it:
       contains_words: "contiene le parole"
       excludes_words: "non contiene le parole"
       has_exact_phrase: "ha frase esatta"
+    boolean_search_field:
+      correspond_to: "corrisponde a"
   common:
     back: "Ritorno"
     greeting: "Buongiorno"

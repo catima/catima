@@ -30,6 +30,8 @@ de:
       contains_words: "enhält Wörter"
       excludes_words: "ohne Wörer"
       has_exact_phrase: "enthält den exakten Ausdruck"
+    boolean_search_field:
+      correspond_to: "entspricht"
   common:
     back: "Zurück"
     greeting: "Hallo"

@@ -75,7 +75,8 @@ one_author_very_old:
   data: |
     {
       "one_author_age_uuid": 2456,
-      "one_author_name_uuid": "Very Old"
+      "one_author_name_uuid": "Very Old",
+      "one_author_deceased_uuid": "1"
     }
 
 one_author_very_young:
@@ -85,7 +86,8 @@ one_author_very_young:
   data: |
     {
       "one_author_age_uuid": 3,
-      "one_author_name_uuid": "Very Young"
+      "one_author_name_uuid": "Very Young",
+      "one_author_deceased_uuid": "0"
     }
 
 one_book_end_of_watch:
