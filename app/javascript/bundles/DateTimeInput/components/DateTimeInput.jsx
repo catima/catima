@@ -27,38 +27,42 @@ class DateTimeInput extends React.Component {
   }
 
   _handleChangeDay(e){
-    const v = parseInt(e.target.value);
+    let v = parseInt(e.target.value);
     if (v < 0 || v > 31) return;
+    if (isNaN(v)) v = "";
     this.updateData({D: v});
   }
 
   _handleChangeMonth(e){
-    const v = parseInt(e.target.value);
+    let v = parseInt(e.target.value);
     if (v < 0 || v > 12) return;
     this.updateData({M: v});
   }
 
   _handleChangeYear(e){
     let v = parseInt(e.target.value);
-    if (isNaN(v)) v = null;
+    if (isNaN(v)) v = "";
     this.updateData({Y: v});
   }
 
   _handleChangeHours(e){
-    const v = parseInt(e.target.value);
+    let v = parseInt(e.target.value);
     if (v < 0 || v > 23) return;
+    if (isNaN(v)) v = "";
     this.updateData({h: v});
   }
 
   _handleChangeMinutes(e){
-    const v = parseInt(e.target.value);
+    let v = parseInt(e.target.value);
     if (v < 0 || v > 59) return;
+    if (isNaN(v)) v = "";
     this.updateData({m: v});
   }
 
   _handleChangeSeconds(e){
-    const v = parseInt(e.target.value);
+    let v = parseInt(e.target.value);
     if (v < 0 || v > 59) return;
+    if (isNaN(v)) v = "";
     this.updateData({s: v});
   }
 
@@ -98,7 +102,7 @@ class DateTimeInput extends React.Component {
         }
         {this.state.M != null ? (
           <select className="form-control" value={this.state.M} onChange={this.handleChangeMonth}>
-            <option value="null">-</option>
+            <option value="">-</option>
             <option value="1">January</option>
             <option value="2">February</option>
             <option value="3">March</option>

@@ -39,7 +39,7 @@ class Field::DateTimePresenter < FieldPresenter
      %W(h %H#{I18n.t('time.formats.h')}),
      %W(m %M#{I18n.t('time.formats.m')}),
      %W(s %S#{I18n.t('time.formats.s')})].each_with_index do |item, index|
-      if dt_array[index]
+      if dt_array[index].to_s.present? && field.format.include?(item.first)
         dt_string.concat(item.first)
         dt_format.concat(item.last.concat(' '))
       else
