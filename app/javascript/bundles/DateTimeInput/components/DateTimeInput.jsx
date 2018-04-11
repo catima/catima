@@ -28,14 +28,14 @@ class DateTimeInput extends React.Component {
 
   _handleChangeDay(e){
     let v = parseInt(e.target.value);
-    if (v < 0 || v > 31) return;
+    if (v < 1 || v > 31) return;
     if (isNaN(v)) v = "";
     this.updateData({D: v});
   }
 
   _handleChangeMonth(e){
     let v = parseInt(e.target.value);
-    if (v < 0 || v > 12) return;
+    if (v < 1 || v > 12) return;
     this.updateData({M: v});
   }
 
