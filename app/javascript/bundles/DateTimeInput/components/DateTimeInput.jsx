@@ -36,6 +36,7 @@ class DateTimeInput extends React.Component {
   _handleChangeMonth(e){
     let v = parseInt(e.target.value);
     if (v < 1 || v > 12) return;
+    if (isNaN(v)) v = "";
     this.updateData({M: v});
   }
 
@@ -102,7 +103,7 @@ class DateTimeInput extends React.Component {
         }
         {this.state.M != null ? (
           <select className="form-control" value={this.state.M} onChange={this.handleChangeMonth}>
-            <option value="">-</option>
+            <option value=""></option>
             <option value="1">January</option>
             <option value="2">February</option>
             <option value="3">March</option>
