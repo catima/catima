@@ -31,7 +31,7 @@
 #
 
 class Field::DateTime < ::Field
-  FORMATS = %w(Y YM YMD YMDh YMDhm YMDhms).freeze
+  FORMATS = %w(Y M h YM MD hm YMD hms MDh YMDh MDhm YMDhm MDhms YMDhms).freeze
 
   store_accessor :options, :format
   after_initialize :set_default_format
@@ -67,7 +67,7 @@ class Field::DateTime < ::Field
   def value_as_int(item)
     components = value_as_array(item)
     return nil if components.nil?
-    (0..(components.length - 1)).collect { |i| components[i].to_s.present? ? components[i] * 10**(10 - 2 * i) : 0 }.sum
+    (0..(components.length - 1)).collect { |i| components[i] * 10**(10 - 2 * i) }.sum
   end
 
   # The form provides the datetime values as hash like
