@@ -67,7 +67,7 @@ class Field::DateTime < ::Field
   def value_as_int(item)
     components = value_as_array(item)
     return nil if components.nil?
-    (0..(components.length - 1)).collect { |i| components[i] * 10**(10 - 2 * i) }.sum
+    (0..(components.length - 1)).collect { |i| components[i].to_s.present? ? components[i] * 10**(10 - 2 * i) : 0 }.sum
   end
 
   # The form provides the datetime values as hash like
