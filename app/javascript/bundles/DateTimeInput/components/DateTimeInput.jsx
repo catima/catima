@@ -17,7 +17,7 @@ class DateTimeInput extends React.Component {
     super(props);
     this.state = {};
     const date = this.getData();
-    const granularity = this.getCurrentFormat();
+    const granularity = this.getCurrentFormat(date);
     for (let i in granularity){
       let k = granularity[i];
       this.state[k] = date[k] || (DateTimeInput.defaultValues)[k];
@@ -30,6 +30,10 @@ class DateTimeInput extends React.Component {
     this.handleChangeMinutes = this._handleChangeMinutes.bind(this);
     this.handleChangeSeconds = this._handleChangeSeconds.bind(this);
     this.handleChangeFormat = this._handleChangeFormat.bind(this);
+  }
+
+  componentDidMount() {
+    if (jQuery.isEmptyObject(this.getData())) return this.initData(DateTimeInput.defaultValues, this.getCurrentFormat());
   }
 
   _handleChangeDay(e){
@@ -74,16 +78,16 @@ class DateTimeInput extends React.Component {
   }
 
   _handleChangeFormat(e){
-    const d = jQuery.isEmptyObject(this.getData()) ?
-        DateTimeInput.defaultValues :
-        this.getData();
+    const d = DateTimeInput.defaultValues;
     const f = e.target.value;
-    console.log(d);
+    this.initData(d, f);
+  }
+
+  initData(data, format) {
     let dt = {};
-    for (let i in d){
-      dt[i] = f.includes(i) ? d[i] || "" : null ;
+    for (let i in data){
+      dt[i] = format.includes(i) ? data[i] || "" : null ;
     }
-    this.setState(dt);
     this.updateData(dt);
   }
 
@@ -118,7 +122,7 @@ class DateTimeInput extends React.Component {
     });
   }
 
-  getCurrentFormat(data = this.getData()) {
+  getCurrentFormat(data = {}) {
     if (jQuery.isEmptyObject(data)) return this.getFieldOptions().format;
     let currentFormat = "";
     Object.keys(DateTimeInput.defaultValues).forEach(function(value, _) {
@@ -136,7 +140,7 @@ class DateTimeInput extends React.Component {
       <div className="dateTimeInput rails-bootstrap-forms-datetime-select">
         {this.state.allowedFormats.length > 0 ? (
             <div id="allowed-formats">
-              <select name="form-control" value={this.getCurrentFormat()} onChange={this.handleChangeFormat}>
+              <select name="form-control" value={this.getCurrentFormat(this.getData())} onChange={this.handleChangeFormat}>
                   <option value={ this.getFieldOptions().format }>{ this.getFieldOptions().format }</option>
                   {this.state.allowedFormats.map(function(format, key){
                       return <option key={ key } value={ format }>{ format }</option>;
