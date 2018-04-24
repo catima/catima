@@ -1,0 +1,8 @@
+#allowed-formats span {
+    margin-left: 5px;
+    color: grey;
+    font-size: 13px;
+}
+#allowed-formats {
+    margin-bottom: 10px;
+}

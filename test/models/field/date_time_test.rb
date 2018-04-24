@@ -77,7 +77,7 @@ class Field::DateTimeTest < ActiveSupport::TestCase
     item.one_author_born_uuid = { "Y" => 2015, "M" => 12, "D" => 31 }
 
     date_arr = item.one_author_born_uuid_time
-    assert_equal([2015, 12, 31, 0, 0, 0].join('-'), date_arr.join('-'))
+    assert_equal([2015, 12, 31, "", "", ""].join('-'), date_arr.join('-'))
   end
 
   # TODO: Update to JSON datetime format

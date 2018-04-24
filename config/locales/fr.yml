@@ -155,10 +155,18 @@ fr:
   time:
     formats:
       Y: "%Y"
+      M: "%B"
+      h: "%Hh"
       YM: "%B %Y"
+      MD: "%-d %B"
+      hm: "%Hh%M"
       YMD: "%-d %B %Y"
+      hms: "%H:%M:%S"
+      MDh: "%-d %B %Hh"
       YMDh: "%-d %B %Y %Hh"
+      MDhm: "%-d %B %Hh%M"
       YMDhm: "%-d %B %Y %Hh%M"
+      MDhms: "%-d %B %H:%M:%S"
       YMDhms: "%-d %B %Y %H:%M:%S"
 
   cancel: 'Annuler'
