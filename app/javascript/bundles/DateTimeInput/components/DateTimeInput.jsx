@@ -17,23 +17,23 @@ class DateTimeInput extends React.Component {
     super(props);
     this.state = {};
     const date = this.getData();
-    const granularity = this.getCurrentFormat(date);
+    const granularity = this.getFieldOptions().format;
     for (let i in granularity){
       let k = granularity[i];
       this.state[k] = date[k] || (DateTimeInput.defaultValues)[k];
     }
-    this.state.allowedFormats = this.getAllowedFormats();
     this.handleChangeDay = this._handleChangeDay.bind(this);
     this.handleChangeMonth = this._handleChangeMonth.bind(this);
     this.handleChangeYear = this._handleChangeYear.bind(this);
     this.handleChangeHours = this._handleChangeHours.bind(this);
     this.handleChangeMinutes = this._handleChangeMinutes.bind(this);
     this.handleChangeSeconds = this._handleChangeSeconds.bind(this);
-    this.handleChangeFormat = this._handleChangeFormat.bind(this);
+
+    this.isRequired = (document.querySelector(this.props.input).getAttribute('data-field-required') == 'true')
   }
 
   componentDidMount() {
-    if (jQuery.isEmptyObject(this.getData())) return this.initData(DateTimeInput.defaultValues, this.getCurrentFormat());
+    if (jQuery.isEmptyObject(this.getData())) return this.initData(DateTimeInput.defaultValues, this.getFieldOptions().format);
   }
 
   _handleChangeDay(e){
@@ -77,12 +77,6 @@ class DateTimeInput extends React.Component {
     this.updateData({s: v});
   }
 
-  _handleChangeFormat(e){
-    const d = DateTimeInput.defaultValues;
-    const f = e.target.value;
-    this.initData(d, f);
-  }
-
   initData(data, format) {
     let dt = {};
     for (let i in data){
@@ -100,9 +94,7 @@ class DateTimeInput extends React.Component {
 
   getData(){
     const value = this.getInput().val();
-    if (typeof(value) === 'undefined' || value === "") {
-      return {};
-    }
+    if (!value) return {};
     return JSON.parse(value);
   }
 
@@ -116,19 +108,22 @@ class DateTimeInput extends React.Component {
 
   getAllowedFormats() {
     const granularity = this.getFieldOptions().format;
-    let allowedFormats  = DateTimeInput.types.slice(0, DateTimeInput.types.indexOf(granularity));
-    return allowedFormats.filter(obj => {
-        if (granularity.includes(obj)) return obj;
+    return DateTimeInput.types.filter(obj => {
+        if (granularity.includes(obj) || granularity == obj) return obj;
     });
   }
 
-  getCurrentFormat(data = {}) {
-    if (jQuery.isEmptyObject(data)) return this.getFieldOptions().format;
-    let currentFormat = "";
-    Object.keys(DateTimeInput.defaultValues).forEach(function(value, _) {
-      if (data[value] != null) currentFormat += value;
-    });
-    return currentFormat;
+  getCurrentFormat() {
+    let d = this.getData();
+    let f = this.getFieldOptions().format;
+    return f.split('').map(function(k){ return d[k] ? k : ''; }).join('')
+  }
+
+  isCurrentFormatValid(){
+    let current = this.getCurrentFormat();
+    if (current == '' && !this.isRequired) return true;   // allow empty value if field is not required
+    let allowed = this.getAllowedFormats();
+    return allowed.indexOf(current) > -1;
   }
 
   getFieldOptions() {
@@ -136,57 +131,52 @@ class DateTimeInput extends React.Component {
   }
 
   render(){
+    let dateValid = this.isCurrentFormatValid()
+    let errorStl = dateValid ? {} : { border: "2px solid #f00" };
+    let errorMsg = dateValid ? "" : "Invalid value"
+    let fmt = this.getFieldOptions().format;
     return (
-      <div className="dateTimeInput rails-bootstrap-forms-datetime-select">
-        {this.state.allowedFormats.length > 0 ? (
-            <div id="allowed-formats">
-              <select name="form-control" value={this.getCurrentFormat(this.getData())} onChange={this.handleChangeFormat}>
-                  <option value={ this.getFieldOptions().format }>{ this.getFieldOptions().format }</option>
-                  {this.state.allowedFormats.map(function(format, key){
-                      return <option key={ key } value={ format }>{ format }</option>;
-                  })}
-              </select>
-              <span>Allowed formats</span>
-            </div>
+      <div>
+        <div className="dateTimeInput rails-bootstrap-forms-datetime-select">
+          {fmt.includes('D') ? (
+              <input  style={errorStl} type="number" min="0" max="31" className="input-2 form-control" value={this.state.D} onChange={this.handleChangeDay} />
+            ) : null
+          }
+          {fmt.includes('M') ? (
+            <select  style={errorStl} className="form-control" value={this.state.M} onChange={this.handleChangeMonth}>
+              <option value=""></option>
+              <option value="1">January</option>
+              <option value="2">February</option>
+              <option value="3">March</option>
+              <option value="4">April</option>
+              <option value="5">May</option>
+              <option value="6">June</option>
+              <option value="7">July</option>
+              <option value="8">August</option>
+              <option value="9">September</option>
+              <option value="10">October</option>
+              <option value="11">November</option>
+              <option value="12">December</option>
+            </select>) : null
+          }
+          {fmt.includes('Y') ? (
+              <input  style={errorStl} className="input-4 margin-right form-control" value={this.state.Y} onChange={this.handleChangeYear} />
           ) : null
-        }
-        {this.state.D != null ? (
-            <input type="number" min="0" max="31" className="input-2 form-control" value={this.state.D} onChange={this.handleChangeDay} />
-          ) : null
-        }
-        {this.state.M != null ? (
-          <select className="form-control" value={this.state.M} onChange={this.handleChangeMonth}>
-            <option value=""></option>
-            <option value="1">January</option>
-            <option value="2">February</option>
-            <option value="3">March</option>
-            <option value="4">April</option>
-            <option value="5">May</option>
-            <option value="6">June</option>
-            <option value="7">July</option>
-            <option value="8">August</option>
-            <option value="9">September</option>
-            <option value="10">October</option>
-            <option value="11">November</option>
-            <option value="12">December</option>
-          </select>) : null
-        }
-        {this.state.Y != null ? (
-            <input className="input-4 margin-right form-control" value={this.state.Y} onChange={this.handleChangeYear} />
-        ) : null
-        }
-        {this.state.h != null ? (
-            <input min="0" max="23" type="number" className="input-2 form-control" value={this.state.h} onChange={this.handleChangeHours} />
-          ) : null
-        }
-        {this.state.m != null ? (
-            <input min="0" max="59" type="number" className="input-2 form-control" value={this.state.m} onChange={this.handleChangeMinutes} />
-          ) : null
-        }
-        {this.state.s != null ? (
-            <input min="0" max="59" type="number" className="input-2 form-control" value={this.state.s} onChange={this.handleChangeSeconds} />
-          ) : null
-        }
+          }
+          {fmt.includes('h') ? (
+              <input  style={errorStl} min="0" max="23" type="number" className="input-2 form-control" value={this.state.h} onChange={this.handleChangeHours} />
+            ) : null
+          }
+          {fmt.includes('m') ? (
+              <input  style={errorStl} min="0" max="59" type="number" className="input-2 form-control" value={this.state.m} onChange={this.handleChangeMinutes} />
+            ) : null
+          }
+          {fmt.includes('s') ? (
+              <input  style={errorStl} min="0" max="59" type="number" className="input-2 form-control" value={this.state.s} onChange={this.handleChangeSeconds} />
+            ) : null
+          }
+        </div>
+        <span className="error helptext">{errorMsg}</span>
       </div>
     );
   }

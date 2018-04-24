@@ -6,3 +6,10 @@
 #allowed-formats {
     margin-bottom: 10px;
 }
+
+
+span.error.helptext {
+  font-size: 12px;
+  color: #f00;
+  font-weight: 700;
+}
