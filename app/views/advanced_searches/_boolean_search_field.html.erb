@@ -1,0 +1,8 @@
+<%= f.collection_select(
+        :exact,
+        field_presenter(nil, field).select_values,
+        :last,
+        :first,
+        { :include_blank => true, :label => t(".correspond_to") },
+        :multiple => false)
+%>

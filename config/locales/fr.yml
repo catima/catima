@@ -30,6 +30,8 @@ fr:
       contains_words: "contient les mots"
       excludes_words: "ne contient pas les mots"
       has_exact_phrase: "possède l'expression exacte"
+    boolean_search_field:
+      correspond_to: "correspond à"
   common:
     back: "Retour"
     greeting: "Bonjour"

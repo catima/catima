@@ -30,6 +30,8 @@ en:
       contains_words: "contains words"
       excludes_words: "excludes words"
       has_exact_phrase: "has exact phrase"
+    boolean_search_field:
+      correspond_to: "correspond to"
   common:
     back: "Back"
     greeting: "Hello"
