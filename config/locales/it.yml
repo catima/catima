@@ -112,6 +112,9 @@ it:
       invited_to_access_html: "%{invited_by} ti ha invitato a accessere al catalogo %{catalog}."
       reviewer_role: Come validatore di catalogo sarete in grado di agginguere e modificare tutte le registrazione nel catalogo e di convalidare per la pubblicazione.
       subject: "Viene chiesto di unirsi %{catalog}"
+  favorites:
+    index:
+      title: "I miei preferiti"
   locales:
     de: Tedesco
     en: Inglese
@@ -124,6 +127,7 @@ it:
         log_out: "Logout"
         register: "Iscrizione"
         my_profile: "Il mio profilo"
+        my_favorites: "I miei preferiti"
   simple_search:
     form:
       advanced: "Avanzata"

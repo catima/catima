@@ -116,6 +116,9 @@ fr:
       invited_to_access_html: "%{invited_by} vous a invité d'accéder %{catalog}."
       reviewer_role: Comme validateur de catalogue, vous allez pouvoir ajouter des entrées, éditer toutes les entrées, mais également valider des entrées en vue de leur publication.
       subject: "Vous êtes invité(e) à joindre %{catalog}"
+  favorites:
+    index:
+      title: "Mes favoris"
   locales:
     de: Allemand
     en: Anglais
@@ -128,6 +131,7 @@ fr:
         log_out: "Logout"
         register: "Enregistrement"
         my_profile: "Mon profile"
+        my_favorites: "Mes favoris"
   simple_search:
     form:
       advanced: "Avancé"

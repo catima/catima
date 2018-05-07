@@ -1,0 +1,7 @@
+<% provide(:title, t(".title")) %>
+
+<% @items.each do |item| %>
+  <p>
+    <%= item.inspect %>
+  </p>
+<% end %>

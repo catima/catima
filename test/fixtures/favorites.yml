@@ -1,0 +1,20 @@
+# == Schema Information
+#
+# Table name: favorites
+#
+#  created_at :datetime         not null
+#  id         :integer          not null, primary key
+#  item_id    :integer
+#  updated_at :datetime         not null
+#  user_id    :integer
+#
+
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  user_id:
+  item_id:
+
+two:
+  user_id:
+  item_id:

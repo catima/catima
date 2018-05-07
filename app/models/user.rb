@@ -28,6 +28,7 @@ class User < ActiveRecord::Base
 
   belongs_to :invited_by, :class_name => "User"
   has_many :catalog_permissions, :dependent => :destroy
+  has_many :favorites, :dependent => :destroy
 
   accepts_nested_attributes_for :catalog_permissions
 

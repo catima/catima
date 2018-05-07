@@ -12,7 +12,7 @@ Rails.application.routes.draw do
   end
 
   # ===========================================================================
-  # Devise
+  # Devise & Favorites
 
   scope :path => ":locale" do
     devise_for :users, :skip => [:passwords, :registrations, :sessions]
@@ -25,22 +25,25 @@ Rails.application.routes.draw do
       patch "change-password" => "devise/passwords#update"
 
       # registrations
-      get "register" => "devise/registrations#new",
+      get "register" => "users/registrations#new",
           :as => :new_user_registration
-      post "register" => "devise/registrations#create",
+      post "register" => "users/registrations#create",
           :as => :user_registration
-      get "my-profile" => "devise/registrations#edit",
+      get "my-profile" => "users/registrations#edit",
           :as => :edit_user_registration
-      patch "my-profile" => "devise/registrations#update"
-      get "cancel-account" => "devise/registrations#cancel",
+      patch "my-profile" => "users/registrations#update"
+      get "cancel-account" => "users/registrations#cancel",
           :as => :cancel_user_registration
-      delete "cancel-account" => "devise/registrations#destroy"
+      delete "cancel-account" => "users/registrations#destroy"
 
       # sessions
       get "login" => "users/sessions#new", :as => :new_user_session
       post "login" => "users/sessions#create", :as => :user_session
       delete "logout" => "users/sessions#destroy", :as => :destroy_user_session
     end
+
+    # Favorites
+    resources :favorites, :except => [:edit, :show, :new, :update]
   end
 
   # ===========================================================================

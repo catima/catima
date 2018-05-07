@@ -116,6 +116,9 @@ en:
       invited_to_access_html: "%{invited_by} has invited you to access %{catalog}."
       reviewer_role: As a catalog reviewer, you will be able to add records, edit all the records, as well as approve records to be published to the public.
       subject: "You are invited to join %{catalog}"
+  favorites:
+    index:
+      title: "My favorites"
   locales:
     de: German
     en: English
@@ -128,6 +131,7 @@ en:
         log_out: "Log out"
         register: "Register"
         my_profile: "My profile"
+        my_favorites: "My favorites"
   simple_search:
     form:
       advanced: "Advanced"

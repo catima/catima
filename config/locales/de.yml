@@ -121,6 +121,9 @@ de:
     en: Englisch
     fr: Französisch
     it: Italienisch
+  favorites:
+    index:
+      title: "Meine Favoriten"
   shared:
     navbar:
       user_menu:
@@ -128,6 +131,7 @@ de:
         log_out: "Logout"
         register: "Registeren"
         my_profile: "Mein Profil"
+        my_favorites: "Meine Favoriten"
   simple_search:
     form:
       advanced: "Erweitert"
