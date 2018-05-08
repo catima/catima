@@ -1,4 +1,9 @@
 <div class="navbar-collapse collapse">
+  <ul class="nav navbar-nav">
+    <div class="navbar-header">
+      <div class="navbar-brand"><%= t(".user_settings") %></div>
+    </div>
+  </ul>
   <ul class="nav navbar-nav navbar-right">
     <%= render("shared/navbar/locale_menu") if params[:locale] %>
     <%= render("shared/navbar/user_menu") %>

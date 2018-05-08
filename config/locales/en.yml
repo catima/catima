@@ -126,6 +126,8 @@ en:
     it: Italian
   shared:
     navbar:
+      navbar_user:
+        user_settings: "User settings"
       user_menu:
         log_in: "Log in"
         log_out: "Log out"

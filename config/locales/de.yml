@@ -126,6 +126,8 @@ de:
       title: "Meine Favoriten"
   shared:
     navbar:
+      navbar_user:
+        user_settings: "Benutzereinstellungen"
       user_menu:
         log_in: "Login"
         log_out: "Logout"

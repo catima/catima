@@ -122,6 +122,8 @@ it:
     it: Italiano
   shared:
     navbar:
+      navbar_user:
+        user_settings: "Impostazioni dell'utente"
       user_menu:
         log_in: "Login"
         log_out: "Logout"

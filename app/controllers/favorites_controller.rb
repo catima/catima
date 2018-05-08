@@ -2,16 +2,10 @@ class FavoritesController < ApplicationController
   before_action :authenticate_user!
 
   def index
-    redirect_to(:back) if current_user.blank?
-    @items = items(current_user.favorites)
-  end
-
-  def items(favorites)
-    favorites.map(&:item)
-  end
-
-  def users(favorites)
-    favorites.map(&:user)
+    @list = ItemList::FavoriteResult.new(
+      :current_user => current_user,
+      :page => params[:page]
+    )
   end
 
   def user_scoped?

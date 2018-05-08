@@ -1,7 +1,4 @@
 <% provide(:title, t(".title")) %>
 
-<% @items.each do |item| %>
-  <p>
-    <%= item.inspect %>
-  </p>
-<% end %>
+<%= render_item_list(@list) %>
+<%= paginate(@list.items) %>
