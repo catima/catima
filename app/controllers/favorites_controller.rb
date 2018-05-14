@@ -1,17 +1,5 @@
 class FavoritesController < ApplicationController
-  FavoriteInvalid = Class.new(RuntimeError)
-  respond_to :html, :js
   before_action :authenticate_user!
-
-  rescue_from FavoriteInvalid do |exception|
-    status = 400
-    error = {
-      :status => status,
-      :error => "Bad request",
-      :message => exception.message
-    }
-    render(:json => error, :status => status)
-  end
 
   def index
     @list = ItemList::FavoriteResult.new(
