@@ -1,4 +1,10 @@
 <% provide(:title, t(".title")) %>
 
+<% if @list.blank? %>
+  <div class="alert alert-warning">
+    You don't have favorites yet !
+  </div>
+<% end %>
+
 <%= render_item_list(@list) %>
 <%= paginate(@list.items) %>

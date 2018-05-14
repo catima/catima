@@ -90,7 +90,7 @@ en:
       missing_element: "Oops. Such an item doesn't exist."
       missing_element_detail: "The item with ID %{item_id} of type «%{item_type}» does not exist in this catalog."
       link_to_item_type: "See all items of type «%{item_type}»"
-    show:
+    buttons:
       delete_confirm: "Are you sure you want to delete “%{item}”?"
   invitations_mailer:
     account_information:

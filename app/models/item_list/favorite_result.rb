@@ -5,36 +5,18 @@ class ItemList::FavoriteResult < ItemList
   end
 
   def unpaginaged_items
-    favorites
+    Item.where(id: favorites.map(&:id))
   end
 
   private
 
   def favorites
-    catalog_visible(
-      public_items(
-        favorite_items(
-          Item
-        )
-      )
-    )
+    favorite_items(Item).each_with_object([]) do |item, array|
+      array << item if item.catalog.public_items.exists?(item) && item.catalog.visible
+    end
   end
 
   def favorite_items(scope)
     scope.joins(:favorites).where('favorites.user_id' => @current_user)
-  end
-
-  def public_items(scope)
-    return scope if approved_user?
-    scope.where(:review_status => "approved")
-  end
-
-  def catalog_visible(scope)
-    return scope if approved_user?
-    scope.joins(:catalog).where(catalogs: { visible: true })
-  end
-
-  def approved_user?
-    @current_user.system_admin
   end
 end
