@@ -5,6 +5,11 @@
     </div>
   </ul>
   <ul class="nav navbar-nav navbar-right">
+    <li>
+      <%= link_to(
+              t(".back_catima"),
+              root_path) %>
+    </li>
     <%= render("shared/navbar/locale_menu") if params[:locale] %>
     <%= render("shared/navbar/user_menu") %>
   </ul>

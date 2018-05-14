@@ -3,8 +3,9 @@
     <%= render "items/buttons", :item => item %>
   </span>
   <span class="media-tags">
-    [
     <span class="label label-info"><%= item.catalog.name %></span>
-    ]
+    <% unless item.catalog.visible %>
+      <span class="label label-default"><%= t("private") %></span>
+    <% end %>
   </span>
 </div>

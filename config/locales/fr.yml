@@ -92,6 +92,8 @@ fr:
       link_to_item_type: "Voir tous les éléments de type «%{item_type}»"
     buttons:
       delete_confirm: "Vous voulez vraiment supprimer “%{item}”?"
+      favorites_add: "Ajouter aux favoris"
+      favorites_remove: "Supprimer des favoris"
   invitations_mailer:
     account_information:
       email: "E-mail"
@@ -119,6 +121,7 @@ fr:
   favorites:
     index:
       title: "Mes favoris"
+      empty: "Vous n'avez pas encore de favoris!"
   locales:
     de: Allemand
     en: Anglais
@@ -128,6 +131,7 @@ fr:
     navbar:
       navbar_user:
         user_settings: "Paramètres utilisateur"
+        back_catima: "Retour à Catima"
       user_menu:
         log_in: "Login"
         log_out: "Logout"
@@ -196,6 +200,8 @@ fr:
   approved: Validé
   rejected: Rejeté
   users: Utilisateurs
+  public: Publique
+  private: Privé
 
   catalog_admin:
 

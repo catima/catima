@@ -88,6 +88,8 @@ it:
       previous: "Precedente: %{item}"
     buttons:
       delete_confirm: "Sei sicuro di voler eliminare “%{item}”?"
+      favorites_add: "Aggiungi ai preferiti"
+      favorites_remove: "Rimuovi dai preferiti"
   invitations_mailer:
     account_information:
       email: "E-mail"
@@ -115,6 +117,7 @@ it:
   favorites:
     index:
       title: "I miei preferiti"
+      empty: "Non hai ancora i preferiti!"
   locales:
     de: Tedesco
     en: Inglese
@@ -124,6 +127,7 @@ it:
     navbar:
       navbar_user:
         user_settings: "Impostazioni dell'utente"
+        back_catima: "Ritorno a Catima"
       user_menu:
         log_in: "Login"
         log_out: "Logout"
@@ -170,6 +174,11 @@ it:
       YMDhm: "%-d %B %Y %H:%M"
       MDhms: "%-d %B %H:%M:%S"
       YMDhms: "%-d %B %Y %H:%M:%S"
+
+  delete: Elimina
+  edit: Modificare
+  public: Pubblico
+  private: Privato
 
   legend_help: "Se selezionato, è possibile aggiungere una legenda all'immagine."
   legend_enable: "Aggiungi una legenda"

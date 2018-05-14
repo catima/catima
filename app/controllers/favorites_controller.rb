@@ -21,16 +21,17 @@ class FavoritesController < ApplicationController
   end
 
   def create
+    build_favorite
+    authorize(@favorite)
     item = find_item(params[:id])
-    authorize(item)
     Favorite.create(item: item, user: current_user)
     redirect_to :back
   end
 
   def destroy
-    item = find_item(params[:id])
-    authorize(item)
-    item.destroy
+    find_favorite(params[:id])
+    authorize(@favorite)
+    @favorite.destroy
     redirect_to :back
   end
 
@@ -44,7 +45,15 @@ class FavoritesController < ApplicationController
 
   private
 
+  def build_favorite
+    @favorite = Favorite.new
+  end
+
   def find_item(item_id)
     Item.find_by(id: item_id)
+  end
+
+  def find_favorite(item_id)
+    @favorite = Favorite.find_by(item_id: item_id, user_id: current_user)
   end
 end

@@ -15,17 +15,16 @@
               :confirm => t('.delete_confirm', item: default_display_name(item))
           }) %>
 <% end %>
-
 <% if exists_for_user?(item) %>
   <%= link_to(
-          fa_icon("star", :text => "Remove from favorites"),
+          fa_icon("star", :text => t(".favorites_remove")),
           favorite_path(I18n.locale, item),
           :class => "btn btn-default btn-xs favorites-remove",
           method: :delete
       ) %>
 <% else %>
   <%= link_to(
-          fa_icon("star-o", :text => "Add to favorites"),
+          fa_icon("star-o", :text => t(".favorites_add")),
           favorites_path(I18n.locale, id: item.id),
           :class => "btn btn-default btn-xs favorites-add",
           method: :post
