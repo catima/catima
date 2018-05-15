@@ -9,9 +9,9 @@ class FavoritesController < ApplicationController
   end
 
   def create
-    build_favorite
-    authorize(@favorite)
     item = find_item(params[:id])
+    build_favorite(item)
+    authorize(@favorite)
     Favorite.create(item: item, user: current_user)
     redirect_to :back
   end
@@ -33,8 +33,11 @@ class FavoritesController < ApplicationController
 
   private
 
-  def build_favorite
-    @favorite = Favorite.new
+  def build_favorite(item)
+    @favorite = Favorite.new do |model|
+      model.item = item
+      model.user = current_user
+    end
   end
 
   def find_item(item_id)

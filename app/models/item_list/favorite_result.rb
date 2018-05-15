@@ -12,19 +12,11 @@ class ItemList::FavoriteResult < ItemList
 
   def favorites
     favorite_items(Item).each_with_object([]) do |item, array|
-      array << item if item.catalog.public_items.exists?(item) && catalog_visibility?(item.catalog)
+      array << item if item.catalog.public_items.exists?(item.id) && @current_user.catalog_visible_for_role?(item.catalog)
     end
   end
 
   def favorite_items(scope)
     scope.joins(:favorites).where('favorites.user_id' => @current_user)
-  end
-
-  def catalog_visibility?(catalog)
-    return true if @current_user.system_admin
-    unless catalog.visible
-      return @current_user.catalog_role_at_least?(catalog, 'editor')
-    end
-    true
   end
 end

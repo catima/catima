@@ -54,6 +54,12 @@ class User < ActiveRecord::Base
     perm ? perm.role : "user"
   end
 
+  def catalog_visible_for_role?(catalog)
+    return true if system_admin
+    return catalog_role_at_least?(catalog, "editor") unless catalog.visible
+    true
+  end
+
   def admin_catalogs
     Catalog.where(:id => admin_catalog_ids)
   end

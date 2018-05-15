@@ -12,9 +12,17 @@
 # Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
 
 one:
-  user_id:
-  item_id:
+  user: one_admin
+  item: one_author_stephen_king
 
 two:
-  user_id:
-  item_id:
+  user: one_editor
+  item: not_visible_book_farewell_to_arms
+
+three:
+  user: one
+  item: not_visible_book_farewell_to_arms
+
+four:
+  user: one
+  item: one_author_stephen_king

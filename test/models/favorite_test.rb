@@ -1,7 +1,6 @@
 require 'test_helper'
 
 class FavoriteTest < ActiveSupport::TestCase
-  # test "the truth" do
-  #   assert true
-  # end
+  should validate_presence_of(:user)
+  should validate_presence_of(:item)
 end
