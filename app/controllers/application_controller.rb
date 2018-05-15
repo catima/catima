@@ -23,15 +23,11 @@ class ApplicationController < ActionController::Base
   end
   helper_method :catalog_scoped?
 
-  # Overridden in other controllers to indicate whether the controller is
-  # scoped to a specific user.
   def user_scoped?
     false
   end
   helper_method :user_scoped?
 
-  # Overridden in other controllers to indicate whether the controller is
-  # scoped to favorites.
   def favorites_scoped?
     false
   end
