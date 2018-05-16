@@ -1,8 +1,7 @@
 <% provide(:title, t(".title")) %>
 
-<% if @list.blank? %>
-  <div class="alert alert-warning"><%= t(".empty") %></div>
+<% if @catalogs && @catalogs.length > 1 %>
+  <%= render "favorites/catalogs" %>
+<% else %>
+  <%= render "favorites/list" %>
 <% end %>
-
-<%= render_item_list(@list) %>
-<%= paginate(@list.items) %>

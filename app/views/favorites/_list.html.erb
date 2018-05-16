@@ -1,0 +1,18 @@
+<% if @selected_catalog && @list.present? %>
+  <strong><%= t(".selected_catalog") %>: "<%= @selected_catalog.name %>"</strong>
+  (<%= link_to t(".back_to_list"), favorites_path %>)
+  <hr>
+<% end %>
+
+<% if @list.blank? %>
+  <div class="alert alert-warning">
+    <% if @selected_catalog %>
+      <%= t(".empty_for_catalog") %>
+    <% else %>
+      <%= t(".empty") %>
+    <% end %>
+  </div>
+<% end %>
+
+<%= render_item_list(@list) %>
+<%= paginate(@list.items) %>

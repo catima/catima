@@ -1,7 +1,8 @@
 class ItemList::FavoriteResult < ItemList
-  def initialize(current_user:, page: nil, per: nil)
+  def initialize(current_user:, selected_catalog:, page: nil, per: nil)
     super(nil, page, per)
     @current_user = current_user
+    @selected_catalog = selected_catalog
   end
 
   def unpaginaged_items
@@ -12,7 +13,12 @@ class ItemList::FavoriteResult < ItemList
 
   def favorites
     favorite_items(Item).each_with_object([]) do |item, array|
-      array << item if item.catalog.public_items.exists?(item.id) && @current_user.catalog_visible_for_role?(item.catalog)
+      if @selected_catalog
+        next unless item.catalog == @selected_catalog
+      end
+      if item.catalog.public_items.exists?(item.id) && @current_user.catalog_visible_for_role?(item.catalog)
+        array << item
+      end
     end
   end
 

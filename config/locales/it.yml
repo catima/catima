@@ -117,7 +117,11 @@ it:
   favorites:
     index:
       title: "I miei preferiti"
+    list:
       empty: "Non hai ancora i preferiti!"
+      empty_for_catalog: "Non hai ancora i preferiti per questo catalogo!"
+      back_to_list: "Torna alla lista"
+      selected_catalog: "Catalogo selezionato"
   locales:
     de: Tedesco
     en: Inglese
@@ -177,8 +181,8 @@ it:
 
   delete: Elimina
   edit: Modificare
-  public: Pubblico
-  private: Privato
+  visible: Visibile
+  not_visible: Non visibile
 
   legend_help: "Se selezionato, è possibile aggiungere una legenda all'immagine."
   legend_enable: "Aggiungi una legenda"

@@ -126,7 +126,11 @@ de:
   favorites:
     index:
       title: "Meine Favoriten"
+    list:
       empty: "Du hast noch keine Favoriten!"
+      empty_for_catalog: "Sie haben noch keine Favoriten für diesen Katalog!"
+      back_to_list: "Zurück zur Liste"
+      selected_catalog: "Ausgewählter Katalog"
   shared:
     navbar:
       navbar_user:
@@ -199,8 +203,8 @@ de:
   approved: Geprüft
   rejected: Abgelehnt
   users: Benutzer
-  public: Öffentlichkeit
-  private: Privatgelände
+  visible: Sichtbar
+  not_visible: Nicht sichtbar
 
   catalog_admin:
 

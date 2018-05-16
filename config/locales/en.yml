@@ -121,7 +121,11 @@ en:
   favorites:
     index:
       title: "My favorites"
+    list:
       empty: "You don't have favorites yet!"
+      empty_for_catalog: "You don't have favorites yet for this catalog!"
+      back_to_list: "Back to the list"
+      selected_catalog: "Selected catalog"
   locales:
     de: German
     en: English
@@ -200,8 +204,8 @@ en:
   approved: Approved
   rejected: Rejected
   users: Users
-  public: Public
-  private: Private
+  visible: Visible
+  not_visible: Not visible
 
   catalog_admin:
 
