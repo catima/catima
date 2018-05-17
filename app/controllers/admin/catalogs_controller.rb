@@ -48,6 +48,7 @@ class Admin::CatalogsController < Admin::BaseController
       :primary_language,
       :requires_review,
       :advertize,
+      :visible,
       :custom_root_page_id,
       :deactivated_at,
       :other_languages => []
