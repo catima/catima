@@ -16,9 +16,7 @@ class ItemList::FavoriteResult < ItemList
       if @selected_catalog
         next unless item.catalog == @selected_catalog
       end
-      if item.catalog.public_items.exists?(item.id) && @current_user.catalog_visible_for_role?(item.catalog)
-        array << item
-      end
+      array << item if @current_user.can_list_item?(item)
     end
   end
 

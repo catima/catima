@@ -2,7 +2,7 @@
   <h4>
     <%= link_to catalog.name, favorites_path(:catalog => catalog.id) %>
     <span class="badge"><%= count.to_s %></span>
-    <% unless catalog.visible %>
+    <% unless catalog.visible? %>
       <span class="label label-default" style="font-size: 12px;">
         <%= t("not_visible") %>
       </span>

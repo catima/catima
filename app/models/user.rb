@@ -60,6 +60,13 @@ class User < ActiveRecord::Base
     true
   end
 
+  def can_list_item?(item)
+    return false unless item.catalog.active?
+    return false unless item.catalog.public_items.exists?(item.id)
+    return false unless catalog_visible_for_role?(item.catalog)
+    true
+  end
+
   def admin_catalogs
     Catalog.where(:id => admin_catalog_ids)
   end

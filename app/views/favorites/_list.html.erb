@@ -6,11 +6,7 @@
 
 <% if @list.blank? %>
   <div class="alert alert-warning">
-    <% if @selected_catalog %>
-      <%= t(".empty_for_catalog") %>
-    <% else %>
-      <%= t(".empty") %>
-    <% end %>
+    <%= empty_favorites_warning(@selected_catalog) %>
   </div>
 <% end %>
 
