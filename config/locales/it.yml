@@ -167,6 +167,11 @@ it:
 
   legend_help: "Se selezionato, è possibile aggiungere una legenda all'immagine."
   legend_enable: "Aggiungi una legenda"
+  delete: Elimina
+  delete_confirm: "Sei sicuro di voler eliminare “%{model}”?"
+  edit: Modificare
+  actions: 'Azioni'
+  duplicate: 'Duplicare'
   catalog_admin:
     item_types:
       common_form_fields:

@@ -1,0 +1,20 @@
+<% if policy(model).edit? %>
+  <li>
+    <%= link_to(
+            fa_icon("pencil", :text => t("edit")),
+            edit_catalog_admin_page_path(model.catalog, I18n.locale, model)
+        )%>
+  </li>
+<% end %>
+<% if policy(model).destroy? %>
+  <li>
+    <%= link_to(
+            fa_icon("trash-o", :text => t("delete")),
+            catalog_admin_page_path(model.catalog, I18n.locale, model),
+            :method => :delete,
+            :data => {
+                :confirm => t("delete_confirm", model: model.slug)
+            }
+        )%>
+  </li>
+<% end %>

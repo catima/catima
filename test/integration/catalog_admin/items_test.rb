@@ -130,6 +130,19 @@ class CatalogAdmin::ItemsTest < ActionDispatch::IntegrationTest
     end
   end
 
+  test "duplicate an item" do
+    log_in_as("one-admin@example.com", "password")
+    visit("/one/en/admin")
+    click_on("Data")
+    click_on("Authors")
+
+    assert_difference("Item.count", +1) do
+      first("button", :text => "Actions").click
+      first("a", :text => "Duplicate").click
+      click_on("Create Author")
+    end
+  end
+
   test "creating items for item types without fields is not enabled" do
     log_in_as("one-admin@example.com", "password")
 

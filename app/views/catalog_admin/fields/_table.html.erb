@@ -30,23 +30,8 @@
       </td>
       <td><%= fa_icon(:check) if field.required? %></td>
       <td><%= fa_icon(:check) if field.display_in_list? %></td>
-      <td style="text-align: right">
-        <% if policy(field).edit? %>
-          <%= link_to(
-                fa_icon("pencil", :text => t("edit")),
-                { :action => :edit, :slug => field },
-                :class => "btn btn-default btn-xs") %>
-        <% end %>
-        <% if policy(field).destroy? %>
-          <%= link_to(
-                fa_icon("trash-o", :text => t("delete")),
-                { :action => :destroy, :slug => field },
-                :class => "btn btn-xs btn-text",
-                :method => :delete,
-                :data => {
-                  :confirm => t('.delete_sure?', field: field.name)
-                }) %>
-        <% end %>
+      <td style="text-align: right;">
+        <%= render "shared/actions_dropdown", :model => field %>
       </td>
     </tr>
   <% end %>

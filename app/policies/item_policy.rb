@@ -18,6 +18,7 @@ class ItemPolicy
   end
   alias_method :new?, :create?
   alias_method :show?, :create?
+  alias_method :duplicate?, :create?
 
   def update?
     role_at_least?(owned_item? ? "editor" : "super-editor")

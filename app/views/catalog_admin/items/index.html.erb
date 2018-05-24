@@ -55,23 +55,8 @@
           <% if catalog.requires_review? %>
             <td><%= review_status_label(item) %></td>
           <% end %>
-          <td style="text-align: right">
-            <% if policy(item).edit? %>
-              <%= link_to(
-                    fa_icon("pencil", :text => t("edit")),
-                    edit_catalog_admin_item_path(catalog, I18n.locale, @item_type, item),
-                    :class => "btn btn-default btn-xs") %>
-            <% end %>
-            <% if policy(item).destroy? %>
-              <%= link_to(
-                    fa_icon("trash-o", :text => t("delete")),
-                    catalog_admin_item_path(catalog, locale, @item_type, item),
-                    :class => "btn btn-xs btn-text",
-                    :method => :delete,
-                    :data => {
-                      :confirm => t('.delete_confirm', item: default_display_name(item))
-                    }) %>
-            <% end %>
+          <td style="text-align: right;">
+            <%= render "shared/actions_dropdown", :model => item %>
           </td>
         </tr>
       <% end %>
