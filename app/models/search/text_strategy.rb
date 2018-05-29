@@ -1,10 +1,11 @@
 class Search::TextStrategy < Search::BaseStrategy
   include Search::I18nSearch
+  include ActionView::Helpers::SanitizeHelper
 
   permit_criteria :exact, :contains, :excludes
 
   def keywords_for_index(item)
-    raw_value(item)
+    remove_useless_content(raw_value(item))
   end
 
   def search(scope, criteria)
@@ -15,6 +16,15 @@ class Search::TextStrategy < Search::BaseStrategy
   end
 
   private
+
+  def remove_useless_content(content)
+    return unless content
+    strip_tags(exclude_base64(content))
+  end
+
+  def exclude_base64(content)
+    content.gsub(%r{/data:image\/([a-zA-Z]*);base64,([^\"]*)\"/}, '')
+  end
 
   def exact_search(scope, exact_phrase)
     return scope if exact_phrase.blank?
