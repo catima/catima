@@ -6,6 +6,14 @@
         ) %>
   </li>
 <% end %>
+<% if policy(model).duplicate? %>
+  <li>
+    <%= link_to(
+            fa_icon("files-o", :text => t("duplicate")),
+            duplicate_catalog_admin_item_path(model.catalog, I18n.locale, model.item_type, model)
+        ) %>
+  </li>
+<% end %>
 <% if policy(model).destroy? %>
   <li>
     <%= link_to(
@@ -15,14 +23,6 @@
             :data => {
                 :confirm => t("delete_confirm", model: default_display_name(model))
             }
-        ) %>
-  </li>
-<% end %>
-<% if policy(model).duplicate? %>
-  <li>
-    <%= link_to(
-            fa_icon("files-o", :text => t("duplicate")),
-            duplicate_catalog_admin_item_path(model.catalog, I18n.locale, model.item_type, model)
         ) %>
   </li>
 <% end %>
