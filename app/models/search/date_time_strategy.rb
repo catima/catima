@@ -1,6 +1,10 @@
 class Search::DateTimeStrategy < Search::BaseStrategy
   permit_criteria :before, :after
 
+  def keywords_for_index(item)
+    date_for_keywords(item)
+  end
+
   def search(scope, criteria)
     criteria = transform_datetime_keys(criteria)
     scope = append_where(scope, "<", criteria[:before])
@@ -9,6 +13,15 @@ class Search::DateTimeStrategy < Search::BaseStrategy
   end
 
   private
+
+  def date_for_keywords(item)
+    return date_from_hash(raw_value(item)) if raw_value(item).is_a?(Hash)
+    raw_value(item)
+  end
+
+  def date_from_hash(hash)
+    hash.each_with_object([]) { |(_, v), array| array << v if v.present? }
+  end
 
   # Translates the datetime_select form submission from flat into a hash with
   # numeric keys. Normally ActiveRecord does this, but since we aren't an
