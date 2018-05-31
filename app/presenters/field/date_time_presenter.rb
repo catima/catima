@@ -9,6 +9,7 @@ class Field::DateTimePresenter < FieldPresenter
     return nil if dt.nil? || dt.values.all?(&:blank?)
     format_str = field.format.split('').reject { |v| dt[v].blank? }.join
     validate_datetime_format_string(format_str)
+    return nil if format_str.empty?
     text_repr = l(DateTime.civil_from_format(:local, *prepare_datetime_array), format: format_str.to_sym)
     text_repr.sub('8888', dt[0].to_s)
   end
@@ -33,7 +34,7 @@ class Field::DateTimePresenter < FieldPresenter
   def validate_datetime_format_string(dtstr)
     s = dtstr
     loop do
-      break if Field::DateTime::FORMATS.include?(s) || s.length.empty?
+      break if Field::DateTime::FORMATS.include?(s) || s.length == 0
       s = s[0...-1]
     end
     s
