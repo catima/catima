@@ -1,6 +1,10 @@
 class Search::DecimalStrategy < Search::BaseStrategy
   permit_criteria :exact
 
+  def keywords_for_index(item)
+    raw_value(item)
+  end
+
   def search(scope, criteria)
     exact_search(scope, criteria[:exact])
   end

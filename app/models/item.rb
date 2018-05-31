@@ -139,6 +139,12 @@ class Item < ActiveRecord::Base
     behaving_as_type.update(uuid => value)
   end
 
+  def default_display_name(locale=I18n.locale)
+    field = field_for_select
+    return '' if field.nil?
+    field.strip_extra_content(self, locale)
+  end
+
   private
 
   def primary_text_value

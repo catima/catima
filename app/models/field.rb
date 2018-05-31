@@ -47,6 +47,7 @@ class Field < ActiveRecord::Base
     "xref" => "Field::Xref"
   }.freeze
 
+  include ActionView::Helpers::SanitizeHelper
   include Field::Style
   include HasTranslations
   include HasSlug
@@ -220,7 +221,17 @@ class Field < ActiveRecord::Base
     end
   end
 
+  # Remove html tags & base64 from field content
+  def strip_extra_content(item, locale=I18n.locale)
+    strip_tags(exclude_base64(raw_value(item, locale)))
+  end
+
   private
+
+  def exclude_base64(string)
+    return '' if string.blank?
+    string.gsub(/data:image\/([a-zA-Z]*);base64,([^\"]*)\"/, '')
+  end
 
   def component_config
     @_component_config ||= ComponentConfig.new(self)

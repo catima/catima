@@ -5,7 +5,7 @@ class Search::TextStrategyTest < ActiveSupport::TestCase
     author = items(:one_author_stephen_king)
     field = fields(:one_author_born)
     strategy = Search::DateTimeStrategy.new(field, :en)
-    assert_empty(strategy.keywords_for_index(author))
+    assert_equal(strategy.keywords_for_index(author), [21, 9, 1947])
   end
 
   test "search finds item within range" do
