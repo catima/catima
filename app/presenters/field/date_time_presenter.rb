@@ -7,17 +7,22 @@ class Field::DateTimePresenter < FieldPresenter
   def value
     dt = raw_value
     return nil if dt.nil? || dt.values.all?(&:blank?)
-    format_str = dt["raw_value"].nil? ? field.format.split('').reject { |v| dt[v].blank? }.join : field.format
+    dt["raw_value"].nil? ? new_style_value_text_repr(dt) : old_style_value_text_repr(dt)
+  end
+
+  # Text representation for old style values, such as {:raw_value => 45034034}
+  def old_style_value_text_repr(dt)
+    dt_value = Time.zone.at(dt["raw_value"])
+    l(dt_value, format: field.format.to_sym)
+  end
+
+  def new_style_value_text_repr(dt)
+    format_str = field.format.split('').reject { |v| dt[v].blank? }.join
     validate_datetime_format_string(format_str)
     return nil if format_str.empty?
-    unless dt["raw_value"].nil?
-      dt_value = Time.at(dt["raw_value"])
-      text_repr = l(dt_value, format: format_str.to_sym)
-    else
-      dt_value = DateTime.civil_from_format(:local, *prepare_datetime_array)
-      text_repr = l(dt_value, format: format_str.to_sym)
-      text_repr.sub('8888', dt[0].to_s) if dt["raw_value"].nil?
-    end
+    dt_value = DateTime.civil_from_format(:local, *prepare_datetime_array)
+    text_repr = l(dt_value, format: format_str.to_sym)
+    text_repr.sub('8888', dt[0].to_s) if dt["raw_value"].nil?
   end
 
   def input(form, method, options={})
@@ -40,7 +45,7 @@ class Field::DateTimePresenter < FieldPresenter
   def validate_datetime_format_string(dtstr)
     s = dtstr
     loop do
-      break if Field::DateTime::FORMATS.include?(s) || s.length == 0
+      break if Field::DateTime::FORMATS.include?(s) || s.empty?
       s = s[0...-1]
     end
     s
