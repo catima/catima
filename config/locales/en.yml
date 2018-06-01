@@ -188,7 +188,10 @@ en:
   create: 'Create'
   default_value_optional: "Default value (optional)"
   delete: 'Delete'
+  delete_confirm: "Are you sure you want to delete “%{model}”?"
   edit: 'Edit'
+  actions: 'Actions'
+  duplicate: 'Duplicate'
   i18n: i18n
   i18n_help: "With i18n enabled, editors will be able to specify a translation of this field for each language (%{languages})"
   i18n_enable: "Enable i18n"
@@ -317,7 +320,6 @@ en:
         type: 'Type'
         required?: 'Required?'
         list_view?: 'List view?'
-        delete_sure?: "Are you sure you want to delete the «%{field}» field?"
       text_option_inputs:
         has_formatted_text: "Has formatted text"
         min_length: "Minimum length (optional)"
@@ -383,7 +385,6 @@ en:
         new_item_type: "New %{item_type}"
         import_csv: "Import from CSV"
         status: Status
-        delete_confirm: "Are you sure you want to delete “%{item}”?"
       new:
         new_item: New %{item_type}
         create_item: Create %{item_type}
@@ -408,7 +409,6 @@ en:
         title: Title
         rank: Rank
         locale: Locale
-        delete_confirm: "Are you sure you want to delete “%{menu}”?"
       new:
         new: "New menu item"
         create: "Create menu item"

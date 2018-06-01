@@ -120,6 +120,7 @@ Rails.application.routes.draw do
       member do
         post "approval" => "approvals#create"
         delete "approval" => "approvals#destroy"
+        get "duplicate"
       end
     end
     post ":item_type_slug/upload" => "items#upload", :as => 'item_file_upload'

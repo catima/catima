@@ -188,7 +188,10 @@ fr:
   create: 'Créer'
   default_value_optional: "Valeur par défaut (optionnel)"
   delete: 'Supprimer'
+  delete_confirm: "Vous voulez vraiment supprimer “%{model}”?"
   edit: 'Éditer'
+  actions: 'Actions'
+  duplicate: 'Dupliquer'
   i18n: Multilingue
   i18n_help: "Avec l'option multilingue activée, les éditeurs du catalogue vont pouvoir saisir une valeur par langue pour ce champ (pour chaque langue du catalogue: %{languages})"
   i18n_enable: "Activer l'option multilingue"
@@ -314,7 +317,6 @@ fr:
         type: 'Type'
         required?: 'Exigé?'
         list_view?: 'Dans liste?'
-        delete_sure?: "Vous voulez vraiment supprimer le champ «%{field}»?"
       text_option_inputs:
         has_formatted_text: "Contient du texte formaté"
         min_length: "Longueur minimale (optionnel)"
@@ -380,7 +382,6 @@ fr:
         new_item_type: "Nouveau type de fiche «%{item_type}»"
         import_csv: "Importer depuis un fichier CSV"
         status: Statut
-        delete_confirm: "Vous voulez vraiment supprimer “%{item}”?"
       new:
         new_item: Nouvelle fiche de type %{item_type}
         create_item: Créer fiche de type %{item_type}
@@ -405,7 +406,6 @@ fr:
         title: Titre
         rank: Rang
         locale: Langue
-        delete_confirm: "Vous voulez vraiment supprimer le menu “%{menu}”?"
       new:
         new: Nouveau menu
         create: Créer le menu

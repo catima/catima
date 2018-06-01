@@ -1,0 +1,8 @@
+<% if policy(model).edit_in_catalog?(catalog) %>
+  <li>
+    <%= link_to(
+            fa_icon("pencil", :text => t("edit")),
+            edit_catalog_admin_user_path(catalog, I18n.locale, model)
+        )%>
+  </li>
+<% end %>

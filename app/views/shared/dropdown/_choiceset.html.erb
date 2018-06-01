@@ -1,0 +1,17 @@
+<% if policy(model).edit? %>
+  <li>
+    <%= link_to(
+            fa_icon("pencil", :text => t("edit")),
+            edit_catalog_admin_choice_set_path(model.catalog, I18n.locale, model)
+        )%>
+  </li>
+  <li>
+    <%= deactivation_toggle(
+            model,
+            :catalog_admin_choice_set_path,
+            model.catalog,
+            I18n.locale,
+            model
+        )%>
+  </li>
+<% end %>

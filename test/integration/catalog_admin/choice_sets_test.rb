@@ -62,6 +62,7 @@ class CatalogAdmin::ChoiceSetsTest < ActionDispatch::IntegrationTest
   test "edit a choice" do
     log_in_as("one-admin@example.com", "password")
     visit("/one/en/admin/_choices")
+    first("button", :text => "Actions").click
     first("a", :text => "Edit").click
     fill_in("Name", :with => "Changed")
 
@@ -78,6 +79,7 @@ class CatalogAdmin::ChoiceSetsTest < ActionDispatch::IntegrationTest
     visit("/one/en/admin/_choices")
 
     assert_difference("catalogs(:one).choice_sets.active.count", -1) do
+      first("button", :text => "Actions").click
       first("a", :text => "Deactivate").click
     end
   end
