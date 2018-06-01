@@ -424,3 +424,12 @@ search_vehicle_style:
     {
       "name_plural_en": "Styles"
     }
+
+not_visible_book_title:
+  type: "Field::Text"
+  name_translations: '{ "name_en": "Title" }'
+  name_plural_translations: '{ "name_plural_en": "Titles" }'
+  slug: title
+  primary: true
+  field_set: not_visible_book (ItemType)
+  uuid: not_visible_book_title_uuid

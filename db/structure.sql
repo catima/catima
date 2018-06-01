@@ -366,6 +366,39 @@ ALTER SEQUENCE containers_id_seq OWNED BY containers.id;
 
 
 --
+-- Name: favorites; Type: TABLE; Schema: public; Owner: -
+--
+
+CREATE TABLE favorites (
+    id integer NOT NULL,
+    user_id integer,
+    item_id integer,
+    created_at timestamp without time zone NOT NULL,
+    updated_at timestamp without time zone NOT NULL
+);
+
+
+--
+-- Name: favorites_id_seq; Type: SEQUENCE; Schema: public; Owner: -
+--
+
+CREATE SEQUENCE favorites_id_seq
+    AS integer
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+--
+-- Name: favorites_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
+--
+
+ALTER SEQUENCE favorites_id_seq OWNED BY favorites.id;
+
+
+--
 -- Name: fields; Type: TABLE; Schema: public; Owner: -
 --
 
@@ -754,6 +787,13 @@ ALTER TABLE ONLY containers ALTER COLUMN id SET DEFAULT nextval('containers_id_s
 
 
 --
+-- Name: favorites id; Type: DEFAULT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY favorites ALTER COLUMN id SET DEFAULT nextval('favorites_id_seq'::regclass);
+
+
+--
 -- Name: fields id; Type: DEFAULT; Schema: public; Owner: -
 --
 
@@ -871,6 +911,14 @@ ALTER TABLE ONLY configurations
 
 ALTER TABLE ONLY containers
     ADD CONSTRAINT containers_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: favorites favorites_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY favorites
+    ADD CONSTRAINT favorites_pkey PRIMARY KEY (id);
 
 
 --
@@ -1040,6 +1088,20 @@ CREATE INDEX index_containers_on_page_id ON containers USING btree (page_id);
 --
 
 CREATE INDEX index_containers_on_slug ON containers USING btree (slug);
+
+
+--
+-- Name: index_favorites_on_item_id; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX index_favorites_on_item_id ON favorites USING btree (item_id);
+
+
+--
+-- Name: index_favorites_on_user_id; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX index_favorites_on_user_id ON favorites USING btree (user_id);
 
 
 --
@@ -1260,6 +1322,14 @@ ALTER TABLE ONLY choices
 
 
 --
+-- Name: favorites fk_rails_30ac764a96; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY favorites
+    ADD CONSTRAINT fk_rails_30ac764a96 FOREIGN KEY (item_id) REFERENCES items(id);
+
+
+--
 -- Name: catalog_permissions fk_rails_30b4814118; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
@@ -1393,6 +1463,14 @@ ALTER TABLE ONLY choices
 
 ALTER TABLE ONLY menu_items
     ADD CONSTRAINT fk_rails_d05e957707 FOREIGN KEY (item_type_id) REFERENCES item_types(id);
+
+
+--
+-- Name: favorites fk_rails_d15744e438; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY favorites
+    ADD CONSTRAINT fk_rails_d15744e438 FOREIGN KEY (user_id) REFERENCES users(id);
 
 
 --
@@ -1556,4 +1634,6 @@ INSERT INTO schema_migrations (version) VALUES ('20171219054741');
 INSERT INTO schema_migrations (version) VALUES ('20180220093412');
 
 INSERT INTO schema_migrations (version) VALUES ('20180308085259');
+
+INSERT INTO schema_migrations (version) VALUES ('20180504082040');
 

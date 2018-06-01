@@ -123,3 +123,9 @@ search_vehicle:
     {
       "name_plural_en": "Vehicles"
     }
+
+not_visible_book:
+  catalog: not_visible
+  name_translations: '{ "name_en": "Not visible book" }'
+  name_plural_translations: '{ "name_plural_en": "Not visible books" }'
+  slug: not-visible-books

@@ -90,8 +90,10 @@ de:
       missing_element: "Hoppla. Ein solches Element gibt es nicht."
       missing_element_detail: "Das Element mit ID %{item_id} und Typ «%{item_type}» gibt es in diesem Katalog nicht."
       link_to_item_type: "Alle Element mit Typ «%{item_type}» anschauen"
-    show:
+    buttons:
       delete_confirm: "Sind Sie sicher, dass Sie “%{item}” löschen möchten?"
+      favorites_add: "Zu den Favoriten hinzufügen"
+      favorites_remove: "Von Favoriten entfernen"
   invitations_mailer:
     account_information:
       email: "E-mail"
@@ -121,13 +123,25 @@ de:
     en: Englisch
     fr: Französisch
     it: Italienisch
+  favorites:
+    index:
+      title: "Meine Favoriten"
+    list:
+      empty: "Du hast noch keine Favoriten!"
+      empty_for_catalog: "Sie haben noch keine Favoriten für diesen Katalog!"
+      back_to_list: "Zurück zur Liste"
+      selected_catalog: "Ausgewählter Katalog"
   shared:
     navbar:
+      navbar_user:
+        user_settings: "Benutzereinstellungen"
+        back_catima: "Zurück zu Catima"
       user_menu:
         log_in: "Login"
         log_out: "Logout"
         register: "Registeren"
         my_profile: "Mein Profil"
+        my_favorites: "Meine Favoriten"
   simple_search:
     form:
       advanced: "Erweitert"
@@ -189,6 +203,8 @@ de:
   approved: Geprüft
   rejected: Abgelehnt
   users: Benutzer
+  visible: Sichtbar
+  not_visible: Nicht sichtbar
 
   catalog_admin:
 

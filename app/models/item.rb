@@ -33,6 +33,7 @@ class Item < ActiveRecord::Base
   belongs_to :catalog
   belongs_to :item_type
   belongs_to :creator, :class_name => "User"
+  has_many :favorites, :dependent => :destroy
 
   validates_presence_of :catalog
   validates_presence_of :creator

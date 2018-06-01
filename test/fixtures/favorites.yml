@@ -1,0 +1,28 @@
+# == Schema Information
+#
+# Table name: favorites
+#
+#  created_at :datetime         not null
+#  id         :integer          not null, primary key
+#  item_id    :integer
+#  updated_at :datetime         not null
+#  user_id    :integer
+#
+
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  user: one_admin
+  item: one_author_stephen_king
+
+two:
+  user: one_editor
+  item: not_visible_book_farewell_to_arms
+
+three:
+  user: one
+  item: not_visible_book_farewell_to_arms
+
+four:
+  user: one
+  item: one_author_stephen_king

@@ -23,6 +23,16 @@ class ApplicationController < ActionController::Base
   end
   helper_method :catalog_scoped?
 
+  def user_scoped?
+    false
+  end
+  helper_method :user_scoped?
+
+  def favorites_scoped?
+    false
+  end
+  helper_method :favorites_scoped?
+
   def set_locale
     if I18n.locale_available?(params[:locale])
       I18n.locale = params[:locale]

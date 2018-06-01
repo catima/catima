@@ -90,8 +90,10 @@ en:
       missing_element: "Oops. Such an item doesn't exist."
       missing_element_detail: "The item with ID %{item_id} of type «%{item_type}» does not exist in this catalog."
       link_to_item_type: "See all items of type «%{item_type}»"
-    show:
+    buttons:
       delete_confirm: "Are you sure you want to delete “%{item}”?"
+      favorites_add: "Add to favorites"
+      favorites_remove: "Remove from favorites"
   invitations_mailer:
     account_information:
       email: "Email"
@@ -116,6 +118,14 @@ en:
       invited_to_access_html: "%{invited_by} has invited you to access %{catalog}."
       reviewer_role: As a catalog reviewer, you will be able to add records, edit all the records, as well as approve records to be published to the public.
       subject: "You are invited to join %{catalog}"
+  favorites:
+    index:
+      title: "My favorites"
+    list:
+      empty: "You don't have favorites yet!"
+      empty_for_catalog: "You don't have favorites yet for this catalog!"
+      back_to_list: "Back to the list"
+      selected_catalog: "Selected catalog"
   locales:
     de: German
     en: English
@@ -123,11 +133,15 @@ en:
     it: Italian
   shared:
     navbar:
+      navbar_user:
+        user_settings: "User settings"
+        back_catima: "Back to Catima"
       user_menu:
         log_in: "Log in"
         log_out: "Log out"
         register: "Register"
         my_profile: "My profile"
+        my_favorites: "My favorites"
   simple_search:
     form:
       advanced: "Advanced"
@@ -190,7 +204,8 @@ en:
   approved: Approved
   rejected: Rejected
   users: Users
-
+  visible: Visible
+  not_visible: Not visible
 
   catalog_admin:
 
