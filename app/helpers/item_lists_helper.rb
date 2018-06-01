@@ -10,6 +10,7 @@ module ItemListsHelper
 
   def render_item_list(list)
     partial = item_list_has_images?(list) ? "items/thumbnails" : "items/list"
+    partial = "items/list" if favorites_scoped?
     render(partial, :item_list => list)
   end
 

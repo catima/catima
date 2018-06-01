@@ -149,6 +149,15 @@ multilingual_author_example:
       }
     }
 
+not_visible_book_farewell_to_arms:
+  catalog: not_visible
+  creator: one_admin
+  item_type: not_visible_book
+  data: |
+    {
+      "not_visible_book_title_uuid": "A Farewell to Arms"
+    }
+
 reviewed_book_end_of_watch:
   catalog: reviewed
   creator: reviewed_editor

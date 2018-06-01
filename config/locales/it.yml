@@ -107,8 +107,10 @@ it:
       next: "Prossimo: %{item}"
       no_more: "Nessun altri risultati"
       previous: "Precedente: %{item}"
-    show:
+    buttons:
       delete_confirm: "Sei sicuro di voler eliminare “%{item}”?"
+      favorites_add: "Aggiungi ai preferiti"
+      favorites_remove: "Rimuovi dai preferiti"
   invitations_mailer:
     account_information:
       email: "E-mail"
@@ -133,6 +135,14 @@ it:
       invited_to_access_html: "%{invited_by} ti ha invitato a accessere al catalogo %{catalog}."
       reviewer_role: Come validatore di catalogo sarete in grado di agginguere e modificare tutte le registrazione nel catalogo e di convalidare per la pubblicazione.
       subject: "Viene chiesto di unirsi %{catalog}"
+  favorites:
+    index:
+      title: "I miei preferiti"
+    list:
+      empty: "Non hai ancora i preferiti!"
+      empty_for_catalog: "Non hai ancora i preferiti per questo catalogo!"
+      back_to_list: "Torna alla lista"
+      selected_catalog: "Catalogo selezionato"
   locales:
     de: Tedesco
     en: Inglese
@@ -140,11 +150,15 @@ it:
     it: Italiano
   shared:
     navbar:
+      navbar_user:
+        user_settings: "Impostazioni dell'utente"
+        back_catima: "Ritorno a Catima"
       user_menu:
         log_in: "Login"
         log_out: "Logout"
         register: "Iscrizione"
         my_profile: "Il mio profilo"
+        my_favorites: "I miei preferiti"
   simple_search:
     form:
       advanced: "Avanzata"
@@ -185,6 +199,11 @@ it:
       YMDhm: "%-d %B %Y %H:%M"
       MDhms: "%-d %B %H:%M:%S"
       YMDhms: "%-d %B %Y %H:%M:%S"
+
+  delete: Elimina
+  edit: Modificare
+  visible: Visibile
+  not_visible: Non visibile
 
   legend_help: "Se selezionato, è possibile aggiungere una legenda all'immagine."
   legend_enable: "Aggiungi una legenda"

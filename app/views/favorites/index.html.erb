@@ -1,0 +1,7 @@
+<% provide(:title, t(".title")) %>
+
+<% if @catalogs && @catalogs.length > 1 %>
+  <%= render "favorites/catalogs" %>
+<% else %>
+  <%= render "favorites/list" %>
+<% end %>

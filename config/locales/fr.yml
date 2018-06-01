@@ -111,8 +111,10 @@ fr:
       missing_element: "Oups. Un tel élément n'existe pas."
       missing_element_detail: "L'élément avec ID %{item_id} de type «%{item_type}» n'existe pas dans ce catalogue."
       link_to_item_type: "Voir tous les éléments de type «%{item_type}»"
-    show:
+    buttons:
       delete_confirm: "Vous voulez vraiment supprimer “%{item}”?"
+      favorites_add: "Ajouter aux favoris"
+      favorites_remove: "Supprimer des favoris"
   invitations_mailer:
     account_information:
       email: "E-mail"
@@ -137,6 +139,14 @@ fr:
       invited_to_access_html: "%{invited_by} vous a invité d'accéder %{catalog}."
       reviewer_role: Comme validateur de catalogue, vous allez pouvoir ajouter des entrées, éditer toutes les entrées, mais également valider des entrées en vue de leur publication.
       subject: "Vous êtes invité(e) à joindre %{catalog}"
+  favorites:
+    index:
+      title: "Mes favoris"
+    list:
+      empty: "Vous n'avez pas encore de favoris!"
+      empty_for_catalog: "Vous n'avez pas encore de favoris pour ce catalogue!"
+      back_to_list: "Retour à la liste"
+      selected_catalog: "Catalogue sélectionné"
   locales:
     de: Allemand
     en: Anglais
@@ -144,11 +154,15 @@ fr:
     it: Italien
   shared:
     navbar:
+      navbar_user:
+        user_settings: "Paramètres utilisateur"
+        back_catima: "Retour à Catima"
       user_menu:
         log_in: "Login"
         log_out: "Logout"
         register: "Enregistrement"
         my_profile: "Mon profile"
+        my_favorites: "Mes favoris"
   simple_search:
     form:
       advanced: "Avancé"
@@ -211,6 +225,8 @@ fr:
   approved: Validé
   rejected: Rejeté
   users: Utilisateurs
+  visible: Visible
+  not_visible: Non visible
 
   catalog_admin:
 

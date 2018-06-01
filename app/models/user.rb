@@ -28,6 +28,7 @@ class User < ActiveRecord::Base
 
   belongs_to :invited_by, :class_name => "User"
   has_many :catalog_permissions, :dependent => :destroy
+  has_many :favorites, :dependent => :destroy
 
   accepts_nested_attributes_for :catalog_permissions
 
@@ -51,6 +52,19 @@ class User < ActiveRecord::Base
   def catalog_role(catalog)
     perm = catalog_permissions.to_a.find { |p| p.catalog_id == catalog.id }
     perm ? perm.role : "user"
+  end
+
+  def catalog_visible_for_role?(catalog)
+    return true if system_admin
+    return catalog_role_at_least?(catalog, "editor") unless catalog.visible
+    true
+  end
+
+  def can_list_item?(item)
+    return false unless item.catalog.active?
+    return false unless item.catalog.public_items.exists?(item.id)
+    return false unless catalog_visible_for_role?(item.catalog)
+    true
   end
 
   def admin_catalogs
