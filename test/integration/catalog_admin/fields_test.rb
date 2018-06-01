@@ -41,7 +41,7 @@ class CatalogAdmin::FieldsTest < ActionDispatch::IntegrationTest
   test "add an int field" do
     log_in_as("two-admin@example.com", "password")
     visit("/two/en/admin/authors/fields")
-    click_on("Int field")
+    click_on("Integer field")
     fill_in("field[name_en]", :with => "Test")
     fill_in("field[name_plural_en]", :with => "Tests")
     fill_in("Slug (singular)", :with => "test")

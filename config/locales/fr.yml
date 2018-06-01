@@ -1,7 +1,28 @@
 ---
 fr:
+  activerecord:
+    models:
+      category: "Sous-fiche"
+    attributes:
+      choice_set:
+        name: "Nom"
   "yes": "Oui"
   "no": "Non"
+  boolean_field: Champ booléen (oui/non)
+  choice_set_field: Champ ensemble de choix
+  date_time_field: Champ date/heure
+  decimal_field: Champ décimal
+  email_field: Champ e-mail
+  file_field: Champ fichier
+  geometry_field: Champ géographique
+  image_field: Champ image
+  int_field: Champ nombre entier
+  reference_field: Champ référence
+  text_field: Champ de texte
+  url_field: Champ URL
+  xref_field: Champ Xref
+  slug_help_text: "Minuscules, chiffres et traits d'union seulement. Pas de caractères accentués."
+  add_another: "Créer et ajouter un autre"
   advanced_searches:
     choice_set_search_field:
       any: "est l'un de"
@@ -268,6 +289,7 @@ fr:
         choice_set: Ensemble de choix
         new_choice_set: Nouvel ensemble de choix
       common_form_fields:
+        name: Nom
         name_plural: Nom (pluriel)
         slug_singular: Slug (singulier)
         comment_optional: Texte d'aide à la saisie (optionnel)
@@ -311,19 +333,6 @@ fr:
       index:
         add_field: "Ajouter…"
         edit_field_set: "Éditer %{field_set}"
-        boolean_field: Champ booléen (oui/non)
-        choice_set_field: Champ ensemble de choix
-        date_time_field: Champ date / heure
-        decimal_field: Champ décimal
-        email_field: Champ e-mail
-        file_field: Champ fichier
-        geometry_field: Champ géographique
-        image_field: Champ image
-        int_field: Champ nombre entier
-        reference_field: Champ référence
-        text_field: Champ de texte
-        url_field: Champ URL
-        xref_field: Champ Xref
       new:
         new_field: "Nouveau champ «%{field}»"
 

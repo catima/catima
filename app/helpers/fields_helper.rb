@@ -96,6 +96,13 @@ module FieldsHelper
     end
   end
 
+  # Clean the type name of the field to match translation strings
+  # The parameter can be either a Field instance or a non-cleaned field type_name string
+  def translation_type_name(field)
+    field = field.type.constantize.new.type_name if field.is_a?(Field)
+    field.sub(' ', '_').downcase
+  end
+
   private
 
   def resolve_type(item_type_or_slug)

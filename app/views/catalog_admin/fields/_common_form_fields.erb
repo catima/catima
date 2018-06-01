@@ -3,7 +3,7 @@
 
 <%= hidden_field_tag(:type, params[:type]) if params[:type] %>
 
-<%= locale_form_group(f, :name, :text_field, :autofocus => true) %>
+<%= locale_form_group(f, :name, :text_field, :label => t(".name"), :autofocus => true) %>
 <%= locale_form_group(f, :name_plural, :text_field, :label => t(".name_plural")) %>
 <%= f.text_field(:slug, :label => t(".slug_singular"), :help => slug_help_text) %>
 <%= f.text_area(:comment, :label => t(".comment_optional")) %>

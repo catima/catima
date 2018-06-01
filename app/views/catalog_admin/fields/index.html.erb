@@ -17,7 +17,7 @@
     <ul class="dropdown-menu dropdown-menu-right" aria-labelledby="add-field-dropdown">
       <% Field.type_choices.each do |key, label| %>
         <li>
-          <%= link_to(t(".#{label.sub(' ', '_').downcase}_field"), { :action => :new, :type => key }) %>
+          <%= link_to(t("#{translation_type_name(label)}_field"), { :action => :new, :type => key }) %>
         </li>
       <% end %>
     </ul>

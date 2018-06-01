@@ -1,5 +1,5 @@
 module ApplicationHelper
   def slug_help_text
-    "Lower case letters, numbers, and hyphens only. No accented characters."
+    I18n.t('slug_help_text')
   end
 end

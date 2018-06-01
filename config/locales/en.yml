@@ -1,7 +1,28 @@
 ---
 en:
+  activerecord:
+    models:
+      category: "Category"
+    attributes:
+      choice_set:
+        name: "Name"
   "yes": "Yes"
   "no": "No"
+  boolean_field: Boolean field (Yes/No)
+  choice_set_field: Choice set field
+  date_time_field: Date time field
+  decimal_field: Decimal field
+  email_field: Email field
+  file_field: File field
+  geometry_field: Geographic field
+  image_field: Image field
+  int_field: Integer field
+  reference_field: Reference field
+  text_field: Text field
+  url_field: URL field
+  xref_field: Xref field
+  slug_help_text: "Lower case letters, numbers, and hyphens only. No accented characters."
+  add_another: "Create and add another"
   advanced_searches:
     choice_set_search_field:
       any: "is any of"
@@ -268,6 +289,7 @@ en:
         choice_set: "Choice set"
         new_choice_set: New choice set
       common_form_fields:
+        name: Name
         name_plural: Name (plural)
         slug_singular: Slug (singular)
         comment_optional: Data editing help text (optional)
@@ -315,19 +337,6 @@ en:
       index:
         add_field: "Add…"
         edit_field_set: "Edit %{field_set}"
-        boolean_field: Boolean field (Yes/No)
-        choice_set_field: Choice set field
-        date_time_field: Date time field
-        decimal_field: Decimal field
-        email_field: Email field
-        file_field: File field
-        geometry_field: Geographic field
-        image_field: Image field
-        int_field: Int field
-        reference_field: Reference field
-        text_field: Text field
-        url_field: URL field
-        xref_field: Xref field
       new:
         new_field: "New %{field} field"
 

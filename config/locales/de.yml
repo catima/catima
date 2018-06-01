@@ -1,7 +1,28 @@
 ---
 de:
+  activerecord:
+    models:
+      category: "Sub-Stecker"
+    attributes:
+      choice_set:
+        name: "Name"
   "yes": "Ja"
   "no": "Nein"
+  boolean_field: Boolesches Feld (ja/nein)
+  choice_set_field: Feld der Wahl
+  date_time_field: Datum/Uhrzeit-Feld
+  decimal_field: Dezimalfeld
+  email_field: E-Mail-Feld
+  file_field: Dateifeld
+  geometry_field: Geografisches Feld
+  image_field: Bildfeld
+  int_field: Ganzzahl-Feld
+  reference_field: Referenzfeld
+  text_field: Textfeld
+  url_field: URL-Feld
+  xref_field: Xref-Feld
+  slug_help_text: "Nur Kleinbuchstaben, Zahlen und Bindestriche. Keine akzentuierten Zeichen."
+  add_another: "Erstellen und fügen Sie einen weiteren hinzu"
   advanced_searches:
     choice_set_search_field:
       any: "ist einer von"
