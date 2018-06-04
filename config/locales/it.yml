@@ -204,6 +204,10 @@ it:
   edit: Modificare
   visible: Visibile
   not_visible: Non visibile
+  slug: Slug
+  title: Titolo
+  url: URL
+  pages: Pagine
 
   legend_help: "Se selezionato, è possibile aggiungere una legenda all'immagine."
   legend_enable: "Aggiungi una legenda"

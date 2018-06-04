@@ -219,6 +219,8 @@ de:
   menu_items: Menüs
   pages: Seiten
   slug: Slug
+  title: Titel
+  url: URL
   draft: Entwurf
   review: Überprüfung
   approved: Geprüft
@@ -424,8 +426,6 @@ de:
       index:
         menu_items: "Menu items"
         new: "New menu item"
-        slug: Slug
-        title: Title
         rank: Rank
         locale: Locale
         delete_confirm: "Are you sure you want to delete “%{menu}”?"

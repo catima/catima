@@ -219,7 +219,9 @@ en:
   menu_items: Menu items
   pages: Pages
   primary: Primary
-  slug: 'Slug'
+  slug: Slug
+  title: Title
+  url: URL
   draft: Draft
   review: Review
   approved: Approved
@@ -397,6 +399,10 @@ en:
         new_item: New %{item_type}
         create_item: Create %{item_type}
 
+    pages:
+      index:
+        new_page: "New page"
+
     menu_items:
       common_form_fields:
         rank_help: The rank defines the order of the menu items in the menu bar (or within a dropdown menu if a parent is defined.
@@ -413,8 +419,6 @@ en:
       index:
         menu_items: "Menu items"
         new: "New menu item"
-        slug: Slug
-        title: Title
         rank: Rank
         locale: Locale
         delete_confirm: "Are you sure you want to delete “%{menu}”?"

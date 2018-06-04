@@ -219,7 +219,9 @@ fr:
   menu_items: Menus
   pages: Pages
   primary: Primaire
-  slug: 'Slug'
+  slug: Slug
+  title: Titre
+  url: URL
   draft: Brouillon
   review: Attente de validation
   approved: Validé
@@ -394,6 +396,10 @@ fr:
         new_item: Nouvelle fiche de type %{item_type}
         create_item: Créer fiche de type %{item_type}
 
+    pages:
+      index:
+        new_page: "Nouvelle page"
+
     menu_items:
       common_form_fields:
         rank_help: Le rang définit l'ordre des différentes entrées dans la barre de menu (ou à l'intérieur d'un menu déroulant si un menu parent est défini).
@@ -410,8 +416,6 @@ fr:
       index:
         menu_items: "Menus"
         new: "Nouveau menu"
-        slug: Slug
-        title: Titre
         rank: Rang
         locale: Langue
         delete_confirm: "Vous voulez vraiment supprimer le menu “%{menu}”?"
