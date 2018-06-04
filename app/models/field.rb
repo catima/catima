@@ -211,13 +211,7 @@ class Field < ActiveRecord::Base
     validators.each do |val|
       val = Array.wrap(val)
       options = val.extract_options!
-      klass.data_store_validator(
-        uuid,
-        val.first,
-        options,
-        :i18n => i18n?,
-        :prerequisite => method(:applicable_to_item)
-      )
+      klass.data_store_validator(uuid, val.first, options, :i18n => i18n?, :prerequisite => method(:applicable_to_item))
     end
   end
 
@@ -230,7 +224,7 @@ class Field < ActiveRecord::Base
 
   def exclude_base64(string)
     return '' if string.blank?
-    string.gsub(/data:image\/([a-zA-Z]*);base64,([^\"]*)\"/, '')
+    string.gsub(%r{data:image/([a-zA-Z]*);base64,([^\"]*)\"}, '')
   end
 
   def component_config

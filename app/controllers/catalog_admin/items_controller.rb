@@ -30,6 +30,13 @@ class CatalogAdmin::ItemsController < CatalogAdmin::BaseController
     end
   end
 
+  def duplicate
+    find_item
+    authorize(@item)
+    @item = @item.dup
+    render("new")
+  end
+
   def edit
     find_item
     authorize(@item)

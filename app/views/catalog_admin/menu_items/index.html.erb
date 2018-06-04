@@ -21,24 +21,8 @@
         <td><%= menu_item.slug %></td>
         <td><%= menu_item.title %></td>
         <td><%= menu_item.rank %></td>
-        <td style="text-align: right">
-          <% if policy(menu_item).edit? %>
-            <%= link_to(
-                  fa_icon("pencil", :text => t("edit")),
-                  edit_catalog_admin_menu_item_path(catalog, I18n.locale, menu_item),
-                  :class => "btn btn-default btn-xs") %>
-
-          <% end %>
-          <% if policy(menu_item).destroy? %>
-            <%= link_to(
-                  fa_icon("trash-o", :text => t("delete")),
-                  catalog_admin_menu_item_path(catalog, I18n.locale, menu_item),
-                  :class => "btn btn-xs btn-text",
-                  :method => :delete,
-                  :data => {
-                    :confirm => t('.delete_confirm', {menu: menu_item.title})
-                  }) %>
-          <% end %>
+        <td style="text-align: right;">
+          <%= render "shared/actions_dropdown", :model => menu_item %>
         </td>
       </tr>
     <% end %>

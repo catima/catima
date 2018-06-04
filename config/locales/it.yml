@@ -214,15 +214,19 @@ it:
   pages: Pagine
   general: Generale
   style: Stile
-
   legend_help: "Se selezionato, è possibile aggiungere una legenda all'immagine."
   legend_enable: "Aggiungi una legenda"
-
+  delete: Elimina
+  delete_confirm: "Sei sicuro di voler eliminare “%{model}”?"
+  edit: Modificare
+  actions: 'Azioni'
+  duplicate: 'Duplicare'
+  
   layouts:
     catalog_admin:
       setup:
         catalog_settings: "Impostazioni del catalogo"
-
+  
   catalog_admin:
     item_types:
       common_form_fields:

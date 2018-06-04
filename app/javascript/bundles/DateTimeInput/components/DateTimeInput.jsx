@@ -95,7 +95,13 @@ class DateTimeInput extends React.Component {
   getData(){
     const value = this.getInput().val();
     if (!value) return {};
-    return JSON.parse(value);
+    let v = JSON.parse(value);
+    return v.raw_value ? this.rawValueToDateTime(v.raw_value) : v;
+  }
+
+  rawValueToDateTime(v){
+    const dt = new Date(v * 1000)
+    return {Y: dt.getFullYear(), M: dt.getMonth()+1, D: dt.getDate(), h: dt.getHours(), m: dt.getMinutes(), s: dt.getSeconds()};
   }
 
   setData(d){
@@ -184,4 +190,3 @@ class DateTimeInput extends React.Component {
 };
 
 export default DateTimeInput;
-
