@@ -1,7 +1,31 @@
 ---
 it:
+  activerecord:
+    models:
+      category: "Sub-plug"
+    attributes:
+      choice_set:
+        name: "Nome"
+      page:
+        slug: "Slug"
+        title: "Titolo"
   "yes": "Si"
   "no": "No"
+  boolean_field: Campo booleano (si/no)
+  choice_set_field: Campo di scelta
+  date_time_field: Campo data/ora
+  decimal_field: Campo decimale
+  email_field: Campo email
+  file_field: Campo file
+  geometry_field: Campo geografico
+  image_field: Campo immagine
+  int_field: Campo intero
+  reference_field: Campo di riferimento
+  text_field: Campo di testo
+  url_field: Campo URL
+  xref_field: Campo Xref
+  slug_help_text: "Solo lettere minuscole, numeri e trattini. Nessun personaggio accentato."
+  add_another: "Crea e aggiungi un altro"
   advanced_searches:
     choice_set_search_field:
       any: "è uno di"
@@ -183,7 +207,13 @@ it:
   edit: Modificare
   visible: Visibile
   not_visible: Non visibile
-
+  plural: Plurale
+  slug: Slug
+  title: Titolo
+  url: URL
+  pages: Pagine
+  general: Generale
+  style: Stile
   legend_help: "Se selezionato, è possibile aggiungere una legenda all'immagine."
   legend_enable: "Aggiungi una legenda"
   delete: Elimina
@@ -191,6 +221,12 @@ it:
   edit: Modificare
   actions: 'Azioni'
   duplicate: 'Duplicare'
+  
+  layouts:
+    catalog_admin:
+      setup:
+        catalog_settings: "Impostazioni del catalogo"
+  
   catalog_admin:
     item_types:
       common_form_fields:

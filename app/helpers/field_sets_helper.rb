@@ -8,6 +8,6 @@ module FieldSetsHelper
 
   def field_set_metadata(field_set)
     return if field_set.is_a?(Category)
-    "(plural: “#{@field_set.name_plural}”, slug: “#{@field_set.slug}”)"
+    "(#{I18n.t('plural').downcase}: “#{@field_set.name_plural}”, #{I18n.t('slug').downcase}: “#{@field_set.slug}”)"
   end
 end

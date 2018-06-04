@@ -1,18 +1,18 @@
-<% provide(:title, "Users") %>
+<% provide(:title, t('users')) %>
 
 <% provide(:actions) do %>
   <%= link_to(new_catalog_admin_user_path) do %>
-    <%= fa_icon(:"user-plus", :text => "New user") %>
+    <%= fa_icon(:"user-plus", :text => t('new_user')) %>
   <% end %>
 <% end %>
 
 <table class="table">
   <thead>
     <tr>
-      <th>Email</th>
-      <th>Role</th>
-      <th>Invited</th>
-      <th>Last signed in</th>
+      <th><%= t('email') %></th>
+      <th><%= t('role') %></th>
+      <th><%= t('invited') %></th>
+      <th><%= t('last_signed_in') %></th>
       <th></th>
     </tr>
   </thead>

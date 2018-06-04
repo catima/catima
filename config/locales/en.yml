@@ -1,7 +1,45 @@
 ---
 en:
+  activerecord:
+    models:
+      category: "Category"
+    attributes:
+      choice_set:
+        name: "Name"
+      page:
+        slug: "Slug"
+        title: "Title"
+      menu_item:
+        slug: "Slug"
+        title: "Title"
+        rank: "Rank"
+        parent: "Parent"
+        url: "URL"
+      item_view:
+        name: "Name"
+        template: "Template"
+      catalog:
+        name: "Name"
+        advertize: "Advertize"
+        visible: "Visible"
+        custom_root_page_id: "Custom root page"
   "yes": "Yes"
   "no": "No"
+  boolean_field: Boolean field (Yes/No)
+  choice_set_field: Choice set field
+  date_time_field: Date time field
+  decimal_field: Decimal field
+  email_field: Email field
+  file_field: File field
+  geometry_field: Geographic field
+  image_field: Image field
+  int_field: Integer field
+  reference_field: Reference field
+  text_field: Text field
+  url_field: URL field
+  xref_field: Xref field
+  slug_help_text: "Lower case letters, numbers, and hyphens only. No accented characters."
+  add_another: "Create and add another"
   advanced_searches:
     choice_set_search_field:
       any: "is any of"
@@ -200,15 +238,37 @@ en:
   locale: Locale
   menu_items: Menu items
   pages: Pages
+  new_page: New page
   primary: Primary
-  slug: 'Slug'
+  plural: plural
+  slug: Slug
+  title: Title
+  url: URL
   draft: Draft
   review: Review
   approved: Approved
   rejected: Rejected
   users: Users
+  new_user: New user
+  send_invitation: Send invitation
   visible: Visible
   not_visible: Not visible
+  email: Email
+  role: Role
+  invited: Invited
+  last_signed_in: Last signed in
+  item_view: Item view
+  item_list: Item list
+  item_display_name: Display name
+  item_views: Item views
+  item_type: Item type
+  general: General
+  style: Style
+
+  layouts:
+    catalog_admin:
+      setup:
+        catalog_settings: "Catalog settings"
 
   catalog_admin:
 
@@ -223,6 +283,31 @@ en:
       edit_settings: 'Edit catalog settings'
       save_settings: 'Save'
       save_style: 'Save style'
+
+    catalogs:
+      common_form_fields:
+        advertize_help: "If checked, this catalog can be found in public catalog lists."
+        visible_help: "If checked, this catalog will be available for everyone. Otherwise only catalog staff will be able to see the content."
+        display_options: "Display options"
+      edit_style:
+        custom_style_catalog: "Customize catalog style"
+        general: "General"
+        logo: "Logo"
+        items: "Items"
+        base_font: "Base font"
+        link_color: "Link color"
+        navbar: "Navbar"
+        catalog_logo: "Catalog logo"
+        remove_catalog_logo: "Remove current logo"
+        catalog_logo_help: "Logo located at the bottom right, maximum width: 200 pixels, maximum height: 100 pixels"
+        navbar_logo: "Logo navigation bar"
+        remove_navbar_logo: "Remove current navigation bar logo"
+        navbar_logo_help: "Logo located at the top left, maximum height: 50 pixels"
+        headings: "Headings"
+        headings_main_title: "Main title"
+        headings_sub_title: "Sub title"
+        item_labels: "Item labels"
+        item_text: "Item text"
 
     categories:
       edit:
@@ -286,6 +371,7 @@ en:
         choice_set: "Choice set"
         new_choice_set: New choice set
       common_form_fields:
+        name: Name
         name_plural: Name (plural)
         slug_singular: Slug (singular)
         comment_optional: Data editing help text (optional)
@@ -332,19 +418,6 @@ en:
       index:
         add_field: "Add…"
         edit_field_set: "Edit %{field_set}"
-        boolean_field: Boolean field (Yes/No)
-        choice_set_field: Choice set field
-        date_time_field: Date time field
-        decimal_field: Decimal field
-        email_field: Email field
-        file_field: File field
-        geometry_field: Geographic field
-        image_field: Image field
-        int_field: Int field
-        reference_field: Reference field
-        text_field: Text field
-        url_field: URL field
-        xref_field: Xref field
       new:
         new_field: "New %{field} field"
 
@@ -389,6 +462,19 @@ en:
         new_item: New %{item_type}
         create_item: Create %{item_type}
 
+    users:
+      common_form_fields:
+        preferred_language: "Admin screens are only available in English, but the user’s preferred language will be honored for login pages and for the catalogs themselves."
+        user_role: "<b>Users</b> can view the public areas of the non-restricted catalogs.<br>"
+        member_role: "<b>Members</b> are users that can view the public areas of a restricted catalog (coming soon).<br>"
+        editor_role: "<b>Editors</b> are members that can create and edit their own items in the catalog.<br>"
+        super_editor_role: "<b>Super-editors</b> are editors that can create and edit all the items in the catalog.<br>"
+        reviewer_role: "<b>Reviewers</b> are super-editors that can approve items to make them visible to the public.<br>"
+
+    pages:
+      new:
+        create_page: "Create page"
+
     menu_items:
       common_form_fields:
         rank_help: The rank defines the order of the menu items in the menu bar (or within a dropdown menu if a parent is defined.
@@ -399,20 +485,37 @@ en:
         help_block_item_3: "<b>Menu for a specific URL</b>. Just provide the URL below. This can be an internal or an external URL."
         help_block_item_4: "<b>A dropdown menu.</b> Don't specify any of the options below. For each submenu that should be displayed within this dropdown menu, choose this menu as parent in the submenu definition form. It is not possible to have a dropdown menu within another dropdown menu (nested menus)."
         locale: Locale
+        page: "Page"
       edit:
         edit: Edit menu item
         update: "Update menu item"
       index:
         menu_items: "Menu items"
         new: "New menu item"
-        slug: Slug
-        title: Title
         rank: Rank
         locale: Locale
       new:
         new: "New menu item"
         create: "Create menu item"
 
+    item_views:
+      index:
+        new: "New item view"
+        nothing: "Currently no item views."
+        delete_confirm: "Are you sure you want to delete “%{item_view}”?"
+      new:
+        new_for_type: "New item view for type “%{item_type_slug}”"
+        create: "Create item view"
+      common_form_fields:
+        use_item_view: "Use as item view"
+        help_item_view_title: "What is an item view?"
+        help_item_view_content: "The item view is how the details of an individual item are shown to the user."
+        use_list_view: "Use as list view"
+        help_list_view_title: "What is a list view?"
+        help_list_view_content: "The list view shows a short description of a series of items, along with a link to the item view."
+        use_display_name: "Use as display name"
+        help_display_name_title: "What is the display name?"
+        help_display_name_content: "The display name is used to show a simple name of the item, for example as the title of the item. By default, the primary field is used."
 
     shared:
       setup_categories_nav:

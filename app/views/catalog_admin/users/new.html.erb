@@ -1,4 +1,4 @@
-<% provide(:title, "New user") %>
+<% provide(:title, t('new_user')) %>
 
 <%= bootstrap_form_for(
       @user,
@@ -7,7 +7,7 @@
 
   <%= f.email_field(:email, :autofocus => true, :autocomplete => "off") %>
   <%= render("common_form_fields", :f => f) %>
-  <%= f.primary("Send invitation") %>
-  <%= link_to "Cancel", catalog_admin_users_path, :class => "btn btn-link" %>
+  <%= f.primary(t('send_invitation')) %>
+  <%= link_to t('cancel'), catalog_admin_users_path, :class => "btn btn-link" %>
 
 <% end %>

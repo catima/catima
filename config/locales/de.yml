@@ -1,7 +1,31 @@
 ---
 de:
+  activerecord:
+    models:
+      category: "Sub-Stecker"
+    attributes:
+      choice_set:
+        name: "Name"
+      page:
+        slug: "Slug"
+        title: "Titel"
   "yes": "Ja"
   "no": "Nein"
+  boolean_field: Boolesches Feld (ja/nein)
+  choice_set_field: Feld der Wahl
+  date_time_field: Datum/Uhrzeit-Feld
+  decimal_field: Dezimalfeld
+  email_field: E-Mail-Feld
+  file_field: Dateifeld
+  geometry_field: Geografisches Feld
+  image_field: Bildfeld
+  int_field: Ganzzahl-Feld
+  reference_field: Referenzfeld
+  text_field: Textfeld
+  url_field: URL-Feld
+  xref_field: Xref-Feld
+  slug_help_text: "Nur Kleinbuchstaben, Zahlen und Bindestriche. Keine akzentuierten Zeichen."
+  add_another: "Erstellen und fügen Sie einen weiteren hinzu"
   advanced_searches:
     choice_set_search_field:
       any: "ist einer von"
@@ -200,7 +224,10 @@ de:
   locale: Sprache
   menu_items: Menüs
   pages: Seiten
+  plural: Plural
   slug: Slug
+  title: Titel
+  url: URL
   draft: Entwurf
   review: Überprüfung
   approved: Geprüft
@@ -208,6 +235,13 @@ de:
   users: Benutzer
   visible: Sichtbar
   not_visible: Nicht sichtbar
+  general: Allgemeines
+  style: Stil
+
+  layouts:
+    catalog_admin:
+      setup:
+        catalog_settings: "Katalogeinstellungen"
 
   catalog_admin:
 
@@ -404,8 +438,6 @@ de:
       index:
         menu_items: "Menu items"
         new: "New menu item"
-        slug: Slug
-        title: Title
         rank: Rank
         locale: Locale
       new:

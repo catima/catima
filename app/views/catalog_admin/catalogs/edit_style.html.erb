@@ -1,7 +1,7 @@
 <%= javascript_pack_tag 'catalog-admin-bundle' %>
 <%= stylesheet_pack_tag 'catalog-admin-bundle' %>
 
-<% provide(:title, "Customize catalog style") %>
+<% provide(:title, t('.custom_style_catalog')) %>
 
 <div class="panel-body">
 
@@ -10,9 +10,9 @@
     <%= f.hidden_field(:style) %>
 
     <ul class="nav nav-tabs" role="tablist" style="margin-bottom: 20px;">
-      <li role="presentation" class="active"><a href="#general" aria-controls="general" role="tab" data-toggle="tab">General</a></li>
-      <li role="presentation"><a href="#logo" aria-controls="logo" role="tab" data-toggle="tab">Logo</a></li>
-      <li role="presentation"><a href="#itemlist" aria-controls="itemlist" role="tab" data-toggle="tab">Items</a></li>
+      <li role="presentation" class="active"><a href="#general" aria-controls="general" role="tab" data-toggle="tab"><%= t('.general') %></a></li>
+      <li role="presentation"><a href="#logo" aria-controls="logo" role="tab" data-toggle="tab"><%= t('.logo') %></a></li>
+      <li role="presentation"><a href="#itemlist" aria-controls="itemlist" role="tab" data-toggle="tab"><%= t('.items') %></a></li>
     </ul>
 
     <!-- Tab panes -->
@@ -21,12 +21,12 @@
       <!-- General pane -->
       <div role="tabpanel" class="tab-pane active" id="general">
         <div class="form-group">
-          <label class="control-label">Base font</label>
+          <label class="control-label"><%= t('.base_font') %></label>
           <%= react_component 'StyleControl', props: { input: '#catalog_style', element: 'base-font' }, prerender: false %>
         </div>
 
         <div class="form-group">
-          <label class="control-label">Link color</label>
+          <label class="control-label"><%= t('.link_color') %></label>
           <input class="form-control" type="text" id="catalog_link_color" value="<%= @catalog.custom_style('link-color') || '#428bca' %>">
           <script>
             $('#catalog_link_color').minicolors({
@@ -41,7 +41,7 @@
         </div>
 
         <div class="form-group">
-          <label class="control-label">Navbar</label>
+          <label class="control-label"><%= t('.navbar') %></label>
           <%= react_component 'StyleControl', props: { input: '#catalog_style', element: 'navbar' }, prerender: false %>
         </div>
       </div>
@@ -49,7 +49,7 @@
       <!-- Catalog logo pane -->
       <div role="tabpanel" class="tab-pane" id="logo">
           <div class="form-group">
-              <label class="control-label" for="catalog_logo">Catalog logo</label>
+              <label class="control-label" for="catalog_logo"><%= t('.catalog_logo') %></label>
               <table>
                 <tr>
                   <td>
@@ -62,16 +62,16 @@
                   <td>
                     <%= f.attachment_field :logo %>
                     <% if @catalog.logo %>
-                      <%= f.check_box :remove_logo, label: 'Remove current logo' %>
+                      <%= f.check_box :remove_logo, label: t('.remove_catalog_logo') %>
                     <% end %>
                   </td>
                 </tr><tr>
-                  <td colspan="3"><span class="help-block">Logo located at the bottom right, maximum width: 200 pixels, maximum height: 100 pixels</span></td>
+                  <td colspan="3"><span class="help-block"><%= t('.catalog_logo_help') %></span></td>
                 </tr>
               </table>
           </div>
           <div class="form-group">
-              <label class="control-label" for="catalog_nav_logo">Logo navigation bar</label>
+              <label class="control-label" for="catalog_nav_logo"><%= t('.navbar_logo') %></label>
               <table>
                 <tr>
                   <td>
@@ -84,11 +84,11 @@
                   <td>
                     <%= f.attachment_field :navlogo %>
                     <% if @catalog.navlogo %>
-                      <%= f.check_box :remove_navlogo, label: 'Remove current navigation bar logo' %>
+                      <%= f.check_box :remove_navlogo, label: t('.remove_navbar_logo') %>
                     <% end %>
                   </td>
                 </tr><tr>
-                  <td colspan="3"><span class="help-block">Logo located at the top left, maximum height: 50 pixels</span></td>
+                  <td colspan="3"><span class="help-block"><%= t('.navbar_logo_help') %></span></td>
                 </tr>
               </table>
           </div>
@@ -97,29 +97,29 @@
       <!-- Headings pane -->
       <div role="tabpanel" class="tab-pane" id="itemlist">
 
-        <h4>Headings</h4>
+        <h4><%= t('.headings') %></h4>
 
         <div class="form-group">
-          <label class="control-label">Main title</label>
+          <label class="control-label"><%= t('.headings_main_title') %></label>
           <%= react_component 'StyleControl', props: { input: '#catalog_style', element: 'main-title' }, prerender: false %>
         </div>
 
         <div class="form-group">
-          <label class="control-label">Sub title</label>
+          <label class="control-label"><%= t('.headings_sub_title') %></label>
           <%= react_component 'StyleControl', props: { input: '#catalog_style', element: 'sub-title' }, prerender: false %>
         </div>
 
         <hr/>
 
-        <h4>Items</h4>
+        <h4><%= t('.items') %></h4>
 
         <div class="form-group">
-          <label class="control-label">Item labels</label>
+          <label class="control-label"><%= t('.item_labels') %></label>
           <%= react_component 'StyleControl', props: { input: '#catalog_style', element: 'item-labels' }, prerender: false %>
         </div>
 
         <div class="form-group">
-          <label class="control-label">Item text</label>
+          <label class="control-label"><%= t('.item_text') %></label>
           <%= react_component 'StyleControl', props: { input: '#catalog_style', element: 'item-text' }, prerender: false %>
         </div>
       </div>

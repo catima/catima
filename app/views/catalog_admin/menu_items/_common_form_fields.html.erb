@@ -35,7 +35,7 @@
   options_from_collection_for_select(
     @catalog.item_types, "id", "name", @menu_item.item_type_id
   ),
-  { include_blank: true }
+  { include_blank: true, :label => t('item_type') }
 ) %>
 
 <%= f.select(
@@ -44,7 +44,7 @@
     @catalog.pages.order('slug').collect { |p| [ "#{p.slug} | #{p.title}", p.id ] },
     @menu_item.page_id
   ),
-  { include_blank: true }
+  { include_blank: true, :label => t('.page') }
 ) %>
 
 

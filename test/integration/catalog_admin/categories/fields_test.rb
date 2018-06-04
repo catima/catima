@@ -5,7 +5,7 @@ class CatalogAdmin::CategoriesFieldsTest < ActionDispatch::IntegrationTest
     log_in_as("one-admin@example.com", "password")
     visit("/one/en/admin")
     click_on("Category One")
-    click_on("Int field")
+    click_on("Integer field")
     fill_in("field[name_en]", :with => "Test")
     fill_in("field[name_plural_en]", :with => "Tests")
     fill_in("Slug (singular)", :with => "test")
