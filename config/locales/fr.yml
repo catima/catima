@@ -6,6 +6,23 @@ fr:
     attributes:
       choice_set:
         name: "Nom"
+      page:
+        slug: "Slug"
+        title: "Titre"
+      menu_item:
+        slug: "Slug"
+        title: "Titre"
+        rank: "Rang"
+        parent: "Parent"
+        url: "URL"
+      item_view:
+        name: "Nom"
+        template: "Template"
+      catalog:
+        name: "Nom"
+        advertize: "Promouvoir"
+        visible: "Visible"
+        custom_root_page_id: "Page d'accueil personnalisée"
   "yes": "Oui"
   "no": "Non"
   boolean_field: Champ booléen (oui/non)
@@ -218,7 +235,9 @@ fr:
   locale: Langue
   menu_items: Menus
   pages: Pages
+  new_page: Nouvelle page
   primary: Primaire
+  plural: Pluriel
   slug: Slug
   title: Titre
   url: URL
@@ -227,8 +246,26 @@ fr:
   approved: Validé
   rejected: Rejeté
   users: Utilisateurs
+  new_user: Nouvel utilisateur
+  send_invitation: Envoyer l'invitation
   visible: Visible
   not_visible: Non visible
+  email: E-mail
+  role: Rôle
+  invited: Invité
+  last_signed_in: Dernière connexion
+  item_view: Affichage fiche
+  item_list: Affichage liste
+  item_display_name: Affichage nom
+  item_views: Affichage des fiches
+  item_type: Type de fiche
+  general: Général
+  style: Style
+
+  layouts:
+    catalog_admin:
+      setup:
+        catalog_settings: "Paramètres du catalogue"
 
   catalog_admin:
 
@@ -243,6 +280,31 @@ fr:
       edit_settings: 'Éditer les paramètres du catalogue'
       save_settings: 'Enregistrer'
       save_style: 'Enregistrer le style'
+
+    catalogs:
+      common_form_fields:
+        advertize_help: "Si coché, ce catalogue peut être trouvé dans les listes de catalogue publiques."
+        visible_help: "Si coché, ce catalogue sera disponible pour tout le monde. Sinon, seul le personnel du catalogue pourra voir le contenu."
+        display_options: "Options d'affichage"
+      edit_style:
+        custom_style_catalog: "Personnaliser le style de catalogue"
+        general: "Général"
+        logo: "Logo"
+        items: "Fiches"
+        base_font: "Police de base"
+        link_color: "Couleur lien"
+        navbar: "Barre de navigation"
+        catalog_logo: "Logo du catalogue"
+        remove_catalog_logo: "Supprimer le logo du catalogue"
+        catalog_logo_help: "Logo situé en bas à droite, largeur maximale: 200 pixels, hauteur maximale: 100 pixels"
+        navbar_logo: "Logo de la barre de navigation"
+        remove_navbar_logo: "Supprimer le logo de la barre de navigation"
+        navbar_logo_help: "Logo situé en haut à gauche, hauteur maximale: 50 pixels"
+        headings: "Rubriques"
+        headings_main_title: "Titre principal"
+        headings_sub_title: "Sous-titre"
+        item_labels: "Étiquettes des fiches"
+        item_text: "Texte des fiches"
 
     categories:
       edit:
@@ -397,8 +459,17 @@ fr:
         create_item: Créer fiche de type %{item_type}
 
     pages:
-      index:
-        new_page: "Nouvelle page"
+      new:
+        create_page: "Créer une page"
+
+    users:
+      common_form_fields:
+        preferred_language: "Les écrans d'administration ne sont disponibles qu'en anglais, mais la langue préférée de l'utilisateur sera honorée pour les pages de connexion et pour les catalogues eux-mêmes."
+        user_role: "<b>Users</b> peuvent afficher les zones publiques des catalogues non restreints.<br>"
+        member_role: "<b>Members</b> sont des utilisateurs qui peuvent afficher les zones publiques d'un catalogue restreint (à venir).<br>"
+        editor_role: "<b>Editors</b> sont des membres qui peuvent créer et modifier leurs propres éléments dans le catalogue.<br>"
+        super_editor_role: "<b>Super-editors</b> sont des éditeurs qui peuvent créer et éditer tous les éléments du catalogue.<br>"
+        reviewer_role: "<b>Reviewers</b> sont des super-éditeurs qui peuvent approuver des éléments pour les rendre visibles au public.<br>"
 
     menu_items:
       common_form_fields:
@@ -410,6 +481,7 @@ fr:
         help_block_item_3: "<b>Menu pour une URL spécifique</b>. Indiquez l'URL ci-dessous. Ceci peut être une URL interne au catalogue, ou externe."
         help_block_item_4: "<b>Menu déroulant.</b> Ne spécifiez aucune option ci-dessous. Pour chaque sous-menu qui doit être affiché à l'intérieur de ce menu, choisissez ce menu comme menu parent. Veuillez noter qu'il n'est pas possible d'avoir des sous-menus à l'intérieur d'un sous-menu (menus imbriqués)."
         locale: Langue
+        page: "Page"
       edit:
         edit: Éditer le menu
         update: "Mettre à jour le menu"
@@ -422,6 +494,26 @@ fr:
       new:
         new: Nouveau menu
         create: Créer le menu
+
+    item_views:
+      index:
+        new: "Nouvel affichage"
+        nothing: "Actuellement aucun affichage."
+        delete_confirm: "Vous voulez vraiment supprimer “%{item_view}”?"
+      new:
+        new_for_type: "Nouvel affichage pour le type de fiche “%{item_type_slug}”"
+        create: "Créer l'affichage"
+      common_form_fields:
+        use_item_view: "Utiliser comme affichage de fiche"
+        help_item_view_title: "Qu'est-ce qu'un affichage de fiche"
+        help_item_view_content: "L'affichage de fiche est la façon dont les détails d'un élément individuel sont montrés à l'utilisateur."
+        use_list_view: "Utiliser comme affichage de liste"
+        help_list_view_title: "Qu'est-ce qu'un affichage de liste"
+        help_list_view_content: "L'affichage de liste affiche une courte description d'une série d'éléments, ainsi qu'un lien vers la vue de l'élément."
+        use_display_name: "Utiliser comme affichage de nom"
+        help_display_name_title: "Qu'est-ce qu'un affichage de nom"
+        help_display_name_content: "L'affichage de nom est utilisé pour afficher un nom simple de l'élément, par exemple en tant que titre de l'élément. Par défaut, le champ principal est utilisé."
+
 
     shared:
       setup_categories_nav:

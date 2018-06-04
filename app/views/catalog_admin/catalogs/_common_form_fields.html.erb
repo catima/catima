@@ -2,8 +2,7 @@
 
 <%= f.form_group(
       :advertize,
-      :help => "If checked, this catalog can be found in public "\
-               "catalog lists."
+      :help => t('.advertize_help')
       ) do %>
   <%= f.check_box(:advertize) %>
 <% end %>
@@ -20,11 +19,10 @@
 
 <hr>
 
-<h4>Display options</h4>
+<h4><%= t('.display_options') %></h4>
 <%= f.form_group(
     :visible,
-    :help => "If checked, this catalog will be available for everyone. "\
-             "Otherwise only catalog staff will be able to see the content."
+    :help => t('.visible_help')
     ) do %>
   <%= f.check_box(:visible) %>
 <% end %>

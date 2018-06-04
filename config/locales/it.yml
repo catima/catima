@@ -6,6 +6,9 @@ it:
     attributes:
       choice_set:
         name: "Nome"
+      page:
+        slug: "Slug"
+        title: "Titolo"
   "yes": "Si"
   "no": "No"
   boolean_field: Campo booleano (si/no)
@@ -204,13 +207,22 @@ it:
   edit: Modificare
   visible: Visibile
   not_visible: Non visibile
+  plural: Plurale
   slug: Slug
   title: Titolo
   url: URL
   pages: Pagine
+  general: Generale
+  style: Stile
 
   legend_help: "Se selezionato, è possibile aggiungere una legenda all'immagine."
   legend_enable: "Aggiungi una legenda"
+
+  layouts:
+    catalog_admin:
+      setup:
+        catalog_settings: "Impostazioni del catalogo"
+
   catalog_admin:
     item_types:
       common_form_fields:

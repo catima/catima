@@ -6,6 +6,9 @@ de:
     attributes:
       choice_set:
         name: "Name"
+      page:
+        slug: "Slug"
+        title: "Titel"
   "yes": "Ja"
   "no": "Nein"
   boolean_field: Boolesches Feld (ja/nein)
@@ -218,6 +221,7 @@ de:
   locale: Sprache
   menu_items: Menüs
   pages: Seiten
+  plural: Plural
   slug: Slug
   title: Titel
   url: URL
@@ -228,6 +232,13 @@ de:
   users: Benutzer
   visible: Sichtbar
   not_visible: Nicht sichtbar
+  general: Allgemeines
+  style: Stil
+
+  layouts:
+    catalog_admin:
+      setup:
+        catalog_settings: "Katalogeinstellungen"
 
   catalog_admin:
 

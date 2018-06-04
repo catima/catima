@@ -2,17 +2,17 @@
   <div class="panel-heading">
     <span class="pull-right">
       <%= link_to(new_catalog_admin_item_view_path) do %>
-        <%= fa_icon('plus-square', text: "New item view") %>
+        <%= fa_icon('plus-square', text: t('.new')) %>
       <% end %>
     </span>
-    Item views
+    <%= t('item_views') %>
   </div>
 
   <table class="table" id="fields">
 
     <% if @field_set.item_views.count == 0 %>
       <tr>
-        <td>Currently no item views.</td>
+        <td><%= t('.nothing') %></td>
         <td></td>
       </tr>
     <% end %>
@@ -38,8 +38,7 @@
                   :class => "btn btn-xs btn-text",
                   :method => :delete,
                   :data => {
-                    :confirm => "Are you sure you want to delete "\
-                                "“#{item_view.name}”?"
+                    :confirm => t('.delete_confirm', :item_view => item_view.name)
                   }) %>
         </td>
       </tr>

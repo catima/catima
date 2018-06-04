@@ -2,7 +2,7 @@
 <%= stylesheet_pack_tag 'template-editor-bundle' %>
 
 <div class="form-group">
-  <%= f.label('Item type') %>
+  <%= f.label(t('item_type')) %>
   <div><%= @item_view.item_type.slug %></div>
 </div>
 
@@ -13,28 +13,28 @@
     <td style="padding-right: 10px;">
       <%= f.check_box(
         :default_for_item_view,
-        label: 'Use as item view'
+        label: t('.use_item_view')
       ) %>
     </td>
-    <td><span style="color: #666;" data-toggle="popover" title="What is an item view?" data-content="The item view is how the details of an individual item are shown to the user."><i class="fa fa-question-circle-o"></i></span></td>
+    <td><span style="color: #666;" data-toggle="popover" title="<%= t('.help_item_view_title') %>" data-content="<%= t('.help_item_view_content') %>"><i class="fa fa-question-circle-o"></i></span></td>
   </tr>
   <tr>
     <td style="padding-right: 10px;">
       <%= f.check_box(
         :default_for_list_view,
-        :label => 'Use as list view'
+        :label => t('.use_list_view')
       ) %>
     </td>
-    <td><span style="color: #666;" data-toggle="popover" title="What is a list view?" data-content="The list view shows a short description of a series of items, along with a link to the item view."><i class="fa fa-question-circle-o"></i></span></td>
+    <td><span style="color: #666;" data-toggle="popover" title="<%= t('.help_list_view_title') %>" data-content="<%= t('.help_list_view_content') %>"><i class="fa fa-question-circle-o"></i></span></td>
   </tr>
   <tr>
     <td style="padding-right: 10px;">
       <%= f.check_box(
         :default_for_display_name,
-        :label => 'Use as display name'
+        :label => t('.use_display_name')
       ) %>
     </td>
-    <td><span style="color: #666;" data-toggle="popover" title="What is the display name?" data-content="The display name is used to show a simple name of the item, for example as the title of the item. By default, the primary field is used."><i class="fa fa-question-circle-o"></i></span></td>
+    <td><span style="color: #666;" data-toggle="popover" title="<%= t('.help_display_name_title') %>" data-content="<%= t('.help_display_name_content') %>"><i class="fa fa-question-circle-o"></i></span></td>
   </tr>
 </table>
 
@@ -67,8 +67,8 @@
 </div>
 <script>
   $('#template-tabs .nav-tabs a').click(function (e) {
-    e.preventDefault()
-    $(this).tab('show')
+    e.preventDefault();
+    $(this).tab('show');
   });
   $('[data-toggle="popover"]').popover();
   $('.dropdown-toggle').dropdown();
