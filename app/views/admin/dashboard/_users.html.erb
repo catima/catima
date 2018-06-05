@@ -16,12 +16,7 @@
         <td><%= l(user.created_at, :format => :long) %></td>
         <td><%= last_signed_in(user) %></td>
         <td style="text-align: right">
-          <%= link_to edit_admin_user_path(user), :class => "btn btn-xs btn-default" do %>
-            <%= fa_icon("pencil", :text => "Edit") %>
-          <% end %>
-          <%= link_to [:admin, user], :class => "btn btn-xs btn-text", :method => :delete, :data => { :confirm => "Are you sure you want to delete this user?" } do %>
-            <%= fa_icon("trash-o", :text => "Delete") %>
-          <% end %>
+          <%= render "shared/actions_dropdown", :model => user %>
         </td>
       </tr>
     <% end %>
