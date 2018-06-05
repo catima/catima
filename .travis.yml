@@ -1,16 +1,11 @@
 language: ruby
 cache: bundler
-env:
-  - RAILS_ENV=test
 rvm:
   - 2.4.1
 before_install:
   - sudo apt-get install -y imagemagick
 before_script:
-  - gem install bundler --no-document --conservative
-  - bundle install
-  - bundle exec rake db:drop db:create db:migrate
-  - bundle exec rake db:seed
+  - bundle exec bin/setup
 script:
   - bundle exec rake test
 services:
