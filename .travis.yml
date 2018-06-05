@@ -9,9 +9,9 @@ before_install:
 before_script:
   - gem install bundler --no-document --conservative
   - bundle install
-  - bundle exec db:create:all
-  - bundle exec db:schema:load
-  - bundle exec db:seed
+  - bundle exec rake db:create:all
+  - bundle exec rake db:schema:load
+  - bundle exec rake db:seed
 script:
   - bundle exec rake test
 services:
