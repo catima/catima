@@ -1,5 +1,7 @@
 language: ruby
 cache: bundler
+env:
+  - RAILS_ENV=test
 rvm:
   - 2.4.1
 before_install:
@@ -7,8 +9,8 @@ before_install:
 before_script:
   - gem install bundler --no-document --conservative
   - bundle install
-  - RAILS_ENV=test bundle exec rake db:drop db:create db:migrate
-  - RAILS_ENV=test bundle exec rake db:seed
+  - bundle exec rake db:migrate:reset
+  - bundle exec rake db:seed
 script:
   - bundle exec rake test
 services:
