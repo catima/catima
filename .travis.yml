@@ -10,9 +10,9 @@ install:
 script:
   - bundle exec rake test
 services:
-  - postgresql
   - redis-server
 addons:
+  postgresql: "9.5"
   apt:
     update: true
   chrome: stable
