@@ -140,6 +140,7 @@ Rails.application.routes.draw do
   # be subclasses of the default controller. Hence, we can simply rely on
   # the existence of a file with the appropriate name.
 
+=begin
   Catalog.active.each do |catalog|
     next unless File.exist?(Rails.root.join('catalogs', catalog.slug, 'controllers', "#{catalog.snake_slug}_catalogs_controller.rb"))
     get "#{catalog.slug}/(:locale)",
@@ -207,6 +208,7 @@ Rails.application.routes.draw do
       end
     end
   end
+=end
 
   # Generating the default routes.
   scope :path => ":catalog_slug/:locale",
