@@ -9,7 +9,7 @@ before_install:
 before_script:
   - gem install bundler --no-document --conservative
   - bundle install
-  - bundle exec rake db:reset
+  - bundle exec rake db:drop db:create db:migrate
   - bundle exec rake db:seed
 script:
   - bundle exec rake test
