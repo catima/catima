@@ -7,7 +7,11 @@ rvm:
 before_install:
   - sudo apt-get install -y imagemagick
 before_script:
-  - bundle exec bin/setup
+  - gem install bundler --no-document --conservative
+  - bundle install
+  - bundle exec db:create:all
+  - bundle exec db:schema:load
+  - bundle exec db:seed
 script:
   - bundle exec rake test
 services:
