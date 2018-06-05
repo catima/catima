@@ -18,12 +18,7 @@
         <td><%= template_storage.format %></td>
         <td><%= template_storage.partial %></td>
         <td style="text-align: right">
-          <%= link_to edit_admin_template_storage_path(template_storage), :class => "btn btn-xs btn-default" do %>
-            <%= fa_icon("pencil", :text => "Edit") %>
-          <% end %>
-          <%= link_to [:admin, template_storage], :class => "btn btn-xs btn-text", :method => :delete, :data => { :confirm => "Are you sure you want to delete this template?" } do %>
-            <%= fa_icon("trash-o", :text => "Delete") %>
-          <% end %>
+          <%= render "shared/actions_dropdown", :model => template_storage %>
         </td>
       </tr>
     <% end %>

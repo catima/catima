@@ -26,20 +26,7 @@
           <%= display_name_badge(item_view) %>
         </td>
         <td style="text-align: right">
-          <%= link_to(
-                fa_icon('pencil', text: t('edit')),
-                { action: :edit, controller: 'catalog_admin/item_views',
-                  item_type_slug: item_view.item_type.slug, id: item_view.id },
-                :class => 'btn btn-default btn-xs')%>
-
-          <%= link_to(
-                  fa_icon("trash-o", :text => "Delete"),
-                  catalog_admin_item_view_path(catalog, I18n.locale, item_view.item_type.slug, item_view),
-                  :class => "btn btn-xs btn-text",
-                  :method => :delete,
-                  :data => {
-                    :confirm => t('.delete_confirm', :item_view => item_view.name)
-                  }) %>
+          <%= render "shared/actions_dropdown", :model => item_view %>
         </td>
       </tr>
     <% end %>

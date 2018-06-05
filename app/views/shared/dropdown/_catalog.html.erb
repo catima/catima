@@ -1,0 +1,15 @@
+<% if current_user.system_admin? %>
+  <li>
+    <%= link_to edit_admin_catalog_path(model, model.valid_locale) do %>
+      <%= fa_icon("pencil", :text => "Edit") %>
+    <% end %>
+  </li>
+  <li>
+    <%= deactivation_toggle(
+            model,
+            :admin_catalog_path,
+            model,
+            model.valid_locale
+        )%>
+  </li>
+<% end %>
