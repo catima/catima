@@ -1,0 +1,17 @@
+language: ruby
+sudo: true
+rvm:
+  - 2.4.1
+before_install:
+  - sudo apt-get install -y imagemagick
+install:
+  - ./bin/setup
+script:
+  - bundle exec rake test
+services:
+  - redis-server
+addons:
+  postgresql: "9.5.2"
+  apt:
+    update: true
+  chrome: stable
