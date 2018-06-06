@@ -4,13 +4,21 @@ cache:
   - bundler
 rvm:
   - 2.4.1
+env:
+  global:
+    - CC_TEST_REPORTER_ID=7584f701366dd59b5a4383208a0a92710886f09a9a8bdb0e9d644dbf5c67d338
 before_install:
   - sudo apt-get install -y imagemagick
 before_script:
+  - curl -L https://codeclimate.com/downloads/test-reporter/test-reporter-latest-linux-amd64 > ./cc-test-reporter
+  - chmod +x ./cc-test-reporter
+  - ./cc-test-reporter before-build
   - bundle exec bin/setup
   - yarn install
 script:
   - bundle exec rake test
+after_script:
+  - ./cc-test-reporter after-build --exit-code $TRAVIS_TEST_RESULT
 services:
   - redis-server
 addons:
