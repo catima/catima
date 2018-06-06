@@ -1,21 +1,18 @@
 language: ruby
 cache:
-- bundler
-- yarn
+  - bundler
+  - yarn
 rvm:
-- 2.4.1
-env:
-- TRAVIS=true
-- RAILS_ENV=test
+  - 2.4.1
 before_install:
-- sudo apt-get install -y imagemagick
+  - sudo apt-get install -y imagemagick
 before_script:
-- bundle exec bin/setup
-- yarn install
+  - bundle exec bin/setup
+  - yarn install
 script:
-- bundle exec rake test
+  - bundle exec rake test
 services:
-- redis-server
+  - redis-server
 addons:
   postgresql: '9.5'
   apt:
