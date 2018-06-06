@@ -16,8 +16,8 @@ class Field::XrefTest < ActiveSupport::TestCase
       )
 
       with_expiring_vcr_cassette do
-        #field.xref = "https://api.github.com/repos/rails/rails"
-        #refute(field.valid?)
+        field.xref = "https://api.github.com/repos/rails/rails"
+        refute(field.valid?)
 
         field.xref = "https://catima-xref.herokuapp.com/api/v1"
         assert(field.valid?)
