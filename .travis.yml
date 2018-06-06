@@ -1,11 +1,16 @@
 language: ruby
-cache: bundler
+cache:
+  - bundler
+  - yarn
 rvm:
   - 2.4.1
+env:
+  - RAILS_ENV=test
 before_install:
   - sudo apt-get install -y imagemagick
 before_script:
   - bundle exec bin/setup
+  - yarn install
 script:
   - bundle exec rake test
 services:
