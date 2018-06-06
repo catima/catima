@@ -11,24 +11,24 @@ class CustomTest < ActionDispatch::IntegrationTest
     assert(page.has_content?("Very Old"))
   end
 
-=begin
-  test "custom catalog controller is invoked correctly for catalog with a dash in slug" do
-    visit("/custom-with-dash/en")
-    assert(page.has_content?(/one/i))
-  end
+  unless ENV['TRAVIS']
+    test "custom catalog controller is invoked correctly for catalog with a dash in slug" do
+      visit("/custom-with-dash/en")
+      assert(page.has_content?(/one/i))
+    end
 
-  test "custom items controller is invoked instead of default controller" do
-    visit('/custom-with-dash/en/authors')
-    assert(page.has_content?("Stephen King"))
-    assert(page.has_content?("Very Old"))
-  end
+    test "custom items controller is invoked instead of default controller" do
+      visit('/custom-with-dash/en/authors')
+      assert(page.has_content?("Stephen King"))
+      assert(page.has_content?("Very Old"))
+    end
 
-  test "custom search controller is invoked instead of default controller" do
-    visit('/custom-with-dash/en/search')
-    assert(page.has_content?("Stephen King"))
-    assert(page.has_content?("Very Old"))
+    test "custom search controller is invoked instead of default controller" do
+      visit('/custom-with-dash/en/search')
+      assert(page.has_content?("Stephen King"))
+      assert(page.has_content?("Very Old"))
+    end
   end
-=end
 
   test "creating new catalog does not break routes with customizable controllers" do
     log_in_as("system-admin@example.com", "password")
