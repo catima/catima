@@ -4,23 +4,23 @@
 Rails.application.config.assets.version = '1.0'
 
 # Add catalog specific assets to the load path
-=begin
-Catalog.overrides.each do |slug|
-  base_path = Rails.root.join('catalogs', slug, 'assets')
-  Rails.application.config.assets.paths += %w(images stylesheets javascripts).map { |asset| base_path.join(asset) }
+unless ActiveRecord::Migrator.needs_migration?
+  Catalog.overrides.each do |slug|
+    base_path = Rails.root.join('catalogs', slug, 'assets')
+    Rails.application.config.assets.paths += %w(images stylesheets javascripts).map { |asset| base_path.join(asset) }
+  end
 end
-=end
 
 # Precompile additional assets.
 # application.js, application.css, and all non-JS/CSS in app/assets folder are already added.
 
 # Add catalog-specific assets
-=begin
-Catalog.overrides.each do |slug|
-  Rails.application.config.assets.precompile += ["#{slug}.css", "#{slug}.js"]
-  loose_catalog_assets = lambda do |filename, path|
-    path =~ %r{catalogs/#{slug}/assets} && !%w(.js .css).include?(File.extname(filename))
+unless ActiveRecord::Migrator.needs_migration?
+  Catalog.overrides.each do |slug|
+    Rails.application.config.assets.precompile += ["#{slug}.css", "#{slug}.js"]
+    loose_catalog_assets = lambda do |filename, path|
+      path =~ %r{catalogs/#{slug}/assets} && !%w(.js .css).include?(File.extname(filename))
+    end
+    Rails.application.config.assets.precompile << loose_catalog_assets
   end
-  Rails.application.config.assets.precompile << loose_catalog_assets
 end
-=end
