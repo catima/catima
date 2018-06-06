@@ -1,4 +1,4 @@
-# CATIMA
+# CATIMA [![Build Status](https://travis-ci.com/catima/catima.svg?branch=development)](https://travis-ci.com/catima/catima)
 
 CATIMA is a Web app to create easily and quickly online catalogs of structured documents, by defining the data schema of the documents.
 
