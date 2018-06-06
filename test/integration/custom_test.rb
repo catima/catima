@@ -11,6 +11,7 @@ class CustomTest < ActionDispatch::IntegrationTest
     assert(page.has_content?("Very Old"))
   end
 
+=begin
   test "custom catalog controller is invoked correctly for catalog with a dash in slug" do
     visit("/custom-with-dash/en")
     assert(page.has_content?(/one/i))
@@ -27,6 +28,7 @@ class CustomTest < ActionDispatch::IntegrationTest
     assert(page.has_content?("Stephen King"))
     assert(page.has_content?("Very Old"))
   end
+=end
 
   test "creating new catalog does not break routes with customizable controllers" do
     log_in_as("system-admin@example.com", "password")
