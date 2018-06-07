@@ -14,7 +14,7 @@ class Field::XrefTest < ActiveSupport::TestCase
       :name_plural_en => "tests"
     )
 
-    with_expiring_vcr_cassette do
+    with_vcr_cassette do
       field.xref = "https://api.github.com/repos/rails/rails"
       refute(field.valid?)
 

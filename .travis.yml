@@ -28,4 +28,4 @@ addons:
 notifications:
   slack:
     rooms:
-      secure: $SLACK_KEY
+      secure: {{SLACK_KEY}}
