@@ -4,13 +4,17 @@ cache:
   - bundler
 rvm:
   - 2.4.1
+env:
+  - TEST_SUITE=functionals
+  - TEST_SUITE=integration
+  - TEST_SUITE=units
 before_install:
   - sudo apt-get install -y imagemagick
 before_script:
   - bundle exec bin/setup
   - yarn install
 script:
-  - bundle exec rake test
+  - "bundle exec rake test:$TEST_SUITE"
 services:
   - redis-server
 addons:
