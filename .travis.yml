@@ -5,8 +5,11 @@ cache:
 rvm:
   - 2.4.1
 env:
+  # test/mailers, test/functional, test/controllers
   - TEST_SUITE=functionals
+  # test/integration
   - TEST_SUITE=integration
+  # test/unit, test/models, test/helpers
   - TEST_SUITE=units
 before_install:
   - sudo apt-get install -y imagemagick
