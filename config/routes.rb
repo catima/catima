@@ -150,11 +150,6 @@ Rails.application.routes.draw do
           :as => "catalog_#{catalog.snake_slug}"
     end
 
-    # Default catalog index route
-    get ":catalog_slug/(:locale)" => "catalogs#show",
-        :as => "catalog_home",
-        :constraints => CatalogsController::Constraint
-
     # Create per-catalog routes for item type views for customized items controllers.
     Catalog.active.each do |catalog|
       scope :path => "#{catalog.slug}/:locale",
@@ -209,6 +204,11 @@ Rails.application.routes.draw do
       end
     end
   end
+
+  # Default catalog index route
+  get ":catalog_slug/(:locale)" => "catalogs#show",
+      :as => "catalog_home",
+      :constraints => CatalogsController::Constraint
 
   # Generating the default routes.
   scope :path => ":catalog_slug/:locale",
