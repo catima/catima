@@ -27,7 +27,7 @@
 /public/system/
 
 # Ignore catalog-specific overrides
-# /catalogs/
+/catalogs/
 /public/upload/
 /public/thumbs/
 
