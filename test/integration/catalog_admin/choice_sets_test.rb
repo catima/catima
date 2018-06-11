@@ -59,6 +59,29 @@ class CatalogAdmin::ChoiceSetsTest < ActionDispatch::IntegrationTest
     assert_equal("Italian", set.choices.first.long_name_it)
   end
 
+  test "add choice from existing item" do
+    log_in_as("one-admin@example.com", "password")
+
+    author = items(:one_author_stephen_king)
+    field = fields(:one_author_other_language)
+    visit("/one/en/admin/authors/#{author.to_param}/edit")
+
+    select("Eng", :from => "Other Languages")
+    select("Spanish", :from => "Other Languages")
+
+    find("div[data-field='#{field.id}'] a", :visible => :all).click
+
+    within("#choice-modal-#{field.uuid}") do
+      fill_in("Short name", :with => "Fre")
+      fill_in("Long name", :with => "French")
+      click_on("Create")
+    end
+
+    assert(page.has_text?("Fre"))
+    assert(page.has_text?("Eng"))
+    assert(page.has_text?("Spanish"))
+  end
+
   test "edit a choice" do
     log_in_as("one-admin@example.com", "password")
     visit("/one/en/admin/_choices")
