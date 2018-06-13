@@ -11,7 +11,8 @@ module TimeHelper
       options = options.reverse_merge(
         :include_blank => true,
         :start_year => Time.current.year + 1,
-        :end_year => 1_900
+        :end_year => 1,
+        :max_years_allowed => Time.current.year
       )
       datetime_select(method, options, html_options)
     end
