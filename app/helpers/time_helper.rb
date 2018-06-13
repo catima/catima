@@ -12,7 +12,7 @@ module TimeHelper
         :include_blank => true,
         :start_year => Time.current.year + 1,
         :end_year => 1,
-        :max_years_allowed => 3000
+        :max_years_allowed => Time.current.year
       )
       datetime_select(method, options, html_options)
     end
