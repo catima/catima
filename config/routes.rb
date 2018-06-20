@@ -77,6 +77,13 @@ Rails.application.routes.draw do
       resources :fields, :param => :slug, :except => :show
     end
 
+    # Exports
+    resources :exports, :path => "_exports", :except => [:edit, :show, :new] do
+      member do
+        get 'download'
+      end
+    end
+
     resources :item_types,
               :path => "_item-types",
               :only => [:new, :create]

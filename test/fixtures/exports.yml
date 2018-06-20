@@ -1,0 +1,27 @@
+# == Schema Information
+#
+# Table name: exports
+#
+#  catalog_id :integer
+#  category   :string
+#  created_at :datetime         not null
+#  id         :integer          not null, primary key
+#  name       :string
+#  status     :string
+#  updated_at :datetime         not null
+#  user_id    :integer
+#
+
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+one:
+  user: one_admin
+  catalog: one
+  type: "Export::Catima"
+  status: "ready"
+
+two:
+  user: one_admin
+  catalog: one
+  type: "Export::Catima"
+  status: "error"

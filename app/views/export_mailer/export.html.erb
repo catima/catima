@@ -1,0 +1,20 @@
+<p><%= t("common.greeting") %>,</p>
+
+<p>
+  <div>
+    The requested export is available. You can download it by clicking on the link below.
+  </div>
+  <br>
+  <div>
+    <%= link_to "Download export (requested " + distance_of_time_in_words(@export.created_at, Time.zone.now) + " ago)",
+                download_catalog_admin_export_path(@catalog.slug, I18n.locale, @export.id)
+    %>
+  </div>
+</p>
+
+<p>
+  <div>
+    Your can view the logs of all the requested exports for the "<%= @catalog.name %>" catalog
+    <%= link_to "here", catalog_admin_exports_path(@catalog.slug, I18n.locale) %>.
+  </div>
+</p>
