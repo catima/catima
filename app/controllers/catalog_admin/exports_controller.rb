@@ -20,10 +20,6 @@ class CatalogAdmin::ExportsController < CatalogAdmin::BaseController
     redirect_to :back
   end
 
-  def update
-    # TODO: create update method
-  end
-
   def destroy
     # TODO: create destroy method
   end
