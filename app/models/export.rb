@@ -13,11 +13,8 @@
 #
 
 class Export < ActiveRecord::Base
-  CATEGORIES = {
-    "catima" => 'Export::Catima'
-  }.freeze
-
-  STATUS_OPTIONS = %w(error expired processing ready).freeze
+  CATEGORY_OPTIONS = %w(catima).freeze
+  STATUS_OPTIONS = %w(error processing ready).freeze
 
   belongs_to :user
   belongs_to :catalog
@@ -25,19 +22,26 @@ class Export < ActiveRecord::Base
   validates_presence_of :user_id
   validates_presence_of :catalog_id
 
+  validates_inclusion_of :category, :in => CATEGORY_OPTIONS
   validates_inclusion_of :status, :in => STATUS_OPTIONS
 
   after_create do
-    ExportWorker.perform_async(id, catalog.slug, category, user.id)
-  end
-
-  def status_at_least?(status)
-    status_index = STATUS_OPTIONS.index(status.to_s)
-    return false if status_index.nil?
-    STATUS_OPTIONS.index(status) >= status_index
+    ExportWorker.perform_async(id, category)
   end
 
   def pathname
     Rails.root.join('exports').to_s + "/#{id}_#{name}.zip"
+  end
+
+  def valid?
+    Time.zone.now < created_at.to_date + validity
+  end
+
+  def ready?
+    status.eql? "ready"
+  end
+
+  def validity
+    1.week
   end
 end

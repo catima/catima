@@ -4,16 +4,13 @@ require 'zip'
 class ExportWorker
   include Sidekiq::Worker
 
-  def perform(export_id, catalog_slug, category, user_id)
+  def perform(export_id, category)
     dir = Dir.mktmpdir(SecureRandom.hex)
-
-    catalog = find_catalog(catalog_slug)
     export = find_export(export_id)
-    user = find_user(user_id)
 
     case category
-    when "Export::Catima"
-      catima_export(export, catalog, user, dir)
+    when "catima"
+      catima_export(export, dir)
     else
       return
     end
@@ -23,29 +20,28 @@ class ExportWorker
 
   private
 
-  def catima_export(export, catalog, user, dir)
-    CatalogDump.new.dump(catalog.slug, dir)
-
-    zip(dir, export.pathname)
-
-    ExportMailer.send_message(export, user, catalog).deliver_now
-
-    export.update(status: "ready")
-  end
-
-  def find_user(id)
-    User.find_by(id: id)
-  end
-
-  def find_catalog(slug)
-    Catalog.find_by(slug: slug)
+  def catima_export(export, dir)
+    begin
+      CatalogDump.new.dump(export.catalog.slug, dir)
+      zip(dir, export.pathname)
+      status = "ready"
+    rescue StandardError => _
+      status = "error"
+    end
+    export.update(status: status)
+    send_mail(export)
   end
 
   def find_export(id)
     Export.find_by(id: id)
   end
 
-  # Zip the input directory.
+  def send_mail(export)
+    return unless export.status.eql? "ready"
+    ExportMailer.send_message(export).deliver_now
+  end
+
+  # Zip the input directory recursively
   def zip(input_dir, output_file)
     entries = Dir.entries(input_dir) - %w(. ..)
 
@@ -54,7 +50,7 @@ class ExportWorker
     end
   end
 
-  # A helper method to make the recursion work.
+  # A helper method to make the recursion work
   def write_entries(input_dir, entries, path, zipfile)
     entries.each do |e|
       zipfile_path = path == '' ? e : File.join(path, e)
