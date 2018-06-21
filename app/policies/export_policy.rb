@@ -7,6 +7,10 @@ class ExportPolicy
     @export = export
   end
 
+  def index?
+    create?
+  end
+
   def create?
     return false unless user.authenticated?
     return true if user.system_admin?
@@ -14,7 +18,7 @@ class ExportPolicy
   end
 
   def download?
-    return false unless export.valid?
+    return false unless export.validity?
     return false unless export.ready?
     create?
   end

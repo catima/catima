@@ -1,0 +1,8 @@
+<% if policy(model).download? %>
+  <li>
+    <%= link_to(
+            fa_icon("download", :text => "Download"),
+            download_catalog_admin_export_path(model.catalog.slug, I18n.locale, model.id)
+        )%>
+  </li>
+<% end %>

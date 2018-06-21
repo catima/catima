@@ -1,14 +1,19 @@
 class CatalogAdmin::ExportsController < CatalogAdmin::BaseController
   def index
-    # TODO: create index view
+    catalog = find_catalog
+    build_export(catalog)
+    authorize(@export)
+    @exports = Export.all.order(created_at: :desc)
+
+    render("index", :layout => "catalog_admin/setup")
   end
 
   def create
     catalog = find_catalog
-
     build_export(catalog)
     authorize(@export)
-
+    # Export async task is triggered with the after_create callback
+    # TODO: get category from request params
     Export.create(
       user: current_user,
       catalog: catalog,
@@ -18,10 +23,6 @@ class CatalogAdmin::ExportsController < CatalogAdmin::BaseController
     )
 
     redirect_to :back
-  end
-
-  def destroy
-    # TODO: create destroy method
   end
 
   def download

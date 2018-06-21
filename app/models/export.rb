@@ -33,7 +33,7 @@ class Export < ActiveRecord::Base
     Rails.root.join('exports').to_s + "/#{id}_#{name}.zip"
   end
 
-  def valid?
+  def validity?
     Time.zone.now < created_at.to_date + validity
   end
 

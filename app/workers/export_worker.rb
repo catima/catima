@@ -22,6 +22,7 @@ class ExportWorker
 
   def catima_export(export, dir)
     status = "ready"
+    export = export
     begin
       CatalogDump.new.dump(export.catalog.slug, dir)
       zip(dir, export.pathname)

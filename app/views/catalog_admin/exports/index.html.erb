@@ -1,0 +1,38 @@
+<% provide(:title, t('export').pluralize) %>
+
+<%# TODO: add translations %>
+
+<% provide(:actions) do %>
+  <%= link_to(catalog_admin_exports_path, method: :post) do %>
+    <%= fa_icon(:"cogs", :text => "New export") %>
+  <% end %>
+<% end %>
+
+<table class="table">
+  <thead>
+  <tr>
+    <th>User</th>
+    <th>Request</th>
+    <th>Format</th>
+    <th>Status</th>
+    <th>Validity</th>
+    <th></th>
+  </tr>
+  </thead>
+  <tbody>
+  <% @exports.each do |export| %>
+    <tr>
+      <td><%= export.user.email %></td>
+      <td><%= l(export.created_at, :format => :long) %></td>
+      <td><%= export.category %></td>
+      <td><%= status_badge(export) %></td>
+      <td><%= validity_badge(export) %></td>
+      <td>
+        <% if policy(export).download? %>
+          <%= render "shared/actions_dropdown", :model => export %>
+        <% end %>
+      </td>
+    </tr>
+  <% end %>
+  </tbody>
+</table>

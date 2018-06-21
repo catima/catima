@@ -237,6 +237,7 @@ de:
   not_visible: Nicht sichtbar
   general: Allgemeines
   style: Stil
+  export: Export
 
   layouts:
     catalog_admin:

@@ -221,12 +221,13 @@ it:
   edit: Modificare
   actions: 'Azioni'
   duplicate: 'Duplicare'
-  
+  export: Esportare
+
   layouts:
     catalog_admin:
       setup:
         catalog_settings: "Impostazioni del catalogo"
-  
+
   catalog_admin:
     item_types:
       common_form_fields:

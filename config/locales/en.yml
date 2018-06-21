@@ -264,6 +264,7 @@ en:
   item_type: Item type
   general: General
   style: Style
+  export: Export
 
   layouts:
     catalog_admin:

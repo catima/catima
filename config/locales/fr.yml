@@ -264,6 +264,7 @@ fr:
   item_type: Type de fiche
   general: Général
   style: Style
+  export: Exportation
 
   layouts:
     catalog_admin:
