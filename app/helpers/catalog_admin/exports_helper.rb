@@ -19,8 +19,8 @@ module CatalogAdmin::ExportsHelper
   end
 
   def validity_badge(export)
-    icon = export.validity? ? "check" : "times"
+    badge = export.validity? ? { :label => "valid", :type => "success" } : { :label => "expired", :type => "danger" }
 
-    content_tag(:i, nil, class: "fa fa-#{icon}")
+    content_tag(:span, badge[:label], class: "label label-#{badge[:type]}")
   end
 end

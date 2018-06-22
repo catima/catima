@@ -3,7 +3,6 @@ class ExportMailer < ApplicationMailer
     # TODO: add traductions
     from = "no-reply@catima.unil.ch"
     subject = "Catima - requested export is ready"
-
     @export = export
 
     mail(

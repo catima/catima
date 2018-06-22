@@ -43,7 +43,7 @@
 # Ignore RSpec internal files
 spec/examples.txt
 
-# Ignore catalog exports
+# Ignore exports
 /exports/*
 !/exports/.keep
 

@@ -3,9 +3,19 @@
 <%# TODO: add translations %>
 
 <% provide(:actions) do %>
-  <%= link_to(catalog_admin_exports_path, method: :post) do %>
-    <%= fa_icon(:"cogs", :text => "New export") %>
-  <% end %>
+  <span class="dropdown">
+    <button class="btn btn-xs btn-default dropdown-toggle" type="button" id="add-field-dropdown" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+      <%= fa_icon(:"plus-square", :text => "New export (choose format)") %>
+      <span class="caret"></span>
+    </button>
+    <ul class="dropdown-menu dropdown-menu-right" aria-labelledby="add-field-dropdown">
+      <% Export::CATEGORY_OPTIONS.each do |format| %>
+        <li>
+          <%= link_to(format.capitalize, catalog_admin_exports_path(:category => format), method: :post) %>
+        </li>
+      <% end %>
+    </ul>
+  </span>
 <% end %>
 
 <table class="table">
