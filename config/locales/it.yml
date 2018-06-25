@@ -138,6 +138,13 @@ it:
       invited_to_access_html: "%{invited_by} ti ha invitato a accessere al catalogo %{catalog}."
       reviewer_role: Come validatore di catalogo sarete in grado di agginguere e modificare tutte le registrazione nel catalogo e di convalidare per la pubblicazione.
       subject: "Viene chiesto di unirsi %{catalog}"
+  export_mailer:
+    export:
+      export_available: "L'esportazione %{category} richiesta è disponibile. Puoi scaricarlo cliccando sul link sottostante."
+      download_export: "Scarica l'esportazione (validità: %{validity})"
+      export_logs: "Puoi visualizzare tutte le esportazioni richieste per il catalogo %{catalog_name}"
+      here: "qui"
+      subject: "Catima - l'esportazione richiesta è pronta"
   favorites:
     index:
       title: "I miei preferiti"

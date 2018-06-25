@@ -156,6 +156,13 @@ fr:
       invited_to_access_html: "%{invited_by} vous a invité d'accéder %{catalog}."
       reviewer_role: Comme validateur de catalogue, vous allez pouvoir ajouter des entrées, éditer toutes les entrées, mais également valider des entrées en vue de leur publication.
       subject: "Vous êtes invité(e) à joindre %{catalog}"
+  export_mailer:
+    export:
+      export_available: "L'export %{category} demandé est disponible. Vous pouvez le télécharger en cliquant sur le lien ci-dessous."
+      download_export: "Télécharger l'export (validité: %{validity})"
+      export_logs: "Vous pouvez afficher toutes les exportations demandées pour le catalogue %{catalog_name}"
+      here: "ici"
+      subject: "Catima - l'export demandé est prêt"
   favorites:
     index:
       title: "Mes favoris"

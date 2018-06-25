@@ -3,11 +3,11 @@
 <%# TODO: add translations %>
 <p>
   <div>
-    The requested <%= @export.category %> export is available. You can download it by clicking on the link below.
+    <%= t(".export_available", :category => @export.category) %>
   </div>
   <br>
   <div>
-    <%= link_to "Download export (validity: " + distance_of_time_in_words(@export.created_at, @export.created_at + Export.validity) + ")",
+    <%= link_to t(".download_export", :validity => distance_of_time_in_words(@export.created_at, Export.validity.ago)),
                 download_catalog_admin_export_path(@export.catalog.slug, I18n.locale, @export.id)
     %>
   </div>
@@ -15,7 +15,7 @@
 
 <p>
   <div>
-    Your can view the logs of all the requested exports for the "<%= @export.catalog.name %>" catalog
-    <%= link_to "here", catalog_admin_exports_path(@export.catalog.slug, I18n.locale) %>.
+    <%= t(".export_logs", :catalog_name => @export.catalog.name) %>
+    <%= link_to t(".here"), catalog_admin_exports_path(@export.catalog.slug, I18n.locale) %>.
   </div>
 </p>

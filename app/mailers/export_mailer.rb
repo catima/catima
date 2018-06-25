@@ -1,12 +1,10 @@
 class ExportMailer < ApplicationMailer
   def send_message(export)
-    # TODO: add traductions
     from = "no-reply@catima.unil.ch"
-    subject = "Catima - requested export is ready"
     @export = export
 
     mail(
-      :subject => subject,
+      :subject => t("export_mailer.export.subject"),
       :to => export.user.email,
       :from => from,
       :template_name => "export"
