@@ -12,7 +12,7 @@ class ExportWorker
     when "catima"
       catima_export(export, dir)
     else
-      export.update(status: "error")
+      export.update(status: "error", file: false)
     end
 
     FileUtils.remove_entry dir

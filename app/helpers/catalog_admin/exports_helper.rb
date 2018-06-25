@@ -3,7 +3,6 @@ module CatalogAdmin::ExportsHelper
     active = (params[:controller] == "catalog_admin/exports")
     klass = "list-group-item"
     klass << " active" if active
-
     link_to(t("export").pluralize, catalog_admin_exports_path, :class => klass)
   end
 
@@ -14,13 +13,11 @@ module CatalogAdmin::ExportsHelper
            when "ready" then "success"
            else "default"
            end
-
     content_tag(:span, export.status, class: "label label-#{type}")
   end
 
   def validity_badge(export)
     badge = export.validity? ? { :label => t("valid"), :type => "success" } : { :label => t("expired"), :type => "danger" }
-
     content_tag(:span, badge[:label], class: "label label-#{badge[:type]}")
   end
 end
