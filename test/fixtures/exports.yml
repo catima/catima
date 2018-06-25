@@ -5,8 +5,8 @@
 #  catalog_id :integer
 #  category   :string
 #  created_at :datetime         not null
+#  file       :boolean
 #  id         :integer          not null, primary key
-#  name       :string
 #  status     :string
 #  updated_at :datetime         not null
 #  user_id    :integer

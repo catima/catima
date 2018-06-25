@@ -21,15 +21,14 @@ class ExportWorker
   private
 
   def catima_export(export, dir)
-    status = "ready"
-    export = export
+    params = { :status => "ready", :file => true }
     begin
       CatalogDump.new.dump(export.catalog.slug, dir)
       zip(dir, export.pathname)
     rescue StandardError
-      status = "error"
+      params[:status] = "error", params[:file] = false
     end
-    export.update(status: status)
+    export.update(status: params[:status], file: params[:file])
     send_mail(export)
   end
 

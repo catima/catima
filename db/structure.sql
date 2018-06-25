@@ -373,9 +373,9 @@ CREATE TABLE exports (
     id integer NOT NULL,
     user_id integer,
     catalog_id integer,
-    name character varying,
     category character varying,
     status character varying,
+    file boolean,
     created_at timestamp without time zone NOT NULL,
     updated_at timestamp without time zone NOT NULL
 );

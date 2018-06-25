@@ -20,6 +20,7 @@ class ExportPolicy
   def download?
     return false unless export.validity?
     return false unless export.ready?
+    return false unless export.file?
     create?
   end
 end

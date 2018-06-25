@@ -3,11 +3,11 @@
 # Table name: exports
 #
 #  id         :integer          not null, primary key
-#  catalog_id :integer
 #  user_id    :integer
+#  catalog_id :integer
 #  category   :string
-#  name       :string
 #  status     :string
+#  file       :boolean
 #  created_at :datetime         not null
 #  updated_at :datetime         not null
 #
@@ -30,7 +30,7 @@ class Export < ActiveRecord::Base
   end
 
   def pathname
-    Rails.root.join('exports').to_s + "/#{id}_#{name}.zip"
+    Rails.root.join('exports').to_s + "/#{id}_#{catalog.slug}.zip"
   end
 
   def validity?
@@ -39,6 +39,10 @@ class Export < ActiveRecord::Base
 
   def ready?
     status.eql? "ready"
+  end
+
+  def file?
+    file
   end
 
   def self.validity

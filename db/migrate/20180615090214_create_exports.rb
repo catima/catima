@@ -3,9 +3,9 @@ class CreateExports < ActiveRecord::Migration
     create_table :exports do |t|
       t.references :user, index: true, foreign_key: true
       t.references :catalog, index: true, foreign_key: true
-      t.string :name
       t.string :category
       t.string :status
+      t.boolean :file
 
       t.timestamps null: false
     end
