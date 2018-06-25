@@ -7,7 +7,7 @@
   </div>
   <br>
   <div>
-    <%= link_to "Download export (validity: " + distance_of_time_in_words(@export.created_at, @export.created_at + @export.validity) + ")",
+    <%= link_to "Download export (validity: " + distance_of_time_in_words(@export.created_at, @export.created_at + Export.validity) + ")",
                 download_catalog_admin_export_path(@export.catalog.slug, I18n.locale, @export.id)
     %>
   </div>

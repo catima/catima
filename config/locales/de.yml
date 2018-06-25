@@ -238,6 +238,9 @@ de:
   general: Allgemeines
   style: Stil
   export: Export
+  valid: "gültig"
+  expired: "abgelaufen"
+  download: "Herunterladen"
 
   layouts:
     catalog_admin:
@@ -312,6 +315,17 @@ de:
         catalog_data: "%{catalog} Data"
         no_item_types_defined: No item types are defined yet.
         define_item_types: Please define catalog item types in setup first.
+
+    exports:
+      index:
+        new_export: "Neuer Export (Format wählen)"
+        user: "Benutzer"
+        request: "Anfordern"
+        format: "Format"
+        status: "Status"
+        validity: "Gültigkeit"
+      create:
+        invalid_category: "Exportformat ungültig"
 
     fields:
       choice_set_modals:

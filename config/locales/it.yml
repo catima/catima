@@ -222,6 +222,9 @@ it:
   actions: 'Azioni'
   duplicate: 'Duplicare'
   export: Esportare
+  valid: "valido"
+  expired: "scaduto"
+  download: "Scaricare"
 
   layouts:
     catalog_admin:
@@ -234,3 +237,14 @@ it:
         display-options: "Opzioni di visualizzazione"
         show-empty-fields: "Mostra campi vuoti per questo tipo di oggetto"
         display-empty-fields: "Mostra campi vuoti"
+
+    exports:
+      index:
+        new_export: "Nuova esportazione (scegli il formato)"
+        user: "Utente"
+        request: "Richiesta"
+        format: "Formato"
+        status: "Stato"
+        validity: "Validità"
+      create:
+        invalid_category: "Formato di esportazione non valido"

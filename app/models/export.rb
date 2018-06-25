@@ -34,14 +34,14 @@ class Export < ActiveRecord::Base
   end
 
   def validity?
-    Time.zone.now < created_at.to_date + validity
+    Time.zone.now < created_at.to_date + Export.validity
   end
 
   def ready?
     status.eql? "ready"
   end
 
-  def validity
+  def self.validity
     1.week
   end
 end
