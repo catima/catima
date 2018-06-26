@@ -2,14 +2,14 @@
 #
 # Table name: exports
 #
+#  id         :integer          not null, primary key
+#  user_id    :integer
 #  catalog_id :integer
 #  category   :string
-#  created_at :datetime         not null
 #  file       :boolean
-#  id         :integer          not null, primary key
 #  status     :string
 #  updated_at :datetime         not null
-#  user_id    :integer
+#  created_at :datetime         not null
 #
 
 # Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
@@ -17,11 +17,36 @@
 one:
   user: one_admin
   catalog: one
-  type: "Export::Catima"
+  category: "catima"
   status: "ready"
+  file: true
 
-two:
+one_expired:
   user: one_admin
   catalog: one
-  type: "Export::Catima"
+  category: "catima"
+  status: "ready"
+  file: false
+  created_at: <%= Time.zone.now - 8.days %>
+  updated_at: <%= Time.zone.now - 8.days %>
+
+one_processing:
+  user: one_admin
+  catalog: one
+  category: "catima"
+  status: "processing"
+  file: false
+
+one_error:
+  user: one_admin
+  catalog: one
+  category: "catima"
   status: "error"
+  file: false
+
+two:
+  user: two_admin
+  catalog: two
+  category: "catima"
+  status: "ready"
+  file: true

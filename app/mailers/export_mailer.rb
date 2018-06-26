@@ -1,5 +1,6 @@
 class ExportMailer < ApplicationMailer
   def send_message(export)
+    I18n.locale = export.user.primary_language
     @export = export
 
     mail(
@@ -8,5 +9,7 @@ class ExportMailer < ApplicationMailer
       :from => "no-reply@catima.unil.ch",
       :template_name => "export"
     )
+  ensure
+    I18n.locale = I18n.default_locale
   end
 end

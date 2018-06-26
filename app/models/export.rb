@@ -19,8 +19,8 @@ class Export < ActiveRecord::Base
   belongs_to :user
   belongs_to :catalog
 
-  validates_presence_of :user_id
-  validates_presence_of :catalog_id
+  validates_presence_of :user
+  validates_presence_of :catalog
 
   validates_inclusion_of :category, :in => CATEGORY_OPTIONS
   validates_inclusion_of :status, :in => STATUS_OPTIONS
