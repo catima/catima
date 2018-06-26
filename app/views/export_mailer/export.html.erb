@@ -7,7 +7,7 @@
   <br>
   <div>
     <%= link_to t(".download_export", :validity => distance_of_time_in_words(@export.created_at, Export.validity.ago)),
-                download_catalog_admin_export_path(@export.catalog.slug, I18n.locale, @export.id)
+                download_catalog_admin_export_url(@export.catalog.slug, I18n.locale, @export.id)
     %>
   </div>
 </p>
@@ -15,6 +15,6 @@
 <p>
   <div>
     <%= t(".export_logs", :catalog_name => @export.catalog.name) %>
-    <%= link_to t(".here"), catalog_admin_exports_path(@export.catalog.slug, I18n.locale) %>.
+    <%= link_to t(".here"), catalog_admin_exports_url(@export.catalog.slug, I18n.locale) %>.
   </div>
 </p>
