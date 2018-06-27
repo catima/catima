@@ -2,14 +2,13 @@
 #
 # Table name: exports
 #
-#  id         :integer          not null, primary key
-#  user_id    :integer
 #  catalog_id :integer
 #  category   :string
-#  status     :string
-#  file       :boolean
 #  created_at :datetime         not null
+#  id         :integer          not null, primary key
+#  status     :string
 #  updated_at :datetime         not null
+#  user_id    :integer
 #
 
 class Export < ActiveRecord::Base
@@ -30,7 +29,8 @@ class Export < ActiveRecord::Base
   end
 
   def pathname
-    Rails.root.join('exports').to_s + "/#{id}_#{catalog.slug}.zip"
+    ext = Rails.env.test? ? "test" : "zip"
+    Rails.root.join('exports').to_s + "/#{id}_#{catalog.slug}.#{ext}"
   end
 
   def validity?
@@ -42,7 +42,7 @@ class Export < ActiveRecord::Base
   end
 
   def file?
-    file
+    File.exist? pathname
   end
 
   def self.validity

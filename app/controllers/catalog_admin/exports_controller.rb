@@ -16,7 +16,6 @@ class CatalogAdmin::ExportsController < CatalogAdmin::BaseController
       user: current_user,
       catalog: catalog,
       category: category,
-      file: false,
       status: "processing"
     )
     redirect_to :back, :alert => @message

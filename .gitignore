@@ -44,8 +44,7 @@
 spec/examples.txt
 
 # Ignore exports
-/exports/*
-!/exports/.keep
+
 
 # Ignore RubyMine files
 .idea

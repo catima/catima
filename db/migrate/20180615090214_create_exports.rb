@@ -5,7 +5,6 @@ class CreateExports < ActiveRecord::Migration
       t.references :catalog, index: true, foreign_key: true
       t.string :category
       t.string :status
-      t.boolean :file
 
       t.timestamps null: false
     end

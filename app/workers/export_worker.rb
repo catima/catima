@@ -12,7 +12,7 @@ class ExportWorker
     when "catima"
       catima_export(export, dir)
     else
-      export.update(status: "error", file: false)
+      export.update(status: "error")
     end
 
     FileUtils.remove_entry dir
@@ -21,14 +21,14 @@ class ExportWorker
   private
 
   def catima_export(export, dir)
-    params = { :status => "ready", :file => true }
+    status = "ready"
     begin
       CatalogDump.new.dump(export.catalog.slug, dir)
       zip(dir, export.pathname)
     rescue StandardError
-      params[:status] = "error", params[:file] = false
+      status = "error"
     end
-    export.update(status: params[:status], file: params[:file])
+    export.update(status: status)
     send_mail(export)
   end
 

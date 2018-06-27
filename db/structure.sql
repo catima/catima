@@ -375,7 +375,6 @@ CREATE TABLE exports (
     catalog_id integer,
     category character varying,
     status character varying,
-    file boolean,
     created_at timestamp without time zone NOT NULL,
     updated_at timestamp without time zone NOT NULL
 );
