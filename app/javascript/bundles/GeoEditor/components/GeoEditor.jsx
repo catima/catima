@@ -5,17 +5,6 @@ import L from 'leaflet';
 import uuid from 'uuid';
 
 const subs = ['a', 'b', 'c'];
-const fc = {
-  type: "FeatureCollection",
-  features: [{
-    type: "Feature",
-    properties: {},
-    geometry: {
-      type: "Point",
-      coordinates: [5.0, 47.0]
-    }
-  }]
-};
 
 class GeoEditor extends React.Component {
 
@@ -27,7 +16,7 @@ class GeoEditor extends React.Component {
     super(props);
     this.input = this.props.input;
     const obj = $(this.input).val();
-    this.fc = JSON.parse((obj == '' || obj == null) ? '{}' : obj);
+    this.fc = JSON.parse((obj == '' || obj == null) ? '{"type": "FeatureCollection", "features": []}' : obj);
     this.state = {
       mapHeight: 300,
       selectedMarkerLatitude: '',
@@ -58,10 +47,11 @@ class GeoEditor extends React.Component {
   }
 
   _bbox(){
-    if (this.fc.features.length == 0) return [[-90, -180], [90, 180]];
+    const features = this._features();
+    if (features.length == 0) return [[-90, -180], [90, 180]];
     let bbox = {ymin: 90, xmin: 180, ymax: -90, xmax: -180};
-    for (let i=0; i < this.fc.features.length; i++){
-      let c = this.fc.features[i].geometry.coordinates;
+    for (let i=0; i < features.length; i++){
+      let c = features[i].geometry.coordinates;
       if (c[0] < bbox.xmin) bbox.xmin = c[0];
       if (c[1] < bbox.ymin) bbox.ymin = c[1];
       if (c[0] > bbox.xmax) bbox.xmax = c[0];
