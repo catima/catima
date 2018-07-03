@@ -10,11 +10,13 @@ class GeoEditor extends React.Component {
 
   static propTypes = {
     input: PropTypes.string.isRequired,
+    bounds: PropTypes.object
   };
 
   constructor(props){
     super(props);
     this.input = this.props.input;
+    this.bounds = this.props.bounds || {xmin: -60, xmax: 60, ymin: -45, ymax: 60};
     const obj = $(this.input).val();
     this.fc = JSON.parse((obj == '' || obj == null) ? '{"type": "FeatureCollection", "features": []}' : obj);
     this.state = {
@@ -48,7 +50,7 @@ class GeoEditor extends React.Component {
 
   _bbox(){
     const features = this._features();
-    if (features.length == 0) return [[-90, -180], [90, 180]];
+    if (features.length == 0) return [[this.bounds.ymin, this.bounds.xmin], [this.bounds.ymax, this.bounds.xmax]];
     let bbox = {ymin: 90, xmin: 180, ymax: -90, xmax: -180};
     for (let i=0; i < features.length; i++){
       let c = features[i].geometry.coordinates;

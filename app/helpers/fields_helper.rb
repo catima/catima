@@ -40,7 +40,7 @@ module FieldsHelper
     presenter = field_presenter(item, field, options)
 
     if presenter.field.display_component.present?
-      json_react_display_component(item, presenter.field)
+      json_react_display_component(item, presenter.field, field.view_props)
     else
       presenter.value
     end

@@ -26,3 +26,8 @@
     ) do %>
   <%= f.check_box(:visible) %>
 <% end %>
+
+<div class="form-group">
+  <label class="control-label" for="catalog_bounds">Bounds</label>
+  <textarea class="form-control" name="catalog[bounds]" id="catalog_bounds"><%= @catalog.bounds.nil? ? '' : @catalog.bounds.to_json.html_safe %></textarea>
+</div>
