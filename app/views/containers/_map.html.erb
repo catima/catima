@@ -16,7 +16,13 @@
   var fc = JSON.parse(document.getElementById('geojson-<%= container.item_type %>').innerText);
   var items_layer = L.geoJSON(fc, {
     onEachFeature: function(feature, layer) {
-      layer.bindPopup('Loading...');
+      layer.on('click', function(e){
+        var marker = e.target;
+        if (marker._popup == null) {
+          marker.bindPopup('Loading...').openPopup();
+          loadPopupContent(marker);
+        }
+      });
      }
   });
   var fc_group = L.markerClusterGroup();
@@ -27,5 +33,30 @@
   var env = JSON.parse(document.getElementById('bounds').innerText);
   var bbox = [[env.ymin, env.xmin], [env.ymax, env.xmax]];
   if (fc.features.length > 0) bbox = fc_group.getBounds();
-  map.fitBounds(bbox);
+  map.fitBounds(bbox, {padding: [40, 40]});
+
+  // Loads the content for the marker popup
+  function loadPopupContent(marker){
+    fid = marker.feature.properties.id;
+
+    var request = new XMLHttpRequest();
+    request.open('GET', '/api/v1/catalogs/photo-library/items/'+fid+'.json');
+
+    request.onload = function() {
+      if (request.status >= 200 && request.status < 400) {
+        // Success!
+        var feat = JSON.parse(request.responseText);
+        marker._popup.setContent('<a href="'+feat._links.html+'">View item</a>');
+      } else {
+        marker._popup.setContent('Error. Unable to load item data.');
+      }
+    };
+
+    request.onerror = function() {
+      marker._popup.setContent('Error. Unable to load item data.');
+    };
+
+    request.send();
+  }
+
 </script>
