@@ -8,7 +8,6 @@ class Container::ItemListPresenter < ContainerPresenter
       :item_type => @item_type,
       :page => @view.params[:page]
     )
-    partial = item_list_has_images?(@list) ? "items/thumbnails" : "items/list"
-    @view.render(partial, :item_list => @list)
+    @view.render("containers/item_list", :item_list => @list)
   end
 end
