@@ -1,5 +1,6 @@
 <textarea id="geojson-<%= container.item_type %>" style="display: none;"><%= container.geojson %></textarea>
 <textarea id="bounds" style="display: none;"><%= container.default_bounds.to_json.html_safe %></textarea>
+<input type="hidden" id="catalog_slug" value="<%= container.catalog.slug %>" />
 <div id="map-<%= container.item_type %>" style="width: 100%; height: 400px;"></div>
 
 <script src="https://unpkg.com/leaflet.markercluster@1.3.0/dist/leaflet.markercluster.js"></script>
@@ -7,7 +8,9 @@
 <link href="https://unpkg.com/leaflet.markercluster@1.3.0/dist/MarkerCluster.Default.css" rel="stylesheet" />
 
 <script type="text/javascript">
+  var catalog = document.getElementById('catalog_slug').value;
   var map = L.map('map-<%= container.item_type %>');
+  var locale = '<%= I18n.locale %>';
   L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
     attribution: 'Map data &copy; <a href="https://www.openstreetmap.org/">OpenStreetMap</a> contributors, <a href="https://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>',
     maxZoom: 18
@@ -19,7 +22,7 @@
       layer.on('click', function(e){
         var marker = e.target;
         if (marker._popup == null) {
-          marker.bindPopup('Loading...').openPopup();
+          marker.bindPopup(_t.loading[locale]).openPopup();
           loadPopupContent(marker);
         }
       });
@@ -40,23 +43,44 @@
     fid = marker.feature.properties.id;
 
     var request = new XMLHttpRequest();
-    request.open('GET', '/api/v1/catalogs/photo-library/items/'+fid+'.json');
+    request.open('GET', '/api/v1/catalogs/'+catalog+'/items/'+fid+'.json');
 
     request.onload = function() {
       if (request.status >= 200 && request.status < 400) {
         // Success!
         var feat = JSON.parse(request.responseText);
-        marker._popup.setContent('<a href="'+feat._links.html+'">View item</a>');
+        marker._popup.setContent('<a href="'+feat._links.html+'">'+_t.view_item[locale]+'</a>');
       } else {
-        marker._popup.setContent('Error. Unable to load item data.');
+        marker._popup.setContent(_t.error[locale]);
       }
     };
 
     request.onerror = function() {
-      marker._popup.setContent('Error. Unable to load item data.');
+      marker._popup.setContent(_t.error[locale]);
     };
 
     request.send();
+  }
+
+  var _t = {
+    "loading": {
+      fr: "Chargement...",
+      en: "Loading...",
+      de: "Laden...",
+      it: "Carico..."
+    },
+    "view_item": {
+      fr: "Consulter la fiche",
+      en: "View item",
+      de: "Element anschauen",
+      it: "Consultare l'oggetto"
+    },
+    "error": {
+      fr: "Erreur. Impossible de charger l'objet.",
+      en: "Error. Unable to load item data.",
+      de: "Fehler. Kann Element nicht laden.",
+      it: "Errore. Impossibile caricare l'oggetto."
+    }
   }
 
 </script>
