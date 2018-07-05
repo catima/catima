@@ -366,6 +366,41 @@ ALTER SEQUENCE containers_id_seq OWNED BY containers.id;
 
 
 --
+-- Name: exports; Type: TABLE; Schema: public; Owner: -
+--
+
+CREATE TABLE exports (
+    id integer NOT NULL,
+    user_id integer,
+    catalog_id integer,
+    category character varying,
+    status character varying,
+    created_at timestamp without time zone NOT NULL,
+    updated_at timestamp without time zone NOT NULL
+);
+
+
+--
+-- Name: exports_id_seq; Type: SEQUENCE; Schema: public; Owner: -
+--
+
+CREATE SEQUENCE exports_id_seq
+    AS integer
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+--
+-- Name: exports_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
+--
+
+ALTER SEQUENCE exports_id_seq OWNED BY exports.id;
+
+
+--
 -- Name: favorites; Type: TABLE; Schema: public; Owner: -
 --
 
@@ -787,6 +822,13 @@ ALTER TABLE ONLY containers ALTER COLUMN id SET DEFAULT nextval('containers_id_s
 
 
 --
+-- Name: exports id; Type: DEFAULT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY exports ALTER COLUMN id SET DEFAULT nextval('exports_id_seq'::regclass);
+
+
+--
 -- Name: favorites id; Type: DEFAULT; Schema: public; Owner: -
 --
 
@@ -911,6 +953,14 @@ ALTER TABLE ONLY configurations
 
 ALTER TABLE ONLY containers
     ADD CONSTRAINT containers_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: exports exports_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY exports
+    ADD CONSTRAINT exports_pkey PRIMARY KEY (id);
 
 
 --
@@ -1088,6 +1138,20 @@ CREATE INDEX index_containers_on_page_id ON containers USING btree (page_id);
 --
 
 CREATE INDEX index_containers_on_slug ON containers USING btree (slug);
+
+
+--
+-- Name: index_exports_on_catalog_id; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX index_exports_on_catalog_id ON exports USING btree (catalog_id);
+
+
+--
+-- Name: index_exports_on_user_id; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX index_exports_on_user_id ON exports USING btree (user_id);
 
 
 --
@@ -1306,6 +1370,14 @@ ALTER TABLE ONLY configurations
 
 
 --
+-- Name: exports fk_rails_26b155474a; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY exports
+    ADD CONSTRAINT fk_rails_26b155474a FOREIGN KEY (user_id) REFERENCES users(id);
+
+
+--
 -- Name: pages fk_rails_2ab8ce6cc4; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
@@ -1415,6 +1487,14 @@ ALTER TABLE ONLY catalogs
 
 ALTER TABLE ONLY pages
     ADD CONSTRAINT fk_rails_73cabaed53 FOREIGN KEY (creator_id) REFERENCES users(id);
+
+
+--
+-- Name: exports fk_rails_7563b31b52; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY exports
+    ADD CONSTRAINT fk_rails_7563b31b52 FOREIGN KEY (catalog_id) REFERENCES catalogs(id);
 
 
 --
@@ -1636,4 +1716,6 @@ INSERT INTO schema_migrations (version) VALUES ('20180220093412');
 INSERT INTO schema_migrations (version) VALUES ('20180308085259');
 
 INSERT INTO schema_migrations (version) VALUES ('20180504082040');
+
+INSERT INTO schema_migrations (version) VALUES ('20180615090214');
 

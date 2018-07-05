@@ -156,6 +156,13 @@ fr:
       invited_to_access_html: "%{invited_by} vous a invité d'accéder %{catalog}."
       reviewer_role: Comme validateur de catalogue, vous allez pouvoir ajouter des entrées, éditer toutes les entrées, mais également valider des entrées en vue de leur publication.
       subject: "Vous êtes invité(e) à joindre %{catalog}"
+  export_mailer:
+    export:
+      export_available: "L'export %{category} demandé est disponible. Vous pouvez le télécharger en cliquant sur le lien ci-dessous."
+      download_export: "Télécharger l'export (validité: %{validity})"
+      export_logs: "Vous pouvez afficher toutes les exportations demandées pour le catalogue %{catalog_name}"
+      here: "ici"
+      subject: "Catima - l'export demandé est prêt"
   favorites:
     index:
       title: "Mes favoris"
@@ -264,6 +271,10 @@ fr:
   item_type: Type de fiche
   general: Général
   style: Style
+  export: Export
+  valid: "valide"
+  expired: "expiré"
+  download: "Télécharger"
 
   layouts:
     catalog_admin:
@@ -364,6 +375,16 @@ fr:
         no_item_types_defined: Aucun type de fiche a été défini.
         define_item_types: Veuillez s.v.p. d'abord définir au moins un type de fichier dans l'interface d'administration du catalogue.
 
+    exports:
+      index:
+        new_export: "Nouvel export (choisir le format)"
+        user: "Utilisateur"
+        request: "Requête"
+        format: "Format"
+        status: "Statut"
+        validity: "Validité"
+      create:
+        invalid_category: "Format d'exportation invalide"
 
     fields:
       choice_set_modals:

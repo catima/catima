@@ -156,6 +156,13 @@ en:
       invited_to_access_html: "%{invited_by} has invited you to access %{catalog}."
       reviewer_role: As a catalog reviewer, you will be able to add records, edit all the records, as well as approve records to be published to the public.
       subject: "You are invited to join %{catalog}"
+  export_mailer:
+    export:
+      export_available: "The requested %{category} export is available. You can download it by clicking on the link below."
+      download_export: "Download export (validity: %{validity})"
+      export_logs: "Your can view all the requested exports for the %{catalog_name} catalog"
+      here: "here"
+      subject: "Catima - requested export is ready"
   favorites:
     index:
       title: "My favorites"
@@ -264,6 +271,10 @@ en:
   item_type: Item type
   general: General
   style: Style
+  export: Export
+  valid: "valid"
+  expired: "expired"
+  download: "Download"
 
   layouts:
     catalog_admin:
@@ -363,6 +374,17 @@ en:
         catalog_data: "%{catalog} Data"
         no_item_types_defined: No item types are defined yet.
         define_item_types: Please define catalog item types in setup first.
+
+    exports:
+      index:
+        new_export: "New export (choose format)"
+        user: "User"
+        request: "Request"
+        format: "Format"
+        status: "Status"
+        validity: "Validity"
+      create:
+        invalid_category: "Export format invalid"
 
     fields:
       choice_set_modals:

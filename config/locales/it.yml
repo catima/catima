@@ -138,6 +138,13 @@ it:
       invited_to_access_html: "%{invited_by} ti ha invitato a accessere al catalogo %{catalog}."
       reviewer_role: Come validatore di catalogo sarete in grado di agginguere e modificare tutte le registrazione nel catalogo e di convalidare per la pubblicazione.
       subject: "Viene chiesto di unirsi %{catalog}"
+  export_mailer:
+    export:
+      export_available: "L'esportazione %{category} richiesta è disponibile. Puoi scaricarlo cliccando sul link sottostante."
+      download_export: "Scarica l'esportazione (validità: %{validity})"
+      export_logs: "Puoi visualizzare tutte le esportazioni richieste per il catalogo %{catalog_name}"
+      here: "qui"
+      subject: "Catima - l'esportazione richiesta è pronta"
   favorites:
     index:
       title: "I miei preferiti"
@@ -221,15 +228,30 @@ it:
   edit: Modificare
   actions: 'Azioni'
   duplicate: 'Duplicare'
-  
+  export: Esportare
+  valid: "valido"
+  expired: "scaduto"
+  download: "Scaricare"
+
   layouts:
     catalog_admin:
       setup:
         catalog_settings: "Impostazioni del catalogo"
-  
+
   catalog_admin:
     item_types:
       common_form_fields:
         display-options: "Opzioni di visualizzazione"
         show-empty-fields: "Mostra campi vuoti per questo tipo di oggetto"
         display-empty-fields: "Mostra campi vuoti"
+
+    exports:
+      index:
+        new_export: "Nuova esportazione (scegli il formato)"
+        user: "Utente"
+        request: "Richiesta"
+        format: "Formato"
+        status: "Stato"
+        validity: "Validità"
+      create:
+        invalid_category: "Formato di esportazione non valido"

@@ -142,6 +142,13 @@ de:
       invited_to_access_html: "%{invited_by} hat Sie eingeladen %{catalog} zu konsultieren."
       reviewer_role: Als Katalog-Validator können Sie Einträge erstellen und editieren, sowie auch Einträge zur Publikation annehmen.
       subject: "Sie wurden eingeladen bei %{catalog} teilzunehmen"
+  export_mailer:
+    export:
+      export_available: "Der angeforderte %{category}-Export ist verfügbar. Sie können es herunterladen, indem Sie auf den folgenden Link klicken."
+      download_export: "Laden Sie den Export herunter (Gültigkeit: %{validity})"
+      export_logs: "Sie können alle angeforderten Exporte für den %{catalog_name}-Katalog anzeigen"
+      here: "Hier"
+      subject: "Catima - Der angeforderte Export ist fertig"
   locales:
     de: Deutsch
     en: Englisch
@@ -237,6 +244,10 @@ de:
   not_visible: Nicht sichtbar
   general: Allgemeines
   style: Stil
+  export: Export
+  valid: "gültig"
+  expired: "abgelaufen"
+  download: "Herunterladen"
 
   layouts:
     catalog_admin:
@@ -311,6 +322,17 @@ de:
         catalog_data: "%{catalog} Data"
         no_item_types_defined: No item types are defined yet.
         define_item_types: Please define catalog item types in setup first.
+
+    exports:
+      index:
+        new_export: "Neuer Export (Format wählen)"
+        user: "Benutzer"
+        request: "Anfordern"
+        format: "Format"
+        status: "Status"
+        validity: "Gültigkeit"
+      create:
+        invalid_category: "Exportformat ungültig"
 
     fields:
       choice_set_modals:

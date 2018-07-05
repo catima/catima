@@ -1,0 +1,49 @@
+# == Schema Information
+#
+# Table name: exports
+#
+#  catalog_id :integer
+#  category   :string
+#  created_at :datetime         not null
+#  id         :integer          not null, primary key
+#  status     :string
+#  updated_at :datetime         not null
+#  user_id    :integer
+#
+
+one:
+  id: 1
+  user: one_admin
+  catalog: one
+  category: "catima"
+  status: "ready"
+
+two:
+  id: 2
+  user: two_admin
+  catalog: two
+  category: "catima"
+  status: "ready"
+
+one_expired:
+  id: 3
+  user: one_admin
+  catalog: one
+  category: "catima"
+  status: "ready"
+  created_at: <%= Time.zone.now - 8.days %>
+  updated_at: <%= Time.zone.now - 8.days %>
+
+one_processing:
+  id: 4
+  user: one_admin
+  catalog: one
+  category: "catima"
+  status: "processing"
+
+one_error:
+  id: 5
+  user: one_admin
+  catalog: one
+  category: "catima"
+  status: "error"

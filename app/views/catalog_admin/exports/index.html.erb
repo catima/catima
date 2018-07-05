@@ -1,0 +1,46 @@
+<% provide(:title, t('export').pluralize) %>
+
+<% provide(:actions) do %>
+  <span class="dropdown">
+    <button class="btn btn-xs btn-default dropdown-toggle" type="button" id="add-field-dropdown" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+      <%= fa_icon(:"plus-square", :text => t(".new_export")) %>
+      <span class="caret"></span>
+    </button>
+    <ul class="dropdown-menu dropdown-menu-right" aria-labelledby="add-field-dropdown">
+      <% Export::CATEGORY_OPTIONS.each do |format| %>
+        <li>
+          <%= link_to(format.capitalize, catalog_admin_exports_path(:category => format), method: :post) %>
+        </li>
+      <% end %>
+    </ul>
+  </span>
+<% end %>
+
+<table class="table">
+  <thead>
+  <tr>
+    <th><%= t(".user") %></th>
+    <th><%= t(".request") %></th>
+    <th><%= t(".format") %></th>
+    <th><%= t(".status") %></th>
+    <th><%= t(".validity") %></th>
+    <th></th>
+  </tr>
+  </thead>
+  <tbody>
+  <% @exports.each do |export| %>
+    <tr>
+      <td><%= export.user.email %></td>
+      <td><%= l(export.created_at, :format => :long) %></td>
+      <td><%= export.category %></td>
+      <td><%= status_badge(export) %></td>
+      <td><%= validity_badge(export) %></td>
+      <td>
+        <% if policy(export).download? %>
+          <%= render "shared/actions_dropdown", :model => export %>
+        <% end %>
+      </td>
+    </tr>
+  <% end %>
+  </tbody>
+</table>

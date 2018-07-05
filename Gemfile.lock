@@ -503,6 +503,7 @@ DEPENDENCIES
   rollbar (~> 2.12)
   rubocop (~> 0.51.0)
   ruby-progressbar
+  rubyzip (~> 1.2.1)
   sass-rails (~> 5.0)
   secure_headers (~> 2.4.4)
   select2-rails (~> 4.0)
@@ -530,4 +531,4 @@ DEPENDENCIES
   zaru (~> 0.1.0)
 
 BUNDLED WITH
-   1.16.0
+   1.16.1
