@@ -15,11 +15,11 @@
 #  uuid                    :string
 #
 
-class Choice < ActiveRecord::Base
+class Choice < ApplicationRecord
   include HasTranslations
 
   belongs_to :catalog
-  belongs_to :category
+  belongs_to :category, optional: true
   belongs_to :choice_set
 
   store_translations :short_name, :required => true

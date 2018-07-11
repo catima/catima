@@ -11,7 +11,7 @@
 #  user_id    :integer
 #
 
-class Export < ActiveRecord::Base
+class Export < ApplicationRecord
   CATEGORY_OPTIONS = %w(catima).freeze
   STATUS_OPTIONS = %w(error processing ready).freeze
 

@@ -31,7 +31,7 @@
 #
 
 # rubocop:disable Metrics/ClassLength
-class Field < ActiveRecord::Base
+class Field < ApplicationRecord
   TYPES = {
     "boolean" => "Field::Boolean",
     "choice" => "Field::ChoiceSet",

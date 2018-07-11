@@ -11,7 +11,7 @@
 #  uuid           :string
 #
 
-class Category < ActiveRecord::Base
+class Category < ApplicationRecord
   include HasDeactivation
   include HasFields
   include HasHumanId

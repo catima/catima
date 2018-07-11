@@ -20,12 +20,12 @@
 #  visible             :boolean          default(TRUE), not null
 #
 
-class Catalog < ActiveRecord::Base
+class Catalog < ApplicationRecord
   include AvailableLocales
   include HasDeactivation
   include HasSlug
 
-  belongs_to :custom_root_page, class_name: "Page"
+  belongs_to :custom_root_page, class_name: "Page", optional: true
 
   before_validation :strip_empty_language
   before_validation :check_activation_status
@@ -49,7 +49,6 @@ class Catalog < ActiveRecord::Base
   has_many :all_item_types, :class_name => "ItemType", :dependent => :destroy
   has_many :pages, :dependent => :destroy
   has_many :menu_items, :dependent => :destroy
-  has_many :exports, :dependent => :destroy
 
   attachment :logo, type: :image
   attachment :navlogo, type: :image

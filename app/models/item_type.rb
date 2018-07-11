@@ -15,7 +15,7 @@
 
 require_dependency 'field/choice_set'
 
-class ItemType < ActiveRecord::Base
+class ItemType < ApplicationRecord
   include HasDeactivation
   include HasFields
   include HasTranslations

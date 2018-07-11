@@ -10,7 +10,7 @@
 #  user_id    :integer
 #
 
-class CatalogPermission < ActiveRecord::Base
+class CatalogPermission < ApplicationRecord
   # Note that the roles are purposely in ascending order of privilege.
   # This is to help the implementation of `role_at_least?`.
   ROLE_OPTIONS = %w(user member editor super-editor reviewer admin).freeze

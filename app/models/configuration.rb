@@ -9,8 +9,8 @@
 #  updated_at         :datetime         not null
 #
 
-class Configuration < ActiveRecord::Base
-  belongs_to :default_catalog, :class_name => "Catalog"
+class Configuration < ApplicationRecord
+  belongs_to :default_catalog, :class_name => "Catalog", optional: true
   validates_presence_of :root_mode
   validates_inclusion_of :root_mode, :in => %w(listing custom redirect)
   validate :cannot_redirect_if_no_active_catalogs

@@ -12,7 +12,7 @@
 #  uuid           :string
 #
 
-class ChoiceSet < ActiveRecord::Base
+class ChoiceSet < ApplicationRecord
   include HasDeactivation
 
   belongs_to :catalog

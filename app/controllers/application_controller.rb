@@ -2,11 +2,8 @@ class ApplicationController < ActionController::Base
   include Pundit
 
   protect_from_forgery :with => :exception
-  ensure_security_headers
 
   prepend_view_path TemplateStorage.resolver
-
-  rescue_from Pundit::NotAuthorizedError, with: :user_not_authorized
 
   before_action :set_locale
 
@@ -17,11 +14,6 @@ class ApplicationController < ActionController::Base
   end
 
   private
-
-  def user_not_authorized
-    flash[:alert] = "You are not authorized to perform this action."
-    redirect_to(root_path)
-  end
 
   # Overridden in other controllers to indicate whether the controller is
   # scoped to a specific catalog.

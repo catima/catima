@@ -18,7 +18,7 @@
 #  uuid           :string
 #
 
-class Item < ActiveRecord::Base
+class Item < ApplicationRecord
   include DataStore::Macros
   include Review::Macros
   include Search::Macros
