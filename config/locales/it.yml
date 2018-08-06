@@ -228,6 +228,10 @@ it:
         catalog_settings: "Impostazioni del catalogo"
 
   catalog_admin:
+
+    catalog:
+      bounds: Estensione spaziale predefinita dei campi geografici
+
     item_types:
       common_form_fields:
         display-options: "Opzioni di visualizzazione"
