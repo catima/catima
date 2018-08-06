@@ -49,6 +49,7 @@ class Catalog < ActiveRecord::Base
   has_many :all_item_types, :class_name => "ItemType", :dependent => :destroy
   has_many :pages, :dependent => :destroy
   has_many :menu_items, :dependent => :destroy
+  has_many :exports, :dependent => :destroy
 
   attachment :logo, type: :image
   attachment :navlogo, type: :image

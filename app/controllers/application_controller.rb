@@ -6,6 +6,8 @@ class ApplicationController < ActionController::Base
 
   prepend_view_path TemplateStorage.resolver
 
+  rescue_from Pundit::NotAuthorizedError, with: :user_not_authorized
+
   before_action :set_locale
 
   # This is a hook for Devise so that it knows to include the required :locale
@@ -15,6 +17,11 @@ class ApplicationController < ActionController::Base
   end
 
   private
+
+  def user_not_authorized
+    flash[:alert] = "You are not authorized to perform this action."
+    redirect_to(root_path)
+  end
 
   # Overridden in other controllers to indicate whether the controller is
   # scoped to a specific catalog.

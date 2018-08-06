@@ -43,5 +43,10 @@
 # Ignore RSpec internal files
 spec/examples.txt
 
+# Ignore exports except test files
+/exports/*
+!/exports/1_one.test
+!/exports/2_two.test
+
 # Ignore RubyMine files
 .idea
