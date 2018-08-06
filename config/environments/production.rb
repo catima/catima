@@ -109,5 +109,5 @@ end
 # For building URLs in API resource links
 Rails.application.routes.default_url_options = {
   :host => ENV.fetch('DOMAIN'),
-  :protocol => ENV.FETCH('PROTOCOL')
+  :protocol => ENV.fetch('PROTOCOL')
 }
