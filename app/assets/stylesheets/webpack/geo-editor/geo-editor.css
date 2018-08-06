@@ -1,0 +1,35 @@
+.geo-edit-pane {
+  background-color: rgba(0, 0, 0, 0.75);
+  color: #fff;
+  padding: 10px;
+  font-size: 11px;
+}
+
+.geo-edit-pane input {
+  width: 100px;
+  color: #000;
+}
+
+.geo-edit-pane label {
+  font-weight: normal;
+}
+
+.leaflet-create-marker {
+  width: 34px;
+  height: 34px;
+  font-size: 22px;
+  border-radius: 2px;
+  background-color: #fff;
+  text-align: center;
+  color: #000;
+  cursor: pointer;
+  border: 2px solid rgba(0,0,0,0.2);
+  background-repeat: no-repeat;
+  background-image: url('/icons/new-marker.png');
+  background-size: 45px;
+  background-position: -7px -7px;
+}
+
+.leaflet-create-marker:hover {
+  background-color: #f4f4f4;
+}

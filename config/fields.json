@@ -4,6 +4,12 @@
 // listed, the catalog administrator will be shown a drop-down list so they can
 // decide which one to use.
 //
+// React components to be used are stored separately for each field instance.
+// Changing a component requires therefore updating the field instances.
+//
+// Additional properties for the fields can be defined for each field type
+// in the model's `edit_props` and `view_props` methods.
+//
 // This is the default configuration used for all catalogs. Each catalog may
 // override it by supplying their own file in the following location:
 //

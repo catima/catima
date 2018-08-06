@@ -294,6 +294,7 @@ fr:
       edit_settings: 'Éditer les paramètres du catalogue'
       save_settings: 'Enregistrer'
       save_style: 'Enregistrer le style'
+      bounds: Étendue spatiale par défaut des champs géographiques
 
     catalogs:
       common_form_fields:

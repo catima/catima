@@ -1,0 +1,9 @@
+<% if catalog.item_types.any? %>
+  <%= f.collection_select(
+        :item_type,
+        catalog.item_types.select { |it| it.fields.where(:type => 'Field::Geometry').count > 0 },
+        :id,
+        :name,
+        {:include_blank => false}
+      ) %>
+<% end %>

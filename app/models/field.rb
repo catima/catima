@@ -30,6 +30,7 @@
 #  uuid                     :string
 #
 
+# rubocop:disable Metrics/ClassLength
 class Field < ActiveRecord::Base
   TYPES = {
     "boolean" => "Field::Boolean",
@@ -159,6 +160,16 @@ class Field < ActiveRecord::Base
   # field uuids.
   def prepare_value(value)
     {uuid => value}
+  end
+
+  # Returns additional properties for React for editing component
+  def edit_props
+    {}
+  end
+
+  # Returns additional properties for React for viewing component
+  def view_props
+    {}
   end
 
   # Tests whether this field is appropriate to display/validate for the given

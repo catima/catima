@@ -294,6 +294,7 @@ en:
       edit_settings: 'Edit catalog settings'
       save_settings: 'Save'
       save_style: 'Save style'
+      bounds: Default spatial extent for geographic fields
 
     catalogs:
       common_form_fields:

@@ -37,6 +37,10 @@ class Field::Geometry < ::Field
     false
   end
 
+  def edit_props
+    { "bounds" => catalog.default_bounds }
+  end
+
   private
 
   def build_validators

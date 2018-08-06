@@ -11,6 +11,7 @@ class GeoViewer extends React.Component {
 
   static propTypes = {
     features: PropTypes.array.isRequired,
+    bounds: PropTypes.object
   };
 
   constructor(props){

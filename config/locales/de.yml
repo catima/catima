@@ -267,6 +267,7 @@ de:
       edit_settings: 'Edit catalog settings'
       save_settings: 'Save'
       save_style: 'Stil sichern'
+      bounds: Allgemeine räumliche Ausdehnung für geografische Daten
 
     categories:
       edit:
