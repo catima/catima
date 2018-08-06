@@ -29,7 +29,6 @@ class TemplateEditor extends React.Component {
         ['para', ['ul', 'ol', 'paragraph']],
         ['height', ['height']],
         ['insert', ['picture', 'link', 'table', 'hr']],
-        ['misc', ['codeview']],
         ['templateEditor', ['fieldsMenu', 'itemLinkButton']]
       ],
       buttons: {
