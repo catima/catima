@@ -73,7 +73,7 @@ Rails.application.configure do
   config.action_mailer.delivery_method = :smtp
   config.action_mailer.smtp_settings = {
     :address => ENV.fetch("MAIL_SMTP_ADDRESS"),
-    :port => 587,
+    :port => ENV.fetch("MAIL_SMTP_PORT"),
     :domain => ENV.fetch('MAIL_SMTP_DOMAIN')
   }
   unless ENV.fetch('MAIL_SMTP_AUTH') == '0'
