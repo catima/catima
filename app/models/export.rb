@@ -24,9 +24,7 @@ class Export < ActiveRecord::Base
   validates_inclusion_of :category, :in => CATEGORY_OPTIONS
   validates_inclusion_of :status, :in => STATUS_OPTIONS
 
-  after_create do
-    ExportWorker.perform_async(id, category)
-  end
+  after_commit :export_catalog, on: :create
 
   def pathname
     ext = Rails.env.test? ? "test" : "zip"
@@ -47,5 +45,9 @@ class Export < ActiveRecord::Base
 
   def self.validity
     1.week
+  end
+
+  def export_catalog
+    ExportWorker.perform_async(id, category)
   end
 end
