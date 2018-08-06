@@ -11,7 +11,7 @@ class CatalogAdmin::ExportsController < CatalogAdmin::BaseController
     build_export(catalog)
     authorize(@export)
     # Export async task (Sidekiq) is triggered
-    # with the after_create callback
+    # with the after_commit callback
     Export.create(
       user: current_user,
       catalog: catalog,
