@@ -74,18 +74,23 @@ Rails.application.configure do
   config.action_mailer.smtp_settings = {
     :address => ENV.fetch("MAIL_SMTP_ADDRESS"),
     :port => 587,
-    :enable_starttls_auto => true,
-    :user_name => ENV.fetch("MAIL_SMTP_USERNAME"),
-    :password => ENV.fetch("MAIL_SMTP_PASSWORD"),
-    :authentication => "login",
-    :domain => "catima.unil.ch"
+    :domain => ENV.fetch('MAIL_SMTP_DOMAIN')
   }
+  unless ENV.fetch('MAIL_SMTP_AUTH') == '0'
+    config.action_mailer.smtp_settings.merge!(
+      :enable_starttls_auto => true,
+      :user_name => ENV.fetch("MAIL_SMTP_USERNAME"),
+      :password => ENV.fetch("MAIL_SMTP_PASSWORD"),
+      :authentication => "login"
+    )
+  end
+
   config.action_mailer.raise_delivery_errors = true
   config.action_mailer.default_url_options = {
-    host: "catima.unil.ch",
-    protocol: "https"
+    host: ENV.fetch('DOMAIN'),
+    protocol: ENV.fetch('PROTOCOL')
   }
-  config.action_mailer.asset_host = "https://catima.unil.ch"
+  config.action_mailer.asset_host = ENV.fetch('ASSET_HOST')
 
   # Enable locale fallbacks for I18n (makes lookups for any locale fall back to
   # the I18n.default_locale when a translation cannot be found).
@@ -103,6 +108,6 @@ end
 
 # For building URLs in API resource links
 Rails.application.routes.default_url_options = {
-  :host => "catima.unil.ch",
-  :protocol => "https"
+  :host => ENV.fetch('DOMAIN'),
+  :protocol => ENV.FETCH('PROTOCOL')
 }
