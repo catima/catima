@@ -22,7 +22,7 @@ module CatalogAdmin::ItemTypesHelper
     klass = "list-group-item"
     klass << " active" if active
 
-    label = [h(item_type.name_plural)]
+    label = [h(truncate(item_type.name_plural, length: 25))]
     label << content_tag(
       :span,
       number_with_delimiter(item_type.items.count),
