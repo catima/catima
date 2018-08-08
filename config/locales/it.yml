@@ -240,9 +240,6 @@ it:
 
   catalog_admin:
 
-    catalog:
-      bounds: Estensione spaziale predefinita dei campi geografici
-
     item_types:
       common_form_fields:
         display-options: "Opzioni di visualizzazione"
@@ -260,3 +257,7 @@ it:
       create:
         invalid_category: "Formato di esportazione non valido"
 
+    fields:
+      geometry_option_inputs:
+        bounds: Estensione spaziale predefinita
+        bounds_help: Se modificata, la mappa utilizzerà l'area selezionata come estensione spaziale predefinita
