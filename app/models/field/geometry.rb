@@ -31,14 +31,23 @@
 #
 
 class Field::Geometry < ::Field
-  # TODO: CRS?
+  store_accessor :options, :bounds
 
   def human_readable?
     false
   end
 
   def edit_props
-    { "bounds" => catalog.default_bounds }
+    { "bounds" => default_bounds }
+  end
+
+  def custom_field_permitted_attributes
+    %i(bounds)
+  end
+
+  def default_bounds(xmin=-60, xmax=60, ymin=-45, ymax=65)
+    geo_bounds = bounds ? JSON.parse(bounds) : { 'xmin' => xmin, 'xmax' => xmax, 'ymin' => ymin, 'ymax' => ymax }
+    geo_bounds.slice('xmin', 'xmax', 'ymin', 'ymax')
   end
 
   private

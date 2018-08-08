@@ -10,8 +10,7 @@ const subs = ['server', 'services'];
 class GeoViewer extends React.Component {
 
   static propTypes = {
-    features: PropTypes.array.isRequired,
-    bounds: PropTypes.object
+    features: PropTypes.array.isRequired
   };
 
   constructor(props){

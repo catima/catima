@@ -294,7 +294,6 @@ fr:
       edit_settings: 'Éditer les paramètres du catalogue'
       save_settings: 'Enregistrer'
       save_style: 'Enregistrer le style'
-      bounds: Étendue spatiale par défaut des champs géographiques
 
     catalogs:
       common_form_fields:
@@ -405,6 +404,9 @@ fr:
         must_be_unique: Doit être unique
         save_field: Enregistrer le champ
         create_field: Créer le champ
+      geometry_option_inputs:
+        bounds: Étendue spatiale par défaut
+        bounds_help: Si modifiée, la carte utilisera la zone sélectionnée comme étendue spatiale par défaut
       decimal_option_inputs:
         min_value: "Valeur minimale (optionnel)"
         max_value: "Valeur maximale (optionnel)"

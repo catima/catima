@@ -294,7 +294,6 @@ en:
       edit_settings: 'Edit catalog settings'
       save_settings: 'Save'
       save_style: 'Save style'
-      bounds: Default spatial extent for geographic fields
 
     catalogs:
       common_form_fields:
@@ -409,6 +408,9 @@ en:
         editor_component_help: Choose a React JS component that will be used for data entry.
         display_component: React component
         display_component_help: Choose a React JS component that will be used for display on the public site.
+      geometry_option_inputs:
+        bounds: Default spatial extent
+        bounds_help: If modified, the map will use the selected area as the default spacial extent
       decimal_option_inputs:
         min_value: "Minimum value (optional)"
         max_value: "Maximum value (optional)"

@@ -19,6 +19,8 @@
     "json-beautify": "^1.0.1",
     "leaflet": "^1.2.0",
     "leaflet-draw": "^0.4.13",
+    "leaflet-editable": "^1.1.0",
+    "leaflet.path.drag": "^0.0.6",
     "mammoth": "git://github.com/catima/mammoth.js.git#b789554",
     "node-sass": "^4.7.2",
     "prop-types": "^15.6.0",

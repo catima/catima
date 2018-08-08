@@ -3101,6 +3101,14 @@ leaflet-draw@^0.4.13:
   version "0.4.13"
   resolved "https://registry.yarnpkg.com/leaflet-draw/-/leaflet-draw-0.4.13.tgz#b9467d8d6523edc5912e93727951005b77b62895"
 
+leaflet-editable@^1.1.0:
+  version "1.1.0"
+  resolved "https://registry.yarnpkg.com/leaflet-editable/-/leaflet-editable-1.1.0.tgz#f777597a40a81a273f287b489fd0fe5ccd60c8d0"
+
+leaflet.path.drag@^0.0.6:
+  version "0.0.6"
+  resolved "https://registry.yarnpkg.com/leaflet.path.drag/-/leaflet.path.drag-0.0.6.tgz#6d9c3af0b9d7b032544ae16bfde688f0160514a0"
+
 leaflet@^1.2.0:
   version "1.2.0"
   resolved "https://registry.yarnpkg.com/leaflet/-/leaflet-1.2.0.tgz#fd5d93d9cb00091f5f8a69206d0d6744c1c82697"

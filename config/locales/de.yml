@@ -267,7 +267,6 @@ de:
       edit_settings: 'Edit catalog settings'
       save_settings: 'Save'
       save_style: 'Stil sichern'
-      bounds: Allgemeine räumliche Ausdehnung für geografische Daten
 
     categories:
       edit:
@@ -356,6 +355,9 @@ de:
         editor_component_help: Choose a React JS component that will be used for data entry.
         display_component: React component
         display_component_help: Choose a React JS component that will be used for display on the public site.
+      geometry_option_inputs:
+        bounds: Allgemeine räumliche Ausdehnung
+        bounds_help: Wenn die Karte geändert wird, verwendet sie den ausgewählten Bereich als standardmäßige räumliche Ausdehnung
       decimal_option_inputs:
         min_value: "Minimum value (optional)"
         max_value: "Maximum value (optional)"
