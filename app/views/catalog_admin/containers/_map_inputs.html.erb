@@ -6,4 +6,14 @@
         :name,
         {:include_blank => false}
       ) %>
+
+  <%= f.number_field(
+        :height,
+        :label => t('.height_label'),
+        :help => t('.height_default', height: Container::Map::DEFAULT_MAP_HEIGHT)
+      ) %>
+<% else %>
+  <div class="alert alert-warning">
+    <%= t('catalog_admin.containers.item_type_warning') %>
+  </div>
 <% end %>

@@ -14,11 +14,12 @@
 #
 
 class Container::Map < ::Container
-  store_accessor :content, :item_type, :base_layers
-  delegate :default_bounds, :to => :catalog
+  DEFAULT_MAP_HEIGHT = 400
+
+  store_accessor :content, :item_type, :base_layers, :height
 
   def custom_container_permitted_attributes
-    %i(item_type geom_field base_layers)
+    %i(item_type geom_field base_layers height)
   end
 
   def geojson
@@ -39,6 +40,10 @@ class Container::Map < ::Container
 
   def describe
     super.merge('content' => { 'item_type' => item_type.nil? ? nil : ItemType.find(item_type).slug })
+  end
+
+  def map_height
+    height.blank? ? DEFAULT_MAP_HEIGHT : height
   end
 
   def update_from_json(d)

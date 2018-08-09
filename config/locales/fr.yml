@@ -355,6 +355,7 @@ fr:
         create_choice_set: Créer ensemble de choix
 
     containers:
+      item_type_warning: "Vous devez créer au moins un type de fiche pour utiliser ce type de conteneur"
       common_form_fields:
         save_container: Enregistrer conteneur
         create_container: Créer conteneur
@@ -362,6 +363,9 @@ fr:
         edit_container: "Éditer conteneur «%{container}»"
       new:
         new_container: "Nouveau conteneur «%{container}»"
+      map_inputs:
+        height_label: "Hauteur de la carte (en pixel)"
+        height_default: "La valeur par défaut est de %{height}"
 
     csv_imports:
       new:
@@ -546,8 +550,3 @@ fr:
       setup_item_types_nav:
         item_types: 'Types de fiche'
         new_item_type: 'Nouveau type de fiche'
-
-
-
-
-

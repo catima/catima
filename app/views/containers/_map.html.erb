@@ -1,7 +1,6 @@
 <textarea id="geojson-<%= container.item_type %>" style="display: none;"><%= container.geojson %></textarea>
-<textarea id="bounds" style="display: none;"><%= container.default_bounds.to_json.html_safe %></textarea>
 <input type="hidden" id="catalog_slug" value="<%= container.catalog.slug %>" />
-<div id="map-<%= container.item_type %>" style="width: 100%; height: 400px;"></div>
+<div id="map-<%= container.item_type %>" style="width: 100%; height: <%= container.map_height %>px;"></div>
 
 <script src="https://unpkg.com/leaflet.markercluster@1.3.0/dist/leaflet.markercluster.js"></script>
 <link href="https://unpkg.com/leaflet.markercluster@1.3.0/dist/MarkerCluster.css" rel="stylesheet" />
@@ -11,32 +10,33 @@
   var catalog = document.getElementById('catalog_slug').value;
   var map = L.map('map-<%= container.item_type %>');
   var locale = '<%= I18n.locale %>';
-  L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-    attribution: 'Map data &copy; <a href="https://www.openstreetmap.org/">OpenStreetMap</a> contributors, <a href="https://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>',
-    maxZoom: 18
-  }).addTo(map);
-
   var fc = JSON.parse(document.getElementById('geojson-<%= container.item_type %>').innerText);
-  var items_layer = L.geoJSON(fc, {
-    onEachFeature: function(feature, layer) {
-      layer.on('click', function(e){
-        var marker = e.target;
-        if (marker._popup == null) {
-          marker.bindPopup(_t.loading[locale]).openPopup();
-          loadPopupContent(marker);
-        }
-      });
-     }
-  });
-  var fc_group = L.markerClusterGroup();
-  fc_group.addLayer(items_layer)
-  map.addLayer(fc_group);
 
-  // Zoom to extent of item geometries
-  var env = JSON.parse(document.getElementById('bounds').innerText);
-  var bbox = [[env.ymin, env.xmin], [env.ymax, env.xmax]];
-  if (fc.features.length > 0) bbox = fc_group.getBounds();
-  map.fitBounds(bbox, {padding: [40, 40]});
+  if (fc.features.length > 0) {
+    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+      attribution: 'Map data &copy; <a href="https://www.openstreetmap.org/">OpenStreetMap</a> contributors, <a href="https://creativecommons.org/licenses/by-sa/2.0/">CC-BY-SA</a>',
+      maxZoom: 18
+    }).addTo(map);
+
+    var items_layer = L.geoJSON(fc, {
+      onEachFeature: function(feature, layer) {
+        layer.on('click', function(e){
+          var marker = e.target;
+          if (marker._popup == null) {
+            marker.bindPopup(_t.loading[locale]).openPopup();
+            loadPopupContent(marker);
+          }
+        });
+       }
+    });
+
+    var fc_group = L.markerClusterGroup();
+    fc_group.addLayer(items_layer);
+    map.addLayer(fc_group);
+
+    // Zoom to extent of item geometries
+    map.fitBounds(fc_group.getBounds());
+  }
 
   // Loads the content for the marker popup
   function loadPopupContent(marker){
