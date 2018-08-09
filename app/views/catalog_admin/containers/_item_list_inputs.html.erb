@@ -1,3 +1,7 @@
 <% if catalog.item_types.any? %>
   <%= item_type_select(f) %>
+<% else %>
+  <div class="alert alert-warning">
+    <%= t('catalog_admin.containers.item_type_warning') %>
+  </div>
 <% end %>

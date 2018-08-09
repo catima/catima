@@ -223,9 +223,7 @@ it:
   style: Stile
   legend_help: "Se selezionato, è possibile aggiungere una legenda all'immagine."
   legend_enable: "Aggiungi una legenda"
-  delete: Elimina
   delete_confirm: "Sei sicuro di voler eliminare “%{model}”?"
-  edit: Modificare
   actions: 'Azioni'
   duplicate: 'Duplicare'
   export: Esportare
@@ -261,3 +259,8 @@ it:
       geometry_option_inputs:
         bounds: Estensione spaziale predefinita
         bounds_help: Se modificata, la mappa utilizzerà l'area selezionata come estensione spaziale predefinita
+
+    containers:
+      map_inputs:
+        height_label: "Altezza della mappa (in pixel)"
+        height_default: "Il valore predefinito è %{height}"

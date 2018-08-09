@@ -355,6 +355,7 @@ en:
         create_choice_set: Create choice set
 
     containers:
+      item_type_warning: "You need to create at least one item type to use this type of container"
       common_form_fields:
         save_container: Save container
         create_container: Create container
@@ -362,6 +363,9 @@ en:
         edit_container: "Edit %{container} container"
       new:
         new_container: "New %{container} container"
+      map_inputs:
+        height_label: "Map height (in pixel)"
+        height_default: "Default value is %{height}"
 
     csv_imports:
       new:
@@ -549,6 +553,3 @@ en:
       setup_item_types_nav:
         item_types: 'Item types'
         new_item_type: 'New item type'
-
-
-

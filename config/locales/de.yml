@@ -310,6 +310,9 @@ de:
         edit_container: "Edit %{container} container"
       new:
         new_container: "New %{container} container"
+      map_inputs:
+        height_label: "Kartenhöhe (in Pixel)"
+        height_default: "Der Standardwert ist %{height}"
 
     csv_imports:
       new:
