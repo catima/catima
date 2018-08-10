@@ -27,6 +27,8 @@
   <%= f.check_box(:visible) %>
 <% end %>
 
+<%# TODO: remove if global bounds are not necessary %>
+<!--
 <div class="form-group">
   <label class="control-label" for="catalog_bounds"><%= t("catalog_admin.catalog.bounds") %></label>
   <textarea class="hidden form-control" name="catalog[bounds]" id="catalog_bounds"><%= @catalog.bounds.nil? ? '' : @catalog.bounds.to_json.html_safe %></textarea>
@@ -69,3 +71,4 @@
   });
 
 </script>
+-->
