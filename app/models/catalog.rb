@@ -118,6 +118,7 @@ class Catalog < ActiveRecord::Base
     slug.tr('-', '_')
   end
 
+  # TODO: remove if global bounds are not necessary (remove also "bounds" db column)
   def default_bounds
     bbox = { 'xmin' => -60, 'xmax' => 60, 'ymin' => -45, 'ymax' => 65 }
     bbox.merge(bounds || {}).slice('xmin', 'xmax', 'ymin', 'ymax')
