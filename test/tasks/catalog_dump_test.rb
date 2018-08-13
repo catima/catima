@@ -1,4 +1,6 @@
 require "test_helper"
+load './lib/tasks/catalog/load.rake'
+load './lib/tasks/catalog/dump.rake'
 
 def assert_equal_files(f1, f2)
   assert_equal(File.open(f1, &:read), File.open(f2, &:read))
