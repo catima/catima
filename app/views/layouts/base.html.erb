@@ -4,6 +4,21 @@
   <head>
     <!-- Viim Core <%= Rails.application.config.version %> (<%= l(Rails.application.config.version_time) %>) -->
 
+    <%# Include jQuery and some other libraries that are used both in Rails and React JS %>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/jquery-minicolors/2.2.6/jquery.minicolors.min.css" integrity="sha256-2RwM3b9l2phMxtm6wE9pe2qUDY4J+IONK0lyuXH9mzM=" crossorigin="anonymous" />
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-minicolors/2.2.6/jquery.minicolors.min.js" integrity="sha256-V5ebkEjJU7qHZIKg2pzzKiH/Ghw1AJgRfKvgMyw09ug=" crossorigin="anonymous"></script>
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.10/summernote.css" integrity="sha256-3en7oGyoTD7A1GPFbWeqdIGvDlNWU5+4oWgJQE2dnQs=" crossorigin="anonymous" />
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/summernote/0.8.10/summernote.min.js" integrity="sha256-uvqllsjdlExrP0kB/YNZeK+Lt/Knmkf3bPJK+uDiQ8Q=" crossorigin="anonymous"></script>
+
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.5/css/select2.min.css" integrity="sha256-xJOZHfpxLR/uhh1BwYFS5fhmOAdIRQaiOul5F/b7v3s=" crossorigin="anonymous" />
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/select2/4.0.5/js/select2.min.js" integrity="sha256-FA14tBI8v+/1BtcH9XtJpcNbComBEpdawUZA6BPXRVw=" crossorigin="anonymous"></script>
+
     <%= stylesheet_link_tag("application", :media => "all") %>
 
     <%= javascript_include_async_tag("application") %>
@@ -17,8 +32,8 @@
     <%# Specifies the default name of home screen bookmark in iOS 6+ %>
     <meta name="apple-mobile-web-app-title" content="CATIMA">
 
-    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/leaflet/1.2.0/leaflet.css">
-    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/leaflet.draw/0.4.2/leaflet.draw.css"/>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.2.0/leaflet.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet.draw/0.4.2/leaflet.draw.css"/>
 
     <%= csrf_meta_tags %>
 

@@ -49,7 +49,7 @@ class Item < ApplicationRecord
     sql = []
     sql << "data->>'#{field.uuid}' ASC" unless field.nil?
     sql << "created_at DESC"
-    order(sql.join(", "))
+    order(Arel.sql(sql.join(", ")))
   end
 
   def self.with_type(type)

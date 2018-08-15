@@ -49,12 +49,13 @@ class Catalog < ApplicationRecord
   has_many :all_item_types, :class_name => "ItemType", :dependent => :destroy
   has_many :pages, :dependent => :destroy
   has_many :menu_items, :dependent => :destroy
+  has_many :exports, :dependent => :destroy
 
   attachment :logo, type: :image
   attachment :navlogo, type: :image
 
   def self.sorted
-    order("LOWER(catalogs.name) ASC")
+    order(Arel.sql("LOWER(catalogs.name) ASC"))
   end
 
   def self.unique_inactive_slug(active_slug)

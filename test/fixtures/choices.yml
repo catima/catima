@@ -21,42 +21,42 @@ nested_bicycle:
   catalog: nested
   category: nested_bicycle
   choice_set: nested_vehicle_types
-  long_name_translations: '{ "long_name_en": "Bicycle" }'
-  short_name_translations: '{ "short_name_en": "Bicycle" }'
+  long_name_translations: { "long_name_en": "Bicycle" }
+  short_name_translations: { "short_name_en": "Bicycle" }
 
 nested_car:
   catalog: nested
   category: nested_car
   choice_set: nested_vehicle_types
-  long_name_translations: '{ "long_name_en": "Car" }'
-  short_name_translations: '{ "short_name_en": "Car" }'
+  long_name_translations: { "long_name_en": "Car" }
+  short_name_translations: { "short_name_en": "Car" }
 
 one_english:
   catalog: one
   choice_set: one_languages
-  long_name_translations: '{ "long_name_en": "English" }'
-  short_name_translations: '{ "short_name_en": "Eng" }'
+  long_name_translations: { "long_name_en": "English" }
+  short_name_translations: { "short_name_en": "Eng" }
 
 one_spanish:
   catalog: one
   choice_set: one_languages
-  long_name_translations: '{ "long_name_en": "Spanish" }'
-  short_name_translations: '{ "short_name_en": "Spanish" }'
+  long_name_translations: { "long_name_en": "Spanish" }
+  short_name_translations: { "short_name_en": "Spanish" }
 
 two_english:
   catalog: two
   choice_set: two_languages
-  long_name_translations: '{ "long_name_en": "English" }'
-  short_name_translations: '{ "short_name_en": "Eng" }'
+  long_name_translations: { "long_name_en": "English" }
+  short_name_translations: { "short_name_en": "Eng" }
 
 search_sedan:
   catalog: search
   choice_set: search_car_styles
-  long_name_translations: '{ "long_name_en": "Sedan" }'
-  short_name_translations: '{ "short_name_en": "Sedan" }'
+  long_name_translations: { "long_name_en": "Sedan" }
+  short_name_translations: { "short_name_en": "Sedan" }
 
 search_suv:
   catalog: search
   choice_set: search_car_styles
-  long_name_translations: '{ "long_name_en": "SUV" }'
-  short_name_translations: '{ "short_name_en": "SUV" }'
+  long_name_translations: { "long_name_en": "SUV" }
+  short_name_translations: { "short_name_en": "SUV" }

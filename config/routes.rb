@@ -147,7 +147,7 @@ Rails.application.routes.draw do
   # be subclasses of the default controller. Hence, we can simply rely on
   # the existence of a file with the appropriate name.
 
-  unless ActiveRecord::Migrator.needs_migration?
+  unless ActiveRecord::Base.connection.migration_context.needs_migration?
     Catalog.active.each do |catalog|
       next unless File.exist?(Rails.root.join('catalogs', catalog.slug, 'controllers', "#{catalog.snake_slug}_catalogs_controller.rb"))
       get "#{catalog.slug}/(:locale)",

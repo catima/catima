@@ -270,3 +270,4 @@ class Field < ApplicationRecord
     value
   end
 end
+# rubocop:enable Metrics/ClassLength

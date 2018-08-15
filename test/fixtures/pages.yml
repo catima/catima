@@ -18,14 +18,16 @@
 # Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
 
 one:
-  title: '{"en": "Page for Catalog One"}'
+  title: {"en": "Page for Catalog One"}
   catalog: one
   slug: one
+  creator: one_admin
 
 two:
-  title: '{"en": "Page for Catalog Two"}'
+  title: {"en": "Page for Catalog Two"}
   catalog: two
   slug: one
+  creator: two_admin
 
 created_by_two_editor:
   catalog: two

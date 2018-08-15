@@ -20,4 +20,4 @@ one_author_list_view:
   item_type: one_author_list_view
   default_for_list_view: true
   default_for_item_view: false
-  template: '{ "en": "{{ name }}", "fr": "{{ name }}" }'
+  template: { "en": "{{ name }}", "fr": "{{ name }}" }

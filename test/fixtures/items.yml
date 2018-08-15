@@ -40,17 +40,13 @@ one_author_empty_fields:
   catalog: one
   creator: one_admin
   item_type: one_author
-  data: |
-    {
-      "one_author_nickname_uuid": "Empty Author"
-    }
+  data: { "one_author_nickname_uuid": "Empty Author" }
 
 one_author_stephen_king:
   catalog: one
   creator: one_admin
   item_type: one_author
-  data: |
-    {
+  data: {
       "one_author_name_uuid": "Stephen King",
       "one_author_nickname_uuid": "Steve",
       "one_author_age_uuid": 68,
@@ -72,48 +68,31 @@ one_author_very_old:
   catalog: one
   creator: one_admin
   item_type: one_author
-  data: |
-    {
-      "one_author_age_uuid": 2456,
-      "one_author_name_uuid": "Very Old",
-      "one_author_deceased_uuid": "1"
-    }
+  data: { "one_author_age_uuid": 2456, "one_author_name_uuid": "Very Old", "one_author_deceased_uuid": "1" }
 
 one_author_very_young:
   catalog: one
   creator: one_admin
   item_type: one_author
-  data: |
-    {
-      "one_author_age_uuid": 3,
-      "one_author_name_uuid": "Very Young",
-      "one_author_deceased_uuid": "0"
-    }
+  data: { "one_author_age_uuid": 3, "one_author_name_uuid": "Very Young", "one_author_deceased_uuid": "0" }
 
 one_book_end_of_watch:
   catalog: one
   creator: one_admin
   item_type: one_book
-  data: |
-    {
-      "one_book_title_uuid": "End of Watch"
-    }
+  data: { "one_book_title_uuid": "End of Watch" }
 
 one_book_finders_keepers:
   catalog: one
   creator: one_admin
   item_type: one_book
-  data: |
-    {
-      "one_book_title_uuid": "Finders Keepers"
-    }
+  data: { "one_book_title_uuid": "Finders Keepers" }
 
 one_author_with_images:
   catalog: one
   creator: one_admin
   item_type: one_author
-  data: |
-    {
+  data: {
       "one_author_picture_uuid": {
         "name": "one_author_picture.jpg",
         "path": "public/upload/one/authors/picture.jpg",
@@ -133,8 +112,7 @@ one_author_with_images:
 multilingual_author_example:
   catalog: multilingual
   item_type: multilingual_author
-  data: |
-    {
+  data: {
       "multilingual_author_bio_uuid": {
         "_translations": {
           "en": "Biography in English",
@@ -153,86 +131,54 @@ not_visible_book_farewell_to_arms:
   catalog: not_visible
   creator: one_admin
   item_type: not_visible_book
-  data: |
-    {
-      "not_visible_book_title_uuid": "A Farewell to Arms"
-    }
+  data: { "not_visible_book_title_uuid": "A Farewell to Arms" }
 
 reviewed_book_end_of_watch:
   catalog: reviewed
   creator: reviewed_editor
   item_type: reviewed_book
-  data: |
-    {
-      "reviewed_book_title_uuid": "End of Watch (book)"
-    }
+  data: { "reviewed_book_title_uuid": "End of Watch (book)" }
 
 reviewed_book_finders_keepers_approved:
   catalog: reviewed
   creator: reviewed_editor
   item_type: reviewed_book
   review_status: approved
-  data: |
-    {
-      "reviewed_book_title_uuid": "Finders Keepers (book)"
-    }
+  data: { "reviewed_book_title_uuid": "Finders Keepers (book)" }
 
 reviewed_book_harry_potter_pending:
   catalog: reviewed
   creator: reviewed_editor
   item_type: reviewed_book
   review_status: ready
-  data: |
-    {
-      "reviewed_book_title_uuid": "Harry Potter (book)"
-    }
+  data: { "reviewed_book_title_uuid": "Harry Potter (book)" }
 
 search_vehicle_honda_accord:
   creator: system_admin_invited_by_one
   catalog: search
   item_type: search_vehicle
-  data: |
-    {
-      "search_vehicle_make_uuid": "Honda",
-      "search_vehicle_model_uuid": "Accord"
-    }
+  data: { "search_vehicle_make_uuid": "Honda", "search_vehicle_model_uuid": "Accord" }
 
 search_vehicle_toyota_prius:
   creator: system_admin_invited_by_one
   catalog: search
   item_type: search_vehicle
-  data: |
-    {
-      "search_vehicle_make_uuid": "Toyota",
-      "search_vehicle_model_uuid": "Prius"
-    }
+  data: { "search_vehicle_make_uuid": "Toyota", "search_vehicle_model_uuid": "Prius" }
 
 search_vehicle_toyota_highlander:
   creator: system_admin_invited_by_one
   catalog: search
   item_type: search_vehicle
-  data: |
-    {
-      "search_vehicle_make_uuid": "Toyota",
-      "search_vehicle_model_uuid": "Highlander"
-    }
+  data: { "search_vehicle_make_uuid": "Toyota", "search_vehicle_model_uuid": "Highlander" }
 
 search_vehicle_toyota_camry:
   creator: system_admin_invited_by_one
   catalog: search
   item_type: search_vehicle
-  data: |
-    {
-      "search_vehicle_make_uuid": "Toyota",
-      "search_vehicle_model_uuid": "Camry"
-    }
+  data: { "search_vehicle_make_uuid": "Toyota", "search_vehicle_model_uuid": "Camry" }
 
 search_vehicle_toyota_camry_hybrid:
   creator: system_admin_invited_by_one
   catalog: search
   item_type: search_vehicle
-  data: |
-    {
-      "search_vehicle_make_uuid": "Toyota",
-      "search_vehicle_model_uuid": "Camry Hybrid"
-    }
+  data: { "search_vehicle_make_uuid": "Toyota", "search_vehicle_model_uuid": "Camry Hybrid" }

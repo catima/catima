@@ -29,7 +29,7 @@ class ChoiceSet < ApplicationRecord
   before_create :assign_uuid
 
   def self.sorted
-    order("LOWER(choice_sets.name)")
+    order(Arel.sql("LOWER(choice_sets.name)"))
   end
 
   def describe

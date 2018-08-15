@@ -9,7 +9,6 @@ gem "bootstrap_form", "~> 2.7.0"
 gem "cocoon"
 gem "coffee-rails", "~> 4.2.2"
 gem "devise", "~> 4.4"
-gem "disable_with_spinner", "~> 0.0.3"
 gem "dotenv-rails", ">= 2.5.0"
 gem "faraday", "~> 0.15.2"
 gem "faraday_middleware", "~> 0.12.2"
@@ -41,7 +40,6 @@ gem "refile-mini_magick", github: "refile/refile-mini_magick"
 gem "rollbar"
 gem "sass-rails"
 gem "secure_headers"
-gem "select2-rails"
 gem "sidekiq"
 gem "sinatra", github: "sinatra/sinatra", branch: "master"
 gem "sprockets"
@@ -55,8 +53,11 @@ source "https://rails-assets.org" do
   gem "rails-assets-mousetrap"
 end
 
-group :production, :staging do
+group :production, :staging, :development do
   gem "unicorn"
+end
+
+group :production, :staging do
   gem "unicorn-worker-killer"
 end
 
@@ -104,6 +105,7 @@ group :test do
   gem "launchy"
   gem "minitest-reporters"
   gem "mocha"
+  gem "puma"
   gem "pry"
   gem "selenium-webdriver"
   gem "shoulda-context"
@@ -111,7 +113,6 @@ group :test do
   # gem "shoulda-matchers",
   #     :git => "https://github.com/mattbrictson/shoulda-matchers.git",
   #     :branch => "with-fixes"
-  gem "test_after_commit"
   gem "vcr"
   gem "webmock"
 end

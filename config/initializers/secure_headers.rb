@@ -16,12 +16,12 @@
   config.x_permitted_cross_domain_policies = "none"
   config.csp = {
     default_src: %w(https: 'self'),
-    font_src: %w('self' data: https:),
-    img_src: %w('self' https: data:),
-    object_src: %w('none'),
-    script_src: %w('self' https:),
+    script_src: %w('self' https: 'unsafe-eval' 'unsafe-inline'),
     style_src: %w('self' https: 'unsafe-inline'),
-    connect_src: Rails.env.development? ? %w('self', https:, 'http://localhost:3035', 'ws://localhost:3035') : %w('self', https:)
+    img_src: %w('self' https: data:),
+    font_src: %w('self' https: data:),
+    object_src: %w('none'),
+    connect_src: Rails.env.development? ? %w('self' https: http://localhost:3035 ws://localhost:3035) : %w('self' https:)
   }
 end
 

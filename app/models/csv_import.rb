@@ -28,7 +28,7 @@
 # * columns (all column names as parsed from the CSV)
 # * unrecognized_columns (the column names that could not be mapped)
 #
-class CSVImport < ApplicationRecord
+class CSVImport < ActiveType::Object
   attr_accessor :creator
   attr_accessor :item_type
   attribute :file_id
