@@ -17,7 +17,7 @@
 development:
   adapter: postgresql
   encoding: unicode
-  database: catima_development
+  database: viim-core_development
   min_messages: WARNING
   pool: 5
 
@@ -42,6 +42,6 @@ development:
 test:
   adapter: postgresql
   encoding: unicode
-  database: catima_test
+  database: viim-core_test
   min_messages: WARNING
   pool: 5
