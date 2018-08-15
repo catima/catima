@@ -2,8 +2,10 @@
 # config.i18n.load_path += Dir[Rails.root.join('my', 'locales', '*.{rb,yml}').to_s]
 
 # Add catalog specific translations from catalogs/:catalog_slug/locales/*.yml
-Catalog.overrides.each do |slug|
-  Rails.application.config.i18n.load_path += Dir[Rails.root.join('catalogs', slug, 'locales', '*.yml').to_s]
+unless ActiveRecord::Migrator.needs_migration?
+  Catalog.overrides.each do |slug|
+    Rails.application.config.i18n.load_path += Dir[Rails.root.join('catalogs', slug, 'locales', '*.yml').to_s]
+  end
 end
 
 Rails.application.config.i18n.default_locale = :en
