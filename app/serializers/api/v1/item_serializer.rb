@@ -15,7 +15,7 @@ class API::V1::ItemSerializer < ActiveModel::Serializer
       :catalog => api_v1_catalog_url(object.catalog.slug),
       :html => item_url(
         object.catalog.slug,
-        object.catalog.primary_language,
+        object.catalog.valid_locale,
         object.item_type.slug,
         object
       )
