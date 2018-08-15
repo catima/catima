@@ -147,70 +147,72 @@ Rails.application.routes.draw do
   # be subclasses of the default controller. Hence, we can simply rely on
   # the existence of a file with the appropriate name.
 
-  Catalog.active.each do |catalog|
-    next unless File.exist?(Rails.root.join('catalogs', catalog.slug, 'controllers', "#{catalog.snake_slug}_catalogs_controller.rb"))
-    get "#{catalog.slug}/(:locale)",
-        :controller => "#{catalog.snake_slug}_catalogs",
-        :action => :show,
-        :catalog_slug => catalog.slug,
-        :as => "catalog_#{catalog.snake_slug}"
-  end
+  unless ActiveRecord::Migrator.needs_migration?
+    Catalog.active.each do |catalog|
+      next unless File.exist?(Rails.root.join('catalogs', catalog.slug, 'controllers', "#{catalog.snake_slug}_catalogs_controller.rb"))
+      get "#{catalog.slug}/(:locale)",
+          :controller => "#{catalog.snake_slug}_catalogs",
+          :action => :show,
+          :catalog_slug => catalog.slug,
+          :as => "catalog_#{catalog.snake_slug}"
+    end
 
-  # Default catalog index route
-  get ":catalog_slug/(:locale)" => "catalogs#show",
-      :as => "catalog_home",
-      :constraints => CatalogsController::Constraint
+    # Default catalog index route
+    get ":catalog_slug/(:locale)" => "catalogs#show",
+        :as => "catalog_home",
+        :constraints => CatalogsController::Constraint
 
-  # Create per-catalog routes for item type views for customized items controllers.
-  Catalog.active.each do |catalog|
-    scope :path => "#{catalog.slug}/:locale",
-          :constraints => CatalogsController::Constraint do
+    # Create per-catalog routes for item type views for customized items controllers.
+    Catalog.active.each do |catalog|
+      scope :path => "#{catalog.slug}/:locale",
+            :constraints => CatalogsController::Constraint do
 
-      if File.exist?(Rails.root.join('catalogs', catalog.slug, 'controllers', "#{catalog.snake_slug}_simple_search_controller.rb"))
-        get "search",
-            :controller => "#{catalog.snake_slug}_simple_search",
-            :action => :index,
-            :as => "#{catalog.snake_slug}_simple_search",
-            :catalog_slug => catalog.slug
-      end
+        if File.exist?(Rails.root.join('catalogs', catalog.slug, 'controllers', "#{catalog.snake_slug}_simple_search_controller.rb"))
+          get "search",
+              :controller => "#{catalog.snake_slug}_simple_search",
+              :action => :index,
+              :as => "#{catalog.snake_slug}_simple_search",
+              :catalog_slug => catalog.slug
+        end
 
-      if File.exist?(Rails.root.join('catalogs', catalog.slug, 'controllers', "#{catalog.snake_slug}_advanced_searches_controller.rb"))
-        get 'search/advanced/new',
-            :controller => "#{catalog.snake_slug}_advanced_searches",
-            :action => :new,
-            :as => "#{catalog.snake_slug}_new_advanced_search",
-            :catalog_slug => catalog.slug
+        if File.exist?(Rails.root.join('catalogs', catalog.slug, 'controllers', "#{catalog.snake_slug}_advanced_searches_controller.rb"))
+          get 'search/advanced/new',
+              :controller => "#{catalog.snake_slug}_advanced_searches",
+              :action => :new,
+              :as => "#{catalog.snake_slug}_new_advanced_search",
+              :catalog_slug => catalog.slug
 
-        get 'search/advanced/:uuid',
-            :controller => "#{catalog.snake_slug}_advanced_searches",
-            :action => :show,
-            :as => "#{catalog.snake_slug}_advanced_search",
-            :catalog_slug => catalog.slug
-      end
+          get 'search/advanced/:uuid',
+              :controller => "#{catalog.snake_slug}_advanced_searches",
+              :action => :show,
+              :as => "#{catalog.snake_slug}_advanced_search",
+              :catalog_slug => catalog.slug
+        end
 
-      if File.exist?(Rails.root.join('catalogs', catalog.slug, 'controllers', "#{catalog.snake_slug}_pages_controller.rb"))
-        get ":slug",
-            :controller => "#{catalog.snake_slug}_pages",
-            :action => :show,
-            :as => "#{catalog.snake_slug}_pages",
-            :catalog_slug => catalog.slug,
-            :constraints => PagesController::Constraint
-      end
+        if File.exist?(Rails.root.join('catalogs', catalog.slug, 'controllers', "#{catalog.snake_slug}_pages_controller.rb"))
+          get ":slug",
+              :controller => "#{catalog.snake_slug}_pages",
+              :action => :show,
+              :as => "#{catalog.snake_slug}_pages",
+              :catalog_slug => catalog.slug,
+              :constraints => PagesController::Constraint
+        end
 
-      if File.exist?(Rails.root.join('catalogs', catalog.slug, 'controllers', "#{catalog.snake_slug}_items_controller.rb"))
-        get ":item_type_slug",
-            :controller => "#{catalog.snake_slug}_items",
-            :action => :index,
-            :as => "#{catalog.snake_slug}_items",
-            :catalog_slug => catalog.slug,
-            :constraints => ItemsController::Constraint
+        if File.exist?(Rails.root.join('catalogs', catalog.slug, 'controllers', "#{catalog.snake_slug}_items_controller.rb"))
+          get ":item_type_slug",
+              :controller => "#{catalog.snake_slug}_items",
+              :action => :index,
+              :as => "#{catalog.snake_slug}_items",
+              :catalog_slug => catalog.slug,
+              :constraints => ItemsController::Constraint
 
-        get ":item_type_slug/:id",
-            :controller => "#{catalog.snake_slug}_items",
-            :action => :show,
-            :as => "#{catalog.snake_slug}_item",
-            :catalog_slug => catalog.slug,
-            :constraints => ItemsController::Constraint
+          get ":item_type_slug/:id",
+              :controller => "#{catalog.snake_slug}_items",
+              :action => :show,
+              :as => "#{catalog.snake_slug}_item",
+              :catalog_slug => catalog.slug,
+              :constraints => ItemsController::Constraint
+        end
       end
     end
   end
