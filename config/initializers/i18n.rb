@@ -2,10 +2,14 @@
 # config.i18n.load_path += Dir[Rails.root.join('my', 'locales', '*.{rb,yml}').to_s]
 
 # Add catalog specific translations from catalogs/:catalog_slug/locales/*.yml
-unless ActiveRecord::Base.connection.migration_context.needs_migration?
+# This requires the database to exist. If it does not exist, we recover without
+# adding catalog specific translations.
+begin
   Catalog.overrides.each do |slug|
     Rails.application.config.i18n.load_path += Dir[Rails.root.join('catalogs', slug, 'locales', '*.yml').to_s]
   end
+rescue ActiveRecord::NoDatabaseError, ActiveRecord::StatementInvalid, ActiveRecord::PendingMigrationError
+  false
 end
 
 Rails.application.config.i18n.default_locale = :en

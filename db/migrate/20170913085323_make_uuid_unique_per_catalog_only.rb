@@ -1,4 +1,4 @@
-class MakeUuidUniquePerCatalogOnly < ActiveRecord::Migration
+class MakeUuidUniquePerCatalogOnly < ActiveRecord::Migration[4.2]
   def up
     remove_index :choice_sets, :uuid
     add_index :choice_sets, [:uuid, :catalog_id], :unique => true

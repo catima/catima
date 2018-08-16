@@ -3,14 +3,6 @@
 # Version of your assets, change this if you want to expire all your assets.
 Rails.application.config.assets.version = '1.0'
 
-# Add catalog specific assets to the load path
-unless ActiveRecord::Base.connection.migration_context.needs_migration?
-  Catalog.overrides.each do |slug|
-    base_path = Rails.root.join('catalogs', slug, 'assets')
-    Rails.application.config.assets.paths += %w(images stylesheets javascripts).map { |asset| base_path.join(asset) }
-  end
-end
-
 # Add additional assets to the asset load path.
 # Rails.application.config.assets.paths << Emoji.images_path
 # Add Yarn node_modules folder to the asset load path.
@@ -21,8 +13,17 @@ end
 # folder are already added.
 # Rails.application.config.assets.precompile += %w( admin.js admin.css )
 
-# Add catalog-specific assets
-unless ActiveRecord::Base.connection.migration_context.needs_migration?
+# The code below requires an existing database to set up catalog specific assets
+# This is not granted in every case, so we recover from an ActiveRecord::NoDatabaseError
+# by simply ignoring catalog specific assets
+begin
+  # Add catalog specific assets to the load path
+  Catalog.overrides.each do |slug|
+    base_path = Rails.root.join('catalogs', slug, 'assets')
+    Rails.application.config.assets.paths += %w(images stylesheets javascripts).map { |asset| base_path.join(asset) }
+  end
+
+  # Add catalog-specific assets
   Catalog.overrides.each do |slug|
     Rails.application.config.assets.precompile += ["#{slug}.css", "#{slug}.js"]
     loose_catalog_assets = lambda do |filename, path|
@@ -30,4 +31,6 @@ unless ActiveRecord::Base.connection.migration_context.needs_migration?
     end
     Rails.application.config.assets.precompile << loose_catalog_assets
   end
+rescue ActiveRecord::NoDatabaseError, ActiveRecord::StatementInvalid, ActiveRecord::PendingMigrationError
+  false
 end

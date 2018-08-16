@@ -1,4 +1,4 @@
-class AddJsonDateToNumberFunction < ActiveRecord::Migration
+class AddJsonDateToNumberFunction < ActiveRecord::Migration[4.2]
   def up
     connection.execute("
       CREATE FUNCTION bigdate_to_num(json) RETURNS NUMERIC(30,0)

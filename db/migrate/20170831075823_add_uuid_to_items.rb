@@ -1,4 +1,4 @@
-class AddUuidToItems < ActiveRecord::Migration
+class AddUuidToItems < ActiveRecord::Migration[4.2]
   def up
     add_column :items, :uuid, :string
     add_index :items, :uuid, :unique => true

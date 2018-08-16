@@ -1,4 +1,4 @@
-class AddUuidToChoices < ActiveRecord::Migration
+class AddUuidToChoices < ActiveRecord::Migration[4.2]
   def up
     add_column :choices, :uuid, :string
     add_index :choices, :uuid, :unique => true

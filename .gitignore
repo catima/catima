@@ -50,3 +50,5 @@ spec/examples.txt
 
 # Ignore RubyMine files
 .idea
+
+/vendor/bundle

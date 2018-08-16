@@ -1,4 +1,4 @@
-class DefineJsonValidationFunction < ActiveRecord::Migration
+class DefineJsonValidationFunction < ActiveRecord::Migration[4.2]
   def up
     execute(<<-SQL)
       CREATE OR REPLACE FUNCTION validate_geojson(json TEXT) RETURNS BOOLEAN AS

@@ -1,4 +1,4 @@
-class PopulateExistingChoiceSetCatalog < ActiveRecord::Migration
+class PopulateExistingChoiceSetCatalog < ActiveRecord::Migration[4.2]
   class ChoiceSet < ActiveRecord::Base
   end
 

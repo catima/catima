@@ -1,4 +1,4 @@
-class FixSlugUniqueConstraints < ActiveRecord::Migration
+class FixSlugUniqueConstraints < ActiveRecord::Migration[4.2]
   def up
     remove_index :fields, :slug
     remove_index :item_types, :slug

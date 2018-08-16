@@ -1,4 +1,4 @@
-class SetDefaultValueForDatetimeUiComponent < ActiveRecord::Migration
+class SetDefaultValueForDatetimeUiComponent < ActiveRecord::Migration[4.2]
   def up
     execute(<<~SQL)
       UPDATE fields
