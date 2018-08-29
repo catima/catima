@@ -4,15 +4,12 @@
   <head>
     <!-- Viim Core <%= Rails.application.config.version %> (<%= l(Rails.application.config.version_time) %>) -->
 
-    <%# Include jQuery and some other libraries that are used both in Rails and React JS %>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.3.1/jquery.min.js" integrity="sha256-FgpCb/KJQlLNfOu91ta32o/NMZxltwRo8QtmkMRdAu8=" crossorigin="anonymous"></script>
+    <%= stylesheet_link_tag('application', media: 'all') %>
+    <%= javascript_include_tag('application-core', media: 'all') %>
 
     <%= yield(:extra_admin_head) %>
 
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/leaflet/1.2.0/leaflet.css">
-
-    <%= stylesheet_link_tag("application", :media => "all") %>
-    <%= javascript_include_async_tag("application") %>
+    <%= javascript_include_async_tag('application') %>
     <%= javascript_pack_tag 'public-bundle' %>
 
     <%= yield(:head) %>

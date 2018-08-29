@@ -12,6 +12,9 @@
 /log/*.log.*
 /tmp
 
+# Ignore private notes
+/_notes
+
 # Ignore test reports
 /brakeman-output.*
 /coverage

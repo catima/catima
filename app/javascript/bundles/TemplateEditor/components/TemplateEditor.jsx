@@ -1,8 +1,6 @@
 import 'es6-shim';
 import PropTypes from 'prop-types';
 import React from 'react';
-import 'summernote/dist/summernote.css';
-import 'summernote';
 
 require('bootstrap-loader');
 
