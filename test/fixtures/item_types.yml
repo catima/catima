@@ -17,115 +17,85 @@
 
 nested_vehicle:
   catalog: nested
-  name_translations: '{ "name_en": "Vehicle" }'
-  name_plural_translations: '{ "name_plural_en": "Vehicles" }'
+  name_translations: { "name_en": "Vehicle" }
+  name_plural_translations: { "name_plural_en": "Vehicles" }
   slug: vehicles
 
 one:
   catalog: one
-  name_translations: '{ "name_en": "One" }'
-  name_plural_translations: '{ "name_plural_en": "Ones" }'
+  name_translations: { "name_en": "One" }
+  name_plural_translations: { "name_plural_en": "Ones" }
   slug: one
 
 one_author:
   catalog: one
-  name_translations: '{ "name_en": "Author" }'
-  name_plural_translations: '{ "name_plural_en": "Authors" }'
+  name_translations: { "name_en": "Author" }
+  name_plural_translations: { "name_plural_en": "Authors" }
   slug: authors
   display_emtpy_fields: false
 
 one_book:
   catalog: one
-  name_translations: '{ "name_en": "Book" }'
-  name_plural_translations: '{ "name_plural_en": "Books" }'
+  name_translations: { "name_en": "Book" }
+  name_plural_translations: { "name_plural_en": "Books" }
   slug: books
 
 one_with_required_choice_set:
   catalog: one
-  name_translations: '{ "name_en": "With Required Choice Set" }'
-  name_plural_translations: '{ "name_plural_en": "With Required Choice Sets" }'
+  name_translations: { "name_en": "With Required Choice Set" }
+  name_plural_translations: { "name_plural_en": "With Required Choice Sets" }
   slug: with-required-choice-set
 
 one_with_required_reference:
   catalog: one
-  name_translations: '{ "name_en": "With Required Reference" }'
-  name_plural_translations: '{ "name_plural_en": "With Required References" }'
+  name_translations: { "name_en": "With Required Reference" }
+  name_plural_translations: { "name_plural_en": "With Required References" }
   slug: with-required-reference
 
 reviewed_book:
   catalog: reviewed
-  name_translations: '{ "name_en": "Book" }'
-  name_plural_translations: '{ "name_plural_en": "Books" }'
+  name_translations: { "name_en": "Book" }
+  name_plural_translations: { "name_plural_en": "Books" }
   slug: books
 
 two:
   catalog: two
-  name_translations: '{ "name_en": "Two" }'
-  name_plural_translations: '{ "name_plural_en": "Twos" }'
+  name_translations: { "name_en": "Two" }
+  name_plural_translations: { "name_plural_en": "Twos" }
   slug: twos
 
 two_author:
   catalog: two
-  name_translations: '{ "name_en": "Author" }'
-  name_plural_translations: '{ "name_plural_en": "Authors" }'
+  name_translations: { "name_en": "Author" }
+  name_plural_translations: { "name_plural_en": "Authors" }
   slug: authors
 
 custom_with_dash_author:
   catalog: custom_with_dash
-  name_translations: '{ "name_en": "Author" }'
-  name_plural_translations: '{ "name_plural_en": "Authors" }'
+  name_translations: { "name_en": "Author" }
+  name_plural_translations: { "name_plural_en": "Authors" }
   slug: authors
 
 multilingual_book:
   catalog: multilingual
   slug: books
-  name_translations: |
-    {
-      "name_de": "Buch",
-      "name_en": "Book",
-      "name_fr": "Livre",
-      "name_it": "Libro"
-    }
-  name_plural_translations: |
-    {
-      "name_plural_de": "Bücher",
-      "name_plural_en": "Books",
-      "name_plural_fr": "Livres",
-      "name_plural_it": "Libri"
-    }
+  name_translations: { "name_de": "Buch", "name_en": "Book", "name_fr": "Livre", "name_it": "Libro" }
+  name_plural_translations: { "name_plural_de": "Bücher", "name_plural_en": "Books", "name_plural_fr": "Livres", "name_plural_it": "Libri" }
 
 multilingual_author:
   catalog: multilingual
   slug: authors
-  name_translations: |
-    {
-      "name_de": "Autor",
-      "name_en": "Author",
-      "name_fr": "Auteur",
-      "name_it": "Autore"
-    }
-  name_plural_translations: |
-    {
-      "name_plural_de": "Autoren",
-      "name_plural_en": "Authors",
-      "name_plural_fr": "Auteurs",
-      "name_plural_it": "Autori"
-    }
+  name_translations: { "name_de": "Autor", "name_en": "Author", "name_fr": "Auteur", "name_it": "Autore" }
+  name_plural_translations: { "name_plural_de": "Autoren", "name_plural_en": "Authors", "name_plural_fr": "Auteurs", "name_plural_it": "Autori" }
 
 search_vehicle:
   catalog: search
   slug: vehicles
-  name_translations: |
-    {
-      "name_en": "Vehicle"
-    }
-  name_plural_translations: |
-    {
-      "name_plural_en": "Vehicles"
-    }
+  name_translations: { "name_en": "Vehicle" }
+  name_plural_translations: { "name_plural_en": "Vehicles" }
 
 not_visible_book:
   catalog: not_visible
-  name_translations: '{ "name_en": "Not visible book" }'
-  name_plural_translations: '{ "name_plural_en": "Not visible books" }'
+  name_translations: { "name_en": "Not visible book" }
+  name_plural_translations: { "name_plural_en": "Not visible books" }
   slug: not-visible-books

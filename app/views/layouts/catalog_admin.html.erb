@@ -1,3 +1,9 @@
+<% provide(:extra_admin_head) do %>
+  <%= stylesheet_link_tag('catalog-admin', media: 'all') %>
+  <%= javascript_include_tag('catalog-admin-core', media: 'all') %>
+  <%= javascript_include_async_tag('catalog-admin') %>
+<% end %>
+
 <div class="navbar navbar-inverse navbar-static-top" role="navigation">
   <div class="container">
     <div class="navbar-header">

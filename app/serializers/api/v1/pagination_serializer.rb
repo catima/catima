@@ -73,7 +73,7 @@ class API::V1::PaginationSerializer
   end
 
   def page_url(new_page)
-    url_for(params.merge(:page_number => new_page, :page_size => page_size))
+    url_for(params.to_unsafe_h.merge(:page_number => new_page, :page_size => page_size))
   end
 
   def valid_page_size(value)

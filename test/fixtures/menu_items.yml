@@ -19,7 +19,7 @@
 
 one:
   slug: one
-  title: '{"en": "One"}'
+  title: { "en": "One" }
   catalog_id: 1
   item_type_id: 1
   page_id:
@@ -29,10 +29,10 @@ one:
 
 two:
   slug: two
-  title: '{"en": "Two"}'
+  title: {"en": "Two"}
   catalog_id: 1
   item_type_id:
   page_id: 1
-  url: '{"en": "http://catima.unil.ch"}'
+  url: { "en": "http://catima.unil.ch" }
   parent_id:
   rank: 2

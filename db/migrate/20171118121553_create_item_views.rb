@@ -1,4 +1,4 @@
-class CreateItemViews < ActiveRecord::Migration
+class CreateItemViews < ActiveRecord::Migration[4.2]
   def change
     create_table :item_views do |t|
       t.string :name

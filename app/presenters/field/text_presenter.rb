@@ -1,7 +1,7 @@
 include ActionView::Helpers::OutputSafetyHelper
 
 class Field::TextPresenter < FieldPresenter
-  delegate :locale_form_group, :truncate, :react_component, :strip_tags, :to => :view
+  delegate :locale_form_group, :truncate, :strip_tags, :to => :view
 
   def value
     return super if field.formatted_text.to_i == 0

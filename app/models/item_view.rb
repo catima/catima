@@ -15,7 +15,7 @@
 
 # rubocop:disable Rails/SkipsModelValidations
 # rubocop:disable Rails/OutputSafety
-class ItemView < ActiveRecord::Base
+class ItemView < ApplicationRecord
   belongs_to :item_type
 
   validates_presence_of :item_type

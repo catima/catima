@@ -10,16 +10,10 @@
 // Read Sprockets README (https://github.com/rails/sprockets#sprockets-directives) for details
 // about supported directives.
 //
-//= require jquery
-//= require jquery_ujs
-//= require jquery.minicolors
 //= require autosize
 //= require cocoon
-//= require spinner
 //= require mousetrap/mousetrap
 //= require mousetrap/plugins/global-bind/mousetrap-global-bind
 //= require refile
-//= require jquery-fileupload/basic
 //= require select2
-//= require summernote
-//= require_tree .
+//= require_tree ./application

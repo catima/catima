@@ -72,7 +72,7 @@ class UserPolicyTest < ActiveSupport::TestCase
       permit(:one_admin, user, params)[:catalog_permissions_attributes]
     )
     assert_equal(
-      params[:user][:catalog_permissions_attributes],
+      params[:user][:catalog_permissions_attributes].permit!,
       permit(:system_admin, user, params)[:catalog_permissions_attributes]
     )
   end

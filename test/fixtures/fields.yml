@@ -34,8 +34,8 @@
 
 nested_vehicle_name:
   type: "Field::Text"
-  name_translations: '{ "name_en": "Name" }'
-  name_plural_translations: '{ "name_plural_en": "Names" }'
+  name_translations: { "name_en": "Name" }
+  name_plural_translations: { "name_plural_en": "Names" }
   slug: name
   field_set: nested_vehicle (ItemType)
   primary: true
@@ -43,8 +43,8 @@ nested_vehicle_name:
 
 nested_vehicle_type:
   type: "Field::ChoiceSet"
-  name_translations: '{ "name_en": "Type" }'
-  name_plural_translations: '{ "name_plural_en": "Types" }'
+  name_translations: { "name_en": "Type" }
+  name_plural_translations: { "name_plural_en": "Types" }
   slug: type
   field_set: nested_vehicle (ItemType)
   uuid: nested_vehicle_type_uuid
@@ -52,24 +52,24 @@ nested_vehicle_type:
 
 nested_car_cupholders:
   type: "Field::Int"
-  name_translations: '{ "name_en": "Number of cup holders" }'
-  name_plural_translations: '{ "name_plural_en": "Numbers of cup holders" }'
+  name_translations: { "name_en": "Number of cup holders" }
+  name_plural_translations: { "name_plural_en": "Numbers of cup holders" }
   slug: cupholders
   field_set: nested_car (Category)
   uuid: nested_car_cupholders_uuid
 
 nested_bicycle_speeds:
   type: "Field::Int"
-  name_translations: '{ "name_en": "Number of speeds" }'
-  name_plural_translations: '{ "name_plural_en": "Numbers of speeds" }'
+  name_translations: { "name_en": "Number of speeds" }
+  name_plural_translations: { "name_plural_en": "Numbers of speeds" }
   slug: speeds
   field_set: nested_bicycle (Category)
   uuid: nested_bicycle_speeds_uuid
 
 one_title:
   type: "Field::Text"
-  name_translations: '{ "name_en": "Title" }'
-  name_plural_translations: '{ "name_plural_en": "Titles" }'
+  name_translations: { "name_en": "Title" }
+  name_plural_translations: { "name_plural_en": "Titles" }
   slug: title
   field_set: one (ItemType)
   primary: true
@@ -77,16 +77,16 @@ one_title:
 
 one_summary:
   type: "Field::Text"
-  name_translations: '{ "name_en": "Summary" }'
-  name_plural_translations: '{ "name_plural_en": "Summaries" }'
+  name_translations: { "name_en": "Summary" }
+  name_plural_translations: { "name_plural_en": "Summaries" }
   slug: summary
   field_set: one (ItemType)
   uuid: <%= SecureRandom.uuid %>
 
 one_author_name:
   type: "Field::Text"
-  name_translations: '{ "name_en": "Name" }'
-  name_plural_translations: '{ "name_plural_en": "Names" }'
+  name_translations: { "name_en": "Name" }
+  name_plural_translations: { "name_plural_en": "Names" }
   slug: name
   field_set: one_author (ItemType)
   primary: true
@@ -94,8 +94,8 @@ one_author_name:
 
 one_author_nickname:
   type: "Field::Text"
-  name_translations: '{ "name_en": "Nickname" }'
-  name_plural_translations: '{ "name_plural_en": "Nicknames" }'
+  name_translations: { "name_en": "Nickname" }
+  name_plural_translations: { "name_plural_en": "Nicknames" }
   slug: nickname
   field_set: one_author (ItemType)
   required: false
@@ -103,40 +103,40 @@ one_author_nickname:
 
 one_author_age:
   type: "Field::Int"
-  name_translations: '{ "name_en": "Age" }'
-  name_plural_translations: '{ "name_plural_en": "Ages" }'
+  name_translations: { "name_en": "Age" }
+  name_plural_translations: { "name_plural_en": "Ages" }
   slug: age
   field_set: one_author (ItemType)
   uuid: one_author_age_uuid
 
 one_author_site:
   type: "Field::URL"
-  name_translations: '{ "name_en": "Site" }'
-  name_plural_translations: '{ "name_plural_en": "Sites" }'
+  name_translations: { "name_en": "Site" }
+  name_plural_translations: { "name_plural_en": "Sites" }
   slug: site
   field_set: one_author (ItemType)
   uuid: one_author_site_uuid
 
 one_author_email:
   type: "Field::Email"
-  name_translations: '{ "name_en": "Email" }'
-  name_plural_translations: '{ "name_plural_en": "Emails" }'
+  name_translations: { "name_en": "Email" }
+  name_plural_translations: { "name_plural_en": "Emails" }
   slug: email
   field_set: one_author (ItemType)
   uuid: one_author_email_uuid
 
 one_author_rank:
   type: "Field::Decimal"
-  name_translations: '{ "name_en": "Rank" }'
-  name_plural_translations: '{ "name_plural_en": "Ranks" }'
+  name_translations: { "name_en": "Rank" }
+  name_plural_translations: { "name_plural_en": "Ranks" }
   slug: rank
   field_set: one_author (ItemType)
   uuid: one_author_rank_uuid
 
 one_author_collaborator:
   type: "Field::Reference"
-  name_translations: '{ "name_en": "Collaborator" }'
-  name_plural_translations: '{ "name_plural_en": "Collaborators" }'
+  name_translations: { "name_en": "Collaborator" }
+  name_plural_translations: { "name_plural_en": "Collaborators" }
   slug: collaborator
   field_set: one_author (ItemType)
   related_item_type: one_author
@@ -144,8 +144,8 @@ one_author_collaborator:
 
 one_author_other_collaborators:
   type: "Field::Reference"
-  name_translations: '{ "name_en": "Other Collaborator" }'
-  name_plural_translations: '{ "name_plural_en": "Other Collaborators" }'
+  name_translations: { "name_en": "Other Collaborator" }
+  name_plural_translations: { "name_plural_en": "Other Collaborators" }
   slug: other-collaborator
   field_set: one_author (ItemType)
   related_item_type: one_author
@@ -155,8 +155,8 @@ one_author_other_collaborators:
 
 one_author_bio:
   type: "Field::File"
-  name_translations: '{ "name_en": "Biography" }'
-  name_plural_translations: '{ "name_plural_en": "Biographies" }'
+  name_translations: { "name_en": "Biography" }
+  name_plural_translations: { "name_plural_en": "Biographies" }
   slug: bio
   field_set: one_author (ItemType)
   required: false
@@ -164,8 +164,8 @@ one_author_bio:
 
 one_author_language:
   type: "Field::ChoiceSet"
-  name_translations: '{ "name_en": "Language" }'
-  name_plural_translations: '{ "name_plural_en": "Languages" }'
+  name_translations: { "name_en": "Language" }
+  name_plural_translations: { "name_plural_en": "Languages" }
   slug: language
   field_set: one_author (ItemType)
   uuid: one_author_language_uuid
@@ -173,8 +173,8 @@ one_author_language:
 
 one_author_other_language:
   type: "Field::ChoiceSet"
-  name_translations: '{ "name_en": "Other Language" }'
-  name_plural_translations: '{ "name_plural_en": "Other Languages" }'
+  name_translations: { "name_en": "Other Language" }
+  name_plural_translations: { "name_plural_en": "Other Languages" }
   slug: other-language
   field_set: one_author (ItemType)
   uuid: one_author_other_language_uuid
@@ -184,8 +184,8 @@ one_author_other_language:
 
 one_author_born:
   type: "Field::DateTime"
-  name_translations: '{ "name_en": "Born" }'
-  name_plural_translations: '{ "name_plural_en": "Born" }'
+  name_translations: { "name_en": "Born" }
+  name_plural_translations: { "name_plural_en": "Born" }
   slug: born
   field_set: one_author (ItemType)
   uuid: one_author_born_uuid
@@ -193,29 +193,29 @@ one_author_born:
 
 one_author_birth_time:
   type: "Field::DateTime"
-  name_translations: '{ "name_en": "Birth Time" }'
-  name_plural_translations: '{ "name_plural_en": "Birth Times" }'
+  name_translations: { "name_en": "Birth Time" }
+  name_plural_translations: { "name_plural_en": "Birth Times" }
   slug: birth-time
   field_set: one_author (ItemType)
   uuid: one_author_birth_time_uuid
   editor_component: DateTimeInput
   required: false
-  options: '{ "format": "YMDhms" }'
+  options: { "format": "YMDhms" }
 
 one_author_birth_month:
   type: "Field::DateTime"
-  name_translations: '{ "name_en": "Birth Month" }'
-  name_plural_translations: '{ "name_plural_en": "Birth Months" }'
+  name_translations: { "name_en": "Birth Month" }
+  name_plural_translations: { "name_plural_en": "Birth Months" }
   slug: birth-month
   field_set: one_author (ItemType)
   uuid: one_author_birth_month_uuid
   required: false
-  options: '{ "format": "YM" }'
+  options: { "format": "YM" }
 
 one_author_birthplace:
   type: "Field::Geometry"
-  name_translations: '{ "name_en": "Birthplace" }'
-  name_plural_translations: '{ "name_plural_en": "Birthplaces" }'
+  name_translations: { "name_en": "Birthplace" }
+  name_plural_translations: { "name_plural_en": "Birthplaces" }
   slug: birthplace
   field_set: one_author (ItemType)
   uuid: one_author_birthplace_uuid
@@ -223,28 +223,28 @@ one_author_birthplace:
 
 one_author_picture:
   type: "Field::Image"
-  name_translations: '{ "name_en": "Picture" }'
-  name_plural_translations: '{ "name_plural_en": "Pictures" }'
+  name_translations: { "name_en": "Picture" }
+  name_plural_translations: { "name_plural_en": "Pictures" }
   slug: picture
   field_set: one_author (ItemType)
   uuid: one_author_picture_uuid
   required: false
-  options: '{"types":"jpg","legend":"1"}'
+  options: {"types":"jpg","legend":"1"}
 
 one_author_picture_inactive_legend:
   type: "Field::Image"
-  name_translations: '{ "name_en": "New picture" }'
-  name_plural_translations: '{ "name_plural_en": "New pictures" }'
+  name_translations: { "name_en": "New picture" }
+  name_plural_translations: { "name_plural_en": "New pictures" }
   slug: picture_inactive_legend
   field_set: one_author (ItemType)
   uuid: one_author_picture_inactive_legend_uuid
   required: false
-  options: '{"types":"jpg","legend":"0"}'
+  options: {"types":"jpg","legend":"0"}
 
 one_author_deceased:
   type: "Field::Boolean"
-  name_translations: '{ "name_en": "Deceased" }'
-  name_plural_translations: '{ "name_plural_en": "Deceased" }'
+  name_translations: { "name_en": "Deceased" }
+  name_plural_translations: { "name_plural_en": "Deceased" }
   slug: deceased
   field_set: one_author (ItemType)
   uuid: one_author_deceased_uuid
@@ -252,8 +252,8 @@ one_author_deceased:
 
 one_book_title:
   type: "Field::Text"
-  name_translations: '{ "name_en": "Title" }'
-  name_plural_translations: '{ "name_plural_en": "Titles" }'
+  name_translations: { "name_en": "Title" }
+  name_plural_translations: { "name_plural_en": "Titles" }
   slug: title
   primary: true
   field_set: one_book (ItemType)
@@ -261,8 +261,8 @@ one_book_title:
 
 one_book_author:
   type: "Field::Reference"
-  name_translations: '{ "name_en": "Author" }'
-  name_plural_translations: '{ "name_plural_en": "Authors" }'
+  name_translations: { "name_en": "Author" }
+  name_plural_translations: { "name_plural_en": "Authors" }
   slug: author
   field_set: one_book (ItemType)
   uuid: one_book_author_uuid
@@ -270,18 +270,18 @@ one_book_author:
 
 one_book_notes:
   type: "Field::Text"
-  name_translations: '{ "name_en": "Notes" }'
-  name_plural_translations: '{ "name_plural_en": "Notes" }'
+  name_translations: { "name_en": "Notes" }
+  name_plural_translations: { "name_plural_en": "Notes" }
   slug: notes
   primary: false
   field_set: one_book (ItemType)
   uuid: one_book_notes_uuid
-  options: '{"maximum":"","minimum":"","formatted_text":"1"}'
+  options: {"maximum":"","minimum":"","formatted_text":"1"}
 
 one_required_choice_set:
   type: "Field::ChoiceSet"
-  name_translations: '{ "name_en": "Choice" }'
-  name_plural_translations: '{ "name_plural_en": "Choices" }'
+  name_translations: { "name_en": "Choice" }
+  name_plural_translations: { "name_plural_en": "Choices" }
   field_set: one_with_required_choice_set (ItemType)
   uuid: required_choice_set
   choice_set: one_languages
@@ -290,8 +290,8 @@ one_required_choice_set:
 
 one_required_reference:
   type: "Field::Reference"
-  name_translations: '{ "name_en": "Reference" }'
-  name_plural_translations: '{ "name_plural_en": "References" }'
+  name_translations: { "name_en": "Reference" }
+  name_plural_translations: { "name_plural_en": "References" }
   field_set: one_with_required_reference (ItemType)
   uuid: required_reference
   related_item_type: one_author
@@ -304,16 +304,8 @@ multilingual_author_name:
   field_set: multilingual_author (ItemType)
   primary: true
   uuid: multilingual_author_name_uuid
-  name_translations: |
-    {
-      "name_en": "Name",
-      "name_fr": "Nom"
-    }
-  name_plural_translations: |
-    {
-      "name_plural_en": "Names",
-      "name_plural_fr": "Noms"
-    }
+  name_translations: { "name_en": "Name", "name_fr": "Nom" }
+  name_plural_translations: { "name_plural_en": "Names", "name_plural_fr": "Noms" }
 
 multilingual_author_bio:
   type: "Field::Text"
@@ -322,16 +314,8 @@ multilingual_author_bio:
   primary: false
   i18n: true
   uuid: multilingual_author_bio_uuid
-  name_translations: |
-    {
-      "name_en": "Biography",
-      "name_fr": "Biographie"
-    }
-  name_plural_translations: |
-    {
-      "name_plural_en": "Biographies",
-      "name_plural_fr": "Biographies"
-    }
+  name_translations: { "name_en": "Biography", "name_fr": "Biographie" }
+  name_plural_translations: { "name_plural_en": "Biographies", "name_plural_fr": "Biographies" }
 
 multilingual_author_site:
   type: "Field::Text"
@@ -341,16 +325,8 @@ multilingual_author_site:
   i18n: true
   required: false
   uuid: multilingual_author_site_uuid
-  name_translations: |
-    {
-      "name_en": "Home page",
-      "name_fr": "Page d'accueil"
-    }
-  name_plural_translations: |
-    {
-      "name_plural_en": "Home pages",
-      "name_plural_fr": "Pages d'accueil"
-    }
+  name_translations: { "name_en": "Home page", "name_fr": "Page d'accueil" }
+  name_plural_translations: { "name_plural_en": "Home pages", "name_plural_fr": "Pages d'accueil" }
 
 multilingual_book_required_i18n_notes:
   type: "Field::Text"
@@ -360,22 +336,14 @@ multilingual_book_required_i18n_notes:
   i18n: true
   required: true
   uuid: multilingual_book_notes_uuid
-  options: '{"maximum":"","minimum":"","formatted_text":"1"}'
-  name_translations: |
-    {
-      "name_en": "Notes",
-      "name_fr": "Notes"
-    }
-  name_plural_translations: |
-    {
-      "name_plural_en": "Notes",
-      "name_plural_fr": "Notes"
-    }
+  options: {"maximum":"","minimum":"","formatted_text":"1"}
+  name_translations: { "name_en": "Notes", "name_fr": "Notes" }
+  name_plural_translations: { "name_plural_en": "Notes", "name_plural_fr": "Notes" }
 
 reviewed_book_title:
   type: "Field::Text"
-  name_translations: '{ "name_en": "Title" }'
-  name_plural_translations: '{ "name_plural_en": "Titles" }'
+  name_translations: { "name_en": "Title" }
+  name_plural_translations: { "name_plural_en": "Titles" }
   slug: title
   primary: true
   field_set: reviewed_book (ItemType)
@@ -386,14 +354,8 @@ search_vehicle_make:
   slug: make
   field_set: search_vehicle (ItemType)
   uuid: search_vehicle_make_uuid
-  name_translations: |
-    {
-      "name_en": "Make"
-    }
-  name_plural_translations: |
-    {
-      "name_plural_en": "Makes"
-    }
+  name_translations: { "name_en": "Make" }
+  name_plural_translations: { "name_plural_en": "Makes" }
 
 search_vehicle_model:
   type: "Field::Text"
@@ -401,14 +363,8 @@ search_vehicle_model:
   field_set: search_vehicle (ItemType)
   uuid: search_vehicle_model_uuid
   primary: true
-  name_translations: |
-    {
-      "name_en": "Model"
-    }
-  name_plural_translations: |
-    {
-      "name_plural_en": "Models"
-    }
+  name_translations: { "name_en": "Model" }
+  name_plural_translations: { "name_plural_en": "Models" }
 
 search_vehicle_style:
   type: "Field::ChoiceSet"
@@ -416,19 +372,13 @@ search_vehicle_style:
   field_set: search_vehicle (ItemType)
   choice_set: search_car_styles
   uuid: search_vehicle_style_uuid
-  name_translations: |
-    {
-      "name_en": "Style"
-    }
-  name_plural_translations: |
-    {
-      "name_plural_en": "Styles"
-    }
+  name_translations: { "name_en": "Style" }
+  name_plural_translations: { "name_plural_en": "Styles" }
 
 not_visible_book_title:
   type: "Field::Text"
-  name_translations: '{ "name_en": "Title" }'
-  name_plural_translations: '{ "name_plural_en": "Titles" }'
+  name_translations: { "name_en": "Title" }
+  name_plural_translations: { "name_plural_en": "Titles" }
   slug: title
   primary: true
   field_set: not_visible_book (ItemType)

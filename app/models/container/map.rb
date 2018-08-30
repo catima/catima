@@ -43,14 +43,14 @@ class Container::Map < ::Container
   end
 
   def map_height
-    height.blank? ? DEFAULT_MAP_HEIGHT : height
+    height.presence || DEFAULT_MAP_HEIGHT
   end
 
-  def update_from_json(d)
-    unless d[:content].nil?
-      it = catalog.item_types.find_by(slug: d[:content]['item_type'])
-      d[:content]['item_type'] = it.id.to_s
+  def update_from_json(data)
+    unless data[:content].nil?
+      it = catalog.item_types.find_by(slug: data[:content]['item_type'])
+      data[:content]['item_type'] = it.id.to_s
     end
-    super(d)
+    super(data)
   end
 end

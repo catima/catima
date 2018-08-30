@@ -11,7 +11,7 @@
 #  uuid           :string
 #
 
-class Category < ActiveRecord::Base
+class Category < ApplicationRecord
   include HasDeactivation
   include HasFields
   include HasHumanId
@@ -23,7 +23,7 @@ class Category < ActiveRecord::Base
   before_destroy :unset_category_in_choice_sets
 
   def self.sorted
-    order("LOWER(categories.name) ASC")
+    order(Arel.sql("LOWER(categories.name) ASC"))
   end
 
   def describe

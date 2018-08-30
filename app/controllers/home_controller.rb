@@ -1,4 +1,6 @@
 class HomeController < ApplicationController
+  prepend_view_path TemplateStorage.resolver
+
   def index
     @config = ::Configuration.first!
     @catalogs = Catalog.active.sorted

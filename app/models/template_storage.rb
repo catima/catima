@@ -13,7 +13,7 @@
 #  updated_at :datetime         not null
 #
 
-class TemplateStorage < ActiveRecord::Base
+class TemplateStorage < ApplicationRecord
   validates_presence_of :body
   validates_presence_of :format
   validates_presence_of :handler

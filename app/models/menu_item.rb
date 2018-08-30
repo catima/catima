@@ -17,15 +17,15 @@
 #  url_old      :text
 #
 
-class MenuItem < ActiveRecord::Base
+class MenuItem < ApplicationRecord
   include HasLocales
 
   belongs_to :catalog
-  belongs_to :item_type
-  belongs_to :page
+  belongs_to :item_type, optional: true
+  belongs_to :page, optional: true
 
   has_many :children, class_name: 'MenuItem', foreign_key: 'parent_id', :dependent => :destroy
-  belongs_to :parent, class_name: 'MenuItem'
+  belongs_to :parent, class_name: 'MenuItem', optional: true
 
   validates_presence_of :catalog
   validates_presence_of :title

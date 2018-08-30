@@ -15,7 +15,7 @@
 
 require_dependency 'field/choice_set'
 
-class ItemType < ActiveRecord::Base
+class ItemType < ApplicationRecord
   include HasDeactivation
   include HasFields
   include HasTranslations
@@ -28,7 +28,7 @@ class ItemType < ActiveRecord::Base
   validates_slug :scope => [:catalog_id, :deactivated_at]
 
   def self.sorted(locale=I18n.locale)
-    order("LOWER(item_types.name_translations->>'name_#{locale}') ASC")
+    order(Arel.sql("LOWER(item_types.name_translations->>'name_#{locale}') ASC"))
   end
 
   # An array of all fields in this item type, plus any nested fields included

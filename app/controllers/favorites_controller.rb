@@ -16,14 +16,14 @@ class FavoritesController < ApplicationController
     build_favorite(item)
     authorize(@favorite)
     Favorite.create(item: item, user: current_user)
-    redirect_to :back
+    redirect_back fallback_location: favorites_path
   end
 
   def destroy
     find_favorite(params[:id])
     authorize(@favorite)
     @favorite.destroy
-    redirect_to :back
+    redirect_back fallback_location: favorites_path
   end
 
   def user_scoped?

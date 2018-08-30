@@ -68,7 +68,7 @@ class CatalogAdmin::ItemsController < CatalogAdmin::BaseController
     upload_dir = File.join('upload', params[:catalog_slug], fld_id)
     upload_path = File.join('public', upload_dir)
     FileUtils.mkdir_p(upload_path)
-    timestamp = Time.now.to_i.to_formatted_s(:number)
+    timestamp = Time.current.to_formatted_s(:number)
     local_fname = "#{timestamp}_" + format_filename(uploaded_file.original_filename)
     file_path = File.join(upload_dir, local_fname)
     File.open(Rails.root.join('public', file_path), 'wb') do |fp|

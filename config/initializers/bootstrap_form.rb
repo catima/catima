@@ -1,7 +1,7 @@
 # Monkey patch to allow a block to be passed to #select.
 
 require "bootstrap_form/version"
-unless BootstrapForm::VERSION == "2.3.0"
+unless BootstrapForm::VERSION == "2.7.0"
   fail "Monkey patch hasn't been tested with #{BootstrapForm::VERSION}"
 end
 

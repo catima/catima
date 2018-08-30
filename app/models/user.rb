@@ -20,16 +20,15 @@
 #  updated_at             :datetime         not null
 #
 
-class User < ActiveRecord::Base
+class User < ApplicationRecord
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :trackable, :validatable
 
   include AvailableLocales
 
-  belongs_to :invited_by, :class_name => "User"
+  belongs_to :invited_by, :class_name => "User", optional: true
   has_many :catalog_permissions, :dependent => :destroy
   has_many :favorites, :dependent => :destroy
-  has_many :exports, :dependent => :destroy
 
   accepts_nested_attributes_for :catalog_permissions
 

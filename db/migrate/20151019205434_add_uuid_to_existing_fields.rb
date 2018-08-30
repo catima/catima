@@ -1,4 +1,4 @@
-class AddUuidToExistingFields < ActiveRecord::Migration
+class AddUuidToExistingFields < ActiveRecord::Migration[4.2]
   class Field < ActiveRecord::Base
   end
 

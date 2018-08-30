@@ -18,7 +18,7 @@
 #  uuid           :string
 #
 
-class Item < ActiveRecord::Base
+class Item < ApplicationRecord
   include DataStore::Macros
   include Review::Macros
   include Search::Macros
@@ -49,7 +49,7 @@ class Item < ActiveRecord::Base
     sql = []
     sql << "data->>'#{field.uuid}' ASC" unless field.nil?
     sql << "created_at DESC"
-    order(sql.join(", "))
+    order(Arel.sql(sql.join(", ")))
   end
 
   def self.with_type(type)

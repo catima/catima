@@ -4,7 +4,7 @@ import React from 'react';
 import { Map, TileLayer, LayersControl, BaseLayer, GeoJSON } from 'react-leaflet';
 
 
-const subs = ['server', 'services'];
+const subs = ['a', 'b', 'c'];
 
 
 class GeoViewer extends React.Component {
@@ -122,12 +122,12 @@ class GeoViewer extends React.Component {
         <Map ref="map" center={center} zoom={2} zoomControl={true}>
           <TileLayer
             attribution='Map data &copy; <a href="http://openstreetmap.org">OpenStreetMap</a> contributors'
-            url="//{s}.arcgisonline.com/ArcGIS/rest/services/World_Topo_Map/MapServer/tile/{z}/{y}/{x}"
+            url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
             subdomains={subs}
             minZoom={1}
             maxZoom={19}
-            attribution='USGS, NOAA'
-            attributionUrl='https://static.arcgis.com/attribution/World_Topo_Map'
+            attribution='© OpenStreetMap contributors'
+            attributionUrl='https://www.openstreetmap.org/copyright'
           />
           {this.features.map((feat, i) =>
             <GeoJSON key={i} data={feat.geometry} />

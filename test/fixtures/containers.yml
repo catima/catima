@@ -20,7 +20,7 @@ one:
   slug: content1
   row_order: 1
   page_id: 1
-  content: {html: "<h1>hello world</h1>"}
+  content: { html: "<h1>hello world</h1>" }
   locale: en
 
 two:
@@ -28,7 +28,5 @@ two:
   slug: content2
   row_order: 0
   page_id: 1
-  content: {markdown: "#hello world"}
+  content: { markdown: "#hello world" }
   locale: en
-
-

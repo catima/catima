@@ -1,4 +1,4 @@
-class RemoveUserCreatorFk < ActiveRecord::Migration
+class RemoveUserCreatorFk < ActiveRecord::Migration[4.2]
   def up
     remove_foreign_key "items", :column => "creator_id"
     remove_foreign_key "items", :column => "reviewer_id"
