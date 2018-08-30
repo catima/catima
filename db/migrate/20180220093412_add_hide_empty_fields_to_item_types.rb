@@ -1,4 +1,4 @@
-class AddHideEmptyFieldsToItemTypes < ActiveRecord::Migration
+class AddHideEmptyFieldsToItemTypes < ActiveRecord::Migration[4.2]
   def up
     add_column :item_types, :display_emtpy_fields, :boolean, :null => false, default: true
   end

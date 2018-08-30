@@ -1,4 +1,4 @@
-class ChangeItemDataFieldToJsonb < ActiveRecord::Migration
+class ChangeItemDataFieldToJsonb < ActiveRecord::Migration[4.2]
   def up
     ActiveRecord::Base.connection.execute(
       "ALTER TABLE items ALTER COLUMN data

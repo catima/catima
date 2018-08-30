@@ -15,12 +15,12 @@
 #  uuid                    :string
 #
 
-class Choice < ActiveRecord::Base
+class Choice < ApplicationRecord
   include HasTranslations
 
   belongs_to :catalog
-  belongs_to :category
-  belongs_to :choice_set
+  belongs_to :category, optional: true
+  belongs_to :choice_set, optional: true
 
   store_translations :short_name, :required => true
   store_translations :long_name, :required => false
@@ -42,7 +42,7 @@ class Choice < ActiveRecord::Base
   end
 
   def self.sorted(locale=I18n.locale)
-    order("LOWER(choices.short_name_translations->>'short_name_#{locale}') ASC")
+    order(Arel.sql("LOWER(choices.short_name_translations->>'short_name_#{locale}') ASC"))
   end
 
   def self.short_named(name, locale=I18n.locale)

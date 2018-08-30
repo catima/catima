@@ -1,10 +1,3 @@
---
--- PostgreSQL database dump
---
-
--- Dumped from database version 10.1
--- Dumped by pg_dump version 10.1
-
 SET statement_timeout = 0;
 SET lock_timeout = 0;
 SET idle_in_transaction_session_timeout = 0;
@@ -26,20 +19,6 @@ CREATE EXTENSION IF NOT EXISTS plpgsql WITH SCHEMA pg_catalog;
 --
 
 COMMENT ON EXTENSION plpgsql IS 'PL/pgSQL procedural language';
-
-
---
--- Name: postgis; Type: EXTENSION; Schema: -; Owner: -
---
-
-CREATE EXTENSION IF NOT EXISTS postgis WITH SCHEMA public;
-
-
---
--- Name: EXTENSION postgis; Type: COMMENT; Schema: -; Owner: -
---
-
-COMMENT ON EXTENSION postgis IS 'PostGIS geometry, geography, and raster spatial types and functions';
 
 
 SET search_path = public, pg_catalog;
@@ -113,6 +92,18 @@ CREATE SEQUENCE advanced_searches_id_seq
 --
 
 ALTER SEQUENCE advanced_searches_id_seq OWNED BY advanced_searches.id;
+
+
+--
+-- Name: ar_internal_metadata; Type: TABLE; Schema: public; Owner: -
+--
+
+CREATE TABLE ar_internal_metadata (
+    key character varying NOT NULL,
+    value character varying,
+    created_at timestamp without time zone NOT NULL,
+    updated_at timestamp without time zone NOT NULL
+);
 
 
 --
@@ -386,7 +377,6 @@ CREATE TABLE exports (
 --
 
 CREATE SEQUENCE exports_id_seq
-    AS integer
     START WITH 1
     INCREMENT BY 1
     NO MINVALUE
@@ -419,7 +409,6 @@ CREATE TABLE favorites (
 --
 
 CREATE SEQUENCE favorites_id_seq
-    AS integer
     START WITH 1
     INCREMENT BY 1
     NO MINVALUE
@@ -901,6 +890,14 @@ ALTER TABLE ONLY advanced_searches
 
 
 --
+-- Name: ar_internal_metadata ar_internal_metadata_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY ar_internal_metadata
+    ADD CONSTRAINT ar_internal_metadata_pkey PRIMARY KEY (key);
+
+
+--
 -- Name: catalog_permissions catalog_permissions_pkey; Type: CONSTRAINT; Schema: public; Owner: -
 --
 
@@ -1021,6 +1018,14 @@ ALTER TABLE ONLY pages
 
 
 --
+-- Name: schema_migrations schema_migrations_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY schema_migrations
+    ADD CONSTRAINT schema_migrations_pkey PRIMARY KEY (version);
+
+
+--
 -- Name: template_storages template_storages_pkey; Type: CONSTRAINT; Schema: public; Owner: -
 --
 
@@ -1040,294 +1045,287 @@ ALTER TABLE ONLY users
 -- Name: index_advanced_searches_on_catalog_id; Type: INDEX; Schema: public; Owner: -
 --
 
-CREATE INDEX index_advanced_searches_on_catalog_id ON advanced_searches USING btree (catalog_id);
+CREATE INDEX index_advanced_searches_on_catalog_id ON public.advanced_searches USING btree (catalog_id);
 
 
 --
 -- Name: index_advanced_searches_on_item_type_id; Type: INDEX; Schema: public; Owner: -
 --
 
-CREATE INDEX index_advanced_searches_on_item_type_id ON advanced_searches USING btree (item_type_id);
+CREATE INDEX index_advanced_searches_on_item_type_id ON public.advanced_searches USING btree (item_type_id);
 
 
 --
 -- Name: index_catalog_permissions_on_catalog_id; Type: INDEX; Schema: public; Owner: -
 --
 
-CREATE INDEX index_catalog_permissions_on_catalog_id ON catalog_permissions USING btree (catalog_id);
+CREATE INDEX index_catalog_permissions_on_catalog_id ON public.catalog_permissions USING btree (catalog_id);
 
 
 --
 -- Name: index_catalog_permissions_on_user_id; Type: INDEX; Schema: public; Owner: -
 --
 
-CREATE INDEX index_catalog_permissions_on_user_id ON catalog_permissions USING btree (user_id);
+CREATE INDEX index_catalog_permissions_on_user_id ON public.catalog_permissions USING btree (user_id);
 
 
 --
 -- Name: index_catalogs_on_slug; Type: INDEX; Schema: public; Owner: -
 --
 
-CREATE UNIQUE INDEX index_catalogs_on_slug ON catalogs USING btree (slug);
+CREATE UNIQUE INDEX index_catalogs_on_slug ON public.catalogs USING btree (slug);
 
 
 --
 -- Name: index_categories_on_catalog_id; Type: INDEX; Schema: public; Owner: -
 --
 
-CREATE INDEX index_categories_on_catalog_id ON categories USING btree (catalog_id);
+CREATE INDEX index_categories_on_catalog_id ON public.categories USING btree (catalog_id);
 
 
 --
 -- Name: index_categories_on_uuid_and_catalog_id; Type: INDEX; Schema: public; Owner: -
 --
 
-CREATE UNIQUE INDEX index_categories_on_uuid_and_catalog_id ON categories USING btree (uuid, catalog_id);
+CREATE UNIQUE INDEX index_categories_on_uuid_and_catalog_id ON public.categories USING btree (uuid, catalog_id);
 
 
 --
 -- Name: index_choice_sets_on_catalog_id; Type: INDEX; Schema: public; Owner: -
 --
 
-CREATE INDEX index_choice_sets_on_catalog_id ON choice_sets USING btree (catalog_id);
+CREATE INDEX index_choice_sets_on_catalog_id ON public.choice_sets USING btree (catalog_id);
 
 
 --
 -- Name: index_choice_sets_on_uuid_and_catalog_id; Type: INDEX; Schema: public; Owner: -
 --
 
-CREATE UNIQUE INDEX index_choice_sets_on_uuid_and_catalog_id ON choice_sets USING btree (uuid, catalog_id);
+CREATE UNIQUE INDEX index_choice_sets_on_uuid_and_catalog_id ON public.choice_sets USING btree (uuid, catalog_id);
 
 
 --
 -- Name: index_choices_on_catalog_id; Type: INDEX; Schema: public; Owner: -
 --
 
-CREATE INDEX index_choices_on_catalog_id ON choices USING btree (catalog_id);
+CREATE INDEX index_choices_on_catalog_id ON public.choices USING btree (catalog_id);
 
 
 --
 -- Name: index_choices_on_category_id; Type: INDEX; Schema: public; Owner: -
 --
 
-CREATE INDEX index_choices_on_category_id ON choices USING btree (category_id);
+CREATE INDEX index_choices_on_category_id ON public.choices USING btree (category_id);
 
 
 --
 -- Name: index_choices_on_choice_set_id; Type: INDEX; Schema: public; Owner: -
 --
 
-CREATE INDEX index_choices_on_choice_set_id ON choices USING btree (choice_set_id);
+CREATE INDEX index_choices_on_choice_set_id ON public.choices USING btree (choice_set_id);
 
 
 --
 -- Name: index_choices_on_uuid_and_choice_set_id; Type: INDEX; Schema: public; Owner: -
 --
 
-CREATE UNIQUE INDEX index_choices_on_uuid_and_choice_set_id ON choices USING btree (uuid, choice_set_id);
+CREATE UNIQUE INDEX index_choices_on_uuid_and_choice_set_id ON public.choices USING btree (uuid, choice_set_id);
 
 
 --
 -- Name: index_containers_on_page_id; Type: INDEX; Schema: public; Owner: -
 --
 
-CREATE INDEX index_containers_on_page_id ON containers USING btree (page_id);
+CREATE INDEX index_containers_on_page_id ON public.containers USING btree (page_id);
 
 
 --
 -- Name: index_containers_on_slug; Type: INDEX; Schema: public; Owner: -
 --
 
-CREATE INDEX index_containers_on_slug ON containers USING btree (slug);
+CREATE INDEX index_containers_on_slug ON public.containers USING btree (slug);
 
 
 --
 -- Name: index_exports_on_catalog_id; Type: INDEX; Schema: public; Owner: -
 --
 
-CREATE INDEX index_exports_on_catalog_id ON exports USING btree (catalog_id);
+CREATE INDEX index_exports_on_catalog_id ON public.exports USING btree (catalog_id);
 
 
 --
 -- Name: index_exports_on_user_id; Type: INDEX; Schema: public; Owner: -
 --
 
-CREATE INDEX index_exports_on_user_id ON exports USING btree (user_id);
+CREATE INDEX index_exports_on_user_id ON public.exports USING btree (user_id);
 
 
 --
 -- Name: index_favorites_on_item_id; Type: INDEX; Schema: public; Owner: -
 --
 
-CREATE INDEX index_favorites_on_item_id ON favorites USING btree (item_id);
+CREATE INDEX index_favorites_on_item_id ON public.favorites USING btree (item_id);
 
 
 --
 -- Name: index_favorites_on_user_id; Type: INDEX; Schema: public; Owner: -
 --
 
-CREATE INDEX index_favorites_on_user_id ON favorites USING btree (user_id);
+CREATE INDEX index_favorites_on_user_id ON public.favorites USING btree (user_id);
 
 
 --
 -- Name: index_fields_on_category_item_type_id; Type: INDEX; Schema: public; Owner: -
 --
 
-CREATE INDEX index_fields_on_category_item_type_id ON fields USING btree (category_item_type_id);
+CREATE INDEX index_fields_on_category_item_type_id ON public.fields USING btree (category_item_type_id);
 
 
 --
 -- Name: index_fields_on_choice_set_id; Type: INDEX; Schema: public; Owner: -
 --
 
-CREATE INDEX index_fields_on_choice_set_id ON fields USING btree (choice_set_id);
+CREATE INDEX index_fields_on_choice_set_id ON public.fields USING btree (choice_set_id);
 
 
 --
 -- Name: index_fields_on_field_set_id; Type: INDEX; Schema: public; Owner: -
 --
 
-CREATE INDEX index_fields_on_field_set_id ON fields USING btree (field_set_id);
+CREATE INDEX index_fields_on_field_set_id ON public.fields USING btree (field_set_id);
 
 
 --
 -- Name: index_fields_on_field_set_id_and_slug; Type: INDEX; Schema: public; Owner: -
 --
 
-CREATE UNIQUE INDEX index_fields_on_field_set_id_and_slug ON fields USING btree (field_set_id, slug);
+CREATE UNIQUE INDEX index_fields_on_field_set_id_and_slug ON public.fields USING btree (field_set_id, slug);
 
 
 --
 -- Name: index_fields_on_related_item_type_id; Type: INDEX; Schema: public; Owner: -
 --
 
-CREATE INDEX index_fields_on_related_item_type_id ON fields USING btree (related_item_type_id);
+CREATE INDEX index_fields_on_related_item_type_id ON public.fields USING btree (related_item_type_id);
 
 
 --
 -- Name: index_item_types_on_catalog_id; Type: INDEX; Schema: public; Owner: -
 --
 
-CREATE INDEX index_item_types_on_catalog_id ON item_types USING btree (catalog_id);
+CREATE INDEX index_item_types_on_catalog_id ON public.item_types USING btree (catalog_id);
 
 
 --
 -- Name: index_item_types_on_catalog_id_and_slug; Type: INDEX; Schema: public; Owner: -
 --
 
-CREATE UNIQUE INDEX index_item_types_on_catalog_id_and_slug ON item_types USING btree (catalog_id, slug);
+CREATE UNIQUE INDEX index_item_types_on_catalog_id_and_slug ON public.item_types USING btree (catalog_id, slug);
 
 
 --
 -- Name: index_item_views_on_item_type_id; Type: INDEX; Schema: public; Owner: -
 --
 
-CREATE INDEX index_item_views_on_item_type_id ON item_views USING btree (item_type_id);
+CREATE INDEX index_item_views_on_item_type_id ON public.item_views USING btree (item_type_id);
 
 
 --
 -- Name: index_items_on_catalog_id; Type: INDEX; Schema: public; Owner: -
 --
 
-CREATE INDEX index_items_on_catalog_id ON items USING btree (catalog_id);
+CREATE INDEX index_items_on_catalog_id ON public.items USING btree (catalog_id);
 
 
 --
 -- Name: index_items_on_creator_id; Type: INDEX; Schema: public; Owner: -
 --
 
-CREATE INDEX index_items_on_creator_id ON items USING btree (creator_id);
+CREATE INDEX index_items_on_creator_id ON public.items USING btree (creator_id);
 
 
 --
 -- Name: index_items_on_item_type_id; Type: INDEX; Schema: public; Owner: -
 --
 
-CREATE INDEX index_items_on_item_type_id ON items USING btree (item_type_id);
+CREATE INDEX index_items_on_item_type_id ON public.items USING btree (item_type_id);
 
 
 --
 -- Name: index_items_on_reviewer_id; Type: INDEX; Schema: public; Owner: -
 --
 
-CREATE INDEX index_items_on_reviewer_id ON items USING btree (reviewer_id);
+CREATE INDEX index_items_on_reviewer_id ON public.items USING btree (reviewer_id);
 
 
 --
 -- Name: index_items_on_uuid_and_catalog_id; Type: INDEX; Schema: public; Owner: -
 --
 
-CREATE UNIQUE INDEX index_items_on_uuid_and_catalog_id ON items USING btree (uuid, catalog_id);
+CREATE UNIQUE INDEX index_items_on_uuid_and_catalog_id ON public.items USING btree (uuid, catalog_id);
 
 
 --
 -- Name: index_menu_items_on_catalog_id; Type: INDEX; Schema: public; Owner: -
 --
 
-CREATE INDEX index_menu_items_on_catalog_id ON menu_items USING btree (catalog_id);
+CREATE INDEX index_menu_items_on_catalog_id ON public.menu_items USING btree (catalog_id);
 
 
 --
 -- Name: index_menu_items_on_item_type_id; Type: INDEX; Schema: public; Owner: -
 --
 
-CREATE INDEX index_menu_items_on_item_type_id ON menu_items USING btree (item_type_id);
+CREATE INDEX index_menu_items_on_item_type_id ON public.menu_items USING btree (item_type_id);
 
 
 --
 -- Name: index_menu_items_on_page_id; Type: INDEX; Schema: public; Owner: -
 --
 
-CREATE INDEX index_menu_items_on_page_id ON menu_items USING btree (page_id);
+CREATE INDEX index_menu_items_on_page_id ON public.menu_items USING btree (page_id);
 
 
 --
 -- Name: index_menu_items_on_parent_id; Type: INDEX; Schema: public; Owner: -
 --
 
-CREATE INDEX index_menu_items_on_parent_id ON menu_items USING btree (parent_id);
+CREATE INDEX index_menu_items_on_parent_id ON public.menu_items USING btree (parent_id);
 
 
 --
 -- Name: index_pages_on_catalog_id; Type: INDEX; Schema: public; Owner: -
 --
 
-CREATE INDEX index_pages_on_catalog_id ON pages USING btree (catalog_id);
+CREATE INDEX index_pages_on_catalog_id ON public.pages USING btree (catalog_id);
 
 
 --
 -- Name: index_pages_on_creator_id; Type: INDEX; Schema: public; Owner: -
 --
 
-CREATE INDEX index_pages_on_creator_id ON pages USING btree (creator_id);
+CREATE INDEX index_pages_on_creator_id ON public.pages USING btree (creator_id);
 
 
 --
 -- Name: index_pages_on_reviewer_id; Type: INDEX; Schema: public; Owner: -
 --
 
-CREATE INDEX index_pages_on_reviewer_id ON pages USING btree (reviewer_id);
+CREATE INDEX index_pages_on_reviewer_id ON public.pages USING btree (reviewer_id);
 
 
 --
 -- Name: index_users_on_email; Type: INDEX; Schema: public; Owner: -
 --
 
-CREATE UNIQUE INDEX index_users_on_email ON users USING btree (email);
+CREATE UNIQUE INDEX index_users_on_email ON public.users USING btree (email);
 
 
 --
 -- Name: index_users_on_reset_password_token; Type: INDEX; Schema: public; Owner: -
 --
 
-CREATE UNIQUE INDEX index_users_on_reset_password_token ON users USING btree (reset_password_token);
-
-
---
--- Name: unique_schema_migrations; Type: INDEX; Schema: public; Owner: -
---
-
-CREATE UNIQUE INDEX unique_schema_migrations ON schema_migrations USING btree (version);
+CREATE UNIQUE INDEX index_users_on_reset_password_token ON public.users USING btree (reset_password_token);
 
 
 --
@@ -1584,141 +1582,75 @@ ALTER TABLE ONLY choice_sets
 
 SET search_path TO "$user", public;
 
-INSERT INTO schema_migrations (version) VALUES ('20151005181012');
+INSERT INTO "schema_migrations" (version) VALUES
+('20151005181012'),
+('20151005201520'),
+('20151005203028'),
+('20151005203921'),
+('20151005205146'),
+('20151005210132'),
+('20151005221339'),
+('20151007172059'),
+('20151013214402'),
+('20151013214815'),
+('20151013232152'),
+('20151013232606'),
+('20151014232335'),
+('20151015161910'),
+('20151015214240'),
+('20151015233520'),
+('20151016001005'),
+('20151019204634'),
+('20151019205434'),
+('20151020171305'),
+('20151021003024'),
+('20151027162712'),
+('20151027173025'),
+('20151027213627'),
+('20151027221141'),
+('20151028165346'),
+('20151028165822'),
+('20151102213009'),
+('20151105175029'),
+('20151106003745'),
+('20151109224327'),
+('20151130193143'),
+('20151130214821'),
+('20151205003146'),
+('20151205005311'),
+('20151205011325'),
+('20151206234336'),
+('20151212000308'),
+('20151214213046'),
+('20160307163846'),
+('20160425072020'),
+('20160425125350'),
+('20160509095147'),
+('20160509194619'),
+('20160720053135'),
+('20170121055843'),
+('20170507231151'),
+('20170507231610'),
+('20170513155612'),
+('20170513160403'),
+('20170705191550'),
+('20170830180816'),
+('20170830181451'),
+('20170830182339'),
+('20170831075823'),
+('20170913085323'),
+('20170926095141'),
+('20171106080707'),
+('20171109063607'),
+('20171118121553'),
+('20171205064929'),
+('20171214171741'),
+('20171216182821'),
+('20171219054741'),
+('20180220093412'),
+('20180308085259'),
+('20180504082040'),
+('20180615090214'),
+('20180702145421');
 
-INSERT INTO schema_migrations (version) VALUES ('20151005201520');
-
-INSERT INTO schema_migrations (version) VALUES ('20151005203028');
-
-INSERT INTO schema_migrations (version) VALUES ('20151005203921');
-
-INSERT INTO schema_migrations (version) VALUES ('20151005205146');
-
-INSERT INTO schema_migrations (version) VALUES ('20151005210132');
-
-INSERT INTO schema_migrations (version) VALUES ('20151005221339');
-
-INSERT INTO schema_migrations (version) VALUES ('20151007172059');
-
-INSERT INTO schema_migrations (version) VALUES ('20151013214402');
-
-INSERT INTO schema_migrations (version) VALUES ('20151013214815');
-
-INSERT INTO schema_migrations (version) VALUES ('20151013232152');
-
-INSERT INTO schema_migrations (version) VALUES ('20151013232606');
-
-INSERT INTO schema_migrations (version) VALUES ('20151014232335');
-
-INSERT INTO schema_migrations (version) VALUES ('20151015161910');
-
-INSERT INTO schema_migrations (version) VALUES ('20151015214240');
-
-INSERT INTO schema_migrations (version) VALUES ('20151015233520');
-
-INSERT INTO schema_migrations (version) VALUES ('20151016001005');
-
-INSERT INTO schema_migrations (version) VALUES ('20151019204634');
-
-INSERT INTO schema_migrations (version) VALUES ('20151019205434');
-
-INSERT INTO schema_migrations (version) VALUES ('20151020171305');
-
-INSERT INTO schema_migrations (version) VALUES ('20151021003024');
-
-INSERT INTO schema_migrations (version) VALUES ('20151027162712');
-
-INSERT INTO schema_migrations (version) VALUES ('20151027173025');
-
-INSERT INTO schema_migrations (version) VALUES ('20151027213627');
-
-INSERT INTO schema_migrations (version) VALUES ('20151027221141');
-
-INSERT INTO schema_migrations (version) VALUES ('20151028165346');
-
-INSERT INTO schema_migrations (version) VALUES ('20151028165822');
-
-INSERT INTO schema_migrations (version) VALUES ('20151102213009');
-
-INSERT INTO schema_migrations (version) VALUES ('20151105175029');
-
-INSERT INTO schema_migrations (version) VALUES ('20151106003745');
-
-INSERT INTO schema_migrations (version) VALUES ('20151109224327');
-
-INSERT INTO schema_migrations (version) VALUES ('20151130193143');
-
-INSERT INTO schema_migrations (version) VALUES ('20151130214821');
-
-INSERT INTO schema_migrations (version) VALUES ('20151205003146');
-
-INSERT INTO schema_migrations (version) VALUES ('20151205005311');
-
-INSERT INTO schema_migrations (version) VALUES ('20151205011325');
-
-INSERT INTO schema_migrations (version) VALUES ('20151206234336');
-
-INSERT INTO schema_migrations (version) VALUES ('20151212000308');
-
-INSERT INTO schema_migrations (version) VALUES ('20151214213046');
-
-INSERT INTO schema_migrations (version) VALUES ('20160307163846');
-
-INSERT INTO schema_migrations (version) VALUES ('20160425072020');
-
-INSERT INTO schema_migrations (version) VALUES ('20160425125350');
-
-INSERT INTO schema_migrations (version) VALUES ('20160509095147');
-
-INSERT INTO schema_migrations (version) VALUES ('20160509194619');
-
-INSERT INTO schema_migrations (version) VALUES ('20160720053135');
-
-INSERT INTO schema_migrations (version) VALUES ('20170121055843');
-
-INSERT INTO schema_migrations (version) VALUES ('20170507231151');
-
-INSERT INTO schema_migrations (version) VALUES ('20170507231610');
-
-INSERT INTO schema_migrations (version) VALUES ('20170513155612');
-
-INSERT INTO schema_migrations (version) VALUES ('20170513160403');
-
-INSERT INTO schema_migrations (version) VALUES ('20170705191550');
-
-INSERT INTO schema_migrations (version) VALUES ('20170830180816');
-
-INSERT INTO schema_migrations (version) VALUES ('20170830181451');
-
-INSERT INTO schema_migrations (version) VALUES ('20170830182339');
-
-INSERT INTO schema_migrations (version) VALUES ('20170831075823');
-
-INSERT INTO schema_migrations (version) VALUES ('20170913085323');
-
-INSERT INTO schema_migrations (version) VALUES ('20170926095141');
-
-INSERT INTO schema_migrations (version) VALUES ('20171106080707');
-
-INSERT INTO schema_migrations (version) VALUES ('20171109063607');
-
-INSERT INTO schema_migrations (version) VALUES ('20171118121553');
-
-INSERT INTO schema_migrations (version) VALUES ('20171205064929');
-
-INSERT INTO schema_migrations (version) VALUES ('20171214171741');
-
-INSERT INTO schema_migrations (version) VALUES ('20171216182821');
-
-INSERT INTO schema_migrations (version) VALUES ('20171219054741');
-
-INSERT INTO schema_migrations (version) VALUES ('20180220093412');
-
-INSERT INTO schema_migrations (version) VALUES ('20180308085259');
-
-INSERT INTO schema_migrations (version) VALUES ('20180504082040');
-
-INSERT INTO schema_migrations (version) VALUES ('20180615090214');
-
-INSERT INTO schema_migrations (version) VALUES ('20180702145421');
 

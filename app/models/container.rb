@@ -13,7 +13,7 @@
 #  updated_at :datetime         not null
 #
 
-class Container < ActiveRecord::Base
+class Container < ApplicationRecord
   TYPES = {
     "html" => 'Container::HTML',
     "markdown" => 'Container::Markdown',

@@ -1,4 +1,4 @@
-class RenameNameColumnsWithTranslationsSuffix < ActiveRecord::Migration
+class RenameNameColumnsWithTranslationsSuffix < ActiveRecord::Migration[4.2]
   def change
     rename_column :choices, :short_name, :short_name_translations
     rename_column :choices, :long_name, :long_name_translations

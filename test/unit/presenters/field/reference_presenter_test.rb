@@ -8,7 +8,7 @@ class Field::ReferencePresenterTest < ActionView::TestCase
   test "#value" do
     author = items(:one_author_stephen_king)
     collaborator = items(:one_author_very_old)
-    collaborator_field = fields(:one_author_collaborator)
+    collaborator_field = Field.find ActiveRecord::FixtureSet.identify('one_author_collaborator')
     # Have to set this manually because fixture doesn't know ID ahead of time
     author.data["one_author_collaborator_uuid"] = collaborator.id
 
@@ -21,7 +21,7 @@ class Field::ReferencePresenterTest < ActionView::TestCase
 
   test "#value for multiple" do
     author = items(:one_author_stephen_king)
-    collaborators_field = fields(:one_author_other_collaborators)
+    collaborators_field = Field.find ActiveRecord::FixtureSet.identify('one_author_other_collaborators')
     ids = [
       items(:one_author_very_old),
       items(:one_author_very_young)

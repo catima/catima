@@ -1,4 +1,4 @@
-class CreateCatalogs < ActiveRecord::Migration
+class CreateCatalogs < ActiveRecord::Migration[4.2]
   def change
     create_table :catalogs do |t|
       t.string :name

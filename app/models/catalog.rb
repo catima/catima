@@ -20,12 +20,12 @@
 #  visible             :boolean          default(TRUE), not null
 #
 
-class Catalog < ActiveRecord::Base
+class Catalog < ApplicationRecord
   include AvailableLocales
   include HasDeactivation
   include HasSlug
 
-  belongs_to :custom_root_page, class_name: "Page"
+  belongs_to :custom_root_page, class_name: "Page", optional: true
 
   before_validation :strip_empty_language
   before_validation :check_activation_status
@@ -55,7 +55,7 @@ class Catalog < ActiveRecord::Base
   attachment :navlogo, type: :image
 
   def self.sorted
-    order("LOWER(catalogs.name) ASC")
+    order(Arel.sql("LOWER(catalogs.name) ASC"))
   end
 
   def self.unique_inactive_slug(active_slug)

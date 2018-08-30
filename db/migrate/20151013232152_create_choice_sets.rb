@@ -1,4 +1,4 @@
-class CreateChoiceSets < ActiveRecord::Migration
+class CreateChoiceSets < ActiveRecord::Migration[4.2]
   def change
     create_table :choice_sets do |t|
       t.belongs_to :catalog, index: true, foreign_key: true

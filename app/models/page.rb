@@ -15,13 +15,13 @@
 #  updated_at  :datetime         not null
 #
 
-class Page < ActiveRecord::Base
+class Page < ApplicationRecord
   include HasSlug
   include HasLocales
 
   belongs_to :catalog
   belongs_to :creator, :class_name => "User"
-  belongs_to :reviewer, :class_name => "User"
+  belongs_to :reviewer, :class_name => "User", optional: true
 
   has_many :containers, :dependent => :destroy
   has_many :menu_items, :dependent => :destroy

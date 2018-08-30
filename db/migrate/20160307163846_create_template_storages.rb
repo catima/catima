@@ -1,4 +1,4 @@
-class CreateTemplateStorages < ActiveRecord::Migration
+class CreateTemplateStorages < ActiveRecord::Migration[4.2]
   def change
     create_table :template_storages do |t|
       t.text :body

@@ -17,12 +17,12 @@
 # The actual logic for performing advanced searches is in a separate class
 # called ItemList::AdvancedSearchResult.
 #
-class AdvancedSearch < ActiveRecord::Base
+class AdvancedSearch < ApplicationRecord
   delegate :fields, :to => :item_type
   delegate :item_types, :to => :catalog
 
   belongs_to :catalog
-  belongs_to :creator, :class_name => "User"
+  belongs_to :creator, :class_name => "User", optional: true
   belongs_to :item_type, -> { active }
 
   validates_presence_of :catalog

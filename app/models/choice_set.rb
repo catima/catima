@@ -12,7 +12,7 @@
 #  uuid           :string
 #
 
-class ChoiceSet < ActiveRecord::Base
+class ChoiceSet < ApplicationRecord
   include HasDeactivation
 
   belongs_to :catalog
@@ -29,7 +29,7 @@ class ChoiceSet < ActiveRecord::Base
   before_create :assign_uuid
 
   def self.sorted
-    order("LOWER(choice_sets.name)")
+    order(Arel.sql("LOWER(choice_sets.name)"))
   end
 
   def describe

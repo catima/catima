@@ -18,7 +18,7 @@ class CatalogAdmin::ExportsController < CatalogAdmin::BaseController
       category: category,
       status: "processing"
     )
-    redirect_to :back, :alert => @message
+    redirect_back fallback_location: catalog_admin_exports_path, :alert => @message
   end
 
   def download

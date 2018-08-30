@@ -1,4 +1,4 @@
-class AlterUuidFormat < ActiveRecord::Migration
+class AlterUuidFormat < ActiveRecord::Migration[4.2]
   class Field < ActiveRecord::Base
   end
 

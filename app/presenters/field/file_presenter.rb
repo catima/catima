@@ -1,5 +1,5 @@
 class Field::FilePresenter < FieldPresenter
-  delegate :content_tag, :number_to_human_size, :react_component, :to => :view
+  delegate :content_tag, :number_to_human_size, :to => :view
 
   def input(form, method, options={})
     item_type = options[:item_type] || field.item_type.slug

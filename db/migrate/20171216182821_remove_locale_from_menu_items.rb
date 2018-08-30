@@ -1,4 +1,4 @@
-class RemoveLocaleFromMenuItems < ActiveRecord::Migration
+class RemoveLocaleFromMenuItems < ActiveRecord::Migration[4.2]
   def up
     rename_column :menu_items, :title, :title_old
     add_column :menu_items, :title, :jsonb

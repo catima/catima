@@ -1,12 +1,9 @@
 //= require ./bootstrap
 //= require rails_bootstrap_forms
-//= require spinner
+//= require leaflet
 //= require font-awesome
-//= require jquery.fileupload
-//= require jquery.fileupload-ui
-//= require jquery.minicolors
 //= require select2
 //= require select2-bootstrap
-//= require summernote
-//= require_tree .
+//= require_tree ./modules
+//= require_tree ./webpack
 //= require_self

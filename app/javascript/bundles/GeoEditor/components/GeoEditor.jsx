@@ -242,7 +242,7 @@ class GeoEditor extends React.Component {
   componentDidMount() {
     const self = this;
     this._map = L.map(this.mapId).setView([47, 7], 7);
-    L.tileLayer('http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
       attribution: '',
       maxZoom: 18
     }).addTo(this._map);

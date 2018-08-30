@@ -1,4 +1,4 @@
-class AddCustomRootPageToCatalogs < ActiveRecord::Migration
+class AddCustomRootPageToCatalogs < ActiveRecord::Migration[4.2]
   def change
     add_column :catalogs, :custom_root_page_id, :integer, :index => true
 

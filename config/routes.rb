@@ -147,72 +147,76 @@ Rails.application.routes.draw do
   # be subclasses of the default controller. Hence, we can simply rely on
   # the existence of a file with the appropriate name.
 
-  unless ActiveRecord::Migrator.needs_migration?
-    Catalog.active.each do |catalog|
-      next unless File.exist?(Rails.root.join('catalogs', catalog.slug, 'controllers', "#{catalog.snake_slug}_catalogs_controller.rb"))
-      get "#{catalog.slug}/(:locale)",
-          :controller => "#{catalog.snake_slug}_catalogs",
-          :action => :show,
-          :catalog_slug => catalog.slug,
-          :as => "catalog_#{catalog.snake_slug}"
-    end
+  # First get a list of custom catalogs by inspecting the catalogs directory.
+  custom_catalogs = Dir[Rails.root.join('catalogs', '*')].map { |dir| File.basename(dir) }
 
-    # Default catalog index route
-    get ":catalog_slug/(:locale)" => "catalogs#show",
-        :as => "catalog_home",
-        :constraints => CatalogsController::Constraint
+  custom_catalogs.each do |catalog_slug|
+    catalog_snake_slug = catalog_slug.tr('-', '_')
+    next unless File.exist?(Rails.root.join('catalogs', catalog_slug, 'controllers', "#{catalog_snake_slug}_catalogs_controller.rb"))
+    get "#{catalog_slug}/(:locale)",
+        :controller => "#{catalog_snake_slug}_catalogs",
+        :action => :show,
+        :catalog_slug => catalog_slug,
+        :as => "catalog_#{catalog_snake_slug}"
+  end
 
-    # Create per-catalog routes for item type views for customized items controllers.
-    Catalog.active.each do |catalog|
-      scope :path => "#{catalog.slug}/:locale",
-            :constraints => CatalogsController::Constraint do
+  # Default catalog index route
+  get ":catalog_slug/(:locale)" => "catalogs#show",
+      :as => "catalog_home",
+      :constraints => CatalogsController::Constraint
 
-        if File.exist?(Rails.root.join('catalogs', catalog.slug, 'controllers', "#{catalog.snake_slug}_simple_search_controller.rb"))
-          get "search",
-              :controller => "#{catalog.snake_slug}_simple_search",
-              :action => :index,
-              :as => "#{catalog.snake_slug}_simple_search",
-              :catalog_slug => catalog.slug
-        end
+  # Create per-catalog routes for item type views for customized items controllers.
+  custom_catalogs.each do |catalog_slug|
+    catalog_snake_slug = catalog_slug.tr('-', '_')
 
-        if File.exist?(Rails.root.join('catalogs', catalog.slug, 'controllers', "#{catalog.snake_slug}_advanced_searches_controller.rb"))
-          get 'search/advanced/new',
-              :controller => "#{catalog.snake_slug}_advanced_searches",
-              :action => :new,
-              :as => "#{catalog.snake_slug}_new_advanced_search",
-              :catalog_slug => catalog.slug
+    scope :path => "#{catalog_slug}/:locale",
+          :constraints => CatalogsController::Constraint do
 
-          get 'search/advanced/:uuid',
-              :controller => "#{catalog.snake_slug}_advanced_searches",
-              :action => :show,
-              :as => "#{catalog.snake_slug}_advanced_search",
-              :catalog_slug => catalog.slug
-        end
+      if File.exist?(Rails.root.join('catalogs', catalog_slug, 'controllers', "#{catalog_snake_slug}_simple_search_controller.rb"))
+        get "search",
+            :controller => "#{catalog_snake_slug}_simple_search",
+            :action => :index,
+            :as => "#{catalog_snake_slug}_simple_search",
+            :catalog_slug => catalog_slug
+      end
 
-        if File.exist?(Rails.root.join('catalogs', catalog.slug, 'controllers', "#{catalog.snake_slug}_pages_controller.rb"))
-          get ":slug",
-              :controller => "#{catalog.snake_slug}_pages",
-              :action => :show,
-              :as => "#{catalog.snake_slug}_pages",
-              :catalog_slug => catalog.slug,
-              :constraints => PagesController::Constraint
-        end
+      if File.exist?(Rails.root.join('catalogs', catalog_slug, 'controllers', "#{catalog_snake_slug}_advanced_searches_controller.rb"))
+        get 'search/advanced/new',
+            :controller => "#{catalog_snake_slug}_advanced_searches",
+            :action => :new,
+            :as => "#{catalog_snake_slug}_new_advanced_search",
+            :catalog_slug => catalog_slug
 
-        if File.exist?(Rails.root.join('catalogs', catalog.slug, 'controllers', "#{catalog.snake_slug}_items_controller.rb"))
-          get ":item_type_slug",
-              :controller => "#{catalog.snake_slug}_items",
-              :action => :index,
-              :as => "#{catalog.snake_slug}_items",
-              :catalog_slug => catalog.slug,
-              :constraints => ItemsController::Constraint
+        get 'search/advanced/:uuid',
+            :controller => "#{catalog_snake_slug}_advanced_searches",
+            :action => :show,
+            :as => "#{catalog_snake_slug}_advanced_search",
+            :catalog_slug => catalog_slug
+      end
 
-          get ":item_type_slug/:id",
-              :controller => "#{catalog.snake_slug}_items",
-              :action => :show,
-              :as => "#{catalog.snake_slug}_item",
-              :catalog_slug => catalog.slug,
-              :constraints => ItemsController::Constraint
-        end
+      if File.exist?(Rails.root.join('catalogs', catalog_slug, 'controllers', "#{catalog_snake_slug}_pages_controller.rb"))
+        get ":slug",
+            :controller => "#{catalog_snake_slug}_pages",
+            :action => :show,
+            :as => "#{catalog_snake_slug}_pages",
+            :catalog_slug => catalog_slug,
+            :constraints => PagesController::Constraint
+      end
+
+      if File.exist?(Rails.root.join('catalogs', catalog_slug, 'controllers', "#{catalog_snake_slug}_items_controller.rb"))
+        get ":item_type_slug",
+            :controller => "#{catalog_snake_slug}_items",
+            :action => :index,
+            :as => "#{catalog_snake_slug}_items",
+            :catalog_slug => catalog_slug,
+            :constraints => ItemsController::Constraint
+
+        get ":item_type_slug/:id",
+            :controller => "#{catalog_snake_slug}_items",
+            :action => :show,
+            :as => "#{catalog_snake_slug}_item",
+            :catalog_slug => catalog_slug,
+            :constraints => ItemsController::Constraint
       end
     end
   end

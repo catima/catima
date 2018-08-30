@@ -1,4 +1,4 @@
-class ChangeFieldNameColumnsToJson < ActiveRecord::Migration
+class ChangeFieldNameColumnsToJson < ActiveRecord::Migration[4.2]
   class Catalog < ActiveRecord::Base
   end
 

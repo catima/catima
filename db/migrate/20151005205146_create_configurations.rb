@@ -1,4 +1,4 @@
-class CreateConfigurations < ActiveRecord::Migration
+class CreateConfigurations < ActiveRecord::Migration[4.2]
   def change
     create_table :configurations do |t|
       t.string :root_mode, :null => false, :default => "listing"

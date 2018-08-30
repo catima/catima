@@ -1,4 +1,4 @@
-class ChangeChoiceNameColumnsToJson < ActiveRecord::Migration
+class ChangeChoiceNameColumnsToJson < ActiveRecord::Migration[4.2]
   class Catalog < ActiveRecord::Base
   end
 

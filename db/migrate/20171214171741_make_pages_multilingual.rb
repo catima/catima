@@ -1,4 +1,4 @@
-class MakePagesMultilingual < ActiveRecord::Migration
+class MakePagesMultilingual < ActiveRecord::Migration[4.2]
   def up
     remove_column :pages, :content
 

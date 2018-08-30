@@ -4,21 +4,19 @@
   <head>
     <!-- Viim Core <%= Rails.application.config.version %> (<%= l(Rails.application.config.version_time) %>) -->
 
-    <%= stylesheet_link_tag("application", :media => "all") %>
+    <%= stylesheet_link_tag('application', media: 'all') %>
+    <%= javascript_include_tag('application-core', media: 'all') %>
 
-    <%= javascript_include_async_tag("application") %>
+    <%= yield(:extra_admin_head) %>
 
+    <%= javascript_include_async_tag('application') %>
     <%= javascript_pack_tag 'public-bundle' %>
 
     <%= yield(:head) %>
 
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <%# Specifies the default name of home screen bookmark in iOS 6+ %>
     <meta name="apple-mobile-web-app-title" content="CATIMA">
-
-    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/leaflet/1.2.0/leaflet.css">
-    <link rel="stylesheet" href="//cdnjs.cloudflare.com/ajax/libs/leaflet.draw/0.4.2/leaflet.draw.css"/>
 
     <%= csrf_meta_tags %>
 
