@@ -14,21 +14,22 @@ class API::V2::ItemsController < ActionController::Base
   def index
     it = item_type
     raise InvalidItemType, 'no item type provided' if it.nil?
-    render(json: {
-      slug: it.slug,
-      name: it.name,
-      fields: it.fields.map do |fld|
-        {
-          slug: fld.slug,
-          name: fld.name,
-          type: fld.type,
-          multiple: fld.multiple,
-          primary: fld.primary,
-          display_in_list: fld.display_in_list
-        }
-      end,
-      items: it.items.map { |itm| itm.describe([:default_display_name], [:requires_review, :uuid]) }
-    })
+    render(json:
+      {
+        slug: it.slug,
+        name: it.name,
+        fields: it.fields.map do |fld|
+          {
+            slug: fld.slug,
+            name: fld.name,
+            type: fld.type,
+            multiple: fld.multiple,
+            primary: fld.primary,
+            display_in_list: fld.display_in_list
+          }
+        end,
+        items: it.items.map { |itm| itm.describe([:default_display_name], [:requires_review, :uuid]) }
+      })
   end
 
   private

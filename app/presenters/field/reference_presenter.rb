@@ -17,16 +17,20 @@ class Field::ReferencePresenter < FieldPresenter
   end
 
   def reference_control(method)
-    react_component('ReferenceEditor', props: {
-      srcRef: "item_#{method}_json",
-      srcId: method,
-      multiple: field.multiple,
-      req: field.required,
-      category: field.category_id,
-      catalog: field.catalog.slug,
-      itemType: field.related_item_type.slug,
-      locale: I18n.locale
-    }, prerender: false)
+    react_component(
+      'ReferenceEditor',
+      props: {
+        srcRef: "item_#{method}_json",
+        srcId: method,
+        multiple: field.multiple,
+        req: field.required,
+        category: field.category_id,
+        catalog: field.catalog.slug,
+        itemType: field.related_item_type.slug,
+        locale: I18n.locale
+      },
+      prerender: false
+    )
   end
 
   def value
