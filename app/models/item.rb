@@ -16,6 +16,7 @@
 #  search_data_it :text
 #  updated_at     :datetime         not null
 #  uuid           :string
+#  views          :jsonb
 #
 
 class Item < ApplicationRecord
@@ -44,6 +45,8 @@ class Item < ApplicationRecord
   after_initialize :assign_default_values
   after_initialize :assign_autoincrement_values
   before_create :assign_uuid
+
+  after_commit :update_views_cache, if: proc { |record| record.saved_changes.key?(:data) }
 
   def self.sorted_by_field(field)
     sql = []
@@ -129,10 +132,16 @@ class Item < ApplicationRecord
   # Returns a JSON representation of the item content.
   # It contains the field values for simple fields,
   # and an identifier for complex fields.
-  def describe
-    Hash[applicable_fields.collect { |f| [f.slug, get_value_or_id(f)] }] \
-      .merge(catalog.requires_review ? { "review_status": review_status } : {}) \
-      .merge("uuid": uuid)
+  def describe(includes=[], excludes=[])
+    d = Hash[applicable_fields.collect { |f| [f.slug, get_value_or_id(f)] }] \
+        .merge('id': id) \
+        .merge('review_status': review_status) \
+        .merge('uuid': uuid)
+
+    includes.each { |i| d[i] = self.public_send(i) }
+    excludes.each { |e| d.delete(e) }
+
+    d
   end
 
   # Sets the value of an item field by UUID
@@ -141,9 +150,15 @@ class Item < ApplicationRecord
   end
 
   def default_display_name(locale=I18n.locale)
+    v = views && views["display_name"] && views["display_name"][locale.to_s]
+    return v unless v.nil?
     field = field_for_select
     return '' if field.nil?
     field.strip_extra_content(self, locale)
+  end
+
+  def view(type, locale=I18n.locale)
+    (views[type.to_s] && views[type.to_s][locale.to_s]) || default_display_name(locale)
   end
 
   private
@@ -182,5 +197,9 @@ class Item < ApplicationRecord
     fields.each do |f|
       self.data[f.uuid] = f.default_value if f.default_value && !f.default_value.empty?
     end
+  end
+
+  def update_views_cache
+    ItemsCacheWorker.perform_async(catalog.slug, item_type.slug, id)
   end
 end

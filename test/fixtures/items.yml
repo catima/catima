@@ -16,6 +16,7 @@
 #  search_data_it :text
 #  updated_at     :datetime         not null
 #  uuid           :string
+#  views          :jsonb
 #
 
 # Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
@@ -95,14 +96,14 @@ one_author_with_images:
   data: {
       "one_author_picture_uuid": {
         "name": "one_author_picture.jpg",
-        "path": "public/upload/one/authors/picture.jpg",
+        "path": "upload/one/authors/picture.jpg",
         "size": 198137,
         "type": "image/jpeg",
         "legend": "One author picture"
       },
       "one_author_picture_inactive_legend_uuid": {
         "name": "one_author_new_picture.jpg",
-        "path": "public/upload/one/authors/new_picture.jpg",
+        "path": "upload/one/authors/new_picture.jpg",
         "size": 148177,
         "type": "image/jpeg",
         "legend": "One author new picture"

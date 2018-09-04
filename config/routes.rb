@@ -11,6 +11,17 @@ Rails.application.routes.draw do
     end
   end
 
+  namespace :api, format: 'json' do
+    namespace :v2 do
+      scope :path => ':catalog_slug' do
+        scope :path => ':locale' do
+          get '/' => 'catalogs#show'
+          get ':item_type' => 'items#index', as: 'items'
+        end
+      end
+    end
+  end
+
   # ===========================================================================
   # Devise & Favorites
 

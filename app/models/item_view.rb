@@ -14,7 +14,6 @@
 #
 
 # rubocop:disable Rails/SkipsModelValidations
-# rubocop:disable Rails/OutputSafety
 class ItemView < ApplicationRecord
   belongs_to :item_type
 
@@ -35,12 +34,8 @@ class ItemView < ApplicationRecord
   end
 
   def render(item, locale)
-    tpl = JSON.parse(template)
-    local_tpl = tpl[locale.to_s] || ''
-    item.fields.each do |field|
-      local_tpl = local_tpl.sub('{{' + field.slug + '}}', item.display_value(field, locale))
-    end
-    local_tpl.html_safe
+    presenter = ItemViewPresenter.new(self, self, item, locale, strip_p: true)
+    presenter.render
   end
 
   def template_json
