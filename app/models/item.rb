@@ -21,6 +21,7 @@
 
 class Item < ApplicationRecord
   include DataStore::Macros
+  include Item::Values
   include Review::Macros
   include Search::Macros
   include HasHumanId
@@ -89,44 +90,8 @@ class Item < ApplicationRecord
     end
   end
 
-  def unique_value_fields
-    return if self.item_type.nil?
-    conn = ActiveRecord::Base.connection.raw_connection
-    fields.each do |f|
-      if f.unique
-        sql = "SELECT COUNT(*) FROM items WHERE data->>'#{f.uuid}' = $1 AND item_type_id = $2"
-        sql_data = [ self.data[f.uuid], self.item_type_id ]
-        if self.id
-          sql << " AND id <> $3"
-          sql_data << self.id
-        end
-        res = conn.exec(sql, sql_data)
-        n = res.getvalue(0,0).to_i
-        if n > 0
-          errors.add("#{f.uuid}".to_sym, "must be unique")
-        end
-      end
-    end
-  end
-
   def assign_uuid
     self.uuid ||= SecureRandom.uuid
-  end
-
-  # Returns the value of the provided field for this item
-  # field can be an instance of a field, a field UUID, or a field slug
-  def get_value(field)
-    field = item_type.find_field(field) unless field.is_a? Field
-    field.value_for_item(self)
-  end
-
-  # Returns the value of the provided field for this item
-  # if it is a simple item, or a ID (e.g. UUID or slug) for complex
-  # fields. By default, it returns the same as get_value, but
-  # subclasses can override this method
-  def get_value_or_id(field)
-    field = item_type.find_field(field) unless field.is_a? Field
-    field.value_or_id_for_item(self)
   end
 
   # Returns a JSON representation of the item content.
@@ -138,7 +103,7 @@ class Item < ApplicationRecord
         .merge('review_status': review_status) \
         .merge('uuid': uuid)
 
-    includes.each { |i| d[i] = self.public_send(i) }
+    includes.each { |i| d[i] = public_send(i) }
     excludes.each { |e| d.delete(e) }
 
     d
@@ -163,40 +128,12 @@ class Item < ApplicationRecord
 
   private
 
-  def primary_text_value
-    field = item_type.primary_text_field
-    field && field.raw_value(self)
-  end
-
   def typed_item_class
     typed = Class.new(Item)
     typed.define_singleton_method(:name) { Item.name }
     typed.define_singleton_method(:model_name) { Item.model_name }
     all_fields.each { |f| f.decorate_item_class(typed) }
     typed
-  end
-
-  def assign_autoincrement_values
-    return if item_type.nil?
-    self.data = {} if self.data.nil?
-    conn = ActiveRecord::Base.connection.raw_connection
-    fields.each do |f|
-      if (f.type == 'Field::Int') && !f.options.nil? && f.options['auto_increment'] && self.data[f.uuid].nil?
-        st = conn.exec(
-          "SELECT MAX(data->>'#{f.uuid}') FROM items WHERE item_type_id = $1",
-          [ self.item_type_id, ]
-        )
-        self.data[f.uuid] = st.getvalue(0,0).to_i + 1
-      end
-    end
-  end
-
-  def assign_default_values
-    return if self.id || self.item_type.nil?
-    self.data = {} if self.data.nil?
-    fields.each do |f|
-      self.data[f.uuid] = f.default_value if f.default_value && !f.default_value.empty?
-    end
   end
 
   def update_views_cache

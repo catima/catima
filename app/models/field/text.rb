@@ -53,8 +53,8 @@ class Field::Text < ::Field
   def prepare_value(value)
     if value.is_a? Hash
       d = {}
-      value.each do |k,v|
-        d.merge!({uuid+'_'+k => v}) if catalog.valid_locale?(k)
+      value.each do |k, v|
+        d.merge!({uuid + '_' + k => v}) if catalog.valid_locale?(k)
       end
       return d
     end

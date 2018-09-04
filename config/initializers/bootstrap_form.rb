@@ -8,7 +8,7 @@ end
 require "bootstrap_form/form_builder"
 module BootstrapForm
   class FormBuilder < ActionView::Helpers::FormBuilder
-    def select(method, choices, options = {}, html_options = {}, &block)
+    def select(method, choices, options={}, html_options={}, &block)
       form_group_builder(method, options, html_options) do
         select_without_bootstrap(method, choices, options, html_options, &block)
       end

@@ -50,6 +50,6 @@ class Field::FilePresenter < FieldPresenter
   end
 
   def files_as_array
-    raw_value.is_a?(Array) ? raw_value : [ raw_value ]
+    raw_value.is_a?(Array) ? raw_value : [raw_value]
   end
 end

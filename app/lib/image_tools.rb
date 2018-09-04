@@ -1,9 +1,8 @@
-
-
 module ImageTools
   include MiniMagick
 
   module_function
+
   def thumbnail(src, dest, size, mode=:fill, crop=[0, 0, 100, 100])
     return nil unless File.file?(src)
     i = Image.open src
