@@ -52,8 +52,8 @@ class CatalogAdmin::ItemsTest < ActionDispatch::IntegrationTest
       author.public_send(:one_author_other_language_uuid))
     assert_equal(items(:one_author_stephen_king).id.to_s, author.public_send(:one_author_collaborator_uuid).to_s)
     assert_equal(
-      %i(one_author_very_old one_author_very_young).map { |i| items(i).id.to_s },
-      author.public_send(:one_author_other_collaborators_uuid))
+      %i(one_author_very_old one_author_very_young).map { |i| items(i).id.to_s }.sort,
+      author.public_send(:one_author_other_collaborators_uuid).sort)
   end
 
   test "create a multilingual item" do
