@@ -14,6 +14,10 @@ import FontMenu from '../bundles/StyleControl/components/FontMenu';
 import FontSize from '../bundles/StyleControl/components/FontSize';
 import FontStyle from '../bundles/StyleControl/components/FontStyle';
 
+import ReferenceEditor from '../bundles/ReferenceEditor/components/ReferenceEditor';
+import SingleReferenceEditor from '../bundles/ReferenceEditor/components/SingleReferenceEditor';
+import MultiReferenceEditor from '../bundles/ReferenceEditor/components/MultiReferenceEditor';
+
 import ThumbnailControl from '../bundles/ThumbnailControl/components/ThumbnailControl';
 
 import TranslatedTextField from '../bundles/TranslatedTextField/components/TranslatedTextField';
@@ -24,6 +28,7 @@ ReactOnRails.register({
   FormattedTextEditor,
   GeoEditor, GeoBounds,
   StyleControl, FontColorButton, FontExample, FontMenu, FontSize, FontStyle,
+  ReferenceEditor, SingleReferenceEditor, MultiReferenceEditor,
   ThumbnailControl,
   TranslatedTextField,
 });

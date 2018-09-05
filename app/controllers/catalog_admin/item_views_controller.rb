@@ -1,6 +1,7 @@
 class CatalogAdmin::ItemViewsController < CatalogAdmin::BaseController
   layout "catalog_admin/setup/form"
   before_action :find_item_type
+  after_action :update_views_cache, only: [:create, :update, :destroy]
 
   def new
     build_item_view
@@ -85,5 +86,9 @@ class CatalogAdmin::ItemViewsController < CatalogAdmin::BaseController
 
   def destroyed_message
     "The “#{@item_view.name}” item view has been deleted."
+  end
+
+  def update_views_cache
+    ItemsCacheWorker.perform_async(@item_view.item_type.catalog.slug, @item_view.item_type.slug)
   end
 end

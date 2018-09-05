@@ -27,6 +27,5 @@ class CreateFields < ActiveRecord::Migration[4.2]
 
     add_foreign_key "fields", "item_types", :column => "category_item_type_id"
     add_foreign_key "fields", "item_types", :column => "related_item_type_id"
-
   end
 end

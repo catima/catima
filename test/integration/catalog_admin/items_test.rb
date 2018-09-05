@@ -1,6 +1,8 @@
 require "test_helper"
 
 class CatalogAdmin::ItemsTest < ActionDispatch::IntegrationTest
+  setup { use_javascript_capybara_driver }
+
   test "create an item" do
     log_in_as("one-editor@example.com", "password")
     visit("/one/en/admin")
@@ -13,19 +15,27 @@ class CatalogAdmin::ItemsTest < ActionDispatch::IntegrationTest
     fill_in("Site", :with => "https://google.com/")
     fill_in("Email", :with => "test@example.com")
     fill_in("Rank", :with => "1.25")
-    select("Stephen King", :from => "Collaborator")
-    select("Very Old", :from => "Other Collaborators")
-    select("Very Young", :from => "Other Collaborators")
+
+    select("Stephen King", :from => 'item_one_author_collaborator_uuid_json-editor')
+    page.execute_script(
+      "Array.from(document.querySelectorAll(" \
+        "'#item_one_author_other_collaborators_uuid_json-editor div.availableReferences div'" \
+      ")).find(el => el.textContent === 'Very Old').click();"
+    )
+    page.execute_script(
+      "Array.from(document.querySelectorAll(" \
+        "'#item_one_author_other_collaborators_uuid_json-editor div.availableReferences div'" \
+      ")).find(el => el.textContent === 'Very Young').click();"
+    )
+    first('#item_one_author_other_collaborators_uuid_json-editor-select').click
+
     select("Eng", :from => "Language")
     select("Eng", :from => "Other Languages")
     select("Spanish", :from => "Other Languages")
-    fill_in_hidden("item_one_author_birth_time_uuid_json", :with => '{"Y":2015, "M":12, "D":31, "h":14, "m":30, "s":17}')
-    # select("2015", :from => "item[one_author_birth_time_uuid_time(1i)]")
-    # select("December", :from => "item[one_author_birth_time_uuid_time(2i)]")
-    # select("31", :from => "item[one_author_birth_time_uuid_time(3i)]")
-    # select("14", :from => "item[one_author_birth_time_uuid_time(4i)]")
-    # select("30", :from => "item[one_author_birth_time_uuid_time(5i)]")
-    # select("17", :from => "item[one_author_birth_time_uuid_time(6i)]")
+    page.execute_script(
+      "document.getElementById('item_one_author_birth_time_uuid_json').value = " \
+        "'{\"Y\":2015, \"M\":12, \"D\":31, \"h\":14, \"m\":30, \"s\":17}';"
+    )
 
     assert_difference("item_types(:one_author).items.count") do
       click_on("Create Author")
@@ -34,29 +44,16 @@ class CatalogAdmin::ItemsTest < ActionDispatch::IntegrationTest
     author = item_types(:one_author).items.last.behaving_as_type
     assert_equal("Test Author", author.public_send(:one_author_name_uuid))
     assert_equal("25", author.public_send(:one_author_age_uuid).to_s)
-    assert_equal(
-      "https://google.com/",
-      author.public_send(:one_author_site_uuid))
+    assert_equal("https://google.com/", author.public_send(:one_author_site_uuid))
     assert_equal("1.25", author.public_send(:one_author_rank_uuid))
-    assert_equal(
-      choices(:one_english).id.to_s,
-      author.public_send(:one_author_language_uuid).to_s)
+    assert_equal(choices(:one_english).id.to_s, author.public_send(:one_author_language_uuid).to_s)
     assert_equal(
       [choices(:one_english).id.to_s, choices(:one_spanish).id.to_s],
       author.public_send(:one_author_other_language_uuid))
+    assert_equal(items(:one_author_stephen_king).id.to_s, author.public_send(:one_author_collaborator_uuid).to_s)
     assert_equal(
-      items(:one_author_stephen_king).id.to_s,
-      author.public_send(:one_author_collaborator_uuid).to_s)
-    assert_equal(
-      %i(
-        one_author_very_old
-        one_author_very_young
-      ).map { |i| items(i).id.to_s },
-      author.public_send(:one_author_other_collaborators_uuid))
-    # assert_equal(
-    #   Time.zone.local(2015, 12, 31, 14, 30, 17),
-    #   author.public_send(:one_author_birth_time_uuid_time)
-    # )
+      %i(one_author_very_old one_author_very_young).map { |i| items(i).id.to_s }.sort,
+      author.public_send(:one_author_other_collaborators_uuid).sort)
   end
 
   test "create a multilingual item" do
@@ -93,13 +90,14 @@ class CatalogAdmin::ItemsTest < ActionDispatch::IntegrationTest
     visit("/one/en/admin")
     click_on("Data")
     click_on("Authors")
-    first("a", :text => "Edit").click
+    first(:button, 'Actions').click
+    click_on('Edit')
 
     # Hack to get the ID of the author we're editing
     author_id = current_path[%r{authors/(.+)/edit$}, 1]
 
     fill_in("Name", :with => "Changed by test")
-    select("Very Old", :from => "Collaborator")
+    select("Very Old", :from => 'item_one_author_collaborator_uuid_json-editor')
     select("Eng", :from => "Language")
 
     assert_no_difference("Item.count") do
@@ -126,7 +124,11 @@ class CatalogAdmin::ItemsTest < ActionDispatch::IntegrationTest
     click_on("Authors")
 
     assert_difference("Item.count", -1) do
-      first("a", :text => "Delete").click
+      page.accept_alert(:wait => 2) do
+        first('button', text: 'Actions').click
+        first('a', text: 'Delete').click
+      end
+      sleep 2
     end
   end
 
@@ -139,6 +141,7 @@ class CatalogAdmin::ItemsTest < ActionDispatch::IntegrationTest
     assert_difference("Item.count", +1) do
       first("button", :text => "Actions").click
       first("a", :text => "Duplicate").click
+      sleep 2 # Wait to initialize JS
       click_on("Create Author")
     end
   end

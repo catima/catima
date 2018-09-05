@@ -15,11 +15,15 @@ class Field::ImagePresenter < Field::FilePresenter
   end
 
   def thumbnail_control(method)
-    react_component('ThumbnailControl', props: {
-      srcRef: "item_#{method}_json",
-      srcId: method,
-      multiple: field.multiple
-    }, prerender: false)
+    react_component(
+      'ThumbnailControl',
+      props: {
+        srcRef: "item_#{method}_json",
+        srcId: method,
+        multiple: field.multiple
+      },
+      prerender: false
+    )
   end
 
   def image_full
@@ -36,9 +40,9 @@ class Field::ImagePresenter < Field::FilePresenter
     crop = img['crop'].nil? ? { 'x' => 0, 'y' => 0, 'width' => 100, 'height' => 100 } : img['crop']
     crop = [crop['x'], crop['y'], crop['width'], crop['height']].map(&:round)
     transform = case options[:class]
-    when :compact then [:fill, '100x100']
-    else [:fill, '250x250']
-    end
+                when :compact then [:fill, '100x100']
+                else [:fill, '250x250']
+                end
     images = files_as_array
     image_tag(file_url(images[0], transform[1], transform[0], crop), options.merge(self.options)).html_safe
   end
