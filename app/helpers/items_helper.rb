@@ -57,10 +57,7 @@ module ItemsHelper
   end
 
   def item_display_name(item)
-    item_view = item.item_type.default_display_name_view
-    return default_display_name(item) if item_view.nil?
-    presenter = ItemViewPresenter.new(self, item_view, item, I18n.locale, strip_p: true)
-    presenter.render
+    item.default_display_name.html_safe
   end
 
   def default_display_name(item)

@@ -41,7 +41,7 @@ class MenuItem < ApplicationRecord
   end
 
   def submenus
-    return nil if parent_id   # we don't have nested menus
+    return nil if parent_id # we don't have nested menus
     MenuItem.where(parent_id: id).order("menu_items.rank ASC")
   end
 

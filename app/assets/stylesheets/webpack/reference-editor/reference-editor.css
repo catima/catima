@@ -1,0 +1,63 @@
+.referenceEditor .wrapper {
+  height: 300px;
+  width: 100%;
+  position: relative;
+  overflow-y: hidden;
+  padding: 5px;
+}
+
+.referenceEditor .availableReferences {
+  width: calc(50% - 50px);
+  height: 100%;
+  position: absolute;
+  left: 0;
+  top: 0;
+  overflow-y: scroll;
+  border: 1px solid #ccc;
+}
+
+.referenceEditor .referenceControls {
+  width: 100px;
+  height: 100%;
+  position: absolute;
+  left: calc(50% - 50px);
+  top: 0;
+  background-color: #eee;
+}
+
+.referenceEditor .selectedReferences {
+  width: calc(50% - 50px);
+  height: 100%;
+  position: absolute;
+  left: calc(50% + 50px);
+  top: 0;
+  overflow-y: scroll;
+  border: 1px solid #ccc;
+}
+
+.referenceEditor .item {
+  padding: 3px 5px;
+  border-bottom: 1px solid #eee;
+  border-top: 1px solid #eee;
+  cursor: pointer;
+}
+
+.referenceEditor .item:hover {
+  background-color: #f0f0f0;
+}
+
+.referenceEditor .item.highlighted {
+  background-color: rgba(255, 215, 65, 0.5);
+  border-bottom: 1px solid #fff;
+  border-top: 1px solid #fff;
+}
+
+.referenceControls {
+  padding: 10px;
+  position: relative;
+}
+
+.referenceControls .btn {
+  display: block;
+  margin: 10px;
+}

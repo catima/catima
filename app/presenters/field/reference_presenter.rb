@@ -1,24 +1,36 @@
 class Field::ReferencePresenter < FieldPresenter
   delegate :references, :selected_references, :to => :field
-  delegate :select2_collection_select, :item_path, :link_to, :item_display_name,
+  delegate :item_path, :link_to, :item_display_name,
            :to => :view
 
   def input(form, method, options={})
-    field_category = field.belongs_to_category? ? "data-field-category=\"#{field.category_id}\"" : ''
     [
-      '<div class="form-component">',
-      "<div #{field_category}>",
-      select2_collection_select(
-        form,
-        method,
-        references,
-        :id,
-        method(:item_display_name),
-        input_defaults(options).merge(:multiple => field.multiple?)
+      form.text_area(
+        "#{method}_json",
+        input_defaults(options).reverse_merge(
+          "data-multiple": field.multiple?,
+          "class": 'hidden'
+        )
       ),
-      '</div>',
-      '</div>'
+      reference_control(method)
     ].join.html_safe
+  end
+
+  def reference_control(method)
+    react_component(
+      'ReferenceEditor',
+      props: {
+        srcRef: "item_#{method}_json",
+        srcId: method,
+        multiple: field.multiple,
+        req: field.required,
+        category: field.category_id,
+        catalog: field.catalog.slug,
+        itemType: field.related_item_type.slug,
+        locale: I18n.locale
+      },
+      prerender: false
+    )
   end
 
   def value

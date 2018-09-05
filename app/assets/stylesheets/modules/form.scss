@@ -22,7 +22,12 @@ textarea[data-field-type="datetime"] {
 }
 
 form > .form-group {
-  margin-top: 15px;
+  margin-top: 20px;
+  margin-bottom: 0;
+}
+
+.form-component .row {
+  margin-top: 20px;
 }
 
 .form-group.file-upload {

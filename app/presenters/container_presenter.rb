@@ -8,8 +8,9 @@ class ContainerPresenter
   end
 
   def html
-    @view.render('containers/'+@container.partial_name, {
-      container:@container, presenter:self
-    })
+    @view.render(
+      'containers/'+@container.partial_name,
+      { container:@container, presenter:self }
+    )
   end
 end

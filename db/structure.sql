@@ -566,7 +566,8 @@ CREATE TABLE items (
     search_data_en text,
     search_data_fr text,
     search_data_it text,
-    uuid character varying
+    uuid character varying,
+    views jsonb
 );
 
 
@@ -1651,6 +1652,7 @@ INSERT INTO "schema_migrations" (version) VALUES
 ('20180308085259'),
 ('20180504082040'),
 ('20180615090214'),
-('20180702145421');
+('20180702145421'),
+('20180822150656');
 
 

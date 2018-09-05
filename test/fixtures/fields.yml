@@ -190,6 +190,7 @@ one_author_born:
   field_set: one_author (ItemType)
   uuid: one_author_born_uuid
   required: false
+  options: { "format": "YMD" }
 
 one_author_birth_time:
   type: "Field::DateTime"
