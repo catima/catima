@@ -18,6 +18,11 @@ module ItemListsHelper
     item_list_presenter(list, item, params[:offset]).render_nav
   end
 
+  def item_list_title(item, item_type)
+    return item_type.name_plural + " (" + item.default_display_name + ")" if item.present?
+    item_type.name_plural
+  end
+
   private
 
   def item_list_presenter(list, item, offset)

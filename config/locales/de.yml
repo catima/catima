@@ -118,6 +118,8 @@ de:
       delete_confirm: "Sind Sie sicher, dass Sie “%{item}” löschen möchten?"
       favorites_add: "Zu den Favoriten hinzufügen"
       favorites_remove: "Von Favoriten entfernen"
+    show:
+      view_more: "Mehr sehen"
   invitations_mailer:
     account_information:
       email: "E-mail"

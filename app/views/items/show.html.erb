@@ -27,9 +27,8 @@
           :item_type_slug => browse.item_type,
           browse.field.slug => browse.value
         )) do %>
-      <%# TODO: i18n %>
-      View more
-      (<%= pluralize(browse.total_count, "item") %>)
+      <%= t(".view_more") %>
+      (<%= browse.total_count %>)
     <% end %>
   <% end %>
 <% end %>
