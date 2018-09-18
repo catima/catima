@@ -114,6 +114,8 @@ it:
       delete_confirm: "Sei sicuro di voler eliminare “%{item}”?"
       favorites_add: "Aggiungi ai preferiti"
       favorites_remove: "Rimuovi dai preferiti"
+    show:
+      view_more: "Vedi di più"
   invitations_mailer:
     account_information:
       email: "E-mail"

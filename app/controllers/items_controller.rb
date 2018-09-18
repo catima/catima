@@ -41,6 +41,7 @@ class ItemsController < ApplicationController
       :value => browse_value,
       :page => params[:page]
     )
+    @item = Item.find(params[@browse_field.slug]) if @browse_field.present?
   end
 
   def show

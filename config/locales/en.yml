@@ -132,6 +132,8 @@ en:
       delete_confirm: "Are you sure you want to delete “%{item}”?"
       favorites_add: "Add to favorites"
       favorites_remove: "Remove from favorites"
+    show:
+      view_more: "View more"
   invitations_mailer:
     account_information:
       email: "Email"
