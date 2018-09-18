@@ -56,9 +56,9 @@ class StyleControl extends React.Component {
         <FontMenu value={this.state.fontFamily} onChange={this.handleChange} />
         <FontSize value={this.state.fontSize} onChange={this.handleChange} />
         <FontStyle
-          fontWeight={this.state.bold}
-          fontStyle={this.state.italic}
-          textDecoration={this.state.underline}
+          fontWeight={this.state.fontWeight}
+          fontStyle={this.state.fontStyle}
+          textDecoration={this.state.textDecoration}
           onChange={this.handleChange}
         />
         <FontColorButton
@@ -76,9 +76,9 @@ class StyleControl extends React.Component {
         <FontExample
           fontFamily={this.state.fontFamily}
           fontSize={this.state.fontSize}
-          fontWeight={this.state.bold}
-          fontStyle={this.state.italic}
-          textDecoration={this.state.underline}
+          fontWeight={this.state.fontWeight}
+          fontStyle={this.state.fontStyle}
+          textDecoration={this.state.textDecoration}
           color={this.state.color}
           backgroundColor={this.state.backgroundColor}
         />
