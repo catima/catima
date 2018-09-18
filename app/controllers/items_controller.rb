@@ -41,7 +41,7 @@ class ItemsController < ApplicationController
       :value => browse_value,
       :page => params[:page]
     )
-    @item = Item.find(params[@browse_field.slug]) if @browse_field.present?
+    @item = find_item
   end
 
   def show
@@ -67,6 +67,16 @@ class ItemsController < ApplicationController
   def browse_field
     @browse_field ||= item_type.fields.find do |field|
       params[field.slug].present?
+    end
+  end
+
+  def find_item
+    return if browse_field.nil?
+
+    begin
+      Item.find(params[browse_field.slug])
+    rescue ActiveRecord::RecordNotFound
+      nil
     end
   end
 
