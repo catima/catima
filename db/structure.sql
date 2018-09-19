@@ -733,7 +733,9 @@ CREATE TABLE users (
     updated_at timestamp without time zone NOT NULL,
     system_admin boolean DEFAULT false NOT NULL,
     primary_language character varying DEFAULT 'en'::character varying NOT NULL,
-    invited_by_id integer
+    invited_by_id integer,
+    provider character varying,
+    uid character varying
 );
 
 
@@ -1653,6 +1655,7 @@ INSERT INTO "schema_migrations" (version) VALUES
 ('20180504082040'),
 ('20180615090214'),
 ('20180702145421'),
-('20180822150656');
+('20180822150656'),
+('20180907111339');
 
 

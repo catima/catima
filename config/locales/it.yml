@@ -230,6 +230,7 @@ it:
   valid: "valido"
   expired: "scaduto"
   download: "Scaricare"
+  or: o
 
   layouts:
     catalog_admin:

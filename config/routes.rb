@@ -26,7 +26,7 @@ Rails.application.routes.draw do
   # Devise & Favorites
 
   scope :path => ":locale" do
-    devise_for :users, :skip => [:passwords, :registrations, :sessions]
+    devise_for :users, :skip => %i[passwords registrations sessions omniauth_callbacks]
     devise_scope :user do
       # passwords
       get "forgot-password" => "devise/passwords#new", :as => :new_user_password
@@ -56,6 +56,8 @@ Rails.application.routes.draw do
     # Favorites
     resources :favorites, :except => [:edit, :show, :new, :update]
   end
+
+  devise_for :users, only: :omniauth_callbacks, controllers: { omniauth_callbacks: 'users/omniauth_callbacks' }
 
   # ===========================================================================
   # System administration

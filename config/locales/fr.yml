@@ -275,6 +275,7 @@ fr:
   valid: "valide"
   expired: "expiré"
   download: "Télécharger"
+  or: ou
 
   layouts:
     catalog_admin:

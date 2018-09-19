@@ -248,6 +248,7 @@ de:
   valid: "gültig"
   expired: "abgelaufen"
   download: "Herunterladen"
+  or: oder
 
   layouts:
     catalog_admin:
