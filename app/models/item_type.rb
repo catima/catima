@@ -50,6 +50,11 @@ class ItemType < ApplicationRecord
     all_fields.select(&:display_in_list)
   end
 
+  # Same as all_fields, but limited to display_in_public_list=>true.
+  def all_public_list_view_fields
+    all_fields.select(&:display_in_public_list)
+  end
+
   # Same as all_list_view_fields, but limited human_readable?.
   def sortable_list_view_fields
     all_list_view_fields.select(&:human_readable?)

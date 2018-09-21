@@ -405,7 +405,8 @@ fr:
         comment_optional: Texte d'aide à la saisie (optionnel)
         display_options: Options d'affichage
         use_as_primary_field: Utiliser comme champ primaire
-        include_in_list_view: Inclure le champ dans la liste des fiches
+        include_in_list_view: Inclure le champ dans la liste des fiches en mode édition (Data)
+        include_in_public_list_view: Inclure le champ dans la liste des fiches en mode consultation
         data_entry_options: Options de saisie des données
         must_be_unique: Doit être unique
         save_field: Enregistrer le champ
@@ -432,7 +433,8 @@ fr:
         name: 'Nom'
         type: 'Type'
         required?: 'Exigé?'
-        list_view?: 'Dans liste?'
+        list_view?: "En édition?"
+        public_list_view?: 'En consultation?'
       text_option_inputs:
         has_formatted_text: "Contient du texte formaté"
         min_length: "Longueur minimale (optionnel)"
@@ -444,7 +446,7 @@ fr:
         edit_field: "Éditer champ %{field_set} “%{field}”"
       index:
         add_field: "Ajouter…"
-        edit_field_set: "Éditer %{field_set}"
+        edit_field_set: "Éditer le type de fiche"
       new:
         new_field: "Nouveau champ «%{field}»"
 
@@ -482,7 +484,7 @@ fr:
       index:
         no_fields_warning: Ce type de fiche n'a aucun champ.
         add_fields: Veuillez s.v.p. d'abord ajouter un ou plusieurs champs dans l'interface de définition des types de fiche.
-        new_item_type: "Nouveau type de fiche «%{item_type}»"
+        new_item_type: "Nouvelle fiche «%{item_type}»"
         import_csv: "Importer depuis un fichier CSV"
         status: Statut
       new:
