@@ -453,7 +453,8 @@ CREATE TABLE fields (
     name_plural_translations json,
     field_set_type character varying,
     editor_component character varying,
-    display_component character varying
+    display_component character varying,
+    display_in_public_list boolean DEFAULT true NOT NULL
 );
 
 
@@ -1653,6 +1654,7 @@ INSERT INTO "schema_migrations" (version) VALUES
 ('20180504082040'),
 ('20180615090214'),
 ('20180702145421'),
-('20180822150656');
+('20180822150656'),
+('20180918114846');
 
 

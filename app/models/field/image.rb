@@ -10,6 +10,7 @@ require_dependency("field/file")
 #  default_value            :text
 #  display_component        :string
 #  display_in_list          :boolean          default(TRUE), not null
+#  display_in_public_list   :boolean          default(TRUE), not null
 #  editor_component         :string
 #  field_set_id             :integer
 #  field_set_type           :string
