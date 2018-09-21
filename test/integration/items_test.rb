@@ -5,7 +5,7 @@ class ItemsTest < ActionDispatch::IntegrationTest
   test "view items" do
     visit("/one/en/authors")
     within("body>.container") do
-      assert(page.has_content?("Age"))
+      refute(page.has_content?("Age"))
       assert(page.has_content?("Site"))
       assert(page.has_content?("Email"))
     end

@@ -5,7 +5,22 @@
     <th><%= t '.name' %></th>
     <th><%= t '.type' %></th>
     <th><%= t '.required?' %></th>
-    <th><%= t '.list_view?' %></th>
+    <th>
+      <span
+        data-toggle="tooltip"
+        data-placement="top"
+        title="<%= t('catalog_admin.fields.common_form_fields.include_in_list_view') %>">
+        <%= t('.list_view?') %>
+      </span>
+    </th>
+    <th>
+      <span
+        data-toggle="tooltip"
+        data-placement="top"
+        title="<%= t('catalog_admin.fields.common_form_fields.include_in_public_list_view') %>">
+        <%= t('.public_list_view?') %>
+      </span>
+    </th>
     <th></th>
   </tr>
 </thead>
@@ -30,6 +45,7 @@
       </td>
       <td><%= fa_icon(:check) if field.required? %></td>
       <td><%= fa_icon(:check) if field.display_in_list? %></td>
+      <td><%= fa_icon(:check) if field.display_in_public_list? %></td>
       <td style="text-align: right;">
         <%= render "shared/actions_dropdown", :model => field %>
       </td>

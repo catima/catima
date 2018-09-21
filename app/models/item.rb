@@ -29,7 +29,7 @@ class Item < ApplicationRecord
   human_id :primary_text_value
 
   delegate :field_for_select, :primary_field, :referenced_by_fields,
-           :fields, :list_view_fields, :all_fields, :all_list_view_fields,
+           :fields, :list_view_fields, :all_fields, :all_public_list_view_fields, :all_list_view_fields,
            :to => :item_type
 
   belongs_to :catalog
@@ -70,7 +70,7 @@ class Item < ApplicationRecord
   # The same as `all_list_view_fields`, but removes category-based fields that
   # do not apply to this item.
   def applicable_list_view_fields
-    all_list_view_fields.select { |f| f.applicable_to_item(self) }
+    all_public_list_view_fields.select { |f| f.applicable_to_item(self) }
   end
 
   def behaving_as_type

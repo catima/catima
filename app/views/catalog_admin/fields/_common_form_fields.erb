@@ -34,6 +34,12 @@
         :label => t('.include_in_list_view')
       ) %>
 <% end %>
+<%= f.form_group(:display_in_public_list) do %>
+  <%= f.check_box(
+          :display_in_public_list,
+          :label => t('.include_in_public_list_view')
+      ) %>
+<% end %>
 
 <hr>
 

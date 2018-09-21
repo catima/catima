@@ -9,6 +9,7 @@
 #  default_value            :text
 #  display_component        :string
 #  display_in_list          :boolean          default(TRUE), not null
+#  display_in_public_list   :boolean          default(TRUE), not null
 #  editor_component         :string
 #  field_set_id             :integer
 #  field_set_type           :string
@@ -189,10 +190,12 @@ class Field < ApplicationRecord
   # attributes. Subclasses can override this method to provide a more
   # specific description.
   def describe
-    as_json(only: [:type, :uuid, :slug,
-                   :name_translations, :name_plural_translations,
-                   :comment, :default_value, :primary, :required, :unique,
-                   :options, :display_in_list]
+    as_json(only:
+              %i[
+                type uuid slug name_translations
+                name_plural_translations comment default_value primary
+                required unique options display_in_list display_in_public_list
+              ]
            ).merge(allows_multiple? ? as_json(only: [:multiple]) : {})
   end
 
