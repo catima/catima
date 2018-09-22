@@ -1,0 +1,32 @@
+<div class="panel panel-default">
+  <div class="panel-heading">
+    <b><%= t('.member_in') %></b>
+  </div>
+
+  <% if current_user.memberships.count == 0 %>
+    <div class="alert alert-warning" style="margin-bottom: 0;">
+      <%= t('.no_group_memberships') %>
+    </div>
+  <% end %>
+
+  <% if current_user.memberships.count > 0 %>
+    <table class="table">
+    <tbody>
+      <% current_user.memberships.each do |membership| %>
+        <tr>
+          <td><%= membership.group.name %></td>
+          <td style="text-align: right;">
+            <%= link_to(
+                  fa_icon(:'sign-out') + t('.leave'),
+                  group_membership_path(membership.group, membership),
+                  method: :delete,
+                  data: { confirm: t('delete_confirm', model: 'membership of ' + membership.group.name) },
+                  class: 'btn btn-xs btn-default'
+                ) %>
+          </td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+  <% end %>
+</div>

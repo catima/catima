@@ -156,6 +156,13 @@ fr:
       invited_to_access_html: "%{invited_by} vous a invité d'accéder %{catalog}."
       reviewer_role: Comme validateur de catalogue, vous allez pouvoir ajouter des entrées, éditer toutes les entrées, mais également valider des entrées en vue de leur publication.
       subject: "Vous êtes invité(e) à joindre %{catalog}"
+    group:
+      subject: "Vous êtes invité à devenir membre du groupe %{group}"
+      invited_to_access_html: "%{invited_by} vous invite à devenir membre du groupe «%{group}» sur %{baseurl}."
+    membership:
+      subject: "Vous avez été ajouté au groupe %{group}"
+      invited_to_msg: "%{invited_by} vous a ajouté au groupe «%{group}»."
+      view_my_groups: "Vous pouvez voir vos adhésions de groupe ici:"
   export_mailer:
     export:
       export_available: "L'export %{category} demandé est disponible. Vous pouvez le télécharger en cliquant sur le lien ci-dessous."
@@ -187,6 +194,7 @@ fr:
         register: "Enregistrement"
         my_profile: "Mon profile"
         my_favorites: "Mes favoris"
+        my_groups: Mes groupes
   simple_search:
     form:
       advanced: "Avancé"
@@ -551,3 +559,50 @@ fr:
       setup_item_types_nav:
         item_types: 'Types de fiche'
         new_item_type: 'Nouveau type de fiche'
+
+  groups:
+    index:
+      title: Groups
+    list_own_groups:
+      my_groups: My own groups
+      no_own_groups_warning: You currently don't own any group.
+      new_group: Create group
+      private: private
+      public: public
+      inactive: inactive
+      member_count_one: 1 member
+      member_count_many: "%{number} members"
+    list_group_memberships:
+      member_in: Groups I am member in (without my own groups)
+      no_group_memberships: You are currently not a member of a group.
+      invited: Invited
+      member: Member
+      admin: Admin
+      leave: Leave
+    list_public_groups:
+      public_groups: Public groups (without groups you are already member in)
+      no_public_groups: Currently there are no public groups you could join
+    new:
+      new_group: New group
+      create_group: Create group
+    common_form_fields:
+      active: Active?
+      public_group: Group is public?
+    edit:
+      edit_group: Edit group
+      update_group: Update group
+    show:
+      show_group: Group “%{group}”
+      back: Back to groups
+    list_members:
+      group_members: Group members
+      no_users: Currently no users are in this group (except the group owner)
+      invite_users: Invite users
+      invited: Invited
+      member: Member
+      admin: Admin
+
+  memberships:
+    new:
+      invite_members_to_group: Invite members to group “%{group}”
+      invite_members: Invite members

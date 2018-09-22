@@ -42,4 +42,41 @@ class InvitationsMailer < ApplicationMailer
   ensure
     I18n.locale = I18n.default_locale
   end
+
+  def group(invited_user, group, token)
+    I18n.locale = invited_user.primary_language.to_sym
+    @token = token
+    @user = invited_user
+    @invited_by = invited_user.invited_by
+    @group = group
+    subject = t(
+      "invitations_mailer.group.subject",
+      group: @group.name)
+
+    mail(
+      subject: subject,
+      to: @user.email,
+      reply_to: @invited_by.email
+    )
+  ensure
+    I18n.locale = I18n.default_locale
+  end
+
+  def membership(invited_by, membership)
+    I18n.locale = membership.user.primary_language.to_sym
+    @invited_by = invited_by
+    @group = membership.group
+    @user = membership.user
+    subject = t(
+      'invitations_mailer.membership.subject',
+      group: @group.name
+    )
+    mail(
+      subject: subject,
+      to: @user.email,
+      reply_to: @invited_by.email
+    )
+  ensure
+    I18n.locale = I18n.default_locale
+  end
 end

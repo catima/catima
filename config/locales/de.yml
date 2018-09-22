@@ -142,6 +142,13 @@ de:
       invited_to_access_html: "%{invited_by} hat Sie eingeladen %{catalog} zu konsultieren."
       reviewer_role: Als Katalog-Validator können Sie Einträge erstellen und editieren, sowie auch Einträge zur Publikation annehmen.
       subject: "Sie wurden eingeladen bei %{catalog} teilzunehmen"
+    group:
+      subject: "Du bist eingeladen, Mitglied in der Gruppe %{group} zu werden."
+      invited_to_access_html: "%{invited_by} hat dich eingeladen, Mitglied in der Gruppe «%{group}» auf %{baseurl} zu werden."
+    membership:
+      subject: "Du wurdest zur Gruppe %{group} hinzugefügt."
+      invited_to_msg: "%{invited_by} hat dich zur Gruppe «%{group}» hinzugefügt."
+      view_my_groups: "Hier kannst du deine Gruppenmitgliedschaften einsehen."
   export_mailer:
     export:
       export_available: "Der angeforderte %{category}-Export ist verfügbar. Sie können es herunterladen, indem Sie auf den folgenden Link klicken."
@@ -173,6 +180,7 @@ de:
         register: "Registeren"
         my_profile: "Mein Profil"
         my_favorites: "Meine Favoriten"
+        my_groups: Meine Gruppen
   simple_search:
     form:
       advanced: "Erweitert"
@@ -481,3 +489,50 @@ de:
       setup_item_types_nav:
         item_types: 'Item types'
         new_item_type: 'New item type'
+
+  groups:
+    index:
+      title: Groups
+    list_own_groups:
+      my_groups: My own groups
+      no_own_groups_warning: You currently don't own any group.
+      new_group: Create group
+      private: private
+      public: public
+      inactive: inactive
+      member_count_one: 1 member
+      member_count_many: "%{number} members"
+    list_group_memberships:
+      member_in: Groups I am member in (without my own groups)
+      no_group_memberships: You are currently not a member of a group.
+      invited: Invited
+      member: Member
+      admin: Admin
+      leave: Leave
+    list_public_groups:
+      public_groups: Public groups (without groups you are already member in)
+      no_public_groups: Currently there are no public groups you could join
+    new:
+      new_group: New group
+      create_group: Create group
+    common_form_fields:
+      active: Active?
+      public_group: Group is public?
+    edit:
+      edit_group: Edit group
+      update_group: Update group
+    show:
+      show_group: Group “%{group}”
+      back: Back to groups
+    list_members:
+      group_members: Group members
+      no_users: Currently no users are in this group (except the group owner)
+      invite_users: Invite users
+      invited: Invited
+      member: Member
+      admin: Admin
+
+  memberships:
+    new:
+      invite_members_to_group: Invite members to group “%{group}”
+      invite_members: Invite members

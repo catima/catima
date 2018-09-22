@@ -43,6 +43,11 @@ class User < ApplicationRecord
   has_many :catalog_permissions, :dependent => :destroy
   has_many :favorites, :dependent => :destroy
 
+  has_many :my_groups, class_name: 'Group', foreign_key: 'owner_id', dependent: :destroy, inverse_of: :owner
+
+  has_many :memberships, dependent: :destroy
+  has_many :groups, through: :memberships
+
   accepts_nested_attributes_for :catalog_permissions
 
   validates_presence_of :primary_language
@@ -65,6 +70,13 @@ class User < ApplicationRecord
     # complete check with a Regex string from Devise but completed for domain
     # name check.
     (email =~ /\A[^@,\s]+@[^@,\s]+\.[^@,\s]+\z/) == 0
+  end
+
+  def all_groups
+    # The groups association contains all groups this user is member,
+    # except for the groups the user is owning.
+    # This method returns all the groups, including the ones the user is owning.
+    groups + my_groups
   end
 
   # Devise + ActiveJob integration

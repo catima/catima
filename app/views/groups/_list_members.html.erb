@@ -1,0 +1,40 @@
+<div class="panel panel-default">
+  <div class="panel-heading">
+    <span class="pull-right">
+      <div class="btn-group">
+        <%= link_to(
+              fa_icon(:'user-plus', text: t('.invite_users')),
+              new_group_membership_path(group_id: @group.id),
+              class: 'btn btn-xs btn-default') %>
+      </div>
+    </span>
+    <b><%= t('.group_members') %></b>
+  </div>
+
+  <% if @group.users.count == 0 %>
+    <div class="alert alert-warning" style="margin-bottom: 0;">
+      <%= t('.no_users') %>
+    </div>
+  <% end %>
+
+  <% if @group.users.count > 0 %>
+    <table class="table">
+    <tbody>
+      <% @group.memberships.each do |membership| %>
+        <tr>
+          <td><%= membership.user.email %></td>
+          <td style="text-align: right;">
+            <%= link_to(
+                  fa_icon(:trash),
+                  group_membership_path(@group, membership),
+                  method: :delete,
+                  data: { confirm: t('delete_confirm', model: 'membership of ' + membership.user.email) },
+                  class: 'btn btn-xs btn-default'
+                ) %>
+          </td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+  <% end %>
+</div>

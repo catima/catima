@@ -1,0 +1,16 @@
+<% provide(:title, t('.new_group')) %>
+
+<div class='panel-body'>
+  <%= bootstrap_form_for(@group) do |f| %>
+
+    <%= render('common_form_fields', :f => f) %>
+
+    <%= f.primary(t('.create_group')) %>
+    <%= submit_and_add_another(f) %>
+    <%= link_to(
+          t('cancel'),
+          groups_path,
+          class: 'btn btn-link') %>
+
+  <% end %>
+</div>
