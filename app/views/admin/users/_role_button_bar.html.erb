@@ -1,6 +1,6 @@
 <div class="btn-group" data-toggle="buttons">
   <% roles.each do |role, active| %>
-    <label class="btn btn-default btn-xs <%= active %> <%= "disabled" if role == "member" %><%#= TODO: enable member button when groups are available %>" style="padding-left: 1.5em; padding-right: 1.5em;">
+    <label class="btn btn-default btn-xs <%= active %>" style="padding-left: 1.5em; padding-right: 1.5em;">
       <%= f.radio_button_without_bootstrap(:role, role, :autocomplete => "off") %>
       <%= role.capitalize %>
     </label>

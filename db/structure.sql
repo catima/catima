@@ -115,7 +115,8 @@ CREATE TABLE public.catalog_permissions (
     user_id integer,
     role character varying,
     created_at timestamp without time zone NOT NULL,
-    updated_at timestamp without time zone NOT NULL
+    updated_at timestamp without time zone NOT NULL,
+    group_id integer
 );
 
 
@@ -1800,6 +1801,7 @@ INSERT INTO "schema_migrations" (version) VALUES
 ('20180822150656'),
 ('20180907111339'),
 ('20180919104449'),
-('20180920073829');
+('20180920073829'),
+('20180922224350');
 
 

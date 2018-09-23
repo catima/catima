@@ -31,10 +31,9 @@ class GroupsController < ApplicationController
   def update
     find_group
     authorize @group
-    if @group.update(group_params)
-      redirect_to groups_path, notice: updated_message
-    else
-      render 'edit'
+    respond_to do |format|
+      format.html { update_group }
+      format.js { update_catalog_permissions_for_group }
     end
   end
 
@@ -60,6 +59,23 @@ class GroupsController < ApplicationController
 
   def find_group
     @group = Group.find_by(id: params[:id], owner: current_user)
+  end
+
+  def update_group
+    if @group.update(group_params)
+      redirect_to groups_path, notice: updated_message
+    else
+      render 'edit'
+    end
+  end
+
+  def update_catalog_permissions_for_group
+    catalog = Catalog.find(params['catalog_id'])
+    group = Group.find(params['id'])
+    @catalog_permission = CatalogPermission.find_or_create_by(catalog_id: catalog.id, group_id: group.id)
+    authorize @catalog_permission
+    @catalog_permission.save
+    @catalog_permission.update(role: params['role'])
   end
 
   def group_params

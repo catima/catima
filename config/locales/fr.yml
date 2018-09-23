@@ -264,6 +264,7 @@ fr:
   approved: Validé
   rejected: Rejeté
   users: Utilisateurs
+  users+groups: Utilisateurs & groupes
   new_user: Nouvel utilisateur
   send_invitation: Envoyer l'invitation
   visible: Visible
@@ -508,6 +509,8 @@ fr:
         editor_role: "<b>Editors</b> sont des membres qui peuvent créer et modifier leurs propres éléments dans le catalogue.<br>"
         super_editor_role: "<b>Super-editors</b> sont des éditeurs qui peuvent créer et éditer tous les éléments du catalogue.<br>"
         reviewer_role: "<b>Reviewers</b> sont des super-éditeurs qui peuvent approuver des éléments pour les rendre visibles au public.<br>"
+      index:
+        manage_my_groups: Gérer mes groupes
 
     menu_items:
       common_form_fields:

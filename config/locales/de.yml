@@ -248,6 +248,7 @@ de:
   approved: Geprüft
   rejected: Abgelehnt
   users: Benutzer
+  users+groups: Benutzer & Gruppen
   visible: Sichtbar
   not_visible: Nicht sichtbar
   general: Allgemeines
@@ -458,6 +459,21 @@ de:
       new:
         new_item: New %{item_type}
         create_item: Create %{item_type}
+
+    users:
+      common_form_fields:
+        preferred_language: "Admin screens are only available in English, but the user’s preferred language will be honored for login pages and for the catalogs themselves."
+        user_role: "<b>Users</b> can view the public areas of the non-restricted catalogs.<br>"
+        member_role: "<b>Members</b> are users that can view the public areas of a restricted catalog.<br>"
+        editor_role: "<b>Editors</b> are members that can create and edit their own items in the catalog.<br>"
+        super_editor_role: "<b>Super-editors</b> are editors that can create and edit all the items in the catalog.<br>"
+        reviewer_role: "<b>Reviewers</b> are super-editors that can approve items to make them visible to the public.<br>"
+      index:
+        manage_my_groups: Meine Gruppen verwalten
+
+    pages:
+      new:
+        create_page: "Create page"
 
     menu_items:
       common_form_fields:

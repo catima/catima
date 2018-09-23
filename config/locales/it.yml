@@ -228,6 +228,8 @@ it:
   url: URL
   pages: Pagine
   general: Generale
+  users: Utenti
+  users+groups: Utenti & gruppi
   style: Stile
   legend_help: "Se selezionato, è possibile aggiungere una legenda all'immagine."
   legend_enable: "Aggiungi una legenda"
@@ -273,6 +275,17 @@ it:
       map_inputs:
         height_label: "Altezza della mappa (in pixel)"
         height_default: "Il valore predefinito è %{height}"
+
+    users:
+      common_form_fields:
+        preferred_language: "Admin screens are only available in English, but the user’s preferred language will be honored for login pages and for the catalogs themselves."
+        user_role: "<b>Users</b> can view the public areas of the non-restricted catalogs.<br>"
+        member_role: "<b>Members</b> are users that can view the public areas of a restricted catalog.<br>"
+        editor_role: "<b>Editors</b> are members that can create and edit their own items in the catalog.<br>"
+        super_editor_role: "<b>Super-editors</b> are editors that can create and edit all the items in the catalog.<br>"
+        reviewer_role: "<b>Reviewers</b> are super-editors that can approve items to make them visible to the public.<br>"
+      index:
+        manage_my_groups: Gestire i miei gruppi
 
   groups:
     index:

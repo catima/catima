@@ -4,7 +4,7 @@ module CatalogAdmin::UsersHelper
     klass = "list-group-item"
     klass << " active" if active
 
-    link_to(t("users"), catalog_admin_users_path, :class => klass)
+    link_to(t("users+groups"), catalog_admin_users_path, :class => klass)
   end
 
   def user_role(user)
@@ -26,5 +26,14 @@ module CatalogAdmin::UsersHelper
         :f => form,
         :perm => sorted_permissions_for_edit(form.object, [catalog]).first
       })
+  end
+
+  def group_roles(group, catalog)
+    options = CatalogPermission::ROLE_OPTIONS.dup
+    options.delete('admin')
+    options.delete('reviewer') unless catalog.requires_review?
+
+    group_permission = group.role_for_catalog(catalog)
+    options.map { |r| [r, r == group_permission] }
   end
 end
