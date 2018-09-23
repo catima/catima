@@ -271,6 +271,7 @@ fr:
   not_visible: Non visible
   email: E-mail
   role: Rôle
+  role-with-groups: Rôle avec les groupes
   invited: Invité
   last_signed_in: Dernière connexion
   item_view: Affichage fiche

@@ -271,6 +271,7 @@ en:
   not_visible: Not visible
   email: Email
   role: Role
+  role-with-groups: Role with groups
   invited: Invited
   last_signed_in: Last signed in
   item_view: Item view

@@ -230,6 +230,8 @@ it:
   general: Generale
   users: Utenti
   users+groups: Utenti & gruppi
+  role: Ruolo
+  role-with-groups: Ruolo con i gruppi
   style: Stile
   legend_help: "Se selezionato, è possibile aggiungere una legenda all'immagine."
   legend_enable: "Aggiungi una legenda"

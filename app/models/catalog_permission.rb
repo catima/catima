@@ -27,6 +27,10 @@ class CatalogPermission < ApplicationRecord
 
   validates_inclusion_of :role, :in => ROLE_OPTIONS
 
+  def self.higher_permission(perm1, perm2)
+    ROLE_OPTIONS.index(perm1.role) > ROLE_OPTIONS.index(perm2.role) ? perm1 : perm2
+  end
+
   def role_at_least?(role_requirement)
     requirement_index = ROLE_OPTIONS.index(role_requirement.to_s)
     return false if requirement_index.nil?

@@ -1,14 +1,32 @@
 module User::Roles
-  def catalog_role_at_least?(catalog, role_requirement)
+  def all_catalog_permissions
+    # Contains all catalog permissions of the user and of all the
+    # groups the user is member of.
+    perms = catalog_permissions
+    all_groups.each { |grp| perms += grp.catalog_permissions }
+    resolve_catalog_permissions perms
+  end
+
+  def resolve_catalog_permissions(permissions)
+    # For a collection of catalog permissions, remove duplicate permissions
+    # and retain only the highest permission for each catalog.
+    perm_per_catalog = {}
+    permissions.each do |p|
+      perm_per_catalog[p.catalog_id] = CatalogPermission.higher_permission(perm_per_catalog[p.catalog_id] || p, p)
+    end
+    perm_per_catalog.values
+  end
+
+  def catalog_role_at_least?(catalog, role_requirement, all=true)
     # Authenticated users are always considered at least "user" level.
     return true if role_requirement == "user"
 
-    perm = catalog_permissions.to_a.find { |p| p.catalog_id == catalog.id }
+    perm = (all == true ? all_catalog_permissions : catalog_permissions).to_a.find { |p| p.catalog_id == catalog.id }
     perm&.role_at_least?(role_requirement)
   end
 
   def catalog_role(catalog)
-    perm = catalog_permissions.to_a.find { |p| p.catalog_id == catalog.id }
+    perm = all_catalog_permissions.to_a.find { |p| p.catalog_id == catalog.id }
     perm ? perm.role : "user"
   end
 
@@ -50,7 +68,7 @@ module User::Roles
   end
 
   def role_catalog_ids(role)
-    catalog_permissions.to_a.each_with_object([]) do |perm, admin|
+    all_catalog_permissions.to_a.each_with_object([]) do |perm, admin|
       next unless perm.active?
       admin << perm.catalog_id if perm.role_at_least?(role)
     end
