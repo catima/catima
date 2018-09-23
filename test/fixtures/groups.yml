@@ -15,15 +15,15 @@
 # Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
 
 one:
-  name: MyString
-  description: MyString
-  public: false
-  created_by:
-  active: false
+  name: Public group
+  description: Public group
+  public: true
+  owner: one_admin
+  active: true
 
 two:
-  name: MyString
-  description: MyString
+  name: Private group
+  description: Private group
   public: false
-  created_by:
-  active: false
+  owner: one_admin
+  active: true

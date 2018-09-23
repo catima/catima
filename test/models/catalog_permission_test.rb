@@ -2,7 +2,6 @@ require "test_helper"
 
 class CatalogPermissionTest < ActiveSupport::TestCase
   should validate_presence_of(:catalog)
-  should validate_presence_of(:user)
   should validate_presence_of(:role)
   should validate_inclusion_of(:role).in_array(%w(user member editor super-editor reviewer admin))
 
