@@ -75,7 +75,7 @@ fr:
     greeting: "Bonjour"
     minimum_characters: "%{length} caractères au minimum"
   catalogs:
-    not_visible: "“%{catalog_name}” est seulement visible par l'équipe du catalogue"
+    not_visible: "“%{catalog_name}” n'est pas accessible"
     show:
       welcome: "Bienvenue chez %{catalog}!"
   devise:
@@ -310,6 +310,7 @@ fr:
       common_form_fields:
         advertize_help: "Si coché, ce catalogue peut être trouvé dans les listes de catalogue publiques."
         visible_help: "Si coché, ce catalogue sera disponible pour tout le monde. Sinon, seul le personnel du catalogue pourra voir le contenu."
+        restricted_help: "Si coché, ce catalogue n'est visible que par les membres et le personnel."
         display_options: "Options d'affichage"
       edit_style:
         custom_style_catalog: "Personnaliser le style de catalogue"
@@ -415,6 +416,7 @@ fr:
         display_options: Options d'affichage
         use_as_primary_field: Utiliser comme champ primaire
         include_in_list_view: Inclure le champ dans la liste des fiches
+        restrict_field_to_members_and_staff: Restreindre le champ aux membres et au personnel
         data_entry_options: Options de saisie des données
         must_be_unique: Doit être unique
         save_field: Enregistrer le champ

@@ -61,7 +61,7 @@ it:
     greeting: "Buongiorno"
     minimum_characters: "%{length} caratteri minima"
   catalogs:
-    not_visible: "“%{catalog_name}” è visibile solo dallo staff del catalogo"
+    not_visible: "“%{catalog_name}” non è accessibile"
     show:
       welcome: "Benvenuti a %{catalog}!"
   devise:
@@ -251,6 +251,38 @@ it:
 
   catalog_admin:
 
+    catalog:
+      settings: 'Catalog settings'
+      edit_settings: 'Edit catalog settings'
+      save_settings: 'Save'
+      save_style: 'Save style'
+
+    catalogs:
+      common_form_fields:
+        advertize_help: "If checked, this catalog can be found in public catalog lists."
+        visible_help: "If checked, this catalog will be available for everyone. Otherwise only catalog staff will be able to see the content."
+        restricted_help: "Se controllato, questo catalogo è visibile solo ai membri e al personale."
+        display_options: "Display options"
+      edit_style:
+        custom_style_catalog: "Customize catalog style"
+        general: "General"
+        logo: "Logo"
+        items: "Items"
+        base_font: "Base font"
+        link_color: "Link color"
+        navbar: "Navbar"
+        catalog_logo: "Catalog logo"
+        remove_catalog_logo: "Remove current logo"
+        catalog_logo_help: "Logo located at the bottom right, maximum width: 200 pixels, maximum height: 100 pixels"
+        navbar_logo: "Logo navigation bar"
+        remove_navbar_logo: "Remove current navigation bar logo"
+        navbar_logo_help: "Logo located at the top left, maximum height: 50 pixels"
+        headings: "Headings"
+        headings_main_title: "Main title"
+        headings_sub_title: "Sub title"
+        item_labels: "Item labels"
+        item_text: "Item text"
+
     item_types:
       common_form_fields:
         display-options: "Opzioni di visualizzazione"
@@ -272,6 +304,8 @@ it:
       geometry_option_inputs:
         bounds: Estensione spaziale predefinita
         bounds_help: Se modificata, la mappa utilizzerà l'area selezionata come estensione spaziale predefinita
+      common_form_fields:
+        restrict_field_to_members_and_staff: Limitare il campo ai membri e al personale
 
     containers:
       map_inputs:

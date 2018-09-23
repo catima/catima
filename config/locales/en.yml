@@ -75,7 +75,7 @@ en:
     greeting: "Hello"
     minimum_characters: "%{length} characters minimum"
   catalogs:
-    not_visible: "“%{catalog_name}” is only visible by the catalog staff"
+    not_visible: "“%{catalog_name}” is not accessible"
     show:
       welcome: "Welcome to %{catalog}!"
   devise:
@@ -310,6 +310,7 @@ en:
       common_form_fields:
         advertize_help: "If checked, this catalog can be found in public catalog lists."
         visible_help: "If checked, this catalog will be available for everyone. Otherwise only catalog staff will be able to see the content."
+        restricted_help: "If checked, this catalog is only visible to members and staff."
         display_options: "Display options"
       edit_style:
         custom_style_catalog: "Customize catalog style"
@@ -415,6 +416,7 @@ en:
         display_options: Display options
         use_as_primary_field: "Use this as the primary field"
         include_in_list_view: "Include this field in list view"
+        restrict_field_to_members_and_staff: Restrict field to members and staff
         data_entry_options: Data entry options
         must_be_unique: "Must be unique"
         save_field: Save field

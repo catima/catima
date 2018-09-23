@@ -61,7 +61,7 @@ de:
     greeting: "Hallo"
     minimum_characters: "mindestens %{length} Zeichen"
   catalogs:
-    not_visible: "“%{catalog_name}” ist nur für das Katalogpersonal sichtbar"
+    not_visible: "“%{catalog_name}” ist nicht zugänglich"
     show:
       welcome: "Willkommen bei %{catalog}!"
   devise:
@@ -280,6 +280,32 @@ de:
       save_settings: 'Save'
       save_style: 'Stil sichern'
 
+    catalogs:
+      common_form_fields:
+        advertize_help: "If checked, this catalog can be found in public catalog lists."
+        visible_help: "If checked, this catalog will be available for everyone. Otherwise only catalog staff will be able to see the content."
+        restricted_help: "Wenn diese Option aktiviert ist, ist dieser Katalog nur für Mitglieder und Mitarbeiter sichtbar."
+        display_options: "Display options"
+      edit_style:
+        custom_style_catalog: "Customize catalog style"
+        general: "General"
+        logo: "Logo"
+        items: "Items"
+        base_font: "Base font"
+        link_color: "Link color"
+        navbar: "Navbar"
+        catalog_logo: "Catalog logo"
+        remove_catalog_logo: "Remove current logo"
+        catalog_logo_help: "Logo located at the bottom right, maximum width: 200 pixels, maximum height: 100 pixels"
+        navbar_logo: "Logo navigation bar"
+        remove_navbar_logo: "Remove current navigation bar logo"
+        navbar_logo_help: "Logo located at the top left, maximum height: 50 pixels"
+        headings: "Headings"
+        headings_main_title: "Main title"
+        headings_sub_title: "Sub title"
+        item_labels: "Item labels"
+        item_text: "Item text"
+
     categories:
       edit:
         edit_category: 'Edit category'
@@ -362,6 +388,7 @@ de:
         display_options: Display options
         use_as_primary_field: "Use this as the primary field"
         include_in_list_view: "Include this field in list view"
+        restrict_field_to_members_and_staff: Beschränkung des Feldes auf Mitglieder und Mitarbeiter
         data_entry_options: Data entry options
         must_be_unique: "Must be unique"
         save_field: Save field

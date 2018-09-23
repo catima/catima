@@ -22,6 +22,7 @@
 #  primary                  :boolean          default(FALSE), not null
 #  related_item_type_id     :integer
 #  required                 :boolean          default(TRUE), not null
+#  restricted               :boolean          default(FALSE), not null
 #  row_order                :integer
 #  slug                     :string
 #  type                     :string
