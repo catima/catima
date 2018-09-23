@@ -47,7 +47,11 @@ module ItemsHelper
   end
 
   def item_summary(item)
-    item.applicable_list_view_fields.each_with_object([]) do |field, html|
+    at_least_member = current_user.catalog_role_at_least?(item.catalog, 'member')
+    flds = item.applicable_list_view_fields.select do |fld|
+      at_least_member || !fld.restricted?
+    end
+    flds.each_with_object([]) do |field, html|
       next if field == item.primary_field
       next unless field.human_readable?
       value = strip_tags(field_value(item, field, :style => :compact))

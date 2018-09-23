@@ -32,6 +32,13 @@
   <%= f.check_box(:visible) %>
 <% end %>
 
+<%= f.form_group(
+    :restricted,
+    :help => t('catalog_admin.catalogs.common_form_fields.restricted_help')
+    ) do %>
+  <%= f.check_box(:restricted) %>
+<% end %>
+
 <hr>
 
 <%= f.select(

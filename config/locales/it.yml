@@ -61,7 +61,7 @@ it:
     greeting: "Buongiorno"
     minimum_characters: "%{length} caratteri minima"
   catalogs:
-    not_visible: "“%{catalog_name}” è visibile solo dallo staff del catalogo"
+    not_visible: "“%{catalog_name}” non è accessibile"
     show:
       welcome: "Benvenuti a %{catalog}!"
   devise:
@@ -140,6 +140,13 @@ it:
       invited_to_access_html: "%{invited_by} ti ha invitato a accessere al catalogo %{catalog}."
       reviewer_role: Come validatore di catalogo sarete in grado di agginguere e modificare tutte le registrazione nel catalogo e di convalidare per la pubblicazione.
       subject: "Viene chiesto di unirsi %{catalog}"
+    group:
+      subject: "Sei invitato a diventare membro del gruppo %{group}"
+      invited_to_access_html: "%{invited_by} ti ha invitato a diventare membro del gruppo «%{group}» su %{baseurl}."
+    membership:
+      subject: "Sei stato aggiunto al gruppo %{group}"
+      invited_to_msg: "%{invited_by} ti ha aggiunto al gruppo «%{group}»."
+      view_my_groups: "Potete vedere le appartenenze del vostro gruppo qui"
   export_mailer:
     export:
       export_available: "L'esportazione %{category} richiesta è disponibile. Puoi scaricarlo cliccando sul link sottostante."
@@ -171,6 +178,7 @@ it:
         register: "Iscrizione"
         my_profile: "Il mio profilo"
         my_favorites: "I miei preferiti"
+        my_groups: I miei gruppi
   simple_search:
     form:
       advanced: "Avanzata"
@@ -222,6 +230,10 @@ it:
   url: URL
   pages: Pagine
   general: Generale
+  users: Utenti
+  users+groups: Utenti & gruppi
+  role: Ruolo
+  role-with-groups: Ruolo con i gruppi
   style: Stile
   legend_help: "Se selezionato, è possibile aggiungere una legenda all'immagine."
   legend_enable: "Aggiungi una legenda"
@@ -232,6 +244,7 @@ it:
   valid: "valido"
   expired: "scaduto"
   download: "Scaricare"
+  or: o
 
   layouts:
     catalog_admin:
@@ -239,6 +252,38 @@ it:
         catalog_settings: "Impostazioni del catalogo"
 
   catalog_admin:
+
+    catalog:
+      settings: 'Catalog settings'
+      edit_settings: 'Edit catalog settings'
+      save_settings: 'Save'
+      save_style: 'Save style'
+
+    catalogs:
+      common_form_fields:
+        advertize_help: "If checked, this catalog can be found in public catalog lists."
+        visible_help: "If checked, this catalog will be available for everyone. Otherwise only catalog staff will be able to see the content."
+        restricted_help: "Se controllato, questo catalogo è visibile solo ai membri e al personale."
+        display_options: "Display options"
+      edit_style:
+        custom_style_catalog: "Customize catalog style"
+        general: "General"
+        logo: "Logo"
+        items: "Items"
+        base_font: "Base font"
+        link_color: "Link color"
+        navbar: "Navbar"
+        catalog_logo: "Catalog logo"
+        remove_catalog_logo: "Remove current logo"
+        catalog_logo_help: "Logo located at the bottom right, maximum width: 200 pixels, maximum height: 100 pixels"
+        navbar_logo: "Logo navigation bar"
+        remove_navbar_logo: "Remove current navigation bar logo"
+        navbar_logo_help: "Logo located at the top left, maximum height: 50 pixels"
+        headings: "Headings"
+        headings_main_title: "Main title"
+        headings_sub_title: "Sub title"
+        item_labels: "Item labels"
+        item_text: "Item text"
 
     item_types:
       common_form_fields:
@@ -261,8 +306,68 @@ it:
       geometry_option_inputs:
         bounds: Estensione spaziale predefinita
         bounds_help: Se modificata, la mappa utilizzerà l'area selezionata come estensione spaziale predefinita
+      common_form_fields:
+        restrict_field_to_members_and_staff: Limitare il campo ai membri e al personale
 
     containers:
       map_inputs:
         height_label: "Altezza della mappa (in pixel)"
         height_default: "Il valore predefinito è %{height}"
+
+    users:
+      common_form_fields:
+        preferred_language: "Admin screens are only available in English, but the user’s preferred language will be honored for login pages and for the catalogs themselves."
+        user_role: "<b>Users</b> can view the public areas of the non-restricted catalogs.<br>"
+        member_role: "<b>Members</b> are users that can view the public areas of a restricted catalog.<br>"
+        editor_role: "<b>Editors</b> are members that can create and edit their own items in the catalog.<br>"
+        super_editor_role: "<b>Super-editors</b> are editors that can create and edit all the items in the catalog.<br>"
+        reviewer_role: "<b>Reviewers</b> are super-editors that can approve items to make them visible to the public.<br>"
+      index:
+        manage_my_groups: Gestire i miei gruppi
+
+  groups:
+    index:
+      title: Groups
+    list_own_groups:
+      my_groups: My own groups
+      no_own_groups_warning: You currently don't own any group.
+      new_group: Create group
+      private: private
+      public: public
+      inactive: inactive
+      member_count_one: 1 member
+      member_count_many: "%{number} members"
+    list_group_memberships:
+      member_in: Groups I am member in (without my own groups)
+      no_group_memberships: You are currently not a member of a group.
+      invited: Invited
+      member: Member
+      admin: Admin
+      leave: Leave
+    list_public_groups:
+      public_groups: Public groups (without groups you are already member in)
+      no_public_groups: Currently there are no public groups you could join
+    new:
+      new_group: New group
+      create_group: Create group
+    common_form_fields:
+      active: Active?
+      public_group: Group is public?
+    edit:
+      edit_group: Edit group
+      update_group: Update group
+    show:
+      show_group: Group “%{group}”
+      back: Back to groups
+    list_members:
+      group_members: Group members
+      no_users: Currently no users are in this group (except the group owner)
+      invite_users: Invite users
+      invited: Invited
+      member: Member
+      admin: Admin
+
+  memberships:
+    new:
+      invite_members_to_group: Invite members to group “%{group}”
+      invite_members: Invite members

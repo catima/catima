@@ -18,12 +18,26 @@ module ControlsCatalog
   attr_reader :catalog
 
   def visibility
-    return if catalog.visible
-    if current_user.authenticated?
-      return if current_user.system_admin
-      return if current_user.catalog_role_at_least?(catalog, "editor")
-    end
+    return if catalog_visible_to_user && catalog_unrestricted_to_user
     redirect_to(root_path, :alert => t("catalogs.not_visible", :catalog_name => catalog.name))
+  end
+
+  def catalog_visible_to_user
+    return true if catalog.visible
+    if current_user.authenticated?
+      return true if current_user.system_admin
+      return true if current_user.catalog_role_at_least?(catalog, "editor")
+    end
+    false
+  end
+
+  def catalog_unrestricted_to_user
+    return true unless catalog.restricted
+    if current_user.authenticated?
+      return true if current_user.system_admin
+      return true if current_user.catalog_role_at_least?(catalog, "member")
+    end
+    false
   end
 
   def catalog_scoped?

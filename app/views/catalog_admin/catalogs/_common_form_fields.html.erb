@@ -27,6 +27,15 @@
   <%= f.check_box(:visible) %>
 <% end %>
 
+<%= f.form_group(
+    :restricted,
+    :help => t('.restricted_help')
+    ) do %>
+  <%= f.check_box(:restricted) %>
+<% end %>
+
+<hr>
+
 <%# TODO: remove if global bounds are not necessary %>
 <!--
 <div class="form-group">

@@ -40,6 +40,12 @@
           :label => t('.include_in_public_list_view')
       ) %>
 <% end %>
+<%= f.form_group(:restricted) do %>
+  <%= f.check_box(
+        :restricted,
+        :label => t('.restrict_field_to_members_and_staff')
+      ) %>
+<% end %>
 
 <hr>
 

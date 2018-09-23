@@ -4,6 +4,7 @@
 #
 #  catalog_id :integer
 #  created_at :datetime         not null
+#  group_id   :integer
 #  id         :integer          not null, primary key
 #  role       :string
 #  updated_at :datetime         not null

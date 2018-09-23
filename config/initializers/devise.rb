@@ -236,6 +236,29 @@ Devise.setup do |config|
   # Add a new OmniAuth provider. Check the wiki for more information on setting
   # up on your models and hooks.
   # config.omniauth :github, 'APP_ID', 'APP_SECRET', scope: 'user,public_repo'
+  if ENV['AUTH_GITHUB_APP_ID']
+    config.omniauth(
+      :github,
+      ENV['AUTH_GITHUB_APP_ID'],
+      ENV['AUTH_GITHUB_APP_SECRET'],
+      scope: 'user:email')
+  end
+  if ENV['AUTH_FACEBOOK_APP_ID']
+    config.omniauth(
+      :facebook,
+      ENV['AUTH_GITHUB_APP_ID'],
+      ENV['AUTH_GITHUB_APP_SECRET'],
+      token_params: { parse: :json })
+  end
+  if ENV['AUTH_SHIB_APP_ID']
+    config.omniauth(
+      :shibboleth,
+      shib_session_id_field: ENV['AUTH_SHIB_SESSION_ID'],
+      shib_application_id_field: ENV['AUTH_SHIB_APP_ID'],
+      uid_field: 'eppn',
+      info_fields: { email: 'mail' }
+    )
+  end
 
   # ==> Warden configuration
   # If you want to use other strategies, that are not supported by Devise, or

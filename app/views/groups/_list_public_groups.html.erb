@@ -1,0 +1,26 @@
+<div class="panel panel-default">
+  <div class="panel-heading">
+    <b><%= t('.public_groups') %></b>
+  </div>
+
+  <% if @public_groups.count == 0 %>
+    <div class="alert alert-warning" style="margin-bottom: 0;">
+      <%= t('.no_public_groups') %>
+    </div>
+  <% end %>
+
+  <% if @public_groups.count > 0 %>
+    <table class="table">
+    <tbody>
+      <% @public_groups.each do |grp| %>
+        <tr>
+          <td><%= grp.name %></td>
+          <td style="text-align: right;">
+            Request to join
+          </td>
+        </tr>
+      <% end %>
+    </tbody>
+  </table>
+  <% end %>
+</div>

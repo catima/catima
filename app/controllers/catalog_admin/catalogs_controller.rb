@@ -39,6 +39,7 @@ class CatalogAdmin::CatalogsController < CatalogAdmin::BaseController
       :bounds,
       :custom_root_page_id,
       :visible,
+      :restricted,
       :style,
       :logo, :remove_logo, :navlogo, :remove_navlogo
     )

@@ -12,11 +12,13 @@
 #  last_sign_in_at        :datetime
 #  last_sign_in_ip        :inet
 #  primary_language       :string           default("en"), not null
+#  provider               :string
 #  remember_created_at    :datetime
 #  reset_password_sent_at :datetime
 #  reset_password_token   :string
 #  sign_in_count          :integer          default(0), not null
 #  system_admin           :boolean          default(FALSE), not null
+#  uid                    :string
 #  updated_at             :datetime         not null
 #
 

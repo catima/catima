@@ -61,7 +61,7 @@ de:
     greeting: "Hallo"
     minimum_characters: "mindestens %{length} Zeichen"
   catalogs:
-    not_visible: "“%{catalog_name}” ist nur für das Katalogpersonal sichtbar"
+    not_visible: "“%{catalog_name}” ist nicht zugänglich"
     show:
       welcome: "Willkommen bei %{catalog}!"
   devise:
@@ -144,6 +144,13 @@ de:
       invited_to_access_html: "%{invited_by} hat Sie eingeladen %{catalog} zu konsultieren."
       reviewer_role: Als Katalog-Validator können Sie Einträge erstellen und editieren, sowie auch Einträge zur Publikation annehmen.
       subject: "Sie wurden eingeladen bei %{catalog} teilzunehmen"
+    group:
+      subject: "Du bist eingeladen, Mitglied in der Gruppe %{group} zu werden."
+      invited_to_access_html: "%{invited_by} hat dich eingeladen, Mitglied in der Gruppe «%{group}» auf %{baseurl} zu werden."
+    membership:
+      subject: "Du wurdest zur Gruppe %{group} hinzugefügt."
+      invited_to_msg: "%{invited_by} hat dich zur Gruppe «%{group}» hinzugefügt."
+      view_my_groups: "Hier kannst du deine Gruppenmitgliedschaften einsehen."
   export_mailer:
     export:
       export_available: "Der angeforderte %{category}-Export ist verfügbar. Sie können es herunterladen, indem Sie auf den folgenden Link klicken."
@@ -175,6 +182,7 @@ de:
         register: "Registeren"
         my_profile: "Mein Profil"
         my_favorites: "Meine Favoriten"
+        my_groups: Meine Gruppen
   simple_search:
     form:
       advanced: "Erweitert"
@@ -242,14 +250,18 @@ de:
   approved: Geprüft
   rejected: Abgelehnt
   users: Benutzer
+  users+groups: Benutzer & Gruppen
   visible: Sichtbar
   not_visible: Nicht sichtbar
+  role: Rolle
+  role-with_groups: Rolle mit Gruppen
   general: Allgemeines
   style: Stil
   export: Export
   valid: "gültig"
   expired: "abgelaufen"
   download: "Herunterladen"
+  or: oder
 
   layouts:
     catalog_admin:
@@ -269,6 +281,32 @@ de:
       edit_settings: 'Edit catalog settings'
       save_settings: 'Save'
       save_style: 'Stil sichern'
+
+    catalogs:
+      common_form_fields:
+        advertize_help: "If checked, this catalog can be found in public catalog lists."
+        visible_help: "If checked, this catalog will be available for everyone. Otherwise only catalog staff will be able to see the content."
+        restricted_help: "Wenn diese Option aktiviert ist, ist dieser Katalog nur für Mitglieder und Mitarbeiter sichtbar."
+        display_options: "Display options"
+      edit_style:
+        custom_style_catalog: "Customize catalog style"
+        general: "General"
+        logo: "Logo"
+        items: "Items"
+        base_font: "Base font"
+        link_color: "Link color"
+        navbar: "Navbar"
+        catalog_logo: "Catalog logo"
+        remove_catalog_logo: "Remove current logo"
+        catalog_logo_help: "Logo located at the bottom right, maximum width: 200 pixels, maximum height: 100 pixels"
+        navbar_logo: "Logo navigation bar"
+        remove_navbar_logo: "Remove current navigation bar logo"
+        navbar_logo_help: "Logo located at the top left, maximum height: 50 pixels"
+        headings: "Headings"
+        headings_main_title: "Main title"
+        headings_sub_title: "Sub title"
+        item_labels: "Item labels"
+        item_text: "Item text"
 
     categories:
       edit:
@@ -353,6 +391,7 @@ de:
         use_as_primary_field: "Use this as the primary field"
         include_in_list_view: "Include this field in data edition list view"
         include_in_public_list_view: "Include this field in public list view"
+        restrict_field_to_members_and_staff: Beschränkung des Feldes auf Mitglieder und Mitarbeiter
         data_entry_options: Data entry options
         must_be_unique: "Must be unique"
         save_field: Save field
@@ -454,6 +493,21 @@ de:
         new_item: New %{item_type}
         create_item: Create %{item_type}
 
+    users:
+      common_form_fields:
+        preferred_language: "Admin screens are only available in English, but the user’s preferred language will be honored for login pages and for the catalogs themselves."
+        user_role: "<b>Users</b> can view the public areas of the non-restricted catalogs.<br>"
+        member_role: "<b>Members</b> are users that can view the public areas of a restricted catalog.<br>"
+        editor_role: "<b>Editors</b> are members that can create and edit their own items in the catalog.<br>"
+        super_editor_role: "<b>Super-editors</b> are editors that can create and edit all the items in the catalog.<br>"
+        reviewer_role: "<b>Reviewers</b> are super-editors that can approve items to make them visible to the public.<br>"
+      index:
+        manage_my_groups: Meine Gruppen verwalten
+
+    pages:
+      new:
+        create_page: "Create page"
+
     menu_items:
       common_form_fields:
         rank_help: The rank defines the order of the menu items in the menu bar (or within a dropdown menu if a parent is defined.
@@ -484,3 +538,50 @@ de:
       setup_item_types_nav:
         item_types: 'Item types'
         new_item_type: 'New item type'
+
+  groups:
+    index:
+      title: Groups
+    list_own_groups:
+      my_groups: My own groups
+      no_own_groups_warning: You currently don't own any group.
+      new_group: Create group
+      private: private
+      public: public
+      inactive: inactive
+      member_count_one: 1 member
+      member_count_many: "%{number} members"
+    list_group_memberships:
+      member_in: Groups I am member in (without my own groups)
+      no_group_memberships: You are currently not a member of a group.
+      invited: Invited
+      member: Member
+      admin: Admin
+      leave: Leave
+    list_public_groups:
+      public_groups: Public groups (without groups you are already member in)
+      no_public_groups: Currently there are no public groups you could join
+    new:
+      new_group: New group
+      create_group: Create group
+    common_form_fields:
+      active: Active?
+      public_group: Group is public?
+    edit:
+      edit_group: Edit group
+      update_group: Update group
+    show:
+      show_group: Group “%{group}”
+      back: Back to groups
+    list_members:
+      group_members: Group members
+      no_users: Currently no users are in this group (except the group owner)
+      invite_users: Invite users
+      invited: Invited
+      member: Member
+      admin: Admin
+
+  memberships:
+    new:
+      invite_members_to_group: Invite members to group “%{group}”
+      invite_members: Invite members

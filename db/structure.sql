@@ -3,6 +3,7 @@ SET lock_timeout = 0;
 SET idle_in_transaction_session_timeout = 0;
 SET client_encoding = 'UTF8';
 SET standard_conforming_strings = on;
+SELECT pg_catalog.set_config('search_path', '', false);
 SET check_function_bodies = false;
 SET client_min_messages = warning;
 SET row_security = off;
@@ -21,13 +22,11 @@ CREATE EXTENSION IF NOT EXISTS plpgsql WITH SCHEMA pg_catalog;
 COMMENT ON EXTENSION plpgsql IS 'PL/pgSQL procedural language';
 
 
-SET search_path = public, pg_catalog;
-
 --
 -- Name: bigdate_to_num(json); Type: FUNCTION; Schema: public; Owner: -
 --
 
-CREATE FUNCTION bigdate_to_num(json) RETURNS numeric
+CREATE FUNCTION public.bigdate_to_num(json) RETURNS numeric
     LANGUAGE sql IMMUTABLE STRICT
     AS $_$SELECT (
             CASE WHEN $1->>'Y' IS NULL THEN 0 ELSE ($1->>'Y')::INTEGER * POWER(10, 10) END +
@@ -43,7 +42,7 @@ CREATE FUNCTION bigdate_to_num(json) RETURNS numeric
 -- Name: validate_geojson(text); Type: FUNCTION; Schema: public; Owner: -
 --
 
-CREATE FUNCTION validate_geojson(json text) RETURNS boolean
+CREATE FUNCTION public.validate_geojson(json text) RETURNS boolean
     LANGUAGE plpgsql
     AS $$
       BEGIN
@@ -62,7 +61,7 @@ SET default_with_oids = false;
 -- Name: advanced_searches; Type: TABLE; Schema: public; Owner: -
 --
 
-CREATE TABLE advanced_searches (
+CREATE TABLE public.advanced_searches (
     id integer NOT NULL,
     uuid character varying,
     item_type_id integer,
@@ -79,7 +78,7 @@ CREATE TABLE advanced_searches (
 -- Name: advanced_searches_id_seq; Type: SEQUENCE; Schema: public; Owner: -
 --
 
-CREATE SEQUENCE advanced_searches_id_seq
+CREATE SEQUENCE public.advanced_searches_id_seq
     START WITH 1
     INCREMENT BY 1
     NO MINVALUE
@@ -91,14 +90,14 @@ CREATE SEQUENCE advanced_searches_id_seq
 -- Name: advanced_searches_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
 --
 
-ALTER SEQUENCE advanced_searches_id_seq OWNED BY advanced_searches.id;
+ALTER SEQUENCE public.advanced_searches_id_seq OWNED BY public.advanced_searches.id;
 
 
 --
 -- Name: ar_internal_metadata; Type: TABLE; Schema: public; Owner: -
 --
 
-CREATE TABLE ar_internal_metadata (
+CREATE TABLE public.ar_internal_metadata (
     key character varying NOT NULL,
     value character varying,
     created_at timestamp without time zone NOT NULL,
@@ -110,13 +109,14 @@ CREATE TABLE ar_internal_metadata (
 -- Name: catalog_permissions; Type: TABLE; Schema: public; Owner: -
 --
 
-CREATE TABLE catalog_permissions (
+CREATE TABLE public.catalog_permissions (
     id integer NOT NULL,
     catalog_id integer,
     user_id integer,
     role character varying,
     created_at timestamp without time zone NOT NULL,
-    updated_at timestamp without time zone NOT NULL
+    updated_at timestamp without time zone NOT NULL,
+    group_id integer
 );
 
 
@@ -124,7 +124,7 @@ CREATE TABLE catalog_permissions (
 -- Name: catalog_permissions_id_seq; Type: SEQUENCE; Schema: public; Owner: -
 --
 
-CREATE SEQUENCE catalog_permissions_id_seq
+CREATE SEQUENCE public.catalog_permissions_id_seq
     START WITH 1
     INCREMENT BY 1
     NO MINVALUE
@@ -136,14 +136,14 @@ CREATE SEQUENCE catalog_permissions_id_seq
 -- Name: catalog_permissions_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
 --
 
-ALTER SEQUENCE catalog_permissions_id_seq OWNED BY catalog_permissions.id;
+ALTER SEQUENCE public.catalog_permissions_id_seq OWNED BY public.catalog_permissions.id;
 
 
 --
 -- Name: catalogs; Type: TABLE; Schema: public; Owner: -
 --
 
-CREATE TABLE catalogs (
+CREATE TABLE public.catalogs (
     id integer NOT NULL,
     name character varying,
     slug character varying,
@@ -159,7 +159,8 @@ CREATE TABLE catalogs (
     logo_id character varying,
     navlogo_id character varying,
     visible boolean DEFAULT true NOT NULL,
-    bounds jsonb
+    bounds jsonb,
+    restricted boolean DEFAULT false NOT NULL
 );
 
 
@@ -167,7 +168,7 @@ CREATE TABLE catalogs (
 -- Name: catalogs_id_seq; Type: SEQUENCE; Schema: public; Owner: -
 --
 
-CREATE SEQUENCE catalogs_id_seq
+CREATE SEQUENCE public.catalogs_id_seq
     START WITH 1
     INCREMENT BY 1
     NO MINVALUE
@@ -179,14 +180,14 @@ CREATE SEQUENCE catalogs_id_seq
 -- Name: catalogs_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
 --
 
-ALTER SEQUENCE catalogs_id_seq OWNED BY catalogs.id;
+ALTER SEQUENCE public.catalogs_id_seq OWNED BY public.catalogs.id;
 
 
 --
 -- Name: categories; Type: TABLE; Schema: public; Owner: -
 --
 
-CREATE TABLE categories (
+CREATE TABLE public.categories (
     id integer NOT NULL,
     catalog_id integer,
     name character varying,
@@ -201,7 +202,7 @@ CREATE TABLE categories (
 -- Name: categories_id_seq; Type: SEQUENCE; Schema: public; Owner: -
 --
 
-CREATE SEQUENCE categories_id_seq
+CREATE SEQUENCE public.categories_id_seq
     START WITH 1
     INCREMENT BY 1
     NO MINVALUE
@@ -213,14 +214,14 @@ CREATE SEQUENCE categories_id_seq
 -- Name: categories_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
 --
 
-ALTER SEQUENCE categories_id_seq OWNED BY categories.id;
+ALTER SEQUENCE public.categories_id_seq OWNED BY public.categories.id;
 
 
 --
 -- Name: choice_sets; Type: TABLE; Schema: public; Owner: -
 --
 
-CREATE TABLE choice_sets (
+CREATE TABLE public.choice_sets (
     id integer NOT NULL,
     catalog_id integer,
     name character varying,
@@ -236,7 +237,7 @@ CREATE TABLE choice_sets (
 -- Name: choice_sets_id_seq; Type: SEQUENCE; Schema: public; Owner: -
 --
 
-CREATE SEQUENCE choice_sets_id_seq
+CREATE SEQUENCE public.choice_sets_id_seq
     START WITH 1
     INCREMENT BY 1
     NO MINVALUE
@@ -248,14 +249,14 @@ CREATE SEQUENCE choice_sets_id_seq
 -- Name: choice_sets_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
 --
 
-ALTER SEQUENCE choice_sets_id_seq OWNED BY choice_sets.id;
+ALTER SEQUENCE public.choice_sets_id_seq OWNED BY public.choice_sets.id;
 
 
 --
 -- Name: choices; Type: TABLE; Schema: public; Owner: -
 --
 
-CREATE TABLE choices (
+CREATE TABLE public.choices (
     id integer NOT NULL,
     choice_set_id integer,
     long_name_old text,
@@ -274,7 +275,7 @@ CREATE TABLE choices (
 -- Name: choices_id_seq; Type: SEQUENCE; Schema: public; Owner: -
 --
 
-CREATE SEQUENCE choices_id_seq
+CREATE SEQUENCE public.choices_id_seq
     START WITH 1
     INCREMENT BY 1
     NO MINVALUE
@@ -286,14 +287,14 @@ CREATE SEQUENCE choices_id_seq
 -- Name: choices_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
 --
 
-ALTER SEQUENCE choices_id_seq OWNED BY choices.id;
+ALTER SEQUENCE public.choices_id_seq OWNED BY public.choices.id;
 
 
 --
 -- Name: configurations; Type: TABLE; Schema: public; Owner: -
 --
 
-CREATE TABLE configurations (
+CREATE TABLE public.configurations (
     id integer NOT NULL,
     root_mode character varying DEFAULT 'listing'::character varying NOT NULL,
     default_catalog_id integer,
@@ -306,7 +307,7 @@ CREATE TABLE configurations (
 -- Name: configurations_id_seq; Type: SEQUENCE; Schema: public; Owner: -
 --
 
-CREATE SEQUENCE configurations_id_seq
+CREATE SEQUENCE public.configurations_id_seq
     START WITH 1
     INCREMENT BY 1
     NO MINVALUE
@@ -318,14 +319,14 @@ CREATE SEQUENCE configurations_id_seq
 -- Name: configurations_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
 --
 
-ALTER SEQUENCE configurations_id_seq OWNED BY configurations.id;
+ALTER SEQUENCE public.configurations_id_seq OWNED BY public.configurations.id;
 
 
 --
 -- Name: containers; Type: TABLE; Schema: public; Owner: -
 --
 
-CREATE TABLE containers (
+CREATE TABLE public.containers (
     id integer NOT NULL,
     page_id integer,
     type character varying,
@@ -342,7 +343,7 @@ CREATE TABLE containers (
 -- Name: containers_id_seq; Type: SEQUENCE; Schema: public; Owner: -
 --
 
-CREATE SEQUENCE containers_id_seq
+CREATE SEQUENCE public.containers_id_seq
     START WITH 1
     INCREMENT BY 1
     NO MINVALUE
@@ -354,14 +355,14 @@ CREATE SEQUENCE containers_id_seq
 -- Name: containers_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
 --
 
-ALTER SEQUENCE containers_id_seq OWNED BY containers.id;
+ALTER SEQUENCE public.containers_id_seq OWNED BY public.containers.id;
 
 
 --
 -- Name: exports; Type: TABLE; Schema: public; Owner: -
 --
 
-CREATE TABLE exports (
+CREATE TABLE public.exports (
     id integer NOT NULL,
     user_id integer,
     catalog_id integer,
@@ -376,7 +377,7 @@ CREATE TABLE exports (
 -- Name: exports_id_seq; Type: SEQUENCE; Schema: public; Owner: -
 --
 
-CREATE SEQUENCE exports_id_seq
+CREATE SEQUENCE public.exports_id_seq
     START WITH 1
     INCREMENT BY 1
     NO MINVALUE
@@ -388,14 +389,14 @@ CREATE SEQUENCE exports_id_seq
 -- Name: exports_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
 --
 
-ALTER SEQUENCE exports_id_seq OWNED BY exports.id;
+ALTER SEQUENCE public.exports_id_seq OWNED BY public.exports.id;
 
 
 --
 -- Name: favorites; Type: TABLE; Schema: public; Owner: -
 --
 
-CREATE TABLE favorites (
+CREATE TABLE public.favorites (
     id integer NOT NULL,
     user_id integer,
     item_id integer,
@@ -408,7 +409,7 @@ CREATE TABLE favorites (
 -- Name: favorites_id_seq; Type: SEQUENCE; Schema: public; Owner: -
 --
 
-CREATE SEQUENCE favorites_id_seq
+CREATE SEQUENCE public.favorites_id_seq
     START WITH 1
     INCREMENT BY 1
     NO MINVALUE
@@ -420,14 +421,14 @@ CREATE SEQUENCE favorites_id_seq
 -- Name: favorites_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
 --
 
-ALTER SEQUENCE favorites_id_seq OWNED BY favorites.id;
+ALTER SEQUENCE public.favorites_id_seq OWNED BY public.favorites.id;
 
 
 --
 -- Name: fields; Type: TABLE; Schema: public; Owner: -
 --
 
-CREATE TABLE fields (
+CREATE TABLE public.fields (
     id integer NOT NULL,
     field_set_id integer,
     category_item_type_id integer,
@@ -454,7 +455,8 @@ CREATE TABLE fields (
     field_set_type character varying,
     editor_component character varying,
     display_component character varying,
-    display_in_public_list boolean DEFAULT true NOT NULL
+    display_in_public_list boolean DEFAULT true NOT NULL,
+    restricted boolean DEFAULT false NOT NULL
 );
 
 
@@ -462,7 +464,7 @@ CREATE TABLE fields (
 -- Name: fields_id_seq; Type: SEQUENCE; Schema: public; Owner: -
 --
 
-CREATE SEQUENCE fields_id_seq
+CREATE SEQUENCE public.fields_id_seq
     START WITH 1
     INCREMENT BY 1
     NO MINVALUE
@@ -474,14 +476,49 @@ CREATE SEQUENCE fields_id_seq
 -- Name: fields_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
 --
 
-ALTER SEQUENCE fields_id_seq OWNED BY fields.id;
+ALTER SEQUENCE public.fields_id_seq OWNED BY public.fields.id;
+
+
+--
+-- Name: groups; Type: TABLE; Schema: public; Owner: -
+--
+
+CREATE TABLE public.groups (
+    id bigint NOT NULL,
+    name character varying,
+    description character varying,
+    public boolean,
+    owner_id bigint NOT NULL,
+    active boolean,
+    created_at timestamp without time zone NOT NULL,
+    updated_at timestamp without time zone NOT NULL
+);
+
+
+--
+-- Name: groups_id_seq; Type: SEQUENCE; Schema: public; Owner: -
+--
+
+CREATE SEQUENCE public.groups_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+--
+-- Name: groups_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
+--
+
+ALTER SEQUENCE public.groups_id_seq OWNED BY public.groups.id;
 
 
 --
 -- Name: item_types; Type: TABLE; Schema: public; Owner: -
 --
 
-CREATE TABLE item_types (
+CREATE TABLE public.item_types (
     id integer NOT NULL,
     catalog_id integer,
     slug character varying,
@@ -498,7 +535,7 @@ CREATE TABLE item_types (
 -- Name: item_types_id_seq; Type: SEQUENCE; Schema: public; Owner: -
 --
 
-CREATE SEQUENCE item_types_id_seq
+CREATE SEQUENCE public.item_types_id_seq
     START WITH 1
     INCREMENT BY 1
     NO MINVALUE
@@ -510,14 +547,14 @@ CREATE SEQUENCE item_types_id_seq
 -- Name: item_types_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
 --
 
-ALTER SEQUENCE item_types_id_seq OWNED BY item_types.id;
+ALTER SEQUENCE public.item_types_id_seq OWNED BY public.item_types.id;
 
 
 --
 -- Name: item_views; Type: TABLE; Schema: public; Owner: -
 --
 
-CREATE TABLE item_views (
+CREATE TABLE public.item_views (
     id integer NOT NULL,
     name character varying,
     item_type_id integer,
@@ -534,7 +571,7 @@ CREATE TABLE item_views (
 -- Name: item_views_id_seq; Type: SEQUENCE; Schema: public; Owner: -
 --
 
-CREATE SEQUENCE item_views_id_seq
+CREATE SEQUENCE public.item_views_id_seq
     START WITH 1
     INCREMENT BY 1
     NO MINVALUE
@@ -546,14 +583,14 @@ CREATE SEQUENCE item_views_id_seq
 -- Name: item_views_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
 --
 
-ALTER SEQUENCE item_views_id_seq OWNED BY item_views.id;
+ALTER SEQUENCE public.item_views_id_seq OWNED BY public.item_views.id;
 
 
 --
 -- Name: items; Type: TABLE; Schema: public; Owner: -
 --
 
-CREATE TABLE items (
+CREATE TABLE public.items (
     id integer NOT NULL,
     catalog_id integer,
     item_type_id integer,
@@ -576,7 +613,7 @@ CREATE TABLE items (
 -- Name: items_id_seq; Type: SEQUENCE; Schema: public; Owner: -
 --
 
-CREATE SEQUENCE items_id_seq
+CREATE SEQUENCE public.items_id_seq
     START WITH 1
     INCREMENT BY 1
     NO MINVALUE
@@ -588,14 +625,47 @@ CREATE SEQUENCE items_id_seq
 -- Name: items_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
 --
 
-ALTER SEQUENCE items_id_seq OWNED BY items.id;
+ALTER SEQUENCE public.items_id_seq OWNED BY public.items.id;
+
+
+--
+-- Name: memberships; Type: TABLE; Schema: public; Owner: -
+--
+
+CREATE TABLE public.memberships (
+    id bigint NOT NULL,
+    user_id bigint,
+    group_id bigint,
+    status character varying,
+    created_at timestamp without time zone NOT NULL,
+    updated_at timestamp without time zone NOT NULL
+);
+
+
+--
+-- Name: memberships_id_seq; Type: SEQUENCE; Schema: public; Owner: -
+--
+
+CREATE SEQUENCE public.memberships_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+--
+-- Name: memberships_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
+--
+
+ALTER SEQUENCE public.memberships_id_seq OWNED BY public.memberships.id;
 
 
 --
 -- Name: menu_items; Type: TABLE; Schema: public; Owner: -
 --
 
-CREATE TABLE menu_items (
+CREATE TABLE public.menu_items (
     id integer NOT NULL,
     catalog_id integer,
     slug character varying,
@@ -616,7 +686,7 @@ CREATE TABLE menu_items (
 -- Name: menu_items_id_seq; Type: SEQUENCE; Schema: public; Owner: -
 --
 
-CREATE SEQUENCE menu_items_id_seq
+CREATE SEQUENCE public.menu_items_id_seq
     START WITH 1
     INCREMENT BY 1
     NO MINVALUE
@@ -628,14 +698,14 @@ CREATE SEQUENCE menu_items_id_seq
 -- Name: menu_items_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
 --
 
-ALTER SEQUENCE menu_items_id_seq OWNED BY menu_items.id;
+ALTER SEQUENCE public.menu_items_id_seq OWNED BY public.menu_items.id;
 
 
 --
 -- Name: pages; Type: TABLE; Schema: public; Owner: -
 --
 
-CREATE TABLE pages (
+CREATE TABLE public.pages (
     id integer NOT NULL,
     catalog_id integer,
     creator_id integer,
@@ -654,7 +724,7 @@ CREATE TABLE pages (
 -- Name: pages_id_seq; Type: SEQUENCE; Schema: public; Owner: -
 --
 
-CREATE SEQUENCE pages_id_seq
+CREATE SEQUENCE public.pages_id_seq
     START WITH 1
     INCREMENT BY 1
     NO MINVALUE
@@ -666,14 +736,14 @@ CREATE SEQUENCE pages_id_seq
 -- Name: pages_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
 --
 
-ALTER SEQUENCE pages_id_seq OWNED BY pages.id;
+ALTER SEQUENCE public.pages_id_seq OWNED BY public.pages.id;
 
 
 --
 -- Name: schema_migrations; Type: TABLE; Schema: public; Owner: -
 --
 
-CREATE TABLE schema_migrations (
+CREATE TABLE public.schema_migrations (
     version character varying NOT NULL
 );
 
@@ -682,7 +752,7 @@ CREATE TABLE schema_migrations (
 -- Name: template_storages; Type: TABLE; Schema: public; Owner: -
 --
 
-CREATE TABLE template_storages (
+CREATE TABLE public.template_storages (
     id integer NOT NULL,
     body text,
     path character varying,
@@ -699,7 +769,7 @@ CREATE TABLE template_storages (
 -- Name: template_storages_id_seq; Type: SEQUENCE; Schema: public; Owner: -
 --
 
-CREATE SEQUENCE template_storages_id_seq
+CREATE SEQUENCE public.template_storages_id_seq
     START WITH 1
     INCREMENT BY 1
     NO MINVALUE
@@ -711,14 +781,14 @@ CREATE SEQUENCE template_storages_id_seq
 -- Name: template_storages_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
 --
 
-ALTER SEQUENCE template_storages_id_seq OWNED BY template_storages.id;
+ALTER SEQUENCE public.template_storages_id_seq OWNED BY public.template_storages.id;
 
 
 --
 -- Name: users; Type: TABLE; Schema: public; Owner: -
 --
 
-CREATE TABLE users (
+CREATE TABLE public.users (
     id integer NOT NULL,
     email character varying DEFAULT ''::character varying NOT NULL,
     encrypted_password character varying DEFAULT ''::character varying NOT NULL,
@@ -734,7 +804,9 @@ CREATE TABLE users (
     updated_at timestamp without time zone NOT NULL,
     system_admin boolean DEFAULT false NOT NULL,
     primary_language character varying DEFAULT 'en'::character varying NOT NULL,
-    invited_by_id integer
+    invited_by_id integer,
+    provider character varying,
+    uid character varying
 );
 
 
@@ -742,7 +814,7 @@ CREATE TABLE users (
 -- Name: users_id_seq; Type: SEQUENCE; Schema: public; Owner: -
 --
 
-CREATE SEQUENCE users_id_seq
+CREATE SEQUENCE public.users_id_seq
     START WITH 1
     INCREMENT BY 1
     NO MINVALUE
@@ -754,140 +826,154 @@ CREATE SEQUENCE users_id_seq
 -- Name: users_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
 --
 
-ALTER SEQUENCE users_id_seq OWNED BY users.id;
+ALTER SEQUENCE public.users_id_seq OWNED BY public.users.id;
 
 
 --
 -- Name: advanced_searches id; Type: DEFAULT; Schema: public; Owner: -
 --
 
-ALTER TABLE ONLY advanced_searches ALTER COLUMN id SET DEFAULT nextval('advanced_searches_id_seq'::regclass);
+ALTER TABLE ONLY public.advanced_searches ALTER COLUMN id SET DEFAULT nextval('public.advanced_searches_id_seq'::regclass);
 
 
 --
 -- Name: catalog_permissions id; Type: DEFAULT; Schema: public; Owner: -
 --
 
-ALTER TABLE ONLY catalog_permissions ALTER COLUMN id SET DEFAULT nextval('catalog_permissions_id_seq'::regclass);
+ALTER TABLE ONLY public.catalog_permissions ALTER COLUMN id SET DEFAULT nextval('public.catalog_permissions_id_seq'::regclass);
 
 
 --
 -- Name: catalogs id; Type: DEFAULT; Schema: public; Owner: -
 --
 
-ALTER TABLE ONLY catalogs ALTER COLUMN id SET DEFAULT nextval('catalogs_id_seq'::regclass);
+ALTER TABLE ONLY public.catalogs ALTER COLUMN id SET DEFAULT nextval('public.catalogs_id_seq'::regclass);
 
 
 --
 -- Name: categories id; Type: DEFAULT; Schema: public; Owner: -
 --
 
-ALTER TABLE ONLY categories ALTER COLUMN id SET DEFAULT nextval('categories_id_seq'::regclass);
+ALTER TABLE ONLY public.categories ALTER COLUMN id SET DEFAULT nextval('public.categories_id_seq'::regclass);
 
 
 --
 -- Name: choice_sets id; Type: DEFAULT; Schema: public; Owner: -
 --
 
-ALTER TABLE ONLY choice_sets ALTER COLUMN id SET DEFAULT nextval('choice_sets_id_seq'::regclass);
+ALTER TABLE ONLY public.choice_sets ALTER COLUMN id SET DEFAULT nextval('public.choice_sets_id_seq'::regclass);
 
 
 --
 -- Name: choices id; Type: DEFAULT; Schema: public; Owner: -
 --
 
-ALTER TABLE ONLY choices ALTER COLUMN id SET DEFAULT nextval('choices_id_seq'::regclass);
+ALTER TABLE ONLY public.choices ALTER COLUMN id SET DEFAULT nextval('public.choices_id_seq'::regclass);
 
 
 --
 -- Name: configurations id; Type: DEFAULT; Schema: public; Owner: -
 --
 
-ALTER TABLE ONLY configurations ALTER COLUMN id SET DEFAULT nextval('configurations_id_seq'::regclass);
+ALTER TABLE ONLY public.configurations ALTER COLUMN id SET DEFAULT nextval('public.configurations_id_seq'::regclass);
 
 
 --
 -- Name: containers id; Type: DEFAULT; Schema: public; Owner: -
 --
 
-ALTER TABLE ONLY containers ALTER COLUMN id SET DEFAULT nextval('containers_id_seq'::regclass);
+ALTER TABLE ONLY public.containers ALTER COLUMN id SET DEFAULT nextval('public.containers_id_seq'::regclass);
 
 
 --
 -- Name: exports id; Type: DEFAULT; Schema: public; Owner: -
 --
 
-ALTER TABLE ONLY exports ALTER COLUMN id SET DEFAULT nextval('exports_id_seq'::regclass);
+ALTER TABLE ONLY public.exports ALTER COLUMN id SET DEFAULT nextval('public.exports_id_seq'::regclass);
 
 
 --
 -- Name: favorites id; Type: DEFAULT; Schema: public; Owner: -
 --
 
-ALTER TABLE ONLY favorites ALTER COLUMN id SET DEFAULT nextval('favorites_id_seq'::regclass);
+ALTER TABLE ONLY public.favorites ALTER COLUMN id SET DEFAULT nextval('public.favorites_id_seq'::regclass);
 
 
 --
 -- Name: fields id; Type: DEFAULT; Schema: public; Owner: -
 --
 
-ALTER TABLE ONLY fields ALTER COLUMN id SET DEFAULT nextval('fields_id_seq'::regclass);
+ALTER TABLE ONLY public.fields ALTER COLUMN id SET DEFAULT nextval('public.fields_id_seq'::regclass);
+
+
+--
+-- Name: groups id; Type: DEFAULT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.groups ALTER COLUMN id SET DEFAULT nextval('public.groups_id_seq'::regclass);
 
 
 --
 -- Name: item_types id; Type: DEFAULT; Schema: public; Owner: -
 --
 
-ALTER TABLE ONLY item_types ALTER COLUMN id SET DEFAULT nextval('item_types_id_seq'::regclass);
+ALTER TABLE ONLY public.item_types ALTER COLUMN id SET DEFAULT nextval('public.item_types_id_seq'::regclass);
 
 
 --
 -- Name: item_views id; Type: DEFAULT; Schema: public; Owner: -
 --
 
-ALTER TABLE ONLY item_views ALTER COLUMN id SET DEFAULT nextval('item_views_id_seq'::regclass);
+ALTER TABLE ONLY public.item_views ALTER COLUMN id SET DEFAULT nextval('public.item_views_id_seq'::regclass);
 
 
 --
 -- Name: items id; Type: DEFAULT; Schema: public; Owner: -
 --
 
-ALTER TABLE ONLY items ALTER COLUMN id SET DEFAULT nextval('items_id_seq'::regclass);
+ALTER TABLE ONLY public.items ALTER COLUMN id SET DEFAULT nextval('public.items_id_seq'::regclass);
+
+
+--
+-- Name: memberships id; Type: DEFAULT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.memberships ALTER COLUMN id SET DEFAULT nextval('public.memberships_id_seq'::regclass);
 
 
 --
 -- Name: menu_items id; Type: DEFAULT; Schema: public; Owner: -
 --
 
-ALTER TABLE ONLY menu_items ALTER COLUMN id SET DEFAULT nextval('menu_items_id_seq'::regclass);
+ALTER TABLE ONLY public.menu_items ALTER COLUMN id SET DEFAULT nextval('public.menu_items_id_seq'::regclass);
 
 
 --
 -- Name: pages id; Type: DEFAULT; Schema: public; Owner: -
 --
 
-ALTER TABLE ONLY pages ALTER COLUMN id SET DEFAULT nextval('pages_id_seq'::regclass);
+ALTER TABLE ONLY public.pages ALTER COLUMN id SET DEFAULT nextval('public.pages_id_seq'::regclass);
 
 
 --
 -- Name: template_storages id; Type: DEFAULT; Schema: public; Owner: -
 --
 
-ALTER TABLE ONLY template_storages ALTER COLUMN id SET DEFAULT nextval('template_storages_id_seq'::regclass);
+ALTER TABLE ONLY public.template_storages ALTER COLUMN id SET DEFAULT nextval('public.template_storages_id_seq'::regclass);
 
 
 --
 -- Name: users id; Type: DEFAULT; Schema: public; Owner: -
 --
 
-ALTER TABLE ONLY users ALTER COLUMN id SET DEFAULT nextval('users_id_seq'::regclass);
+ALTER TABLE ONLY public.users ALTER COLUMN id SET DEFAULT nextval('public.users_id_seq'::regclass);
 
 
 --
 -- Name: advanced_searches advanced_searches_pkey; Type: CONSTRAINT; Schema: public; Owner: -
 --
 
-ALTER TABLE ONLY advanced_searches
+ALTER TABLE ONLY public.advanced_searches
     ADD CONSTRAINT advanced_searches_pkey PRIMARY KEY (id);
 
 
@@ -895,7 +981,7 @@ ALTER TABLE ONLY advanced_searches
 -- Name: ar_internal_metadata ar_internal_metadata_pkey; Type: CONSTRAINT; Schema: public; Owner: -
 --
 
-ALTER TABLE ONLY ar_internal_metadata
+ALTER TABLE ONLY public.ar_internal_metadata
     ADD CONSTRAINT ar_internal_metadata_pkey PRIMARY KEY (key);
 
 
@@ -903,7 +989,7 @@ ALTER TABLE ONLY ar_internal_metadata
 -- Name: catalog_permissions catalog_permissions_pkey; Type: CONSTRAINT; Schema: public; Owner: -
 --
 
-ALTER TABLE ONLY catalog_permissions
+ALTER TABLE ONLY public.catalog_permissions
     ADD CONSTRAINT catalog_permissions_pkey PRIMARY KEY (id);
 
 
@@ -911,7 +997,7 @@ ALTER TABLE ONLY catalog_permissions
 -- Name: catalogs catalogs_pkey; Type: CONSTRAINT; Schema: public; Owner: -
 --
 
-ALTER TABLE ONLY catalogs
+ALTER TABLE ONLY public.catalogs
     ADD CONSTRAINT catalogs_pkey PRIMARY KEY (id);
 
 
@@ -919,7 +1005,7 @@ ALTER TABLE ONLY catalogs
 -- Name: categories categories_pkey; Type: CONSTRAINT; Schema: public; Owner: -
 --
 
-ALTER TABLE ONLY categories
+ALTER TABLE ONLY public.categories
     ADD CONSTRAINT categories_pkey PRIMARY KEY (id);
 
 
@@ -927,7 +1013,7 @@ ALTER TABLE ONLY categories
 -- Name: choice_sets choice_sets_pkey; Type: CONSTRAINT; Schema: public; Owner: -
 --
 
-ALTER TABLE ONLY choice_sets
+ALTER TABLE ONLY public.choice_sets
     ADD CONSTRAINT choice_sets_pkey PRIMARY KEY (id);
 
 
@@ -935,7 +1021,7 @@ ALTER TABLE ONLY choice_sets
 -- Name: choices choices_pkey; Type: CONSTRAINT; Schema: public; Owner: -
 --
 
-ALTER TABLE ONLY choices
+ALTER TABLE ONLY public.choices
     ADD CONSTRAINT choices_pkey PRIMARY KEY (id);
 
 
@@ -943,7 +1029,7 @@ ALTER TABLE ONLY choices
 -- Name: configurations configurations_pkey; Type: CONSTRAINT; Schema: public; Owner: -
 --
 
-ALTER TABLE ONLY configurations
+ALTER TABLE ONLY public.configurations
     ADD CONSTRAINT configurations_pkey PRIMARY KEY (id);
 
 
@@ -951,7 +1037,7 @@ ALTER TABLE ONLY configurations
 -- Name: containers containers_pkey; Type: CONSTRAINT; Schema: public; Owner: -
 --
 
-ALTER TABLE ONLY containers
+ALTER TABLE ONLY public.containers
     ADD CONSTRAINT containers_pkey PRIMARY KEY (id);
 
 
@@ -959,7 +1045,7 @@ ALTER TABLE ONLY containers
 -- Name: exports exports_pkey; Type: CONSTRAINT; Schema: public; Owner: -
 --
 
-ALTER TABLE ONLY exports
+ALTER TABLE ONLY public.exports
     ADD CONSTRAINT exports_pkey PRIMARY KEY (id);
 
 
@@ -967,7 +1053,7 @@ ALTER TABLE ONLY exports
 -- Name: favorites favorites_pkey; Type: CONSTRAINT; Schema: public; Owner: -
 --
 
-ALTER TABLE ONLY favorites
+ALTER TABLE ONLY public.favorites
     ADD CONSTRAINT favorites_pkey PRIMARY KEY (id);
 
 
@@ -975,15 +1061,23 @@ ALTER TABLE ONLY favorites
 -- Name: fields fields_pkey; Type: CONSTRAINT; Schema: public; Owner: -
 --
 
-ALTER TABLE ONLY fields
+ALTER TABLE ONLY public.fields
     ADD CONSTRAINT fields_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: groups groups_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.groups
+    ADD CONSTRAINT groups_pkey PRIMARY KEY (id);
 
 
 --
 -- Name: item_types item_types_pkey; Type: CONSTRAINT; Schema: public; Owner: -
 --
 
-ALTER TABLE ONLY item_types
+ALTER TABLE ONLY public.item_types
     ADD CONSTRAINT item_types_pkey PRIMARY KEY (id);
 
 
@@ -991,7 +1085,7 @@ ALTER TABLE ONLY item_types
 -- Name: item_views item_views_pkey; Type: CONSTRAINT; Schema: public; Owner: -
 --
 
-ALTER TABLE ONLY item_views
+ALTER TABLE ONLY public.item_views
     ADD CONSTRAINT item_views_pkey PRIMARY KEY (id);
 
 
@@ -999,15 +1093,23 @@ ALTER TABLE ONLY item_views
 -- Name: items items_pkey; Type: CONSTRAINT; Schema: public; Owner: -
 --
 
-ALTER TABLE ONLY items
+ALTER TABLE ONLY public.items
     ADD CONSTRAINT items_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: memberships memberships_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.memberships
+    ADD CONSTRAINT memberships_pkey PRIMARY KEY (id);
 
 
 --
 -- Name: menu_items menu_items_pkey; Type: CONSTRAINT; Schema: public; Owner: -
 --
 
-ALTER TABLE ONLY menu_items
+ALTER TABLE ONLY public.menu_items
     ADD CONSTRAINT menu_items_pkey PRIMARY KEY (id);
 
 
@@ -1015,7 +1117,7 @@ ALTER TABLE ONLY menu_items
 -- Name: pages pages_pkey; Type: CONSTRAINT; Schema: public; Owner: -
 --
 
-ALTER TABLE ONLY pages
+ALTER TABLE ONLY public.pages
     ADD CONSTRAINT pages_pkey PRIMARY KEY (id);
 
 
@@ -1023,7 +1125,7 @@ ALTER TABLE ONLY pages
 -- Name: schema_migrations schema_migrations_pkey; Type: CONSTRAINT; Schema: public; Owner: -
 --
 
-ALTER TABLE ONLY schema_migrations
+ALTER TABLE ONLY public.schema_migrations
     ADD CONSTRAINT schema_migrations_pkey PRIMARY KEY (version);
 
 
@@ -1031,7 +1133,7 @@ ALTER TABLE ONLY schema_migrations
 -- Name: template_storages template_storages_pkey; Type: CONSTRAINT; Schema: public; Owner: -
 --
 
-ALTER TABLE ONLY template_storages
+ALTER TABLE ONLY public.template_storages
     ADD CONSTRAINT template_storages_pkey PRIMARY KEY (id);
 
 
@@ -1039,7 +1141,7 @@ ALTER TABLE ONLY template_storages
 -- Name: users users_pkey; Type: CONSTRAINT; Schema: public; Owner: -
 --
 
-ALTER TABLE ONLY users
+ALTER TABLE ONLY public.users
     ADD CONSTRAINT users_pkey PRIMARY KEY (id);
 
 
@@ -1212,6 +1314,13 @@ CREATE INDEX index_fields_on_related_item_type_id ON public.fields USING btree (
 
 
 --
+-- Name: index_groups_on_owner_id; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX index_groups_on_owner_id ON public.groups USING btree (owner_id);
+
+
+--
 -- Name: index_item_types_on_catalog_id; Type: INDEX; Schema: public; Owner: -
 --
 
@@ -1265,6 +1374,20 @@ CREATE INDEX index_items_on_reviewer_id ON public.items USING btree (reviewer_id
 --
 
 CREATE UNIQUE INDEX index_items_on_uuid_and_catalog_id ON public.items USING btree (uuid, catalog_id);
+
+
+--
+-- Name: index_memberships_on_group_id; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX index_memberships_on_group_id ON public.memberships USING btree (group_id);
+
+
+--
+-- Name: index_memberships_on_user_id; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX index_memberships_on_user_id ON public.memberships USING btree (user_id);
 
 
 --
@@ -1334,248 +1457,272 @@ CREATE UNIQUE INDEX index_users_on_reset_password_token ON public.users USING bt
 -- Name: catalog_permissions fk_rails_025bd80d15; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
-ALTER TABLE ONLY catalog_permissions
-    ADD CONSTRAINT fk_rails_025bd80d15 FOREIGN KEY (user_id) REFERENCES users(id);
+ALTER TABLE ONLY public.catalog_permissions
+    ADD CONSTRAINT fk_rails_025bd80d15 FOREIGN KEY (user_id) REFERENCES public.users(id);
 
 
 --
 -- Name: pages fk_rails_06ecc03a0b; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
-ALTER TABLE ONLY pages
-    ADD CONSTRAINT fk_rails_06ecc03a0b FOREIGN KEY (reviewer_id) REFERENCES users(id);
+ALTER TABLE ONLY public.pages
+    ADD CONSTRAINT fk_rails_06ecc03a0b FOREIGN KEY (reviewer_id) REFERENCES public.users(id);
 
 
 --
 -- Name: menu_items fk_rails_0bf5ba9c7e; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
-ALTER TABLE ONLY menu_items
-    ADD CONSTRAINT fk_rails_0bf5ba9c7e FOREIGN KEY (catalog_id) REFERENCES catalogs(id);
+ALTER TABLE ONLY public.menu_items
+    ADD CONSTRAINT fk_rails_0bf5ba9c7e FOREIGN KEY (catalog_id) REFERENCES public.catalogs(id);
 
 
 --
 -- Name: advanced_searches fk_rails_117ec28f50; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
-ALTER TABLE ONLY advanced_searches
-    ADD CONSTRAINT fk_rails_117ec28f50 FOREIGN KEY (catalog_id) REFERENCES catalogs(id);
+ALTER TABLE ONLY public.advanced_searches
+    ADD CONSTRAINT fk_rails_117ec28f50 FOREIGN KEY (catalog_id) REFERENCES public.catalogs(id);
 
 
 --
 -- Name: configurations fk_rails_19ef1c4b26; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
-ALTER TABLE ONLY configurations
-    ADD CONSTRAINT fk_rails_19ef1c4b26 FOREIGN KEY (default_catalog_id) REFERENCES catalogs(id);
+ALTER TABLE ONLY public.configurations
+    ADD CONSTRAINT fk_rails_19ef1c4b26 FOREIGN KEY (default_catalog_id) REFERENCES public.catalogs(id);
 
 
 --
 -- Name: exports fk_rails_26b155474a; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
-ALTER TABLE ONLY exports
-    ADD CONSTRAINT fk_rails_26b155474a FOREIGN KEY (user_id) REFERENCES users(id);
+ALTER TABLE ONLY public.exports
+    ADD CONSTRAINT fk_rails_26b155474a FOREIGN KEY (user_id) REFERENCES public.users(id);
 
 
 --
 -- Name: pages fk_rails_2ab8ce6cc4; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
-ALTER TABLE ONLY pages
-    ADD CONSTRAINT fk_rails_2ab8ce6cc4 FOREIGN KEY (catalog_id) REFERENCES catalogs(id);
+ALTER TABLE ONLY public.pages
+    ADD CONSTRAINT fk_rails_2ab8ce6cc4 FOREIGN KEY (catalog_id) REFERENCES public.catalogs(id);
 
 
 --
 -- Name: choices fk_rails_2cdcd0ff03; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
-ALTER TABLE ONLY choices
-    ADD CONSTRAINT fk_rails_2cdcd0ff03 FOREIGN KEY (category_id) REFERENCES categories(id);
+ALTER TABLE ONLY public.choices
+    ADD CONSTRAINT fk_rails_2cdcd0ff03 FOREIGN KEY (category_id) REFERENCES public.categories(id);
 
 
 --
 -- Name: favorites fk_rails_30ac764a96; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
-ALTER TABLE ONLY favorites
-    ADD CONSTRAINT fk_rails_30ac764a96 FOREIGN KEY (item_id) REFERENCES items(id);
+ALTER TABLE ONLY public.favorites
+    ADD CONSTRAINT fk_rails_30ac764a96 FOREIGN KEY (item_id) REFERENCES public.items(id);
 
 
 --
 -- Name: catalog_permissions fk_rails_30b4814118; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
-ALTER TABLE ONLY catalog_permissions
-    ADD CONSTRAINT fk_rails_30b4814118 FOREIGN KEY (catalog_id) REFERENCES catalogs(id);
+ALTER TABLE ONLY public.catalog_permissions
+    ADD CONSTRAINT fk_rails_30b4814118 FOREIGN KEY (catalog_id) REFERENCES public.catalogs(id);
 
 
 --
 -- Name: item_types fk_rails_32125ce034; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
-ALTER TABLE ONLY item_types
-    ADD CONSTRAINT fk_rails_32125ce034 FOREIGN KEY (catalog_id) REFERENCES catalogs(id);
+ALTER TABLE ONLY public.item_types
+    ADD CONSTRAINT fk_rails_32125ce034 FOREIGN KEY (catalog_id) REFERENCES public.catalogs(id);
 
 
 --
 -- Name: choices fk_rails_36cea7cc6d; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
-ALTER TABLE ONLY choices
-    ADD CONSTRAINT fk_rails_36cea7cc6d FOREIGN KEY (catalog_id) REFERENCES catalogs(id);
+ALTER TABLE ONLY public.choices
+    ADD CONSTRAINT fk_rails_36cea7cc6d FOREIGN KEY (catalog_id) REFERENCES public.catalogs(id);
+
+
+--
+-- Name: groups fk_rails_5447bdb9c5; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.groups
+    ADD CONSTRAINT fk_rails_5447bdb9c5 FOREIGN KEY (owner_id) REFERENCES public.users(id);
 
 
 --
 -- Name: menu_items fk_rails_55a0ee63e5; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
-ALTER TABLE ONLY menu_items
-    ADD CONSTRAINT fk_rails_55a0ee63e5 FOREIGN KEY (parent_id) REFERENCES menu_items(id);
+ALTER TABLE ONLY public.menu_items
+    ADD CONSTRAINT fk_rails_55a0ee63e5 FOREIGN KEY (parent_id) REFERENCES public.menu_items(id);
 
 
 --
 -- Name: advanced_searches fk_rails_58a0bde7fb; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
-ALTER TABLE ONLY advanced_searches
-    ADD CONSTRAINT fk_rails_58a0bde7fb FOREIGN KEY (item_type_id) REFERENCES item_types(id);
+ALTER TABLE ONLY public.advanced_searches
+    ADD CONSTRAINT fk_rails_58a0bde7fb FOREIGN KEY (item_type_id) REFERENCES public.item_types(id);
 
 
 --
 -- Name: fields fk_rails_630f019a5a; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
-ALTER TABLE ONLY fields
-    ADD CONSTRAINT fk_rails_630f019a5a FOREIGN KEY (related_item_type_id) REFERENCES item_types(id);
+ALTER TABLE ONLY public.fields
+    ADD CONSTRAINT fk_rails_630f019a5a FOREIGN KEY (related_item_type_id) REFERENCES public.item_types(id);
 
 
 --
 -- Name: items fk_rails_6bed0f90a5; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
-ALTER TABLE ONLY items
-    ADD CONSTRAINT fk_rails_6bed0f90a5 FOREIGN KEY (item_type_id) REFERENCES item_types(id);
+ALTER TABLE ONLY public.items
+    ADD CONSTRAINT fk_rails_6bed0f90a5 FOREIGN KEY (item_type_id) REFERENCES public.item_types(id);
 
 
 --
 -- Name: fields fk_rails_6f848ad005; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
-ALTER TABLE ONLY fields
-    ADD CONSTRAINT fk_rails_6f848ad005 FOREIGN KEY (category_item_type_id) REFERENCES item_types(id);
+ALTER TABLE ONLY public.fields
+    ADD CONSTRAINT fk_rails_6f848ad005 FOREIGN KEY (category_item_type_id) REFERENCES public.item_types(id);
 
 
 --
 -- Name: menu_items fk_rails_7075222f77; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
-ALTER TABLE ONLY menu_items
-    ADD CONSTRAINT fk_rails_7075222f77 FOREIGN KEY (page_id) REFERENCES pages(id);
+ALTER TABLE ONLY public.menu_items
+    ADD CONSTRAINT fk_rails_7075222f77 FOREIGN KEY (page_id) REFERENCES public.pages(id);
 
 
 --
 -- Name: catalogs fk_rails_72a75a77ca; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
-ALTER TABLE ONLY catalogs
-    ADD CONSTRAINT fk_rails_72a75a77ca FOREIGN KEY (custom_root_page_id) REFERENCES pages(id);
+ALTER TABLE ONLY public.catalogs
+    ADD CONSTRAINT fk_rails_72a75a77ca FOREIGN KEY (custom_root_page_id) REFERENCES public.pages(id);
 
 
 --
 -- Name: pages fk_rails_73cabaed53; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
-ALTER TABLE ONLY pages
-    ADD CONSTRAINT fk_rails_73cabaed53 FOREIGN KEY (creator_id) REFERENCES users(id);
+ALTER TABLE ONLY public.pages
+    ADD CONSTRAINT fk_rails_73cabaed53 FOREIGN KEY (creator_id) REFERENCES public.users(id);
 
 
 --
 -- Name: exports fk_rails_7563b31b52; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
-ALTER TABLE ONLY exports
-    ADD CONSTRAINT fk_rails_7563b31b52 FOREIGN KEY (catalog_id) REFERENCES catalogs(id);
+ALTER TABLE ONLY public.exports
+    ADD CONSTRAINT fk_rails_7563b31b52 FOREIGN KEY (catalog_id) REFERENCES public.catalogs(id);
 
 
 --
 -- Name: containers fk_rails_8a017573a6; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
-ALTER TABLE ONLY containers
-    ADD CONSTRAINT fk_rails_8a017573a6 FOREIGN KEY (page_id) REFERENCES pages(id);
+ALTER TABLE ONLY public.containers
+    ADD CONSTRAINT fk_rails_8a017573a6 FOREIGN KEY (page_id) REFERENCES public.pages(id);
 
 
 --
 -- Name: item_views fk_rails_9310522ec6; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
-ALTER TABLE ONLY item_views
-    ADD CONSTRAINT fk_rails_9310522ec6 FOREIGN KEY (item_type_id) REFERENCES item_types(id);
+ALTER TABLE ONLY public.item_views
+    ADD CONSTRAINT fk_rails_9310522ec6 FOREIGN KEY (item_type_id) REFERENCES public.item_types(id);
+
+
+--
+-- Name: memberships fk_rails_99326fb65d; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.memberships
+    ADD CONSTRAINT fk_rails_99326fb65d FOREIGN KEY (user_id) REFERENCES public.users(id);
+
+
+--
+-- Name: memberships fk_rails_aaf389f138; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.memberships
+    ADD CONSTRAINT fk_rails_aaf389f138 FOREIGN KEY (group_id) REFERENCES public.groups(id);
 
 
 --
 -- Name: items fk_rails_ac675f13b9; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
-ALTER TABLE ONLY items
-    ADD CONSTRAINT fk_rails_ac675f13b9 FOREIGN KEY (catalog_id) REFERENCES catalogs(id);
+ALTER TABLE ONLY public.items
+    ADD CONSTRAINT fk_rails_ac675f13b9 FOREIGN KEY (catalog_id) REFERENCES public.catalogs(id);
 
 
 --
 -- Name: users fk_rails_ae14a5013f; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
-ALTER TABLE ONLY users
-    ADD CONSTRAINT fk_rails_ae14a5013f FOREIGN KEY (invited_by_id) REFERENCES users(id);
+ALTER TABLE ONLY public.users
+    ADD CONSTRAINT fk_rails_ae14a5013f FOREIGN KEY (invited_by_id) REFERENCES public.users(id);
 
 
 --
 -- Name: choices fk_rails_baa6b9a371; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
-ALTER TABLE ONLY choices
-    ADD CONSTRAINT fk_rails_baa6b9a371 FOREIGN KEY (choice_set_id) REFERENCES choice_sets(id);
+ALTER TABLE ONLY public.choices
+    ADD CONSTRAINT fk_rails_baa6b9a371 FOREIGN KEY (choice_set_id) REFERENCES public.choice_sets(id);
 
 
 --
 -- Name: menu_items fk_rails_d05e957707; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
-ALTER TABLE ONLY menu_items
-    ADD CONSTRAINT fk_rails_d05e957707 FOREIGN KEY (item_type_id) REFERENCES item_types(id);
+ALTER TABLE ONLY public.menu_items
+    ADD CONSTRAINT fk_rails_d05e957707 FOREIGN KEY (item_type_id) REFERENCES public.item_types(id);
 
 
 --
 -- Name: favorites fk_rails_d15744e438; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
-ALTER TABLE ONLY favorites
-    ADD CONSTRAINT fk_rails_d15744e438 FOREIGN KEY (user_id) REFERENCES users(id);
+ALTER TABLE ONLY public.favorites
+    ADD CONSTRAINT fk_rails_d15744e438 FOREIGN KEY (user_id) REFERENCES public.users(id);
 
 
 --
 -- Name: categories fk_rails_e090108a07; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
-ALTER TABLE ONLY categories
-    ADD CONSTRAINT fk_rails_e090108a07 FOREIGN KEY (catalog_id) REFERENCES catalogs(id);
+ALTER TABLE ONLY public.categories
+    ADD CONSTRAINT fk_rails_e090108a07 FOREIGN KEY (catalog_id) REFERENCES public.catalogs(id);
 
 
 --
 -- Name: fields fk_rails_fd9a6168ac; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
-ALTER TABLE ONLY fields
-    ADD CONSTRAINT fk_rails_fd9a6168ac FOREIGN KEY (choice_set_id) REFERENCES choice_sets(id);
+ALTER TABLE ONLY public.fields
+    ADD CONSTRAINT fk_rails_fd9a6168ac FOREIGN KEY (choice_set_id) REFERENCES public.choice_sets(id);
 
 
 --
 -- Name: choice_sets fk_rails_ff3358b0ed; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
-ALTER TABLE ONLY choice_sets
-    ADD CONSTRAINT fk_rails_ff3358b0ed FOREIGN KEY (catalog_id) REFERENCES catalogs(id);
+ALTER TABLE ONLY public.choice_sets
+    ADD CONSTRAINT fk_rails_ff3358b0ed FOREIGN KEY (catalog_id) REFERENCES public.catalogs(id);
 
 
 --
@@ -1655,6 +1802,10 @@ INSERT INTO "schema_migrations" (version) VALUES
 ('20180615090214'),
 ('20180702145421'),
 ('20180822150656'),
-('20180918114846');
-
-
+('20180907111339'),
+('20180918114846'),
+('20180919104449'),
+('20180920073829'),
+('20180922224350'),
+('20180923135339'),
+('20180923135401');
