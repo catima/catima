@@ -266,3 +266,5 @@ it:
       map_inputs:
         height_label: "Altezza della mappa (in pixel)"
         height_default: "Il valore predefinito è %{height}"
+      item_list_inputs:
+        display_style: "Display style of items (automatically adapts to content if nothing is selected)"

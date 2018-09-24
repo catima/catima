@@ -368,6 +368,8 @@ en:
       map_inputs:
         height_label: "Map height (in pixel)"
         height_default: "Default value is %{height}"
+      item_list_inputs:
+        display_style: "Display style of items (automatically adapts to content if nothing is selected)"
 
     csv_imports:
       new:

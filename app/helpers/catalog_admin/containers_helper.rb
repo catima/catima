@@ -23,6 +23,16 @@ module CatalogAdmin::ContainersHelper
     )
   end
 
+  def style_select(form, options={})
+    form.collection_select(
+      :style,
+      ItemList::STYLES,
+      :first,
+      :first,
+      options.reverse_merge(:include_blank => true)
+    )
+  end
+
   private
 
   def container_move_link(container, direction)
