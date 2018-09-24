@@ -32,8 +32,8 @@ module ItemListsHelper
   end
 
   def style_param?(params)
-    return false unless params.present?
-    return false unless params[:style].present?
+    return false if params.blank?
+    return false if params[:style].blank?
     return false unless ItemList::STYLES.include?(params[:style])
     true
   end
