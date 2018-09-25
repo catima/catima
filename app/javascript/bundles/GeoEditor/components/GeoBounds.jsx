@@ -34,7 +34,7 @@ class GeoBounds extends React.Component {
 
   createMap(){
     this.map = L.map(this.mapId, {editable: true}).fitBounds(this.bounds, {padding: [10,10]});
-    L.tileLayer('http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
       attribution: '',
       maxZoom: 19
     }).addTo(this.map);
