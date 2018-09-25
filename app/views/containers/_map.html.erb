@@ -18,6 +18,13 @@
       maxZoom: 18
     }).addTo(map);
 
+    var plainBlueMarker = L.icon({
+      iconUrl: '/icons/plain-blue-marker.png',
+      iconSize: [25, 41],
+      iconAnchor:   [12, 40],
+      popupAnchor:  [0, -40]
+    });
+
     var items_layer = L.geoJSON(fc, {
       onEachFeature: function(feature, layer) {
         layer.on('click', function(e){
@@ -27,7 +34,10 @@
             loadPopupContent(marker);
           }
         });
-       }
+      },
+      pointToLayer: function(feature, latlng){
+        return L.marker(latlng, { icon: plainBlueMarker })
+      }
     });
 
     var fc_group = L.markerClusterGroup();
@@ -35,7 +45,7 @@
     map.addLayer(fc_group);
 
     // Zoom to extent of item geometries
-    map.fitBounds(fc_group.getBounds());
+    map.fitBounds(fc_group.getBounds(), { padding: [10, 10]});
   }
 
   // Loads the content for the marker popup
