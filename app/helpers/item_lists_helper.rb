@@ -8,9 +8,10 @@ module ItemListsHelper
     first.try(:image?)
   end
 
-  def render_item_list(list)
-    partial = item_list_has_images?(list) ? "items/thumbnails" : "items/list"
-    partial = "items/list" if favorites_scoped?
+  def render_item_list(list, params=nil)
+    partial = item_list_has_images?(list) ? ItemList::STYLES["thumb"] : ItemList::STYLES["list"]
+    partial = ItemList::STYLES["list"] if favorites_scoped?
+    partial = ItemList::STYLES[params[:style]] if style_param?(params)
     render(partial, :item_list => list)
   end
 
@@ -28,5 +29,12 @@ module ItemListsHelper
   def item_list_presenter(list, item, offset)
     klass = "#{list.class.name}Presenter".constantize
     klass.new(self, item, offset, list)
+  end
+
+  def style_param?(params)
+    return false if params.blank?
+    return false if params[:style].blank?
+    return false unless ItemList::STYLES.include?(params[:style])
+    true
   end
 end

@@ -27,5 +27,5 @@
   </ul>
 <% end %>
 
-<%= render_item_list(@search) %>
+<%= render_item_list(@search, params) %>
 <%= paginate(@search.items) %>
