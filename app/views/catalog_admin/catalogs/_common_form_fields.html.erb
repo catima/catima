@@ -20,64 +20,36 @@
 <hr>
 
 <h4><%= t('.display_options') %></h4>
-<%= f.form_group(
-    :visible,
-    :help => t('.visible_help')
-    ) do %>
-  <%= f.check_box(:visible) %>
+
+<%= f.hidden_field(:visible) %>
+<%= f.hidden_field(:restricted) %>
+
+<%= f.form_group(:catalog_access) do %>
+      <label for="catalog_access"><%= t('.catalog_access') %></label>
+      <%= select_tag(
+        :catalog_access,
+        options_for_select([
+          [t('.open_for_everyone'), 1],
+          [t('.open_to_members'), 2],
+          [t('.open_to_catalog_staff'), 3]
+        ], catalog_access(@catalog)),
+        class: 'form-control',
+        label: 'houps'
+      ) %>
 <% end %>
 
-<%= f.form_group(
-    :restricted,
-    :help => t('.restricted_help')
-    ) do %>
-  <%= f.check_box(:restricted) %>
-<% end %>
+<script type="text/javascript">
+  function setCatalogAccess(visible, restricted){
+    document.getElementById('catalog_visible').value = (visible == true);
+    document.getElementById('catalog_restricted').value = (restricted == true);
+  }
+
+  var cat_access = document.getElementById('catalog_access');
+  cat_access.onchange = function(){
+    if (cat_access.value == '1') setCatalogAccess(true, false);
+    if (cat_access.value == '2') setCatalogAccess(true, true);
+    if (cat_access.value == '3') setCatalogAccess(false, true);
+  }
+</script>
 
 <hr>
-
-<%# TODO: remove if global bounds are not necessary %>
-<!--
-<div class="form-group">
-  <label class="control-label" for="catalog_bounds"><%= t("catalog_admin.catalog.bounds") %></label>
-  <textarea class="hidden form-control" name="catalog[bounds]" id="catalog_bounds"><%= @catalog.bounds.nil? ? '' : @catalog.bounds.to_json.html_safe %></textarea>
-  <div id="catalog-bounds-map" style="height: 300px;"></div>
-</div>
-
-
-
-<script src="https://unpkg.com/leaflet-path-drag@1.1.0/dist/L.Path.Drag.js"></script>
-<script src="https://unpkg.com/leaflet-editable@1.1.0/src/Leaflet.Editable.js"></script>
-<script type="text/javascript">
-  var bounds = [[-60, -145], [70, 185]];
-  var catalog_bounds = {};
-  var catalog_bounds_str = document.getElementById('catalog_bounds').value;
-  if (catalog_bounds_str != null && catalog_bounds_str.length > 0){
-    catalog_bounds = JSON.parse(catalog_bounds_str);
-  }
-  if (catalog_bounds.xmin) bounds[0][1] = catalog_bounds.xmin;
-  if (catalog_bounds.ymin) bounds[0][0] = catalog_bounds.ymin;
-  if (catalog_bounds.xmax) bounds[1][1] = catalog_bounds.xmax;
-  if (catalog_bounds.ymax) bounds[1][0] = catalog_bounds.ymax;
-
-  var map = L.map('catalog-bounds-map', {editable: true}).fitBounds(bounds, {padding: [10,10]});
-  L.tileLayer('http://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-    attribution: '',
-    maxZoom: 18
-  }).addTo(map);
-
-  console.log('*** bounds', bounds)
-  var boundsRect = L.rectangle(bounds).addTo(map);
-  boundsRect.enableEdit();
-
-  map.on('editable:editing', function(e){
-    var bnds = boundsRect.getBounds();
-    var boundsValue = {
-      xmin: bnds.getWest(), xmax: bnds.getEast(),
-      ymin: bnds.getSouth(), ymax: bnds.getNorth()
-    };
-    document.getElementById('catalog_bounds').value = JSON.stringify(boundsValue);
-  });
-
-</script>
--->

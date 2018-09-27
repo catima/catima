@@ -1,14 +1,14 @@
 <% provide(:title, t('.edit_group')) %>
 
 <div class='panel-body'>
-  <%= bootstrap_form_for(@group) do |f| %>
+  <%= bootstrap_form_for(@group, url: catalog_admin_group_path) do |f| %>
 
     <%= render('common_form_fields', :f => f) %>
 
     <%= f.primary(t('.update_group')) %>
     <%= link_to(
           t('cancel'),
-          groups_path,
+          catalog_admin_users_path,
           class: 'btn btn-link') %>
 
   <% end %>

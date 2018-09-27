@@ -56,10 +56,8 @@ Rails.application.routes.draw do
     # Favorites
     resources :favorites, :except => [:edit, :show, :new, :update]
 
-    # User groups
-    resources :groups do
-      resources :memberships
-    end
+    # Group memberships
+    resources :memberships, only: %i(index destroy), path: '_groups'
   end
 
   devise_for :users, only: :omniauth_callbacks, controllers: { omniauth_callbacks: 'users/omniauth_callbacks' }
@@ -90,6 +88,10 @@ Rails.application.routes.draw do
 
     get "/_style" => "catalogs#edit_style", :as => :style
     patch "/_style" => "catalogs#update_style"
+
+    resources :groups, path: '_groups' do
+      resources :memberships
+    end
 
     resources :categories, :path => "_categories", :except => [:show] do
       resources :fields, :param => :slug, :except => :show

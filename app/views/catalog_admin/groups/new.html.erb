@@ -1,7 +1,9 @@
 <% provide(:title, t('.new_group')) %>
 
+<h1><%= t('.new_group_for_catalog', catalog: catalog.name) %></h1>
+
 <div class='panel-body'>
-  <%= bootstrap_form_for(@group) do |f| %>
+  <%= bootstrap_form_for([:catalog_admin, @group]) do |f| %>
 
     <%= render('common_form_fields', :f => f) %>
 
@@ -9,7 +11,7 @@
     <%= submit_and_add_another(f) %>
     <%= link_to(
           t('cancel'),
-          groups_path,
+          catalog_admin_users_path,
           class: 'btn btn-link') %>
 
   <% end %>

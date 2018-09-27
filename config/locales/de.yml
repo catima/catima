@@ -288,6 +288,10 @@ de:
         visible_help: "If checked, this catalog will be available for everyone. Otherwise only catalog staff will be able to see the content."
         restricted_help: "Wenn diese Option aktiviert ist, ist dieser Katalog nur für Mitglieder und Mitarbeiter sichtbar."
         display_options: "Display options"
+        catalog_access: Catalog visibility
+        open_for_everyone: Open for everyone
+        open_to_members: Open to members
+        open_to_catalog_staff: Open to catalog staff
       edit_style:
         custom_style_catalog: "Customize catalog style"
         general: "General"
@@ -502,7 +506,11 @@ de:
         super_editor_role: "<b>Super-editors</b> are editors that can create and edit all the items in the catalog.<br>"
         reviewer_role: "<b>Reviewers</b> are super-editors that can approve items to make them visible to the public.<br>"
       index:
-        manage_my_groups: Meine Gruppen verwalten
+        groups: Gruppen
+        new_group: Neue Gruppe
+        no_groups_for_catalog_warning: Es gibt keine Gruppen für diesen Katalog.
+      catalog_users:
+        group_role: Gruppe
 
     pages:
       new:
@@ -539,49 +547,52 @@ de:
         item_types: 'Item types'
         new_item_type: 'New item type'
 
+    groups:
+      index:
+        title: Groups
+      new:
+        new_group: New group
+        new_group_for_catalog: New group for catalog «%{catalog}»
+        create_group: Create group
+      common_form_fields:
+        active: Active?
+        public_group: Group is public?
+      edit:
+        edit_group: Edit group
+        update_group: Update group
+      show:
+        show_group: Group “%{group}”
+        back: Back to groups
+      list_members:
+        group_members: Group members
+        no_users: Currently no users are in this group (except the group owner)
+        invite_users: Invite users
+        invited: Invited
+        member: Member
+        admin: Admin
+
+    memberships:
+      new:
+        invite_members_to_group: Invite members to group “%{group}”
+        invite_members: Invite members
+
   groups:
-    index:
-      title: Groups
-    list_own_groups:
-      my_groups: My own groups
-      no_own_groups_warning: You currently don't own any group.
-      new_group: Create group
-      private: private
-      public: public
-      inactive: inactive
-      member_count_one: 1 member
-      member_count_many: "%{number} members"
     list_group_memberships:
-      member_in: Groups I am member in (without my own groups)
+      member_in: Groups I am member in
       no_group_memberships: You are currently not a member of a group.
       invited: Invited
       member: Member
       admin: Admin
       leave: Leave
-    list_public_groups:
-      public_groups: Public groups (without groups you are already member in)
-      no_public_groups: Currently there are no public groups you could join
-    new:
-      new_group: New group
-      create_group: Create group
-    common_form_fields:
-      active: Active?
-      public_group: Group is public?
-    edit:
-      edit_group: Edit group
-      update_group: Update group
-    show:
-      show_group: Group “%{group}”
-      back: Back to groups
-    list_members:
-      group_members: Group members
-      no_users: Currently no users are in this group (except the group owner)
-      invite_users: Invite users
-      invited: Invited
-      member: Member
-      admin: Admin
 
   memberships:
-    new:
-      invite_members_to_group: Invite members to group “%{group}”
-      invite_members: Invite members
+    index:
+      my_groups: My groups
+    list_memberships:
+      no_memberships_warning: You are not member in any group yet.
+      delete_confirm: "Are you sure you want to leave group “%{group}”?"
+      leave: Leave
+      group: Group
+      catalog: Catalog
+      role: Role
+

@@ -4,12 +4,14 @@ class GroupPolicy
     @group = group
   end
 
-  def own_group?
-    @user == @group.owner
+  def admin?
+    # All catalog admins of the catalog the group belongs to
+    # are considered as group admins.
+    @user.catalog_role_at_least?(@group.catalog, 'admin', false)
   end
 
-  alias_method :show?, :own_group?
-  alias_method :edit?, :own_group?
-  alias_method :update?, :own_group?
-  alias_method :destroy?, :own_group?
+  alias_method :show?, :admin?
+  alias_method :edit?, :admin?
+  alias_method :update?, :admin?
+  alias_method :destroy?, :admin?
 end

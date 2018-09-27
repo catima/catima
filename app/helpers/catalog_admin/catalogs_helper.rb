@@ -12,4 +12,10 @@ module CatalogAdmin::CatalogsHelper
     klass << " active" if active
     link_to(I18n.t('style'), catalog_admin_style_path, :class => klass)
   end
+
+  def catalog_access(catalog)
+    return 1 if catalog.visible && !catalog.restricted
+    return 2 if catalog.visible && catalog.restricted
+    3
+  end
 end

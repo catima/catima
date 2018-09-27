@@ -455,8 +455,8 @@ CREATE TABLE public.fields (
     field_set_type character varying,
     editor_component character varying,
     display_component character varying,
-    display_in_public_list boolean DEFAULT true NOT NULL,
-    restricted boolean DEFAULT false NOT NULL
+    restricted boolean DEFAULT false NOT NULL,
+    display_in_public_list boolean DEFAULT true NOT NULL
 );
 
 
@@ -491,7 +491,8 @@ CREATE TABLE public.groups (
     owner_id bigint NOT NULL,
     active boolean,
     created_at timestamp without time zone NOT NULL,
-    updated_at timestamp without time zone NOT NULL
+    updated_at timestamp without time zone NOT NULL,
+    catalog_id bigint
 );
 
 
@@ -1314,6 +1315,20 @@ CREATE INDEX index_fields_on_related_item_type_id ON public.fields USING btree (
 
 
 --
+-- Name: index_groups_on_catalog_id; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX index_groups_on_catalog_id ON public.groups USING btree (catalog_id);
+
+
+--
+-- Name: index_groups_on_name_and_catalog_id; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE UNIQUE INDEX index_groups_on_name_and_catalog_id ON public.groups USING btree (name, catalog_id);
+
+
+--
 -- Name: index_groups_on_owner_id; Type: INDEX; Schema: public; Owner: -
 --
 
@@ -1574,6 +1589,14 @@ ALTER TABLE ONLY public.advanced_searches
 
 
 --
+-- Name: groups fk_rails_59e1c2c1e9; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.groups
+    ADD CONSTRAINT fk_rails_59e1c2c1e9 FOREIGN KEY (catalog_id) REFERENCES public.catalogs(id);
+
+
+--
 -- Name: fields fk_rails_630f019a5a; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
@@ -1808,4 +1831,7 @@ INSERT INTO "schema_migrations" (version) VALUES
 ('20180920073829'),
 ('20180922224350'),
 ('20180923135339'),
-('20180923135401');
+('20180923135401'),
+('20180925152745');
+
+

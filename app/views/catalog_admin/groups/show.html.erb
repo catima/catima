@@ -1,0 +1,15 @@
+<% provide(:title, t('.show_group', group: @group.name)) %>
+
+<h1><%= t('.show_group', group: @group.name) %></h1>
+
+<div style="margin: 20px 0;"><%= link_to('< ' + t('.back'), catalog_admin_users_path) %></div>
+
+<% unless @group.description.empty? %>
+  <div class="panel-body">
+    <%= @group.description %>
+  </div>
+<% end %>
+
+<%= render "catalog_admin/groups/list_members" %>
+
+<div style="margin: 20px 0;"><%= link_to('< ' + t('.back'), catalog_admin_users_path) %></div>

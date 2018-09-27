@@ -3,7 +3,7 @@ module User::Roles
     # Contains all catalog permissions of the user and of all the
     # groups the user is member of.
     perms = catalog_permissions
-    all_groups.each { |grp| perms += grp.catalog_permissions }
+    groups.each { |grp| perms += grp.catalog_permissions }
     resolve_catalog_permissions perms
   end
 
@@ -20,12 +20,13 @@ module User::Roles
   def catalog_role_at_least?(catalog, role_requirement, all=true)
     # Authenticated users are always considered at least "user" level.
     return true if role_requirement == "user"
-
+    return true if system_admin
     perm = (all == true ? all_catalog_permissions : catalog_permissions).to_a.find { |p| p.catalog_id == catalog.id }
     perm&.role_at_least?(role_requirement)
   end
 
   def catalog_role(catalog)
+    return 'admin' if system_admin
     perm = all_catalog_permissions.to_a.find { |p| p.catalog_id == catalog.id }
     perm ? perm.role : "user"
   end

@@ -72,13 +72,6 @@ class User < ApplicationRecord
     (email =~ /\A[^@,\s]+@[^@,\s]+\.[^@,\s]+\z/) == 0
   end
 
-  def all_groups
-    # The groups association contains all groups this user is member,
-    # except for the groups the user is owning.
-    # This method returns all the groups, including the ones the user is owning.
-    groups + my_groups
-  end
-
   # Devise + ActiveJob integration
   def send_devise_notification(notification, *args)
     devise_mailer.send(notification, self, *args).deliver_later

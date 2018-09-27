@@ -4,7 +4,7 @@
       <div class="btn-group">
         <%= link_to(
               fa_icon(:'user-plus', text: t('.invite_users')),
-              new_group_membership_path(group_id: @group.id),
+              new_catalog_admin_group_membership_path(group_id: @group.id),
               class: 'btn btn-xs btn-default') %>
       </div>
     </span>
@@ -26,7 +26,7 @@
           <td style="text-align: right;">
             <%= link_to(
                   fa_icon(:trash),
-                  group_membership_path(@group, membership),
+                  catalog_admin_group_membership_path(group_id: @group.id, id: membership.id),
                   method: :delete,
                   data: { confirm: t('delete_confirm', model: 'membership of ' + membership.user.email) },
                   class: 'btn btn-xs btn-default'

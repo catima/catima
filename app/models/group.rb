@@ -3,6 +3,7 @@
 # Table name: groups
 #
 #  active      :boolean
+#  catalog_id  :bigint(8)
 #  created_at  :datetime         not null
 #  description :string
 #  id          :bigint(8)        not null, primary key
@@ -14,6 +15,7 @@
 
 class Group < ApplicationRecord
   belongs_to :owner, class_name: 'User'
+  belongs_to :catalog
 
   has_many :memberships, dependent: :destroy
   has_many :users, through: :memberships
@@ -22,6 +24,9 @@ class Group < ApplicationRecord
 
   validates_presence_of :name
   validates_presence_of :owner
+  validates_presence_of :catalog
+
+  validates_uniqueness_of :name, scope: :catalog
 
   accepts_nested_attributes_for :catalog_permissions
 

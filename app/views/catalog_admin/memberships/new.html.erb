@@ -2,7 +2,7 @@
 
 
 <div class='panel-body'>
-  <%= bootstrap_form_for([@group, @membership]) do |f| %>
+  <%= bootstrap_form_for(@membership, url:catalog_admin_group_memberships_path) do |f| %>
 
     <%= f.form_group do %>
       <label class="control-label required" for="members_to_invite">Emails of members to invite</label>
@@ -15,7 +15,7 @@
     <%= f.primary(t('.invite_members')) %>
     <%= link_to(
           t('cancel'),
-          group_path(id: @group.id),
+          catalog_admin_group_path(id: @group.id),
           class: 'btn btn-link') %>
   <% end %>
 </div>

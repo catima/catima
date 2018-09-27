@@ -14,15 +14,25 @@
     <tbody>
       <% current_user.memberships.each do |membership| %>
         <tr>
-          <td><%= membership.group.name %></td>
+          <td>
+            <%= membership.group.name %>
+            <% if membership.status == 'admin' %>
+              <span class="label label-primary">Admin</span>
+            <% end %>
+          </td>
           <td style="text-align: right;">
-            <%= link_to(
-                  fa_icon(:'sign-out') + t('.leave'),
-                  group_membership_path(membership.group, membership),
-                  method: :delete,
-                  data: { confirm: t('delete_confirm', model: 'membership of ' + membership.group.name) },
-                  class: 'btn btn-xs btn-default'
-                ) %>
+            <% unless membership.status == 'admin' %>
+              <%= link_to(
+                    fa_icon(:'sign-out') + t('.leave'),
+                    catalog_admin_group_membership_path(
+                      group_id: membership.group.id,
+                      id: membership.id
+                    ),
+                    method: :delete,
+                    data: { confirm: t('.delete_confirm', group: membership.group.name) },
+                    class: 'btn btn-xs btn-default'
+                  ) %>
+            <% end %>
           </td>
         </tr>
       <% end %>
