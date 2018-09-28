@@ -384,6 +384,8 @@ fr:
       map_inputs:
         height_label: "Hauteur de la carte (en pixel)"
         height_default: "La valeur par défaut est de %{height}"
+      item_list_inputs:
+        display_style: "Style d'affichage des fiches (s'adapte automatiquement au contenu si rien n'est sélectionné)"
 
     csv_imports:
       new:

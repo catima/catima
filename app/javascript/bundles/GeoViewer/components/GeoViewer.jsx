@@ -20,6 +20,15 @@ class GeoViewer extends React.Component {
       mapHeight: 300,
     };
     this._mapInitialized = false;
+
+    this.plainBlueMarker = L.icon({
+      iconUrl: '/icons/plain-blue-marker.png',
+      iconSize: [25, 41],
+      iconAnchor:   [12, 40],
+      popupAnchor:  [0, -40]
+    });
+
+    this.pointToLayer = this._pointToLayer.bind(this);
   }
 
   componentDidMount(){
@@ -41,7 +50,6 @@ class GeoViewer extends React.Component {
   mapBecomesVisible(){
     if (this._mapInitialized) return;
     const mapHideElement = this.isMapHidden();
-    window.mapEl = mapHideElement;
     if (mapHideElement == null){
       // Map is visible. Fix the map viewport.
       setTimeout(this.resetMapView.bind(this), 500);
@@ -115,6 +123,10 @@ class GeoViewer extends React.Component {
     return [xmin, xmax, ymin, ymax];
   }
 
+  _pointToLayer(feature, latlng){
+    return L.marker(latlng, { icon: this.plainBlueMarker });
+  }
+
   render(){
     const center = this.center();
     return (
@@ -130,7 +142,7 @@ class GeoViewer extends React.Component {
             attributionUrl='https://www.openstreetmap.org/copyright'
           />
           {this.features.map((feat, i) =>
-            <GeoJSON key={i} data={feat.geometry} />
+            <GeoJSON key={i} data={feat.geometry} pointToLayer={this.pointToLayer} />
           )}
         </Map>
       </div>

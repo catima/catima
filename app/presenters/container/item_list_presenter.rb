@@ -8,6 +8,7 @@ class Container::ItemListPresenter < ContainerPresenter
       :item_type => @item_type,
       :page => @view.params[:page]
     )
+    @view.params[:style] = container.content["style"] if container.content["style"].present?
     @view.render("containers/item_list", :item_list => @list)
   end
 end

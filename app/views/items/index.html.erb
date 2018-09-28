@@ -1,4 +1,4 @@
 <% provide(:title, item_list_title(@item, item_type)) %>
 
-<%= render_item_list(@browse) %>
+<%= render_item_list(@browse, params) %>
 <%= paginate(@browse.items) %>

@@ -1,5 +1,11 @@
 # Base class for paginated lists of Items, e.g. search results.
 class ItemList
+  STYLES = {
+    "thumb" => "items/thumbnails",
+    "list" => "items/list",
+    "grid" => "items/grid"
+  }.freeze
+
   delegate :total_count, :to => :items
   delegate :empty?, :to => :unpaginaged_items
 

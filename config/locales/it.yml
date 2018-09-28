@@ -312,11 +312,18 @@ it:
         bounds_help: Se modificata, la mappa utilizzerà l'area selezionata come estensione spaziale predefinita
       common_form_fields:
         restrict_field_to_members_and_staff: Limitare il campo ai membri e al personale
+        include_in_list_view: "Include this field in edition list view (Data)"
+        include_in_public_list_view: "Include this field in site list view"
+      table:
+        list_view?: 'Edition mode?'
+        public_list_view?: 'Public mode?'
 
     containers:
       map_inputs:
         height_label: "Altezza della mappa (in pixel)"
         height_default: "Il valore predefinito è %{height}"
+      item_list_inputs:
+        display_style: "Display style of items (automatically adapts to content if nothing is selected)"
 
     users:
       common_form_fields:
@@ -371,7 +378,7 @@ it:
       admin: Admin
       leave: Leave
 
-memberships:
+  memberships:
     index:
       my_groups: My groups
     list_memberships:
@@ -382,4 +389,3 @@ memberships:
       catalog: Catalog
       role: Role
       group_role: Group
-

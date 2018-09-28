@@ -14,12 +14,12 @@
 #
 
 class Container::ItemList < ::Container
-  store_accessor :content, :item_type
+  store_accessor :content, :item_type, :style
 
   include ItemListsHelper
 
   def custom_container_permitted_attributes
-    %i(item_type)
+    %i(item_type style)
   end
 
   def render_view(options={})
