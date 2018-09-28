@@ -7,6 +7,6 @@ class User::GroupInvitationFormPolicy
   end
 
   def create?
-    @record.group.owner == @user
+    @user.catalog_role_at_least? @record.group.catalog, 'admin'
   end
 end

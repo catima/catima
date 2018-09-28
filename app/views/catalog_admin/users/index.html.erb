@@ -23,8 +23,8 @@
           <%= form_for([catalog, grp], url: catalog_admin_group_path(id: grp.id), remote: true, authenticity_token: true) do |f| %>
             <div class="btn-group" data-group="<%= grp.id %>" data-toggle="buttons">
               <% group_roles(grp, catalog).each do |role, active| %>
-                <label class="btn btn-default btn-xs <%= active ? 'active' : '' %>" style="padding-left: 1.5em; padding-right: 1.5em;">
-                  <%= radio_button_tag(:role, role) %>
+                <label class="lbl-<%= role %> btn btn-default btn-xs <%= active ? 'active' : '' %>" style="padding-left: 1.5em; padding-right: 1.5em;">
+                  <%= radio_button_tag(:role, role, !!active) %>
                   <%= role.capitalize %>
                 </label>
               <% end %>
@@ -36,12 +36,14 @@
           <%= link_to(
                   fa_icon(:users),
                   catalog_admin_group_path(id: grp.id),
-                  class: 'btn btn-xs btn-default'
+                  class: 'btn btn-xs btn-default',
+                  'data-label': 'invite users'
                 ) %>
             <%= link_to(
                   fa_icon(:pencil),
                   edit_catalog_admin_group_path(id: grp.id),
-                  class: 'btn btn-xs btn-default'
+                  class: 'btn btn-xs btn-default',
+                    'data-label': 'edit group'
                 ) %>
             <%= link_to(
                   fa_icon(:trash),

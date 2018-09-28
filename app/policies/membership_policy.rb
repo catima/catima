@@ -4,14 +4,14 @@ class MembershipPolicy
     @membership = membership
   end
 
-  def own_group?
-    @user == @membership.group.owner
+  def catalog_admin?
+    @user.catalog_role_at_least?(@membership.group.catalog, 'admin')
   end
 
-  alias_method :new?, :own_group?
-  alias_method :create?, :own_group?
+  alias_method :new?, :catalog_admin?
+  alias_method :create?, :catalog_admin?
 
   def destroy?
-    @membership.user == @user || @membership.group.owner == @user
+    @membership.user == @user || catalog_admin?
   end
 end

@@ -12,12 +12,17 @@
 
 # Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
 
-one:
-  user: one
+one_user:
+  user: one_user
   group: one
-  status: MyString
+  status: member
 
 two:
-  user: two
+  user: two_admin
   group: two
-  status: MyString
+  status: member
+
+two_user:
+  user: two_user
+  group: two
+  status: member

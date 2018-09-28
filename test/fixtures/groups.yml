@@ -16,15 +16,17 @@
 # Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
 
 one:
-  name: Public group
-  description: Public group
+  name: Group for catalog one
+  description: This group belongs to catalog one
   public: true
   owner: one_admin
   active: true
+  catalog: one
 
 two:
-  name: Private group
-  description: Private group
+  name: Group for catalog two
+  description: This group belongs to catalog two
   public: false
-  owner: one_admin
+  owner: system_admin
   active: true
+  catalog: two

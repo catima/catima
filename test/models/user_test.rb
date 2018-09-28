@@ -34,6 +34,12 @@ class UserTest < ActiveSupport::TestCase
     assert_equal("user", users(:one_admin).catalog_role(catalogs(:two)))
     assert_equal("super-editor", users(:one_super_editor).catalog_role(catalogs(:one)))
     assert_equal("member", users(:one_member).catalog_role(catalogs(:one)))
+
+    # one_user is member in one group which has super-editor role for catalog one
+    assert_equal('super-editor', users(:one_user).catalog_role(catalogs(:one)))
+
+    # user two_admin is admin for catalog two, but member through the group two
+    assert_equal('admin', users(:two_admin).catalog_role(catalogs(:two)))
   end
 
   test "#admin_of_any_catalog?" do
@@ -44,6 +50,8 @@ class UserTest < ActiveSupport::TestCase
   test "#super_editor_of_any_catalog?" do
     refute(users(:one).super_editor_of_any_catalog?)
     assert(users(:one_super_editor).super_editor_of_any_catalog?)
+    # User one_user is super-editor through group one
+    assert(users(:one_user).super_editor_of_any_catalog?)
   end
 
   test "#editor_of_any_catalog?" do

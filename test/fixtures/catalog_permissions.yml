@@ -48,6 +48,11 @@ one_reviewer:
   user: one_reviewer
   role: reviewer
 
+one_group_member:
+  catalog: one
+  group: one
+  role: super-editor
+
 two:
   catalog: two
   user: two
@@ -62,6 +67,11 @@ two_admin:
   catalog: two
   user: two_admin
   role: admin
+
+two_group_member:
+  catalog: two
+  group: two
+  role: member
 
 multilingual_admin:
   catalog: multilingual

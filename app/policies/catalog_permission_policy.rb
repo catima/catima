@@ -5,6 +5,6 @@ class CatalogPermissionPolicy
   end
 
   def update?
-    @user == @catalog_permission.group.owner
+    @user.catalog_role_at_least?(@catalog_permission.catalog, 'admin')
   end
 end
