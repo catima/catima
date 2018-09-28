@@ -1,15 +1,35 @@
-<% provide(:title, t('.show_group', group: @group.name)) %>
+<% provide(:title, t('.group_members')) %>
 
-<h1><%= t('.show_group', group: @group.name) %></h1>
+<% provide(:actions) do %>
+  <%= link_to(
+        fa_icon(:'user-plus', text: t('.invite_users')),
+        new_catalog_admin_group_membership_path(group_id: @group.id),
+        class: 'btn btn-xs btn-default') %>
+<% end %>
 
-<div style="margin: 20px 0;"><%= link_to('< ' + t('.back'), catalog_admin_users_path) %></div>
-
-<% unless @group.description.empty? %>
-  <div class="panel-body">
-    <%= @group.description %>
+<% if @group.users.count == 0 %>
+  <div class="alert alert-warning" style="margin-bottom: 0;">
+    <%= t('.no_users') %>
   </div>
 <% end %>
 
-<%= render "catalog_admin/groups/list_members" %>
-
-<div style="margin: 20px 0;"><%= link_to('< ' + t('.back'), catalog_admin_users_path) %></div>
+<% if @group.users.count > 0 %>
+  <table class="table">
+  <tbody>
+    <% @group.memberships.each do |membership| %>
+      <tr>
+        <td><%= membership.user.email %></td>
+        <td style="text-align: right;">
+          <%= link_to(
+                fa_icon(:trash),
+                catalog_admin_group_membership_path(group_id: @group.id, id: membership.id),
+                method: :delete,
+                data: { confirm: t('delete_confirm', model: 'membership of ' + membership.user.email) },
+                class: 'btn btn-xs btn-default'
+              ) %>
+        </td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+<% end %>

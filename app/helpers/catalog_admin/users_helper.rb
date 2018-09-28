@@ -7,9 +7,10 @@ module CatalogAdmin::UsersHelper
     link_to(t("users+groups"), catalog_admin_users_path, :class => klass)
   end
 
-  def user_role(user, including_groups=false)
+  def user_role(user, catalog, including_groups=false)
     return "Admin" if user.system_admin?
 
+    catalog = catalog.nil? ? cat : catalog
     options = CatalogPermission::ROLE_OPTIONS.reverse
     options.delete("reviewer") unless catalog.requires_review?
 

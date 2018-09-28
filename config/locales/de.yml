@@ -149,7 +149,7 @@ de:
       invited_to_access_html: "%{invited_by} hat dich eingeladen, Mitglied in der Gruppe «%{group}» auf %{baseurl} zu werden."
     membership:
       subject: "Du wurdest zur Gruppe %{group} hinzugefügt."
-      invited_to_msg: "%{invited_by} hat dich zur Gruppe «%{group}» hinzugefügt."
+      invited_to_msg: "%{invited_by} hat dich zur Gruppe «%{group}» des Katalogs «%{catalog}» hinzugefügt."
       view_my_groups: "Hier kannst du deine Gruppenmitgliedschaften einsehen."
   export_mailer:
     export:
@@ -595,4 +595,5 @@ de:
       group: Group
       catalog: Catalog
       role: Role
+      group_role: Group
 

@@ -145,7 +145,7 @@ it:
       invited_to_access_html: "%{invited_by} ti ha invitato a diventare membro del gruppo «%{group}» su %{baseurl}."
     membership:
       subject: "Sei stato aggiunto al gruppo %{group}"
-      invited_to_msg: "%{invited_by} ti ha aggiunto al gruppo «%{group}»."
+      invited_to_msg: "%{invited_by} ti ha aggiunto al gruppo «%{group}» del catalogo «%{catalog}»."
       view_my_groups: "Potete vedere le appartenenze del vostro gruppo qui"
   export_mailer:
     export:
@@ -381,4 +381,5 @@ memberships:
       group: Group
       catalog: Catalog
       role: Role
+      group_role: Group
 

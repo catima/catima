@@ -163,7 +163,7 @@ en:
       invited_to_access_html: "%{invited_by} has invited you to become a member in group «%{group}» on %{baseurl}."
     membership:
       subject: "You have been added to group %{group}"
-      invited_to_msg: "%{invited_by} has added you to the group «%{group}»."
+      invited_to_msg: "%{invited_by} has added you to the group «%{group}» of catalog «%{catalog}»."
       view_my_groups: "You can view your group memberships here:"
   export_mailer:
     export:
@@ -597,13 +597,9 @@ en:
       show:
         show_group: Group “%{group}”
         back: Back to groups
-      list_members:
         group_members: Group members
         no_users: Currently no users are in this group (except the group owner)
         invite_users: Invite users
-        invited: Invited
-        member: Member
-        admin: Admin
 
     memberships:
       new:
@@ -629,3 +625,4 @@ en:
       group: Group
       catalog: Catalog
       role: Role
+      group_role: Group

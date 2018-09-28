@@ -13,8 +13,8 @@
       <tr>
         <td><%= fa_icon(:user, :text => user.email) %></td>
         <td>
-          <%= user_role(user, true) %>
-          <% unless user_role(user) == user_role(user, true) %>
+          <%= user_role(user, catalog, true) %>
+          <% unless user_role(user, catalog) == user_role(user, catalog, true) %>
             <span class="label label-info"><%= t('.group_role') %></span>
           <% end %>
         </td>

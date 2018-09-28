@@ -26,6 +26,9 @@
         </td>
         <td>
           <%= current_user.catalog_role(membership.group.catalog).capitalize %>
+          <% unless user_role(current_user, membership.group.catalog) == user_role(current_user, membership.group.catalog, true) %>
+            <span class="label label-info"><%= t('.group_role') %></span>
+          <% end %>
         <td>
         <td style="text-align: right;">
             <%= link_to(

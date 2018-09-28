@@ -1,4 +1,6 @@
 class CatalogAdmin::GroupsController < CatalogAdmin::BaseController
+  layout "catalog_admin/setup"
+
   def index
   end
 
