@@ -357,6 +357,8 @@ de:
       map_inputs:
         height_label: "Kartenhöhe (in Pixel)"
         height_default: "Der Standardwert ist %{height}"
+      item_list_inputs:
+        display_style: "Display style of items (automatically adapts to content if nothing is selected)"
 
     csv_imports:
       new:
@@ -393,8 +395,8 @@ de:
         comment_optional: Data editing help text (optional)
         display_options: Display options
         use_as_primary_field: "Use this as the primary field"
-        include_in_list_view: "Include this field in data edition list view"
-        include_in_public_list_view: "Include this field in public list view"
+        include_in_list_view: "Include this field in edition list view (Data)"
+        include_in_public_list_view: "Include this field in site list view"
         restrict_field_to_members_and_staff: Beschränkung des Feldes auf Mitglieder und Mitarbeiter
         data_entry_options: Data entry options
         must_be_unique: "Must be unique"
@@ -426,8 +428,8 @@ de:
         name: 'Name'
         type: 'Type'
         required?: 'Required?'
-        list_view?: 'In edition?'
-        public_list_view?: 'In public?'
+        list_view?: 'Edition mode?'
+        public_list_view?: 'Public mode?'
       text_option_inputs:
         has_formatted_text: "Has formatted text"
         min_length: "Minimum length (optional)"

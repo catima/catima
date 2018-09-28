@@ -4,5 +4,5 @@
         :count_delimited => number_with_delimiter(@search.total_count)) %>
 <% end %>
 
-<%= render_item_list(@search) %>
+<%= render_item_list(@search, params) %>
 <%= paginate(@search.items) %>
