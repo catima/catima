@@ -38,11 +38,13 @@ module CatalogAdmin::ItemTypesHelper
 
   def catalog_admin_contextual_data_path
     return catalog_admin_data_path unless params[:item_type_slug].present?
+
     catalog_admin_items_path
   end
 
   def catalog_admin_contextual_setup_path
     return catalog_admin_setup_path unless params[:item_type_slug].present?
+
     catalog_admin_item_type_fields_path
   end
 end

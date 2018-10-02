@@ -14,6 +14,7 @@ module Field::AllowsMultipleValues
   def strip_empty_values(item)
     values = raw_value(item)
     return unless values.is_a?(Array)
+
     values.reject!(&:blank?)
   end
 end

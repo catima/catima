@@ -33,6 +33,7 @@ class ItemListPresenter
   # and prev/next links.
   def render_nav
     return if offset.blank?
+
     render(
       :partial => "items/item_list_nav",
       :locals => {
@@ -61,6 +62,7 @@ class ItemListPresenter
 
   def context_params
     return {} if context_param.nil?
+
     { context_param => list.to_param }
   end
 

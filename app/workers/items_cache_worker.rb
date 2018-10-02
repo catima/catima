@@ -12,8 +12,10 @@ class ItemsCacheWorker
 
   def item_types(catalog, itemtype)
     return ItemType.all if catalog.nil?
+
     cat = Catalog.find_by(slug: catalog)
     return [] if cat.nil?
+
     itemtype.nil? ? cat.item_types : cat.item_types.where(slug: itemtype)
   end
 

@@ -14,6 +14,7 @@ class API::V2::ItemsController < ActionController::Base
   def index
     it = item_type
     raise InvalidItemType, 'no item type provided' if it.nil?
+
     render(json:
       {
         slug: it.slug,
@@ -36,8 +37,10 @@ class API::V2::ItemsController < ActionController::Base
 
   def item_type
     return nil if params[:item_type].blank?
+
     item_type = catalog.item_types.where(:slug => params[:item_type]).first
     raise InvalidItemType, "item_type not found: #{params[:item_type]}" if item_type.nil?
+
     item_type
   end
 

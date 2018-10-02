@@ -18,6 +18,7 @@ module ControlsItemList
     browse_data = ItemList::Filter.parse_param(params[:browse])
     field_slug = browse_data[:field_slug]
     return nil if field_slug.nil?
+
     @search ||= ItemList::Filter.new(
       :item_type => item_type,
       :field => item_type.fields.where(:slug => field_slug).first,
@@ -28,6 +29,7 @@ module ControlsItemList
   def advanced_search
     model = catalog.advanced_searches.where(:uuid => params[:search]).first
     return nil if model.nil?
+
     @search ||= ItemList::AdvancedSearchResult.new(:model => model)
   end
 

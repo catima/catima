@@ -82,6 +82,7 @@ class ItemsController < ApplicationController
 
   def browse_value
     return if browse_field.nil?
+
     params[browse_field.slug]
   end
 

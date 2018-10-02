@@ -39,6 +39,7 @@ class CatalogAdmin::ExportsController < CatalogAdmin::BaseController
   def retrieve_export(export_id)
     raise Pundit::NotAuthorizedError if export_id.blank?
     raise Pundit::NotAuthorizedError unless /^\d+$/ =~ export_id
+
     find_export(export_id)
   rescue ActiveRecord::RecordNotFound
     raise Pundit::NotAuthorizedError

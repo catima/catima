@@ -9,6 +9,7 @@ module ApplicationHelper
 
   def environment_clue
     return unless Rails.env.development? || (Rails.env.production? && current_user.system_admin?)
+
     content_tag(:div, Rails.env.to_s.downcase, :class => 'environment', :id => Rails.env.to_s.downcase)
   end
 end

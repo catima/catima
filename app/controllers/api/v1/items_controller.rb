@@ -29,7 +29,9 @@ class API::V1::ItemsController < ActionController::Base
     item_type = catalog.item_types.where(:slug => params[:item_type]).first
     if item_type.nil?
       raise InvalidItemType, "item_type not found: #{params[:item_type]}"
+
     end
+
     item_type
   end
 

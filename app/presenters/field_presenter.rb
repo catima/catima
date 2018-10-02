@@ -18,6 +18,7 @@ class FieldPresenter
 
   def value
     return nil if raw_value.blank?
+
     raw_value
   end
 
@@ -38,6 +39,7 @@ class FieldPresenter
 
   def input_data_defaults(data)
     return data unless field.belongs_to_category?
+
     data.reverse_merge("field-category" => field.category_id)
   end
 end

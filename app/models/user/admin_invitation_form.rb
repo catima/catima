@@ -49,6 +49,7 @@ class User::AdminInvitationForm < ActiveType::Record[User]
 
   def set_system_admin_if_no_catalogs
     return if catalog_choices.any?
+
     self.system_admin = true
   end
 
@@ -73,6 +74,7 @@ class User::AdminInvitationForm < ActiveType::Record[User]
 
   def at_least_one_catalog_assigned
     return if system_admin? || admin_of_any_catalog?
+
     if catalog_choices.any?
       errors.add(:catalog_ids, "at least one must be selected")
     else

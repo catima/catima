@@ -13,6 +13,7 @@ class AlterUuidFormat < ActiveRecord::Migration[4.2]
 
     Item.find_each do |item|
       next if item.data.nil?
+
       item.data = item.data.transform_keys do |uuid|
         "_#{uuid.tr('-', '_')}"
       end
@@ -28,6 +29,7 @@ class AlterUuidFormat < ActiveRecord::Migration[4.2]
 
     Item.find_each do |item|
       next if item.data.nil?
+
       item.data = item.data.transform_keys do |uuid|
         uuid.sub(/^_/, "").tr("_", "-")
       end

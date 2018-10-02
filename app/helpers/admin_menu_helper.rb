@@ -6,6 +6,7 @@ module AdminMenuHelper
   def admin_menu_item_types
     return [] unless catalog_scoped?
     return [] unless policy(catalog.items.new).show?
+
     catalog.item_types.sorted
   end
 
@@ -15,6 +16,7 @@ module AdminMenuHelper
 
   def catalog_admin?
     return false unless catalog_scoped?
+
     policy(catalog).show?
   end
 end

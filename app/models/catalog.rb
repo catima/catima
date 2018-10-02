@@ -142,11 +142,13 @@ class Catalog < ApplicationRecord
 
   def add_inactive_suffix_to_slug
     return if inactive_suffix?
+
     update(slug: Catalog.unique_inactive_slug(slug))
   end
 
   def remove_inactive_suffix_from_slug
     return unless inactive_suffix?
+
     m = /([a-z0-9\-]+)(-inactive[0-9][0-9][0-9][0-9])$/.match(slug)
     new_slug = m[1]
     n = 0
@@ -159,6 +161,7 @@ class Catalog < ApplicationRecord
 
   def other_languages_included_in_available_locales
     return if ((other_languages || []) - available_locales).empty?
+
     errors.add(
       :other_languages,
       "can only include #{available_locales.join(', ')}"

@@ -38,6 +38,7 @@ class ItemType < ApplicationRecord
     fields.each_with_object([]) do |field, all|
       all << field
       next unless field.is_a?(Field::ChoiceSet)
+
       field.choices.each do |choice|
         category = choice.category
         all.concat(category.fields) if category && category.active?

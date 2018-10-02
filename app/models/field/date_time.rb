@@ -58,6 +58,7 @@ class Field::DateTime < ::Field
   def value_as_array(item)
     value = raw_value(item)
     return nil if value.nil?
+
     defaults = { "Y" => "", "M" => "", "D" => "", "h" => "", "m" => "", "s" => "" }
     components = defaults.map do |key, default_value|
       value[key] || default_value
@@ -69,6 +70,7 @@ class Field::DateTime < ::Field
   def value_as_int(item)
     components = value_as_array(item)
     return nil if components.nil?
+
     (0..(components.length - 1)).collect { |i| components[i].to_s.present? ? components[i] * 10**(10 - 2 * i) : 0 }.sum
   end
 
@@ -123,6 +125,7 @@ class Field::DateTime < ::Field
   def transform_value(v)
     return nil if v.nil?
     return v if v.is_a?(Hash) && !v.key?("raw_value")
+
     v = { "raw_value" => v } if v.is_a?(Integer)
     v["raw_value"].nil? ? nil : v
   end
@@ -134,6 +137,7 @@ class Field::DateTime < ::Field
   def coerce_to_array(values)
     return [] if values.nil?
     return values if values.is_a?(Array)
+
     # Rails datetime form helpers send data as e.g. { 1 => "2015", 2 => "12" }.
     values.keys.sort.each_with_object([]) do |key, array|
       array << values[key]

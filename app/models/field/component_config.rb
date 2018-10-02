@@ -23,6 +23,7 @@ class Field::ComponentConfig
   def validate_component(type)
     value = field.send("#{type}_component")
     return if value.blank? || value.in?(component_choices(type))
+
     field.errors.add(:"#{type}_component", "is not a supported component")
   end
 
@@ -33,6 +34,7 @@ class Field::ComponentConfig
 
   def assign_default_component(type)
     return if component_choice?(type)
+
     field.public_send("#{type}_component=", component_choices(type).first)
   end
 

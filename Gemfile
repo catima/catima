@@ -10,8 +10,8 @@ gem "cocoon"
 gem "coffee-rails", "~> 4.2.2"
 gem "devise", "~> 4.4"
 gem "dotenv-rails", ">= 2.5.0"
-gem "faraday", "~> 0.15.2"
-gem "faraday_middleware", "~> 0.12.2"
+gem "faraday"
+gem "faraday_middleware"
 gem "font-awesome-rails"
 gem "jquery-fileupload-rails"
 gem "jquery-minicolors-rails"
@@ -26,6 +26,7 @@ gem "marco-polo"
 gem "mini_magick"
 gem "mini_racer", platforms: :ruby
 gem "nokogiri"
+gem 'omniauth-oauth2'
 gem 'omniauth-facebook'
 gem 'omniauth-github'
 gem 'omniauth-shibboleth'

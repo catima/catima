@@ -22,6 +22,7 @@ module Field::Style
   # TODO: test
   def style=(key)
     return if key.blank?
+
     self.required = !!(key =~ /required/)
     self.multiple = !!(key =~ /multiple/)
     self.ordered = !!(key =~ /ordered/)

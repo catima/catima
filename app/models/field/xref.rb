@@ -60,6 +60,7 @@ class Field::Xref < ::Field
 
   def selected_choices(item)
     return [] if raw_value(item).blank? || external_type.nil?
+
     Array.wrap(raw_value(item)).map do |id|
       begin
         external_type.find_item(id)

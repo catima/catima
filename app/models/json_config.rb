@@ -13,6 +13,7 @@ class JsonConfig
   module Cache
     def self.store
       return {} if Rails.env.development?
+
       @_store ||= {}
     end
 

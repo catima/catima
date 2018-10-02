@@ -50,6 +50,7 @@ class CatalogAdmin::MembershipsController < CatalogAdmin::BaseController
 
   def add_user_to_group(user, group)
     return if user.groups.include? group
+
     membership = group.memberships.new do |m|
       m.user = user
       m.status = :member
