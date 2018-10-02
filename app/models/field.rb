@@ -148,6 +148,7 @@ class Field < ApplicationRecord
 
   def raw_value(item, locale=I18n.locale, suffix="")
     return nil unless applicable_to_item(item)
+
     attrib = i18n? ? "#{uuid}_#{locale}#{suffix}" : uuid
     item.behaving_as_type.public_send(attrib)
   end
@@ -182,6 +183,7 @@ class Field < ApplicationRecord
 
     item.fields.any? do |field|
       next unless field.is_a?(ChoiceSet)
+
       choice = field.selected_choice(item)
       choice && choice.category_id == category_id
     end
@@ -239,6 +241,7 @@ class Field < ApplicationRecord
 
   def exclude_base64(string)
     return '' if string.blank?
+
     string.gsub(%r{data:image/([a-zA-Z]*);base64,([^\"]*)\"}, '')
   end
 

@@ -5,6 +5,7 @@ module ImageTools
 
   def thumbnail(src, dest, size, mode=:fill, crop=[0, 0, 100, 100])
     return nil unless File.file?(src)
+
     i = Image.open src
     sz = size.map { |s| s.to_s }.join('x')
     cr = crop.map { |n| n / 100.0 }

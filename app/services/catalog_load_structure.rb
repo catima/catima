@@ -16,6 +16,7 @@ class CatalogLoadStructure
 
   def load_categories(catalog, categories_file)
     return unless File.exist?(categories_file)
+
     @categories = []
     File.open(categories_file) do |f|
       JSON.parse(f.read)['categories'].each do |cat_info|
@@ -42,6 +43,7 @@ class CatalogLoadStructure
 
   def load_choice_sets(catalog, choice_sets_file)
     return unless File.exist?(choice_sets_file)
+
     File.open(choice_sets_file) do |f|
       JSON.parse(f.read)['choice-sets'].each { |cs| load_choice_set(catalog, cs) }
     end
@@ -60,6 +62,7 @@ class CatalogLoadStructure
 
   def load_item_types(catalog, item_types_directory)
     return unless File.directory?(item_types_directory)
+
     # First we create the empty item types, without fields
     # Fields can potentially reference other item types, so they have to
     # exist at the moment the field is created.

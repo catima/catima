@@ -28,6 +28,7 @@ class ItemList::Filter < ItemList
 
   def to_param
     return nil if strategy.nil?
+
     [field.slug, value].join("_")
   end
 

@@ -11,6 +11,7 @@ class Field::GeometryPresenter < FieldPresenter
   def value
     json = raw_value
     return nil if json.blank?
+
     geo_viewer
   end
 

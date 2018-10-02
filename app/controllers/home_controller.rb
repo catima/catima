@@ -23,6 +23,7 @@ class HomeController < ApplicationController
   def render_custom_root
     custom_view = Rails.root.join("catalogs/root.html.erb")
     return render(:file => custom_view) if custom_view.file?
+
     render("index")
   end
 end

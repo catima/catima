@@ -1,6 +1,8 @@
 # This has to come first
-require 'simplecov'
-SimpleCov.start
+unless ENV['NO_COVERAGE']
+  require 'simplecov'
+  SimpleCov.start
+end
 require_relative "./support/rails"
 
 # Load everything else from test/support

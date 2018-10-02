@@ -21,6 +21,7 @@ module ItemListsHelper
 
   def item_list_title(item, item_type)
     return item_type.name_plural + " (" + item.default_display_name + ")" if item.present?
+
     item_type.name_plural
   end
 
@@ -35,6 +36,7 @@ module ItemListsHelper
     return false if params.blank?
     return false if params[:style].blank?
     return false unless ItemList::STYLES.include?(params[:style])
+
     true
   end
 end

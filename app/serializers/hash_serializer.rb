@@ -5,6 +5,7 @@ class HashSerializer
 
   def self.load(hash)
     return '{}' if hash.nil?
+
     hash.empty? ? '{}' : JSON.dump(hash)
   end
 end

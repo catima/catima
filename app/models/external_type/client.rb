@@ -12,6 +12,7 @@ class ExternalType::Client
 
   def parse_json_with_workaround(response)
     fail InvalidFormat unless response[:content_type] =~ /\bjson\b/
+
     JSON.parse(response.body)
   end
 

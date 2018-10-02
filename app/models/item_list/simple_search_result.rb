@@ -26,6 +26,7 @@ class ItemList::SimpleSearchResult < ItemList
     found_type_ids = relation.pluck("items.item_type_id").uniq
     sorted_item_types.each do |type|
       next unless found_type_ids.include?(type.id)
+
       yield(type, type.items.merge(relation).count)
     end
   end
@@ -43,6 +44,7 @@ class ItemList::SimpleSearchResult < ItemList
 
   def relation
     return Item.none if query.blank?
+
     catalog.items.simple_search(query)
   end
 

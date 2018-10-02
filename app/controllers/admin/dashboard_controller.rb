@@ -17,6 +17,7 @@ class Admin::DashboardController < Admin::BaseController
     end
 
     return unless @catalogs.empty?
+
     redirect_to edit_user_registration_path(locale: I18n.locale)
     skip_authorization
   end

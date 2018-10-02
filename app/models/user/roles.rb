@@ -21,12 +21,14 @@ module User::Roles
     # Authenticated users are always considered at least "user" level.
     return true if role_requirement == "user"
     return true if system_admin
+
     perm = (all == true ? all_catalog_permissions : catalog_permissions).to_a.find { |p| p.catalog_id == catalog.id }
     perm&.role_at_least?(role_requirement)
   end
 
   def catalog_role(catalog)
     return 'admin' if system_admin
+
     perm = all_catalog_permissions.to_a.find { |p| p.catalog_id == catalog.id }
     perm ? perm.role : "user"
   end
@@ -34,6 +36,7 @@ module User::Roles
   def catalog_visible_for_role?(catalog)
     return true if system_admin
     return catalog_role_at_least?(catalog, "editor") unless catalog.visible
+
     true
   end
 
@@ -41,6 +44,7 @@ module User::Roles
     return false unless item.catalog.active?
     return false unless item.catalog.public_items.exists?(item.id)
     return false unless catalog_visible_for_role?(item.catalog)
+
     true
   end
 
@@ -71,6 +75,7 @@ module User::Roles
   def role_catalog_ids(role)
     all_catalog_permissions.to_a.each_with_object([]) do |perm, admin|
       next unless perm.active?
+
       admin << perm.catalog_id if perm.role_at_least?(role)
     end
   end

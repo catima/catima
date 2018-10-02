@@ -89,8 +89,10 @@ module FieldsHelper
     item.referenced_by_fields.each_with_object({}) do |field, result|
       # skip if we have a category
       next if field.item_type.is_a?(Category)
+
       list = field_item_references(field.item_type, field, item)
       next if list.empty?
+
       result[field] = list
       yield(field, list) if block_given?
     end
@@ -107,6 +109,7 @@ module FieldsHelper
 
   def resolve_type(item_type_or_slug)
     return item_type_or_slug if item_type_or_slug.is_a?(ItemType)
+
     catalog.item_types.find(-> { fail "Unknown type: #{item_type_slug}"}) do |t|
       t.slug == item_type_or_slug.to_s
     end
@@ -114,6 +117,7 @@ module FieldsHelper
 
   def resolve_field(item_type, field_or_slug)
     return field_or_slug if field_or_slug.is_a?(Field)
+
     item_type.fields.find(-> { fail "Unknown field: #{field_or_slug}" }) do |f|
       f.slug == field_or_slug.to_s
     end

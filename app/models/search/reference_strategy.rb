@@ -14,6 +14,7 @@ class Search::ReferenceStrategy < Search::BaseStrategy
   def primary_text_for_keywords(item)
     ids = raw_value(item)
     return if ids.blank?
+
     ids = [ids] unless ids.is_a?(Array)
     ids.each_with_object([]) do |key, array|
       item = Item.find_by(id: key)

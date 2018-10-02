@@ -34,12 +34,8 @@ class CatalogDump
   end
 
   def create_output_dir(d)
-    if File.exist?(d) && !File.directory?(d)
-      raise "ERROR. '#{d}' is a file. Please specify an non-existing or empty directory."
-    end
-    if File.directory?(d) && !Dir[File.join(d, '*')].empty?
-      raise "ERROR. '#{d}' is not empty. Please specify an non-existing or empty directory."
-    end
+    ensure_no_file_overwrite(d)
+    ensure_empty_directory(d)
     FileUtils.mkdir_p(d) unless File.exist?(d)
   end
 
@@ -133,5 +129,19 @@ class CatalogDump
       File.join(dir, "menus.json"),
       JSON.pretty_generate("menu-items": cat.menu_items.map(&:describe))
     )
+  end
+
+  private
+
+  def file_error(msg)
+    "ERROR. #{msg} Please specify an non-existing or empty directory."
+  end
+
+  def ensure_no_file_overwrite(path)
+    raise(file_error("'#{path}' is a file.")) if File.exist?(path) && !File.directory?(path)
+  end
+
+  def ensure_empty_directory(dir)
+    raise(file_error("'#{dir}' is not empty.")) if File.directory?(dir) && !Dir[File.join(dir, '*')].empty?
   end
 end

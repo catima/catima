@@ -58,6 +58,7 @@ class Item < ApplicationRecord
 
   def self.with_type(type)
     return all if type.nil?
+
     where(:item_type => type)
   end
 
@@ -86,6 +87,7 @@ class Item < ApplicationRecord
   def image?
     list_view_fields.any? do |f|
       next unless f.is_a?(Field::Image)
+
       f.file_count(self) > 0
     end
   end
@@ -117,8 +119,10 @@ class Item < ApplicationRecord
   def default_display_name(locale=I18n.locale)
     v = views && views["display_name"] && views["display_name"][locale.to_s]
     return v unless v.nil?
+
     field = field_for_select
     return '' if field.nil?
+
     field.strip_extra_content(self, locale)
   end
 

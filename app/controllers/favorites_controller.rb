@@ -54,6 +54,7 @@ class FavoritesController < ApplicationController
   def find_catalog(catalog_id)
     return nil if catalog_id.blank?
     return nil unless /^\d+$/ =~ catalog_id
+
     Catalog.find(catalog_id)
   rescue ActiveRecord::RecordNotFound
     nil
@@ -62,6 +63,7 @@ class FavoritesController < ApplicationController
   def catalogs(list)
     return nil if list.blank?
     return nil if @selected_catalog
+
     catalogs = list.items.each_with_object([]) do |item, array|
       array << item.catalog
     end

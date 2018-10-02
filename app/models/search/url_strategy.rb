@@ -15,6 +15,7 @@ class Search::URLStrategy < Search::BaseStrategy
 
   def exact_search(scope, exact_phrase)
     return scope if exact_phrase.blank?
+
     scope.where("#{data_field_expr} ILIKE ?", "%#{exact_phrase.strip}%")
   end
 end

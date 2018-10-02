@@ -38,6 +38,7 @@ class ExportWorker
 
   def send_mail(export)
     return unless export.status.eql? "ready"
+
     ExportMailer.send_message(export).deliver_now
   end
 

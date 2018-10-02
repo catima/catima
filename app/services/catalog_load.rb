@@ -30,6 +30,7 @@ class CatalogLoad
 
   def check_load_dir
     raise "ERROR. '#{@load_dir}' is not a directory." unless File.directory?(@load_dir)
+
     m = meta
     raise "ERROR. Dump version '#{meta['dump_version']}' is not supported." unless m['dump_version'] == '1.0'
   end
@@ -47,6 +48,7 @@ class CatalogLoad
     # Check if such a catalog already exists
     catalog = Catalog.find_by(slug: @slug)
     raise "ERROR. Catalog '#{@slug}' already exists. Please specify a unique catalog slug." unless catalog.nil?
+
     Catalog.new(catalog_info.merge("slug" => @slug)).save
   end
 

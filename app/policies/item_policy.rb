@@ -37,6 +37,7 @@ class ItemPolicy
 
     def resolve
       return scope.all if user.system_admin?
+
       Item.where(:catalog_id => user.editor_catalog_ids).merge(scope.all)
     end
   end

@@ -173,6 +173,7 @@ Rails.application.routes.draw do
   custom_catalogs.each do |catalog_slug|
     catalog_snake_slug = catalog_slug.tr('-', '_')
     next unless File.exist?(Rails.root.join('catalogs', catalog_slug, 'controllers', "#{catalog_snake_slug}_catalogs_controller.rb"))
+
     get "#{catalog_slug}/(:locale)",
         :controller => "#{catalog_snake_slug}_catalogs",
         :action => :show,

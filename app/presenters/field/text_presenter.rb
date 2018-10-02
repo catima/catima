@@ -5,19 +5,20 @@ class Field::TextPresenter < FieldPresenter
 
   def value
     return super if field.formatted_text.to_i == 0
+
     c = formatted_value(super) || ''
     compact? ? compact_value(c) : sanitize(c)
   end
 
   def formatted_value(value)
     v = begin
-      JSON.parse(value || '') || { 'format': 'raw', 'content': '' }
-    rescue JSON::ParserError
-      {
-        'format' => field.formatted_text.to_i == 1 ? 'markdown' : 'raw',
-        'content' => value
-      }
-    end
+          JSON.parse(value || '') || { 'format': 'raw', 'content': '' }
+        rescue JSON::ParserError
+          {
+            'format' => field.formatted_text.to_i == 1 ? 'markdown' : 'raw',
+            'content' => value
+          }
+        end
     [
       '<div class="formatted-text">',
       v['format'] == 'markdown' ? render_markdown(v['content']) : v['content'],
@@ -33,6 +34,7 @@ class Field::TextPresenter < FieldPresenter
     i18n = options.fetch(:i18n) { field.i18n? }
     inp = raw_input(form, method, options, i18n)
     return inp unless field.formatted?
+
     [
       '<div class="form-component">',
       '<div class="hidden-children-inputs">',
@@ -49,6 +51,7 @@ class Field::TextPresenter < FieldPresenter
 
   def raw_input(form, method, options={}, i18n=false)
     return i18n_input(form, method, options) if i18n
+
     form.text_area(method, input_defaults(options).merge(:rows => 1))
   end
 

@@ -7,6 +7,7 @@ class CatalogLoadPages
   def load
     @catalog = Catalog.find_by(slug: @slug)
     return unless File.directory?(@dir)
+
     load_pages
   end
 

@@ -4,6 +4,7 @@ class Field::ImagePresenter < Field::FilePresenter
   def value
     return nil if raw_value.nil?
     return image_viewer unless options[:style]
+
     options[:class] = options[:style] ? options[:style] : :full
     options[:class] == :full ? image_full : image_cropped
   end
@@ -37,6 +38,7 @@ class Field::ImagePresenter < Field::FilePresenter
     # If multiple images, we select the first one for the thumbnail
     img = raw_value.class == Array ? raw_value[0] : raw_value
     return nil if img.nil?
+
     crop = img['crop'].nil? ? { 'x' => 0, 'y' => 0, 'width' => 100, 'height' => 100 } : img['crop']
     crop = [crop['x'], crop['y'], crop['width'], crop['height']].map(&:round)
     transform = case options[:class]
@@ -50,6 +52,7 @@ class Field::ImagePresenter < Field::FilePresenter
   def file_url(file, size=nil, mode=:fill, crop=[0, 0, 100, 100])
     return nil if file['path'].nil?
     return "/#{file['path']}" if size.nil?
+
     path_parts = file['path'].split('/')
     crop_str = mode == :fill ? '/' + crop.map(&:to_s).join(',') : ''
     "/thumbs/#{path_parts[1]}/#{size}/#{mode}#{crop_str}/#{path_parts[2]}/#{path_parts[3]}"
@@ -79,6 +82,7 @@ class Field::ImagePresenter < Field::FilePresenter
   def legend_active?
     return false unless field.options
     return false unless field.options.key?("legend")
+
     !field.options["legend"].to_i.zero?
   end
 end

@@ -6,6 +6,7 @@ class CatalogAdmin::CategoriesController < CatalogAdmin::BaseController
     # Otherwise redirect to the default admin URL.
     first_category = catalog.categories.first
     return redirect_to(catalog_admin_setup_path) if first_category.nil?
+
     redirect_to(catalog_admin_category_fields_path(catalog, I18n.locale, first_category))
   end
 

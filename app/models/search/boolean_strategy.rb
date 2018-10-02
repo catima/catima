@@ -9,6 +9,7 @@ class Search::BooleanStrategy < Search::BaseStrategy
 
   def exact_search(scope, exact_phrase)
     return scope if exact_phrase.blank?
+
     scope.where("#{data_field_expr} = ?", exact_phrase.strip.to_s)
   end
 end

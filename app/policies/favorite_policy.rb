@@ -8,11 +8,13 @@ class FavoritePolicy
 
   def create?
     return false unless @user.authenticated?
+
     @user.catalog_visible_for_role?(@favorite.item.catalog)
   end
 
   def destroy?
     return false unless @user.authenticated?
+
     attributed_to_user?
   end
 

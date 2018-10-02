@@ -52,6 +52,7 @@ class Field::File < ::Field
   def file_count(item)
     files = raw_value(item)
     return 0 if files.nil?
+
     files.is_a?(Array) ? files.count : 1
   end
 end

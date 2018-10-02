@@ -14,6 +14,7 @@ class ExportPolicy
   def create?
     return false unless user.authenticated?
     return true if user.system_admin?
+
     user.catalog_role_at_least?(catalog, "admin")
   end
 
@@ -21,6 +22,7 @@ class ExportPolicy
     return false unless export.validity?
     return false unless export.ready?
     return false unless export.file?
+
     create?
   end
 end

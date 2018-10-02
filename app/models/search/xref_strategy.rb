@@ -10,6 +10,7 @@ class Search::XrefStrategy < Search::BaseStrategy
   def browse(scope, choice_slug)
     choice = field.choice_by_id(choice_slug)
     return scope.none if choice.nil?
+
     search(scope, :any => [choice.id.to_s])
   end
 
