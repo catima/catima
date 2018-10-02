@@ -1,12 +1,12 @@
-<% provide(:title, "Edit #{@user.email}") %>
+<% provide(:title, t('edit') + " “#{@user.email}“") %>
 
 <%= bootstrap_form_for(
-      @user,
-      :url => catalog_admin_user_path(catalog, I18n.locale, @user)
-      ) do |f| %>
+        @user,
+        :url => catalog_admin_user_path(catalog, I18n.locale, @user)
+    ) do |f| %>
 
   <%= render("common_form_fields", :f => f) %>
-  <%= f.primary("Update user") %>
-  <%= link_to "Cancel", catalog_admin_users_path, :class => "btn btn-link" %>
+  <%= f.primary(t('.update_user')) %>
+  <%= link_to t('cancel'), catalog_admin_users_path, :class => "btn btn-link" %>
 
 <% end %>

@@ -5,8 +5,8 @@
   <%= bootstrap_form_for(@membership, url:catalog_admin_group_memberships_path) do |f| %>
 
     <%= f.form_group do %>
-      <label class="control-label required" for="members_to_invite">Emails of members to invite</label>
-      <p>For multiple members to invite at once, write one email address per line.</p>
+      <label class="control-label required" for="members_to_invite"><%= t('.members_emails') %></label>
+      <p><%= t('.one_mail_per_line') %></p>
       <%= text_area('members_to_invite', '', style: 'width: 300px;', rows: 5) %>
     <% end %>
 
@@ -14,8 +14,8 @@
 
     <%= f.primary(t('.invite_members')) %>
     <%= link_to(
-          t('cancel'),
-          catalog_admin_group_path(id: @group.id),
-          class: 'btn btn-link') %>
+            t('cancel'),
+            catalog_admin_group_path(id: @group.id),
+            class: 'btn btn-link') %>
   <% end %>
 </div>

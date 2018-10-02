@@ -1,6 +1,6 @@
 module CatalogAdmin::UsersHelper
   def setup_catalog_users_nav_link
-    active = (params[:controller] == "catalog_admin/users")
+    active = (params[:controller] == "catalog_admin/users") || (params[:controller] == "catalog_admin/groups")
     klass = "list-group-item"
     klass << " active" if active
 
