@@ -23,6 +23,9 @@ en:
         advertize: "Advertize"
         visible: "Visible"
         custom_root_page_id: "Custom root page"
+      group:
+        name: "Name"
+        description: "Description"
   "yes": "Yes"
   "no": "No"
   boolean_field: Boolean field (Yes/No)
@@ -99,16 +102,16 @@ en:
         new_password: "New password"
         new_password_confirmation: "Confirm new password"
     registrations:
-        new:
-          title: "Sign up"
-          submit: "Sign up"
-        edit:
-          title: "My profile"
-          submit: "Save profile"
-          leave_blank: "Leave blank if you don’t want to change it"
-          need_to_confirm: "We need your current password to confirm your changes"
-          unhappy: "Unhappy?"
-          cancel_account: "Cancel my account"
+      new:
+        title: "Sign up"
+        submit: "Sign up"
+      edit:
+        title: "My profile"
+        submit: "Save profile"
+        leave_blank: "Leave blank if you don’t want to change it"
+        need_to_confirm: "We need your current password to confirm your changes"
+        unhappy: "Unhappy?"
+        cancel_account: "Cancel my account"
     shared:
       links:
         log_in: "Log in"
@@ -528,6 +531,8 @@ en:
         no_groups_for_catalog_warning: There are no groups for this catalog.
       catalog_users:
         group_role: Group
+      edit:
+        update_user: Update user
 
     pages:
       new:
@@ -605,6 +610,8 @@ en:
 
     memberships:
       new:
+        members_emails: Emails of members to invite
+        one_mail_per_line: For multiple members to invite at once, write one email address per line.
         invite_members_to_group: Invite members to group “%{group}”
         invite_members: Invite members
 
