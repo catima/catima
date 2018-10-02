@@ -32,6 +32,7 @@ class CatalogPolicyTest < ActiveSupport::TestCase
 
   test "guests, users and members can't show" do
     refute(policy(users(:one)).show?)
+    refute(policy(users(:two_user)).show?)
     refute(policy(users(:one_member)).show?)
     refute(policy(users(:two)).show?)
     refute(policy(users(:two_editor)).show?)
@@ -44,6 +45,7 @@ class CatalogPolicyTest < ActiveSupport::TestCase
     assert(policy(users(:one_super_editor)).show?)
     assert(policy(users(:one_reviewer)).show?)
     assert(policy(users(:one_admin)).show?)
+    assert(policy(users(:one_user)).show?)
   end
 
   private

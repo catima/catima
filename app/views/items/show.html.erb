@@ -8,7 +8,7 @@
 
 <table class="table item-table">
   <tbody>
-    <% @item.applicable_fields.each do |field| %>
+    <% item_applicable_fields(@item).each do |field| %>
       <% if field_check_display(@item, field) %>
         <tr>
           <th><%= field.label %></th>

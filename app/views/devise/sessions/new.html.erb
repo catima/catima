@@ -1,4 +1,32 @@
-<% provide(:title, t(".log_in")) %>
+<div style="max-width: 300px; margin: 0 auto;">
+
+  <% if auth_providers.include? :github %>
+    <%= link_to(
+      fa_icon('github') + ' ' + t('.log_in_with', provider: 'Github'),
+      user_github_omniauth_authorize_path,
+      class: 'btn btn-default',
+      style: 'width: 100%; margin-bottom: 10px;') %>
+  <% end %>
+
+  <% if auth_providers.include? :facebook %>
+    <%= link_to(
+      fa_icon('facebook-square') + ' ' + t('.log_in_with', provider: 'Facebook'),
+      user_facebook_omniauth_authorize_path,
+      class: 'btn btn-default',
+      style: 'width: 100%; margin-bottom: 10px;') %>
+  <% end %>
+
+  <% if auth_providers.include? :shibboleth %>
+    <%= link_to(
+      t('.log_in_with', provider: ENV['AUTH_SHIB_NAME'] || 'Shibboleth'),
+      user_shibboleth_omniauth_authorize_path,
+      class: 'btn btn-default',
+      style: 'width: 100%; margin-bottom: 10px;') %>
+  <% end %>
+
+  <% if auth_providers.length > 0 %>
+    <div style="text-align: center; margin: 20px 0; color: #999;"><%= t('or') %></div>
+  <% end %>
 
 <%= bootstrap_form_for(
       resource,
@@ -20,3 +48,5 @@
 <hr>
 
 <%= render("devise/shared/links") %>
+
+</div>

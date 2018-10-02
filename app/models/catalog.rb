@@ -14,6 +14,7 @@
 #  other_languages     :json
 #  primary_language    :string           default("en"), not null
 #  requires_review     :boolean          default(FALSE), not null
+#  restricted          :boolean          default(FALSE), not null
 #  slug                :string
 #  style               :jsonb
 #  updated_at          :datetime         not null
@@ -50,6 +51,7 @@ class Catalog < ApplicationRecord
   has_many :pages, :dependent => :destroy
   has_many :menu_items, :dependent => :destroy
   has_many :exports, :dependent => :destroy
+  has_many :groups, dependent: :destroy
 
   attachment :logo, type: :image
   attachment :navlogo, type: :image
