@@ -23,6 +23,9 @@ fr:
         advertize: "Promouvoir"
         visible: "Visible"
         custom_root_page_id: "Page d'accueil personnalisée"
+      group:
+        name: "Nom"
+        description: "Description"
   "yes": "Oui"
   "no": "Non"
   boolean_field: Champ booléen (oui/non)
@@ -99,16 +102,16 @@ fr:
         new_password: "Nouveau mot de passe"
         new_password_confirmation: "Confirmer le noveau mot de passe"
     registrations:
-        new:
-          title: "Enregistrement"
-          submit: "S'enregistrer"
-        edit:
-          title: "Mon profil"
-          submit: "Enregistrer le profil"
-          leave_blank: "Laissez vide si vous ne voulez pas changer le mot de passe"
-          need_to_confirm: "Veuillez saisir votre mot de passe actuel pour confirmer vos modifications"
-          unhappy: "Mécontent?"
-          cancel_account: "Supprimer mon compte"
+      new:
+        title: "Enregistrement"
+        submit: "S'enregistrer"
+      edit:
+        title: "Mon profil"
+        submit: "Enregistrer le profil"
+        leave_blank: "Laissez vide si vous ne voulez pas changer le mot de passe"
+        need_to_confirm: "Veuillez saisir votre mot de passe actuel pour confirmer vos modifications"
+        unhappy: "Mécontent?"
+        cancel_account: "Supprimer mon compte"
     shared:
       links:
         log_in: "Login"
@@ -314,10 +317,10 @@ fr:
         visible_help: "Si coché, ce catalogue sera disponible pour tout le monde. Sinon, seul le personnel du catalogue pourra voir le contenu."
         restricted_help: "Si coché, ce catalogue n'est visible que par les membres et le personnel."
         display_options: "Options d'affichage"
-        catalog_access: Catalog visibility
-        open_for_everyone: Open for everyone
-        open_to_members: Open to members
-        open_to_catalog_staff: Open to catalog staff
+        catalog_access: Visibilité du catalogue
+        open_for_everyone: Ouvert à tous
+        open_to_members: Ouvert aux membres
+        open_to_catalog_staff: Ouvert au personnel
       edit_style:
         custom_style_catalog: "Personnaliser le style de catalogue"
         general: "Général"
@@ -492,7 +495,7 @@ fr:
       review:
         approved: Cette fiche de type «%{item_type}» est validée et visible pour le public.
         rejected: Cette fiche de type «%{item_type}» a été rejetée. Vous pouvez la resoumettre pour validation en cochant la case ci-dessous.
-        pending: Cette fiche de type «%{item_type}» attend la validation. Elle sera visible pour le publique une fois un validateur l'a approuvé.
+        pending: Cette fiche de type «%{item_type}» attend la validation. Elle sera visible pour le publique une fois un validateur l'a approuvé.
         approval_help: Cochez cette case pour soumettre cette fiche de type %{item_type} pour validation. Toutes les fiches de type %{item_type} doivent être approuvées avant d'être visibles pour le public sur le site du catalogue %{catalog}.
         ready_for_review: "Prêt pour la validation"
       sort_menu:
@@ -528,6 +531,8 @@ fr:
         no_groups_for_catalog_warning: Il n'y a pas de groupes pour ce catalogue.
       catalog_users:
         group_role: Groupe
+      edit:
+        update_user: Mettre à jour l'utilisateur
 
     menu_items:
       common_form_fields:
@@ -582,51 +587,48 @@ fr:
 
     groups:
       index:
-        title: Groups
+        title: Groupes
       new:
-        new_group: New group
-        new_group_for_catalog: New group for catalog «%{catalog}»
-        create_group: Create group
+        new_group: Nouveau groupe
+        new_group_for_catalog: Nouveau groupe pour le catalogue «%{catalog}»
+        create_group: Créer un groupe
       common_form_fields:
-        active: Active?
-        public_group: Group is public?
+        active: Actif?
+        public_group: Le groupe est public?
       edit:
-        edit_group: Edit group
-        update_group: Update group
+        edit_group: Modifier le groupe
+        update_group: Mettre à jour le groupe
       show:
-        show_group: Group “%{group}”
-        back: Back to groups
-      list_members:
-        group_members: Group members
-        no_users: Currently no users are in this group (except the group owner)
-        invite_users: Invite users
-        invited: Invited
-        member: Member
-        admin: Admin
+        show_group: Groupe “%{group}”
+        back: Retour aux groupes
+        group_members: Membres du groupe
+        no_users: Actuellement aucun utilisateur n'est dans ce groupe (sauf le propriétaire du groupe)
+        invite_users: Inviter des utilisateurs
 
     memberships:
       new:
-        invite_members_to_group: Invite members to group “%{group}”
-        invite_members: Invite members
+        members_emails: Emails des membres à inviter
+        one_mail_per_line: Pour inviter plusieurs membres à la fois, écrivez une adresse e-mail par ligne.
+        invite_members_to_group: Inviter les membres au groupe “%{group}”
+        invite_members: Inviter des membres
 
   groups:
     list_group_memberships:
-      member_in: Groups I am member in
-      no_group_memberships: You are currently not a member of a group.
-      invited: Invited
-      member: Member
+      member_in: Groupes dont je suis membre
+      no_group_memberships: Vous n'êtes actuellement pas membre d'un groupe.
+      invited: Invité
+      member: Membre
       admin: Admin
-      leave: Leave
+      leave: Quitter
 
   memberships:
     index:
-      my_groups: My groups
+      my_groups: Mes groupes
     list_memberships:
-      no_memberships_warning: You are not member in any group yet.
-      delete_confirm: "Are you sure you want to leave group “%{group}”?"
-      leave: Leave
-      group: Group
-      catalog: Catalog
-      role: Role
-      group_role: Group
-
+      no_memberships_warning: Vous n'êtes pas encore membre d'un groupe.
+      delete_confirm: "Êtes-vous sûr de vouloir quitter le groupe “%{group}”?"
+      leave: Quitter
+      group: Groupe
+      catalog: Catalogue
+      role: Rôle
+      group_role: Groupe

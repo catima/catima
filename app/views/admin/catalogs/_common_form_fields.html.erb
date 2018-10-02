@@ -24,19 +24,12 @@
   <%= f.check_box(:advertize) %>
 <% end %>
 
-<%= f.form_group(
-    :visible,
-    :help => "If checked, this catalog will be available for everyone. "\
-             "Otherwise only catalog staff will be able to see the content."
-) do %>
-  <%= f.check_box(:visible) %>
-<% end %>
+<%= f.hidden_field(:visible) %>
+<%= f.hidden_field(:restricted) %>
 
-<%= f.form_group(
-    :restricted,
-    :help => t('catalog_admin.catalogs.common_form_fields.restricted_help')
-    ) do %>
-  <%= f.check_box(:restricted) %>
+<%= f.form_group(:catalog_access) do %>
+  <label for="catalog_access"><%= t('catalog_admin.catalogs.common_form_fields.catalog_access') %></label>
+  <%= catalog_access_select(@catalog) %>
 <% end %>
 
 <hr>
