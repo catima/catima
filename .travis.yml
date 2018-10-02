@@ -17,11 +17,11 @@ before_script:
   - bundle exec bin/setup
   - yarn install
 script:
-  - "bundle exec rake test:$TEST_SUITE"
+  - "NO_COVERAGE=1 bundle exec rake test:$TEST_SUITE"
 services:
   - redis-server
 addons:
-  postgresql: '9.5'
+  postgresql: '10.5'
   chrome: stable
   apt:
     update: true
