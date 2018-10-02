@@ -1,0 +1,46 @@
+<% if @memberships.count == 0 %>
+  <div class="alert alert-warning" style="margin-bottom: 0;">
+    <%= t('.no_memberships_warning') %>
+  </div>
+<% end %>
+
+<% if @memberships.count > 0 %>
+  <table class="table" id="group-memberships-table">
+  <thead>
+    <tr>
+      <th><%= t('.group') %></th>
+      <th><%= t('.catalog') %></th>
+      <th><%= t('.role') %></th>
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+    <% @memberships.each do |membership| %>
+      <tr>
+        <td><%= membership.group.name %></td>
+        <td>
+          <%= link_to(
+                membership.group.catalog.name,
+                catalog_home_path(catalog_slug: membership.group.catalog.slug)
+              ) %>
+        </td>
+        <td>
+          <%= current_user.catalog_role(membership.group.catalog).capitalize %>
+          <% unless user_role(current_user, membership.group.catalog) == user_role(current_user, membership.group.catalog, true) %>
+            <span class="label label-info"><%= t('.group_role') %></span>
+          <% end %>
+        <td>
+        <td style="text-align: right;">
+            <%= link_to(
+                  fa_icon(:'sign-out') + t('.leave'),
+                  membership_path(id: membership.id),
+                  method: :delete,
+                  data: { confirm: t('.delete_confirm', group: membership.group.name) },
+                  class: 'btn btn-xs btn-default'
+                ) %>
+        </td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+<% end %>

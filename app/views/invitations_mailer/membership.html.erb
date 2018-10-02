@@ -1,0 +1,16 @@
+<p><%= t('common.greeting') %>,</p>
+
+<p>
+  <%= t('.invited_to_msg',
+        invited_by: @invited_by.email,
+        group: @group.name,
+        catalog: @group.catalog.name) %>
+</p>
+
+<p>
+  <%= t('.view_my_groups') %>
+  <%= link_to(
+        memberships_url(:locale => @user.primary_language),
+        memberships_url(:locale => @user.primary_language)
+      ) %>
+</p>

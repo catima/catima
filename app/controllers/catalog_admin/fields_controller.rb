@@ -80,6 +80,7 @@ class CatalogAdmin::FieldsController < CatalogAdmin::BaseController
       :primary,
       :display_in_list,
       :display_in_public_list,
+      :restricted,
       :i18n,
       :row_order_position,
       :editor_component,

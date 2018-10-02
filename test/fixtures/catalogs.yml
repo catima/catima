@@ -14,6 +14,7 @@
 #  other_languages     :json
 #  primary_language    :string           default("en"), not null
 #  requires_review     :boolean          default(FALSE), not null
+#  restricted          :boolean          default(FALSE), not null
 #  slug                :string
 #  style               :jsonb
 #  updated_at          :datetime         not null

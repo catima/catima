@@ -1,0 +1,31 @@
+<table class="table">
+  <thead>
+    <tr>
+      <th><%= t('email') %></th>
+      <th><%= t('role') %></th>
+      <th><%= t('invited') %></th>
+      <th><%= t('last_signed_in') %></th>
+      <th></th>
+    </tr>
+  </thead>
+  <tbody>
+    <% @users.each do |user| %>
+      <tr>
+        <td><%= fa_icon(:user, :text => user.email) %></td>
+        <td>
+          <%= user_role(user, catalog, true) %>
+          <% unless user_role(user, catalog) == user_role(user, catalog, true) %>
+            <span class="label label-info"><%= t('.group_role') %></span>
+          <% end %>
+        </td>
+        <td><%= l(user.created_at, :format => :long) %></td>
+        <td><%= last_signed_in(user) %></td>
+        <td style="text-align: right">
+          <% if policy(user).edit_in_catalog?(catalog) %>
+            <%= render "shared/actions_dropdown", :model => user %>
+          <% end %>
+        </td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>

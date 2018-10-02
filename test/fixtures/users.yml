@@ -12,11 +12,13 @@
 #  last_sign_in_at        :datetime
 #  last_sign_in_ip        :inet
 #  primary_language       :string           default("en"), not null
+#  provider               :string
 #  remember_created_at    :datetime
 #  reset_password_sent_at :datetime
 #  reset_password_token   :string
 #  sign_in_count          :integer          default(0), not null
 #  system_admin           :boolean          default(FALSE), not null
+#  uid                    :string
 #  updated_at             :datetime         not null
 #
 
@@ -37,6 +39,10 @@ nested_admin:
 
 one:
   email: one@example.com
+  encrypted_password: <%= BCrypt::Password.create("password") %>
+
+one_user:
+  email: one-user@example.com
   encrypted_password: <%= BCrypt::Password.create("password") %>
 
 one_member:
@@ -61,6 +67,10 @@ one_admin:
 
 two:
   email: two@example.com
+  encrypted_password: <%= BCrypt::Password.create("password") %>
+
+two_user:
+  email: two-user@example.com
   encrypted_password: <%= BCrypt::Password.create("password") %>
 
 two_editor:

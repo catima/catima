@@ -26,6 +26,9 @@ gem "marco-polo"
 gem "mini_magick"
 gem "mini_racer", platforms: :ruby
 gem "nokogiri"
+gem 'omniauth-facebook'
+gem 'omniauth-github'
+gem 'omniauth-shibboleth'
 gem "panoramic"
 gem "pg", "~> 1.0"
 gem "pg_search", "~> 2.1.2"

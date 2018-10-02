@@ -1,34 +1,94 @@
-<% provide(:title, t('users')) %>
+<% provide(:title, t('.groups')) %>
 
 <% provide(:actions) do %>
-  <%= link_to(new_catalog_admin_user_path) do %>
-    <%= fa_icon(:"user-plus", :text => t('new_user')) %>
-  <% end %>
+  <%= link_to(
+        fa_icon(:"plus-square", text: t('.new_group')),
+        new_catalog_admin_group_path,
+        class: 'btn btn-xs btn-default') %>
 <% end %>
 
-<table class="table">
-  <thead>
-    <tr>
-      <th><%= t('email') %></th>
-      <th><%= t('role') %></th>
-      <th><%= t('invited') %></th>
-      <th><%= t('last_signed_in') %></th>
-      <th></th>
-    </tr>
-  </thead>
+<% if catalog.groups.count == 0 %>
+  <div class="alert alert-warning" style="margin-bottom: 0;">
+    <%= t('.no_groups_for_catalog_warning') %>
+  </div>
+<% end %>
+
+<% if catalog.groups.count > 0 %>
+  <table class="table" id="group-permissions-table">
   <tbody>
-    <% @users.each do |user| %>
+    <% catalog.groups.each do |grp| %>
       <tr>
-        <td><%= fa_icon(:user, :text => user.email) %></td>
-        <td><%= user_role(user) %></td>
-        <td><%= l(user.created_at, :format => :long) %></td>
-        <td><%= last_signed_in(user) %></td>
-        <td style="text-align: right">
-          <% if policy(user).edit_in_catalog?(catalog) %>
-            <%= render "shared/actions_dropdown", :model => user %>
+        <td><%= grp.name %></td>
+        <td>
+          <%= form_for([catalog, grp], url: catalog_admin_group_path(id: grp.id), remote: true, authenticity_token: true) do |f| %>
+            <div class="btn-group" data-group="<%= grp.id %>" data-toggle="buttons">
+              <% group_roles(grp, catalog).each do |role, active| %>
+                <label class="lbl-<%= role %> btn btn-default btn-xs <%= active ? 'active' : '' %>" style="padding-left: 1.5em; padding-right: 1.5em;">
+                  <%= radio_button_tag(:role, role, !!active) %>
+                  <%= role.capitalize %>
+                </label>
+              <% end %>
+            </div>
+            <%= f.submit 'OK', class: 'hidden' %>
           <% end %>
+        </td>
+        <td style="text-align: right;">
+          <%= link_to(
+                  fa_icon(:users),
+                  catalog_admin_group_path(id: grp.id),
+                  class: 'btn btn-xs btn-default',
+                  'data-label': 'invite users'
+                ) %>
+            <%= link_to(
+                  fa_icon(:pencil),
+                  edit_catalog_admin_group_path(id: grp.id),
+                  class: 'btn btn-xs btn-default',
+                    'data-label': 'edit group'
+                ) %>
+            <%= link_to(
+                  fa_icon(:trash),
+                  catalog_admin_group_path(id: grp.id),
+                  method: :delete,
+                  data: { confirm: t('delete_confirm', model: grp.name) },
+                  class: 'btn btn-xs btn-default'
+                ) %>
         </td>
       </tr>
     <% end %>
   </tbody>
 </table>
+<% end %>
+
+<script>
+  var group_roles_handler = function(e){
+    var btn_group = e.target.parentElement;
+    var group_id = btn_group.getAttribute('data-group');
+    var submit_button = document.querySelector('#edit_group_' + group_id + ' input[type=submit]');
+    window.setTimeout(function(){
+      submit_button.click();
+    }, 100);
+  };
+
+  var group_permissions_buttons = document.querySelectorAll('#group-permissions-table .btn-group label');
+  for (var i=0; i < group_permissions_buttons.length; i++){
+    group_permissions_buttons[i].addEventListener('click', group_roles_handler, false);
+  }
+</script>
+
+
+<% provide(:extra_setup) do %>
+<hr/>
+
+<div class="panel panel-default">
+  <div class="panel-heading">
+    <span class="pull-right">
+      <%= link_to(new_catalog_admin_user_path) do %>
+        <%= fa_icon(:"user-plus", :text => t('new_user')) %>
+      <% end %>
+    </span>
+    <%= t('users') %>
+  </div>
+  <%= render 'catalog_users' %>
+</div>
+
+<% end %>
