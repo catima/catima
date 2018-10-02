@@ -9,6 +9,9 @@ it:
       page:
         slug: "Slug"
         title: "Titolo"
+      group:
+        name: "Name"
+        description: "Description"
   "yes": "Si"
   "no": "No"
   boolean_field: Campo booleano (si/no)
@@ -85,16 +88,16 @@ it:
         new_password: "Nuova password"
         new_password_confirmation: "Confermare la nouva password"
     registrations:
-        new:
-          title: "Iscrizione"
-          submit: "Iscrizione"
-        edit:
-          title: "Il mio profilo"
-          submit: "Salvare il profilo"
-          leave_blank: "Lascia vuoto se non si vuole cambiare la password"
-          need_to_confirm: "Si prega di fornire la password corrente per confermare le modifiche"
-          unhappy: "Insoddisfatto?"
-          cancel_account: "Cancellare il mio account"
+      new:
+        title: "Iscrizione"
+        submit: "Iscrizione"
+      edit:
+        title: "Il mio profilo"
+        submit: "Salvare il profilo"
+        leave_blank: "Lascia vuoto se non si vuole cambiare la password"
+        need_to_confirm: "Si prega di fornire la password corrente per confermare le modifiche"
+        unhappy: "Insoddisfatto?"
+        cancel_account: "Cancellare il mio account"
     shared:
       links:
         log_in: "Login"
@@ -220,6 +223,7 @@ it:
       MDhms: "%-d %B %H:%M:%S"
       YMDhms: "%-d %B %Y %H:%M:%S"
 
+  cancel: 'Annulla'
   delete: Elimina
   edit: Modificare
   visible: Visibile
@@ -339,10 +343,12 @@ it:
         no_groups_for_catalog_warning: Non ci sono gruppi per questo catalogo.
       catalog_users:
         group_role: Gruppo
+      edit:
+        update_user: Aggiorna utente
 
     groups:
       index:
-        title: Gruppi
+        title: Groups
       new:
         new_group: New group
         new_group_for_catalog: New group for catalog «%{catalog}»
@@ -356,16 +362,14 @@ it:
       show:
         show_group: Group “%{group}”
         back: Back to groups
-      list_members:
         group_members: Group members
         no_users: Currently no users are in this group (except the group owner)
         invite_users: Invite users
-        invited: Invited
-        member: Member
-        admin: Admin
 
     memberships:
       new:
+        members_emails: Emails of members to invite
+        one_mail_per_line: For multiple members to invite at once, write one email address per line.
         invite_members_to_group: Invite members to group “%{group}”
         invite_members: Invite members
 
@@ -380,12 +384,12 @@ it:
 
   memberships:
     index:
-      my_groups: My groups
+      my_groups: I miei gruppi
     list_memberships:
-      no_memberships_warning: You are not member in any group yet.
-      delete_confirm: "Are you sure you want to leave group “%{group}”?"
-      leave: Leave
-      group: Group
-      catalog: Catalog
-      role: Role
-      group_role: Group
+      no_memberships_warning: Non sei ancora membro di nessun gruppo.
+      delete_confirm: "Sei sicuro di voler lasciare il gruppo “%{group}”?"
+      leave: Lascia
+      group: Gruppo
+      catalog: Catalogo
+      role: Ruolo
+      group_role: Gruppo
