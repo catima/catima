@@ -34,6 +34,7 @@ class CatalogPermission < ApplicationRecord
   def role_at_least?(role_requirement)
     requirement_index = ROLE_OPTIONS.index(role_requirement.to_s)
     return false if requirement_index.nil?
+
     ROLE_OPTIONS.index(role) >= requirement_index
   end
 end

@@ -48,6 +48,7 @@ class Field::ChoiceSet < ::Field
 
   def choices
     return Choice.none if choice_set.nil?
+
     choice_set.choices.sorted
   end
 
@@ -69,6 +70,7 @@ class Field::ChoiceSet < ::Field
 
   def selected_choices(item)
     return [] if raw_value(item).blank?
+
     choices.where(:id => raw_value(item))
   end
 

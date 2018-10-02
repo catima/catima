@@ -18,6 +18,7 @@ class Configuration < ApplicationRecord
   def active_redirect_catalog
     return nil unless root_mode == "redirect"
     return nil unless default_catalog && default_catalog.active?
+
     default_catalog
   end
 

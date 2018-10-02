@@ -41,6 +41,7 @@ class ItemList::Navigation
 
   def offset_actual
     return nil if current_index.nil?
+
     window_offset + current_index
   end
 

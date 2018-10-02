@@ -31,6 +31,7 @@ class Field::FilePresenter < FieldPresenter
 
   def file_info
     return nil if raw_value.nil?
+
     info = files_as_array.map do |file|
       "<div class=\"file-link\">" \
         "<a href=\"#{file_url(file)}\" target=\"_blank\">" \

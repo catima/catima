@@ -53,6 +53,7 @@ class Admin::UsersController < Admin::BaseController
   def build_default_catalog_permissions
     Catalog.sorted.each do |catalog|
       next if @user.catalog_permissions.find { |p| p.catalog_id == catalog.id }
+
       @user.catalog_permissions.build(:catalog => catalog, :role => "user")
     end
   end

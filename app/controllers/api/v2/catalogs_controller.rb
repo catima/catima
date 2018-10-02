@@ -1,8 +1,10 @@
 class API::V2::CatalogsController < ActionController::Base
   def show
     return not_available unless Catalog.valid?(params['catalog_slug'])
+
     catalog = Catalog.find_by(slug: params['catalog_slug'])
     return not_available unless catalog.visible
+
     render(json:
       {
         slug: catalog.slug,

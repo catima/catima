@@ -27,16 +27,19 @@ module CatalogAdmin::FieldsHelper
 
   def field_primary_badge(field)
     return unless field.primary?
+
     content_tag(:span, t("primary"), :class => "label label-warning")
   end
 
   def field_restricted_badge(field)
     return unless field.restricted?
+
     content_tag(:span, fa_icon(:lock), class: 'label label-danger')
   end
 
   def field_i18n_badge(field)
     return unless field.i18n?
+
     content_tag(:span, t("i18n"), :class => "label label-info")
   end
 

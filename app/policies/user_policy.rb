@@ -21,6 +21,7 @@ class UserPolicy
   def edit_in_catalog?(catalog)
     return false unless edit?
     return false if record.system_admin?
+
     !record.admin_catalog_ids.include?(catalog.id)
   end
 
@@ -46,6 +47,7 @@ class UserPolicy
 
     def resolve
       return scope.all if user.system_admin? || user.admin_of_any_catalog?
+
       scope.none
     end
   end
@@ -54,6 +56,7 @@ class UserPolicy
 
   def remove_prohibited_role_changes(params)
     return params if user.system_admin?
+
     admin_catalog_ids = user.admin_catalog_ids
     params.fetch(:catalog_permissions_attributes, {}).delete_if do |_, perm|
       perm[:role] == "admin" || !admin_catalog_ids.include?(perm[:catalog_id].to_i)

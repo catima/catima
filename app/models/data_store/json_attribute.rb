@@ -26,6 +26,7 @@ class DataStore::JsonAttribute
 
   def self.define_writer(item_class, name, attr)
     return unless item_class.public_method_defined?("#{name}=")
+
     item_class.send(:define_method, "#{name}_json=") do |json_string|
       attr.set(self, json_string)
     end
@@ -67,6 +68,7 @@ class DataStore::JsonAttribute
   def validate(item)
     json_string = item.instance_variable_get(json_string_variable)
     return if json_string.blank?
+
     begin
       JSON.parse(json_string)
     rescue StandardError
@@ -84,6 +86,7 @@ class DataStore::JsonAttribute
 
   def generate_json(data)
     return nil if data.nil?
+
     data = { "raw_value" => data } if !data.is_a?(Array) && !data.is_a?(Hash)
     JSON.pretty_generate(data)
   end

@@ -19,13 +19,16 @@ module ControlsCatalog
 
   def visibility
     return if catalog_visible_to_user && catalog_unrestricted_to_user
+
     redirect_to(root_path, :alert => t("catalogs.not_visible", :catalog_name => catalog.name))
   end
 
   def catalog_visible_to_user
     return true if catalog.visible
+
     if current_user.authenticated?
       return true if current_user.system_admin
+
       return true if current_user.catalog_role_at_least?(catalog, "editor")
     end
     false
@@ -33,8 +36,10 @@ module ControlsCatalog
 
   def catalog_unrestricted_to_user
     return true unless catalog.restricted
+
     if current_user.authenticated?
       return true if current_user.system_admin
+
       return true if current_user.catalog_role_at_least?(catalog, "member")
     end
     false
@@ -50,6 +55,7 @@ module ControlsCatalog
 
   def redirect_to_valid_locale
     return if catalog.valid_locale?(params[:locale])
+
     redirect_to(:locale => preferred_locale)
   end
 
@@ -61,8 +67,11 @@ module ControlsCatalog
 
   def remember_requested_locale
     return if params[:locale].nil?
+
     return unless current_user.authenticated?
+
     return if current_user.primary_language == params[:locale]
+
     current_user.update_column(:primary_language, params[:locale])
     true
   end

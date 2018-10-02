@@ -36,12 +36,14 @@ module ItemsHelper
   def item_thumbnail(item, options={})
     field = item.list_view_fields.find { |f| f.is_a?(Field::Image) }
     return if field.nil?
+
     field_value(item, field, options.reverse_merge(:style => :compact))
   end
 
   def item_list_view(item, options={})
     item_view = item.item_type.default_list_view
     return item_display_name if item_view.nil?
+
     presenter = ItemViewPresenter.new(self, item_view, item, I18n.locale, options)
     presenter.render
   end
@@ -54,8 +56,10 @@ module ItemsHelper
     flds.each_with_object([]) do |field, html|
       next if field == item.primary_field
       next unless field.human_readable?
+
       value = strip_tags(field_value(item, field, :style => :compact))
       next if value.blank?
+
       html << [content_tag(:b, "#{field.name}:"), value].join(" ")
     end.join("; ").html_safe
   end
@@ -67,6 +71,7 @@ module ItemsHelper
   def default_display_name(item)
     field = item.field_for_select
     return item.to_s if field.nil?
+
     strip_tags(field_value(item, field, :style => :compact)) || ''.html_safe
   end
 end

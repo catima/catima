@@ -16,6 +16,7 @@ module CatalogAdmin::CatalogsHelper
   def catalog_access(catalog)
     return 1 if catalog.visible && !catalog.restricted
     return 2 if catalog.visible && catalog.restricted
+
     3
   end
 end

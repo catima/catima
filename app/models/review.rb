@@ -43,6 +43,7 @@ class Review
 
   def submitted
     return unless submit_allowed?
+
     self.review_status = "ready"
   end
 end

@@ -16,6 +16,7 @@ class Search::DateTimeStrategy < Search::BaseStrategy
 
   def date_for_keywords(item)
     return date_from_hash(raw_value(item)) if raw_value(item).is_a?(Hash)
+
     raw_value(item)
   end
 
@@ -49,6 +50,7 @@ class Search::DateTimeStrategy < Search::BaseStrategy
     # time_with_zone = field.form_submission_as_time_with_zone(value)
     # return scope if time_with_zone.nil?
     return scope if dt_int == 0
+
     scope.where(
       "bigdate_to_num(cast(#{data_field_expr} AS json)) #{operator} ?",
       dt_int

@@ -12,6 +12,7 @@ class CatalogLoadData
   def load
     catalog = Catalog.find_by(slug: @slug)
     return unless File.directory?(@data_dir)
+
     # In a first round we load the base data for each item type.
     load_item_types(catalog)
     # In a second roud we also build the values for all reference fields.
@@ -114,11 +115,13 @@ class CatalogLoadData
 
   def update_slug_for_file_field(it, fld)
     return unless fld.type == 'Field::Image' || fld.type == 'Field::File'
+
     it.items.each { |i| update_slug_for_item_and_field(i, fld) }
   end
 
   def update_slug_for_item_and_field(i, fld)
     return if i.data[fld.uuid].nil?
+
     i.behaving_as_type.update(fld.uuid => convert_file_path(i.data[fld.uuid], i.catalog.slug))
   end
 

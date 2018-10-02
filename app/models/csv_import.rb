@@ -70,6 +70,7 @@ class CSVImport < ActiveType::Object
 
   def file_is_csv?
     return false if file.nil?
+
     rows # trigger CSV parse
     true
   rescue CSV::MalformedCSVError
@@ -78,6 +79,7 @@ class CSVImport < ActiveType::Object
 
   def file_must_not_be_malformed
     return if file.nil? || file_is_csv?
+
     errors.add(:file, "does not appear to be in CSV format")
   end
 

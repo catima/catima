@@ -40,6 +40,7 @@ class CatalogDump
     if File.directory?(d) && !Dir[File.join(d, '*')].empty?
       raise "ERROR. '#{d}' is not empty. Please specify an non-existing or empty directory."
     end
+
     FileUtils.mkdir_p(d) unless File.exist?(d)
   end
 
