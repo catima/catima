@@ -21,7 +21,7 @@ script:
 services:
   - redis-server
 addons:
-  postgresql: '10.5'
+  postgresql: '9.5'
   chrome: stable
   apt:
     update: true
