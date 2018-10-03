@@ -433,6 +433,14 @@ fr:
         must_be_unique: Doit être unique
         save_field: Enregistrer le champ
         create_field: Créer le champ
+        editor_component: React component
+        editor_component_help: Choose a React JS component that will be used for data entry.
+        display_component: React component
+        display_component_help: Choose a React JS component that will be used for display on the public site.
+        single_choice: "Une seule valeur – optionnel"
+        single_required_choice: "Une seule valeur – requis"
+        multiple_choice: "Plusieurs valeurs – optionnel"
+        multiple_required_choice: "Plusieurs valeurs – au moins une"
       geometry_option_inputs:
         bounds: Étendue spatiale par défaut
         bounds_help: Si modifiée, la carte utilisera la zone sélectionnée comme étendue spatiale par défaut

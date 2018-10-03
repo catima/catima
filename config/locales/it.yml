@@ -318,6 +318,10 @@ it:
         restrict_field_to_members_and_staff: Limitare il campo ai membri e al personale
         include_in_list_view: "Include this field in edition list view (Data)"
         include_in_public_list_view: "Include this field in site list view"
+        single_choice: "Single value – optional"
+        single_required_choice: "Single value – required"
+        multiple_choice: "Multiple values – optional"
+        multiple_required_choice: "Multiple values – at least one"
       table:
         list_view?: 'Edition mode?'
         public_list_view?: 'Public mode?'
