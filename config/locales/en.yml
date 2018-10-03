@@ -437,6 +437,10 @@ en:
         editor_component_help: Choose a React JS component that will be used for data entry.
         display_component: React component
         display_component_help: Choose a React JS component that will be used for display on the public site.
+        single_choice: "Single value – optional"
+        single_required_choice: "Single value – required"
+        multiple_choice: "Multiple values – optional"
+        multiple_required_choice: "Multiple values – at least one"
       geometry_option_inputs:
         bounds: Default spatial extent
         bounds_help: If modified, the map will use the selected area as the default spacial extent

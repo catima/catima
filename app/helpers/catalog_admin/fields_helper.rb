@@ -4,7 +4,7 @@ module CatalogAdmin::FieldsHelper
       :style,
       form.object.style_choices.keys,
       :itself,
-      ->(key) { form.object.style_choices[key] },
+      ->(key) { I18n.t(".catalog_admin.fields.common_form_fields.#{translation_choice_name(key)}_choice") },
       :hide_label => true
     )
   end
@@ -96,6 +96,11 @@ module CatalogAdmin::FieldsHelper
   end
 
   private
+
+  # Clean the type name of the choice to match translation strings
+  def translation_choice_name(key)
+    key.sub('-', '_').downcase
+  end
 
   def field_move_link(field, direction)
     link_to(
