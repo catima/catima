@@ -262,6 +262,8 @@ Rails.application.routes.draw do
               :constraints => ItemsController::Constraint
 
     get ":slug" => "custom#show", :constraints => CustomController::Constraint
+
+    get "/doc", :to => "documentation#index"
   end
 
   # ===========================================================================
