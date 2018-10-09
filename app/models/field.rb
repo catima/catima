@@ -241,6 +241,7 @@ class Field < ApplicationRecord
 
   def exclude_base64(string)
     return '' if string.blank?
+    return '' unless string.instance_of? String
 
     string.gsub(%r{data:image/([a-zA-Z]*);base64,([^\"]*)\"}, '')
   end
