@@ -1,7 +1,7 @@
 module DocumentationHelper
   def markdown_2_html(url)
     markdown = Redcarpet::Markdown.new(
-      Redcarpet::Render::HTML,
+      CustomRender.new,
       autolink: true,
       tables: true,
       filter_html: true,

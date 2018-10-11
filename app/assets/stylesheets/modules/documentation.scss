@@ -9,3 +9,47 @@
 #doc-accordion a:focus {
   text-decoration: none;
 }
+
+#doc-accordion img {
+  height: auto;
+  max-width: 100%;
+}
+
+#doc-content table {
+  margin-top: 20px;
+  margin-bottom: 20px;
+}
+
+#doc-content table thead {
+  display: table-header-group;
+  vertical-align: middle;
+  border-color: inherit;
+}
+
+#doc-content table tr {
+  background-color: #fff;
+  border-top: 1px solid #c6cbd1;
+}
+
+#doc-content table th {
+  padding: 6px 13px;
+  border: 1px solid #dfe2e5;
+}
+
+#doc-content table td {
+  padding: 6px 13px;
+  border: 1px solid #dfe2e5;
+}
+
+#doc-content table tr:nth-child(even) {
+  background-color: #f6f8fa;
+}
+
+#doc-content table tr:nth-child(odd) {
+  background-color: #fff;
+}
+
+#doc-content blockquote {
+  color: #6a737d;
+  font-size: 14px;
+}

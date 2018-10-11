@@ -16,7 +16,7 @@ For some applications, CATIMA can be a replacement for databases such as FileMak
 
 ## Documentation
 
-CATIMA is a Rails 4.2.8 app.
+CATIMA is a Rails 5.2 app.
 
 This README describes the purpose of this repository and how to set up a development environment. Other sources of documentation are as follows:
 

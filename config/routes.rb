@@ -23,7 +23,7 @@ Rails.application.routes.draw do
   end
 
   # ===========================================================================
-  # Devise & Favorites
+  # Devise, favorites & group memberships
 
   scope :path => ":locale" do
     devise_for :users, :skip => %i[passwords registrations sessions omniauth_callbacks]
