@@ -320,7 +320,7 @@ fr:
         catalog_access: Visibilité du catalogue
         open_for_everyone: Ouvert à tous
         open_to_members: Ouvert aux membres
-        open_to_catalog_staff: Ouvert au personnel
+        open_to_catalog_staff: Ouvert au personnel du catalogue
       edit_style:
         custom_style_catalog: "Personnaliser le style de catalogue"
         general: "Général"
@@ -428,7 +428,7 @@ fr:
         use_as_primary_field: Utiliser comme champ primaire
         include_in_list_view: Inclure le champ dans la liste des fiches en mode édition (Data)
         include_in_public_list_view: Inclure le champ dans la liste des fiches en mode consultation
-        restrict_field_to_members_and_staff: Restreindre le champ aux membres et au personnel
+        restrict_field_to_members_and_staff: Restreindre le champ aux membres et au personnel du catalogue
         data_entry_options: Options de saisie des données
         must_be_unique: Doit être unique
         save_field: Enregistrer le champ
