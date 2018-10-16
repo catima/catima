@@ -644,3 +644,7 @@ fr:
   documentation:
     index:
       title: Documentation
+      guest: Search
+      user: Favorites & groups
+      editors: Catalog edition
+      admin: Catalog admin

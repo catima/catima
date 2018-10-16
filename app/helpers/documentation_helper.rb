@@ -1,7 +1,7 @@
 module DocumentationHelper
   def markdown_2_html(file_name)
     markdown = Redcarpet::Markdown.new(
-      CustomRender.new(
+      DocRender.new(
         :locale => define_locale(file_name),
         :with_toc_data => true
       ),

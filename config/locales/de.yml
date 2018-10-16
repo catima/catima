@@ -609,3 +609,7 @@ de:
   documentation:
     index:
       title: Dokumentation
+      guest: Search
+      user: Favorites & groups
+      editors: Catalog edition
+      admin: Catalog admin

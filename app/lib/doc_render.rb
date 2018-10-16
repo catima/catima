@@ -1,5 +1,5 @@
 # Custom render class for the Redcarpet library
-class CustomRender < Redcarpet::Render::HTML
+class DocRender < Redcarpet::Render::HTML
   def initialize(options={})
     @options = options
     super(options)

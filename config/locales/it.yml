@@ -401,3 +401,7 @@ it:
   documentation:
     index:
       title: Documentazione
+      guest: Search
+      user: Favorites & groups
+      editors: Catalog edition
+      admin: Catalog admin
