@@ -86,8 +86,6 @@ class DataStore::JsonAttribute
 
   def generate_json(data)
     return nil if data.nil?
-
-    data = { "raw_value" => data } if !data.is_a?(Array) && !data.is_a?(Hash)
     JSON.pretty_generate(data)
   end
 end
