@@ -397,3 +397,7 @@ it:
       catalog: Catalogo
       role: Ruolo
       group_role: Gruppo
+
+  documentation:
+    index:
+      title: Documentazione

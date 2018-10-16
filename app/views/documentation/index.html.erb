@@ -1,14 +1,14 @@
-<% provide(:title, "Documentation") %>
+<% provide(:title, t('.title')) %>
 
 <div id="doc-content">
-  <%= markdown_2_html("#{ENV['DOC_BASE_URL']}1-introduction.md").html_safe %>
+  <%= markdown_2_html("1-introduction.md").html_safe %>
 
   <br>
 
   <div class="panel-group" id="doc-accordion">
     <%= render("documentation/accordion_item",
                title: "Search",
-               content_url: "#{ENV['DOC_BASE_URL']}2-basics.md",
+               file_name: "2-search.md",
                id: random_id)
 
     %>
@@ -16,15 +16,15 @@
     <% if current_user.catalog_role_at_least?(@catalog, 'user') %>
       <%= render("documentation/accordion_item",
                  title: "Favorites & groups",
-                 content_url: "#{ENV['DOC_BASE_URL']}2-basics.md",
+                 file_name: "3-favorites.md",
                  id: random_id)
       %>
     <% end %>
 
     <% if current_user.catalog_role_at_least?(@catalog, 'editor') %>
       <%= render("documentation/accordion_item",
-                 title: "Catalog staff",
-                 content_url: "#{ENV['DOC_BASE_URL']}3-data.md",
+                 title: "Catalog editing",
+                 file_name: "4-data.md",
                  id: random_id)
       %>
     <% end %>
@@ -32,7 +32,7 @@
     <% if current_user.catalog_role_at_least?(@catalog, 'admin') %>
       <%= render("documentation/accordion_item",
                  title: "Catalog admin",
-                 content_url: "#{ENV['DOC_BASE_URL']}4-setup.md",
+                 file_name: "5-setup.md",
                  id: random_id)
       %>
     <% end %>

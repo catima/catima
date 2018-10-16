@@ -605,3 +605,7 @@ de:
       catalog: Katalog
       role: Rolle
       group_role: Gruppe
+
+  documentation:
+    index:
+      title: Dokumentation

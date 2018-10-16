@@ -42,7 +42,7 @@ module ItemsHelper
 
   def item_list_view(item, options={})
     item_view = item.item_type.default_list_view
-    return item_display_name if item_view.nil?
+    return item_display_name(item) if item_view.nil?
 
     presenter = ItemViewPresenter.new(self, item_view, item, I18n.locale, options)
     presenter.render

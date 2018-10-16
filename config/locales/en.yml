@@ -639,3 +639,7 @@ en:
       catalog: Catalog
       role: Role
       group_role: Group
+
+  documentation:
+    index:
+      title: Documentation
