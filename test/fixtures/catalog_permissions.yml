@@ -83,6 +83,16 @@ multilingual_editor:
   user: multilingual_editor
   role: editor
 
+multilingual_member:
+  catalog: multilingual
+  user: multilingual_member
+  role: member
+
+multilingual_user:
+  catalog: multilingual
+  user: multilingual_user
+  role: user
+
 reviewed_editor:
   catalog: reviewed
   user: reviewed_editor
