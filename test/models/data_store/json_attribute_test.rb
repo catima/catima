@@ -15,13 +15,9 @@ class DataStore::JsonAttributeTest < ActiveSupport::TestCase
     @item.respond_to?(:name_json)
   end
 
-  test "reader provides existing non-array, non-hash value as raw_value" do
+  test "reader does not transform existing non-array, non-hash values" do
     @item.name = "foo"
-    assert_equal(<<~TEXT.strip, @item.name_json)
-      {
-        "raw_value": "foo"
-      }
-    TEXT
+    assert_equal('"foo"', @item.name_json)
   end
 
   test "writer is defined" do
