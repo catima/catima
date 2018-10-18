@@ -67,6 +67,18 @@ class Field::Text < ::Field
     (options && options['formatted_text'] && options['formatted_text'].to_i) == 1
   end
 
+  def raw_value(item, locale=I18n.locale, suffix="")
+    attrib = i18n? ? "#{uuid}_#{locale}#{suffix}" : uuid
+    v = item.behaving_as_type.public_send(attrib)
+    return v if v.nil? || !formatted?
+
+    begin
+      return JSON.parse(v)['content']
+    rescue JSON::ParserError
+      return v
+    end
+  end
+
   private
 
   def build_validators
