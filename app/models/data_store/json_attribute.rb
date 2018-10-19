@@ -86,6 +86,7 @@ class DataStore::JsonAttribute
 
   def generate_json(data)
     return nil if data.nil?
+
     JSON.pretty_generate(data)
   end
 end
