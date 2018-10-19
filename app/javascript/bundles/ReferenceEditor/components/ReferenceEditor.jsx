@@ -15,11 +15,41 @@ class ReferenceEditor extends Component {
   }
 
   componentDidMount(){
-    axios.get(`/api/v2/${this.props.catalog}/${this.props.locale}/${this.props.itemType}`)
+    let config = {
+      retry: 1,
+      retryDelay: 1000
+    };
+
+    axios.get(`/api/v2/${this.props.catalog}/${this.props.locale}/${this.props.itemType}`, config)
       .then(res => {
         this.setState({ items: res.data.items });
         this.setState({ isLoading: false });
       });
+
+    // Retry failed requests
+    axios.interceptors.response.use(undefined, (err) => {
+      let config = err.config;
+
+      if(!config || !config.retry) return Promise.reject(err);
+
+      config.__retryCount = config.__retryCount || 0;
+
+      if(config.__retryCount >= config.retry) {
+        return Promise.reject(err);
+      }
+
+      config.__retryCount += 1;
+
+      let backoff = new Promise(function(resolve) {
+        setTimeout(function() {
+          resolve();
+        }, config.retryDelay || 1);
+      });
+
+      return backoff.then(function() {
+        return axios(config);
+      });
+    });
   }
 
   renderEditor(){
