@@ -455,8 +455,8 @@ CREATE TABLE public.fields (
     field_set_type character varying,
     editor_component character varying,
     display_component character varying,
-    restricted boolean DEFAULT false NOT NULL,
-    display_in_public_list boolean DEFAULT true NOT NULL
+    display_in_public_list boolean DEFAULT true NOT NULL,
+    restricted boolean DEFAULT false NOT NULL
 );
 
 
@@ -606,7 +606,8 @@ CREATE TABLE public.items (
     search_data_fr text,
     search_data_it text,
     uuid character varying,
-    views jsonb
+    views jsonb,
+    updater_id integer
 );
 
 
@@ -1832,6 +1833,7 @@ INSERT INTO "schema_migrations" (version) VALUES
 ('20180922224350'),
 ('20180923135339'),
 ('20180923135401'),
-('20180925152745');
+('20180925152745'),
+('20181022124602');
 
 

@@ -15,6 +15,7 @@ class Field::ChoiceSetTest < ActiveSupport::TestCase
   test "required multivalued choice set field validates presence of value" do
     item = Item.new(
       :creator => users(:one_editor),
+      :updater => users(:one_editor),
       :catalog => catalogs(:one),
       :item_type => item_types(:one_with_required_choice_set)
     ).behaving_as_type
@@ -31,6 +32,7 @@ class Field::ChoiceSetTest < ActiveSupport::TestCase
   test "persists multiple choices" do
     item = Item.new(
       :creator => users(:one_editor),
+      :updater => users(:one_editor),
       :catalog => catalogs(:one),
       :item_type => item_types(:one_with_required_choice_set)
     ).behaving_as_type

@@ -387,3 +387,43 @@ not_visible_book_title:
   primary: true
   field_set: not_visible_book (ItemType)
   uuid: not_visible_book_title_uuid
+
+editor_field:
+  type: "Field::Editor"
+  name_translations: { "name_en": "Title" }
+  name_plural_translations: { "name_plural_en": "Titles" }
+  slug: creator
+  primary: false
+  field_set: another_book (ItemType)
+  uuid: another_book_with_editor_title_uuid
+  options: { "updater": "0", "timestamps": "0" }
+
+editor_field_with_updater:
+  type: "Field::Editor"
+  name_translations: { "name_en": "Title" }
+  name_plural_translations: { "name_plural_en": "Titles" }
+  slug: creator-with-updater
+  primary: false
+  field_set: another_book (ItemType)
+  uuid: another_book_with_editor_title_uuid
+  options: { "updater": "1", "timestamps": "0" }
+
+editor_field_with_timestamps:
+  type: "Field::Editor"
+  name_translations: { "name_en": "Title" }
+  name_plural_translations: { "name_plural_en": "Titles" }
+  slug: creator-with-timestamps
+  primary: false
+  field_set: another_book (ItemType)
+  uuid: another_book_with_editor_title_uuid
+  options: { "updater": "0", "timestamps": "1" }
+
+editor_field_with_updater_and_timestamps:
+  type: "Field::Editor"
+  name_translations: { "name_en": "Title" }
+  name_plural_translations: { "name_plural_en": "Titles" }
+  slug: creator-with-updater-and-timestamps
+  primary: false
+  field_set: another_book (ItemType)
+  uuid: another_book_with_editor_title_uuid
+  options: { "updater": "1", "timestamps": "1" }

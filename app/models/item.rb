@@ -5,6 +5,7 @@
 #  catalog_id     :integer
 #  created_at     :datetime         not null
 #  creator_id     :integer
+#  updater_id     :integer
 #  data           :jsonb
 #  id             :integer          not null, primary key
 #  item_type_id   :integer
@@ -15,6 +16,7 @@
 #  search_data_fr :text
 #  search_data_it :text
 #  updated_at     :datetime         not null
+#  updater_id     :integer
 #  uuid           :string
 #  views          :jsonb
 #
@@ -35,10 +37,12 @@ class Item < ApplicationRecord
   belongs_to :catalog
   belongs_to :item_type
   belongs_to :creator, :class_name => "User"
+  belongs_to :updater, :class_name => "User"
   has_many :favorites, :dependent => :destroy
 
   validates_presence_of :catalog
   validates_presence_of :creator
+  validates_presence_of :updater
   validates_presence_of :item_type
   validate :unique_value_fields
 

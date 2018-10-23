@@ -40,6 +40,7 @@ class Field < ApplicationRecord
     "datetime" => "Field::DateTime",
     "decimal" => "Field::Decimal",
     "email" => "Field::Email",
+    "editor" => "Field::Editor",
     "file" => "Field::File",
     "geometry" => "Field::Geometry",
     "image" => "Field::Image",

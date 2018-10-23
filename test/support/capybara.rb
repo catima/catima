@@ -3,7 +3,7 @@ require "capybara/rails"
 Capybara.javascript_driver = :chrome
 
 Capybara.register_driver :chrome do |app|
-  opts = ENV['HEADLESS'] == '0' ? {} : Selenium::WebDriver::Chrome::Options.new(args: %w[headless disable-gpu])
+  opts = ENV['HEADLESS'] == '0' ? Selenium::WebDriver::Chrome::Options.new() : Selenium::WebDriver::Chrome::Options.new(args: %w[headless disable-gpu])
   Capybara::Selenium::Driver.new(app, browser: :chrome, options: opts)
 end
 

@@ -33,6 +33,7 @@ en:
   date_time_field: Date time field
   decimal_field: Decimal field
   email_field: Email field
+  editor_field: Editor field
   file_field: File field
   geometry_field: Geographic field
   image_field: Image field
@@ -137,6 +138,10 @@ en:
       favorites_remove: "Remove from favorites"
     show:
       view_more: "View more"
+    editor:
+      created_by: Created by %{editor}
+      updated_by: Updated by %{updater}
+      at: on %{date}
   invitations_mailer:
     account_information:
       email: "Email"
@@ -255,6 +260,10 @@ en:
   i18n_enable: "Enable i18n"
   legend_help: "If checked, a legend can be added to the image."
   legend_enable: "Add a legend"
+  updater_enable: Display updater
+  updater_help: If checked, displays the updater's email
+  timestamps_enable: Display timestamps
+  timestamps_help: If checked, displays created at and updated at fields
   locale: Locale
   menu_items: Menu items
   pages: Pages

@@ -14,6 +14,7 @@ class Field::ReferenceTest < ActiveSupport::TestCase
   test "required multivalued reference field validates presence of value" do
     item = Item.new(
       :creator => users(:one_editor),
+      :updater => users(:one_editor),
       :catalog => catalogs(:one),
       :item_type => item_types(:one_with_required_reference)
     ).behaving_as_type
@@ -30,6 +31,7 @@ class Field::ReferenceTest < ActiveSupport::TestCase
   test "persists multiple references" do
     item = Item.new(
       :creator => users(:one_editor),
+      :updater => users(:one_editor),
       :catalog => catalogs(:one),
       :item_type => item_types(:one_with_required_reference)
     ).behaving_as_type

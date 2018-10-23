@@ -16,6 +16,7 @@ Rails.application.routes.draw do
       scope :path => ':catalog_slug' do
         scope :path => ':locale' do
           get '/' => 'catalogs#show'
+          get '/users' => 'users#index', as: 'users'
           get ':item_type' => 'items#index', as: 'items'
         end
       end

@@ -15,6 +15,7 @@
 #  search_data_fr :text
 #  search_data_it :text
 #  updated_at     :datetime         not null
+#  updater_id     :integer
 #  uuid           :string
 #  views          :jsonb
 #
@@ -40,12 +41,14 @@ created_by_two_editor:
 one_author_empty_fields:
   catalog: one
   creator: one_admin
+  updater: one_admin
   item_type: one_author
   data: { "one_author_nickname_uuid": "Empty Author" }
 
 one_author_stephen_king:
   catalog: one
   creator: one_admin
+  updater: one_admin
   item_type: one_author
   data: {
       "one_author_name_uuid": "Stephen King",
@@ -68,30 +71,42 @@ one_author_stephen_king:
 one_author_very_old:
   catalog: one
   creator: one_admin
+  updater: one_admin
   item_type: one_author
   data: { "one_author_age_uuid": 2456, "one_author_name_uuid": "Very Old", "one_author_deceased_uuid": "1" }
 
 one_author_very_young:
   catalog: one
   creator: one_admin
+  updater: one_admin
   item_type: one_author
   data: { "one_author_age_uuid": 3, "one_author_name_uuid": "Very Young", "one_author_deceased_uuid": "0" }
+
+one_book_theory_of_relativity:
+  catalog: one
+  creator: one_admin
+  updater: one_admin
+  item_type: another_book
+  data: { "another_book_title_uuid": "Theory of Relativity" }
 
 one_book_end_of_watch:
   catalog: one
   creator: one_admin
+  updater: one_admin
   item_type: one_book
   data: { "one_book_title_uuid": "End of Watch" }
 
 one_book_finders_keepers:
   catalog: one
   creator: one_admin
+  updater: one_admin
   item_type: one_book
   data: { "one_book_title_uuid": "Finders Keepers" }
 
 one_author_with_images:
   catalog: one
   creator: one_admin
+  updater: one_admin
   item_type: one_author
   data: {
       "one_author_picture_uuid": {
@@ -131,18 +146,21 @@ multilingual_author_example:
 not_visible_book_farewell_to_arms:
   catalog: not_visible
   creator: one_admin
+  updater: one_Admin
   item_type: not_visible_book
   data: { "not_visible_book_title_uuid": "A Farewell to Arms" }
 
 reviewed_book_end_of_watch:
   catalog: reviewed
   creator: reviewed_editor
+  updater: reviewed_editor
   item_type: reviewed_book
   data: { "reviewed_book_title_uuid": "End of Watch (book)" }
 
 reviewed_book_finders_keepers_approved:
   catalog: reviewed
   creator: reviewed_editor
+  updater: reviewed_editor
   item_type: reviewed_book
   review_status: approved
   data: { "reviewed_book_title_uuid": "Finders Keepers (book)" }
@@ -150,36 +168,42 @@ reviewed_book_finders_keepers_approved:
 reviewed_book_harry_potter_pending:
   catalog: reviewed
   creator: reviewed_editor
+  updater: reviewed_editor
   item_type: reviewed_book
   review_status: ready
   data: { "reviewed_book_title_uuid": "Harry Potter (book)" }
 
 search_vehicle_honda_accord:
   creator: system_admin_invited_by_one
+  updater: system_admin_invited_by_one
   catalog: search
   item_type: search_vehicle
   data: { "search_vehicle_make_uuid": "Honda", "search_vehicle_model_uuid": "Accord" }
 
 search_vehicle_toyota_prius:
   creator: system_admin_invited_by_one
+  updater: system_admin_invited_by_one
   catalog: search
   item_type: search_vehicle
   data: { "search_vehicle_make_uuid": "Toyota", "search_vehicle_model_uuid": "Prius" }
 
 search_vehicle_toyota_highlander:
   creator: system_admin_invited_by_one
+  updater: system_admin_invited_by_one
   catalog: search
   item_type: search_vehicle
   data: { "search_vehicle_make_uuid": "Toyota", "search_vehicle_model_uuid": "Highlander" }
 
 search_vehicle_toyota_camry:
   creator: system_admin_invited_by_one
+  updater: system_admin_invited_by_one
   catalog: search
   item_type: search_vehicle
   data: { "search_vehicle_make_uuid": "Toyota", "search_vehicle_model_uuid": "Camry" }
 
 search_vehicle_toyota_camry_hybrid:
   creator: system_admin_invited_by_one
+  updater: system_admin_invited_by_one
   catalog: search
   item_type: search_vehicle
   data: { "search_vehicle_make_uuid": "Toyota", "search_vehicle_model_uuid": "Camry Hybrid" }
