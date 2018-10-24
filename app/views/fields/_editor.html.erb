@@ -1,7 +1,7 @@
 <%= t('items.editor.created_by', editor: editor) %>
 <%= t('items.editor.at', date: l(created_at, format: 'YMDhm'.to_sym)) if show_timestamps %>
 
-<% if show_updater %>
+<% if show_updater && updater.present? %>
   <br>
   <%= t('items.editor.updated_by', updater: updater) %>
   <%= t('items.editor.at', date: l(updated_at, format: 'YMDhm'.to_sym)) if show_timestamps %>

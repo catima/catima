@@ -33,6 +33,7 @@ fr:
   date_time_field: Champ date/heure
   decimal_field: Champ décimal
   email_field: Champ e-mail
+  editor_field: Champ éditeur
   file_field: Champ fichier
   geometry_field: Champ géographique
   image_field: Champ image
@@ -137,6 +138,10 @@ fr:
       favorites_remove: "Supprimer des favoris"
     show:
       view_more: "Voir plus"
+    editor:
+      created_by: Créée par %{editor}
+      updated_by: Mise à jour par %{updater}
+      at: le %{date}
   invitations_mailer:
     account_information:
       email: "E-mail"
@@ -255,6 +260,10 @@ fr:
   i18n_enable: "Activer l'option multilingue"
   legend_help: "Si cette case est cochée, une légende peut être ajoutée à l'image."
   legend_enable: "Ajouter une légende"
+  updater_enable: Afficher le dernier éditeur
+  updater_help: Si cette case est cochée, le dernier éditeur de la fiche sera affiché
+  timestamps_enable: Afficher les dates de création et modification
+  timestamps_help: Si cette case est cochée, les dates de création et de modification de la fiche seront affichées
   locale: Langue
   menu_items: Menus
   pages: Pages

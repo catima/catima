@@ -123,6 +123,10 @@ de:
       favorites_remove: "Von Favoriten entfernen"
     show:
       view_more: "Mehr sehen"
+    editor:
+      created_by: Erstellt von %{editor}
+      updated_by: Aktualisiert von %{updater}
+      at: am %{date}
   invitations_mailer:
     account_information:
       email: "E-mail"

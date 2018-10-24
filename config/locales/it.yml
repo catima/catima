@@ -119,6 +119,10 @@ it:
       favorites_remove: "Rimuovi dai preferiti"
     show:
       view_more: "Vedi di più"
+    editor:
+      created_by: Creato da %{editor}
+      updated_by: Aggiornato da %{updater}
+      at: il %{date}
   invitations_mailer:
     account_information:
       email: "E-mail"

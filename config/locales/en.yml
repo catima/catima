@@ -530,6 +530,9 @@ en:
         new_item: New %{item_type}
         create_item: Create %{item_type}
 
+    pages:
+      new:
+        create_page: "Create page"
     users:
       common_form_fields:
         preferred_language: "Admin screens are only available in English, but the user’s preferred language will be honored for login pages and for the catalogs themselves."
@@ -546,10 +549,6 @@ en:
         group_role: Group
       edit:
         update_user: Update user
-
-    pages:
-      new:
-        create_page: "Create page"
 
     menu_items:
       common_form_fields:

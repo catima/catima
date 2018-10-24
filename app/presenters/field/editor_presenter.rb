@@ -4,7 +4,7 @@ class Field::EditorPresenter < FieldPresenter
 
   def input(form, method, options={})
     editor = field.original_editor(item.creator_id)
-    form.hidden_field(method, input_defaults(options).reverse_merge(:help => help, :value => editor.email))
+    form.text_field(method, input_defaults(options).reverse_merge(:help => help, :value => editor.email, :readonly => true))
   end
 
   def value
@@ -14,13 +14,12 @@ class Field::EditorPresenter < FieldPresenter
       editor.email
     else
       updater = field.original_editor(item.updater_id)
-      updater = editor if updater.nil?
 
       @view.render('fields/editor',
                    field: field,
                    editor: editor.email,
                    show_updater: updater_active?,
-                   updater: updater.email,
+                   updater: updater&.email,
                    show_timestamps: timestamps_active?,
                    created_at: item.created_at,
                    updated_at: item.updated_at)
