@@ -31,8 +31,8 @@ module DocumentationHelper
     ENV['DOC_BASE_URL'] + "/" + locale.to_s + "/" + file_name
   end
 
-  # Define current locale for content url if the
-  # content is available, fallback to French otherwise
+  # Define current locale for the content url if the
+  # markdown file is available, fallback to French otherwise
   def define_locale(file_name)
     return I18n.locale.to_s if file_available?(file_name)
 
