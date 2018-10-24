@@ -49,6 +49,7 @@ if Rails.env.development?
       book = books.items.new.behaving_as_type
       book.catalog = library
       book.creator = admin
+      book.updater = admin
 
       fields.each do |field|
         fake_value = Faker::Book.public_send(field.slug)

@@ -84,11 +84,8 @@ class User < ApplicationRecord
       user.save
     end
   end
-  
+
   def describe
-    as_json(only:
-            %i[
-              id email
-              ])
+    as_json(only: %i[id email])
   end
 end

@@ -5,7 +5,6 @@
 #  catalog_id     :integer
 #  created_at     :datetime         not null
 #  creator_id     :integer
-#  updater_id     :integer
 #  data           :jsonb
 #  id             :integer          not null, primary key
 #  item_type_id   :integer
