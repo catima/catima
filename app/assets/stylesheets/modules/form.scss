@@ -26,6 +26,10 @@ form > .form-group {
   margin-bottom: 0;
 }
 
+.form-inline > .form-group {
+  margin: 0;
+}
+
 .form-component .row {
   margin-top: 20px;
 }
@@ -52,7 +56,6 @@ input.input-4 {
 input.margin-right {
   margin-right: 10px;
 }
-
 
 button[data-active=true] {
   color: #eee;
