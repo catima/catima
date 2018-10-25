@@ -139,8 +139,8 @@ fr:
     show:
       view_more: "Voir plus"
     editor:
-      created_by: Créée par %{editor}
-      updated_by: Mise à jour par %{updater}
+      created_by: Créé par %{editor}
+      updated_by: Édité par %{updater}
       at: le %{date}
   invitations_mailer:
     account_information:
