@@ -45,6 +45,7 @@ class CatalogAdmin::ItemsController < CatalogAdmin::BaseController
   def update
     find_item
     authorize(@item)
+    @item.updater = current_user
     if @item.update(item_params)
       redirect_to({ :action => "index" }, :notice => updated_message)
     else
@@ -107,6 +108,7 @@ class CatalogAdmin::ItemsController < CatalogAdmin::BaseController
     @item = @item_type.items.new.tap do |item|
       item.catalog = catalog
       item.creator = current_user
+      item.updater = current_user
     end.behaving_as_type
   end
 
