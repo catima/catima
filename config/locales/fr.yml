@@ -33,7 +33,7 @@ fr:
   date_time_field: Champ date/heure
   decimal_field: Champ décimal
   email_field: Champ e-mail
-  editor_field: Champ éditeur
+  editor_field: Champ rédacteur
   file_field: Champ fichier
   geometry_field: Champ géographique
   image_field: Champ image
