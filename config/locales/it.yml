@@ -401,7 +401,7 @@ it:
   documentation:
     index:
       title: Documentazione
-      guest: Search
-      user: Favorites & groups
-      editors: Catalog edition
-      admin: Catalog admin
+      guest: Visitatore del catalogo
+      user: Utente del catalogo
+      editors: Editore del catalogo
+      admin: Amministratore del catalogo

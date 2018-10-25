@@ -644,7 +644,7 @@ fr:
   documentation:
     index:
       title: Documentation
-      guest: Search
-      user: Favorites & groups
-      editors: Catalog edition
-      admin: Catalog admin
+      guest: Visiteur de catalogue
+      user: Utilisateur de catalogue
+      editors: Éditeur de catalogue
+      admin: Administrateur de catalogue

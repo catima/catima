@@ -643,7 +643,7 @@ en:
   documentation:
     index:
       title: Documentation
-      guest: Search
-      user: Favorites & groups
-      editors: Catalog edition
-      admin: Catalog admin
+      guest: Catalog visitor
+      user: Catalog user
+      editors: Catalog editior
+      admin: Catalog administrator
