@@ -306,6 +306,10 @@ en:
       setup:
         catalog_settings: "Catalog settings"
 
+  containers:
+    contact:
+      request_sent: Contact request sent
+
   catalog_admin:
 
     approvals:
