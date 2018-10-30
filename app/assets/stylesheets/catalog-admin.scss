@@ -8,3 +8,7 @@ In vendor/assets/stylesheets is a the original summernote.css file
 that we are including here instead of the one from the gem
 */
 //= require summernote/summernote
+
+.pb-1 {
+  padding-bottom: 1em;
+}

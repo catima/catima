@@ -1,5 +1,8 @@
 <% provide(:extra_nav) do %>
-  <%= render("simple_search/form") %>
+  <%= render("simple_search/form",
+      :controller => "simple_search",
+      :action => "index",
+      :display_advanced_search => true) %>
 <% end %>
 
 <% provide(:title) do %>

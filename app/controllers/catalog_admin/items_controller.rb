@@ -86,6 +86,19 @@ class CatalogAdmin::ItemsController < CatalogAdmin::BaseController
     }
   end
 
+  def search
+    @search_results = ItemList::SimpleSearchResult.new(
+      :catalog => catalog,
+      :query => params[:q],
+      :page => params[:page],
+      :item_type_slug => params[:item_type_slug]
+    )
+    @items = apply_sort(policy_scope(@search_results.items))
+    @items = @items.page(params[:page]).per(25)
+    @fields = @item_type.all_list_view_fields
+    render("index", :layout => "catalog_admin/data")
+  end
+
   private
 
   attr_reader :item_type

@@ -1,5 +1,5 @@
 <%= bootstrap_form_tag(
-      :url => { :controller => "simple_search", :action => "index" },
+      :url => { :controller => controller, :action => action },
       :method => "GET",
       :layout => :inline,
       :html => { :style => "text-align: center" }) do |f| %>
@@ -15,8 +15,10 @@
 
   <%= f.submit(t(".submit")) %>
 
-  <%= link_to(
-        t(".advanced"),
-        new_advanced_search_path,
-        :class => "btn btn-link") %>
+  <% if display_advanced_search %>
+    <%= link_to(
+          t(".advanced"),
+          new_advanced_search_path,
+          :class => "btn btn-link") %>
+  <% end %>
 <% end %>
