@@ -1,12 +1,11 @@
 class ContactMailer < ApplicationMailer
-  def send_message(content, email)
-    # I18n.locale = export.user.primary_language
-
+  def send_request(receiver, content)
     @content = content
 
     mail(
       :subject => content['subject'],
-      :to => email,
+      :reply_to => content['email'],
+      :to => receiver,
       :from => ENV['MAIL_SENDER'],
       :template_name => "contact"
     )

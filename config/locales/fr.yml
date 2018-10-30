@@ -307,6 +307,10 @@ fr:
       setup:
         catalog_settings: "Paramètres du catalogue"
 
+  containers:
+    contact:
+      request_sent: Demande de contact envoyée
+
   catalog_admin:
 
     approvals:

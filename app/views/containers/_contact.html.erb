@@ -1,9 +1,9 @@
 <%= bootstrap_form_for('', :url => contact_path) do |f| %>
   <%= f.hidden_field :container_id, :value => container.id %>
-  <% container.content.each do |key, enabled| %>
-    <% if key != 'receiving_email' %>
-      <%= f.text_field key.to_sym if enabled %>
-    <% end %>
+  <% inputs.each do |input, value| %>
+    <% parsed_value = JSON.parse(value) %>
+
+    <%= f.public_send(parsed_value["input_type"], input.to_sym, :required => parsed_value["required"]) %>
   <% end %>
   <%= f.submit %>
 <% end %>

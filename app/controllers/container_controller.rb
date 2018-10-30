@@ -4,9 +4,11 @@ class ContainerController < ApplicationController
   before_action :find_container
 
   def contact
-    p container_params['body']
-    email = @container.content['receiving_email']
-    ContactMailer.send_message(container_params, email).deliver_later
+    receiver = @container.content['receiving_email']
+
+    ContactMailer.send_request(receiver, container_params.to_h).deliver_later
+
+    redirect_back fallback_location: root_path, :notice => t('containers.contact.request_sent')
   end
 
   private
