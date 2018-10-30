@@ -1,0 +1,9 @@
+<%= bootstrap_form_for('', :url => contact_path) do |f| %>
+  <%= f.hidden_field :container_id, :value => container.id %>
+  <% container.content.each do |key, enabled| %>
+    <% if key != 'receiving_email' %>
+      <%= f.text_field key.to_sym if enabled %>
+    <% end %>
+  <% end %>
+  <%= f.submit %>
+<% end %>

@@ -1,0 +1,15 @@
+<p><%= t("common.greeting") %>,</p>
+
+<p><%= t(".new_header") %></p>
+<br>
+<p>
+  <div>
+    <%= t(".export_available", :category => @export.category) %>
+  </div>
+  <br>
+  <div>
+    <%= link_to t(".download_export", :validity => distance_of_time_in_words(@export.created_at, Export.validity.ago)),
+                download_catalog_admin_export_url(@export.catalog.slug, I18n.locale, @export.id)
+    %>
+  </div>
+</p>
