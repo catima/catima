@@ -163,28 +163,4 @@ class CatalogAdmin::ItemsTest < ActionDispatch::IntegrationTest
     click_on('Computers')
     assert(page.has_content?('This item type does not have any fields.'))
   end
-
-  test "displays the items the admin is searching for" do
-    log_in_as("one-admin@example.com", "password")
-
-    visit("/one/en/admin/authors")
-    fill_in("q", :with => "Steve")
-    click_on('Search')
-
-    assert(page.has_content?('Stephen King'))
-  end
-
-  test "displays the items the admin is searching for in the right order" do
-    log_in_as("one-admin@example.com", "password")
-
-    visit("/one/en/admin/authors")
-    fill_in("q", :with => "old")
-    click_on("Search")
-
-    assert(page.has_content?("Very Old"))
-    assert(page.has_content?("Very Young"))
-
-    assert_equal(find(:xpath, "//table/tbody/tr[1]/td[1]").text, "Very Old")
-    assert_equal(find(:xpath, "//table/tbody/tr[2]/td[1]").text, "Very Young")
-  end
 end
