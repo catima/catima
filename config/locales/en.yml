@@ -396,6 +396,10 @@ en:
       map_inputs:
         height_label: "Map height (in pixel)"
         height_default: "Default value is %{height}"
+      contact_inputs:
+        receiving_email:
+          label: Receiving email
+          help: Email that will be used to receive contact information
       item_list_inputs:
         display_style: "Display style of items (automatically adapts to content if nothing is selected)"
 
