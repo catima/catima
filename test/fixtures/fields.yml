@@ -93,6 +93,7 @@ one_author_name:
   field_set: one_author (ItemType)
   primary: true
   uuid: one_author_name_uuid
+  row_order: 1
 
 one_author_nickname:
   type: "Field::Text"
@@ -111,6 +112,7 @@ one_author_age:
   field_set: one_author (ItemType)
   uuid: one_author_age_uuid
   display_in_public_list: false
+  row_order: 2
 
 one_author_site:
   type: "Field::URL"
