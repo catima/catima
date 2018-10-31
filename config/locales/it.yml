@@ -329,6 +329,8 @@ it:
       table:
         list_view?: 'Edition mode?'
         public_list_view?: 'Public mode?'
+      editor_option_inputs:
+        warning: <strong>Warning!</strong> Please note that this field will automatically show the editor's email address.
 
     containers:
       map_inputs:

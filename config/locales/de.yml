@@ -435,6 +435,8 @@ de:
         auto_increment: "Auto increment"
       reference_option_inputs:
         reference: Reference
+      editor_option_inputs:
+        warning: <strong>Warning!</strong> Please note that this field will automatically show the editor's email address.
       table:
         name: 'Name'
         type: 'Type'

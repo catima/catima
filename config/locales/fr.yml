@@ -468,6 +468,8 @@ fr:
         auto_increment: "Numéro de série automatique"
       reference_option_inputs:
         reference: Référence
+      editor_option_inputs:
+        warning: <strong>Attention!</strong> Veuillez noter que ce champ va automatiquement afficher l'adresse mail des éditeurs.
       table:
         name: 'Nom'
         type: 'Type'
