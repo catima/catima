@@ -611,3 +611,11 @@ de:
       catalog: Katalog
       role: Rolle
       group_role: Gruppe
+
+  documentation:
+    index:
+      title: Dokumentation
+      guest: Katalogbesucher
+      user: Katalog-Benutzer
+      editors: Katalog-Editor
+      admin: Katalogverwalter

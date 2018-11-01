@@ -1,0 +1,13 @@
+<div class="panel panel-default">
+  <div class="panel-heading">
+    <h4 class="panel-title">
+      <a data-toggle="collapse" data-parent="#accordion" href="#<%= id %>">
+        <%= title %>
+        <span class="glyphicon glyphicon-chevron-down pull-right"></span>
+      </a>
+    </h4>
+  </div>
+  <div id="<%= id %>" class="panel-collapse collapse">
+    <div class="panel-body"><%= markdown_2_html(file_name).html_safe %></div>
+  </div>
+</div>

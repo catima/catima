@@ -649,3 +649,11 @@ en:
       catalog: Catalog
       role: Role
       group_role: Group
+
+  documentation:
+    index:
+      title: Documentation
+      guest: Catalog visitor
+      user: Catalog user
+      editors: Catalog editor
+      admin: Catalog administrator

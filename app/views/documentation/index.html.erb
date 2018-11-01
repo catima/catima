@@ -1,0 +1,40 @@
+<% provide(:title, t(".title")) %>
+
+<div id="doc-content">
+  <%= markdown_2_html("introduction.md").html_safe %>
+
+  <br>
+
+  <div class="panel-group" id="doc-accordion">
+    <%= render("documentation/accordion_item",
+               title: t(".guest"),
+               file_name: "guest.md",
+               id: random_id)
+
+    %>
+
+    <% if current_user.catalog_role_at_least?(@catalog, 'user') %>
+      <%= render("documentation/accordion_item",
+                 title: t(".user"),
+                 file_name: "user.md",
+                 id: random_id)
+      %>
+    <% end %>
+
+    <% if current_user.catalog_role_at_least?(@catalog, 'editor') %>
+      <%= render("documentation/accordion_item",
+                 title: t(".editors"),
+                 file_name: "editors.md",
+                 id: random_id)
+      %>
+    <% end %>
+
+    <% if current_user.catalog_role_at_least?(@catalog, 'admin') %>
+      <%= render("documentation/accordion_item",
+                 title: t(".admin"),
+                 file_name: "admin.md",
+                 id: random_id)
+      %>
+    <% end %>
+  </div>
+</div>

@@ -90,6 +90,14 @@ multilingual_editor:
   email: multilingual-editor@example.com
   encrypted_password: <%= BCrypt::Password.create("password") %>
 
+multilingual_member:
+  email: multilingual-member@example.com
+  encrypted_password: <%= BCrypt::Password.create("password") %>
+
+multilingual_user:
+  email: multilingual-user@example.com
+  encrypted_password: <%= BCrypt::Password.create("password") %>
+
 reviewed_editor:
   email: reviewed-editor@example.com
   encrypted_password: <%= BCrypt::Password.create("password") %>

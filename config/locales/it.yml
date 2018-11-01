@@ -403,3 +403,11 @@ it:
       catalog: Catalogo
       role: Ruolo
       group_role: Gruppo
+
+  documentation:
+    index:
+      title: Documentazione
+      guest: Visitatore del catalogo
+      user: Utente del catalogo
+      editors: Editore del catalogo
+      admin: Amministratore del catalogo

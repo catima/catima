@@ -33,7 +33,6 @@
                   :controller => /$(?<!items|dashboard)/
                 }) %>
         <% end %>
-        <li><a href="/doc/"><%= fa_icon("question-circle", text:"Help") %></a></li>
       </ul>
       <ul class="nav navbar-nav navbar-right">
         <li>
@@ -53,6 +52,11 @@
         <% end %>
         <%= render("shared/navbar/locale_menu") if params[:locale] %>
         <%= render("shared/navbar/user_menu") %>
+        <li class="help">
+          <%= link_to(doc_path, html_options = {}) do
+            fa_icon("question-circle")
+          end %>
+        </li>
       </ul>
     </div>
   </div>

@@ -47,5 +47,10 @@
     <%= render("shared/navbar/locale_menu") if params[:locale] %>
     <%= render("shared/navbar/admin_menu") if admin_menu_visible? %>
     <%= render("shared/navbar/user_menu") %>
+    <li class="help">
+      <%= link_to(doc_path, html_options = {}) do
+        fa_icon("question-circle")
+      end %>
+    </li>
   </ul>
 </div><!--/.nav-collapse -->
