@@ -190,6 +190,7 @@ it:
     form:
       advanced: "Avanzata"
       submit: "Ricerca"
+      placeholder: Ricerca in %{item_type}
     index:
       title:
         zero: "Non abbiamo trovato nulla per “%{query}”"
