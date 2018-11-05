@@ -123,6 +123,8 @@ it:
       created_by: Creato da %{editor}
       updated_by: Aggiornato da %{updater}
       at: il %{date}
+    edit:
+      back: "Back"
   invitations_mailer:
     account_information:
       email: "E-mail"
@@ -261,6 +263,11 @@ it:
         catalog_settings: "Impostazioni del catalogo"
 
   catalog_admin:
+
+    items:
+      edit:
+        back: "Back"
+        view-item: "View item"
 
     catalog:
       settings: 'Catalog settings'

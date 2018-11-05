@@ -523,6 +523,8 @@ en:
       edit:
         edit_item: Edit %{item}
         save_item: Save %{item}
+        back: "Back"
+        view-item: "View item"
       index:
         no_fields_warning: This item type does not have any fields.
         add_fields: Please add first one or more fields in the item type setup.
