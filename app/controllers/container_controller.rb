@@ -4,9 +4,19 @@ class ContainerController < ApplicationController
   before_action :find_container
 
   def contact
+    unless verify_recaptcha
+      return redirect_back fallback_location: root_path,
+                           :alert => t('containers.contact.invalid_captcha')
+    end
+
     receiver = @container.content['receiving_email']
 
-    ContactMailer.send_request(receiver, container_params.to_h).deliver_later
+    ContactMailer.send_request(
+      receiver,
+      container_params.to_h,
+      params[:catalog],
+      request.referer
+    ).deliver_later
 
     redirect_back fallback_location: root_path, :notice => t('containers.contact.request_sent')
   end

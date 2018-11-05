@@ -10,7 +10,7 @@ class ContactsMailerTest < ActionMailer::TestCase
       "body" => "request body"
     }
 
-    mail = ContactMailer.send_request(receiver, request_params)
+    mail = ContactMailer.send_request(receiver, request_params, "name", "url")
 
     assert_match(request_params['subject'], mail.subject)
     assert_equal([ENV['MAIL_SENDER']], mail.from)

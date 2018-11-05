@@ -1,5 +1,22 @@
 <p><%= t("common.greeting") %>,</p>
 
-<p><%= @content['name'] %></p>
-<p><%= @content['email'] %></p>
-<p><%= @content['body'] %></p>
+<%= t('contact_mailer.intro',
+    :catalog_name => @catalog_name,
+    :catalog_url => @catalog_url) %>
+
+<% if @content['name'].present? %>
+  <p>
+    <%= t('contact_mailer.name') %>
+    <p><%= @content['name'] %></p>
+  </p>
+<% end %>
+
+<p>
+  <%= t('contact_mailer.email') %>
+  <p><%= @content['email'] %></p>
+</p>
+
+<p>
+  <%= t('contact_mailer.email') %>
+  <p><%= @content['body'] %></p>
+</p>

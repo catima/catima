@@ -377,6 +377,8 @@ GEM
       execjs (~> 2.5)
       rails (>= 3.2)
       rainbow (~> 3.0)
+    recaptcha (4.13.0)
+      json
     redcarpet (3.4.0)
     redis (4.0.2)
     redis-namespace (1.6.0)
@@ -563,6 +565,7 @@ DEPENDENCIES
   rbnacl
   rbnacl-libsodium
   react_on_rails (~> 11.0.9)
+  recaptcha
   redcarpet
   redis-namespace
   refile!

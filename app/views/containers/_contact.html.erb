@@ -3,7 +3,19 @@
   <% inputs.each do |input, value| %>
     <% parsed_value = JSON.parse(value) %>
 
-    <%= f.public_send(parsed_value["input_type"], input.to_sym, :required => parsed_value["required"]) %>
+    <%= f.public_send(
+      parsed_value["input_type"],
+      input.to_sym,
+      :required => parsed_value["required"],
+      :label => t(parsed_value["label"])
+    ) %>
   <% end %>
-  <%= f.submit %>
+
+  <div class="pt-1">
+    <%= recaptcha_tags %>
+  </div>
+
+  <div class="pt-1">
+    <%= f.submit(t("containers.contact.send")) %>
+  </div>
 <% end %>

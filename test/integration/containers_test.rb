@@ -8,7 +8,7 @@ class ContainersTest < ActionDispatch::IntegrationTest
     fill_in("Email", :with => "fake@email.ch")
     fill_in("Subject", :with => "subject")
     fill_in("Body", :with => "body")
-    click_on("Save")
+    click_on("Send message")
 
     assert(page.has_content?("Contact request sent"))
   end

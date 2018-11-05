@@ -180,6 +180,11 @@ en:
       export_logs: "Your can view all the requested exports for the %{catalog_name} catalog"
       here: "here"
       subject: "Catima - requested export is ready"
+  contact_mailer:
+    intro: A user sent you a message through the contact form of the catalog %{catalog_name} (%{catalog_url}).
+    name: "Name:"
+    email: "Email:"
+    message: "Message:"
   favorites:
     index:
       title: "My favorites"
@@ -309,7 +314,13 @@ en:
 
   containers:
     contact:
-      request_sent: Contact request sent
+      name: Your name
+      email: Your email
+      subject: Subject
+      body: Message
+      send: Send message
+      request_sent: Message sent
+      invalid_captcha: Please, verify you are a human
 
   catalog_admin:
 
@@ -404,7 +415,7 @@ en:
       contact_inputs:
         receiving_email:
           label: Receiving email
-          help: Email that will be used to receive contact information
+          help: Email that will be used to receive messages from the contact form
       item_list_inputs:
         display_style: "Display style of items (automatically adapts to content if nothing is selected)"
 

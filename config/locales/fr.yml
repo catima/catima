@@ -180,6 +180,11 @@ fr:
       export_logs: "Vous pouvez afficher toutes les exportations demandées pour le catalogue %{catalog_name}"
       here: "ici"
       subject: "Catima - l'export demandé est prêt"
+  contact_mailer:
+    intro: Un utilisateur vous a envoyé un message grâce au formulaire de contact du catalogue %{catalog_name} (%{catalog_url}).
+    name: "Nom :"
+    email: "Email :"
+    message: "Message :"
   favorites:
     index:
       title: "Mes favoris"
@@ -309,7 +314,13 @@ fr:
 
   containers:
     contact:
-      request_sent: Demande de contact envoyée
+      name: Votre nom
+      email: Votre email
+      subject: Sujet
+      body: Message
+      send: Envoyer le message
+      request_sent: Message envoyé
+      invalid_captcha: Veuillez vérifiez que vous êtes un humain
 
   catalog_admin:
 
@@ -401,6 +412,10 @@ fr:
       map_inputs:
         height_label: "Hauteur de la carte (en pixel)"
         height_default: "La valeur par défaut est de %{height}"
+      contact_inputs:
+        receiving_email:
+          label: Destinataire
+          help: L'adresse email qui recevra les message du formulaire de contact
       item_list_inputs:
         display_style: "Style d'affichage des fiches (s'adapte automatiquement au contenu si rien n'est sélectionné)"
 

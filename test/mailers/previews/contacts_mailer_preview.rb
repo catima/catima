@@ -11,9 +11,13 @@ class ContactsMailerPreview < ActionMailer::Preview
       )
       ContactMailer.send_request(
         recipient.email,
-        "name" => "fake name",
-        "email" => "email@email.com",
-        "body" => "request's body"
+        {
+          "name" => "fake name",
+          "email" => "email@email.com",
+          "body" => "request's body"
+        },
+        "catalog name",
+        "http://catalog.url"
       )
     end
   end
