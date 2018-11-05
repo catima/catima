@@ -9,6 +9,19 @@ that we are including here instead of the one from the gem
 */
 //= require summernote/summernote
 
-.pb-1 {
-  padding-bottom: 1em;
+.data-nav .pb-1 {
+  left: 15px;
+}
+.data-nav .pb-2 {
+  right: 15px;
+}
+.data-nav {
+  display: block;
+  height: 30px;
+}
+.data-nav span {
+  position: absolute;
+}
+.data-search {
+  margin-bottom: 20px;
 }

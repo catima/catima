@@ -1,7 +1,16 @@
 <% provide(:extra_nav) do %>
-  <div class="pb-1">
-    <i class="fa fa-arrow-left"></i>
-    <%= link_to t('items.item_list_nav.back'), @back_to_list_path %>
+  <div class="data-nav">
+    <span class="pb-1">
+      <i class="fa fa-arrow-left"></i>
+      <%= link_to t('.back'), @back_to_list_path %>
+    </span>
+
+    <span class="pb-2">
+      <%= link_to(
+              t('.view-item'),
+              item_path(:item_type_slug => @item.item_type.slug, :id => @item),
+              :target => '_blank') if params['action'] == 'edit' %>
+    </span>
   </div>
 <% end %>
 

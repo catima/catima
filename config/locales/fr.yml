@@ -521,6 +521,8 @@ fr:
       edit:
         edit_item: Éditer %{item}
         save_item: Enregistrer %{item}
+        back: "Retour"
+        view-item: "Consulter la fiche"
       index:
         no_fields_warning: Ce type de fiche n'a aucun champ.
         add_fields: Veuillez s.v.p. d'abord ajouter un ou plusieurs champs dans l'interface de définition des types de fiche.
