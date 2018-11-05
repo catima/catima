@@ -1,3 +1,12 @@
+<% provide(:extra_nav) do %>
+  <div class="pb-1">
+    <%= render("simple_search/form",
+        :controller => "items",
+        :action => "search",
+        :display_advanced_search => false) %>
+  </div>
+<% end %>
+
 <% provide(:title) do %>
   <b><%= @item_type.name_plural %></b>
 <% end %>

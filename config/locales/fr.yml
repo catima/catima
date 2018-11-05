@@ -209,6 +209,7 @@ fr:
     form:
       advanced: "Avancé"
       submit: "Chercher"
+      placeholder: Chercher dans %{item_type}
     index:
       title:
         zero: "Rien trouvé pour “%{query}”"

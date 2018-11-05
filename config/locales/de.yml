@@ -194,6 +194,7 @@ de:
     form:
       advanced: "Erweitert"
       submit: "Suchen"
+      placeholder: Suche in %{item_type}
     index:
       title:
         zero: "Kein Resultat gefunden für “%{query}”"

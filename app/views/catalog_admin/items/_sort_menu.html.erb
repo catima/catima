@@ -6,7 +6,7 @@
   <ul class="dropdown-menu" aria-labelledby="choose-sort-dropdown">
     <% sort_field_choices.each do |field| %>
       <li>
-        <%= link_to(:params => param_for_sort(field)) do %>
+        <%= link_to(:params => param_for_sort(field).merge(:q => params[:q])) do %>
           <%= prepend_icon_if(field == current_sort_field, :check, field.name) %>
         <% end %>
       </li>

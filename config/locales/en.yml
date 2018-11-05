@@ -209,6 +209,7 @@ en:
     form:
       advanced: "Advanced"
       submit: "Search"
+      placeholder: Search in %{item_type}
     index:
       title:
         zero: "Nothing found for “%{query}”"
