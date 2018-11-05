@@ -8,12 +8,7 @@
   </div>
   <div class="<%= content_for(:catalog_admin_width) || 'col-sm-9' %>">
 
-    <div class="pb-1">
-      <%= render("simple_search/form",
-          :controller => "items",
-          :action => "search",
-          :display_advanced_search => false) %>
-    </div>
+    <%= yield(:extra_nav) %>
 
     <div class="panel panel-default">
       <div class="panel-heading">

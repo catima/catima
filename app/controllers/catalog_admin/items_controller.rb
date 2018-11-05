@@ -38,6 +38,8 @@ class CatalogAdmin::ItemsController < CatalogAdmin::BaseController
   end
 
   def edit
+    @back_to_list_path = request.referer
+
     find_item
     authorize(@item)
   end

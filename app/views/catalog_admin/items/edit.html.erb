@@ -1,3 +1,10 @@
+<% provide(:extra_nav) do %>
+  <div class="pb-1">
+    <i class="fa fa-arrow-left"></i>
+    <%= link_to t('items.item_list_nav.back'), @back_to_list_path %>
+  </div>
+<% end %>
+
 <% provide(:title, t('.edit_item', item: default_display_name(@item))) %>
 
 <div id="item-form">
