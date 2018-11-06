@@ -10,7 +10,7 @@ class ContainersTest < ActionDispatch::IntegrationTest
     fill_in("Body", :with => "body")
     click_on("Send message")
 
-    assert(page.has_content?("Contact request sent"))
+    assert(page.has_content?("Message sent"))
   end
 
   test "has the required attribute for required fields" do
