@@ -9,6 +9,10 @@ class ContactsMailerPreview < ActionMailer::Preview
         :email => "matt@mattbrictson.com",
         :primary_language => locale
       )
+      catalog = Catalog.new(
+        :name => 'Catalog',
+        :slug => 'catalog'
+      )
       ContactMailer.send_request(
         recipient.email,
         {
@@ -16,8 +20,7 @@ class ContactsMailerPreview < ActionMailer::Preview
           "email" => "email@email.com",
           "body" => "request's body"
         },
-        "catalog name",
-        "http://catalog.url"
+        catalog
       )
     end
   end

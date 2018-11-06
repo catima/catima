@@ -1,11 +1,12 @@
 class ContactMailer < ApplicationMailer
-  def send_request(receiver, content, catalog_name, catalog_url)
+  def send_request(receiver, content, catalog)
     @content = content
-    @catalog_name = catalog_name
-    @catalog_url = catalog_url
+    @catalog = catalog
+
+    subject = content['subject'].empty? ? t('contact_mailer.subject') : content['subject']
 
     mail(
-      :subject => "[Catima] - #{content['subject']}",
+      :subject => "[Catima] - #{subject}",
       :reply_to => content['email'],
       :to => receiver,
       :from => ENV['MAIL_SENDER'],

@@ -40,11 +40,6 @@ the translation of the field's label here and remove the translations from the .
                     }'
                   ) %>
 
-<%= f.hidden_field(:name, :value => '{ "row_order": 1, "enabled": true, "required": false, "input_type": "text_field"}') %>
-<%= f.hidden_field(:email, :value => '{ "row_order": 2, "enabled": true, "required": true, "input_type": "email_field" }') %>
-<%= f.hidden_field(:subject, :value => '{ "row_order": 3, "enabled": true, "required": false, "input_type": "text_field" }') %>
-<%= f.hidden_field(:body, :value => '{ "row_order": 4, "enabled": true, "required": true, "input_type": "text_area" }') %>
-
 <%= f.email_field(
       :receiving_email,
       :label => t('.receiving_email.label'),

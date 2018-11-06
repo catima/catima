@@ -1,8 +1,5 @@
-<p><%= t("common.greeting") %>,</p>
-
-<%= t('contact_mailer.intro',
-    :catalog_name => @catalog_name,
-    :catalog_url => @catalog_url) %>
+<%= raw t('contact_mailer.intro',
+  :catalog_link => link_to(@catalog.name, catalog_home_url(catalog_slug: @catalog.slug))) %>
 
 <% if @content['name'].present? %>
   <p>

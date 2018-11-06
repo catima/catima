@@ -164,10 +164,11 @@ it:
       here: "qui"
       subject: "Catima - l'esportazione richiesta è pronta"
   contact_mailer:
-    intro: Un utente ti ha inviato un messaggio utilizzando il modulo di contatto nel catalogo %{catalog_name} (%{catalog_url}).
+    subject: Nuovo messaggio
+    intro: Un utente ti ha inviato un messaggio utilizzando il modulo di contatto nel catalogo %{catalog_link}.
     name: "Nome :"
     email: "Email :"
-    message: "Messaggio :"
+    body: "Messaggio :"
   favorites:
     index:
       title: "I miei preferiti"

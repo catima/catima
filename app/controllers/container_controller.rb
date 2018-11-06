@@ -14,9 +14,8 @@ class ContainerController < ApplicationController
     ContactMailer.send_request(
       receiver,
       container_params.to_h,
-      @container.page.title,
-      request.referer
-    ).deliver_now
+      @container.catalog
+    ).deliver_later
 
     redirect_back fallback_location: root_path, :notice => t('containers.contact.request_sent')
   end

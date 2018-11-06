@@ -166,10 +166,11 @@ de:
       here: "Hier"
       subject: "Catima - Der angeforderte Export ist fertig"
   contact_mailer:
-    intro: Ein Benutzer hat Ihnen über das Kontaktformular im Katalog eine Nachricht geschickt %{catalog_name} (%{catalog_url}).
+    subject: Neue Nachricht
+    intro: Ein Benutzer hat Ihnen über das Kontaktformular im Katalog eine Nachricht geschickt %{catalog_link}.
     name: "Name :"
     email: "Email :"
-    message: "Nachricht :"
+    body: "Nachricht :"
   locales:
     de: Deutsch
     en: Englisch

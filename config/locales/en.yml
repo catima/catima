@@ -181,10 +181,11 @@ en:
       here: "here"
       subject: "Catima - requested export is ready"
   contact_mailer:
-    intro: A user sent you a message through the contact form of the catalog %{catalog_name} (%{catalog_url}).
+    subject: New message
+    intro: A user sent you a message through the contact form of the catalog %{catalog_link}.
     name: "Name:"
     email: "Email:"
-    message: "Message:"
+    body: "Message:"
   favorites:
     index:
       title: "My favorites"

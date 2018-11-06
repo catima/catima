@@ -181,10 +181,11 @@ fr:
       here: "ici"
       subject: "Catima - l'export demandé est prêt"
   contact_mailer:
-    intro: Un utilisateur vous a envoyé un message grâce au formulaire de contact du catalogue %{catalog_name} (%{catalog_url}).
+    subject: Nouveau message
+    intro: Un utilisateur vous a envoyé un message grâce au formulaire de contact du catalogue %{catalog_link}.
     name: "Nom :"
     email: "Email :"
-    message: "Message :"
+    body: "Message :"
   favorites:
     index:
       title: "Mes favoris"
