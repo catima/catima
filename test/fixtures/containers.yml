@@ -30,3 +30,17 @@ two:
   page_id: 1
   content: { markdown: "#hello world" }
   locale: en
+
+contact_container:
+  type: Container::Contact
+  slug: contact-container
+  row_order: 2
+  page: one
+  content: {
+    "body": "{ \"row_order\": 4, \"enabled\": true, \"required\": true, \"input_type\": \"text_area\" }",
+    "name": "{ \"row_order\": 1, \"enabled\": true, \"required\": false, \"input_type\": \"text_field\"}",
+    "email": "{ \"row_order\": 2, \"enabled\": true, \"required\": true, \"input_type\": \"email_field\" }",
+    "subject": "{ \"row_order\": 3, \"enabled\": true, \"required\": false, \"input_type\": \"text_field\" }",
+    "receiving_email": "admin@email.ch"
+    }
+  locale: en

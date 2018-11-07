@@ -1,0 +1,19 @@
+<%= raw t('contact_mailer.intro',
+  :catalog_link => link_to(@catalog.name, catalog_home_url(catalog_slug: @catalog.slug))) %>
+
+<% if @content['name'].present? %>
+  <p>
+    <%= t('contact_mailer.name') %>
+    <p><%= @content['name'] %></p>
+  </p>
+<% end %>
+
+<p>
+  <%= t('contact_mailer.email') %>
+  <p><%= @content['email'] %></p>
+</p>
+
+<p>
+  <%= t('contact_mailer.body') %>
+  <p><%= @content['body'] %></p>
+</p>

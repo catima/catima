@@ -165,6 +165,12 @@ de:
       export_logs: "Sie können alle angeforderten Exporte für den %{catalog_name}-Katalog anzeigen"
       here: "Hier"
       subject: "Catima - Der angeforderte Export ist fertig"
+  contact_mailer:
+    subject: Neue Nachricht
+    intro: Ein Benutzer hat Ihnen über das Kontaktformular im Katalog eine Nachricht geschickt %{catalog_link}.
+    name: "Name :"
+    email: "Email :"
+    body: "Nachricht :"
   locales:
     de: Deutsch
     en: Englisch
@@ -276,6 +282,16 @@ de:
       setup:
         catalog_settings: "Katalogeinstellungen"
 
+  containers:
+    contact:
+      name: Ihr Name
+      email: Ihr Email
+      subject: Subjekt
+      body: Nachricht
+      send: Nachricht senden
+      request_sent: Nachricht gesendet
+      invalid_captcha: Bitte überprüfen Sie, ob Sie ein Mensch sind.
+
   catalog_admin:
 
     approvals:
@@ -365,6 +381,10 @@ de:
       map_inputs:
         height_label: "Kartenhöhe (in Pixel)"
         height_default: "Der Standardwert ist %{height}"
+      contact_inputs:
+        receiving_email:
+          label: Empfangen von E-Mails
+          help: E-Mail, die zum Empfangen von Nachrichten aus dem Kontaktformular verwendet wird
       item_list_inputs:
         display_style: "Display style of items (automatically adapts to content if nothing is selected)"
 

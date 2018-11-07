@@ -163,6 +163,12 @@ it:
       export_logs: "Puoi visualizzare tutte le esportazioni richieste per il catalogo %{catalog_name}"
       here: "qui"
       subject: "Catima - l'esportazione richiesta è pronta"
+  contact_mailer:
+    subject: Nuovo messaggio
+    intro: Un utente ti ha inviato un messaggio utilizzando il modulo di contatto nel catalogo %{catalog_link}.
+    name: "Nome :"
+    email: "Email :"
+    body: "Messaggio :"
   favorites:
     index:
       title: "I miei preferiti"
@@ -262,6 +268,16 @@ it:
       setup:
         catalog_settings: "Impostazioni del catalogo"
 
+  containers:
+    contact:
+      name: Il tuo nome
+      email: Il tuo indirizzo e-mail
+      subject: Tema
+      body: Messaggio
+      send: Invia messaggio
+      request_sent: Messaggio inviato
+      invalid_captcha: Per favore, verifica di essere un umano
+
   catalog_admin:
 
     items:
@@ -344,6 +360,10 @@ it:
       map_inputs:
         height_label: "Altezza della mappa (in pixel)"
         height_default: "Il valore predefinito è %{height}"
+      contact_inputs:
+        receiving_email:
+          label: Ricezione di e-mail
+          help: E-mail che verranno utilizzate per ricevere i messaggi dal modulo di contatto
       item_list_inputs:
         display_style: "Display style of items (automatically adapts to content if nothing is selected)"
 

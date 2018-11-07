@@ -1780,4 +1780,1009 @@ http_interactions:
 '
     http_version: 
   recorded_at: Thu, 01 Nov 2018 09:41:27 GMT
+- request:
+    method: get
+    uri: https://raw.githubusercontent.com/catima/userdoc/development/fr//en/introduction.md
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+      User-Agent:
+      - Ruby
+      Host:
+      - raw.githubusercontent.com
+  response:
+    status:
+      code: 404
+      message: Not Found
+    headers:
+      Content-Security-Policy:
+      - default-src 'none'; style-src 'unsafe-inline'; sandbox
+      Strict-Transport-Security:
+      - max-age=31536000
+      X-Content-Type-Options:
+      - nosniff
+      X-Frame-Options:
+      - deny
+      X-Xss-Protection:
+      - 1; mode=block
+      X-Github-Request-Id:
+      - B90A:2A2C:9DBF4:A67D5:5BE0B7B6
+      Content-Length:
+      - '15'
+      Accept-Ranges:
+      - bytes
+      Date:
+      - Mon, 05 Nov 2018 21:35:50 GMT
+      Via:
+      - 1.1 varnish
+      Connection:
+      - keep-alive
+      X-Served-By:
+      - cache-cdg20751-CDG
+      X-Cache:
+      - MISS
+      X-Cache-Hits:
+      - '0'
+      X-Timer:
+      - S1541453750.081849,VS0,VE515
+      Vary:
+      - Authorization,Accept-Encoding
+      Access-Control-Allow-Origin:
+      - "*"
+      X-Fastly-Request-Id:
+      - 3805e583b9892d53ee401f5e1b0370361257b3dc
+      Expires:
+      - Mon, 05 Nov 2018 21:40:50 GMT
+      Source-Age:
+      - '0'
+    body:
+      encoding: UTF-8
+      string: '404: Not Found
+
+'
+    http_version: 
+  recorded_at: Mon, 05 Nov 2018 21:35:50 GMT
+- request:
+    method: get
+    uri: https://raw.githubusercontent.com/catima/userdoc/development/fr//en/introduction.md
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+      User-Agent:
+      - Ruby
+      Host:
+      - raw.githubusercontent.com
+  response:
+    status:
+      code: 404
+      message: Not Found
+    headers:
+      Content-Security-Policy:
+      - default-src 'none'; style-src 'unsafe-inline'; sandbox
+      Strict-Transport-Security:
+      - max-age=31536000
+      X-Content-Type-Options:
+      - nosniff
+      X-Frame-Options:
+      - deny
+      X-Xss-Protection:
+      - 1; mode=block
+      X-Github-Request-Id:
+      - B90A:2A2C:9DBF4:A67D5:5BE0B7B6
+      Content-Length:
+      - '15'
+      Accept-Ranges:
+      - bytes
+      Date:
+      - Mon, 05 Nov 2018 21:35:51 GMT
+      Via:
+      - 1.1 varnish
+      Connection:
+      - keep-alive
+      X-Served-By:
+      - cache-cdg20749-CDG
+      X-Cache:
+      - HIT
+      X-Cache-Hits:
+      - '1'
+      X-Timer:
+      - S1541453751.166858,VS0,VE0
+      Vary:
+      - Authorization,Accept-Encoding
+      Access-Control-Allow-Origin:
+      - "*"
+      X-Fastly-Request-Id:
+      - 6562ef77256f9dd1c3d44e2ab721ec92b615afd5
+      Expires:
+      - Mon, 05 Nov 2018 21:40:51 GMT
+      Source-Age:
+      - '1'
+    body:
+      encoding: UTF-8
+      string: '404: Not Found
+
+'
+    http_version: 
+  recorded_at: Mon, 05 Nov 2018 21:35:51 GMT
+- request:
+    method: get
+    uri: https://raw.githubusercontent.com/catima/userdoc/development/fr//fr/introduction.md
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+      User-Agent:
+      - Ruby
+      Host:
+      - raw.githubusercontent.com
+  response:
+    status:
+      code: 404
+      message: Not Found
+    headers:
+      Content-Security-Policy:
+      - default-src 'none'; style-src 'unsafe-inline'; sandbox
+      Strict-Transport-Security:
+      - max-age=31536000
+      X-Content-Type-Options:
+      - nosniff
+      X-Frame-Options:
+      - deny
+      X-Xss-Protection:
+      - 1; mode=block
+      X-Github-Request-Id:
+      - CAA6:0426:3CB2E:413B6:5BE0B7B7
+      Content-Length:
+      - '15'
+      Accept-Ranges:
+      - bytes
+      Date:
+      - Mon, 05 Nov 2018 21:35:51 GMT
+      Via:
+      - 1.1 varnish
+      Connection:
+      - keep-alive
+      X-Served-By:
+      - cache-cdg20743-CDG
+      X-Cache:
+      - MISS
+      X-Cache-Hits:
+      - '0'
+      X-Timer:
+      - S1541453751.219878,VS0,VE142
+      Vary:
+      - Authorization,Accept-Encoding
+      Access-Control-Allow-Origin:
+      - "*"
+      X-Fastly-Request-Id:
+      - 72b7aaf3f0063bdfac04929abe97c010566c81f3
+      Expires:
+      - Mon, 05 Nov 2018 21:40:51 GMT
+      Source-Age:
+      - '0'
+    body:
+      encoding: UTF-8
+      string: '404: Not Found
+
+'
+    http_version: 
+  recorded_at: Mon, 05 Nov 2018 21:35:51 GMT
+- request:
+    method: get
+    uri: https://raw.githubusercontent.com/catima/userdoc/development/fr//en/guest.md
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+      User-Agent:
+      - Ruby
+      Host:
+      - raw.githubusercontent.com
+  response:
+    status:
+      code: 404
+      message: Not Found
+    headers:
+      Content-Security-Policy:
+      - default-src 'none'; style-src 'unsafe-inline'; sandbox
+      Strict-Transport-Security:
+      - max-age=31536000
+      X-Content-Type-Options:
+      - nosniff
+      X-Frame-Options:
+      - deny
+      X-Xss-Protection:
+      - 1; mode=block
+      X-Github-Request-Id:
+      - B616:63DF:B8C75:CB053:5BE0B7B8
+      Content-Length:
+      - '15'
+      Accept-Ranges:
+      - bytes
+      Date:
+      - Mon, 05 Nov 2018 21:35:52 GMT
+      Via:
+      - 1.1 varnish
+      Connection:
+      - keep-alive
+      X-Served-By:
+      - cache-cdg20739-CDG
+      X-Cache:
+      - MISS
+      X-Cache-Hits:
+      - '0'
+      X-Timer:
+      - S1541453752.024863,VS0,VE483
+      Vary:
+      - Authorization,Accept-Encoding
+      Access-Control-Allow-Origin:
+      - "*"
+      X-Fastly-Request-Id:
+      - 41b4c43da73abcfb65fffdba02cd7db6370f3e52
+      Expires:
+      - Mon, 05 Nov 2018 21:40:52 GMT
+      Source-Age:
+      - '0'
+    body:
+      encoding: UTF-8
+      string: '404: Not Found
+
+'
+    http_version: 
+  recorded_at: Mon, 05 Nov 2018 21:35:52 GMT
+- request:
+    method: get
+    uri: https://raw.githubusercontent.com/catima/userdoc/development/fr//en/guest.md
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+      User-Agent:
+      - Ruby
+      Host:
+      - raw.githubusercontent.com
+  response:
+    status:
+      code: 404
+      message: Not Found
+    headers:
+      Content-Security-Policy:
+      - default-src 'none'; style-src 'unsafe-inline'; sandbox
+      Strict-Transport-Security:
+      - max-age=31536000
+      X-Content-Type-Options:
+      - nosniff
+      X-Frame-Options:
+      - deny
+      X-Xss-Protection:
+      - 1; mode=block
+      X-Github-Request-Id:
+      - B616:63DF:B8C75:CB053:5BE0B7B8
+      Content-Length:
+      - '15'
+      Accept-Ranges:
+      - bytes
+      Date:
+      - Mon, 05 Nov 2018 21:35:52 GMT
+      Via:
+      - 1.1 varnish
+      Connection:
+      - keep-alive
+      X-Served-By:
+      - cache-cdg20733-CDG
+      X-Cache:
+      - HIT
+      X-Cache-Hits:
+      - '1'
+      X-Timer:
+      - S1541453753.559824,VS0,VE0
+      Vary:
+      - Authorization,Accept-Encoding
+      Access-Control-Allow-Origin:
+      - "*"
+      X-Fastly-Request-Id:
+      - 21df25c161e3cd37b5b8ee79e312aaec00981d1d
+      Expires:
+      - Mon, 05 Nov 2018 21:40:52 GMT
+      Source-Age:
+      - '0'
+    body:
+      encoding: UTF-8
+      string: '404: Not Found
+
+'
+    http_version: 
+  recorded_at: Mon, 05 Nov 2018 21:35:52 GMT
+- request:
+    method: get
+    uri: https://raw.githubusercontent.com/catima/userdoc/development/fr//fr/guest.md
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+      User-Agent:
+      - Ruby
+      Host:
+      - raw.githubusercontent.com
+  response:
+    status:
+      code: 404
+      message: Not Found
+    headers:
+      Content-Security-Policy:
+      - default-src 'none'; style-src 'unsafe-inline'; sandbox
+      Strict-Transport-Security:
+      - max-age=31536000
+      X-Content-Type-Options:
+      - nosniff
+      X-Frame-Options:
+      - deny
+      X-Xss-Protection:
+      - 1; mode=block
+      X-Github-Request-Id:
+      - 6462:2D2C:43F65:48E1C:5BE0B7B8
+      Content-Length:
+      - '15'
+      Accept-Ranges:
+      - bytes
+      Date:
+      - Mon, 05 Nov 2018 21:35:53 GMT
+      Via:
+      - 1.1 varnish
+      Connection:
+      - keep-alive
+      X-Served-By:
+      - cache-cdg20747-CDG
+      X-Cache:
+      - MISS
+      X-Cache-Hits:
+      - '0'
+      X-Timer:
+      - S1541453753.610638,VS0,VE506
+      Vary:
+      - Authorization,Accept-Encoding
+      Access-Control-Allow-Origin:
+      - "*"
+      X-Fastly-Request-Id:
+      - f7c0a6781165bc148cf4e8c82981fa591d0e3d42
+      Expires:
+      - Mon, 05 Nov 2018 21:40:53 GMT
+      Source-Age:
+      - '0'
+    body:
+      encoding: UTF-8
+      string: '404: Not Found
+
+'
+    http_version: 
+  recorded_at: Mon, 05 Nov 2018 21:35:53 GMT
+- request:
+    method: get
+    uri: https://raw.githubusercontent.com/catima/userdoc/development/fr//en/user.md
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+      User-Agent:
+      - Ruby
+      Host:
+      - raw.githubusercontent.com
+  response:
+    status:
+      code: 404
+      message: Not Found
+    headers:
+      Content-Security-Policy:
+      - default-src 'none'; style-src 'unsafe-inline'; sandbox
+      Strict-Transport-Security:
+      - max-age=31536000
+      X-Content-Type-Options:
+      - nosniff
+      X-Frame-Options:
+      - deny
+      X-Xss-Protection:
+      - 1; mode=block
+      X-Github-Request-Id:
+      - 2B7E:65B4:54900:5D10D:5BE0B7B8
+      Content-Length:
+      - '15'
+      Accept-Ranges:
+      - bytes
+      Date:
+      - Mon, 05 Nov 2018 21:35:53 GMT
+      Via:
+      - 1.1 varnish
+      Connection:
+      - keep-alive
+      X-Served-By:
+      - cache-cdg20741-CDG
+      X-Cache:
+      - MISS
+      X-Cache-Hits:
+      - '0'
+      X-Timer:
+      - S1541453753.168830,VS0,VE234
+      Vary:
+      - Authorization,Accept-Encoding
+      Access-Control-Allow-Origin:
+      - "*"
+      X-Fastly-Request-Id:
+      - dac7ff8542e315561e5d17b132d326645a675ca3
+      Expires:
+      - Mon, 05 Nov 2018 21:40:53 GMT
+      Source-Age:
+      - '0'
+    body:
+      encoding: UTF-8
+      string: '404: Not Found
+
+'
+    http_version: 
+  recorded_at: Mon, 05 Nov 2018 21:35:53 GMT
+- request:
+    method: get
+    uri: https://raw.githubusercontent.com/catima/userdoc/development/fr//en/user.md
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+      User-Agent:
+      - Ruby
+      Host:
+      - raw.githubusercontent.com
+  response:
+    status:
+      code: 404
+      message: Not Found
+    headers:
+      Content-Security-Policy:
+      - default-src 'none'; style-src 'unsafe-inline'; sandbox
+      Strict-Transport-Security:
+      - max-age=31536000
+      X-Content-Type-Options:
+      - nosniff
+      X-Frame-Options:
+      - deny
+      X-Xss-Protection:
+      - 1; mode=block
+      X-Github-Request-Id:
+      - 2B7E:65B4:54900:5D10D:5BE0B7B8
+      Content-Length:
+      - '15'
+      Accept-Ranges:
+      - bytes
+      Date:
+      - Mon, 05 Nov 2018 21:35:53 GMT
+      Via:
+      - 1.1 varnish
+      Connection:
+      - keep-alive
+      X-Served-By:
+      - cache-cdg20751-CDG
+      X-Cache:
+      - HIT
+      X-Cache-Hits:
+      - '1'
+      X-Timer:
+      - S1541453754.675818,VS0,VE0
+      Vary:
+      - Authorization,Accept-Encoding
+      Access-Control-Allow-Origin:
+      - "*"
+      X-Fastly-Request-Id:
+      - f98b7527af27029d7bd8e3db01adcf051768721b
+      Expires:
+      - Mon, 05 Nov 2018 21:40:53 GMT
+      Source-Age:
+      - '0'
+    body:
+      encoding: UTF-8
+      string: '404: Not Found
+
+'
+    http_version: 
+  recorded_at: Mon, 05 Nov 2018 21:35:53 GMT
+- request:
+    method: get
+    uri: https://raw.githubusercontent.com/catima/userdoc/development/fr//fr/user.md
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+      User-Agent:
+      - Ruby
+      Host:
+      - raw.githubusercontent.com
+  response:
+    status:
+      code: 404
+      message: Not Found
+    headers:
+      Content-Security-Policy:
+      - default-src 'none'; style-src 'unsafe-inline'; sandbox
+      Strict-Transport-Security:
+      - max-age=31536000
+      X-Content-Type-Options:
+      - nosniff
+      X-Frame-Options:
+      - deny
+      X-Xss-Protection:
+      - 1; mode=block
+      X-Github-Request-Id:
+      - 602E:53BD:113303:132304:5BE0B7B9
+      Content-Length:
+      - '15'
+      Accept-Ranges:
+      - bytes
+      Date:
+      - Mon, 05 Nov 2018 21:35:53 GMT
+      Via:
+      - 1.1 varnish
+      Connection:
+      - keep-alive
+      X-Served-By:
+      - cache-cdg20744-CDG
+      X-Cache:
+      - MISS
+      X-Cache-Hits:
+      - '0'
+      X-Timer:
+      - S1541453754.731931,VS0,VE131
+      Vary:
+      - Authorization,Accept-Encoding
+      Access-Control-Allow-Origin:
+      - "*"
+      X-Fastly-Request-Id:
+      - 00d208c58d8bcc9880c339b1d7f598b3df05d742
+      Expires:
+      - Mon, 05 Nov 2018 21:40:53 GMT
+      Source-Age:
+      - '0'
+    body:
+      encoding: UTF-8
+      string: '404: Not Found
+
+'
+    http_version: 
+  recorded_at: Mon, 05 Nov 2018 21:35:53 GMT
+- request:
+    method: get
+    uri: https://raw.githubusercontent.com/catima/userdoc/development/fr//en/editors.md
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+      User-Agent:
+      - Ruby
+      Host:
+      - raw.githubusercontent.com
+  response:
+    status:
+      code: 404
+      message: Not Found
+    headers:
+      Content-Security-Policy:
+      - default-src 'none'; style-src 'unsafe-inline'; sandbox
+      Strict-Transport-Security:
+      - max-age=31536000
+      X-Content-Type-Options:
+      - nosniff
+      X-Frame-Options:
+      - deny
+      X-Xss-Protection:
+      - 1; mode=block
+      X-Github-Request-Id:
+      - E4C6:0755:4867E:50B5A:5BE0B7BB
+      Content-Length:
+      - '15'
+      Accept-Ranges:
+      - bytes
+      Date:
+      - Mon, 05 Nov 2018 21:35:55 GMT
+      Via:
+      - 1.1 varnish
+      Connection:
+      - keep-alive
+      X-Served-By:
+      - cache-cdg20727-CDG
+      X-Cache:
+      - MISS
+      X-Cache-Hits:
+      - '0'
+      X-Timer:
+      - S1541453755.120508,VS0,VE149
+      Vary:
+      - Authorization,Accept-Encoding
+      Access-Control-Allow-Origin:
+      - "*"
+      X-Fastly-Request-Id:
+      - dd0e2d323d9c96ca1208c1d64dcd1a8e6e4fea81
+      Expires:
+      - Mon, 05 Nov 2018 21:40:55 GMT
+      Source-Age:
+      - '0'
+    body:
+      encoding: UTF-8
+      string: '404: Not Found
+
+'
+    http_version: 
+  recorded_at: Mon, 05 Nov 2018 21:35:55 GMT
+- request:
+    method: get
+    uri: https://raw.githubusercontent.com/catima/userdoc/development/fr//en/editors.md
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+      User-Agent:
+      - Ruby
+      Host:
+      - raw.githubusercontent.com
+  response:
+    status:
+      code: 404
+      message: Not Found
+    headers:
+      Content-Security-Policy:
+      - default-src 'none'; style-src 'unsafe-inline'; sandbox
+      Strict-Transport-Security:
+      - max-age=31536000
+      X-Content-Type-Options:
+      - nosniff
+      X-Frame-Options:
+      - deny
+      X-Xss-Protection:
+      - 1; mode=block
+      X-Github-Request-Id:
+      - E4C6:0755:4867E:50B5A:5BE0B7BB
+      Content-Length:
+      - '15'
+      Accept-Ranges:
+      - bytes
+      Date:
+      - Mon, 05 Nov 2018 21:35:56 GMT
+      Via:
+      - 1.1 varnish
+      Connection:
+      - keep-alive
+      X-Served-By:
+      - cache-cdg20721-CDG
+      X-Cache:
+      - HIT
+      X-Cache-Hits:
+      - '1'
+      X-Timer:
+      - S1541453757.992946,VS0,VE0
+      Vary:
+      - Authorization,Accept-Encoding
+      Access-Control-Allow-Origin:
+      - "*"
+      X-Fastly-Request-Id:
+      - 6a27657d0fcae7aaf7652df5662e52fc83b8185f
+      Expires:
+      - Mon, 05 Nov 2018 21:40:56 GMT
+      Source-Age:
+      - '2'
+    body:
+      encoding: UTF-8
+      string: '404: Not Found
+
+'
+    http_version: 
+  recorded_at: Mon, 05 Nov 2018 21:35:57 GMT
+- request:
+    method: get
+    uri: https://raw.githubusercontent.com/catima/userdoc/development/fr//fr/editors.md
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+      User-Agent:
+      - Ruby
+      Host:
+      - raw.githubusercontent.com
+  response:
+    status:
+      code: 404
+      message: Not Found
+    headers:
+      Content-Security-Policy:
+      - default-src 'none'; style-src 'unsafe-inline'; sandbox
+      Strict-Transport-Security:
+      - max-age=31536000
+      X-Content-Type-Options:
+      - nosniff
+      X-Frame-Options:
+      - deny
+      X-Xss-Protection:
+      - 1; mode=block
+      X-Github-Request-Id:
+      - 6F94:53BD:11342A:132460:5BE0B7BD
+      Content-Length:
+      - '15'
+      Accept-Ranges:
+      - bytes
+      Date:
+      - Mon, 05 Nov 2018 21:35:57 GMT
+      Via:
+      - 1.1 varnish
+      Connection:
+      - keep-alive
+      X-Served-By:
+      - cache-cdg20748-CDG
+      X-Cache:
+      - MISS
+      X-Cache-Hits:
+      - '0'
+      X-Timer:
+      - S1541453757.320823,VS0,VE437
+      Vary:
+      - Authorization,Accept-Encoding
+      Access-Control-Allow-Origin:
+      - "*"
+      X-Fastly-Request-Id:
+      - ecb6ceb9d5d071e65801e685252b51b49c0e2c5b
+      Expires:
+      - Mon, 05 Nov 2018 21:40:57 GMT
+      Source-Age:
+      - '0'
+    body:
+      encoding: UTF-8
+      string: '404: Not Found
+
+'
+    http_version: 
+  recorded_at: Mon, 05 Nov 2018 21:35:57 GMT
+- request:
+    method: get
+    uri: https://raw.githubusercontent.com/catima/userdoc/development/fr//en/admin.md
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+      User-Agent:
+      - Ruby
+      Host:
+      - raw.githubusercontent.com
+  response:
+    status:
+      code: 404
+      message: Not Found
+    headers:
+      Content-Security-Policy:
+      - default-src 'none'; style-src 'unsafe-inline'; sandbox
+      Strict-Transport-Security:
+      - max-age=31536000
+      X-Content-Type-Options:
+      - nosniff
+      X-Frame-Options:
+      - deny
+      X-Xss-Protection:
+      - 1; mode=block
+      X-Github-Request-Id:
+      - B8C4:1300:1132D:133B1:5BE0B7BF
+      Content-Length:
+      - '15'
+      Accept-Ranges:
+      - bytes
+      Date:
+      - Mon, 05 Nov 2018 21:35:59 GMT
+      Via:
+      - 1.1 varnish
+      Connection:
+      - keep-alive
+      X-Served-By:
+      - cache-cdg20724-CDG
+      X-Cache:
+      - MISS
+      X-Cache-Hits:
+      - '0'
+      X-Timer:
+      - S1541453759.157626,VS0,VE488
+      Vary:
+      - Authorization,Accept-Encoding
+      Access-Control-Allow-Origin:
+      - "*"
+      X-Fastly-Request-Id:
+      - 3dc04389183fd5748597faa8d5c39032840297dc
+      Expires:
+      - Mon, 05 Nov 2018 21:40:59 GMT
+      Source-Age:
+      - '0'
+    body:
+      encoding: UTF-8
+      string: '404: Not Found
+
+'
+    http_version: 
+  recorded_at: Mon, 05 Nov 2018 21:35:59 GMT
+- request:
+    method: get
+    uri: https://raw.githubusercontent.com/catima/userdoc/development/fr//en/admin.md
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+      User-Agent:
+      - Ruby
+      Host:
+      - raw.githubusercontent.com
+  response:
+    status:
+      code: 404
+      message: Not Found
+    headers:
+      Content-Security-Policy:
+      - default-src 'none'; style-src 'unsafe-inline'; sandbox
+      Strict-Transport-Security:
+      - max-age=31536000
+      X-Content-Type-Options:
+      - nosniff
+      X-Frame-Options:
+      - deny
+      X-Xss-Protection:
+      - 1; mode=block
+      X-Github-Request-Id:
+      - B8C4:1300:1132D:133B1:5BE0B7BF
+      Content-Length:
+      - '15'
+      Accept-Ranges:
+      - bytes
+      Date:
+      - Mon, 05 Nov 2018 21:35:59 GMT
+      Via:
+      - 1.1 varnish
+      Connection:
+      - keep-alive
+      X-Served-By:
+      - cache-cdg20724-CDG
+      X-Cache:
+      - HIT
+      X-Cache-Hits:
+      - '1'
+      X-Timer:
+      - S1541453760.797630,VS0,VE0
+      Vary:
+      - Authorization,Accept-Encoding
+      Access-Control-Allow-Origin:
+      - "*"
+      X-Fastly-Request-Id:
+      - 3412dee51df901f0ba586460a8008d3fd34848c9
+      Expires:
+      - Mon, 05 Nov 2018 21:40:59 GMT
+      Source-Age:
+      - '0'
+    body:
+      encoding: UTF-8
+      string: '404: Not Found
+
+'
+    http_version: 
+  recorded_at: Mon, 05 Nov 2018 21:35:59 GMT
+- request:
+    method: get
+    uri: https://raw.githubusercontent.com/catima/userdoc/development/fr//fr/admin.md
+    body:
+      encoding: US-ASCII
+      string: ''
+    headers:
+      Accept-Encoding:
+      - gzip;q=1.0,deflate;q=0.6,identity;q=0.3
+      Accept:
+      - "*/*"
+      User-Agent:
+      - Ruby
+      Host:
+      - raw.githubusercontent.com
+  response:
+    status:
+      code: 404
+      message: Not Found
+    headers:
+      Content-Security-Policy:
+      - default-src 'none'; style-src 'unsafe-inline'; sandbox
+      Strict-Transport-Security:
+      - max-age=31536000
+      X-Content-Type-Options:
+      - nosniff
+      X-Frame-Options:
+      - deny
+      X-Xss-Protection:
+      - 1; mode=block
+      X-Github-Request-Id:
+      - 92B4:4D0E:3A39C:3FA44:5BE0B7C0
+      Content-Length:
+      - '15'
+      Accept-Ranges:
+      - bytes
+      Date:
+      - Mon, 05 Nov 2018 21:36:00 GMT
+      Via:
+      - 1.1 varnish
+      Connection:
+      - keep-alive
+      X-Served-By:
+      - cache-cdg20732-CDG
+      X-Cache:
+      - MISS
+      X-Cache-Hits:
+      - '0'
+      X-Timer:
+      - S1541453760.845805,VS0,VE518
+      Vary:
+      - Authorization,Accept-Encoding
+      Access-Control-Allow-Origin:
+      - "*"
+      X-Fastly-Request-Id:
+      - f366136e80a0c38538df947fd1c63d847922ff03
+      Expires:
+      - Mon, 05 Nov 2018 21:41:00 GMT
+      Source-Age:
+      - '0'
+    body:
+      encoding: UTF-8
+      string: '404: Not Found
+
+'
+    http_version: 
+  recorded_at: Mon, 05 Nov 2018 21:36:00 GMT
 recorded_with: VCR 4.0.0

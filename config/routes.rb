@@ -78,6 +78,10 @@ Rails.application.routes.draw do
   root "home#index"
 
   # ===========================================================================
+  # Containers actions
+  post '/contact', :to => 'container#contact'
+
+  # ===========================================================================
   # Catalog administration
 
   namespace "catalog_admin", :path => ":catalog_slug/:locale/admin" do

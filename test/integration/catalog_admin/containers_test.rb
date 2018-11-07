@@ -35,4 +35,22 @@ class CatalogAdmin::ContainersTest < ActionDispatch::IntegrationTest
     click_on('View page')
     assert(page.has_content?('HTML container text content'))
   end
+
+  test "creates a contact container" do
+    log_in_as("one-admin@example.com", "password")
+    visit('/one/en/one')
+
+    click_on('Edit this page')
+    click_on('Contact container')
+
+    fill_in('Slug', :with => 'test-contact')
+    fill_in('Receiving email', :with => 'test@email.ch')
+    click_on('Create container')
+
+    click_on('View page')
+    assert(page.has_css?('input#name'))
+    assert(page.has_css?('input#email'))
+    assert(page.has_css?('input#subject'))
+    assert(page.has_css?('textarea#body'))
+  end
 end
