@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import ReactSelect from 'react-select';
 import striptags from 'striptags';
 
 class SingleReferenceEditor extends Component {
@@ -31,6 +32,16 @@ class SingleReferenceEditor extends Component {
     return this.props.req ? null : <option key="null" value=""></option>;
   }
 
+  _getOptionList(){
+    var optionsList = [];
+    optionsList = this.props.items.map(item =>
+      this._getJSONItem(item)
+    );
+
+    optionsList.unshift(this._emptyOption());
+    return optionsList;
+  }
+
   _load(v){
     if (v == null || v == '') return '';
     let selItem = JSON.parse(v);
@@ -48,6 +59,10 @@ class SingleReferenceEditor extends Component {
     return striptags(item.default_display_name);
   }
 
+  _getJSONItem(item) {
+    return {key: `${this.props.srcId}-${item.id}`, value: item.id, label: this._itemName(item)};
+  }
+
   renderItem(item){
     const itemKey = `${this.props.srcId}-${item.id}`;
     return <option key={itemKey} value={item.id}>{this._itemName(item)}</option>
@@ -55,12 +70,9 @@ class SingleReferenceEditor extends Component {
 
   render(){
     return (
-      <select id={this.editorId} onChange={this.selectItem} value={this.state.selectedItem} className="form-control">
-        {this._emptyOption()}
-        {this.props.items.map(item =>
-          this.renderItem(item)
-        )}
-      </select>
+      <div className="form-group">
+        <ReactSelect id={this.editorId} value={this.state.selectedItem} onChange={this.handleChange} options={this._getOptionList()}/>
+      </div>
     );
   }
 }
