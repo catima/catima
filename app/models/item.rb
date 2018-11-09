@@ -54,7 +54,26 @@ class Item < ApplicationRecord
 
   def self.sorted_by_field(field)
     sql = []
-    sql << "data->>'#{field.uuid}' ASC" unless field.nil?
+    # p field
+    p 'youpi'
+    p field.primary
+    # sql << "data->>'#{field.uuid}' ASC" unless field.nil?
+    unless field.nil?
+      sql <<  case field.type
+              when Field::TYPES['datetime'] then "data->'#{field.uuid}'->>'Y' ASC,
+                                                data->'#{field.uuid}'->>'M' ASC,
+                                                data->'#{field.uuid}'->>'D' ASC,
+                                                data->'#{field.uuid}'->>'h' ASC,
+                                                data->'#{field.uuid}'->>'m' ASC,
+                                                data->'#{field.uuid}'->>'s' ASC"
+              when Field::TYPES['int'] then "(data->>'#{field.uuid}')::int ASC"
+              when Field::TYPES['decimal'] then "(data->>'#{field.uuid}')::float ASC"
+              # when Field::TYPES['reference'] then ''
+              else
+                "data->>'#{field.uuid}' ASC"
+              end
+    end
+    p sql
     sql << "created_at DESC"
     order(Arel.sql(sql.join(", ")))
   end
