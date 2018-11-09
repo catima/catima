@@ -61,11 +61,15 @@ source "https://rails-assets.org" do
 end
 
 group :production, :staging, :development do
-  gem "unicorn"
+  platforms :ruby do
+    gem "unicorn"
+  end
 end
 
 group :production, :staging do
-  gem "unicorn-worker-killer"
+  platforms :ruby do
+    gem "unicorn-worker-killer"
+  end
 end
 
 group :development, :test do
@@ -102,6 +106,10 @@ group :development do
   gem "terminal-notifier-guard", :require => false
   gem "thin", :require => false
   # gem "xray-rails"
+
+  platforms :mswin, :mingw, :x64_mingw do
+    gem "tzinfo-data"
+  end
 end
 
 group :test do
