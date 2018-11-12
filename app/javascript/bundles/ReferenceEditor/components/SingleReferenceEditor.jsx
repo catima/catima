@@ -14,6 +14,7 @@ class SingleReferenceEditor extends Component {
       selectedFilter: null
     };
     this.editorId = `${this.props.srcRef}-editor`;
+    this.filterId = `${this.props.srcRef}-filters`;
     this.selectItem = this._selectItem.bind(this);
     this.selectFilter = this._selectFilter.bind(this);
   }
@@ -68,7 +69,6 @@ class SingleReferenceEditor extends Component {
 
   _selectFilter(filter){
     this.setState({ selectedFilter: filter });
-    this.props.fields.filter(field => field.primary !== true);
   }
 
   _getFilterOptions(){
@@ -89,8 +89,8 @@ class SingleReferenceEditor extends Component {
   render(){
     return (
       <div className="form-group">
-        <ReactSelect className="single-reference" id={this.editorId} value={this.state.selectedItem} onChange={this.selectItem} options={this._getItemOptions()}/>
-        <ReactSelect className="single-reference-filters" isSearchable={false} isClearable={true} id="{this.editorId}" value={this.state.selectedFilter} onChange={this.selectFilter} options={this._getFilterOptions()}/>
+        <ReactSelect id={this.editorId} className="single-reference" value={this.state.selectedItem} onChange={this.selectItem} options={this._getItemOptions()}/>
+        <ReactSelect id={this.filterId} className="single-reference-filters" isSearchable={false} isClearable={true} value={this.state.selectedFilter} onChange={this.selectFilter} options={this._getFilterOptions()}/>
       </div>
     );
   }
