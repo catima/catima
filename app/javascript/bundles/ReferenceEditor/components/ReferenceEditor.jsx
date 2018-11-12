@@ -10,6 +10,7 @@ class ReferenceEditor extends Component {
 
     this.state = {
       items: [],
+      fields: [],
       isLoading: true
     };
   }
@@ -23,6 +24,7 @@ class ReferenceEditor extends Component {
     axios.get(`/api/v2/${this.props.catalog}/${this.props.locale}/${this.props.itemType}`, config)
       .then(res => {
         this.setState({ items: res.data.items });
+        this.setState({ fields: res.data.fields });
         this.setState({ isLoading: false });
       });
 
@@ -63,6 +65,7 @@ class ReferenceEditor extends Component {
     else
       return <SingleReferenceEditor
                 items={this.state.items}
+                fields={this.state.fields}
                 srcRef={this.props.srcRef}
                 srcId={this.props.srcId}
                 req={this.props.req} />

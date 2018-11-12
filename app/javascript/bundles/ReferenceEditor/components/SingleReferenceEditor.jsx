@@ -10,10 +10,12 @@ class SingleReferenceEditor extends Component {
     const selItem = this._load(v);
 
     this.state = {
-      selectedItem: selItem
+      selectedItem: selItem,
+      selectedFilter: null
     };
     this.editorId = `${this.props.srcRef}-editor`;
     this.selectItem = this._selectItem.bind(this);
+    this.selectFilter = this._selectFilter.bind(this);
   }
 
   componentDidMount(){
@@ -26,6 +28,10 @@ class SingleReferenceEditor extends Component {
   _selectItem(item){
     const sel = parseInt(item.value);
     this.setState({ selectedItem: item }, () => this._save());
+  }
+
+  _emptyOption(){
+    return this.props.req ? null : {key: null, value: "", label: ""};
   }
 
   _load(v){
@@ -41,33 +47,50 @@ class SingleReferenceEditor extends Component {
     document.getElementById(this.props.srcRef).value = v;
   }
 
-
-  _emptyOption(){
-    return this.props.req ? null : {key: null, value: "", label: ""};
-  }
-
-  _getOptionList(){
+  _getItemOptions(){
     var optionsList = [];
     optionsList = this.props.items.map(item =>
       this._getJSONItem(item)
     );
 
-    optionsList.unshift(this._emptyOption());
     return optionsList;
   }
 
   _itemName(item){
-    return striptags(item.default_display_name);
+    if(typeof this.state === 'undefined') return striptags(item.default_display_name);
+    if(typeof this.state !== 'undefined' && this.state.selectedFilter === null) return striptags(item.default_display_name);
+    return striptags(item.default_display_name) + ' - ' + item[this.state.selectedFilter.value];
   }
 
   _getJSONItem(item) {
     return {value: item.id, label: this._itemName(item)};
   }
 
+  _selectFilter(filter){
+    this.setState({ selectedFilter: filter });
+    this.props.fields.filter(field => field.primary !== true);
+  }
+
+  _getFilterOptions(){
+    var optionsList = [];
+    optionsList = this.props.fields.filter(field => field.primary !== true);
+
+    optionsList = optionsList.map(field =>
+      this._getJSONFilter(field)
+    );
+
+    return optionsList;
+  }
+
+  _getJSONFilter(field) {
+    if(!field.primary) return {value: field.slug, label: field.name};
+  }
+
   render(){
     return (
       <div className="form-group">
-        <ReactSelect id={this.editorId} value={this.state.selectedItem} onChange={this.selectItem} options={this._getOptionList()}/>
+        <ReactSelect className="single-reference" id={this.editorId} value={this.state.selectedItem} onChange={this.selectItem} options={this._getItemOptions()}/>
+        <ReactSelect className="single-reference-filters" isSearchable={false} isClearable={true} id="{this.editorId}" value={this.state.selectedFilter} onChange={this.selectFilter} options={this._getFilterOptions()}/>
       </div>
     );
   }
