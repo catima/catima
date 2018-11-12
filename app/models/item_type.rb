@@ -88,7 +88,6 @@ class ItemType < ApplicationRecord
   end
 
   def sorted_items
-    p 'youpa'
     items.sorted_by_field(primary_field)
   end
 

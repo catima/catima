@@ -54,28 +54,12 @@ class Item < ApplicationRecord
 
   def self.sorted_by_field(field)
     sql = []
-    # p field
-    p 'youpi'
-    p field.primary
-    # sql << "data->>'#{field.uuid}' ASC" unless field.nil?
-    unless field.nil?
-      sql <<  case field.type
-              when Field::TYPES['datetime'] then "data->'#{field.uuid}'->>'Y' ASC,
-                                                data->'#{field.uuid}'->>'M' ASC,
-                                                data->'#{field.uuid}'->>'D' ASC,
-                                                data->'#{field.uuid}'->>'h' ASC,
-                                                data->'#{field.uuid}'->>'m' ASC,
-                                                data->'#{field.uuid}'->>'s' ASC"
-              when Field::TYPES['int'] then "(data->>'#{field.uuid}')::int ASC"
-              when Field::TYPES['decimal'] then "(data->>'#{field.uuid}')::float ASC"
-              # when Field::TYPES['reference'] then ''
-              else
-                "data->>'#{field.uuid}' ASC"
-              end
-    end
-    p sql
+    sql << order_by_field_type(field) unless field.nil?
     sql << "created_at DESC"
-    order(Arel.sql(sql.join(", ")))
+    return order(Arel.sql(sql.join(", "))) unless !field.nil? && field.type == Field::TYPES['reference']
+
+    joins("LEFT JOIN items ref_items ON ref_items.id::text = items.data->>'#{field.uuid}'")
+      .order(Arel.sql(sql.join(", ")))
   end
 
   def self.with_type(type)
@@ -150,6 +134,26 @@ class Item < ApplicationRecord
 
   def view(type, locale=I18n.locale)
     (views[type.to_s] && views[type.to_s][locale.to_s]) || default_display_name(locale)
+  end
+
+  def self.order_by_field_type(field)
+    case field.type
+    when Field::TYPES['datetime'] then
+      "data->'#{field.uuid}'->>'Y' ASC,
+      data->'#{field.uuid}'->>'M::int' ASC,
+      data->'#{field.uuid}'->>'D::int' ASC,
+      data->'#{field.uuid}'->>'h::int' ASC,
+      data->'#{field.uuid}'->>'m::int' ASC,
+      data->'#{field.uuid}'->>'s::int' ASC"
+    when Field::TYPES['int'] then
+      "(data->>'#{field.uuid}')::int ASC"
+    when Field::TYPES['decimal'] then
+      "(data->>'#{field.uuid}')::float ASC"
+    when Field::TYPES['reference'] then
+      "(ref_items.data->>'#{field.related_item_type.primary_field.uuid}') ASC"
+    else
+      "data->>'#{field.uuid}' ASC"
+    end
   end
 
   private
