@@ -6,30 +6,29 @@ class SingleReferenceEditor extends Component {
   constructor(props){
     super(props);
 
-    const v = document.getElementById(this.props.srcRef).value;
-    const selItem = this._load(v);
+    const selItem = document.getElementById(this.props.srcRef).value;
 
     this.state = {
       selectedItem: selItem
     };
     this.editorId = `${this.props.srcRef}-editor`;
     this.selectItem = this._selectItem.bind(this);
+    this.handleChange = this._handleChange.bind(this);
   }
 
   componentDidMount(){
     // If reference value is empty but field is required, insert the default value.
     if (document.getElementById(this.props.srcRef).value == '' && this.props.req) {
-      this._selectItem();
+      this._selectItem(this._emptyOption());
     }
   }
 
-  _selectItem(){
-    const sel = parseInt(document.querySelector(`#${this.editorId}`).value);
-    this.setState({ selectedItem: isNaN(sel) ? '' : sel }, () => this._save());
+  _selectItem(item){
+    this.setState({ selectedItem: item});
   }
 
   _emptyOption(){
-    return this.props.req ? null : <option key="null" value=""></option>;
+    return this.props.req ? null : {key: null, value: "", label: ""};
   }
 
   _getOptionList(){
@@ -42,19 +41,6 @@ class SingleReferenceEditor extends Component {
     return optionsList;
   }
 
-  _load(v){
-    if (v == null || v == '') return '';
-    let selItem = JSON.parse(v);
-    if (selItem.hasOwnProperty('raw_value')) return selItem.raw_value ? selItem.raw_value : '';
-    if (selItem.hasOwnProperty('length')) return selItem.length > 0 ? parseInt(selItem[0]) : '';
-    return selItem ? selItem : '';
-  }
-
-  _save(){
-    const v = (this.state.selectedItem == '' || this.state.selectedItem == null) ? '' : JSON.stringify(this.state.selectedItem);
-    document.getElementById(this.props.srcRef).value = v;
-  }
-
   _itemName(item){
     return striptags(item.default_display_name);
   }
@@ -63,9 +49,12 @@ class SingleReferenceEditor extends Component {
     return {key: `${this.props.srcId}-${item.id}`, value: item.id, label: this._itemName(item)};
   }
 
+  _handleChange(option) {
+    this.setState({selectedItem: option});
+  }
+
   renderItem(item){
-    const itemKey = `${this.props.srcId}-${item.id}`;
-    return <option key={itemKey} value={item.id}>{this._itemName(item)}</option>
+    return <option key={item.key} value={item.id}>{item.name}</option>
   }
 
   render(){
