@@ -38,6 +38,18 @@ form > .form-group {
   margin-top: 0;
 }
 
+.referenceEditor .single-reference-container div[class*="col-"] {
+  padding: 0;
+}
+
+.referenceEditor .single-reference-container .single-reference-filter .css-1hwfws3, .referenceEditor .single-reference .css-1wy0on6 {
+  display: none;
+}
+
+.referenceEditor .single-reference-container .single-reference-filter .css-vj8t7z {
+  border: none;
+}
+
 .red {
   color: #f00;
 }

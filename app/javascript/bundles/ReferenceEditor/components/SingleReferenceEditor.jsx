@@ -70,7 +70,6 @@ class SingleReferenceEditor extends Component {
   _selectFilter(filter){
     this.setState({ selectedFilter: filter }, () => {
       const currentItem = this._getItemOptions().find(item => item.value === this.state.selectedItem.value);
-      console.log(currentItem);
       this.setState({ selectedItem: currentItem });
     });
   }
@@ -92,9 +91,13 @@ class SingleReferenceEditor extends Component {
 
   render(){
     return (
-      <div className="form-group">
-        <ReactSelect id={this.editorId} className="single-reference" value={this.state.selectedItem} onChange={this.selectItem} options={this._getItemOptions()}/>
-        <ReactSelect id={this.filterId} className="single-reference-filters" isSearchable={false} isClearable={true} value={this.state.selectedFilter} onChange={this.selectFilter} options={this._getFilterOptions()}/>
+      <div className="single-reference-container">
+        <div className="col-sm-10">
+          <ReactSelect id={this.editorId} className="single-reference" value={this.state.selectedItem} onChange={this.selectItem} options={this._getItemOptions()}/>
+        </div>
+        <div className="col-sm-2">
+          <ReactSelect id={this.filterId} className="single-reference-filter" isSearchable={false} isClearable={true} value={this.state.selectedFilter} onChange={this.selectFilter} options={this._getFilterOptions()}/>
+        </div>
       </div>
     );
   }
