@@ -6,14 +6,14 @@ class SingleReferenceEditor extends Component {
   constructor(props){
     super(props);
 
-    const selItem = document.getElementById(this.props.srcRef).value;
+    const v = document.getElementById(this.props.srcRef).value;
+    const selItem = this._load(v);
 
     this.state = {
       selectedItem: selItem
     };
     this.editorId = `${this.props.srcRef}-editor`;
     this.selectItem = this._selectItem.bind(this);
-    this.handleChange = this._handleChange.bind(this);
   }
 
   componentDidMount(){
@@ -24,8 +24,23 @@ class SingleReferenceEditor extends Component {
   }
 
   _selectItem(item){
-    this.setState({ selectedItem: item});
+    const sel = parseInt(item.value);
+    this.setState({ selectedItem: item }, () => this._save());
   }
+
+  _load(v){
+    if (v !== null && v !== '') {
+      let initItem = this.props.items.filter(item => item.id === parseInt(v));
+      if(initItem.length === 1) return this._getJSONItem(initItem[0]);
+    }
+    return {};
+  }
+
+  _save(){
+    const v = (this.state.selectedItem.value == '' || this.state.selectedItem.value == null) ? '' : JSON.stringify(this.state.selectedItem.value);
+    document.getElementById(this.props.srcRef).value = v;
+  }
+
 
   _emptyOption(){
     return this.props.req ? null : {key: null, value: "", label: ""};
@@ -46,21 +61,13 @@ class SingleReferenceEditor extends Component {
   }
 
   _getJSONItem(item) {
-    return {key: `${this.props.srcId}-${item.id}`, value: item.id, label: this._itemName(item)};
-  }
-
-  _handleChange(option) {
-    this.setState({selectedItem: option});
-  }
-
-  renderItem(item){
-    return <option key={item.key} value={item.id}>{item.name}</option>
+    return {value: item.id, label: this._itemName(item)};
   }
 
   render(){
     return (
       <div className="form-group">
-        <ReactSelect id={this.editorId} value={this.state.selectedItem} onChange={this.handleChange} options={this._getOptionList()}/>
+        <ReactSelect id={this.editorId} value={this.state.selectedItem} onChange={this.selectItem} options={this._getOptionList()}/>
       </div>
     );
   }
