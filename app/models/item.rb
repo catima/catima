@@ -54,9 +54,12 @@ class Item < ApplicationRecord
 
   def self.sorted_by_field(field)
     sql = []
-    sql << "data->>'#{field.uuid}' ASC" unless field.nil?
+    sql << field.order_items_by unless field.nil?
     sql << "created_at DESC"
-    order(Arel.sql(sql.join(", ")))
+    return order(Arel.sql(sql.join(", "))) unless !field.nil? && field.type == Field::TYPES['reference']
+
+    joins("LEFT JOIN items ref_items ON ref_items.id::text = items.data->>'#{field.uuid}'")
+      .order(Arel.sql(sql.join(", ")))
   end
 
   def self.with_type(type)

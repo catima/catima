@@ -47,6 +47,10 @@ class Field::Int < ::Field
     %i(maximum minimum auto_increment)
   end
 
+  def order_items_by
+    "(data->>'#{uuid}')::int ASC"
+  end
+
   private
 
   def build_validators

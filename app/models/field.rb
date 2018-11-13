@@ -238,6 +238,11 @@ class Field < ApplicationRecord
     strip_tags(exclude_base64(raw_value(item, locale)))
   end
 
+  # Returns the order by for items with a sort by a field
+  def order_items_by
+    "data->>'#{uuid}' ASC"
+  end
+
   private
 
   def exclude_base64(string)

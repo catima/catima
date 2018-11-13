@@ -120,6 +120,15 @@ class Field::DateTime < ::Field
     end
   end
 
+  def order_items_by
+    "NULLIF(data->'#{uuid}'->>'Y', '')::int ASC,
+    NULLIF(data->'#{uuid}'->>'M', '')::int ASC,
+    NULLIF(data->'#{uuid}'->>'D', '')::int ASC,
+    NULLIF(data->'#{uuid}'->>'h', '')::int ASC,
+    NULLIF(data->'#{uuid}'->>'m', '')::int ASC,
+    NULLIF(data->'#{uuid}'->>'s', '')::int ASC"
+  end
+
   private
 
   def transform_value(v)
