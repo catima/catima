@@ -27,7 +27,6 @@ class SingleReferenceEditor extends Component {
   }
 
   _selectItem(item){
-    const sel = parseInt(item.value);
     this.setState({ selectedItem: item }, () => this._save());
   }
 
@@ -44,8 +43,10 @@ class SingleReferenceEditor extends Component {
   }
 
   _save(){
-    const v = (this.state.selectedItem.value == '' || this.state.selectedItem.value == null) ? '' : JSON.stringify(this.state.selectedItem.value);
-    document.getElementById(this.props.srcRef).value = v;
+    if(this.state.selectedItem !== null) {
+      const v = (this.state.selectedItem.value == '' || this.state.selectedItem.value == null) ? '' : JSON.stringify(this.state.selectedItem.value);
+      document.getElementById(this.props.srcRef).value = v;
+    }
   }
 
   _getItemOptions(){
@@ -69,10 +70,8 @@ class SingleReferenceEditor extends Component {
 
   _selectFilter(filter){
     this.setState({ selectedFilter: filter }, () => {
-      if(typeof this.state.selectedItem !== 'undefined') {
-        const currentItem = this._getItemOptions().find(item => item.value === this.state.selectedItem.value);
-        this.setState({ selectedItem: currentItem });
-      }
+      const currentItem = this._getItemOptions().find(item => item.value === this.state.selectedItem.value);
+      this.setState({ selectedItem: currentItem });
     });
   }
 
@@ -95,7 +94,7 @@ class SingleReferenceEditor extends Component {
     return (
       <div className="input-group single-reference-container">
         <ReactSelect id={this.editorId} className="single-reference" value={this.state.selectedItem} onChange={this.selectItem} options={this._getItemOptions()}/>
-        <div className="input-group-addon"><ReactSelect id={this.filterId} className="single-reference-filter input-group-text" isSearchable={false} isClearable={true} value={this.state.selectedFilter} onChange={this.selectFilter} options={this._getFilterOptions()}/></div>
+        <div className="input-group-addon"><ReactSelect id={this.filterId} className="single-reference-filter" isSearchable={false} isClearable={true} value={this.state.selectedFilter} onChange={this.selectFilter} options={this._getFilterOptions()}/></div>
       </div>
     );
   }
