@@ -42,12 +42,25 @@ form > .form-group {
   padding: 0;
 }
 
-.referenceEditor .single-reference-container .single-reference-filter .css-1hwfws3, .referenceEditor .single-reference .css-1wy0on6 {
+.referenceEditor .single-reference-filter .css-1hwfws3, .referenceEditor .single-reference .css-1wy0on6, .referenceEditor .single-reference-filter .css-d8oujb {
   display: none;
 }
 
-.referenceEditor .single-reference-container .single-reference-filter .css-vj8t7z {
+.referenceEditor .single-reference-filter .css-vj8t7z {
   border: none;
+}
+
+.referenceEditor .single-reference .css-2o5izw {
+    border-color: #66afe9;
+    outline: 0;
+    box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075), 0 0 8px rgba(102, 175, 233, 0.6);
+}
+
+.referenceEditor {
+  display: block;
+  float: left;
+  width: 100%;
+  margin-bottom: 20px;
 }
 
 .red {

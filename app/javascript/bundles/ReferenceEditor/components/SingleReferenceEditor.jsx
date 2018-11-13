@@ -69,8 +69,10 @@ class SingleReferenceEditor extends Component {
 
   _selectFilter(filter){
     this.setState({ selectedFilter: filter }, () => {
-      const currentItem = this._getItemOptions().find(item => item.value === this.state.selectedItem.value);
-      this.setState({ selectedItem: currentItem });
+      if(typeof this.state.selectedItem !== 'undefined') {
+        const currentItem = this._getItemOptions().find(item => item.value === this.state.selectedItem.value);
+        this.setState({ selectedItem: currentItem });
+      }
     });
   }
 
