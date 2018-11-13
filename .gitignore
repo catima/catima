@@ -55,3 +55,6 @@ spec/examples.txt
 .idea
 
 /vendor/bundle
+
+# Ignore Windows files
+dump.rdb
