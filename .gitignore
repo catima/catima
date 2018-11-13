@@ -55,10 +55,6 @@ spec/examples.txt
 .idea
 
 /vendor/bundle
-<<<<<<< Updated upstream
 
 # Ignore Windows files
 dump.rdb
-=======
-/dump.rdb
->>>>>>> Stashed changes
