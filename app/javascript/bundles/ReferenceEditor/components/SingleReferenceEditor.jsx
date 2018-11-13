@@ -93,13 +93,9 @@ class SingleReferenceEditor extends Component {
 
   render(){
     return (
-      <div className="single-reference-container">
-        <div className="col-sm-10">
-          <ReactSelect id={this.editorId} className="single-reference" value={this.state.selectedItem} onChange={this.selectItem} options={this._getItemOptions()}/>
-        </div>
-        <div className="col-sm-2">
-          <ReactSelect id={this.filterId} className="single-reference-filter" isSearchable={false} isClearable={true} value={this.state.selectedFilter} onChange={this.selectFilter} options={this._getFilterOptions()}/>
-        </div>
+      <div className="input-group single-reference-container">
+        <ReactSelect id={this.editorId} className="single-reference" value={this.state.selectedItem} onChange={this.selectItem} options={this._getItemOptions()}/>
+        <div className="input-group-addon"><ReactSelect id={this.filterId} className="single-reference-filter input-group-text" isSearchable={false} isClearable={true} value={this.state.selectedFilter} onChange={this.selectFilter} options={this._getFilterOptions()}/></div>
       </div>
     );
   }

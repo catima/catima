@@ -38,31 +38,6 @@ form > .form-group {
   margin-top: 0;
 }
 
-.referenceEditor .single-reference-container div[class*="col-"] {
-  padding: 0;
-}
-
-.referenceEditor .single-reference-filter .css-1hwfws3, .referenceEditor .single-reference .css-1wy0on6, .referenceEditor .single-reference-filter .css-d8oujb {
-  display: none;
-}
-
-.referenceEditor .single-reference-filter .css-vj8t7z {
-  border: none;
-}
-
-.referenceEditor .single-reference .css-2o5izw {
-    border-color: #66afe9;
-    outline: 0;
-    box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075), 0 0 8px rgba(102, 175, 233, 0.6);
-}
-
-.referenceEditor {
-  display: block;
-  float: left;
-  width: 100%;
-  margin-bottom: 20px;
-}
-
 .red {
   color: #f00;
 }
@@ -112,4 +87,55 @@ button[data-active=true]:focus {
   width: 30px;
   height: 30px;
   margin-left: 5px;
+}
+
+/*** Single reference editor styles ***/
+
+.referenceEditor {
+  display: block;
+  float: left;
+  width: 100%;
+  margin-bottom: 20px;
+}
+
+.referenceEditor .input-group-addon {
+  min-width: 80px;
+  padding: 0;
+  border: 0;
+}
+
+.referenceEditor .single-reference-filter .css-1hwfws3, .referenceEditor .single-reference .css-1wy0on6, .referenceEditor .single-reference-filter .css-d8oujb {
+  display: none;
+}
+
+.referenceEditor .single-reference-filter .css-1wy0on6 {
+  position: absolute;
+  right: 0;
+}
+
+.referenceEditor .single-reference-filter .css-11unzgr div {
+  text-align: left;
+}
+
+.referenceEditor .single-reference .css-2o5izw {
+    border-color: #66afe9;
+    outline: 0;
+    box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075), 0 0 8px rgba(102, 175, 233, 0.6);
+}
+
+.referenceEditor .single-reference-filter .css-vj8t7z {
+  border-top-left-radius: 0;
+  border-bottom-left-radius: 0;
+  border-left: 1px solid #CCCCCC;
+}
+
+.referenceEditor .single-reference .css-vj8t7z {
+  border-right: none;
+  border-top-right-radius: 0;
+  border-bottom-right-radius: 0;
+
+}
+
+.referenceEditor .css-vj8t7z:hover {
+border-color: #CCCCCC;
 }
