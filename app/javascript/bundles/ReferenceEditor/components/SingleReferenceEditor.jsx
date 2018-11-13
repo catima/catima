@@ -22,12 +22,17 @@ class SingleReferenceEditor extends Component {
   componentDidMount(){
     // If reference value is empty but field is required, insert the default value.
     if (document.getElementById(this.props.srcRef).value == '' && this.props.req) {
-      this._selectItem(this._emptyOption());
+      this._selectItem();
     }
   }
 
   _selectItem(item){
-    this.setState({ selectedItem: item }, () => this._save());
+    if(typeof item !== 'undefined') {
+      this.setState({ selectedItem: item }, () => this._save());
+    } else {
+      this.setState({ selectedItem: [] }, () => this._save());
+    }
+
   }
 
   _emptyOption(){
@@ -70,8 +75,12 @@ class SingleReferenceEditor extends Component {
 
   _selectFilter(filter){
     this.setState({ selectedFilter: filter }, () => {
-      const currentItem = this._getItemOptions().find(item => item.value === this.state.selectedItem.value);
-      this.setState({ selectedItem: currentItem });
+      if(typeof this.state.selectedItem !== 'undefined') {
+        const currentItem = this._getItemOptions().find(item => item.value === this.state.selectedItem.value);
+        this.setState({ selectedItem: currentItem });
+      } else {
+        this.setState({ selectedItem: [] });
+      }
     });
   }
 
