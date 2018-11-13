@@ -139,3 +139,12 @@ button[data-active=true]:focus {
 .referenceEditor .css-vj8t7z:hover {
 border-color: #CCCCCC;
 }
+
+.referenceEditor .multiple-selection-container .availableReferences .form-control, .referenceEditor .multiple-selection-container .selectedReferences .form-control {
+  border: none;
+  border-radius: 0;
+}
+
+.referenceEditor .multiple-selection-container .css-vj8t7z, .referenceEditor .multiple-selection-container .css-2o5izw {
+  margin-bottom: 20px;
+}

@@ -168,15 +168,16 @@ class MultiReferenceEditor extends Component {
 
   render(){
     return (
-      <div>
-        <ReactSelect id={this.filterId} isSearchable={false} isClearable={true} value={this.state.selectedFilter} onChange={this.selectFilter} options={this._getFilterOptions()}/>
-        <input className="form-control" type="text" value={this.state.filterAvailableInputValue} onChange={this.filterAvailableReferences}/>
-        <input className="form-control" type="text" value={this.state.filterSelectedInputValue} onChange={this.filterSelectedReferences}/>
+      <div className="multiple-selection-container">
+        <ReactSelect id={this.filterId} className="multiple-reference-filter" placeholder="Search by..." isSearchable={false} isClearable={true} value={this.state.selectedFilter} onChange={this.selectFilter} options={this._getFilterOptions()}/>
         <div id={this.editorId} className="wrapper">
           <div className="availableReferences">
-            {this.props.items.map(item =>
-              this.renderItemDiv(item, false)
-            )}
+            <input className="form-control" type="text" value={this.state.filterAvailableInputValue} onChange={this.filterAvailableReferences} placeholder="Search..."/>
+            <div>
+              {this.props.items.map(item =>
+                this.renderItemDiv(item, false)
+              )}
+            </div>
           </div>
           <div className="referenceControls">
             <div id={this._selectButtonId('select')} className="btn btn-success" onClick={this.selectItems} disabled>
@@ -187,9 +188,12 @@ class MultiReferenceEditor extends Component {
             </div>
           </div>
           <div className="selectedReferences">
-            {this.props.items.map(item =>
-              this.renderItemDiv(item, true)
-            )}
+            <input className="form-control" type="text" value={this.state.filterSelectedInputValue} onChange={this.filterSelectedReferences} placeholder="Search..."/>
+            <div>
+              {this.props.items.map(item =>
+                this.renderItemDiv(item, true)
+              )}
+            </div>
           </div>
         </div>
       </div>
