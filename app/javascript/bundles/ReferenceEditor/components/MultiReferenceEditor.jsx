@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import ReactDOM from 'react-dom';
+import ReactSelect from 'react-select';
 import striptags from 'striptags';
 
 class MultiReferenceEditor extends Component {
@@ -12,13 +13,20 @@ class MultiReferenceEditor extends Component {
 
     this.state = {
       selectedItems: selItems,
+      selectedFilter: null,
+      filterAvailableInputValue: '',
+      filterSelectedInputValue: ''
     };
 
     this.editorId = `${this.props.srcRef}-editor`;
+    this.filterId = `${this.props.srcRef}-filters`;
 
     this.highlightItem = this._highlightItem.bind(this);
     this.selectItems = this._selectItems.bind(this);
     this.unselectItems = this._unselectItems.bind(this);
+    this.selectFilter = this._selectFilter.bind(this);
+    this.filterAvailableReferences = this._filterAvailableReferences.bind(this);
+    this.filterSelectedReferences = this._filterSelectedReferences.bind(this);
   }
 
   _highlightItem(e){
@@ -64,11 +72,40 @@ class MultiReferenceEditor extends Component {
   }
 
   _itemName(item){
-    return striptags(item.default_display_name);
+    if(typeof this.state === 'undefined') return striptags(item.default_display_name);
+    if(typeof this.state !== 'undefined' && this.state.selectedFilter === null) return striptags(item.default_display_name);
+    return striptags(item.default_display_name) + ' - ' + item[this.state.selectedFilter.value];
   }
 
   _selectButtonId(status){
     return `${this.editorId}-${status}`;
+  }
+
+  _selectFilter(filter){
+    this.setState({ selectedFilter: filter });
+  }
+
+  _getFilterOptions(){
+    var optionsList = [];
+    optionsList = this.props.fields.filter(field => field.primary !== true);
+
+    optionsList = optionsList.map(field =>
+      this._getJSONFilter(field)
+    );
+
+    return optionsList;
+  }
+
+  _getJSONFilter(field) {
+    if(!field.primary) return {value: field.slug, label: field.name};
+  }
+
+  _filterAvailableReferences(e) {
+    this.setState({filterAvailableInputValue: e.target.value});
+  }
+
+  _filterSelectedReferences(e) {
+    this.setState({filterSelectedInputValue: e.target.value});
   }
 
   highlightedItems(className){
@@ -95,6 +132,33 @@ class MultiReferenceEditor extends Component {
     const itemDivId = `${this.props.srcId}-${item.id}`;
     if (selectedItems == false && this.state.selectedItems.indexOf(item.id) > -1) return null;
     if (selectedItems == true && this.state.selectedItems.indexOf(item.id) == -1) return null;
+
+    // Filtering the unselected items ItemList
+    if(selectedItems == false && this.state.filterAvailableInputValue !== '') {
+      var isInString = -1;
+      if(this.state.selectedFilter !== null) {
+        var searchString = item.default_display_name.toLowerCase() + ' - ' + item[this.state.selectedFilter.value].toLowerCase();
+          isInString = searchString.indexOf(this.state.filterAvailableInputValue.toLowerCase());
+      } else {
+          isInString = item.default_display_name.toLowerCase().indexOf(this.state.filterAvailableInputValue.toLowerCase());
+      }
+
+      if(isInString === -1) return null;
+    }
+
+    // Filtering the selected items ItemList
+    if(selectedItems == true && this.state.filterSelectedInputValue !== '') {
+      var isInString = -1;
+      if(this.state.selectedFilter !== null) {
+        var searchString = item.default_display_name.toLowerCase() + ' - ' + item[this.state.selectedFilter.value].toLowerCase();
+          isInString = searchString.indexOf(this.state.filterSelectedInputValue.toLowerCase());
+      } else {
+          isInString = item.default_display_name.toLowerCase().indexOf(this.state.filterSelectedInputValue.toLowerCase());
+      }
+
+      if(isInString === -1) return null;
+    }
+
     return (
       <div id={itemDivId} key={itemDivId} className="item" onClick={this.highlightItem}>
         {this._itemName(item)}
@@ -104,24 +168,33 @@ class MultiReferenceEditor extends Component {
 
   render(){
     return (
-      <div id={this.editorId} className="wrapper">
-        <div className="availableReferences">
-          {this.props.items.map(item =>
-            this.renderItemDiv(item, false)
-          )}
-        </div>
-        <div className="referenceControls">
-          <div id={this._selectButtonId('select')} className="btn btn-success" onClick={this.selectItems} disabled>
-            <i className="fa fa-arrow-right"></i>
+      <div className="multiple-selection-container">
+        <ReactSelect id={this.filterId} className="multiple-reference-filter" placeholder="Search by..." isSearchable={false} isClearable={true} value={this.state.selectedFilter} onChange={this.selectFilter} options={this._getFilterOptions()}/>
+        <div id={this.editorId} className="wrapper">
+          <div className="availableReferences">
+            <input className="form-control" type="text" value={this.state.filterAvailableInputValue} onChange={this.filterAvailableReferences} placeholder="Search..."/>
+            <div>
+              {this.props.items.map(item =>
+                this.renderItemDiv(item, false)
+              )}
+            </div>
           </div>
-          <div id={this._selectButtonId('unselect')} className="btn btn-danger" onClick={this.unselectItems} disabled>
-            <i className="fa fa-arrow-left"></i>
+          <div className="referenceControls">
+            <div id={this._selectButtonId('select')} className="btn btn-success" onClick={this.selectItems} disabled>
+              <i className="fa fa-arrow-right"></i>
+            </div>
+            <div id={this._selectButtonId('unselect')} className="btn btn-danger" onClick={this.unselectItems} disabled>
+              <i className="fa fa-arrow-left"></i>
+            </div>
           </div>
-        </div>
-        <div className="selectedReferences">
-          {this.props.items.map(item =>
-            this.renderItemDiv(item, true)
-          )}
+          <div className="selectedReferences">
+            <input className="form-control" type="text" value={this.state.filterSelectedInputValue} onChange={this.filterSelectedReferences} placeholder="Search..."/>
+            <div>
+              {this.props.items.map(item =>
+                this.renderItemDiv(item, true)
+              )}
+            </div>
+          </div>
         </div>
       </div>
     );
