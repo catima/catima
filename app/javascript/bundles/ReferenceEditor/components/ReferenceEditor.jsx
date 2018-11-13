@@ -59,6 +59,7 @@ class ReferenceEditor extends Component {
     if (this.props.multiple)
       return <MultiReferenceEditor
                 items={this.state.items}
+                fields={this.state.fields}
                 srcRef={this.props.srcRef}
                 srcId={this.props.srcId}
                 req={this.props.req} />
