@@ -24,7 +24,7 @@ class Search::TextStrategyTest < ActiveSupport::TestCase
 
     results = strategy.search(scope, criteria)
     assert_includes(results.to_a, items(:one_author_stephen_king))
-    refute_includes(results.to_a, items(:one_author_very_old))
+    refute_includes(results.to_a, items(:one_author_very_young))
   end
 
   test "search excludes item outside of range" do

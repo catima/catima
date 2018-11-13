@@ -44,6 +44,10 @@ class Field::Decimal < ::Field
     %i(maximum minimum)
   end
 
+  def order_items_by
+    "(data->>'#{uuid}')::float ASC"
+  end
+
   private
 
   def build_validators

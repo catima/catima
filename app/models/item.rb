@@ -54,7 +54,7 @@ class Item < ApplicationRecord
 
   def self.sorted_by_field(field)
     sql = []
-    sql << order_by_field_type(field) unless field.nil?
+    sql << field.order_items_by unless field.nil?
     sql << "created_at DESC"
     return order(Arel.sql(sql.join(", "))) unless !field.nil? && field.type == Field::TYPES['reference']
 
@@ -134,27 +134,6 @@ class Item < ApplicationRecord
 
   def view(type, locale=I18n.locale)
     (views[type.to_s] && views[type.to_s][locale.to_s]) || default_display_name(locale)
-  end
-
-  def self.order_by_field_type(field)
-    case field.type
-    when Field::TYPES['datetime'] then
-      "NULLIF(data->'#{field.uuid}'->>'Y', '')::int ASC,
-      NULLIF(data->'#{field.uuid}'->>'M', '')::int ASC,
-      NULLIF(data->'#{field.uuid}'->>'D', '')::int ASC,
-      NULLIF(data->'#{field.uuid}'->>'h', '')::int ASC,
-      NULLIF(data->'#{field.uuid}'->>'m', '')::int ASC,
-      NULLIF(data->'#{field.uuid}'->>'s', '')::int ASC"
-    when Field::TYPES['int'] then
-      "(data->>'#{field.uuid}')::int ASC"
-    when Field::TYPES['decimal'] then
-      "(data->>'#{field.uuid}')::float ASC"
-    when Field::TYPES['reference'] then
-      ref_field = field.related_item_type.field_for_select
-      "(ref_items.data->>'#{ref_field.uuid}') ASC" unless ref_field.nil?
-    else
-      "data->>'#{field.uuid}' ASC"
-    end
   end
 
   private
