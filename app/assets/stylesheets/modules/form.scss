@@ -88,3 +88,69 @@ button[data-active=true]:focus {
   height: 30px;
   margin-left: 5px;
 }
+
+/*** Single reference editor styles ***/
+
+.referenceEditor {
+  display: block;
+  float: left;
+  width: 100%;
+  margin-bottom: 20px;
+}
+
+.referenceEditor .input-group-addon {
+  min-width: 80px;
+  padding: 0;
+  border: 0;
+}
+
+.referenceEditor .single-reference-filter .css-1hwfws3, .referenceEditor .single-reference .css-1wy0on6, .referenceEditor .single-reference-filter .css-d8oujb {
+  display: none;
+}
+
+.referenceEditor .single-reference-filter .css-1wy0on6 {
+  position: absolute;
+  right: 0;
+}
+
+.referenceEditor .single-reference-filter .css-11unzgr div {
+  text-align: left;
+}
+
+.referenceEditor .single-reference-filter .css-vj8t7z {
+  border-top-left-radius: 0;
+  border-bottom-left-radius: 0;
+  border-left: 1px solid #CCCCCC;
+}
+
+.referenceEditor .single-reference-filter .css-2o5izw {
+  border-top-left-radius: 0;
+  border-bottom-left-radius: 0;
+}
+
+.referenceEditor .single-reference .css-vj8t7z {
+  border-right: none;
+  border-top-right-radius: 0;
+  border-bottom-right-radius: 0;
+}
+
+.referenceEditor .single-reference .css-2o5izw {
+  border-top-right-radius: 0;
+  border-bottom-right-radius: 0;
+  border-color: #66afe9;
+  outline: 0;
+  box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075), 0 0 8px rgba(102, 175, 233, 0.6);
+}
+
+.referenceEditor .css-vj8t7z:hover {
+  border-color: #CCCCCC;
+}
+
+.referenceEditor .multiple-selection-container .availableReferences .form-control, .referenceEditor .multiple-selection-container .selectedReferences .form-control {
+  border: none;
+  border-radius: 0;
+}
+
+.referenceEditor .multiple-selection-container .css-vj8t7z, .referenceEditor .multiple-selection-container .css-2o5izw {
+  margin-bottom: 20px;
+}

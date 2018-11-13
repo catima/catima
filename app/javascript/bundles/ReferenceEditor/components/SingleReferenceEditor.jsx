@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import ReactSelect from 'react-select';
 import striptags from 'striptags';
 
 class SingleReferenceEditor extends Component {
@@ -9,58 +10,99 @@ class SingleReferenceEditor extends Component {
     const selItem = this._load(v);
 
     this.state = {
-      selectedItem: selItem
+      selectedItem: selItem,
+      selectedFilter: null
     };
     this.editorId = `${this.props.srcRef}-editor`;
+    this.filterId = `${this.props.srcRef}-filters`;
     this.selectItem = this._selectItem.bind(this);
+    this.selectFilter = this._selectFilter.bind(this);
   }
 
   componentDidMount(){
     // If reference value is empty but field is required, insert the default value.
     if (document.getElementById(this.props.srcRef).value == '' && this.props.req) {
-      this._selectItem();
+      const itemList = this._getItemOptions();
+      this._selectItem(itemList[0]);
     }
   }
 
-  _selectItem(){
-    const sel = parseInt(document.querySelector(`#${this.editorId}`).value);
-    this.setState({ selectedItem: isNaN(sel) ? '' : sel }, () => this._save());
-  }
-
-  _emptyOption(){
-    return this.props.req ? null : <option key="null" value=""></option>;
+  _selectItem(item, event){
+    if(typeof event === 'undefined' || event.action !== "pop-value" || !this.props.req) {
+      if(typeof item !== 'undefined') {
+        this.setState({ selectedItem: item }, () => this._save());
+      } else {
+        this.setState({ selectedItem: [] }, () => this._save());
+      }
+    }
   }
 
   _load(v){
-    if (v == null || v == '') return '';
-    let selItem = JSON.parse(v);
-    if (selItem.hasOwnProperty('raw_value')) return selItem.raw_value ? selItem.raw_value : '';
-    if (selItem.hasOwnProperty('length')) return selItem.length > 0 ? parseInt(selItem[0]) : '';
-    return selItem ? selItem : '';
+    if (v !== null && v !== '') {
+      let initItem = this.props.items.filter(item => item.id === parseInt(v));
+      if(initItem.length === 1) return this._getJSONItem(initItem[0]);
+    }
+    return [];
   }
 
   _save(){
-    const v = (this.state.selectedItem == '' || this.state.selectedItem == null) ? '' : JSON.stringify(this.state.selectedItem);
-    document.getElementById(this.props.srcRef).value = v;
+    if(this.state.selectedItem !== null) {
+      const v = (this.state.selectedItem.value == '' || this.state.selectedItem.value == null) ? '' : JSON.stringify(this.state.selectedItem.value);
+      document.getElementById(this.props.srcRef).value = v;
+    }
+  }
+
+  _getItemOptions(){
+    var optionsList = [];
+    optionsList = this.props.items.map(item =>
+      this._getJSONItem(item)
+    );
+
+    return optionsList;
   }
 
   _itemName(item){
-    return striptags(item.default_display_name);
+    if(typeof this.state === 'undefined') return striptags(item.default_display_name);
+    if(typeof this.state !== 'undefined' && this.state.selectedFilter === null) return striptags(item.default_display_name);
+    return striptags(item.default_display_name) + ' - ' + item[this.state.selectedFilter.value];
   }
 
-  renderItem(item){
-    const itemKey = `${this.props.srcId}-${item.id}`;
-    return <option key={itemKey} value={item.id}>{this._itemName(item)}</option>
+  _getJSONItem(item) {
+    return {value: item.id, label: this._itemName(item)};
+  }
+
+  _selectFilter(filter){
+    this.setState({ selectedFilter: filter }, () => {
+      if(typeof this.state.selectedItem !== 'undefined') {
+        const currentItem = this._getItemOptions().find(item => item.value === this.state.selectedItem.value);
+        this.setState({ selectedItem: currentItem });
+      } else {
+        this.setState({ selectedItem: [] });
+      }
+    });
+  }
+
+  _getFilterOptions(){
+    var optionsList = [];
+    optionsList = this.props.fields.filter(field => field.primary !== true);
+
+    optionsList = optionsList.map(field =>
+      this._getJSONFilter(field)
+    );
+
+    return optionsList;
+  }
+
+  _getJSONFilter(field) {
+    if(!field.primary) return {value: field.slug, label: field.name};
   }
 
   render(){
     return (
-      <select id={this.editorId} onChange={this.selectItem} value={this.state.selectedItem} className="form-control">
-        {this._emptyOption()}
-        {this.props.items.map(item =>
-          this.renderItem(item)
-        )}
-      </select>
+      <div className="input-group single-reference-container">
+        <ReactSelect id={this.editorId} className="single-reference" value={this.state.selectedItem} onChange={this.selectItem} options={this._getItemOptions()}/>
+        <div className="input-group-addon"><ReactSelect id={this.filterId} className="single-reference-filter" isSearchable={false} isClearable={true} value={this.state.selectedFilter} onChange={this.selectFilter} options={this._getFilterOptions()}/></div>
+      </div>
     );
   }
 }
