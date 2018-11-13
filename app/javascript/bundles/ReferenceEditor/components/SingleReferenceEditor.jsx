@@ -22,21 +22,19 @@ class SingleReferenceEditor extends Component {
   componentDidMount(){
     // If reference value is empty but field is required, insert the default value.
     if (document.getElementById(this.props.srcRef).value == '' && this.props.req) {
-      this._selectItem();
+      const itemList = this._getItemOptions();
+      this._selectItem(itemList[0]);
     }
   }
 
-  _selectItem(item){
-    if(typeof item !== 'undefined') {
-      this.setState({ selectedItem: item }, () => this._save());
-    } else {
-      this.setState({ selectedItem: [] }, () => this._save());
+  _selectItem(item, event){
+    if(typeof event === 'undefined' || event.action !== "pop-value" || !this.props.req) {
+      if(typeof item !== 'undefined') {
+        this.setState({ selectedItem: item }, () => this._save());
+      } else {
+        this.setState({ selectedItem: [] }, () => this._save());
+      }
     }
-
-  }
-
-  _emptyOption(){
-    return this.props.req ? null : {key: null, value: "", label: ""};
   }
 
   _load(v){
