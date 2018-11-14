@@ -16,7 +16,13 @@ class CatalogAdmin::ItemsTest < ActionDispatch::IntegrationTest
     fill_in("Email", :with => "test@example.com")
     fill_in("Rank", :with => "1.25")
 
-    select("Stephen King", :from => 'item_one_author_collaborator_uuid_json-editor')
+    find(:css, '#item_one_author_collaborator_uuid_json-editor').click
+    page.execute_script(
+      "Array.from(document.querySelectorAll(" \
+        "'#item_one_author_collaborator_uuid_json-editor div'" \
+      ")).find(el => el.textContent === 'Stephen King').click();"
+    )
+
     page.execute_script(
       "Array.from(document.querySelectorAll(" \
         "'#item_one_author_other_collaborators_uuid_json-editor div.availableReferences div'" \
@@ -97,7 +103,12 @@ class CatalogAdmin::ItemsTest < ActionDispatch::IntegrationTest
     author_id = current_path[%r{authors/(.+)/edit$}, 1]
 
     fill_in("Name", :with => "Changed by test")
-    select("Very Old", :from => 'item_one_author_collaborator_uuid_json-editor')
+    find(:css, '#item_one_author_collaborator_uuid_json-editor').click
+    page.execute_script(
+      "Array.from(document.querySelectorAll(" \
+        "'#item_one_author_collaborator_uuid_json-editor div'" \
+      ")).find(el => el.textContent === 'Very Old').click();"
+    )
     select("Eng", :from => "Language")
 
     assert_no_difference("Item.count") do
