@@ -63,7 +63,7 @@ class SingleReferenceEditor extends Component {
 
   _itemName(item){
     if(typeof this.state === 'undefined') return striptags(item.default_display_name);
-    if(typeof this.state !== 'undefined' && this.state.selectedFilter === null) return striptags(item.default_display_name);
+    if(typeof this.state !== 'undefined' && (this.state.selectedFilter === null || item[this.state.selectedFilter.value] === null || typeof item[this.state.selectedFilter.value] === "Object" || item[this.state.selectedFilter.value].length === 0)) return striptags(item.default_display_name);
     return striptags(item.default_display_name) + ' - ' + item[this.state.selectedFilter.value];
   }
 

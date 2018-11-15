@@ -98,19 +98,18 @@ button[data-active=true]:focus {
   margin-bottom: 20px;
 }
 
-.referenceEditor .input-group-addon {
-  min-width: 80px;
+.referenceEditor .css-15k3avv {
+  z-index: 3;
+}
+
+.referenceEditor .single-reference-container .input-group-addon {
+  min-width: 10em;
   padding: 0;
   border: 0;
 }
 
-.referenceEditor .single-reference-filter .css-1hwfws3, .referenceEditor .single-reference .css-1wy0on6, .referenceEditor .single-reference-filter .css-d8oujb {
+.referenceEditor .single-reference .css-1wy0on6, .referenceEditor .single-reference-filter .css-d8oujb {
   display: none;
-}
-
-.referenceEditor .single-reference-filter .css-1wy0on6 {
-  position: absolute;
-  right: 0;
 }
 
 .referenceEditor .single-reference-filter .css-11unzgr div {
@@ -146,11 +145,36 @@ button[data-active=true]:focus {
   border-color: #CCCCCC;
 }
 
-.referenceEditor .multiple-selection-container .availableReferences .form-control, .referenceEditor .multiple-selection-container .selectedReferences .form-control {
+.referenceEditor .multiple-reference-container .availableReferences .form-control, .referenceEditor .multiple-reference-container .selectedReferences .form-control {
   border: none;
   border-radius: 0;
 }
 
-.referenceEditor .multiple-selection-container .css-vj8t7z, .referenceEditor .multiple-selection-container .css-2o5izw {
+.referenceEditor .multiple-reference-container .css-vj8t7z, .referenceEditor .multiple-reference-container .css-2o5izw {
   margin-bottom: 20px;
+}
+
+.referenceEditor .multiple-reference-filter .css-vj8t7z {
+  border: none;
+  margin: 0;
+}
+
+.referenceEditor .multiple-reference-filter .css-1hwfws3 {
+  display: none;
+}
+
+.referenceEditor .multiple-reference-container .css-1wy0on6 {
+  position: absolute;
+  right: 0;
+}
+
+.referenceEditor .multiple-reference-container .input-group-addon {
+  padding: 0;
+  border: 0;
+  background-color: #FFFFFF;
+  min-width: 8em;
+}
+
+.referenceEditor .multiple-reference-container .form-control:focus {
+  box-shadow: none;
 }

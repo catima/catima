@@ -23,7 +23,7 @@ class Field::DateTimePresenter < FieldPresenter
     return nil if format_str.empty?
 
     dt_value = DateTime.civil_from_format(:local, *prepare_datetime_array)
-    text_repr = l(dt_value, format: format_str.to_sym)
+    text_repr = I18n.localize(dt_value, format: format_str.to_sym)
     text_repr.sub('8888', dt[0].to_s) if dt["raw_value"].nil?
   end
 
