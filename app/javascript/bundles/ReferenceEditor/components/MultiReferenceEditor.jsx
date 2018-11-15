@@ -13,18 +13,21 @@ class MultiReferenceEditor extends Component {
 
     this.state = {
       selectedItems: selItems,
-      selectedFilter: null,
+      availableRefsSelectedFilter: null,
+      selectedRefsSelectedFilter: null,
       filterAvailableInputValue: '',
       filterSelectedInputValue: ''
     };
 
     this.editorId = `${this.props.srcRef}-editor`;
-    this.filterId = `${this.props.srcRef}-filters`;
+    this.availableRefsFilterId = `${this.props.srcRef}-available-filters`;
+    this.selectedRefsFilterId = `${this.props.srcRef}-selected-filters`;
 
     this.highlightItem = this._highlightItem.bind(this);
     this.selectItems = this._selectItems.bind(this);
     this.unselectItems = this._unselectItems.bind(this);
-    this.selectFilter = this._selectFilter.bind(this);
+    this.availableRefsSelectFilter = this._availableRefsSelectFilter.bind(this);
+    this.selectedRefsSelectFilter = this._selectedRefsSelectFilter.bind(this);
     this.filterAvailableReferences = this._filterAvailableReferences.bind(this);
     this.filterSelectedReferences = this._filterSelectedReferences.bind(this);
   }
@@ -71,18 +74,29 @@ class MultiReferenceEditor extends Component {
     document.getElementById(this.props.srcRef).value = v;
   }
 
-  _itemName(item){
+  _availableRefsItemName(item){
     if(typeof this.state === 'undefined') return striptags(item.default_display_name);
-    if(typeof this.state !== 'undefined' && this.state.selectedFilter === null) return striptags(item.default_display_name);
-    return striptags(item.default_display_name) + ' - ' + item[this.state.selectedFilter.value];
+    if(typeof this.state !== 'undefined' && (this.state.availableRefsSelectedFilter === null || item[this.state.availableRefsSelectedFilter.value] === null || typeof item[this.state.availableRefsSelectedFilter.value] === "Object" || item[this.state.availableRefsSelectedFilter.value].length === 0)) return striptags(item.default_display_name);
+console.log(item[this.state.availableRefsSelectedFilter.value]);
+    return striptags(item.default_display_name) + ' - ' + item[this.state.availableRefsSelectedFilter.value];
+  }
+
+  _selectedRefsItemName(item){
+    if(typeof this.state === 'undefined') return striptags(item.default_display_name);
+    if(typeof this.state !== 'undefined' && (this.state.selectedRefsSelectedFilter === null || item[this.state.selectedRefsSelectedFilter.value] === null || typeof item[this.state.selectedRefsSelectedFilter.value] === "Object" || item[this.state.selectedRefsSelectedFilter.value].length === 0)) return striptags(item.default_display_name);
+    return striptags(item.default_display_name) + ' - ' + item[this.state.selectedRefsSelectedFilter.value];
   }
 
   _selectButtonId(status){
     return `${this.editorId}-${status}`;
   }
 
-  _selectFilter(filter){
-    this.setState({ selectedFilter: filter });
+  _availableRefsSelectFilter(filter){
+    this.setState({ availableRefsSelectedFilter: filter });
+  }
+
+  _selectedRefsSelectFilter(filter){
+    this.setState({ selectedRefsSelectedFilter: filter });
   }
 
   _getFilterOptions(){
@@ -128,7 +142,7 @@ class MultiReferenceEditor extends Component {
       document.querySelector(`#${this.editorId} .referenceControls .btn-danger`).setAttribute('disabled', 'disabled');
   }
 
-  renderItemDiv(item, selectedItems){
+  renderAvailableItemDiv(item, selectedItems){
     const itemDivId = `${this.props.srcId}-${item.id}`;
     if (selectedItems == false && this.state.selectedItems.indexOf(item.id) > -1) return null;
     if (selectedItems == true && this.state.selectedItems.indexOf(item.id) == -1) return null;
@@ -136,8 +150,8 @@ class MultiReferenceEditor extends Component {
     // Filtering the unselected items ItemList
     if(selectedItems == false && this.state.filterAvailableInputValue !== '') {
       var isInString = -1;
-      if(this.state.selectedFilter !== null) {
-        var searchString = item.default_display_name.toLowerCase() + ' - ' + item[this.state.selectedFilter.value].toLowerCase();
+      if(this.state.availableRefsSelectedFilter !== null) {
+          var searchString = item.default_display_name.toLowerCase() + ' - ' + item[this.state.availableRefsSelectedFilter.value].toLowerCase();
           isInString = searchString.indexOf(this.state.filterAvailableInputValue.toLowerCase());
       } else {
           isInString = item.default_display_name.toLowerCase().indexOf(this.state.filterAvailableInputValue.toLowerCase());
@@ -146,11 +160,23 @@ class MultiReferenceEditor extends Component {
       if(isInString === -1) return null;
     }
 
+    return (
+      <div id={itemDivId} key={itemDivId} className="item" onClick={this.highlightItem}>
+        {this._availableRefsItemName(item)}
+      </div>
+    );
+  }
+
+  renderSelectedItemDiv(item, selectedItems){
+    const itemDivId = `${this.props.srcId}-${item.id}`;
+    if (selectedItems == false && this.state.selectedItems.indexOf(item.id) > -1) return null;
+    if (selectedItems == true && this.state.selectedItems.indexOf(item.id) == -1) return null;
+
     // Filtering the selected items ItemList
     if(selectedItems == true && this.state.filterSelectedInputValue !== '') {
       var isInString = -1;
-      if(this.state.selectedFilter !== null) {
-        var searchString = item.default_display_name.toLowerCase() + ' - ' + item[this.state.selectedFilter.value].toLowerCase();
+      if(this.state.selectedRefsSelectedFilter !== null) {
+        var searchString = item.default_display_name.toLowerCase() + ' - ' + item[this.state.selectedRefsSelectedFilter.value].toLowerCase();
           isInString = searchString.indexOf(this.state.filterSelectedInputValue.toLowerCase());
       } else {
           isInString = item.default_display_name.toLowerCase().indexOf(this.state.filterSelectedInputValue.toLowerCase());
@@ -161,21 +187,23 @@ class MultiReferenceEditor extends Component {
 
     return (
       <div id={itemDivId} key={itemDivId} className="item" onClick={this.highlightItem}>
-        {this._itemName(item)}
+        {this._selectedRefsItemName(item)}
       </div>
     );
   }
 
   render(){
     return (
-      <div className="multiple-selection-container">
-        <ReactSelect id={this.filterId} className="multiple-reference-filter" placeholder="Search by..." isSearchable={false} isClearable={true} value={this.state.selectedFilter} onChange={this.selectFilter} options={this._getFilterOptions()}/>
+      <div className="multiple-reference-container">
         <div id={this.editorId} className="wrapper">
           <div className="availableReferences">
-            <input className="form-control" type="text" value={this.state.filterAvailableInputValue} onChange={this.filterAvailableReferences} placeholder="Search..."/>
+              <div className="input-group">
+                <input className="form-control" type="text" value={this.state.filterAvailableInputValue} onChange={this.filterAvailableReferences} placeholder="Search..."/>
+                <div className="input-group-addon"><ReactSelect id={this.availableRefsFilterId} className="multiple-reference-filter" isSearchable={false} isClearable={true} value={this.state.availableRefsSelectedFilter} onChange={this.availableRefsSelectFilter} options={this._getFilterOptions()}/></div>
+              </div>
             <div>
               {this.props.items.map(item =>
-                this.renderItemDiv(item, false)
+                this.renderAvailableItemDiv(item, false)
               )}
             </div>
           </div>
@@ -188,10 +216,13 @@ class MultiReferenceEditor extends Component {
             </div>
           </div>
           <div className="selectedReferences">
-            <input className="form-control" type="text" value={this.state.filterSelectedInputValue} onChange={this.filterSelectedReferences} placeholder="Search..."/>
+            <div className="input-group">
+              <input className="form-control" type="text" value={this.state.filterSelectedInputValue} onChange={this.filterSelectedReferences} placeholder="Search..."/>
+              <div className="input-group-addon"><ReactSelect id={this.selectedRefsFilterId} className="multiple-reference-filter" isSearchable={false} isClearable={true} value={this.state.selectedRefsSelectedFilter} onChange={this.selectedRefsSelectFilter} options={this._getFilterOptions()}/></div>
+            </div>
             <div>
               {this.props.items.map(item =>
-                this.renderItemDiv(item, true)
+                this.renderSelectedItemDiv(item, true)
               )}
             </div>
           </div>
