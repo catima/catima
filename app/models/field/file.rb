@@ -55,4 +55,8 @@ class Field::File < ::Field
 
     files.is_a?(Array) ? files.count : 1
   end
+
+  def human_readable?
+    false
+  end
 end

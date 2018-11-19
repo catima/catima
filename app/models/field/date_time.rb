@@ -35,18 +35,12 @@
 class Field::DateTime < ::Field
   FORMATS = %w(Y M h YM MD hm YMD hms MDh YMDh MDhm YMDhm MDhms YMDhms).freeze
 
-  include FieldsHelper
-
   store_accessor :options, :format
   after_initialize :set_default_format
   validates_inclusion_of :format, :in => FORMATS
 
   def type_name
     "Date time" + (persisted? ? " (#{format})" : "")
-  end
-
-  def value_or_id_for_item(it)
-    field_value(it, self)
   end
 
   def custom_field_permitted_attributes

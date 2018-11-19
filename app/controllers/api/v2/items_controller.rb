@@ -14,11 +14,13 @@ class API::V2::ItemsController < ActionController::Base
   def index
     it = item_type
     raise InvalidItemType, 'no item type provided' if it.nil?
-
+    
     render(json:
       {
         slug: it.slug,
         name: it.name,
+        search_placeholder: t("catalog_admin.items.reference_editor.reference_editor_search"),
+        filter_placeholder: t("catalog_admin.items.reference_editor.reference_editor_filter"),
         fields: it.fields.map do |fld|
           {
             slug: fld.slug,
@@ -26,7 +28,8 @@ class API::V2::ItemsController < ActionController::Base
             type: fld.type,
             multiple: fld.multiple,
             primary: fld.primary,
-            display_in_list: fld.display_in_list
+            display_in_list: fld.display_in_list,
+            human_readable: fld.human_readable?
           }
         end,
         items: it.items.map { |itm| itm.describe([:default_display_name], [:requires_review, :uuid]) }
