@@ -76,14 +76,13 @@ class MultiReferenceEditor extends Component {
 
   _availableRefsItemName(item){
     if(typeof this.state === 'undefined') return striptags(item.default_display_name);
-    if(typeof this.state !== 'undefined' && (this.state.availableRefsSelectedFilter === null || item[this.state.availableRefsSelectedFilter.value] === null || typeof item[this.state.availableRefsSelectedFilter.value] === "Object" || item[this.state.availableRefsSelectedFilter.value].length === 0)) return striptags(item.default_display_name);
-console.log(item[this.state.availableRefsSelectedFilter.value]);
+    if(typeof this.state !== 'undefined' && (this.state.availableRefsSelectedFilter === null || item[this.state.availableRefsSelectedFilter.value] === null || item[this.state.availableRefsSelectedFilter.value].length === 0)) return striptags(item.default_display_name);
     return striptags(item.default_display_name) + ' - ' + item[this.state.availableRefsSelectedFilter.value];
   }
 
   _selectedRefsItemName(item){
     if(typeof this.state === 'undefined') return striptags(item.default_display_name);
-    if(typeof this.state !== 'undefined' && (this.state.selectedRefsSelectedFilter === null || item[this.state.selectedRefsSelectedFilter.value] === null || typeof item[this.state.selectedRefsSelectedFilter.value] === "Object" || item[this.state.selectedRefsSelectedFilter.value].length === 0)) return striptags(item.default_display_name);
+    if(typeof this.state !== 'undefined' && (this.state.selectedRefsSelectedFilter === null || item[this.state.selectedRefsSelectedFilter.value] === null || item[this.state.selectedRefsSelectedFilter.value].length === 0)) return striptags(item.default_display_name);
     return striptags(item.default_display_name) + ' - ' + item[this.state.selectedRefsSelectedFilter.value];
   }
 
@@ -101,7 +100,7 @@ console.log(item[this.state.availableRefsSelectedFilter.value]);
 
   _getFilterOptions(){
     var optionsList = [];
-    optionsList = this.props.fields.filter(field => field.primary !== true);
+    optionsList = this.props.fields.filter(field => field.primary !== true && field.human_readable);
 
     optionsList = optionsList.map(field =>
       this._getJSONFilter(field)
@@ -150,11 +149,16 @@ console.log(item[this.state.availableRefsSelectedFilter.value]);
     // Filtering the unselected items ItemList
     if(selectedItems == false && this.state.filterAvailableInputValue !== '') {
       var isInString = -1;
+
       if(this.state.availableRefsSelectedFilter !== null) {
-          var searchString = item.default_display_name.toLowerCase() + ' - ' + item[this.state.availableRefsSelectedFilter.value].toLowerCase();
+        if(item[this.state.availableRefsSelectedFilter.value] !== null && item[this.state.availableRefsSelectedFilter.value].length !== 0) {
+          var searchString = item.default_display_name.toLowerCase() + ' - ' + JSON.stringify(item[this.state.availableRefsSelectedFilter.value]).toLowerCase();
           isInString = searchString.indexOf(this.state.filterAvailableInputValue.toLowerCase());
-      } else {
+        } else {
           isInString = item.default_display_name.toLowerCase().indexOf(this.state.filterAvailableInputValue.toLowerCase());
+        }
+      } else {
+        isInString = item.default_display_name.toLowerCase().indexOf(this.state.filterAvailableInputValue.toLowerCase());
       }
 
       if(isInString === -1) return null;
@@ -175,8 +179,8 @@ console.log(item[this.state.availableRefsSelectedFilter.value]);
     // Filtering the selected items ItemList
     if(selectedItems == true && this.state.filterSelectedInputValue !== '') {
       var isInString = -1;
-      if(this.state.selectedRefsSelectedFilter !== null) {
-        var searchString = item.default_display_name.toLowerCase() + ' - ' + item[this.state.selectedRefsSelectedFilter.value].toLowerCase();
+      if((this.state.selectedRefsSelectedFilter !== null && item[this.state.selectedRefsSelectedFilter.value] !== null && item[this.state.selectedRefsSelectedFilter.value].length !== 0)) {
+        var searchString = item.default_display_name.toLowerCase() + ' - ' + JSON.stringify(item[this.state.selectedRefsSelectedFilter.value]).toLowerCase();
           isInString = searchString.indexOf(this.state.filterSelectedInputValue.toLowerCase());
       } else {
           isInString = item.default_display_name.toLowerCase().indexOf(this.state.filterSelectedInputValue.toLowerCase());
@@ -198,8 +202,8 @@ console.log(item[this.state.availableRefsSelectedFilter.value]);
         <div id={this.editorId} className="wrapper">
           <div className="availableReferences">
               <div className="input-group">
-                <input className="form-control" type="text" value={this.state.filterAvailableInputValue} onChange={this.filterAvailableReferences} placeholder="Search..."/>
-                <div className="input-group-addon"><ReactSelect id={this.availableRefsFilterId} className="multiple-reference-filter" isSearchable={false} isClearable={true} value={this.state.availableRefsSelectedFilter} onChange={this.availableRefsSelectFilter} options={this._getFilterOptions()}/></div>
+                <input className="form-control" type="text" value={this.state.filterAvailableInputValue} onChange={this.filterAvailableReferences} placeholder={this.props.searchPlaceholder}/>
+                <div className="input-group-addon"><ReactSelect id={this.availableRefsFilterId} className="multiple-reference-filter" isSearchable={false} isClearable={true} value={this.state.availableRefsSelectedFilter} onChange={this.availableRefsSelectFilter} options={this._getFilterOptions()} placeholder={this.props.filterPlaceholder}/></div>
               </div>
             <div>
               {this.props.items.map(item =>
@@ -217,8 +221,8 @@ console.log(item[this.state.availableRefsSelectedFilter.value]);
           </div>
           <div className="selectedReferences">
             <div className="input-group">
-              <input className="form-control" type="text" value={this.state.filterSelectedInputValue} onChange={this.filterSelectedReferences} placeholder="Search..."/>
-              <div className="input-group-addon"><ReactSelect id={this.selectedRefsFilterId} className="multiple-reference-filter" isSearchable={false} isClearable={true} value={this.state.selectedRefsSelectedFilter} onChange={this.selectedRefsSelectFilter} options={this._getFilterOptions()}/></div>
+              <input className="form-control" type="text" value={this.state.filterSelectedInputValue} onChange={this.filterSelectedReferences} placeholder={this.props.searchPlaceholder}/>
+              <div className="input-group-addon"><ReactSelect id={this.selectedRefsFilterId} className="multiple-reference-filter" isSearchable={false} isClearable={true} value={this.state.selectedRefsSelectedFilter} onChange={this.selectedRefsSelectFilter} options={this._getFilterOptions()} placeholder={this.props.filterPlaceholder}/></div>
             </div>
             <div>
               {this.props.items.map(item =>

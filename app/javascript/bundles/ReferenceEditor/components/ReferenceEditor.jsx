@@ -11,7 +11,9 @@ class ReferenceEditor extends Component {
     this.state = {
       items: [],
       fields: [],
-      isLoading: true
+      isLoading: true,
+      searchPlaceholder: '',
+      filterPlaceholder: ''
     };
   }
 
@@ -23,6 +25,9 @@ class ReferenceEditor extends Component {
 
     axios.get(`/api/v2/${this.props.catalog}/${this.props.locale}/${this.props.itemType}`, config)
       .then(res => {
+        console.log(res.data.items);
+        this.setState({ searchPlaceholder: res.data.search_placeholder });
+        this.setState({ filterPlaceholder: res.data.filter_placeholder });
         this.setState({ items: res.data.items });
         this.setState({ fields: res.data.fields });
         this.setState({ isLoading: false });
@@ -60,6 +65,8 @@ class ReferenceEditor extends Component {
       return <MultiReferenceEditor
                 items={this.state.items}
                 fields={this.state.fields}
+                searchPlaceholder={this.state.searchPlaceholder}
+                filterPlaceholder={this.state.filterPlaceholder}
                 srcRef={this.props.srcRef}
                 srcId={this.props.srcId}
                 req={this.props.req} />
@@ -67,6 +74,8 @@ class ReferenceEditor extends Component {
       return <SingleReferenceEditor
                 items={this.state.items}
                 fields={this.state.fields}
+                searchPlaceholder={this.state.searchPlaceholder}
+                filterPlaceholder={this.state.filterPlaceholder}
                 srcRef={this.props.srcRef}
                 srcId={this.props.srcId}
                 req={this.props.req} />

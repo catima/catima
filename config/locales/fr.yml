@@ -554,6 +554,9 @@ fr:
       new:
         new_item: Nouvelle fiche de type %{item_type}
         create_item: Créer fiche de type %{item_type}
+      reference_editor:
+        reference_editor_filter: "Filtrer..."
+        reference_editor_search: "Chercher..."
 
     pages:
       new:

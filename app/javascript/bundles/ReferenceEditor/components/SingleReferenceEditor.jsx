@@ -13,6 +13,7 @@ class SingleReferenceEditor extends Component {
       selectedItem: selItem,
       selectedFilter: null
     };
+
     this.editorId = `${this.props.srcRef}-editor`;
     this.filterId = `${this.props.srcRef}-filters`;
     this.selectItem = this._selectItem.bind(this);
@@ -63,7 +64,7 @@ class SingleReferenceEditor extends Component {
 
   _itemName(item){
     if(typeof this.state === 'undefined') return striptags(item.default_display_name);
-    if(typeof this.state !== 'undefined' && (this.state.selectedFilter === null || item[this.state.selectedFilter.value] === null || typeof item[this.state.selectedFilter.value] === "Object" || item[this.state.selectedFilter.value].length === 0)) return striptags(item.default_display_name);
+    if(typeof this.state !== 'undefined' && (this.state.selectedFilter === null || item[this.state.selectedFilter.value] === null || item[this.state.selectedFilter.value].length === 0)) return striptags(item.default_display_name);
     return striptags(item.default_display_name) + ' - ' + item[this.state.selectedFilter.value];
   }
 
@@ -84,7 +85,7 @@ class SingleReferenceEditor extends Component {
 
   _getFilterOptions(){
     var optionsList = [];
-    optionsList = this.props.fields.filter(field => field.primary !== true);
+    optionsList = this.props.fields.filter(field => (field.primary !== true && field.human_readable));
 
     optionsList = optionsList.map(field =>
       this._getJSONFilter(field)
@@ -101,7 +102,7 @@ class SingleReferenceEditor extends Component {
     return (
       <div className="input-group single-reference-container">
         <ReactSelect id={this.editorId} className="single-reference" value={this.state.selectedItem} onChange={this.selectItem} options={this._getItemOptions()}/>
-        <div className="input-group-addon"><ReactSelect id={this.filterId} className="single-reference-filter" isSearchable={false} isClearable={true} value={this.state.selectedFilter} onChange={this.selectFilter} options={this._getFilterOptions()}/></div>
+        <div className="input-group-addon"><ReactSelect id={this.filterId} className="single-reference-filter" isSearchable={false} isClearable={true} value={this.state.selectedFilter} onChange={this.selectFilter} options={this._getFilterOptions()} placeholder={this.props.filterPlaceholder}/></div>
       </div>
     );
   }

@@ -22,6 +22,7 @@ module Item::Values
   def get_value_or_id(field)
     field = item_type.find_field(field) unless field.is_a? Field
     field.value_or_id_for_item(self)
+    #TODO => field.field_value_for_item(self)
   end
 
   private
