@@ -19,10 +19,14 @@ module Item::Values
   # if it is a simple item, or a ID (e.g. UUID or slug) for complex
   # fields. By default, it returns the same as get_value, but
   # subclasses can override this method
-  def get_value_or_id(field)
+  def get_value_or_id(field, for_api)
     field = item_type.find_field(field) unless field.is_a? Field
-    field.value_or_id_for_item(self)
-    #TODO => field.field_value_for_item(self)
+
+    if for_api
+      field.field_value_for_item(self)
+    else
+      field.value_or_id_for_item(self)
+    end
   end
 
   private

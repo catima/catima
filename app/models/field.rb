@@ -219,7 +219,7 @@ class Field < ApplicationRecord
   end
 
   def field_value_for_item(it)
-    field_value(it, self)
+    raw_value(it) if human_readable?
   end
 
   # Defines methods and runs class macros on the given item class in order to

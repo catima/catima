@@ -1,181 +1,198 @@
 // Override Bootstrap remove trailing margin when group is in a table cell
 .table td .form-group:last-child {
-  margin-bottom: 0;
+    margin-bottom: 0;
 }
 
 .file-upload td {
-  padding: 5px 15px 5px 5px;
+    padding: 5px 15px 5px 5px;
 }
 .file-upload tr:hover {
-  background-color: #eee;
+    background-color: #eee;
 }
 
 .file-upload path {
-  fill: '#f00';
+    fill: '#f00';
 }
 
 textarea[data-field-type="file"] {
-  display: none;
+    display: none;
 }
 textarea[data-field-type="datetime"] {
-  display: none;
+    display: none;
 }
 
 form > .form-group {
-  margin-top: 20px;
-  margin-bottom: 0;
+    margin-top: 20px;
+    margin-bottom: 0;
 }
 
 .form-inline > .form-group {
-  margin: 0;
+    margin: 0;
 }
 
 .form-component .row {
-  margin-top: 20px;
+    margin-top: 20px;
 }
 
 .form-group.file-upload {
-  margin-top: 0;
+    margin-top: 0;
 }
 
 .red {
-  color: #f00;
+    color: #f00;
 }
 
 .rails-bootstrap-forms-datetime-select input {
-  display: inline-block;
-  margin: 3px;
+    display: inline-block;
+    margin: 3px;
 }
 
 input.input-2 {
-  width: 60px;
+    width: 60px;
 }
 input.input-4 {
-  width: 80px;
+    width: 80px;
 }
 input.margin-right {
-  margin-right: 10px;
+    margin-right: 10px;
 }
 
 button[data-active=true] {
-  color: #eee;
-  background-color: #666;
-  border-color: #adadad;
+    color: #eee;
+    background-color: #666;
+    border-color: #adadad;
 }
 button[data-active=true]:hover {
-  color: #eee;
-  background-color: #444;
-  border-color: #adadad;
+    color: #eee;
+    background-color: #444;
+    border-color: #adadad;
 }
 button[data-active=true]:focus {
-  color: #eee;
-  background-color: #444;
-  border-color: #adadad;
+    color: #eee;
+    background-color: #444;
+    border-color: #adadad;
 }
 .example {
-  margin-top: 5px;
+    margin-top: 5px;
 }
 .colorButtonWrapper {
-  display: inline-block;
-  margin-left: 10px;
-  font-size: 80%;
+    display: inline-block;
+    margin-left: 10px;
+    font-size: 80%;
 }
 .colorButton {
-  display: inline-block;
-  border: 1px solid #ccc;
-  border-radius: 3px;
-  width: 30px;
-  height: 30px;
-  margin-left: 5px;
+    display: inline-block;
+    border: 1px solid #ccc;
+    border-radius: 3px;
+    width: 30px;
+    height: 30px;
+    margin-left: 5px;
 }
 
 /*** Single reference editor styles ***/
 
 .referenceEditor {
-  display: block;
-  float: left;
-  width: 100%;
-  margin-bottom: 20px;
+    display: block;
+    float: left;
+    width: 100%;
+    margin-bottom: 20px;
 }
 
 .referenceEditor .css-15k3avv {
-  z-index: 3;
+    z-index: 3;
 }
 
 .referenceEditor .single-reference-container .input-group-addon {
-  min-width: 10em;
-  padding: 0;
-  border: 0;
+    min-width: 10em;
+    padding: 0;
+    border: 0;
 }
 
 .referenceEditor .single-reference .css-1wy0on6, .referenceEditor .single-reference-filter .css-d8oujb {
-  display: none;
+    display: none;
 }
 
 .referenceEditor .single-reference-filter .css-11unzgr div {
-  text-align: left;
+    text-align: left;
 }
 
 .referenceEditor .single-reference-filter .css-vj8t7z {
-  border-top-left-radius: 0;
-  border-bottom-left-radius: 0;
-  border-left: 1px solid #CCCCCC;
+    border-top-left-radius: 0;
+    border-bottom-left-radius: 0;
+    border-left: 1px solid #CCCCCC;
 }
 
 .referenceEditor .single-reference-filter .css-2o5izw {
-  border-top-left-radius: 0;
-  border-bottom-left-radius: 0;
+    border-top-left-radius: 0;
+    border-bottom-left-radius: 0;
 }
 
 .referenceEditor .single-reference .css-vj8t7z {
-  border-right: none;
-  border-top-right-radius: 0;
-  border-bottom-right-radius: 0;
+    border-right: none;
+    border-top-right-radius: 0;
+    border-bottom-right-radius: 0;
 }
 
 .referenceEditor .single-reference .css-2o5izw {
-  border-top-right-radius: 0;
-  border-bottom-right-radius: 0;
-  border-color: #66afe9;
-  outline: 0;
-  box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075), 0 0 8px rgba(102, 175, 233, 0.6);
+    border-top-right-radius: 0;
+    border-bottom-right-radius: 0;
+    border-color: #66afe9;
+    outline: 0;
+    box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075), 0 0 8px rgba(102, 175, 233, 0.6);
 }
 
 .referenceEditor .css-vj8t7z:hover {
-  border-color: #CCCCCC;
+    border-color: #CCCCCC;
 }
 
 .referenceEditor .multiple-reference-container .availableReferences .form-control, .referenceEditor .multiple-reference-container .selectedReferences .form-control {
-  border: none;
-  border-radius: 0;
+    border: none;
+    border-radius: 0;
 }
 
 .referenceEditor .multiple-reference-container .css-vj8t7z, .referenceEditor .multiple-reference-container .css-2o5izw {
-  margin-bottom: 20px;
+    margin-bottom: 20px;
 }
 
 .referenceEditor .multiple-reference-filter .css-vj8t7z {
-  border: none;
-  margin: 0;
+    border-left: 1px solid #CCCCCC;
+    border-top: none;
+    border-right: none;
+    border-bottom: none;
+    border-radius: 0;
+    margin: 0;
 }
 
 .referenceEditor .multiple-reference-filter .css-2o5izw {
-  border: none;
-  box-shadow: none;
-  margin-bottom: 0;
+    border-left: 1px solid #CCCCCC;
+    border-top: none;
+    border-right: none;
+    border-bottom: none;
+    border-radius: 0;
+    box-shadow: none;
+    margin-bottom: 0;
 }
 
-.referenceEditor .multiple-reference-filter .css-1hwfws3 {
-  // display: none;
+.referenceEditor .multiple-reference-filter .css-d8oujb {
+    display: none;
 }
 
 .referenceEditor .multiple-reference-container .input-group-addon {
-  padding: 0;
-  border: 0;
-  background-color: #FFFFFF;
-  min-width: 10em;
+    padding: 0;
+    border: none;
+    background-color: #FFFFFF;
+    min-width: 9em;
+}
+
+.referenceEditor .multiple-reference-container .input-group {
+    border-bottom: 1px solid #CCCCCC;
+}
+
+.referenceEditor .multiple-reference-container .input-group .form-control {
+    height: 38px;
+    line-height: 38px;
 }
 
 .referenceEditor .multiple-reference-container .form-control:focus {
-  box-shadow: none;
+    box-shadow: none;
 }

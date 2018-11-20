@@ -167,6 +167,14 @@ one_author_bio:
   required: false
   uuid: one_author_bio_uuid
 
+one_author_editor:
+  type: "Field::Editor"
+  name_translations: { "name_en": "Editor" }
+  name_plural_translations: { "name_plural_en": "Editors" }
+  slug: editor
+  field_set: one_author (ItemType)
+  uuid: one_author_editor_uuid
+
 one_author_language:
   type: "Field::ChoiceSet"
   name_translations: { "name_en": "Language" }

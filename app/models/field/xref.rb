@@ -70,11 +70,16 @@ class Field::Xref < ::Field
     end.compact
   end
 
+  def field_value_for_item(it)
+    selected_choices(it).first&.name
+  end
+
   private
 
   def xref_must_point_to_valid_service
     return if xref.blank?
 
+    # TODO : shouldn't it be "unless xref.match? URI.regexp"
     if xref.match? URI.regexp
       errors.add(:xref, :invalid_url)
     elsif external_type.nil?

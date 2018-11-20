@@ -14,7 +14,7 @@ class API::V2::ItemsController < ActionController::Base
   def index
     it = item_type
     raise InvalidItemType, 'no item type provided' if it.nil?
-    
+
     render(json:
       {
         slug: it.slug,
@@ -32,7 +32,7 @@ class API::V2::ItemsController < ActionController::Base
             human_readable: fld.human_readable?
           }
         end,
-        items: it.items.map { |itm| itm.describe([:default_display_name], [:requires_review, :uuid]) }
+        items: it.items.map { |itm| itm.describe([:default_display_name], [:requires_review, :uuid], true) }
       })
   end
 
