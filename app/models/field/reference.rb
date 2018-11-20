@@ -90,4 +90,13 @@ class Field::Reference < ::Field
       refs.first.nil? ? nil : refs.first.uuid
     end
   end
+
+  def field_value_for_item(it)
+    refs = value_for_item(it)
+    if multiple?
+      refs.map(&:default_display_name)
+    else
+      refs.nil? ? nil : refs.default_display_name
+    end
+  end
 end

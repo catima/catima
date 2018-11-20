@@ -120,6 +120,10 @@ class Field::DateTime < ::Field
     end
   end
 
+  def field_value_for_item(it)
+    field_value(it, self)
+  end
+
   private
 
   def transform_value(v)

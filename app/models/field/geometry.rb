@@ -48,7 +48,7 @@ class Field::Geometry < ::Field
   end
 
   def default_bounds(xmin=-60, xmax=60, ymin=-45, ymax=65)
-    geo_bounds = bounds ? JSON.parse(bounds) : { 'xmin' => xmin, 'xmax' => xmax, 'ymin' => ymin, 'ymax' => ymax }
+    geo_bounds = bounds.present? ? JSON.parse(bounds) : { 'xmin' => xmin, 'xmax' => xmax, 'ymin' => ymin, 'ymax' => ymax }
     geo_bounds.slice('xmin', 'xmax', 'ymin', 'ymax')
   end
 

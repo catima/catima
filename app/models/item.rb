@@ -102,8 +102,8 @@ class Item < ApplicationRecord
   # Returns a JSON representation of the item content.
   # It contains the field values for simple fields,
   # and an identifier for complex fields.
-  def describe(includes=[], excludes=[])
-    d = Hash[applicable_fields.collect { |f| [f.slug, get_value_or_id(f)] }] \
+  def describe(includes=[], excludes=[], for_api=false)
+    d = Hash[applicable_fields.collect { |f| [f.slug, get_value_or_id(f, for_api)] }] \
         .merge('id': id) \
         .merge('review_status': review_status) \
         .merge('uuid': uuid)

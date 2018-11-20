@@ -65,6 +65,9 @@ one_author_stephen_king:
         "size": 192000,
         "type": "document/doc"
       },
+      "one_author_language_uuid": <%= ActiveRecord::FixtureSet.identify(:one_spanish) %>,
+      "one_author_editor_uuid": <%= ActiveRecord::FixtureSet.identify(:one_author_editor) %>,
+      "one_author_collaborator_uuid": <%= ActiveRecord::FixtureSet.identify(:one_author_very_old) %>,
       "one_author_born_uuid": {"Y": 1947, "M": 9, "D": 21}
     }
   "search_data_en": "Steve"
