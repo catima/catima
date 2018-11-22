@@ -70,8 +70,8 @@ class Field::Xref < ::Field
     end.compact
   end
 
-  def field_value_for_item(it)
-    selected_choices(it).first&.name
+  def field_value_for_item(item)
+    selected_choices(item).first&.name
   end
 
   private

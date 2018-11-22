@@ -26,7 +26,7 @@ class Field::EditorPresenter < FieldPresenter
     end
   end
 
-  def field_value_for_item(it)
+  def field_value_for_item(item)
     editor = field.original_editor(item.creator_id)
     editor.email
   end
