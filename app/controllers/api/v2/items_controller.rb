@@ -19,8 +19,8 @@ class API::V2::ItemsController < ActionController::Base
       {
         slug: it.slug,
         name: it.name,
-        search_placeholder: t("catalog_admin.items.reference_editor.reference_editor_search"),
-        filter_placeholder: t("catalog_admin.items.reference_editor.reference_editor_filter"),
+        search_placeholder: t("catalog_admin.items.reference_editor.reference_editor_search", locale: params[:locale]),
+        filter_placeholder: t("catalog_admin.items.reference_editor.reference_editor_filter", locale: params[:locale]),
         fields: it.fields.map do |fld|
           {
             slug: fld.slug,

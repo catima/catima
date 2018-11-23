@@ -125,6 +125,9 @@ it:
       at: il %{date}
     edit:
       back: "Back"
+  reference_editor:
+    reference_editor_filter: "Filtro..."
+    reference_editor_search: "Ricerca..."
   invitations_mailer:
     account_information:
       email: "E-mail"
