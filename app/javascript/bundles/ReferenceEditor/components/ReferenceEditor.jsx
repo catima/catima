@@ -25,7 +25,6 @@ class ReferenceEditor extends Component {
 
     axios.get(`/api/v2/${this.props.catalog}/${this.props.locale}/${this.props.itemType}`, config)
       .then(res => {
-        console.log(res.data.items);
         this.setState({ searchPlaceholder: res.data.search_placeholder });
         this.setState({ filterPlaceholder: res.data.filter_placeholder });
         this.setState({ items: res.data.items });

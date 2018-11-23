@@ -99,4 +99,8 @@ class Field::Reference < ::Field
       refs.nil? ? nil : refs.default_display_name
     end
   end
+
+  def order_items_by
+    "(ref_items.data->>'#{related_item_type.field_for_select.uuid}') ASC" unless related_item_type.field_for_select.nil?
+  end
 end
