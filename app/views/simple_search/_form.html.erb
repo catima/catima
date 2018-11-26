@@ -4,7 +4,7 @@
       :layout => :inline,
       :html => { :style => "text-align: center" }) do |f| %>
 
-
+    <div class="clearable-input">
       <div class="input-group">
         <%= f.search_field(
               :q,
@@ -14,17 +14,18 @@
               :hide_label => true,
               :autofocus => true,
               :class => "form-control",
-              :style => "width: 100%"
+              :style => "width: 25em"
               ) %>
 
         <div class="input-group-addon">
           <% unless params[:q].nil? %>
-            <a href="<%= request.path %>" class="clear-input"><i class="fa fa-times"></i></a>
+            <a href="<%= request.path.remove('search', '') %>" class="clear-input"><i class="fa fa-times"></i></a>
           <% end %>
         </div>
       </div>
+    </div>
 
-      <%= f.submit(t(".submit")) %>
+    <%= f.submit(t(".submit")) %>
 
   <% if display_advanced_search %>
     <%= link_to(
