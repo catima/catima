@@ -50,4 +50,10 @@ class Field::Editor < ::Field
 
     ::User.find_by(id: user_id)
   end
+
+  def field_value_for_item(item)
+    user = ::User.find_by(id: item.updater_id)
+
+    user.email if user.present?
+  end
 end

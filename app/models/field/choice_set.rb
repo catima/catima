@@ -107,6 +107,15 @@ class Field::ChoiceSet < ::Field
     end
   end
 
+  def field_value_for_item(it)
+    if multiple?
+      selected_choices(it).map(&:long_display_name)
+    else
+      ch = selected_choice(it)
+      ch.nil? ? nil : ch.long_display_name
+    end
+  end
+
   private
 
   # TODO: validate choice belongs to specified ChoiceSet

@@ -120,6 +120,10 @@ class Field::DateTime < ::Field
     end
   end
 
+  def field_value_for_item(it)
+    field_value(it, self)
+  end
+
   def order_items_by
     "NULLIF(data->'#{uuid}'->>'Y', '')::int ASC,
     NULLIF(data->'#{uuid}'->>'M', '')::int ASC,

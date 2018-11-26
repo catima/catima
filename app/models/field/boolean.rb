@@ -33,4 +33,7 @@
 #
 
 class Field::Boolean < ::Field
+  def field_value_for_item(item)
+    field_value(item, self)
+  end
 end

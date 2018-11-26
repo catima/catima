@@ -56,6 +56,8 @@ class Field < ApplicationRecord
   include HasTranslations
   include HasSlug
   include RankedModel
+  include FieldsHelper
+  include JsonHelper
 
   ranks :row_order, :class_name => "Field", :with_same => :field_set_id
 
@@ -214,6 +216,10 @@ class Field < ApplicationRecord
 
   def value_or_id_for_item(it)
     value_for_item(it)
+  end
+
+  def field_value_for_item(it)
+    raw_value(it) if human_readable?
   end
 
   # Defines methods and runs class macros on the given item class in order to

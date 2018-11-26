@@ -534,6 +534,9 @@ de:
       new:
         new_item: New %{item_type}
         create_item: Create %{item_type}
+      reference_editor:
+        reference_editor_filter: "Filter..."
+        reference_editor_search: "Suche..."
 
     users:
       common_form_fields:
