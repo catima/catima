@@ -100,6 +100,7 @@ button[data-active=true]:focus {
 
 .referenceEditor .css-15k3avv {
     z-index: 3;
+    text-align: left;
 }
 
 .referenceEditor .single-reference-container .input-group-addon {
@@ -110,10 +111,6 @@ button[data-active=true]:focus {
 
 .referenceEditor .single-reference .css-1wy0on6, .referenceEditor .single-reference-filter .css-d8oujb {
     display: none;
-}
-
-.referenceEditor .single-reference-filter .css-11unzgr div {
-    text-align: left;
 }
 
 .referenceEditor .single-reference-filter .css-vj8t7z {
@@ -199,7 +196,7 @@ button[data-active=true]:focus {
 
 .clearable-input {
   display: inline-block;
-  
+
   .input-group {
     border: 1px solid #ccc;
     border-radius: .25rem;
