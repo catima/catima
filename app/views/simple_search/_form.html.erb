@@ -10,7 +10,7 @@
               :q,
               :value => params[:q],
               :label => t('simple_search.form.submit'),
-              :placeholder => t('simple_search.form.placeholder', :item_type => params[:item_type_slug]),
+              :placeholder => @item_type.present? ? t('.placeholder', :item_type => @item_type.name_plural) : t('.submit'),
               :hide_label => true,
               :autofocus => true,
               :class => "form-control",
