@@ -25,7 +25,7 @@
 <% end %>
 
 <% provide(:extra_setup) do %>
-  <% if @field_set.class == ItemType %>
+  <% if @field_set.class == ItemType && current_user.system_admin? %>
     <hr>
     <h3><%= t('item_views') %></h3>
     <%= render('catalog_admin/item_views/index') %>
