@@ -56,9 +56,11 @@ class Item < ApplicationRecord
     sql = []
     sql << field.order_items_by unless field.nil?
     sql << "created_at DESC"
-    return order(Arel.sql(sql.join(", "))) unless !field.nil? && field.type == Field::TYPES['reference']
+
+    return reorder('').order(Arel.sql(sql.join(", "))) unless !field.nil? && field.type == Field::TYPES['reference']
 
     joins("LEFT JOIN items ref_items ON ref_items.id::text = items.data->>'#{field.uuid}'")
+      .reorder('')
       .order(Arel.sql(sql.join(", ")))
   end
 
