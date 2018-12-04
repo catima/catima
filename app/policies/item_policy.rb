@@ -12,6 +12,7 @@ class ItemPolicy
   def index?
     user.system_admin? || user.editor_of_any_catalog?
   end
+  alias_method :search?, :index?
 
   def create?
     role_at_least?("editor")
