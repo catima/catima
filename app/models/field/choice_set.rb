@@ -116,6 +116,10 @@ class Field::ChoiceSet < ::Field
     end
   end
 
+  def order_items_by
+    "(choices.long_name_translations->>'long_name_#{I18n.locale}') ASC" unless choices.nil?
+  end
+
   private
 
   # TODO: validate choice belongs to specified ChoiceSet

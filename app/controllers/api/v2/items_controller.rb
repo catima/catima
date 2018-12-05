@@ -1,4 +1,6 @@
 class API::V2::ItemsController < ActionController::Base
+  include ControlsItemSorting
+  
   InvalidItemType = Class.new(RuntimeError)
 
   rescue_from InvalidItemType do |exception|
@@ -32,7 +34,7 @@ class API::V2::ItemsController < ActionController::Base
             human_readable: fld.human_readable?
           }
         end,
-        items: it.items.map { |itm| itm.describe([:default_display_name], [:requires_review, :uuid], true) }
+        items: apply_sort(it.items).map { |itm| itm.describe([:default_display_name], [:requires_review, :uuid], true) }
       })
   end
 
