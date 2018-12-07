@@ -57,11 +57,15 @@ class Item < ApplicationRecord
     sql << field.order_items_by unless field.nil?
     sql << "created_at DESC"
 
-    # unless !field.nil? && (field.type == Field::TYPES['reference'] || field.type == Field::TYPES['choice'])
-    if field.nil? || (field.type != Field::TYPES['reference'] && field.type != Field::TYPES['choice'])
+    if field.nil? ||
+       (field.type != Field::TYPES['reference'] && field.type != Field::TYPES['choice'])
       return reorder('').order(Arel.sql(sql.join(", ")))
     end
 
+    sorted_by_ref_or_choice(sql, field)
+  end
+
+  def self.sorted_by_ref_or_choice(sql, field)
     if field.type == Field::TYPES['reference']
       return joins("LEFT JOIN items ref_items ON ref_items.id::text = items.data->>'#{field.uuid}'")
              .reorder('')
