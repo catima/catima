@@ -3,7 +3,6 @@
 # Table name: catalogs
 #
 #  advertize           :boolean
-#  bounds              :jsonb
 #  created_at          :datetime         not null
 #  custom_root_page_id :integer
 #  deactivated_at      :datetime
@@ -118,12 +117,6 @@ class Catalog < ApplicationRecord
 
   def snake_slug
     slug.tr('-', '_')
-  end
-
-  # TODO: remove if global bounds are not necessary (remove also "bounds" db column)
-  def default_bounds
-    bbox = { 'xmin' => -60, 'xmax' => 60, 'ymin' => -45, 'ymax' => 65 }
-    bbox.merge(bounds || {}).slice('xmin', 'xmax', 'ymin', 'ymax')
   end
 
   private

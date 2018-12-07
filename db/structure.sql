@@ -159,7 +159,6 @@ CREATE TABLE public.catalogs (
     logo_id character varying,
     navlogo_id character varying,
     visible boolean DEFAULT true NOT NULL,
-    bounds jsonb,
     restricted boolean DEFAULT false NOT NULL
 );
 
@@ -1835,6 +1834,7 @@ INSERT INTO "schema_migrations" (version) VALUES
 ('20180923135401'),
 ('20180925152745'),
 ('20181022124602'),
-('20181207103025');
+('20181207103025'),
+('20181207145518');
 
 
