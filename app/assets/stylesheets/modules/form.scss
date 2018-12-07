@@ -21,7 +21,8 @@ textarea[data-field-type="datetime"] {
     display: none;
 }
 
-form > .form-group {
+form > .form-group,
+form > .form-component{
     margin-top: 20px;
     margin-bottom: 0;
 }
@@ -87,111 +88,6 @@ button[data-active=true]:focus {
     width: 30px;
     height: 30px;
     margin-left: 5px;
-}
-
-/*** Single reference editor styles ***/
-
-.referenceEditor {
-    display: block;
-    float: left;
-    width: 100%;
-    margin-bottom: 20px;
-}
-
-.referenceEditor .css-15k3avv {
-    z-index: 1001;
-    text-align: left;
-}
-
-.referenceEditor .single-reference-container .input-group-addon {
-    min-width: 10em;
-    padding: 0;
-    border: 0;
-}
-
-.referenceEditor .single-reference .css-1wy0on6, .referenceEditor .single-reference-filter .css-d8oujb {
-    display: none;
-}
-
-.referenceEditor .single-reference-filter .css-vj8t7z {
-    border-top-left-radius: 0;
-    border-bottom-left-radius: 0;
-    border-left: 1px solid #CCCCCC;
-}
-
-.referenceEditor .single-reference-filter .css-2o5izw {
-    border-top-left-radius: 0;
-    border-bottom-left-radius: 0;
-}
-
-.referenceEditor .single-reference .css-vj8t7z {
-    border-right: none;
-    border-top-right-radius: 0;
-    border-bottom-right-radius: 0;
-}
-
-.referenceEditor .single-reference .css-2o5izw {
-    border-top-right-radius: 0;
-    border-bottom-right-radius: 0;
-    border-color: #66afe9;
-    outline: 0;
-    box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075), 0 0 8px rgba(102, 175, 233, 0.6);
-}
-
-.referenceEditor .css-vj8t7z:hover {
-    border-color: #CCCCCC;
-}
-
-.referenceEditor .multiple-reference-container .availableReferences .form-control, .referenceEditor .multiple-reference-container .selectedReferences .form-control {
-    border: none;
-    border-radius: 0;
-}
-
-.referenceEditor .multiple-reference-container .css-vj8t7z, .referenceEditor .multiple-reference-container .css-2o5izw {
-    margin-bottom: 20px;
-}
-
-.referenceEditor .multiple-reference-filter .css-vj8t7z {
-    border-left: 1px solid #CCCCCC;
-    border-top: none;
-    border-right: none;
-    border-bottom: none;
-    border-radius: 0;
-    margin: 0;
-}
-
-.referenceEditor .multiple-reference-filter .css-2o5izw {
-    border-left: 1px solid #CCCCCC;
-    border-top: none;
-    border-right: none;
-    border-bottom: none;
-    border-radius: 0;
-    box-shadow: none;
-    margin-bottom: 0;
-}
-
-.referenceEditor .multiple-reference-filter .css-d8oujb {
-    display: none;
-}
-
-.referenceEditor .multiple-reference-container .input-group-addon {
-    padding: 0;
-    border: none;
-    background-color: #FFFFFF;
-    min-width: 9em;
-}
-
-.referenceEditor .multiple-reference-container .input-group {
-    border-bottom: 1px solid #CCCCCC;
-}
-
-.referenceEditor .multiple-reference-container .input-group .form-control {
-    height: 38px;
-    line-height: 38px;
-}
-
-.referenceEditor .multiple-reference-container .form-control:focus {
-    box-shadow: none;
 }
 
 .clearable-input {

@@ -50,7 +50,8 @@ class Item < ApplicationRecord
   after_initialize :assign_autoincrement_values
   before_create :assign_uuid
 
-  after_commit :update_views_cache, if: proc { |record| record.saved_changes.key?(:data) }
+  # TODO: Fix ItemsCacheWorker bugs before uncommenting the following line
+  # after_commit :update_views_cache, if: proc { |record| record.saved_changes.key?(:data) }
 
   def self.sorted_by_field(field)
     sql = []
