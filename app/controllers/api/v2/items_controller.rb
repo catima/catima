@@ -1,6 +1,6 @@
 class API::V2::ItemsController < ActionController::Base
   include ControlsItemSorting
-  
+
   InvalidItemType = Class.new(RuntimeError)
 
   rescue_from InvalidItemType do |exception|

@@ -57,7 +57,8 @@ class Item < ApplicationRecord
     sql << field.order_items_by unless field.nil?
     sql << "created_at DESC"
 
-    unless !field.nil? && (field.type == Field::TYPES['reference'] || field.type == Field::TYPES['choice'])
+    # unless !field.nil? && (field.type == Field::TYPES['reference'] || field.type == Field::TYPES['choice'])
+    if field.nil? || (field.type != Field::TYPES['reference'] && field.type != Field::TYPES['choice'])
       return reorder('').order(Arel.sql(sql.join(", ")))
     end
 
@@ -67,11 +68,11 @@ class Item < ApplicationRecord
              .order(Arel.sql(sql.join(", ")))
     end
 
-    if field.type == Field::TYPES['choice']
-      return joins("LEFT JOIN choices ON choices.id::text = items.data->>'#{field.uuid}'")
-             .reorder('')
-             .order(Arel.sql(sql.join(", ")))
-    end
+    return unless field.type == Field::TYPES['choice']
+
+    joins("LEFT JOIN choices ON choices.id::text = items.data->>'#{field.uuid}'")
+      .reorder('')
+      .order(Arel.sql(sql.join(", ")))
   end
 
   def self.with_type(type)
