@@ -109,7 +109,7 @@ class Field::ChoiceSet < ::Field
 
   def field_value_for_item(it)
     if multiple?
-      selected_choices(it).map(&:long_display_name)
+      selected_choices(it).map(&:long_display_name).join(', ')
     else
       ch = selected_choice(it)
       ch.nil? ? nil : ch.long_display_name
