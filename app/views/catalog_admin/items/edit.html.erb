@@ -1,20 +1,19 @@
-<% provide(:extra_nav) do %>
-  <div class="data-nav">
-    <span class="pb-1">
-      <i class="fa fa-arrow-left"></i>
-      <%= link_to t('.back'), @back_to_list_path %>
-    </span>
-
-    <span class="pb-2">
-      <%= link_to(
-              t('.view-item'),
-              item_path(:item_type_slug => @item.item_type.slug, :id => @item),
-              :target => '_blank') if params['action'] == 'edit' %>
-    </span>
-  </div>
-<% end %>
-
 <% provide(:title, t('.edit_item', item: default_display_name(@item))) %>
+
+<% provide(:actions) do %>
+  <% if referer_with_same_item_type?(@item) %>
+    <span>
+      <%= link_to t('.back'), @back_to_list %>
+    </span> |
+  <% end %>
+
+  <span>
+    <%= link_to(
+            t('.view-item'),
+            item_path(:item_type_slug => @item.item_type.slug, :id => @item),
+            :target => '_blank') if params['action'] == 'edit' %>
+  </span>
+<% end %>
 
 <div id="item-form">
   <%= bootstrap_form_for(@item, :url => catalog_admin_item_path) do |f| %>

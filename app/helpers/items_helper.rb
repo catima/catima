@@ -78,4 +78,17 @@ module ItemsHelper
 
     strip_tags(field_value(item, field, :style => :compact)) || ''.html_safe
   end
+
+  # Check that the referer is the item type list (Data mode)
+  # of the same item type
+  def referer_with_same_item_type?(item)
+    return false unless request.referer
+
+    referer = Rails.application.routes.recognize_path(URI(request.referer).path)
+    return false if referer.key?(:id)
+
+    return false unless referer.key?(:item_type_slug)
+
+    referer[:item_type_slug].eql? item.item_type.slug
+  end
 end
