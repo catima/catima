@@ -147,9 +147,7 @@ class Item < ApplicationRecord
     field = field_for_select
     return '' if field.nil?
 
-    return field.field_value_for_item(self) if primary_field_and_reference_or_choice_set?(field)
-
-    field.strip_extra_content(self, locale)
+    field.field_value_for_item(self)
   end
 
   def view(type, locale=I18n.locale)
@@ -168,9 +166,5 @@ class Item < ApplicationRecord
 
   def update_views_cache
     ItemsCacheWorker.perform_async(catalog.slug, item_type.slug, id)
-  end
-
-  def primary_field_and_reference_or_choice_set?(field)
-    field == primary_field && (field.is_a?(Field::ChoiceSet) || field.is_a?(Field::Reference))
   end
 end
