@@ -94,7 +94,7 @@ class Field::Reference < ::Field
   def field_value_for_item(it)
     refs = value_for_item(it)
     if multiple?
-      refs.map(&:default_display_name)
+      refs.map(&:default_display_name).join(', ')
     else
       refs.nil? ? nil : refs.default_display_name
     end
