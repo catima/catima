@@ -43,6 +43,12 @@ module CatalogAdmin::FieldsHelper
     content_tag(:span, t("i18n"), :class => "label label-info")
   end
 
+  def field_formatted_badge(field)
+    return unless field.respond_to?(:formatted?) && field.formatted?
+
+    content_tag(:span, t("formatted"), :class => "label label-info")
+  end
+
   def field_move_up_link(field)
     field_move_link(field, "up")
   end

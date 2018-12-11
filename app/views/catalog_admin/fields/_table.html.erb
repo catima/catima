@@ -43,6 +43,7 @@
       <td>
         <%= t("#{translation_type_name(field)}_field") %>
         <%= field_i18n_badge(field) %>
+        <%= field_formatted_badge(field) %>
       </td>
       <td><%= fa_icon(:check) if field.required? %></td>
       <td><%= fa_icon(:check) if field.display_in_list? %></td>

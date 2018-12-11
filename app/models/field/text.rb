@@ -52,6 +52,12 @@ class Field::Text < ::Field
     super.merge({"i18n": i18n})
   end
 
+  def human_readable?
+    # TODO: remove comment below when there is no longer formatted text primary fields in production
+    # return false if formatted?
+    true
+  end
+
   def prepare_value(value)
     if value.is_a? Hash
       d = {}

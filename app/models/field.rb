@@ -77,7 +77,7 @@ class Field < ApplicationRecord
 
   before_validation :assign_default_components
   before_create :assign_uuid
-  after_save :remove_primary_from_other_fields, :if => :primary?
+  after_save :remove_primary, :if => :primary?
 
   def self.sorted
     rank(:row_order)
@@ -282,7 +282,11 @@ class Field < ApplicationRecord
     self.uuid ||= "_#{SecureRandom.uuid.tr('-', '_')}"
   end
 
-  def remove_primary_from_other_fields
+  def remove_primary
+    # Remove primary if current field is not human readable
+    return update(:primary => false) unless human_readable?
+
+    # Remove primary from other fields if current field is human readable
     field_set.fields.where("fields.id != ?", id).update_all(:primary => false)
   end
 

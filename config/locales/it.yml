@@ -242,6 +242,10 @@ it:
   cancel: 'Annulla'
   delete: Elimina
   edit: Modificare
+  i18n: i18n
+  i18n_help: "With i18n enabled, editors will be able to specify a translation of this field for each language (%{languages})"
+  i18n_enable: "Enable i18n"
+  formatted: Formatted
   visible: Visibile
   not_visible: Non visibile
   plural: Plurale
