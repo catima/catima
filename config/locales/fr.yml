@@ -344,6 +344,8 @@ fr:
   options: Options
   deactivate: Désactiver
   reactivate: Réactiver
+  and: et
+  exclude: sauf
 
   layouts:
     catalog_admin:
