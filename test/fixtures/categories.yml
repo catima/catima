@@ -28,3 +28,7 @@ one:
 two:
   catalog: two
   name: MyString
+
+language:
+  catalog: one
+  name: Language

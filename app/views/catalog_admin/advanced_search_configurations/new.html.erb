@@ -1,0 +1,19 @@
+<% provide(:title, t('.title')) %>
+
+<%= bootstrap_form_for(
+      @advanced_search_conf,
+      :url => catalog_admin_advanced_search_configurations_path(catalog, I18n.locale)
+      ) do |f| %>
+
+  <%= render("common_form_fields", :f => f) %>
+
+  <hr>
+
+  <%= f.select(:item_type, render_item_types_as_options(@advanced_search_conf.catalog.item_types, params[:item_type]),
+    { :hide_label => false }
+  ) %>
+
+  <%= f.primary(t('.next')) %>
+  <%= link_to t('cancel'), catalog_admin_advanced_search_configurations_path, :class => "btn btn-link" %>
+
+<% end %>

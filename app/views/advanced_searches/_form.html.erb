@@ -1,0 +1,36 @@
+<%= bootstrap_form_for(@advanced_search, :remote => @advanced_search_config&.search_type_map?) do |f| %>
+  <%= hidden_field_tag(:item_type, params[:item_type].presence || @advanced_search_config&.item_type&.slug) %>
+
+  <% if params[:item_type].present? || @advanced_search_config.present? %>
+    <div class="row">
+      <div class="col-md-12">
+        <h3><%= t("advanced_searches.new.item_type_search",  item_type: @advanced_search_config.present? ? @advanced_search_config.item_type.name : @advanced_search.item_type.name) %></h3>
+      </div>
+      <% if @fields.count.zero? %>
+        <div class="col-md-12">
+          <%= t("advanced_searches.new.no_field_in_advance_search_configuration") %>
+        </div>
+      <% end %>
+    </div>
+  <% end %>
+
+  <table class="table">
+    <tbody>
+      <% if params[:item_type].present? || @advanced_search_config.present? %>
+        <% @fields.each do |field| %>
+          <%= render_advanced_search_field(f, field) do |content| %>
+            <tr>
+              <th><%= field.name %></th>
+              <td><%= content %></td>
+            </tr>
+          <% end %>
+        <% end %>
+      <% end %>
+    </tbody>
+  </table>
+  <%= f.primary(t("advanced_searches.new.submit")) %>
+  <%= link_to(
+        t("advanced_searches.new.start_over"),
+        { :type => params[:type] },
+        :class => "btn btn-text") %>
+<% end %>

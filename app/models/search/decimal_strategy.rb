@@ -1,19 +1,20 @@
 class Search::DecimalStrategy < Search::BaseStrategy
-  permit_criteria :exact
+  include Search::NumberedSearch
+
+  permit_criteria :exact, :less_than, :less_than_or_equal_to, :greater_than, :greater_than_or_equal_to, :field_condition
 
   def keywords_for_index(item)
     raw_value(item)
   end
 
   def search(scope, criteria)
-    exact_search(scope, criteria[:exact])
-  end
+    negate = criteria[:field_condition] == "exclude"
 
-  private
-
-  def exact_search(scope, exact_phrase)
-    return scope if exact_phrase.blank?
-
-    scope.where("#{data_field_expr} ILIKE ?", exact_phrase.strip.to_s)
+    scope = exact_search(scope, criteria[:exact], negate)
+    scope = less_than_search(scope, criteria[:less_than], negate, "float")
+    scope = less_than_or_equal_to_search(scope, criteria[:less_than_or_equal_to], negate, "float")
+    scope = greater_than_search(scope, criteria[:greater_than], negate, "float")
+    scope = greater_than_or_equal_to_search(scope, criteria[:greater_than_or_equal_to], negate, "float")
+    scope
   end
 end

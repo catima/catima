@@ -1,0 +1,55 @@
+<% provide(:title, t('.advanced_search_configurations')) %>
+
+<% provide(:actions) do %>
+  <%= link_to(
+        fa_icon(:"plus-square", text: t('.new_advanced_search_configuration')),
+        new_catalog_admin_advanced_search_configuration_path,
+        class: 'btn btn-xs btn-default') %>
+<% end %>
+
+<% if catalog.advanced_search_configurations.count == 0 %>
+  <div class="alert alert-warning" style="margin-bottom: 0;">
+    <%= t('.no_advanced_search_configurations_for_catalog_warning') %>
+  </div>
+<% end %>
+
+<% if catalog.advanced_search_configurations.count > 0 %>
+  <table class="table" id="group-permissions-table">
+    <thead>
+      <tr>
+        <th><%= t('activerecord.attributes.advanced_search_configuration.title') %></th>
+        <th><%= t('activerecord.attributes.advanced_search_configuration.description') %></th>
+        <th><%= t('activerecord.attributes.advanced_search_configuration.item_type') %></th>
+        <th></th>
+      </tr>
+    </thead>
+  <tbody>
+    <% catalog.advanced_search_configurations.each do |conf| %>
+      <tr>
+        <td><%= conf.title %></td>
+        <td><%= conf.description %></td>
+        <td><%= conf.item_type.name %></td>
+        <td style="text-align: right;">
+            <%= render "shared/actions_dropdown", :model => conf %>
+        </td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+<% end %>
+
+<script>
+  var group_roles_handler = function(e){
+    var btn_group = e.target.parentElement;
+    var group_id = btn_group.getAttribute('data-group');
+    var submit_button = document.querySelector('#edit_group_' + group_id + ' input[type=submit]');
+    window.setTimeout(function(){
+      submit_button.click();
+    }, 100);
+  };
+
+  var group_permissions_buttons = document.querySelectorAll('#group-permissions-table .btn-group label');
+  for (var i=0; i < group_permissions_buttons.length; i++){
+    group_permissions_buttons[i].addEventListener('click', group_roles_handler, false);
+  }
+</script>

@@ -1,0 +1,12 @@
+<div class="panel panel-default">
+  <table class="table" id="fields">
+    <% if @advanced_search_conf.fields.blank? %>
+      <tr>
+        <td><%= t('.nothing') %></td>
+        <td></td>
+      </tr>
+    <% else %>
+      <%= render(:partial => 'container_table') %>
+    <% end %>
+  </table>
+</div>

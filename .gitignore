@@ -58,3 +58,6 @@ spec/examples.txt
 
 # Ignore Windows files
 dump.rdb
+
+# Ignore IDE config
+.editorconfig

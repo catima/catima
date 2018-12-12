@@ -8,10 +8,10 @@ class Search::TextStrategyTest < ActiveSupport::TestCase
     assert_equal("Stephen King", strategy.keywords_for_index(author))
   end
 
-  test "search contains and excludes terms" do
+  test "search excludes terms" do
     criteria = {
-      "contains" => "camry",
-      "excludes" => "hybrid"
+      :field_condition => "exclude",
+      :one_word => "hybrid"
     }.with_indifferent_access
 
     scope = catalogs(:search).items
@@ -35,14 +35,14 @@ class Search::TextStrategyTest < ActiveSupport::TestCase
   end
 
   test "search multiple terms" do
-    criteria = { "contains" => "hybrid camry" }.with_indifferent_access
+    criteria = { "one_word" => "hybrid camry" }.with_indifferent_access
     scope = catalogs(:search).items
     field = fields(:search_vehicle_model)
     strategy = Search::TextStrategy.new(field, :en)
 
     results = strategy.search(scope, criteria)
     assert_includes(results.to_a, items(:search_vehicle_toyota_camry_hybrid))
-    refute_includes(results.to_a, items(:search_vehicle_toyota_camry))
+    assert_includes(results.to_a, items(:search_vehicle_toyota_camry))
   end
 
   test "search obeys scope" do

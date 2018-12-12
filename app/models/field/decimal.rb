@@ -48,6 +48,42 @@ class Field::Decimal < ::Field
     "(data->>'#{uuid}')::float ASC"
   end
 
+  # Useful for the advanced search
+  def search_conditions_as_options
+    [
+      [I18n.t("advanced_searches.number_search_field.contains_number"), "exact"],
+      [I18n.t("advanced_searches.number_search_field.less_than"), "less_than"],
+      [I18n.t("advanced_searches.number_search_field.less_than_or_equal_to"), "less_than_or_equal_to"],
+      [I18n.t("advanced_searches.number_search_field.greater_than"), "greater_than"],
+      [I18n.t("advanced_searches.number_search_field.greater_than_or_equal_to"), "greater_than_or_equal_to"]
+    ]
+  end
+
+  def search_conditions_as_hash
+    [
+      {
+        :value => I18n.t("advanced_searches.number_search_field.contains_number"),
+        :key => "exact"
+      },
+      {
+        :value => I18n.t("advanced_searches.number_search_field.less_than"),
+        :key => "less_than"
+      },
+      {
+        :value => I18n.t("advanced_searches.number_search_field.less_than_or_equal_to"),
+        :key => "less_than_or_equal_to"
+      },
+      {
+        :value => I18n.t("advanced_searches.number_search_field.greater_than"),
+        :key => "greater_than"
+      },
+      {
+        :value => I18n.t("advanced_searches.number_search_field.greater_than_or_equal_to"),
+        :key => "greater_than_or_equal_to"
+      }
+    ]
+  end
+
   private
 
   def build_validators

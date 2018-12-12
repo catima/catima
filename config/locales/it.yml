@@ -12,6 +12,10 @@ it:
       group:
         name: "Name"
         description: "Description"
+      advanced_search_configuration:
+        title: Titolo
+        description: Descrizione
+        item_type: Tipo di record
   "yes": "Si"
   "no": "No"
   boolean_field: Campo booleano (si/no)
@@ -30,27 +34,44 @@ it:
   slug_help_text: "Solo lettere minuscole, numeri e trattini. Nessun personaggio accentato."
   add_another: "Crea e aggiungi un altro"
   advanced_searches:
+    menu: Ricerche avanzate
     choice_set_search_field:
       any: "è uno di"
     date_time_search_field:
+      exact: precisa
       after: "prima"
       before: "dopo"
+      between: tra date
+      outside: fuori dalle date
     new:
-      tab: "%{type} ricerca"
+      tab: "%{title} ricerca"
       title: "Ricerca avanzata"
       start_over: "Nuova ricerca"
       submit: "Ricerca"
+      default_search: Ricerca predefinita
+      advanced_search_configurations: Ricerche preconfigurate
+      item_type_selection: Ricerca su un tipo di record
+      item_type_search: Ricerca avanzata sul tipo di record %{item_type}
+      no_advanced_search_configuration: Nessuna ricerca preconfigurata
+      no_field_in_advance_search_configuration: Nessun campo di ricerca configurato
     show:
       title:
         zero: "Your advanced search found no results"
         one: "1 advanced search result"
         other: "%{count_delimited} advanced search results"
     text_search_field:
+      all_words: tutte le parole
+      exact: espressione esatta
+      one_word: almeno una delle parole
       contains_words: "contiene le parole"
       excludes_words: "non contiene le parole"
       has_exact_phrase: "ha frase esatta"
-    int_search_field:
+    number_search_field:
       contains_number: "ha il numero esatto"
+      less_than: è inferiore a
+      less_than_or_equal_to: è inferiore o uguale a
+      greater_than: è maggiore di
+      greater_than_or_equal_to: è maggiore o uguale a
     decimal_search_field:
       contains_number: "ha il numero esatto"
     email_search_field:
@@ -276,6 +297,8 @@ it:
   expired: "scaduto"
   download: "Scaricare"
   or: o
+  and: e
+  exclude: eccetto
   options: Options
   deactivate: Deactivate
   reactivate: Reactivate
@@ -354,7 +377,22 @@ it:
         validity: "Validità"
       create:
         invalid_category: "Formato di esportazione non valido"
-
+    advanced_search_configurations:
+      index:
+        advanced_search_configurations: Configurazioni di ricerca
+        new_advanced_search_configuration: Nuova configurazione di ricerca
+        no_advanced_search_configurations_for_catalog_warning: Non esiste una configurazione di ricerca avanzata per
+          questo catalogo.
+        nothing: Nessun campo definito definito
+      new:
+        title: Nuova configurazione di ricerca
+        next: Prossimo
+      edit:
+        title: Modifica della configurazione di ricerca
+        add_field: Aggiungi alla lista
+        submit: Modificare
+      common_form_fields:
+        search_display_type: Tipo di ricerca visualizzata
     fields:
       geometry_option_inputs:
         bounds: Estensione spaziale predefinita
@@ -385,6 +423,12 @@ it:
           help: E-mail che verranno utilizzate per ricevere i messaggi dal modulo di contatto
       item_list_inputs:
         display_style: "Display style of items (automatically adapts to content if nothing is selected)"
+
+    items:
+      reference_editor:
+        reference_editor_filter: "Filtro..."
+        reference_editor_search: "Ricerca per..."
+
 
     users:
       common_form_fields:

@@ -107,4 +107,8 @@ class Field::Reference < ::Field
   def allows_unique?
     false
   end
+
+  def search_conditions_as_hash
+    []
+  end
 end
