@@ -19,8 +19,8 @@ class ReferenceSearch extends Component {
       inputName: this.props.inputName.split("[exact]"),
       selectedCondition: '',
       selectedItem: [],
-      searchPlaceholder: this.props.searchPlaceholder,
-      filterPlaceholder: this.props.filterPlaceholder
+      searchPlaceholder: '',
+      filterPlaceholder: ''
     };
 
     this.selectFilter = this._selectFilter.bind(this);
@@ -45,6 +45,8 @@ class ReferenceSearch extends Component {
     .then(res => {
       this.setState({ items: res.data.items });
       this.setState({ fields: res.data.fields });
+      this.setState({ filterPlaceholder: res.data.filter_placeholder });
+      this.setState({ searchPlaceholder: res.data.search_placeholder });
       this.setState({ isLoading: false });
     });
 
@@ -121,8 +123,6 @@ class ReferenceSearch extends Component {
     this.setState({ selectedFilter: value });
 
     if(typeof value !== 'undefined' && value === null) {
-        this.setState({ selectedCondition: '' });
-        this.setState({ selectCondition: [] });
       this.setState({ itemTypeSearch: false });
     } else {
       this.setState({ itemTypeSearch: true });
@@ -131,11 +131,8 @@ class ReferenceSearch extends Component {
 
   _getFilterOptions(){
     var optionsList = [];
-    optionsList = this.state.fields.filter(
-        field => (
-            field.filterable && field.displayable_to_user
-        )
-    );
+    optionsList = this.state.fields.filter(field => (field.primary !== true && field.human_readable));
+
     optionsList = optionsList.map(field =>
       this._getJSONFilter(field)
     );
@@ -153,7 +150,7 @@ class ReferenceSearch extends Component {
   }
 
   _getJSONFilter(field) {
-    return {value: field.uuid, label: field.name};
+    if(!field.primary) return {value: field.slug, label: field.name};
   }
 
   _getConditionOptions(){
@@ -239,17 +236,17 @@ class ReferenceSearch extends Component {
     return (
       <div>
         <div className="col-md-2">
-          { this.props.displayFieldCondition && this.renderFieldConditionElement() }
+          { this.renderFieldConditionElement() }
         </div>
         <div className="col-md-7">
           <div className="reference-search-container">
             <div className="col-md-11 reference-input-container">
               <div className="row">
-                <div className="col-md-7">
+                <div className="col-md-8">
                   { this.state.isLoading && <div className="loader"></div> }
                   { this.renderSearch() }
                 </div>
-                <div className="col-md-5">{ this.renderFilter() }</div>
+                <div className="col-md-4">{ this.renderFilter() }</div>
               </div>
             </div>
             { (this.props.itemId === this.props.componentList[0].itemId && this.props.componentList.length === 1) &&

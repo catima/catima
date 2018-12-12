@@ -1,13 +1,15 @@
-<div class="col-md-2">
-  <%= render_and_or_exclude_select(f) %>
-</div>
-<div class="col-md-10">
-  <%= f.collection_select(
-          :exact,
-          field_presenter(nil, field).select_values,
-          :last,
-          :first,
-          { :include_blank => true, :hide_label => true },
-          :multiple => false)
-  %>
+<div class="row">
+  <div class="col-md-2">
+    <%= render_and_or_exclude_select(f, field) %>
+  </div>
+  <div class="col-md-10">
+    <%= f.collection_select(
+            :exact,
+            field_presenter(nil, field).select_values,
+            :last,
+            :first,
+            { :include_blank => true, :hide_label => true },
+            :multiple => false)
+    %>
+  </div>
 </div>

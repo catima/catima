@@ -24,23 +24,8 @@ class AdvancedSearchesController < ApplicationController
     if @advanced_search_config.present?
       @item_types = @advanced_search_config.item_types
       @fields = @advanced_search_config.field_set
-
-      # Initial display of map
-      if @advanced_search_config.search_type_map?
-        params[:item_type] = @advanced_search_config.item_type.slug
-        build_advanced_search
-        @search = ItemList::AdvancedSearchResult.new(
-          :model => @advanced_search
-        )
-      end
     else
-      @item_types = @advanced_search.item_types.order(:slug => :asc)
-
-      if @item_types.blank?
-        # If no item_type is available, redirect to catalog homepage with a warning
-        return redirect_to catalog_home_path, :alert => t('errors.messages.advanced_searches.not_available')
-      end
-
+      @item_types = @advanced_search.item_types
       @fields = @advanced_search.fields
 
       return redirect_to :action => :new, :item_type => @item_types.first if params[:item_type].blank?

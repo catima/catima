@@ -133,20 +133,19 @@ class Field::DateTime < ::Field
     NULLIF(data->'#{uuid}'->>'s', '')::int ASC"
   end
 
-  def search_conditions_as_hash(locale)
+  def search_conditions_as_hash
     [
-      { :value => I18n.t("advanced_searches.fields.date_time_search_field.exact", locale: locale), :key => "exact" },
-      { :value => I18n.t("advanced_searches.fields.date_time_search_field.after", locale: locale), :key => "after" },
-      { :value => I18n.t("advanced_searches.fields.date_time_search_field.before", locale: locale), :key => "before" },
-      { :value => I18n.t("advanced_searches.fields.date_time_search_field.between", locale: locale), :key => "between" },
-      { :value => I18n.t("advanced_searches.fields.date_time_search_field.outside", locale: locale), :key => "outside" }
+      { :value => I18n.t("advanced_searches.fields.date_time_search_field.exact"), :key => "exact" },
+      { :value => I18n.t("advanced_searches.fields.date_time_search_field.after"), :key => "after" },
+      { :value => I18n.t("advanced_searches.fields.date_time_search_field.before"), :key => "before" },
+      { :value => I18n.t("advanced_searches.fields.date_time_search_field.between"), :key => "between" },
+      { :value => I18n.t("advanced_searches.fields.date_time_search_field.outside"), :key => "outside" }
     ]
   end
 
   def search_options_as_hash
     [
-      { :format => format },
-      { :localizedDateTimeData => I18n.t('date') }
+      { :format => format }
     ]
   end
 

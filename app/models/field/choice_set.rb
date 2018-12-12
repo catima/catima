@@ -124,16 +124,18 @@ class Field::ChoiceSet < ::Field
     "(choices.long_name_translations->>'long_name_#{I18n.locale}') ASC" unless choices.nil?
   end
 
-  def allows_unique?
-    false
-  end
-
   def search_data_as_hash
     choices_as_options = []
 
     choices.each do |choice|
       option = { :value => choice.short_name, :key => choice.id }
-      option[:category_data] = choice.category.present? && choice.category.active? ? choice.category.fields : []
+
+      if choice.category.present? && choice.category.active?
+        option[:category_data] = []
+        choice.category.fields.each do |field|
+          option[:category_data] << field unless field.is_a?(Field::ChoiceSet) || field.is_a?(Field::Reference)
+        end
+      end
 
       choices_as_options << option
     end

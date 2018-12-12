@@ -21,7 +21,6 @@ class ItemTypesReferenceSearch extends Component {
       inputType: 'Field::Text',
       inputData: null,
       inputOptions: null,
-      localizedDateTimeData: [],
       selectedFilter: {},
       selectedItem: [],
       selectCondition: this.props.selectCondition,
@@ -105,7 +104,6 @@ class ItemTypesReferenceSearch extends Component {
       this._updateSelectCondition(res.data.selectCondition);
       this.setState({ inputNameArray: this.state.inputName.split('[' + res.data.selectCondition[0].key + ']')});
       this._buildDateTimeInputNames(this.state.inputName);
-      this._updateLocalizedDateTimeData(res.data.inputOptions);
       this.setState({ inputType: res.data.inputType });
       this.setState({ inputOptions: res.data.inputOptions });
       this.setState({ isLoading: false });
@@ -148,13 +146,6 @@ class ItemTypesReferenceSearch extends Component {
     else return formatOption.format;
   }
 
-  _updateLocalizedDateTimeData(options) {
-    var option = this._searchInArray(options, 'localizedDateTimeData');
-    if (option !== false) {
-        this.setState({localizedDateTimeData: option.localizedDateTimeData});
-    }
-  }
-
   _getChoiceSetMultipleOption() {
     var multipleOption = this._searchInArray(this.state.inputOptions, 'multiple');
     if (multipleOption === false) return false;
@@ -194,7 +185,6 @@ class ItemTypesReferenceSearch extends Component {
                 disableInputByCondition={this.props.selectedCondition}
                 startDateInputName={this.state.startDateInputName}
                 endDateInputName={this.state.endDateInputName}
-                localizedDateTimeData={this.state.localizedDateTimeData}
                 catalog={this.props.catalog}
                 itemType={this.props.itemType}
                 inputStart='input1'
@@ -204,9 +194,7 @@ class ItemTypesReferenceSearch extends Component {
                 locale={this.props.locale}
                 onChange={this.selectItem}
               />
-    } else if (this.state.inputType === 'Field::Decimal') {
-      return <input id={this.referenceSearchId} ref={this.referenceSearchRef} name={this.state.inputName} onChange={this.selectItem} type="number" className="form-control" step="any"/>
-    } else if (this.state.inputType === 'Field::Int') {
+    } else if (this.state.inputType === 'Field::Int' || this.state.inputType === 'Field::Decimal') {
       return <input id={this.referenceSearchId} ref={this.referenceSearchRef} name={this.state.inputName} onChange={this.selectItem} type="number" className="form-control"/>
     } else if ((this.state.inputType === 'Field::ChoiceSet' && !this._getChoiceSetMultipleOption()) || this.state.inputType === 'Field::Boolean') {
       return (

@@ -1,15 +1,15 @@
 <p>
-  <b><%= @item.item_type.primary_text_field.field_value_for_item(@item).truncate(80) %></b>
+  <%= link_to(item_url(
+  :catalog_slug => @item.catalog.slug,
+  :locale => I18n.locale,
+  :item_type_slug => @item.item_type.slug,
+  :id => @item.id), item_path(
+  :catalog_slug => @item.catalog.slug,
+  :locale => I18n.locale,
+  :item_type_slug => @item.item_type.slug,
+  :id => @item.id)) %>
 </p>
 
-<p>
-  <%= link_to(
-          t('catalog_admin.items.edit.view-item'),
-          item_path(
-            :catalog_slug => @item.catalog.slug,
-            :locale => I18n.locale,
-            :item_type_slug => @item.item_type.slug,
-            :id => @item
-          ),
-          :target => '_blank') %>
-</p>
+<% @item.fields.each do |field| %>
+  <%= field.field_value_for_item(@item) %><br>
+<% end %>

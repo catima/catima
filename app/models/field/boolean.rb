@@ -37,10 +37,6 @@ class Field::Boolean < ::Field
     field_value(item, self)
   end
 
-  def allows_unique?
-    false
-  end
-
   def search_data_as_hash
     [
       { :value => I18n.t("yes"), :key => 1 },
