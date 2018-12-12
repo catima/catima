@@ -17,8 +17,8 @@
   <table class="table">
     <tbody>
       <% if params[:item_type].present? || @advanced_search_config.present? %>
-        <% @fields.each_with_index do |field, i| %>
-          <%= render_advanced_search_field(f, field, i) do |content| %>
+        <% @fields.each do |field| %>
+          <%= render_advanced_search_field(f, field) do |content| %>
             <tr>
               <th><%= field.name %></th>
               <td><%= content %></td>
@@ -31,9 +31,6 @@
   <%= f.primary(t("advanced_searches.new.submit")) %>
   <%= link_to(
         t("advanced_searches.new.start_over"),
-        {
-          :item_type => params[:item_type],
-          :advanced_search_conf => params[:advanced_search_conf],
-        },
+        { :type => params[:type] },
         :class => "btn btn-text") %>
 <% end %>

@@ -35,22 +35,14 @@ de:
   add_another: "Erstellen und fügen Sie einen weiteren hinzu"
   advanced_searches:
     menu: Erweiterte Suche
-    fields:
-      choice_set_search_field:
-        any: "ist einer von"
-        filter_placeholder: Ein Feld auswählen.......
-        select_placeholder: Bitte wählen Sie...
-      date_time_search_field:
-        start_date: Startdatum
-        end_date: Enddatum
-        exact: präzise
-        after: "nach"
-        before: "vor"
-        between: zwischen den Daten
-        outside: außerhalb der Termine
-      reference_search_field:
-        field_placeholder: Nach Feld...
-        item_type_placeholder: Mit der Karte...
+    choice_set_search_field:
+      any: "ist einer von"
+    date_time_search_field:
+      exact: präzise
+      after: "nach"
+      before: "vor"
+      between: zwischen den Daten
+      outside: außerhalb der Termine
     new:
       tab: "%{title} Suche"
       title: "Erweiterte Suche"
@@ -62,7 +54,6 @@ de:
       item_type_search: Erweiterte Suche nach der Art des Datensatzes %{item_type}
       no_advanced_search_configuration: Keine vorkonfigurierte Suche
       no_field_in_advance_search_configuration: Kein Suchfeld konfiguriert
-      no_map_results: Diese erweiterte Suche ergab keine Ergebnisse
     show:
       title:
         zero: "Ihre erweiterte Suche gab kein Resultat"

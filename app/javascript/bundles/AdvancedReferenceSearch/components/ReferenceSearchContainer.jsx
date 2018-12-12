@@ -31,8 +31,6 @@ class ReferenceSearchContainer extends Component {
       inputName: this._buildInputName(id),
       referenceFilterName: this._buildReferenceFilterName(id),
       multiple: this.props.multiple,
-      searchPlaceholder: this.props.searchPlaceholder,
-      filterPlaceholder: this.props.filterPlaceholder,
       srcRef: this._buildSrcRef(id),
       itemTypeSearch: this.props.itemTypeSearch,
       selectConditionName: this._buildSelectConditionName(id),
@@ -62,8 +60,6 @@ class ReferenceSearchContainer extends Component {
       inputName: this._buildInputName(id),
       referenceFilterName: this._buildReferenceFilterName(id),
       multiple: this.props.multiple,
-      searchPlaceholder: this.props.searchPlaceholder,
-      filterPlaceholder: this.props.filterPlaceholder,
       srcRef: this._buildSrcRef(id),
       itemTypeSearch: this.props.itemTypeSearch,
       selectConditionName: this._buildSelectConditionName(id),
@@ -144,13 +140,10 @@ class ReferenceSearchContainer extends Component {
       inputName={item.inputName}
       referenceFilterName={item.referenceFilterName}
       multiple={this.props.multiple}
-      searchPlaceholder={item.searchPlaceholder}
-      filterPlaceholder={item.filterPlaceholder}
       srcRef={item.srcRef}
       itemTypeSearch={item.itemTypeSearch}
       selectConditionName={item.selectConditionName}
       selectCondition={item.selectCondition}
-      displayFieldCondition={this.props.displayFieldCondition}
       fieldConditionName={item.fieldConditionName}
       fieldConditionData={item.fieldConditionData}
       addComponent={item.addComponent}
