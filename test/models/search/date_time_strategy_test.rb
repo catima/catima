@@ -12,7 +12,7 @@ class Search::TextStrategyTest < ActiveSupport::TestCase
     criteria = {
       :condition => "exact",
       :field_condition => "and",
-      :start => { :exact => { "M" => "6" } },
+      :start => { :exact => "1433120461000" },
       :end => { :exact => "" }
     }.with_indifferent_access
 
@@ -29,7 +29,7 @@ class Search::TextStrategyTest < ActiveSupport::TestCase
     criteria = {
       :condition => "after",
       :field_condition => "and",
-      :start => { :after => { "h" => "9" } },
+      :start => { :after => "-57580642495000" },
       :end => { :exact => "" }
     }.with_indifferent_access
 
@@ -46,20 +46,8 @@ class Search::TextStrategyTest < ActiveSupport::TestCase
     criteria = {
       :condition => "between",
       :field_condition => "and",
-      :start => {
-        :exact => {
-          "Y": "1900",
-          "M": "1",
-          "D": "1"
-        }
-      },
-      :end => {
-        :exact => {
-          "Y": "2015",
-          "M": "12",
-          "D": "31"
-        }
-      }
+      :start => { :exact => "-2208988800000" },
+      :end => { :exact => "1451520000000" }
     }.with_indifferent_access
 
     scope = catalogs(:one).items
@@ -75,20 +63,8 @@ class Search::TextStrategyTest < ActiveSupport::TestCase
     criteria = {
       :condition => "between",
       :field_condition => "and",
-      :start => {
-        :exact => {
-          "Y": "2015",
-          "M": "12",
-          "D": "31"
-        }
-      },
-      :end => {
-        :exact => {
-          "Y": "2000",
-          "M": "1",
-          "D": "1"
-        }
-      }
+      :start => { :exact => "1451520000000" },
+      :end => { :exact => "946684800000" }
     }.with_indifferent_access
 
     scope = catalogs(:one).items

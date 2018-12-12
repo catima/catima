@@ -125,4 +125,8 @@ class Field::Reference < ::Field
     #   related_primary_field = related_item_type.primary_field.sql_type
     # end
   end
+
+  def search_conditions_as_hash
+    []
+  end
 end

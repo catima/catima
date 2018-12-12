@@ -9,7 +9,6 @@
 #  fields             :jsonb
 #  id                 :bigint(8)        not null, primary key
 #  item_type_id       :bigint(8)
-#  search_type        :string           default("default")
 #  slug               :string
 #  title_translations :jsonb
 #  updated_at         :datetime         not null
@@ -30,19 +29,21 @@ class AdvancedSearchConfiguration < ApplicationRecord
 
   belongs_to :catalog
   belongs_to :creator, :class_name => "User", optional: true
-  belongs_to :item_type, -> { active }, :inverse_of => false
+  belongs_to :item_type, -> { active }
 
   store_translations :title
 
   validates_presence_of :catalog
   validates_presence_of :item_type
+  validates_presence_of :title
+  validates_presence_of :description
 
   serialize :description, HashSerializer
   locales :description
 
   def field_set
     field_set = []
-    fields.sort_by { |_field_uuid, position| position }.each do |field_uuid|
+    fields.each do |field_uuid, _position|
       field_set << Field.find_by(:uuid => field_uuid)
     end
 
@@ -54,7 +55,7 @@ class AdvancedSearchConfiguration < ApplicationRecord
   end
 
   def available_fields
-    item_type.fields.select(&:human_readable?).reject do |field|
+    item_type.sortable_list_view_fields.reject do |field|
       field_set.include?(field)
     end
   end
@@ -101,7 +102,17 @@ class AdvancedSearchConfiguration < ApplicationRecord
     end
   end
 
+  def include_geographic_field?
+    return false if item_type.nil?
+
+    item_type.fields.each do |field|
+      return true if field.type == Field::TYPES["geometry"]
+    end
+
+    false
+  end
+
   def search_type_map?
-    search_type == AdvancedSearchConfiguration::TYPES['Map']
+    self.search_type == AdvancedSearchConfiguration::TYPES['Map']
   end
 end

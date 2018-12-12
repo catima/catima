@@ -22,7 +22,6 @@ class LinkedCategoryInput extends Component {
       inputType: 'Field::Text',
       inputData: null,
       inputOptions: null,
-      localizedDateTimeData: [],
       selectedFilter: {},
       selectedItem: [],
       selectCondition: [],
@@ -120,7 +119,6 @@ class LinkedCategoryInput extends Component {
       this._buildDateTimeInputNames(res.data.inputType, this.state.inputName, this.state.selectedCondition);
       this.setState({ inputOptions: res.data.inputOptions });
       this._updateDateTimeFormatOption(res.data.inputOptions);
-      this._updateLocalizedDateTimeData(res.data.inputOptions);
       this.setState({ inputType: res.data.inputType });
       this.setState({ isLoading: false });
     });
@@ -166,19 +164,6 @@ class LinkedCategoryInput extends Component {
     }
   }
 
-  _updateLocalizedDateTimeData(options) {
-    var option = this._searchInArray(options, 'localizedDateTimeData');
-    if (option !== false) {
-        this.setState({localizedDateTimeData: option.localizedDateTimeData});
-    }
-  }
-
-  _getInputOption(string) {
-    var option = this._searchInArray(this.state.inputOptions, string);
-    if (option === false) return null;
-    else return option;
-  }
-
   _getChoiceSetMultipleOption() {
     var multipleOption = this._searchInArray(this.state.inputOptions, 'multiple');
     if (multipleOption === false) return false;
@@ -218,7 +203,6 @@ class LinkedCategoryInput extends Component {
                 disableInputByCondition={this.props.selectedCondition}
                 startDateInputName={this.state.startDateInputName}
                 endDateInputName={this.state.endDateInputName}
-                localizedDateTimeData={this.state.localizedDateTimeData}
                 catalog={this.props.catalog}
                 itemType={this.props.itemType}
                 inputStart='input1'
@@ -230,10 +214,8 @@ class LinkedCategoryInput extends Component {
               />
     } else if (this.state.inputType === 'Field::Email') {
       return <input name={this._buildInputNameCondition(this.state.selectedCondition)} onChange={this.selectItem} type="text" className="form-control"/>
-    } else if (this.state.inputType === 'Field::Int') {
+    } else if (this.state.inputType === 'Field::Int' || this.state.inputType === 'Field::Decimal') {
       return <input name={this._buildInputNameCondition(this.state.selectedCondition)} onChange={this.selectItem} type="number" className="form-control"/>
-    } else if (this.state.inputType === 'Field::Decimal') {
-      return <input name={this._buildInputNameCondition(this.state.selectedCondition)} onChange={this.selectItem} type="number" className="form-control" step="any"/>
     } else if (this.state.inputType === 'Field::URL') {
       return <input name={this._buildInputNameCondition(this.state.selectedCondition)} onChange={this.selectItem} type="url" className="form-control"/>
     } else if ((this.state.inputType === 'Field::ChoiceSet' && !this._getChoiceSetMultipleOption()) || this.state.inputType === 'Field::Boolean') {

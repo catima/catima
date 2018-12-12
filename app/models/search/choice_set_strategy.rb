@@ -3,7 +3,7 @@ class Search::ChoiceSetStrategy < Search::BaseStrategy
 
   permit_criteria :exact, :all_words, :one_word, :less_than, :less_than_or_equal_to, :greater_than,
                   :greater_than_or_equal_to, :field_condition, :filter_field_slug, :category_field,
-                  :after, :before, :between, :outside, :condition, :default, :category_criteria => {}
+                  :after, :before, :between, :outside, :condition, :category_criteria => {}
 
   def keywords_for_index(item)
     choices = field.selected_choices(item)
@@ -37,7 +37,7 @@ class Search::ChoiceSetStrategy < Search::BaseStrategy
       strategy = klass.constantize.new(cat_field, locale)
       scope = strategy.search(scope, criteria)
     else
-      scope = search_data_matching_one_or_more(scope, criteria[:default], negate)
+      scope = search_data_matching_one_or_more(scope, criteria[:exact], negate)
     end
 
     scope = search_data_matching_one_or_more(scope, criteria[:any], false) if criteria[:any].present?
@@ -64,7 +64,7 @@ class Search::ChoiceSetStrategy < Search::BaseStrategy
     scope = strategy.search(
       scope.select('"parent_items".*')
         .from("items parent_items")
-        .joins("LEFT JOIN items ON parent_items.data->>'#{field.uuid}' = items.id::text AND parent_items.item_type_id = #{field.item_type.id}"),
+        .joins("LEFT JOIN items ON parent_items.data->>'#{field.uuid}' = items.id::text"),
       criteria)
 
     scope

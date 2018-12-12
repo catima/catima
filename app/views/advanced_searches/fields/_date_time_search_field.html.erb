@@ -9,7 +9,6 @@
           startLabel: t(".start_date"),
           endLabel: t(".end_date"),
           locale: I18n.locale,
-          localizedDateTimeData: t('date'),
           srcId: "advanced_search_criteria_#{field.uuid}_id",
           srcRef: "advanced_search_criteria_#{field.uuid}_exact",
           startDateInputName: "advanced_search[criteria][#{field.uuid}][start][exact]",
@@ -18,8 +17,7 @@
           inputStart: json_hidden_field_id(f, field),
           inputEnd: json_hidden_field_id(f, field),
           selectConditionName: "advanced_search[criteria][#{field.uuid}][condition]",
-          selectCondition: field.search_conditions_as_hash(I18n.locale),
-          displayFieldCondition: i.positive?,
+          selectCondition: field.search_conditions_as_hash,
           fieldConditionName: "advanced_search[criteria][#{field.uuid}][field_condition]",
           fieldConditionData: field.search_field_conditions_as_hash
         },

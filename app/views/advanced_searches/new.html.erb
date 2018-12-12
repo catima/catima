@@ -1,7 +1,7 @@
 <% provide(:title, t(".title")) %>
 
 <ul class="nav nav-tabs">
-  <li id="default_search_type" class="dropdown <%= "active" if current_page?(new_advanced_search_path) && params[:advanced_search_conf].blank? %>">
+  <li id="default_search_type" class="dropdown <%= "active" if current_page?(new_advanced_search_path) %>">
       <a href="#" data-toggle="dropdown" class="dropdown-toggle"><%= t(".default_search") %> <b class="caret"></b></a>
       <ul class="dropdown-menu">
         <% @item_types.each do |item_type| %>
@@ -23,15 +23,13 @@
   <% end %>
 </ul>
 
-<% if @advanced_search_config.present? && @advanced_search_config.description %>
-  <div class="row">
-    <div class="col-md-12 description"><%= @advanced_search_config.description %>
-    </div>
-  </div>
+<% if @advanced_search_config.present? %>
+  <h3><%= @advanced_search_config.title %></h3>
+  <p><%= @advanced_search_config.description %></p>
 <% end %>
 
 <%= render :partial => "form" %>
 
 <% if @advanced_search_config&.search_type_map? %>
-  <%= render :partial => "map", :locals => { :results => @search.items_as_geojson } %>
+  <%= render :partial => "map", :locals => { :results => [] } %>
 <% end %>
