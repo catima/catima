@@ -1,13 +1,15 @@
-<div class="col-md-2">
-  <%= render_and_or_exclude_select(f) %>
-</div>
-<div class="col-md-7">
-  <%= f.text_field("exact", :hide_label => true) %>
-  <%= f.hidden_field("__filter__", :hide_label => true, :class => 'template', :disabled => true) %>
-</div>
-<div class="col-md-3">
-  <%= f.select("condition", field.search_conditions_as_options,
-    { :hide_label => true },
-    { :class => "filter-condition" }
-  ) %>
+<div class="row">
+  <div class="col-md-2">
+    <%= render_and_or_exclude_select(f, field) %>
+  </div>
+  <div class="col-md-7">
+    <%= f.text_field("exact", :hide_label => true) %>
+    <%= f.hidden_field("__filter__", :hide_label => true, :class => 'template', :disabled => true) %>
+  </div>
+  <div class="col-md-3">
+    <%= f.select("condition", field.search_conditions_as_options,
+      { :hide_label => true },
+      { :class => "filter-condition" }
+    ) %>
+  </div>
 </div>

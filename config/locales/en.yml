@@ -53,8 +53,6 @@ en:
     fields:
       choice_set_search_field:
         any: "is any of"
-        filter_placeholder: Choose a field...
-        select_placeholder: Choose...
       date_time_search_field:
         start_date: Start date
         end_date: End date
@@ -63,22 +61,18 @@ en:
         before: "before"
         between: between the date
         outside: outside the dates
-      reference_search_field:
-        field_placeholder: By field...
-        item_type_placeholder: By item...
     new:
       item_type: Item type
       tab: "%{title} search"
       title: "Advanced search"
       start_over: "Start over"
       submit: "Search"
-      default_search: Default search by item type
+      default_search: Default search
       advanced_search_configurations: Preconfigured searches
       item_type_selection: Search for an item type
-      item_type_search: Advanced search for the item type “%{item_type}“
+      item_type_search: Advanced search for the item type %{item_type}
       no_advanced_search_configuration: No preconfigured searches
       no_field_in_advance_search_configuration: No fields in preconfigured searches
-      no_map_results: Your advanced search found no results
     show:
       title:
         zero: "Your advanced search found no results"

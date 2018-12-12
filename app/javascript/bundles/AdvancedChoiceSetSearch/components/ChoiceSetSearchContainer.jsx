@@ -33,7 +33,6 @@ class ChoiceSetSearchContainer extends Component {
       linkedCategoryInputName: this._buildLinkedCategoryInputName(id),
       locale: this.props.locale,
       searchPlaceholder: this.props.searchPlaceholder,
-      filterPlaceholder: this.props.filterPlaceholder,
       srcId: this._buildSrcId(id),
       srcRef: this._buildSrcRef(id),
       inputName: this._buildInputName(id),
@@ -65,7 +64,6 @@ class ChoiceSetSearchContainer extends Component {
       linkedCategoryInputName: this._buildLinkedCategoryInputName(id),
       locale: this.props.locale,
       searchPlaceholder: this.props.searchPlaceholder,
-      filterPlaceholder: this.props.filterPlaceholder,
       srcId: this._buildSrcId(id),
       srcRef: this._buildSrcRef(id),
       inputName: this._buildInputName(id),
@@ -165,14 +163,12 @@ class ChoiceSetSearchContainer extends Component {
       locale={item.locale}
       inputName={item.inputName}
       searchPlaceholder={item.searchPlaceholder}
-      filterPlaceholder={item.filterPlaceholder}
       srcId={item.srcId}
       srcRef={item.srcRef}
       selectConditionName={item.selectConditionName}
       selectCondition={item.selectCondition}
       fieldConditionName={item.fieldConditionName}
       fieldConditionData={item.fieldConditionData}
-      displayFieldCondition={this.props.displayFieldCondition}
       multiple={item.multiple}
       addComponent={item.addComponent}
       deleteComponent={item.deleteComponent}

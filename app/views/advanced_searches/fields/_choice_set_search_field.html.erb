@@ -1,27 +1,25 @@
-<div class="search-container">
-  <div class="col-md-12">
-    <%= react_component('ChoiceSetSearchContainer',
-      props: {
-        catalog: field.catalog.slug,
-        itemType: field.item_type.slug,
-        label: t(".any"),
-        items: filter_category_fields(field.search_data_as_hash),
-        categoryInputName: "advanced_search[criteria][#{field.uuid}][0][category_field]",
-        linkedCategoryInputName: "advanced_search[criteria][#{field.uuid}][0][category_criteria]",
-        locale: I18n.locale,
-        localizedDateTimeData: t('date'),
-        searchPlaceholder: t('advanced_searches.fields.choice_set_search_field.select_placeholder'),
-        filterPlaceholder: t('advanced_searches.fields.choice_set_search_field.filter_placeholder'),
-        srcId: "advanced_search_criteria_#{field.uuid}_0_id",
-        srcRef: "advanced_search_criteria_#{field.uuid}_0_exact",
-        inputName: "advanced_search[criteria][#{field.uuid}][0][exact]",
-        selectConditionName: "advanced_search[criteria][#{field.uuid}][0][condition]",
-        selectCondition: field.search_conditions_as_hash(I18n.locale),
-        displayFieldCondition: i.positive?,
-        multiple: true,
-        fieldConditionName: "advanced_search[criteria][#{field.uuid}][0][field_condition]",
-        fieldConditionData: field.search_field_conditions_as_hash
-      },
-      prerender: false) %>
-    </div>
+<div class="row search-container">
+    <div>&nbsp</div>
+    <div class="col-md-12">
+      <%= react_component('ChoiceSetSearchContainer',
+        props: {
+          catalog: field.catalog.slug,
+          itemType: field.item_type.slug,
+          label: t(".any"),
+          items: field.search_data_as_hash,
+          categoryInputName: "advanced_search[criteria][#{field.uuid}][0][category_field]",
+          linkedCategoryInputName: "advanced_search[criteria][#{field.uuid}][0][category_criteria]",
+          locale: I18n.locale,
+          searchPlaceholder: t('catalog_admin.items.reference_editor.reference_editor_search'),
+          srcId: "advanced_search_criteria_#{field.uuid}_0_id",
+          srcRef: "advanced_search_criteria_#{field.uuid}_0_exact",
+          inputName: "advanced_search[criteria][#{field.uuid}][0][exact]",
+          selectConditionName: "advanced_search[criteria][#{field.uuid}][0][condition]",
+          selectCondition: field.search_conditions_as_hash,
+          multiple: true,
+          fieldConditionName: "advanced_search[criteria][#{field.uuid}][0][field_condition]",
+          fieldConditionData: field.search_field_conditions_as_hash
+        },
+        prerender: false) %>
+      </div>
 </div>

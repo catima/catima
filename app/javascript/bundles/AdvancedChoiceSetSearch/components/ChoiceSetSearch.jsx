@@ -10,7 +10,7 @@ class ChoiceSetSearch extends Component {
 
     this.state = {
       selectedCondition: '',
-      selectCondition: [],
+      selectCondition: this.props.selectCondition,
       selectedFieldCondition: '',
       selectedCategory: {},
       selectedItem: [],
@@ -32,7 +32,7 @@ class ChoiceSetSearch extends Component {
 
   componentDidMount(){
     if(typeof this.props.selectCondition !== 'undefined' && this.props.selectCondition.length !== 0) {
-      this.setState({selectedCondition: this.props.selectCondition[0].key});
+        this.setState({selectedCondition: this.props.selectCondition[0].key});
     }
   }
 
@@ -44,12 +44,12 @@ class ChoiceSetSearch extends Component {
   }
 
   _buildInputNameCondition(condition) {
-    if(this.state.inputName.length === 2) {
-      if(condition !== '') return this.state.inputName[0] + '[' + condition + ']' + this.state.inputName[1];
-      else return this.state.inputName[0] + '[default]' + this.state.inputName[1];
-    } else {
-      return this.props.inputName;
-    }
+      if(this.state.inputName.length === 2) {
+        if(condition !== '') return this.state.inputName[0] + '[' + condition + ']' + this.state.inputName[1];
+        else return this.state.inputName[0] + '[default]' + this.state.inputName[1];
+      } else {
+        return this.props.inputName;
+      }
   }
 
   _selectItem(item, event){
@@ -57,8 +57,6 @@ class ChoiceSetSearch extends Component {
       if(typeof item !== 'undefined') {
         if(item.data.length === 0) {
           this.setState({ selectedCategory: {} });
-          this.setState({ selectedCondition: '' });
-          this.setState({ selectCondition: [] });
         }
         this.setState({ selectedItem: item }, () => this._save());
       } else {
@@ -84,14 +82,10 @@ class ChoiceSetSearch extends Component {
           this.setState({ selectedCategory: item });
         } else {
           this.setState({ selectedCategory: {} });
-          this.setState({ selectedCondition: '' });
-          this.setState({ selectCondition: [] });
         }
       }
     } else {
       this.setState({ selectedCategory: {} });
-      this.setState({ selectedCondition: '' });
-      this.setState({ selectCondition: [] });
     }
   }
 
@@ -159,7 +153,7 @@ class ChoiceSetSearch extends Component {
 
   renderSelectConditionElement(){
     return (
-      <select className="form-control filter-condition" name={this.props.selectConditionName} value={this.state.selectedCondition} onChange={this.selectCondition} disabled={this.state.selectedItem.length===0 || Object.keys(this.state.selectedCategory).length === 0}>
+      <select className="form-control filter-condition" name={this.props.selectConditionName} value={this.state.selectedCondition} onChange={this.selectCondition} disabled={this.state.selectedItem.length===0}>
       { this.state.selectCondition.map((item) => {
         return <option key={item.key} value={item.key}>{item.value}</option>
       })}
@@ -187,7 +181,7 @@ class ChoiceSetSearch extends Component {
 
   renderChoiceSetItemCategory(){
     return (
-        <ReactSelect id={this.choiceSetId + '_condition'} name={this.props.categoryInputName} options={this._getCategoryOptions()} className="basic-multi-select" onChange={this.selectCategory} classNamePrefix="select" placeholder={this.props.filterPlaceholder} isClearable={true}/>
+        <ReactSelect id={this.choiceSetId + '_condition'} name={this.props.categoryInputName} options={this._getCategoryOptions()} className="basic-multi-select" onChange={this.selectCategory} classNamePrefix="select" placeholder={this.props.searchPlaceholder} isClearable={true}/>
     );
   }
 
@@ -210,9 +204,9 @@ class ChoiceSetSearch extends Component {
   render() {
     return (
       <div className="col-md-12 choiceset-search-container">
-        <div className="row">
+        <div className="row component-search-row">
           <div className="col-md-2">
-              { this.props.displayFieldCondition && this.renderFieldConditionElement() }
+              { this.renderFieldConditionElement() }
           </div>
           <div>
             <div className={this._getChoiceSetClassname()}>
@@ -247,7 +241,7 @@ class ChoiceSetSearch extends Component {
           </div>
         </div>
         { (Object.keys(this.state.selectedCategory).length !== 0 && this.state.selectedItem.data.length !== 0) &&
-        <div className="row">
+        <div className="row component-search-row">
           <div className="col-md-offset-2 col-md-6">{ this.renderLinkedCategoryElement() }</div>
         </div>
         }

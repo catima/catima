@@ -1,6 +1,7 @@
 <%= javascript_pack_tag 'catalog-admin-bundle' %>
 <%= stylesheet_pack_tag 'catalog-admin-bundle' %>
 
+<%= f.hidden_field(:item_type, :value => @advanced_search_conf.item_type&.slug) %>
 <%= locale_form_group(f, :title, :text_field, :autofocus => true) %>
 <%= f.text_field(:description, :class => 'hide', :value => @advanced_search_conf.description_str) %>
 <%= react_component(
@@ -10,10 +11,9 @@
     locales: @advanced_search_conf.catalog.valid_locales },
     prerender: false) %>
 
-<div id="searchType" style="display: <%= @advanced_search_conf.item_type.nil? || !@advanced_search_conf.item_type.include_geographic_field? ? 'none' : 'block' %>">
+<% if @advanced_search_conf.include_geographic_field? %>
   <%= f.select(
     :search_type,
     AdvancedSearchConfiguration::TYPES,
-    :label => t(".search_display_type")
-    ) %>
-</div>
+    :label => t(".search_display_type")) %>
+<% end %>

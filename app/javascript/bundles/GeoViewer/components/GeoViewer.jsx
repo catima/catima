@@ -172,7 +172,6 @@ class GeoViewer extends React.Component {
             attributionUrl='https://www.openstreetmap.org/copyright'
           />
           {this.features.map((feat, i) =>
-
             <GeoJSON key={i} data={feat} pointToLayer={this.pointToLayer} onEachFeature={this.onEachFeature} />
           )}
         </Map>

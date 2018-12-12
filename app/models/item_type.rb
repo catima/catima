@@ -75,7 +75,7 @@ class ItemType < ApplicationRecord
 
   # Fields that are not of type Reference or ChoiceSet to prevent n+1 lookup in advanced search
   def simple_fields
-    fields.reject { |fld| ["Field::Reference", "Field::ChoiceSet"].include?(fld.type) }
+    all_public_list_view_fields.reject { |fld| ["Field::Reference", "Field::ChoiceSet"].include?(fld.type) }
   end
 
   # The primary or first text field. Used to generate Item slugs.

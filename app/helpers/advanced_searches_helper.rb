@@ -66,4 +66,30 @@ module AdvancedSearchesHelper
       :class => "field-condition"
     )
   end
+
+  def render_item_types_as_options(item_types, selected_item_type_slug)
+    options = []
+    item_types.each do |item_type|
+      options << [
+        item_type.name,
+        item_type.slug,
+        "data-url".to_sym => url_for(:item_type => item_type.slug),
+        :selected => item_type.slug == selected_item_type_slug
+      ]
+    end
+
+    options
+  end
+
+  def render_and_or_exclude_select(form, field)
+    form.select("field_condition",
+                [
+                  [I18n.t(".and"), "and"],
+                  [I18n.t(".or"), "or"],
+                  [I18n.t(".exclude"), "exclude"]
+                ],
+                { :hide_label => true },
+                :class => "field-condition"
+               )
+  end
 end
