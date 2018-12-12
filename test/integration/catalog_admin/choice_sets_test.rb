@@ -63,7 +63,7 @@ class CatalogAdmin::ChoiceSetsTest < ActionDispatch::IntegrationTest
     log_in_as("one-admin@example.com", "password")
 
     author = items(:one_author_stephen_king)
-    field = fields(:one_author_other_language)
+    field = fields(:one_author_other_languages)
     visit("/one/en/admin/authors/#{author.to_param}/edit")
 
     select("Eng", :from => "Other Languages")

@@ -12,6 +12,10 @@ de:
       group:
         name: "Name"
         description: "Description"
+      advanced_search_configuration:
+        title: Titel
+        description: Beschreibung
+        item_type: Satzart
   "yes": "Ja"
   "no": "Nein"
   boolean_field: Boolesches Feld (ja/nein)
@@ -30,27 +34,44 @@ de:
   slug_help_text: "Nur Kleinbuchstaben, Zahlen und Bindestriche. Keine akzentuierten Zeichen."
   add_another: "Erstellen und fügen Sie einen weiteren hinzu"
   advanced_searches:
+    menu: Erweiterte Suche
     choice_set_search_field:
       any: "ist einer von"
     date_time_search_field:
+      exact: präzise
       after: "nach"
       before: "vor"
+      between: zwischen den Daten
+      outside: außerhalb der Termine
     new:
-      tab: "%{type} Suche"
+      tab: "%{title} Suche"
       title: "Erweiterte Suche"
       start_over: "Neue Suche"
       submit: "Suchen"
+      default_search: Standardsuche
+      advanced_search_configurations: Vorkonfigurierte Suchvorgänge
+      item_type_selection: Suche nach einer Satzart
+      item_type_search: Erweiterte Suche nach der Art des Datensatzes %{item_type}
+      no_advanced_search_configuration: Keine vorkonfigurierte Suche
+      no_field_in_advance_search_configuration: Kein Suchfeld konfiguriert
     show:
       title:
         zero: "Ihre erweiterte Suche gab kein Resultat"
         one: "1 Resultat der erweiterten Suche"
         other: "%{count_delimited} Resultate der erweiterten Suche"
     text_search_field:
+      all_words: alle Wörter
+      exact: genauer Ausdruck
+      one_word: mindestens eines der Wörter
       contains_words: "enhält Wörter"
       excludes_words: "ohne Wörer"
       has_exact_phrase: "enthält den exakten Ausdruck"
-    int_search_field:
+    number_search_field:
       contains_number: "enthält die exakte Nummer"
+      less_than: ist kleiner als
+      less_than_or_equal_to: ist kleiner oder gleich
+      greater_than: ist größer als
+      greater_than_or_equal_to: ist größer oder gleich
     decimal_search_field:
       contains_number: "enthält die exakte Nummer"
     email_search_field:
@@ -280,6 +301,8 @@ de:
   expired: "abgelaufen"
   download: "Herunterladen"
   or: oder
+  and: und
+  exclude: außer
   options: Options
   deactivate: Deactivate
   reactivate: Reactivate
@@ -418,6 +441,21 @@ de:
       create:
         invalid_category: "Exportformat ungültig"
 
+    advanced_search_configurations:
+      index:
+        advanced_search_configurations: Konfigurationen suchen
+        new_advanced_search_configuration: Neue Suchkonfiguration
+        no_advanced_search_configurations_for_catalog_warning: Es gibt keine erweiterte Suchkonfiguration für die Suche nach diesen Katalog.
+        nothing: Keine definierten Felder definiert
+      new:
+        title: Neue Suchkonfiguration
+        next: Weiter
+      edit:
+        title: Ändern der Suchkonfiguration
+        add_field: Zur Liste hinzufügen
+        submit: Modifizieren
+      common_form_fields:
+        search_display_type: Art der Suchanzeige
     fields:
       choice_set_modals:
         create_new_choice_set: Create new choice set

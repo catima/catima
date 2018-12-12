@@ -256,7 +256,39 @@ class Field < ApplicationRecord
 
   # Returns the order by for items with a sort by a field
   def order_items_by
-    "data->>'#{uuid}' ASC"
+    # "data->>'#{uuid}' ASC"
+    "items.data->>'#{uuid}' ASC"
+  end
+
+  # Useful for the advanced search
+  def search_conditions_as_options
+    [
+      [I18n.t("advanced_searches.text_search_field.exact"), "exact"],
+      [I18n.t("advanced_searches.text_search_field.all_words"), "all_words"],
+      [I18n.t("advanced_searches.text_search_field.one_word"), "one_word"]
+    ]
+  end
+
+  def search_conditions_as_hash
+    [
+      { :value => I18n.t("advanced_searches.text_search_field.exact"), :key => "exact"},
+      { :value => I18n.t("advanced_searches.text_search_field.all_words"), :key => "all_words"},
+      { :value => I18n.t("advanced_searches.text_search_field.one_word"), :key => "one_word"}
+    ]
+  end
+
+  def search_field_conditions_as_hash
+    [
+      { :value => I18n.t("and"), :key => "and"},
+      { :value => I18n.t("or"), :key => "or"},
+      { :value => I18n.t("exclude"), :key => "exclude"}
+    ]
+  end
+
+  def search_data_as_hash
+  end
+
+  def search_options_as_hash
   end
 
   private

@@ -26,6 +26,10 @@ en:
       group:
         name: "Name"
         description: "Description"
+      advanced_search_configuration:
+        title: Title
+        description: Description
+        item_type: Item type
   "yes": "Yes"
   "no": "No"
   boolean_field: Boolean field (Yes/No)
@@ -45,27 +49,52 @@ en:
   slug_help_text: "Lower case letters, numbers, and hyphens only. No accented characters."
   add_another: "Create and add another"
   advanced_searches:
-    choice_set_search_field:
-      any: "is any of"
-    date_time_search_field:
-      after: "after"
-      before: "before"
+    menu: Advanced searches
+    fields:
+      choice_set_search_field:
+        any: "is any of"
+      date_time_search_field:
+        start_date: Start date
+        end_date: End date
+        exact: exact date
+        after: "after"
+        before: "before"
+        between: between the date
+        outside: outside the dates
     new:
-      tab: "%{type} search"
+      item_type: Item type
+      tab: "%{title} search"
       title: "Advanced search"
       start_over: "Start over"
       submit: "Search"
+      default_search: Default search
+      advanced_search_configurations: Preconfigured searches
+      item_type_selection: Search for an item type
+      item_type_search: Advanced search for the item type %{item_type}
+      no_advanced_search_configuration: No preconfigured searches
+      no_field_in_advance_search_configuration: No fields in preconfigured searches
     show:
       title:
         zero: "Your advanced search found no results"
         one: "1 advanced search result"
         other: "%{count_delimited} advanced search results"
     text_search_field:
+      all_words: all words
+      exact: exact expression
+      one_word: at least one word
       contains_words: "contains words"
       excludes_words: "excludes words"
       has_exact_phrase: "has exact phrase"
-    int_search_field:
+    reference_search_field:
+      contains_words: "contains words"
+      excludes_words: "excludes words"
+      has_exact_phrase: "has exact phrase"
+    number_search_field:
       contains_number: "has exact number"
+      less_than: less than
+      less_than_or_equal_to: less than or equal
+      greater_than: greater than
+      greater_than_or_equal_to: greater than or equal
     decimal_search_field:
       contains_number: "has exact number"
     email_search_field:
@@ -311,6 +340,8 @@ en:
   expired: "expired"
   download: "Download"
   or: or
+  and: and
+  exclude: exclude
   options: Options
   deactivate: Deactivate
   reactivate: Reactivate
@@ -450,6 +481,21 @@ en:
       create:
         invalid_category: "Export format invalid"
 
+    advanced_search_configurations:
+      index:
+        advanced_search_configurations: Search configurations
+        new_advanced_search_configuration: New search configuration
+        no_advanced_search_configurations_for_catalog_warning: No search configuration set for this catalog
+        nothing: No fields set
+      new:
+        title: New search configuration
+        next: Next
+      edit:
+        title: Edit search configuration
+        add_field: Add
+        submit: Submit
+      common_form_fields:
+        search_display_type: Search display type
     fields:
       choice_set_modals:
         create_new_choice_set: Create new choice set
@@ -564,7 +610,7 @@ en:
       reference_editor:
         reference_editor_filter: "Filter..."
         reference_editor_search: "Search..."
-
+        no_options: No options
     pages:
       new:
         create_page: "Create page"

@@ -51,6 +51,7 @@ class Catalog < ApplicationRecord
   has_many :menu_items, :dependent => :destroy
   has_many :exports, :dependent => :destroy
   has_many :groups, dependent: :destroy
+  has_many :advanced_search_configurations, dependent: :destroy
 
   attachment :logo, type: :image
   attachment :navlogo, type: :image

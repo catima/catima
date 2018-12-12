@@ -1,36 +1,35 @@
 <% provide(:title, t(".title")) %>
 
-<% if @advanced_search.item_types.many? %>
-  <ul class="nav nav-tabs">
-    <% @advanced_search.item_types.each do |type| %>
-      <%= content_tag(
+<ul class="nav nav-tabs">
+  <li id="default_search_type" class="dropdown <%= "active" if current_page?(new_advanced_search_path) %>">
+      <a href="#" data-toggle="dropdown" class="dropdown-toggle"><%= t(".default_search") %> <b class="caret"></b></a>
+      <ul class="dropdown-menu">
+        <% @item_types.each do |item_type| %>
+          <%= content_tag(
             :li,
-            :role => "presentation",
-            :class => ("active" if @advanced_search.item_type == type)) do %>
-        <%= link_to(t(".tab", :type => type.name), :type => type.slug) %>
-      <% end %>
+            :class => ("active" if item_type.slug == params[:item_type])) do %>
+            <a href="<%= url_for(:item_type => item_type.slug) %>"><%= item_type.name %></a>
+          <% end %>
+        <% end %>
+      </ul>
+  </li>
+  <% @advance_search_confs.each do |search_config| %>
+    <%= content_tag(
+          :li,
+          :role => "presentation",
+          :class => ("active" if search_config.id == @advanced_search_config&.id)) do %>
+      <%= link_to(search_config.title, :advanced_search_conf => search_config.id) %>
     <% end %>
-  </ul>
+  <% end %>
+</ul>
+
+<% if @advanced_search_config.present? %>
+  <h3><%= @advanced_search_config.title %></h3>
+  <p><%= @advanced_search_config.description %></p>
 <% end %>
 
-<%= bootstrap_form_for(@advanced_search) do |f| %>
-  <%= hidden_field_tag(:type, params[:type]) %>
+<%= render :partial => "form" %>
 
-  <table class="table">
-    <tbody>
-      <% @advanced_search.fields.each do |field| %>
-        <%= render_advanced_search_field(f, field) do |content| %>
-          <tr>
-            <th><%= field.name %></th>
-            <td><%= content %></td>
-          </tr>
-        <% end %>
-      <% end %>
-    </tbody>
-  </table>
-  <%= f.primary(t(".submit")) %>
-  <%= link_to(
-        t(".start_over"),
-        { :type => params[:type] },
-        :class => "btn btn-text") %>
+<% if @advanced_search_config&.search_type_map? %>
+  <%= render :partial => "map", :locals => { :results => [] } %>
 <% end %>

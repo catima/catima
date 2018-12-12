@@ -73,6 +73,11 @@ class ItemType < ApplicationRecord
     candidate_fields.find(&:human_readable?)
   end
 
+  # Fields that are not of type Reference or ChoiceSet to prevent n+1 lookup in advanced search
+  def simple_fields
+    all_public_list_view_fields.reject { |fld| ["Field::Reference", "Field::ChoiceSet"].include?(fld.type) }
+  end
+
   # The primary or first text field. Used to generate Item slugs.
   def primary_text_field
     candidate_fields = [primary_field, list_view_fields, fields].flatten.compact

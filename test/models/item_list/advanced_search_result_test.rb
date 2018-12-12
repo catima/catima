@@ -3,8 +3,16 @@ require "test_helper"
 class ItemList::AdvancedSearchResultTest < ActiveSupport::TestCase
   test "search multiple fields" do
     criteria = {
-      "search_vehicle_make_uuid" => { "exact" => "toyota" },
-      "search_vehicle_model_uuid" => { "excludes" => "camry" }
+      "search_vehicle_make_uuid" => {
+        "field_condition" => "and",
+        "exact" => "toyota"
+      },
+      "search_vehicle_model_uuid" => {
+        "field_condition" => "exclude",
+        "one_word" => "camry"
+      },
+      "search_vehicle_doors_uuid" => { "exact" => "" },
+      "search_vehicle_style_uuid" => { "exact" => "" }
     }
     model = AdvancedSearch.new(
       :catalog => catalogs(:search),

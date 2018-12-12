@@ -18,10 +18,13 @@ class CatalogAdmin::ItemsTest < ActionDispatch::IntegrationTest
     fill_in("Email", :with => "test@example.com")
     fill_in("Rank", :with => "1.25")
 
-    add_single_reference('#item_one_author_collaborator_uuid_json-editor', 'Stephen King')
+    sleep 2
+    
+    add_single_reference('#item_one_author_collaborator_uuid_json-editor', 'Very Old')
 
     add_multiple_reference('#item_one_author_other_collaborators_uuid_json-editor', 'Very Old')
     add_multiple_reference('#item_one_author_other_collaborators_uuid_json-editor', 'Very Young')
+
     first('#item_one_author_other_collaborators_uuid_json-editor-select').click
 
     select("Eng", :from => "Language")
@@ -44,8 +47,8 @@ class CatalogAdmin::ItemsTest < ActionDispatch::IntegrationTest
     assert_equal(choices(:one_english).id.to_s, author.public_send(:one_author_language_uuid).to_s)
     assert_equal(
       [choices(:one_english).id.to_s, choices(:one_spanish).id.to_s],
-      author.public_send(:one_author_other_language_uuid))
-    assert_equal(items(:one_author_stephen_king).id.to_s, author.public_send(:one_author_collaborator_uuid).to_s)
+      author.public_send(:one_author_other_languages_uuid))
+    assert_equal(items(:one_author_very_old).id.to_s, author.public_send(:one_author_collaborator_uuid).to_s)
     assert_equal(
       %i(one_author_very_old one_author_very_young).map { |i| items(i).id.to_s }.sort,
       author.public_send(:one_author_other_collaborators_uuid).sort)

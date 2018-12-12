@@ -1,0 +1,32 @@
+<tr>
+  <th>Position</th>
+  <th>Nom</th>
+</tr>
+<% @advanced_search_conf.sorted_fields.each do |field_uuid, field_position| %>
+  <% field = Field.where(:uuid => field_uuid).first %>
+  <tr>
+    <td>
+      <%= field_position + 1 %>
+      <%= advanced_search_field_move_up_link(field_uuid) unless field_position == 0 %>
+      <%= advanced_search_field_move_down_link(field_uuid) unless field_position == @advanced_search_conf.fields.size - 1 %>
+    </td>
+    <td>
+      <%= field.name %>
+      <%#= list_view_badge(item_view) %>
+      <%#= item_view_badge(item_view) %>
+      <%#= display_name_badge(item_view) %>
+    </td>
+    <td style="text-align: right">
+      <%= link_to(
+            fa_icon(:trash),
+            catalog_admin_advanced_search_configuration_path(
+              :catalog_slug => @advanced_search_conf.catalog.slug,
+              :id => @advanced_search_conf.id,
+              :field => field.uuid),
+            method: :delete,
+            data: { confirm: t('delete_confirm', model: field.name) },
+            class: 'btn btn-xs btn-default'
+          ) %>
+    </td>
+  </tr>
+<% end %>

@@ -43,6 +43,13 @@ one_spanish:
   long_name_translations: { "long_name_en": "Spanish" }
   short_name_translations: { "short_name_en": "Spanish" }
 
+one_french:
+  catalog: one
+  choice_set: one_languages
+  long_name_translations: { "long_name_en": "French" }
+  short_name_translations: { "short_name_en": "French" }
+  category: language
+
 two_english:
   catalog: two
   choice_set: two_languages

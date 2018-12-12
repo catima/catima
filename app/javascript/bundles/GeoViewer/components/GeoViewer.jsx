@@ -29,6 +29,7 @@ class GeoViewer extends React.Component {
     });
 
     this.pointToLayer = this._pointToLayer.bind(this);
+    this.onEachFeature = this._onEachFeature.bind(this);
   }
 
   componentDidMount(){
@@ -127,6 +128,13 @@ class GeoViewer extends React.Component {
     return L.marker(latlng, { icon: this.plainBlueMarker });
   }
 
+  _onEachFeature(feature, layer) {
+    //On each marker, bind a popup
+    if (feature.properties && feature.properties.popupContent) {
+      layer.bindPopup(feature.properties.popupContent);
+    }
+  }
+
   render(){
     const center = this.center();
     return (
@@ -142,7 +150,7 @@ class GeoViewer extends React.Component {
             attributionUrl='https://www.openstreetmap.org/copyright'
           />
           {this.features.map((feat, i) =>
-            <GeoJSON key={i} data={feat.geometry} pointToLayer={this.pointToLayer} />
+            <GeoJSON key={i} data={feat} pointToLayer={this.pointToLayer} onEachFeature={this.onEachFeature} />
           )}
         </Map>
       </div>
