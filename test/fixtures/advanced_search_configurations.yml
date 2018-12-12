@@ -9,7 +9,6 @@
 #  fields             :jsonb
 #  id                 :bigint(8)        not null, primary key
 #  item_type_id       :bigint(8)
-#  search_type        :string           default("default")
 #  slug               :string
 #  title_translations :jsonb
 #  updated_at         :datetime         not null
@@ -21,16 +20,8 @@
 # model remove the '{}' from the fixture names and add the columns immediately
 # below each fixture, per the syntax in the comments below
 #
-one:
-  catalog: one
-  item_type: one_author
-  creator: one_user
-  title_translations: {
-    title_fr: "Recherche personalisée avancée d'auteurs",
-    title_en: "Custom author adanced search"
-  }
-  description: {
-    fr: "Recherche avancée sans contenu",
-    en: "Empty advanced search"
-  }
-  slug: "custom-advanced-search"
+one: {}
+# column: value
+#
+two: {}
+# column: value

@@ -35,22 +35,14 @@ it:
   add_another: "Crea e aggiungi un altro"
   advanced_searches:
     menu: Ricerche avanzate
-    fields:
-      choice_set_search_field:
-        any: "è uno di"
-        filter_placeholder: Selezionare un campo...
-        select_placeholder: Selezionare...
-      date_time_search_field:
-        start_date: data di inizio
-        end_date: Data di fine
-        exact: precisa
-        after: "prima"
-        before: "dopo"
-        between: tra date
-        outside: fuori dalle date
-      reference_search_field:
-        field_placeholder: Per campo...
-        item_type_placeholder: Con carta...
+    choice_set_search_field:
+      any: "è uno di"
+    date_time_search_field:
+      exact: precisa
+      after: "prima"
+      before: "dopo"
+      between: tra date
+      outside: fuori dalle date
     new:
       tab: "%{title} ricerca"
       title: "Ricerca avanzata"
@@ -62,7 +54,6 @@ it:
       item_type_search: Ricerca avanzata sul tipo di record %{item_type}
       no_advanced_search_configuration: Nessuna ricerca preconfigurata
       no_field_in_advance_search_configuration: Nessun campo di ricerca configurato
-      no_map_results: Questa ricerca avanzata non ha prodotto risultati
     show:
       title:
         zero: "Your advanced search found no results"
@@ -434,6 +425,12 @@ it:
           help: E-mail che verranno utilizzate per ricevere i messaggi dal modulo di contatto
       item_list_inputs:
         display_style: "Display style of items (automatically adapts to content if nothing is selected)"
+
+    items:
+      reference_editor:
+        reference_editor_filter: "Filtro..."
+        reference_editor_search: "Ricerca per..."
+
 
     users:
       common_form_fields:

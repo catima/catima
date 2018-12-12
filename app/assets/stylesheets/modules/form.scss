@@ -177,3 +177,66 @@ button[data-active=true]:focus {
         z-index: 402;
     }
 }
+
+.search-container {
+  .component-search-row {
+    margin-bottom: 10px;
+  }
+
+  a {
+     &:hover {
+       cursor: pointer;
+     }
+  }
+
+  .icon-container {
+    position: relative;
+    height: 38px;
+
+    a {
+      display: table;
+      margin: 0 auto;
+      position: absolute;
+      top: 50%;
+      transform: translateY(-50%);
+    }
+  }
+
+  .reference-search-container {
+      .reference-input-container {
+        padding: 0;
+      }
+
+      .condition-input-container {
+        padding-right: 0;
+
+        .col-md-12 {
+          padding-right: 0;
+        }
+      }
+  }
+
+  .datetime-search-container {
+    .condition-input-container {
+      .col-md-12 {
+        padding-right: 0;
+      }
+    }
+  }
+}
+
+.dateTimeInput {
+  .hidden-datepicker {
+    margin-left: 5px;
+    width: 0;
+    height: 0;
+    overflow: hidden;
+
+    input {
+      position: absolute;
+      z-index: -1;
+      opacity:0;
+      filter:alpha(opacity=0);
+    }
+  }
+}

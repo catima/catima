@@ -9,19 +9,11 @@
 
   <hr>
 
-  <%= f.select(
-        :item_type,
-        render_item_types_as_options(
-          @advanced_search_conf.catalog.item_types,
-          params[:item_type].presence || @advanced_search_conf.item_type&.slug,
-          @advanced_search_conf
-        ),
-        :hide_label => false
+  <%= f.select(:item_type, render_item_types_as_options(@advanced_search_conf.catalog.item_types, params[:item_type]),
+    { :hide_label => false }
   ) %>
 
-  <div class="form-group">
-      <%= f.primary(t('.next')) %>
-      <%= link_to t('cancel'), catalog_admin_advanced_search_configurations_path, :class => "btn btn-link" %>
-  </div>
+  <%= f.primary(t('.next')) %>
+  <%= link_to t('cancel'), catalog_admin_advanced_search_configurations_path, :class => "btn btn-link" %>
 
 <% end %>

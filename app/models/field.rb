@@ -286,10 +286,6 @@ class Field < ApplicationRecord
     "items.data->>'#{uuid}' ASC"
   end
 
-  def order_items_by_primary_field
-    "items.data->>'#{item_type.primary_human_readable_field.uuid}'"
-  end
-
   # Useful for the advanced search
   def search_conditions_as_options
     [
@@ -299,11 +295,11 @@ class Field < ApplicationRecord
     ]
   end
 
-  def search_conditions_as_hash(locale)
+  def search_conditions_as_hash
     [
-      { :value => I18n.t("advanced_searches.text_search_field.exact", locale: locale), :key => "exact"},
-      { :value => I18n.t("advanced_searches.text_search_field.all_words", locale: locale), :key => "all_words"},
-      { :value => I18n.t("advanced_searches.text_search_field.one_word", locale: locale), :key => "one_word"}
+      { :value => I18n.t("advanced_searches.text_search_field.exact"), :key => "exact"},
+      { :value => I18n.t("advanced_searches.text_search_field.all_words"), :key => "all_words"},
+      { :value => I18n.t("advanced_searches.text_search_field.one_word"), :key => "one_word"}
     ]
   end
 
@@ -319,28 +315,6 @@ class Field < ApplicationRecord
   end
 
   def search_options_as_hash
-  end
-
-  def filterable_field?
-    !is_a?(Field::ChoiceSet) && !is_a?(Field::Reference) && human_readable?
-  end
-
-  def sql_type
-    ""
-  end
-
-  def sql_nullable
-    "#{'NOT ' if required}NULL"
-  end
-
-  def sql_unique
-    "UNIQUE" if unique
-  end
-
-  def sql_default
-    return "" if default_value.blank?
-
-    "DEFAULT '#{default_value}'"
   end
 
   private

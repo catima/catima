@@ -20,6 +20,8 @@ class API::V2::ItemsController < ApplicationController
 
     fields = params[:simple_fields].blank? ? it.fields : it.simple_fields
 
+    fields = params[:simple_fields].blank? ? it.fields : it.simple_fields
+
     render(json:
       {
         slug: item_type.slug,

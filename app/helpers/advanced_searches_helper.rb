@@ -63,30 +63,29 @@ module AdvancedSearchesHelper
     )
   end
 
-  def render_item_types_as_options(item_types, selected_item_type_slug, configuration)
+  def render_item_types_as_options(item_types, selected_item_type_slug)
     options = []
     item_types.each do |item_type|
       options << [
         item_type.name,
         item_type.slug,
-        :selected => item_type.slug == selected_item_type_slug,
-        "data-has-map" => item_type.include_geographic_field?
+        "data-url".to_sym => url_for(:item_type => item_type.slug),
+        :selected => item_type.slug == selected_item_type_slug
       ]
     end
 
     options
   end
 
-  def render_and_or_exclude_select(form)
-    form.select(
-      "field_condition",
-      [
-        [I18n.t(".and"), "and"],
-        [I18n.t(".or"), "or"],
-        [I18n.t(".exclude"), "exclude"]
-      ],
-      { :hide_label => true },
-      :class => "field-condition"
-    )
+  def render_and_or_exclude_select(form, field)
+    form.select("field_condition",
+                [
+                  [I18n.t(".and"), "and"],
+                  [I18n.t(".or"), "or"],
+                  [I18n.t(".exclude"), "exclude"]
+                ],
+                { :hide_label => true },
+                :class => "field-condition"
+               )
   end
 end

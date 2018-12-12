@@ -159,6 +159,31 @@ class Field::ChoiceSet < ::Field
   def sql_type
     "INT"
   end
+  
+  def search_data_as_hash
+    choices_as_options = []
+
+    choices.each do |choice|
+      option = { :value => choice.short_name, :key => choice.id }
+
+      if choice.category.present? && choice.category.active?
+        option[:category_data] = []
+        choice.category.fields.each do |field|
+          option[:category_data] << field unless field.is_a?(Field::ChoiceSet) || field.is_a?(Field::Reference)
+        end
+      end
+
+      choices_as_options << option
+    end
+
+    choices_as_options
+  end
+
+  def search_options_as_hash
+    [
+      { :multiple => multiple? }
+    ]
+  end
 
   private
 
