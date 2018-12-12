@@ -47,8 +47,8 @@ one_author_empty_fields:
 
 one_author_stephen_king:
   catalog: one
-  creator: one_admin
-  updater: one_admin
+  creator: one_user
+  updater: one_user
   item_type: one_author
   data: {
       "one_author_name_uuid": "Stephen King",
@@ -66,9 +66,19 @@ one_author_stephen_king:
         "type": "document/doc"
       },
       "one_author_language_uuid": <%= ActiveRecord::FixtureSet.identify(:one_spanish) %>,
+      "one_author_other_languages_uuid": [
+        "<%= ActiveRecord::FixtureSet.identify(:one_spanish) %>",
+        "<%= ActiveRecord::FixtureSet.identify(:one_english) %>"
+      ],
       "one_author_editor_uuid": <%= ActiveRecord::FixtureSet.identify(:one_author_editor) %>,
       "one_author_collaborator_uuid": <%= ActiveRecord::FixtureSet.identify(:one_author_very_old) %>,
-      "one_author_born_uuid": {"Y": 1947, "M": 9, "D": 21}
+      "one_author_other_collaborators_uuid": [
+        "<%= ActiveRecord::FixtureSet.identify(:one_author_apprentice) %>"
+        ],
+      "one_author_born_uuid": {"Y": 1947, "M": 9, "D": 21},
+      "one_author_birth_time_uuid": {"Y": 1947, "M": 9, "D": 21, "h": 10, "m": 10, "s": 10},
+      "one_author_most_active_month_uuid": {"M": 6},
+      "one_author_most_active_hour_uuid": {"h": 10}
     }
   "search_data_en": "Steve"
 
@@ -81,9 +91,19 @@ one_author_very_old:
     "one_author_age_uuid": 2456,
     "one_author_name_uuid": "Very Old",
     "one_author_deceased_uuid": "1",
+    "one_author_email_uuid": "so@old.com",
     "one_author_rank_uuid": "2.12",
-    "one_author_born_uuid": {"Y": 1947, "M": 11, "D": 11}
-  }
+    "language_category_uuid": "Latin",
+    "one_author_language_earliest_recollection_uuid": {"Y": -500},
+    "one_author_other_languages_uuid": [
+      "<%= ActiveRecord::FixtureSet.identify(:one_french) %>",
+      "<%= ActiveRecord::FixtureSet.identify(:one_english) %>"
+    ],
+    "one_author_collaborator_uuid": <%= ActiveRecord::FixtureSet.identify(:one_author_very_young) %>,
+    "one_author_born_uuid": {"Y": 1947, "M": 11, "D": 11},
+    "one_author_most_active_month_uuid": {"M": 1},
+    "one_author_most_active_hour_uuid": {"h": 1}
+    }
   "search_data_en": "too old"
 
 one_author_very_young:
@@ -91,8 +111,34 @@ one_author_very_young:
   creator: one_admin
   updater: one_admin
   item_type: one_author
-  data: { "one_author_age_uuid": 3, "one_author_name_uuid": "Very Young", "one_author_deceased_uuid": "0" }
+  data: {
+    "one_author_age_uuid": 3,
+    "one_author_name_uuid": "Very Young",
+    "one_author_deceased_uuid": "0",
+    "one_author_other_collaborators_uuid": [
+      "<%= ActiveRecord::FixtureSet.identify(:one_author_stephen_king) %>",
+      "<%= ActiveRecord::FixtureSet.identify(:one_author_very_old) %>"
+      ]
+    }
   "search_data_en": "too young to be old"
+
+one_author_apprentice:
+  catalog: one
+  creator: one_admin
+  updater: one_admin
+  item_type: one_author
+  data: {
+    "one_author_age_uuid": 22,
+    "one_author_name_uuid": "Young apprentice",
+    "one_author_deceased_uuid": "0",
+    "language_category_uuid": "Sino-Tibetan",
+    "one_author_language_earliest_recollection_uuid": {"Y": -2000},
+    "one_author_other_collaborators_uuid": [
+      "<%= ActiveRecord::FixtureSet.identify(:one_author_stephen_king) %>",
+      "<%= ActiveRecord::FixtureSet.identify(:one_author_very_old) %>"
+      ]
+    }
+  "search_data_en": "young apprentice"
 
 one_book_theory_of_relativity:
   catalog: one
@@ -190,32 +236,69 @@ search_vehicle_honda_accord:
   updater: system_admin_invited_by_one
   catalog: search
   item_type: search_vehicle
-  data: { "search_vehicle_make_uuid": "Honda", "search_vehicle_model_uuid": "Accord" }
+  data: {
+    "search_vehicle_make_uuid": "Honda",
+    "search_vehicle_model_uuid": "Accord",
+    "search_vehicle_style_uuid": "<%= ActiveRecord::FixtureSet.identify(:search_sedan) %>",
+    "search_vehicle_doors_uuid": 5
+    }
 
 search_vehicle_toyota_prius:
   creator: system_admin_invited_by_one
   updater: system_admin_invited_by_one
   catalog: search
   item_type: search_vehicle
-  data: { "search_vehicle_make_uuid": "Toyota", "search_vehicle_model_uuid": "Prius" }
+  data: {
+    "search_vehicle_make_uuid": "Toyota",
+    "search_vehicle_model_uuid": "Prius",
+    "search_vehicle_style_uuid": "<%= ActiveRecord::FixtureSet.identify(:search_sedan) %>",
+    "search_vehicle_doors_uuid": 3
+    }
 
 search_vehicle_toyota_highlander:
   creator: system_admin_invited_by_one
   updater: system_admin_invited_by_one
   catalog: search
   item_type: search_vehicle
-  data: { "search_vehicle_make_uuid": "Toyota", "search_vehicle_model_uuid": "Highlander" }
+  data: {
+    "search_vehicle_make_uuid": "Toyota",
+    "search_vehicle_model_uuid": "Highlander",
+    "search_vehicle_style_uuid": "<%= ActiveRecord::FixtureSet.identify(:search_suv) %>",
+    "search_vehicle_doors_uuid": 5
+    }
 
 search_vehicle_toyota_camry:
   creator: system_admin_invited_by_one
   updater: system_admin_invited_by_one
   catalog: search
   item_type: search_vehicle
-  data: { "search_vehicle_make_uuid": "Toyota", "search_vehicle_model_uuid": "Camry" }
+  data: {
+    "search_vehicle_make_uuid": "Toyota",
+    "search_vehicle_model_uuid": "Camry",
+    "search_vehicle_style_uuid": "<%= ActiveRecord::FixtureSet.identify(:search_sedan) %>",
+    "search_vehicle_doors_uuid": 5
+    }
 
 search_vehicle_toyota_camry_hybrid:
   creator: system_admin_invited_by_one
   updater: system_admin_invited_by_one
   catalog: search
   item_type: search_vehicle
-  data: { "search_vehicle_make_uuid": "Toyota", "search_vehicle_model_uuid": "Camry Hybrid" }
+  data: {
+    "search_vehicle_make_uuid": "Toyota",
+    "search_vehicle_model_uuid": "Camry Hybrid",
+    "search_vehicle_style_uuid": "<%= ActiveRecord::FixtureSet.identify(:search_sedan) %>",
+    "search_vehicle_doors_uuid": 3
+    }
+
+search_vehicle_motorcycle:
+  creator: system_admin_invited_by_one
+  updater: system_admin_invited_by_one
+  catalog: search
+  item_type: search_vehicle
+  data: {
+    "search_vehicle_make_uuid": "Yamaha",
+    "search_vehicle_model_uuid": "XJ6",
+    "search_vehicle_style_uuid": "",
+    "search_vehicle_doors_uuid": 0
+    }

@@ -184,16 +184,33 @@ one_author_language:
   uuid: one_author_language_uuid
   choice_set: one_languages
 
-one_author_other_language:
+one_author_other_languages:
   type: "Field::ChoiceSet"
   name_translations: { "name_en": "Other Language" }
   name_plural_translations: { "name_plural_en": "Other Languages" }
   slug: other-language
   field_set: one_author (ItemType)
-  uuid: one_author_other_language_uuid
+  uuid: one_author_other_languages_uuid
   choice_set: one_languages
   required: false
   multiple: true
+
+one_author_language_origin:
+  type: "Field::Text"
+  name_translations: { "name_en": "Language origin" }
+  name_plural_translations: { "name_plural_en": "Language origins" }
+  slug: language-origin
+  field_set: language (Category)
+  uuid: language_category_uuid
+
+one_author_language_earliest_recollection:
+  type: "Field::DateTime"
+  name_translations: { "name_en": "Language earlier recollection" }
+  name_plural_translations: { "name_plural_en": "Language earliest recollections" }
+  slug: language-earliest-recollection
+  field_set: language (Category)
+  uuid: one_author_language_earliest_recollection_uuid
+  options: { "format": "Y" }
 
 one_author_born:
   type: "Field::DateTime"
@@ -225,6 +242,26 @@ one_author_birth_month:
   uuid: one_author_birth_month_uuid
   required: false
   options: { "format": "YM" }
+
+one_author_most_active_month:
+  type: "Field::DateTime"
+  name_translations: { "name_en": "Most Active Month" }
+  name_plural_translations: { "name_plural_en": "Most Active Months" }
+  slug: most-active-month
+  field_set: one_author (ItemType)
+  uuid: one_author_most_active_month_uuid
+  required: false
+  options: { "format": "M" }
+
+one_author_most_active_hour:
+  type: "Field::DateTime"
+  name_translations: { "name_en": "Most Active Hour" }
+  name_plural_translations: { "name_plural_en": "Most Active Hours" }
+  slug: most-active-hour
+  field_set: one_author (ItemType)
+  uuid: one_author_most_active_hour_uuid
+  required: false
+  options: { "format": "h" }
 
 one_author_birthplace:
   type: "Field::Geometry"
@@ -263,6 +300,15 @@ one_author_deceased:
   field_set: one_author (ItemType)
   uuid: one_author_deceased_uuid
   required: false
+
+one_author_category_genre:
+  type: "Field::Text"
+  name_translations: { "name_en": "Genre" }
+  name_plural_translations: { "name_plural_en": "Genres" }
+  slug: genre
+  field_set: one (Category)
+  required: false
+  uuid: one_author_genre_uuid
 
 one_book_title:
   type: "Field::Text"
@@ -388,6 +434,14 @@ search_vehicle_style:
   uuid: search_vehicle_style_uuid
   name_translations: { "name_en": "Style" }
   name_plural_translations: { "name_plural_en": "Styles" }
+
+search_vehicle_doors:
+  type: "Field::Int"
+  slug: doors
+  field_set: search_vehicle (ItemType)
+  uuid: search_vehicle_doors_uuid
+  name_translations: { "name_en": "Door" }
+  name_plural_translations: { "name_plural_en": "Doors" }
 
 not_visible_book_title:
   type: "Field::Text"

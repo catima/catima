@@ -8,14 +8,46 @@ class Search::TextStrategyTest < ActiveSupport::TestCase
     assert_equal(strategy.keywords_for_index(author), [21, 9, 1947])
   end
 
+  test "search finds item with exact month with a field formatted as `M`" do
+    criteria = {
+      :condition => "exact",
+      :field_condition => "and",
+      :start => { :exact => "1433120461000" },
+      :end => { :exact => "" }
+    }.with_indifferent_access
+
+    scope = catalogs(:one).items
+    field = fields(:one_author_most_active_month)
+    strategy = Search::DateTimeStrategy.new(field, :en)
+
+    results = strategy.search(scope, criteria)
+    assert_includes(results.to_a, items(:one_author_stephen_king))
+    refute_includes(results.to_a, items(:one_author_very_young))
+  end
+
+  test "search finds item with hour with a field formatted as `h`" do
+    criteria = {
+      :condition => "after",
+      :field_condition => "and",
+      :start => { :after => "-57580642495000" },
+      :end => { :exact => "" }
+    }.with_indifferent_access
+
+    scope = catalogs(:one).items
+    field = fields(:one_author_most_active_hour)
+    strategy = Search::DateTimeStrategy.new(field, :en)
+
+    results = strategy.search(scope, criteria)
+    assert_includes(results.to_a, items(:one_author_stephen_king))
+    refute_includes(results.to_a, items(:one_author_very_young))
+  end
+
   test "search finds item within range" do
     criteria = {
-      "before(1i)" => "2015",
-      "before(2i)" => "12",
-      "before(3i)" => "31",
-      "after(1i)" => "1900",
-      "after(2i)" => "1",
-      "after(3i)" => "1"
+      :condition => "between",
+      :field_condition => "and",
+      :start => { :exact => "-2208988800000" },
+      :end => { :exact => "1451520000000" }
     }.with_indifferent_access
 
     scope = catalogs(:one).items
@@ -29,12 +61,10 @@ class Search::TextStrategyTest < ActiveSupport::TestCase
 
   test "search excludes item outside of range" do
     criteria = {
-      "before(1i)" => "2015",
-      "before(2i)" => "12",
-      "before(3i)" => "31",
-      "after(1i)" => "2000",
-      "after(2i)" => "1",
-      "after(3i)" => "1"
+      :condition => "between",
+      :field_condition => "and",
+      :start => { :exact => "1451520000000" },
+      :end => { :exact => "946684800000" }
     }.with_indifferent_access
 
     scope = catalogs(:one).items

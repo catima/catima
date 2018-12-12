@@ -20,7 +20,7 @@ class CatalogAdmin::ItemReferenceSelectionTest < ActionDispatch::IntegrationTest
   end
 
   # rubocop:disable Metrics/BlockLength
-  test "search with boolean filter" do
+  test "search with filters" do
     filters_and_associated_text = {
       :boolean => {
         :filter_name => 'Deceased',

@@ -27,7 +27,8 @@ class Field::ReferencePresenter < FieldPresenter
         category: field.category_id,
         catalog: field.catalog.slug,
         itemType: field.related_item_type.slug,
-        locale: I18n.locale
+        locale: I18n.locale,
+        noOptionsMessage: t('catalog_admin.items.reference_editor.no_options')
       },
       prerender: false
     )

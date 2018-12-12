@@ -26,6 +26,10 @@ fr:
       group:
         name: "Nom"
         description: "Description"
+      advanced_search_configuration:
+        title: Titre
+        description: Description
+        item_type: Type de fiche
   "yes": "Oui"
   "no": "Non"
   boolean_field: Champ booléen (oui/non)
@@ -45,27 +49,47 @@ fr:
   slug_help_text: "Minuscules, chiffres et traits d'union seulement. Pas de caractères accentués."
   add_another: "Créer et ajouter un autre"
   advanced_searches:
-    choice_set_search_field:
-      any: "est l'un de"
-    date_time_search_field:
-      after: "après"
-      before: "avant"
+    menu: Recherches avancées
+    fields:
+      choice_set_search_field:
+        any: "est l'un de"
+      date_time_search_field:
+        start_date: Date de début
+        end_date: Date de fin
+        exact: date exacte
+        after: après
+        before: avant
+        between: entre les dates
+        outside: en dehors des dates
     new:
-      tab: "Recherche %{type}"
+      tab: "Recherche %{title}"
       title: "Recherche avancée"
       start_over: "Nouvelle recherche"
       submit: "Chercher"
+      default_search: Recherche par défaut
+      advanced_search_configurations: Recherches préconfigurées
+      item_type_selection: Recherche sur un type de fiche
+      item_type_search: Recherche avancée sur le type de fiche %{item_type}
+      no_advanced_search_configuration: Aucune recherche préconfigurée
+      no_field_in_advance_search_configuration: Aucun champ de recherche configuré
     show:
       title:
         zero: "Votre recherche avancée n'a pas donné de résultat"
         one: "1 résultat de recherche avancée"
         other: "%{count_delimited} résultats de recherche avancée"
     text_search_field:
+      all_words: tous les mots
+      exact: expression exacte
+      one_word: au moins un des mots
       contains_words: "contient les mots"
       excludes_words: "ne contient pas les mots"
       has_exact_phrase: "possède l'expression exacte"
-    int_search_field:
+    number_search_field:
       contains_number: "possède chiffre/nombre exact"
+      less_than: est inférieur à
+      less_than_or_equal_to: est inférieur ou égal à
+      greater_than: est supérieur à
+      greater_than_or_equal_to: est supérieur ou égal à
     decimal_search_field:
       contains_number: "possède chiffre/nombre exact"
     email_search_field:
@@ -315,7 +339,9 @@ fr:
   expired: "expiré"
   download: "Télécharger"
   or: ou
-  options: Options
+  and: et
+  exclude: sauf
+  options: options
 
   layouts:
     catalog_admin:
@@ -452,6 +478,22 @@ fr:
       create:
         invalid_category: "Format d'exportation invalide"
 
+    advanced_search_configurations:
+      index:
+        advanced_search_configurations: Configurations de recherche
+        new_advanced_search_configuration: Nouvelle configuration de recherche
+        no_advanced_search_configurations_for_catalog_warning: Il n'y a pas de configuration de recherche avancée pour
+          ce catalogue.
+        nothing: Aucun champs défini
+      new:
+        title: Nouvelle configuration de recherche
+        next: Suivant
+      edit:
+        title: Modification de la configuration de recherche
+        add_field: Ajouter
+        submit: Modifier
+      common_form_fields:
+        search_display_type: Type d'affichage de la recherche
     fields:
       choice_set_modals:
         create_new_choice_set: Créer nouvel ensemble de choix
@@ -566,7 +608,7 @@ fr:
       reference_editor:
         reference_editor_filter: "Filtrer..."
         reference_editor_search: "Chercher..."
-
+        no_options: Aucune option
     pages:
       new:
         create_page: "Créer une page"

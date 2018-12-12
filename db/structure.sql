@@ -58,6 +58,43 @@ SET default_tablespace = '';
 SET default_with_oids = false;
 
 --
+-- Name: advanced_search_configurations; Type: TABLE; Schema: public; Owner: -
+--
+
+CREATE TABLE public.advanced_search_configurations (
+    id bigint NOT NULL,
+    item_type_id bigint,
+    catalog_id bigint,
+    creator_id integer,
+    title_translations jsonb,
+    description jsonb,
+    slug character varying,
+    fields jsonb DEFAULT '{}'::jsonb,
+    created_at timestamp without time zone NOT NULL,
+    updated_at timestamp without time zone NOT NULL
+);
+
+
+--
+-- Name: advanced_search_configurations_id_seq; Type: SEQUENCE; Schema: public; Owner: -
+--
+
+CREATE SEQUENCE public.advanced_search_configurations_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+--
+-- Name: advanced_search_configurations_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
+--
+
+ALTER SEQUENCE public.advanced_search_configurations_id_seq OWNED BY public.advanced_search_configurations.id;
+
+
+--
 -- Name: advanced_searches; Type: TABLE; Schema: public; Owner: -
 --
 
@@ -832,6 +869,13 @@ ALTER SEQUENCE public.users_id_seq OWNED BY public.users.id;
 
 
 --
+-- Name: advanced_search_configurations id; Type: DEFAULT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.advanced_search_configurations ALTER COLUMN id SET DEFAULT nextval('public.advanced_search_configurations_id_seq'::regclass);
+
+
+--
 -- Name: advanced_searches id; Type: DEFAULT; Schema: public; Owner: -
 --
 
@@ -969,6 +1013,14 @@ ALTER TABLE ONLY public.template_storages ALTER COLUMN id SET DEFAULT nextval('p
 --
 
 ALTER TABLE ONLY public.users ALTER COLUMN id SET DEFAULT nextval('public.users_id_seq'::regclass);
+
+
+--
+-- Name: advanced_search_configurations advanced_search_configurations_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.advanced_search_configurations
+    ADD CONSTRAINT advanced_search_configurations_pkey PRIMARY KEY (id);
 
 
 --
@@ -1145,6 +1197,27 @@ ALTER TABLE ONLY public.template_storages
 
 ALTER TABLE ONLY public.users
     ADD CONSTRAINT users_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: index_advanced_search_configurations_on_catalog_id; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX index_advanced_search_configurations_on_catalog_id ON public.advanced_search_configurations USING btree (catalog_id);
+
+
+--
+-- Name: index_advanced_search_configurations_on_item_type_id; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX index_advanced_search_configurations_on_item_type_id ON public.advanced_search_configurations USING btree (item_type_id);
+
+
+--
+-- Name: index_advanced_search_configurations_on_slug; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX index_advanced_search_configurations_on_slug ON public.advanced_search_configurations USING btree (slug);
 
 
 --
@@ -1670,6 +1743,14 @@ ALTER TABLE ONLY public.item_views
 
 
 --
+-- Name: advanced_search_configurations fk_rails_9526ee702d; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.advanced_search_configurations
+    ADD CONSTRAINT fk_rails_9526ee702d FOREIGN KEY (catalog_id) REFERENCES public.catalogs(id);
+
+
+--
 -- Name: memberships fk_rails_99326fb65d; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
@@ -1715,6 +1796,14 @@ ALTER TABLE ONLY public.choices
 
 ALTER TABLE ONLY public.menu_items
     ADD CONSTRAINT fk_rails_d05e957707 FOREIGN KEY (item_type_id) REFERENCES public.item_types(id);
+
+
+--
+-- Name: advanced_search_configurations fk_rails_d069211577; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.advanced_search_configurations
+    ADD CONSTRAINT fk_rails_d069211577 FOREIGN KEY (item_type_id) REFERENCES public.item_types(id);
 
 
 --
@@ -1837,6 +1926,7 @@ INSERT INTO "schema_migrations" (version) VALUES
 ('20181022124602'),
 ('20181207103025'),
 ('20181207145518'),
+('20181210123619'),
 ('20181214095728');
 
 
