@@ -269,6 +269,7 @@ it:
   expired: "scaduto"
   download: "Scaricare"
   or: o
+  options: Options
 
   layouts:
     catalog_admin:
@@ -383,6 +384,9 @@ it:
         super_editor_role: "<b>Super-editors</b> are editors that can create and edit all the items in the catalog.<br>"
         reviewer_role: "<b>Reviewers</b> are super-editors that can approve items to make them visible to the public.<br>"
       index:
+        name: Name
+        roles: Roles
+        is_active: Active?
         groups: Gruppi
         new_group: Nuovo gruppo
         no_groups_for_catalog_warning: Non ci sono gruppi per questo catalogo.
@@ -400,6 +404,7 @@ it:
         create_group: Create group
       common_form_fields:
         active: Active?
+        active_help: "Sets the status of the group. A role defined for an inactive group will not be taken into account."
         public_group: Group is public?
       edit:
         edit_group: Edit group

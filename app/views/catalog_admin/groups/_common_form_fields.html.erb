@@ -5,5 +5,12 @@
 <%= f.form_group(:description) do %>
   <%= f.text_area(:description) %>
 <% end %>
+<hr>
+<h4><%= t("options") %></h4>
+<%= f.form_group(
+    :active,
+    :help => t(".active_help")) do %>
+  <%= f.check_box(:active, :label => t(".active")) %>
+<% end %>
 
 <hr>

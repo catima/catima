@@ -308,6 +308,7 @@ fr:
   expired: "expiré"
   download: "Télécharger"
   or: ou
+  options: Options
 
   layouts:
     catalog_admin:
@@ -572,6 +573,9 @@ fr:
         super_editor_role: "<b>Super-editors</b> sont des éditeurs qui peuvent créer et éditer tous les éléments du catalogue.<br>"
         reviewer_role: "<b>Reviewers</b> sont des super-éditeurs qui peuvent approuver des éléments pour les rendre visibles au public.<br>"
       index:
+        name: Nom
+        roles: Rôles
+        is_active: Actif?
         groups: Groupes
         new_group: Nouveau groupe
         no_groups_for_catalog_warning: Il n'y a pas de groupes pour ce catalogue.
@@ -640,6 +644,7 @@ fr:
         create_group: Créer un groupe
       common_form_fields:
         active: Actif?
+        active_help: "Permet de définir le statut du groupe. Un rôle définit pour un groupe inactif ne sera pas pris en compte."
         public_group: Le groupe est public?
       edit:
         edit_group: Modifier le groupe

@@ -15,6 +15,14 @@
 
 <% if catalog.groups.count > 0 %>
   <table class="table" id="group-permissions-table">
+  <thead>
+    <tr>
+      <th><%= t('.name') %></th>
+      <th><%= t('.roles') %></th>
+      <th><%= t('.is_active') %></th>
+      <th></th>
+    </tr>
+  </thead>
   <tbody>
     <% catalog.groups.each do |grp| %>
       <tr>
@@ -31,6 +39,9 @@
             </div>
             <%= f.submit 'OK', class: 'hidden' %>
           <% end %>
+        </td>
+        <td>
+          <%= fa_icon(:check) if grp.active? %>
         </td>
         <td style="text-align: right;">
           <%= link_to(
