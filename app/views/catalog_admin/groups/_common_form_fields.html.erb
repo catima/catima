@@ -12,5 +12,16 @@
     :help => t(".active_help")) do %>
   <%= f.check_box(:active, :label => t(".active")) %>
 <% end %>
-
+<%= f.form_group(
+    :public,
+    :help => t(".public_group_help")) do %>
+  <%= f.check_box(:public, :label => t(".public_group")) %>
+<% end %>
+<% if show_token?(@group) %>
+  <%= f.form_group(
+      :token,
+      :help => "Identifiant unique à transmettre aux utilisateurs qui souhaitent rejoindre ce groupe") do %>
+    <%= f.text_field(:token, readonly: true, hide_label: true) %>
+  <% end %>
+<% end %>
 <hr>

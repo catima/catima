@@ -645,7 +645,8 @@ fr:
       common_form_fields:
         active: Actif?
         active_help: "Permet de définir le statut du groupe. Un rôle définit pour un groupe inactif ne sera pas pris en compte."
-        public_group: Le groupe est public?
+        public_group: Public?
+        public_group_help: "Permet de définir la l'accessibilité du groupe. Un groupe public pourra être rejoint par toute personne possédant l'identifiant unique du groupe."
       edit:
         edit_group: Modifier le groupe
         update_group: Mettre à jour le groupe

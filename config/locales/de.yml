@@ -605,7 +605,8 @@ de:
       common_form_fields:
         active: Active?
         active_help: "Sets the status of the group. A role defined for an inactive group will not be taken into account."
-        public_group: Group is public?
+        public_group: Public?
+        public_group_help: "Allows you to define the accessibility of the group. A public group can be joined by anyone with the group's unique identifier."
       edit:
         edit_group: Edit group
         update_group: Update group
