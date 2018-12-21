@@ -17,11 +17,9 @@
     :help => t(".public_group_help")) do %>
   <%= f.check_box(:public, :label => t(".public_group")) %>
 <% end %>
-<% if show_token?(@group) %>
-  <%= f.form_group(
-      :token,
-      :help => "Identifiant unique à transmettre aux utilisateurs qui souhaitent rejoindre ce groupe") do %>
-    <%= f.text_field(:token, readonly: true, hide_label: true) %>
-  <% end %>
+<% if @group.public_reachable? %>
+  <div class="alert alert-info">
+    <strong><%= t(".identifier") %>: </strong> <%= @group.identifier %>
+  </div>
 <% end %>
 <hr>

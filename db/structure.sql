@@ -492,7 +492,7 @@ CREATE TABLE public.groups (
     created_at timestamp without time zone NOT NULL,
     updated_at timestamp without time zone NOT NULL,
     catalog_id bigint,
-    token character varying
+    identifier character varying
 );
 
 

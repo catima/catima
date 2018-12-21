@@ -7,10 +7,10 @@
 #  created_at  :datetime         not null
 #  description :string
 #  id          :bigint(8)        not null, primary key
+#  identifier  :string
 #  name        :string
 #  owner_id    :bigint(8)        not null
 #  public      :boolean
-#  token       :string
 #  updated_at  :datetime         not null
 #
 
@@ -31,7 +31,7 @@ class Group < ApplicationRecord
 
   accepts_nested_attributes_for :catalog_permissions
 
-  after_save :assign_token, :if => :public?
+  after_save :assign_public_identifier, :if => :public?
 
   def self.public
     where(public: true)
@@ -44,14 +44,28 @@ class Group < ApplicationRecord
     perm_idx.count == 0 ? 'user' : options[perm_idx.max]
   end
 
-  def assign_token
+  def assign_public_identifier
     # If no identifier is assigned to the group, then create a new token
-    update(:token => generate_token) if token.blank?
+    update(:identifier => generate_identifier) if identifier.blank?
+  end
+
+  def public_reachable?
+    return false unless active?
+    return false unless public?
+    return false unless identifier?
+
+    true
   end
 
   private
 
-  def generate_token
-    Digest::SHA1.hexdigest([Time.zone.now, rand].join)
+  # The identifier is composed of:
+  # catalog slug + catalog id + group id + 8 random characters
+  def generate_identifier
+    catalog.slug.concat("-")
+           .concat(catalog.id.to_s)
+           .concat(id.to_s)
+           .concat("-")
+           .concat(SecureRandom.uuid.split("-").first)
   end
 end
