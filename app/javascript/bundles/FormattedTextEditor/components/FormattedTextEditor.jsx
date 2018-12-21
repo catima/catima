@@ -108,7 +108,9 @@ class FormattedTextEditor extends React.Component {
     el.value = JSON.stringify({
       format: 'html',
       doc: this.editor.getContents(),
-      content: this._prepareHtmlForSaving(this.editor.root.innerHTML)
+      content: '<p style="display:none;"></p>' +
+          this._prepareHtmlForSaving(this.editor.root.innerHTML) +
+          '<p style="display:none;"></p>'
     });
   }
 

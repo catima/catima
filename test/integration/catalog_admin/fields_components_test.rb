@@ -15,7 +15,7 @@ class CatalogAdmin::FieldsComponentsTest < ActionDispatch::IntegrationTest
 
     b = book.reload
     c = JSON.parse(b.data['one_book_notes_uuid'])
-    assert_equal(c["content"], '<p>Hello world</p>')
+    assert_equal(c["content"], "<p style=\"display:none;\"></p><p>Hello world</p><p style=\"display:none;\"></p>")
   end
 
   test "multilingual required formatted text component shows error message" do
