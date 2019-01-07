@@ -61,11 +61,11 @@ class CatalogAdmin::GroupsTest < ActionDispatch::IntegrationTest
     visit('/two/en/admin/_users')
 
     find('a[data-label="invite users"]').click
-    assert(page.has_content?('Group members'))
-    click_on('Invite users')
+    assert(page.has_content?('group members'))
+    click_on('Add users')
 
     fill_in('members_to_invite_', with: "Albert <einstein@example.com>\none@example.com")
-    click_on('Invite members')
+    click_on('Add members')
 
     assert(page.has_content?('einstein@example.com'))
     assert_not(page.has_content?('Albert'))
