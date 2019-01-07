@@ -122,6 +122,13 @@ fr:
     messages:
       invalid_email: n'est pas une adresse e-mail valide
       invalid_url: est une URL invalide ou incomplète
+      membership:
+        no_identifier: Veuillez entrer un identifiant de groupe
+        already_member: Vous êtes déjà membre
+        identifier_does_not_exist: "L'identifiant «%{identifier}» n'existe pas"
+  notices:
+    membership:
+      created: Vous êtes maintenant membre du groupe «%{group}»
   items:
     item_list_nav:
       back: "Retour au résultat de recherche"
@@ -576,6 +583,7 @@ fr:
         name: Nom
         roles: Rôles
         is_active: Actif?
+        is_public: Public?
         groups: Groupes
         new_group: Nouveau groupe
         no_groups_for_catalog_warning: Il n'y a pas de groupes pour ce catalogue.
@@ -677,6 +685,8 @@ fr:
   memberships:
     index:
       my_groups: Mes groupes
+      join: Rejoindre le groupe
+      group_identifier: Identifiant du groupe
     list_memberships:
       no_memberships_warning: Vous n'êtes pas encore membre d'un groupe.
       delete_confirm: "Êtes-vous sûr de vouloir quitter le groupe “%{group}”?"

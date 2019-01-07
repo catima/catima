@@ -122,6 +122,13 @@ en:
     messages:
       invalid_email: is not a valid email address
       invalid_url: is an invalid or incomplete URL
+      membership:
+        no_identifier: Please enter a group identifier
+        already_member: You are already a member
+        identifier_does_not_exist: "Identifier «%{identifier}» does not exist"
+  notices:
+    membership:
+      created: You are now a member of the «%{group}» group
   items:
     item_list_nav:
       back: "Back to search results"
@@ -575,6 +582,7 @@ en:
         name: Name
         roles: Roles
         is_active: Active?
+        is_public: Public?
         groups: Groups
         new_group: Create group
         no_groups_for_catalog_warning: There are no groups for this catalog.
@@ -675,6 +683,8 @@ en:
   memberships:
     index:
       my_groups: My groups
+      join: Join the group
+      group_identifier: Group identifier
     list_memberships:
       no_memberships_warning: You are not member in any group yet.
       delete_confirm: "Are you sure you want to leave group “%{group}”?"

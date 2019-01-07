@@ -20,6 +20,7 @@
       <th><%= t('.name') %></th>
       <th><%= t('.roles') %></th>
       <th><%= t('.is_active') %></th>
+      <th><%= t('.is_public') %></th>
       <th></th>
     </tr>
   </thead>
@@ -43,11 +44,14 @@
         <td>
           <%= fa_icon(:check) if grp.active? %>
         </td>
+        <td>
+          <%= fa_icon(:check) if grp.public? %>
+        </td>
         <td style="text-align: right;">
           <%= link_to(
                   fa_icon(:users),
                   catalog_admin_group_path(id: grp.id),
-                  class: 'btn btn-xs btn-default',
+                  class: "btn btn-xs btn-default #{'disabled' unless grp.active?}",
                   'data-label': 'invite users'
                 ) %>
             <%= link_to(

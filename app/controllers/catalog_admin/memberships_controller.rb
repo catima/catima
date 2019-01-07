@@ -52,6 +52,7 @@ class CatalogAdmin::MembershipsController < CatalogAdmin::BaseController
     return if user.groups.include? group
 
     membership = group.memberships.new do |m|
+      m.group = group
       m.user = user
       m.status = :member
     end

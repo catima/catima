@@ -1,8 +1,30 @@
 <% provide :title, t('.my_groups') %>
 
+<div id="my-group-join">
+  <div class="input-group">
+    <input type="text" class="form-control" placeholder="<%= t('.group_identifier') %>">
+    <span class="input-group-btn">
+      <%=
+        link_to(
+            t('.join'),
+            memberships_path,
+            class: 'btn btn-primary',
+            method: :post
+        )
+      %>
+    </span>
+  </div>
+</div>
+
 <div class="panel panel-default">
   <div class="panel-heading">
     <b><%= t('.my_groups') %></b>
   </div>
   <%= render 'list_memberships' %>
 </div>
+
+<script>
+  $('#my-group-join input').bind('input', function() {
+    $('#my-group-join a').attr("href", "<%= memberships_path %>" + "?identifier=" + $(this).val());
+  });
+</script>

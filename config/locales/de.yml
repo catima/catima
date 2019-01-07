@@ -107,6 +107,13 @@ de:
     messages:
       invalid_email: ist keine gültige E-mail-Adresse
       invalid_url: ist eine ungültige oder unvollständige URL
+      membership:
+        no_identifier: Bitte geben Sie eine Gruppen-ID ein
+        already_member: Du bist bereits Mitglied
+        identifier_does_not_exist: "Identifikator «%{identifier}» existiert nicht"
+  notices:
+    membership:
+      created: Du bist jetzt ein Mitglied der «%{group}» Gruppe
   items:
     item_list_nav:
       back: "Zurück yu den Suchresultaten"
@@ -552,6 +559,7 @@ de:
         name: Name
         roles: Roles
         is_active: Active?
+        is_public: Public?
         groups: Gruppen
         new_group: Neue Gruppe
         no_groups_for_catalog_warning: Es gibt keine Gruppen für diesen Katalog.
@@ -637,6 +645,8 @@ de:
   memberships:
     index:
       my_groups: Meine Gruppen
+      join: Der Gruppe beitreten
+      group_identifier: Gruppenkennung
     list_memberships:
       no_memberships_warning: Du bist noch kein Mitglied in einer Gruppe.
       delete_confirm: "Sind Sie sicher, dass Sie die Gruppe “%{group}” verlassen wollen?"
