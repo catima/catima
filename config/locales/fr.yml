@@ -654,24 +654,25 @@ fr:
         active: Actif?
         active_help: "Permet de définir le statut du groupe. Un rôle définit pour un groupe inactif ne sera pas pris en compte."
         public_group: Public?
-        public_group_help: "Permet de définir la l'accessibilité du groupe. Un groupe public pourra être rejoint par toute personne possédant l'identifiant unique du groupe."
+        public_group_help: "Permet de définir l'accessibilité du groupe. Un groupe public pourra être rejoint par toute personne possédant l'identifiant unique du groupe."
         identifier: Identifiant
       edit:
-        edit_group: Modifier le groupe
+        edit_group: Modifier le groupe “%{group}”
         update_group: Mettre à jour le groupe
       show:
         show_group: Groupe “%{group}”
         back: Retour aux groupes
-        group_members: Membres du groupe
-        no_users: Actuellement aucun utilisateur n'est dans ce groupe (sauf le propriétaire du groupe)
-        invite_users: Inviter des utilisateurs
+        group_members: Membres du groupe “%{group}”
+        delete_confirm: "Vous voulez vraiment supprimer “%{user}” du groupe?"
+        no_users: Actuellement aucun utilisateur n'est dans ce groupe
+        add_users: Ajouter des utilisateurs
 
     memberships:
       new:
-        members_emails: Emails des membres à inviter
-        one_mail_per_line: Pour inviter plusieurs membres à la fois, écrivez une adresse e-mail par ligne.
-        invite_members_to_group: Inviter les membres au groupe “%{group}”
-        invite_members: Inviter des membres
+        members_emails: Emails des membres à ajouter
+        one_mail_per_line: Pour ajouter plusieurs membres à la fois, écrivez une adresse e-mail par ligne.
+        add_members_to_group: Ajouter des membres au groupe “%{group}”
+        add_members: Ajouter des membres
 
   groups:
     list_group_memberships:
