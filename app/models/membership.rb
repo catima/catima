@@ -16,4 +16,8 @@ class Membership < ApplicationRecord
 
   belongs_to :user
   belongs_to :group
+
+  validates_presence_of :group_id
+  validates_presence_of :user_id
+  validates_inclusion_of :status, :in => STATUS_OPTIONS
 end

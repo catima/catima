@@ -1,0 +1,2 @@
+module CatalogAdmin::GroupHelper
+end

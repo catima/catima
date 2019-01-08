@@ -3,7 +3,7 @@ module User::Roles
     # Contains all catalog permissions of the user and of all the
     # groups the user is member of.
     perms = catalog_permissions
-    groups.each { |grp| perms += grp.catalog_permissions }
+    groups.each { |grp| perms += grp.catalog_permissions if grp.active? }
     resolve_catalog_permissions perms
   end
 

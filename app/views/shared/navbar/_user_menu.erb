@@ -1,5 +1,5 @@
 <% if current_user.authenticated? %>
-  <li class="dropdown">
+  <li class="dropdown" id="user-menu">
     <a href="#" class="dropdown-toggle" data-toggle="dropdown">
       <%= fa_icon(:user) %>
       <%= current_user.email %>

@@ -15,6 +15,15 @@
 
 <% if catalog.groups.count > 0 %>
   <table class="table" id="group-permissions-table">
+  <thead>
+    <tr>
+      <th><%= t('.name') %></th>
+      <th><%= t('.roles') %></th>
+      <th><%= t('.is_active') %></th>
+      <th><%= t('.is_public') %></th>
+      <th></th>
+    </tr>
+  </thead>
   <tbody>
     <% catalog.groups.each do |grp| %>
       <tr>
@@ -32,11 +41,17 @@
             <%= f.submit 'OK', class: 'hidden' %>
           <% end %>
         </td>
+        <td>
+          <%= fa_icon(:check) if grp.active? %>
+        </td>
+        <td>
+          <%= fa_icon(:check) if grp.public? %>
+        </td>
         <td style="text-align: right;">
           <%= link_to(
                   fa_icon(:users),
                   catalog_admin_group_path(id: grp.id),
-                  class: 'btn btn-xs btn-default',
+                  class: "btn btn-xs btn-default #{'disabled' unless grp.active?}",
                   'data-label': 'invite users'
                 ) %>
             <%= link_to(

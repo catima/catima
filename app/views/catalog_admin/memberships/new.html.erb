@@ -1,4 +1,4 @@
-<% provide(:title, t('.invite_members_to_group', group: @group.name)) %>
+<% provide(:title, t('.add_members_to_group', group: @group.name)) %>
 
 
 <div class='panel-body'>
@@ -12,7 +12,7 @@
 
     <hr/>
 
-    <%= f.primary(t('.invite_members')) %>
+    <%= f.primary(t('.add_members')) %>
     <%= link_to(
             t('cancel'),
             catalog_admin_group_path(id: @group.id),

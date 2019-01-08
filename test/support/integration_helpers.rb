@@ -15,4 +15,9 @@ class ActionDispatch::IntegrationTest
     fill_in("Password", :with => password)
     within("form") { click_on("Log in") }
   end
+
+  def logout
+    find('#user-menu').click
+    click_on('Log out')
+  end
 end

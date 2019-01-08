@@ -491,7 +491,8 @@ CREATE TABLE public.groups (
     active boolean,
     created_at timestamp without time zone NOT NULL,
     updated_at timestamp without time zone NOT NULL,
-    catalog_id bigint
+    catalog_id bigint,
+    identifier character varying
 );
 
 
@@ -1835,6 +1836,7 @@ INSERT INTO "schema_migrations" (version) VALUES
 ('20180925152745'),
 ('20181022124602'),
 ('20181207103025'),
-('20181207145518');
+('20181207145518'),
+('20181214095728');
 
 

@@ -5,5 +5,21 @@
 <%= f.form_group(:description) do %>
   <%= f.text_area(:description) %>
 <% end %>
-
+<hr>
+<h4><%= t("options") %></h4>
+<%= f.form_group(
+    :active,
+    :help => t(".active_help")) do %>
+  <%= f.check_box(:active, :label => t(".active")) %>
+<% end %>
+<%= f.form_group(
+    :public,
+    :help => t(".public_group_help")) do %>
+  <%= f.check_box(:public, :label => t(".public_group")) %>
+<% end %>
+<% if @group.public_reachable? %>
+  <div class="alert alert-info">
+    <strong><%= t(".identifier") %>: </strong> <%= @group.identifier %>
+  </div>
+<% end %>
 <hr>

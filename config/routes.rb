@@ -58,7 +58,7 @@ Rails.application.routes.draw do
     resources :favorites, :except => [:edit, :show, :new, :update]
 
     # Group memberships
-    resources :memberships, only: %i(index destroy), path: '_groups'
+    resources :memberships, only: %i(index create destroy), path: '_groups'
   end
 
   devise_for :users, only: :omniauth_callbacks, controllers: { omniauth_callbacks: 'users/omniauth_callbacks' }

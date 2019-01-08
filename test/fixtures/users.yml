@@ -82,6 +82,23 @@ two_admin:
   encrypted_password: <%= BCrypt::Password.create("password") %>
   invited_by: system_admin
 
+group:
+  email: group@example.com
+  encrypted_password: <%= BCrypt::Password.create("password") %>
+
+group_two:
+  email: group-two@example.com
+  encrypted_password: <%= BCrypt::Password.create("password") %>
+
+group_user:
+  email: group-user@example.com
+  encrypted_password: <%= BCrypt::Password.create("password") %>
+
+group_admin:
+  email: group-admin@example.com
+  encrypted_password: <%= BCrypt::Password.create("password") %>
+  invited_by: system_admin
+
 multilingual_admin:
   email: multilingual-admin@example.com
   encrypted_password: <%= BCrypt::Password.create("password") %>

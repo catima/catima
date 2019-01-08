@@ -26,3 +26,23 @@ two_user:
   user: two_user
   group: two
   status: member
+
+group_user_invited:
+  user: group
+  group: one
+  status: invited
+
+group_two_user_invited:
+  user: group_two
+  group: two
+  status: invited
+
+group_two_inactive_user_member:
+  user: group_two
+  group: two_inactive
+  status: member
+
+group_inactive_user_invited:
+  user: group_user
+  group: two_inactive
+  status: invited

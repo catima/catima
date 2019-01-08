@@ -107,6 +107,13 @@ it:
     messages:
       invalid_email: non è un indirizzo e-mail valito
       invalid_url: è un URL invalido o incompleto
+      membership:
+        no_identifier: Inserire l'identificatore di un gruppo
+        already_member: Sei già membro
+        identifier_does_not_exist: "L'identificatore «%{identifier}» non esiste"
+  notices:
+    membership:
+      created: Ora sei un membro del gruppo «%{group}»
   items:
     item_list_nav:
       back: "Torna ai risultati di ricerca"
@@ -269,6 +276,7 @@ it:
   expired: "scaduto"
   download: "Scaricare"
   or: o
+  options: Options
 
   layouts:
     catalog_admin:
@@ -383,6 +391,10 @@ it:
         super_editor_role: "<b>Super-editors</b> are editors that can create and edit all the items in the catalog.<br>"
         reviewer_role: "<b>Reviewers</b> are super-editors that can approve items to make them visible to the public.<br>"
       index:
+        name: Name
+        roles: Roles
+        is_active: Active?
+        is_public: Public?
         groups: Gruppi
         new_group: Nuovo gruppo
         no_groups_for_catalog_warning: Non ci sono gruppi per questo catalogo.
@@ -400,23 +412,27 @@ it:
         create_group: Create group
       common_form_fields:
         active: Active?
-        public_group: Group is public?
+        active_help: "Sets the status of the group. A role defined for an inactive group will not be taken into account."
+        public_group: Public?
+        public_group_help: "Allows you to define the accessibility of the group. A public group can be joined by anyone with the group's unique identifier."
+        identifier: Identifier
       edit:
-        edit_group: Edit group
+        edit_group: Edit “%{group}” group
         update_group: Update group
       show:
-        show_group: Group “%{group}”
+        show_group: “%{group}” group
         back: Back to groups
-        group_members: Group members
-        no_users: Currently no users are in this group (except the group owner)
-        invite_users: Invite users
+        group_members: “%{group}” group members
+        delete_confirm: "Sei sicuro di voler rimuovere “%{user}” dal gruppo?"
+        no_users: Currently no users are in this group
+        add_users: Add users
 
     memberships:
       new:
-        members_emails: Emails of members to invite
-        one_mail_per_line: For multiple members to invite at once, write one email address per line.
-        invite_members_to_group: Invite members to group “%{group}”
-        invite_members: Invite members
+        members_emails: Emails of members to add
+        one_mail_per_line: For multiple members to add at once, write one email address per line.
+        add_members_to_group: Add members to “%{group}” group
+        add_members: Add members
 
   groups:
     list_group_memberships:
@@ -430,6 +446,8 @@ it:
   memberships:
     index:
       my_groups: I miei gruppi
+      join: Unisciti al gruppo
+      group_identifier: Identificazione del gruppo
     list_memberships:
       no_memberships_warning: Non sei ancora membro di nessun gruppo.
       delete_confirm: "Sei sicuro di voler lasciare il gruppo “%{group}”?"
