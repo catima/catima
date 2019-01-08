@@ -23,6 +23,7 @@ one:
   owner: one_admin
   active: true
   catalog: one
+  identifier: one-11-44444444
 
 two:
   name: Group for catalog two
@@ -30,4 +31,12 @@ two:
   public: false
   owner: system_admin
   active: true
+  catalog: two
+
+two_inactive:
+  name: Inactive group for catalog two
+  description: This inactive group belongs to catalog two
+  public: true
+  owner: system_admin
+  active: false
   catalog: two

@@ -56,11 +56,11 @@ class CatalogAdmin::GroupsTest < ActionDispatch::IntegrationTest
     assert_equal(true, page.execute_script('return document.getElementById("role_super-editor").checked'))
   end
 
-  test 'invite users to group' do
+  test 'add users to group' do
     log_in_as('two-admin@example.com', 'password')
     visit('/two/en/admin/_users')
 
-    find('a[data-label="invite users"]').click
+    first('a[data-label="invite users"]').click
     assert(page.has_content?('group members'))
     click_on('Add users')
 
@@ -102,11 +102,43 @@ class CatalogAdmin::GroupsTest < ActionDispatch::IntegrationTest
     visit('/two/en/admin/_users')
 
     assert(page.has_content?('Group for catalog two'))
-    find('a[data-label="edit group"]').click
+    first('a[data-label="edit group"]').click
     fill_in('Name', with: 'Alternative name for group')
     click_on('Cancel')
 
     assert(page.has_content?('two Setup'))
     assert(page.has_content?('Group for catalog two'))
+  end
+
+  test 'deactivate group' do
+    log_in_as('two-admin@example.com', 'password')
+    visit('/en/_groups')
+
+    assert(page.has_content?('Group for catalog two'))
+
+    visit('/two/en/admin/_users')
+
+    assert(page.has_content?('Group for catalog two'))
+    first('a[data-label="edit group"]').click
+
+    uncheck("Active?")
+    click_on('Update group')
+
+    visit('/en/_groups')
+
+    refute(page.has_content?('Group for catalog two'))
+  end
+
+  test 'join a public group' do
+    log_in_as('two@example.com', 'password')
+    visit('/en/_groups')
+
+    refute(page.has_content?('Group for catalog one'))
+
+    fill_in 'group-join-input', :with => 'one-11-44444444'
+    click_on('Join the group')
+
+    assert(page.has_content?('Group for catalog one'))
+    assert(page.has_content?('You are now a member of the «Group for catalog one» group'))
   end
 end
