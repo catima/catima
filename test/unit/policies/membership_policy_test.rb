@@ -1,7 +1,7 @@
 require "test_helper"
 
 class MembershipPolicyTest < ActiveSupport::TestCase
-  test "#create? [invited] allows all users when group is public reachable" do
+  test "#create? [invited] allows users when group is public reachable" do
     # Invited users joined a group with a public group identifier
     assert(policy(users(:group), memberships(:group_user_invited)).create?)
     refute(policy(users(:group_two), memberships(:group_two_user_invited)).create?)
