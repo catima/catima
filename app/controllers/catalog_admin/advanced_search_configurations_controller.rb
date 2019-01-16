@@ -49,7 +49,12 @@ class CatalogAdmin::AdvancedSearchConfigurationsController < CatalogAdmin::BaseC
         f.js
         f.html do
           flash[:notice] = advanced_search_configuration_updated_message
-          redirect_back(fallback_location: catalog_admin_advanced_search_configurations_path)
+
+          if advanced_search_conf_params[:field_position].present? || advanced_search_conf_params[:field].present?
+            return redirect_back(fallback_location: catalog_admin_advanced_search_configurations_path)
+          end
+
+          redirect_to catalog_admin_advanced_search_configurations_path
         end
       end
     else

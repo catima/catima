@@ -56,7 +56,7 @@ class AdvancedSearchConfiguration < ApplicationRecord
   end
 
   def available_fields
-    item_type.sortable_list_view_fields.reject do |field|
+    item_type.fields.select(&:human_readable?).reject do |field|
       field_set.include?(field)
     end
   end
