@@ -77,15 +77,16 @@ module AdvancedSearchesHelper
     options
   end
 
-  def render_and_or_exclude_select(form, field)
-    form.select("field_condition",
-                [
-                  [I18n.t(".and"), "and"],
-                  [I18n.t(".or"), "or"],
-                  [I18n.t(".exclude"), "exclude"]
-                ],
-                { :hide_label => true },
-                :class => "field-condition"
-               )
+  def render_and_or_exclude_select(form)
+    form.select(
+      "field_condition",
+      [
+        [I18n.t(".and"), "and"],
+        [I18n.t(".or"), "or"],
+        [I18n.t(".exclude"), "exclude"]
+      ],
+      { :hide_label => true },
+      :class => "field-condition"
+    )
   end
 end
