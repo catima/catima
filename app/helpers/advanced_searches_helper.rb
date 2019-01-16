@@ -23,13 +23,13 @@ module AdvancedSearchesHelper
   # markup (e.g. <tr> ... </tr>). The wrapper will only be rendered if the
   # inner content is present.
   #
-  def render_advanced_search_field(form, field, index, &block)
+  def render_advanced_search_field(form, field, i, &block)
     model_name = field.partial_name
     partial = "advanced_searches/fields/#{model_name}_search_field"
     partial_rendered = ""
     content = form.fields_for(:criteria) do |f|
       f.fields_for(field.uuid) do |f|
-        partial_rendered = render(partial, :f => f, :field => field, :i => index)
+        partial_rendered = render(partial, :f => f, :field => field, :i => i)
       end
     end
     result = capture(content, &block)
