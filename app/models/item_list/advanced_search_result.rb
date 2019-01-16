@@ -71,26 +71,33 @@ class ItemList::AdvancedSearchResult < ItemList
       end
     end
 
-    and_relations = items_strategies["and"].first
-    items_strategies["and"].drop(1).each do |relation|
-      and_relations = and_relations.merge(relation)
-    end
-
-    or_relations = items_strategies["or"].first
-    items_strategies["or"].drop(1).each do |relation|
-      or_relations = or_relations.or(relation)
-    end
-
-    exclude_relations = items_strategies["exclude"].first
-    items_strategies["exclude"].drop(1).each do |relation|
-      exclude_relations = exclude_relations.merge(relation)
-    end
+    and_relations = merge_relations(items_strategies["and"])
+    or_relations = or_relations(items_strategies["or"])
+    exclude_relations = merge_relations(items_strategies["exclude"])
 
     and_relations = and_relations.merge(exclude_relations) if exclude_relations.present?
 
     return and_relations.or(or_relations) if or_relations.present?
 
     and_relations
+  end
+
+  def merge_relations(strategies)
+    relations = strategies.first
+    strategies.drop(1).each do |relation|
+      relations = relations.merge(relation)
+    end
+
+    relations
+  end
+
+  def or_relations(strategies)
+    relations = strategies.first
+    strategies.drop(1).each do |relation|
+      relations = relations.or(relation)
+    end
+
+    relations
   end
 
   def field_criteria(field)
