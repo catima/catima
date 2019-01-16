@@ -230,7 +230,7 @@ class DateTimeInput extends React.Component {
                 <div className="row hidden-datepicker">
                   <input type="text" ref="hiddenInput" value={this.state.selectedDate} name={this.props.inputName} onChange={this.selectDate}/>
                 </div>
-                <a onClick={this.openCloseDatepicker} type="button"><span className="glyphicon glyphicon-calendar"></span></a>
+                <a id={this.props.inputId + '_calendar_icon' + '_' + this.props.inputSuffixId} onClick={this.openCloseDatepicker} type="button"><span className="glyphicon glyphicon-calendar"></span></a>
               {fmt.includes('D') ? (
                 <input id={this.props.inputId + '_' + this.props.inputSuffixId + '_day'} style={errorStl} type="number" min="0" max="31" className="input-2 form-control" value={this.state.D} onChange={this.handleChangeDay} disabled={this.state.disabled} />
               ) : null
