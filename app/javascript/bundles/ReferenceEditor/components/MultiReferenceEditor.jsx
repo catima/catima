@@ -100,7 +100,7 @@ class MultiReferenceEditor extends Component {
 
   _getFilterOptions(){
     var optionsList = [];
-    optionsList = this.props.fields.filter(field => field.primary !== true && field.human_readable);
+    optionsList = this.props.fields.filter(field => field.human_readable);
 
     optionsList = optionsList.map(field =>
       this._getJSONFilter(field)
@@ -110,7 +110,7 @@ class MultiReferenceEditor extends Component {
   }
 
   _getJSONFilter(field) {
-    if(!field.primary) return {value: field.slug, label: field.name};
+    return {value: field.slug, label: field.name};
   }
 
   _filterAvailableReferences(e) {
