@@ -71,8 +71,7 @@ CREATE TABLE public.advanced_search_configurations (
     slug character varying,
     fields jsonb DEFAULT '{}'::jsonb,
     created_at timestamp without time zone NOT NULL,
-    updated_at timestamp without time zone NOT NULL,
-    search_type character varying DEFAULT 'default'::character varying NOT NULL
+    updated_at timestamp without time zone NOT NULL
 );
 
 
