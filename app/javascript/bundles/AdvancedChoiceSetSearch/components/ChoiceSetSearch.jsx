@@ -10,7 +10,7 @@ class ChoiceSetSearch extends Component {
 
     this.state = {
       selectedCondition: '',
-      selectCondition: this.props.selectCondition,
+      selectCondition: [],
       selectedFieldCondition: '',
       selectedCategory: {},
       selectedItem: [],
@@ -57,6 +57,8 @@ class ChoiceSetSearch extends Component {
       if(typeof item !== 'undefined') {
         if(item.data.length === 0) {
           this.setState({ selectedCategory: {} });
+          this.setState({ selectedCondition: '' });
+          this.setState({ selectCondition: [] });
         }
         this.setState({ selectedItem: item }, () => this._save());
       } else {
@@ -82,10 +84,14 @@ class ChoiceSetSearch extends Component {
           this.setState({ selectedCategory: item });
         } else {
           this.setState({ selectedCategory: {} });
+          this.setState({ selectedCondition: '' });
+          this.setState({ selectCondition: [] });
         }
       }
     } else {
       this.setState({ selectedCategory: {} });
+      this.setState({ selectedCondition: '' });
+      this.setState({ selectCondition: [] });
     }
   }
 
@@ -153,7 +159,7 @@ class ChoiceSetSearch extends Component {
 
   renderSelectConditionElement(){
     return (
-      <select className="form-control filter-condition" name={this.props.selectConditionName} value={this.state.selectedCondition} onChange={this.selectCondition} disabled={this.state.selectedItem.length===0}>
+      <select className="form-control filter-condition" name={this.props.selectConditionName} value={this.state.selectedCondition} onChange={this.selectCondition} disabled={this.state.selectedItem.length===0 || Object.keys(this.state.selectedCategory).length === 0}>
       { this.state.selectCondition.map((item) => {
         return <option key={item.key} value={item.key}>{item.value}</option>
       })}
