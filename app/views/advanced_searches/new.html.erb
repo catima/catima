@@ -1,7 +1,7 @@
 <% provide(:title, t(".title")) %>
 
 <ul class="nav nav-tabs">
-  <li id="default_search_type" class="dropdown <%= "active" if current_page?(new_advanced_search_path) %>">
+  <li id="default_search_type" class="dropdown <%= "active" if current_page?(new_advanced_search_path) && params[:advanced_search_conf].blank? %>">
       <a href="#" data-toggle="dropdown" class="dropdown-toggle"><%= t(".default_search") %> <b class="caret"></b></a>
       <ul class="dropdown-menu">
         <% @item_types.each do |item_type| %>
