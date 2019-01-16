@@ -31,6 +31,8 @@ class AdvancedSearch < ApplicationRecord
   before_create :assign_locale
   before_create :assign_uuid
 
+  attr_accessor :field_condition
+
   def to_param
     uuid
   end
