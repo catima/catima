@@ -131,7 +131,7 @@ class ReferenceSearch extends Component {
 
   _getFilterOptions(){
     var optionsList = [];
-    optionsList = this.state.fields.filter(field => (field.primary !== true && field.human_readable));
+    optionsList = this.state.fields.filter(field => (field.human_readable));
 
     optionsList = optionsList.map(field =>
       this._getJSONFilter(field)
@@ -150,7 +150,7 @@ class ReferenceSearch extends Component {
   }
 
   _getJSONFilter(field) {
-    if(!field.primary) return {value: field.slug, label: field.name};
+    return {value: field.slug, label: field.name};
   }
 
   _getConditionOptions(){
