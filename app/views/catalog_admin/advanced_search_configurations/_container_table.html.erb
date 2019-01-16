@@ -1,6 +1,7 @@
 <tr>
   <th>Position</th>
   <th>Nom</th>
+  <th></th>
 </tr>
 <% @advanced_search_conf.sorted_fields.each do |field_uuid, field_position| %>
   <% field = Field.where(:uuid => field_uuid).first %>
