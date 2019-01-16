@@ -40,11 +40,11 @@
             <div class="col-md-12"><%= render("index", locale: locale) %></div>
         </div>
     </div>
+  </div>
 
-    <div class="form-group">
-        <%= f.primary(t('.submit')) %>
-        <%= link_to t('cancel'), catalog_admin_advanced_search_configurations_path, :class => "btn btn-link" %>
-    </div>
+  <div class="form-group">
+      <%= f.primary(t('.submit')) %>
+      <%= link_to t('cancel'), catalog_admin_advanced_search_configurations_path, :class => "btn btn-link" %>
   </div>
 
 <% end %>
