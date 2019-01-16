@@ -55,19 +55,19 @@ class Search::ReferenceStrategy < Search::BaseStrategy
     klass = "Search::#{ref_field.type.sub(/^Field::/, '')}Strategy"
     strategy = klass.constantize.new(ref_field, locale)
 
-    if field.multiple?
-      scope = strategy.search(
-        scope.select('"parent_items".*')
-          .from("items parent_items")
-          .joins("LEFT JOIN items ON (parent_items.data->>'#{field.uuid}')::jsonb ?| array[items.id::text]"),
-        criteria)
-    else
-      scope = strategy.search(
-        scope.select('"parent_items".*')
-          .from("items parent_items")
-          .joins("LEFT JOIN items ON parent_items.data->>'#{field.uuid}' = items.id::text"),
-        criteria)
-    end
+    scope = if field.multiple?
+              strategy.search(
+                scope.select('"parent_items".*')
+                  .from("items parent_items")
+                  .joins("LEFT JOIN items ON (parent_items.data->>'#{field.uuid}')::jsonb ?| array[items.id::text]"),
+                criteria)
+            else
+              strategy.search(
+                scope.select('"parent_items".*')
+                  .from("items parent_items")
+                  .joins("LEFT JOIN items ON parent_items.data->>'#{field.uuid}' = items.id::text"),
+                criteria)
+            end
 
     scope
   end

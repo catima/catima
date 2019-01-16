@@ -9,7 +9,7 @@
 #  fields             :jsonb
 #  id                 :bigint(8)        not null, primary key
 #  item_type_id       :bigint(8)
-#  search_type        :string           default("default")
+#  search_type        :string           default("default"), not null
 #  slug               :string
 #  title_translations :jsonb
 #  updated_at         :datetime         not null
@@ -114,6 +114,6 @@ class AdvancedSearchConfiguration < ApplicationRecord
   end
 
   def search_type_map?
-    self.search_type == AdvancedSearchConfiguration::TYPES['Map']
+    search_type == AdvancedSearchConfiguration::TYPES['Map']
   end
 end
