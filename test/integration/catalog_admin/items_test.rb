@@ -19,7 +19,6 @@ class CatalogAdmin::ItemsTest < ActionDispatch::IntegrationTest
     fill_in("Rank", :with => "1.25")
 
     sleep 2
-    
     add_single_reference('#item_one_author_collaborator_uuid_json-editor', 'Very Old')
 
     add_multiple_reference('#item_one_author_other_collaborators_uuid_json-editor', 'Very Old')
