@@ -37,7 +37,6 @@ class AdvancedSearchConfiguration < ApplicationRecord
   validates_presence_of :catalog
   validates_presence_of :item_type
   validates_presence_of :title
-  validates_presence_of :description
 
   serialize :description, HashSerializer
   locales :description
