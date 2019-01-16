@@ -16,10 +16,12 @@ class CatalogAdmin::AdvancedSearchConfigurationsController < CatalogAdmin::BaseC
     authorize(@advanced_search_conf)
     if @advanced_search_conf.update(advanced_search_conf_params.except(:item_type))
       flash[:notice] = advanced_search_configuration_updated_message
-      redirect_to(edit_catalog_admin_advanced_search_configuration_path(
-        :catalog_slug => @advanced_search_conf.catalog,
-        :id => @advanced_search_conf.id)
-    )
+      redirect_to(
+        edit_catalog_admin_advanced_search_configuration_path(
+          :catalog_slug => @advanced_search_conf.catalog,
+          :id => @advanced_search_conf.id
+        )
+      )
     else
       render("new")
     end
