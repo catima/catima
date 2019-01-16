@@ -1,5 +1,4 @@
-<div class="panel panel-default">
-  <table class="table" id="fields">
+<table class="table" id="fields">
     <% if @advanced_search_conf.fields.blank? %>
       <tr>
         <td><%= t('.nothing') %></td>
@@ -9,4 +8,3 @@
       <%= render(:partial => 'container_table') %>
     <% end %>
   </table>
-</div>
