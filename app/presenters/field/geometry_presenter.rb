@@ -22,8 +22,6 @@ class Field::GeometryPresenter < FieldPresenter
   end
 
   def geo_viewer
-    p "____°_°_°_°_°_°_°_"
-    p raw_value['features']
     @view.render('fields/geometries', features: raw_value['features'])
   end
 end

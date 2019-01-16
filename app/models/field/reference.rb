@@ -108,7 +108,6 @@ class Field::Reference < ::Field
     "(ref_items.data->>'#{related_item_type.field_for_select.uuid}') ASC" unless related_item_type.field_for_select.nil?
   end
 
-
   def search_conditions_as_hash
     []
   end
