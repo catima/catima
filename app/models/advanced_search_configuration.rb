@@ -43,7 +43,7 @@ class AdvancedSearchConfiguration < ApplicationRecord
 
   def field_set
     field_set = []
-    fields.sort_by {|field_uuid, position| position}.each do |field_uuid|
+    fields.sort_by {|_field_uuid, position| position}.each do |field_uuid|
       field_set << Field.find_by(:uuid => field_uuid)
     end
 
