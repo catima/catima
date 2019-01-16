@@ -8,39 +8,43 @@
   <%= render("common_form_fields", :f => f) %>
 
   <hr>
-
   <div class="container-list">
-    <div style="float: right;">
-      <span class="dropdown">
-        <% unless @available_fields.size.zero? %>
-          <button class="btn btn-xs btn-default dropdown-toggle" type="button" id="add-field-dropdown" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
-            <%= fa_icon(:"plus-square", :text => t('.add_field')) %>
-            <span class="caret"></span>
-          </button>
-          <ul class="dropdown-menu dropdown-menu-right" aria-labelledby="add-field-dropdown">
-            <% @available_fields.each do |field| %>
-              <li>
-                <%= link_to(field.name, {
-                  :action => :update,
-                  :catalog_slug => @advanced_search_conf.catalog.slug,
-                  :id => @advanced_search_conf.id,
-                  :advanced_search_configuration => {
-                    :field => field.uuid
-                  }},
-                  method: :put) %>
-              </li>
-            <% end %>
-          </ul>
-        <% end %>
-      </span>
+    <div class="form-group">
+        <div class="row">
+            <div class="col-md-12">
+                <span class="dropdown" style="float: right;">
+                  <% unless @available_fields.size.zero? %>
+                    <button class="btn btn-xs btn-default dropdown-toggle" type="button" id="add-field-dropdown" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+                      <%= fa_icon(:"plus-square", :text => t('.add_field')) %>
+                      <span class="caret"></span>
+                    </button>
+                    <ul class="dropdown-menu dropdown-menu-right" aria-labelledby="add-field-dropdown">
+                      <% @available_fields.each do |field| %>
+                        <li>
+                          <%= link_to(field.name, {
+                            :action => :update,
+                            :catalog_slug => @advanced_search_conf.catalog.slug,
+                            :id => @advanced_search_conf.id,
+                            :advanced_search_configuration => {
+                              :field => field.uuid
+                            }},
+                            method: :put) %>
+                        </li>
+                      <% end %>
+                    </ul>
+                  <% end %>
+                </span>
+            </div>
+        </div>
+        <div class="row">
+            <div class="col-md-12"><%= render("index", locale: locale) %></div>
+        </div>
     </div>
 
-    <table id="container-table-<%= locale %>" class="table">
-      <%= render("index", locale: locale) %>
-    </table>
+    <div class="form-group">
+        <%= f.primary(t('.submit')) %>
+        <%= link_to t('cancel'), catalog_admin_advanced_search_configurations_path, :class => "btn btn-link" %>
+    </div>
   </div>
-
-  <%= f.primary(t('.submit')) %>
-  <%= link_to t('cancel'), catalog_admin_advanced_search_configurations_path, :class => "btn btn-link" %>
 
 <% end %>
