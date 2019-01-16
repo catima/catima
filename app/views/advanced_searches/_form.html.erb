@@ -31,6 +31,9 @@
   <%= f.primary(t("advanced_searches.new.submit")) %>
   <%= link_to(
         t("advanced_searches.new.start_over"),
-        { :type => params[:type] },
+        {
+          :item_type => params[:item_type],
+          :advanced_search_conf => params[:advanced_search_conf],
+        },
         :class => "btn btn-text") %>
 <% end %>
