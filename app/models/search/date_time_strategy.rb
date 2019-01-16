@@ -20,7 +20,9 @@ class Search::DateTimeStrategy < Search::BaseStrategy
 
     scope = append_where_date_is_set(scope)
     scope = search_with_start_date(scope, criteria, start_date_time, negate, field_condition)
-    scope = search_with_end_date(scope, criteria, start_date_time, end_date_time, negate, field_condition)
+    scope = search_interval_dates(
+      scope, criteria, { :start => start_date_time, :end => end_date_time }, negate, field_condition
+    )
 
     scope
   end
@@ -55,19 +57,22 @@ class Search::DateTimeStrategy < Search::BaseStrategy
     scope
   end
 
-  def search_with_end_date(scope, criteria, start_date_time, end_date_time, negate, field_condition)
+  def search_interval_dates(scope, criteria, dates, negate, field_condition)
     return scope unless end_date?(criteria)
 
     return scope unless %w[outside between].include?(field_condition)
 
-    interval_search(scope, start_date_time, end_date_time, field_condition, negate)
+    interval_search(scope, dates[:start], dates[:end], field_condition, negate)
   end
 
   def exact_search(scope, exact_date_time, negate)
     return scope if exact_date_time.blank?
 
-    sql_operator = "#{'<>' if negate} ="
-    scope.where("#{convert_to_timestamp(concat_json_date(exact_date_time))} #{sql_operator} to_timestamp(?, '#{field_date_format_to_sql_format}')", date_remove_utc(exact_date_time))
+    sql_operator = negate ? "<>" : "="
+    scope.where(
+      "#{convert_to_timestamp(concat_json_date(exact_date_time))} #{sql_operator}
+      to_timestamp(?, '#{field_date_format_to_sql_format}')", date_remove_utc(exact_date_time)
+    )
   end
 
   def inexact_search(scope, date_time, field_condition, negate)
@@ -80,16 +85,20 @@ class Search::DateTimeStrategy < Search::BaseStrategy
       sql_operator = negate ? "<" : ">"
     end
 
-    scope.where("#{convert_to_timestamp(concat_json_date(date_time))} #{sql_operator} to_timestamp(?, '#{field_date_format_to_sql_format}')", date_remove_utc(date_time))
+    scope.where(
+      "#{convert_to_timestamp(concat_json_date(date_time))} #{sql_operator}
+      to_timestamp(?, '#{field_date_format_to_sql_format}')", date_remove_utc(date_time)
+    )
   end
 
   def interval_search(scope, start_date_time, end_date_time, field_condition, negate)
     return scope if start_date_time.blank? || end_date_time.blank?
 
-    field_condition = "outside" if negate && field_condition == "between"
-    field_condition = "between" if negate && field_condition == "outside"
+    if negate
+      field_condition = field_condition == "between" ? "outside" : "between"
+    end
 
-    where_scope = ->(*where_query) { field_condition == "outside" ? scope.where.not(where_query) : scope.where(where_query) }
+    where_scope = ->(*q) { field_condition == "outside" ? scope.where.not(q) : scope.where(q) }
 
     where_scope.call(
       "#{convert_to_timestamp(concat_json_date(start_date_time))}

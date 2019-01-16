@@ -6,7 +6,7 @@ init = ->
     changeInputName($(this))
 
   # When user clicks on reload page or previous page in the browser, sets the correct name on page load
-  $(".filter-condition").each (index, select) =>
+  $(".filter-condition").each (index, select) ->
     changeInputName($(select))
 
 changeInputName = (selectInput) ->
