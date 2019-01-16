@@ -20,7 +20,8 @@ class DateTimeInput extends React.Component {
     super(props);
     this.state = {
       disabled: false,
-      selectedDate: ''
+      selectedDate: '',
+      isDatepickerOpen: false,
     };
     const date = this.getData();
     const granularity = this.getFieldOptions().format;
@@ -41,6 +42,7 @@ class DateTimeInput extends React.Component {
     }
 
     this.selectDate = this._selectDate.bind(this);
+    this.openCloseDatepicker = this._openCloseDatepicker.bind(this);
   }
 
   componentDidMount() {
@@ -69,13 +71,17 @@ class DateTimeInput extends React.Component {
       });
 
       $(this.refs['hiddenInput']).datetimepicker().on('dp.change', (event) => this._onDatepickerChangerDate(event));
-
-      dateInputElements.forEach((element, index) => {
-        element.addEventListener('focus', () => {
-          $(this.refs['hiddenInput']).data("DateTimePicker").show();
-        });
-      });
     }
+  }
+
+  _openCloseDatepicker() {
+      if(this.state.isDatepickerOpen) {
+          this.setState({isDatepickerOpen: false});
+          $(this.refs['hiddenInput']).data("DateTimePicker").hide();
+      } else {
+          this.setState({isDatepickerOpen: true});
+          $(this.refs['hiddenInput']).data("DateTimePicker").show();
+      }
   }
 
   _onDatepickerChangerDate(data) {
@@ -220,46 +226,49 @@ class DateTimeInput extends React.Component {
     return (
       <div id={this.props.inputId + '_' + this.props.inputSuffixId}>
         <div className="dateTimeInput rails-bootstrap-forms-datetime-select">
-          <div className="row hidden-datepicker">
-            <input type="text" ref="hiddenInput" value={this.state.selectedDate} name={this.props.inputName} onChange={this.selectDate}/>
-          </div>
-          {fmt.includes('D') ? (
-            <input id={this.props.inputId + '_' + this.props.inputSuffixId + '_day'} style={errorStl} type="number" min="0" max="31" className="input-2 form-control" value={this.state.D} onChange={this.handleChangeDay} disabled={this.state.disabled} />
-          ) : null
-          }
-          {fmt.includes('M') ? (
-            <select id={this.props.inputId + '_' + this.props.inputSuffixId + '_month'} style={errorStl} className="form-control" value={this.state.M} onChange={this.handleChangeMonth} disabled={this.state.disabled}>
-            <option value=""></option>
-            <option value="1">January</option>
-            <option value="2">February</option>
-            <option value="3">March</option>
-            <option value="4">April</option>
-            <option value="5">May</option>
-            <option value="6">June</option>
-            <option value="7">July</option>
-            <option value="8">August</option>
-            <option value="9">September</option>
-            <option value="10">October</option>
-            <option value="11">November</option>
-            <option value="12">December</option>
-            </select>) : null
-          }
-          {fmt.includes('Y') ? (
-            <input id={this.props.inputId + '_' + this.props.inputSuffixId + '_year'} style={errorStl} type="number" className={'input-4 form-control' + this.styleMarginRight} value={this.state.Y} onChange={this.handleChangeYear} disabled={this.state.disabled} />
-          ) : null
-          }
-          {fmt.includes('h') ? (
-            <input id={this.props.inputId + '_' + this.props.inputSuffixId + '_hour'} style={errorStl} min="0" max="23" type="number" className="input-2 form-control" value={this.state.h} onChange={this.handleChangeHours} disabled={this.state.disabled} />
-          ) : null
-          }
-          {fmt.includes('m') ? (
-            <input id={this.props.inputId + '_' + this.props.inputSuffixId + '_minutes'} style={errorStl} min="0" max="59" type="number" className="input-2 form-control" value={this.state.m} onChange={this.handleChangeMinutes} disabled={this.state.disabled} />
-          ) : null
-          }
-          {fmt.includes('s') ? (
-            <input id={this.props.inputId + '_' + this.props.inputSuffixId + '_seconds'} style={errorStl} min="0" max="59" type="number" className="input-2 form-control" value={this.state.s} onChange={this.handleChangeSeconds} disabled={this.state.disabled} />
-          ) : null
-          }
+            <div className="row">
+                <div className="row hidden-datepicker">
+                  <input type="text" ref="hiddenInput" value={this.state.selectedDate} name={this.props.inputName} onChange={this.selectDate}/>
+                </div>
+                <a onClick={this.openCloseDatepicker} type="button"><span className="glyphicon glyphicon-calendar"></span></a>
+              {fmt.includes('D') ? (
+                <input id={this.props.inputId + '_' + this.props.inputSuffixId + '_day'} style={errorStl} type="number" min="0" max="31" className="input-2 form-control" value={this.state.D} onChange={this.handleChangeDay} disabled={this.state.disabled} />
+              ) : null
+              }
+              {fmt.includes('M') ? (
+                <select id={this.props.inputId + '_' + this.props.inputSuffixId + '_month'} style={errorStl} className="form-control" value={this.state.M} onChange={this.handleChangeMonth} disabled={this.state.disabled}>
+                <option value=""></option>
+                <option value="1">January</option>
+                <option value="2">February</option>
+                <option value="3">March</option>
+                <option value="4">April</option>
+                <option value="5">May</option>
+                <option value="6">June</option>
+                <option value="7">July</option>
+                <option value="8">August</option>
+                <option value="9">September</option>
+                <option value="10">October</option>
+                <option value="11">November</option>
+                <option value="12">December</option>
+                </select>) : null
+              }
+              {fmt.includes('Y') ? (
+                <input id={this.props.inputId + '_' + this.props.inputSuffixId + '_year'} style={errorStl} type="number" className={'input-4 form-control' + this.styleMarginRight} value={this.state.Y} onChange={this.handleChangeYear} disabled={this.state.disabled} />
+              ) : null
+              }
+              {fmt.includes('h') ? (
+                <input id={this.props.inputId + '_' + this.props.inputSuffixId + '_hour'} style={errorStl} min="0" max="23" type="number" className="input-2 form-control" value={this.state.h} onChange={this.handleChangeHours} disabled={this.state.disabled} />
+              ) : null
+              }
+              {fmt.includes('m') ? (
+                <input id={this.props.inputId + '_' + this.props.inputSuffixId + '_minutes'} style={errorStl} min="0" max="59" type="number" className="input-2 form-control" value={this.state.m} onChange={this.handleChangeMinutes} disabled={this.state.disabled} />
+              ) : null
+              }
+              {fmt.includes('s') ? (
+                <input id={this.props.inputId + '_' + this.props.inputSuffixId + '_seconds'} style={errorStl} min="0" max="59" type="number" className="input-2 form-control" value={this.state.s} onChange={this.handleChangeSeconds} disabled={this.state.disabled} />
+              ) : null
+              }
+            </div>
         </div>
         <span className="error helptext">{errorMsg}</span>
       </div>
