@@ -24,8 +24,9 @@
 </ul>
 
 <% if @advanced_search_config.present? %>
-  <h3><%= @advanced_search_config.title %></h3>
-  <p><%= @advanced_search_config.description %></p>
+<p>
+  <div class="row"><div class="col-md-12"><%= @advanced_search_config.description %></div></div>
+</p>
 <% end %>
 
 <%= render :partial => "form" %>
