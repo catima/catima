@@ -23,9 +23,12 @@
   <% end %>
 </ul>
 
-<% if @advanced_search_config.present? %>
+<% if @advanced_search_config.present? && @advanced_search_config.description %>
 <p>
-  <div class="row"><div class="col-md-12"><%= @advanced_search_config.description %></div></div>
+  <div class="row">
+    <div class="col-md-12"><%= @advanced_search_config.description %>
+    </div>
+  </div>
 </p>
 <% end %>
 
