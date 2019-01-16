@@ -36,11 +36,11 @@ class Container::ItemList < ::Container
     super.merge('content' => { 'item_type' => item_type.nil? ? nil : ItemType.find(item_type).slug })
   end
 
-  def update_from_json(d)
-    unless d[:content].nil?
-      it = catalog.item_types.find_by(slug: d[:content]['item_type'])
-      d[:content]['item_type'] = it.id.to_s
+  def update_from_json(json)
+    unless json[:content].nil?
+      it = catalog.item_types.find_by(slug: json[:content]['item_type'])
+      json[:content]['item_type'] = it.id.to_s
     end
-    super(d)
+    super(json)
   end
 end
