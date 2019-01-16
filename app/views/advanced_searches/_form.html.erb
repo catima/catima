@@ -17,8 +17,8 @@
   <table class="table">
     <tbody>
       <% if params[:item_type].present? || @advanced_search_config.present? %>
-        <% @fields.each do |field| %>
-          <%= render_advanced_search_field(f, field) do |content| %>
+        <% @fields.each_with_index do |field, i| %>
+          <%= render_advanced_search_field(f, field, i) do |content| %>
             <tr>
               <th><%= field.name %></th>
               <td><%= content %></td>
