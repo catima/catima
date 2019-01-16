@@ -141,6 +141,24 @@ class ItemList::AdvancedSearchResult < ItemList
     rel.chomp(" UNION ")
   end
 
+  def merge_relations(strategies)
+    relations = strategies.first
+    strategies.drop(1).each do |relation|
+      relations = relations.merge(relation)
+    end
+
+    relations
+  end
+
+  def or_relations(strategies)
+    relations = strategies.first
+    strategies.drop(1).each do |relation|
+      relations = relations.or(relation)
+    end
+
+    relations
+  end
+
   def field_criteria(field)
     (criteria || {}).fetch(field.uuid, {}).with_indifferent_access
   end
