@@ -12,7 +12,7 @@
 #
 
 class Export < ApplicationRecord
-  CATEGORY_OPTIONS = %w(catima sql csv).freeze
+  CATEGORY_OPTIONS = %w(catima sql).freeze
   STATUS_OPTIONS = %w(error processing ready).freeze
 
   belongs_to :user
