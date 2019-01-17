@@ -52,6 +52,10 @@ class Field::Geometry < ::Field
     geo_bounds.slice('xmin', 'xmax', 'ymin', 'ymax')
   end
 
+  def sql_type
+    "JSON"
+  end
+
   private
 
   def build_validators

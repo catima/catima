@@ -87,6 +87,10 @@ class Field::Int < ::Field
     ]
   end
 
+  def sql_type
+    "INT"
+  end
+
   private
 
   def build_validators
