@@ -149,19 +149,6 @@ class Field::ChoiceSet < ::Field
     ]
   end
 
-  def field_value_for_all_item(_it)
-    choices_as_hash = []
-
-    choices.each do |choice|
-      option = { :value => choice.short_name }
-      option[:category_name] = choice.category.name if choice.category.present?
-
-      choices_as_hash << option
-    end
-
-    choices_as_hash.to_json
-  end
-
   def sql_type
     "INT"
   end

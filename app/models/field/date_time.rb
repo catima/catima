@@ -149,19 +149,6 @@ class Field::DateTime < ::Field
     ]
   end
 
-  def field_value_for_all_item(item)
-    date_time_components = super
-
-    '%<year>s-%<month>s-%<day>s %<hour>s:%<minutes>s:%<seconds>s' % [
-      :year => date_time_components["Y"].presence || "0000",
-      :month => date_time_components["M"].presence || "00",
-      :day => date_time_components["D"].presence || "00",
-      :hour => date_time_components["h"].presence || "00",
-      :minutes => date_time_components["m"].presence || "00",
-      :seconds => date_time_components["s"].presence || "00"
-    ]
-  end
-
   def sql_type
     "JSON"
   end

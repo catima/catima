@@ -89,43 +89,8 @@ class Field::Text < ::Field
     end
   end
 
-  def search_conditions_as_options
-    options = [
-      [I18n.t("advanced_searches.text_search_field.all_words"), "all_words"],
-      [I18n.t("advanced_searches.text_search_field.one_word"), "one_word"]
-    ]
-
-    return options if formatted?
-
-    # Formatted text can't be exact searched
-    options.unshift([I18n.t("advanced_searches.text_search_field.exact"), "exact"])
-  end
-
-  def search_conditions_as_hash(locale)
-    options = [
-      { :value => I18n.t("advanced_searches.text_search_field.all_words", locale: locale), :key => "all_words"},
-      { :value => I18n.t("advanced_searches.text_search_field.one_word", locale: locale), :key => "one_word"}
-    ]
-
-    return options if formatted?
-
-    options.unshift({ :value => I18n.t("advanced_searches.text_search_field.exact", locale: locale), :key => "exact"})
-  end
-
   def sql_type
-    if maximum.present?
-      maximum = [maximum.to_i, 21_845].max
-      # 21845 is the max length of the SQL TEXT type
-      return "VARCHAR(#{maximum})" if maximum < 500
-    end
-
-    "TEXT"
-  end
-
-  def sql_default
-    return "" if formatted? || sql_type.include?("TEXT")
-
-    super
+    "VARCHAR(#{maximum.presence || 255})"
   end
 
   private
