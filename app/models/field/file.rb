@@ -59,4 +59,8 @@ class Field::File < ::Field
   def human_readable?
     false
   end
+
+  def sql_type
+    "VARCHAR(255)"
+  end
 end

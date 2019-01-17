@@ -84,6 +84,10 @@ class Field::Decimal < ::Field
     ]
   end
 
+  def sql_type
+    "FLOAT"
+  end
+
   private
 
   def build_validators

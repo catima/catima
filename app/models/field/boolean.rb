@@ -43,4 +43,8 @@ class Field::Boolean < ::Field
       { :value => I18n.t("no"), :key => 0 }
     ]
   end
+
+  def sql_type
+    "BOOLEAN"
+  end
 end

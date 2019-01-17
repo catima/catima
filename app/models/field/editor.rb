@@ -56,4 +56,8 @@ class Field::Editor < ::Field
 
     user.email if user.present?
   end
+
+  def sql_type
+    "INT"
+  end
 end
