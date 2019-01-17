@@ -111,4 +111,8 @@ class Field::Reference < ::Field
   def search_conditions_as_hash
     []
   end
+
+  def sql_type
+    "INT"
+  end
 end

@@ -149,6 +149,10 @@ class Field::DateTime < ::Field
     ]
   end
 
+  def sql_type
+    "JSON"
+  end
+
   private
 
   def transform_value(v)

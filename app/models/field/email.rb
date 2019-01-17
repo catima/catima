@@ -33,6 +33,10 @@
 #
 
 class Field::Email < ::Field
+  def sql_type
+    "VARCHAR(255)"
+  end
+
   private
 
   def build_validators

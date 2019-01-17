@@ -60,7 +60,7 @@ class Field::File < ::Field
     false
   end
 
-  def allows_unique?
-    false
+  def sql_type
+    "VARCHAR(255)"
   end
 end
