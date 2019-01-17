@@ -116,6 +116,10 @@ class Field::Text < ::Field
     "VARCHAR(#{maximum.presence || 255})"
   end
 
+  def sql_type
+    "VARCHAR(#{maximum.presence || 255})"
+  end
+
   private
 
   def build_validators

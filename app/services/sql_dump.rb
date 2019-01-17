@@ -191,6 +191,13 @@ class SqlDump
     end
 
     tables
+    columns = ""
+
+    item_type.fields.each do |field|
+      columns << "`#{field.slug}` #{field.sql_type} #{field.sql_nullable} #{field.sql_default} #{field.sql_unique}#{',' unless field == item_type.fields.last} \n"
+    end
+
+    "CREATE TABLE `#{item_type.slug}` (\n#{columns}\n);\n\n"
   end
 
   def dump_create_choice_sets_table(choice_set)
@@ -238,6 +245,10 @@ class SqlDump
     end
 
     values
+  def primary_key(item_type)
+    return "" if item_type.primary_field.blank?
+
+    "PRIMARY KEY (#{item_type.primary_field.slug})"
   end
 
   def dump_catalog_information(cat, struct_dir)
