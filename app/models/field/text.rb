@@ -89,27 +89,8 @@ class Field::Text < ::Field
     end
   end
 
-  def search_conditions_as_options
-    options = [
-      [I18n.t("advanced_searches.text_search_field.all_words"), "all_words"],
-      [I18n.t("advanced_searches.text_search_field.one_word"), "one_word"]
-    ]
-
-    return options if formatted?
-
-    # Formatted text can't be exact searched
-    options << [I18n.t("advanced_searches.text_search_field.exact"), "exact"]
-  end
-
-  def search_conditions_as_hash(locale)
-    options = [
-      { :value => I18n.t("advanced_searches.text_search_field.all_words", locale: locale), :key => "all_words"},
-      { :value => I18n.t("advanced_searches.text_search_field.one_word", locale: locale), :key => "one_word"}
-    ]
-
-    return options if formatted?
-
-    options << { :value => I18n.t("advanced_searches.text_search_field.exact", locale: locale), :key => "exact"}
+  def sql_type
+    "VARCHAR(#{maximum.presence || 255})"
   end
 
   private

@@ -149,6 +149,10 @@ class Field::ChoiceSet < ::Field
     ]
   end
 
+  def sql_type
+    "INT"
+  end
+
   private
 
   # TODO: validate choice belongs to specified ChoiceSet

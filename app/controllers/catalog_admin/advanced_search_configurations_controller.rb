@@ -2,7 +2,7 @@ class CatalogAdmin::AdvancedSearchConfigurationsController < CatalogAdmin::BaseC
   layout "catalog_admin/setup/form"
 
   def index
-    authorize(AdvancedSearchConfiguration)
+    # authorize(AdvancedSearchConfiguration)
     render("index", :layout => "catalog_admin/setup")
   end
 

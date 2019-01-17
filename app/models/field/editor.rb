@@ -57,11 +57,7 @@ class Field::Editor < ::Field
     user.email if user.present?
   end
 
-  def allows_unique?
-    false
-  end
-
-  def allows_style?
-    false
+  def sql_type
+    "INT"
   end
 end

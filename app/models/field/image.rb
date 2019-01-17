@@ -52,6 +52,10 @@ class Field::Image < ::Field::File
     %i(legend)
   end
 
+  def sql_type
+    "VARCHAR(255)"
+  end
+
   private
 
   def set_default_types

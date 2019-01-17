@@ -307,6 +307,24 @@ class Field < ApplicationRecord
   def search_options_as_hash
   end
 
+  def sql_type
+    ""
+  end
+
+  def sql_nullable
+    "#{'NOT ' unless required}NULL"
+  end
+
+  def sql_unique
+    "UNIQUE" if unique
+  end
+
+  def sql_default
+    return "" if default_value.blank?
+
+    "DEFAULT #{default_value}"
+  end
+
   private
 
   def exclude_base64(string)

@@ -74,6 +74,10 @@ class Field::Xref < ::Field
     selected_choices(item).first&.name
   end
 
+  def sql_type
+    "VARCHAR(255)"
+  end
+
   private
 
   def xref_must_point_to_valid_service
