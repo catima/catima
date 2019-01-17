@@ -112,6 +112,10 @@ class Field::Text < ::Field
     options.unshift({ :value => I18n.t("advanced_searches.text_search_field.exact", locale: locale), :key => "exact"})
   end
 
+  def sql_type
+    "VARCHAR(#{maximum.presence || 255})"
+  end
+
   private
 
   def build_validators
