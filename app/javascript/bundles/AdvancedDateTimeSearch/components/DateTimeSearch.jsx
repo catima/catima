@@ -159,7 +159,7 @@ class DateTimeSearch extends Component {
       <div className="datetime-search-container row">
         { this.props.selectCondition.length > 0 &&
         <div className="col-md-2">
-            { this.renderFieldConditionElement() }
+            { this.props.displayFieldCondition && this.renderFieldConditionElement() }
         </div>
         }
         <div className={this._getDateTimeClassname()}>
