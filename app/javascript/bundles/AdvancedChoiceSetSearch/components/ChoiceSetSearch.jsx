@@ -212,7 +212,7 @@ class ChoiceSetSearch extends Component {
       <div className="col-md-12 choiceset-search-container">
         <div className="row component-search-row">
           <div className="col-md-2">
-              { this.renderFieldConditionElement() }
+              { this.props.displayFieldCondition && this.renderFieldConditionElement() }
           </div>
           <div>
             <div className={this._getChoiceSetClassname()}>
