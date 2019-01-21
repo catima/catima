@@ -169,6 +169,7 @@ class ChoiceSetSearchContainer extends Component {
       selectCondition={item.selectCondition}
       fieldConditionName={item.fieldConditionName}
       fieldConditionData={item.fieldConditionData}
+      displayFieldCondition={this.props.displayFieldCondition}
       multiple={item.multiple}
       addComponent={item.addComponent}
       deleteComponent={item.deleteComponent}

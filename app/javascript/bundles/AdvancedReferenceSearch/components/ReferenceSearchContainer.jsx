@@ -144,6 +144,7 @@ class ReferenceSearchContainer extends Component {
       itemTypeSearch={item.itemTypeSearch}
       selectConditionName={item.selectConditionName}
       selectCondition={item.selectCondition}
+      displayFieldCondition={this.props.displayFieldCondition}
       fieldConditionName={item.fieldConditionName}
       fieldConditionData={item.fieldConditionData}
       addComponent={item.addComponent}

@@ -18,7 +18,7 @@
           inputEnd: json_hidden_field_id(f, field),
           selectConditionName: "advanced_search[criteria][#{field.uuid}][condition]",
           selectCondition: field.search_conditions_as_hash,
-          displayFieldCondition: i.zero?,
+          displayFieldCondition: i.positive?,
           fieldConditionName: "advanced_search[criteria][#{field.uuid}][field_condition]",
           fieldConditionData: field.search_field_conditions_as_hash
         },
