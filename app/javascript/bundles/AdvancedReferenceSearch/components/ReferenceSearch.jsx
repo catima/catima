@@ -123,6 +123,8 @@ class ReferenceSearch extends Component {
     this.setState({ selectedFilter: value });
 
     if(typeof value !== 'undefined' && value === null) {
+        this.setState({ selectedCondition: '' });
+        this.setState({ selectCondition: [] });
       this.setState({ itemTypeSearch: false });
     } else {
       this.setState({ itemTypeSearch: true });
