@@ -23,12 +23,12 @@ class ExportWorker
 
   def catima_export(export, dir)
     status = "ready"
-    begin
+    # begin
       CatalogDump.new.dump(export.catalog.slug, dir)
       zip(dir, export.pathname)
-    rescue StandardError
-      status = "error"
-    end
+    # rescue StandardError
+    #   status = "error"
+    # end
     export.update(status: status)
     send_mail(export)
   end
