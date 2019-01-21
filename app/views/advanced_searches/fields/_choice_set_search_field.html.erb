@@ -16,6 +16,7 @@
           inputName: "advanced_search[criteria][#{field.uuid}][0][exact]",
           selectConditionName: "advanced_search[criteria][#{field.uuid}][0][condition]",
           selectCondition: field.search_conditions_as_hash,
+          displayFieldCondition: i.zero?,
           multiple: true,
           fieldConditionName: "advanced_search[criteria][#{field.uuid}][0][field_condition]",
           fieldConditionData: field.search_field_conditions_as_hash
