@@ -26,6 +26,7 @@ class API::V2::FieldsController < ActionController::Base
         search_placeholder: t("catalog_admin.items.reference_editor.reference_editor_search", locale: params[:locale]),
         filter_placeholder: t("catalog_admin.items.reference_editor.reference_editor_filter", locale: params[:locale]),
         selectCondition: field.search_conditions_as_hash,
+        displayFieldCondition: true,
         inputType: field.type,
         inputData: field.search_data_as_hash,
         inputOptions: field.search_options_as_hash
