@@ -8,7 +8,8 @@
           itemType: field.related_item_type.slug,
           field: field.slug,
           locale: I18n.locale,
-          multiple: field.multiple?,
+          multiple: false,
+          # multiple: field.multiple?, #Uncomment this if you need multiple tags in a reference input
           noOptionsMessage: t("catalog_admin.items.reference_editor.no_options"),
           inputName: "advanced_search[criteria][#{field.uuid}][0][exact]",
           referenceFilterName: "advanced_search[criteria][#{field.uuid}][0][filter_field_slug]",
