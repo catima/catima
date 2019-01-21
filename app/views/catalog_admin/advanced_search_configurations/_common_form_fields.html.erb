@@ -2,6 +2,7 @@
 <%= stylesheet_pack_tag 'catalog-admin-bundle' %>
 
 <%= f.hidden_field(:item_type, :value => @advanced_search_conf.item_type&.slug) %>
+
 <%= locale_form_group(f, :title, :text_field, :autofocus => true) %>
 <%= f.text_field(:description, :class => 'hide', :value => @advanced_search_conf.description_str) %>
 <%= react_component(
