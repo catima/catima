@@ -187,7 +187,7 @@ class ChoiceSetSearch extends Component {
 
   renderChoiceSetItemCategory(){
     return (
-        <ReactSelect id={this.choiceSetId + '_condition'} name={this.props.categoryInputName} options={this._getCategoryOptions()} className="basic-multi-select" onChange={this.selectCategory} classNamePrefix="select" placeholder={this.props.searchPlaceholder} isClearable={true}/>
+        <ReactSelect id={this.choiceSetId + '_condition'} name={this.props.categoryInputName} options={this._getCategoryOptions()} className="basic-multi-select" onChange={this.selectCategory} classNamePrefix="select" placeholder={this.props.filterPlaceholder} isClearable={true}/>
     );
   }
 
