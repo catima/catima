@@ -236,7 +236,7 @@ class ReferenceSearch extends Component {
     return (
       <div>
         <div className="col-md-2">
-          { this.renderFieldConditionElement() }
+          { this.props.displayFieldCondition && this.renderFieldConditionElement() }
         </div>
         <div className="col-md-7">
           <div className="reference-search-container">
