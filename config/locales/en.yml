@@ -53,6 +53,8 @@ en:
     fields:
       choice_set_search_field:
         any: "is any of"
+        filter_placeholder: Select a field...
+        select_placeholder: Select...
       date_time_search_field:
         start_date: Start date
         end_date: End date
@@ -61,6 +63,9 @@ en:
         before: "before"
         between: between the date
         outside: outside the dates
+      reference_search_field:
+        field_placeholder: By field...
+        item_type_placeholder: By item type...
     new:
       item_type: Item type
       tab: "%{title} search"
