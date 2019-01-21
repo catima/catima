@@ -53,6 +53,8 @@ fr:
     fields:
       choice_set_search_field:
         any: "est l'un de"
+        filter_placeholder: Sélectionner un champ...
+        select_placeholder: Sélectionner...
       date_time_search_field:
         start_date: Date de début
         end_date: Date de fin
@@ -61,6 +63,9 @@ fr:
         before: avant
         between: entre les dates
         outside: en dehors des dates
+      reference_search_field:
+        field_placeholder: Par champ...
+        item_type_placeholder: Par fiche...
     new:
       tab: "Recherche %{title}"
       title: "Recherche avancée"
