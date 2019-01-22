@@ -43,6 +43,7 @@ class DateTimeInput extends React.Component {
 
     this.selectDate = this._selectDate.bind(this);
     this.openCloseDatepicker = this._openCloseDatepicker.bind(this);
+    this.clearDatepicker = this._clearDatepicker.bind(this);
   }
 
   componentDidMount() {
@@ -84,6 +85,11 @@ class DateTimeInput extends React.Component {
       }
   }
 
+  _clearDatepicker() {
+    $(this.refs['hiddenInput']).data("DateTimePicker").clear();
+    this.updateData({ Y: '', M: '', D: '', h: '', m: '', s: ''});
+  }
+
   _onDatepickerChangerDate(data) {
     if(data.date !== false) {
       this.setState({selectedDate: data.date});
@@ -109,7 +115,7 @@ class DateTimeInput extends React.Component {
     if (v < 1 || v > 31) return;
     if (isNaN(v)) v = "";
     this.updateData({D: v});
-    this.updateDatePicker({D: v});
+    //this.updateDatePicker({D: v});
   }
 
   _handleChangeMonth(e){
@@ -117,14 +123,14 @@ class DateTimeInput extends React.Component {
     if (v < 1 || v > 12) return;
     if (isNaN(v)) v = "";
     this.updateData({M: v});
-    this.updateDatePicker({M: v});
+    //this.updateDatePicker({M: v});
   }
 
   _handleChangeYear(e){
     let v = parseInt(e.target.value);
     if (isNaN(v)) v = "";
     this.updateData({Y: v});
-    this.updateDatePicker({Y: v});
+    //this.updateDatePicker({Y: v});
   }
 
   _handleChangeHours(e){
@@ -132,7 +138,7 @@ class DateTimeInput extends React.Component {
     if (v < 0 || v > 23) return;
     if (isNaN(v)) v = "";
     this.updateData({h: v});
-    this.updateDatePicker({h: v});
+    //this.updateDatePicker({h: v});
   }
 
   _handleChangeMinutes(e){
@@ -140,7 +146,7 @@ class DateTimeInput extends React.Component {
     if (v < 0 || v > 59) return;
     if (isNaN(v)) v = "";
     this.updateData({m: v});
-    this.updateDatePicker({m: v});
+    //this.updateDatePicker({m: v});
   }
 
   _handleChangeSeconds(e){
@@ -148,7 +154,7 @@ class DateTimeInput extends React.Component {
     if (v < 0 || v > 59) return;
     if (isNaN(v)) v = "";
     this.updateData({s: v});
-    this.updateDatePicker({s: v});
+    //this.updateDatePicker({s: v});
   }
 
   initData(data, format) {
@@ -228,11 +234,11 @@ class DateTimeInput extends React.Component {
         <div className="dateTimeInput rails-bootstrap-forms-datetime-select">
             <div className="row">
               {fmt.includes('D') ? (
-                <input id={this.props.inputId + '_' + this.props.inputSuffixId + '_day'} style={errorStl} type="number" min="0" max="31" className="input-2 form-control" value={this.state.D} onChange={this.handleChangeDay} disabled={this.state.disabled} />
+                <input id={this.props.inputId + '_' + this.props.inputSuffixId + '_day'} name={this.props.inputName + '[day]'} style={errorStl} type="number" min="0" max="31" className="input-2 form-control" value={this.state.D} onChange={this.handleChangeDay} disabled={this.state.disabled || this.props.isRange} />
               ) : null
               }
               {fmt.includes('M') ? (
-                <select id={this.props.inputId + '_' + this.props.inputSuffixId + '_month'} style={errorStl} className="form-control" value={this.state.M} onChange={this.handleChangeMonth} disabled={this.state.disabled}>
+                <select id={this.props.inputId + '_' + this.props.inputSuffixId + '_month'} name={this.props.inputName + '[month]'} style={errorStl} className="form-control" value={this.state.M} onChange={this.handleChangeMonth} disabled={this.state.disabled || this.props.isRange}>
                 <option value=""></option>
                 <option value="1">January</option>
                 <option value="2">February</option>
@@ -249,25 +255,28 @@ class DateTimeInput extends React.Component {
                 </select>) : null
               }
               {fmt.includes('Y') ? (
-                <input id={this.props.inputId + '_' + this.props.inputSuffixId + '_year'} style={errorStl} type="number" className={'input-4 form-control' + this.styleMarginRight} value={this.state.Y} onChange={this.handleChangeYear} disabled={this.state.disabled} />
+                <input id={this.props.inputId + '_' + this.props.inputSuffixId + '_year'} name={this.props.inputName + '[year]'} style={errorStl} type="number" className={'input-4 form-control' + this.styleMarginRight} value={this.state.Y} onChange={this.handleChangeYear} disabled={this.state.disabled || this.props.isRange} />
               ) : null
               }
               {fmt.includes('h') ? (
-                <input id={this.props.inputId + '_' + this.props.inputSuffixId + '_hour'} style={errorStl} min="0" max="23" type="number" className="input-2 form-control" value={this.state.h} onChange={this.handleChangeHours} disabled={this.state.disabled} />
+                <input id={this.props.inputId + '_' + this.props.inputSuffixId + '_hour'} name={this.props.inputName + '[hour]'} style={errorStl} min="0" max="23" type="number" className="input-2 form-control" value={this.state.h} onChange={this.handleChangeHours} disabled={this.state.disabled || this.props.isRange} />
               ) : null
               }
               {fmt.includes('m') ? (
-                <input id={this.props.inputId + '_' + this.props.inputSuffixId + '_minutes'} style={errorStl} min="0" max="59" type="number" className="input-2 form-control" value={this.state.m} onChange={this.handleChangeMinutes} disabled={this.state.disabled} />
+                <input id={this.props.inputId + '_' + this.props.inputSuffixId + '_minute'} name={this.props.inputName + '[minute]'} style={errorStl} min="0" max="59" type="number" className="input-2 form-control" value={this.state.m} onChange={this.handleChangeMinutes} disabled={this.state.disabled || this.props.isRange} />
               ) : null
               }
               {fmt.includes('s') ? (
-                <input id={this.props.inputId + '_' + this.props.inputSuffixId + '_seconds'} style={errorStl} min="0" max="59" type="number" className="input-2 form-control" value={this.state.s} onChange={this.handleChangeSeconds} disabled={this.state.disabled} />
+                <input id={this.props.inputId + '_' + this.props.inputSuffixId + '_second'} name={this.props.inputName + '[second]'} style={errorStl} min="0" max="59" type="number" className="input-2 form-control" value={this.state.s} onChange={this.handleChangeSeconds} disabled={this.state.disabled || this.props.isRange} />
               ) : null
               }
               <div className="hidden-datepicker">
                 <input type="text" ref="hiddenInput" value={this.state.selectedDate} name={this.props.inputName} onChange={this.selectDate}/>
               </div>
-              <a id={this.props.inputId + '_calendar_icon' + '_' + this.props.inputSuffixId} onClick={this.openCloseDatepicker} type="button" className="calendar-button"><span className="glyphicon glyphicon-calendar"></span></a>
+              <div className="calendar-button-container">
+                <a id={this.props.inputId + '_calendar_icon' + '_' + this.props.inputSuffixId} onClick={this.openCloseDatepicker} type="button"><span className="glyphicon glyphicon-calendar"></span></a>
+                <a onClick={this.clearDatepicker} type="button"><span className="glyphicon glyphicon-remove"></span></a>
+              </div>
             </div>
         </div>
         <span className="error helptext">{errorMsg}</span>
