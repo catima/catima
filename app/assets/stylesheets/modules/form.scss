@@ -166,19 +166,3 @@ button[data-active=true]:focus {
     }
   }
 }
-
-.dateTimeInput {
-  .hidden-datepicker {
-    margin-left: 5px;
-    width: 0;
-    height: 0;
-    overflow: hidden;
-
-    input {
-      position: absolute;
-      z-index: -1;
-      opacity:0;
-      filter:alpha(opacity=0);
-    }
-  }
-}
