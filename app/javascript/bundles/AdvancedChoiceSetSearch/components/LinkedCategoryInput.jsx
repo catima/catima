@@ -214,8 +214,10 @@ class LinkedCategoryInput extends Component {
               />
     } else if (this.state.inputType === 'Field::Email') {
       return <input name={this._buildInputNameCondition(this.state.selectedCondition)} onChange={this.selectItem} type="text" className="form-control"/>
-    } else if (this.state.inputType === 'Field::Int' || this.state.inputType === 'Field::Decimal') {
+    } else if (this.state.inputType === 'Field::Int') {
       return <input name={this._buildInputNameCondition(this.state.selectedCondition)} onChange={this.selectItem} type="number" className="form-control"/>
+    } else if (this.state.inputType === 'Field::Decimal') {
+      return <input name={this._buildInputNameCondition(this.state.selectedCondition)} onChange={this.selectItem} type="number" className="form-control" step="any"/>
     } else if (this.state.inputType === 'Field::URL') {
       return <input name={this._buildInputNameCondition(this.state.selectedCondition)} onChange={this.selectItem} type="url" className="form-control"/>
     } else if ((this.state.inputType === 'Field::ChoiceSet' && !this._getChoiceSetMultipleOption()) || this.state.inputType === 'Field::Boolean') {
