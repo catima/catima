@@ -227,9 +227,6 @@ class DateTimeInput extends React.Component {
       <div id={this.props.inputId + '_' + this.props.inputSuffixId}>
         <div className="dateTimeInput rails-bootstrap-forms-datetime-select">
             <div className="row">
-                <div className="row hidden-datepicker">
-                  <input type="text" ref="hiddenInput" value={this.state.selectedDate} name={this.props.inputName} onChange={this.selectDate}/>
-                </div>
               {fmt.includes('D') ? (
                 <input id={this.props.inputId + '_' + this.props.inputSuffixId + '_day'} style={errorStl} type="number" min="0" max="31" className="input-2 form-control" value={this.state.D} onChange={this.handleChangeDay} disabled={this.state.disabled} />
               ) : null
@@ -267,6 +264,9 @@ class DateTimeInput extends React.Component {
                 <input id={this.props.inputId + '_' + this.props.inputSuffixId + '_seconds'} style={errorStl} min="0" max="59" type="number" className="input-2 form-control" value={this.state.s} onChange={this.handleChangeSeconds} disabled={this.state.disabled} />
               ) : null
               }
+              <div className="hidden-datepicker">
+                <input type="text" ref="hiddenInput" value={this.state.selectedDate} name={this.props.inputName} onChange={this.selectDate}/>
+              </div>
               <a id={this.props.inputId + '_calendar_icon' + '_' + this.props.inputSuffixId} onClick={this.openCloseDatepicker} type="button" className="calendar-button"><span className="glyphicon glyphicon-calendar"></span></a>
             </div>
         </div>
