@@ -2,16 +2,21 @@
   margin-top: 15px;
 }
 
-.calendar-button {
-    height: 30px;
-    width: 30px;
-    padding: 3px;
+.calendar-button-container {
     display: inline-block;
-    vertical-align: middle;
+    margin-left: 5px;
 }
 
-.glyphicon-calendar {
-    font-size: 22px;
+.calendar-button-container a {
+    display: inline-block;
+    vertical-align: middle;
+    height: 30px;
+    width: 22px;
+    padding: 4px 0;
+}
+
+.calendar-button-container a .glyphicon {
+    font-size: 16px;
     vertical-align: middle;
     height: 22px;
     width: 22px;
