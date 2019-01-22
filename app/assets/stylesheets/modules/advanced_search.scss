@@ -16,3 +16,20 @@
     height: 22px;
     width: 22px;
 }
+
+.dateTimeInput {
+  .hidden-datepicker {
+    display: inline-block;
+    width: 0;
+    height: 0;
+    overflow: hidden;
+
+    input {
+      position: absolute;
+      z-index: -1;
+      bottom: 0;
+      opacity:0;
+      filter:alpha(opacity=0);
+    }
+  }
+}
