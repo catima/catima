@@ -134,7 +134,7 @@ class DateTimeSearch extends Component {
 
   renderDateTimeElement(){
     return (
-      <div className="d-inline-block">
+      <div>
         <DateTimeInput input={this.props.inputStart} inputId={this.dateTimeSearchId} inputSuffixId="start_date" inputName={this.state.startDateInputName} ref={this.dateTimeSearchRef} datepicker={true} locale={this.props.locale} format={this.props.format}/>
         { !this.state.disabled &&
           <i className="fa fa-chevron-down"></i>
@@ -163,9 +163,6 @@ class DateTimeSearch extends Component {
         </div>
         }
         <div className={this._getDateTimeClassname()}>
-          { this.props.startLabel !== '' && (typeof this.props.startLabel !== 'undefined') &&
-          <label>{ this.props.startLabel }</label>
-          }
           { this.renderDateTimeElement() }
           <div className="collapse" id={this.dateTimeCollapseId}>
             { this.props.endLabel !== '' && (typeof this.props.endLabel !== 'undefined') &&
