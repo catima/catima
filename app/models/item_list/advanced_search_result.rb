@@ -146,6 +146,8 @@ class ItemList::AdvancedSearchResult < ItemList
   def merge_relations(strategies)
     relations = strategies.first
     strategies.drop(1).each do |relation|
+      # Needed for reference filter search
+      relation = relation.unscope(where: :item_type_id) if relations.to_sql.include?("parent_items")
       relations = relations.merge(relation)
     end
 
@@ -155,6 +157,8 @@ class ItemList::AdvancedSearchResult < ItemList
   def or_relations(strategies)
     relations = strategies.first
     strategies.drop(1).each do |relation|
+      # Needed for reference filter search
+      relation = relation.unscope(where: :item_type_id) if relations.to_sql.include?("parent_items")
       relations = relations.or(relation)
     end
 
