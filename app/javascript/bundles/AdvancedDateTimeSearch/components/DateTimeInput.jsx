@@ -19,7 +19,8 @@ class DateTimeInput extends React.Component {
   constructor(props){
     super(props);
     this.state = {
-      disabled: false,
+      disabled: this.props.disabled,
+      isRange: this.props.isRange,
       selectedDate: '',
       isDatepickerOpen: false,
     };
@@ -54,6 +55,10 @@ class DateTimeInput extends React.Component {
   componentWillReceiveProps(nextProps) {
     if (nextProps.disabled !== this.state.disabled) {
       this.setState({ disabled: nextProps.disabled });
+    }
+
+    if (nextProps.isRange !== this.state.isRange) {
+      this.setState({ isRange: nextProps.isRange });
     }
   }
 
