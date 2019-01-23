@@ -16,7 +16,8 @@ class DateTimeSearch extends Component {
       endDateInputName: this.props.endDateInputName,
       startDateInputNameArray: this.props.startDateInputName.split("[exact]"),
       endDateInputNameArray: this.props.endDateInputName.split("[exact]"),
-      disabled: true
+      disabled: false,
+      isRange: false
     };
 
     this.dateTimeSearchId = `${this.props.srcId}-datetime`;
@@ -85,11 +86,18 @@ class DateTimeSearch extends Component {
   _updateDisableState(value) {
     if(typeof value !== 'undefined') {
       if(value === 'between' || value === 'outside') {
-        this.setState({ disabled: false });
+        this.setState({ disabled: true });
+        this.setState({ isRange: true });
         $('#' + this.dateTimeCollapseId).slideDown();
         this._linkRangeDatepickers(this.dateTimeSearchRef, this.dateTimeSearchRef2, false);
-      } else {
+    } else if (value === 'after' || value === 'before') {
         this.setState({ disabled: true });
+        this.setState({ isRange: false });
+        $('#' + this.dateTimeCollapseId).slideUp();
+        this._linkRangeDatepickers(this.dateTimeSearchRef, this.dateTimeSearchRef2, true);
+    } else {
+        this.setState({ disabled: false });
+        this.setState({ isRange: false });
         $('#' + this.dateTimeCollapseId).slideUp();
         this._linkRangeDatepickers(this.dateTimeSearchRef, this.dateTimeSearchRef2, true);
       }
@@ -134,12 +142,12 @@ class DateTimeSearch extends Component {
 
   renderDateTimeElement(){
     return (
-      <div>
-        <DateTimeInput input={this.props.inputStart} inputId={this.dateTimeSearchId} inputSuffixId="start_date" inputName={this.state.startDateInputName} ref={this.dateTimeSearchRef} isRange={!this.state.disabled} datepicker={true} locale={this.props.locale} format={this.props.format}/>
-        { !this.state.disabled &&
-          <i className="fa fa-chevron-down"></i>
-        }
-      </div>
+        <div className="col-md-12">
+            <DateTimeInput input={this.props.inputStart} inputId={this.dateTimeSearchId} inputSuffixId="start_date" inputName={this.state.startDateInputName} ref={this.dateTimeSearchRef} disabled={this.state.disabled} isRange={this.state.isRange} datepicker={true} locale={this.props.locale} format={this.props.format}/>
+            { this.state.isRange &&
+              <i className="fa fa-chevron-down"></i>
+            }
+        </div>
     );
   }
 
@@ -165,9 +173,9 @@ class DateTimeSearch extends Component {
         <div className={this._getDateTimeClassname()}>
           { this.renderDateTimeElement() }
           <div className="collapse" id={this.dateTimeCollapseId}>
-            <div className="row">
-              <div className="col-md-12"><DateTimeInput input={this.props.inputEnd} inputId={this.dateTimeSearchId} inputSuffixId="end_date" inputName={this.state.endDateInputName} disabled={this.state.disabled} isRange={!this.state.disabled} ref={this.dateTimeSearchRef2} datepicker={true} locale={this.props.locale} format={this.props.format}/></div>
-            </div>
+             <div className="col-md-12">
+                <DateTimeInput input={this.props.inputEnd} inputId={this.dateTimeSearchId} inputSuffixId="end_date" inputName={this.state.endDateInputName} disabled={this.state.disabled} isRange={this.state.isRange} ref={this.dateTimeSearchRef2} datepicker={true} locale={this.props.locale} format={this.props.format}/>
+             </div>
           </div>
         </div>
         { this.props.selectCondition.length > 0 &&
