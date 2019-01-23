@@ -79,6 +79,8 @@ class ItemList::AdvancedSearchResult < ItemList
 
     strategies.each do |strategy|
       criteria = field_criteria(strategy.field)
+      # The first strategy doesn't have and/or/exclude field in the view, so we manually add it here
+      criteria[:field_condition] = "and" if criteria[:field_condition].blank?
 
       # The first strategy doesn't have and/or/exclude field in the view, so we manually add it here
       criteria[:field_condition] = "and" if criteria[:field_condition].blank?
