@@ -78,6 +78,10 @@ class DateTimeInput extends React.Component {
     if (nextProps.isRange !== this.state.isRange) {
       this.setState({ isRange: nextProps.isRange });
     }
+
+    if (nextProps.isRange !== this.state.isRange) {
+      this.setState({ isRange: nextProps.isRange });
+    }
   }
 
   _initDatePicker() {
