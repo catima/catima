@@ -7,11 +7,12 @@ class Search::EmailStrategy < Search::BaseStrategy
 
   def search(scope, criteria)
     negate = criteria[:field_condition] == "exclude"
-
+    p "000000000000000000000000000000000000000000000000000000000000"
+p scope.to_sql
     scope = exact_search(scope, criteria[:exact], negate)
     scope = all_words_search(scope, criteria[:all_words], negate)
     scope = one_word_search(scope, criteria[:one_word], negate)
-
+p scope.to_sql
     scope
   end
 
