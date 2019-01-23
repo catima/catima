@@ -103,26 +103,26 @@ class Field::Int < ::Field
     ]
   end
 
-  def search_conditions_as_hash
+  def search_conditions_as_hash(locale)
     [
       {
-        :value => I18n.t("advanced_searches.number_search_field.contains_number"),
+        :value => I18n.t("advanced_searches.number_search_field.contains_number", locale: locale),
         :key => "exact"
       },
       {
-        :value => I18n.t("advanced_searches.number_search_field.less_than"),
+        :value => I18n.t("advanced_searches.number_search_field.less_than", locale: locale),
         :key => "less_than"
       },
       {
-        :value => I18n.t("advanced_searches.number_search_field.less_than_or_equal_to"),
+        :value => I18n.t("advanced_searches.number_search_field.less_than_or_equal_to", locale: locale),
         :key => "less_than_or_equal_to"
       },
       {
-        :value => I18n.t("advanced_searches.number_search_field.greater_than"),
+        :value => I18n.t("advanced_searches.number_search_field.greater_than", locale: locale),
         :key => "greater_than"
       },
       {
-        :value => I18n.t("advanced_searches.number_search_field.greater_than_or_equal_to"),
+        :value => I18n.t("advanced_searches.number_search_field.greater_than_or_equal_to", locale: locale),
         :key => "greater_than_or_equal_to"
       }
     ]
