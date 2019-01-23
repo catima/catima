@@ -285,11 +285,11 @@ class Field < ApplicationRecord
     ]
   end
 
-  def search_conditions_as_hash
+  def search_conditions_as_hash(locale)
     [
-      { :value => I18n.t("advanced_searches.text_search_field.exact"), :key => "exact"},
-      { :value => I18n.t("advanced_searches.text_search_field.all_words"), :key => "all_words"},
-      { :value => I18n.t("advanced_searches.text_search_field.one_word"), :key => "one_word"}
+      { :value => I18n.t("advanced_searches.text_search_field.exact", locale: locale), :key => "exact"},
+      { :value => I18n.t("advanced_searches.text_search_field.all_words", locale: locale), :key => "all_words"},
+      { :value => I18n.t("advanced_searches.text_search_field.one_word", locale: locale), :key => "one_word"}
     ]
   end
 

@@ -16,7 +16,7 @@
           srcRef: "advanced_search_criteria_#{field.uuid}_0_exact",
           inputName: "advanced_search[criteria][#{field.uuid}][0][exact]",
           selectConditionName: "advanced_search[criteria][#{field.uuid}][0][condition]",
-          selectCondition: field.search_conditions_as_hash,
+          selectCondition: field.search_conditions_as_hash(I18n.locale),
           displayFieldCondition: i.positive?,
           multiple: true,
           fieldConditionName: "advanced_search[criteria][#{field.uuid}][0][field_condition]",
