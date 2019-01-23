@@ -53,18 +53,24 @@ class ItemList::AdvancedSearchResult < ItemList
       "or" => [],
       "exclude" => []
     }
+
     strategies.each do |strategy|
       criteria = field_criteria(strategy.field)
+      # The first strategy doesn't have and/or/exclude field in the view, so we manually add it here
+      criteria[:field_condition] = "and" if criteria[:field_condition].blank?
 
       # Simple fields
-      if %w[or exclude and].include?(criteria[:field_condition])
+      if %w[or exclude and].include?(criteria[:field_condition]) && criteria["0"].blank?
         items_strategies[criteria[:field_condition]] << strategy.search(original_scope, criteria)
       end
 
       # React complex fields that can have multiple values
       next if criteria["0"].blank?
 
+      # Remove previously added criteria[:field_condition]
+      criteria = criteria.except(:field_condition)
       criteria.keys.each do |key|
+        criteria[key][:field_condition] = "and" if criteria[key][:field_condition].blank?
         if %w[or exclude and].include?(criteria[key][:field_condition])
           items_strategies[criteria[key][:field_condition]] << strategy.search(original_scope, criteria[key])
         end
