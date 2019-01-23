@@ -143,7 +143,7 @@ class DateTimeSearch extends Component {
   renderDateTimeElement(){
     return (
         <div className="col-md-12">
-            <DateTimeInput input={this.props.inputStart} inputId={this.dateTimeSearchId} inputSuffixId="start_date" inputName={this.state.startDateInputName} ref={this.dateTimeSearchRef} disabled={this.state.disabled} isRange={this.state.isRange} datepicker={true} locale={this.props.locale} format={this.props.format}/>
+            <DateTimeInput input={this.props.inputStart} inputId={this.dateTimeSearchId} inputSuffixId="start_date" inputName={this.state.startDateInputName} ref={this.dateTimeSearchRef} localizedDateTimeData={this.props.localizedDateTimeData} disabled={this.state.disabled} isRange={this.state.isRange} datepicker={true} locale={this.props.locale} format={this.props.format}/>
             { this.state.isRange &&
               <i className="fa fa-chevron-down"></i>
             }
@@ -174,7 +174,7 @@ class DateTimeSearch extends Component {
           { this.renderDateTimeElement() }
           <div className="collapse" id={this.dateTimeCollapseId}>
              <div className="col-md-12">
-                <DateTimeInput input={this.props.inputEnd} inputId={this.dateTimeSearchId} inputSuffixId="end_date" inputName={this.state.endDateInputName} disabled={this.state.disabled} isRange={this.state.isRange} ref={this.dateTimeSearchRef2} datepicker={true} locale={this.props.locale} format={this.props.format}/>
+                <DateTimeInput input={this.props.inputEnd} inputId={this.dateTimeSearchId} inputSuffixId="end_date" inputName={this.state.endDateInputName} localizedDateTimeData={this.props.localizedDateTimeData} disabled={this.state.disabled} isRange={this.state.isRange} ref={this.dateTimeSearchRef2} datepicker={true} locale={this.props.locale} format={this.props.format}/>
              </div>
           </div>
         </div>

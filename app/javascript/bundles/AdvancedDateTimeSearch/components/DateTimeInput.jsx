@@ -243,21 +243,16 @@ class DateTimeInput extends React.Component {
               ) : null
               }
               {fmt.includes('M') ? (
-                <select id={this.props.inputId + '_' + this.props.inputSuffixId + '_month'} name={this.props.inputName + '[month]'} style={errorStl} className="form-control" value={this.state.M} onChange={this.handleChangeMonth} disabled={this.state.disabled || this.props.isRange}>
-                <option value=""></option>
-                <option value="1">January</option>
-                <option value="2">February</option>
-                <option value="3">March</option>
-                <option value="4">April</option>
-                <option value="5">May</option>
-                <option value="6">June</option>
-                <option value="7">July</option>
-                <option value="8">August</option>
-                <option value="9">September</option>
-                <option value="10">October</option>
-                <option value="11">November</option>
-                <option value="12">December</option>
-                </select>) : null
+                <select id={this.props.inputId + '_' + this.props.inputSuffixId + '_month'} style={errorStl} className="form-control" value={this.state.M} onChange={this.handleChangeMonth} disabled={this.state.disabled}>
+                { this.props.localizedDateTimeData.month_names.map((month, index) => {
+                  if (month !== null) {
+                    month = month.charAt(0).toUpperCase() + month.slice(1);
+                  }
+
+                  return <option key={index} value={index}>{ month }</option>
+                }
+              )}
+              </select>) : null
               }
               {fmt.includes('Y') ? (
                 <input id={this.props.inputId + '_' + this.props.inputSuffixId + '_year'} name={this.props.inputName + '[year]'} style={errorStl} type="number" className={'input-4 form-control' + this.styleMarginRight} value={this.state.Y} onChange={this.handleChangeYear} disabled={this.state.disabled || this.props.isRange} />
