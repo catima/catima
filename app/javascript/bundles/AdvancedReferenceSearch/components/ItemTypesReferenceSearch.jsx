@@ -21,6 +21,7 @@ class ItemTypesReferenceSearch extends Component {
       inputType: 'Field::Text',
       inputData: null,
       inputOptions: null,
+      localizedDateTimeData: [],
       selectedFilter: {},
       selectedItem: [],
       selectCondition: this.props.selectCondition,
@@ -104,6 +105,7 @@ class ItemTypesReferenceSearch extends Component {
       this._updateSelectCondition(res.data.selectCondition);
       this.setState({ inputNameArray: this.state.inputName.split('[' + res.data.selectCondition[0].key + ']')});
       this._buildDateTimeInputNames(this.state.inputName);
+      this._updateLocalizedDateTimeData(res.data.inputOptions);
       this.setState({ inputType: res.data.inputType });
       this.setState({ inputOptions: res.data.inputOptions });
       this.setState({ isLoading: false });
@@ -146,10 +148,11 @@ class ItemTypesReferenceSearch extends Component {
     else return formatOption.format;
   }
 
-  _getInputOption(string) {
-    var option = this._searchInArray(this.state.inputOptions, string);
-    if (option === false) return null;
-    else return option;
+  _updateLocalizedDateTimeData(options) {
+    var option = this._searchInArray(options, 'localizedDateTimeData');
+    if (option !== false) {
+        this.setState({localizedDateTimeData: option.localizedDateTimeData});
+    }
   }
 
   _getChoiceSetMultipleOption() {
@@ -191,7 +194,7 @@ class ItemTypesReferenceSearch extends Component {
                 disableInputByCondition={this.props.selectedCondition}
                 startDateInputName={this.state.startDateInputName}
                 endDateInputName={this.state.endDateInputName}
-                localizedDateTimeData={this._getInputOption('localizedDateTimeData')}
+                localizedDateTimeData={this.state.localizedDateTimeData}
                 catalog={this.props.catalog}
                 itemType={this.props.itemType}
                 inputStart='input1'
