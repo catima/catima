@@ -19,8 +19,8 @@ class ReferenceSearch extends Component {
       inputName: this.props.inputName.split("[exact]"),
       selectedCondition: '',
       selectedItem: [],
-      searchPlaceholder: '',
-      filterPlaceholder: ''
+      searchPlaceholder: this.props.searchPlaceholder,
+      filterPlaceholder: this.props.filterPlaceholder
     };
 
     this.selectFilter = this._selectFilter.bind(this);
@@ -45,8 +45,6 @@ class ReferenceSearch extends Component {
     .then(res => {
       this.setState({ items: res.data.items });
       this.setState({ fields: res.data.fields });
-      this.setState({ filterPlaceholder: res.data.filter_placeholder });
-      this.setState({ searchPlaceholder: res.data.search_placeholder });
       this.setState({ isLoading: false });
     });
 

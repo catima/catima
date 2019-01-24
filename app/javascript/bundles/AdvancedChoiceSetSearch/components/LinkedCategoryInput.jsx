@@ -22,6 +22,7 @@ class LinkedCategoryInput extends Component {
       inputType: 'Field::Text',
       inputData: null,
       inputOptions: null,
+      localizedDateTimeData: [],
       selectedFilter: {},
       selectedItem: [],
       selectCondition: [],
@@ -119,6 +120,7 @@ class LinkedCategoryInput extends Component {
       this._buildDateTimeInputNames(res.data.inputType, this.state.inputName, this.state.selectedCondition);
       this.setState({ inputOptions: res.data.inputOptions });
       this._updateDateTimeFormatOption(res.data.inputOptions);
+      this._updateLocalizedDateTimeData(res.data.inputOptions);
       this.setState({ inputType: res.data.inputType });
       this.setState({ isLoading: false });
     });
@@ -161,6 +163,13 @@ class LinkedCategoryInput extends Component {
     }
     else {
       this.setState({dateFormat: formatOption.format});
+    }
+  }
+
+  _updateLocalizedDateTimeData(options) {
+    var option = this._searchInArray(options, 'localizedDateTimeData');
+    if (option !== false) {
+        this.setState({localizedDateTimeData: option.localizedDateTimeData});
     }
   }
 
@@ -209,7 +218,7 @@ class LinkedCategoryInput extends Component {
                 disableInputByCondition={this.props.selectedCondition}
                 startDateInputName={this.state.startDateInputName}
                 endDateInputName={this.state.endDateInputName}
-                localizedDateTimeData={this._getInputOption('localizedDateTimeData')}
+                localizedDateTimeData={this.state.localizedDateTimeData}
                 catalog={this.props.catalog}
                 itemType={this.props.itemType}
                 inputStart='input1'
