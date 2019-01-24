@@ -245,7 +245,7 @@ class DateTimeInput extends React.Component {
               ) : null
               }
               {fmt.includes('M') ? (
-                <select id={this.props.inputId + '_' + this.props.inputSuffixId + '_month'} style={errorStl} className="form-control" value={this.state.M} onChange={this.handleChangeMonth} disabled={this.state.disabled}>
+                <select id={this.props.inputId + '_' + this.props.inputSuffixId + '_month'} style={errorStl} name={this.props.inputName + '[month]'} className="form-control" value={this.state.M} onChange={this.handleChangeMonth} disabled={this.state.disabled}>
                 { this.props.localizedDateTimeData.month_names.map((month, index) => {
                   if (month !== null) {
                     month = month.charAt(0).toUpperCase() + month.slice(1);
