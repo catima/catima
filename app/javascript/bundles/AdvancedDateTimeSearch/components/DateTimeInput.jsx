@@ -274,7 +274,7 @@ class DateTimeInput extends React.Component {
               ) : null
               }
               <div className="hidden-datepicker">
-                <input type="text" ref="hiddenInput" value={this.state.selectedDate} name={this.props.inputName} onChange={this.selectDate}/>
+                <input type="text" ref="hiddenInput" value={this.state.selectedDate} onChange={this.selectDate}/>
               </div>
               <div className="calendar-button-container">
                 <a id={this.props.inputId + '_calendar_icon' + '_' + this.props.inputSuffixId} onClick={this.openCloseDatepicker} type="button"><span className="glyphicon glyphicon-calendar"></span></a>
