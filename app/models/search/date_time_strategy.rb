@@ -13,8 +13,10 @@ class Search::DateTimeStrategy < Search::BaseStrategy
     start_condition = criteria[:start].keys.first
     end_condition = criteria[:start].keys.first
 
-    start_date_time = Time.zone.at(criteria[:start][start_condition].to_i / 1000) if start_date?(criteria)
-    end_date_time = Time.zone.at(criteria[:end][end_condition].to_i / 1000) if end_date?(criteria)
+    # start_date_time = Time.zone.at(criteria[:start][start_condition].to_i / 1000) if start_date?(criteria)
+    # end_date_time = Time.zone.at(criteria[:end][end_condition].to_i / 1000) if end_date?(criteria)
+    start_date_time = criteria[:start][start_condition]
+    end_date_time = criteria[:end][end_condition] if end_date?(criteria)
 
     return scope unless start_date_time.present? || end_date_time.present?
 
@@ -69,6 +71,8 @@ class Search::DateTimeStrategy < Search::BaseStrategy
     return scope if exact_date_time.blank?
 
     sql_operator = negate ? "<>" : "="
+    p "__________________________________________________________________________________"
+    p field.format
     scope.where(
       "#{convert_to_timestamp(concat_json_date(exact_date_time))} #{sql_operator}
       to_timestamp(?, '#{field_date_format_to_sql_format}')", date_remove_utc(exact_date_time)
