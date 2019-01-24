@@ -164,6 +164,12 @@ class LinkedCategoryInput extends Component {
     }
   }
 
+  _getInputOption(string) {
+    var option = this._searchInArray(this.state.inputOptions, string);
+    if (option === false) return null;
+    else return option;
+  }
+
   _getChoiceSetMultipleOption() {
     var multipleOption = this._searchInArray(this.state.inputOptions, 'multiple');
     if (multipleOption === false) return false;
@@ -203,6 +209,7 @@ class LinkedCategoryInput extends Component {
                 disableInputByCondition={this.props.selectedCondition}
                 startDateInputName={this.state.startDateInputName}
                 endDateInputName={this.state.endDateInputName}
+                localizedDateTimeData={this._getInputOption('localizedDateTimeData')}
                 catalog={this.props.catalog}
                 itemType={this.props.itemType}
                 inputStart='input1'
