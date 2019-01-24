@@ -145,7 +145,8 @@ class Field::DateTime < ::Field
 
   def search_options_as_hash
     [
-      { :format => format }
+      { :format => format },
+      { :localizedDateTimeData => I18n.t('date') }
     ]
   end
 

@@ -23,6 +23,7 @@ class DateTimeInput extends React.Component {
       isRange: this.props.isRange,
       selectedDate: '',
       isDatepickerOpen: false,
+      localizedDateTimeData: []
     };
     const date = this.getData();
     const granularity = this.getFieldOptions().format;
@@ -49,6 +50,7 @@ class DateTimeInput extends React.Component {
 
   componentDidMount() {
     this._initDatePicker();
+    this.setState({ localizedDateTimeData: this.props.localizedDateTimeData });
     if (jQuery.isEmptyObject(this.getData())) return this.initData(DateTimeInput.defaultValues, this.getFieldOptions().format)
   }
 
@@ -243,8 +245,9 @@ class DateTimeInput extends React.Component {
               ) : null
               }
               {fmt.includes('M') ? (
+
                 <select id={this.props.inputId + '_' + this.props.inputSuffixId + '_month'} style={errorStl} className="form-control" value={this.state.M} onChange={this.handleChangeMonth} disabled={this.state.disabled}>
-                { this.props.localizedDateTimeData.month_names.map((month, index) => {
+                { this.state.localizedDateTimeData.month_names.map((month, index) => {
                   if (month !== null) {
                     month = month.charAt(0).toUpperCase() + month.slice(1);
                   }
