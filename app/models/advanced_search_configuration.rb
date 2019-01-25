@@ -101,16 +101,6 @@ class AdvancedSearchConfiguration < ApplicationRecord
     end
   end
 
-  def include_geographic_field?
-    return false if item_type.nil?
-
-    item_type.fields.each do |field|
-      return true if field.type == Field::TYPES["geometry"]
-    end
-
-    false
-  end
-
   def search_type_map?
     search_type == AdvancedSearchConfiguration::TYPES['Map']
   end

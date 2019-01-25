@@ -112,4 +112,12 @@ class ItemType < ApplicationRecord
   def default_display_name_view
     item_views.find_by(default_for_display_name: true)
   end
+
+  def include_geographic_field?
+    fields.each do |field|
+      return true if field.type == Field::TYPES["geometry"]
+    end
+
+    false
+  end
 end
