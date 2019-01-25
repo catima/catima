@@ -68,8 +68,6 @@ class Search::DateTimeStrategy < Search::BaseStrategy
   end
 
   def exact_search(scope, date_time, negate)
-    return scope if date_time.blank?
-
     sql_operator = negate ? "<>" : "="
 
     date_time.keys.each do |key|
@@ -82,8 +80,6 @@ class Search::DateTimeStrategy < Search::BaseStrategy
   end
 
   def inexact_search(scope, date_time, field_condition, negate)
-    return scope if date_time.blank?
-
     case field_condition
     when "before"
       sql_operator = negate ? ">" : "<"
