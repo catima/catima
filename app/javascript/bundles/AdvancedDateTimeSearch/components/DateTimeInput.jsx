@@ -256,14 +256,17 @@ class DateTimeInput extends React.Component {
         <div className="dateTimeInput rails-bootstrap-forms-datetime-select">
             <div className="row">
               {fmt.includes('D') ? (
-                <input id={this.props.inputId + '_' + this.props.inputSuffixId + '_day'} name={this.props.inputName + '[day]'} style={errorStl} type="number" min="0" max="31" className="input-2 form-control" value={this.state.D} onChange={this.handleChangeDay} disabled={this.state.disabled || this.props.isRange} />
+                <input id={this.props.inputId + '_' + this.props.inputSuffixId + '_day'} name={this.props.inputName + '[D]'} style={errorStl} type="number" min="0" max="31" className="input-2 form-control" value={this.state.D} onChange={this.handleChangeDay} readOnly={this.state.disabled || this.props.isRange} />
               ) : null
               }
               {fmt.includes('M') ? (
-                <select id={this.props.inputId + '_' + this.props.inputSuffixId + '_month'} style={errorStl} name={this.props.inputName + '[month]'} className="form-control" value={this.state.M} onChange={this.handleChangeMonth} disabled={this.state.disabled}>
+                <select id={this.props.inputId + '_' + this.props.inputSuffixId + '_month'} style={errorStl} name={this.props.inputName + '[M]'} className="form-control" value={this.state.M} onChange={this.handleChangeMonth} readOnly={this.state.disabled}>
                 { this.props.localizedDateTimeData.month_names.map((month, index) => {
                   if (month !== null) {
                     month = month.charAt(0).toUpperCase() + month.slice(1);
+                  }
+                  if (index === 0) {
+                    index = ''
                   }
 
                   return <option key={index} value={index}>{ month }</option>
@@ -272,19 +275,19 @@ class DateTimeInput extends React.Component {
               </select>) : null
               }
               {fmt.includes('Y') ? (
-                <input id={this.props.inputId + '_' + this.props.inputSuffixId + '_year'} name={this.props.inputName + '[year]'} style={errorStl} type="number" className={'input-4 form-control' + this.styleMarginRight} value={this.state.Y} onChange={this.handleChangeYear} disabled={this.state.disabled || this.props.isRange} />
+                <input id={this.props.inputId + '_' + this.props.inputSuffixId + '_year'} name={this.props.inputName + '[Y]'} style={errorStl} type="number" className={'input-4 form-control' + this.styleMarginRight} value={this.state.Y} onChange={this.handleChangeYear} readOnly={this.state.disabled || this.props.isRange} />
               ) : null
               }
               {fmt.includes('h') ? (
-                <input id={this.props.inputId + '_' + this.props.inputSuffixId + '_hour'} name={this.props.inputName + '[hour]'} style={errorStl} min="0" max="23" type="number" className="input-2 form-control" value={this.state.h} onChange={this.handleChangeHours} disabled={this.state.disabled || this.props.isRange} />
+                <input id={this.props.inputId + '_' + this.props.inputSuffixId + '_hour'} name={this.props.inputName + '[h]'} style={errorStl} min="0" max="23" type="number" className="input-2 form-control" value={this.state.h} onChange={this.handleChangeHours} readOnly={this.state.disabled || this.props.isRange} />
               ) : null
               }
               {fmt.includes('m') ? (
-                <input id={this.props.inputId + '_' + this.props.inputSuffixId + '_minute'} name={this.props.inputName + '[minute]'} style={errorStl} min="0" max="59" type="number" className="input-2 form-control" value={this.state.m} onChange={this.handleChangeMinutes} disabled={this.state.disabled || this.props.isRange} />
+                <input id={this.props.inputId + '_' + this.props.inputSuffixId + '_minute'} name={this.props.inputName + '[m]'} style={errorStl} min="0" max="59" type="number" className="input-2 form-control" value={this.state.m} onChange={this.handleChangeMinutes} readOnly={this.state.disabled || this.props.isRange} />
               ) : null
               }
               {fmt.includes('s') ? (
-                <input id={this.props.inputId + '_' + this.props.inputSuffixId + '_second'} name={this.props.inputName + '[second]'} style={errorStl} min="0" max="59" type="number" className="input-2 form-control" value={this.state.s} onChange={this.handleChangeSeconds} disabled={this.state.disabled || this.props.isRange} />
+                <input id={this.props.inputId + '_' + this.props.inputSuffixId + '_second'} name={this.props.inputName + '[s]'} style={errorStl} min="0" max="59" type="number" className="input-2 form-control" value={this.state.s} onChange={this.handleChangeSeconds} readOnly={this.state.disabled || this.props.isRange} />
               ) : null
               }
               <div className="hidden-datepicker">
