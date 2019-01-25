@@ -133,7 +133,9 @@ class Field::ChoiceSet < ::Field
       if choice.category.present? && choice.category.active?
         option[:category_data] = []
         choice.category.fields.each do |field|
-          option[:category_data] << field unless field.is_a?(Field::ChoiceSet) || field.is_a?(Field::Reference)
+          next if field.is_a?(Field::ChoiceSet) || field.is_a?(Field::Reference) || !field.human_readable?
+          
+          option[:category_data] << field
         end
       end
 
