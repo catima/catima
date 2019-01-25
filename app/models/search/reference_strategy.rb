@@ -11,8 +11,7 @@ class Search::ReferenceStrategy < Search::BaseStrategy
 
   def search(scope, criteria)
     negate = criteria[:field_condition] == "exclude"
-p "________________________________________________________________________________"
-p criteria[:default].present?
+
     # User searched by tag
     if criteria[:default].present?
       criterias = criteria[:default].split(',')
@@ -70,8 +69,6 @@ p criteria[:default].present?
                   .joins("LEFT JOIN items ON parent_items.data->>'#{field.uuid}' = items.id::text AND parent_items.item_type_id = #{field.item_type.id}"),
                 criteria)
             end
-
-    p "coucou"
 
     scope
   end
