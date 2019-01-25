@@ -57,6 +57,21 @@ class DateTimeInput extends React.Component {
   componentWillReceiveProps(nextProps) {
     if (nextProps.disabled !== this.state.disabled) {
       this.setState({ disabled: nextProps.disabled });
+      //When the selected condition changes, we clear the inputs if the user has left une field empty
+      if(nextProps.disabled) {
+          var formatArray = this.props.format.split('');
+          var count = 0;
+          formatArray.forEach((item) => {
+              if(this.state[item] !== '') {
+                  count++;
+              }
+          });
+
+          if(count < formatArray.length) {
+              //The user has left a field empty => clear all fields
+              this._clearDatepicker();
+          }
+      }
     }
 
     if (nextProps.isRange !== this.state.isRange) {
