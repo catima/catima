@@ -2,7 +2,6 @@ class CatalogAdmin::AdvancedSearchConfigurationsController < CatalogAdmin::BaseC
   layout "catalog_admin/setup/form"
 
   def index
-    authorize(AdvancedSearchConfiguration)
     render("index", :layout => "catalog_admin/setup")
   end
 
@@ -38,10 +37,8 @@ class CatalogAdmin::AdvancedSearchConfigurationsController < CatalogAdmin::BaseC
     authorize(@advanced_search_conf)
 
     add_field_to_advanced_search_configuration
-    if advanced_search_conf_params[:field_position].present?
-      @advanced_search_conf.move_field_up(advanced_search_conf_params[:field]) if advanced_search_conf_params[:field_position] == "up"
-      @advanced_search_conf.move_field_down(advanced_search_conf_params[:field]) if advanced_search_conf_params[:field_position] == "down"
-    end
+
+    move_field(advanced_search_conf_params) if advanced_search_conf_params[:field_position].present?
 
     if @advanced_search_conf.update(advanced_search_conf_params.except(:item_type, :field, :field_position))
       @locales = @advanced_search_conf.catalog.valid_locales
@@ -115,6 +112,10 @@ class CatalogAdmin::AdvancedSearchConfigurationsController < CatalogAdmin::BaseC
       :field,
       :field_position,
       permitted_params)
+  end
+
+  def move_field(params)
+    @advanced_search_conf.try("move_field_#{params[:field_position]}", params[:field])
   end
 
   def advanced_search_configuration_updated_message
