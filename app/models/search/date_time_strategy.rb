@@ -182,4 +182,20 @@ class Search::DateTimeStrategy < Search::BaseStrategy
 
     true
   end
+
+  def data_field_expr(date_component)
+    "items.data->'#{field.uuid}'->>'#{date_component}'"
+  end
+
+  def date_time_component(date_time, key)
+    return date_time[key].presence || "0000" if key == "Y"
+
+    date_time[key].presence || "00"
+  end
+
+  def components_empty?(date_time)
+    date_time.each { |_key, value| return false if value.present? }
+
+    true
+  end
 end
