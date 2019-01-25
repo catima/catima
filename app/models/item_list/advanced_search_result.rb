@@ -45,8 +45,6 @@ class ItemList::AdvancedSearchResult < ItemList
 
   def unpaginaged_items
     original_scope = item_type.public_sorted_items
-    p "hello"
-    p original_scope.to_sql
 
     return original_scope if criteria.blank?
 
@@ -60,32 +58,27 @@ class ItemList::AdvancedSearchResult < ItemList
       criteria = field_criteria(strategy.field)
       # The first strategy doesn't have and/or/exclude field in the view, so we manually add it here
       criteria[:field_condition] = "and" if criteria[:field_condition].blank?
-      p criteria
+
       # Simple fields
       if %w[or exclude and].include?(criteria[:field_condition]) && criteria["0"].blank?
         items_strategies[criteria[:field_condition]] << strategy.search(original_scope, criteria)
       end
-p criteria["0"].blank?
+
       # React complex fields that can have multiple values
       next if criteria["0"].blank?
 
       # Remove previously added criteria[:field_condition]
       criteria = criteria.except(:field_condition)
-      p criteria
       criteria.keys.each do |key|
-        p key
+
         criteria[key][:field_condition] = "and" if criteria[key][:field_condition].blank?
-        p criteria
         if %w[or exclude and].include?(criteria[key][:field_condition])
           items_strategies[criteria[key][:field_condition]] << strategy.search(original_scope, criteria[key])
         end
       end
     end
 
-    p items_strategies["and"].first.to_sql
     and_relations = merge_relations(items_strategies["and"])
-    p "salut"
-    p and_relations.to_sql
     or_relations = or_relations(items_strategies["or"])
     exclude_relations = merge_relations(items_strategies["exclude"])
 
