@@ -2,9 +2,9 @@ require 'fileutils'
 
 class SqlDump
   COMMON_SQL_COLUMNS = {
-    :id => "INT",
-    :created_at => "DATETIME",
-    :updated_at => "DATETIME"
+    :id => "INT PRIMARY KEY",
+    :created_at => "TIMESTAMP DEFAULT CURRENT_TIMESTAMP",
+    :updated_at => "TIMESTAMP DEFAULT CURRENT_TIMESTAMP"
   }.freeze
 
   def initialize
@@ -29,7 +29,7 @@ class SqlDump
     dump_data(cat, directory)
 
     # Export references
-    # dump_references(cat, directory)
+    dump_references(cat, directory)
 
     # Export data & files
     # dump_data(cat, directory)
@@ -108,11 +108,59 @@ class SqlDump
       fields.each do |field|
         inserts << "INSERT INTO `#{field.slug}` (`#{item.item_type.slug}`, `#{field.slug}_#{field.related_item_type.slug}`) \n VALUES (#{item.id}, #{field.related_item_type.id});\n\n"
       end
-
-      #TODO: choiceset data
     end
 
+    inserts << dump_choices_data(cat, dir)
+
     File.open(File.join(struct_dir, 'data.sql'), 'a+') { |f| f << inserts }
+  end
+
+
+  def dump_references(cat, dir)
+    struct_dir = File.join(dir, 'structure')
+
+    File.write(File.join(struct_dir, 'references.sql'), '')
+
+    alters = ""
+    cat.items.each do |item|
+      # Todo: make sure id the correct primary key
+      # Single references and choices
+      fields = item.item_type.fields.select { |field| !field.multiple? && field.is_a?(Field::Reference) }
+      fields.each do |field|
+        alter = ""
+        alter = "ALTER TABLE `#{item.item_type.slug}` ADD #{primary_key(item.item_type)};\n" if primary_key(item.item_type).present?
+        alter << "ALTER TABLE `#{item.item_type.slug}` ADD FOREIGN KEY (`#{field.slug}`) \n REFERENCES `#{field.related_item_type.slug}`(`id`);\n\n"
+
+        alters << alter unless alters.include?(alter)
+      end
+
+      # Multiple references and choices
+      fields = item.item_type.fields.select { |field| field.multiple? && field.is_a?(Field::Reference) }
+      fields.each do |field|
+        alters << "ALTER TABLE `#{field.related_item_type.slug}` ADD FOREIGN KEY (`#{field.related_item_type.slug}`) \n REFERENCES(`#{field.slug}`);\n\n"
+      end
+    end
+
+    File.open(File.join(struct_dir, 'references.sql'), 'a+') { |f| f << alters }
+  end
+
+
+  def dump_choices_data(cat, dir)
+    inserts = ""
+    cat.choice_sets.each do |choice_set|
+      choice_set.choices.each do |choice|
+        insert_template = "INSERT INTO `#{choice.choice_set.name}` (#{Choice.columns_hash.map { |c_name, _c| "`#{c_name}`"}.join(',')}) \n VALUES ("
+        Choice.columns_hash.each do |column_name, column|
+          value = convert_active_storage_value_to_sql_value(column.type, choice.public_send(column_name))
+          insert_template << "#{value}#{',' unless column_name == Choice.columns_hash.keys.last} \n"
+        end
+        insert_template << ");\n\n"
+
+        inserts << insert_template
+      end
+    end
+
+    inserts
   end
 
   def dump_create_database(cat)
@@ -122,14 +170,12 @@ class SqlDump
   def dump_create_item_types_table(item_type)
     columns = common_sql_columns
 
-    item_type.fields.each do |field|
-      # ManyToMany references have separate tables
-      next if field.multiple?
-
-      columns << "`#{field.slug}` #{field.sql_type} #{field.sql_nullable} #{field.sql_default} #{field.sql_unique}#{',' unless field == item_type.fields.last} \n"
+    fields = item_type.fields.reject(&:multiple)
+    fields.each do |field|
+      columns << "`#{field.slug}` #{field.sql_type} #{field.sql_nullable} #{field.sql_default} #{field.sql_unique}#{',' unless field == fields.last} \n"
     end
 
-    "CREATE TABLE `#{item_type.slug}` (\n#{columns}\n);\n\n"
+    "CREATE TABLE `#{item_type.slug}` (\n#{columns}\n);"
   end
 
   def dump_create_reference_table(item_type)
@@ -148,7 +194,7 @@ class SqlDump
   end
 
   def dump_create_choice_sets_table(choice_set)
-    columns = common_sql_columns
+    columns = ""
 
     Choice.columns_hash.each do |column_name, column|
       columns << "`#{column_name}` #{convert_active_storage_type_to_sql_type(column.type)} #{'NOT NULL' unless column.null}#{',' unless column_name == Choice.columns_hash.keys.last} \n"
@@ -158,7 +204,7 @@ class SqlDump
   end
 
   def dump_create_categories_table(category)
-    columns = common_sql_columns
+    columns = ""
 
     category.fields.each do |field|
       columns << "`#{field.slug}` #{field.sql_type} #{field.sql_nullable} #{field.sql_default} #{field.sql_unique}#{',' unless field == category.fields.last} \n"
@@ -174,21 +220,24 @@ class SqlDump
   def primary_key(item_type)
     return "" if item_type.primary_field.blank?
 
-    "PRIMARY KEY (#{item_type.primary_field.slug})"
+    "PRIMARY KEY (`#{item_type.primary_field.slug}`)"
   end
 
   def dump_item_data(item)
-    values = "("
+    values = ""
 
     values << "#{item.id}, "
-    values << "#{item.created_at}, "
-    values << "#{item.updated_at}, "
+    values << "#{convert_active_storage_value_to_sql_value(:datetime, item.created_at)}, "
+    values << "#{convert_active_storage_value_to_sql_value(:datetime, item.updated_at)}, "
 
     item.fields.each do |field|
-      values << "#{sql_value(field.type, field.value_for_item(item))} #{',' unless item == item.fields.last}"
+      # ManyToMany references have separate tables
+      next if field.multiple?
+
+      values << "#{sql_value(field.type, field.value_for_item(item))} #{',' unless field == item.fields.last}"
     end
 
-    values << ")"
+    values
   end
 
   def dump_catalog_information(cat, struct_dir)
@@ -299,9 +348,27 @@ class SqlDump
     when :json
       "JSON"
     when :datetime
-      "DATETIME"
+      "TIMESTAMP DEFAULT CURRENT_TIMESTAMP"
     else
       "VARCHAR(255)"
+    end
+  end
+
+  def convert_active_storage_value_to_sql_value(type, value)
+    return "NULL" if value.blank?
+
+    case type
+    # when :string
+    #   "VARCHAR(255)"
+    when :integer
+      value
+    when :json
+      "'#{value.to_json.to_s.gsub("'") { "\\'" }}'"
+    when :datetime
+      "'#{value.utc.to_s.gsub(' UTC', '')}'"
+    else
+      value = value.gsub("'") { "\\'" }
+      "'#{value}'"
     end
   end
 
@@ -312,13 +379,14 @@ class SqlDump
     when "Field::Int", "Field::Decimal", "Field::Editor"
       value
     when "Field::Reference", "Field::ChoiceSet"
-      value.id if value.is_a?(Item)
+      # value.is_a?(Item) ? value.id : "'#{value.short_name_translations.to_json}'"
+      value.id
     when "Field::Boolean"
       value == "0" ? "FALSE" : "TRUE"
     when "Field::DateTime"
       "'#{value.to_json}'"
     else
-      "'#{value}'"
+      "'#{value.to_s.gsub("'") { "\\'" }}'"
     end
   end
 end
