@@ -161,11 +161,6 @@ class SqlDump
     end
 
     inserts
-
-      #TODO: choiceset data
-    end
-
-    File.open(File.join(struct_dir, 'data.sql'), 'a+') { |f| f << inserts }
   end
 
   def dump_create_database(cat)
@@ -196,35 +191,10 @@ class SqlDump
     end
 
     tables
-    columns = ""
-
-    item_type.fields.each do |field|
-      # ManyToMany references have separate tables
-      next if field.multiple?
-
-      columns << "`#{field.slug}` #{field.sql_type} #{field.sql_nullable} #{field.sql_default} #{field.sql_unique}#{',' unless field == item_type.fields.last} \n"
-    end
-
-    "CREATE TABLE `#{item_type.slug}` (\n#{columns}\n);\n\n"
-  end
-
-  def dump_create_reference_table(item_type)
-    tables = ""
-    item_type.fields.each do |field|
-      # ManyToMany references have separate tables
-      next unless field.multiple? && field.is_a?(Field::Reference)
-
-      columns = "`#{item_type.slug}_id` INT NOT NULL,\n"
-      columns << "`#{field.slug}_#{field.related_item_type.slug}_id` INT NOT NULL}\n"
-
-      tables << "CREATE TABLE `#{field.slug}` (\n#{columns}\n);\n\n"
-    end
-
-    tables
   end
 
   def dump_create_choice_sets_table(choice_set)
-    columns = common_sql_columns
+    columns = ""
 
     Choice.columns_hash.each do |column_name, column|
       columns << "`#{column_name}` #{convert_active_storage_type_to_sql_type(column.type)} #{'NOT NULL' unless column.null}#{',' unless column_name == Choice.columns_hash.keys.last} \n"
@@ -250,21 +220,24 @@ class SqlDump
   def primary_key(item_type)
     return "" if item_type.primary_field.blank?
 
-    "PRIMARY KEY (#{item_type.primary_field.slug})"
+    "PRIMARY KEY (`#{item_type.primary_field.slug}`)"
   end
 
   def dump_item_data(item)
-    values = "("
+    values = ""
 
     values << "#{item.id}, "
-    values << "#{item.created_at}, "
-    values << "#{item.updated_at}, "
+    values << "#{convert_active_storage_value_to_sql_value(:datetime, item.created_at)}, "
+    values << "#{convert_active_storage_value_to_sql_value(:datetime, item.updated_at)}, "
 
     item.fields.each do |field|
-      values << "#{sql_value(field.type, field.value_for_item(item))} #{',' unless item == item.fields.last}"
+      # ManyToMany references have separate tables
+      next if field.multiple?
+
+      values << "#{sql_value(field.type, field.value_for_item(item))} #{',' unless field == item.fields.last}"
     end
 
-    values << ")"
+    values
   end
 
   def dump_catalog_information(cat, struct_dir)
