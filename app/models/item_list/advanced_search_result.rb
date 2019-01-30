@@ -79,11 +79,17 @@ class ItemList::AdvancedSearchResult < ItemList
     end
 
     and_relations = merge_relations(items_strategies["and"])
+    p and_relations.to_sql
     or_relations = or_relations(items_strategies["or"])
     exclude_relations = merge_relations(items_strategies["exclude"])
-
+    # p exclude_relations.to_sql
+    # p exclude_relations.merge(Item.all).to_sql
+# return exclude_relations.merge(Item.all)
     and_relations = and_relations.merge(exclude_relations) if exclude_relations.present?
 
+    p "FULL QUERY"
+    p and_relations.to_sql
+    p or_relations.to_sql
     return and_relations.or(or_relations) if or_relations.present?
 
     and_relations
