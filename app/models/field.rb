@@ -55,6 +55,7 @@ class Field < ApplicationRecord
   include Field::Style
   include HasTranslations
   include HasSlug
+  include HasSqlSlug
   include RankedModel
   include FieldsHelper
   include JsonHelper

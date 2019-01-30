@@ -113,6 +113,8 @@ class Field::Reference < ::Field
   end
 
   def sql_type
-    "INT"
+    return "INT" unless related_item_type.primary_field.present?
+
+    related_item_type.primary_field.sql_type
   end
 end
