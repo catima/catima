@@ -62,3 +62,6 @@ dump.rdb
 
 # Ignore IDE config
 .editorconfig
+
+# Ignore certificates and keys
+*.pem
