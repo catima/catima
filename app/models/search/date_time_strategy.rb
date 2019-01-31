@@ -184,7 +184,12 @@ class Search::DateTimeStrategy < Search::BaseStrategy
   end
 
   def data_field_expr(date_component)
-    "items.data->'#{field.uuid}'->>'#{date_component}'"
+    case date_component
+    when "Y"
+      "LPAD(items.data->'#{field.uuid}'->>'#{date_component}', 4, '0')"
+    else
+      "LPAD(items.data->'#{field.uuid}'->>'#{date_component}', 2, '0')"
+    end
   end
 
   def date_time_component(date_time, key)
