@@ -51,6 +51,7 @@ class DateTimeInput extends React.Component {
   componentDidMount() {
     this._initDatePicker();
     this.setState({ localizedDateTimeData: this.props.localizedDateTimeData });
+    window.addEventListener("click", this.onSelectMonthClick);
     if (jQuery.isEmptyObject(this.getData())) return this.initData(DateTimeInput.defaultValues, this.getFieldOptions().format)
   }
 
@@ -104,6 +105,14 @@ class DateTimeInput extends React.Component {
       } else {
           this.setState({isDatepickerOpen: true});
           $(this.refs['hiddenInput']).data("DateTimePicker").show();
+      }
+  }
+
+  _getSelectClassNames() {
+      if(this.state.disabled) {
+          return "form-control disabled";
+      } else {
+          return "form-control";
       }
   }
 
@@ -260,19 +269,20 @@ class DateTimeInput extends React.Component {
               ) : null
               }
               {fmt.includes('M') ? (
-                <select id={this.props.inputId + '_' + this.props.inputSuffixId + '_month'} style={errorStl} name={this.props.inputName + '[M]'} className="form-control" value={this.state.M} onChange={this.handleChangeMonth} readOnly={this.state.disabled} disabled={this.state.disabled}>
-                { this.props.localizedDateTimeData.month_names.map((month, index) => {
-                  if (month !== null) {
-                    month = month.charAt(0).toUpperCase() + month.slice(1);
-                  }
-                  if (index === 0) {
-                    index = ''
-                  }
+                    <select id={this.props.inputId + '_' + this.props.inputSuffixId + '_month'} style={errorStl} name={this.props.inputName + '[M]'} className={this._getSelectClassNames()} value={this.state.M} onChange={this.handleChangeMonth} ref={this.props.inputName + '[M]'} readOnly={this.state.disabled || this.props.isRange}>
+                    { this.props.localizedDateTimeData.month_names.map((month, index) => {
+                      if (month !== null) {
+                        month = month.charAt(0).toUpperCase() + month.slice(1);
+                      }
+                      if (index === 0) {
+                        index = ''
+                      }
 
-                  return <option key={index} value={index}>{ month }</option>
-                }
-              )}
-              </select>) : null
+                      return <option key={index} value={index}>{ month }</option>
+                    }
+                    )}
+                    </select>
+              ) : null
               }
               {fmt.includes('Y') ? (
                 <input id={this.props.inputId + '_' + this.props.inputSuffixId + '_year'} name={this.props.inputName + '[Y]'} style={errorStl} type="number" className={'input-4 form-control' + this.styleMarginRight} value={this.state.Y} onChange={this.handleChangeYear} readOnly={this.state.disabled || this.props.isRange} />
