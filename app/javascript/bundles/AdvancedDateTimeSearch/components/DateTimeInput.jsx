@@ -45,7 +45,6 @@ class DateTimeInput extends React.Component {
 
     this.selectDate = this._selectDate.bind(this);
     this.openCloseDatepicker = this._openCloseDatepicker.bind(this);
-    this.onSelectMonthClick = this._onSelectMonthClick.bind(this);
     this.clearDatepicker = this._clearDatepicker.bind(this);
   }
 
