@@ -33,6 +33,10 @@ class GeoViewer extends React.Component {
   }
 
   componentDidMount(){
+    if (typeof this.props.mapHeight !== 'undefined') {
+      this.setState({mapHeight: this.props.mapHeight})
+    }
+
     this._map = this.refs.map.leafletElement;
     this._mapElement = this.refs.map;
     this.mapBecomesVisible();
