@@ -249,6 +249,15 @@ class Field < ApplicationRecord
     raw_value(it) if human_readable?
   end
 
+  # Even non readable. Useful for dumps
+  def field_value_for_all_item(it)
+    raw_value = raw_value(it)
+    return raw_value unless is_a?(Field::File) || is_a?(Field::Image)
+
+    # gsub is useful to change the path of uploaded files
+    raw_value.to_s.gsub("upload/#{it.catalog.slug}", "files") unless raw_value.nil?
+  end
+
   # Defines methods and runs class macros on the given item class in order to
   # add validation rules, accessors, etc. for this field. The class in this
   # case is an anonymous subclass of Item.

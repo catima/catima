@@ -1,6 +1,4 @@
-require 'fileutils'
-
-class CatalogDump
+class Dump::CatalogDump < ::Dump
   def initialize
   end
 
@@ -32,17 +30,6 @@ class CatalogDump
     # Dump menu items
     Rails.logger.info "Dumping menu items for catalog #{cat.id}..."
     dump_menu_items(cat, directory)
-  end
-
-  def write_meta(dir)
-    meta = { dump_created_at: Time.now.utc.to_s, dump_version: '1.0' }
-    File.write(File.join(dir, 'meta.json'), JSON.pretty_generate(meta))
-  end
-
-  def create_output_dir(d)
-    ensure_no_file_overwrite(d)
-    ensure_empty_directory(d)
-    FileUtils.mkdir_p(d) unless File.exist?(d)
   end
 
   def dump_structure(cat, dir)
@@ -81,11 +68,11 @@ class CatalogDump
     end
   end
 
-  def dump_item_type_structure(it, dir)
-    dmp = it.as_json(only: %i(slug name_translations name_plural_translations))
-    dmp["fields"] = it.fields.map(&:describe)
-    dmp['item-views'] = it.item_views.map(&:describe)
-    File.write(File.join(dir, "#{it.slug}.json"), JSON.pretty_generate(dmp))
+  def dump_item_type_structure(item, dir)
+    dmp = item.as_json(only: %i(slug name_translations name_plural_translations))
+    dmp["fields"] = item.fields.map(&:describe)
+    dmp['item-views'] = item.item_views.map(&:describe)
+    File.write(File.join(dir, "#{item.slug}.json"), JSON.pretty_generate(dmp))
   end
 
   def dump_categories(cat, struct_dir)
@@ -115,23 +102,14 @@ class CatalogDump
     )
   end
 
-  def dump_files(cat, dir)
-    files_dir = File.join(dir, 'files')
-    Dir.mkdir files_dir
-    FileUtils.cp_r(
-      Dir.glob(File.join(Rails.public_path, 'upload', cat.slug, '*')),
-      files_dir
-    )
-  end
-
   def dump_pages(cat, dir)
     pages_dir = File.join(dir, 'pages')
     Dir.mkdir pages_dir
     cat.pages.each { |p| dump_page(p, pages_dir) }
   end
 
-  def dump_page(p, dir)
-    File.write(File.join(dir, "#{p.slug}.json"), JSON.pretty_generate(p.describe))
+  def dump_page(page, dir)
+    File.write(File.join(dir, "#{page.slug}.json"), JSON.pretty_generate(page.describe))
   end
 
   def dump_menu_items(cat, dir)
@@ -139,19 +117,5 @@ class CatalogDump
       File.join(dir, "menus.json"),
       JSON.pretty_generate("menu-items": cat.menu_items.map(&:describe))
     )
-  end
-
-  private
-
-  def file_error(msg)
-    "ERROR. #{msg} Please specify an non-existing or empty directory."
-  end
-
-  def ensure_no_file_overwrite(path)
-    raise(file_error("'#{path}' is a file.")) if File.exist?(path) && !File.directory?(path)
-  end
-
-  def ensure_empty_directory(dir)
-    raise(file_error("'#{dir}' is not empty.")) if File.directory?(dir) && !Dir[File.join(dir, '*')].empty?
   end
 end
