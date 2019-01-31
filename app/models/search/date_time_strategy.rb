@@ -68,15 +68,20 @@ class Search::DateTimeStrategy < Search::BaseStrategy
   end
 
   def exact_search(scope, date_time, negate)
-    sql_operator = negate ? "<>" : "="
+    # sql_operator = negate ? "<>" : "="
 
-    date_time.keys.each do |key|
-      next if date_time[key].blank?
+    date_components = date_time.select { |_, value| value.present? }
+    sql = date_components.map { |k, _| "#{data_field_expr(k)} LIKE ?" }.join(" AND ")
 
-      scope = scope.where("#{data_field_expr(key)} #{sql_operator} ?", date_time[key])
-    end
+    # date_time.keys.each do |key|
+    #   next if date_time[key].blank?
+    #
+    #   scope = scope.where("#{data_field_expr(key)} #{sql_operator} ?", date_time[key])
+    # end
 
-    scope
+    where_scope = ->(*q) { negate ? scope.where.not(q) : scope.where(q) }
+
+    where_scope.call(sql, *date_components.map { |_key, value| "%#{value}%" })
   end
 
   def inexact_search(scope, date_time, field_condition, negate)
@@ -166,7 +171,12 @@ class Search::DateTimeStrategy < Search::BaseStrategy
   end
 
   def data_field_expr(date_component)
-    "items.data->'#{field.uuid}'->>'#{date_component}'"
+    case date_component
+    when "Y"
+      "LPAD(items.data->'#{field.uuid}'->>'#{date_component}', 4, '0')"
+    else
+      "LPAD(items.data->'#{field.uuid}'->>'#{date_component}', 2, '0')"
+    end
   end
 
   def date_time_component(date_time, key)
