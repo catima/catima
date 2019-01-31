@@ -32,7 +32,8 @@ class ItemList::AdvancedSearchResult < ItemList
         popup_content = ApplicationController.render(
           :partial => 'advanced_searches/popup_content',
           :assigns => {
-            :item => item
+            :item => item,
+            :field => field
           }
         )
         item.data[field.uuid]["features"][0]["properties"]["popupContent"] = popup_content
