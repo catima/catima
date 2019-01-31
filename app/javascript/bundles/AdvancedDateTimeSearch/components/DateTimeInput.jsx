@@ -45,13 +45,13 @@ class DateTimeInput extends React.Component {
 
     this.selectDate = this._selectDate.bind(this);
     this.openCloseDatepicker = this._openCloseDatepicker.bind(this);
-    this.onSelectMonthClick = this._onSelectMonthClick.bind(this);
     this.clearDatepicker = this._clearDatepicker.bind(this);
   }
 
   componentDidMount() {
     this._initDatePicker();
     this.setState({ localizedDateTimeData: this.props.localizedDateTimeData });
+    window.addEventListener("click", this.onSelectMonthClick);
     if (jQuery.isEmptyObject(this.getData())) return this.initData(DateTimeInput.defaultValues, this.getFieldOptions().format)
   }
 
@@ -108,10 +108,11 @@ class DateTimeInput extends React.Component {
       }
   }
 
-  _onSelectMonthClick(e) {
+  _getSelectClassNames() {
       if(this.state.disabled) {
-          e.stopPropagation();
-          $(this.refs[this.props.inputName + '[M]']).blur();
+          return "form-control disabled";
+      } else {
+          return "form-control";
       }
   }
 
@@ -268,7 +269,7 @@ class DateTimeInput extends React.Component {
               ) : null
               }
               {fmt.includes('M') ? (
-                    <select id={this.props.inputId + '_' + this.props.inputSuffixId + '_month'} style={errorStl} name={this.props.inputName + '[M]'} className="form-control" value={this.state.M} onChange={this.handleChangeMonth} ref={this.props.inputName + '[M]'} readOnly={this.state.disabled} onClick={this.onSelectMonthClick}>
+                    <select id={this.props.inputId + '_' + this.props.inputSuffixId + '_month'} style={errorStl} name={this.props.inputName + '[M]'} className={this._getSelectClassNames()} value={this.state.M} onChange={this.handleChangeMonth} ref={this.props.inputName + '[M]'} readOnly={this.state.disabled || this.props.isRange}>
                     { this.props.localizedDateTimeData.month_names.map((month, index) => {
                       if (month !== null) {
                         month = month.charAt(0).toUpperCase() + month.slice(1);
