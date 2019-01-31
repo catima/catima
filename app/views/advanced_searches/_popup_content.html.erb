@@ -1,4 +1,8 @@
 <p>
+  <%= @item.item_type.primary_field&.field_value_for_item(@item) %>
+</p>
+
+<p>
   <%= link_to(item_url(
   :catalog_slug => @item.catalog.slug,
   :locale => I18n.locale,
@@ -9,7 +13,3 @@
   :item_type_slug => @item.item_type.slug,
   :id => @item.id)) %>
 </p>
-
-<% @item.fields.each do |field| %>
-  <%= field.field_value_for_item(@item) %><br>
-<% end %>
