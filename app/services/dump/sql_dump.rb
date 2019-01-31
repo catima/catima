@@ -1,6 +1,6 @@
 require 'fileutils'
 
-class SqlDump
+class Dump::SqlDump < ::Dump
   include CatalogAdmin::SqlDumpHelper
 
   COMMON_SQL_COLUMNS = {
@@ -36,23 +36,12 @@ class SqlDump
     # TODO : Dump files
   end
 
-  def write_meta(dir)
-    meta = { dump_created_at: Time.now.utc.to_s, dump_version: '1.0' }
-    File.write(File.join(dir, 'meta.json'), JSON.pretty_generate(meta))
-  end
-
-  def create_output_dir(d)
-    ensure_no_file_overwrite(d)
-    ensure_empty_directory(d)
-    FileUtils.mkdir_p(d) unless File.exist?(d)
-  end
-
   def dump_structure(cat, dir)
-    struct_dir = File.join(dir, 'structure')
+    # struct_dir = File.join(dir, 'structure')
     # Dir.mkdir struct_dir
 
     # Create database
-    File.write(File.join(struct_dir, 'structure.sql'), dump_create_database(cat))
+    File.write(File.join(dir, 'structure.sql'), dump_create_database(cat))
 
     # ItemsTypes become tables, ItemType fields become columns
     tables = ""
@@ -70,14 +59,14 @@ class SqlDump
       tables << dump_create_categories_table(category)
     end
 
-    File.open(File.join(struct_dir, 'structure.sql'), 'a+') { |f| f << tables }
+    File.open(File.join(dir, 'structure.sql'), 'a+') { |f| f << tables }
   end
 
 
   def dump_data(cat, dir)
-    struct_dir = File.join(dir, 'structure')
+    # struct_dir = File.join(dir, 'structure')
 
-    File.write(File.join(struct_dir, 'data.sql'), '')
+    File.write(File.join(dir, 'data.sql'), '')
 
     # ItemsTypes become tables, ItemType fields become columns
     inserts = ""
@@ -89,13 +78,24 @@ class SqlDump
 
       fields = item.item_type.fields.select { |field| field.multiple? && field.is_a?(Field::Reference) }
       fields.each do |field|
-        inserts << "INSERT INTO `#{field.sql_slug}` (`#{item.item_type.sql_slug}`, `#{field.sql_slug}_#{field.related_item_type.sql_slug}`) VALUES (\n#{item.id}, #{field.related_item_type.id});\n\n"
+        value = if item.item_type.primary_field.nil? || item.item_type.primary_field&.is_a?(Field::Reference) || item.item_type.primary_field&.is_a?(Field::ChoiceSet)
+                  item.id
+                else
+                  # "'#{field.field_value_for_item(item)}'"
+                  "'#{item.item_type.primary_field&.value_for_item(item)}'"
+                end
+
+        next if value == "''"
+
+        field.value_for_item(item).each do |ref|
+          inserts << "INSERT INTO `#{field.sql_slug}` (`#{item.item_type.sql_slug}`, `#{field.sql_slug}_#{field.related_item_type.sql_slug}`) VALUES (\n#{value}, #{field.related_item_type.id});\n\n"
+        end
       end
     end
 
     inserts << dump_choices_data(cat, dir)
 
-    File.open(File.join(struct_dir, 'data.sql'), 'a+') { |f| f << inserts }
+    File.open(File.join(dir, 'data.sql'), 'a+') { |f| f << inserts }
   end
 
   def dump_primary_keys(cat)
@@ -111,7 +111,7 @@ class SqlDump
     cat.items.each do |item|
       # TODO: #{field.sql_slug}_#{field.related_item_type.sql_slug} can be too long...
       item.fields.select { |f| f.multiple? && f.is_a?(Field::Reference) }.each do |field|
-        alter = "ALTER TABLE `#{field.sql_slug}` ADD PRIMARY KEY (`#{item.item_type.sql_slug}`, `#{field.sql_slug}_#{field.related_item_type.sql_slug}`);\n"
+        alter = "-- ALTER TABLE `#{field.sql_slug}` ADD PRIMARY KEY (`#{item.item_type.sql_slug}`, `#{field.sql_slug}_#{field.related_item_type.sql_slug}`);\n"
 
         alters << alter unless alters.include?(alter)
       end
@@ -137,15 +137,15 @@ class SqlDump
   end
 
   def dump_references(cat, dir)
-    struct_dir = File.join(dir, 'structure')
+    # struct_dir = File.join(dir, 'structure')
 
-    File.write(File.join(struct_dir, 'references.sql'), '')
+    File.write(File.join(dir, 'references.sql'), '')
 
     # Export primary keys
     alters = dump_primary_keys(cat)
 
     alters << render_header_comment("REFERENCES")
-    alters << render_comment("ITEMS")
+    alters << render_comment("Single references")
     cat.items.each do |item|
       # Single references and choices
       fields = item.item_type.fields.select { |field| !field.multiple? && field.is_a?(Field::Reference) }
@@ -161,7 +161,10 @@ class SqlDump
 
         alters << alter unless alters.include?(alter)
       end
+    end
 
+    alters << render_comment("Multiple references")
+    cat.items.each do |item|
       # Multiple references and choices
       fields = item.item_type.fields.select { |field| field.multiple? && field.is_a?(Field::Reference) }
       fields.each do |field|
@@ -179,7 +182,7 @@ class SqlDump
       end
     end
 
-    File.open(File.join(struct_dir, 'references.sql'), 'a+') { |f| f << alters }
+    File.open(File.join(dir, 'references.sql'), 'a+') { |f| f << alters }
   end
 
 
@@ -229,11 +232,11 @@ class SqlDump
       primary_field = item_type.primary_field
       foreign_column_name = primary_field&.sql_slug.presence || 'id'
       # References that point to a multiple field dont't have the primary field column so we force it to id
-      foreign_column_name = 'id' if item_type.primary_field.multiple?
+      # foreign_column_name = 'id' if item_type.primary_field.multiple?
 
-      columns = "`#{item_type.sql_slug}` INT NOT NULL,\n"
+      columns = "`#{item_type.sql_slug}` #{convert_app_type_to_sql_type(primary_field)},\n"
       column_name = "#{field.sql_slug}_#{field.related_item_type.sql_slug}"
-      columns << "`#{column_name}` INT NOT NULL\n"
+      columns << "`#{column_name}` #{convert_app_type_to_sql_type(field.related_item_type.primary_field)}\n"
 
       tables << "CREATE TABLE `#{field.sql_slug}` (\n#{columns}\n);\n\n"
     end
@@ -335,59 +338,8 @@ class SqlDump
       JSON.pretty_generate("choice-sets": cat.choice_sets.map(&:describe))
     )
   end
-  #
-  # def dump_data(cat, dir)
-  #   data_dir = File.join(dir, 'data')
-  #   # Dir.mkdir data_dir
-  #   cat.item_types.each { |it| dump_items(it, data_dir) }
-  # end
-
-  def dump_items(item_type, dir)
-    File.write(
-      File.join(dir, "#{item_type.sql_slug}.json"),
-      JSON.pretty_generate("item-type": item_type.sql_slug, "items": item_type.items.map(&:describe))
-    )
-  end
-
-  def dump_files(cat, dir)
-    files_dir = File.join(dir, 'files')
-    Dir.mkdir files_dir
-    FileUtils.cp_r(
-      Dir.glob(File.join(Rails.public_path, 'upload', cat.sql_slug, '*')),
-      files_dir
-    )
-  end
-
-  def dump_pages(cat, dir)
-    pages_dir = File.join(dir, 'pages')
-    Dir.mkdir pages_dir
-    cat.pages.each { |p| dump_page(p, pages_dir) }
-  end
-
-  def dump_page(p, dir)
-    File.write(File.join(dir, "#{p.sql_slug}.json"), JSON.pretty_generate(p.describe))
-  end
-
-  def dump_menu_items(cat, dir)
-    File.write(
-      File.join(dir, "menus.json"),
-      JSON.pretty_generate("menu-items": cat.menu_items.map(&:describe))
-    )
-  end
 
   private
-
-  def file_error(msg)
-    "ERROR. #{msg} Please specify an non-existing or empty directory."
-  end
-
-  def ensure_no_file_overwrite(path)
-    raise(file_error("'#{path}' is a file.")) if File.exist?(path) && !File.directory?(path)
-  end
-
-  def ensure_empty_directory(dir)
-    raise(file_error("'#{dir}' is not empty.")) if File.directory?(dir) && !Dir[File.join(dir, '*')].empty?
-  end
 
   def common_sql_columns
     columns = ""
@@ -409,6 +361,25 @@ class SqlDump
       "JSON"
     when :datetime
       "TIMESTAMP DEFAULT CURRENT_TIMESTAMP"
+    else
+      "VARCHAR(255)"
+    end
+  end
+
+  def convert_app_type_to_sql_type(field)
+    return "INT" if field.nil?
+
+    case field.type
+    when "Field::Boolean"
+      "BOOLEAN"
+    when "Field::Int", "Field::ChoiceSet", "Field::Reference"
+      "INT"
+    when "Field::DateTime"
+      "JSON"
+    when "Field::Decimal"
+      "FLOAT"
+    # when :datetime
+    #   "TIMESTAMP DEFAULT CURRENT_TIMESTAMP"
     else
       "VARCHAR(255)"
     end
