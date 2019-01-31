@@ -20,7 +20,7 @@ class Search::DateTimeStrategy < Search::BaseStrategy
 
     return scope if components_empty?(start_date_time) && components_empty?(end_date_time)
 
-    scope = append_where_date_is_set(scope)
+    scope = append_where_date_is_set(scope) unless negate
     scope = search_with_start_date(scope, criteria, start_date_time, field_condition, negate)
     scope = search_interval_dates(
       scope, criteria, { :start => start_date_time, :end => end_date_time }, negate, field_condition
