@@ -26,9 +26,6 @@ class Dump::CatalogDump < ::Dump
     # Dump pages
     Rails.logger.info "Dumping pages for catalog #{cat.id}..."
     dump_pages(cat, directory)
-
-    # Dump menu items
-    Rails.logger.info "Dumping menu items for catalog #{cat.id}..."
     dump_menu_items(cat, directory)
   end
 
