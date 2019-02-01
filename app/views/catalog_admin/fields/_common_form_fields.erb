@@ -20,7 +20,7 @@
         :help => t(".display_component_help")) %>
 <% end %>
 
-<% unless f.object.is_a?(Category) %>
+<% if primary_option?(f.object) %>
   <%= f.form_group(:primary) do %>
     <%= f.check_box(
           :primary,
