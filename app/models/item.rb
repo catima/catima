@@ -167,4 +167,29 @@ class Item < ApplicationRecord
   def update_views_cache
     ItemsCacheWorker.perform_async(catalog.slug, item_type.slug, id)
   end
+
+  def assign_default_values
+    return if id || item_type.nil?
+
+    self.data = {} if self.data.nil?
+    fields.each do |f|
+      self.data[f.uuid] = f.default_value if f.default_value.present?
+    end
+  end
+
+  def assign_autoincrement_values
+    return if id || item_type.nil?
+
+    self.data = {} if self.data.nil?
+    conn = ActiveRecord::Base.connection.raw_connection
+    fields.each do |f|
+      next unless (f.type == 'Field::Int') && !f.options.nil? && f.options['auto_increment'] && self.data[f.uuid].nil?
+
+      st = conn.exec(
+        "SELECT MAX(data->>'#{f.uuid}') FROM items WHERE item_type_id = $1",
+        [item_type_id]
+      )
+      self.data[f.uuid] = st.getvalue(0, 0).to_i + 1
+    end
+  end
 end
