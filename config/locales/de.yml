@@ -434,7 +434,7 @@ de:
         use_as_primary_field: "Use this as the primary field"
         include_in_list_view: "Include this field in edition list view (Data)"
         include_in_public_list_view: "Include this field in site list view"
-        restrict_field_to_members_and_staff: Beschränkung des Feldes auf Mitglieder und Mitarbeiter
+        restrict_field_to_staff: Einschränkung des Feldes auf Katalogpersonal
         data_entry_options: Data entry options
         must_be_unique: "Must be unique"
         save_field: Save field

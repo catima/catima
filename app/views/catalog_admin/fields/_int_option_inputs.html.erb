@@ -7,18 +7,3 @@
         :label => t('.auto_increment')
       ) %>
 <% end %>
-
-<script>
-$(function(){
-  if ($('#field_auto_increment')[0].checked){
-    $('#field_default_value').attr('disabled', 'disabled');
-  }
-  $('#field_auto_increment').on('change', function(e){
-    if ($('#field_auto_increment')[0].checked){
-      $('#field_default_value').attr('disabled', 'disabled');
-    } else {
-      $('#field_default_value').attr('disabled', null);
-    }
-  })
-})
-</script>

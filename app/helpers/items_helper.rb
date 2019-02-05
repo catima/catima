@@ -49,9 +49,9 @@ module ItemsHelper
   end
 
   def item_summary(item)
-    at_least_member = current_user.catalog_role_at_least?(item.catalog, 'member')
+    at_least_editor = current_user.catalog_role_at_least?(item.catalog, 'editor')
     flds = item.applicable_list_view_fields.select do |fld|
-      at_least_member || !fld.restricted?
+      at_least_editor || !fld.restricted?
     end
     flds.each_with_object([]) do |field, html|
       next if field == item.primary_field

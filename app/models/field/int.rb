@@ -42,6 +42,7 @@ class Field::Int < ::Field
   validates_numericality_of :maximum, :minimum,
                             :only_integer => true,
                             :allow_blank => true
+  after_save :remove_default_value, :if => :auto_increment?
 
   def custom_field_permitted_attributes
     %i(maximum minimum auto_increment)
@@ -62,5 +63,9 @@ class Field::Int < ::Field
     opts[:less_than_or_equal_to] = maximum.to_i unless maximum.blank?
     opts[:greater_than_or_equal_to] = minimum.to_i unless minimum.blank?
     [ActiveModel::Validations::NumericalityValidator, opts]
+  end
+
+  def auto_increment?
+    (options && options['auto_increment'] && options['auto_increment'].to_i) == 1
   end
 end

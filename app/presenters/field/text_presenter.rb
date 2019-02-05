@@ -60,16 +60,17 @@ class Field::TextPresenter < FieldPresenter
   end
 
   def formatted_text_input(form, method, _options={}, i18n=false)
+    type = @item.present? ? 'item' : 'field'
     if i18n
       field.catalog.valid_locales.map do |l|
         errors = form.object.errors.messages["#{method}_#{l}".to_sym]
         "<tr " + (errors.empty? ? '' : 'class="has-error"') + "><td>#{l}</td><td>" + \
-          formatted_text_component("item_#{method}_#{l}") + \
+          formatted_text_component("#{type}_#{method}_#{l}") + \
           "</td></tr>" + \
           (errors.empty? ? '' : "<tr class=\"has-error msg\"><td colspan=\"2\">#{errors.compact.join(' / ')}</td></tr>")
       end.compact.join
     else
-      formatted_text_component("item_#{method}")
+      formatted_text_component("#{type}_#{method}")
     end
   end
 

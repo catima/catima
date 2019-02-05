@@ -290,6 +290,10 @@ class Field < ApplicationRecord
     field_set.fields.where("fields.id != ?", id).update_all(:primary => false)
   end
 
+  def remove_default_value
+    update(:default_value => nil) if default_value?
+  end
+
   def transform_value(value)
     value
   end
