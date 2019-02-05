@@ -36,6 +36,10 @@ class CatalogAdmin::FieldsPrimaryTest < ActionDispatch::IntegrationTest
     visit("/one/en/admin/authors/fields/age/edit")
     assert(page.has_content?("Use this as the primary field"))
 
+    # Bool
+    visit("/one/en/admin/authors/fields/deceased/edit")
+    assert(page.has_content?("Use this as the primary field"))
+
     # Text
     visit("/one/en/admin/authors/fields/nickname/edit")
     assert(page.has_content?("Use this as the primary field"))

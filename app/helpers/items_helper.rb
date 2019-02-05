@@ -49,7 +49,7 @@ module ItemsHelper
   end
 
   def item_summary(item)
-    at_least_member = current_user.catalog_role_at_least?(item.catalog, 'member')
+    at_least_member = current_user.catalog_role_at_least?(item.catalog, 'editor')
     flds = item.applicable_list_view_fields.select do |fld|
       at_least_member || !fld.restricted?
     end

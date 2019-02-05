@@ -467,7 +467,7 @@ en:
         use_as_primary_field: "Use this as the primary field"
         include_in_list_view: "Include this field in edition list view (Data)"
         include_in_public_list_view: "Include this field in site list view"
-        restrict_field_to_members_and_staff: Restrict field to members and staff
+        restrict_field_to_staff: Restrict this field to catalog staff
         data_entry_options: Data entry options
         must_be_unique: "Must be unique"
         save_field: Save field

@@ -358,7 +358,7 @@ it:
         bounds: Estensione spaziale predefinita
         bounds_help: Se modificata, la mappa utilizzerà l'area selezionata come estensione spaziale predefinita
       common_form_fields:
-        restrict_field_to_members_and_staff: Limitare il campo ai membri e al personale
+        restrict_field_to_staff: Limitare il campo al personale del catalogo
         include_in_list_view: "Include this field in edition list view (Data)"
         include_in_public_list_view: "Include this field in site list view"
         single_choice: "Single value – optional"
