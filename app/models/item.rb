@@ -183,7 +183,7 @@ class Item < ApplicationRecord
     self.data = {} if self.data.nil?
     conn = ActiveRecord::Base.connection.raw_connection
     fields.each do |f|
-      next unless (f.type == 'Field::Int') && !f.options.nil? && f.options['auto_increment'] && self.data[f.uuid].nil?
+      next unless (f.type == 'Field::Int') && !f.options.nil? && f.auto_increment? && self.data[f.uuid].nil?
 
       st = conn.exec(
         "SELECT MAX(data->>'#{f.uuid}') FROM items WHERE item_type_id = $1",

@@ -52,6 +52,10 @@ class Field::Int < ::Field
     "(data->>'#{uuid}')::int ASC"
   end
 
+  def auto_increment?
+    (options && options['auto_increment'] && options['auto_increment'].to_i) == 1
+  end
+
   private
 
   def build_validators
@@ -63,9 +67,5 @@ class Field::Int < ::Field
     opts[:less_than_or_equal_to] = maximum.to_i unless maximum.blank?
     opts[:greater_than_or_equal_to] = minimum.to_i unless minimum.blank?
     [ActiveModel::Validations::NumericalityValidator, opts]
-  end
-
-  def auto_increment?
-    (options && options['auto_increment'] && options['auto_increment'].to_i) == 1
   end
 end
