@@ -1,0 +1,20 @@
+<%= link_to(
+        fa_icon(:users),
+        catalog_admin_group_path(id: model.id),
+        class: "btn btn-xs btn-default #{'disabled' unless model.active?}",
+        "data-toggle" => "tooltip", "data-placement" => "top", "title" => t("catalog_admin.groups.show.add_users")
+    ) %>
+<%= link_to(
+        fa_icon(:pencil),
+        edit_catalog_admin_group_path(id: model.id),
+        class: 'btn btn-xs btn-default',
+        "data-toggle" => "tooltip", "data-placement" => "top", "title" => t("edit")
+    ) %>
+<%= link_to(
+        fa_icon(:trash),
+        catalog_admin_group_path(id: model.id),
+        method: :delete,
+        data: { confirm: t('delete_confirm', model: model.name) },
+        class: 'btn btn-xs btn-default',
+        "data-toggle" => "tooltip", "data-placement" => "top", "title" => t("delete")
+    ) %>

@@ -1,0 +1,26 @@
+<% if defined?(catalog) %>
+  <% if policy(model).edit_in_catalog?(catalog) %>
+    <%= link_to(
+            fa_icon(:pencil),
+            edit_catalog_admin_user_path(catalog, I18n.locale, model),
+            class: "btn btn-xs btn-default",
+            "data-toggle" => "tooltip", "data-placement" => "top", "title" => t("edit")
+        ) %>
+  <% end %>
+<% else %>
+  <%= link_to(
+          fa_icon(:pencil),
+          edit_admin_user_path(model),
+          class: "btn btn-xs btn-default",
+          "data-toggle" => "tooltip", "data-placement" => "top", "title" => "Edit"
+      ) %>
+
+  <%= link_to(
+          fa_icon(:trash),
+          admin_user_path(model),
+          method: :delete,
+          data: { :confirm => "Are you sure you want to delete this user?" },
+          class: "btn btn-xs btn-default",
+          "data-toggle" => "tooltip", "data-placement" => "top", "title" => "Delete"
+      ) %>
+<% end %>

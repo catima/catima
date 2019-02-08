@@ -15,8 +15,8 @@
         <td><%= admin_catalogs(user) %></td>
         <td><%= l(user.created_at, :format => :long) %></td>
         <td><%= last_signed_in(user) %></td>
-        <td style="text-align: right">
-          <%= render "shared/actions_dropdown", :model => user %>
+        <td align="right">
+          <%= render "shared/actions/user", :model => user %>
         </td>
       </tr>
     <% end %>

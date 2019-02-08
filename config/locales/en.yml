@@ -316,6 +316,8 @@ en:
   download: "Download"
   or: or
   options: Options
+  deactivate: Deactivate
+  reactivate: Reactivate
 
   layouts:
     catalog_admin:
@@ -586,6 +588,7 @@ en:
         groups: Groups
         new_group: Create group
         no_groups_for_catalog_warning: There are no groups for this catalog.
+        search: Search for users
       catalog_users:
         group_role: Group
       edit:

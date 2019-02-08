@@ -20,8 +20,8 @@
         </td>
         <td><%= deactivation_status_label(catalog) %></td>
         <td><%= visibility_status_label(catalog) %></td>
-        <td style="text-align: right">
-          <%= render "shared/actions_dropdown", :model => catalog %>
+        <td align="right">
+          <%= render "shared/actions/catalog", :model => catalog %>
         </td>
       </tr>
     <% end %>

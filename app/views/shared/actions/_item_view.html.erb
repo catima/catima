@@ -1,0 +1,18 @@
+<%= link_to(
+        fa_icon(:pencil),
+        { action: :edit, controller: 'catalog_admin/item_views',
+          item_type_slug: model.item_type.slug, id: model.id },
+        class: "btn btn-xs btn-default",
+        "data-toggle" => "tooltip", "data-placement" => "top", "title" => t("edit")
+    ) %>
+
+<%= link_to(
+        fa_icon(:trash),
+        catalog_admin_item_view_path(catalog, I18n.locale, model.item_type.slug, model),
+        :method => :delete,
+        :data => {
+            :confirm => t('delete_confirm', :model => model.name)
+        },
+        class: "btn btn-xs btn-default",
+        "data-toggle" => "tooltip", "data-placement" => "top", "title" => t("delete")
+    ) %>

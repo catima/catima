@@ -277,6 +277,8 @@ it:
   download: "Scaricare"
   or: o
   options: Options
+  deactivate: Deactivate
+  reactivate: Reactivate
 
   layouts:
     catalog_admin:
@@ -398,6 +400,7 @@ it:
         groups: Gruppi
         new_group: Nuovo gruppo
         no_groups_for_catalog_warning: Non ci sono gruppi per questo catalogo.
+        search: Cerca utenti
       catalog_users:
         group_role: Gruppo
       edit:

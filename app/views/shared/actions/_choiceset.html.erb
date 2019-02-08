@@ -1,0 +1,15 @@
+<% if policy(model).edit? %>
+  <%= link_to(
+          fa_icon(:pencil),
+          edit_catalog_admin_choice_set_path(model.catalog, I18n.locale, model),
+          class: "btn btn-xs btn-default",
+          "data-toggle" => "tooltip", "data-placement" => "top", "title" => t("edit")
+      ) %>
+  <%= deactivation_toggle(
+          model,
+          :catalog_admin_choice_set_path,
+          model.catalog,
+          I18n.locale,
+          model
+      )%>
+<% end %>

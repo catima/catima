@@ -21,8 +21,8 @@
         <td><%= page.slug %></td>
         <td><%= link_to(page_path(page), page_path(page)) %></td>
         <td><%= page.title %></td>
-        <td style="text-align: right;">
-          <%= render "shared/actions_dropdown", :model => page %>
+        <td align="right">
+          <%= render "shared/actions/page", :model => page %>
         </td>
       </tr>
     <% end %>

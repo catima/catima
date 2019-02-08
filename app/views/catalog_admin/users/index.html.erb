@@ -47,26 +47,8 @@
         <td>
           <%= fa_icon(:check) if grp.public? %>
         </td>
-        <td style="text-align: right;">
-          <%= link_to(
-                  fa_icon(:users),
-                  catalog_admin_group_path(id: grp.id),
-                  class: "btn btn-xs btn-default #{'disabled' unless grp.active?}",
-                  'data-label': 'invite users'
-                ) %>
-            <%= link_to(
-                  fa_icon(:pencil),
-                  edit_catalog_admin_group_path(id: grp.id),
-                  class: 'btn btn-xs btn-default',
-                    'data-label': 'edit group'
-                ) %>
-            <%= link_to(
-                  fa_icon(:trash),
-                  catalog_admin_group_path(id: grp.id),
-                  method: :delete,
-                  data: { confirm: t('delete_confirm', model: grp.name) },
-                  class: 'btn btn-xs btn-default'
-                ) %>
+        <td align="right">
+          <%= render "shared/actions/group", :model => grp %>
         </td>
       </tr>
     <% end %>
@@ -90,20 +72,24 @@
   }
 </script>
 
-
 <% provide(:extra_setup) do %>
 <hr/>
-
-<div class="panel panel-default">
-  <div class="panel-heading">
-    <span class="pull-right">
-      <%= link_to(new_catalog_admin_user_path) do %>
-        <%= fa_icon(:"user-plus", :text => t('new_user')) %>
-      <% end %>
-    </span>
-    <%= t('users') %>
-  </div>
-  <%= render 'catalog_users' %>
-</div>
-
+  <% if @users %>
+    <div class="panel panel-default">
+      <div class="panel-heading">
+        <%= render 'shared/search_form',
+                   :controller => 'catalog_admin/users',
+                   :action => 'index',
+                   :placeholder => t('.search')
+        %>
+        <span class="pull-right">
+          <%= link_to(new_catalog_admin_user_path) do %>
+            <%= fa_icon(:"user-plus", :text => t('new_user')) %>
+          <% end %>
+        </span>
+      </div>
+      <%= render 'catalog_users' %>
+    </div>
+    <%= paginate(@users) %>
+  <% end %>
 <% end %>
