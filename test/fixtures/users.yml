@@ -133,3 +133,7 @@ de:
   email: de@example.com
   encrypted_password: <%= BCrypt::Password.create("password") %>
   primary_language: de
+
+search:
+  email: test-search@example.com
+  encrypted_password: <%= BCrypt::Password.create("password") %>
