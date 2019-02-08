@@ -59,4 +59,8 @@ class Field::File < ::Field
   def human_readable?
     false
   end
+
+  def allows_unique?
+    false
+  end
 end

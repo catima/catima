@@ -44,6 +44,10 @@ class Field::Image < ::Field::File
     false
   end
 
+  def allows_unique?
+    false
+  end
+
   def custom_field_permitted_attributes
     %i(legend)
   end

@@ -39,6 +39,10 @@ class Field::Geometry < ::Field
     false
   end
 
+  def allows_unique?
+    false
+  end
+
   def edit_props
     { "bounds" => default_bounds }
   end

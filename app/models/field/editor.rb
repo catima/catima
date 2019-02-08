@@ -56,4 +56,12 @@ class Field::Editor < ::Field
 
     user.email if user.present?
   end
+
+  def allows_unique?
+    false
+  end
+
+  def allows_style?
+    false
+  end
 end
