@@ -16,7 +16,7 @@ class CatalogAdmin::ContainersTest < ActionDispatch::IntegrationTest
     within('h1') { assert(page.has_content?('Container test page')) }
 
     click_on('Edit this page')
-    click_on('Markdown container')
+    click_on('Markdown')
 
     fill_in('Slug', :with => 'test-md')
     fill_in('Markdown', :with => '**Bold text**')
@@ -27,7 +27,7 @@ class CatalogAdmin::ContainersTest < ActionDispatch::IntegrationTest
     within('strong') { assert(page.has_content?('Bold text')) }
 
     click_on('Edit this page')
-    click_on('HTML container')
+    click_on('HTML')
     fill_in('Slug', :with => 'test-html')
     fill_in('Html', :with => 'HTML container text content')
     click_on('Create container')
@@ -41,7 +41,7 @@ class CatalogAdmin::ContainersTest < ActionDispatch::IntegrationTest
     visit('/one/en/one')
 
     click_on('Edit this page')
-    click_on('Contact container')
+    click_on('Contact')
 
     fill_in('Slug', :with => 'test-contact')
     fill_in('Receiving email', :with => 'test@email.ch')

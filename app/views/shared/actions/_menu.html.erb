@@ -2,7 +2,7 @@
   <%= link_to(
           fa_icon(:pencil),
           edit_catalog_admin_menu_item_path(model.catalog, I18n.locale, model),
-          class: "btn btn-xs btn-default",
+          class: "btn btn-xs btn-default menu-action-edit",
           "data-toggle" => "tooltip", "data-placement" => "top", "title" => t("edit")
       ) %>
 <% end %>
@@ -14,7 +14,7 @@
           :data => {
               :confirm => t("delete_confirm", {model: model.title})
           },
-          class: "btn btn-xs btn-default",
+          class: "btn btn-xs btn-default menu-action-delete",
           "data-toggle" => "tooltip", "data-placement" => "top", "title" => t("delete")
       ) %>
 <% end %>

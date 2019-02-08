@@ -1,7 +1,7 @@
 <%= link_to(
         fa_icon(:pencil),
         edit_admin_template_storage_path(model),
-        class: "btn btn-xs btn-default",
+        class: "btn btn-xs btn-default template-action-edit",
         "data-toggle" => "tooltip", "data-placement" => "top", "title" => "Edit"
     ) %>
 <%= link_to(
@@ -9,6 +9,6 @@
         admin_template_storage_path(model),
         method: :delete,
         :data => { :confirm => "Are you sure you want to delete this template?" },
-        class: 'btn btn-xs btn-default',
+        class: 'btn btn-xs btn-default template-action-delete',
         "data-toggle" => "tooltip", "data-placement" => "top", "title" => "Delete"
     ) %>

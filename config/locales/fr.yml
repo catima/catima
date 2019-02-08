@@ -572,6 +572,11 @@ fr:
     pages:
       new:
         create_page: "Créer une page"
+      edit:
+        edit_page: Modifier la page
+        view_page: Voir la page
+        update_page: Mettre à jour la page
+        container_index: Conteneurs
 
     users:
       common_form_fields:

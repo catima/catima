@@ -52,8 +52,7 @@ class CatalogAdmin::PagesTest < ActionDispatch::IntegrationTest
     visit("/one/en/admin")
     click_on("Setup")
     click_on("Pages")
-    first("button", :text => "Actions").click
-    first("a", :text => "Edit").click
+    first("a.page-action-edit").click
 
     find('div.translatedTextField input[data-locale=en]').base.send_keys([:backspace] * 22, 'Changed by test')
 
@@ -72,8 +71,7 @@ class CatalogAdmin::PagesTest < ActionDispatch::IntegrationTest
     click_on("Pages")
     assert_difference("Page.count", -1) do
       page.accept_alert(:wait => 2) do
-        first("button", :text => "Actions").click
-        first("a", :text => "Delete").click
+        first("a.page-action-delete").click
       end
       sleep 2 # Wait for page count to be correct
     end
@@ -113,8 +111,7 @@ class CatalogAdmin::PagesTest < ActionDispatch::IntegrationTest
 
     assert_difference("Page.count", -1) do
       page.accept_alert(:wait => 2) do
-        first("button", :text => "Actions").click
-        first("a", :text => "Delete").click
+        first("a.page-action-delete").click
       end
       sleep 2
     end

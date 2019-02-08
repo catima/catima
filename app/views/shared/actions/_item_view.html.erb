@@ -2,7 +2,7 @@
         fa_icon(:pencil),
         { action: :edit, controller: 'catalog_admin/item_views',
           item_type_slug: model.item_type.slug, id: model.id },
-        class: "btn btn-xs btn-default",
+        class: "btn btn-xs btn-default view-action-edit",
         "data-toggle" => "tooltip", "data-placement" => "top", "title" => t("edit")
     ) %>
 
@@ -13,6 +13,6 @@
         :data => {
             :confirm => t('delete_confirm', :model => model.name)
         },
-        class: "btn btn-xs btn-default",
+        class: "btn btn-xs btn-default view-action-delete",
         "data-toggle" => "tooltip", "data-placement" => "top", "title" => t("delete")
     ) %>

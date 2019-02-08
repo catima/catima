@@ -21,7 +21,7 @@ class CatalogAdmin::UsersTest < ActionDispatch::IntegrationTest
   test "edit a user" do
     log_in_as("one-admin@example.com", "password")
     visit("/one/en/admin/_users")
-    first("a", :text => "Edit").click
+    first("a.user-action-edit").click
     click_on("Update user")
     assert(page.has_content?("has been saved"))
   end
@@ -29,7 +29,7 @@ class CatalogAdmin::UsersTest < ActionDispatch::IntegrationTest
   test "edit a user role" do
     log_in_as("one-admin@example.com", "password")
     visit("/one/en/admin/_users")
-    first("a", :text => "Edit").click
+    first("a.user-action-edit").click
     first("label", :text => "Editor").click
     click_on("Update user")
     assert(page.has_content?("has been saved"))

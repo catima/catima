@@ -574,6 +574,11 @@ de:
     pages:
       new:
         create_page: "Create page"
+      edit:
+        edit_page: Edit page
+        view_page: View page
+        update_page: Update page
+        container_index: Containers
 
     menu_items:
       common_form_fields:
