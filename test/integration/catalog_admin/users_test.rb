@@ -46,5 +46,11 @@ class CatalogAdmin::UsersTest < ActionDispatch::IntegrationTest
 
     assert_selector('.user-panel tbody tr', :count => 1)
     assert(page.has_content?("test-search@example.com"))
+
+    page.fill_in with: 'Test-SEARCH', name: "search"
+    find(".user-panel .search-form button").click
+
+    assert_selector('.user-panel tbody tr', :count => 1)
+    assert(page.has_content?("test-search@example.com"))
   end
 end
