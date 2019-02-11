@@ -316,6 +316,8 @@ fr:
   download: "Télécharger"
   or: ou
   options: Options
+  deactivate: Désactiver
+  reactivate: Réactiver
 
   layouts:
     catalog_admin:
@@ -570,12 +572,17 @@ fr:
     pages:
       new:
         create_page: "Créer une page"
+      edit:
+        edit_page: Modifier la page
+        view_page: Voir la page
+        update_page: Mettre à jour la page
+        container_index: Conteneurs
 
     users:
       common_form_fields:
         preferred_language: "Les écrans d'administration ne sont disponibles qu'en anglais, mais la langue préférée de l'utilisateur sera honorée pour les pages de connexion et pour les catalogues eux-mêmes."
         user_role: "<b>Users</b> peuvent afficher les zones publiques des catalogues non restreints.<br>"
-        member_role: "<b>Members</b> sont des utilisateurs qui peuvent afficher les zones publiques d'un catalogue restreint (à venir).<br>"
+        member_role: "<b>Members</b> sont des utilisateurs qui peuvent afficher les zones publiques d'un catalogue restreint.<br>"
         editor_role: "<b>Editors</b> sont des membres qui peuvent créer et modifier leurs propres éléments dans le catalogue.<br>"
         super_editor_role: "<b>Super-editors</b> sont des éditeurs qui peuvent créer et éditer tous les éléments du catalogue.<br>"
         reviewer_role: "<b>Reviewers</b> sont des super-éditeurs qui peuvent approuver des éléments pour les rendre visibles au public.<br>"
@@ -587,6 +594,7 @@ fr:
         groups: Groupes
         new_group: Nouveau groupe
         no_groups_for_catalog_warning: Il n'y a pas de groupes pour ce catalogue.
+        search: Rechercher des utilisateurs
       catalog_users:
         group_role: Groupe
       edit:

@@ -35,9 +35,9 @@
       <td><%= export.category %></td>
       <td><%= status_badge(export) %></td>
       <td><%= validity_badge(export) %></td>
-      <td>
+      <td align="right">
         <% if policy(export).download? %>
-          <%= render "shared/actions_dropdown", :model => export %>
+          <%= render "shared/actions/export", :model => export %>
         <% end %>
       </td>
     </tr>

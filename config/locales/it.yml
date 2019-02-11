@@ -277,6 +277,8 @@ it:
   download: "Scaricare"
   or: o
   options: Options
+  deactivate: Deactivate
+  reactivate: Reactivate
 
   layouts:
     catalog_admin:
@@ -370,6 +372,8 @@ it:
         public_list_view?: 'Public mode?'
       editor_option_inputs:
         warning: <strong>Warning!</strong> Please note that this field will automatically show the editor's email address.
+      index:
+        add_field: "Add…"
 
     containers:
       map_inputs:
@@ -398,10 +402,18 @@ it:
         groups: Gruppi
         new_group: Nuovo gruppo
         no_groups_for_catalog_warning: Non ci sono gruppi per questo catalogo.
+        search: Cerca utenti
       catalog_users:
         group_role: Gruppo
       edit:
         update_user: Aggiorna utente
+
+    pages:
+      edit:
+        edit_page: Edit page
+        view_page: View page
+        update_page: Update page
+        container_index: Containers
 
     groups:
       index:

@@ -6,7 +6,7 @@ class Admin::DashboardTest < ActionDispatch::IntegrationTest
     visit("/admin")
     assert(page.has_content?("Global settings"))
     assert(page.has_content?("Catalogs"))
-    assert(page.has_content?("Users"))
+    assert(page.has_content?("New admin user"))
     assert(page.has_content?("Custom templates"))
   end
 
@@ -15,7 +15,7 @@ class Admin::DashboardTest < ActionDispatch::IntegrationTest
     visit("/admin")
     assert_not(page.has_content?("Global settings"))
     assert(page.has_content?("Catalogs"))
-    assert_not(page.has_content?("Users"))
+    assert_not(page.has_content?("New admin user"))
     assert_not(page.has_content?("Custom templates"))
   end
 end

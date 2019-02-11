@@ -8,8 +8,19 @@ module DeactivationHelper
     options = args.extract_options!
     param = model.model_name.param_key
 
-    label, at = model.active? ? %w(Deactivate now) : ["Reactivate", ""]
+    at, icon = model.active? ? %w(now lock) : ["", "unlock"]
+    label = model.active? ? t('deactivate') : t('reactivate')
     path = public_send(path_method, *args, param => { :deactivated_at => at })
-    link_to(label, path, options.reverse_merge(:method => :patch))
+    link_to(
+      fa_icon(icon),
+      path,
+      options.reverse_merge(
+        :method => :patch,
+        :class => "btn btn-xs btn-default #{model.model_name.to_s.downcase}-action-#{label.to_s.downcase}",
+        "data-toggle" => "tooltip",
+        "data-placement" => "top",
+        "title" => label
+      )
+    )
   end
 end

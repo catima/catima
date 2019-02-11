@@ -25,17 +25,22 @@
 </div>
 
 <% if @users %>
-<div class="panel panel-default">
-  <div class="panel-heading">
-    <span class="pull-right">
-      <%= link_to(new_admin_user_path) do %>
-        <%= fa_icon(:"user-plus", :text => "New admin user") %>
-      <% end %>
-    </span>
-    Users
+  <div class="panel panel-default">
+    <div class="panel-heading">
+      <%= render 'shared/search_form',
+                 :controller => 'admin/dashboard',
+                 :action => 'index',
+                 :placeholder => 'Search for users'
+      %>
+      <span class="pull-right">
+        <%= link_to(new_admin_user_path) do %>
+          <%= fa_icon(:"user-plus", :text => "New admin user") %>
+        <% end %>
+      </span>
+    </div>
+    <%= render("users") %>
   </div>
-  <%= render("users") %>
-</div>
+  <%= paginate(@users) %>
 <% end %>
 
 <% if @template_storages %>

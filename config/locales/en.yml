@@ -316,6 +316,8 @@ en:
   download: "Download"
   or: or
   options: Options
+  deactivate: Deactivate
+  reactivate: Reactivate
 
   layouts:
     catalog_admin:
@@ -570,6 +572,12 @@ en:
     pages:
       new:
         create_page: "Create page"
+      edit:
+        edit_page: Edit page
+        view_page: View page
+        update_page: Update page
+        container_index: Containers
+
     users:
       common_form_fields:
         preferred_language: "Admin screens are only available in English, but the user’s preferred language will be honored for login pages and for the catalogs themselves."
@@ -586,6 +594,7 @@ en:
         groups: Groups
         new_group: Create group
         no_groups_for_catalog_warning: There are no groups for this catalog.
+        search: Search for users
       catalog_users:
         group_role: Group
       edit:

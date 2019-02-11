@@ -147,7 +147,7 @@ class CatalogAdmin::FieldsTest < ActionDispatch::IntegrationTest
   test "edit a field" do
     log_in_as("one-admin@example.com", "password")
     visit("/one/en/admin/authors/fields")
-    first("table a", :text => "Edit").click
+    first("a.field-action-edit").click
     fill_in("field[name_en]", :with => "Changed!")
     fill_in("Slug", :with => "changed")
 
@@ -164,7 +164,7 @@ class CatalogAdmin::FieldsTest < ActionDispatch::IntegrationTest
     visit("/one/en/admin/authors/fields")
 
     assert_difference("item_types(:one_author).fields.count", -1) do
-      first("table a", :text => "Delete").click
+      first("a.field-action-delete").click
     end
   end
 end
