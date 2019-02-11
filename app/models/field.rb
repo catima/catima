@@ -149,6 +149,16 @@ class Field < ApplicationRecord
     false
   end
 
+  # Whether or not this field supports the `style` options. Subclasses may override.
+  def allows_style?
+    true
+  end
+
+  # Whether or not this field supports the `unique` option. Subclasses may override.
+  def allows_unique?
+    true
+  end
+
   def raw_value(item, locale=I18n.locale, suffix="")
     return nil unless applicable_to_item(item)
 

@@ -120,6 +120,10 @@ class Field::ChoiceSet < ::Field
     "(choices.long_name_translations->>'long_name_#{I18n.locale}') ASC" unless choices.nil?
   end
 
+  def allows_unique?
+    false
+  end
+
   private
 
   # TODO: validate choice belongs to specified ChoiceSet
