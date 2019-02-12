@@ -89,8 +89,15 @@ class Field::Text < ::Field
     end
   end
 
-  def sql_type
-    "VARCHAR(#{maximum.presence || 255})"
+  def search_conditions_as_options
+    options = [
+      [I18n.t("advanced_searches.text_search_field.all_words"), "all_words"],
+      [I18n.t("advanced_searches.text_search_field.one_word"), "one_word"]
+    ]
+
+    options.unshift([I18n.t("advanced_searches.text_search_field.exact"), "exact"]) unless formatted?
+
+    options
   end
 
   private
