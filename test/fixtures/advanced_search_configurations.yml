@@ -9,6 +9,7 @@
 #  fields             :jsonb
 #  id                 :bigint(8)        not null, primary key
 #  item_type_id       :bigint(8)
+#  search_type        :string           default("default")
 #  slug               :string
 #  title_translations :jsonb
 #  updated_at         :datetime         not null

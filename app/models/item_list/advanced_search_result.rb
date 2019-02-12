@@ -57,8 +57,11 @@ class ItemList::AdvancedSearchResult < ItemList
 
     strategies.each do |strategy|
       criteria = field_criteria(strategy.field)
+
       # The first strategy doesn't have and/or/exclude field in the view, so we manually add it here
       criteria[:field_condition] = "and" if criteria[:field_condition].blank?
+
+      next if empty_search_criteria(criteria)
 
       # Simple fields
       if %w[or exclude and].include?(criteria[:field_condition]) && criteria["0"].blank?
@@ -71,7 +74,6 @@ class ItemList::AdvancedSearchResult < ItemList
       # Remove previously added criteria[:field_condition]
       criteria = criteria.except(:field_condition)
       criteria.keys.each do |key|
-
         criteria[key][:field_condition] = "and" if criteria[key][:field_condition].blank?
         if %w[or exclude and].include?(criteria[key][:field_condition])
           items_strategies[criteria[key][:field_condition]] << strategy.search(original_scope, criteria[key])
@@ -79,23 +81,24 @@ class ItemList::AdvancedSearchResult < ItemList
       end
     end
 
-    and_relations = merge_relations(items_strategies["and"])
-    or_relations = or_relations(items_strategies["or"])
-    exclude_relations = merge_relations(items_strategies["exclude"])
-    # p exclude_relations.to_sql
-    # p exclude_relations.merge(Item.all).to_sql
-# return exclude_relations.merge(Item.all)
-    and_relations = and_relations.merge(exclude_relations) if exclude_relations.present?
+    and_relations = merge_relations(items_strategies["and"], original_scope)
+    or_relations = or_relations(items_strategies["or"], original_scope)
+    exclude_relations = merge_relations(items_strategies["exclude"], original_scope)
 
-    # p "FULL QUERY"
-    # p and_relations.to_sql
-    # p or_relations.to_sql
-    return and_relations.or(or_relations) if or_relations.present?
+    and_relations = and_relations.merge(exclude_relations) if items_strategies["exclude"].present?
+
+    if items_strategies["or"].present?
+      return and_relations.or(or_relations) if items_strategies["and"].present?
+
+      return or_relations
+    end
 
     and_relations
   end
 
-  def merge_relations(strategies)
+  def merge_relations(strategies, original_scope)
+    return original_scope unless strategies.count.positive?
+
     relations = strategies.first
     strategies.drop(1).each do |relation|
       # Needed for reference filter search
@@ -106,7 +109,9 @@ class ItemList::AdvancedSearchResult < ItemList
     relations
   end
 
-  def or_relations(strategies)
+  def or_relations(strategies, original_scope)
+    return original_scope unless strategies.count.positive?
+
     relations = strategies.first
     strategies.drop(1).each do |relation|
       # Needed for reference filter search
@@ -119,5 +124,17 @@ class ItemList::AdvancedSearchResult < ItemList
 
   def field_criteria(field)
     (criteria || {}).fetch(field.uuid, {}).with_indifferent_access
+  end
+
+  def empty_search_criteria(criteria)
+    criteria.except(:field_condition, :condition).each do |_, value|
+      if value.is_a?(Hash)
+        return false unless empty_search_criteria(value)
+      elsif value.present?
+        return false
+      end
+    end
+
+    true
   end
 end
