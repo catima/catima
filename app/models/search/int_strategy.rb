@@ -10,11 +10,13 @@ class Search::IntStrategy < Search::BaseStrategy
   def search(scope, criteria)
     negate = criteria[:field_condition] == "exclude"
 
+    scope = append_where_number_is_set(scope) unless negate
+
     scope = exact_search(scope, criteria[:exact], negate)
-    scope = less_than_search(scope, criteria[:less_than], negate)
-    scope = less_than_or_equal_to_search(scope, criteria[:less_than_or_equal_to], negate)
-    scope = greater_than_search(scope, criteria[:greater_than], negate)
-    scope = greater_than_or_equal_to_search(scope, criteria[:greater_than_or_equal_to], negate)
+    scope = less_than_search(scope, criteria[:less_than], negate, "int")
+    scope = less_than_or_equal_to_search(scope, criteria[:less_than_or_equal_to], negate, "int")
+    scope = greater_than_search(scope, criteria[:greater_than], negate, "int")
+    scope = greater_than_or_equal_to_search(scope, criteria[:greater_than_or_equal_to], negate, "int")
     scope
   end
 end
