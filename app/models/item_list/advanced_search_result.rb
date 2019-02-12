@@ -79,6 +79,7 @@ class ItemList::AdvancedSearchResult < ItemList
 
     strategies.each do |strategy|
       criteria = field_criteria(strategy.field)
+
       # The first strategy doesn't have and/or/exclude field in the view, so we manually add it here
       criteria[:field_condition] = "and" if criteria[:field_condition].blank?
 
@@ -143,7 +144,9 @@ class ItemList::AdvancedSearchResult < ItemList
     rel.chomp(" UNION ")
   end
 
-  def merge_relations(strategies)
+  def merge_relations(strategies, original_scope)
+    return original_scope unless strategies.count.positive?
+
     relations = strategies.first
     strategies.drop(1).each do |relation|
       # Needed for reference filter search
@@ -154,7 +157,9 @@ class ItemList::AdvancedSearchResult < ItemList
     relations
   end
 
-  def or_relations(strategies)
+  def or_relations(strategies, original_scope)
+    return original_scope unless strategies.count.positive?
+
     relations = strategies.first
     strategies.drop(1).each do |relation|
       # Needed for reference filter search
