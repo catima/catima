@@ -36,8 +36,11 @@ class ItemList::AdvancedSearchResult < ItemList
             :field => field
           }
         )
-        item.data[field.uuid]["features"][0]["properties"]["popupContent"] = popup_content
-        item.data[field.uuid]["features"][0]
+
+        if item.data[field.uuid].present?
+          item.data[field.uuid]["features"][0]["properties"]["popupContent"] = popup_content
+          item.data[field.uuid]["features"][0]
+        end
       end
     end
   end
