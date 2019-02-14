@@ -95,9 +95,21 @@ class Field::Text < ::Field
       [I18n.t("advanced_searches.text_search_field.one_word"), "one_word"]
     ]
 
-    options.unshift([I18n.t("advanced_searches.text_search_field.exact"), "exact"]) unless formatted?
+    return options if formatted?
 
-    options
+    # Formatted text can't be exact searched
+    options.unshift([I18n.t("advanced_searches.text_search_field.exact"), "exact"])
+  end
+
+  def search_conditions_as_hash(locale)
+    options = [
+      { :value => I18n.t("advanced_searches.text_search_field.all_words", locale: locale), :key => "all_words"},
+      { :value => I18n.t("advanced_searches.text_search_field.one_word", locale: locale), :key => "one_word"}
+    ]
+
+    return options if formatted?
+
+    options.unshift({ :value => I18n.t("advanced_searches.text_search_field.exact", locale: locale), :key => "exact"})
   end
 
   private
