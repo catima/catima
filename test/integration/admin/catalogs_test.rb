@@ -50,4 +50,13 @@ class Admin::CatalogsTest < ActionDispatch::IntegrationTest
       first("a.catalog-action-reactivate").click
     end
   end
+
+  test "delete a catalog" do
+    log_in_as("system-admin@example.com", "password")
+    visit("/admin")
+
+    assert_difference("Catalog.active.count", -1) do
+      find("td", :text => "Catalog to be destroyed").find(:xpath, '..').first("a.catalog-action-delete").click
+    end
+  end
 end
