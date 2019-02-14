@@ -68,20 +68,12 @@ class Search::DateTimeStrategy < Search::BaseStrategy
   end
 
   def exact_search(scope, date_time, negate)
-    # sql_operator = negate ? "<>" : "="
-
     date_components = date_time.select { |_, value| value.present? }
     sql = date_components.map { |k, _| "#{data_field_expr(k)} LIKE ?" }.join(" AND ")
 
-    # date_time.keys.each do |key|
-    #   next if date_time[key].blank?
-    #
-    #   scope = scope.where("#{data_field_expr(key)} #{sql_operator} ?", date_time[key])
-    # end
+    s = ->(*q) { negate ? scope.where.not(q).or(scope.where("items.data->'#{field.uuid}' IS NULL")) : scope.where(q) }
 
-    where_scope = ->(*q) { negate ? scope.where.not(q) : scope.where(q) }
-
-    where_scope.call(sql, *date_components.map { |_key, value| "%#{value}%" })
+    s.call(sql, *date_components.map { |_key, value| "%#{value}%" })
   end
 
   def inexact_search(scope, date_time, field_condition, negate)
