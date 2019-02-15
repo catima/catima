@@ -46,8 +46,4 @@ class Search::BaseStrategy
     # TODO: move this to Field?
     "#{sql_select_name.presence || 'items'}.data->>'#{field.uuid}'"
   end
-
-  def sql_select_table_name
-    sql_select_name.presence || 'items'
-  end
 end
