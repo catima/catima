@@ -1,5 +1,6 @@
 require "test_helper"
 
+# rubocop:disable Metrics/ClassLength
 class AdvancedSearch::ReferenceFieldTest < ActionDispatch::IntegrationTest
   setup { use_javascript_capybara_driver }
 
@@ -172,4 +173,45 @@ class AdvancedSearch::ReferenceFieldTest < ActionDispatch::IntegrationTest
     assert(page.has_selector?('h4', text: 'Stephen King'))
     refute(page.has_selector?('h4', text: 'Very Old'))
   end
+
+  test "search for authors by multiple tag reference field AND with a filter by attribute" do
+    visit("/one/en")
+    click_on("Advanced")
+
+    find("#default_search_type").click
+    within("#default_search_type") do
+      click_on("Author")
+    end
+
+    within("#advanced_search_criteria_one_author_other_collaborators_uuid_0_exact-editor") do
+      find(".css-vj8t7z").click # Click on the filter input
+
+      within(".css-11unzgr") do # Within the filter list
+        find('div', text: "Very Old", match: :first).click
+      end
+    end
+
+    within all(".reference-search-container")[1] do
+      find(".fa.fa-plus").click
+    end
+
+    within all(".reference-search-container")[2] do
+      find(".css-vj8t7z").click # Click on the filter input
+
+      within(".css-11unzgr") do # Within the filter list
+        find('div', text: "Name", match: :first).click
+      end
+
+      fill_in(
+        "advanced_search[criteria][one_author_other_collaborators_uuid][1][exact]",
+        :with => "Young apprentice"
+      )
+    end
+
+    click_on("Search")
+
+    refute(page.has_selector?('h4', text: 'Young apprentice'))
+    refute(page.has_selector?('h4', text: 'Very Young'))
+  end
 end
+# rubocop:enable Metrics/ClassLength

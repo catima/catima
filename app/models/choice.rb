@@ -58,4 +58,18 @@ class Choice < ApplicationRecord
   def assign_uuid
     self.uuid ||= SecureRandom.uuid
   end
+
+  def filterable_category_fields
+    fields = []
+
+    return fields unless category.present? && category.active?
+
+    category.fields.each do |field|
+      next if field.is_a?(Field::ChoiceSet) || field.is_a?(Field::Reference) || !field.human_readable?
+
+      fields << field
+    end
+
+    fields
+  end
 end
