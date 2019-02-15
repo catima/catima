@@ -129,15 +129,7 @@ class Field::ChoiceSet < ::Field
 
     choices.each do |choice|
       option = { :value => choice.short_name, :key => choice.id }
-
-      if choice.category.present? && choice.category.active?
-        option[:category_data] = []
-        choice.category.fields.each do |field|
-          next if field.is_a?(Field::ChoiceSet) || field.is_a?(Field::Reference) || !field.human_readable?
-
-          option[:category_data] << field
-        end
-      end
+      option[:category_data] = choice.filterable_category_fields
 
       choices_as_options << option
     end

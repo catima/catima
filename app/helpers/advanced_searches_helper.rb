@@ -36,7 +36,7 @@ module AdvancedSearchesHelper
     partial_rendered.present? ? result : partial_rendered
   end
 
-  def render_item_types_as_options(item_types, selected_item_type_slug, advanced_search_conf)
+  def render_item_types_as_options(item_types, selected_item_type_slug)
     options = []
     item_types.each do |item_type|
       options << [
