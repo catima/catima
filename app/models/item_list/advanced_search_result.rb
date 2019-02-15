@@ -52,6 +52,24 @@ class ItemList::AdvancedSearchResult < ItemList
 
     return original_scope if criteria.blank?
 
+    items_strategies = build_items_strategies(original_scope)
+
+    and_relations = merge_relations(items_strategies["and"], original_scope)
+    or_relations = or_relations(items_strategies["or"], original_scope)
+    exclude_relations = merge_relations(items_strategies["exclude"], original_scope)
+
+    and_relations = and_relations.merge(exclude_relations) if items_strategies["exclude"].present?
+
+    if items_strategies["or"].present?
+      return and_relations.or(or_relations) if items_strategies["and"].present?
+
+      return or_relations
+    end
+
+    and_relations
+  end
+
+  def build_items_strategies(scope)
     items_strategies = {
       "and" => [],
       "or" => [],
@@ -67,36 +85,33 @@ class ItemList::AdvancedSearchResult < ItemList
       next if empty_search_criteria(criteria)
 
       # Simple fields
-      if %w[or exclude and].include?(criteria[:field_condition]) && criteria["0"].blank?
-        items_strategies[criteria[:field_condition]] << strategy.search(original_scope, criteria)
-      end
+      build_simple_fields_relations(items_strategies, strategy, criteria, scope)
 
       # React complex fields that can have multiple values
       next if criteria["0"].blank?
 
-      # Remove previously added criteria[:field_condition]
-      criteria = criteria.except(:field_condition)
-      criteria.keys.each do |key|
-        criteria[key][:field_condition] = "and" if criteria[key][:field_condition].blank?
-        if %w[or exclude and].include?(criteria[key][:field_condition])
-          items_strategies[criteria[key][:field_condition]] << strategy.search(original_scope, criteria[key])
-        end
-      end
+      build_complex_fields_relations(items_strategies, strategy, criteria, scope)
     end
 
-    and_relations = merge_relations(items_strategies["and"], original_scope)
-    or_relations = or_relations(items_strategies["or"], original_scope)
-    exclude_relations = merge_relations(items_strategies["exclude"], original_scope)
+    items_strategies
+  end
 
-    and_relations = and_relations.merge(exclude_relations) if items_strategies["exclude"].present?
+  def build_simple_fields_relations(items_strategies, strategy, criteria, scope)
+    return unless %w[or exclude and].include?(criteria[:field_condition]) && criteria["0"].blank?
 
-    if items_strategies["or"].present?
-      return and_relations.or(or_relations) if items_strategies["and"].present?
+    items_strategies[criteria[:field_condition]] << strategy.search(scope, criteria)
+  end
 
-      return or_relations
+  def build_complex_fields_relations(items_strategies, strategy, criteria, scope)
+    # Remove previously added criteria[:field_condition]
+    criteria = criteria.except(:field_condition)
+    criteria.keys.each do |key|
+      criteria[key][:field_condition] = "and" if criteria[key][:field_condition].blank?
+
+      next unless %w[or exclude and].include?(criteria[key][:field_condition])
+
+      items_strategies[criteria[key][:field_condition]] << strategy.search(scope, criteria[key])
     end
-
-    and_relations
   end
 
   def merge_relations(strategies, original_scope)
