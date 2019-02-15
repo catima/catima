@@ -65,7 +65,7 @@ class Choice < ApplicationRecord
     return fields unless category.present? && category.active?
 
     category.fields.each do |field|
-      next if field.is_a?(Field::ChoiceSet) || field.is_a?(Field::Reference) || !field.human_readable?
+      next unless field.filterable_field?
 
       fields << field
     end
