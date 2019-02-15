@@ -20,7 +20,7 @@ class CatalogPolicyTest < ActiveSupport::TestCase
     refute(policy(users(:one_admin), nil).index?)
     refute(policy(users(:one_admin)).create?)
     refute(policy(users(:one_admin)).new?)
-    refute(policy(users(:one_admin)).destroy?)
+    refute(policy(users(:one_admin), catalogs(:inactive)).destroy?)
   end
 
   test "other users cannot manage" do
