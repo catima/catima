@@ -317,22 +317,8 @@ class Field < ApplicationRecord
   def search_options_as_hash
   end
 
-  def sql_type
-    ""
-  end
-
-  def sql_nullable
-    "#{'NOT ' unless required}NULL"
-  end
-
-  def sql_unique
-    "UNIQUE" if unique
-  end
-
-  def sql_default
-    return "" if default_value.blank?
-
-    "DEFAULT #{default_value}"
+  def filterable_field?
+    !is_a?(Field::ChoiceSet) && !is_a?(Field::Reference) && field.human_readable?
   end
 
   private
