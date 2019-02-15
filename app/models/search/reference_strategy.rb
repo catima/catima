@@ -2,7 +2,7 @@ class Search::ReferenceStrategy < Search::BaseStrategy
   include Search::MultivaluedSearch
 
   permit_criteria :exact, :all_words, :one_word, :less_than, :less_than_or_equal_to, :greater_than,
-                  :greater_than_or_equal_to, :field_condition, :filter_field_slug, :condition, :default,
+                  :greater_than_or_equal_to, :field_condition, :filter_field_uuid, :condition, :default,
                   :start => {}, :end => {}
 
   def keywords_for_index(item)
@@ -24,7 +24,7 @@ class Search::ReferenceStrategy < Search::BaseStrategy
       scope = search_data_matching_all(scope, criteria[:default], negate)
     end
 
-    scope = search_in_ref_field(scope, criteria) if criteria[:filter_field_slug].present?
+    scope = search_in_ref_field(scope, criteria) if criteria[:filter_field_uuid].present?
 
     scope
   end
@@ -46,14 +46,13 @@ class Search::ReferenceStrategy < Search::BaseStrategy
     end
   end
 
-  # Known issue in rails (with the editor field only): https://github.com/rails/rails/issues/34536#issue-384526390
-  # Joins relations order is not preserved, leading in a PG::UndefinedTable: ERROR.
   def search_in_ref_field(scope, criteria)
-    ref_field = Field.find_by(slug: criteria[:filter_field_slug])
+    ref_field = Field.find_by(uuid: criteria[:filter_field_uuid])
     return scope if ref_field.nil?
 
     klass = "Search::#{ref_field.type.sub(/^Field::/, '')}Strategy"
     strategy = klass.constantize.new(ref_field, locale)
+    strategy.sql_select_name = "items"
 
     scope = if field.multiple?
               strategy.search(
