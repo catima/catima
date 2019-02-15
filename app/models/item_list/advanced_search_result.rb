@@ -27,7 +27,7 @@ class ItemList::AdvancedSearchResult < ItemList
     @model.fields.each do |field|
       next unless field.type_name == "Geometry"
 
-      return items.map do |item|
+      return items.reject { |it| it.data[field.uuid].blank? }.map do |item|
         # TODO: part 3 : display only fields that have been selected to be displayed in the advanced search configuration
         popup_content = ApplicationController.render(
           :partial => 'advanced_searches/popup_content',
