@@ -317,6 +317,10 @@ class Field < ApplicationRecord
   def search_options_as_hash
   end
 
+  def filterable_field?
+    !is_a?(Field::ChoiceSet) && !is_a?(Field::Reference) && field.human_readable?
+  end
+
   private
 
   def exclude_base64(string)
