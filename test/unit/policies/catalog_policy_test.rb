@@ -8,7 +8,10 @@ class CatalogPolicyTest < ActiveSupport::TestCase
     assert(policy(users(:system_admin)).new?)
     assert(policy(users(:system_admin)).update?)
     assert(policy(users(:system_admin)).show?)
-    assert(policy(users(:system_admin)).destroy?)
+    # SystemAdmin cannot delete an active catalog
+    refute(policy(users(:system_admin)).destroy?)
+    # SystemAdmin can delete an inactive catalog
+    assert(policy(users(:system_admin), catalogs(:inactive)).destroy?)
   end
 
   test "catalog admin can edit but not create or destroy" do
