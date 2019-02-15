@@ -1,6 +1,7 @@
 # A strategy defines how a field is indexed and searched.
 class Search::BaseStrategy
   attr_reader :field, :locale
+  attr_accessor :sql_select_name
 
   def self.permit_criteria(*args)
     @permitted_keys = args
@@ -43,6 +44,6 @@ class Search::BaseStrategy
 
   def data_field_expr
     # TODO: move this to Field?
-    "items.data->>'#{field.uuid}'"
+    "#{sql_select_name.presence || 'items'}.data->>'#{field.uuid}'"
   end
 end
