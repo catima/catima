@@ -256,6 +256,7 @@ en:
         register: "Register"
         my_profile: "My profile"
         my_favorites: "My favorites"
+        my_searches: My searches
         my_groups: My groups
   simple_search:
     form:

@@ -251,6 +251,7 @@ fr:
         register: "Enregistrement"
         my_profile: "Mon profile"
         my_favorites: "Mes favoris"
+        my_searches: Mes recherches
         my_groups: Mes groupes
   simple_search:
     form:

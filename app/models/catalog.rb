@@ -40,6 +40,7 @@ class Catalog < ApplicationRecord
   serialize :style, HashSerializer
 
   has_many :advanced_searches, :dependent => :destroy
+  has_many :simple_searches, :dependent => :destroy
   has_many :catalog_permissions, :dependent => :destroy
   has_many :categories, -> { active }
   has_many :all_categories, :class_name => "Category", :dependent => :destroy

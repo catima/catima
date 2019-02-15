@@ -2,8 +2,7 @@
 # performing the search and paginating the results.
 #
 class ItemList::AdvancedSearchResult < ItemList
-  include Search::Strategies
-  include ItemMapsHelper
+  include ::Search::Strategies
 
   attr_reader :model
   delegate :catalog, :item_type, :criteria, :locale, :to_param, :to => :model

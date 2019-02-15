@@ -1,0 +1,7 @@
+<% provide(:title, t(".title")) %>
+
+<% if @catalogs && @catalogs.length > 1 %>
+  <%= render "searches/catalogs" %>
+<% else %>
+  <%= render "searches/list" %>
+<% end %>

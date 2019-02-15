@@ -237,6 +237,7 @@ it:
         register: "Iscrizione"
         my_profile: "Il mio profilo"
         my_favorites: "I miei preferiti"
+        my_searches: Le mie ricerche
         my_groups: I miei gruppi
   simple_search:
     form:

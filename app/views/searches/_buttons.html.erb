@@ -1,0 +1,39 @@
+<% if policy(search).show? %>
+  <%= link_to(
+          fa_icon("eye", :text => t("show")),
+          search_path(search.catalog, search.id),
+          :class => "btn btn-default btn-xs",
+          :target => '_blank') %>
+<% end %>
+<% if policy(search).edit? %>
+  <%= link_to(
+          fa_icon("pencil", :text => t("edit")),
+          edit_search_path(search),
+          :class => "btn btn-default btn-xs",
+          :target => '_blank') %>
+<% end %>
+<% if policy(search).destroy? %>
+  <%= link_to(
+          fa_icon("trash-o", :text => t("delete")),
+          search_path(search),
+          :class => "btn btn-default btn-xs",
+          :method => :delete,
+          :data => {
+              :confirm => t('.delete_confirm', search: search.name)
+          }) %>
+<% end %>
+<% if exists_for_user?(search) %>
+  <%= link_to(
+          fa_icon("star", :text => t(".favorites_remove")),
+          favorite_path(I18n.locale, search),
+          :class => "btn btn-default btn-xs favorites-remove",
+          method: :delete
+      ) %>
+<% else %>
+  <%= link_to(
+          fa_icon("star-o", :text => t(".favorites_add")),
+          favorites_path(I18n.locale, id: search.id),
+          :class => "btn btn-default btn-xs favorites-add",
+          method: :post
+      ) %>
+<% end %>

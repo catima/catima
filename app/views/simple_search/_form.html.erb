@@ -1,6 +1,6 @@
 <%= bootstrap_form_tag(
       :url => { :controller => controller, :action => action },
-      :method => "GET",
+      :method => "POST",
       :layout => :inline,
       :html => { :style => "text-align: center" }) do |f| %>
 
@@ -26,11 +26,4 @@
     </div>
 
     <%= f.submit(t(".submit")) %>
-
-  <% if display_advanced_search %>
-    <%= link_to(
-          t(".advanced"),
-          new_advanced_search_path,
-          :class => "btn btn-link") %>
-  <% end %>
 <% end %>

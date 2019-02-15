@@ -236,6 +236,7 @@ de:
         register: "Registeren"
         my_profile: "Mein Profil"
         my_favorites: "Meine Favoriten"
+        my_searches: Meine Suchen
         my_groups: Meine Gruppen
   simple_search:
     form:
