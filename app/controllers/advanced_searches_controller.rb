@@ -67,6 +67,10 @@ class AdvancedSearchesController < ApplicationController
 
   def show
     find_advanced_search_or_redirect
+    @advanced_search_results = ItemList::AdvancedSearchResult.new(
+      :model => @saved_search,
+      :page => params[:page]
+    )
   end
 
   private
@@ -81,13 +85,8 @@ class AdvancedSearchesController < ApplicationController
   end
 
   def find_advanced_search_or_redirect
-    model = scope.where(:uuid => params[:uuid]).first
-    return redirect_to(:action => :new) if model.nil?
-
-    @search = ItemList::AdvancedSearchResult.new(
-      :model => model,
-      :page => params[:page]
-    )
+    @saved_search = scope.where(:uuid => params[:uuid]).first
+    redirect_to(:action => :new) if @saved_search.nil?
   end
 
   def advanced_search_params

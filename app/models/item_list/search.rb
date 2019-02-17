@@ -1,8 +1,10 @@
 class ItemList::Search < ItemList
-  def initialize(current_user:, selected_catalog:, page: nil, per: nil)
+  attr_accessor :selected_catalog
+
+  def initialize(user:, catalog:, page: nil, per: nil)
     super(nil, page, per)
-    @current_user = current_user
-    @selected_catalog = selected_catalog
+    @user = user
+    @selected_catalog = catalog
   end
 
   def unpaginaged_items
@@ -17,13 +19,12 @@ class ItemList::Search < ItemList
         next unless search.catalog == @selected_catalog
       end
 
-      # TODO
-      # array << search if @current_user.can_list_item?(search)
+      array << search if @current_user.can_list_item?(search)
       array << search
     end
   end
 
   def search_items(scope)
-    scope.where(:user_id => @current_user)
+    scope.where(:user_id => @user)
   end
 end

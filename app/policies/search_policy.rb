@@ -20,6 +20,7 @@ class SearchPolicy
 
   alias_method :show?, :create?
   alias_method :edit?, :create?
+  alias_method :update?, :create?
 
   private
 

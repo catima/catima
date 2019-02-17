@@ -162,7 +162,7 @@ Rails.application.routes.draw do
     end
     post ":item_type_slug/upload" => "items#upload", :as => 'item_file_upload'
 
-    get ":item_type_slug/search" => "items#search", :as => "simple_search"
+    post ":item_type_slug/search" => "items#search", :as => "simple_search"
   end
 
   # ===========================================================================

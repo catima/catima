@@ -3,14 +3,19 @@ class SearchesController < ApplicationController
 
   def show
     find_search(params[:id])
-    
+
+    if @search.related_search_type == SimpleSearch.name
+      redirect_to simple_search_index_path(@search.catalog, @search.locale, :uuid => @search.related_search.uuid)
+    else
+      redirect_to advanced_search_path(@search.catalog, :uuid => @search.related_search.uuid)
+    end
   end
 
   def index
     @selected_catalog = find_catalog(params[:catalog])
     @list = ItemList::Search.new(
-      :current_user => current_user,
-      :selected_catalog => @selected_catalog,
+      :user => current_user,
+      :catalog => @selected_catalog,
       :page => params[:page]
     )
     @catalogs = catalogs(@list)
@@ -24,18 +29,33 @@ class SearchesController < ApplicationController
     redirect_back fallback_location: searches_path
   end
 
+  def edit
+    find_search(params[:id])
+    authorize(@search)
+  end
+
+  def update
+    find_search(params[:id])
+    authorize(@search)
+    if @search.update(search_params)
+      redirect_to searches_path, notice: updated_message
+    else
+      render 'edit'
+    end
+  end
+
   def destroy
-    find_favorite(params[:id])
-    authorize(@favorite)
-    @favorite.destroy
-    redirect_back fallback_location: favorites_path
+    find_search(params[:id])
+    authorize(@search)
+    @search.destroy
+    redirect_back fallback_location: searches_path
   end
 
   def user_scoped?
     true
   end
 
-  def favorites_scoped?
+  def searches_scoped?
     true
   end
 
@@ -73,5 +93,13 @@ class SearchesController < ApplicationController
       array << item.related_search.catalog
     end
     catalogs.group_by(&:itself).map { |k, v| [k, v.count] }
+  end
+
+  def search_params
+    params.require(:search).permit(:name)
+  end
+
+  def updated_message
+    "Search “#{@search.name}” has been saved."
   end
 end

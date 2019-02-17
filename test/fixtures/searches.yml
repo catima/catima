@@ -7,6 +7,7 @@
 #  name                :string
 #  related_search_id   :bigint(8)
 #  related_search_type :string
+#  type                :string
 #  updated_at          :datetime         not null
 #  user_id             :bigint(8)
 #
@@ -17,8 +18,11 @@
 # model remove the '{}' from the fixture names and add the columns immediately
 # below each fixture, per the syntax in the comments below
 #
-one: {}
-# column: value
-#
-two: {}
-# column: value
+book:
+  related_search: book (SimpleSearch)
+
+toyota:
+  related_search: toyota (SimpleSearch)
+
+blank:
+  related_search: blank (SimpleSearch)

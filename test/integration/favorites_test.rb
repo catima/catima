@@ -1,6 +1,6 @@
 require "test_helper"
 
-class FavoritesTest < ActionDispatch::IntegrationTest
+class FavoritesTest < ActionDispatch::IntegrationTest  
   test "redirected to login with unauthenticated user" do
     author = items(:one_author_stephen_king)
     visit("/one/en/authors/#{author.to_param}")

@@ -1,6 +1,6 @@
 <% if @selected_catalog && @list.present? %>
   <strong><%= t(".selected_catalog") %>: "<%= @selected_catalog.name %>"</strong>
-  (<%= link_to t(".back_to_list"), favorites_path %>)
+  (<%= link_to t(".back_to_list"), searches_path %>)
   <hr>
 <% end %>
 
@@ -14,15 +14,9 @@
   <div class="media">
     <div class="media-body">
       <h4 class="media-heading">
-        <%= search.name.presence || search.related_search.uuid %>
-        <%#= search_list_link(item_list, item, i, item_display_name(item)) %>
+        <%= search.search_name %>
       </h4>
-      <%#= item_summary(item) %>
     </div>
-    <%= render "searches/buttons", :search => search if favorites_scoped? %>
+    <%= render "searches/buttons", :search => search if searches_scoped? %>
   </div>
 <% end %>
-
-<%#= render_item_list(@list) %>
-
-<%#= paginate(@list.items) %>
