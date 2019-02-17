@@ -1,10 +1,8 @@
-class ItemList::Search < ItemList
-  attr_accessor :selected_catalog
-
-  def initialize(user:, catalog:, page: nil, per: nil)
+class ItemList::SavedSearch < ItemList
+  def initialize(user:, page: nil, per: nil)
     super(nil, page, per)
     @user = user
-    @selected_catalog = catalog
+    # @selected_catalog = selected_catalog
   end
 
   def unpaginaged_items
@@ -19,7 +17,7 @@ class ItemList::Search < ItemList
         next unless search.catalog == @selected_catalog
       end
 
-      array << search if @current_user.can_list_item?(search)
+      array << search if @user.can_list_item?(search)
       array << search
     end
   end

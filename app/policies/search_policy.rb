@@ -9,7 +9,7 @@ class SearchPolicy
   def create?
     return false unless @user.authenticated?
 
-    @user.catalog_visible_for_role?(@search.related_search.catalog)
+    @user.catalog_visible_for_role?(@search.catalog)
   end
 
   def destroy?
