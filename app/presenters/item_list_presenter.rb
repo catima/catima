@@ -24,7 +24,13 @@ class ItemListPresenter
 
     link_to(
       block ? capture(&block) : args.first,
-      item_path(context.merge(:item_type_slug => item_type, :id => item)),
+      item_path(
+        context.merge(
+          :item_type_slug => item_type,
+          :id => item,
+          :uuid => list.search_uuid
+        )
+      ),
       options
     )
   end

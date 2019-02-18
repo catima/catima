@@ -1,8 +1,23 @@
 <% provide(:title) do %>
   <%= t(".title",
-        :count => @search.total_count,
-        :count_delimited => number_with_delimiter(@search.total_count)) %>
+        :count => @advanced_search_results.total_count,
+        :count_delimited => number_with_delimiter(@advanced_search_results.total_count)) %>
+
+  <% if search_exists_for_user?(@saved_search) %>
+    <%= link_to(
+            fa_icon("star", :text => t(".searches_remove")),
+            search_path(I18n.locale, @saved_search.search),
+            :class => "btn btn-default btn-xs",
+            method: :delete
+        ) %>
+  <% else %>
+    <%= link_to(
+            fa_icon("star-o", :text => t(".searches_add")),
+            searches_path(I18n.locale, related_search_uuid: @saved_search.uuid),
+            :class => "btn btn-default btn-xs",
+            method: :post
+        ) %>
+  <% end %>
 <% end %>
 
-<%= render_item_list(@search, params) %>
-<%= paginate(@search.items) %>
+<%= render :partial => "advanced_searches/list", :locals => { :search_results => @advanced_search_results, :saved_result => @saved_search } %>

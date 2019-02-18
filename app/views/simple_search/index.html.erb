@@ -1,34 +1,31 @@
 <% provide(:extra_nav) do %>
   <%= render("simple_search/form",
       :controller => "simple_search",
-      :action => "index",
+      :action => "create",
       :display_advanced_search => true) %>
 <% end %>
 
 <% provide(:title) do %>
   <%= t(".title",
-        :query => @search.query,
-        :count => @search.total_count,
-        :count_delimited => number_with_delimiter(@search.total_count)) %>
+        :query => @simple_search_results.query,
+        :count => @simple_search_results.total_count,
+        :count_delimited => number_with_delimiter(@simple_search_results.total_count)) %>
+
+  <% if search_exists_for_user?(@saved_search) %>
+    <%= link_to(
+            fa_icon("star", :text => t(".searches_remove")),
+            search_path(I18n.locale, @saved_search.search),
+            :class => "btn btn-default btn-xs",
+            method: :delete
+        ) %>
+  <% else %>
+    <%= link_to(
+            fa_icon("star-o", :text => t(".searches_add")),
+            searches_path(I18n.locale, related_search_uuid: @saved_search.uuid),
+            :class => "btn btn-default btn-xs",
+            method: :post
+        ) %>
+  <% end %>
 <% end %>
 
-<% if @search.item_counts_by_type.many? %>
-  <ul class="nav nav-tabs">
-    <% @search.item_counts_by_type do |type, count| %>
-      <%= content_tag(
-            :li,
-            :role => "presentation",
-            :class => ("active" if @search.active?(type))) do %>
-        <%= link_to(:type => type.slug, :q => @search.query) do %>
-          <%= type.name_plural %>
-          <span class="badge">
-            <%= number_with_delimiter(count) %>
-          </span>
-        <% end %>
-      <% end %>
-    <% end %>
-  </ul>
-<% end %>
-
-<%= render_item_list(@search, params) %>
-<%= paginate(@search.items) %>
+<%= render :partial => "simple_search/list", :locals => { :search_results => @simple_search_results, :search_result => @saved_search } %>

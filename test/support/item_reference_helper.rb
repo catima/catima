@@ -6,6 +6,7 @@ module ItemReferenceHelper
         "'#{id} div'" \
       ")).find(el => el.textContent === '#{name}').click();"
     )
+    find("body").click
   end
 
   def add_multiple_reference(id, name)

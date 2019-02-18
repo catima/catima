@@ -5,7 +5,7 @@ class ItemList::Filter < ItemList
     field_slug.present? ? { :field_slug => field_slug, :value => value } : {}
   end
 
-  include Search::Strategies
+  include ::Search::Strategies
 
   attr_reader :item_type, :field, :value
 

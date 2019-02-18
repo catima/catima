@@ -6,12 +6,12 @@ class ItemList::SimpleSearchResultTest < ActiveSupport::TestCase
   end
 
   test "finds nothing if query is blank" do
-    simple = simple_search(catalogs(:search), " ")
+    simple = simple_search(catalogs(:search), searches(:blank))
     assert_empty(simple.items.to_a)
   end
 
   test "counts results by item type" do
-    simple = simple_search(catalogs(:search), "toyota")
+    simple = simple_search(catalogs(:search), searches(:toyota))
     counts = simple.item_counts_by_type.to_a
 
     assert_equal(1, counts.size)
@@ -22,12 +22,12 @@ class ItemList::SimpleSearchResultTest < ActiveSupport::TestCase
   end
 
   test "items is scoped to catalog" do
-    simple = simple_search(catalogs(:one), "toyota")
+    simple = simple_search(catalogs(:one), searches(:toyota))
     assert_empty(simple.items.to_a)
   end
 
   test "only shows public items" do
-    simple = simple_search(catalogs(:reviewed), "book")
+    simple = simple_search(catalogs(:reviewed), searches(:book))
 
     results = simple.items.to_a
     assert_includes(results, items(:reviewed_book_finders_keepers_approved))
@@ -36,7 +36,11 @@ class ItemList::SimpleSearchResultTest < ActiveSupport::TestCase
 
   private
 
-  def simple_search(catalog, query)
-    ItemList::SimpleSearchResult.new(:catalog => catalog, :query => query)
+  def simple_search(catalog, search)
+    ItemList::SimpleSearchResult.new(
+      :catalog => catalog,
+      :query => search.related_search.query,
+      :search_uuid => search.uuid
+    )
   end
 end

@@ -1,0 +1,10 @@
+<%= f.text_field(
+      :description,
+      :label => t('.description.label'),
+      :help => t('.description.help'),
+      :required => false
+  ) %>
+
+<%= item_list_display_types(f) %>
+
+<%= user_searches(f, current_user) %>

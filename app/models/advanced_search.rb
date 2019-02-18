@@ -25,6 +25,8 @@ class AdvancedSearch < ApplicationRecord
   belongs_to :creator, :class_name => "User", optional: true
   belongs_to :item_type, -> { active }
 
+  has_one :search, :as => :related_search, dependent: :destroy
+
   validates_presence_of :catalog
   validates_presence_of :item_type
 

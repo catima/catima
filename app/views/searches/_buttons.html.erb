@@ -1,0 +1,19 @@
+<% if policy(search).show? %>
+  <%= link_to(
+          fa_icon("eye", :text => t("view")),
+          search_path(search.catalog, search.id),
+          :class => "btn btn-default btn-xs",
+          :target => '_blank') %>
+<% end %>
+<% if policy(search).edit? %>
+  <%= link_to(
+          fa_icon("pencil", :text => t("edit")),
+          edit_search_path(search),
+          :class => "btn btn-default btn-xs") %>
+<% end %>
+<%= link_to(
+        fa_icon("star", :text => t("simple_search.index.searches_remove")),
+        search_path(I18n.locale, search),
+        :class => "btn btn-default btn-xs",
+        method: :delete
+    ) %>

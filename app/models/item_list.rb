@@ -9,7 +9,7 @@ class ItemList
   delegate :total_count, :to => :items
   delegate :empty?, :to => :unpaginaged_items
 
-  attr_reader :catalog, :page, :per
+  attr_reader :catalog, :search_uuid, :page, :per
 
   def initialize(catalog, page, per)
     @catalog = catalog

@@ -45,6 +45,8 @@ de:
         zero: "Ihre erweiterte Suche gab kein Resultat"
         one: "1 Resultat der erweiterten Suche"
         other: "%{count_delimited} Resultate der erweiterten Suche"
+      searches_add: Zu gespeicherten Suchanfragen hinzufügen
+      searches_remove: Aus gespeicherten Suchanfragen entfernen
     text_search_field:
       contains_words: "enhält Wörter"
       excludes_words: "ohne Wörer"
@@ -202,6 +204,7 @@ de:
         register: "Registeren"
         my_profile: "Mein Profil"
         my_favorites: "Meine Favoriten"
+        my_searches: Meine Suchen
         my_groups: Meine Gruppen
   simple_search:
     form:
@@ -213,6 +216,16 @@ de:
         zero: "Kein Resultat gefunden für “%{query}”"
         one: "1 Resultat für “%{query}”"
         other: "%{count_delimited} Resultate für “%{query}”"
+      searches_add: Zu gespeicherten Suchanfragen hinzufügen
+      searches_remove: Aus gespeicherten Suchanfragen entfernen
+  searches:
+    index:
+      title: Meine gespeicherten Suchanfragen
+    list:
+      empty: "Du hast noch keine Suchanfragen!"
+      empty_for_catalog: "Sie haben noch keine Suchanfragen für diesen Katalog!"
+      back_to_list: "Zurück zur Liste"
+      selected_catalog: "Ausgewählter Katalog"
   helpers:
     help:
       field/url: Eine komplette URL, inklusive den http-Teil
@@ -252,6 +265,7 @@ de:
   delete: Löschen
   delete_confirm: "Sind Sie sicher, dass Sie löschen möchten “%{model}”?"
   edit: Ändern
+  view: Ansicht
   actions: 'Aktionen'
   duplicate: 'Duplikat'
   i18n: i18n
@@ -398,6 +412,16 @@ de:
           help: E-Mail, die zum Empfangen von Nachrichten aus dem Kontaktformular verwendet wird
       item_list_inputs:
         display_style: "Display style of items (automatically adapts to content if nothing is selected)"
+      search_inputs:
+        description:
+          label: Beschreibung
+          help: Text, der über den Suchergebnissen angezeigt wird, um den Inhalt zu erklären.
+        display_type:
+          label: Anzeigeart
+          help: Die Art und Weise, wie die Suchergebnisse angezeigt werden
+        search:
+          label: Gespeicherte Suche
+          help: Die Suchergebnisse, die angezeigt werden.
 
     csv_imports:
       new:

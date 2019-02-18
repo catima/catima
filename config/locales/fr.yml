@@ -60,6 +60,8 @@ fr:
         zero: "Votre recherche avancée n'a pas donné de résultat"
         one: "1 résultat de recherche avancée"
         other: "%{count_delimited} résultats de recherche avancée"
+      searches_add: Sauvegarder la recherche
+      searches_remove: Supprimer des recherches sauvegardées
     text_search_field:
       contains_words: "contient les mots"
       excludes_words: "ne contient pas les mots"
@@ -217,6 +219,7 @@ fr:
         register: "Enregistrement"
         my_profile: "Mon profile"
         my_favorites: "Mes favoris"
+        my_searches: Mes recherches
         my_groups: Mes groupes
   simple_search:
     form:
@@ -228,6 +231,16 @@ fr:
         zero: "Rien trouvé pour “%{query}”"
         one: "1 résultat pour “%{query}”"
         other: "%{count_delimited} résultats pour “%{query}”"
+      searches_add: Sauvegarder la recherche
+      searches_remove: Supprimer des recherches sauvegardées
+  searches:
+    index:
+      title: Mes recherches sauvegardées
+    list:
+      empty: "Vous n'avez pas encore de recherches!"
+      empty_for_catalog: "Vous n'avez pas encore de recherches pour ce catalogue!"
+      back_to_list: "Retour à la liste"
+      selected_catalog: "Catalogue sélectionné"
   helpers:
     help:
       field/url: Une URL complète, y compris la partie http
@@ -267,6 +280,7 @@ fr:
   delete: 'Supprimer'
   delete_confirm: "Vous voulez vraiment supprimer “%{model}”?"
   edit: 'Éditer'
+  view: Voir
   actions: 'Actions'
   duplicate: 'Dupliquer'
   i18n: i18n
@@ -430,6 +444,16 @@ fr:
           help: L'adresse email qui recevra les message du formulaire de contact
       item_list_inputs:
         display_style: "Style d'affichage des fiches (s'adapte automatiquement au contenu si rien n'est sélectionné)"
+      search_inputs:
+        description:
+          label: Description
+          help: Texte affiché au dessus des résultats de recherche pour les commenter
+        display_type:
+          label: Type d'affichage
+          help: La façon dont les résultats de recherches seront affichés
+        search:
+          label: Recherche sauvergardée
+          help: Les résultats de recherche qui seront affichés
 
     csv_imports:
       new:

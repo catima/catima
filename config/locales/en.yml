@@ -60,6 +60,8 @@ en:
         zero: "Your advanced search found no results"
         one: "1 advanced search result"
         other: "%{count_delimited} advanced search results"
+      searches_add: Save search
+      searches_remove: Remove from saved searches
     text_search_field:
       contains_words: "contains words"
       excludes_words: "excludes words"
@@ -217,6 +219,7 @@ en:
         register: "Register"
         my_profile: "My profile"
         my_favorites: "My favorites"
+        my_searches: My searches
         my_groups: My groups
   simple_search:
     form:
@@ -228,6 +231,16 @@ en:
         zero: "Nothing found for “%{query}”"
         one: "1 result for “%{query}”"
         other: "%{count_delimited} results for “%{query}”"
+      searches_add: Save search
+      searches_remove: Remove from saved searches
+  searches:
+    index:
+      title: My saved searches
+    list:
+      empty: "You don't have searches yet!"
+      empty_for_catalog: "You don't have searches yet for this catalog!"
+      back_to_list: "Back to the list"
+      selected_catalog: "Selected catalog"
   helpers:
     help:
       field/url: A full URL, including the http part
@@ -267,6 +280,7 @@ en:
   delete: 'Delete'
   delete_confirm: "Are you sure you want to delete “%{model}”?"
   edit: 'Edit'
+  view: Show
   actions: 'Actions'
   duplicate: 'Duplicate'
   i18n: i18n
@@ -430,6 +444,16 @@ en:
           help: Email that will be used to receive messages from the contact form
       item_list_inputs:
         display_style: "Display style of items (automatically adapts to content if nothing is selected)"
+      search_inputs:
+        description:
+          label: Description
+          help: Text displayed above the search results to explain its content
+        display_type:
+          label: Display type
+          help: The way search results will be displayed
+        search:
+          label: Saved search
+          help: The search results that will be displayed
 
     csv_imports:
       new:
