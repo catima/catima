@@ -1,3 +1,23 @@
 .geoViewer {
     padding: 1rem 0;
 }
+
+.geoViewer .messageBox {
+    position: absolute;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    top: 0;
+    background-color: #000000;
+    opacity: 0.5;
+    z-index: 401;
+}
+
+.geoViewer .messageBox .message {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    color: #FFFFFF;
+    font-size: 18px;
+}
