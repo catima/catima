@@ -62,6 +62,7 @@ de:
       item_type_search: Erweiterte Suche nach der Art des Datensatzes %{item_type}
       no_advanced_search_configuration: Keine vorkonfigurierte Suche
       no_field_in_advance_search_configuration: Kein Suchfeld konfiguriert
+      no_map_results: Diese erweiterte Suche ergab keine Ergebnisse
     show:
       title:
         zero: "Ihre erweiterte Suche gab kein Resultat"
