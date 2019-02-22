@@ -132,9 +132,7 @@ en:
   items:
     item_list_nav:
       back: "Back to search results"
-      next: "Next: %{item}"
       no_more: "No more results"
-      previous: "Previous: %{item}"
     missing:
       missing_element: "Oops. Such an item doesn't exist."
       missing_element_detail: "The item with ID %{item_id} of type «%{item_type}» does not exist in this catalog."

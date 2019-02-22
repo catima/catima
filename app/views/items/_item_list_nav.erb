@@ -1,24 +1,15 @@
-<p>
-  <%= link_to(
-        fa_icon(:"chevron-circle-left", :text => t(".back")),
-        item_list_path
-        ) %>
-
-  <span class="pull-right">
-    <% if nav.previous %>
-      <%= item_list_link(item_list, nav.previous, nav.previous_offset) do %>
-        <%= fa_icon(:"chevron-left") %>
-        <%= t(".previous", :item => item_display_name(nav.previous)) %>
-      <% end %>
+<span class="pull-right">
+  <% if nav.previous %>
+    <%= item_list_link(item_list, nav.previous, nav.previous_offset) do %>
+      <%= fa_icon(:"chevron-left") %>
+      <%= item_display_name(nav.previous).truncate(30) %>
     <% end %>
-    &nbsp;&nbsp;
-    <% if nav.next %>
-      <%= item_list_link(item_list, nav.next, nav.next_offset) do %>
-        <%= t(".next", :item => item_display_name(nav.next)) %>
-        <%= fa_icon(:"chevron-right") %>
-      <% end %>
-    <% elsif nav.previous %>
-      <%= t(".no_more") %>
+  <% end %>
+  &nbsp;&nbsp;&nbsp;
+  <% if nav.next %>
+    <%= item_list_link(item_list, nav.next, nav.next_offset) do %>
+      <%= item_display_name(nav.next).truncate(30) %>
+      <%= fa_icon(:"chevron-right") %>
     <% end %>
-  </span>
-</p>
+  <% end %>
+</span>

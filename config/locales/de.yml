@@ -117,9 +117,7 @@ de:
   items:
     item_list_nav:
       back: "Zurück yu den Suchresultaten"
-      next: "Nächster: %{item}"
       no_more: "Keine weiteren Resultate"
-      previous: "Vorheriger: %{item}"
     missing:
       missing_element: "Hoppla. Ein solches Element gibt es nicht."
       missing_element_detail: "Das Element mit ID %{item_id} und Typ «%{item_type}» gibt es in diesem Katalog nicht."
