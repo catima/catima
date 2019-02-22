@@ -36,7 +36,7 @@ module AdvancedSearchesHelper
     strip_tags(partial_rendered).blank? ? nil : result
   end
 
-  def render_item_types_as_options(item_types, selected_item_type_slug)
+  def render_item_types_as_options(item_types, selected_item_type_slug, configuration)
     options = []
     item_types.each do |item_type|
       options << [
