@@ -9,20 +9,6 @@ SET client_min_messages = warning;
 SET row_security = off;
 
 --
--- Name: plpgsql; Type: EXTENSION; Schema: -; Owner: -
---
-
-CREATE EXTENSION IF NOT EXISTS plpgsql WITH SCHEMA pg_catalog;
-
-
---
--- Name: EXTENSION plpgsql; Type: COMMENT; Schema: -; Owner: -
---
-
-COMMENT ON EXTENSION plpgsql IS 'PL/pgSQL procedural language';
-
-
---
 -- Name: bigdate_to_num(json); Type: FUNCTION; Schema: public; Owner: -
 --
 
@@ -304,7 +290,8 @@ CREATE TABLE public.choices (
     long_name_translations json,
     catalog_id integer,
     category_id integer,
-    uuid character varying
+    uuid character varying,
+    parent_id bigint
 );
 
 
@@ -1306,6 +1293,13 @@ CREATE INDEX index_choices_on_choice_set_id ON public.choices USING btree (choic
 
 
 --
+-- Name: index_choices_on_parent_id; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX index_choices_on_parent_id ON public.choices USING btree (parent_id);
+
+
+--
 -- Name: index_choices_on_uuid_and_choice_set_id; Type: INDEX; Schema: public; Owner: -
 --
 
@@ -1928,6 +1922,7 @@ INSERT INTO "schema_migrations" (version) VALUES
 ('20181207103025'),
 ('20181207145518'),
 ('20181210123619'),
-('20181214095728');
+('20181214095728'),
+('20190201141740');
 
 

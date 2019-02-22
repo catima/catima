@@ -9,6 +9,7 @@
 #  id                      :integer          not null, primary key
 #  long_name_old           :text
 #  long_name_translations  :json
+#  parent_id               :bigint(8)
 #  short_name_old          :string
 #  short_name_translations :json
 #  updated_at              :datetime         not null
