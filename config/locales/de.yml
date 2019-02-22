@@ -115,9 +115,6 @@ de:
     membership:
       created: Du bist jetzt ein Mitglied der «%{group}» Gruppe
   items:
-    item_list_nav:
-      back: "Zurück yu den Suchresultaten"
-      no_more: "Keine weiteren Resultate"
     missing:
       missing_element: "Hoppla. Ein solches Element gibt es nicht."
       missing_element_detail: "Das Element mit ID %{item_id} und Typ «%{item_type}» gibt es in diesem Katalog nicht."

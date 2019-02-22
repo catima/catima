@@ -19,7 +19,7 @@ class AdvancedSearchesTest < ActionDispatch::IntegrationTest
     refute(page.has_content?("Camry"))
   end
 
-  test "allows navigation from one result to another, and back to results" do
+  test "allows navigation from one result to another" do
     visit("/search/en")
     click_on("Advanced")
     fill_in(
@@ -31,13 +31,8 @@ class AdvancedSearchesTest < ActionDispatch::IntegrationTest
     click_on("Highlander")
     within("h1") { assert(page.has_content?("Highlander")) }
 
-    click_on("Next:")
-    click_on("Previous:")
+    click_on("Prius")
+    click_on("Highlander")
     within("h1") { assert(page.has_content?("Highlander")) }
-    click_on("Back to search results")
-
-    assert(page.has_content?("Prius"))
-    assert(page.has_content?("Highlander"))
-    assert(page.has_content?("Camry"))
   end
 end
