@@ -144,6 +144,11 @@ class GeoViewer extends React.Component {
     return (
       <div className="geoViewer" style={{height: this.state.mapHeight}}>
         <Map ref="map" center={center} zoom={2} zoomControl={true}>
+            { (this.features.length === 0) &&
+                <div className="messageBox">
+                    <div className="message"><i className="fa fa-info-circle"></i> { this.props.noResultsMessage }</div>
+                </div>
+            }
           <TileLayer
             attribution='Map data &copy; <a href="http://openstreetmap.org">OpenStreetMap</a> contributors'
             url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
