@@ -62,6 +62,7 @@ it:
       item_type_search: Ricerca avanzata sul tipo di record %{item_type}
       no_advanced_search_configuration: Nessuna ricerca preconfigurata
       no_field_in_advance_search_configuration: Nessun campo di ricerca configurato
+      no_map_results: Questa ricerca avanzata non ha prodotto risultati
     show:
       title:
         zero: "Your advanced search found no results"
