@@ -24,6 +24,14 @@ class AdvancedSearchesController < ApplicationController
     if @advanced_search_config.present?
       @item_types = @advanced_search_config.item_types
       @fields = @advanced_search_config.field_set
+
+      # Initial display of map
+      if @advanced_search_config.search_type_map?
+        build_advanced_search
+        @search = ItemList::AdvancedSearchResult.new(
+          :model => @advanced_search
+        )
+      end
     else
       @item_types = @advanced_search.item_types
       @fields = @advanced_search.fields
