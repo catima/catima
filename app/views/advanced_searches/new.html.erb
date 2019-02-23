@@ -33,5 +33,5 @@
 <%= render :partial => "form" %>
 
 <% if @advanced_search_config&.search_type_map? %>
-  <%= render :partial => "map", :locals => { :results => [] } %>
+  <%= render :partial => "map", :locals => { :results => @search.items_as_geojson } %>
 <% end %>
