@@ -308,7 +308,7 @@ class Field < ApplicationRecord
   end
 
   def filterable_field?
-    !is_a?(Field::ChoiceSet) && !is_a?(Field::Reference) && field.human_readable?
+    !is_a?(Field::ChoiceSet) && !is_a?(Field::Reference) && human_readable?
   end
 
   private
