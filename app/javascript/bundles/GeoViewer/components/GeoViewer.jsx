@@ -15,6 +15,7 @@ class GeoViewer extends React.Component {
 
   constructor(props){
     super(props);
+
     this.features = this.props.features;
     this.state = {
       mapHeight: 300,
