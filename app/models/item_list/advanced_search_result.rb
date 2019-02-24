@@ -27,7 +27,8 @@ class ItemList::AdvancedSearchResult < ItemList
     @model.fields.each do |field|
       next unless field.type_name == "Geometry"
 
-      return items.reject { |it| it.data[field.uuid].blank? }.map do |item|
+      geometry_aware_items = items.reject { |it| it.data[field.uuid].blank? }
+      return geometry_aware_items.map do |item|
         # TODO: part 3 : display only fields that have been selected to be displayed in the advanced search configuration
         popup_content = ApplicationController.render(
           :partial => 'advanced_searches/popup_content',
@@ -48,9 +49,9 @@ class ItemList::AdvancedSearchResult < ItemList
   private
 
   def unpaginaged_items
-    original_scope = item_type.public_sorted_items
+    original_scope = item_type.public_sorted_items.select("items.id")
 
-    return original_scope if criteria.blank?
+    return original_scope.unscope(:select) if criteria.blank?
 
     items_strategies = build_items_strategies(original_scope)
 
@@ -61,12 +62,12 @@ class ItemList::AdvancedSearchResult < ItemList
     and_relations = and_relations.merge(exclude_relations) if items_strategies["exclude"].present?
 
     if items_strategies["or"].present?
-      return and_relations.or(or_relations) if items_strategies["and"].present?
+      return items_in("#{and_relations.unscope(:order).to_sql} UNION #{or_relations}") if items_strategies["and"].present?
 
-      return or_relations
+      return items_in(or_relations.to_sql)
     end
 
-    and_relations
+    items_in(and_relations.to_sql)
   end
 
   def build_items_strategies(scope)
@@ -130,14 +131,13 @@ class ItemList::AdvancedSearchResult < ItemList
   def or_relations(strategies, original_scope)
     return original_scope unless strategies.count.positive?
 
-    relations = strategies.first
-    strategies.drop(1).each do |relation|
-      # Needed for reference filter search
-      relation = relation.unscope(where: :item_type_id) if relations.to_sql.include?("parent_items")
-      relations = relations.or(relation)
-    end
+    rel = ""
+    strategies.map do |relation|
+      select_name = relation.to_sql.include?("parent_items") ? "parent_items" : "items"
+      rel << relation.unscope(:select).unscope(:order).select("#{select_name}.id").to_sql
+    end.join(" UNION ")
 
-    relations
+    rel
   end
 
   def field_criteria(field)
@@ -154,5 +154,9 @@ class ItemList::AdvancedSearchResult < ItemList
     end
 
     true
+  end
+
+  def items_in(relations)
+    Item.where("(items.id) IN (#{relations})").distinct
   end
 end

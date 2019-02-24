@@ -103,16 +103,7 @@ class GeoViewer extends React.Component {
   }
 
   bbox(){
-    var coords = [];
-    this.features.map(function(feat, i) {
-      if (typeof feat.geometry === 'undefined') {
-        feat.map(function(f, j) {
-          if (f !== "undefined" && f !== null) { coords.push(f.geometry.coordinates); }
-        });
-      } else {
-        coords = feat.geometry.coordinates;
-      }
-    });
+    const coords = this.features.map(function(feat, i){ if (feat !== "undefined") { return feat.geometry.coordinates; } });
     const minmax = this._minmax(coords);
     // Check if there are non valid numbers in the minmax. If so, we return a default bbox
     if (minmax.map((a) => isNaN(a)).reduce((a, b) => a || b, false)) return [-60, 60, -120, 120];
