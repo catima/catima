@@ -157,6 +157,6 @@ class ItemList::AdvancedSearchResult < ItemList
   end
 
   def items_in(relations)
-    Item.where("(items.id) IN (#{relations})").distinct
+    Item.where("(items.id) IN (#{relations})")
   end
 end
