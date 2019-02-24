@@ -27,6 +27,7 @@ class AdvancedSearchesController < ApplicationController
 
       # Initial display of map
       if @advanced_search_config.search_type_map?
+        params[:item_type] = @advanced_search_config.item_type.slug
         build_advanced_search
         @search = ItemList::AdvancedSearchResult.new(
           :model => @advanced_search
