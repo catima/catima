@@ -21,11 +21,11 @@ class ItemList::AdvancedSearchResultTest < ActiveSupport::TestCase
     )
     search = ItemList::AdvancedSearchResult.new(:model => model)
 
-    results = search.items
-    assert_includes(results.to_a, items(:search_vehicle_toyota_highlander))
-    assert_includes(results.to_a, items(:search_vehicle_toyota_prius))
-    refute_includes(results.to_a, items(:search_vehicle_toyota_camry_hybrid))
-    refute_includes(results.to_a, items(:search_vehicle_toyota_camry))
+    results = search.items.to_a
+    assert_includes(results, items(:search_vehicle_toyota_highlander))
+    assert_includes(results, items(:search_vehicle_toyota_prius))
+    refute_includes(results, items(:search_vehicle_toyota_camry_hybrid))
+    refute_includes(results, items(:search_vehicle_toyota_camry))
   end
 
   test "only shows public items" do
