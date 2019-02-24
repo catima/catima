@@ -56,7 +56,7 @@ class Item < ApplicationRecord
   def self.sorted_by_field(field)
     sql = []
     sql << field.order_items_by unless field.nil?
-    sql << "items.created_at DESC"
+    # sql << "items.created_at DESC"
 
     if field.nil? ||
        (field.type != Field::TYPES['reference'] && field.type != Field::TYPES['choice'])
