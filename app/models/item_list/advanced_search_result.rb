@@ -167,7 +167,7 @@ class ItemList::AdvancedSearchResult < ItemList
       relations = relations.or(relation)
     end
 
-    relations
+    rel
   end
 
   def field_criteria(field)
