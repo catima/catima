@@ -130,11 +130,6 @@ fr:
     membership:
       created: Vous êtes maintenant membre du groupe «%{group}»
   items:
-    item_list_nav:
-      back: "Retour au résultat de recherche"
-      next: "Suivant: %{item}"
-      no_more: "Pas de résultats supplémentaires"
-      previous: "Précédent: %{item}"
     missing:
       missing_element: "Oups. Un tel élément n'existe pas."
       missing_element_detail: "L'élément avec ID %{item_id} de type «%{item_type}» n'existe pas dans ce catalogue."

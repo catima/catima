@@ -115,11 +115,6 @@ it:
     membership:
       created: Ora sei un membro del gruppo «%{group}»
   items:
-    item_list_nav:
-      back: "Torna ai risultati di ricerca"
-      next: "Prossimo: %{item}"
-      no_more: "Nessun altri risultati"
-      previous: "Precedente: %{item}"
     buttons:
       delete_confirm: "Sei sicuro di voler eliminare “%{item}”?"
       favorites_add: "Aggiungi ai preferiti"

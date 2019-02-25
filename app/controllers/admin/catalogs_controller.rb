@@ -31,6 +31,13 @@ class Admin::CatalogsController < Admin::BaseController
     end
   end
 
+  def destroy
+    find_catalog
+    authorize(@catalog)
+    @catalog.destroy
+    redirect_to(admin_dashboard_path, :notice => destroyed_message)
+  end
+
   private
 
   def build_catalog
@@ -58,6 +65,10 @@ class Admin::CatalogsController < Admin::BaseController
 
   def created_message
     "The “#{@catalog.name}” catalog has been created."
+  end
+
+  def destroyed_message
+    "The “#{@catalog.name}” catalog has been deleted."
   end
 
   def updated_message

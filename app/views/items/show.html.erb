@@ -2,9 +2,8 @@
 
 <div class="item-admin" style="margin-bottom: 20px;">
   <%= render "items/buttons", :item => @item %>
+  <%= render_item_list_nav(item_list, @item) if item_list %>
 </div>
-
-<%= render_item_list_nav(item_list, @item) if item_list %>
 
 <table class="table item-table">
   <tbody>
@@ -20,15 +19,24 @@
 </table>
 
 <% fields_and_item_references(@item) do |field, browse| %>
-  <h3><%= field.item_type.name_plural %></h3>
+  <h3>
+    <%= link_to(
+            fa_icon(:"link"),
+            items_path(
+                :item_type_slug => browse.item_type,
+                browse.field.slug => browse.value
+            ))
+    %>
+    <%= field.item_type.name_plural %>
+  </h3>
   <%= render_item_list(browse, params) %>
   <% if browse.more? %>
-    <%= link_to(items_path(
-          :item_type_slug => browse.item_type,
-          browse.field.slug => browse.value
-        )) do %>
-      <%= t(".view_more") %>
-      (<%= browse.total_count %>)
+    <%= link_to(
+            items_path(
+                :item_type_slug => browse.item_type,
+                browse.field.slug => browse.value
+            )) do %>
+      <%= t(".view_more") %> (<%= browse.total_count %>)
     <% end %>
   <% end %>
 <% end %>
