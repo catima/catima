@@ -130,6 +130,10 @@ class Field::Reference < ::Field
     []
   end
 
+  def field_value_for_all_item(item)
+    item_type.primary_text_field&.field_value_for_all_item(item)
+  end
+
   def sql_type
     return "INT" unless related_item_type.primary_field.present?
 
