@@ -4,6 +4,8 @@ require "test_helper"
 class AdvancedSearch::ReferenceFieldTest < ActionDispatch::IntegrationTest
   setup { use_javascript_capybara_driver }
 
+  include DatepickerHelper
+
   test "search for authors by single tag reference field" do
     visit("/one/en")
     click_on("Advanced")
@@ -210,6 +212,32 @@ class AdvancedSearch::ReferenceFieldTest < ActionDispatch::IntegrationTest
     click_on("Search")
 
     assert(page.has_selector?('h4', text: 'Stephen King'))
+    refute(page.has_selector?('h4', text: 'Very Old'))
+  end
+
+  test "search for authors by date field of reference" do
+    visit("/one/en")
+    click_on("Advanced")
+
+    find("#default_search_type").click
+    within("#default_search_type") do
+      click_on("Author")
+    end
+
+    within all(".single-reference-filter")[1] do
+      find(".css-vj8t7z").click # Click on the filter input
+
+      within(".css-11unzgr") do # Within the filter list
+        find('div', text: "Most Active Month", match: :first).click
+      end
+    end
+
+    select("June", :from => "advanced_search[criteria][one_author_other_collaborators_uuid][0][start][exact][M]")
+
+    click_on("Search")
+
+    assert(page.has_selector?('h4', text: 'Very Young'))
+    assert(page.has_selector?('h4', text: 'Young apprentice'))
     refute(page.has_selector?('h4', text: 'Very Old'))
   end
 
