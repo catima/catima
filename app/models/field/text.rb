@@ -85,6 +85,7 @@ class Field::Text < ::Field
     end
   end
 
+<<<<<<< HEAD
   def search_conditions_as_options
     options = [
       [I18n.t("advanced_searches.text_search_field.all_words"), "all_words"],
@@ -108,6 +109,8 @@ class Field::Text < ::Field
     options.unshift({ :value => I18n.t("advanced_searches.text_search_field.exact", locale: locale), :key => "exact"})
   end
 
+=======
+>>>>>>> dd33a39653aa0d641991521820848614e74e9bda
   def sql_type
     "VARCHAR(#{maximum.presence || 255})"
   end
