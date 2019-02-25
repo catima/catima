@@ -71,7 +71,7 @@ class Search::DateTimeStrategy < Search::BaseStrategy
     date_components = date_time.select { |_, value| value.present? }
     sql = date_components.map { |k, _| "#{data_field_expr(k)} LIKE ?" }.join(" AND ")
 
-    s = ->(*q) { negate ? scope.where.not(q).or(scope.where("items.data->'#{field.uuid}' IS NULL")) : scope.where(q) }
+    s = ->(*q) { negate ? scope.where.not(q).or(scope.where("#{sql_select_name.presence || 'items'}.data->'#{field.uuid}' IS NULL")) : scope.where(q) }
 
     s.call(sql, *date_components.map { |_key, value| "%#{value}%" })
   end
@@ -110,34 +110,34 @@ class Search::DateTimeStrategy < Search::BaseStrategy
   # rubocop:disable Metrics/MethodLength
   def concat_json_date(date_time)
     "CONCAT(
-      CASE WHEN items.data->'#{field.uuid}'->>'Y' IS NULL
+      CASE WHEN #{sql_select_name.presence || 'items'}.data->'#{field.uuid}'->>'Y' IS NULL
            THEN '#{date_time_component(date_time, 'Y')}'
-           ELSE LPAD(items.data->'#{field.uuid}'->>'Y', 4, '0')
+           ELSE LPAD(#{sql_select_name.presence || 'items'}.data->'#{field.uuid}'->>'Y', 4, '0')
            END,
         '-',
-      CASE WHEN items.data->'#{field.uuid}'->>'M' IS NULL
+      CASE WHEN #{sql_select_name.presence || 'items'}.data->'#{field.uuid}'->>'M' IS NULL
            THEN '#{date_time_component(date_time, 'M')}'
-           ELSE LPAD(items.data->'#{field.uuid}'->>'M', 2, '0')
+           ELSE LPAD(#{sql_select_name.presence || 'items'}.data->'#{field.uuid}'->>'M', 2, '0')
            END,
         '-',
-      CASE WHEN items.data->'#{field.uuid}'->>'D' IS NULL
+      CASE WHEN #{sql_select_name.presence || 'items'}.data->'#{field.uuid}'->>'D' IS NULL
            THEN '#{date_time_component(date_time, 'D')}'
-           ELSE LPAD(items.data->'#{field.uuid}'->>'D', 2, '0')
+           ELSE LPAD(#{sql_select_name.presence || 'items'}.data->'#{field.uuid}'->>'D', 2, '0')
            END,
         ' ',
-      CASE WHEN items.data->'#{field.uuid}'->>'h' IS NULL
+      CASE WHEN #{sql_select_name.presence || 'items'}.data->'#{field.uuid}'->>'h' IS NULL
            THEN '#{date_time_component(date_time, 'h')}'
-           ELSE LPAD(items.data->'#{field.uuid}'->>'h', 2, '0')
+           ELSE LPAD(#{sql_select_name.presence || 'items'}.data->'#{field.uuid}'->>'h', 2, '0')
            END,
         ':',
-      CASE WHEN items.data->'#{field.uuid}'->>'m' IS NULL
+      CASE WHEN #{sql_select_name.presence || 'items'}.data->'#{field.uuid}'->>'m' IS NULL
            THEN '#{date_time_component(date_time, 'm')}'
-           ELSE LPAD(items.data->'#{field.uuid}'->>'m', 2, '0')
+           ELSE LPAD(#{sql_select_name.presence || 'items'}.data->'#{field.uuid}'->>'m', 2, '0')
            END,
         ':',
-      CASE WHEN items.data->'#{field.uuid}'->>'s' IS NULL
+      CASE WHEN #{sql_select_name.presence || 'items'}.data->'#{field.uuid}'->>'s' IS NULL
            THEN '#{date_time_component(date_time, 's')}'
-           ELSE LPAD(items.data->'#{field.uuid}'->>'s', 2, '0')
+           ELSE LPAD(#{sql_select_name.presence || 'items'}.data->'#{field.uuid}'->>'s', 2, '0')
            END
     )"
   end
@@ -159,15 +159,15 @@ class Search::DateTimeStrategy < Search::BaseStrategy
   end
 
   def append_where_date_is_set(scope)
-    scope.where("items.data->'#{field.uuid}' IS NOT NULL")
+    scope.where("#{sql_select_name.presence || 'items'}.data->'#{field.uuid}' IS NOT NULL")
   end
 
   def data_field_expr(date_component)
     case date_component
     when "Y"
-      "LPAD(items.data->'#{field.uuid}'->>'#{date_component}', 4, '0')"
+      "LPAD(#{sql_select_name.presence || 'items'}.data->'#{field.uuid}'->>'#{date_component}', 4, '0')"
     else
-      "LPAD(items.data->'#{field.uuid}'->>'#{date_component}', 2, '0')"
+      "LPAD(#{sql_select_name.presence || 'items'}.data->'#{field.uuid}'->>'#{date_component}', 2, '0')"
     end
   end
 
