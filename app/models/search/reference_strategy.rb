@@ -65,20 +65,6 @@ class Search::ReferenceStrategy < Search::BaseStrategy
                   .joins("LEFT JOIN items children_items ON items.data->>'#{field.uuid}' = children_items.id::text"),
                 criteria)
             end
-    # scope = if field.multiple?
-    #           strategy.search(
-    #             scope.select('"parent_items".id')
-    #               .from("items parent_items")
-    #               .joins("LEFT JOIN items ON (parent_items.data->>'#{field.uuid}')::jsonb ?| array[items.id::text] AND parent_items.item_type_id = #{field.item_type.id}"),
-    #             criteria)
-    #         else
-    #           strategy.search(
-    #             scope.unscope(where: :item_type_id)
-    #               .select('"parent_items".id')
-    #               .from("items parent_items")
-    #               .joins("LEFT JOIN items ON parent_items.data->>'#{field.uuid}' = items.id::text AND parent_items.item_type_id = #{field.item_type.id}"),
-    #             criteria)
-    #         end
 
     scope
   end
