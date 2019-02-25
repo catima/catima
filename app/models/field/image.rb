@@ -52,6 +52,29 @@ class Field::Image < ::Field::File
     %i(legend)
   end
 
+  def field_value_for_all_item(item)
+    value = super
+
+    case
+    when value.is_a?(Hash)
+      return "" if value["path"].blank?
+
+      img = { :path => value["path"] }
+      img[:legend] = value["legend"] if value["legend"].present?
+
+      return img.to_json
+    when value.is_a?(Array)
+      value.map do |i|
+        next if i["path"].blank?
+
+        img = { :path => i["path"] }
+        img[:legend] = i["legend"] if i["legend"].present?
+
+        img.to_json
+      end
+    end
+  end
+
   def sql_type
     "VARCHAR(255)"
   end
