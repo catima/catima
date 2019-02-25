@@ -38,7 +38,7 @@ class ItemList::AdvancedSearchResult < ItemList
           }
         )
 
-        if item.data[field.uuid].present?
+        if item.data[field.uuid]["features"].present?
           item.data[field.uuid]["features"][0]["properties"]["popupContent"] = popup_content
           item.data[field.uuid]["features"][0]
         end
@@ -64,7 +64,7 @@ class ItemList::AdvancedSearchResult < ItemList
     if items_strategies["or"].present?
       return items_in("#{and_relations.unscope(:order).to_sql} UNION #{or_relations}") if items_strategies["and"].present?
 
-      return items_in(or_relations.to_sql)
+      return items_in(or_relations)
     end
 
     items_in(and_relations.to_sql)
@@ -134,10 +134,11 @@ class ItemList::AdvancedSearchResult < ItemList
     rel = ""
     strategies.map do |relation|
       select_name = relation.to_sql.include?("parent_items") ? "parent_items" : "items"
-      rel << relation.unscope(:select).unscope(:order).select("#{select_name}.id").to_sql
-    end.join(" UNION ")
+      rel << " " << relation.unscope(:select).unscope(:order).select("#{select_name}.id").to_sql
+      rel << " UNION "
+    end
 
-    rel
+    rel.chomp(" UNION ")
   end
 
   def field_criteria(field)
