@@ -186,9 +186,9 @@ class Search::DateTimeStrategy < Search::BaseStrategy
   def data_field_expr(date_component)
     case date_component
     when "Y"
-      "LPAD(items.data->'#{field.uuid}'->>'#{date_component}', 4, '0')"
+      "LPAD(#{sql_select_name.presence || 'items'}.data->'#{field.uuid}'->>'#{date_component}', 4, '0')"
     else
-      "LPAD(items.data->'#{field.uuid}'->>'#{date_component}', 2, '0')"
+      "LPAD(#{sql_select_name.presence || 'items'}.data->'#{field.uuid}'->>'#{date_component}', 2, '0')"
     end
   end
 
