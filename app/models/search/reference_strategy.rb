@@ -57,7 +57,7 @@ class Search::ReferenceStrategy < Search::BaseStrategy
     scope = if field.multiple?
               strategy.search(
                 scope
-                  .joins("LEFT JOIN items children_items ON (items.data->>'#{field.uuid}')::jsonb ?| array[items.id::text]"),
+                  .joins("LEFT JOIN items children_items ON (items.data->>'#{field.uuid}')::jsonb ?| array[children_items.id::text]"),
                 criteria)
             else
               strategy.search(
