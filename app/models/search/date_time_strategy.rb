@@ -10,6 +10,8 @@ class Search::DateTimeStrategy < Search::BaseStrategy
     field_condition = criteria[:condition]
     negate = criteria[:field_condition] == "exclude"
 
+    return scope if criteria[:start].blank?
+
     start_condition = criteria[:start].keys.first
     end_condition = criteria[:end].keys.first
 
