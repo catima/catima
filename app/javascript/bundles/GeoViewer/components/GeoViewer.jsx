@@ -16,7 +16,10 @@ class GeoViewer extends React.Component {
   constructor(props){
     super(props);
 
-    this.features = this.props.features;
+    this.features = this.props.features.filter(function (el) {
+      return el != null;
+    });
+
     this.state = {
       mapHeight: 300,
     };
@@ -103,7 +106,9 @@ class GeoViewer extends React.Component {
   }
 
   bbox(){
-    const coords = this.features.map(function(feat, i){ if (feat !== "undefined") { return feat.geometry.coordinates; } });
+    const coords = this.features.map(function(feat, i){
+      if (feat !== "undefined" && feat !== null) { return feat.geometry.coordinates; }
+    });
     const minmax = this._minmax(coords);
     // Check if there are non valid numbers in the minmax. If so, we return a default bbox
     if (minmax.map((a) => isNaN(a)).reduce((a, b) => a || b, false)) return [-60, 60, -120, 120];
