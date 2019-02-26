@@ -1,4 +1,6 @@
 module CatalogAdmin::SqlDumpHelper
+  MAX_SQL_NAME_LENGTH = 128
+
   def render_header_comment(header)
     "\n--\t ••• #{header} •••\n\n"
   end

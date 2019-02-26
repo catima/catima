@@ -9,7 +9,7 @@
 #  fields             :jsonb
 #  id                 :bigint(8)        not null, primary key
 #  item_type_id       :bigint(8)
-#  search_type        :string           default("default"), not null
+#  search_type        :string           default("default")
 #  slug               :string
 #  title_translations :jsonb
 #  updated_at         :datetime         not null
@@ -30,7 +30,7 @@ class AdvancedSearchConfiguration < ApplicationRecord
 
   belongs_to :catalog
   belongs_to :creator, :class_name => "User", optional: true
-  belongs_to :item_type, -> { active }
+  belongs_to :item_type, -> { active }, :inverse_of => false
 
   store_translations :title
 

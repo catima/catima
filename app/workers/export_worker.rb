@@ -45,7 +45,7 @@ class ExportWorker
       status = "error"
     end
     export.update(status: status)
-    send_mail(export)
+    send_mail(export)rge
   end
 
   def csv_export(export, dir)

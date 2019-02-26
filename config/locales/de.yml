@@ -62,6 +62,7 @@ de:
       item_type_search: Erweiterte Suche nach der Art des Datensatzes %{item_type}
       no_advanced_search_configuration: Keine vorkonfigurierte Suche
       no_field_in_advance_search_configuration: Kein Suchfeld konfiguriert
+      no_map_results: Diese erweiterte Suche ergab keine Ergebnisse
     show:
       title:
         zero: "Ihre erweiterte Suche gab kein Resultat"
@@ -579,7 +580,7 @@ de:
         edit_item: Edit %{item}
         save_item: Save %{item}
         back: "Back"
-        view-item: "View item"
+        view-item: Element anschauen
       index:
         no_fields_warning: This item type does not have any fields.
         add_fields: Please add first one or more fields in the item type setup.

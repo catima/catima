@@ -78,6 +78,7 @@ en:
       item_type_search: Advanced search for the item type %{item_type}
       no_advanced_search_configuration: No preconfigured searches
       no_field_in_advance_search_configuration: No fields in preconfigured searches
+      no_map_results: Your advanced search found no results
     show:
       title:
         zero: "Your advanced search found no results"

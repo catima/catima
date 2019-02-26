@@ -150,7 +150,7 @@ class ReferenceSearch extends Component {
   }
 
   _getJSONFilter(field) {
-    return {value: field.slug, label: field.name};
+    return {value: field.uuid, label: field.name};
   }
 
   _getConditionOptions(){
