@@ -28,6 +28,6 @@ module Search::MultivaluedSearch
   end
 
   def data_field_jsonb_expr
-    "(items.data->'#{field.uuid}')::jsonb"
+    "(#{sql_select_name.presence || 'items'}.data->'#{field.uuid}')::jsonb"
   end
 end

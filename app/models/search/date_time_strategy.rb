@@ -10,17 +10,17 @@ class Search::DateTimeStrategy < Search::BaseStrategy
     field_condition = criteria[:condition]
     negate = criteria[:field_condition] == "exclude"
 
+    return scope if criteria[:start].blank?
+
     start_condition = criteria[:start].keys.first
     end_condition = criteria[:end].keys.first
 
-    # start_date_time = Time.zone.at(criteria[:start][start_condition].to_i / 1000) if start_date?(criteria)
-    # end_date_time = Time.zone.at(criteria[:end][end_condition].to_i / 1000) if end_date?(criteria)
     start_date_time = criteria[:start][start_condition]
     end_date_time = criteria[:end][end_condition] if end_date?(criteria)
 
     return scope if components_empty?(start_date_time) && components_empty?(end_date_time)
 
-    scope = append_where_date_is_set(scope)
+    scope = append_where_date_is_set(scope) unless negate
     scope = search_with_start_date(scope, criteria, start_date_time, field_condition, negate)
     scope = search_interval_dates(
       scope, criteria, { :start => start_date_time, :end => end_date_time }, negate, field_condition
@@ -68,15 +68,12 @@ class Search::DateTimeStrategy < Search::BaseStrategy
   end
 
   def exact_search(scope, date_time, negate)
-    sql_operator = negate ? "<>" : "="
+    date_components = date_time.select { |_, value| value.present? }
+    sql = date_components.map { |k, _| "#{data_field_expr(k)} LIKE ?" }.join(" AND ")
 
-    date_time.keys.each do |key|
-      next if date_time[key].blank?
+    s = ->(*q) { negate ? scope.where.not(q).or(scope.where("#{sql_select_table_name}.data->'#{field.uuid}' IS NULL")) : scope.where(q) }
 
-      scope = scope.where("#{data_field_expr(key)} #{sql_operator} ?", date_time[key])
-    end
-
-    scope
+    s.call(sql, *date_components.map { |_key, value| "%#{value}%" })
   end
 
   def inexact_search(scope, date_time, field_condition, negate)
@@ -113,34 +110,34 @@ class Search::DateTimeStrategy < Search::BaseStrategy
   # rubocop:disable Metrics/MethodLength
   def concat_json_date(date_time)
     "CONCAT(
-      CASE WHEN items.data->'#{field.uuid}'->>'Y' IS NULL
+      CASE WHEN #{sql_select_table_name}.data->'#{field.uuid}'->>'Y' IS NULL
            THEN '#{date_time_component(date_time, 'Y')}'
-           ELSE LPAD(items.data->'#{field.uuid}'->>'Y', 4, '0')
+           ELSE LPAD(#{sql_select_table_name}.data->'#{field.uuid}'->>'Y', 4, '0')
            END,
         '-',
-      CASE WHEN items.data->'#{field.uuid}'->>'M' IS NULL
+      CASE WHEN #{sql_select_table_name}.data->'#{field.uuid}'->>'M' IS NULL
            THEN '#{date_time_component(date_time, 'M')}'
-           ELSE LPAD(items.data->'#{field.uuid}'->>'M', 2, '0')
+           ELSE LPAD(#{sql_select_table_name}.data->'#{field.uuid}'->>'M', 2, '0')
            END,
         '-',
-      CASE WHEN items.data->'#{field.uuid}'->>'D' IS NULL
+      CASE WHEN #{sql_select_table_name}.data->'#{field.uuid}'->>'D' IS NULL
            THEN '#{date_time_component(date_time, 'D')}'
-           ELSE LPAD(items.data->'#{field.uuid}'->>'D', 2, '0')
+           ELSE LPAD(#{sql_select_table_name}.data->'#{field.uuid}'->>'D', 2, '0')
            END,
         ' ',
-      CASE WHEN items.data->'#{field.uuid}'->>'h' IS NULL
+      CASE WHEN #{sql_select_table_name}.data->'#{field.uuid}'->>'h' IS NULL
            THEN '#{date_time_component(date_time, 'h')}'
-           ELSE LPAD(items.data->'#{field.uuid}'->>'h', 2, '0')
+           ELSE LPAD(#{sql_select_table_name}.data->'#{field.uuid}'->>'h', 2, '0')
            END,
         ':',
-      CASE WHEN items.data->'#{field.uuid}'->>'m' IS NULL
+      CASE WHEN #{sql_select_table_name}.data->'#{field.uuid}'->>'m' IS NULL
            THEN '#{date_time_component(date_time, 'm')}'
-           ELSE LPAD(items.data->'#{field.uuid}'->>'m', 2, '0')
+           ELSE LPAD(#{sql_select_table_name}.data->'#{field.uuid}'->>'m', 2, '0')
            END,
         ':',
-      CASE WHEN items.data->'#{field.uuid}'->>'s' IS NULL
+      CASE WHEN #{sql_select_table_name}.data->'#{field.uuid}'->>'s' IS NULL
            THEN '#{date_time_component(date_time, 's')}'
-           ELSE LPAD(items.data->'#{field.uuid}'->>'s', 2, '0')
+           ELSE LPAD(#{sql_select_table_name}.data->'#{field.uuid}'->>'s', 2, '0')
            END
     )"
   end
@@ -162,11 +159,16 @@ class Search::DateTimeStrategy < Search::BaseStrategy
   end
 
   def append_where_date_is_set(scope)
-    scope.where("items.data->'#{field.uuid}' IS NOT NULL")
+    scope.where("#{sql_select_table_name}.data->'#{field.uuid}' IS NOT NULL")
   end
 
   def data_field_expr(date_component)
-    "items.data->'#{field.uuid}'->>'#{date_component}'"
+    case date_component
+    when "Y"
+      "LPAD(#{sql_select_table_name}.data->'#{field.uuid}'->>'#{date_component}', 4, '0')"
+    else
+      "LPAD(#{sql_select_table_name}.data->'#{field.uuid}'->>'#{date_component}', 2, '0')"
+    end
   end
 
   def date_time_component(date_time, key)

@@ -15,7 +15,11 @@ class GeoViewer extends React.Component {
 
   constructor(props){
     super(props);
-    this.features = this.props.features;
+
+    this.features = this.props.features.filter(function (el) {
+      return el != null;
+    });
+
     this.state = {
       mapHeight: 300,
     };
@@ -33,6 +37,10 @@ class GeoViewer extends React.Component {
   }
 
   componentDidMount(){
+    if (typeof this.props.mapHeight !== 'undefined') {
+      this.setState({mapHeight: this.props.mapHeight})
+    }
+
     this._map = this.refs.map.leafletElement;
     this._mapElement = this.refs.map;
     this.mapBecomesVisible();
@@ -98,7 +106,9 @@ class GeoViewer extends React.Component {
   }
 
   bbox(){
-    const coords = this.features.map(function(feat, i){ return feat.geometry.coordinates; });
+    const coords = this.features.map(function(feat, i){
+      if (feat !== "undefined" && feat !== null) { return feat.geometry.coordinates; }
+    });
     const minmax = this._minmax(coords);
     // Check if there are non valid numbers in the minmax. If so, we return a default bbox
     if (minmax.map((a) => isNaN(a)).reduce((a, b) => a || b, false)) return [-60, 60, -120, 120];
@@ -140,6 +150,11 @@ class GeoViewer extends React.Component {
     return (
       <div className="geoViewer" style={{height: this.state.mapHeight}}>
         <Map ref="map" center={center} zoom={2} zoomControl={true}>
+            { (this.features.length === 0) &&
+                <div className="messageBox">
+                    <div className="message"><i className="fa fa-info-circle"></i> { this.props.noResultsMessage }</div>
+                </div>
+            }
           <TileLayer
             attribution='Map data &copy; <a href="http://openstreetmap.org">OpenStreetMap</a> contributors'
             url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"

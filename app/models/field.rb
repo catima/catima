@@ -225,11 +225,7 @@ class Field < ApplicationRecord
 
   # Even non readable. Useful for dumps
   def field_value_for_all_item(it)
-    raw_value = raw_value(it)
-    return raw_value unless is_a?(Field::File) || is_a?(Field::Image)
-
-    # gsub is useful to change the path of uploaded files
-    raw_value.to_s.gsub("upload/#{it.catalog.slug}", "files") unless raw_value.nil?
+    raw_value(it)
   end
 
   # Defines methods and runs class macros on the given item class in order to
@@ -291,12 +287,16 @@ class Field < ApplicationRecord
   def search_options_as_hash
   end
 
+  def filterable_field?
+    !is_a?(Field::ChoiceSet) && !is_a?(Field::Reference) && human_readable?
+  end
+
   def sql_type
     ""
   end
 
   def sql_nullable
-    "#{'NOT ' unless required}NULL"
+    "#{'NOT ' if required}NULL"
   end
 
   def sql_unique
@@ -306,7 +306,7 @@ class Field < ApplicationRecord
   def sql_default
     return "" if default_value.blank?
 
-    "DEFAULT #{default_value}"
+    "DEFAULT '#{default_value}'"
   end
 
   private

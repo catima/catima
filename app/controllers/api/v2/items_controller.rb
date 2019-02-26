@@ -33,7 +33,8 @@ class API::V2::ItemsController < ActionController::Base
             multiple: fld.multiple,
             primary: fld.primary,
             display_in_list: fld.display_in_list,
-            human_readable: fld.human_readable?
+            human_readable: fld.human_readable?,
+            uuid: fld.uuid
           }
         end,
         items: apply_sort(it.items).map { |itm| itm.describe([:default_display_name], [:requires_review, :uuid], true) }
