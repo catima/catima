@@ -10,7 +10,7 @@ class Dump::CsvDump < ::Dump
 
     # Check if directory exists; create if necessary,
     # if not empty raise an error.
-    create_output_dir directory
+    create_output_dir directory unless File.directory?(directory)
 
     # Write meta.json file. Contains information about
     # the dump, format version etc.
@@ -28,6 +28,6 @@ class Dump::CsvDump < ::Dump
       end
     end
 
-    dump_files(cat, directory)
+    # dump_files(cat, directory)
   end
 end

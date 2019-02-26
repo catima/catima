@@ -38,7 +38,7 @@ class ExportWorker
 
   def sql_export(export, dir)
     status = "ready"
-    begin
+    # begin
       Dump::SqlDump.new.dump(export.catalog.slug, File.join(dir, 'sql'))
       zip(dir, export.pathname)
     rescue StandardError
@@ -50,7 +50,7 @@ class ExportWorker
 
   def csv_export(export, dir)
     status = "ready"
-    begin
+    # begin
       Dump::CsvDump.new.dump(export.catalog.slug, File.join(dir, 'csv'))
       zip(dir, export.pathname)
     rescue StandardError
