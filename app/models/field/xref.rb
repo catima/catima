@@ -83,8 +83,7 @@ class Field::Xref < ::Field
   def xref_must_point_to_valid_service
     return if xref.blank?
 
-    # TODO : shouldn't it be "unless xref.match? URI.regexp"
-    if xref.match? URI.regexp
+    if !xref.match? URI.regexp
       errors.add(:xref, :invalid_url)
     elsif external_type.nil?
       errors.add(:xref, "must point to a valid xref service")

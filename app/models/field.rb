@@ -306,7 +306,7 @@ class Field < ApplicationRecord
   def sql_default
     return "" if default_value.blank?
 
-    "DEFAULT #{default_value}"
+    "DEFAULT '#{default_value}'"
   end
 
   private
