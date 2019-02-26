@@ -117,7 +117,15 @@ class Field::Text < ::Field
   end
 
   def sql_type
-    "VARCHAR(#{maximum.presence || 255})"
+    return "VARCHAR(#{maximum.presence})" if maximum.present?
+
+    "TEXT"
+  end
+
+  def sql_default
+    return "" if formatted?
+
+    super
   end
 
   private
