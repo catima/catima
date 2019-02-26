@@ -62,6 +62,6 @@ class Field::Editor < ::Field
   end
 
   def sql_type
-    "INT"
+    "VARCHAR(255)"
   end
 end
