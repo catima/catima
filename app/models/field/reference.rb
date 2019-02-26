@@ -108,16 +108,16 @@ class Field::Reference < ::Field
     []
   end
 
-<<<<<<< HEAD
   def field_value_for_all_item(item)
     item_type.primary_text_field&.field_value_for_all_item(item)
   end
 
-=======
->>>>>>> dd33a39653aa0d641991521820848614e74e9bda
   def sql_type
-    return "INT" unless related_item_type.primary_field.present?
+    return "INT" if related_item_type.primary_field.blank?
 
     related_item_type.primary_field.sql_type
+    # while related_primary_field.is_a?(Field::Reference) && related_primary_field.related_item_type.present?
+    #   related_primary_field = related_item_type.primary_field.sql_type
+    # end
   end
 end
