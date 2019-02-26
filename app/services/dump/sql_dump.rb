@@ -84,9 +84,9 @@ class Dump::SqlDump < ::Dump
     inserts = render_header_comment("INSERT INTO statements")
 
     # ItemsTypes become tables, ItemType fields become columns
-    inserts << render_comment("Fields: single")
+    inserts << render_comment("Fields: single and multiple non ref fields")
     cat.items.each do |item|
-      fields = item.item_type.fields.reject(&:multiple)
+      fields = item.item_type.fields.reject { |f| f.multiple? && (f.is_a?(Field::Reference) || f.is_a?(Field::ChoiceSet)) }
 
       common_fields = COMMON_SQL_COLUMNS.map { |column_name, _column_type| "`#{column_name}`" }.join(',')
       common_fields << ", `primary_field`" if item.primary_field.present?
@@ -136,12 +136,12 @@ class Dump::SqlDump < ::Dump
   def dump_create_item_types_table(item_type)
     columns = common_sql_columns
 
-    fields = item_type.fields.reject(&:multiple)
+    fields = item_type.fields.reject { |f| f.multiple? && (f.is_a?(Field::Reference) || f.is_a?(Field::ChoiceSet)) }
     fields.each do |field|
       columns << "`#{field.sql_slug}` #{field.sql_type} #{field.sql_nullable} #{field.sql_default} #{field.sql_unique},"
     end
     # Save the custom primary key if any
-    columns << "`primary_field` VARCHAR(256) NOT NULL DEFAULT '#{item_type.primary_field.slug}'" unless item_type.primary_field.nil?
+    columns << "`primary_field` VARCHAR(255) NOT NULL DEFAULT '#{item_type.primary_field.slug}'" unless item_type.primary_field.nil?
 
     table_name = @holder.guess_table_name(item_type, "sql_slug")
     create_table(table_name, columns)
@@ -201,7 +201,7 @@ class Dump::SqlDump < ::Dump
 
     item.fields.each do |field|
       # ManyToMany references have separate tables
-      next if field.multiple?
+      next if field.multiple? && (field.is_a?(Field::Reference) || field.is_a?(Field::ChoiceSet))
 
       values << "#{sql_value(field, item)},"
     end
@@ -312,7 +312,7 @@ class Dump::SqlDump < ::Dump
         # foreign_column_name = related_primary_field&.sql_slug.presence || 'id'
         foreign_column_name = 'id'
         # References that point to a multiple field dont't have the primary field column so we force it to id
-        foreign_column_name = 'id' if field.related_item_type.primary_field.multiple?
+        foreign_column_name = 'id' if field.related_item_type.primary_field&.multiple?
 
         table_name = @holder.table_name(item.item_type, "sql_slug")
         related_table_name = @holder.table_name(field.related_item_type, "sql_slug")

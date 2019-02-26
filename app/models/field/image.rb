@@ -76,7 +76,7 @@ class Field::Image < ::Field::File
   end
 
   def sql_type
-    "VARCHAR(255)"
+    "TEXT"
   end
 
   private
