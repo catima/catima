@@ -52,7 +52,7 @@ class ExportWorker
   def csv_export(export, dir)
     status = "ready"
     # begin
-    FileUtils.remove_dir(dir,true)
+    # FileUtils.remove_dir(dir,true)
       Dump::CsvDump.new.dump(export.catalog.slug, File.join(dir, 'csv'))
       # zip(dir, export.pathname)
     # rescue StandardError
