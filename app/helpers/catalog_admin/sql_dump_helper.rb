@@ -36,15 +36,11 @@ module CatalogAdmin::SqlDumpHelper
     "INSERT INTO `#{table_name}`\n\t\t(#{columns})\nVALUES (#{values});\n\n"
   end
 
-  def add_primary_key(table_name, primary_key_name, key_length=nil)
-    return  "ALTER TABLE `#{table_name}` ADD PRIMARY KEY (`#{primary_key_name}`);\n" if key_length.nil?
-
-    "ALTER TABLE `#{table_name}` ADD PRIMARY KEY (`#{primary_key_name}`(#{key_length}));\n"
+  def add_primary_key(table_name, primary_key_name)
+    "ALTER TABLE `#{table_name}` ADD PRIMARY KEY (`#{primary_key_name}`);\n"
   end
 
-  def add_foreign_key(table_name, fk_name, ref_table_name, ref_table_col, key_length=nil)
-    return "ALTER TABLE `#{table_name}` ADD FOREIGN KEY (`#{fk_name}`) REFERENCES `#{ref_table_name}`(`#{ref_table_col}`);\n\n" if key_length.nil?
-
-    "ALTER TABLE `#{table_name}` ADD FOREIGN KEY (`#{fk_name}`) REFERENCES `#{ref_table_name}`(`#{ref_table_col}`(#{key_length}));\n\n"
+  def add_foreign_key(table_name, fk_name, ref_table_name, ref_table_col)
+    "ALTER TABLE `#{table_name}` ADD FOREIGN KEY (`#{fk_name}`) REFERENCES `#{ref_table_name}`(`#{ref_table_col}`);\n\n"
   end
 end
