@@ -16,10 +16,7 @@ class SQLExport::Holder
 
   def guess_table_name(model, method)
     table_name = build_table_name(model, method)
-    while tables.key?(table_name)
-      model.id += 1
-      table_name = build_table_name(model, method, model.id)
-    end
+    table_name = build_table_name(model, method, model.id + 1) while tables[table_name].present?
 
     tables[table_name] = "#{model.id}_#{model.class.name}_#{model.public_send(method)}"
 
@@ -32,9 +29,9 @@ class SQLExport::Holder
 
   private
 
-  def build_table_name(model, method, index=nil)
+  def build_table_name(model, method, index=0)
     name = TABLE_PREFIXES[model.class.name]
-    name += "#{index}_" unless index.nil?
+    name += "#{index}_" unless index.zero?
     name += model.public_send(method)
 
     name.truncate(CatalogAdmin::SqlDumpHelper::MAX_SQL_NAME_LENGTH).downcase

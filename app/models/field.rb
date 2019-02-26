@@ -326,7 +326,7 @@ class Field < ApplicationRecord
   end
 
   def sql_nullable
-    "#{'NOT ' unless required}NULL"
+    "#{'NOT ' if required}NULL"
   end
 
   def sql_unique

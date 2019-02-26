@@ -38,26 +38,28 @@ class ExportWorker
 
   def sql_export(export, dir)
     status = "ready"
-    begin
+    # begin
+    # FileUtils.remove_dir(File.join(dir, 'sql'),true)
       Dump::SqlDump.new.dump(export.catalog.slug, File.join(dir, 'sql'))
-      zip(dir, export.pathname)
-    rescue StandardError
-      status = "error"
-    end
+      # zip(dir, export.pathname)
+    # rescue StandardError
+      # status = "error"
+    # end
     export.update(status: status)
-    send_mail(export)
+    # send_mail(export)
   end
 
   def csv_export(export, dir)
     status = "ready"
-    begin
+    # begin
+    FileUtils.remove_dir(dir,true)
       Dump::CsvDump.new.dump(export.catalog.slug, File.join(dir, 'csv'))
-      zip(dir, export.pathname)
-    rescue StandardError
-      status = "error"
-    end
+      # zip(dir, export.pathname)
+    # rescue StandardError
+      # status = "error"
+    # end
     export.update(status: status)
-    send_mail(export)
+    # send_mail(export)
   end
 
   def find_export(id)

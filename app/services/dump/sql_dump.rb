@@ -20,6 +20,7 @@ class Dump::SqlDump < ::Dump
   }.freeze
 
   def initialize
+    @holder = SQLExport::Holder.new
   end
 
   def dump(catalog, directory)
@@ -28,23 +29,23 @@ class Dump::SqlDump < ::Dump
 
     # Check if directory exists; create if necessary,
     # if not empty raise an error.
-    create_output_dir directory
+    # create_output_dir directory
 
     # Write meta.json file. Contains information about
     # the dump, format version etc.
-    write_meta directory
+    # write_meta directory
 
     # Export structure
     dump_structure(cat, directory)
 
     # Export data
-    dump_data(cat, directory)
+    # dump_data(cat, directory)
 
     # Export references
     dump_references(cat, directory)
 
     # Dump files
-    dump_files(cat, directory)
+    # dump_files(cat, directory)
   end
 
   def dump_structure(cat, dir)
@@ -92,7 +93,7 @@ class Dump::SqlDump < ::Dump
 
       column_names = common_fields << fields.map { |f| "`#{f.sql_slug}`" }.join(',')
 
-      inserts << insert_into(item.item_type.sql_slug, column_names, concat_item_data(item))
+      inserts << insert_into(@holder.table_name(item.item_type, "sql_slug"), column_names, concat_item_data(item))
     end
 
     inserts << render_comment("Fields: multiple")
@@ -139,7 +140,8 @@ class Dump::SqlDump < ::Dump
       columns << "`#{field.sql_slug}` #{field.sql_type} #{field.sql_nullable} #{field.sql_default} #{field.sql_unique},"
     end
 
-    create_table(item_type.sql_slug, columns)
+    table_name = @holder.guess_table_name(item_type, "sql_slug")
+    create_table(table_name, columns)
   end
 
   def dump_create_multiple_reference_table(item_type)
@@ -153,7 +155,8 @@ class Dump::SqlDump < ::Dump
       column_name = "#{field.sql_slug}_#{field.related_item_type.sql_slug}"
       columns << "`#{column_name}` #{convert_app_type_to_sql_type(field.related_item_type.primary_field)}"
 
-      tables << create_table(field.sql_slug, columns)
+      table_name = @holder.guess_table_name(field, "sql_slug")
+      tables << create_table(table_name, columns)
     end
 
     tables
@@ -166,7 +169,8 @@ class Dump::SqlDump < ::Dump
       columns << "`#{col_name}` #{convert_active_storage_type_to_sql_type(col.type)} #{'NOT NULL' unless col.null},"
     end
 
-    create_table(choice_set.name, columns)
+    table_name = @holder.guess_table_name(choice_set, "name")
+    create_table(table_name, columns)
   end
 
   def dump_create_categories_table(category)
@@ -180,7 +184,8 @@ class Dump::SqlDump < ::Dump
       columns << "`#{field.sql_slug}` #{field.sql_type} #{field.sql_nullable} #{field.sql_default} #{field.sql_unique},"
     end
 
-    create_table(category.name, columns)
+    table_name = @holder.guess_table_name(category, "name")
+    create_table(table_name, columns)
   end
 
   def concat_item_data(item)
@@ -218,7 +223,7 @@ class Dump::SqlDump < ::Dump
       field.value_for_item(item).each do |_ref|
         columns = "`#{item.item_type.sql_slug}`, `#{field.sql_slug}_#{field.related_item_type.sql_slug}`"
         values = "#{value}, #{field.related_item_type.id}"
-        inserts << insert_into(field.sql_slug, columns, values)
+        inserts << insert_into(@holder.table_name(field, "sql_slug"), columns, values)
       end
     end
 
@@ -237,7 +242,7 @@ class Dump::SqlDump < ::Dump
           values << "#{value}#{', ' unless column_name == Choice.columns_hash.keys.last}"
         end
 
-        insert_template = insert_into(choice.choice_set.name, columns, values)
+        insert_template = insert_into(@holder.table_name(choice.choice_set, "name"), columns, values)
         inserts << insert_template
       end
     end
@@ -248,7 +253,8 @@ class Dump::SqlDump < ::Dump
   def dump_primary_keys(cat)
     alters = render_comment("ITEMS")
     cat.items.each do |item|
-      alter = add_primary_key(item.item_type.sql_slug, primary_key(item.item_type))
+      constraint = primary_key_constraint(item.item_type)
+      alter = add_primary_key(@holder.table_name(item.item_type, "sql_slug"), primary_key(item.item_type), constraint)
 
       alters << alter unless alters.include?(alter)
     end
@@ -265,13 +271,14 @@ class Dump::SqlDump < ::Dump
 
     alters << render_comment("CHOICE SETS")
     cat.choice_sets.each do |choice_set|
-      alters << add_primary_key(choice_set.name, "id")
+      alters << add_primary_key(@holder.table_name(choice_set, "name"), "id")
     end
 
     alters << render_comment("CATEGORIES")
     cat.categories.each do |category|
       primary_field = category.fields.select(&:primary?).first
-      alters << add_primary_key(category.name, primary_field&.sql_slug.presence || 'id')
+      constraint = primary_key_constraint(primary_field&.item_type)
+      alters << add_primary_key(@holder.table_name(category, "name"), primary_field&.sql_slug.presence || 'id', constraint)
     end
 
     alters << render_footer_comment
@@ -284,12 +291,25 @@ class Dump::SqlDump < ::Dump
       fields = item.item_type.fields.select { |field| !field.multiple? && field.is_a?(Field::Reference) }
       fields.each do |field|
         related_primary_field = field.related_item_type.primary_field
+        # TODO : do ...
+        # while related_primary_field.is_a?(Field::Reference) && related_primary_field.present?
+        #   p "REFERENCE of REFERENCE"
+        #   p related_primary_field.slug
+        #   related_primary_field = related_primary_field.related_item_type.primary_field
+        # end
+        #
+        # p field.slug
+        # p related_primary_field.slug
+        # p "over"
+
         foreign_column_name = related_primary_field&.sql_slug.presence || 'id'
         # References that point to a multiple field dont't have the primary field column so we force it to id
         foreign_column_name = 'id' if field.related_item_type.primary_field.multiple?
 
+        constraint = primary_key_constraint(field.related_item_type)
         alter = add_foreign_key(
-          item.item_type.sql_slug, field.sql_slug, field.related_item_type.sql_slug, foreign_column_name
+          "it_type_#{item.item_type.sql_slug}", field.sql_slug, "it_type_#{field.related_item_type.sql_slug}", foreign_column_name,
+          constraint
         )
         alters << alter unless alters.include?(alter)
       end
@@ -307,10 +327,10 @@ class Dump::SqlDump < ::Dump
         primary_field = item.item_type.primary_field
         foreign_column_name = primary_field&.sql_slug.presence || 'id'
         # References that point to a multiple field dont't have the primary field column so we force it to id
-        foreign_column_name = 'id' if item.item_type.primary_field.multiple?
+        foreign_column_name = 'id' if item.item_type.primary_field&.multiple?
 
         alter = add_foreign_key(
-          field.sql_slug, item.item_type.sql_slug, item.item_type.sql_slug, foreign_column_name
+          "ref_#{field.sql_slug}", item.item_type.sql_slug, "ref_#{item.item_type.sql_slug}", foreign_column_name
         )
         alters << alter unless alters.include?(alter)
       end
@@ -329,6 +349,15 @@ class Dump::SqlDump < ::Dump
                   end
 
     primary_key
+  end
+
+  def primary_key_constraint(item_type)
+    return nil if item_type.nil?
+
+    primary_field = item_type.primary_field
+    return nil if primary_field.nil? || primary_field.multiple? || !primary_field.is_a?(Field::Text)
+
+    256
   end
 
   def common_sql_columns
@@ -399,7 +428,7 @@ class Dump::SqlDump < ::Dump
     return "NULL" if value.blank?
 
     case field.type
-    when "Field::Int", "Field::Decimal", "Field::Editor"
+    when "Field::Int", "Field::Decimal"
       value
     when "Field::Reference", "Field::ChoiceSet"
       # The value of the field is not necessarily the id for a reference
@@ -414,6 +443,8 @@ class Dump::SqlDump < ::Dump
     when "Field::DateTime", "Field::Geometry"
       "'#{value.to_json}'"
     else
+      value = field.field_value_for_all_item(item) if field.is_a?(Field::Text) && field.formatted?
+
       "'#{value.to_s.gsub("'") { "\\'" }}'"
     end
   end
