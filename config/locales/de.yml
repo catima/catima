@@ -215,6 +215,7 @@ de:
       catalog:
         other_languages: Andere unterstützte Sprachen
       item_type:
+        name: "Name"
         name_plural: "Name (Plural)"
         slug: "Slug (Plural)"
       user:

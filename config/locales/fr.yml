@@ -230,6 +230,7 @@ fr:
       catalog:
         other_languages: Autres langues supportées
       item_type:
+        name: "Nom"
         name_plural: "Nom (pluriel)"
         slug: "Slug (pluriel)"
       user:

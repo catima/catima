@@ -230,6 +230,7 @@ en:
       catalog:
         other_languages: Other supported languages
       item_type:
+        name: "Name"
         name_plural: "Name (plural)"
         slug: "Slug (plural)"
       user:

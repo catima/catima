@@ -13,7 +13,7 @@ class CatalogAdmin::DashboardController < CatalogAdmin::BaseController
     if (first_type = catalog.item_types.first)
       redirect_to(catalog_admin_item_type_fields_path(catalog, I18n.locale, first_type))
     else
-      redirect_to(catalog_admin_users_path(catalog, I18n.locale))
+      redirect_to(catalog_admin_settings_path(catalog, I18n.locale))
     end
   end
 end

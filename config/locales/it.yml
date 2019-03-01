@@ -216,6 +216,7 @@ it:
       catalog:
         other_languages: Altre lingue supportate
       item_type:
+        name: "Nome"
         name_plural: "Nome (plurale)"
         slug: "Slug (plurale)"
       user:
