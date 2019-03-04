@@ -47,8 +47,8 @@ class ItemList
     return unpaginated_list_items if item_type.nil?
 
     item_type ||= (catalog.presence || @selected_catalog).item_types.first
-    return unpaginated_list_items if item_type.primary_text_field.nil?
+    return unpaginated_list_items if item_type.primary_human_readable_field.nil?
 
-    unpaginated_list_items.order(Arel.sql("items.data->>'#{item_type.primary_text_field.uuid}'"))
+    unpaginated_list_items.order(Arel.sql("items.data->>'#{item_type.primary_human_readable_field.uuid}'"))
   end
 end
