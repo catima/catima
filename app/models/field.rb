@@ -286,6 +286,10 @@ class Field < ApplicationRecord
     "items.data->>'#{uuid}' ASC"
   end
 
+  def order_items_by_primary_field
+    "items.data->>'#{item_type.primary_human_readable_field.uuid}'"
+  end
+
   # Useful for the advanced search
   def search_conditions_as_options
     [
