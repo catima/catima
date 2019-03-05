@@ -123,7 +123,7 @@ class Field::ChoiceSet < ::Field
   def allows_unique?
     false
   end
-  
+
   def search_data_as_hash
     choices_as_options = []
 
