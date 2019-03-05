@@ -1,5 +1,5 @@
 <p>
-  <b><%= @item.item_type.primary_text_field.field_value_for_item(@item) %></b>
+  <b><%= @item.item_type.primary_text_field.field_value_for_item(@item).truncate(80) %></b>
 </p>
 
 <p>
