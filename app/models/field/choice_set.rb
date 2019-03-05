@@ -159,7 +159,7 @@ class Field::ChoiceSet < ::Field
   def sql_type
     "INT"
   end
-  
+
   def search_data_as_hash
     choices_as_options = []
 

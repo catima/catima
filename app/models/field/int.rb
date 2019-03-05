@@ -91,7 +91,7 @@ class Field::Int < ::Field
   def sql_type
     "INT"
   end
-  
+
   # Useful for the advanced search
   def search_conditions_as_options
     [

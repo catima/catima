@@ -106,8 +106,11 @@ class GeoViewer extends React.Component {
   }
 
   bbox(){
-    const coords = this.features.map(function(feat, i){
-      if (feat !== "undefined" && feat !== null) { return feat.geometry.coordinates; }
+    const coords = [];
+    this.features.map(function(feat, i) {
+      feat.map(function(f, j) {
+        if (f !== "undefined" && f !== null) { coords.push(f.geometry.coordinates); }
+      });
     });
     const minmax = this._minmax(coords);
     // Check if there are non valid numbers in the minmax. If so, we return a default bbox
@@ -165,6 +168,7 @@ class GeoViewer extends React.Component {
             attributionUrl='https://www.openstreetmap.org/copyright'
           />
           {this.features.map((feat, i) =>
+
             <GeoJSON key={i} data={feat} pointToLayer={this.pointToLayer} onEachFeature={this.onEachFeature} />
           )}
         </Map>

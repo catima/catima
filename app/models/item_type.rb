@@ -87,7 +87,7 @@ class ItemType < ApplicationRecord
 
   def primary_human_readable_field
     candidate_fields = [primary_field, list_view_fields, fields].flatten.compact
-    candidate_fields.find { |f| f.is_a?(Field::Text) || f.is_a?(Field::Email) }
+    candidate_fields.find(&:human_readable?)
   end
 
   def public_items
