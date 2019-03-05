@@ -25,5 +25,4 @@
 .geoViewer .leaflet-popup-content {
     overflow: hidden;
     text-overflow: ellipsis;
-    max-width: 120px;
 }
