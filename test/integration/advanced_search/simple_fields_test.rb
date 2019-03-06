@@ -13,7 +13,7 @@ class AdvancedSearch::SimpleFieldsTest < ActionDispatch::IntegrationTest
     end
 
     fill_in(
-      "advanced_search[criteria][search_vehicle_make_uuid][exact]",
+      "advanced_search[criteria][search_vehicle_make_uuid][all_words]",
       :with => "toyota"
     )
 
@@ -144,7 +144,7 @@ class AdvancedSearch::SimpleFieldsTest < ActionDispatch::IntegrationTest
     end
 
     fill_in(
-      "advanced_search[criteria][one_author_site_uuid][exact]",
+      "advanced_search[criteria][one_author_site_uuid][all_words]",
       :with => "http://stephenking.com/index.html"
     )
     click_on("Search")
