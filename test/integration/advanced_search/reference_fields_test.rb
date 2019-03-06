@@ -205,7 +205,7 @@ class AdvancedSearch::ReferenceFieldTest < ActionDispatch::IntegrationTest
     end
 
     fill_in(
-      "advanced_search[criteria][one_author_collaborator_uuid][0][exact]",
+      "advanced_search[criteria][one_author_collaborator_uuid][0][all_words]",
       :with => "so@old.com"
     )
 
@@ -270,7 +270,7 @@ class AdvancedSearch::ReferenceFieldTest < ActionDispatch::IntegrationTest
       end
 
       fill_in(
-        "advanced_search[criteria][one_author_other_collaborators_uuid][1][exact]",
+        "advanced_search[criteria][one_author_other_collaborators_uuid][1][all_words]",
         :with => "Young apprentice"
       )
     end

@@ -1,4 +1,0 @@
-<%= f.fields_for(:catalog_permissions, perm) do |f| %>
-  <%= f.hidden_field(:catalog_id) %>
-  <%= render_users_role_button_bar(f, :exclude => "admin") %>
-<% end %>

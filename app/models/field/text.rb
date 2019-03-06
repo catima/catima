@@ -98,7 +98,7 @@ class Field::Text < ::Field
     return options if formatted?
 
     # Formatted text can't be exact searched
-    options.unshift([I18n.t("advanced_searches.text_search_field.exact"), "exact"])
+    options << [I18n.t("advanced_searches.text_search_field.exact"), "exact"]
   end
 
   def search_conditions_as_hash(locale)
@@ -109,7 +109,7 @@ class Field::Text < ::Field
 
     return options if formatted?
 
-    options.unshift({ :value => I18n.t("advanced_searches.text_search_field.exact", locale: locale), :key => "exact"})
+    options << { :value => I18n.t("advanced_searches.text_search_field.exact", locale: locale), :key => "exact"}
   end
 
   private

@@ -13,8 +13,7 @@
         :item_type,
         render_item_types_as_options(
           @advanced_search_conf.catalog.item_types,
-          params[:item_type].presence || @advanced_search_conf.item_type&.slug,
-          @advanced_search_conf
+          params[:item_type].presence || @advanced_search_conf.item_type&.slug
         ),
         :hide_label => false
   ) %>
