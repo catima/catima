@@ -13,7 +13,7 @@ class AdvancedSearchesTest < ActionDispatch::IntegrationTest
     end
 
     fill_in(
-      "advanced_search[criteria][search_vehicle_make_uuid][exact]",
+      "advanced_search[criteria][search_vehicle_make_uuid][all_words]",
       :with => "toyota"
     )
     click_on("Search")
@@ -35,7 +35,7 @@ class AdvancedSearchesTest < ActionDispatch::IntegrationTest
     end
 
     fill_in(
-      "advanced_search[criteria][search_vehicle_make_uuid][exact]",
+      "advanced_search[criteria][search_vehicle_make_uuid][all_words]",
       :with => "toyota"
     )
     click_on("Search")

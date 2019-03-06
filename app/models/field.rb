@@ -293,17 +293,17 @@ class Field < ApplicationRecord
   # Useful for the advanced search
   def search_conditions_as_options
     [
-      [I18n.t("advanced_searches.text_search_field.exact"), "exact"],
       [I18n.t("advanced_searches.text_search_field.all_words"), "all_words"],
-      [I18n.t("advanced_searches.text_search_field.one_word"), "one_word"]
+      [I18n.t("advanced_searches.text_search_field.one_word"), "one_word"],
+      [I18n.t("advanced_searches.text_search_field.exact"), "exact"]
     ]
   end
 
   def search_conditions_as_hash(locale)
     [
-      { :value => I18n.t("advanced_searches.text_search_field.exact", locale: locale), :key => "exact"},
       { :value => I18n.t("advanced_searches.text_search_field.all_words", locale: locale), :key => "all_words"},
-      { :value => I18n.t("advanced_searches.text_search_field.one_word", locale: locale), :key => "one_word"}
+      { :value => I18n.t("advanced_searches.text_search_field.one_word", locale: locale), :key => "one_word"},
+      { :value => I18n.t("advanced_searches.text_search_field.exact", locale: locale), :key => "exact"}
     ]
   end
 

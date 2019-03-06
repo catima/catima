@@ -90,7 +90,7 @@ class AdvancedSearch::ChoiceSetFieldTest < ActionDispatch::IntegrationTest
     end
 
     fill_in(
-      "advanced_search[criteria][one_author_language_uuid][0][category_criteria][exact]",
+      "advanced_search[criteria][one_author_language_uuid][0][category_criteria][all_words]",
       :with => 'latin'
     )
 
