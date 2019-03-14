@@ -86,9 +86,6 @@ class ItemList::AdvancedSearchResult < ItemList
       # The first strategy doesn't have and/or/exclude field in the view, so we manually add it here
       criteria[:field_condition] = "and" if criteria[:field_condition].blank?
 
-      # The first strategy doesn't have and/or/exclude field in the view, so we manually add it here
-      criteria[:field_condition] = "and" if criteria[:field_condition].blank?
-
       next if empty_search_criteria(criteria)
 
       # Simple fields

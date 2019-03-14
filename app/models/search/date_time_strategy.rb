@@ -182,25 +182,4 @@ class Search::DateTimeStrategy < Search::BaseStrategy
 
     true
   end
-
-  def data_field_expr(date_component)
-    case date_component
-    when "Y"
-      "LPAD(#{sql_select_table_name}.data->'#{field.uuid}'->>'#{date_component}', 4, '0')"
-    else
-      "LPAD(#{sql_select_table_name}.data->'#{field.uuid}'->>'#{date_component}', 2, '0')"
-    end
-  end
-
-  def date_time_component(date_time, key)
-    return date_time[key].presence || "0000" if key == "Y"
-
-    date_time[key].presence || "00"
-  end
-
-  def components_empty?(date_time)
-    date_time.each { |_key, value| return false if value.present? }
-
-    true
-  end
 end
