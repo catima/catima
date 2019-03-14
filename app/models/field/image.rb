@@ -57,21 +57,27 @@ class Field::Image < ::Field::File
 
     case
     when value.is_a?(Hash)
-      return "" if value["path"].blank?
+      return if value["path"].blank?
 
-      img = { :path => value["path"] }
-      img[:legend] = value["legend"] if value["legend"].present?
+      path = ""
+      # TODO : what to do with legends?
+      # path = "[#{i['legend']}]" if i["legend"].present?
+      path << i["path"]
 
-      return img.to_json
+      return path
     when value.is_a?(Array)
+      return if value.blank?
+
       value.map do |i|
         next if i["path"].blank?
 
-        img = { :path => i["path"] }
-        img[:legend] = i["legend"] if i["legend"].present?
+        path = ""
+        # TODO : what to do with legends?
+        # path = "[#{i['legend']}]" if i["legend"].present?
+        path << i["path"]
 
-        img.to_json
-      end
+        path
+      end.join('; ')
     end
   end
 

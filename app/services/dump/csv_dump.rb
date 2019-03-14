@@ -20,11 +20,54 @@ class Dump::CsvDump < ::Dump
       File.write(File.join(directory, "#{item_type.slug}.csv"), '')
     end
 
+    # First loop to check if there are categories among choices
+    categories_fields = []
+    cat.items.each do |item|
+      item.fields.each do |field|
+        next unless field.is_a?(Field::ChoiceSet)
+
+        value = field.value_for_item(item)
+        next if value.blank?
+
+        if field.multiple?
+          value.each do |choice|
+            next if choice.category.blank?
+
+            choice.category.fields.map do |f|
+              categories_fields << f
+            end
+          end
+        elsif value.category.present?
+          value.category.fields.each do |f|
+            categories_fields << f
+          end
+        end
+      end
+    end
+
     cat.items.each do |item|
       CSV.open(File.join(directory, "#{item.item_type.slug}.csv"), "a+") do |csv|
         columns = item.fields.map(&:slug)
+
+        if categories_fields.present?
+          categories_fields.each do |field|
+            columns << "#{Category.find(field.category_id)&.name}_#{field.slug}"
+          end
+        end
+
         csv << columns unless csv.include?(columns)
-        csv << item.fields.map { |f| f.field_value_for_all_item(item) }
+
+        values = item.fields.map { |f| f.field_value_for_all_item(item) }
+        categories_fields.each do |f|
+          p "----------------"
+          p item.id
+          p f.slug
+          p f.field_value_for_all_item(item)
+          values << "coucou #{f.field_value_for_all_item(item)}"
+          # values << f.field_value_for_all_item(item)
+        end
+
+        csv << values
       end
     end
 

@@ -179,17 +179,13 @@ class Field::ChoiceSet < ::Field
     ]
   end
 
-  def field_value_for_all_item(_it)
-    choices_as_hash = []
+  def field_value_for_all_item(it)
+    value = super
+    return if value.blank? || value.is_a?(String)
 
-    choices.each do |choice|
-      option = { :value => choice.short_name }
-      option[:category_name] = choice.category.name if choice.category.present?
-
-      choices_as_hash << option
-    end
-
-    choices_as_hash.to_json
+    value.map do |choice_id|
+      Choice.find(choice_id).short_name
+    end.join("; ")
   end
 
   def sql_type
