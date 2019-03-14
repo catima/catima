@@ -131,6 +131,8 @@ class Field::Reference < ::Field
   end
 
   def field_value_for_all_item(item)
+    return if item_type.is_a?(Category)
+
     item_type.primary_text_field&.field_value_for_all_item(item)
   end
 

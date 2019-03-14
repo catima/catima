@@ -60,11 +60,8 @@ class Field::Geometry < ::Field
     return if super.blank?
 
     super["features"].map do |f|
-      {
-        :lat => f["geometry"]["coordinates"][0],
-        :lon => f["geometry"]["coordinates"][1]
-      }
-    end.to_json
+      "#{f['geometry']['coordinates'][1]}, #{f['geometry']['coordinates'][0]}"
+    end.join("; ")
   end
 
   def sql_type

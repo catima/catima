@@ -79,7 +79,7 @@ class Field::Text < ::Field
 
   def raw_value(item, locale=I18n.locale, suffix="")
     attrib = i18n? ? "#{uuid}_#{locale}#{suffix}" : uuid
-    v = item.behaving_as_type.public_send(attrib)
+    v = item.behaving_as_type.public_send(attrib) if item.behaving_as_type.respond_to?(attrib)
     return v if v.nil? || !formatted?
 
     begin
@@ -110,10 +110,6 @@ class Field::Text < ::Field
     return options if formatted?
 
     options << { :value => I18n.t("advanced_searches.text_search_field.exact", locale: locale), :key => "exact"}
-  end
-
-  def sql_type
-    "VARCHAR(#{maximum.presence || 255})"
   end
 
   def sql_type
