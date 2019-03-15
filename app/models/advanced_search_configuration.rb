@@ -54,7 +54,9 @@ class AdvancedSearchConfiguration < ApplicationRecord
   end
 
   def available_fields
-    item_type.fields.select(&:human_readable?).reject do |field|
+    # Select all human readable fields + text fields even formatted ones
+    # Then reject all fields already included in the advanced search configuration
+    item_type.fields.select { |f| f.human_readable? || f.respond_to?(:formatted?) }.reject do |field|
       field_set.include?(field)
     end
   end
