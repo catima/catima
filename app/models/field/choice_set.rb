@@ -124,6 +124,25 @@ class Field::ChoiceSet < ::Field
     false
   end
 
+  def search_data_as_hash
+    choices_as_options = []
+
+    choices.each do |choice|
+      option = { :value => choice.short_name, :key => choice.id }
+      option[:category_data] = choice.filterable_category_fields
+
+      choices_as_options << option
+    end
+
+    choices_as_options
+  end
+
+  def search_options_as_hash
+    [
+      { :multiple => multiple? }
+    ]
+  end
+
   private
 
   # TODO: validate choice belongs to specified ChoiceSet

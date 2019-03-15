@@ -73,10 +73,20 @@ class ItemType < ApplicationRecord
     candidate_fields.find(&:human_readable?)
   end
 
+  # Fields that are not of type Reference or ChoiceSet to prevent n+1 lookup in advanced search
+  def simple_fields
+    fields.reject { |fld| ["Field::Reference", "Field::ChoiceSet"].include?(fld.type) }
+  end
+
   # The primary or first text field. Used to generate Item slugs.
   def primary_text_field
     candidate_fields = [primary_field, list_view_fields, fields].flatten.compact
     candidate_fields.find { |f| f.is_a?(Field::Text) }
+  end
+
+  def primary_human_readable_field
+    candidate_fields = [primary_field, list_view_fields, fields].flatten.compact
+    candidate_fields.find(&:human_readable?)
   end
 
   def public_items
@@ -106,5 +116,13 @@ class ItemType < ApplicationRecord
 
   def default_display_name_view
     item_views.find_by(default_for_display_name: true)
+  end
+
+  def include_geographic_field?
+    fields.each do |field|
+      return true if field.type == Field::TYPES["geometry"]
+    end
+
+    false
   end
 end

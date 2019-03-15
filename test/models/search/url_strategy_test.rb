@@ -2,7 +2,7 @@ require "test_helper"
 
 class Search::URLStrategyTest < ActiveSupport::TestCase
   test "search i18n field" do
-    criteria = { "exact" => "https://www.google.fr" }.with_indifferent_access
+    criteria = { "exact" => "https://www.google.fr/" }.with_indifferent_access
     scope = catalogs(:multilingual).items
     field = fields(:multilingual_author_site)
 

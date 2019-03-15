@@ -17,13 +17,15 @@ class API::V2::ItemsController < ActionController::Base
     it = item_type
     raise InvalidItemType, 'no item type provided' if it.nil?
 
+    fields = params[:simple_fields].blank? ? it.fields : it.simple_fields
+
     render(json:
       {
         slug: it.slug,
         name: it.name,
         search_placeholder: t("catalog_admin.items.reference_editor.reference_editor_search", locale: params[:locale]),
         filter_placeholder: t("catalog_admin.items.reference_editor.reference_editor_filter", locale: params[:locale]),
-        fields: it.fields.map do |fld|
+        fields: fields.map do |fld|
           {
             slug: fld.slug,
             name: fld.name,
@@ -31,7 +33,8 @@ class API::V2::ItemsController < ActionController::Base
             multiple: fld.multiple,
             primary: fld.primary,
             display_in_list: fld.display_in_list,
-            human_readable: fld.human_readable?
+            human_readable: fld.human_readable?,
+            uuid: fld.uuid
           }
         end,
         items: apply_sort(it.items).map { |itm| itm.describe([:default_display_name], [:requires_review, :uuid], true) }

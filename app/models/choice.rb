@@ -9,6 +9,7 @@
 #  id                      :integer          not null, primary key
 #  long_name_old           :text
 #  long_name_translations  :json
+#  parent_id               :bigint(8)
 #  short_name_old          :string
 #  short_name_translations :json
 #  updated_at              :datetime         not null
@@ -56,5 +57,19 @@ class Choice < ApplicationRecord
 
   def assign_uuid
     self.uuid ||= SecureRandom.uuid
+  end
+
+  def filterable_category_fields
+    fields = []
+
+    return fields unless category.present? && category.active?
+
+    category.fields.each do |field|
+      next unless field.filterable_field?
+
+      fields << field
+    end
+
+    fields
   end
 end

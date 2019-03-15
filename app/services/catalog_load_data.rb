@@ -44,12 +44,13 @@ class CatalogLoadData
       i.uuid = item_json['uuid']
       i.review_status = item_json['review_status'] if item_json.key?('review_status')
       i.creator_id = 1
+      i.updater_id = 1
     end.behaving_as_type
     begin
       item_type_fields = item_type.fields.map(&:slug)
-      item.update(Hash[item_json.except('uuid', 'review_status').collect { |k, v| [item_type.fields.where(slug: k).first!.uuid, v] }])
+      item.update(Hash[item_json.except('id', 'uuid', 'review_status').collect { |k, v| [item_type.fields.where(slug: k).first!.uuid, v] }])
     rescue ActiveRecord::RecordNotFound
-      msg "Error. Not all fields can be found for item type '#{item_type.slug}'. Expected fields: #{item_type_fields.join(', ')}. Found fields: #{item_json.keys.join(', ')}."
+      msg "Error. Not all fields can be found for item type '#{item_type.slug}'. Expected fields: \n#{item_type_fields.join(', ')}. \nFound fields: \n#{item_json.keys.join(', ')}."
     end
   end
 

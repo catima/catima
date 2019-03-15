@@ -1,0 +1,40 @@
+<% provide(:title, t('.advanced_search_configurations')) %>
+
+<% provide(:actions) do %>
+  <%= link_to(
+        fa_icon(:"plus-square", text: t('.new_advanced_search_configuration')),
+        new_catalog_admin_advanced_search_configuration_path,
+        class: 'btn btn-xs btn-default') %>
+<% end %>
+
+<% if catalog.advanced_search_configurations.count == 0 %>
+  <div class="alert alert-warning" style="margin-bottom: 0;">
+    <%= t('.no_advanced_search_configurations_for_catalog_warning') %>
+  </div>
+<% end %>
+
+<% if catalog.advanced_search_configurations.count > 0 %>
+  <table class="table" id="group-permissions-table">
+    <thead>
+      <tr>
+        <th><%= t('activerecord.attributes.advanced_search_configuration.title') %></th>
+        <th><%= t('activerecord.attributes.advanced_search_configuration.description') %></th>
+        <th><%= t('activerecord.attributes.advanced_search_configuration.item_type') %></th>
+        <th></th>
+      </tr>
+    </thead>
+  <tbody>
+    <% catalog.advanced_search_configurations.each do |conf| %>
+      <tr>
+        <td><%= conf.title %></td>
+        <td><%= conf.description %></td>
+        <td><%= conf.item_type.name %></td>
+        <td style="text-align: right;">
+            <%= render "shared/actions/advanced_search", :model => conf %>
+        </td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+<% end %>
+

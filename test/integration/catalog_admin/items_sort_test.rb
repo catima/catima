@@ -11,8 +11,9 @@ class CatalogAdmin::ItemsSortTest < ActionDispatch::IntegrationTest
     click_on('Age')
 
     assert_equal("Very Young", find(:xpath, "//table/tbody/tr[1]/td[1]").text)
-    assert_equal("Stephen King", find(:xpath, "//table/tbody/tr[2]/td[1]").text)
-    assert_equal("Very Old", find(:xpath, "//table/tbody/tr[3]/td[1]").text)
+    assert_equal("Young apprentice", find(:xpath, "//table/tbody/tr[2]/td[1]").text)
+    assert_equal("Stephen King", find(:xpath, "//table/tbody/tr[3]/td[1]").text)
+    assert_equal("Very Old", find(:xpath, "//table/tbody/tr[4]/td[1]").text)
   end
 
   test "the authors are sort by rank" do

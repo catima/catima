@@ -58,6 +58,10 @@ class ReferenceEditor extends Component {
     });
   }
 
+  _getNoOptionsMessage() {
+    return () => this.props.noOptionsMessage;
+  }
+
   renderEditor(){
     if (this.state.isLoading) return null;
     if (this.props.multiple)
@@ -68,7 +72,8 @@ class ReferenceEditor extends Component {
                 filterPlaceholder={this.state.filterPlaceholder}
                 srcRef={this.props.srcRef}
                 srcId={this.props.srcId}
-                req={this.props.req} />
+                req={this.props.req}
+                noOptionsMessage={this._getNoOptionsMessage()} />
     else
       return <SingleReferenceEditor
                 items={this.state.items}
@@ -77,7 +82,8 @@ class ReferenceEditor extends Component {
                 filterPlaceholder={this.state.filterPlaceholder}
                 srcRef={this.props.srcRef}
                 srcId={this.props.srcId}
-                req={this.props.req} />
+                req={this.props.req}
+                noOptionsMessage={this._getNoOptionsMessage()} />
   }
 
   render() {

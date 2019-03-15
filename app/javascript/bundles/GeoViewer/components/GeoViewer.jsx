@@ -15,7 +15,11 @@ class GeoViewer extends React.Component {
 
   constructor(props){
     super(props);
-    this.features = this.props.features;
+
+    this.features = this.props.features.filter(function (el) {
+      return el != null;
+    });
+
     this.state = {
       mapHeight: 300,
     };
@@ -29,9 +33,14 @@ class GeoViewer extends React.Component {
     });
 
     this.pointToLayer = this._pointToLayer.bind(this);
+    this.onEachFeature = this._onEachFeature.bind(this);
   }
 
   componentDidMount(){
+    if (typeof this.props.mapHeight !== 'undefined') {
+      this.setState({mapHeight: this.props.mapHeight})
+    }
+
     this._map = this.refs.map.leafletElement;
     this._mapElement = this.refs.map;
     this.mapBecomesVisible();
@@ -97,7 +106,12 @@ class GeoViewer extends React.Component {
   }
 
   bbox(){
-    const coords = this.features.map(function(feat, i){ return feat.geometry.coordinates; });
+    const coords = [];
+    this.features.map(function(feat, i) {
+      feat.map(function(f, j) {
+        if (f !== "undefined" && f !== null) { coords.push(f.geometry.coordinates); }
+      });
+    });
     const minmax = this._minmax(coords);
     // Check if there are non valid numbers in the minmax. If so, we return a default bbox
     if (minmax.map((a) => isNaN(a)).reduce((a, b) => a || b, false)) return [-60, 60, -120, 120];
@@ -105,7 +119,7 @@ class GeoViewer extends React.Component {
   }
 
   _minmax(coords){
-    if (typeof(coords[0]) == 'number') {
+    if (typeof(coords) !== 'undefined' && typeof(coords[0]) === 'number') {
       return [coords[0], coords[0], coords[1], coords[1]];
     }
     return this._minmaxArray(coords);
@@ -127,11 +141,23 @@ class GeoViewer extends React.Component {
     return L.marker(latlng, { icon: this.plainBlueMarker });
   }
 
+  _onEachFeature(feature, layer) {
+    //On each marker, bind a popup
+    if (feature.properties && feature.properties.popupContent) {
+      layer.bindPopup(feature.properties.popupContent);
+    }
+  }
+
   render(){
     const center = this.center();
     return (
       <div className="geoViewer" style={{height: this.state.mapHeight}}>
         <Map ref="map" center={center} zoom={2} zoomControl={true}>
+            { (this.features.length === 0) &&
+                <div className="messageBox">
+                    <div className="message"><i className="fa fa-info-circle"></i> { this.props.noResultsMessage }</div>
+                </div>
+            }
           <TileLayer
             attribution='Map data &copy; <a href="http://openstreetmap.org">OpenStreetMap</a> contributors'
             url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
@@ -142,7 +168,8 @@ class GeoViewer extends React.Component {
             attributionUrl='https://www.openstreetmap.org/copyright'
           />
           {this.features.map((feat, i) =>
-            <GeoJSON key={i} data={feat.geometry} pointToLayer={this.pointToLayer} />
+
+            <GeoJSON key={i} data={feat} pointToLayer={this.pointToLayer} onEachFeature={this.onEachFeature} />
           )}
         </Map>
       </div>

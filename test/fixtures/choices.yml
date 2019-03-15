@@ -9,6 +9,7 @@
 #  id                      :integer          not null, primary key
 #  long_name_old           :text
 #  long_name_translations  :json
+#  parent_id               :bigint(8)
 #  short_name_old          :string
 #  short_name_translations :json
 #  updated_at              :datetime         not null
@@ -42,6 +43,13 @@ one_spanish:
   choice_set: one_languages
   long_name_translations: { "long_name_en": "Spanish" }
   short_name_translations: { "short_name_en": "Spanish" }
+
+one_french:
+  catalog: one
+  choice_set: one_languages
+  long_name_translations: { "long_name_en": "French" }
+  short_name_translations: { "short_name_en": "French" }
+  category: language
 
 two_english:
   catalog: two
