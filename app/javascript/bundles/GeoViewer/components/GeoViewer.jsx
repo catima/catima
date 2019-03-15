@@ -97,7 +97,7 @@ class GeoViewer extends React.Component {
     this._map.flyToBounds([
       [bbox[2] - 0.2*h, bbox[0] - 0.2*w],
       [bbox[3] + 0.2*h, bbox[1] + 0.2*w]
-    ], { duration: 0.5, maxZoom: 10 });
+    ], { duration: 0.5, maxZoom: 13 });
   }
 
   center(){

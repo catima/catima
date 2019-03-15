@@ -242,11 +242,11 @@ class ReferenceSearch extends Component {
           <div className="reference-search-container">
             <div className="col-md-11 reference-input-container">
               <div className="row">
-                <div className="col-md-8">
+                <div className="col-md-7">
                   { this.state.isLoading && <div className="loader"></div> }
                   { this.renderSearch() }
                 </div>
-                <div className="col-md-4">{ this.renderFilter() }</div>
+                <div className="col-md-5">{ this.renderFilter() }</div>
               </div>
             </div>
             { (this.props.itemId === this.props.componentList[0].itemId && this.props.componentList.length === 1) &&

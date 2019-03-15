@@ -102,6 +102,8 @@ class CatalogAdmin::ItemsTest < ActionDispatch::IntegrationTest
       click_on("Save Author")
     end
 
+    sleep 2
+
     author = Item.find(author_id).behaving_as_type
     assert_equal("Changed by test", author.public_send(:one_author_name_uuid))
   end
