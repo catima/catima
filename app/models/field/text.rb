@@ -58,6 +58,10 @@ class Field::Text < ::Field
     true
   end
 
+  def filterable?
+    true
+  end
+
   def prepare_value(value)
     if value.is_a? Hash
       d = {}

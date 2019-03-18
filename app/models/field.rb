@@ -132,14 +132,21 @@ class Field < ApplicationRecord
   # text. Any field that uses a display_component would not qualify, because the
   # field is rendered via JavaScript.
   #
-  # This is used primarily by Item#field_for_select to choose a field suitable
-  # for a drop-down menu.
-  #
   # Default depends on the presence of display_component, and subclasses can
   # override.
   #
   def human_readable?
     display_component.blank?
+  end
+
+  # Whether or not this field is filterable.
+  #
+  # Default depends on the presence of the human_readable method result, and subclasses can
+  # override.
+  #
+  # Mainly used by advanced search components, also used by views for the item summary.
+  def filterable?
+    human_readable?
   end
 
   # Whether or not this field supports the `multiple` option. Most fields do
@@ -273,6 +280,7 @@ class Field < ApplicationRecord
     ]
   end
 
+  # Useful for the advanced search
   def search_conditions_as_hash(locale)
     [
       { :value => I18n.t("advanced_searches.text_search_field.all_words", locale: locale), :key => "all_words"},
@@ -281,6 +289,7 @@ class Field < ApplicationRecord
     ]
   end
 
+  # Useful for the advanced search
   def search_field_conditions_as_hash
     [
       { :value => I18n.t("and"), :key => "and"},
@@ -293,10 +302,6 @@ class Field < ApplicationRecord
   end
 
   def search_options_as_hash
-  end
-
-  def filterable_field?
-    !is_a?(Field::ChoiceSet) && !is_a?(Field::Reference) && human_readable?
   end
 
   private

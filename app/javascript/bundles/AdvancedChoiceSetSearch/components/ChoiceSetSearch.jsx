@@ -32,7 +32,7 @@ class ChoiceSetSearch extends Component {
 
   componentDidMount(){
     if(typeof this.props.selectCondition !== 'undefined' && this.props.selectCondition.length !== 0) {
-        this.setState({selectedCondition: this.props.selectCondition[0].key});
+      this.setState({selectedCondition: this.props.selectCondition[0].key});
     }
   }
 
@@ -44,12 +44,12 @@ class ChoiceSetSearch extends Component {
   }
 
   _buildInputNameCondition(condition) {
-      if(this.state.inputName.length === 2) {
-        if(condition !== '') return this.state.inputName[0] + '[' + condition + ']' + this.state.inputName[1];
-        else return this.state.inputName[0] + '[default]' + this.state.inputName[1];
-      } else {
-        return this.props.inputName;
-      }
+    if(this.state.inputName.length === 2) {
+      if(condition !== '') return this.state.inputName[0] + '[' + condition + ']' + this.state.inputName[1];
+      else return this.state.inputName[0] + '[default]' + this.state.inputName[1];
+    } else {
+      return this.props.inputName;
+    }
   }
 
   _selectItem(item, event){

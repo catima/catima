@@ -26,3 +26,7 @@
     overflow: hidden;
     text-overflow: ellipsis;
 }
+
+.geoViewer .leaflet-popup-content p:first-child {
+    font-size: 14px;
+}
