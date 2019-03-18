@@ -90,6 +90,10 @@ class Field::ChoiceSet < ::Field
     {uuid => cid}
   end
 
+  def filterable?
+    false
+  end
+
   def describe
     super.merge("choice_set": choice_set.uuid)
   end

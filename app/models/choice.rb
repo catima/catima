@@ -65,7 +65,7 @@ class Choice < ApplicationRecord
     return fields unless category.present? && category.active?
 
     category.fields.each do |field|
-      next unless field.filterable_field?
+      next unless field.filterable?
 
       fields << field
     end

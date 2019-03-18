@@ -59,10 +59,8 @@ module ItemsHelper
       # Remove field if primary
       next if fld == item.primary_field
 
-      # Remove non human readable fields unless a formatted text
-      unless fld.respond_to?(:formatted?)
-        next unless fld.human_readable?
-      end
+      # Remove non human readable fields unless field is filterable
+      next unless fld.human_readable? || fld.filterable?
 
       # Remove all html tags
       value = strip_tags(field_value(item, fld, :style => :compact))
