@@ -161,6 +161,8 @@ en:
         no_identifier: Please enter a group identifier
         already_member: You are already a member
         identifier_does_not_exist: "Identifier «%{identifier}» does not exist"
+      advanced_searches:
+        not_available: Avanced search is not available for this catalog
   notices:
     membership:
       created: You are now a member of the «%{group}» group

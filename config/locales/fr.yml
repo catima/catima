@@ -156,6 +156,8 @@ fr:
         no_identifier: Veuillez entrer un identifiant de groupe
         already_member: Vous êtes déjà membre
         identifier_does_not_exist: "L'identifiant «%{identifier}» n'existe pas"
+      advanced_searches:
+        not_available: La recherche avancée n'est pas disponible pour ce catalogue
   notices:
     membership:
       created: Vous êtes maintenant membre du groupe «%{group}»

@@ -21,7 +21,11 @@
           <%= render_advanced_search_field(f, field, i) do |content| %>
             <tr>
               <th><%= field.name %></th>
-              <td><%= content %></td>
+              <td>
+                <div class="row">
+                  <%= content %>
+                </div>
+              </td>
             </tr>
           <% end %>
         <% end %>

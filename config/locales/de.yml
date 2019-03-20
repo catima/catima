@@ -141,6 +141,8 @@ de:
         no_identifier: Bitte geben Sie eine Gruppen-ID ein
         already_member: Du bist bereits Mitglied
         identifier_does_not_exist: "Identifikator «%{identifier}» existiert nicht"
+      advanced_searches:
+        not_available: Die erweiterte Suche ist für diesen Katalog nicht verfügbar
   notices:
     membership:
       created: Du bist jetzt ein Mitglied der «%{group}» Gruppe

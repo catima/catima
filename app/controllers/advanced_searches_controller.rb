@@ -34,7 +34,13 @@ class AdvancedSearchesController < ApplicationController
         )
       end
     else
-      @item_types = @advanced_search.item_types
+      @item_types = @advanced_search.item_types.order(:slug => :asc)
+
+      if @item_types.blank?
+        # If no item_type is available, redirect to catalog homepage with a warning
+        return redirect_to catalog_home_path, :alert => t('errors.messages.advanced_searches.not_available')
+      end
+
       @fields = @advanced_search.fields
 
       return redirect_to :action => :new, :item_type => @item_types.first if params[:item_type].blank?
