@@ -50,18 +50,18 @@ class SimpleSearchTest < ActionDispatch::IntegrationTest
 
     click_on("Camry Hybrid")
     within("h1") { assert(page.has_content?("Camry Hybrid")) }
-    assert(page.has_content?("Previous: Camry"))
+    assert(page.has_content?("Camry"))
 
-    click_on("Next: Highlander")
+    click_on("Highlander")
     within("h1") { assert(page.has_content?("Highlander")) }
-    assert(page.has_content?("Previous: Camry Hybrid"))
+    assert(page.has_content?("Camry Hybrid"))
 
     click_on("Prius")
     within("h1") { assert(page.has_content?("Prius")) }
-    assert(page.has_content?("Previous: Highlander"))
+    assert(page.has_content?("Highlander"))
     refute(page.has_content?("Next:"))
 
-    click_on("Previous: Highlander")
+    click_on("Highlander")
     within("h1") { assert(page.has_content?("Highlander")) }
   end
 end

@@ -52,6 +52,10 @@ class Field::Int < ::Field
     "(data->>'#{uuid}')::int ASC"
   end
 
+  def auto_increment?
+    (options && options['auto_increment'] && options['auto_increment'].to_i) == 1
+  end
+
   # Useful for the advanced search
   def search_conditions_as_options
     [
