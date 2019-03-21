@@ -6,7 +6,7 @@
         catalog: field.catalog.slug,
         itemType: field.item_type.slug,
         label: t(".any"),
-        items: field.search_data_as_hash,
+        items: filter_category_fields(field.search_data_as_hash),
         categoryInputName: "advanced_search[criteria][#{field.uuid}][0][category_field]",
         linkedCategoryInputName: "advanced_search[criteria][#{field.uuid}][0][category_criteria]",
         locale: I18n.locale,

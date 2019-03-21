@@ -1,4 +1,4 @@
-class API::V2::ItemsController < ActionController::Base
+class API::V2::ItemsController < ApplicationController
   include ControlsItemSorting
 
   InvalidItemType = Class.new(RuntimeError)
@@ -22,7 +22,7 @@ class API::V2::ItemsController < ActionController::Base
       {
         slug: item_type.slug,
         name: item_type.name,
-        search_placeholder: t("catalog_admin.items.reference_editor.reference_editor_search", locale: params[:locale]),
+        search_placeholder: t("catalog_admin.items.reference_editor.reference_editor_search"),
         filter_placeholder: t("catalog_admin.items.reference_editor.reference_editor_filter", locale: params[:locale]),
         fields: fields.map do |fld|
           {
@@ -34,6 +34,7 @@ class API::V2::ItemsController < ActionController::Base
             display_in_list: fld.display_in_list,
             human_readable: fld.human_readable?,
             filterable: fld.filterable?,
+            displayable_to_user: fld.displayable_to_user?(current_user),
             uuid: fld.uuid
           }
         end,
