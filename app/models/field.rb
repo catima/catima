@@ -99,6 +99,15 @@ class Field < ApplicationRecord
     !!category_id
   end
 
+  # Whether or not a field is displayable to a user for a specific catalog.
+  #
+  # A restricted field should not be displayed if the user is not a staff
+  # (>= editor) of the current catalog
+  def displayable_to_user?(user, cat=catalog)
+    at_least_editor = user.catalog_role_at_least?(cat, 'editor')
+    at_least_editor || !restricted?
+  end
+
   def category_id
     field_set.is_a?(Category) ? field_set.id : nil
   end

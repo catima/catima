@@ -1,4 +1,4 @@
-class API::V2::CatalogsController < ActionController::Base
+class API::V2::CatalogsController < ApplicationController
   def show
     return not_available unless Catalog.valid?(params['catalog_slug'])
 

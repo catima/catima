@@ -49,17 +49,15 @@ module ItemsHelper
   end
 
   def item_summary(item)
-    at_least_editor = current_user.catalog_role_at_least?(item.catalog, 'editor')
-
     # Retrieve all applicable fields for the summary & join the values
     item.applicable_list_view_fields.each_with_object([]) do |fld, html|
-      # Remove restricted fields unless the user is at least an editor
-      next unless at_least_editor || !fld.restricted?
+      # Remove field if restricted
+      next unless fld.displayable_to_user?(current_user)
 
       # Remove field if primary
       next if fld == item.primary_field
 
-      # Remove non human readable fields unless field is filterable
+      # Remove field if non human readable unless is filterable
       next unless fld.human_readable? || fld.filterable?
 
       # Remove all html tags

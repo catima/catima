@@ -1,4 +1,4 @@
-class API::V2::FieldsController < ActionController::Base
+class API::V2::FieldsController < ApplicationController
   include ControlsItemSorting
 
   InvalidItemType = Class.new(RuntimeError)
