@@ -9,7 +9,10 @@
   <%= devise_error_messages! %>
 
   <%= f.email_field :email, :autofocus => true %>
-  <%= f.primary(t(".submit")) %>
+
+  <div style="margin-top: 20px">
+    <%= f.primary(t(".submit")) %>
+  </div>
 <% end %>
 
 <hr>

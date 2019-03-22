@@ -56,10 +56,10 @@ it:
       title: "Ricerca avanzata"
       start_over: "Nuova ricerca"
       submit: "Ricerca"
-      default_search: Ricerca predefinita
+      default_search: Ricerca predefinita per tipo di record
       advanced_search_configurations: Ricerche preconfigurate
       item_type_selection: Ricerca su un tipo di record
-      item_type_search: Ricerca avanzata sul tipo di record %{item_type}
+      item_type_search: Ricerca avanzata sul tipo di record “%{item_type}“
       no_advanced_search_configuration: Nessuna ricerca preconfigurata
       no_field_in_advance_search_configuration: Nessun campo di ricerca configurato
       no_map_results: Questa ricerca avanzata non ha prodotto risultati

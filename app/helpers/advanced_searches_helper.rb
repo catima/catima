@@ -29,11 +29,15 @@ module AdvancedSearchesHelper
     partial_rendered = ""
     content = form.fields_for(:criteria) do |f|
       f.fields_for(field.uuid) do |f|
-        partial_rendered = render(partial, :f => f, :field => field, :i => index)
+        begin
+          partial_rendered = render(partial, :f => f, :field => field, :i => index)
+        rescue ActionView::MissingTemplate
+          partial_rendered = nil
+        end
       end
     end
     result = capture(content, &block)
-    strip_tags(partial_rendered).blank? ? nil : result
+    partial_rendered.present? ? result : partial_rendered
   end
 
   def render_item_types_as_options(item_types, selected_item_type_slug)

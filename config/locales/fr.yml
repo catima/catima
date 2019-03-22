@@ -71,10 +71,10 @@ fr:
       title: "Recherche avancée"
       start_over: "Nouvelle recherche"
       submit: "Chercher"
-      default_search: Recherche par défaut
+      default_search: Recherche par défaut par type de fiche
       advanced_search_configurations: Recherches préconfigurées
       item_type_selection: Recherche sur un type de fiche
-      item_type_search: Recherche avancée sur le type de fiche %{item_type}
+      item_type_search: Recherche avancée sur le type de fiche “%{item_type}“
       no_advanced_search_configuration: Aucune recherche préconfigurée
       no_field_in_advance_search_configuration: Aucun champ de recherche configuré
       no_map_results: Cette recherche avancée n'a retourné aucun résultat

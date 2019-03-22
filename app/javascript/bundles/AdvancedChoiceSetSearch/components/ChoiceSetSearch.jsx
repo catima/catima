@@ -210,7 +210,7 @@ class ChoiceSetSearch extends Component {
   render() {
     return (
       <div className="col-md-12 choiceset-search-container">
-        <div className="row component-search-row">
+        <div className="row">
           <div className="col-md-2">
               { this.props.displayFieldCondition && this.renderFieldConditionElement() }
           </div>
@@ -247,7 +247,7 @@ class ChoiceSetSearch extends Component {
           </div>
         </div>
         { (Object.keys(this.state.selectedCategory).length !== 0 && this.state.selectedItem.data.length !== 0) &&
-        <div className="row component-search-row">
+        <div className="row">
           <div className="col-md-offset-2 col-md-6">{ this.renderLinkedCategoryElement() }</div>
         </div>
         }
