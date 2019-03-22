@@ -21,7 +21,7 @@ class CatalogAdmin::UsersTest < ActionDispatch::IntegrationTest
   test "edit a user" do
     log_in_as("one-admin@example.com", "password")
     visit("/one/en/admin/_users")
-    first("a", :text => "Edit").click
+    first("a.user-action-edit").click
     click_on("Update user")
     assert(page.has_content?("has been saved"))
   end
@@ -29,9 +29,28 @@ class CatalogAdmin::UsersTest < ActionDispatch::IntegrationTest
   test "edit a user role" do
     log_in_as("one-admin@example.com", "password")
     visit("/one/en/admin/_users")
-    first("a", :text => "Edit").click
+    first("a.user-action-edit").click
     first("label", :text => "Editor").click
     click_on("Update user")
     assert(page.has_content?("has been saved"))
+  end
+
+  test "find a user" do
+    log_in_as("one-admin@example.com", "password")
+    visit("/one/en/admin/_users")
+
+    assert_selector('.user-panel tbody tr', :count => 25)
+
+    page.fill_in with: 'test-search@example.com', name: "search"
+    find(".user-panel .search-form button").click
+
+    assert_selector('.user-panel tbody tr', :count => 1)
+    assert(page.has_content?("test-search@example.com"))
+
+    page.fill_in with: 'Test-SEARCH', name: "search"
+    find(".user-panel .search-form button").click
+
+    assert_selector('.user-panel tbody tr', :count => 1)
+    assert(page.has_content?("test-search@example.com"))
   end
 end

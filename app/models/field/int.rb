@@ -42,6 +42,7 @@ class Field::Int < ::Field
   validates_numericality_of :maximum, :minimum,
                             :only_integer => true,
                             :allow_blank => true
+  after_save :remove_default_value, :if => :auto_increment?
 
   def custom_field_permitted_attributes
     %i(maximum minimum auto_increment)
@@ -49,6 +50,50 @@ class Field::Int < ::Field
 
   def order_items_by
     "(data->>'#{uuid}')::int ASC"
+  end
+
+  def auto_increment?
+    (options && options['auto_increment'] && options['auto_increment'].to_i) == 1
+  end
+
+  # Useful for the advanced search
+  def search_conditions_as_options
+    [
+      [I18n.t("advanced_searches.number_search_field.contains_number"), "exact"],
+      [I18n.t("advanced_searches.number_search_field.less_than"), "less_than"],
+      [I18n.t("advanced_searches.number_search_field.less_than_or_equal_to"), "less_than_or_equal_to"],
+      [I18n.t("advanced_searches.number_search_field.greater_than"), "greater_than"],
+      [I18n.t("advanced_searches.number_search_field.greater_than_or_equal_to"), "greater_than_or_equal_to"]
+    ]
+  end
+
+  def search_conditions_as_hash(locale)
+    [
+      {
+        :value => I18n.t("advanced_searches.number_search_field.contains_number", locale: locale),
+        :key => "exact"
+      },
+      {
+        :value => I18n.t("advanced_searches.number_search_field.less_than", locale: locale),
+        :key => "less_than"
+      },
+      {
+        :value => I18n.t("advanced_searches.number_search_field.less_than_or_equal_to", locale: locale),
+        :key => "less_than_or_equal_to"
+      },
+      {
+        :value => I18n.t("advanced_searches.number_search_field.greater_than", locale: locale),
+        :key => "greater_than"
+      },
+      {
+        :value => I18n.t("advanced_searches.number_search_field.greater_than_or_equal_to", locale: locale),
+        :key => "greater_than_or_equal_to"
+      }
+    ]
+  end
+
+  def sql_type
+    "INT"
   end
 
   # Useful for the advanced search

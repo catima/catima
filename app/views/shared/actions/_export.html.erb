@@ -1,0 +1,8 @@
+<% if policy(model).download? %>
+  <%= link_to(
+          fa_icon(:download),
+          download_catalog_admin_export_path(model.catalog.slug, I18n.locale, model.id),
+          class: "btn btn-xs btn-default export-action-download",
+          "data-toggle" => "tooltip", "data-placement" => "top", "title" => t("download")
+      ) %>
+<% end %>

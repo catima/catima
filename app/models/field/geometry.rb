@@ -39,6 +39,10 @@ class Field::Geometry < ::Field
     false
   end
 
+  def allows_unique?
+    false
+  end
+
   def edit_props
     { "bounds" => default_bounds }
   end
@@ -56,15 +60,23 @@ class Field::Geometry < ::Field
     return if super.blank?
 
     super["features"].map do |f|
-      {
-        :lat => f["geometry"]["coordinates"][0],
-        :lon => f["geometry"]["coordinates"][1]
-      }
-    end.to_json
+      "#{f['geometry']['coordinates'][1]}, #{f['geometry']['coordinates'][0]}"
+    end.join("; ")
   end
 
   def sql_type
     "JSON"
+  end
+
+  def sql_value(_it)
+    return if super.blank?
+
+    coordinates = []
+    super["features"].map do |f|
+      coordinates << { lat: f['geometry']['coordinates'][1], lon: f['geometry']['coordinates'][0] }
+    end
+
+    coordinates.to_json
   end
 
   private

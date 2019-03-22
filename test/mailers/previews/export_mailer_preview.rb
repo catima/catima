@@ -10,8 +10,8 @@ class ExportMailerPreview < ActionMailer::Preview
         :primary_language => "en"
       )
       user = User.new(
-        :email => "ck@naxio.ch",
-        :primary_language => "en"
+        :email => "john@doe.com",
+        :primary_language => locale
       )
       export = Export.new(
         :id => 1,
@@ -19,7 +19,6 @@ class ExportMailerPreview < ActionMailer::Preview
         :catalog => catalog,
         :category => "catima",
         :status => "ready",
-        :file => true,
         :created_at => Time.zone.now,
         :updated_at => Time.zone.now
       )

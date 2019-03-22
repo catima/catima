@@ -1,7 +1,7 @@
-<% provide(:title, "Edit page") %>
+<% provide(:title, t('.edit_page')) %>
 
 <% provide(:actions) do %>
-  <%= link_to("View page", page_path(@page), :target => '_blank') %>
+  <%= link_to(t('.view_page'), page_path(@page), :target => '_blank') %>
 <% end %>
 
 <div class="panel-body">
@@ -9,9 +9,9 @@
 
     <%= render("common_form_fields", :f => f) %>
 
-    <%= f.primary("Update page") %>
+    <%= f.primary(t('.update_page')) %>
     <%= link_to(
-          "Cancel",
+          t('cancel'),
           catalog_admin_pages_path,
           :class => "btn btn-link") %>
 
@@ -21,7 +21,7 @@
 <hr/>
 <div class="panel-body">
 
-  <h4>Containers</h4>
+  <h4><%= t('.container_index') %></h4>
 
   <% @page.catalog.valid_locales.each do |locale| %>
 
@@ -29,14 +29,14 @@
       <div style="float: right;">
         <span class="dropdown">
           <button class="btn btn-xs btn-default dropdown-toggle" type="button" id="add-field-dropdown" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
-            <%= fa_icon(:"plus-square", :text => "Add…") %>
+            <%= fa_icon(:"plus-square", :text => t('catalog_admin.fields.index.add_field')) %>
             <span class="caret"></span>
           </button>
           <ul class="dropdown-menu" style="right: 0; left: auto;" aria-labelledby="add-field-dropdown">
             <% Container.type_choices.each do |key, label| %>
               <li>
                 <%= link_to(
-                      "#{label} container",
+                      "#{label}",
                       new_catalog_admin_page_container_path(page_slug:@page.slug, type:key, l:locale)
                     ) %>
               </li>

@@ -64,8 +64,8 @@
           <% if catalog.requires_review? %>
             <td><%= review_status_label(item) %></td>
           <% end %>
-          <td style="text-align: right;">
-            <%= render "shared/actions_dropdown", :model => item %>
+          <td align="right">
+            <%= render "shared/actions/item", :model => item %>
           </td>
         </tr>
       <% end %>

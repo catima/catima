@@ -161,15 +161,12 @@ en:
         no_identifier: Please enter a group identifier
         already_member: You are already a member
         identifier_does_not_exist: "Identifier «%{identifier}» does not exist"
+      advanced_searches:
+        not_available: Avanced search is not available for this catalog
   notices:
     membership:
       created: You are now a member of the «%{group}» group
   items:
-    item_list_nav:
-      back: "Back to search results"
-      next: "Next: %{item}"
-      no_more: "No more results"
-      previous: "Previous: %{item}"
     missing:
       missing_element: "Oops. Such an item doesn't exist."
       missing_element_detail: "The item with ID %{item_id} of type «%{item_type}» does not exist in this catalog."
@@ -270,6 +267,7 @@ en:
       catalog:
         other_languages: Other supported languages
       item_type:
+        name: "Name"
         name_plural: "Name (plural)"
         slug: "Slug (plural)"
       user:
@@ -353,6 +351,8 @@ en:
   and: and
   exclude: exclude
   options: Options
+  deactivate: Deactivate
+  reactivate: Reactivate
 
   layouts:
     catalog_admin:
@@ -519,7 +519,7 @@ en:
         use_as_primary_field: "Use this as the primary field"
         include_in_list_view: "Include this field in edition list view (Data)"
         include_in_public_list_view: "Include this field in site list view"
-        restrict_field_to_members_and_staff: Restrict field to members and staff
+        restrict_field_to_staff: Restrict this field to catalog staff
         data_entry_options: Data entry options
         must_be_unique: "Must be unique"
         save_field: Save field
@@ -622,6 +622,12 @@ en:
     pages:
       new:
         create_page: "Create page"
+      edit:
+        edit_page: Edit page
+        view_page: View page
+        update_page: Update page
+        container_index: Containers
+
     users:
       common_form_fields:
         preferred_language: "Admin screens are only available in English, but the user’s preferred language will be honored for login pages and for the catalogs themselves."
@@ -638,6 +644,7 @@ en:
         groups: Groups
         new_group: Create group
         no_groups_for_catalog_warning: There are no groups for this catalog.
+        search: Search for users
       catalog_users:
         group_role: Group
       edit:

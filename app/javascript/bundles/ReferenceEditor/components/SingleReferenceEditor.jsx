@@ -40,7 +40,7 @@ class SingleReferenceEditor extends Component {
 
   _load(v){
     if (v !== null && v !== '') {
-      let initItem = this.props.items.filter(item => item.id === parseInt(v));
+      let initItem = this.props.items.filter(item => item.id === parseInt(JSON.parse(v)));
       if(initItem.length === 1) return this._getJSONItem(initItem[0]);
     }
     return [];

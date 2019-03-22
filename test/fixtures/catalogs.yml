@@ -89,3 +89,8 @@ not_visible:
   slug: not-visible
   primary_language: en
   visible: false
+
+to_be_deleted:
+  name: Catalog to be destroyed
+  slug: to-be-deleted
+  primary_language: en

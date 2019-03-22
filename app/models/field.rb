@@ -100,6 +100,15 @@ class Field < ApplicationRecord
     !!category_id
   end
 
+  # Whether or not a field is displayable to a user for a specific catalog.
+  #
+  # A restricted field should not be displayed if the user is not a staff
+  # (>= editor) of the current catalog
+  def displayable_to_user?(user, cat=catalog)
+    at_least_editor = user.catalog_role_at_least?(cat, 'editor')
+    at_least_editor || !restricted?
+  end
+
   def category_id
     field_set.is_a?(Category) ? field_set.id : nil
   end
@@ -133,9 +142,6 @@ class Field < ApplicationRecord
   # text. Any field that uses a display_component would not qualify, because the
   # field is rendered via JavaScript.
   #
-  # This is used primarily by Item#field_for_select to choose a field suitable
-  # for a drop-down menu.
-  #
   # Default depends on the presence of display_component, and subclasses can
   # override.
   #
@@ -143,11 +149,31 @@ class Field < ApplicationRecord
     display_component.blank?
   end
 
+  # Whether or not this field is filterable.
+  #
+  # Default depends on the presence of the human_readable method result, and subclasses can
+  # override.
+  #
+  # Mainly used by advanced search components, also used by views for the item summary.
+  def filterable?
+    human_readable?
+  end
+
   # Whether or not this field supports the `multiple` option. Most fields do
   # not. This method exists so that the UI can show or hide the appropriate
   # configuration controls for the field. Subclasses may override.
   def allows_multiple?
     false
+  end
+
+  # Whether or not this field supports the `style` options. Subclasses may override.
+  def allows_style?
+    true
+  end
+
+  # Whether or not this field supports the `unique` option. Subclasses may override.
+  def allows_unique?
+    true
   end
 
   def raw_value(item, locale=I18n.locale, suffix="")
@@ -256,20 +282,24 @@ class Field < ApplicationRecord
     "items.data->>'#{uuid}' ASC"
   end
 
+  def order_items_by_primary_field
+    "items.data->>'#{item_type.primary_human_readable_field.uuid}'"
+  end
+
   # Useful for the advanced search
   def search_conditions_as_options
     [
-      [I18n.t("advanced_searches.text_search_field.exact"), "exact"],
       [I18n.t("advanced_searches.text_search_field.all_words"), "all_words"],
-      [I18n.t("advanced_searches.text_search_field.one_word"), "one_word"]
+      [I18n.t("advanced_searches.text_search_field.one_word"), "one_word"],
+      [I18n.t("advanced_searches.text_search_field.exact"), "exact"]
     ]
   end
 
   def search_conditions_as_hash(locale)
     [
-      { :value => I18n.t("advanced_searches.text_search_field.exact", locale: locale), :key => "exact"},
       { :value => I18n.t("advanced_searches.text_search_field.all_words", locale: locale), :key => "all_words"},
-      { :value => I18n.t("advanced_searches.text_search_field.one_word", locale: locale), :key => "one_word"}
+      { :value => I18n.t("advanced_searches.text_search_field.one_word", locale: locale), :key => "one_word"},
+      { :value => I18n.t("advanced_searches.text_search_field.exact", locale: locale), :key => "exact"}
     ]
   end
 
@@ -307,6 +337,10 @@ class Field < ApplicationRecord
     return "" if default_value.blank?
 
     "DEFAULT '#{default_value}'"
+  end
+
+  def sql_value(item)
+    raw_value(item)
   end
 
   private
@@ -348,6 +382,10 @@ class Field < ApplicationRecord
 
     # Remove primary from other fields if current field is human readable
     field_set.fields.where("fields.id != ?", id).update_all(:primary => false)
+  end
+
+  def remove_default_value
+    update(:default_value => nil) if default_value?
   end
 
   def transform_value(value)

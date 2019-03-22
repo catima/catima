@@ -30,7 +30,7 @@
         <td><%= conf.description %></td>
         <td><%= conf.item_type.name %></td>
         <td style="text-align: right;">
-            <%= render "shared/actions_dropdown", :model => conf %>
+            <%= render "shared/actions/advanced_search", :model => conf %>
         </td>
       </tr>
     <% end %>
@@ -38,18 +38,3 @@
 </table>
 <% end %>
 
-<script>
-  var group_roles_handler = function(e){
-    var btn_group = e.target.parentElement;
-    var group_id = btn_group.getAttribute('data-group');
-    var submit_button = document.querySelector('#edit_group_' + group_id + ' input[type=submit]');
-    window.setTimeout(function(){
-      submit_button.click();
-    }, 100);
-  };
-
-  var group_permissions_buttons = document.querySelectorAll('#group-permissions-table .btn-group label');
-  for (var i=0; i < group_permissions_buttons.length; i++){
-    group_permissions_buttons[i].addEventListener('click', group_roles_handler, false);
-  }
-</script>

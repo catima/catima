@@ -156,15 +156,12 @@ fr:
         no_identifier: Veuillez entrer un identifiant de groupe
         already_member: Vous êtes déjà membre
         identifier_does_not_exist: "L'identifiant «%{identifier}» n'existe pas"
+      advanced_searches:
+        not_available: La recherche avancée n'est pas disponible pour ce catalogue
   notices:
     membership:
       created: Vous êtes maintenant membre du groupe «%{group}»
   items:
-    item_list_nav:
-      back: "Retour au résultat de recherche"
-      next: "Suivant: %{item}"
-      no_more: "Pas de résultats supplémentaires"
-      previous: "Précédent: %{item}"
     missing:
       missing_element: "Oups. Un tel élément n'existe pas."
       missing_element_detail: "L'élément avec ID %{item_id} de type «%{item_type}» n'existe pas dans ce catalogue."
@@ -265,6 +262,7 @@ fr:
       catalog:
         other_languages: Autres langues supportées
       item_type:
+        name: "Nom"
         name_plural: "Nom (pluriel)"
         slug: "Slug (pluriel)"
       user:
@@ -345,9 +343,11 @@ fr:
   expired: "expiré"
   download: "Télécharger"
   or: ou
+  options: Options
+  deactivate: Désactiver
+  reactivate: Réactiver
   and: et
   exclude: sauf
-  options: options
 
   layouts:
     catalog_admin:
@@ -515,7 +515,7 @@ fr:
         use_as_primary_field: Utiliser comme champ primaire
         include_in_list_view: Inclure le champ dans la liste des fiches en mode édition (Data)
         include_in_public_list_view: Inclure le champ dans la liste des fiches en mode consultation
-        restrict_field_to_members_and_staff: Restreindre le champ aux membres et au personnel du catalogue
+        restrict_field_to_staff: Restreindre le champ au personnel du catalogue
         data_entry_options: Options de saisie des données
         must_be_unique: Doit être unique
         save_field: Enregistrer le champ
@@ -618,12 +618,17 @@ fr:
     pages:
       new:
         create_page: "Créer une page"
+      edit:
+        edit_page: Modifier la page
+        view_page: Voir la page
+        update_page: Mettre à jour la page
+        container_index: Conteneurs
 
     users:
       common_form_fields:
         preferred_language: "Les écrans d'administration ne sont disponibles qu'en anglais, mais la langue préférée de l'utilisateur sera honorée pour les pages de connexion et pour les catalogues eux-mêmes."
         user_role: "<b>Users</b> peuvent afficher les zones publiques des catalogues non restreints.<br>"
-        member_role: "<b>Members</b> sont des utilisateurs qui peuvent afficher les zones publiques d'un catalogue restreint (à venir).<br>"
+        member_role: "<b>Members</b> sont des utilisateurs qui peuvent afficher les zones publiques d'un catalogue restreint.<br>"
         editor_role: "<b>Editors</b> sont des membres qui peuvent créer et modifier leurs propres éléments dans le catalogue.<br>"
         super_editor_role: "<b>Super-editors</b> sont des éditeurs qui peuvent créer et éditer tous les éléments du catalogue.<br>"
         reviewer_role: "<b>Reviewers</b> sont des super-éditeurs qui peuvent approuver des éléments pour les rendre visibles au public.<br>"
@@ -635,6 +640,7 @@ fr:
         groups: Groupes
         new_group: Nouveau groupe
         no_groups_for_catalog_warning: Il n'y a pas de groupes pour ce catalogue.
+        search: Rechercher des utilisateurs
       catalog_users:
         group_role: Groupe
       edit:

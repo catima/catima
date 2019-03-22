@@ -66,6 +66,10 @@ class Field::Reference < ::Field
     references.where(:id => raw_value(item))
   end
 
+  def filterable?
+    false
+  end
+
   def describe
     super.merge("related_item_type": related_item_type.slug)
   end
@@ -109,6 +113,26 @@ class Field::Reference < ::Field
   end
 
   def field_value_for_all_item(item)
+    item_type.primary_text_field&.field_value_for_all_item(item)
+  end
+
+  def sql_type
+    "INT"
+    # return "INT" if related_item_type.primary_field.blank?
+    #
+    # related_item_type.primary_field.sql_type
+    # while related_primary_field.is_a?(Field::Reference) && related_primary_field.related_item_type.present?
+    #   related_primary_field = related_item_type.primary_field.sql_type
+    # end
+  end
+
+  def search_conditions_as_hash
+    []
+  end
+
+  def field_value_for_all_item(item)
+    return if item_type.is_a?(Category)
+
     item_type.primary_text_field&.field_value_for_all_item(item)
   end
 

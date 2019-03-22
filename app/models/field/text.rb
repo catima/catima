@@ -53,8 +53,12 @@ class Field::Text < ::Field
   end
 
   def human_readable?
-    # TODO: remove comment below when there is no longer formatted text primary fields in production
-    # return false if formatted?
+    return false if formatted?
+
+    true
+  end
+
+  def filterable?
     true
   end
 
@@ -75,7 +79,7 @@ class Field::Text < ::Field
 
   def raw_value(item, locale=I18n.locale, suffix="")
     attrib = i18n? ? "#{uuid}_#{locale}#{suffix}" : uuid
-    v = item.behaving_as_type.public_send(attrib)
+    v = item.behaving_as_type.public_send(attrib) if item.behaving_as_type.respond_to?(attrib)
     return v if v.nil? || !formatted?
 
     begin
@@ -94,7 +98,7 @@ class Field::Text < ::Field
     return options if formatted?
 
     # Formatted text can't be exact searched
-    options.unshift([I18n.t("advanced_searches.text_search_field.exact"), "exact"])
+    options << [I18n.t("advanced_searches.text_search_field.exact"), "exact"]
   end
 
   def search_conditions_as_hash(locale)
@@ -105,7 +109,7 @@ class Field::Text < ::Field
 
     return options if formatted?
 
-    options.unshift({ :value => I18n.t("advanced_searches.text_search_field.exact", locale: locale), :key => "exact"})
+    options << { :value => I18n.t("advanced_searches.text_search_field.exact", locale: locale), :key => "exact"}
   end
 
   def sql_type

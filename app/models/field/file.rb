@@ -61,6 +61,25 @@ class Field::File < ::Field
   end
 
   def sql_type
-    "TEXT"
+    "JSON"
+  end
+
+  def field_value_for_all_item(item)
+    value = super
+
+    case
+    when value.is_a?(Hash)
+      return if value["path"].blank?
+
+      return i["path"]
+    when value.is_a?(Array)
+      return if value.blank?
+
+      value.map do |i|
+        next if i["path"].blank?
+
+        i["path"]
+      end.join('; ')
+    end
   end
 end

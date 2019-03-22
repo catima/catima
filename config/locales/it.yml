@@ -141,15 +141,12 @@ it:
         no_identifier: Inserire l'identificatore di un gruppo
         already_member: Sei già membro
         identifier_does_not_exist: "L'identificatore «%{identifier}» non esiste"
+      advanced_searches:
+        not_available: La ricerca avanzata non è disponibile per questo catalogo
   notices:
     membership:
       created: Ora sei un membro del gruppo «%{group}»
   items:
-    item_list_nav:
-      back: "Torna ai risultati di ricerca"
-      next: "Prossimo: %{item}"
-      no_more: "Nessun altri risultati"
-      previous: "Precedente: %{item}"
     buttons:
       delete_confirm: "Sei sicuro di voler eliminare “%{item}”?"
       favorites_add: "Aggiungi ai preferiti"
@@ -251,6 +248,7 @@ it:
       catalog:
         other_languages: Altre lingue supportate
       item_type:
+        name: "Nome"
         name_plural: "Nome (plurale)"
         slug: "Slug (plurale)"
       user:
@@ -309,6 +307,8 @@ it:
   and: e
   exclude: eccetto
   options: Options
+  deactivate: Deactivate
+  reactivate: Reactivate
 
   layouts:
     catalog_admin:
@@ -409,7 +409,7 @@ it:
         bounds: Estensione spaziale predefinita
         bounds_help: Se modificata, la mappa utilizzerà l'area selezionata come estensione spaziale predefinita
       common_form_fields:
-        restrict_field_to_members_and_staff: Limitare il campo ai membri e al personale
+        restrict_field_to_staff: Limitare il campo al personale del catalogo
         include_in_list_view: "Include this field in edition list view (Data)"
         include_in_public_list_view: "Include this field in site list view"
         single_choice: "Single value – optional"
@@ -421,6 +421,8 @@ it:
         public_list_view?: 'Public mode?'
       editor_option_inputs:
         warning: <strong>Warning!</strong> Please note that this field will automatically show the editor's email address.
+      index:
+        add_field: "Add…"
 
     containers:
       map_inputs:
@@ -449,10 +451,18 @@ it:
         groups: Gruppi
         new_group: Nuovo gruppo
         no_groups_for_catalog_warning: Non ci sono gruppi per questo catalogo.
+        search: Cerca utenti
       catalog_users:
         group_role: Gruppo
       edit:
         update_user: Aggiorna utente
+
+    pages:
+      edit:
+        edit_page: Edit page
+        view_page: View page
+        update_page: Update page
+        container_index: Containers
 
     groups:
       index:

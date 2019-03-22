@@ -123,12 +123,15 @@ module FieldsHelper
     end
   end
 
+  # Returns all applicable fields for the item
   def item_applicable_fields(item)
-    # Returns all applicable fields for the items without the restricted ones
-    # if the user is not at least a member of the catalog
-    at_least_member = current_user.catalog_role_at_least?(item.catalog, 'member')
-    item.applicable_fields.select do |fld|
-      at_least_member || !fld.restricted?
+    displayable_fields(item.applicable_fields)
+  end
+
+  # Returns all displayable fields for a collection of fields without the restricted ones
+  def displayable_fields(fields)
+    fields.select do |fld|
+      fld.displayable_to_user?(current_user)
     end
   end
 end

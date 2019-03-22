@@ -34,7 +34,7 @@ class Admin::UsersTest < ActionDispatch::IntegrationTest
     visit("/admin")
 
     assert_difference("User.count", -1) do
-      first("a", :text => "Delete").click
+      first("a.user-action-delete").click
     end
   end
 end

@@ -1,0 +1,30 @@
+<div style="width: 100px;">
+<% if policy(model).edit? %>
+  <%= link_to(
+          fa_icon(:pencil),
+          edit_catalog_admin_item_path(model.catalog, I18n.locale, model.item_type, model),
+          class: "btn btn-xs btn-default item-action-edit",
+          "data-toggle" => "tooltip", "data-placement" => "top", "title" => t("edit")
+      ) %>
+<% end %>
+<% if policy(model).duplicate? %>
+  <%= link_to(
+          fa_icon(:copy),
+          duplicate_catalog_admin_item_path(model.catalog, I18n.locale, model.item_type, model),
+          class: "btn btn-xs btn-default item-action-duplicate",
+          "data-toggle" => "tooltip", "data-placement" => "top", "title" => t("duplicate"),
+      ) %>
+<% end %>
+<% if policy(model).destroy? %>
+  <%= link_to(
+          fa_icon(:trash),
+          catalog_admin_item_path(model.catalog, I18n.locale, model.item_type, model),
+          :method => :delete,
+          :data => {
+              :confirm => t("delete_confirm", model: default_display_name(model))
+          },
+          class: "btn btn-xs btn-default item-action-delete",
+          "data-toggle" => "tooltip", "data-placement" => "top", "title" => t("delete")
+      ) %>
+<% end %>
+</div>

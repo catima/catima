@@ -20,7 +20,7 @@
         :help => t(".display_component_help")) %>
 <% end %>
 
-<% unless f.object.is_a?(Category) %>
+<% if primary_option?(f.object) %>
   <%= f.form_group(:primary) do %>
     <%= f.check_box(
           :primary,
@@ -43,7 +43,7 @@
 <%= f.form_group(:restricted) do %>
   <%= f.check_box(
         :restricted,
-        :label => t('.restrict_field_to_members_and_staff')
+        :label => t('.restrict_field_to_staff')
       ) %>
 <% end %>
 
@@ -59,12 +59,16 @@
         :help => t(".editor_component_help")) %>
 <% end %>
 
-<%= field_style_select(f) %>
+<% if f.object.allows_style? %>
+  <%= field_style_select(f) %>
+<% end %>
 
-<%= f.form_group(:unique) do %>
-  <%= f.check_box(
-        :unique,
-        :label => t('.must_be_unique')) %>
+<% if f.object.allows_unique? %>
+  <%= f.form_group(:unique) do %>
+    <%= f.check_box(
+          :unique,
+          :label => t('.must_be_unique')) %>
+  <% end %>
 <% end %>
 
 <%= render_catalog_admin_fields_option_inputs(f) %>

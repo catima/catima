@@ -87,8 +87,7 @@ class CatalogAdmin::ItemsTest < ActionDispatch::IntegrationTest
     visit("/one/en/admin")
     click_on("Data")
     click_on("Authors")
-    first(:button, 'Actions').click
-    click_on('Edit')
+    first("a.item-action-edit").click
 
     # Hack to get the ID of the author we're editing
     author_id = current_path[%r{authors/(.+)/edit$}, 1]
@@ -102,6 +101,8 @@ class CatalogAdmin::ItemsTest < ActionDispatch::IntegrationTest
     assert_no_difference("Item.count") do
       click_on("Save Author")
     end
+
+    sleep 2
 
     author = Item.find(author_id).behaving_as_type
     assert_equal("Changed by test", author.public_send(:one_author_name_uuid))
@@ -124,8 +125,7 @@ class CatalogAdmin::ItemsTest < ActionDispatch::IntegrationTest
 
     assert_difference("Item.count", -1) do
       page.accept_alert(:wait => 2) do
-        first('button', text: 'Actions').click
-        first('a', text: 'Delete').click
+        first("a.item-action-delete").click
       end
       sleep 2
     end
@@ -138,8 +138,7 @@ class CatalogAdmin::ItemsTest < ActionDispatch::IntegrationTest
     click_on("Authors")
 
     assert_difference("Item.count", +1) do
-      first("button", :text => "Actions").click
-      first("a", :text => "Duplicate").click
+      first("a.item-action-duplicate").click
       sleep 2 # Wait to initialize JS
       click_on("Create Author")
     end

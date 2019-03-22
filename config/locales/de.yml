@@ -141,15 +141,12 @@ de:
         no_identifier: Bitte geben Sie eine Gruppen-ID ein
         already_member: Du bist bereits Mitglied
         identifier_does_not_exist: "Identifikator «%{identifier}» existiert nicht"
+      advanced_searches:
+        not_available: Die erweiterte Suche ist für diesen Katalog nicht verfügbar
   notices:
     membership:
       created: Du bist jetzt ein Mitglied der «%{group}» Gruppe
   items:
-    item_list_nav:
-      back: "Zurück yu den Suchresultaten"
-      next: "Nächster: %{item}"
-      no_more: "Keine weiteren Resultate"
-      previous: "Vorheriger: %{item}"
     missing:
       missing_element: "Hoppla. Ein solches Element gibt es nicht."
       missing_element_detail: "Das Element mit ID %{item_id} und Typ «%{item_type}» gibt es in diesem Katalog nicht."
@@ -250,6 +247,7 @@ de:
       catalog:
         other_languages: Andere unterstützte Sprachen
       item_type:
+        name: "Name"
         name_plural: "Name (Plural)"
         slug: "Slug (Plural)"
       user:
@@ -317,6 +315,8 @@ de:
   and: und
   exclude: außer
   options: Options
+  deactivate: Deactivate
+  reactivate: Reactivate
 
   layouts:
     catalog_admin:
@@ -481,7 +481,7 @@ de:
         use_as_primary_field: "Use this as the primary field"
         include_in_list_view: "Include this field in edition list view (Data)"
         include_in_public_list_view: "Include this field in site list view"
-        restrict_field_to_members_and_staff: Beschränkung des Feldes auf Mitglieder und Mitarbeiter
+        restrict_field_to_staff: Einschränkung des Feldes auf Katalogpersonal
         data_entry_options: Data entry options
         must_be_unique: "Must be unique"
         save_field: Save field
@@ -611,6 +611,7 @@ de:
         groups: Gruppen
         new_group: Neue Gruppe
         no_groups_for_catalog_warning: Es gibt keine Gruppen für diesen Katalog.
+        search: Suche nach Benutzern
       catalog_users:
         group_role: Gruppe
       edit:
@@ -619,6 +620,11 @@ de:
     pages:
       new:
         create_page: "Create page"
+      edit:
+        edit_page: Edit page
+        view_page: View page
+        update_page: Update page
+        container_index: Containers
 
     menu_items:
       common_form_fields:

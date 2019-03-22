@@ -44,35 +44,62 @@ class Field::Image < ::Field::File
     false
   end
 
+  def allows_unique?
+    false
+  end
+
   def custom_field_permitted_attributes
     %i(legend)
   end
 
-  def field_value_for_all_item(item)
+  def field_value_for_all_item(_it)
     value = super
 
     case
     when value.is_a?(Hash)
-      return "" if value["path"].blank?
+      return if value["path"].blank?
 
-      img = { :path => value["path"] }
-      img[:legend] = value["legend"] if value["legend"].present?
+      path = ""
+      # TODO : what to do with legends?
+      # path = "[#{i['legend']}]" if i["legend"].present?
+      path << value["path"]
 
-      return img.to_json
+      return path
     when value.is_a?(Array)
+      return if value.blank?
+
       value.map do |i|
         next if i["path"].blank?
 
-        img = { :path => i["path"] }
-        img[:legend] = i["legend"] if i["legend"].present?
+        path = ""
+        # TODO : what to do with legends?
+        # path = "[#{i['legend']}]" if i["legend"].present?
+        path << i["path"]
 
-        img.to_json
-      end
+        path
+      end.join('; ')
     end
   end
 
   def sql_type
-    "TEXT"
+    "JSON"
+  end
+
+  def sql_value(_it)
+    value = super
+
+    images = []
+    if value.is_a?(Hash) && value["path"].present?
+      add_image_hash(images, value)
+    elsif value.is_a?(Array) && value.present?
+      value.map do |i|
+        next if i["path"].blank?
+
+        add_image_hash(images, i)
+      end
+    end
+
+    images.to_json
   end
 
   private
@@ -81,5 +108,10 @@ class Field::Image < ::Field::File
     return if persisted? || types.present?
 
     self.types = "jpg, jpeg, png, gif"
+  end
+
+  def add_image_hash(images, image)
+    images << { :legend => image["legend"] } if image["legend"].present?
+    images << { :path => image["path"] }
   end
 end

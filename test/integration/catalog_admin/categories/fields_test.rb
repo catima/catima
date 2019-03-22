@@ -25,7 +25,7 @@ class CatalogAdmin::CategoriesFieldsTest < ActionDispatch::IntegrationTest
     log_in_as("nested-admin@example.com", "password")
     visit("/nested/en/admin")
     click_on("Bicycle")
-    first("table a", :text => "Edit").click
+    first("a.field-action-edit").click
     fill_in("field[name_en]", :with => "Changed!")
     fill_in("Slug", :with => "changed")
 
@@ -43,7 +43,7 @@ class CatalogAdmin::CategoriesFieldsTest < ActionDispatch::IntegrationTest
     click_on("Bicycle")
 
     assert_difference("categories(:nested_bicycle).fields.count", -1) do
-      first("table a", :text => "Delete").click
+      first("a.field-action-delete").click
     end
   end
 end

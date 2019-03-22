@@ -1,0 +1,20 @@
+<% if policy(model).edit? %>
+  <%= link_to(
+          fa_icon(:pencil),
+          {:action => :edit, :slug => model},
+          class: "btn btn-xs btn-default field-action-edit",
+          "data-toggle" => "tooltip", "data-placement" => "top", "title" => t("edit")
+      ) %>
+<% end %>
+<% if policy(model).destroy? %>
+  <%= link_to(
+          fa_icon(:trash),
+          {:action => :destroy, :slug => model},
+          :method => :delete,
+          :data => {
+              :confirm => t("delete_confirm", model: model.slug)
+          },
+          class: "btn btn-xs btn-default field-action-delete",
+          "data-toggle" => "tooltip", "data-placement" => "top", "title" => t("delete")
+      ) %>
+<% end %>

@@ -60,7 +60,7 @@ class CatalogAdmin::GroupsTest < ActionDispatch::IntegrationTest
     log_in_as('two-admin@example.com', 'password')
     visit('/two/en/admin/_users')
 
-    first('a[data-label="invite users"]').click
+    first("a.group-action-add").click
     assert(page.has_content?('group members'))
     click_on('Add users')
 
@@ -102,7 +102,7 @@ class CatalogAdmin::GroupsTest < ActionDispatch::IntegrationTest
     visit('/two/en/admin/_users')
 
     assert(page.has_content?('Group for catalog two'))
-    first('a[data-label="edit group"]').click
+    first("a.group-action-edit").click
     fill_in('Name', with: 'Alternative name for group')
     click_on('Cancel')
 
@@ -119,7 +119,7 @@ class CatalogAdmin::GroupsTest < ActionDispatch::IntegrationTest
     visit('/two/en/admin/_users')
 
     assert(page.has_content?('Group for catalog two'))
-    first('a[data-label="edit group"]').click
+    first("a.group-action-edit").click
 
     uncheck("Active?")
     click_on('Update group')

@@ -4,7 +4,7 @@ class Admin::DashboardController < Admin::BaseController
       authorize(Catalog, :index?)
       authorize(User, :index?)
 
-      @users = User.sorted
+      @users = index_users(params[:search], params[:page])
       @catalogs = Catalog.sorted
       @configuration = ::Configuration.first!
       @template_storages = TemplateStorage.all
@@ -20,5 +20,14 @@ class Admin::DashboardController < Admin::BaseController
 
     redirect_to edit_user_registration_path(locale: I18n.locale)
     skip_authorization
+  end
+
+  private
+
+  # Retrieve users for index with pagination & search params
+  def index_users(search=nil, page=1)
+    users = User.sorted
+    users = users.search(search) if search
+    users.page(page)
   end
 end
