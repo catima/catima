@@ -131,11 +131,7 @@ class ReferenceSearch extends Component {
 
   _getFilterOptions(){
     var optionsList = [];
-    optionsList = this.state.fields.filter(
-        field => (
-            field.filterable && field.displayable_to_user
-        )
-    );
+    optionsList = this.state.fields.filter(field => (field.human_readable));
 
     optionsList = optionsList.map(field =>
       this._getJSONFilter(field)

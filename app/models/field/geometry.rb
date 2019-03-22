@@ -73,7 +73,7 @@ class Field::Geometry < ::Field
 
     coordinates = []
     super["features"].map do |f|
-      coordinates << { lat: f['geometry']['coordinates'][1], lon: f['geometry']['coordinates'][0] }
+      coordinates << { :lat => f['geometry']['coordinates'][1], :lon => f['geometry']['coordinates'][0] }
     end
 
     coordinates.to_json

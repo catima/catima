@@ -1,4 +1,4 @@
-class API::V2::AdvancedSearchController < ApplicationController
+class API::V2::AdvancedSearchController < ActionController::Base
   include ControlsCatalog
 
   def index

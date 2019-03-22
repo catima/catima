@@ -15,13 +15,16 @@ class Dump::CatalogDump < ::Dump
     write_meta directory
 
     # Export structure
+    Rails.logger.info "Dumping structure for catalog #{cat.id}..."
     dump_structure(cat, directory)
 
     # Export data & files
+    Rails.logger.info "Dumping data & files for catalog #{cat.id}..."
     dump_data(cat, directory)
     dump_files(cat, directory)
 
-    # Dump pages and menu items
+    # Dump pages
+    Rails.logger.info "Dumping pages for catalog #{cat.id}..."
     dump_pages(cat, directory)
     dump_menu_items(cat, directory)
   end
@@ -31,15 +34,19 @@ class Dump::CatalogDump < ::Dump
     Dir.mkdir struct_dir
 
     # Dump the catalog information
+    Rails.logger.info "Dumping catalog information for catalog #{cat.id}..."
     dump_catalog_information(cat, struct_dir)
 
     # Dump all the item types
+    Rails.logger.info "Dumping item types for catalog #{cat.id}..."
     dump_item_types_structure(cat, struct_dir)
 
     # Dump categories
+    Rails.logger.info "Dumping categories for catalog #{cat.id}..."
     dump_categories(cat, struct_dir)
 
     # Dump choice sets
+    Rails.logger.info "Dumping choice sets for catalog #{cat.id}..."
     dump_choice_sets(cat, struct_dir)
   end
 
