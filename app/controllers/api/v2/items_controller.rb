@@ -33,6 +33,8 @@ class API::V2::ItemsController < ApplicationController
             primary: fld.primary,
             display_in_list: fld.display_in_list,
             human_readable: fld.human_readable?,
+            filterable: fld.filterable?,
+            displayable_to_user: fld.displayable_to_user?(current_user),
             uuid: fld.uuid
           }
         end,
