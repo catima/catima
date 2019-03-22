@@ -68,6 +68,17 @@ class Field::Geometry < ::Field
     "JSON"
   end
 
+  def sql_value(_it)
+    return if super.blank?
+
+    coordinates = []
+    super["features"].map do |f|
+      coordinates << { lat: f['geometry']['coordinates'][1], lon: f['geometry']['coordinates'][0] }
+    end
+
+    coordinates.to_json
+  end
+
   private
 
   def build_validators

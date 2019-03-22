@@ -61,7 +61,7 @@ class Field::File < ::Field
   end
 
   def sql_type
-    "TEXT"
+    "JSON"
   end
 
   def field_value_for_all_item(item)

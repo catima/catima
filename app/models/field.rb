@@ -326,7 +326,7 @@ class Field < ApplicationRecord
   end
 
   def sql_nullable
-    "#{'NOT ' unless required}NULL"
+    "#{'NOT ' if required}NULL"
   end
 
   def sql_unique
@@ -336,7 +336,11 @@ class Field < ApplicationRecord
   def sql_default
     return "" if default_value.blank?
 
-    "DEFAULT #{default_value}"
+    "DEFAULT '#{default_value}'"
+  end
+
+  def sql_value(item)
+    raw_value(item)
   end
 
   private
