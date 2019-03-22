@@ -90,10 +90,6 @@ class Field::ChoiceSet < ::Field
     {uuid => cid}
   end
 
-  def filterable?
-    false
-  end
-
   def describe
     super.merge("choice_set": choice_set.uuid)
   end
@@ -124,40 +120,8 @@ class Field::ChoiceSet < ::Field
     "(choices.long_name_translations->>'long_name_#{I18n.locale}') ASC" unless choices.nil?
   end
 
-  def search_data_as_hash
-    choices_as_options = []
-
-    choices.each do |choice|
-      option = { :value => choice.short_name, :key => choice.id }
-      option[:category_data] = choice.filterable_category_fields
-
-      choices_as_options << option
-    end
-
-    choices_as_options
-  end
-
-  def search_options_as_hash
-    [
-      { :multiple => multiple? }
-    ]
-  end
-
-  def field_value_for_all_item(_it)
-    choices_as_hash = []
-
-    choices.each do |choice|
-      option = { :value => choice.short_name }
-      option[:category_name] = choice.category.name if choice.category.present?
-
-      choices_as_hash << option
-    end
-
-    choices_as_hash.to_json
-  end
-
-  def sql_type
-    "INT"
+  def allows_unique?
+    false
   end
 
   def search_data_as_hash
@@ -177,19 +141,6 @@ class Field::ChoiceSet < ::Field
     [
       { :multiple => multiple? }
     ]
-  end
-
-  def field_value_for_all_item(it)
-    value = super
-    return if value.blank? || value.is_a?(String)
-
-    value.map do |choice_id|
-      Choice.find(choice_id).short_name
-    end.join("; ")
-  end
-
-  def sql_type
-    "INT"
   end
 
   private
