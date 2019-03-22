@@ -52,7 +52,7 @@ class Field::Image < ::Field::File
     %i(legend)
   end
 
-  def field_value_for_all_item(item)
+  def field_value_for_all_item(_it)
     value = super
 
     case
@@ -62,7 +62,7 @@ class Field::Image < ::Field::File
       path = ""
       # TODO : what to do with legends?
       # path = "[#{i['legend']}]" if i["legend"].present?
-      path << i["path"]
+      path << value["path"]
 
       return path
     when value.is_a?(Array)
@@ -82,7 +82,24 @@ class Field::Image < ::Field::File
   end
 
   def sql_type
-    "TEXT"
+    "JSON"
+  end
+
+  def sql_value(_it)
+    value = super
+
+    images = []
+    if value.is_a?(Hash) && value["path"].present?
+      add_image_hash(images, value)
+    elsif value.is_a?(Array) && value.present?
+      value.map do |i|
+        next if i["path"].blank?
+
+        add_image_hash(images, i)
+      end
+    end
+
+    images.to_json
   end
 
   private
@@ -91,5 +108,10 @@ class Field::Image < ::Field::File
     return if persisted? || types.present?
 
     self.types = "jpg, jpeg, png, gif"
+  end
+
+  def add_image_hash(images, image)
+    images << { :legend => image["legend"] } if image["legend"].present?
+    images << { :path => image["path"] }
   end
 end

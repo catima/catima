@@ -154,7 +154,7 @@ class Dump::SqlDump < ::Dump
       # References that point to a multiple field dont't have the primary field column so we force it to id
       # foreign_column_name = 'id' if item_type.primary_field.multiple?
 
-      columns = "`#{item_type.sql_slug}` #{convert_app_type_to_sql_type(primary_field)},"
+      columns = "`#{item_type.sql_slug}` #{convert_app_type_to_sql_type(nil)},"
       column_name = "#{field.sql_slug}_#{field.related_item_type.sql_slug}"
       columns << "`#{column_name}` #{convert_app_type_to_sql_type(field.related_item_type.primary_field)}"
 
@@ -214,13 +214,15 @@ class Dump::SqlDump < ::Dump
 
     fields = item.item_type.fields.select { |field| field.multiple? && field.is_a?(Field::Reference) }
     fields.each do |field|
-      value = if item.item_type.primary_field.nil? ||
-                 item.item_type.primary_field&.is_a?(Field::Reference) ||
-                 item.item_type.primary_field&.is_a?(Field::ChoiceSet)
-                item.id
-              else
-                "'#{item.item_type.primary_field&.value_for_item(item)}'"
-              end
+      # Rule: the primary key is always the id
+      value = item.id
+      # value = if item.item_type.primary_field.nil? ||
+      #            item.item_type.primary_field&.is_a?(Field::Reference) ||
+      #            item.item_type.primary_field&.is_a?(Field::ChoiceSet)
+      #           item.id
+      #         else
+      #           "'#{item.item_type.primary_field&.value_for_item(item)}'"
+      #         end
 
       next if value == "''"
 
@@ -448,7 +450,7 @@ class Dump::SqlDump < ::Dump
     when "Field::DateTime"
       "'#{value.to_json}'"
     when "Field::Geometry", "Field::File", "Field::Image"
-      "'#{field.field_value_for_all_item(item)}'"
+      "'#{field.sql_value(item)}'"
     else
       value = field.field_value_for_all_item(item) if field.is_a?(Field::Text) && field.formatted?
 
