@@ -85,17 +85,17 @@ class Field::Image < ::Field::File
     "JSON"
   end
 
-  def sql_value(_it)
-    value = super
+  def sql_value(item)
+    value = raw_value(item)
 
     images = []
     if value.is_a?(Hash) && value["path"].present?
-      add_image_hash(images, value)
+      images = add_image_hash(images, value, item)
     elsif value.is_a?(Array) && value.present?
       value.map do |i|
         next if i["path"].blank?
 
-        add_image_hash(images, i)
+        images = add_image_hash(images, i, item)
       end
     end
 
@@ -110,8 +110,10 @@ class Field::Image < ::Field::File
     self.types = "jpg, jpeg, png, gif"
   end
 
-  def add_image_hash(images, image)
+  def add_image_hash(images, image, item)
     images << { :legend => image["legend"] } if image["legend"].present?
+
+    image["path"] = image["path"].gsub("upload/#{item.catalog.slug}", "files")
     images << { :path => image["path"] }
   end
 end

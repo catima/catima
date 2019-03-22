@@ -83,7 +83,22 @@ class Field::File < ::Field
     end
   end
 
-  def sql_type
-    "TEXT"
+  def sql_value(item)
+    value = super
+
+    files = []
+    if value.is_a?(Hash) && value["path"].present?
+      value["path"] = value["path"].gsub("upload/#{item.catalog.slug}", "files")
+      files << { :path => value["path"] }
+    elsif value.is_a?(Array) && value.present?
+      value.map do |f|
+        next if f["path"].blank?
+
+        f["path"] = f["path"].gsub("upload/#{item.catalog.slug}", "files")
+        files << { :path => f["path"] }
+      end
+    end
+
+    files.to_json
   end
 end

@@ -33,7 +33,7 @@ class Dump::SqlDump < ::Dump
 
     # Write meta.json file. Contains information about
     # the dump, format version etc.
-    # write_meta directory
+    write_meta directory
 
     # Export structure
     dump_structure(cat, directory)
@@ -45,12 +45,12 @@ class Dump::SqlDump < ::Dump
     dump_references(cat, directory)
 
     # Dump files
-    # dump_files(cat, directory)
+    dump_files(cat, directory)
   end
 
   def dump_structure(cat, dir)
     # Create database
-    File.write(File.join(dir, 'structure.sql'), dump_create_database(cat))
+    File.write(File.join(dir, 'dump.sql'), dump_create_database(cat))
 
     # ItemsTypes become tables, ItemType fields become columns
     creates = render_header_comment("CREATE TABLE statements")
@@ -75,11 +75,11 @@ class Dump::SqlDump < ::Dump
       creates << dump_create_categories_table(category)
     end
 
-    File.open(File.join(dir, 'structure.sql'), 'a+') { |f| f << creates }
+    File.open(File.join(dir, 'dump.sql'), 'a+') { |f| f << creates }
   end
 
   def dump_data(cat, dir)
-    File.write(File.join(dir, 'data.sql'), '')
+    # File.write(File.join(dir, 'data.sql'), '')
 
     inserts = render_header_comment("INSERT INTO statements")
 
@@ -106,13 +106,13 @@ class Dump::SqlDump < ::Dump
     inserts << dump_choices_data(cat)
 
     inserts << render_footer_comment
-    File.open(File.join(dir, 'data.sql'), 'a+') { |f| f << inserts }
+    File.open(File.join(dir, 'dump.sql'), 'a+') { |f| f << inserts }
   end
 
   def dump_references(cat, dir)
     # struct_dir = File.join(dir, 'structure')
 
-    File.write(File.join(dir, 'references.sql'), '')
+    # File.write(File.join(dir, 'references.sql'), '')
 
     # Export primary keys
     alters = render_header_comment("PRIMARY KEYS")
@@ -124,7 +124,7 @@ class Dump::SqlDump < ::Dump
     alters << render_header_comment("MULTIPLE REFERENCES")
     alters << dump_multiple_references_and_choices(cat)
 
-    File.open(File.join(dir, 'references.sql'), 'a+') { |f| f << alters }
+    File.open(File.join(dir, 'dump.sql'), 'a+') { |f| f << alters }
   end
 
   private
