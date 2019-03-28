@@ -1,4 +1,14 @@
 class API::V2::CatalogsController < ApplicationController
+  module Constraint
+    def self.matches?(request)
+      catalog = Catalog.find_by(slug: request[:catalog_slug])
+      return false if catalog.blank?
+
+      # Available only for public catalogs or internal requests
+      catalog.public? || request.local?
+    end
+  end
+
   def show
     return not_available unless Catalog.valid?(params['catalog_slug'])
 
