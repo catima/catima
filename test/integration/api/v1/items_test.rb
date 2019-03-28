@@ -14,13 +14,13 @@ class API::V1::ItemsTest < ActionDispatch::IntegrationTest
   end
 
   test "GET items with bad catalog results in 404 error" do
-    assert_raises(ActiveRecord::RecordNotFound) do
+    assert_raises(ActionController::RoutingError) do
       get("/api/v1/catalogs/bad-catalog-slug/items")
     end
   end
 
   test "GET items with inactive catalog results in 404 error" do
-    assert_raises(ActiveRecord::RecordNotFound) do
+    assert_raises(ActionController::RoutingError) do
       get("/api/v1/catalogs/#{catalogs(:inactive).id}/items")
     end
   end

@@ -5,8 +5,8 @@ Rails.application.routes.draw do
 
   namespace :api, :format => "json", :only => %w(index show) do
     namespace :v1 do
-      constraints(API::V1::CatalogsController::Constraint) do
-        resources :catalogs, :param => :slug do
+      resources :catalogs, :param => :slug do
+        constraints(API::V1::CatalogsController::Constraint) do
           resources :items
         end
       end

@@ -1,8 +1,9 @@
 class API::V2::CatalogsController < ApplicationController
   module Constraint
     def self.matches?(request)
+      return false unless Catalog.valid?(request[:catalog_slug])
+
       catalog = Catalog.find_by(slug: request[:catalog_slug])
-      return false if catalog.blank?
 
       # Available only for public catalogs or internal requests
       catalog.public? || request.local?
@@ -10,10 +11,7 @@ class API::V2::CatalogsController < ApplicationController
   end
 
   def show
-    return not_available unless Catalog.valid?(params['catalog_slug'])
-
     catalog = Catalog.find_by(slug: params['catalog_slug'])
-    return not_available unless catalog.visible
 
     render(json:
       {
@@ -30,11 +28,5 @@ class API::V2::CatalogsController < ApplicationController
           }
         end
       })
-  end
-
-  private
-
-  def not_available
-    render(json: { error: "Not available" })
   end
 end

@@ -1,8 +1,9 @@
 class API::V1::CatalogsController < ActionController::Base
   module Constraint
     def self.matches?(request)
+      return false unless Catalog.valid?(request[:catalog_slug])
+
       catalog = Catalog.find_by(slug: request[:catalog_slug])
-      return false if catalog.blank?
 
       # Available only for public catalogs or internal requests
       catalog.public? || request.local?

@@ -70,6 +70,6 @@ class API::V2::FieldsController < ApplicationController
   end
 
   def catalog
-    @catalog ||= Catalog.active.find_by!(:slug => params[:catalog_slug])
+    @catalog ||= Catalog.find_by!(:slug => params[:catalog_slug])
   end
 end

@@ -36,7 +36,7 @@ class API::V1::ItemsController < ActionController::Base
   end
 
   def catalog
-    @_catalog ||= Catalog.active.find_by!(:slug => params[:catalog_slug])
+    @_catalog ||= Catalog.find_by!(:slug => params[:catalog_slug])
   end
 
   def items_scope
