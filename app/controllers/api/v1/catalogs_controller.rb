@@ -6,7 +6,7 @@ class API::V1::CatalogsController < ActionController::Base
       catalog = Catalog.find_by(slug: request[:catalog_slug])
 
       # Available only for public catalogs or internal requests
-      catalog.public? || request.local?
+      catalog.public? || request.host == "localhost"
     end
   end
 
