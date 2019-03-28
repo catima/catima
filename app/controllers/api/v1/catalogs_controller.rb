@@ -7,6 +7,7 @@ class API::V1::CatalogsController < ActionController::Base
 
       # Available only for public catalogs or internal requests
       # catalog.public? || request.host == "localhost"
+      true
     end
   end
 
