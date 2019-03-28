@@ -32,9 +32,11 @@ class ReferenceSearch extends Component {
   }
 
   componentDidMount(){
+    const csrfToken = document.getElementsByName('csrf-token')[0].content;
     let config = {
       retry: 1,
-      retryDelay: 1000
+      retryDelay: 1000,
+      headers: {'X-CSRF-Token': csrfToken}
     };
 
     if(typeof this.props.selectCondition !== 'undefined' && this.props.selectCondition.length !== 0) {

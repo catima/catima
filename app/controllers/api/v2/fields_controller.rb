@@ -1,5 +1,6 @@
-class API::V2::FieldsController < ApplicationController
+class API::V2::FieldsController < API::ApplicationController
   include ControlsItemSorting
+  before_action :catalog_request_clearance
 
   InvalidItemType = Class.new(RuntimeError)
   InvalidField = Class.new(RuntimeError)
