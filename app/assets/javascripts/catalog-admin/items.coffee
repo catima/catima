@@ -63,6 +63,10 @@ allowed_extensions = ($field)->
   exts = $("#fileupload_#{$field}").attr('data-file-types').split(',')
   return (ext.trim().toLowerCase() for ext in exts)
 
+is_size_allowed = ($field, $bytes)->
+  max_size = $("#fileupload_#{$field}").attr('data-file-size')
+  return $bytes <= max_size ? true : false
+
 auth_token = ->
   $('input[name=authenticity_token]').val()
 
@@ -184,13 +188,11 @@ fileupload_add_for = ($field, $data)->
   check_filerequired($field)
 
 file_valid_for = ($field, $file)->
+  return false if !is_size_allowed($field, $file.size)
   ext = extension_for($file.name)
   return false if typeof(ext) == 'undefined'
   allowed_exts = allowed_extensions($field)
-  if allowed_exts.length == 0 or allowed_exts.indexOf(ext.toLowerCase()) > -1
-    return true
-  else
-    return false
+  return allowed_exts.length == 0 or allowed_exts.indexOf(ext.toLowerCase()) > -1 ? true : false
 
 extension_for = ($filename)->
   return /(?:\.([^.]+))?$/.exec($filename)[1]

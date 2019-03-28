@@ -16,6 +16,13 @@ it:
         title: Titolo
         description: Descrizione
         item_type: Tipo di record
+  presenters:
+    field:
+      file:
+        add_file: Add file
+        add_files: Add files
+        size_constraint: "Max size: %{max_size}MB"
+        types_constraint: "Allowed file(s): %{types}"
   "yes": "Si"
   "no": "No"
   boolean_field: Campo booleano (si/no)

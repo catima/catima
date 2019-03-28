@@ -6,20 +6,23 @@ Rails.application.routes.draw do
   namespace :api, :format => "json", :only => %w(index show) do
     namespace :v1 do
       resources :catalogs, :param => :slug do
-        resources :items
+        constraints(API::V1::CatalogsController::Constraint) do
+          resources :items
+        end
       end
     end
   end
 
   namespace :api, format: 'json' do
     namespace :v2 do
-      scope :path => ':catalog_slug' do
-        scope :path => ':locale' do
-          get '/' => 'catalogs#show'
-          get '/users' => 'users#index', as: 'users'
-          get ':item_type' => 'items#index', as: 'items'
-          get ':item_type_slug/:field_uuid' => 'fields#index', as: 'fields'
-          get '/categories/:category_id/:field_uuid' => 'fields#index', as: 'category_fields'
+      constraints(API::V2::CatalogsController::Constraint) do
+        scope :path => ':catalog_slug' do
+          scope :path => ':locale' do
+            get '/' => 'catalogs#show'
+            get ':item_type' => 'items#index', as: 'items'
+            get ':item_type_slug/:field_uuid' => 'fields#index', as: 'fields'
+            get '/categories/:category_id/:field_uuid' => 'fields#index', as: 'category_fields'
+          end
         end
       end
     end

@@ -30,6 +30,13 @@ fr:
         title: Titre
         description: Description
         item_type: Type de fiche
+  presenters:
+    field:
+      file:
+        add_file: Ajouter un fichier
+        add_files: Ajouter des fichiers
+        size_constraint: "Taille maximum: %{max_size}MB"
+        types_constraint: "Fichier(s) autorisé(s): %{types}"
   "yes": "Oui"
   "no": "Non"
   boolean_field: Champ booléen (oui/non)

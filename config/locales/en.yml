@@ -30,6 +30,13 @@ en:
         title: Title
         description: Description
         item_type: Item type
+  presenters:
+    field:
+      file:
+        add_file: Add file
+        add_files: Add files
+        size_constraint: "Max size: %{max_size}MB"
+        types_constraint: "Allowed file(s): %{types}"
   "yes": "Yes"
   "no": "No"
   boolean_field: Boolean field (Yes/No)

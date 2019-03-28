@@ -16,6 +16,13 @@ de:
         title: Titel
         description: Beschreibung
         item_type: Satzart
+  presenters:
+    field:
+      file:
+        add_file: Add file
+        add_files: Add files
+        size_constraint: "Max size: %{max_size}MB"
+        types_constraint: "Allowed file(s): %{types}"
   "yes": "Ja"
   "no": "Nein"
   boolean_field: Boolesches Feld (ja/nein)
