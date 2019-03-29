@@ -49,7 +49,7 @@ class Field::Int < ::Field
   end
 
   def order_items_by
-    "(data->>'#{uuid}')::int ASC"
+    "(items.data->>'#{uuid}')::int ASC"
   end
 
   def auto_increment?
