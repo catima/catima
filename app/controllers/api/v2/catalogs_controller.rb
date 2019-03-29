@@ -1,15 +1,5 @@
-class API::V2::CatalogsController < ApplicationController
-  module Constraint
-    def self.matches?(request)
-      return false unless Catalog.valid?(request[:catalog_slug])
-
-      # catalog = Catalog.find_by(slug: request[:catalog_slug])
-
-      # Available only for public catalogs or internal requests
-      # catalog.public? || request.host == "localhost"
-      true
-    end
-  end
+class API::V2::CatalogsController < API::ApplicationController
+  before_action :catalog_request_clearance
 
   def show
     catalog = Catalog.find_by(slug: params['catalog_slug'])

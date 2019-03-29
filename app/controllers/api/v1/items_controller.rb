@@ -1,5 +1,6 @@
-class API::V1::ItemsController < ActionController::Base
+class API::V1::ItemsController < API::ApplicationController
   InvalidItemType = Class.new(RuntimeError)
+  before_action :catalog_request_clearance
 
   rescue_from InvalidItemType do |exception|
     status = 400
