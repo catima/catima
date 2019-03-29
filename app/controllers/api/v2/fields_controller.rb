@@ -15,6 +15,8 @@ class API::V2::FieldsController < API::ApplicationController
     render(:json => error, :status => status)
   end
 
+  # Mainly used to get the fields of an ItemType
+  # or a Category in the advanced search react components
   def index
     it = item_type
     category = find_category
