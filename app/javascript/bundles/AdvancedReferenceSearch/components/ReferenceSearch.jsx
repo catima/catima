@@ -32,7 +32,7 @@ class ReferenceSearch extends Component {
   }
 
   componentDidMount(){
-    const csrfToken = document.getElementsByName('csrf-token')[0].content;
+    const csrfToken = $('meta[name="csrf-token"]').attr('content');
     let config = {
       retry: 1,
       retryDelay: 1000,
