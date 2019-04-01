@@ -124,6 +124,13 @@ class Catalog < ApplicationRecord
     slug.tr('-', '_')
   end
 
+  # Return a list of users with a specific role in the current catalog
+  def users_with_role(role)
+    return nil unless CatalogPermission::ROLE_OPTIONS.include? role
+
+    CatalogPermission.where(catalog_id: id, role: role).map(&:user)
+  end
+
   private
 
   def strip_empty_language

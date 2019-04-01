@@ -19,6 +19,7 @@ class Admin::CatalogsController < Admin::BaseController
 
   def edit
     find_catalog
+    @admins = @catalog.users_with_role("admin")
     authorize(@catalog)
   end
 

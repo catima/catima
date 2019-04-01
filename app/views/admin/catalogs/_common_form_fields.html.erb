@@ -41,3 +41,20 @@
   ),
   { include_blank: true }
 ) %>
+
+<% if @admins.present? %>
+  <hr>
+  <label>
+    <% if @admins.count >  1 %>Administrators<% else %>Administrator<% end %>
+  </label>
+  <ul>
+    <% @admins.each do |user| %>
+      <li>
+      <%= link_to(
+              user.email,
+              edit_admin_user_path(user)
+            ) %>
+      </li>
+    <% end %>
+  </ul>
+<% end %>
