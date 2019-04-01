@@ -45,7 +45,7 @@ class Field::Decimal < ::Field
   end
 
   def order_items_by
-    "(data->>'#{uuid}')::float ASC"
+    "(items.data->>'#{uuid}')::float ASC"
   end
 
   # Useful for the advanced search
