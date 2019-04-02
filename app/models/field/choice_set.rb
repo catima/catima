@@ -123,6 +123,10 @@ class Field::ChoiceSet < ::Field
     ch.nil? ? nil : ch.short_name
   end
 
+  def sql_type
+    "INT"
+  end
+
   def order_items_by
     "(choices.long_name_translations->>'long_name_#{I18n.locale}') ASC" unless choices.nil?
   end

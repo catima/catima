@@ -29,7 +29,7 @@ module CatalogAdmin::SqlDumpHelper
   def create_table(table_name, columns)
     pretty_format_statement(columns)
 
-    "CREATE TABLE `#{table_name}` (\n#{columns}\n);\n\n"
+    "CREATE TABLE IF NOT EXISTS `#{table_name}` (\n#{columns}\n);\n\n"
   end
 
   def insert_into(table_name, columns, values)

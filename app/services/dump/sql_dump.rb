@@ -50,7 +50,7 @@ class Dump::SqlDump < ::Dump
 
   def dump_structure(cat, dir)
     # Create database
-    File.write(File.join(dir, 'dump.sql'), dump_create_database(cat))
+    File.write(File.join(dir, @holder.dump_file_name(cat)), '')
 
     # ItemsTypes become tables, ItemType fields become columns
     creates = render_header_comment("CREATE TABLE statements")
@@ -75,7 +75,7 @@ class Dump::SqlDump < ::Dump
       creates << dump_create_categories_table(category)
     end
 
-    File.open(File.join(dir, 'dump.sql'), 'a+') { |f| f << creates }
+    File.open(File.join(dir, @holder.dump_file_name(cat)), 'a+') { |f| f << creates }
   end
 
   def dump_data(cat, dir)
@@ -106,7 +106,7 @@ class Dump::SqlDump < ::Dump
     inserts << dump_choices_data(cat)
 
     inserts << render_footer_comment
-    File.open(File.join(dir, 'dump.sql'), 'a+') { |f| f << inserts }
+    File.open(File.join(dir, @holder.dump_file_name(cat)), 'a+') { |f| f << inserts }
   end
 
   def dump_references(cat, dir)
@@ -124,14 +124,10 @@ class Dump::SqlDump < ::Dump
     alters << render_header_comment("MULTIPLE REFERENCES")
     alters << dump_multiple_references_and_choices(cat)
 
-    File.open(File.join(dir, 'dump.sql'), 'a+') { |f| f << alters }
+    File.open(File.join(dir, @holder.dump_file_name(cat)), 'a+') { |f| f << alters }
   end
 
   private
-
-  def dump_create_database(cat)
-    "CREATE DATABASE `#{cat.sql_slug}`;\n\n"
-  end
 
   def dump_create_item_types_table(item_type)
     columns = common_sql_columns
@@ -229,6 +225,7 @@ class Dump::SqlDump < ::Dump
       field.value_for_item(item).each do |_ref|
         columns = "`#{item.item_type.sql_slug}`, `#{field.sql_slug}_#{field.related_item_type.sql_slug}`"
         values = "#{value}, #{field.related_item_type.id}"
+
         inserts << insert_into(@holder.table_name(field, "sql_slug"), columns, values)
       end
     end
@@ -426,11 +423,12 @@ class Dump::SqlDump < ::Dump
     when :integer
       value
     when :json
-      "'#{value.to_json.to_s.gsub("'") { "\\'" }}'"
+      "'#{value.to_json.to_s.gsub("'") { "\\'" }.gsub('\\t') { 't' }}'"
     when :datetime
       "'#{value.utc.to_s.gsub(' UTC', '')}'"
     else
       value = value.gsub("'") { "\\'" }
+
       "'#{value}'"
     end
   end

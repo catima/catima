@@ -119,7 +119,8 @@ class Field::Text < ::Field
       return "VARCHAR(#{maximum})" if maximum < 500
     end
 
-    "TEXT"
+    # A primary key must have a max length
+    primary? ? "VARCHAR(255)" : "TEXT"
   end
 
   def sql_default
