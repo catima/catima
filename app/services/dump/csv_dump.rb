@@ -68,6 +68,6 @@ class Dump::CsvDump < ::Dump
       end
     end
 
-    # dump_files(cat, directory)
+    dump_files(cat, directory)
   end
 end
