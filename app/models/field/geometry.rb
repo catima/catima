@@ -60,7 +60,7 @@ class Field::Geometry < ::Field
     return if super.blank?
 
     super["features"].map do |f|
-      "#{f['geometry']['coordinates'][1]}, #{f['geometry']['coordinates'][0]}"
+      "#{f['geometry']['coordinates'][1]},#{f['geometry']['coordinates'][0]}"
     end.join("; ")
   end
 
