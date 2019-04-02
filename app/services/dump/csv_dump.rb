@@ -16,13 +16,27 @@ class Dump::CsvDump < ::Dump
     # the dump, format version etc.
     write_meta directory
 
-    cat.item_types.each do |item_type|
-      File.write(File.join(directory, "#{item_type.slug}.csv"), '')
-    end
+    create_files(cat, directory)
 
     # First loop to check if there are categories among choices
+    categories_fields = build_csv_header(cat)
+
+    dump_data(cat, categories_fields, directory)
+
+    dump_files(cat, directory)
+  end
+
+  private
+
+  def create_files(catalog, directory)
+    catalog.item_types.each do |item_type|
+      File.write(File.join(directory, "#{item_type.slug}.csv"), '')
+    end
+  end
+
+  def build_csv_header(catalog)
     categories_fields = {}
-    cat.items.each do |item|
+    catalog.items.each do |item|
       categories_fields[item.item_type.id] = []
 
       item.fields.each do |field|
@@ -36,18 +50,26 @@ class Dump::CsvDump < ::Dump
             next if choice.category.blank?
 
             choice.category.fields.map do |f|
-              categories_fields[item.item_type.id] << f unless categories_fields[item.item_type.id].include?(f)
+              categories_fields = add_category_field(categories_fields, item, f)
             end
           end
         elsif value.category.present?
           value.category.fields.each do |f|
-            categories_fields[item.item_type.id] << f unless categories_fields[item.item_type.id].include?(f)
+            categories_fields = add_category_field(categories_fields, item, f)
           end
         end
       end
     end
 
-    cat.items.each do |item|
+    categories_fields
+  end
+
+  def add_category_field(categories_fields, item, field)
+    categories_fields[item.item_type.id] << field unless categories_fields[item.item_type.id].include?(field)
+  end
+
+  def dump_data(catalog, categories_fields, directory)
+    catalog.items.each do |item|
       CSV.open(File.join(directory, "#{item.item_type.slug}.csv"), "a+") do |csv|
         columns = item.fields.map(&:slug)
 
@@ -67,7 +89,5 @@ class Dump::CsvDump < ::Dump
         csv << values
       end
     end
-
-    dump_files(cat, directory)
   end
 end

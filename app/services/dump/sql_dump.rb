@@ -146,7 +146,7 @@ class Dump::SqlDump < ::Dump
   def dump_create_multiple_reference_table(item_type)
     tables = ""
     item_type.fields.select { |f| f.multiple? && f.is_a?(Field::Reference) }.each do |field|
-      primary_field = item_type.primary_field
+      # primary_field = item_type.primary_field
       # References that point to a multiple field dont't have the primary field column so we force it to id
       # foreign_column_name = 'id' if item_type.primary_field.multiple?
 
@@ -281,7 +281,7 @@ class Dump::SqlDump < ::Dump
 
     alters << render_comment("CATEGORIES")
     cat.categories.each do |category|
-      primary_field = category.fields.select(&:primary?).first
+      # primary_field = category.fields.select(&:primary?).first
       # constraint = primary_key_constraint(primary_field&.item_type)
       # alters << add_primary_key(@holder.table_name(category, "name"), primary_field&.sql_slug.presence || 'id', constraint)
       alters << add_primary_key(@holder.table_name(category, "name"), 'id')

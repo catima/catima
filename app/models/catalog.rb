@@ -83,6 +83,10 @@ class Catalog < ApplicationRecord
     Dir.exist?(Rails.root.join('catalogs')) ? Dir.entries(Rails.root.join('catalogs')).select { |f| Catalog.valid? f } : []
   end
 
+  def public?
+    visible && !restricted
+  end
+
   def public_items
     requires_review? ? Review.public_items_in_catalog(self) : items
   end

@@ -96,46 +96,6 @@ class Field::Int < ::Field
     "INT"
   end
 
-  # Useful for the advanced search
-  def search_conditions_as_options
-    [
-      [I18n.t("advanced_searches.number_search_field.contains_number"), "exact"],
-      [I18n.t("advanced_searches.number_search_field.less_than"), "less_than"],
-      [I18n.t("advanced_searches.number_search_field.less_than_or_equal_to"), "less_than_or_equal_to"],
-      [I18n.t("advanced_searches.number_search_field.greater_than"), "greater_than"],
-      [I18n.t("advanced_searches.number_search_field.greater_than_or_equal_to"), "greater_than_or_equal_to"]
-    ]
-  end
-
-  def search_conditions_as_hash(locale)
-    [
-      {
-        :value => I18n.t("advanced_searches.number_search_field.contains_number", locale: locale),
-        :key => "exact"
-      },
-      {
-        :value => I18n.t("advanced_searches.number_search_field.less_than", locale: locale),
-        :key => "less_than"
-      },
-      {
-        :value => I18n.t("advanced_searches.number_search_field.less_than_or_equal_to", locale: locale),
-        :key => "less_than_or_equal_to"
-      },
-      {
-        :value => I18n.t("advanced_searches.number_search_field.greater_than", locale: locale),
-        :key => "greater_than"
-      },
-      {
-        :value => I18n.t("advanced_searches.number_search_field.greater_than_or_equal_to", locale: locale),
-        :key => "greater_than_or_equal_to"
-      }
-    ]
-  end
-
-  def sql_type
-    "INT"
-  end
-
   private
 
   def build_validators

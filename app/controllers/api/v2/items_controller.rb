@@ -1,5 +1,6 @@
-class API::V2::ItemsController < ApplicationController
+class API::V2::ItemsController < API::ApplicationController
   include ControlsItemSorting
+  before_action :catalog_request_clearance
 
   InvalidItemType = Class.new(RuntimeError)
 
@@ -20,8 +21,7 @@ class API::V2::ItemsController < ApplicationController
 
     render(json:
       {
-        slug: item_type.slug,
-        name: item_type.name,
+        slug: item_type.slug, name: item_type.name,
         search_placeholder: t("catalog_admin.items.reference_editor.reference_editor_search"),
         filter_placeholder: t("catalog_admin.items.reference_editor.reference_editor_filter", locale: params[:locale]),
         fields: fields.map do |fld|
@@ -52,6 +52,6 @@ class API::V2::ItemsController < ApplicationController
   end
 
   def catalog
-    @catalog ||= Catalog.active.find_by!(:slug => params[:catalog_slug])
+    @catalog ||= Catalog.find_by!(:slug => params[:catalog_slug])
   end
 end

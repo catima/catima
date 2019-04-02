@@ -1,9 +1,8 @@
-class API::V2::CatalogsController < ApplicationController
-  def show
-    return not_available unless Catalog.valid?(params['catalog_slug'])
+class API::V2::CatalogsController < API::ApplicationController
+  before_action :catalog_request_clearance
 
+  def show
     catalog = Catalog.find_by(slug: params['catalog_slug'])
-    return not_available unless catalog.visible
 
     render(json:
       {
@@ -20,11 +19,5 @@ class API::V2::CatalogsController < ApplicationController
           }
         end
       })
-  end
-
-  private
-
-  def not_available
-    render(json: { error: "Not available" })
   end
 end
