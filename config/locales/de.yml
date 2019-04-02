@@ -255,11 +255,15 @@ de:
   searches:
     index:
       title: Meine gespeicherten Suchanfragen
+      in_use: Leider wird diese Suche in einem Container verwendet.
     list:
       empty: "Du hast noch keine Suchanfragen!"
       empty_for_catalog: "Sie haben noch keine Suchanfragen für diesen Katalog!"
       back_to_list: "Zurück zur Liste"
       selected_catalog: "Ausgewählter Katalog"
+    edit:
+      edit_search: Bearbeiten der gespeicherten Suche
+      update_search: Aktualisierung
   helpers:
     help:
       field/url: Eine komplette URL, inklusive den http-Teil

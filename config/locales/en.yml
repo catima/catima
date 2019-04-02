@@ -275,11 +275,15 @@ en:
   searches:
     index:
       title: My saved searches
+      in_use: Sorry this search is used in a container
     list:
       empty: "You don't have searches yet!"
       empty_for_catalog: "You don't have searches yet for this catalog!"
       back_to_list: "Back to the list"
       selected_catalog: "Selected catalog"
+    edit:
+      edit_search: Edit saved search
+      update_search: Update
   helpers:
     help:
       field/url: A full URL, including the http part

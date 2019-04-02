@@ -47,6 +47,10 @@ class SearchesController < ApplicationController
   def destroy
     find_search(params[:id])
     authorize(@search)
+
+    search_in_use = Container.where("content->>'search' = ?", @search.uuid).count.positive?
+    return redirect_back fallback_location: searches_path, notice: I18n.t('searches.index.in_use') if search_in_use
+
     @search.destroy
     redirect_back fallback_location: searches_path
   end

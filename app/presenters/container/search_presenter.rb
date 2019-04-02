@@ -18,6 +18,7 @@ class Container::SearchPresenter < ContainerPresenter
   end
 
   def item_list(search)
+    search_uuid = container.content['search']
     if search.is_a?(SimpleSearch)
       ::ItemList::SimpleSearchResult.new(
         :catalog => search.catalog,

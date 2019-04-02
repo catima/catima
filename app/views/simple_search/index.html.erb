@@ -13,14 +13,14 @@
 
   <% if search_exists_for_user?(@saved_search) %>
     <%= link_to(
-            fa_icon("star", :text => t(".searches_remove")),
+            fa_icon("save", :text => t(".searches_remove")),
             search_path(I18n.locale, @saved_search.search),
             :class => "btn btn-default btn-xs",
             method: :delete
         ) %>
   <% else %>
     <%= link_to(
-            fa_icon("star-o", :text => t(".searches_add")),
+            fa_icon("save", :text => t(".searches_add")),
             searches_path(I18n.locale, related_search_uuid: @saved_search.uuid),
             :class => "btn btn-default btn-xs",
             method: :post

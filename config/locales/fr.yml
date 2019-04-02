@@ -270,11 +270,15 @@ fr:
   searches:
     index:
       title: Mes recherches sauvegardées
+      in_use: Désolé cette recherche est utilisée dans un conteneur
     list:
       empty: "Vous n'avez pas encore de recherches!"
       empty_for_catalog: "Vous n'avez pas encore de recherches pour ce catalogue!"
       back_to_list: "Retour à la liste"
       selected_catalog: "Catalogue sélectionné"
+    edit:
+      edit_search: Editer la recherche sauvegardée
+      update_search: Mettre à jour
   helpers:
     help:
       field/url: Une URL complète, y compris la partie http
