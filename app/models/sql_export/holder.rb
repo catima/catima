@@ -1,6 +1,6 @@
 # Model to help with SQL exports and duplicates
 class SQLExport::Holder
-  # tables = { :table_name => id + class + item_type_slug|id + class + category_name|id + class + choiceset_name... }
+  # tables = { :table_name => id|uuid + class + item_type_slug|id + class + category_name|id + class + choiceset_name... }
   attr_accessor :tables
 
   TABLE_PREFIXES = {
@@ -14,20 +14,33 @@ class SQLExport::Holder
     self.tables = {}
   end
 
-  def guess_table_name(model, method)
-    table_name = build_table_name(model, method)
-    while tables.key?(table_name)
-      model.id += 1
-      table_name = build_table_name(model, method, model.id)
-    end
+  def dump_file_name(catalog)
+    "dump_#{catalog.slug}.sql"
+  end
 
-    tables[table_name] = "#{model.id}_#{model.class.name}_#{model.public_send(method)}"
+  def guess_table_name(model, method)
+    index = if model.is_a?(Catalog) || model.is_a?(ItemType)
+              model.id
+            else
+              # 10 is an arbitraty value
+              model.uuid.truncate(10, omission: '')
+            end
+
+    table_name = build_table_name(model, method, index)
+    tables[table_name] = "#{index}_#{model.class.name}_#{model.public_send(method)}"
 
     table_name
   end
 
   def table_name(model, method)
-    tables.key("#{model.id}_#{model.class.name}_#{model.public_send(method)}")
+    index = if model.is_a?(Catalog) || model.is_a?(ItemType)
+              model.id
+            else
+              # 10 is an arbitraty value
+              model.uuid.truncate(10, omission: '')
+            end
+
+    tables.key("#{index}_#{model.class.name}_#{model.public_send(method)}")
   end
 
   private
