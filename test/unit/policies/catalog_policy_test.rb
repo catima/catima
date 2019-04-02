@@ -8,14 +8,19 @@ class CatalogPolicyTest < ActiveSupport::TestCase
     assert(policy(users(:system_admin)).new?)
     assert(policy(users(:system_admin)).update?)
     assert(policy(users(:system_admin)).show?)
+    # SystemAdmin cannot delete an active catalog
+    refute(policy(users(:system_admin)).destroy?)
+    # SystemAdmin can delete an inactive catalog
+    assert(policy(users(:system_admin), catalogs(:inactive)).destroy?)
   end
 
-  test "catalog admin can edit but not create" do
+  test "catalog admin can edit but not create or destroy" do
     assert(policy(users(:one_admin)).edit?)
     assert(policy(users(:one_admin)).update?)
     refute(policy(users(:one_admin), nil).index?)
     refute(policy(users(:one_admin)).create?)
     refute(policy(users(:one_admin)).new?)
+    refute(policy(users(:one_admin), catalogs(:inactive)).destroy?)
   end
 
   test "other users cannot manage" do

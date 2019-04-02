@@ -1,0 +1,9 @@
+<%= react_component("GeoViewer",
+      id: "results_map_container",
+      props: {
+        features: results,
+        noResultsMessage: t('advanced_searches.new.no_map_results'),
+        mapHeight: 600
+      },
+    prerender: false)
+%>

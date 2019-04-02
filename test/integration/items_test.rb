@@ -187,14 +187,10 @@ class ItemsTest < ActionDispatch::IntegrationTest
 
     click_on("Accord")
     within("h1") { assert(page.has_content?("Accord")) }
-    refute(page.has_content?("Previous:"))
 
-    click_on("Next: Camry")
+    click_on("Camry")
     within("h1") { assert(page.has_content?("Camry")) }
-    assert(page.has_content?("Previous: Accord"))
-
-    click_on("Back to search results")
-    assert_match(%r{/search/en/vehicles\?page=1&style=en-Sedan$}, current_url)
+    assert(page.has_content?("Accord"))
   end
 
   private

@@ -41,6 +41,7 @@
 /public/packs-test
 /node_modules
 yarn-debug.log*
+.yarn-error.log
 .yarn-integrity
 
 # Ignore RSpec internal files
@@ -58,3 +59,6 @@ spec/examples.txt
 
 # Ignore Windows files
 dump.rdb
+
+# Ignore IDE config
+.editorconfig

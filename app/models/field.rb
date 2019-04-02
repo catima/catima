@@ -99,6 +99,15 @@ class Field < ApplicationRecord
     !!category_id
   end
 
+  # Whether or not a field is displayable to a user for a specific catalog.
+  #
+  # A restricted field should not be displayed if the user is not a staff
+  # (>= editor) of the current catalog
+  def displayable_to_user?(user, cat=catalog)
+    at_least_editor = user.catalog_role_at_least?(cat, 'editor')
+    at_least_editor || !restricted?
+  end
+
   def category_id
     field_set.is_a?(Category) ? field_set.id : nil
   end
@@ -132,14 +141,21 @@ class Field < ApplicationRecord
   # text. Any field that uses a display_component would not qualify, because the
   # field is rendered via JavaScript.
   #
-  # This is used primarily by Item#field_for_select to choose a field suitable
-  # for a drop-down menu.
-  #
   # Default depends on the presence of display_component, and subclasses can
   # override.
   #
   def human_readable?
     display_component.blank?
+  end
+
+  # Whether or not this field is filterable.
+  #
+  # Default depends on the presence of the human_readable method result, and subclasses can
+  # override.
+  #
+  # Mainly used by advanced search components, also used by views for the item summary.
+  def filterable?
+    human_readable?
   end
 
   # Whether or not this field supports the `multiple` option. Most fields do
@@ -256,7 +272,45 @@ class Field < ApplicationRecord
 
   # Returns the order by for items with a sort by a field
   def order_items_by
-    "data->>'#{uuid}' ASC"
+    # "data->>'#{uuid}' ASC"
+    "items.data->>'#{uuid}' ASC"
+  end
+
+  def order_items_by_primary_field
+    "items.data->>'#{item_type.primary_human_readable_field.uuid}'"
+  end
+
+  # Useful for the advanced search
+  def search_conditions_as_options
+    [
+      [I18n.t("advanced_searches.text_search_field.all_words"), "all_words"],
+      [I18n.t("advanced_searches.text_search_field.one_word"), "one_word"],
+      [I18n.t("advanced_searches.text_search_field.exact"), "exact"]
+    ]
+  end
+
+  # Useful for the advanced search
+  def search_conditions_as_hash(locale)
+    [
+      { :value => I18n.t("advanced_searches.text_search_field.all_words", locale: locale), :key => "all_words"},
+      { :value => I18n.t("advanced_searches.text_search_field.one_word", locale: locale), :key => "one_word"},
+      { :value => I18n.t("advanced_searches.text_search_field.exact", locale: locale), :key => "exact"}
+    ]
+  end
+
+  # Useful for the advanced search
+  def search_field_conditions_as_hash
+    [
+      { :value => I18n.t("and"), :key => "and"},
+      { :value => I18n.t("or"), :key => "or"},
+      { :value => I18n.t("exclude"), :key => "exclude"}
+    ]
+  end
+
+  def search_data_as_hash
+  end
+
+  def search_options_as_hash
   end
 
   private

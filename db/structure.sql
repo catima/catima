@@ -80,10 +80,10 @@ CREATE TABLE public.advanced_search_configurations (
     title_translations jsonb,
     description jsonb,
     slug character varying,
+    search_type character varying DEFAULT 'default'::character varying,
     fields jsonb DEFAULT '{}'::jsonb,
     created_at timestamp without time zone NOT NULL,
-    updated_at timestamp without time zone NOT NULL,
-    search_type character varying DEFAULT 'default'::character varying NOT NULL
+    updated_at timestamp without time zone NOT NULL
 );
 
 
@@ -801,6 +801,75 @@ CREATE TABLE public.schema_migrations (
 
 
 --
+-- Name: searches; Type: TABLE; Schema: public; Owner: -
+--
+
+CREATE TABLE public.searches (
+    id bigint NOT NULL,
+    name character varying,
+    related_search_type character varying,
+    related_search_id bigint,
+    user_id bigint,
+    created_at timestamp without time zone NOT NULL,
+    updated_at timestamp without time zone NOT NULL
+);
+
+
+--
+-- Name: searches_id_seq; Type: SEQUENCE; Schema: public; Owner: -
+--
+
+CREATE SEQUENCE public.searches_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+--
+-- Name: searches_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
+--
+
+ALTER SEQUENCE public.searches_id_seq OWNED BY public.searches.id;
+
+
+--
+-- Name: simple_searches; Type: TABLE; Schema: public; Owner: -
+--
+
+CREATE TABLE public.simple_searches (
+    id bigint NOT NULL,
+    uuid character varying,
+    catalog_id bigint,
+    creator_id integer,
+    query character varying,
+    locale character varying DEFAULT 'en'::character varying NOT NULL,
+    created_at timestamp without time zone NOT NULL,
+    updated_at timestamp without time zone NOT NULL
+);
+
+
+--
+-- Name: simple_searches_id_seq; Type: SEQUENCE; Schema: public; Owner: -
+--
+
+CREATE SEQUENCE public.simple_searches_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+--
+-- Name: simple_searches_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
+--
+
+ALTER SEQUENCE public.simple_searches_id_seq OWNED BY public.simple_searches.id;
+
+
+--
 -- Name: template_storages; Type: TABLE; Schema: public; Owner: -
 --
 
@@ -1015,6 +1084,20 @@ ALTER TABLE ONLY public.pages ALTER COLUMN id SET DEFAULT nextval('public.pages_
 
 
 --
+-- Name: searches id; Type: DEFAULT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.searches ALTER COLUMN id SET DEFAULT nextval('public.searches_id_seq'::regclass);
+
+
+--
+-- Name: simple_searches id; Type: DEFAULT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.simple_searches ALTER COLUMN id SET DEFAULT nextval('public.simple_searches_id_seq'::regclass);
+
+
+--
 -- Name: template_storages id; Type: DEFAULT; Schema: public; Owner: -
 --
 
@@ -1194,6 +1277,22 @@ ALTER TABLE ONLY public.pages
 
 ALTER TABLE ONLY public.schema_migrations
     ADD CONSTRAINT schema_migrations_pkey PRIMARY KEY (version);
+
+
+--
+-- Name: searches searches_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.searches
+    ADD CONSTRAINT searches_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: simple_searches simple_searches_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.simple_searches
+    ADD CONSTRAINT simple_searches_pkey PRIMARY KEY (id);
 
 
 --
@@ -1549,6 +1648,27 @@ CREATE INDEX index_pages_on_reviewer_id ON public.pages USING btree (reviewer_id
 
 
 --
+-- Name: index_searches_on_related_search_type_and_related_search_id; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX index_searches_on_related_search_type_and_related_search_id ON public.searches USING btree (related_search_type, related_search_id);
+
+
+--
+-- Name: index_searches_on_user_id; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX index_searches_on_user_id ON public.searches USING btree (user_id);
+
+
+--
+-- Name: index_simple_searches_on_catalog_id; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX index_simple_searches_on_catalog_id ON public.simple_searches USING btree (catalog_id);
+
+
+--
 -- Name: index_users_on_email; Type: INDEX; Schema: public; Owner: -
 --
 
@@ -1835,11 +1955,27 @@ ALTER TABLE ONLY public.favorites
 
 
 --
+-- Name: simple_searches fk_rails_e02a867d5d; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.simple_searches
+    ADD CONSTRAINT fk_rails_e02a867d5d FOREIGN KEY (catalog_id) REFERENCES public.catalogs(id);
+
+
+--
 -- Name: categories fk_rails_e090108a07; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
 ALTER TABLE ONLY public.categories
     ADD CONSTRAINT fk_rails_e090108a07 FOREIGN KEY (catalog_id) REFERENCES public.catalogs(id);
+
+
+--
+-- Name: searches fk_rails_e192b86393; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.searches
+    ADD CONSTRAINT fk_rails_e192b86393 FOREIGN KEY (user_id) REFERENCES public.users(id);
 
 
 --
@@ -1948,8 +2084,5 @@ INSERT INTO "schema_migrations" (version) VALUES
 ('20181207145518'),
 ('20181210123619'),
 ('20181214095728'),
-('20190201141740'),
 ('20190215124856'),
 ('20190215125849');
-
-

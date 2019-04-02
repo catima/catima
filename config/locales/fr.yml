@@ -26,6 +26,17 @@ fr:
       group:
         name: "Nom"
         description: "Description"
+      advanced_search_configuration:
+        title: Titre
+        description: Description
+        item_type: Type de fiche
+  presenters:
+    field:
+      file:
+        add_file: Ajouter un fichier
+        add_files: Ajouter des fichiers
+        size_constraint: "Taille maximum: %{max_size}MB"
+        types_constraint: "Fichier(s) autorisé(s): %{types}"
   "yes": "Oui"
   "no": "Non"
   boolean_field: Champ booléen (oui/non)
@@ -45,16 +56,35 @@ fr:
   slug_help_text: "Minuscules, chiffres et traits d'union seulement. Pas de caractères accentués."
   add_another: "Créer et ajouter un autre"
   advanced_searches:
-    choice_set_search_field:
-      any: "est l'un de"
-    date_time_search_field:
-      after: "après"
-      before: "avant"
+    menu: Recherches avancées
+    fields:
+      choice_set_search_field:
+        any: "est l'un de"
+        filter_placeholder: Choisir un champ...
+        select_placeholder: Choisir...
+      date_time_search_field:
+        start_date: Date de début
+        end_date: Date de fin
+        exact: date exacte
+        after: après
+        before: avant
+        between: entre les dates
+        outside: en dehors des dates
+      reference_search_field:
+        field_placeholder: Par champ...
+        item_type_placeholder: Par fiche...
     new:
-      tab: "Recherche %{type}"
+      tab: "Recherche %{title}"
       title: "Recherche avancée"
       start_over: "Nouvelle recherche"
       submit: "Chercher"
+      default_search: Recherche par défaut par type de fiche
+      advanced_search_configurations: Recherches préconfigurées
+      item_type_selection: Recherche sur un type de fiche
+      item_type_search: Recherche avancée sur le type de fiche “%{item_type}“
+      no_advanced_search_configuration: Aucune recherche préconfigurée
+      no_field_in_advance_search_configuration: Aucun champ de recherche configuré
+      no_map_results: Cette recherche avancée n'a retourné aucun résultat
     show:
       title:
         zero: "Votre recherche avancée n'a pas donné de résultat"
@@ -63,11 +93,18 @@ fr:
       searches_add: Sauvegarder la recherche
       searches_remove: Supprimer des recherches sauvegardées
     text_search_field:
+      all_words: tous les mots
+      exact: expression exacte
+      one_word: au moins un des mots
       contains_words: "contient les mots"
       excludes_words: "ne contient pas les mots"
       has_exact_phrase: "possède l'expression exacte"
-    int_search_field:
+    number_search_field:
       contains_number: "possède chiffre/nombre exact"
+      less_than: est inférieur à
+      less_than_or_equal_to: est inférieur ou égal à
+      greater_than: est supérieur à
+      greater_than_or_equal_to: est supérieur ou égal à
     decimal_search_field:
       contains_number: "possède chiffre/nombre exact"
     email_search_field:
@@ -128,15 +165,12 @@ fr:
         no_identifier: Veuillez entrer un identifiant de groupe
         already_member: Vous êtes déjà membre
         identifier_does_not_exist: "L'identifiant «%{identifier}» n'existe pas"
+      advanced_searches:
+        not_available: La recherche avancée n'est pas disponible pour ce catalogue
   notices:
     membership:
       created: Vous êtes maintenant membre du groupe «%{group}»
   items:
-    item_list_nav:
-      back: "Retour au résultat de recherche"
-      next: "Suivant: %{item}"
-      no_more: "Pas de résultats supplémentaires"
-      previous: "Précédent: %{item}"
     missing:
       missing_element: "Oups. Un tel élément n'existe pas."
       missing_element_detail: "L'élément avec ID %{item_id} de type «%{item_type}» n'existe pas dans ce catalogue."
@@ -236,11 +270,15 @@ fr:
   searches:
     index:
       title: Mes recherches sauvegardées
+      in_use: Désolé cette recherche est utilisée dans un conteneur
     list:
       empty: "Vous n'avez pas encore de recherches!"
       empty_for_catalog: "Vous n'avez pas encore de recherches pour ce catalogue!"
       back_to_list: "Retour à la liste"
       selected_catalog: "Catalogue sélectionné"
+    edit:
+      edit_search: Editer la recherche sauvegardée
+      update_search: Mettre à jour
   helpers:
     help:
       field/url: Une URL complète, y compris la partie http
@@ -248,6 +286,7 @@ fr:
       catalog:
         other_languages: Autres langues supportées
       item_type:
+        name: "Nom"
         name_plural: "Nom (pluriel)"
         slug: "Slug (pluriel)"
       user:
@@ -332,6 +371,8 @@ fr:
   options: Options
   deactivate: Désactiver
   reactivate: Réactiver
+  and: et
+  exclude: sauf
 
   layouts:
     catalog_admin:
@@ -478,6 +519,22 @@ fr:
       create:
         invalid_category: "Format d'exportation invalide"
 
+    advanced_search_configurations:
+      index:
+        advanced_search_configurations: Configurations de recherche
+        new_advanced_search_configuration: Nouvelle configuration de recherche
+        no_advanced_search_configurations_for_catalog_warning: Il n'y a pas de configuration de recherche avancée pour
+          ce catalogue.
+        nothing: Aucun champs défini
+      new:
+        title: Nouvelle configuration de recherche
+        next: Suivant
+      edit:
+        title: Modification de la configuration de recherche
+        add_field: Ajouter
+        submit: Modifier
+      common_form_fields:
+        search_display_type: Type d'affichage de la recherche
     fields:
       choice_set_modals:
         create_new_choice_set: Créer nouvel ensemble de choix
@@ -592,7 +649,7 @@ fr:
       reference_editor:
         reference_editor_filter: "Filtrer..."
         reference_editor_search: "Chercher..."
-
+        no_options: Aucune option
     pages:
       new:
         create_page: "Créer une page"

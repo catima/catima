@@ -1,6 +1,8 @@
 require "test_helper"
 
 class SimpleSearchTest < ActionDispatch::IntegrationTest
+  setup { use_javascript_capybara_driver }
+
   setup do
     catalogs(:search).items.reindex
   end
@@ -13,6 +15,18 @@ class SimpleSearchTest < ActionDispatch::IntegrationTest
     assert(page.has_content?("Prius"))
     assert(page.has_content?("Highlander"))
     assert(page.has_content?("Camry"))
+  end
+
+  test "displays the results in the alphabetical order" do
+    visit("/search/en")
+    fill_in("q", :with => "Toyota")
+    click_on("Search")
+
+    items = all("h4")
+
+    assert_equal("Camry", items[0].text)
+    assert_equal("Camry Hybrid", items[1].text)
+    assert_equal("Highlander", items[2].text)
   end
 
   test "search for honda finds no matches" do
@@ -30,24 +44,22 @@ class SimpleSearchTest < ActionDispatch::IntegrationTest
     fill_in("q", :with => "Toyota")
     click_on("Search")
 
+    click_on("Camry")
+    within("h1") { assert(page.has_content?("Camry")) }
+    assert(page.has_content?("Camry Hybrid"))
+
+    click_on("Camry Hybrid")
+    within("h1") { assert(page.has_content?("Camry Hybrid")) }
+    assert(page.has_content?("Highlander"))
+
     click_on("Highlander")
     within("h1") { assert(page.has_content?("Highlander")) }
-    refute(page.has_content?("Previous:"))
 
-    click_on("Next: Camry Hybrid")
-    within("h1") { assert(page.has_content?("Camry Hybrid")) }
-    assert(page.has_content?("Previous: Highlander"))
-
-    click_on("Next: Camry")
-    within("h1") { assert(page.has_content?("Camry")) }
-    assert(page.has_content?("Previous: Camry Hybrid"))
-
-    click_on("Next: Prius")
+    click_on("Prius")
     within("h1") { assert(page.has_content?("Prius")) }
-    assert(page.has_content?("Previous: Camry"))
-    refute(page.has_content?("Next:"))
+    assert(page.has_content?("Highlander"))
 
-    click_on("Previous: Camry")
-    within("h1") { assert(page.has_content?("Camry")) }
+    click_on("Highlander")
+    within("h1") { assert(page.has_content?("Highlander")) }
   end
 end

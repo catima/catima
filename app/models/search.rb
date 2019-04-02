@@ -7,7 +7,6 @@
 #  name                :string
 #  related_search_id   :bigint(8)
 #  related_search_type :string
-#  type                :string
 #  updated_at          :datetime         not null
 #  user_id             :bigint(8)
 #

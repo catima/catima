@@ -20,6 +20,14 @@ class CatalogPolicy
     user_is_system_admin? || user.catalog_role_at_least?(catalog, "editor")
   end
 
+  def destroy?
+    return false unless user_is_system_admin?
+
+    return false if @catalog.active?
+
+    true
+  end
+
   alias_method :create?, :user_is_system_admin?
   alias_method :edit?, :user_is_catalog_admin?
   alias_method :index?, :user_is_system_admin?

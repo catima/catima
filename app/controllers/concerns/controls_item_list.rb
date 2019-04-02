@@ -8,10 +8,13 @@ module ControlsItemList
   private
 
   def item_list
-    # TODO: references?
     return browse if params[:browse].present?
+
     return advanced_search if params[:search].present?
+
     return simple_search if params[:q].present?
+
+    default_filter if params[:offset].present?
   end
 
   def browse
@@ -39,6 +42,14 @@ module ControlsItemList
       :query => params[:q],
       :item_type_slug => params[:item_type_slug],
       :search_uuid => params[:uuid]
+    )
+  end
+
+  def default_filter
+    return if item_type.blank?
+
+    @search ||= ItemList::Filter.new(
+      :item_type => item_type
     )
   end
 end

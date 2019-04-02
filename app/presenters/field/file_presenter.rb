@@ -4,7 +4,8 @@ class Field::FilePresenter < FieldPresenter
   def input(form, method, options={})
     item_type = options[:item_type] || field.item_type.slug
     field_category = field.belongs_to_category? ? "data-field-category=\"#{field.category_id}\"" : ''
-    html = [
+    btn_label = field.multiple ? t('presenters.field.file.add_files') : t('presenters.field.file.add_file')
+    [
       form.text_area(
         "#{method}_json",
         input_defaults(options).reverse_merge(:rows => 1, 'data-field-type' => 'file')
@@ -19,10 +20,11 @@ class Field::FilePresenter < FieldPresenter
           "data-fieldname=\"#{field.name}\" " \
           "data-upload-url=\"/#{field.catalog.slug}/#{I18n.locale}/admin/#{item_type}/upload\" " \
           "data-file-types=\"#{field.types}\" " \
-          "data-button-text=\"" + (field.multiple == true ? 'Add files' : "Add file") + "\"></div>",
-      '</div>'
-    ]
-    html.compact.join.html_safe
+          "data-file-size=\"#{field.max_file_size.megabytes}\" " \
+          "data-button-text=\"" + btn_label + "\"></div>",
+      "</div><h4><small>#{t('presenters.field.file.size_constraint', :max_size => field.max_file_size)}</small><br>",
+      "<small>#{t('presenters.field.file.types_constraint', :types => field.types)}</small></h4>"
+    ].compact.join.html_safe
   end
 
   def value
@@ -43,7 +45,7 @@ class Field::FilePresenter < FieldPresenter
         "</a>" \
       "</div>"
     end
-    info.join().html_safe
+    info.join.html_safe
   end
 
   def file_url(file)

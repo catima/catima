@@ -36,7 +36,7 @@ class ItemList::SimpleSearchResult < ItemList
 
   def unpaginaged_items
     scope = active_item_type ? active_item_type.public_items : Item.none
-    scope.merge(relation)
+    scope.merge(relation).unscope(:order)
   end
 
   def to_param

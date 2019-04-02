@@ -9,6 +9,8 @@ class CatalogAdmin::FieldsComponentsTest < ActionDispatch::IntegrationTest
     book = items(:one_book_end_of_watch)
     visit("/one/en/admin/books/#{book.to_param}/edit")
 
+    sleep 2
+
     assert(page.has_selector?('div.ql-editor'))
     find('div.ql-editor').base.send_keys('Hello world')
     click_on('Save Book')

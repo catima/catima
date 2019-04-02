@@ -52,6 +52,7 @@ class Catalog < ApplicationRecord
   has_many :menu_items, :dependent => :destroy
   has_many :exports, :dependent => :destroy
   has_many :groups, dependent: :destroy
+  has_many :advanced_search_configurations, dependent: :destroy
 
   attachment :logo, type: :image
   attachment :navlogo, type: :image
@@ -80,6 +81,10 @@ class Catalog < ApplicationRecord
 
   def self.overrides
     Dir.exist?(Rails.root.join('catalogs')) ? Dir.entries(Rails.root.join('catalogs')).select { |f| Catalog.valid? f } : []
+  end
+
+  def public?
+    visible && !restricted
   end
 
   def public_items

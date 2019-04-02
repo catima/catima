@@ -53,8 +53,12 @@ class Field::Text < ::Field
   end
 
   def human_readable?
-    # TODO: remove comment below when there is no longer formatted text primary fields in production
-    # return false if formatted?
+    return false if formatted?
+
+    true
+  end
+
+  def filterable?
     true
   end
 
@@ -83,6 +87,29 @@ class Field::Text < ::Field
     rescue JSON::ParserError
       return v
     end
+  end
+
+  def search_conditions_as_options
+    options = [
+      [I18n.t("advanced_searches.text_search_field.all_words"), "all_words"],
+      [I18n.t("advanced_searches.text_search_field.one_word"), "one_word"]
+    ]
+
+    return options if formatted?
+
+    # Formatted text can't be exact searched
+    options << [I18n.t("advanced_searches.text_search_field.exact"), "exact"]
+  end
+
+  def search_conditions_as_hash(locale)
+    options = [
+      { :value => I18n.t("advanced_searches.text_search_field.all_words", locale: locale), :key => "all_words"},
+      { :value => I18n.t("advanced_searches.text_search_field.one_word", locale: locale), :key => "one_word"}
+    ]
+
+    return options if formatted?
+
+    options << { :value => I18n.t("advanced_searches.text_search_field.exact", locale: locale), :key => "exact"}
   end
 
   private

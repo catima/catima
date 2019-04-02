@@ -26,13 +26,13 @@ class Search::ChoiceSetStrategyTest < ActiveSupport::TestCase
     author = author_with_english_and_spanish_choices
     author.save!
 
-    language_field = fields(:one_author_other_language)
+    language_field = fields(:one_author_other_languages)
     strategy = Search::ChoiceSetStrategy.new(language_field, :en)
 
     criteria = { :any => [choices(:one_english).id.to_s] }
     results = strategy.search(Item, criteria)
 
-    assert_equal(1, results.count)
+    assert_equal(2, results.count)
     assert_includes(results.to_a, author)
   end
 

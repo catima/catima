@@ -1,5 +1,6 @@
-class API::V2::ItemsController < ActionController::Base
+class API::V2::ItemsController < API::ApplicationController
   include ControlsItemSorting
+  before_action :catalog_request_clearance
 
   InvalidItemType = Class.new(RuntimeError)
 
@@ -14,16 +15,16 @@ class API::V2::ItemsController < ActionController::Base
   end
 
   def index
-    it = item_type
-    raise InvalidItemType, 'no item type provided' if it.nil?
+    raise InvalidItemType, 'no item type provided' if item_type.nil?
+
+    fields = params[:simple_fields].blank? ? item_type.fields : item_type.simple_fields
 
     render(json:
       {
-        slug: it.slug,
-        name: it.name,
-        search_placeholder: t("catalog_admin.items.reference_editor.reference_editor_search", locale: params[:locale]),
+        slug: item_type.slug, name: item_type.name,
+        search_placeholder: t("catalog_admin.items.reference_editor.reference_editor_search"),
         filter_placeholder: t("catalog_admin.items.reference_editor.reference_editor_filter", locale: params[:locale]),
-        fields: it.fields.map do |fld|
+        fields: fields.map do |fld|
           {
             slug: fld.slug,
             name: fld.name,
@@ -31,10 +32,13 @@ class API::V2::ItemsController < ActionController::Base
             multiple: fld.multiple,
             primary: fld.primary,
             display_in_list: fld.display_in_list,
-            human_readable: fld.human_readable?
+            human_readable: fld.human_readable?,
+            filterable: fld.filterable?,
+            displayable_to_user: fld.displayable_to_user?(current_user),
+            uuid: fld.uuid
           }
         end,
-        items: apply_sort(it.items).map { |itm| itm.describe([:default_display_name], [:requires_review, :uuid], true) }
+        items: apply_sort(item_type.items).map { |itm| itm.describe([:default_display_name], [:requires_review, :uuid], true) }
       })
   end
 
@@ -50,6 +54,6 @@ class API::V2::ItemsController < ActionController::Base
   end
 
   def catalog
-    @catalog ||= Catalog.active.find_by!(:slug => params[:catalog_slug])
+    @catalog ||= Catalog.find_by!(:slug => params[:catalog_slug])
   end
 end

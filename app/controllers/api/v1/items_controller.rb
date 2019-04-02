@@ -1,5 +1,6 @@
-class API::V1::ItemsController < ActionController::Base
+class API::V1::ItemsController < API::ApplicationController
   InvalidItemType = Class.new(RuntimeError)
+  before_action :catalog_request_clearance
 
   rescue_from InvalidItemType do |exception|
     status = 400
@@ -36,7 +37,7 @@ class API::V1::ItemsController < ActionController::Base
   end
 
   def catalog
-    @_catalog ||= Catalog.active.find_by!(:slug => params[:catalog_slug])
+    @_catalog ||= Catalog.find_by!(:slug => params[:catalog_slug])
   end
 
   def items_scope

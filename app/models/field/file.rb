@@ -49,6 +49,11 @@ class Field::File < ::Field
     end
   end
 
+  # Max upload file size (in MB)
+  def max_file_size
+    200
+  end
+
   def file_count(item)
     files = raw_value(item)
     return 0 if files.nil?

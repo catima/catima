@@ -40,7 +40,7 @@ class SingleReferenceEditor extends Component {
 
   _load(v){
     if (v !== null && v !== '') {
-      let initItem = this.props.items.filter(item => item.id === parseInt(v));
+      let initItem = this.props.items.filter(item => item.id === parseInt(JSON.parse(v)));
       if(initItem.length === 1) return this._getJSONItem(initItem[0]);
     }
     return [];
@@ -85,7 +85,7 @@ class SingleReferenceEditor extends Component {
 
   _getFilterOptions(){
     var optionsList = [];
-    optionsList = this.props.fields.filter(field => (field.primary !== true && field.human_readable));
+    optionsList = this.props.fields.filter(field => (field.human_readable));
 
     optionsList = optionsList.map(field =>
       this._getJSONFilter(field)
@@ -95,15 +95,15 @@ class SingleReferenceEditor extends Component {
   }
 
   _getJSONFilter(field) {
-    if(!field.primary) return {value: field.slug, label: field.name};
+    return {value: field.slug, label: field.name};
   }
 
   render(){
     return (
       <div className="input-group single-reference-container">
-        <ReactSelect id={this.editorId} className="single-reference" value={this.state.selectedItem} onChange={this.selectItem} options={this._getItemOptions()}/>
+        <ReactSelect id={this.editorId} className="single-reference" value={this.state.selectedItem} onChange={this.selectItem} options={this._getItemOptions()} noOptionsMessage={this.props.noOptionsMessage}/>
         <div className="input-group-addon">
-          <ReactSelect id={this.filterId} className="single-reference-filter" isSearchable={false} isClearable={true} value={this.state.selectedFilter} onChange={this.selectFilter} options={this._getFilterOptions()} placeholder={this.props.filterPlaceholder}/>
+          <ReactSelect id={this.filterId} className="single-reference-filter" isSearchable={false} isClearable={true} value={this.state.selectedFilter} onChange={this.selectFilter} options={this._getFilterOptions()} placeholder={this.props.filterPlaceholder} noOptionsMessage={this.props.noOptionsMessage}/>
         </div>
       </div>
     );

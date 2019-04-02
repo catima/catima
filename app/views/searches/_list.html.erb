@@ -15,6 +15,9 @@
     <div class="media-body">
       <h4 class="media-heading">
         <%= search.search_name %>
+        <% if search.name.present? %>
+          <small><%= search_name(search) %></small>
+        <% end %>
       </h4>
     </div>
     <%= render "searches/buttons", :search => search if searches_scoped? %>

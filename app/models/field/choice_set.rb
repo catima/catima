@@ -90,6 +90,10 @@ class Field::ChoiceSet < ::Field
     {uuid => cid}
   end
 
+  def filterable?
+    false
+  end
+
   def describe
     super.merge("choice_set": choice_set.uuid)
   end
@@ -122,6 +126,25 @@ class Field::ChoiceSet < ::Field
 
   def allows_unique?
     false
+  end
+
+  def search_data_as_hash
+    choices_as_options = []
+
+    choices.each do |choice|
+      option = { :value => choice.short_name, :key => choice.id }
+      option[:category_data] = choice.category.present? && choice.category.active? ? choice.category.fields : []
+
+      choices_as_options << option
+    end
+
+    choices_as_options
+  end
+
+  def search_options_as_hash
+    [
+      { :multiple => multiple? }
+    ]
   end
 
   private

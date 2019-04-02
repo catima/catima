@@ -16,8 +16,9 @@ Rails.application.routes.draw do
       scope :path => ':catalog_slug' do
         scope :path => ':locale' do
           get '/' => 'catalogs#show'
-          get '/users' => 'users#index', as: 'users'
           get ':item_type' => 'items#index', as: 'items'
+          get ':item_type_slug/:field_uuid' => 'fields#index', as: 'fields'
+          get '/categories/:category_id/:field_uuid' => 'fields#index', as: 'category_fields'
         end
       end
     end
@@ -71,7 +72,7 @@ Rails.application.routes.draw do
 
   namespace "admin" do
     get "/" => "dashboard#index", :as => :dashboard
-    resources :catalogs, :param => :slug, :except => [:index, :destroy]
+    resources :catalogs, :param => :slug, :except => [:index]
     resources :template_storages, :except => :index
     resources :configurations, :only => :update
     resources :users, :except => :index
@@ -148,6 +149,7 @@ Rails.application.routes.draw do
                 :except => :show
     end
     resources :users, :path => "_users"
+    resources :advanced_search_configurations, :path => "_advanced_search_configurations"
     resources :menu_items, path: '_menu_items'
 
     # Data entry

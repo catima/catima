@@ -18,9 +18,11 @@ class ReferenceEditor extends Component {
   }
 
   componentDidMount(){
+    const csrfToken = $('meta[name="csrf-token"]').attr('content');
     let config = {
       retry: 1,
-      retryDelay: 1000
+      retryDelay: 1000,
+      headers: {'X-CSRF-Token': csrfToken}
     };
 
     axios.get(`/api/v2/${this.props.catalog}/${this.props.locale}/${this.props.itemType}`, config)
@@ -58,6 +60,10 @@ class ReferenceEditor extends Component {
     });
   }
 
+  _getNoOptionsMessage() {
+    return () => this.props.noOptionsMessage;
+  }
+
   renderEditor(){
     if (this.state.isLoading) return null;
     if (this.props.multiple)
@@ -68,7 +74,8 @@ class ReferenceEditor extends Component {
                 filterPlaceholder={this.state.filterPlaceholder}
                 srcRef={this.props.srcRef}
                 srcId={this.props.srcId}
-                req={this.props.req} />
+                req={this.props.req}
+                noOptionsMessage={this._getNoOptionsMessage()} />
     else
       return <SingleReferenceEditor
                 items={this.state.items}
@@ -77,7 +84,8 @@ class ReferenceEditor extends Component {
                 filterPlaceholder={this.state.filterPlaceholder}
                 srcRef={this.props.srcRef}
                 srcId={this.props.srcId}
-                req={this.props.req} />
+                req={this.props.req}
+                noOptionsMessage={this._getNoOptionsMessage()} />
   }
 
   render() {

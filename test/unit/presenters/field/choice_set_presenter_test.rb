@@ -20,7 +20,7 @@ class Field::ChoiceSetPresenterTest < ActionView::TestCase
   test "#value for multiple" do
     author = items(:one_author_stephen_king)
     choices = [choices(:one_english), choices(:one_spanish)]
-    languages_field = Field.find ActiveRecord::FixtureSet.identify('one_author_other_language')
+    languages_field = Field.find ActiveRecord::FixtureSet.identify('one_author_other_languages')
     # Have to set this manually because fixture doesn't know IDs ahead of time
     author.data["one_author_other_language_uuid"] = choices.map(&:id)
 

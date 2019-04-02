@@ -31,7 +31,7 @@ class Item < ApplicationRecord
 
   delegate :field_for_select, :primary_field, :referenced_by_fields,
            :fields, :list_view_fields, :all_fields, :all_public_list_view_fields, :all_list_view_fields,
-           :to => :item_type
+           :simple_fields, :to => :item_type
 
   belongs_to :catalog
   belongs_to :item_type
@@ -56,7 +56,7 @@ class Item < ApplicationRecord
   def self.sorted_by_field(field)
     sql = []
     sql << field.order_items_by unless field.nil?
-    sql << "created_at DESC"
+    # sql << "items.created_at DESC"
 
     if field.nil? ||
        (field.type != Field::TYPES['reference'] && field.type != Field::TYPES['choice'])

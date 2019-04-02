@@ -49,18 +49,24 @@ module ItemsHelper
   end
 
   def item_summary(item)
-    at_least_editor = current_user.catalog_role_at_least?(item.catalog, 'editor')
-    flds = item.applicable_list_view_fields.select do |fld|
-      at_least_editor || !fld.restricted?
-    end
-    flds.each_with_object([]) do |field, html|
-      next if field == item.primary_field
-      next unless field.human_readable?
+    # Retrieve all applicable fields for the summary & join the values
+    item.applicable_list_view_fields.each_with_object([]) do |fld, html|
+      # Remove field if restricted
+      next unless fld.displayable_to_user?(current_user)
 
-      value = strip_tags(field_value(item, field, :style => :compact))
+      # Remove field if primary
+      next if fld == item.primary_field
+
+      # Remove field if non human readable unless is filterable
+      next unless fld.human_readable? || fld.filterable?
+
+      # Remove all html tags
+      value = strip_tags(field_value(item, fld, :style => :compact))
+
+      # Remove field if value is blank
       next if value.blank?
 
-      html << [content_tag(:b, "#{field.name}:"), value].join(" ")
+      html << [content_tag(:b, "#{fld.name}:"), value].join(" ")
     end.join("; ").html_safe
   end
 

@@ -1,4 +1,4 @@
-class API::V1::CatalogsController < ActionController::Base
+class API::V1::CatalogsController < API::ApplicationController
   def index
     render(:json => API::V1::PaginationSerializer.new(
       "catalogs", catalogs_scope, params

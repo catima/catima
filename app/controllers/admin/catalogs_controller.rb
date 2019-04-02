@@ -1,4 +1,5 @@
 class Admin::CatalogsController < Admin::BaseController
+  rescue_from Exception, with: :exception_rescue
   layout "admin/form"
 
   def new
@@ -31,6 +32,13 @@ class Admin::CatalogsController < Admin::BaseController
     end
   end
 
+  def destroy
+    find_catalog
+    authorize(@catalog)
+    destroy_catalog
+    redirect_to(admin_dashboard_path, :notice => destroyed_message)
+  end
+
   private
 
   def build_catalog
@@ -39,6 +47,11 @@ class Admin::CatalogsController < Admin::BaseController
 
   def find_catalog
     @catalog = Catalog.where(:slug => params[:slug]).first!
+  end
+
+  def destroy_catalog
+    @catalog.update(custom_root_page_id: nil)
+    @catalog.destroy
   end
 
   def catalog_params
@@ -60,6 +73,10 @@ class Admin::CatalogsController < Admin::BaseController
     "The “#{@catalog.name}” catalog has been created."
   end
 
+  def destroyed_message
+    "The “#{@catalog.name}” catalog has been deleted."
+  end
+
   def updated_message
     message = "The “#{@catalog.name}” catalog has been "
     if catalog_params.key?(:deactivated_at)
@@ -68,5 +85,9 @@ class Admin::CatalogsController < Admin::BaseController
       message << "updated."
     end
     message
+  end
+
+  def exception_rescue(exception)
+    redirect_to(admin_dashboard_path, :alert => exception.to_s)
   end
 end

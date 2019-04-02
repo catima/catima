@@ -66,6 +66,10 @@ class Field::Reference < ::Field
     references.where(:id => raw_value(item))
   end
 
+  def filterable?
+    false
+  end
+
   def describe
     super.merge("related_item_type": related_item_type.slug)
   end
@@ -106,5 +110,9 @@ class Field::Reference < ::Field
 
   def allows_unique?
     false
+  end
+
+  def search_conditions_as_hash
+    []
   end
 end
