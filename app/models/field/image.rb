@@ -52,35 +52,6 @@ class Field::Image < ::Field::File
     %i(legend)
   end
 
-  def field_value_for_all_item(_it)
-    value = super
-
-    case
-    when value.is_a?(Hash)
-      return if value["path"].blank?
-
-      path = ""
-      # TODO : what to do with legends?
-      # path = "[#{i['legend']}]" if i["legend"].present?
-      path << value["path"]
-
-      return path
-    when value.is_a?(Array)
-      return if value.blank?
-
-      value.map do |i|
-        next if i["path"].blank?
-
-        path = ""
-        # TODO : what to do with legends?
-        # path = "[#{i['legend']}]" if i["legend"].present?
-        path << i["path"]
-
-        path
-      end.join('; ')
-    end
-  end
-
   def sql_type
     "JSON"
   end

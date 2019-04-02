@@ -116,6 +116,13 @@ class Field::ChoiceSet < ::Field
     end
   end
 
+  def field_value_for_all_item(it)
+    return selected_choices(it).map(&:short_name).join('; ') if multiple?
+
+    ch = selected_choice(it)
+    ch.nil? ? nil : ch.short_name
+  end
+
   def order_items_by
     "(choices.long_name_translations->>'long_name_#{I18n.locale}') ASC" unless choices.nil?
   end
