@@ -49,9 +49,10 @@ class Field::File < ::Field
     end
   end
 
-  # Max upload file size (in MB)
+  # Max upload file size.
+  # Subclasses can override this method.
   def max_file_size
-    200
+    200 # in MB
   end
 
   def file_count(item)

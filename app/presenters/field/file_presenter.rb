@@ -22,8 +22,11 @@ class Field::FilePresenter < FieldPresenter
           "data-file-types=\"#{field.types}\" " \
           "data-file-size=\"#{field.max_file_size.megabytes}\" " \
           "data-button-text=\"" + btn_label + "\"></div>",
-      "</div><h4><small>#{t('presenters.field.file.size_constraint', :max_size => field.max_file_size)}</small><br>",
-      "<small>#{t('presenters.field.file.types_constraint', :types => field.types)}</small></h4>"
+      "<h4>",
+      "<small>#{t('presenters.field.file.size_constraint', :max_size => field.max_file_size)}</small><br>",
+      "<small>#{t('presenters.field.file.types_constraint', :types => field.types)}</small>",
+      "</h4>",
+      "</div>"
     ].compact.join.html_safe
   end
 

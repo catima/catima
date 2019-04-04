@@ -52,6 +52,11 @@ class Field::Image < ::Field::File
     %i(legend)
   end
 
+  # Max upload image size
+  def max_file_size
+    15 # in MB
+  end
+
   private
 
   def set_default_types
