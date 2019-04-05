@@ -1,5 +1,6 @@
 {
   "dependencies": {
+    "@babel/core": "^7.0.0-0",
     "@babel/preset-react": "^7.0.0",
     "@claviska/jquery-minicolors": "^2.2.6",
     "@rails/webpacker": "4.0.2",
@@ -44,7 +45,8 @@
     "resolve-url-loader": "^2.2.1",
     "sass-loader": "^6.0.6",
     "striptags": "^3.1.1",
-    "url-loader": "^0.6.2"
+    "url-loader": "^0.6.2",
+    "webpack": "^4.0.0"
   },
   "devDependencies": {
     "webpack-dev-server": "3.2.1"
