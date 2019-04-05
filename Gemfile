@@ -53,7 +53,7 @@ gem "sprockets"
 gem "sprockets-rails"
 gem "summernote-rails"
 gem "rubyzip", "~> 1.2.2"
-gem "webpacker"
+gem "webpacker", "~> 4.0.2"
 gem "zaru"
 
 source "https://rails-assets.org" do
