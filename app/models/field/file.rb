@@ -49,10 +49,10 @@ class Field::File < ::Field
     end
   end
 
-  # Max upload file size.
+  # Max upload file size (in MB). Default is 200MB.
   # Subclasses can override this method.
   def max_file_size
-    200 # in MB
+    ENV["FILE_MAX_UPLOAD_SIZE"].present? ? Integer(ENV["FILE_MAX_UPLOAD_SIZE"]) : 200
   end
 
   def file_count(item)

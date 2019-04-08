@@ -52,9 +52,9 @@ class Field::Image < ::Field::File
     %i(legend)
   end
 
-  # Max upload image size
+  # Max upload image size (in MB). Default is 15MB.
   def max_file_size
-    15 # in MB
+    ENV["IMAGE_MAX_UPLOAD_SIZE"].present? ? Integer(ENV["IMAGE_MAX_UPLOAD_SIZE"]) : 15
   end
 
   private
