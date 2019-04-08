@@ -18,7 +18,7 @@ class Search::EditorStrategy < Search::BaseStrategy
   private
 
   def text_for_keywords(item)
-    field.strip_extra_content(item, locale)
+    raw_value(item)
   end
 
   def exact_search(scope, exact_phrase, negate)
