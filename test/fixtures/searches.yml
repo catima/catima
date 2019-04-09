@@ -19,9 +19,15 @@
 #
 book:
   related_search: book (SimpleSearch)
+  user: one_admin
+  name: book search
 
 toyota:
   related_search: toyota (SimpleSearch)
+  user: one_admin
+  name: car search
 
 blank:
   related_search: blank (SimpleSearch)
+  user: one_admin
+  name: blank search

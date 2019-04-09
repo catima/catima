@@ -20,9 +20,18 @@
 #
 book:
   query: "book"
+  catalog: one
+  creator: one_admin
+  uuid: unique-book-search-uuid
 
 toyota:
   query: "toyota"
+  catalog: one
+  creator: one_admin
+  uuid: unique-car-search-uuid
 
 blank:
   query: " "
+  catalog: one
+  creator: one_admin
+  uuid: unique-blank-search-uuid
