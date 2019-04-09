@@ -22,8 +22,8 @@ module SearchesHelper
     l(search.created_at)
   end
 
-  def item_list_display_types(f)
-    f.select(
+  def item_list_display_types(form)
+    form.select(
       :display_type,
       ItemList::STYLES.map { |style, _| [style, style] },
       :label => t(".display_type.label"),

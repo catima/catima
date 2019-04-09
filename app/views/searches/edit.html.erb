@@ -4,7 +4,7 @@
   <%= bootstrap_form_for(@search, url: search_path) do |f| %>
 
     <%= f.form_group(:name) do %>
-      <%= f.text_field(:name) %>
+      <%= f.text_field(:name, :label => t(".name")) %>
     <% end %>
 
     <%= f.primary(t('.update_search')) %>

@@ -277,6 +277,7 @@ fr:
       back_to_list: "Retour à la liste"
       selected_catalog: "Catalogue sélectionné"
     edit:
+      name: Nom
       edit_search: Editer la recherche sauvegardée
       update_search: Mettre à jour
   helpers:
