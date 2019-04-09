@@ -1,6 +1,8 @@
 require "test_helper"
 
 class CatalogAdmin::ContainersTest < ActionDispatch::IntegrationTest
+  setup { use_javascript_capybara_driver }
+
   test "create a container" do
     log_in_as("one-admin@example.com", "password")
     visit("/one/en/admin")
