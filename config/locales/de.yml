@@ -262,6 +262,7 @@ de:
       back_to_list: "Zurück zur Liste"
       selected_catalog: "Ausgewählter Katalog"
     edit:
+      name: Name
       edit_search: Bearbeiten der gespeicherten Suche
       update_search: Aktualisierung
   helpers:

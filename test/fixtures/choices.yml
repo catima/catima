@@ -12,6 +12,7 @@
 #  parent_id               :bigint(8)
 #  short_name_old          :string
 #  short_name_translations :json
+#  synonyms                :jsonb
 #  updated_at              :datetime         not null
 #  uuid                    :string
 #

@@ -263,6 +263,7 @@ it:
       back_to_list: "Torna alla lista"
       selected_catalog: "Catalogo selezionato"
     edit:
+      name: Nome
       edit_search: Modificare la ricerca salvata
       update_search: Attualizzazione
   helpers:

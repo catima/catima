@@ -13,11 +13,7 @@ class SearchesController < ApplicationController
 
   def index
     @selected_catalog = find_catalog(params[:catalog])
-    @list = ItemList::SavedSearch.new(
-      :user => current_user,
-      # :selected_catalog => @selected_catalog,
-      # :page => params[:page]
-    )
+    @list = ItemList::SavedSearch.new(:user => current_user)
     @catalogs = catalogs(@list)
   end
 

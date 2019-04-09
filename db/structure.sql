@@ -80,10 +80,10 @@ CREATE TABLE public.advanced_search_configurations (
     title_translations jsonb,
     description jsonb,
     slug character varying,
-    search_type character varying DEFAULT 'default'::character varying,
     fields jsonb DEFAULT '{}'::jsonb,
     created_at timestamp without time zone NOT NULL,
-    updated_at timestamp without time zone NOT NULL
+    updated_at timestamp without time zone NOT NULL,
+    search_type character varying DEFAULT 'default'::character varying NOT NULL
 );
 
 
@@ -2084,5 +2084,6 @@ INSERT INTO "schema_migrations" (version) VALUES
 ('20181207145518'),
 ('20181210123619'),
 ('20181214095728'),
+('20190201141740'),
 ('20190215124856'),
 ('20190215125849');
