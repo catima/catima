@@ -27,11 +27,10 @@ class ItemList::SimpleSearchResultTest < ActiveSupport::TestCase
   end
 
   test "only shows public items" do
-    simple = simple_search(catalogs(:reviewed), searches(:book))
+    simple = simple_search(catalogs(:one), searches(:book))
 
     results = simple.items.to_a
-    assert_includes(results, items(:reviewed_book_finders_keepers_approved))
-    refute_includes(results, items(:reviewed_book_end_of_watch))
+    assert_includes(results, items(:one_author_stephen_king))
   end
 
   private

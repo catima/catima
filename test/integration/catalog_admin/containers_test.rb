@@ -61,14 +61,13 @@ class CatalogAdmin::ContainersTest < ActionDispatch::IntegrationTest
     click_on("Search")
 
     fill_in("Slug", :with => "book-search")
-    fill_in("Description", :with => "You will find my saved search here!")
     select("list", :from => "Display type")
     select("book search", :from => "Saved search")
     click_on("Create container")
 
     new_window = window_opened_by { click_on("View page") }
     within_window new_window do
-      assert(page.has_content?("You will find my saved search here!"))
+      assert(page.has_content?("Stephen"))
     end
   end
 end

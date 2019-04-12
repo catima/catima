@@ -205,9 +205,9 @@ Rails.application.routes.draw do
     scope :path => "#{catalog_slug}/:locale",
           :constraints => CatalogsController::Constraint do
 
-      if File.exist?(Rails.root.join('catalogs', catalog_slug, 'controllers', "#{catalog_snake_slug}_simple_search_controller.rb"))
+      if File.exist?(Rails.root.join('catalogs', catalog_slug, 'controllers', "#{catalog_snake_slug}_simple_searches_controller.rb"))
         get "search",
-            :controller => "#{catalog_snake_slug}_simple_search",
+            :controller => "#{catalog_snake_slug}_simple_searches",
             :action => :index,
             :as => "#{catalog_snake_slug}_simple_search",
             :catalog_slug => catalog_slug
