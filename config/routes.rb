@@ -225,6 +225,12 @@ Rails.application.routes.draw do
             :action => :show,
             :as => "#{catalog_snake_slug}_advanced_search",
             :catalog_slug => catalog_slug
+
+        get 'search/simple/:uuid',
+            :controller => "#{catalog_snake_slug}_simple_searches",
+            :action => :show,
+            :as => "#{catalog_snake_slug}_simple_search",
+            :catalog_slug => catalog_slug
       end
 
       if File.exist?(Rails.root.join('catalogs', catalog_slug, 'controllers', "#{catalog_snake_slug}_pages_controller.rb"))
@@ -257,11 +263,13 @@ Rails.application.routes.draw do
   # Generating the default routes.
   scope :path => ":catalog_slug/:locale",
         :constraints => CatalogsController::Constraint do
-    # get "search" => "simple_search#index", :as => "simple_search"
 
-    resources :simple_search,
+    get "search", :to => "simple_searches#new"
+
+    resources :simple_searches,
               :path => "search/simple",
-              :only => [:new, :create, :index]
+              :param => :uuid,
+              :only => [:new, :create, :show]
 
     resources :advanced_searches,
               :path => "search/advanced",

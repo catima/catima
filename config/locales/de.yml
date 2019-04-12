@@ -240,12 +240,12 @@ de:
         my_favorites: "Meine Favoriten"
         my_searches: Meine Suchen
         my_groups: Meine Gruppen
-  simple_search:
+  simple_searches:
     form:
       advanced: "Erweitert"
       submit: "Suchen"
       placeholder: Suche in %{item_type}
-    index:
+    show:
       title:
         zero: "Kein Resultat gefunden für “%{query}”"
         one: "1 Resultat für “%{query}”"

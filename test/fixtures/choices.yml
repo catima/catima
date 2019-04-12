@@ -9,11 +9,8 @@
 #  id                      :integer          not null, primary key
 #  long_name_old           :text
 #  long_name_translations  :json
-#  parent_id               :bigint(8)
-#  row_order               :integer
 #  short_name_old          :string
 #  short_name_translations :json
-#  synonyms                :jsonb
 #  updated_at              :datetime         not null
 #  uuid                    :string
 #
