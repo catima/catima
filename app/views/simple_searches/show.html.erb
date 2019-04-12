@@ -7,9 +7,9 @@
 
 <% provide(:title) do %>
   <%= t(".title",
-        :query => @simple_search_results.query,
-        :count => @simple_search_results.total_count.presence,
-        :count_delimited => number_with_delimiter(@simple_search_results.total_count)) %>
+        :query => @simple_search_results&.query,
+        :count => @simple_search_results&.total_count.presence || 0,
+        :count_delimited => number_with_delimiter(@simple_search_results&.total_count)) %>
 
   <% if search_exists_for_user?(@saved_search) %>
     <%= link_to(
@@ -28,4 +28,6 @@
   <% end %>
 <% end %>
 
-<%= render :partial => "simple_searches/list", :locals => { :search_results => @simple_search_results, :search_result => @saved_search } %>
+<% if @simple_search_results.present? %>
+  <%= render :partial => "simple_searches/list", :locals => { :search_results => @simple_search_results, :search_result => @saved_search } %>
+<% end %>

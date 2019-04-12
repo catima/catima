@@ -14,9 +14,9 @@
 #
 
 class Container::Search < ::Container
-  store_accessor :content, :description, :search, :display_type
+  store_accessor :content, :search, :display_type
 
   def custom_container_permitted_attributes
-    %i(description search display_type)
+    %i(search display_type)
   end
 end

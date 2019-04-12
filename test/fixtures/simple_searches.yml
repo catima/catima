@@ -19,7 +19,7 @@
 # below each fixture, per the syntax in the comments below
 #
 book:
-  query: "book"
+  query: "ste"
   catalog: one
   creator: one_admin
   uuid: unique-book-search-uuid
