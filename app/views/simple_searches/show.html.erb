@@ -1,6 +1,6 @@
 <% provide(:extra_nav) do %>
-  <%= render("simple_search/form",
-      :controller => "simple_search",
+  <%= render("simple_searches/form",
+      :controller => "simple_searches",
       :action => "create",
       :display_advanced_search => true) %>
 <% end %>
@@ -8,7 +8,7 @@
 <% provide(:title) do %>
   <%= t(".title",
         :query => @simple_search_results.query,
-        :count => @simple_search_results.total_count,
+        :count => @simple_search_results.total_count.presence,
         :count_delimited => number_with_delimiter(@simple_search_results.total_count)) %>
 
   <% if search_exists_for_user?(@saved_search) %>
@@ -28,4 +28,4 @@
   <% end %>
 <% end %>
 
-<%= render :partial => "simple_search/list", :locals => { :search_results => @simple_search_results, :search_result => @saved_search } %>
+<%= render :partial => "simple_searches/list", :locals => { :search_results => @simple_search_results, :search_result => @saved_search } %>

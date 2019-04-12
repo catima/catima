@@ -1,21 +1,33 @@
-class SimpleSearchController < ApplicationController
+class SimpleSearchesController < ApplicationController
   include ControlsCatalog
 
   def new
     build_simple_search
-  end
 
-  def create
+    return render("show") if simple_search_params.blank?
+
+    # Legacy search
     build_simple_search
     if @saved_search.update(simple_search_params)
-      redirect_to(:action => :index, :uuid => @saved_search.uuid)
+      redirect_to(:action => :show, :uuid => @saved_search.uuid)
     else
       render("new")
     end
   end
 
-  def index
+  def create
+    build_simple_search
+    if @saved_search.update(simple_search_params)
+      redirect_to(:action => :show, :uuid => @saved_search.uuid)
+    else
+      render("new")
+    end
+  end
+
+  def show
     find_simple_search_or_redirect
+    return redirect_to(catalog_home_path) if @saved_search.nil?
+
     @simple_search_results = ItemList::SimpleSearchResult.new(
       :catalog => catalog,
       :query => @saved_search.query,
@@ -35,7 +47,6 @@ class SimpleSearchController < ApplicationController
 
   def find_simple_search_or_redirect
     @saved_search = SimpleSearch.find_by(:uuid => params[:uuid])
-    redirect_to(catalog_home_path) if @saved_search.nil?
   end
 
   def simple_search_params

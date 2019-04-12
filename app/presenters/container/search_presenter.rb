@@ -1,7 +1,7 @@
 class Container::SearchPresenter < ContainerPresenter
   def html
     search = saved_search
-    partial_name = search.is_a?(SimpleSearch) ? "simple_search/list" : "advanced_searches/list"
+    partial_name = search.is_a?(SimpleSearch) ? "simple_searches/list" : "advanced_searches/list"
 
     @view.render(
       "containers/search",

@@ -255,12 +255,12 @@ fr:
         my_favorites: "Mes favoris"
         my_searches: Mes recherches
         my_groups: Mes groupes
-  simple_search:
+  simple_searches:
     form:
       advanced: "Avancé"
       submit: "Chercher"
       placeholder: Chercher dans %{item_type}
-    index:
+    show:
       title:
         zero: "Rien trouvé pour “%{query}”"
         one: "1 résultat pour “%{query}”"

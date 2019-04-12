@@ -1,5 +1,5 @@
 <%= bootstrap_form_tag(
-      :url => { :controller => controller, :action => action },
+      :url => { :controller => controller, :action => action, :uuid => '' },
       :method => "POST",
       :layout => :inline,
       :html => { :style => "text-align: center" }) do |f| %>
@@ -8,8 +8,8 @@
       <div class="input-group">
         <%= f.search_field(
               :q,
-              :value => params[:q],
-              :label => t('simple_search.form.submit'),
+              :value => @saved_search&.query,
+              :label => t('simple_searches.form.submit'),
               :placeholder => @item_type.present? ? t('.placeholder', :item_type => @item_type.name_plural) : t('.submit'),
               :hide_label => true,
               :autofocus => true,

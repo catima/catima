@@ -260,12 +260,12 @@ en:
         my_favorites: "My favorites"
         my_searches: My searches
         my_groups: My groups
-  simple_search:
+  simple_searches:
     form:
       advanced: "Advanced"
       submit: "Search"
       placeholder: Search in %{item_type}
-    index:
+    show:
       title:
         zero: "Nothing found for “%{query}”"
         one: "1 result for “%{query}”"

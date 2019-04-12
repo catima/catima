@@ -241,8 +241,8 @@ it:
         my_favorites: "I miei preferiti"
         my_searches: Le mie ricerche
         my_groups: I miei gruppi
-  simple_search:
-    form:
+  simple_searches:
+    show:
       advanced: "Avanzata"
       submit: "Ricerca"
       placeholder: Ricerca in %{item_type}
