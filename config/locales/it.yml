@@ -297,7 +297,7 @@ it:
   pages: Pagine
   general: Generale
   users: Utenti
-  users+groups: Utenti & gruppi
+  users_and_groups: Utenti & gruppi
   role: Ruolo
   role-with-groups: Ruolo con i gruppi
   style: Stile
@@ -415,6 +415,10 @@ it:
       geometry_option_inputs:
         bounds: Estensione spaziale predefinita
         bounds_help: Se modificata, la mappa utilizzerà l'area selezionata come estensione spaziale predefinita
+        layers: Additional layers
+        layers_help: You can add additional layers to your map (default is the standard tile layer from OpenStreetMap). You can also add custom layers with a valid url (only use this if you know what you do). If layers are added, the first one will be the default layer for your map.
+        layers_component_no_options: No more layers to add
+        layers_component_placeholder: Add layers
       common_form_fields:
         restrict_field_to_staff: Limitare il campo al personale del catalogo
         include_in_list_view: "Include this field in edition list view (Data)"
@@ -424,8 +428,11 @@ it:
         multiple_choice: "Multiple values – optional"
         multiple_required_choice: "Multiple values – at least one"
       table:
-        list_view?: 'Edition mode?'
-        public_list_view?: 'Public mode?'
+        name: 'Name'
+        type: 'Type'
+        required: 'Required?'
+        list_view: 'Edition mode?'
+        public_list_view: 'Public mode?'
       editor_option_inputs:
         warning: <strong>Warning!</strong> Please note that this field will automatically show the editor's email address.
       index:

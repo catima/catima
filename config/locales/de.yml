@@ -307,7 +307,7 @@ de:
   approved: Geprüft
   rejected: Abgelehnt
   users: Benutzer
-  users+groups: Benutzer & Gruppen
+  users_and_groups: Benutzer & Gruppen
   visible: Sichtbar
   not_visible: Nicht sichtbar
   role: Rolle
@@ -504,6 +504,10 @@ de:
       geometry_option_inputs:
         bounds: Allgemeine räumliche Ausdehnung
         bounds_help: Wenn die Karte geändert wird, verwendet sie den ausgewählten Bereich als standardmäßige räumliche Ausdehnung
+        layers: Additional layers
+        layers_help: You can add additional layers to your map (default is the standard tile layer from OpenStreetMap). You can also add custom layers with a valid url (only use this if you know what you do). If layers are added, the first one will be the default layer for your map.
+        layers_component_no_options: No more layers to add
+        layers_component_placeholder: Add layers
       decimal_option_inputs:
         min_value: "Minimum value (optional)"
         max_value: "Maximum value (optional)"
@@ -524,9 +528,9 @@ de:
       table:
         name: 'Name'
         type: 'Type'
-        required?: 'Required?'
-        list_view?: 'Edition mode?'
-        public_list_view?: 'Public mode?'
+        required: 'Required?'
+        list_view: 'Edition mode?'
+        public_list_view: 'Public mode?'
       text_option_inputs:
         has_formatted_text: "Has formatted text"
         min_length: "Minimum length (optional)"

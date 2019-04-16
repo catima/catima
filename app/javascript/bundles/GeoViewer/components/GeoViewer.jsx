@@ -179,6 +179,6 @@ class GeoViewer extends React.Component {
       </div>
     );
   }
-};
+}
 
 export default GeoViewer;

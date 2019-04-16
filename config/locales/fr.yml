@@ -328,7 +328,7 @@ fr:
   approved: Validé
   rejected: Rejeté
   users: Utilisateurs
-  users+groups: Utilisateurs & groupes
+  users_and_groups: Utilisateurs & groupes
   new_user: Nouvel utilisateur
   send_invitation: Envoyer l'invitation
   visible: Visible
@@ -538,6 +538,10 @@ fr:
       geometry_option_inputs:
         bounds: Étendue spatiale par défaut
         bounds_help: Si modifiée, la carte utilisera la zone sélectionnée comme étendue spatiale par défaut
+        layers: Calques supplémentaires
+        layers_help: Vous pouvez ajouter des calques supplémentaires à votre carte (par défaut, la couche standard OpenStreetMap est utilisée). Vous pouvez aussi ajouter des calques personnalisés avec une url valide (n'utilisez cette option que si vous savez ce que vous faites). Si des calques sont ajoutées, le premier sera le claque par défaut de votre carte.
+        layers_component_no_options: Plus de calques à ajouter
+        layers_component_placeholder: Ajouter des calques
       decimal_option_inputs:
         min_value: "Valeur minimale (optionnel)"
         max_value: "Valeur maximale (optionnel)"
@@ -558,9 +562,9 @@ fr:
       table:
         name: 'Nom'
         type: 'Type'
-        required?: 'Exigé?'
-        list_view?: "En édition?"
-        public_list_view?: 'En consultation?'
+        required: 'Exigé?'
+        list_view: "En édition?"
+        public_list_view: 'En consultation?'
       text_option_inputs:
         has_formatted_text: "Contient du texte formaté"
         min_length: "Longueur minimale (optionnel)"

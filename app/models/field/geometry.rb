@@ -33,7 +33,13 @@
 #
 
 class Field::Geometry < ::Field
-  store_accessor :options, :bounds
+  store_accessor :options, :bounds, :layers
+
+  LAYERS = [
+    { :label => "OpenStreetMap Standard", :value => "https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png" },
+    { :label => "Other Layer 1", :value => "https://layer1.com" },
+    { :label => "Other Layer 2", :value => "https://layer2.com" }
+  ].freeze
 
   def human_readable?
     false
@@ -48,12 +54,16 @@ class Field::Geometry < ::Field
   end
 
   def custom_field_permitted_attributes
-    %i(bounds)
+    %i(bounds layers)
   end
 
   def default_bounds(xmin=-60, xmax=60, ymin=-45, ymax=65)
     geo_bounds = bounds.present? ? JSON.parse(bounds) : { 'xmin' => xmin, 'xmax' => xmax, 'ymin' => ymin, 'ymax' => ymax }
     geo_bounds.slice('xmin', 'xmax', 'ymin', 'ymax')
+  end
+
+  def parsed_layers
+    layers.present? ? JSON.parse(layers) : []
   end
 
   private
