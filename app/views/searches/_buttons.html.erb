@@ -1,7 +1,7 @@
 <% if policy(search).show? %>
   <%= link_to(
           fa_icon("eye", :text => t("view")),
-          search_path(search.locale, search.id),
+          search_path(I18n.locale, search.id),
           :class => "btn btn-default btn-xs",
           :target => '_blank') %>
 <% end %>
