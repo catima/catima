@@ -1,7 +1,7 @@
 # Handles extracting data from an item and building a index value that is used
 # for full-text search.
 class Search::Index
-  include Search::Strategies
+  include ::Search::Strategies
 
   attr_reader :item, :locale
   delegate :fields, :to => :item

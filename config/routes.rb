@@ -58,6 +58,9 @@ Rails.application.routes.draw do
     # Favorites
     resources :favorites, :except => [:edit, :show, :new, :update]
 
+    # Searches
+    resources :searches, :except => [:new]
+
     # Group memberships
     resources :memberships, only: %i(index create destroy), path: '_groups'
   end
@@ -159,7 +162,7 @@ Rails.application.routes.draw do
     end
     post ":item_type_slug/upload" => "items#upload", :as => 'item_file_upload'
 
-    get ":item_type_slug/search" => "items#search", :as => "simple_search"
+    post ":item_type_slug/search" => "items#search", :as => "simple_search"
   end
 
   # ===========================================================================
@@ -202,9 +205,9 @@ Rails.application.routes.draw do
     scope :path => "#{catalog_slug}/:locale",
           :constraints => CatalogsController::Constraint do
 
-      if File.exist?(Rails.root.join('catalogs', catalog_slug, 'controllers', "#{catalog_snake_slug}_simple_search_controller.rb"))
+      if File.exist?(Rails.root.join('catalogs', catalog_slug, 'controllers', "#{catalog_snake_slug}_simple_searches_controller.rb"))
         get "search",
-            :controller => "#{catalog_snake_slug}_simple_search",
+            :controller => "#{catalog_snake_slug}_simple_searches",
             :action => :index,
             :as => "#{catalog_snake_slug}_simple_search",
             :catalog_slug => catalog_slug
@@ -221,6 +224,12 @@ Rails.application.routes.draw do
             :controller => "#{catalog_snake_slug}_advanced_searches",
             :action => :show,
             :as => "#{catalog_snake_slug}_advanced_search",
+            :catalog_slug => catalog_slug
+
+        get 'search/simple/:uuid',
+            :controller => "#{catalog_snake_slug}_simple_searches",
+            :action => :show,
+            :as => "#{catalog_snake_slug}_simple_search",
             :catalog_slug => catalog_slug
       end
 
@@ -254,7 +263,13 @@ Rails.application.routes.draw do
   # Generating the default routes.
   scope :path => ":catalog_slug/:locale",
         :constraints => CatalogsController::Constraint do
-    get "search" => "simple_search#index", :as => "simple_search"
+
+    get "search", :to => "simple_searches#new"
+
+    resources :simple_searches,
+              :path => "search/simple",
+              :param => :uuid,
+              :only => [:new, :create, :show]
 
     resources :advanced_searches,
               :path => "search/advanced",

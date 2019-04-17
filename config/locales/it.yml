@@ -75,6 +75,8 @@ it:
         zero: "Your advanced search found no results"
         one: "1 advanced search result"
         other: "%{count_delimited} advanced search results"
+      searches_add: Salve la ricercha
+      searches_remove: Rimuovi dalle ricerche salvate
     text_search_field:
       all_words: tutte le parole
       exact: espressione esatta
@@ -237,9 +239,10 @@ it:
         register: "Iscrizione"
         my_profile: "Il mio profilo"
         my_favorites: "I miei preferiti"
+        my_searches: Le mie ricerche
         my_groups: I miei gruppi
-  simple_search:
-    form:
+  simple_searches:
+    show:
       advanced: "Avanzata"
       submit: "Ricerca"
       placeholder: Ricerca in %{item_type}
@@ -248,6 +251,21 @@ it:
         zero: "Non abbiamo trovato nulla per “%{query}”"
         one: "1 risultato per “%{query}”"
         other: "%{count_delimited} risultati per “%{query}”"
+      searches_add: Salve la ricercha
+      searches_remove: Rimuovi dalle ricerche salvate
+  searches:
+    index:
+      title: Le mie ricerche salvate
+      in_use: spiacente che questa ricerca sia in uso
+    list:
+      empty: "Non hai ancora i ricerche!"
+      empty_for_catalog: "Non hai ancora i ricerche per questo catalogo!"
+      back_to_list: "Torna alla lista"
+      selected_catalog: "Catalogo selezionato"
+    edit:
+      name: Nome
+      edit_search: Modificare la ricerca salvata
+      update_search: Attualizzazione
   helpers:
     help:
       field/url: Un URL completo, compresa la parte http
@@ -284,6 +302,7 @@ it:
   cancel: 'Annulla'
   delete: Elimina
   edit: Modificare
+  view: Visualizzare
   i18n: i18n
   i18n_help: "With i18n enabled, editors will be able to specify a translation of this field for each language (%{languages})"
   i18n_enable: "Enable i18n"
@@ -441,6 +460,16 @@ it:
           help: E-mail che verranno utilizzate per ricevere i messaggi dal modulo di contatto
       item_list_inputs:
         display_style: "Display style of items (automatically adapts to content if nothing is selected)"
+      search_inputs:
+        description:
+          label: Descrizione
+          help: Testo visualizzato sopra i risultati della ricerca per spiegarne il contenuto
+        display_type:
+          label: Tipo di display
+          help: Il modo in cui saranno visualizzati i risultati della ricerca
+        search:
+          label: Ricerca salvata
+          help: I risultati della ricerca che verranno visualizzati
 
     users:
       common_form_fields:
