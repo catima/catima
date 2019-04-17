@@ -115,4 +115,14 @@ class Field::Reference < ::Field
   def search_conditions_as_hash
     []
   end
+
+  def field_value_for_all_item(item)
+    return if item_type.is_a?(Category)
+
+    item_type.primary_text_field&.field_value_for_all_item(item)
+  end
+
+  def sql_type
+    "INT"
+  end
 end

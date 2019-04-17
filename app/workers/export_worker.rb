@@ -4,12 +4,16 @@ class ExportWorker
   include Sidekiq::Worker
 
   def perform(export_id, category)
-    dir = Dir.mktmpdir(SecureRandom.hex)
+    dir = Rails.env.development? ? Rails.root.join('tmp', 'exports') : Dir.mktmpdir(SecureRandom.hex)
     export = find_export(export_id)
 
     case category
     when "catima"
       catima_export(export, dir)
+    when "sql"
+      sql_export(export, dir)
+    when "csv"
+      csv_export(export, dir)
     else
       export.update(status: "error")
     end
@@ -22,7 +26,33 @@ class ExportWorker
   def catima_export(export, dir)
     status = "ready"
     begin
-      CatalogDump.new.dump(export.catalog.slug, dir)
+      Dump::CatalogDump.new.dump(export.catalog.slug, File.join(dir, 'catima'))
+      zip(dir, export.pathname)
+    rescue StandardError => er
+      status = "error"
+      Rails.logger.error "[ERROR] Catalog dump: #{er.message}"
+    end
+    export.update(status: status)
+    send_mail(export)
+  end
+
+  def sql_export(export, dir)
+    status = "ready"
+    begin
+      Dump::SqlDump.new.dump(export.catalog.slug, File.join(dir, 'sql'))
+      zip(dir, export.pathname)
+    rescue StandardError => er
+      status = "error"
+      Rails.logger.error "[ERROR] Catalog dump: #{er.message}"
+    end
+    export.update(status: status)
+    send_mail(export)
+  end
+
+  def csv_export(export, dir)
+    status = "ready"
+    begin
+      Dump::CsvDump.new.dump(export.catalog.slug, File.join(dir, 'csv'))
       zip(dir, export.pathname)
     rescue StandardError => er
       status = "error"

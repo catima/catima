@@ -58,4 +58,18 @@ class Choice < ApplicationRecord
   def assign_uuid
     self.uuid ||= SecureRandom.uuid
   end
+
+  def filterable_category_fields
+    fields = []
+
+    return fields unless category.present? && category.active?
+
+    category.fields.each do |field|
+      next unless field.filterable_field?
+
+      fields << field
+    end
+
+    fields
+  end
 end

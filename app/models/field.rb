@@ -55,6 +55,7 @@ class Field < ApplicationRecord
   include Field::Style
   include HasTranslations
   include HasSlug
+  include HasSqlSlug
   include RankedModel
   include FieldsHelper
   include JsonHelper
@@ -248,6 +249,11 @@ class Field < ApplicationRecord
     raw_value(it) if human_readable?
   end
 
+  # Even non readable. Useful for dumps
+  def field_value_for_all_item(it)
+    raw_value(it)
+  end
+
   # Defines methods and runs class macros on the given item class in order to
   # add validation rules, accessors, etc. for this field. The class in this
   # case is an anonymous subclass of Item.
@@ -311,6 +317,32 @@ class Field < ApplicationRecord
   end
 
   def search_options_as_hash
+  end
+
+  def filterable_field?
+    !is_a?(Field::ChoiceSet) && !is_a?(Field::Reference) && human_readable?
+  end
+
+  def sql_type
+    ""
+  end
+
+  def sql_nullable
+    "#{'NOT ' if required}NULL"
+  end
+
+  def sql_unique
+    "UNIQUE" if unique
+  end
+
+  def sql_default
+    return "" if default_value.blank?
+
+    "DEFAULT '#{default_value}'"
+  end
+
+  def sql_value(item)
+    raw_value(item)
   end
 
   private

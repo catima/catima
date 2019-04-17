@@ -69,4 +69,55 @@ class Field::File < ::Field
   def allows_unique?
     false
   end
+
+  def field_value_for_all_item(item)
+    value = super
+
+    if value.is_a?(Hash)
+      process_single_file(value)
+    elsif value.is_a?(Array)
+      process_multiple_files(value)
+    end
+  end
+
+  def sql_value(item)
+    value = super
+
+    files = []
+    if value.is_a?(Hash) && value["path"].present?
+      value["path"] = value["path"].gsub("upload/#{item.catalog.slug}", "files")
+      files << { :path => value["path"] }
+    elsif value.is_a?(Array) && value.present?
+      value.map do |f|
+        next if f["path"].blank?
+
+        f["path"] = f["path"].gsub("upload/#{item.catalog.slug}", "files")
+        files << { :path => f["path"] }
+      end
+    end
+
+    files.to_json
+  end
+
+  def sql_type
+    "JSON"
+  end
+
+  private
+
+  def process_single_file(value)
+    return if value["path"].blank?
+
+    value["path"]
+  end
+
+  def process_multiple_files(values)
+    return if values.blank?
+
+    values.map do |i|
+      next if i["path"].blank?
+
+      i["path"]
+    end.join('; ')
+  end
 end

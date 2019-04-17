@@ -56,6 +56,29 @@ class Field::Geometry < ::Field
     geo_bounds.slice('xmin', 'xmax', 'ymin', 'ymax')
   end
 
+  def field_value_for_all_item(_it)
+    return if super.blank?
+
+    super["features"].map do |f|
+      "#{f['geometry']['coordinates'][1]},#{f['geometry']['coordinates'][0]}"
+    end.join("; ")
+  end
+
+  def sql_value(_it)
+    return if super.blank?
+
+    coordinates = []
+    super["features"].map do |f|
+      coordinates << { :lat => f['geometry']['coordinates'][1], :lon => f['geometry']['coordinates'][0] }
+    end
+
+    coordinates.to_json
+  end
+
+  def sql_type
+    "JSON"
+  end
+
   private
 
   def build_validators
