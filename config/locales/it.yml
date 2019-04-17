@@ -416,7 +416,7 @@ it:
         bounds: Estensione spaziale predefinita
         bounds_help: Se modificata, la mappa utilizzerà l'area selezionata come estensione spaziale predefinita
         layers: Additional layers
-        layers_help: You can add additional layers to your map (default is the standard tile layer from OpenStreetMap). You can also add custom layers with a valid url (only use this if you know what you do). If layers are added, the first one will be the default layer for your map.
+        layers_help: You can add additional layers to your map (default is the standard tile layer from OpenStreetMap). You can also add custom tile layers with a valid url (only use this if you know what you do - https only). If layers are added, the first one will be the default layer for your map.
         layers_component_no_options: No more layers to add
         layers_component_placeholder: Add layers
       common_form_fields:

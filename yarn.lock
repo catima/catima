@@ -4513,6 +4513,11 @@ leaflet-editable@^1.1.0:
   resolved "https://registry.yarnpkg.com/leaflet-editable/-/leaflet-editable-1.2.0.tgz#a3a01001764ba58ea923381ee6a1c814708a0b84"
   integrity sha512-wG11JwpL8zqIbypTop6xCRGagMuWw68ihYu4uqrqc5Ep0wnEJeyob7NB2Rt5t74Oih4rwJ3OfwaGbzdowOGfYQ==
 
+leaflet-providers@^1.6.0:
+  version "1.6.0"
+  resolved "https://registry.yarnpkg.com/leaflet-providers/-/leaflet-providers-1.6.0.tgz#20a36286dad8756ac139902838136526eaae4f8d"
+  integrity sha512-a/LzpZj5H83pnIyNgLKYT4BeMclc0IF406tth25bz8mEt3RvZmeX6s5aYvkoFG3fQ+Wyj8j8UV2qiLowryWWpQ==
+
 leaflet.path.drag@^0.0.6:
   version "0.0.6"
   resolved "https://registry.yarnpkg.com/leaflet.path.drag/-/leaflet.path.drag-0.0.6.tgz#6d9c3af0b9d7b032544ae16bfde688f0160514a0"

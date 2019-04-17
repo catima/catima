@@ -22,6 +22,6 @@ class Field::GeometryPresenter < FieldPresenter
   end
 
   def geo_viewer
-    @view.render('fields/geometries', features: raw_value['features'])
+    @view.render('fields/geometries', features: raw_value['features'], layers: field.parsed_layers)
   end
 end

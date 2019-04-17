@@ -37,8 +37,8 @@ class Field::Geometry < ::Field
 
   LAYERS = [
     { :label => "OpenStreetMap Standard", :value => "https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png" },
-    { :label => "Other Layer 1", :value => "https://layer1.com" },
-    { :label => "Other Layer 2", :value => "https://layer2.com" }
+    { :label => "OpenTopoMap", :value => "https://{s}.tile.opentopomap.org/{z}/{x}/{y}.png" },
+    { :label => "OpenCycleMap", :value => "https://tile.thunderforest.com/cycle/{z}/{x}/{y}.png?apikey=ca918f61043b433d9beb2557416883bd" }
   ].freeze
 
   def human_readable?
@@ -50,7 +50,7 @@ class Field::Geometry < ::Field
   end
 
   def edit_props
-    { "bounds" => default_bounds }
+    { "bounds" => default_bounds, "layers" => parsed_layers }
   end
 
   def custom_field_permitted_attributes

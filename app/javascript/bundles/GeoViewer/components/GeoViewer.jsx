@@ -1,16 +1,15 @@
 import 'es6-shim';
 import PropTypes from 'prop-types';
 import React from 'react';
-import { Map, TileLayer, LayersControl, BaseLayer, GeoJSON } from 'react-leaflet';
-
+import { Map, TileLayer, LayersControl, GeoJSON } from 'react-leaflet';
 
 const subs = ['a', 'b', 'c'];
-
+const { BaseLayer } = LayersControl;
 
 class GeoViewer extends React.Component {
-
   static propTypes = {
-    features: PropTypes.array.isRequired
+    features: PropTypes.array.isRequired,
+    layers: PropTypes.array
   };
 
   constructor(props){
@@ -20,9 +19,15 @@ class GeoViewer extends React.Component {
       return el != null;
     });
 
+    this.layers = this.props.layers;
+
     this.state = {
       mapHeight: 300,
+      mapZoom: 2,
+      mapMinZoom: 1,
+      mapMaxZoom: 19
     };
+
     this._mapInitialized = false;
 
     this.plainBlueMarker = L.icon({
@@ -154,27 +159,49 @@ class GeoViewer extends React.Component {
 
   render(){
     const center = this.center();
+
+    // Create map layers
+    let layers;
+    if (this.layers.length > 0) {
+      layers = <LayersControl position="topright" collapsed={ true }>
+        { this.layers.map((layer, i) =>
+          <BaseLayer key={ i } checked={ i === 0 } name={ layer.label }>
+            <TileLayer
+              minZoom={ this.props.mapMinZoom }
+              maxZoom={ this.props.mapMaxZoom }
+              subdomains={ subs }
+              attribution={ layer.label }
+              url={ layer.value }
+            />
+          </BaseLayer>
+        )}
+      </LayersControl>
+    } else {
+      layers = <TileLayer
+        attribution='Map data &copy; <a href="http://openstreetmap.org">OpenStreetMap</a> contributors'
+        url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
+        subdomains={ subs }
+        minZoom={ this.props.mapMinZoom }
+        maxZoom={ this.props.mapMaxZoom }
+        attributionUrl='https://www.openstreetmap.org/copyright'
+      />
+    }
+
+    // Create map markers
+    let features = this.features.map((feat, i) =>
+      <GeoJSON key={ i } data={ feat } pointToLayer={ this.pointToLayer } onEachFeature={ this.onEachFeature } />
+    );
+
     return (
       <div className="geoViewer" style={{height: this.state.mapHeight}}>
-        <Map ref="map" center={center} zoom={2} zoomControl={true}>
-            { (this.features.length === 0) &&
-                <div className="messageBox">
-                    <div className="message"><i className="fa fa-info-circle"></i> { this.props.noResultsMessage }</div>
-                </div>
-            }
-          <TileLayer
-            attribution='Map data &copy; <a href="http://openstreetmap.org">OpenStreetMap</a> contributors'
-            url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
-            subdomains={subs}
-            minZoom={1}
-            maxZoom={19}
-            attribution='© OpenStreetMap contributors'
-            attributionUrl='https://www.openstreetmap.org/copyright'
-          />
-          {this.features.map((feat, i) =>
-
-            <GeoJSON key={i} data={feat} pointToLayer={this.pointToLayer} onEachFeature={this.onEachFeature} />
-          )}
+        <Map ref="map" center={ center } zoom={ this.state.mapZoom } zoomControl={ true }>
+          { (this.features.length === 0) &&
+            <div className="messageBox">
+              <div className="message"><i className="fa fa-info-circle"></i> { this.props.noResultsMessage }</div>
+            </div>
+          }
+          { layers }
+          { features }
         </Map>
       </div>
     );

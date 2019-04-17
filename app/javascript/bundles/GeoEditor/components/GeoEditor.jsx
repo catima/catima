@@ -10,12 +10,15 @@ class GeoEditor extends React.Component {
 
   static propTypes = {
     input: PropTypes.string.isRequired,
-    bounds: PropTypes.object
+    bounds: PropTypes.object,
+    layers: PropTypes.array
   };
 
   constructor(props){
     super(props);
     this.input = this.props.input;
+    this.layers = this.props.layers;
+    console.log(this.layers);
     this.bounds = this.props.bounds || {xmin: -60, xmax: 60, ymin: -45, ymax: 60};
     const obj = $(this.input).val();
     this.fc = JSON.parse((obj == '' || obj == null) ? '{"type": "FeatureCollection", "features": []}' : obj);
@@ -255,7 +258,7 @@ class GeoEditor extends React.Component {
     this._addMarkersFromFeatureCollection();
 
     // Display all markers
-    this._map.fitBounds(this._bbox())
+    this._map.fitBounds(this._bbox());
   }
 
   render(){
