@@ -206,9 +206,9 @@ Rails.application.routes.draw do
           :constraints => CatalogsController::Constraint do
 
       if File.exist?(Rails.root.join('catalogs', catalog_slug, 'controllers', "#{catalog_snake_slug}_simple_searches_controller.rb"))
-        get "search",
+        get "search/simple/:uuid",
             :controller => "#{catalog_snake_slug}_simple_searches",
-            :action => :index,
+            :action => :show,
             :as => "#{catalog_snake_slug}_simple_search",
             :catalog_slug => catalog_slug
       end
@@ -224,12 +224,6 @@ Rails.application.routes.draw do
             :controller => "#{catalog_snake_slug}_advanced_searches",
             :action => :show,
             :as => "#{catalog_snake_slug}_advanced_search",
-            :catalog_slug => catalog_slug
-
-        get 'search/simple/:uuid',
-            :controller => "#{catalog_snake_slug}_simple_searches",
-            :action => :show,
-            :as => "#{catalog_snake_slug}_simple_search",
             :catalog_slug => catalog_slug
       end
 
