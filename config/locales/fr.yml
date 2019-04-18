@@ -280,6 +280,7 @@ fr:
       name: Nom
       edit_search: Editer la recherche sauvegardée
       update_search: Mettre à jour
+      success: La recherche a été modifée
   helpers:
     help:
       field/url: Une URL complète, y compris la partie http
@@ -486,9 +487,6 @@ fr:
       item_list_inputs:
         display_style: "Style d'affichage des fiches (s'adapte automatiquement au contenu si rien n'est sélectionné)"
       search_inputs:
-        description:
-          label: Description
-          help: Texte affiché au dessus des résultats de recherche pour les commenter
         display_type:
           label: Type d'affichage
           help: La façon dont les résultats de recherches seront affichés

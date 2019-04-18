@@ -13,7 +13,7 @@ class SearchesController < ApplicationController
 
   def index
     @selected_catalog = find_catalog(params[:catalog])
-    @list = ItemList::SavedSearch.new(:user => current_user)
+    @list = ItemList::SavedSearch.new(:user => current_user, :selected_catalog => @selected_catalog)
     @catalogs = catalogs(@list)
   end
 
@@ -34,7 +34,7 @@ class SearchesController < ApplicationController
     find_search(params[:id])
     authorize(@search)
     if @search.update(search_params)
-      redirect_to searches_path, notice: updated_message
+      redirect_to searches_path, notice: I18n.t("searches.edit.success")
     else
       render 'edit'
     end
@@ -45,7 +45,7 @@ class SearchesController < ApplicationController
     authorize(@search)
 
     search_in_use = Container.where("content->>'search' = ?", @search.uuid).count.positive?
-    return redirect_back fallback_location: searches_path, notice: I18n.t('searches.index.in_use') if search_in_use
+    return redirect_back fallback_location: searches_path, notice: I18n.t("searches.index.in_use") if search_in_use
 
     @search.destroy
     redirect_back fallback_location: searches_path

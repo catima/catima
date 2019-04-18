@@ -265,6 +265,7 @@ de:
       name: Name
       edit_search: Bearbeiten der gespeicherten Suche
       update_search: Aktualisierung
+      success: Die Forschung wurde modifiziert
   helpers:
     help:
       field/url: Eine komplette URL, inklusive den http-Teil
@@ -454,9 +455,6 @@ de:
       item_list_inputs:
         display_style: "Display style of items (automatically adapts to content if nothing is selected)"
       search_inputs:
-        description:
-          label: Beschreibung
-          help: Text, der über den Suchergebnissen angezeigt wird, um den Inhalt zu erklären.
         display_type:
           label: Anzeigeart
           help: Die Art und Weise, wie die Suchergebnisse angezeigt werden

@@ -285,6 +285,7 @@ en:
       name: Name
       edit_search: Edit saved search
       update_search: Update
+      success: The search has been updated
   helpers:
     help:
       field/url: A full URL, including the http part
@@ -491,9 +492,6 @@ en:
       item_list_inputs:
         display_style: "Display style of items (automatically adapts to content if nothing is selected)"
       search_inputs:
-        description:
-          label: Description
-          help: Text displayed above the search results to explain its content
         display_type:
           label: Display type
           help: The way search results will be displayed

@@ -258,6 +258,7 @@ Rails.application.routes.draw do
   scope :path => ":catalog_slug/:locale",
         :constraints => CatalogsController::Constraint do
 
+    # Route for legacy search URL
     get "search", :to => "simple_searches#new"
 
     resources :simple_searches,

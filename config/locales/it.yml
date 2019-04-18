@@ -242,11 +242,11 @@ it:
         my_searches: Le mie ricerche
         my_groups: I miei gruppi
   simple_searches:
-    show:
+    form:
       advanced: "Avanzata"
       submit: "Ricerca"
       placeholder: Ricerca in %{item_type}
-    index:
+    show:
       title:
         zero: "Non abbiamo trovato nulla per “%{query}”"
         one: "1 risultato per “%{query}”"
@@ -266,6 +266,7 @@ it:
       name: Nome
       edit_search: Modificare la ricerca salvata
       update_search: Attualizzazione
+      success: La ricerca è stata modificata
   helpers:
     help:
       field/url: Un URL completo, compresa la parte http
@@ -460,9 +461,6 @@ it:
       item_list_inputs:
         display_style: "Display style of items (automatically adapts to content if nothing is selected)"
       search_inputs:
-        description:
-          label: Descrizione
-          help: Testo visualizzato sopra i risultati della ricerca per spiegarne il contenuto
         display_type:
           label: Tipo di display
           help: Il modo in cui saranno visualizzati i risultati della ricerca
