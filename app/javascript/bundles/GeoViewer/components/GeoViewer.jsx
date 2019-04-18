@@ -19,13 +19,13 @@ class GeoViewer extends React.Component {
       return el != null;
     });
 
-    this.layers = this.props.layers;
+    this.layers = this.props.layers ? this.props.layers : [];
 
     this.state = {
       mapHeight: 300,
       mapZoom: 2,
       mapMinZoom: 1,
-      mapMaxZoom: 19
+      mapMaxZoom: 18
     };
 
     this._mapInitialized = false;
@@ -157,20 +157,22 @@ class GeoViewer extends React.Component {
     }
   }
 
-  render(){
-    const center = this.center();
-
+  renderLayer() {
     // Create map layers
     let layers;
-    if (this.layers.length > 0) {
+    if (this.layers.length === 1) {
+      layers = <TileLayer
+        subdomains={ subs }
+        attribution={ this.layers[0].attribution }
+        url={ this.layers[0].value }
+      />
+    } else if (this.layers.length > 1) {
       layers = <LayersControl position="topright" collapsed={ true }>
         { this.layers.map((layer, i) =>
           <BaseLayer key={ i } checked={ i === 0 } name={ layer.label }>
             <TileLayer
-              minZoom={ this.props.mapMinZoom }
-              maxZoom={ this.props.mapMaxZoom }
               subdomains={ subs }
-              attribution={ layer.label }
+              attribution={ layer.attribution }
               url={ layer.value }
             />
           </BaseLayer>
@@ -181,27 +183,35 @@ class GeoViewer extends React.Component {
         attribution='Map data &copy; <a href="http://openstreetmap.org">OpenStreetMap</a> contributors'
         url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
         subdomains={ subs }
-        minZoom={ this.props.mapMinZoom }
-        maxZoom={ this.props.mapMaxZoom }
         attributionUrl='https://www.openstreetmap.org/copyright'
       />
     }
 
+    return layers;
+  }
+
+  renderMarkers() {
     // Create map markers
     let features = this.features.map((feat, i) =>
-      <GeoJSON key={ i } data={ feat } pointToLayer={ this.pointToLayer } onEachFeature={ this.onEachFeature } />
+        <GeoJSON key={ i } data={ feat } pointToLayer={ this.pointToLayer } onEachFeature={ this.onEachFeature } />
     );
+
+    return features;
+  }
+
+  render(){
+    const center = this.center();
 
     return (
       <div className="geoViewer" style={{height: this.state.mapHeight}}>
-        <Map ref="map" center={ center } zoom={ this.state.mapZoom } zoomControl={ true }>
+        <Map ref="map" center={ center } zoom={ this.state.mapZoom } zoomControl={ true } minZoom={ this.state.mapMinZoom } maxZoom={ this.state.mapMaxZoom } >
           { (this.features.length === 0) &&
             <div className="messageBox">
               <div className="message"><i className="fa fa-info-circle"></i> { this.props.noResultsMessage }</div>
             </div>
           }
-          { layers }
-          { features }
+          { this.renderLayer() }
+          { this.renderMarkers() }
         </Map>
       </div>
     );

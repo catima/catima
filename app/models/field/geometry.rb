@@ -35,12 +35,6 @@
 class Field::Geometry < ::Field
   store_accessor :options, :bounds, :layers
 
-  LAYERS = [
-    { :label => "OpenStreetMap Standard", :value => "https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png" },
-    { :label => "OpenTopoMap", :value => "https://{s}.tile.opentopomap.org/{z}/{x}/{y}.png" },
-    { :label => "OpenCycleMap", :value => "https://tile.thunderforest.com/cycle/{z}/{x}/{y}.png?apikey=ca918f61043b433d9beb2557416883bd" }
-  ].freeze
-
   def human_readable?
     false
   end
@@ -62,7 +56,7 @@ class Field::Geometry < ::Field
     geo_bounds.slice('xmin', 'xmax', 'ymin', 'ymax')
   end
 
-  def parsed_layers
+  def geo_layers
     layers.present? ? JSON.parse(layers) : []
   end
 

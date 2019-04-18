@@ -10,6 +10,7 @@ def setup!
     run  "bundle exec overcommit --install"
     copy "example.env"
     copy "config/database.example.yml"
+    copy "config/geo_layers.example.yml"
     test_local_env_contains_required_keys
     run  "bundle exec rake db:create:all"
     run  "bundle exec rake db:migrate"

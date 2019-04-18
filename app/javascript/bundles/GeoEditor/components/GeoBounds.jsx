@@ -65,7 +65,7 @@ class GeoBounds extends React.Component {
 
   render(){
     return (
-      <div id={this.mapId} style={{height: this.state.mapHeight}}>map</div>
+      <div id={this.mapId} style={{height: this.state.mapHeight}}></div>
     );
   }
 };

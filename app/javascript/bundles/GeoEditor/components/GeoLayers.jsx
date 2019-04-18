@@ -11,7 +11,7 @@ class GeoLayers extends React.Component {
 
   handleSelectChange = (values) => {
     // Keep only the label et value properties
-    let selection = values.map(l => this.getSubset(['label', 'value'], l));
+    let selection = values.map(l => this.getSubset(['label', 'value', 'attribution'], l));
     // Populate the hidden field with the selected values
     document.getElementById('field_layers').value = JSON.stringify(selection);
   };
