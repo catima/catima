@@ -308,7 +308,6 @@ it:
   i18n_enable: "Enable i18n"
   formatted: Formatted
   visible: Visibile
-  not_visible: Non visibile
   plural: Plurale
   slug: Slug
   title: Titolo

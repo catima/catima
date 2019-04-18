@@ -2,10 +2,5 @@
   <h4>
     <%= link_to catalog.name, searches_path(:catalog => catalog.id) %>
     <span class="badge"><%= count.to_s %></span>
-    <% unless catalog.visible? %>
-      <span class="label label-default" style="font-size: 12px;">
-        <%= t("not_visible") %>
-      </span>
-    <% end %>
   </h4>
 <% end %>

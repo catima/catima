@@ -328,7 +328,6 @@ de:
   users: Benutzer
   users+groups: Benutzer & Gruppen
   visible: Sichtbar
-  not_visible: Nicht sichtbar
   role: Rolle
   role-with_groups: Rolle mit Gruppen
   general: Allgemeines

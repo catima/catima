@@ -351,7 +351,6 @@ fr:
   new_user: Nouvel utilisateur
   send_invitation: Envoyer l'invitation
   visible: Visible
-  not_visible: Non visible
   email: E-mail
   role: Rôle
   role-with-groups: Rôle avec les groupes

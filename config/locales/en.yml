@@ -356,7 +356,6 @@ en:
   new_user: New user
   send_invitation: Send invitation
   visible: Visible
-  not_visible: Not visible
   email: Email
   role: Role
   role-with-groups: Role with groups
