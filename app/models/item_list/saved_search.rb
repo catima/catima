@@ -1,8 +1,8 @@
 class ItemList::SavedSearch < ItemList
-  def initialize(user:, page: nil, per: nil)
+  def initialize(user:, selected_catalog:, page: nil, per: nil)
     super(nil, page, per)
     @user = user
-    # @selected_catalog = selected_catalog
+    @selected_catalog = selected_catalog
   end
 
   def unpaginaged_items

@@ -36,7 +36,7 @@ module SearchesHelper
     searches = ::Search.where(:user => user)
     form.collection_select(
       :search,
-      searches,
+      searches.select { |s| s.catalog == catalog },
       :uuid,
       :search_name,
       :label => t(".search.label"),
