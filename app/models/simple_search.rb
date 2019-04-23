@@ -21,7 +21,8 @@ class SimpleSearch < ApplicationRecord
   before_create :assign_locale
   before_create :assign_uuid
 
-  # Maps the SimpleSearch column query with the :q search param. Used for legacy search URL
+  # Maps the SimpleSearch column query with the :q search param.
+  # Used for simple search legacy URLs.
   alias_attribute :q, :query
 
   private

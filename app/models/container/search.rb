@@ -17,7 +17,6 @@ class Container::Search < ::Container
   store_accessor :content, :search, :display_type
 
   validates_presence_of :search
-  validates_presence_of :display_type
 
   def custom_container_permitted_attributes
     %i(search display_type)
