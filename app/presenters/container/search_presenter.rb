@@ -23,6 +23,7 @@ class Container::SearchPresenter < ContainerPresenter
       ::ItemList::SimpleSearchResult.new(
         :catalog => search.catalog,
         :query => search.query,
+        :item_type_slug => options[:type],
         :search_uuid => search_uuid
       )
     else
