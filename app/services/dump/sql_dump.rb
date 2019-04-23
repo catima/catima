@@ -152,7 +152,7 @@ class Dump::SqlDump < ::Dump
 
       columns = "`#{item_type.sql_slug}` #{convert_app_type_to_sql_type(nil)},"
       column_name = "#{field.sql_slug}_#{field.related_item_type.sql_slug}"
-      columns << "`#{column_name}` #{convert_app_type_to_sql_type(field.related_item_type.primary_field)}"
+      columns << "`#{column_name}` #{convert_app_type_to_sql_type(nil)}"
 
       table_name = @holder.guess_table_name(field, "sql_slug")
       tables << create_table(table_name, columns)
@@ -164,7 +164,7 @@ class Dump::SqlDump < ::Dump
   def dump_create_choice_sets_table(choice_set)
     columns = ""
 
-    Choice.columns_hash.each do |col_name, col|
+    Choice.sql_columns.each do |col_name, col|
       columns << "`#{col_name}` #{convert_active_storage_type_to_sql_type(col.type)} #{'NOT NULL' unless col.null},"
     end
 
@@ -222,11 +222,12 @@ class Dump::SqlDump < ::Dump
 
       next if value == "''"
 
-      field.value_for_item(item).each do |_ref|
+      field.value_for_item(item).each do |ref|
         columns = "`#{item.item_type.sql_slug}`, `#{field.sql_slug}_#{field.related_item_type.sql_slug}`"
-        values = "#{value}, #{field.related_item_type.id}"
+        values = "#{value}, #{ref.id}"
+        insert_statement = insert_into(@holder.table_name(field, "sql_slug"), columns, values)
 
-        inserts << insert_into(@holder.table_name(field, "sql_slug"), columns, values)
+        inserts << insert_statement unless inserts.include?(insert_statement)
       end
     end
 
@@ -238,10 +239,10 @@ class Dump::SqlDump < ::Dump
     cat.choice_sets.each do |choice_set|
       choice_set_inserts = ""
       choice_set.choices.each do |choice|
-        columns = Choice.columns_hash.map { |c_name, _c| "`#{c_name}`" }.join(',')
+        columns = Choice.sql_columns.map { |c_name, _c| "`#{c_name}`" }.join(',')
 
         values = ""
-        Choice.columns_hash.each do |column_name, column|
+        Choice.sql_columns.each do |column_name, column|
           value = convert_active_storage_value_to_sql_value(column.type, choice.public_send(column_name))
           values << "#{value}#{', ' unless column_name == Choice.columns_hash.keys.last}"
         end
@@ -320,6 +321,20 @@ class Dump::SqlDump < ::Dump
       end
     end
 
+    alters = render_comment("Single choices")
+    cat.items.each do |item|
+      # Single references and choices
+      fields = item.item_type.fields.select { |field| !field.multiple? && field.is_a?(Field::ChoiceSet) }
+      fields.each do |field|
+        foreign_column_name = 'id'
+
+        table_name = @holder.table_name(item.item_type, "sql_slug")
+        related_table_name = @holder.table_name(field.choice_set, "name")
+        alter = add_foreign_key(table_name, field.sql_slug, related_table_name, foreign_column_name)
+        alters << alter unless alters.include?(alter)
+      end
+    end
+
     alters
   end
 
@@ -337,10 +352,15 @@ class Dump::SqlDump < ::Dump
 
         table_name = @holder.table_name(field, "sql_slug")
         related_table_name = @holder.table_name(item.item_type, "sql_slug")
+        related_item_type_table_name = @holder.table_name(field.related_item_type, "sql_slug")
         alter = add_foreign_key(
           table_name, item.item_type.sql_slug, related_table_name, foreign_column_name
         )
+        alter2 = add_foreign_key(
+          table_name, "#{field.sql_slug}_#{field.related_item_type.sql_slug}", related_item_type_table_name, foreign_column_name
+        )
         alters << alter unless alters.include?(alter)
+        alters << alter2 unless alters.include?(alter2)
       end
     end
 

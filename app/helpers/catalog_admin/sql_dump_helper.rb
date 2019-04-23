@@ -19,7 +19,7 @@ module CatalogAdmin::SqlDumpHelper
   end
 
   def remove_ending_comma!(statement)
-    statement.gsub!(/,$/, '')
+    statement.gsub!(/\ ?,$/, '')
   end
 
   def add_return_carriages!(statement)
@@ -27,6 +27,8 @@ module CatalogAdmin::SqlDumpHelper
   end
 
   def create_table(table_name, columns)
+    # Remove special characters from table names
+    table_name = sanitize(table_name)
     pretty_format_statement(columns)
 
     "CREATE TABLE IF NOT EXISTS `#{table_name}` (\n#{columns}\n);\n\n"
@@ -42,5 +44,9 @@ module CatalogAdmin::SqlDumpHelper
 
   def add_foreign_key(table_name, fk_name, ref_table_name, ref_table_col)
     "ALTER TABLE `#{table_name}` ADD FOREIGN KEY (`#{fk_name}`) REFERENCES `#{ref_table_name}`(`#{ref_table_col}`);\n\n"
+  end
+
+  def sanitize(text)
+    text.gsub(/[^0-9A-Za-z_-]/, '')
   end
 end

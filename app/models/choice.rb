@@ -72,4 +72,16 @@ class Choice < ApplicationRecord
 
     fields
   end
+
+  def self.sql_columns
+    columns = {}
+
+    Choice.columns_hash.each do |column_name, column|
+      next if %w[choice_set_id long_name_old short_name_old catalog_id category_id].include?(column_name)
+
+      columns[column_name] = column
+    end
+
+    columns
+  end
 end

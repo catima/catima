@@ -155,7 +155,7 @@ class Field::DateTime < ::Field
   end
 
   def sql_type
-    "JSON"
+    "VARCHAR(255)"
   end
 
   private

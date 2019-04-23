@@ -1,5 +1,6 @@
 # Model to help with SQL exports and duplicates
 class SQLExport::Holder
+  include CatalogAdmin::SqlDumpHelper
   # tables = { :table_name => id|uuid + class + item_type_slug|id + class + category_name|id + class + choiceset_name... }
   attr_accessor :tables
 
@@ -15,7 +16,7 @@ class SQLExport::Holder
   end
 
   def dump_file_name(catalog)
-    "dump_#{catalog.slug}.sql"
+    "#{catalog.slug}.sql"
   end
 
   def guess_table_name(model, method)
@@ -27,6 +28,7 @@ class SQLExport::Holder
             end
 
     table_name = build_table_name(model, method, index)
+    table_name = sanitize(table_name)
     tables[table_name] = "#{index}_#{model.class.name}_#{model.public_send(method)}"
 
     table_name

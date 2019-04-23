@@ -87,9 +87,10 @@ class Field::Image < ::Field::File
   end
 
   def add_image_hash(images, image, item)
-    images << { :legend => image["legend"] } if image["legend"].present?
-
     image["path"] = image["path"].gsub("upload/#{item.catalog.slug}", "files")
-    images << { :path => image["path"] }
+    img = { :path => image["path"] }
+    img[:legend] = image["legend"] if image["legend"].present?
+
+    images << img
   end
 end
