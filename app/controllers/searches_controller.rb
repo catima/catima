@@ -5,9 +5,9 @@ class SearchesController < ApplicationController
     find_search(params[:id])
 
     if @search.related_search_type == SimpleSearch.name
-      redirect_to simple_search_path(@search.catalog, I18n.locale, :uuid => @search.related_search.uuid)
+      redirect_to simple_search_path(@search.catalog, :locale => params[:locale], :uuid => @search.related_search.uuid)
     else
-      redirect_to advanced_search_path(@search.catalog, I18n.locale, :uuid => @search.related_search.uuid)
+      redirect_to advanced_search_path(@search.catalog, :locale => params[:locale], :uuid => @search.related_search.uuid)
     end
   end
 
