@@ -3,6 +3,7 @@ class Container::SearchPresenter < ContainerPresenter
     search = saved_search
     partial_name = search.is_a?(SimpleSearch) ? "simple_searches/list" : "advanced_searches/list"
 
+    @view.params[:style] = container.content["style"] if container.content["style"].present?
     @view.render(
       "containers/search",
       :container => container,
@@ -24,11 +25,13 @@ class Container::SearchPresenter < ContainerPresenter
         :catalog => search.catalog,
         :query => search.query,
         :item_type_slug => options[:type],
-        :search_uuid => search_uuid
+        :search_uuid => search_uuid,
+        :page => @view.params[:page]
       )
     else
       ::ItemList::AdvancedSearchResult.new(
-        :model => search
+        :model => search,
+        :page => @view.params[:page]
       )
     end
   end
