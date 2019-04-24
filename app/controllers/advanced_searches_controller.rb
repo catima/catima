@@ -50,27 +50,29 @@ class AdvancedSearchesController < ApplicationController
   def create
     build_advanced_search
     if @advanced_search.update(advanced_search_params)
-      # return redirect_back(fallback_location: root_path)
-
       respond_to do |f|
         f.html { redirect_to(:action => :show, :uuid => @advanced_search) }
         f.js do
           params[:uuid] = @advanced_search.uuid
-          find_advanced_search_or_redirect
-          render "show"
+          find_advanced_search
+          render("show")
         end
       end
     else
       render("new")
     end
+  rescue StandardError
+    redirect_to(:action => :new)
   end
 
   def show
-    find_advanced_search_or_redirect
+    find_advanced_search
     @advanced_search_results = ItemList::AdvancedSearchResult.new(
       :model => @saved_search,
       :page => params[:page]
     )
+  rescue StandardError
+    redirect_to(:action => :new)
   end
 
   private
@@ -84,9 +86,8 @@ class AdvancedSearchesController < ApplicationController
     end
   end
 
-  def find_advanced_search_or_redirect
+  def find_advanced_search
     @saved_search = scope.where(:uuid => params[:uuid]).first
-    redirect_to(:action => :new) if @saved_search.nil?
   end
 
   def advanced_search_params

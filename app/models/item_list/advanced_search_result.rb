@@ -24,7 +24,7 @@ class ItemList::AdvancedSearchResult < ItemList
   # Uses the first Geometry Field found among the advanced_search's fields
   def items_as_geojson
     @model.fields.each do |field|
-      next unless field.type_name == "Geometry"
+      next unless field.is_a?(Field::Geometry)
 
       geometry_aware_items = unpaginaged_items.reject { |it| it.data[field.uuid].blank? }
 
