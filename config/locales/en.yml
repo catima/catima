@@ -283,9 +283,11 @@ en:
       selected_catalog: "Selected catalog"
     edit:
       name: Name
-      edit_search: Edit saved search
+      rename_search: Rename the saved search
       update_search: Update
       success: The search has been updated
+    buttons:
+      rename: Rename
   helpers:
     help:
       field/url: A full URL, including the http part

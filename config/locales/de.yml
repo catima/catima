@@ -263,9 +263,11 @@ de:
       selected_catalog: "Ausgewählter Katalog"
     edit:
       name: Name
-      edit_search: Bearbeiten der gespeicherten Suche
+      rename_search: Umbenennen der gespeicherten Suche
       update_search: Aktualisierung
       success: Die Forschung wurde modifiziert
+    buttons:
+      rename: Umbenennen
   helpers:
     help:
       field/url: Eine komplette URL, inklusive den http-Teil

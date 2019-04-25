@@ -278,9 +278,11 @@ fr:
       selected_catalog: "Catalogue sélectionné"
     edit:
       name: Nom
-      edit_search: Editer la recherche sauvegardée
+      rename_search: Renommer la recherche sauvegardée
       update_search: Mettre à jour
       success: La recherche a été modifée
+    buttons:
+      rename: Renommer
   helpers:
     help:
       field/url: Une URL complète, y compris la partie http

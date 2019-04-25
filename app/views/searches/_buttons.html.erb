@@ -7,7 +7,7 @@
 <% end %>
 <% if policy(search).edit? %>
   <%= link_to(
-          fa_icon("pencil", :text => t("edit")),
+          fa_icon("pencil", :text => t(".rename")),
           edit_search_path(search),
           :class => "btn btn-default btn-xs") %>
 <% end %>

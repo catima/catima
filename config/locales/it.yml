@@ -264,9 +264,11 @@ it:
       selected_catalog: "Catalogo selezionato"
     edit:
       name: Nome
-      edit_search: Modificare la ricerca salvata
+      rename_search: Rinominare la ricerca salvata
       update_search: Attualizzazione
       success: La ricerca è stata modificata
+    buttons:
+      rename: Rinomina
   helpers:
     help:
       field/url: Un URL completo, compresa la parte http
