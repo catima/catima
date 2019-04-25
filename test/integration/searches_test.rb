@@ -37,7 +37,7 @@ class SearchesTest < ActionDispatch::IntegrationTest
     click_on("Save search")
     visit("/en/searches")
     assert(page.has_content?("Show"))
-    assert(page.has_content?("Edit"))
+    assert(page.has_content?("Rename"))
     assert(page.has_content?("Remove from saved searches"))
   end
 
