@@ -490,11 +490,11 @@ fr:
         display_style: "Style d'affichage des fiches (s'adapte automatiquement au contenu si rien n'est sélectionné)"
       search_inputs:
         display_type:
-          label: Type d'affichage
-          help: La façon dont les résultats de recherches seront affichés
+          label: Style
+          help: "Style d'affichage des fiches (s'adapte automatiquement au contenu si rien n'est sélectionné)"
         search:
           label: Recherche sauvergardée
-          help: Les résultats de recherche qui seront affichés
+          help: Veuillez sélectionner la recherche sauvegardée à afficher.
 
     csv_imports:
       new:

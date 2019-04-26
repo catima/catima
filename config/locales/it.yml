@@ -464,11 +464,11 @@ it:
         display_style: "Display style of items (automatically adapts to content if nothing is selected)"
       search_inputs:
         display_type:
-          label: Tipo di display
-          help: Il modo in cui saranno visualizzati i risultati della ricerca
+          label: Style
+          help: "Display style of items (automatically adapts to content if nothing is selected)"
         search:
-          label: Ricerca salvata
-          help: I risultati della ricerca che verranno visualizzati
+          label: Saved search
+          help: Please select the saved search to be displayed.
 
     users:
       common_form_fields:

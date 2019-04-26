@@ -458,11 +458,11 @@ de:
         display_style: "Display style of items (automatically adapts to content if nothing is selected)"
       search_inputs:
         display_type:
-          label: Anzeigeart
-          help: Die Art und Weise, wie die Suchergebnisse angezeigt werden
+          label: Style
+          help: "Display style of items (automatically adapts to content if nothing is selected)"
         search:
-          label: Gespeicherte Suche
-          help: Die Suchergebnisse, die angezeigt werden.
+          label: Saved search
+          help: Please select the saved search to be displayed.
 
     csv_imports:
       new:

@@ -495,11 +495,11 @@ en:
         display_style: "Display style of items (automatically adapts to content if nothing is selected)"
       search_inputs:
         display_type:
-          label: Display type
-          help: The way search results will be displayed
+          label: Style
+          help: "Display style of items (automatically adapts to content if nothing is selected)"
         search:
           label: Saved search
-          help: The search results that will be displayed
+          help: Please select the saved search to be displayed.
 
     csv_imports:
       new:
