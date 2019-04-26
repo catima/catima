@@ -61,7 +61,7 @@ class CatalogAdmin::ContainersTest < ActionDispatch::IntegrationTest
     click_on("Search")
 
     fill_in("Slug", :with => "book-search")
-    select("list", :from => "Display type")
+    select("list", :from => "Style")
     select("book search", :from => "Saved search")
     click_on("Create container")
 
