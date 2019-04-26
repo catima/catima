@@ -55,6 +55,10 @@ class AdvancedSearchesController < ApplicationController
         f.js do
           params[:uuid] = @advanced_search.uuid
           find_advanced_search
+          @advanced_search_results = ItemList::AdvancedSearchResult.new(
+            :model => @saved_search,
+            :page => params[:page]
+          )
           render("show")
         end
       end
