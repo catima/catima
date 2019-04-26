@@ -44,7 +44,7 @@ class Field::Geometry < ::Field
   end
 
   def edit_props
-    { "bounds" => default_bounds, "layers" => parsed_layers }
+    { "bounds" => default_bounds, "layers" => geo_layers }
   end
 
   def custom_field_permitted_attributes

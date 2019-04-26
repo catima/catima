@@ -5,6 +5,8 @@ import L from "leaflet";
 import "leaflet.path.drag";
 import "leaflet-editable";
 
+const subs = ['a', 'b', 'c'];
+
 class GeoBounds extends React.Component {
   static propTypes = {
     bounds: PropTypes.object
@@ -12,12 +14,42 @@ class GeoBounds extends React.Component {
 
   constructor(props){
     super(props);
+    this.layers = this.props.layers ? this.props.layers : [];
     this.bounds = this.bbox();
     this.mapId = 'geo-bounds-map';
     this.map = null;
     this.state = {
       mapHeight: 300
     };
+  }
+
+  _initLayers(map){
+    if (this.layers.length === 1) {
+      this.layers.forEach((layer) => {
+        L.tileLayer(layer.value, {
+          subdomains: subs,
+          attribution: layer.attribution
+        }).addTo(map);
+      });
+    } else if (this.layers.length > 1) {
+      let baseMaps = {};
+
+      this.layers.forEach((layer) => {
+        baseMaps[layer.label] = L.tileLayer(layer.value, {
+          subdomains: subs,
+          attribution: layer.attribution
+        });
+      });
+
+      Object.values(baseMaps)[0].addTo(map);
+
+      L.control.layers(baseMaps, {}).addTo(map);
+    } else {
+      L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+        subdomains: subs,
+        attribution: 'Map data &copy; <a href="http://openstreetmap.org">OpenStreetMap</a> contributors'
+      }).addTo(map);
+    }
   }
 
   bbox(){
@@ -34,10 +66,9 @@ class GeoBounds extends React.Component {
 
   createMap(){
     this.map = L.map(this.mapId, {editable: true}).fitBounds(this.bounds, {padding: [10,10]});
-    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-      attribution: '',
-      maxZoom: 19
-    }).addTo(this.map);
+
+    // Initialize map layers & layer control if needed
+    this._initLayers(this.map);
   }
 
   drawBounds(){

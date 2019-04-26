@@ -6,7 +6,10 @@
     :help => t(".bounds_help")
 ) do %>
   <%= f.hidden_field(:bounds) %>
-  <%= react_component('GeoBounds', props: { bounds: f.object.default_bounds(-145, 185, -60, 70) }) %>
+  <%= react_component('GeoBounds', props: {
+      bounds: f.object.default_bounds(-145, 185, -60, 70),
+      layers: f.object.geo_layers
+  }) %>
 <% end %>
 <h4 style="margin-top:20px;"><%= t(".layers") %></h4>
 <%= f.form_group(
