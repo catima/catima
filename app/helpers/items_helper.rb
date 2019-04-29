@@ -97,6 +97,6 @@ module ItemsHelper
 
     referer[:item_type_slug].eql? item.item_type.slug
   rescue StandardError
-    return false
+    false
   end
 end
