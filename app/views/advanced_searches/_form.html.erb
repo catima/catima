@@ -20,7 +20,9 @@
         <% displayable_fields(@fields).each_with_index do |field, i| %>
           <%= render_advanced_search_field(f, field, i) do |content| %>
             <tr>
-              <th><%= field.name %></th>
+              <th style="width: 25%;">
+                <%= field.name %>
+              </th>
               <td>
                 <div class="row">
                   <%= content %>
