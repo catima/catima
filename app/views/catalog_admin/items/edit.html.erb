@@ -3,7 +3,7 @@
 <% provide(:actions) do %>
   <% if referer_with_same_item_type?(@item) %>
     <span>
-      <%= link_to t('.back'), @back_to_list %>
+      <a href="#" onclick="window.history.go(-1); return false;" type="button"><%= t('.back') %></a>
     </span> |
   <% end %>
 

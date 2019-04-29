@@ -90,11 +90,13 @@ module ItemsHelper
   def referer_with_same_item_type?(item)
     return false unless request.referer
 
-    referer = Rails.application.routes.recognize_path(URI(request.referer).path)
+    referer = Rails.application.routes.recognize_path(URI(request.referer).path, method: :post)
     return false if referer.key?(:id)
 
     return false unless referer.key?(:item_type_slug)
 
     referer[:item_type_slug].eql? item.item_type.slug
+  rescue StandardError
+    return false
   end
 end
