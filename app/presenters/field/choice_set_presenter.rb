@@ -1,23 +1,34 @@
 class Field::ChoiceSetPresenter < FieldPresenter
-  delegate :choices, :selected_choices, :selected_choice?, :to => :field
-  delegate :select2_select, :browse_similar_items_link, :content_tag,
-           :to => :view
+  delegate :choices, :selected_choices, :selected_choices_as_hash, :selected_choice?, :to => :field
+  delegate :browse_similar_items_link_with_tooltip, :content_tag, :to => :view
 
   def input(form, method, options={})
     category = field.belongs_to_category? ? "data-field-category=\"#{field.category_id}\"" : ''
     [
       '<div class="form-component">',
         "<div class=\"row\" #{category} data-choice-set=\"#{field.choice_set.id}\" data-field=\"#{field.id}\">",
+          "<div class=\"col-xs-12\">",
+                  form.label(field.label),
+              "</div>",
+          "</div>",
+          "<div class=\"row choice-set-editor\" #{category} data-choice-set=\"#{field.choice_set.id}\" data-field=\"#{field.id}\">",
           '<div class="col-xs-8">',
-            select2_select(
-              form,
-              method,
-              nil,
-              input_defaults(options).merge(:multiple => field.multiple?),
-              &method(:options_for_select)
+            react_component('ChoiceSetEditor',
+              props: {
+                catalog: field.catalog.slug,
+                itemType: field.item_type.slug,
+                items: field.search_data_as_hash,
+                searchPlaceholder: t('advanced_searches.fields.choice_set_search_field.select_placeholder'),
+                srcId: "item_#{field.uuid}",
+                srcRef: "item_#{field.uuid}",
+                inputName: "item[#{field.uuid}_json]",
+                inputDefaults: selected_choices_as_hash(@item),
+                multiple: field.multiple?
+              },
+              prerender: false
             ),
           '</div>',
-          '<div class="col-xs-4" style="padding-top: 25px; margin-left: -15px;">',
+          '<div class="col-xs-4 btn-add-choiceset">',
             '<a class="btn btn-sm btn-default" style="color: #aaa;" data-toggle="modal" data-target="#choice-modal-'+method+'" href="#">',
               '<span class="glyphicon glyphicon-plus"></span>',
             '</a>',
@@ -33,8 +44,9 @@ class Field::ChoiceSetPresenter < FieldPresenter
 
     choices.map do |choice|
       value_slug = [I18n.locale, choice.short_name].join("-")
-      browse_similar_items_link(
-        choice.long_display_name, item, field, value_slug
+      tootltip_title = choice.top_parent_to_self.join(' > ')
+      browse_similar_items_link_with_tooltip(
+        choice.long_display_name, item, field, value_slug, tootltip_title
       )
     end.join(", ").html_safe
   end

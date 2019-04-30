@@ -22,6 +22,8 @@ import ThumbnailControl from '../bundles/ThumbnailControl/components/ThumbnailCo
 
 import TranslatedTextField from '../bundles/TranslatedTextField/components/TranslatedTextField';
 
+import ChoiceSetInput from '../bundles/ChoiceSetInput/components/ChoiceSetInput';
+import ChoiceSetEditor from '../bundles/ChoiceSetEditor/components/ChoiceSetEditor';
 
 ReactOnRails.register({
   DateTimeInput,
@@ -31,4 +33,5 @@ ReactOnRails.register({
   ReferenceEditor, SingleReferenceEditor, MultiReferenceEditor,
   ThumbnailControl,
   TranslatedTextField,
+  ChoiceSetInput, ChoiceSetEditor
 });

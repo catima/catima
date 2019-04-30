@@ -37,6 +37,8 @@ class Field::ChoiceSet < ::Field
 
   belongs_to :choice_set, :class_name => "::ChoiceSet"
 
+  delegate :search_data_as_hash, :to => :choice_set
+
   validates_presence_of :choice_set
   validates_inclusion_of :choice_set,
                          :in => :choice_set_choices,
@@ -95,6 +97,8 @@ class Field::ChoiceSet < ::Field
   end
 
   def describe
+    return super if choice_set.blank?
+
     super.merge("choice_set": choice_set.uuid)
   end
 
@@ -128,6 +132,12 @@ class Field::ChoiceSet < ::Field
     false
   end
 
+  def search_options_as_hash
+    [
+      { :multiple => multiple? }
+    ]
+  end
+
   def search_data_as_hash
     choices_as_options = []
 
@@ -145,6 +155,15 @@ class Field::ChoiceSet < ::Field
     [
       { :multiple => multiple? }
     ]
+  end
+
+  def selected_choices_as_hash(item)
+    choices_as_options = []
+
+    selected_choices(item).each do |choice|
+      option = { :value => choice.id, :label => choice.short_name }
+      choices_as_options << option
+    end
   end
 
   private

@@ -39,6 +39,17 @@ CREATE FUNCTION public.bigdate_to_num(json) RETURNS numeric
 
 
 --
+-- Name: strip_tags(text); Type: FUNCTION; Schema: public; Owner: -
+--
+
+CREATE FUNCTION public.strip_tags(text) RETURNS text
+    LANGUAGE sql
+    AS $_$
+          SELECT regexp_replace($1, '<[^>]*>', '', 'g')
+          $_$;
+
+
+--
 -- Name: validate_geojson(text); Type: FUNCTION; Schema: public; Owner: -
 --
 
@@ -69,10 +80,10 @@ CREATE TABLE public.advanced_search_configurations (
     title_translations jsonb,
     description jsonb,
     slug character varying,
-    search_type character varying DEFAULT 'default'::character varying,
     fields jsonb DEFAULT '{}'::jsonb,
     created_at timestamp without time zone NOT NULL,
-    updated_at timestamp without time zone NOT NULL
+    updated_at timestamp without time zone NOT NULL,
+    search_type character varying DEFAULT 'default'::character varying NOT NULL
 );
 
 
@@ -304,7 +315,10 @@ CREATE TABLE public.choices (
     long_name_translations json,
     catalog_id integer,
     category_id integer,
-    uuid character varying
+    uuid character varying,
+    parent_id bigint,
+    synonyms jsonb,
+    row_order integer
 );
 
 
@@ -1405,6 +1419,13 @@ CREATE INDEX index_choices_on_choice_set_id ON public.choices USING btree (choic
 
 
 --
+-- Name: index_choices_on_parent_id; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX index_choices_on_parent_id ON public.choices USING btree (parent_id);
+
+
+--
 -- Name: index_choices_on_uuid_and_choice_set_id; Type: INDEX; Schema: public; Owner: -
 --
 
@@ -2065,5 +2086,9 @@ INSERT INTO "schema_migrations" (version) VALUES
 ('20181207145518'),
 ('20181210123619'),
 ('20181214095728'),
+('20190201141740'),
 ('20190215124856'),
-('20190215125849');
+('20190215125849'),
+('20190404113244');
+
+

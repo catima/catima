@@ -26,7 +26,21 @@ module ItemsHelper
         :item_type_slug => item.item_type,
         :locale => I18n.locale,
         field.slug => value
-      ))
+      )
+    )
+  end
+
+  def browse_similar_items_link_with_tooltip(label, item, field, value, tooltip_title)
+    link_to(
+      label,
+      items_path(
+        :catalog_slug => item.catalog,
+        :item_type_slug => item.item_type,
+        :locale => I18n.locale,
+        field.slug => value
+      ),
+      "data-toggle" => "tooltip", "data-placement" => "top", "title" => tooltip_title
+    )
   end
 
   def item_has_thumbnail?(item)
