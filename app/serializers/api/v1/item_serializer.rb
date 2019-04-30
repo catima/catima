@@ -25,7 +25,7 @@ class API::V1::ItemSerializer < ActiveModel::Serializer
   attribute(:views) do
     {
       map_popup: ApplicationController.render(
-        :partial => 'containers/map_popup_content',
+        :partial => 'shared/modals/map_popup_content',
         :assigns => {
           :item => object
         }
