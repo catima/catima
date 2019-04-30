@@ -21,8 +21,9 @@
     props: {
       layers: f.object.geo_layers,
       options: load_geo_layers,
+      inputId: "field_layers",
       placeholder: t(".layers_component_placeholder"),
-      noOptionsMessage: t(".layers_component_no_options"),
+      noOptionsMessage: t(".layers_component_no_options")
     },
     prerender: false) %>
 <% end %>

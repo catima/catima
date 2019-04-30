@@ -2,6 +2,7 @@ import 'es6-shim';
 import PropTypes from 'prop-types';
 import React from 'react';
 import { Map, TileLayer, LayersControl, GeoJSON } from 'react-leaflet';
+import MarkerClusterGroup from 'react-leaflet-markercluster';
 
 const subs = ['a', 'b', 'c'];
 const { BaseLayer } = LayersControl;
@@ -211,7 +212,9 @@ class GeoViewer extends React.Component {
             </div>
           }
           { this.renderLayer() }
-          { this.renderMarkers() }
+          <MarkerClusterGroup showCoverageOnHover={ true }>
+            { this.renderMarkers() }
+          </MarkerClusterGroup>
         </Map>
       </div>
     );
