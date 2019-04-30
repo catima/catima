@@ -1,0 +1,10 @@
+.btn-add-choiceset {
+    margin-left: -15px;
+    min-height: 38px;
+    line-height: 38px;
+    vertical-align: middle;
+}
+
+.form-component .choice-set-editor.row {
+    margin-top: 0;
+}

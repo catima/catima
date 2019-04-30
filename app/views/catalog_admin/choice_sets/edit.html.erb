@@ -1,17 +1,24 @@
 <% provide(:title, t(".edit_choice_set")) %>
 
+<% provide(:actions) do %>
+  <%= link_to(catalog_admin_choice_set_synonyms_path(:choice_set_id => @choice_set.id)) do %>
+    <%= fa_icon(:"plus-square", :text => t(".edit_synonyms")) %>
+  <% end %>
+<% end %>
+
 <div class="panel-body">
   <%= bootstrap_form_for(
-        @choice_set,
-        :url => catalog_admin_choice_set_path) do |f| %>
+    @choice_set,
+    :url => catalog_admin_choice_set_path) do |f| %>
 
     <%= render("common_form_fields", :f => f) %>
 
-    <%= f.primary(t(".update_choice_set")) %>
-    <%= link_to(
-          t("cancel"),
-          catalog_admin_choice_sets_path,
-          :class => "btn btn-link") %>
-
+      <div class="col-md-12">
+          <%= f.primary(t(".update_choice_set")) %>
+          <%= link_to(
+                t("cancel"),
+                catalog_admin_choice_sets_path,
+                :class => "btn btn-link") %>
+      </div>
   <% end %>
 </div>

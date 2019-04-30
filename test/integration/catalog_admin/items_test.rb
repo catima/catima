@@ -26,9 +26,20 @@ class CatalogAdmin::ItemsTest < ActionDispatch::IntegrationTest
 
     first('#item_one_author_other_collaborators_uuid_json-editor-select').click
 
-    select("Eng", :from => "Language")
-    select("Eng", :from => "Other Languages")
-    select("Spanish", :from => "Other Languages")
+    within("#item_one_author_language_uuid_container") do
+      find("span.ant-select-selection.ant-select-selection--single").click # Click on the filter input
+    end
+    within("div.ant-select-dropdown:not(.ant-select-dropdown-hidden)") do
+      find("span", text: "Eng", :match => :first).click
+    end
+
+    within("#item_one_author_other_languages_uuid_container") do
+      find("span.ant-select-selection.ant-select-selection--multiple").click # Click on the filter input
+    end
+    within("div.ant-select-dropdown--multiple:not(.ant-select-dropdown-hidden)") do
+      find("span", text: "Eng", :match => :first).click
+      find("span", text: "Spanish", :match => :first).click
+    end
     page.execute_script(
       "document.getElementById('item_one_author_birth_time_uuid_json').value = " \
         "'{\"Y\":2015, \"M\":12, \"D\":31, \"h\":14, \"m\":30, \"s\":17}';"
@@ -94,9 +105,16 @@ class CatalogAdmin::ItemsTest < ActionDispatch::IntegrationTest
 
     fill_in("Name", :with => "Changed by test")
 
-    add_single_reference('#item_one_author_collaborator_uuid_json-editor', 'Very Old')
+    add_single_reference("#item_one_author_collaborator_uuid_json-editor", 'Very Old')
+    find("body").click
 
-    select("Eng", :from => "Language")
+    within("#item_one_author_language_uuid_container") do
+      find("span.ant-select-selection.ant-select-selection--single").click # Click on the filter input
+    end
+
+    within("div.ant-select-dropdown:not(.ant-select-dropdown-hidden)") do
+      find("span", text: "Eng", :match => :first).click
+    end
 
     assert_no_difference("Item.count") do
       click_on("Save Author")

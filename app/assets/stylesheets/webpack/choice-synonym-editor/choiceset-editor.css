@@ -1,0 +1,15 @@
+.synonym-container .select-container {
+    margin-bottom: 15px;
+}
+
+.synonym-container .col-md-6 {
+    margin-bottom: 15px;
+}
+
+.synonym-container .icon-container a:hover {
+    cursor: pointer;
+}
+
+.synonym-container .ant-select-selection__placeholder {
+    position: relative;
+}

@@ -12,13 +12,8 @@ class AdvancedSearch::ChoiceSetFieldTest < ActionDispatch::IntegrationTest
       click_on("Vehicle")
     end
 
-    within("#advanced_search_criteria_search_vehicle_style_uuid_0_id") do
-      find(".css-vj8t7z").click # Click on the filter input
-
-      within(".css-11unzgr") do # Within the filter list
-        find('div', text: "Sedan", match: :first).click
-      end
-    end
+    find("span.ant-select-arrow").click # Click on the filter input
+    find("span", text: "Sedan", match: :first).click
 
     click_on("Search")
 
@@ -36,27 +31,17 @@ class AdvancedSearch::ChoiceSetFieldTest < ActionDispatch::IntegrationTest
     end
 
     within all(".choiceset-search-container")[1] do
-      within("#advanced_search_criteria_one_author_other_languages_uuid_0_id") do
-        find(".css-vj8t7z").click # Click on the filter input
-
-        within(".css-11unzgr") do # Within the filter list
-          find('div', text: "Spanish", match: :first).click
-        end
-      end
-
       find(".fa.fa-plus").click
+      find("span.ant-select-arrow").click # Click on the filter input
     end
+    find("span", text: "Spanish", match: :first).click
 
     select("exclude", :from => "advanced_search[criteria][one_author_other_languages_uuid][1][field_condition]")
 
     within all(".choiceset-search-container")[2] do
-      within("#advanced_search_criteria_one_author_other_languages_uuid_1_id") do
-        find(".css-vj8t7z").click # Click on the filter input
-        within(".css-11unzgr") do # Within the filter list
-          find('div', text: "French", match: :first).click
-        end
-      end
+      find("span.ant-select-arrow").click # Click on the filter input
     end
+    find("span", text: "French", match: :first).click
 
     click_on("Search")
 
@@ -73,24 +58,21 @@ class AdvancedSearch::ChoiceSetFieldTest < ActionDispatch::IntegrationTest
       click_on("Author")
     end
 
-    within("#advanced_search_criteria_one_author_language_uuid_0_id") do
-      find(".css-vj8t7z").click # Click on the filter input
-
-      within(".css-11unzgr") do # Within the filter list
-        find('div', text: "French", match: :first).click
-      end
+    within all(".choiceset-search-container")[0] do
+      find("span.ant-select-arrow").click # Click on the filter input
     end
+    find("span", text: "French", match: :first).click
 
     within("#advanced_search_criteria_one_author_language_uuid_0_id_condition") do
-      find(".css-vj8t7z").click # Click on the filter input
+      find(".select__indicators").click # Click on the filter input
+    end
 
-      within(".css-11unzgr") do # Within the filter list
-        find('div', text: "Language origin", match: :first).click
-      end
+    within(".select__menu") do
+      all("div")[1].click
     end
 
     fill_in(
-      "advanced_search[criteria][one_author_language_uuid][0][category_criteria][all_words]",
+      "advanced_search[criteria][one_author_language_uuid][0][category_criteria][exact]",
       :with => 'latin'
     )
 

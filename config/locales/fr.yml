@@ -460,8 +460,9 @@ fr:
         category_optional: 'Sous-fiche (optionnel)'
         add_choice: 'Ajouter choix'
       edit:
-        edit_choice_set: Edit choice set
-        update_choice_set: Update choice set
+        edit_choice_set: Modifier l'ensemble de choix
+        update_choice_set: Mettre à jour l'ensemble de choix
+        edit_synonyms: Synonymes
       index:
         choice_sets: Ensembles de choix
         new_choice_set: "Nouvel ensemble de choix"
@@ -471,6 +472,11 @@ fr:
       new:
         new_choice_set: "Nouvel ensemble de choix"
         create_choice_set: Créer ensemble de choix
+      synonyms:
+        title: "Synonymes de l'ensemble de choix %{choice_set_name}"
+        add: Ajouter un synonyme
+        choice_placeholder: Sélectionner un choix
+        save: Enregister
 
     containers:
       item_type_warning: "Vous devez créer au moins un type de fiche pour utiliser ce type de conteneur"

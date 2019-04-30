@@ -2,6 +2,7 @@
   "dependencies": {
     "@babel/core": "^7.0.0-0",
     "@babel/preset-react": "^7.0.0",
+    "antd": "^3.12.4",
     "@claviska/jquery-minicolors": "^2.2.6",
     "@rails/webpacker": "4.0.2",
     "axios": "^0.17.1",
@@ -22,6 +23,7 @@
     "leaflet": "^1.2.0",
     "leaflet-draw": "^0.4.13",
     "leaflet-editable": "^1.1.0",
+    "less-loader": "^4.1.0",
     "leaflet.markercluster": "^1.4.1",
     "leaflet.path.drag": "^0.0.6",
     "mammoth": "git://github.com/catima/mammoth.js.git#b789554",
@@ -39,6 +41,7 @@
     "react-fontawesome": "^1.6.1",
     "react-image-crop": "^3.0.7",
     "react-image-lightbox": "^4.3.0",
+    "react-nestable": "^1.1.0",
     "react-leaflet": "^1.7.8",
     "react-leaflet-draw": "^0.18.0",
     "react-leaflet-markercluster": "^1.1.8",

@@ -467,6 +467,7 @@ en:
       edit:
         edit_choice_set: Edit choice set
         update_choice_set: Update choice set
+        edit_synonyms: Synonyms
       index:
         choice_sets: Choice sets
         new_choice_set: "New choice set"
@@ -476,6 +477,11 @@ en:
       new:
         new_choice_set: "New choice set"
         create_choice_set: Create choice set
+      synonyms:
+        title: "%{choice_set_name} choice set's synonyms"
+        add: Add a synonym
+        choice_placeholder: Select a choice
+        save: Save
 
     containers:
       item_type_warning: "You need to create at least one item type to use this type of container"

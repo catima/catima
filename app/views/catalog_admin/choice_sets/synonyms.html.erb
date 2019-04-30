@@ -1,0 +1,33 @@
+<% provide(:title, t(".title", :choice_set_name => @field.name)) %>
+
+
+<div class="panel-body">
+  <%= bootstrap_form_for(
+    @field,
+    :url => catalog_admin_choice_set_update_synonyms_path) do |f| %>
+
+      <div class="row">
+        <div class="col-md-12">
+          <%=
+              react_component('ChoiceSynonymEditorContainer',
+                props: {
+                  choices: @field.search_data_as_hash,
+                  synonyms: @field.synonyms,
+                  available_languages: @field.catalog.valid_locales,
+                  add_synonym_label: t(".add"),
+                  select_placeholder: t(".choice_placeholder")
+                },
+                prerender: false)
+          %>
+        </div>
+      </div>
+
+      <div class="col-md-12">
+          <%= f.primary(t(".save")) %>
+          <%= link_to(
+                t("cancel"),
+                edit_catalog_admin_choice_set_path(:id => @field.id),
+                :class => "btn btn-link") %>
+      </div>
+  <% end %>
+</div>

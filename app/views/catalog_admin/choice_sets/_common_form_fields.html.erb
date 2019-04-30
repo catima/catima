@@ -1,37 +1,35 @@
-<%= f.text_field(:name) %>
-
+<div class="panel-body">
+    <div class="row">
+        <div class="col-md-12"><%= f.text_field(:name) %></div>
+    </div>
+</div>
 <hr>
 
-<div id="choices">
-  <label><%= t('.choices') %></label>
-
-  <table class="table table-hover">
-    <thead>
-      <th><%= t('.short_name') %></th>
-      <th><%= t('.long_name_optional') %></th>
-      <th>
-        <% if catalog.categories.any? %>
-          <%= t('.category_optional') %>
-        <% end %>
-      </th>
-      <th></th>
-    </thead>
-    <tbody>
-      <%= f.fields_for(:choices) do |choice| %>
-        <%= render("catalog_admin/choice_sets/choice_fields", :f => choice) %>
-      <% end %>
-      <tr data-link="choices">
-        <td colspan="4">
-          <%= link_to_add_association(
-                fa_icon(:"plus-square", :text => t(".add_choice")),
-                f,
-                :choices,
-                :class => "btn btn-text",
-                :"data-association-insertion-node" => "[data-link='choices']",
-                :partial => 'catalog_admin/choice_sets/choice_fields'
-              ) %>
-        </td>
-      </tr>
-    </tbody>
-  </table>
+<div class="panel-body">
+  <div class="row">
+    <div class="col-md-12">
+      <%= react_component('ChoiceSetInput',
+        props: {
+          data: @field.describe,
+          category_options: @field.catalog.categories,
+          available_locales: @field.catalog.valid_locales,
+          shortInputName: "choice_set[choices_attributes][0][short_name_en]",
+          longInputName: "choice_set[choices_attributes][0][long_name_en]",
+          categoryInputName: "choice_set[choices_attributes][0][category_id]",
+          srcShortId: "choice_set_choices_attributes_0_short_name_en",
+          srcLongId: "choice_set_choices_attributes_0_long_name_en",
+          srcCategoryId: "choice_set_choices_attributes_0_category_id",
+          choiceNameLabel: t('.choices'),
+          shortNameLabel: t('.short_name'),
+          longNameLabel: t('.long_name_optional'),
+          categoryNameLabel: t('.category_optional'),
+          updateButtonLabel: t(".update_choice_set"),
+          cancelButtonLabel: t(".cancel"),
+          addChoiceLabel: t(".add_choice"),
+          removeChoiceLabel: "Remove",
+          addChildrenChoiceLabel: "Add children",
+        },
+        prerender: false) %>
+    </div>
+  </div>
 </div>
