@@ -1,6 +1,7 @@
 import 'es6-shim';
 import PropTypes from 'prop-types';
 import React from 'react';
+import axios from 'axios';
 import { Map, TileLayer, LayersControl, GeoJSON } from 'react-leaflet';
 import MarkerClusterGroup from 'react-leaflet-markercluster';
 import 'react-leaflet-markercluster/dist/styles.min.css';
@@ -33,12 +34,6 @@ class GeoContainerViewer extends React.Component {
         de: "Laden...",
         it: "Carico..."
       },
-      "view_item": {
-        fr: "Consulter la fiche",
-        en: "View item",
-        de: "Element anschauen",
-        it: "Consultare l'oggetto"
-      },
       "error": {
         fr: "Erreur. Impossible de charger l'objet.",
         en: "Error. Unable to load item data.",
@@ -69,26 +64,26 @@ class GeoContainerViewer extends React.Component {
   componentDidMount(){
     this._map = this.refs.map.leafletElement;
     this._mapElement = this.refs.map;
+    this.flyToMarkersBounds();
+  }
+
+  flyToMarkersBounds() {
+    const bbox = this.bbox();
+    const w = bbox[1] - bbox[0], h = bbox[3] - bbox[2];
+    this._map.invalidateSize();
+    this._map.flyToBounds([
+      [bbox[2] - 0.2*h, bbox[0] - 0.2*w],
+      [bbox[3] + 0.2*h, bbox[1] + 0.2*w]
+    ], { duration: 0.5, maxZoom: 10 });
   }
 
   center(){
     const minmax = this.bbox();
-    console.log(minmax);
     return [ (minmax[0] + minmax[1]) / 2, (minmax[2] + minmax[3]) / 2 ];
   }
 
   bbox(){
-    let coords = [];
-
-    this.features.features.map(function(feat, i) {
-      if (typeof feat.geometry === 'undefined') {
-        feat.map(function(f, j) {
-          if (f !== "undefined" && f !== null) { coords.push(f.geometry.coordinates); }
-        });
-      } else {
-        coords = feat.geometry.coordinates;
-      }
-    });
+    const coords = this.features.features.map(function(feat, i){ return feat.geometry.coordinates; });
     const minmax = this._minmax(coords);
     // Check if there are non valid numbers in the minmax. If so, we return a default bbox
     if (minmax.map((a) => isNaN(a)).reduce((a, b) => a || b, false)) return [-60, 60, -120, 120];
@@ -96,7 +91,7 @@ class GeoContainerViewer extends React.Component {
   }
 
   _minmax(coords){
-    if (typeof(coords) !== 'undefined' && typeof(coords[0]) === 'number') {
+    if (typeof(coords[0]) == 'number') {
       return [coords[0], coords[0], coords[1], coords[1]];
     }
     return this._minmaxArray(coords);
@@ -131,27 +126,51 @@ class GeoContainerViewer extends React.Component {
   };
 
   loadPopupContent(marker, feature){
-    let fid = feature.properties.id;
+    const fid = feature.properties.id;
+    const csrfToken = $('meta[name="csrf-token"]').attr('content');
 
-    let request = new XMLHttpRequest();
-    request.open('GET', '/api/v1/catalogs/'+this.catalog+'/items/'+fid+'.json');
+    let config = {
+      retry: 1,
+      retryDelay: 1000,
+      headers: {'X-CSRF-Token': csrfToken}
+    };
 
     let self = this;
-    request.onload = function() {
-      if (request.status >= 200 && request.status < 400) {
-        // Success!
-        let feat = JSON.parse(request.responseText);
-        marker._popup.setContent('<a href="'+feat._links.html+'">'+self.translations.view_item[self.locale]+'</a>');
-      } else {
-        marker._popup.setContent(self.translations.error[self.locale]);
+    axios.get('/api/v1/'+this.locale+'/catalogs/'+this.catalog+'/items/'+fid+'.json', config)
+        .then(res => {
+          marker._popup.setContent(res.data.views.map_popup);
+        })
+        .catch(error => {
+          marker._popup.setContent(
+              self.translations.error[self.locale]
+          );
+          console.log(error.message);
+        });
+
+    // Retry failed requests
+    axios.interceptors.response.use(undefined, (err) => {
+      let config = err.config;
+
+      if(!config || !config.retry) return Promise.reject(err);
+
+      config.__retryCount = config.__retryCount || 0;
+
+      if(config.__retryCount >= config.retry) {
+        return Promise.reject(err);
       }
-    };
 
-    request.onerror = function() {
-      marker._popup.setContent(self.translations.error[self.locale]);
-    };
+      config.__retryCount += 1;
 
-    request.send();
+      let backoff = new Promise(function(resolve) {
+        setTimeout(function() {
+          resolve();
+        }, config.retryDelay || 1);
+      });
+
+      return backoff.then(function() {
+        return axios(config);
+      });
+    });
   }
 
   renderLayer() {

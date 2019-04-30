@@ -7,6 +7,9 @@ Rails.application.routes.draw do
     namespace :v1 do
       resources :catalogs, :param => :slug do
         resources :items
+        scope :path => ':locale' do
+          resources :items
+        end
       end
     end
   end

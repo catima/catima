@@ -339,6 +339,8 @@ de:
       send: Nachricht senden
       request_sent: Nachricht gesendet
       invalid_captcha: Bitte überprüfen Sie, ob Sie ein Mensch sind.
+    map:
+      view_item: Element anschauen
 
   catalog_admin:
 

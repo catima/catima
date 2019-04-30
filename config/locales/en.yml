@@ -375,6 +375,8 @@ en:
       send: Send message
       request_sent: Message sent
       invalid_captcha: Please, verify you are a human
+    map:
+      view_item: View item
 
   catalog_admin:
 

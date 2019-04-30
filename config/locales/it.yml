@@ -331,6 +331,8 @@ it:
       send: Invia messaggio
       request_sent: Messaggio inviato
       invalid_captcha: Per favore, verifica di essere un umano
+    map:
+      view_item: Consultare l'oggetto
 
   catalog_admin:
 

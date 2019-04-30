@@ -370,6 +370,8 @@ fr:
       send: Envoyer le message
       request_sent: Message envoyé
       invalid_captcha: Veuillez vérifiez que vous êtes un humain
+    map:
+      view_item: Consulter la fiche
 
   catalog_admin:
 
