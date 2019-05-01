@@ -40,6 +40,8 @@ class GeoLayers extends React.Component {
       <ReactSelect
         defaultValue={ this.layers }
         isMulti
+        isSearchable={ true }
+        isClearable={ true }
         name="layers"
         options={ this.options }
         onChange={ this.handleSelectChange }
