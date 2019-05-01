@@ -5,29 +5,8 @@ class Field::FilePresenter < FieldPresenter
     item_type = options[:item_type] || field.item_type.slug
     field_category = field.belongs_to_category? ? "data-field-category=\"#{field.category_id}\"" : ''
     btn_label = field.multiple ? t('presenters.field.file.add_files') : t('presenters.field.file.add_file')
-    [
-      form.text_area(
-        "#{method}_json",
-        input_defaults(options).reverse_merge(:rows => 1, 'data-field-type' => 'file')
-      ),
-      '<div class="form-component">',
-      "<div class=\"form-group file-upload\" #{field_category} " \
-          "id=\"fileupload_#{method}\" " \
-          "data-field=\"#{method}\" " \
-          "data-field-type=\"#{field.type}\" " \
-          "data-multiple=\"#{field.multiple}\" " \
-          "data-required=\"#{field.required?}\" " \
-          "data-fieldname=\"#{field.name}\" " \
-          "data-upload-url=\"/#{field.catalog.slug}/#{I18n.locale}/admin/#{item_type}/upload\" " \
-          "data-file-types=\"#{field.types}\" " \
-          "data-file-size=\"#{field.max_file_size.megabytes}\" " \
-          "data-button-text=\"" + btn_label + "\"></div>",
-      "<h4>",
-      "<small>#{t('presenters.field.file.size_constraint', :max_size => field.max_file_size)}</small><br>",
-      "<small>#{t('presenters.field.file.types_constraint', :types => field.types)}</small>",
-      "</h4>",
-      "</div>"
-    ].compact.join.html_safe
+
+    render_html(form, method, item_type, field_category, btn_label)
   end
 
   def value
@@ -35,7 +14,7 @@ class Field::FilePresenter < FieldPresenter
   end
 
   def file_info
-    return nil if raw_value.nil?
+    return nil if raw_value.blank?
 
     info = files_as_array.map do |file|
       "<div class=\"file-link\">" \
@@ -57,5 +36,33 @@ class Field::FilePresenter < FieldPresenter
 
   def files_as_array
     raw_value.is_a?(Array) ? raw_value : [raw_value]
+  end
+
+  private
+
+  def render_html(form, method, item_type, field_category, btn_label)
+    [
+      form.text_area(
+        "#{method}_json",
+        input_defaults(options).reverse_merge(:rows => 1, 'data-field-type' => 'file')
+      ),
+      '<div class="form-component">',
+      "<div class=\"form-group file-upload\" #{field_category} " \
+        "id=\"fileupload_#{method}\" " \
+        "data-field=\"#{method}\" " \
+        "data-field-type=\"#{field.type}\" " \
+        "data-multiple=\"#{field.multiple}\" " \
+        "data-required=\"#{field.required?}\" " \
+        "data-fieldname=\"#{field.name}\" " \
+        "data-upload-url=\"/#{field.catalog.slug}/#{I18n.locale}/admin/#{item_type}/upload\" " \
+        "data-file-types=\"#{field.types}\" " \
+        "data-file-size=\"#{field.max_file_size.megabytes}\" " \
+        "data-button-text=\"" + btn_label + "\"></div>",
+      "<h4>",
+      "<small>#{t('presenters.field.file.size_constraint', :max_size => field.max_file_size)}</small><br>",
+      "<small>#{t('presenters.field.file.types_constraint', :types => field.types)}</small>",
+      "</h4>",
+      "</div>"
+    ].compact.join.html_safe
   end
 end

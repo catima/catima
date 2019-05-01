@@ -10,7 +10,7 @@
     <% item_applicable_fields(@item).each do |field| %>
       <% if field_check_display(@item, field) %>
         <tr>
-          <th><%= field.label %></th>
+          <th style="width: 25%;"><%= field.label %></th>
             <td class="<%= field.type %>"><%= field_value(@item, field) %></td>
         </tr>
       <% end %>

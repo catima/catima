@@ -52,7 +52,7 @@ module FieldsHelper
   def field_check_display(item, field)
     return true if item.item_type.display_emtpy_fields
 
-    if %w[Field::Geometry Field::Image].include?(field.type)
+    if %w[Field::Geometry Field::File Field::Image].include?(field.type)
       field_value(item, field).present?
     else
       strip_tags(field_value(item, field)).present?
