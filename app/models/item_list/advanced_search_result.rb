@@ -3,7 +3,6 @@
 #
 class ItemList::AdvancedSearchResult < ItemList
   include Search::Strategies
-  include ItemMapsHelper
 
   attr_reader :model
   delegate :catalog, :item_type, :criteria, :locale, :to_param, :to => :model
