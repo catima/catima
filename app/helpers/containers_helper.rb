@@ -18,6 +18,8 @@ module ContainersHelper
   end
 
   def container_presenter(container, options={})
+    options = params if container.is_a?(Container::Search)
+
     "Container::#{container.type_name}Presenter".constantize.new(self, container, options)
   end
 end

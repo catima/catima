@@ -11,4 +11,4 @@
 <hr>
 
 <%= f.primary(t(".#{@container.persisted? ? 'save' : 'create'}_container")) %>
-<%= link_to("Cancel", edit_catalog_admin_page_path(@container.page.catalog, I18n.locale, @container.page), :class => "btn btn-link") %>
+<%= link_to(t("cancel"), edit_catalog_admin_page_path(@container.page.catalog, I18n.locale, @container.page), :class => "btn btn-link") %>

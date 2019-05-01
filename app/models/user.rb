@@ -40,11 +40,11 @@ class User < ApplicationRecord
   include AvailableLocales
 
   belongs_to :invited_by, :class_name => "User", optional: true
+
   has_many :catalog_permissions, :dependent => :destroy
   has_many :favorites, :dependent => :destroy
-
+  has_many :searches, :dependent => :destroy
   has_many :my_groups, class_name: 'Group', foreign_key: 'owner_id', dependent: :destroy, inverse_of: :owner
-
   has_many :memberships, dependent: :destroy
   has_many :groups, through: :memberships
 

@@ -91,6 +91,8 @@ en:
         zero: "Your advanced search found no results"
         one: "1 advanced search result"
         other: "%{count_delimited} advanced search results"
+      searches_add: Save search
+      searches_remove: Remove from saved searches
     text_search_field:
       all_words: all words
       exact: exact expression
@@ -256,17 +258,36 @@ en:
         register: "Register"
         my_profile: "My profile"
         my_favorites: "My favorites"
+        my_searches: My searches
         my_groups: My groups
-  simple_search:
+  simple_searches:
     form:
       advanced: "Advanced"
       submit: "Search"
       placeholder: Search in %{item_type}
-    index:
+    show:
       title:
         zero: "Nothing found for “%{query}”"
         one: "1 result for “%{query}”"
         other: "%{count_delimited} results for “%{query}”"
+      searches_add: Save search
+      searches_remove: Remove from saved searches
+  searches:
+    index:
+      title: My saved searches
+      in_use: Sorry this search is used in a container
+    list:
+      empty: "You don't have searches yet!"
+      empty_for_catalog: "You don't have searches yet for this catalog!"
+      back_to_list: "Back to the list"
+      selected_catalog: "Selected catalog"
+    edit:
+      name: Name
+      rename_search: Rename the saved search
+      update_search: Update
+      success: The search has been updated
+    buttons:
+      rename: Rename
   helpers:
     help:
       field/url: A full URL, including the http part
@@ -307,6 +328,7 @@ en:
   delete: 'Delete'
   delete_confirm: "Are you sure you want to delete “%{model}”?"
   edit: 'Edit'
+  view: Show
   actions: 'Actions'
   duplicate: 'Duplicate'
   i18n: i18n
@@ -337,7 +359,6 @@ en:
   new_user: New user
   send_invitation: Send invitation
   visible: Visible
-  not_visible: Not visible
   email: Email
   role: Role
   role-with-groups: Role with groups
@@ -474,6 +495,13 @@ en:
           help: Email that will be used to receive messages from the contact form
       item_list_inputs:
         display_style: "Display style of items (automatically adapts to content if nothing is selected)"
+      search_inputs:
+        display_type:
+          label: Style
+          help: "Display style of items (automatically adapts to content if nothing is selected)"
+        search:
+          label: Saved search
+          help: Please select the saved search to be displayed.
 
     csv_imports:
       new:

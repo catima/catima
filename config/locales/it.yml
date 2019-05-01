@@ -75,6 +75,8 @@ it:
         zero: "Your advanced search found no results"
         one: "1 advanced search result"
         other: "%{count_delimited} advanced search results"
+      searches_add: Salve la ricercha
+      searches_remove: Rimuovi dalle ricerche salvate
     text_search_field:
       all_words: tutte le parole
       exact: espressione esatta
@@ -237,17 +239,36 @@ it:
         register: "Iscrizione"
         my_profile: "Il mio profilo"
         my_favorites: "I miei preferiti"
+        my_searches: Le mie ricerche
         my_groups: I miei gruppi
-  simple_search:
+  simple_searches:
     form:
       advanced: "Avanzata"
       submit: "Ricerca"
       placeholder: Ricerca in %{item_type}
-    index:
+    show:
       title:
         zero: "Non abbiamo trovato nulla per “%{query}”"
         one: "1 risultato per “%{query}”"
         other: "%{count_delimited} risultati per “%{query}”"
+      searches_add: Salve la ricercha
+      searches_remove: Rimuovi dalle ricerche salvate
+  searches:
+    index:
+      title: Le mie ricerche salvate
+      in_use: spiacente che questa ricerca sia in uso
+    list:
+      empty: "Non hai ancora i ricerche!"
+      empty_for_catalog: "Non hai ancora i ricerche per questo catalogo!"
+      back_to_list: "Torna alla lista"
+      selected_catalog: "Catalogo selezionato"
+    edit:
+      name: Nome
+      rename_search: Rinominare la ricerca salvata
+      update_search: Attualizzazione
+      success: La ricerca è stata modificata
+    buttons:
+      rename: Rinomina
   helpers:
     help:
       field/url: Un URL completo, compresa la parte http
@@ -284,12 +305,12 @@ it:
   cancel: 'Annulla'
   delete: Elimina
   edit: Modificare
+  view: Visualizzare
   i18n: i18n
   i18n_help: "With i18n enabled, editors will be able to specify a translation of this field for each language (%{languages})"
   i18n_enable: "Enable i18n"
   formatted: Formatted
   visible: Visibile
-  not_visible: Non visibile
   plural: Plurale
   slug: Slug
   title: Titolo
@@ -450,6 +471,13 @@ it:
           help: E-mail che verranno utilizzate per ricevere i messaggi dal modulo di contatto
       item_list_inputs:
         display_style: "Display style of items (automatically adapts to content if nothing is selected)"
+      search_inputs:
+        display_type:
+          label: Style
+          help: "Display style of items (automatically adapts to content if nothing is selected)"
+        search:
+          label: Saved search
+          help: Please select the saved search to be displayed.
 
     users:
       common_form_fields:

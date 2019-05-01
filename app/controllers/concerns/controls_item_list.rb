@@ -40,7 +40,8 @@ module ControlsItemList
     @search ||= ItemList::SimpleSearchResult.new(
       :catalog => catalog,
       :query => params[:q],
-      :item_type_slug => params[:item_type_slug]
+      :item_type_slug => params[:item_type_slug],
+      :search_uuid => params[:uuid]
     )
   end
 
