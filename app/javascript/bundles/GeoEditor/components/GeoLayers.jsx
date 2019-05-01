@@ -38,15 +38,15 @@ class GeoLayers extends React.Component {
   render(){
     return (
       <ReactSelect
-          defaultValue={ this.layers }
-          isMulti
-          name="layers"
-          options={ this.options }
-          onChange={ this.handleSelectChange }
-          className="basic-multi-select"
-          classNamePrefix="select"
-          placeholder={ this.placeholder }
-          noOptionsMessage={ this.getNoOptionsMessage() }
+        defaultValue={ this.layers }
+        isMulti
+        name="layers"
+        options={ this.options }
+        onChange={ this.handleSelectChange }
+        className="basic-multi-select"
+        classNamePrefix="select"
+        placeholder={ this.placeholder }
+        noOptionsMessage={ this.getNoOptionsMessage() }
       />
     );
   }
