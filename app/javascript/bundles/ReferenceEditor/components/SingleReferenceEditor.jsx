@@ -30,7 +30,7 @@ class SingleReferenceEditor extends Component {
 
   _selectItem(item, event){
     if(typeof event === 'undefined' || event.action !== "pop-value" || !this.props.req) {
-      if(typeof item !== 'undefined') {
+      if(typeof item !== 'undefined' && item !== null) {
         this.setState({ selectedItem: item }, () => this._save());
       } else {
         this.setState({ selectedItem: [] }, () => this._save());
@@ -74,7 +74,7 @@ class SingleReferenceEditor extends Component {
 
   _selectFilter(filter){
     this.setState({ selectedFilter: filter }, () => {
-      if(typeof this.state.selectedItem !== 'undefined') {
+      if(typeof this.state.selectedItem !== 'undefined' && this.state.selectedItem !== null) {
         const currentItem = this._getItemOptions().find(item => item.value === this.state.selectedItem.value);
         this.setState({ selectedItem: currentItem });
       } else {
