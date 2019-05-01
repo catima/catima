@@ -26,6 +26,9 @@
 /config/database.yml
 /.env
 
+# Ignore the geo layers file
+/config/geo_layers.yml
+
 # Ignore refile uploads
 /public/system/
 

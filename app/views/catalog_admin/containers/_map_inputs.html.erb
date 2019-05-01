@@ -1,11 +1,28 @@
 <% if catalog.item_types.any? %>
   <%= f.collection_select(
-        :item_type,
-        catalog.item_types.select { |it| it.fields.where(:type => 'Field::Geometry').count > 0 },
-        :id,
-        :name,
-        {:include_blank => false}
-      ) %>
+      :item_type,
+      catalog.item_types.select { |it| it.fields.where(:type => 'Field::Geometry').count > 0 },
+      :id,
+      :name,
+      {:include_blank => false}
+    ) %>
+
+  <%= f.form_group(
+      :layers,
+      :help => t("catalog_admin.fields.geometry_option_inputs.layers_help")
+  ) do %>
+    <label class="control-label" for="container_layers"><%= t("catalog_admin.fields.geometry_option_inputs.layers") %></label>
+    <%= f.hidden_field(:layers) %>
+    <%= react_component('GeoLayers',
+      props: {
+        layers: f.object.geo_layers,
+        options: load_geo_layers,
+        inputId: "container_layers",
+        placeholder: t("catalog_admin.fields.geometry_option_inputs.layers_component_placeholder"),
+        noOptionsMessage: t("catalog_admin.fields.geometry_option_inputs.layers_component_no_options")
+      },
+      prerender: false) %>
+  <% end %>
 
   <%= f.number_field(
         :height,

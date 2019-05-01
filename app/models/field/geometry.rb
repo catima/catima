@@ -33,7 +33,7 @@
 #
 
 class Field::Geometry < ::Field
-  store_accessor :options, :bounds
+  store_accessor :options, :bounds, :layers
 
   def human_readable?
     false
@@ -44,16 +44,20 @@ class Field::Geometry < ::Field
   end
 
   def edit_props
-    { "bounds" => default_bounds }
+    { "bounds" => default_bounds, "layers" => geo_layers }
   end
 
   def custom_field_permitted_attributes
-    %i(bounds)
+    %i(bounds layers)
   end
 
   def default_bounds(xmin=-60, xmax=60, ymin=-45, ymax=65)
     geo_bounds = bounds.present? ? JSON.parse(bounds) : { 'xmin' => xmin, 'xmax' => xmax, 'ymin' => ymin, 'ymax' => ymax }
     geo_bounds.slice('xmin', 'xmax', 'ymin', 'ymax')
+  end
+
+  def geo_layers
+    layers.present? ? JSON.parse(layers) : []
   end
 
   private

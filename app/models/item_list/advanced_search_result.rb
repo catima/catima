@@ -31,10 +31,9 @@ class ItemList::AdvancedSearchResult < ItemList
       return geometry_aware_items.map do |item|
         # TODO: part 3 : display only fields that have been selected to be displayed in the advanced search configuration
         popup_content = ApplicationController.render(
-          :partial => 'advanced_searches/popup_content',
+          :partial => 'shared/modals/map_popup_content',
           :assigns => {
-            :item => item,
-            :field => field
+            :item => item
           }
         )
 

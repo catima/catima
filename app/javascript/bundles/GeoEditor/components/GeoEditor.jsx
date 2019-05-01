@@ -10,17 +10,21 @@ class GeoEditor extends React.Component {
 
   static propTypes = {
     input: PropTypes.string.isRequired,
-    bounds: PropTypes.object
+    bounds: PropTypes.object,
+    layers: PropTypes.array
   };
 
   constructor(props){
     super(props);
     this.input = this.props.input;
+    this.layers = this.props.layers ? this.props.layers : [];
     this.bounds = this.props.bounds || {xmin: -60, xmax: 60, ymin: -45, ymax: 60};
     const obj = $(this.input).val();
     this.fc = JSON.parse((obj == '' || obj == null) ? '{"type": "FeatureCollection", "features": []}' : obj);
     this.state = {
       mapHeight: 300,
+      mapMinZoom: 1,
+      mapMaxZoom: 18,
       selectedMarkerLatitude: '',
       selectedMarkerLongitude: '',
     };
@@ -157,6 +161,35 @@ class GeoEditor extends React.Component {
     });
   }
 
+  _initLayers(map){
+    if (this.layers.length === 1) {
+      this.layers.forEach((layer) => {
+        L.tileLayer(layer.value, {
+          subdomains: subs,
+          attribution: layer.attribution
+        }).addTo(map);
+      });
+    } else if (this.layers.length > 1) {
+      let baseMaps = {};
+
+      this.layers.forEach((layer) => {
+        baseMaps[layer.label] = L.tileLayer(layer.value, {
+          subdomains: subs,
+          attribution: layer.attribution
+        });
+      });
+
+      Object.values(baseMaps)[0].addTo(map);
+
+      L.control.layers(baseMaps, {}).addTo(map);
+    } else {
+      L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+        subdomains: subs,
+        attribution: 'Map data &copy; <a href="http://openstreetmap.org">OpenStreetMap</a> contributors'
+      }).addTo(map);
+    }
+  }
+
   _unselectAllMarkers(){
     for (var i=0; i < this.markers.length; i++) {
       this.markers[i].setIcon(this.markerIconNormal);
@@ -241,11 +274,14 @@ class GeoEditor extends React.Component {
 
   componentDidMount() {
     const self = this;
-    this._map = L.map(this.mapId).setView([47, 7], 7);
-    L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
-      attribution: '',
-      maxZoom: 18
-    }).addTo(this._map);
+    this._map = L.map(this.mapId, {
+      minZoom: this.state.mapMinZoom,
+      maxZoom: this.state.mapMaxZoom
+    }).setView([47, 7], 7);
+
+    // Initialize map layers & layer control if needed
+    this._initLayers(this._map);
+
     L.control.createMarkerControl({ position: 'topleft' }).addTo(this._map);
     this._map.on('click', function(e){
       self._unselectAllMarkers();
@@ -255,7 +291,7 @@ class GeoEditor extends React.Component {
     this._addMarkersFromFeatureCollection();
 
     // Display all markers
-    this._map.fitBounds(this._bbox())
+    this._map.fitBounds(this._bbox());
   }
 
   render(){

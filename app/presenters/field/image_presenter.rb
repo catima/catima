@@ -2,7 +2,7 @@ class Field::ImagePresenter < Field::FilePresenter
   delegate :image_tag, :to => :view
 
   def value
-    return nil if raw_value.nil?
+    return nil if raw_value.blank?
     return image_viewer unless options[:style]
 
     options[:class] = options[:style] ? options[:style] : :full

@@ -4513,6 +4513,11 @@ leaflet-editable@^1.1.0:
   resolved "https://registry.yarnpkg.com/leaflet-editable/-/leaflet-editable-1.2.0.tgz#a3a01001764ba58ea923381ee6a1c814708a0b84"
   integrity sha512-wG11JwpL8zqIbypTop6xCRGagMuWw68ihYu4uqrqc5Ep0wnEJeyob7NB2Rt5t74Oih4rwJ3OfwaGbzdowOGfYQ==
 
+leaflet.markercluster@^1.4.1:
+  version "1.4.1"
+  resolved "https://registry.yarnpkg.com/leaflet.markercluster/-/leaflet.markercluster-1.4.1.tgz#b53f2c4f2ca7306ddab1dbb6f1861d5e8aa6c5e5"
+  integrity sha512-ZSEpE/EFApR0bJ1w/dUGwTSUvWlpalKqIzkaYdYB7jaftQA/Y2Jav+eT4CMtEYFj+ZK4mswP13Q2acnPBnhGOw==
+
 leaflet.path.drag@^0.0.6:
   version "0.0.6"
   resolved "https://registry.yarnpkg.com/leaflet.path.drag/-/leaflet.path.drag-0.0.6.tgz#6d9c3af0b9d7b032544ae16bfde688f0160514a0"
@@ -7010,6 +7015,13 @@ react-leaflet-draw@^0.18.0:
   version "0.18.0"
   resolved "https://registry.yarnpkg.com/react-leaflet-draw/-/react-leaflet-draw-0.18.0.tgz#bb523bc6f0f93139ebc968b074720a65282cebb2"
   integrity sha512-/iJLov5Qe5K9ze1Cmgphk5M6bn5EqvGzrnpPFnH3hJQ9kYqkXhGwZk5zVLlhCN3cy8smiesrMu2+/cpAqGmOrw==
+
+react-leaflet-markercluster@^1.1.8:
+  version "1.1.8"
+  resolved "https://registry.yarnpkg.com/react-leaflet-markercluster/-/react-leaflet-markercluster-1.1.8.tgz#ba72acb2ae07a47a45b5f7287b73a9c2b26cc316"
+  integrity sha512-REOnc8+QPO3V+vUHIkJ2Dnlw6lNBY+L7p3PBG3+Q1t8Idy9yXTjZ0hEJKSRrcU6HSPALiVyZgbDxIpd2j/HbqA==
+  dependencies:
+    deep-equal "^1.0.1"
 
 react-leaflet@^1.7.8:
   version "1.9.1"
