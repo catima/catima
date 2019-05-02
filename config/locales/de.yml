@@ -533,9 +533,9 @@ de:
         multiple_required_choice: "Multiple values – at least one"
       geometry_option_inputs:
         bounds: Allgemeine räumliche Ausdehnung
-        bounds_help: Wenn die Karte geändert wird, verwendet sie den ausgewählten Bereich als standardmäßige räumliche Ausdehnung
+        bounds_help: Wenn die Karte geändert wird, verwendet sie den ausgewählten Bereich als Standard-Raumbereich im Bearbeitungsmodus.
         layers: Additional layers
-        layers_help: You can add additional layers to your map (default is the standard tile layer from OpenStreetMap). You can also add custom tile layers with a valid url (only use this if you know what you do - an https url is needed). If layers are added, the first one will be the default layer for your map.
+        layers_help: You can add additional layers to your map (default is the standard tile layer from OpenStreetMap). If layers are added, the first one will be the default layer for your map.
         layers_component_no_options: No more layers to add
         layers_component_placeholder: Add layers
       decimal_option_inputs:
