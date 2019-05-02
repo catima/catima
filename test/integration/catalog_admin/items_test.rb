@@ -108,14 +108,6 @@ class CatalogAdmin::ItemsTest < ActionDispatch::IntegrationTest
     add_single_reference("#item_one_author_collaborator_uuid_json-editor", 'Very Old')
     find("body").click
 
-    within("#item_one_author_language_uuid_container") do
-      find("span.ant-select-selection.ant-select-selection--single").click # Click on the filter input
-    end
-
-    within("div.ant-select-dropdown:not(.ant-select-dropdown-hidden)") do
-      find("span", text: "Eng", :match => :first).click
-    end
-
     assert_no_difference("Item.count") do
       click_on("Save Author")
     end

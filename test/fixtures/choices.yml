@@ -39,6 +39,11 @@ one_english:
   choice_set: one_languages
   long_name_translations: { "long_name_en": "English" }
   short_name_translations: { "short_name_en": "Eng" }
+  synonyms: [
+      {
+        "en": "Eng (UK)"
+      }
+    ]
 
 one_spanish:
   catalog: one
