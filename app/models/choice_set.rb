@@ -21,9 +21,7 @@ class ChoiceSet < ApplicationRecord
   end), :dependent => :destroy
   has_many :fields, :dependent => :destroy
 
-  accepts_nested_attributes_for :choices,
-  :reject_if => :all_blank,
-  :allow_destroy => true
+  accepts_nested_attributes_for :choices, :reject_if => :all_blank, :allow_destroy => true
 
   validates_presence_of :catalog
   validates_presence_of :name

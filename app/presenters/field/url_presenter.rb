@@ -21,6 +21,6 @@ class Field::URLPresenter < FieldPresenter
     return if raw_value.blank?
 
     compact = raw_value[%r{^https?://(.+?)/?$}, 1] || raw_value
-    link_to(compact, raw_value, :target => "_blank")
+    link_to(compact, raw_value, :target => "_blank", :rel => "noreferrer")
   end
 end

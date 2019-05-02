@@ -80,7 +80,18 @@ class CatalogAdmin::ChoiceSetsController < CatalogAdmin::BaseController
     @choice_set = catalog.choice_sets.find(params[:id])
   end
 
-  def loop_trough_children(params, post_choices=[], parent=nil)
+  def build_choice(params)
+    params["uuid"].present? ? Choice.find_by(:uuid => params["uuid"]) : Choice.new
+    choice.assign_attributes(params)
+    choice.row_order = i
+    choice.parent = parent
+    choice.catalog = @choice_set.catalog
+    choice.uuid = SecureRandom.uuid if choice.uuid.blank?
+
+    choice
+  end
+
+  def loop_trough_children(params, post_choices=[])
     return if params.blank?
 
     params.each do |i, choices_attributes|
@@ -92,13 +103,7 @@ class CatalogAdmin::ChoiceSetsController < CatalogAdmin::BaseController
         allowed_params[key] = choices_attributes[key]
       end
 
-      choice = allowed_params["uuid"].present? ? Choice.find_by(:uuid => allowed_params["uuid"]) : Choice.new
-      choice.assign_attributes(allowed_params)
-      choice.row_order = i
-      choice.parent = parent
-      choice.catalog = @choice_set.catalog
-      choice.uuid = SecureRandom.uuid if choice.uuid.blank?
-
+      choice = build_choice(allowed_params)
       post_choices << choice.uuid
 
       @choice_set.choices << choice

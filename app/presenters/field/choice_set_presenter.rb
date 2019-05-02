@@ -2,7 +2,8 @@ class Field::ChoiceSetPresenter < FieldPresenter
   delegate :choices, :selected_choices, :selected_choices_as_hash, :selected_choice?, :to => :field
   delegate :browse_similar_items_link_with_tooltip, :content_tag, :to => :view
 
-  def input(form, method, options={})
+  # rubocop:disable Layout/AlignParameters, Metrics/MethodLength
+  def input(form, method)
     category = field.belongs_to_category? ? "data-field-category=\"#{field.category_id}\"" : ''
     [
       '<div class="form-component">',
@@ -37,6 +38,7 @@ class Field::ChoiceSetPresenter < FieldPresenter
       '</div>'
     ].join.html_safe
   end
+  # rubocop:enable Layout/AlignParameters, Metrics/MethodLength
 
   def value
     choices = selected_choices(item)

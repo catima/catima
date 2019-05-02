@@ -19,6 +19,7 @@ module TimeHelper
 
     def datetime_options_from_format(format)
       format ||= "YMDhms"
+
       {
         :include_seconds => format =~ /s/,
         :discard_minute  => format !~ /m/,
