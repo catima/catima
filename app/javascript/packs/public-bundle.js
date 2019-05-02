@@ -20,7 +20,7 @@ ReactOnRails.register({
   DateTimeSearch, DateTimeInput,
   ChoiceSetSearchContainer, ChoiceSetSearch,
   ImageViewer,
-  GeoViewer, GeoContainerViewer
+  GeoViewer, GeoContainerViewer,
   ChoiceSetInput,
   ChoiceSynonymEditorContainer
 });
