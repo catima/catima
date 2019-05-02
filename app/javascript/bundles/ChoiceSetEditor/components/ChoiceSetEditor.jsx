@@ -49,7 +49,11 @@ class ChoiceSetEditor extends Component {
               ]
               });
           } else {
-              if(items.value) {
+              if(items.length > 0) {
+                  this.setState({ hiddenInputValue: [
+                      items[0].value.toString()
+                  ]});
+              } else if (items.value) {
                   this.setState({ hiddenInputValue: [
                       items.value.toString()
                   ]});

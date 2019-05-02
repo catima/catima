@@ -53,44 +53,6 @@ class CatalogAdmin::ChoiceSetsController < CatalogAdmin::BaseController
     end
   end
 
-  def loop_trough_children(params, post_choices=[], parent=nil)
-    return if params.blank?
-
-    params.each do |i, choices_attributes|
-      next unless choices_attributes.is_a?(ActionController::Parameters)
-
-      allowed_params = {}
-      # Manually allow all numeric params
-      choices_attributes.keys.reject { |k| k.to_s.match(/\A\d+\Z/) }.map do |key, _v|
-        allowed_params[key] = choices_attributes[key]
-      end
-
-      choice = if allowed_params["uuid"].present?
-                 Choice.find_by(:uuid => allowed_params["uuid"])
-               else
-                 Choice.new
-               end
-
-      choice.row_order = i
-      choice.assign_attributes(allowed_params)
-      choice.parent = parent
-      choice.catalog = @choice_set.catalog
-      choice.uuid = SecureRandom.uuid if choice.uuid.blank?
-
-      post_choices << choice.uuid
-
-      @choice_set.choices << choice
-
-      if i.match?(/\A\d+\Z/)
-        loop_trough_children(choices_attributes, post_choices, choice) if i =~ /\A\d+\Z/
-      end
-    end
-
-    @choice_set.save
-
-    post_choices
-  end
-
   def create_choice
     choice_set = catalog.choice_sets.find(params[:choice_set_id])
     authorize(choice_set)
@@ -108,46 +70,6 @@ class CatalogAdmin::ChoiceSetsController < CatalogAdmin::BaseController
     end
   end
 
-  def synonyms
-    @field = catalog.choice_sets.find(params[:choice_set_id])
-  end
-
-  def update_synonyms
-    choice_set = catalog.choice_sets.find(params[:choice_set_id])
-    authorize(choice_set)
-
-    if params[:choice_synonyms].nil?
-      choice_set.choices.each { |c| c.update(:synonyms => nil) }
-      return redirect_to :action => :synonyms
-    end
-
-    updated_choices = []
-    choice_synonym_params.each do |choice_id, synonyms|
-      choice = Choice.find_by(:id => choice_id)
-      next if choice.nil?
-
-      choice.synonyms = []
-
-      synonyms.each do |_i, synonym_params|
-        synonym = {}
-
-        synonym_params.each do |lang, syn|
-          synonym[lang] = syn
-        end
-
-        choice.synonyms << synonym
-      end
-
-      choice.save
-      updated_choices << choice
-    end
-
-    # Removes synonyms that where not present in the params
-    choice_set.choices.each { |c| c.update(:synonyms => nil) unless updated_choices.include?(c) }
-
-    redirect_to :action => :synonyms
-  end
-
   private
 
   def build_choice_set
@@ -158,15 +80,39 @@ class CatalogAdmin::ChoiceSetsController < CatalogAdmin::BaseController
     @choice_set = catalog.choice_sets.find(params[:id])
   end
 
-  def choice_set_params
-    params.require(:choice_set).permit(
-      :name,
-      :deactivated_at,
-      :choices_attributes => {})
+  def loop_trough_children(params, post_choices=[], parent=nil)
+    return if params.blank?
+
+    params.each do |i, choices_attributes|
+      next unless choices_attributes.is_a?(ActionController::Parameters)
+
+      allowed_params = {}
+      # Manually allow all numeric params
+      choices_attributes.keys.reject { |k| k.to_s.match(/\A\d+\Z/) }.map do |key, _v|
+        allowed_params[key] = choices_attributes[key]
+      end
+
+      choice = allowed_params["uuid"].present? ? Choice.find_by(:uuid => allowed_params["uuid"]) : Choice.new
+      choice.assign_attributes(allowed_params)
+      choice.row_order = i
+      choice.parent = parent
+      choice.catalog = @choice_set.catalog
+      choice.uuid = SecureRandom.uuid if choice.uuid.blank?
+
+      post_choices << choice.uuid
+
+      @choice_set.choices << choice
+
+      if i.match?(/\A\d+\Z/)
+        loop_trough_children(choices_attributes, post_choices, choice) if i =~ /\A\d+\Z/
+      end
+    end
+
+    post_choices
   end
 
-  def choice_synonym_params
-    params.require(:choice_synonyms)
+  def choice_set_params
+    params.require(:choice_set).permit(:name, :deactivated_at, :choices_attributes => {})
   end
 
   def choice_params

@@ -12,7 +12,8 @@ class Field::ChoiceSetPresenterTest < ActionView::TestCase
 
     presenter = Field::ChoiceSetPresenter.new(self, author, language_field)
     assert_equal(
-      '<a data-toggle="tooltip" data-placement="top" title="" href="/one/en/authors?language=en-Eng">English</a>',
+      '<a data-toggle="tooltip" data-placement="top" title="Eng (UK)" href="/one/en/authors?language=en-Eng"'\
+      '>English</a>',
       presenter.value
     )
   end
@@ -26,7 +27,7 @@ class Field::ChoiceSetPresenterTest < ActionView::TestCase
 
     presenter = Field::ChoiceSetPresenter.new(self, author, languages_field)
     assert_equal(
-      '<a data-toggle="tooltip" data-placement="top" title="" href="/one/en/authors?other-language=en-Eng"'\
+      '<a data-toggle="tooltip" data-placement="top" title="Eng (UK)" href="/one/en/authors?other-language=en-Eng"'\
       '>English</a>, '\
       '<a data-toggle="tooltip" data-placement="top" title="" href="/one/en/authors?other-language=en-Spanish"'\
       '>Spanish</a>',

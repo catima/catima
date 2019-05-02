@@ -151,12 +151,6 @@ class Field::ChoiceSet < ::Field
     choices_as_options
   end
 
-  def search_options_as_hash
-    [
-      { :multiple => multiple? }
-    ]
-  end
-
   def selected_choices_as_hash(item)
     choices_as_options = []
 
@@ -164,6 +158,8 @@ class Field::ChoiceSet < ::Field
       option = { :value => choice.id, :label => choice.short_name }
       choices_as_options << option
     end
+
+    choices_as_options
   end
 
   private

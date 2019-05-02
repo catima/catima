@@ -15,6 +15,7 @@ AllCops:
     - Gemfile
     - Guardfile
     - Rakefile
+    - "**/*.erb"
 
 # Metrics/AbcSize:
 #   Exclude:

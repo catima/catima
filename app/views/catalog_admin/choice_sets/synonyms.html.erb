@@ -1,9 +1,8 @@
-<% provide(:title, t(".title", :choice_set_name => @field.name)) %>
-
+<% provide(:title, t(".title", :choice_set_name => @choice_set.name)) %>
 
 <div class="panel-body">
   <%= bootstrap_form_for(
-    @field,
+    @choice_set,
     :url => catalog_admin_choice_set_update_synonyms_path) do |f| %>
 
       <div class="row">
@@ -11,9 +10,9 @@
           <%=
               react_component('ChoiceSynonymEditorContainer',
                 props: {
-                  choices: @field.search_data_as_hash,
-                  synonyms: @field.synonyms,
-                  available_languages: @field.catalog.valid_locales,
+                  choices: @choice_set.search_data_as_hash,
+                  synonyms: @choice_set.synonyms,
+                  available_languages: @choice_set.catalog.valid_locales,
                   add_synonym_label: t(".add"),
                   select_placeholder: t(".choice_placeholder")
                 },
@@ -26,7 +25,7 @@
           <%= f.primary(t(".save")) %>
           <%= link_to(
                 t("cancel"),
-                edit_catalog_admin_choice_set_path(:id => @field.id),
+                edit_catalog_admin_choice_set_path(:id => @choice_set.id),
                 :class => "btn btn-link") %>
       </div>
   <% end %>
