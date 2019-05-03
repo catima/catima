@@ -3,6 +3,8 @@ import React from 'react';
 import ReactSelect from 'react-select/lib/Creatable';
 import PropTypes from "prop-types";
 
+const selectStyles = { menu: styles => ({ ...styles, zIndex: 2000 }) };
+
 class GeoLayers extends React.Component {
   static propTypes = {
     layers: PropTypes.array.isRequired,
@@ -25,7 +27,7 @@ class GeoLayers extends React.Component {
   getSubset = (keys, obj) => keys.reduce((a, c) => ({ ...a, [c]: obj[c] }), {});
 
   handleSelectChange = (values) => {
-    // Keep only the label et value properties
+    // Keep only label, value & attribution properties
     let selection = values.map(l => this.getSubset(['label', 'value', 'attribution'], l));
     // Populate the hidden field with the selected values
     document.getElementById(this.inputId).value = JSON.stringify(selection);
@@ -38,6 +40,7 @@ class GeoLayers extends React.Component {
   render(){
     return (
       <ReactSelect
+        styles={ selectStyles }
         defaultValue={ this.layers }
         isMulti
         isSearchable={ true }
