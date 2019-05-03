@@ -81,6 +81,7 @@ class FormattedTextEditor extends React.Component {
       container: [
         [{ 'header': [false, 1, 2, 3, 4] }],
         ['bold', 'italic', 'underline', 'strike'],
+        [{ 'color': [] }, { 'background': [] }],
         [{ 'script': 'sub'}, { 'script': 'super' }],
         ['link', 'image'],
         [{ 'list': 'ordered'}, { 'list': 'bullet' }],
