@@ -3,7 +3,7 @@ class Field::ChoiceSetPresenter < FieldPresenter
   delegate :browse_similar_items_link_with_tooltip, :content_tag, :to => :view
 
   # rubocop:disable Layout/AlignParameters, Metrics/MethodLength
-  def input(form, method)
+  def input(form, method, _options={})
     category = field.belongs_to_category? ? "data-field-category=\"#{field.category_id}\"" : ''
     [
       '<div class="form-component">',

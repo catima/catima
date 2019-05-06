@@ -7,6 +7,7 @@ class Field::URLPresenterTest < ActionView::TestCase
     presenter = Field::URLPresenter.new(self, author, site_field)
     assert_equal(
       '<a target="_blank" '\
+      'rel="noreferrer" '\
       'href="http://stephenking.com/index.html">'\
       "stephenking.com/index.html"\
       "</a>",
