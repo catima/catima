@@ -83,7 +83,7 @@ class FormattedTextEditor extends React.Component {
         ['bold', 'italic', 'underline', 'strike'],
         [{ 'color': [] }, { 'background': [] }],
         [{ 'script': 'sub'}, { 'script': 'super' }],
-        ['link', 'image'],
+        ['link'],
         [{ 'list': 'ordered'}, { 'list': 'bullet' }],
         [{ table: FormattedTextEditor.tableOptions() }, { table: 'append-row' }, { table: 'append-col' }],
         ['footnote', 'endnote', 'import_docx'],
