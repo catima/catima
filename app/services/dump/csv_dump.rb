@@ -68,6 +68,8 @@ class Dump::CsvDump < ::Dump
     return categories_fields unless categories_fields.key?(item.item_type.id)
 
     categories_fields[item.item_type.id] << field unless categories_fields[item.item_type.id].include?(field)
+
+    categories_fields
   end
 
   def dump_data(catalog, categories_fields, directory)

@@ -47,6 +47,7 @@ module CatalogAdmin::SqlDumpHelper
   end
 
   def sanitize(text)
-    text.gsub(/[^0-9A-Za-z_-]/, '')
+    text.tr!('-', '_')
+    text.gsub(/[^0-9A-Za-z_]/, '')
   end
 end

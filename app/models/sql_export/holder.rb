@@ -8,6 +8,7 @@ class SQLExport::Holder
     "ItemType" => "it_type_",
     "Category" => "cat_",
     "ChoiceSet" => "choice_set_",
+    "Field::ChoiceSet" => "choices_",
     "Field::Reference" => "ref_"
   }.freeze
 

@@ -48,6 +48,7 @@ class Dump::SqlDump < ::Dump
     dump_files(cat, directory)
   end
 
+  # rubocop:disable Metrics/AbcSize
   def dump_structure(cat, dir)
     # Create database
     File.write(File.join(dir, @holder.dump_file_name(cat)), '')
@@ -65,6 +66,11 @@ class Dump::SqlDump < ::Dump
       creates << dump_create_multiple_reference_table(it)
     end
 
+    creates << render_comment("Additional tables ==> multiple choicesets fields of ItemTypes")
+    cat.item_types.select { |it| it.fields.count.positive? }.each do |it|
+      creates << dump_create_multiple_choiceset_table(it)
+    end
+
     creates << render_comment("Additional tables ==> ChoiceSets")
     cat.choice_sets.each do |choice_set|
       creates << dump_create_choice_sets_table(choice_set)
@@ -77,10 +83,10 @@ class Dump::SqlDump < ::Dump
 
     File.open(File.join(dir, @holder.dump_file_name(cat)), 'a+') { |f| f << creates }
   end
+  # rubocop:enable Metrics/AbcSize
 
+  # rubocop:disable Metrics/AbcSize
   def dump_data(cat, dir)
-    # File.write(File.join(dir, 'data.sql'), '')
-
     inserts = render_header_comment("INSERT INTO statements")
 
     # ItemsTypes become tables, ItemType fields become columns
@@ -97,9 +103,14 @@ class Dump::SqlDump < ::Dump
       inserts << insert_into(@holder.table_name(item.item_type, "sql_slug"), column_names, concat_item_data(item))
     end
 
-    inserts << render_comment("Fields: multiple")
+    inserts << render_comment("Fields: multiple references")
     cat.items.each do |item|
-      inserts << dump_mulitple_field_item_data(item)
+      inserts << dump_mulitple_field_reference_item_data(item)
+    end
+
+    inserts << render_comment("Fields: multiple choicesets")
+    cat.items.each do |item|
+      inserts << dump_mulitple_field_choiceset_item_data(item)
     end
 
     inserts << render_comment("Choices")
@@ -108,12 +119,9 @@ class Dump::SqlDump < ::Dump
     inserts << render_footer_comment
     File.open(File.join(dir, @holder.dump_file_name(cat)), 'a+') { |f| f << inserts }
   end
+  # rubocop:enable Metrics/AbcSize
 
   def dump_references(cat, dir)
-    # struct_dir = File.join(dir, 'structure')
-
-    # File.write(File.join(dir, 'references.sql'), '')
-
     # Export primary keys
     alters = render_header_comment("PRIMARY KEYS")
     alters << dump_primary_keys(cat)
@@ -122,7 +130,10 @@ class Dump::SqlDump < ::Dump
     alters << dump_single_references_and_choices(cat)
 
     alters << render_header_comment("MULTIPLE REFERENCES")
-    alters << dump_multiple_references_and_choices(cat)
+    alters << dump_references_multiple_reference(cat)
+
+    alters << render_header_comment("MULTIPLE CHOICESET")
+    alters << dump_references_multiple_choiceset(cat)
 
     File.open(File.join(dir, @holder.dump_file_name(cat)), 'a+') { |f| f << alters }
   end
@@ -146,13 +157,22 @@ class Dump::SqlDump < ::Dump
   def dump_create_multiple_reference_table(item_type)
     tables = ""
     item_type.fields.select { |f| f.multiple? && f.is_a?(Field::Reference) }.each do |field|
-      # primary_field = item_type.primary_field
-      # References that point to a multiple field dont't have the primary field column so we force it to id
-      # foreign_column_name = 'id' if item_type.primary_field.multiple?
-
       columns = "`#{item_type.sql_slug}` #{convert_app_type_to_sql_type(nil)},"
       column_name = "#{field.sql_slug}_#{field.related_item_type.sql_slug}"
       columns << "`#{column_name}` #{convert_app_type_to_sql_type(nil)}"
+
+      table_name = @holder.guess_table_name(field, "sql_slug")
+      tables << create_table(table_name, columns)
+    end
+
+    tables
+  end
+
+  def dump_create_multiple_choiceset_table(item_type)
+    tables = ""
+    item_type.fields.select { |f| f.multiple? && f.is_a?(Field::ChoiceSet) }.each do |field|
+      columns = "`#{item_type.sql_slug}` #{convert_app_type_to_sql_type(nil)}, "
+      columns << "`#{field.sql_slug}` #{convert_app_type_to_sql_type(nil)}"
 
       table_name = @holder.guess_table_name(field, "sql_slug")
       tables << create_table(table_name, columns)
@@ -205,7 +225,7 @@ class Dump::SqlDump < ::Dump
     remove_ending_comma!(values)
   end
 
-  def dump_mulitple_field_item_data(item)
+  def dump_mulitple_field_reference_item_data(item)
     inserts = ""
 
     fields = item.item_type.fields.select { |field| field.multiple? && field.is_a?(Field::Reference) }
@@ -224,6 +244,27 @@ class Dump::SqlDump < ::Dump
 
       field.value_for_item(item).each do |ref|
         columns = "`#{item.item_type.sql_slug}`, `#{field.sql_slug}_#{field.related_item_type.sql_slug}`"
+        values = "#{value}, #{ref.id}"
+        insert_statement = insert_into(@holder.table_name(field, "sql_slug"), columns, values)
+
+        inserts << insert_statement unless inserts.include?(insert_statement)
+      end
+    end
+
+    inserts
+  end
+
+  def dump_mulitple_field_choiceset_item_data(item)
+    inserts = ""
+
+    fields = item.item_type.fields.select { |field| field.multiple? && field.is_a?(Field::ChoiceSet) }
+    fields.each do |field|
+      # Rule: the primary key is always the id
+      value = item.id
+      next if value == "''"
+
+      field.value_for_item(item).each do |ref|
+        columns = "`#{item.item_type.sql_slug}`, `#{field.sql_slug}`"
         values = "#{value}, #{ref.id}"
         insert_statement = insert_into(@holder.table_name(field, "sql_slug"), columns, values)
 
@@ -323,17 +364,13 @@ class Dump::SqlDump < ::Dump
     alters
   end
 
-  def dump_multiple_references_and_choices(cat)
+  def dump_references_multiple_reference(cat)
     alters = render_comment("Mulitple references")
     cat.items.each do |item|
-      # Multiple references and choices
+      # Multiple references
       fields = item.item_type.fields.select { |field| field.multiple? && field.is_a?(Field::Reference) }
       fields.each do |field|
-        # primary_field = item.item_type.primary_field
-        # foreign_column_name = primary_field&.sql_slug.presence || 'id'
         foreign_column_name = 'id'
-        # References that point to a multiple field dont't have the primary field column so we force it to id
-        foreign_column_name = 'id' if item.item_type.primary_field&.multiple?
 
         table_name = @holder.table_name(field, "sql_slug")
         related_table_name = @holder.table_name(item.item_type, "sql_slug")
@@ -352,17 +389,28 @@ class Dump::SqlDump < ::Dump
     alters
   end
 
+  def dump_references_multiple_choiceset(cat)
+    alters = render_comment("Mulitple choicesets")
+    cat.items.each do |item|
+      # Multiple choices
+      fields = item.item_type.fields.select { |field| field.multiple? && field.is_a?(Field::ChoiceSet) }
+      fields.each do |field|
+        foreign_column_name = 'id'
+
+        table_name = @holder.table_name(field, "sql_slug")
+        related_table_name = @holder.table_name(item.item_type, "sql_slug")
+        choiceset_table_name = @holder.table_name(field.choice_set, "name")
+        alter = add_foreign_key(table_name, item.item_type.sql_slug, related_table_name, foreign_column_name)
+        alter2 = add_foreign_key(table_name, field.sql_slug, choiceset_table_name, foreign_column_name)
+        alters << alter unless alters.include?(alter)
+        alters << alter2 unless alters.include?(alter2)
+      end
+    end
+
+    alters
+  end
+
   def primary_key(_item_type)
-    # primary_field = item_type.primary_field
-    # Primary keys that are multiple don't exist in the newly created table so the primary key becomes `id`
-    # Uncomment to define proper primary fields
-    # primary_key = if primary_field.nil? || (primary_field.present? && primary_field.multiple?)
-    #                 'id'
-    #               else
-    #                 primary_field&.sql_slug
-    #               end
-    #
-    #  primary_key
     'id'
   end
 
@@ -438,10 +486,10 @@ class Dump::SqlDump < ::Dump
     end
   end
 
-  # rubocop:disable Metrics/CyclomaticComplexity
+  # rubocop:disable Metrics/CyclomaticComplexity, Metrics/PerceivedComplexity
   def sql_value(field, item)
     value = field.value_for_item(item)
-    return "NULL" if value.blank?
+    return "NULL" if value.blank? && field.type != "Field::Editor"
 
     case field.type
     when "Field::Int", "Field::Decimal"
@@ -454,12 +502,14 @@ class Dump::SqlDump < ::Dump
       "'#{value.to_json}'"
     when "Field::Geometry", "Field::File", "Field::Image"
       "'#{field.sql_value(item)}'"
+    when "Field::Editor"
+      "'#{field.field_value_for_item(item)}'"
     else
       value = field.field_value_for_all_item(item) if field.is_a?(Field::Text) && field.formatted?
 
       "'#{value.to_s.gsub("'") { "\\'" }}'"
     end
   end
-  # rubocop:enable Metrics/CyclomaticComplexity
+  # rubocop:enable Metrics/CyclomaticComplexity, Metrics/PerceivedComplexity
 end
 # rubocop:enable Metrics/ClassLength
