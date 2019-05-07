@@ -297,22 +297,7 @@ class Dump::SqlDump < ::Dump
       # Single references and choices
       fields = item.item_type.fields.select { |field| !field.multiple? && field.is_a?(Field::Reference) }
       fields.each do |field|
-        # related_primary_field = field.related_item_type.primary_field
-        # TODO : do ...
-        # while related_primary_field.is_a?(Field::Reference) && related_primary_field.present?
-        #   p "REFERENCE of REFERENCE"
-        #   p related_primary_field.slug
-        #   related_primary_field = related_primary_field.related_item_type.primary_field
-        # end
-        #
-        # p field.slug
-        # p related_primary_field.slug
-        # p "over"
-
-        # foreign_column_name = related_primary_field&.sql_slug.presence || 'id'
         foreign_column_name = 'id'
-        # References that point to a multiple field dont't have the primary field column so we force it to id
-        foreign_column_name = 'id' if field.related_item_type.primary_field&.multiple?
 
         table_name = @holder.table_name(item.item_type, "sql_slug")
         related_table_name = @holder.table_name(field.related_item_type, "sql_slug")
@@ -426,7 +411,7 @@ class Dump::SqlDump < ::Dump
     when "Field::DateTime"
       "JSON"
     when "Field::Decimal"
-      "FLOAT"
+      "DOUBLE"
     # when :datetime
     #   "TIMESTAMP DEFAULT CURRENT_TIMESTAMP"
     else

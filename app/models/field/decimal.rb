@@ -85,7 +85,7 @@ class Field::Decimal < ::Field
   end
 
   def sql_type
-    "FLOAT"
+    "DOUBLE"
   end
 
   private
