@@ -90,8 +90,13 @@ class Field::ChoiceSet < ::Field
     {uuid => cid}
   end
 
+  def human_readable?
+    true
+  end
+
   def filterable?
-    false
+    # Should be false if choice set holds a category, true otherwise
+    !holds_category?
   end
 
   def describe
@@ -149,7 +154,11 @@ class Field::ChoiceSet < ::Field
 
   private
 
-  # TODO: validate choice belongs to specified ChoiceSet
-  # def build_validators(field, attr)
-  # end
+  def holds_category?
+    choices.each do |choice|
+      return true if choice.category.present? && choice.category.active?
+    end
+
+    false
+  end
 end
