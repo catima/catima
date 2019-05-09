@@ -94,9 +94,10 @@ class Field::ChoiceSet < ::Field
     true
   end
 
+  # Considered filterable if the choice set do not holds
+  # a choice linked to a category.
   def filterable?
-    # Should be false if choice set holds a category, true otherwise
-    !holds_category?
+    !linked_category?
   end
 
   def describe
@@ -154,9 +155,11 @@ class Field::ChoiceSet < ::Field
 
   private
 
-  def holds_category?
-    choices.each do |choice|
-      return true if choice.category.present? && choice.category.active?
+  # Should return true if the choice set holds a choice linked to
+  # a category, false otherwise.
+  def linked_category?
+    return true if choices.any? do |choice|
+      choice.category.present? && choice.category.active?
     end
 
     false

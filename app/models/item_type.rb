@@ -73,7 +73,7 @@ class ItemType < ApplicationRecord
     candidate_fields.find(&:human_readable?)
   end
 
-  # Fields that are not filterable to prevent n+1 lookup in advanced search
+  # Fields that are filterable
   def simple_fields
     fields.select(&:filterable?)
   end

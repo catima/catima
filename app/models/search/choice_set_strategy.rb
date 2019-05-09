@@ -61,12 +61,10 @@ class Search::ChoiceSetStrategy < Search::BaseStrategy
 
     klass = "Search::#{category_field.type.sub(/^Field::/, '')}Strategy"
     strategy = klass.constantize.new(category_field, locale)
-    scope = strategy.search(
+    strategy.search(
       scope.select('"parent_items".*')
         .from("items parent_items")
         .joins("LEFT JOIN items ON parent_items.data->>'#{field.uuid}' = items.id::text AND parent_items.item_type_id = #{field.item_type.id}"),
       criteria)
-
-    scope
   end
 end

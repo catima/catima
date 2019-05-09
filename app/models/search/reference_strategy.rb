@@ -54,18 +54,16 @@ class Search::ReferenceStrategy < Search::BaseStrategy
     strategy = klass.constantize.new(ref_field, locale)
     strategy.sql_select_name = "children_items"
 
-    scope = if field.multiple?
-              strategy.search(
-                scope
-                  .joins("LEFT JOIN items children_items ON (items.data->>'#{field.uuid}')::jsonb ?| array[children_items.id::text]"),
-                criteria)
-            else
-              strategy.search(
-                scope
-                  .joins("LEFT JOIN items children_items ON items.data->>'#{field.uuid}' = children_items.id::text"),
-                criteria)
-            end
-
-    scope
+    if field.multiple?
+      strategy.search(
+        scope
+          .joins("LEFT JOIN items children_items ON (items.data->>'#{field.uuid}')::jsonb ?| array[children_items.id::text]"),
+        criteria)
+    else
+      strategy.search(
+        scope
+          .joins("LEFT JOIN items children_items ON items.data->>'#{field.uuid}' = children_items.id::text"),
+        criteria)
+    end
   end
 end
