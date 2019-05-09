@@ -90,8 +90,8 @@ class LinkedCategoryInput extends Component {
   }
 
   _selectItem(event){
-    if(typeof event === 'undefined' || event.action !== "pop-value" || !this.props.req) {
-      if(typeof item !== 'undefined') {
+    if(typeof event === 'undefined' || event === null || event.action !== "pop-value" || !this.props.req) {
+      if(typeof item !== 'undefined' && item !== null) {
         this.setState({ selectedItem: event.target.value }, () => this._save());
       } else {
         this.setState({ selectedItem: [] }, () => this._save());
@@ -107,7 +107,7 @@ class LinkedCategoryInput extends Component {
       headers: {'X-CSRF-Token': csrfToken}
     };
 
-    if (typeof selectedCategory !== 'undefined') {
+    if (typeof selectedCategory !== 'undefined' && this.state.selectedItem !== null) {
       this.props.selectedCategory.value = selectedCategory.value;
       this.props.selectedCategory.label = selectedCategory.label;
     }
@@ -238,7 +238,7 @@ class LinkedCategoryInput extends Component {
       return <input name={this._buildInputNameCondition(this.state.selectedCondition)} onChange={this.selectItem} type="number" className="form-control" step="any"/>
     } else if (this.state.inputType === 'Field::URL') {
       return <input name={this._buildInputNameCondition(this.state.selectedCondition)} onChange={this.selectItem} type="url" className="form-control"/>
-    } else if ((this.state.inputType === 'Field::ChoiceSet' && !this._getChoiceSetMultipleOption()) || this.state.inputType === 'Field::Boolean') {
+    } else if (this.state.inputType === 'Field::Boolean') {
       return (
         <select name={this._buildInputNameCondition(this.state.selectedCondition)} onChange={this.selectItem} className="form-control">
           { this.state.inputData.map((item) => {
@@ -247,9 +247,18 @@ class LinkedCategoryInput extends Component {
           }
         </select>
       );
-    } else if (this.state.inputType === 'Field::ChoiceSet' && this._getChoiceSetMultipleOption()) {
+    } else if (this.state.inputType === 'Field::ChoiceSet') {
       return (
-        <ReactSelect name={this._buildInputNameCondition(this.state.selectedCondition)} isMulti options={this._getMultipleChoiceSetOptions()} className="basic-multi-select" onChange={this.selectItem} classNamePrefix="select" placeholder={this.props.searchPlaceholder}/>
+        <ReactSelect
+            name={this._buildInputNameCondition(this.state.selectedCondition)}
+            isSearchable={ true }
+            isClearable={ true }
+            options={this._getMultipleChoiceSetOptions()}
+            className="basic-select"
+            onChange={this.selectItem}
+            classNamePrefix="select"
+            placeholder={this.props.searchPlaceholder}
+        />
       );
     } else {
       return <input name={this._buildInputNameCondition(this.state.selectedCondition)} onChange={this.selectItem} type="text" className="form-control"/>

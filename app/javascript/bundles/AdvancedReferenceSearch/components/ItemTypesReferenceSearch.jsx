@@ -72,8 +72,8 @@ class ItemTypesReferenceSearch extends Component {
   }
 
   _selectItem(event){
-    if(typeof event === 'undefined' || event.action !== "pop-value" || !this.props.req) {
-      if(typeof item !== 'undefined') {
+    if(typeof event === 'undefined' || event === null || event.action !== "pop-value" || !this.props.req) {
+      if(typeof item !== 'undefined' && item !== null) {
         this.setState({ selectedItem: event.target.value }, () => this._save());
       } else {
         this.setState({ selectedItem: [] }, () => this._save());
@@ -89,7 +89,7 @@ class ItemTypesReferenceSearch extends Component {
       headers: {'X-CSRF-Token': csrfToken}
     };
 
-    if (typeof selectedFilter !== 'undefined') {
+    if (typeof selectedFilter !== 'undefined' && this.state.selectedItem !== null) {
       this.props.selectedFilter.value = selectedFilter.value;
       this.props.selectedFilter.label = selectedFilter.label;
     } else {
@@ -210,7 +210,7 @@ class ItemTypesReferenceSearch extends Component {
       return <input id={this.referenceSearchId} ref={this.referenceSearchRef} name={this.state.inputName} onChange={this.selectItem} type="number" className="form-control" step="any"/>
     } else if (this.state.inputType === 'Field::Int') {
       return <input id={this.referenceSearchId} ref={this.referenceSearchRef} name={this.state.inputName} onChange={this.selectItem} type="number" className="form-control"/>
-    } else if ((this.state.inputType === 'Field::ChoiceSet' && !this._getChoiceSetMultipleOption()) || this.state.inputType === 'Field::Boolean') {
+    } else if (this.state.inputType === 'Field::Boolean') {
       return (
         <select id={this.referenceSearchId} ref={this.referenceSearchRef} name={this.state.inputName} onChange={this.selectItem} className="form-control">
           { this.state.inputData.map((item) => {
@@ -219,9 +219,20 @@ class ItemTypesReferenceSearch extends Component {
           }
         </select>
       );
-    } else if (this.state.inputType === 'Field::ChoiceSet' && this._getChoiceSetMultipleOption()) {
+    } else if (this.state.inputType === 'Field::ChoiceSet') {
       return (
-        <ReactSelect id={this.referenceSearchId} name={this.state.inputName} isMulti options={this._getMultipleChoiceSetOptions()} className="basic-multi-select" onChange={this.selectItem} classNamePrefix="select" placeholder={this.props.searchPlaceholder} noOptionsMessage={this.props.noOptionsMessage}/>
+        <ReactSelect
+            id={this.referenceSearchId}
+            name={this.state.inputName}
+            isSearchable={ true }
+            isClearable={ true }
+            options={this._getMultipleChoiceSetOptions()}
+            className="basic-select"
+            onChange={this.selectItem}
+            classNamePrefix="select"
+            placeholder={this.props.searchPlaceholder}
+            noOptionsMessage={this.props.noOptionsMessage}
+        />
       );
     } else {
       return <input id={this.referenceSearchId} ref={this.referenceSearchRef} name={this.state.inputName} onChange={this.selectItem} type="text" className="form-control"/>
