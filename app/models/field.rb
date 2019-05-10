@@ -350,6 +350,9 @@ class Field < ApplicationRecord
     # Remove primary if current field is not human readable
     return update(:primary => false) unless human_readable?
 
+    # Remove primary if current field is restricted
+    return update(:primary => false) if restricted?
+
     # Remove primary from other fields if current field is human readable
     field_set.fields.where("fields.id != ?", id).update_all(:primary => false)
   end
