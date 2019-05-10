@@ -288,7 +288,8 @@ class Field < ApplicationRecord
     ]
   end
 
-  # Useful for the advanced search
+  # Useful for the advanced search. Subclasses can
+  # override.
   def search_conditions_as_hash(locale)
     [
       { :value => I18n.t("advanced_searches.text_search_field.all_words", locale: locale), :key => "all_words"},
@@ -297,7 +298,8 @@ class Field < ApplicationRecord
     ]
   end
 
-  # Useful for the advanced search
+  # Useful for the advanced search. Subclasses can
+  # override.
   def search_field_conditions_as_hash
     [
       { :value => I18n.t("and"), :key => "and"},

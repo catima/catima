@@ -147,6 +147,12 @@ class Field::ChoiceSet < ::Field
     choices_as_options
   end
 
+  def search_conditions_as_hash(locale)
+    [
+      { :value => I18n.t("advanced_searches.text_search_field.exact", locale: locale), :key => "exact"}
+    ]
+  end
+
   def search_options_as_hash
     [
       { :multiple => multiple? }
