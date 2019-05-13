@@ -6,7 +6,6 @@ import $ from 'jquery';
 import 'moment';
 import 'eonasdan-bootstrap-datetimepicker';
 import DateTimeSearch from '../../AdvancedDateTimeSearch/components/DateTimeSearch';
-import striptags from 'striptags';
 
 class LinkedCategoryInput extends Component {
   constructor(props){

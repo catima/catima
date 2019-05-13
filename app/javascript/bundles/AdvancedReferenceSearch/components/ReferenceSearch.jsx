@@ -20,6 +20,7 @@ class ReferenceSearch extends Component {
       selectedCondition: '',
       selectedItem: [],
       searchPlaceholder: this.props.searchPlaceholder,
+      choosePlaceholder: this.props.choosePlaceholder,
       filterPlaceholder: this.props.filterPlaceholder
     };
 
@@ -185,6 +186,7 @@ class ReferenceSearch extends Component {
       return <ItemTypesReferenceSearch
                 updateSelectCondition={this.updateSelectCondition}
                 searchPlaceholder={this.state.searchPlaceholder}
+                choosePlaceholder={this.state.choosePlaceholder}
                 noOptionsMessage={this._getNoOptionsMessage()}
                 items={this.state.items}
                 fields={this.state.fields}

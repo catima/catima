@@ -6,7 +6,6 @@ import $ from 'jquery';
 import 'moment';
 import 'eonasdan-bootstrap-datetimepicker';
 import DateTimeSearch from '../../AdvancedDateTimeSearch/components/DateTimeSearch';
-import striptags from 'striptags';
 
 class ItemTypesReferenceSearch extends Component {
   constructor(props){
@@ -230,7 +229,7 @@ class ItemTypesReferenceSearch extends Component {
             className="basic-select"
             onChange={this.selectItem}
             classNamePrefix="select"
-            placeholder={this.props.searchPlaceholder}
+            placeholder={this.props.choosePlaceholder}
             noOptionsMessage={this.props.noOptionsMessage}
         />
       );
