@@ -250,7 +250,7 @@ class LinkedCategoryInput extends Component {
     } else if (this.state.inputType === 'Field::ChoiceSet') {
       return (
         <ReactSelect
-            name={this._buildInputNameCondition(this.state.selectedCondition)}
+            name={this._buildInputNameCondition('default')}
             isSearchable={ true }
             isClearable={ true }
             options={this._getMultipleChoiceSetOptions()}
