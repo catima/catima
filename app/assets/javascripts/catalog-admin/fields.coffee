@@ -27,7 +27,6 @@ init = ->
       else
         $('#field_formatted_text').attr 'disabled', null
         $('.checkbox:has(#field_formatted_text)').removeClass("disabled")
-      return
     if $('#field_restricted').length
       if $('#field_primary')[0].checked
         $('#field_restricted').attr 'disabled', 'disabled'
@@ -35,7 +34,6 @@ init = ->
       else
         $('#field_restricted').attr 'disabled', null
         $('.checkbox:has(#field_restricted)').removeClass("disabled")
-      return
 
   $('#field_auto_increment').on 'change', (e) ->
     if $('#field_default_value').length
