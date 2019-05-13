@@ -148,19 +148,18 @@ class Field < ApplicationRecord
     display_component.blank?
   end
 
-  # Whether or not this field is filterable.
+  # Whether or not this field is filterable. Can be used in addition to the human_readable?
+  # method.
   #
   # Default depends on the presence of the human_readable method result, and subclasses can
   # override.
-  #
-  # Mainly used by advanced search components, also used by views for the item summary.
   def filterable?
     human_readable?
   end
 
-  # Whether or not this field supports the `multiple` option. Most fields do
-  # not. This method exists so that the UI can show or hide the appropriate
-  # configuration controls for the field. Subclasses may override.
+  # Whether or not this field supports the `multiple` option. This method exists so that
+  # the UI can show or hide the appropriate configuration controls for the field.
+  # Subclasses may override.
   def allows_multiple?
     false
   end
@@ -289,7 +288,8 @@ class Field < ApplicationRecord
     ]
   end
 
-  # Useful for the advanced search
+  # Useful for the advanced search. Subclasses can
+  # override.
   def search_conditions_as_hash(locale)
     [
       { :value => I18n.t("advanced_searches.text_search_field.all_words", locale: locale), :key => "all_words"},
@@ -298,7 +298,8 @@ class Field < ApplicationRecord
     ]
   end
 
-  # Useful for the advanced search
+  # Useful for the advanced search. Subclasses can
+  # override.
   def search_field_conditions_as_hash
     [
       { :value => I18n.t("and"), :key => "and"},

@@ -73,9 +73,9 @@ class ItemType < ApplicationRecord
     candidate_fields.find(&:human_readable?)
   end
 
-  # Fields that are not of type Reference or ChoiceSet to prevent n+1 lookup in advanced search
+  # Fields that are filterable
   def simple_fields
-    fields.reject { |fld| ["Field::Reference", "Field::ChoiceSet"].include?(fld.type) }
+    fields.select(&:filterable?)
   end
 
   # The primary or first text field. Used to generate Item slugs.

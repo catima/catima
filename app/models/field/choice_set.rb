@@ -90,8 +90,14 @@ class Field::ChoiceSet < ::Field
     {uuid => cid}
   end
 
+  def human_readable?
+    true
+  end
+
+  # Considered filterable if the choice set do not holds
+  # a choice linked to a category.
   def filterable?
-    false
+    !linked_category?
   end
 
   def describe
@@ -141,6 +147,12 @@ class Field::ChoiceSet < ::Field
     choices_as_options
   end
 
+  def search_conditions_as_hash(locale)
+    [
+      { :value => I18n.t("advanced_searches.text_search_field.exact", locale: locale), :key => "exact"}
+    ]
+  end
+
   def search_options_as_hash
     [
       { :multiple => multiple? }
@@ -149,7 +161,13 @@ class Field::ChoiceSet < ::Field
 
   private
 
-  # TODO: validate choice belongs to specified ChoiceSet
-  # def build_validators(field, attr)
-  # end
+  # Should return true if the choice set holds a choice linked to
+  # a category, false otherwise.
+  def linked_category?
+    return true if choices.any? do |choice|
+      choice.category.present? && choice.category.active?
+    end
+
+    false
+  end
 end
