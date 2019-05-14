@@ -77,6 +77,7 @@ class Field < ApplicationRecord
 
   before_validation :assign_default_components
   before_create :assign_uuid
+  after_update :recreate_cache
   after_save :remove_primary, :if => :primary?
 
   def self.sorted
@@ -356,6 +357,13 @@ class Field < ApplicationRecord
 
     # Remove primary from other fields if current field is human readable
     field_set.fields.where("fields.id != ?", id).update_all(:primary => false)
+  end
+
+  def recreate_cache
+    # Recreate cache only if the primary attribute has changed
+    return unless saved_changes.include?(:primary)
+
+    ItemsCacheWorker.perform_async(catalog.slug, item_type.slug)
   end
 
   def remove_default_value
