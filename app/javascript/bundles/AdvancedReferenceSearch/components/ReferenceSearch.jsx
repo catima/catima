@@ -35,7 +35,7 @@ class ReferenceSearch extends Component {
   componentDidMount(){
     const csrfToken = $('meta[name="csrf-token"]').attr('content');
     let config = {
-      retry: 1,
+      retry: 3,
       retryDelay: 1000,
       headers: {'X-CSRF-Token': csrfToken}
     };
