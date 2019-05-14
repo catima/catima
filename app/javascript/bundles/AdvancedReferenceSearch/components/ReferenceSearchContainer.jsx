@@ -32,6 +32,7 @@ class ReferenceSearchContainer extends Component {
       referenceFilterName: this._buildReferenceFilterName(id),
       multiple: this.props.multiple,
       searchPlaceholder: this.props.searchPlaceholder,
+      choosePlaceholder: this.props.choosePlaceholder,
       filterPlaceholder: this.props.filterPlaceholder,
       srcRef: this._buildSrcRef(id),
       itemTypeSearch: this.props.itemTypeSearch,
@@ -63,6 +64,7 @@ class ReferenceSearchContainer extends Component {
       referenceFilterName: this._buildReferenceFilterName(id),
       multiple: this.props.multiple,
       searchPlaceholder: this.props.searchPlaceholder,
+      choosePlaceholder: this.props.choosePlaceholder,
       filterPlaceholder: this.props.filterPlaceholder,
       srcRef: this._buildSrcRef(id),
       itemTypeSearch: this.props.itemTypeSearch,
@@ -145,6 +147,7 @@ class ReferenceSearchContainer extends Component {
       referenceFilterName={item.referenceFilterName}
       multiple={this.props.multiple}
       searchPlaceholder={item.searchPlaceholder}
+      choosePlaceholder={item.choosePlaceholder}
       filterPlaceholder={item.filterPlaceholder}
       srcRef={item.srcRef}
       itemTypeSearch={item.itemTypeSearch}

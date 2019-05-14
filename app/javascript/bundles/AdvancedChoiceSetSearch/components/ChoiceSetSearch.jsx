@@ -1,8 +1,6 @@
 import React, { Component } from 'react';
 import ReactDOM from 'react-dom';
 import ReactSelect from 'react-select';
-import striptags from 'striptags';
-import { TreeSelect } from 'antd';
 import LinkedCategoryInput from './LinkedCategoryInput';
 
 const TreeNode = TreeSelect.TreeNode;
@@ -255,15 +253,16 @@ class ChoiceSetSearch extends Component {
   renderLinkedCategoryElement(){
     return (
       <div>
-      <LinkedCategoryInput
-      catalog={this.props.catalog}
-      locale={this.props.locale}
-      itemType={this.props.itemType}
-      inputName={this.props.linkedCategoryInputName}
-      selectedCategory={this.state.selectedCategory}
-      selectedCondition={this.state.selectedCondition}
-      updateSelectCondition={this.updateSelectCondition}
-      />
+        <LinkedCategoryInput
+          catalog={this.props.catalog}
+          locale={this.props.locale}
+          itemType={this.props.itemType}
+          inputName={this.props.linkedCategoryInputName}
+          selectedCategory={this.state.selectedCategory}
+          selectedCondition={this.state.selectedCondition}
+          updateSelectCondition={this.updateSelectCondition}
+          searchPlaceholder={this.props.searchPlaceholder}
+        />
       </div>
     );
   }

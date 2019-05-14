@@ -167,7 +167,7 @@ Rails.application.routes.draw do
     end
     post ":item_type_slug/upload" => "items#upload", :as => 'item_file_upload'
 
-    post ":item_type_slug/search/(:uuid)" => "items#search", :as => "simple_search"
+    match ":item_type_slug/search/(:uuid)" => "items#search", :as => "simple_search", via: [:get, :post]
   end
 
   # ===========================================================================

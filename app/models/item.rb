@@ -36,12 +36,11 @@ class Item < ApplicationRecord
   belongs_to :catalog
   belongs_to :item_type
   belongs_to :creator, :class_name => "User"
-  belongs_to :updater, :class_name => "User"
+  belongs_to :updater, :class_name => "User", optional: true
   has_many :favorites, :dependent => :destroy
 
   validates_presence_of :catalog
   validates_presence_of :creator
-  validates_presence_of :updater
   validates_presence_of :item_type
   validate :unique_value_fields
 
@@ -50,8 +49,7 @@ class Item < ApplicationRecord
   after_initialize :assign_autoincrement_values
   before_create :assign_uuid
 
-  # TODO: Fix ItemsCacheWorker bugs before uncommenting the following line
-  # after_commit :update_views_cache, if: proc { |record| record.saved_changes.key?(:data) }
+  after_commit :update_views_cache, if: proc { |record| record.saved_changes.key?(:data) }
 
   def self.sorted_by_field(field)
     sql = []
@@ -171,25 +169,27 @@ class Item < ApplicationRecord
   def assign_default_values
     return if id || item_type.nil?
 
-    self.data = {} if self.data.nil?
+    self.data = {} if data.nil?
     fields.each do |f|
-      self.data[f.uuid] = f.default_value if f.default_value.present?
+      data[f.uuid] = f.default_value if f.default_value.present?
     end
   end
 
+  # rubocop:disable Metrics/CyclomaticComplexity, Metrics/PerceivedComplexity
   def assign_autoincrement_values
     return if id || item_type.nil?
 
-    self.data = {} if self.data.nil?
+    self.data = {} if data.nil?
     conn = ActiveRecord::Base.connection.raw_connection
     fields.each do |f|
-      next unless (f.type == 'Field::Int') && !f.options.nil? && f.auto_increment? && self.data[f.uuid].nil?
+      next unless (f.type == 'Field::Int') && !f.options.nil? && f.auto_increment? && data[f.uuid].nil?
 
       st = conn.exec(
         "SELECT MAX(CAST(NULLIF(data->>'#{f.uuid}', '') AS integer)) FROM items WHERE item_type_id = $1",
         [item_type_id]
       )
-      self.data[f.uuid] = st.getvalue(0, 0).to_i + 1
+      data[f.uuid] = st.getvalue(0, 0).to_i + 1
     end
   end
+  # rubocop:enable Metrics/CyclomaticComplexity, Metrics/PerceivedComplexity
 end

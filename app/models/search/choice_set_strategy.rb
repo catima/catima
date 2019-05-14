@@ -24,18 +24,19 @@ class Search::ChoiceSetStrategy < Search::BaseStrategy
       condition = criteria[:category_criteria].keys[0]
       criteria[condition] = criteria[:category_criteria][condition]
 
-      # Second condition may be present for ranges with DateTime fields for example
-      if criteria[condition].is_a?(Hash)
-        second_condition = criteria[:category_criteria].keys[1] if %w[outside between].include?(criteria[condition].keys[0])
-        criteria[second_condition] = criteria[:category_criteria][second_condition]
-      end
+      register_second_condition(criteria, condition)
 
       cat_field = Field.find_by(slug: criteria[:category_field])
       return scope if cat_field.nil?
 
-      klass = "Search::#{cat_field.type.sub(/^Field::/, '')}Strategy"
-      strategy = klass.constantize.new(cat_field, locale)
-      scope = strategy.search(scope, criteria)
+      if cat_field.type == "Field::ChoiceSet"
+        @field = cat_field
+        scope = search_data_matching_one_or_more(scope, criteria[:default], negate)
+      else
+        klass = "Search::#{cat_field.type.sub(/^Field::/, '')}Strategy"
+        strategy = klass.constantize.new(cat_field, locale)
+        scope = strategy.search(scope, criteria)
+      end
     else
       scope = search_data_matching_one_or_more(scope, criteria[:default], negate)
     end
@@ -61,12 +62,18 @@ class Search::ChoiceSetStrategy < Search::BaseStrategy
 
     klass = "Search::#{category_field.type.sub(/^Field::/, '')}Strategy"
     strategy = klass.constantize.new(category_field, locale)
-    scope = strategy.search(
+    strategy.search(
       scope.select('"parent_items".*')
         .from("items parent_items")
         .joins("LEFT JOIN items ON parent_items.data->>'#{field.uuid}' = items.id::text AND parent_items.item_type_id = #{field.item_type.id}"),
       criteria)
+  end
 
-    scope
+  def register_second_condition(criteria, condition)
+    return unless criteria[condition].is_a?(Hash)
+
+    # Second condition may be present for ranges with DateTime fields for example
+    second_condition = criteria[:category_criteria].keys[1] if %w[outside between].include?(criteria[condition].keys[0])
+    criteria[second_condition] = criteria[:category_criteria][second_condition]
   end
 end

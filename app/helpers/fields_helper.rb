@@ -90,6 +90,9 @@ module FieldsHelper
       # skip if we have a category
       next if field.item_type.is_a?(Category)
 
+      # skip if item type is inactive
+      next unless field.item_type.active?
+
       list = field_item_references(field.item_type, field, item)
       next if list.empty?
 

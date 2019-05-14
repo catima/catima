@@ -9,6 +9,16 @@ init = ->
         $('.checkbox:has(#field_primary)').removeClass("disabled")
       return
 
+  $('#field_restricted').on 'change', (e) ->
+    if $('#field_primary').length
+      if $('#field_restricted')[0].checked
+        $('#field_primary').attr 'disabled', 'disabled'
+        $('.checkbox:has(#field_primary)').addClass("disabled")
+      else
+        $('#field_primary').attr 'disabled', null
+        $('.checkbox:has(#field_primary)').removeClass("disabled")
+      return
+
   $('#field_primary').on 'change', (e) ->
     if $('#field_formatted_text').length
       if $('#field_primary')[0].checked
@@ -17,7 +27,13 @@ init = ->
       else
         $('#field_formatted_text').attr 'disabled', null
         $('.checkbox:has(#field_formatted_text)').removeClass("disabled")
-      return
+    if $('#field_restricted').length
+      if $('#field_primary')[0].checked
+        $('#field_restricted').attr 'disabled', 'disabled'
+        $('.checkbox:has(#field_restricted)').addClass("disabled")
+      else
+        $('#field_restricted').attr 'disabled', null
+        $('.checkbox:has(#field_restricted)').removeClass("disabled")
 
   $('#field_auto_increment').on 'change', (e) ->
     if $('#field_default_value').length

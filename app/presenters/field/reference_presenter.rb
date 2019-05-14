@@ -20,27 +20,31 @@ class Field::ReferencePresenter < FieldPresenter
     category = field.belongs_to_category? ? "data-field-category=\"#{field.category_id}\"" : ''
     [
       '<div class="form-component">',
-        "<div class=\"row\" #{category} data-field=\"#{field.id}\">",
-          '<div class="col-xs-12">',
-          react_component(
-            'ReferenceEditor',
-            props: {
-              srcRef: "item_#{method}_json",
-              srcId: method,
-              multiple: field.multiple,
-              req: field.required,
-              category: field.category_id,
-              catalog: field.catalog.slug,
-              itemType: field.related_item_type.slug,
-              locale: I18n.locale,
-              noOptionsMessage: t('catalog_admin.items.reference_editor.no_options')
-            },
-            prerender: false
-          ),
-          '</div>',
-        '</div>',
+      "<div class=\"row\" #{category} data-field=\"#{field.id}\">",
+      '<div class="col-xs-12">',
+      component(method),
+      '</div>',
+      '</div>',
       '</div>'
     ].join.html_safe
+  end
+
+  def component(method)
+    react_component(
+      'ReferenceEditor',
+      props: {
+        srcRef: "item_#{method}_json",
+        srcId: method,
+        multiple: field.multiple,
+        req: field.required,
+        category: field.category_id,
+        catalog: field.catalog.slug,
+        itemType: field.related_item_type.slug,
+        locale: I18n.locale,
+        noOptionsMessage: t('catalog_admin.items.reference_editor.no_options')
+      },
+      prerender: false
+    )
   end
 
   def value
