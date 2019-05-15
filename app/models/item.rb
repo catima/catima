@@ -49,12 +49,12 @@ class Item < ApplicationRecord
   after_initialize :assign_autoincrement_values
   before_create :assign_uuid
 
-  after_commit :update_views_cache, if: proc { |record| record.saved_changes.key?(:data) }
+  # TODO: uncomment when item cache worker is fixed
+  # after_commit :update_views_cache, if: proc { |record| record.saved_changes.key?(:data) }
 
   def self.sorted_by_field(field)
     sql = []
     sql << field.order_items_by unless field.nil?
-    # sql << "items.created_at DESC"
 
     if field.nil? ||
        (field.type != Field::TYPES['reference'] && field.type != Field::TYPES['choice'])
