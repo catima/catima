@@ -655,7 +655,7 @@ class ChoiceSetInput extends Component {
   renderItem({item}) {
     return (
       <div className="row nested-fields">
-        <div className="col-md-3">
+        <div className="col-md-4">
             { Object.keys(item.short_name_translations).map((key) => {
                 return (
                     <div key={item.short_input_id + '_' + key} className="input-group form-group">
@@ -665,7 +665,7 @@ class ChoiceSetInput extends Component {
             })}
         </div>
         <input name={item.hidden_input_name} value={item.uuid} type="hidden"/>
-        <div className="col-md-3">
+        <div className="col-md-4">
             { Object.keys(item.long_name_translations).map((key) => {
                 return (
                     <div key={item.long_input_id + '_' + key} className="input-group form-group">
@@ -674,7 +674,7 @@ class ChoiceSetInput extends Component {
                     </div>)
             })}
         </div>
-        <div className="col-md-3">
+        <div className="col-md-2">
             <select id={item.category_input_id} className="form-control" name={item.category_input_name} value={item.category_id} onChange={this.updateSelectedCategory} disabled={item.category_options.length === 0}>
               <option key="" value=""></option>
               { item.category_options.map((item) => {
@@ -699,10 +699,10 @@ class ChoiceSetInput extends Component {
       <div className="choiceset-input-container">
         <div className="row"><div className="col-md-12"><label>{ this.props.choiceNameLabel }</label></div></div>
         <div className="row">
-          <div className="col-md-3"><label>{ this.props.shortNameLabel }</label></div>
-          <div className="col-md-3"><label>{ this.props.longNameLabel }</label></div>
-          <div className="col-md-3"><label>{ this.props.categoryNameLabel }</label></div>
-          <div className="col-md-3"></div>
+          <div className="col-md-4"><label>{ this.props.shortNameLabel }</label></div>
+          <div className="col-md-4"><label>{ this.props.longNameLabel }</label></div>
+          <div className="col-md-2"><label>{ this.props.categoryNameLabel }</label></div>
+          <div className="col-md-2"></div>
         </div>
         <Nestable
           items={[...this.state.componentsList]}
