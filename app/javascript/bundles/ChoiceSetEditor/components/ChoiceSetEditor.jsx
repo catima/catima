@@ -37,8 +37,6 @@ class ChoiceSetEditor extends Component {
           items = [];
       }
 
-      console.log(items)
-
           if(this.props.multiple) {
               this.setState({ hiddenInputValue: [
                 JSON.stringify(

@@ -39,6 +39,7 @@ class ChoiceSynonymEditorContainer extends Component {
 
   renderSynonymComponent(item, index, list){
       return (
+        <div>
           <ChoiceSynonymEditor
             key={index}
             synonym={item}
@@ -47,6 +48,8 @@ class ChoiceSynonymEditorContainer extends Component {
             deleteComponent={this.deleteSynonym}
             selectPlaceholder={this.props.select_placeholder}
             selectDefaultValue={item.choice_option}/>
+            <hr/>
+        </div>
       );
   }
 

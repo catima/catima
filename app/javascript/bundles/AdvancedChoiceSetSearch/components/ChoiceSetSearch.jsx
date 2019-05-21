@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import ReactDOM from 'react-dom';
 import ReactSelect from 'react-select';
+import { TreeSelect } from 'antd';
 import LinkedCategoryInput from './LinkedCategoryInput';
 
 const TreeNode = TreeSelect.TreeNode;

@@ -25,7 +25,6 @@ class ChoiceSynonymEditor extends Component {
   }
 
   _selectItem(item){
-    console.log(item);
       if(typeof item === 'undefined') {
           item = null;
       }
@@ -129,6 +128,12 @@ class ChoiceSynonymEditor extends Component {
 
   renderSynonymComponent(key) {
       return(
+        <input className="form-control" name={this._buildInputName(key)} disabled={this.state.selectedItem === null} data-locale={key} type="text" value={this.state.synonym.synonym[key]} onChange={(e) => this._updateSynonym(e, key)}/>
+      );
+  }
+
+  renderMultiLangSynonymComponent(key) {
+      return(
       <div className="input-group">
         <span className="input-group-addon">{key}</span>
         <input className="form-control" name={this._buildInputName(key)} disabled={this.state.selectedItem === null} data-locale={key} type="text" value={this.state.synonym.synonym[key]} onChange={(e) => this._updateSynonym(e, key)}/>
@@ -148,7 +153,8 @@ class ChoiceSynonymEditor extends Component {
                     { this.state.synonym.synonym && Object.keys(this.state.synonym.synonym).map((key) => {
                         return (
                             <div key={key} className="col-md-6">
-                                { this.renderSynonymComponent(key, this.state.synonym.choice_id) }
+                                { Object.keys(this.state.synonym.synonym).length > 1 && this.renderMultiLangSynonymComponent(key, this.state.synonym.choice_id) }
+                                { Object.keys(this.state.synonym.synonym).length === 1 && this.renderSynonymComponent(key, this.state.synonym.choice_id) }
                             </div>
                         );
                       })
