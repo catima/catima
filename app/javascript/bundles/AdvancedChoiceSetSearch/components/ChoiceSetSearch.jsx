@@ -229,17 +229,18 @@ class ChoiceSetSearch extends Component {
       <div>
       <input id={this.choiceSetId} type="hidden" readOnly value={this.state.hiddenInputValue} name={this._buildInputNameCondition(this.state.selectedCondition)}/>
       <TreeSelect
-      value={this.state.selectedItem}
-      placeholder={this.props.searchPlaceholder}
-      showSearch
-      allowClear
-      labelInValue
-      treeDefaultExpandAll
-      treeNodeFilterProp="title"
-      onChange={this.selectItem}>
-      { this.props.items.map((item, index) => {
-        return this._getTreeChildrens(item, index, 'root' + index);
-      })}
+          value={this.state.selectedItem}
+          placeholder={this.props.searchPlaceholder}
+          showSearch
+          allowClear
+          labelInValue
+          treeDefaultExpandAll
+          treeNodeFilterProp="title"
+          multiple={false}
+          onChange={this.selectItem}>
+          { this.props.items.map((item, index) => {
+            return this._getTreeChildrens(item, index, 'root' + index);
+          })}
       </TreeSelect>
       </div>
     );

@@ -126,7 +126,7 @@ class ChoiceSetEditor extends Component {
               labelInValue
               treeDefaultExpandAll
               treeNodeFilterProp="title"
-              multiple={this.props.multiple}
+              multiple={false}
               defaultValue={this.state.defaultValues}
               onChange={this.selectItem}>
                 { this.props.items.map((item) => {

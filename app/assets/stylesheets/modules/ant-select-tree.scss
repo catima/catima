@@ -71,6 +71,10 @@
       font-size: 16px;
     }
   }
+
+  .ant-empy {
+      display: none;
+  }
 }
 
 .ant-select-selection--multiple {
@@ -96,4 +100,10 @@
       background-color: #f0f0f0 !important;
     }
   }
+}
+
+.ant-select-tree-dropdown {
+    .ant-select-not-found {
+        display: none !important;
+    }
 }

@@ -695,7 +695,6 @@ class ChoiceSetInput extends Component {
   }
 
   renderLongNameTranslations(item, key) {
-      console.log(item.long_name_translations)
       if(Object.keys(item.long_name_translations).length > 1) {
       return (
           <div key={item.long_input_id + '_' + key} className="input-group form-group">
