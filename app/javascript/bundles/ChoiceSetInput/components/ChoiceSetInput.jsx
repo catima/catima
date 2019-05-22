@@ -652,27 +652,74 @@ class ChoiceSetInput extends Component {
      this.setState({componentsList: this._renameTreeComponents(list)});
   }
 
+  renderShortNameTranslations(item, key) {
+      if(Object.keys(item.short_name_translations).length > 1) {
+          return (
+              <div key={item.short_input_id + '_' + key} className="input-group form-group">
+                  <span className="input-group-addon">{key.split('short_name_')[1]}</span>
+                  <input id={item.short_input_id + '_' + key} name={item.short_input_name + '[' + key + ']'} value={item.short_name_translations[key]} onChange={this._updateShortNameTranslations.bind(this)} className="form-control" type="text" required/>
+              </div>
+            )
+      } else {
+          return (
+              <div key={item.short_input_id + '_' + key} className="input-group">
+                  <input id={item.short_input_id + '_' + key} name={item.short_input_name + '[' + key + ']'} value={item.short_name_translations[key]} onChange={this._updateShortNameTranslations.bind(this)} className="form-control" type="text" required/>
+              </div>
+            )
+      }
+
+  }
+
+  renderShortNameTranslationsList(item) {
+    return Object.keys(item.short_name_translations).map((key) => this.renderShortNameTranslations(item, key));
+  }
+
+  renderShortNameTranslations(item, key) {
+      if(Object.keys(item.short_name_translations).length > 1) {
+      return (
+          <div key={item.short_input_id + '_' + key} className="input-group form-group">
+              <span className="input-group-addon">{key.split('short_name_')[1]}</span>
+              <input id={item.short_input_id + '_' + key} name={item.short_input_name + '[' + key + ']'} value={item.short_name_translations[key]} onChange={this._updateShortNameTranslations.bind(this)} className="form-control" type="text"/>
+          </div>
+          )
+      } else {
+          return (
+              <div key={item.short_input_id + '_' + key} className="form-group">
+                  <input id={item.short_input_id + '_' + key} name={item.short_input_name + '[' + key + ']'} value={item.short_name_translations[key]} onChange={this._updateShortNameTranslations.bind(this)} className="form-control" type="text"/>
+              </div>)
+      }
+  }
+
+  renderLongNameTranslationsList(item) {
+    return Object.keys(item.long_name_translations).map((key) => this.renderLongNameTranslations(item, key));
+  }
+
+  renderLongNameTranslations(item, key) {
+      console.log(item.long_name_translations)
+      if(Object.keys(item.long_name_translations).length > 1) {
+      return (
+          <div key={item.long_input_id + '_' + key} className="input-group form-group">
+              <span className="input-group-addon">{key.split('long_name_')[1]}</span>
+              <input id={item.long_input_id + '_' + key} name={item.long_input_name + '[' + key + ']'} value={item.long_name_translations[key]} onChange={this._updateLongNameTranslations.bind(this)} className="form-control" type="text"/>
+          </div>
+          )
+      } else {
+          return (
+              <div key={item.long_input_id + '_' + key} className="form-group">
+                  <input id={item.long_input_id + '_' + key} name={item.long_input_name + '[' + key + ']'} value={item.long_name_translations[key]} onChange={this._updateLongNameTranslations.bind(this)} className="form-control" type="text"/>
+              </div>)
+      }
+  }
+
   renderItem({item}) {
     return (
       <div className="row nested-fields">
         <div className="col-md-4">
-            { Object.keys(item.short_name_translations).map((key) => {
-                return (
-                    <div key={item.short_input_id + '_' + key} className="input-group form-group">
-                        <span className="input-group-addon">{key.split('short_name_')[1]}</span>
-                        <input id={item.short_input_id + '_' + key} name={item.short_input_name + '[' + key + ']'} value={item.short_name_translations[key]} onChange={this._updateShortNameTranslations.bind(this)} className="form-control" type="text" required/>
-                    </div>)
-            })}
+            { this.renderShortNameTranslationsList(item) }
         </div>
         <input name={item.hidden_input_name} value={item.uuid} type="hidden"/>
         <div className="col-md-4">
-            { Object.keys(item.long_name_translations).map((key) => {
-                return (
-                    <div key={item.long_input_id + '_' + key} className="input-group form-group">
-                        <span className="input-group-addon">{key.split('long_name_')[1]}</span>
-                        <input id={item.long_input_id + '_' + key} name={item.long_input_name + '[' + key + ']'} value={item.long_name_translations[key]} onChange={this._updateLongNameTranslations.bind(this)} className="form-control" type="text"/>
-                    </div>)
-            })}
+            { this.renderLongNameTranslationsList(item) }
         </div>
         <div className="col-md-2">
             <select id={item.category_input_id} className="form-control" name={item.category_input_name} value={item.category_id} onChange={this.updateSelectedCategory} disabled={item.category_options.length === 0}>
