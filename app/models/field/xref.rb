@@ -78,6 +78,10 @@ class Field::Xref < ::Field
     "VARCHAR(255)"
   end
 
+  def field_value_for_all_item(item)
+    return '' if raw_value(item).blank? || external_type.nil?
+  end
+
   private
 
   def xref_must_point_to_valid_service

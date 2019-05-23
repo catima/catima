@@ -117,9 +117,9 @@ class Field::Reference < ::Field
   end
 
   def field_value_for_all_item(item)
-    return if item_type.is_a?(Category)
+    return if related_item_type.is_a?(Category)
 
-    item_type.primary_text_field&.field_value_for_all_item(item)
+    field_value_for_item(item)
   end
 
   def sql_type

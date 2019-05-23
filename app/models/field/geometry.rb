@@ -55,6 +55,7 @@ class Field::Geometry < ::Field
     geo_bounds = bounds.present? ? JSON.parse(bounds) : { 'xmin' => xmin, 'xmax' => xmax, 'ymin' => ymin, 'ymax' => ymax }
     geo_bounds.slice('xmin', 'xmax', 'ymin', 'ymax')
   end
+
   def geo_layers
     layers.present? ? JSON.parse(layers) : []
   end
