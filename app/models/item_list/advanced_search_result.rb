@@ -2,8 +2,7 @@
 # performing the search and paginating the results.
 #
 class ItemList::AdvancedSearchResult < ItemList
-  include Search::Strategies
-  include ItemMapsHelper
+  include ::Search::Strategies
 
   attr_reader :model
   delegate :catalog, :item_type, :criteria, :locale, :to_param, :to => :model
@@ -25,17 +24,16 @@ class ItemList::AdvancedSearchResult < ItemList
   # Uses the first Geometry Field found among the advanced_search's fields
   def items_as_geojson
     @model.fields.each do |field|
-      next unless field.type_name == "Geometry"
+      next unless field.is_a?(Field::Geometry)
 
       geometry_aware_items = unpaginaged_items.reject { |it| it.data[field.uuid].blank? }
 
       return geometry_aware_items.map do |item|
         # TODO: part 3 : display only fields that have been selected to be displayed in the advanced search configuration
         popup_content = ApplicationController.render(
-          :partial => 'advanced_searches/popup_content',
+          :partial => 'shared/modals/map_popup_content',
           :assigns => {
-            :item => item,
-            :field => field
+            :item => item
           }
         )
 

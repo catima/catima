@@ -10,7 +10,7 @@ class Field::GeometryPresenter < FieldPresenter
 
   def value
     json = raw_value
-    return nil if json.blank?
+    return nil if json.blank? || json['features'].blank?
 
     geo_viewer
   end
@@ -22,6 +22,6 @@ class Field::GeometryPresenter < FieldPresenter
   end
 
   def geo_viewer
-    @view.render('fields/geometries', features: raw_value['features'])
+    @view.render('fields/geometries', features: raw_value['features'], layers: field.geo_layers)
   end
 end

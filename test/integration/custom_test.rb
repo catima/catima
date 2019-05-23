@@ -26,8 +26,8 @@ class CustomTest < ActionDispatch::IntegrationTest
 
     test "custom search controller is invoked instead of default controller" do
       visit('/custom-with-dash/en/search')
-      assert(page.has_content?("Stephen King"))
-      assert(page.has_content?("Very Old"))
+      refute(page.has_content?("Stephen King"))
+      refute(page.has_content?("Very Old"))
     end
   end
 

@@ -1,11 +1,14 @@
 class ItemList::SimpleSearchResult < ItemList
   attr_reader :query, :item_type_slug
 
-  def initialize(catalog:, query:, item_type_slug:nil, page:nil, per:nil)
+  # rubocop:disable Metrics/ParameterLists
+  def initialize(catalog:, query:, search_uuid:, item_type_slug:nil, page:nil, per:nil)
     super(catalog, page, per)
     @query = query
     @item_type_slug = item_type_slug
+    @search_uuid = search_uuid
   end
+  # rubocop:enable Metrics/ParameterLists
 
   # TODO: test
   def active_item_type

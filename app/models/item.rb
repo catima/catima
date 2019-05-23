@@ -36,12 +36,11 @@ class Item < ApplicationRecord
   belongs_to :catalog
   belongs_to :item_type
   belongs_to :creator, :class_name => "User"
-  belongs_to :updater, :class_name => "User"
+  belongs_to :updater, :class_name => "User", optional: true
   has_many :favorites, :dependent => :destroy
 
   validates_presence_of :catalog
   validates_presence_of :creator
-  validates_presence_of :updater
   validates_presence_of :item_type
   validate :unique_value_fields
 
@@ -50,13 +49,12 @@ class Item < ApplicationRecord
   after_initialize :assign_autoincrement_values
   before_create :assign_uuid
 
-  # TODO: Fix ItemsCacheWorker bugs before uncommenting the following line
+  # TODO: uncomment when item cache worker is fixed
   # after_commit :update_views_cache, if: proc { |record| record.saved_changes.key?(:data) }
 
   def self.sorted_by_field(field)
     sql = []
     sql << field.order_items_by unless field.nil?
-    # sql << "items.created_at DESC"
 
     if field.nil? ||
        (field.type != Field::TYPES['reference'] && field.type != Field::TYPES['choice'])

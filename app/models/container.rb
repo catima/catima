@@ -19,7 +19,8 @@ class Container < ApplicationRecord
     "markdown" => 'Container::Markdown',
     "itemlist" => 'Container::ItemList',
     "map" => 'Container::Map',
-    "contact" => 'Container::Contact'
+    "contact" => 'Container::Contact',
+    "search" => 'Container::Search'
   }.freeze
 
   # include HasSlug

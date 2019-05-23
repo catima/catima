@@ -30,6 +30,11 @@ class ApplicationController < ActionController::Base
   end
   helper_method :favorites_scoped?
 
+  def searches_scoped?
+    false
+  end
+  helper_method :searches_scoped?
+
   def set_locale
     if I18n.locale_available?(params[:locale])
       I18n.locale = params[:locale]

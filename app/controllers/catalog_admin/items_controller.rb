@@ -38,8 +38,6 @@ class CatalogAdmin::ItemsController < CatalogAdmin::BaseController
   end
 
   def edit
-    @back_to_list = request.referer
-
     find_item
     authorize(@item)
   end
@@ -89,11 +87,15 @@ class CatalogAdmin::ItemsController < CatalogAdmin::BaseController
   end
 
   def search
+    build_simple_search
+    redirect_to :action => index unless @saved_search.update(simple_search_params)
+
     @search_results = ItemList::SimpleSearchResult.new(
       :catalog => catalog,
       :query => params[:q],
       :page => params[:page],
-      :item_type_slug => params[:item_type_slug]
+      :item_type_slug => params[:item_type_slug],
+      :search_uuid => @saved_search.uuid
     )
     @items = apply_sort(policy_scope(@search_results.items))
     @items = @items.page(params[:page]).per(25)
@@ -153,5 +155,19 @@ class CatalogAdmin::ItemsController < CatalogAdmin::BaseController
     ext = File.extname(fname)
     basename = fname.slice(0, fname.length - ext.length)
     basename.gsub(/[^0-9_\-a-zA-Z]/, '') + ext
+  end
+
+  def build_simple_search
+    @saved_search = scope.new do |model|
+      model.creator = current_user if current_user.authenticated?
+    end
+  end
+
+  def simple_search_params
+    params.permit(:q)
+  end
+
+  def scope
+    catalog.simple_searches
   end
 end

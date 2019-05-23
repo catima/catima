@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import ReactDOM from 'react-dom';
 import ReactSelect from 'react-select';
-import striptags from 'striptags';
 import LinkedCategoryInput from './LinkedCategoryInput';
 
 class ChoiceSetSearch extends Component {
@@ -202,6 +201,7 @@ class ChoiceSetSearch extends Component {
           selectedCategory={this.state.selectedCategory}
           selectedCondition={this.state.selectedCondition}
           updateSelectCondition={this.updateSelectCondition}
+          searchPlaceholder={this.props.searchPlaceholder}
         />
       </div>
     );

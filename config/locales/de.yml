@@ -75,6 +75,8 @@ de:
         zero: "Ihre erweiterte Suche gab kein Resultat"
         one: "1 Resultat der erweiterten Suche"
         other: "%{count_delimited} Resultate der erweiterten Suche"
+      searches_add: Zu gespeicherten Suchanfragen hinzufügen
+      searches_remove: Aus gespeicherten Suchanfragen entfernen
     text_search_field:
       all_words: alle Wörter
       exact: genauer Ausdruck
@@ -236,17 +238,36 @@ de:
         register: "Registeren"
         my_profile: "Mein Profil"
         my_favorites: "Meine Favoriten"
+        my_searches: Meine Suchen
         my_groups: Meine Gruppen
-  simple_search:
+  simple_searches:
     form:
       advanced: "Erweitert"
       submit: "Suchen"
       placeholder: Suche in %{item_type}
-    index:
+    show:
       title:
         zero: "Kein Resultat gefunden für “%{query}”"
         one: "1 Resultat für “%{query}”"
         other: "%{count_delimited} Resultate für “%{query}”"
+      searches_add: Zu gespeicherten Suchanfragen hinzufügen
+      searches_remove: Aus gespeicherten Suchanfragen entfernen
+  searches:
+    index:
+      title: Meine gespeicherten Suchanfragen
+      in_use: Leider wird diese Suche in einem Container verwendet.
+    list:
+      empty: "Du hast noch keine Suchanfragen!"
+      empty_for_catalog: "Sie haben noch keine Suchanfragen für diesen Katalog!"
+      back_to_list: "Zurück zur Liste"
+      selected_catalog: "Ausgewählter Katalog"
+    edit:
+      name: Name
+      rename_search: Umbenennen der gespeicherten Suche
+      update_search: Aktualisierung
+      success: Die Forschung wurde modifiziert
+    buttons:
+      rename: Umbenennen
   helpers:
     help:
       field/url: Eine komplette URL, inklusive den http-Teil
@@ -287,6 +308,7 @@ de:
   delete: Löschen
   delete_confirm: "Sind Sie sicher, dass Sie löschen möchten “%{model}”?"
   edit: Ändern
+  view: Ansicht
   actions: 'Aktionen'
   duplicate: 'Duplikat'
   i18n: i18n
@@ -307,9 +329,8 @@ de:
   approved: Geprüft
   rejected: Abgelehnt
   users: Benutzer
-  users+groups: Benutzer & Gruppen
+  users_and_groups: Benutzer & Gruppen
   visible: Sichtbar
-  not_visible: Nicht sichtbar
   role: Rolle
   role-with_groups: Rolle mit Gruppen
   general: Allgemeines
@@ -339,6 +360,8 @@ de:
       send: Nachricht senden
       request_sent: Nachricht gesendet
       invalid_captcha: Bitte überprüfen Sie, ob Sie ein Mensch sind.
+    map:
+      view_item: Element anschauen
 
   catalog_admin:
 
@@ -435,6 +458,13 @@ de:
           help: E-Mail, die zum Empfangen von Nachrichten aus dem Kontaktformular verwendet wird
       item_list_inputs:
         display_style: "Display style of items (automatically adapts to content if nothing is selected)"
+      search_inputs:
+        display_type:
+          label: Style
+          help: "Display style of items (automatically adapts to content if nothing is selected)"
+        search:
+          label: Saved search
+          help: Please select the saved search to be displayed.
 
     csv_imports:
       new:
@@ -503,7 +533,11 @@ de:
         multiple_required_choice: "Multiple values – at least one"
       geometry_option_inputs:
         bounds: Allgemeine räumliche Ausdehnung
-        bounds_help: Wenn die Karte geändert wird, verwendet sie den ausgewählten Bereich als standardmäßige räumliche Ausdehnung
+        bounds_help: Wenn die Karte geändert wird, verwendet sie den ausgewählten Bereich als Standard-Raumbereich im Bearbeitungsmodus.
+        layers: Additional layers
+        layers_help: You can add additional layers to your map (default is the standard tile layer from OpenStreetMap). If layers are added, the first one will be the default layer for your map.
+        layers_component_no_options: No more layers to add
+        layers_component_placeholder: Add layers
       decimal_option_inputs:
         min_value: "Minimum value (optional)"
         max_value: "Maximum value (optional)"
@@ -524,9 +558,9 @@ de:
       table:
         name: 'Name'
         type: 'Type'
-        required?: 'Required?'
-        list_view?: 'Edition mode?'
-        public_list_view?: 'Public mode?'
+        required: 'Required?'
+        list_view: 'Edition mode?'
+        public_list_view: 'Public mode?'
       text_option_inputs:
         has_formatted_text: "Has formatted text"
         min_length: "Minimum length (optional)"

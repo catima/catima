@@ -6,6 +6,7 @@ import FormattedTextEditor from '../bundles/FormattedTextEditor/components/Forma
 
 import GeoEditor from '../bundles/GeoEditor/components/GeoEditor';
 import GeoBounds from '../bundles/GeoEditor/components/GeoBounds';
+import GeoLayers from '../bundles/GeoEditor/components/GeoLayers';
 
 import StyleControl from '../bundles/StyleControl/components/StyleControl';
 import FontColorButton from '../bundles/StyleControl/components/FontColorButton';
@@ -26,7 +27,7 @@ import TranslatedTextField from '../bundles/TranslatedTextField/components/Trans
 ReactOnRails.register({
   DateTimeInput,
   FormattedTextEditor,
-  GeoEditor, GeoBounds,
+  GeoEditor, GeoBounds, GeoLayers,
   StyleControl, FontColorButton, FontExample, FontMenu, FontSize, FontStyle,
   ReferenceEditor, SingleReferenceEditor, MultiReferenceEditor,
   ThumbnailControl,

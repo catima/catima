@@ -80,7 +80,9 @@
     border: 0;
 }
 
-.referenceEditor .single-reference .css-1wy0on6, .referenceEditor .single-reference-filter .css-d8oujb {
+.referenceEditor .single-reference .css-1ep9fjw,
+.referenceEditor .single-reference-filter .css-d8oujb,
+.referenceEditor .single-reference .css-d8oujb {
     display: none;
 }
 

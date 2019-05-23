@@ -1,4 +1,6 @@
 module CatalogAdmin::FieldsHelper
+  include CatalogAdmin::MapHelper
+
   def field_style_select(form)
     form.collection_select(
       :style,

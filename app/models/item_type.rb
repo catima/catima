@@ -66,28 +66,29 @@ class ItemType < ApplicationRecord
     @primary_field ||= fields.to_a.find(&:primary?)
   end
 
-  # Field most appropriate for describing this item in a select (i.e. drop-down)
-  # menu. This is usually the primary_field, but may be something different if
-  # the primary field is not human_readable?.
+  # Field most appropriate for describing this item. This is usually the
+  # primary field, but may be something different if the primary field is
+  # not defined. Restricted fields or fields that are not human_readable
+  # wont be suitable candidates.
   def field_for_select
     candidate_fields = [primary_field, list_view_fields, fields].flatten.compact
-    candidate_fields.find(&:human_readable?)
+    candidate_fields.reject(&:restricted?).find(&:human_readable?)
   end
 
-  # Fields that are not of type Reference or ChoiceSet to prevent n+1 lookup in advanced search
+  # Fields that are filterable
   def simple_fields
-    fields.reject { |fld| ["Field::Reference", "Field::ChoiceSet"].include?(fld.type) }
+    fields.select(&:filterable?)
   end
 
   # The primary or first text field. Used to generate Item slugs.
   def primary_text_field
     candidate_fields = [primary_field, list_view_fields, fields].flatten.compact
-    candidate_fields.find { |f| f.is_a?(Field::Text) }
+    candidate_fields.reject(&:restricted?).find { |f| f.is_a?(Field::Text) }
   end
 
   def primary_human_readable_field
     candidate_fields = [primary_field, list_view_fields, fields].flatten.compact
-    candidate_fields.find(&:human_readable?)
+    candidate_fields.reject(&:restricted?).find(&:human_readable?)
   end
 
   def public_items

@@ -18,13 +18,13 @@
 one:
   uuid: MyString
   item_type_id:
-  catalog_id:
+  catalog: one
   creator_id: 1
   criteria:
 
 two:
   uuid: MyString
   item_type_id:
-  catalog_id:
+  catalog: one
   creator_id: 1
   criteria:

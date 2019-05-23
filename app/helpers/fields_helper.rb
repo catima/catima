@@ -52,7 +52,7 @@ module FieldsHelper
   def field_check_display(item, field)
     return true if item.item_type.display_emtpy_fields
 
-    if %w[Field::Geometry Field::Image].include?(field.type)
+    if %w[Field::Geometry Field::File Field::Image].include?(field.type)
       field_value(item, field).present?
     else
       strip_tags(field_value(item, field)).present?
@@ -89,6 +89,9 @@ module FieldsHelper
     item.referenced_by_fields.each_with_object({}) do |field, result|
       # skip if we have a category
       next if field.item_type.is_a?(Category)
+
+      # skip if item type is inactive
+      next unless field.item_type.active?
 
       list = field_item_references(field.item_type, field, item)
       next if list.empty?

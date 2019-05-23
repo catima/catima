@@ -16,10 +16,10 @@
 class Container::Map < ::Container
   DEFAULT_MAP_HEIGHT = 400
 
-  store_accessor :content, :item_type, :base_layers, :height
+  store_accessor :content, :item_type, :layers, :height
 
   def custom_container_permitted_attributes
-    %i(item_type geom_field base_layers height)
+    %i(item_type geom_field layers height)
   end
 
   def geojson
@@ -43,7 +43,11 @@ class Container::Map < ::Container
   end
 
   def map_height
-    height.presence || DEFAULT_MAP_HEIGHT
+    height.present? ? height.to_i : DEFAULT_MAP_HEIGHT
+  end
+
+  def geo_layers
+    layers.present? ? JSON.parse(layers) : []
   end
 
   def update_from_json(data)

@@ -180,7 +180,6 @@ class ChoiceSetSearchContainer extends Component {
   }
 
   renderComponentList() {
-    const list = this.state.componentsList;
     return this.state.componentsList.map((item, index, list) => this.renderComponent(item, index, list));
   }
 

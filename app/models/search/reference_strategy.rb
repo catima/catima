@@ -50,22 +50,26 @@ class Search::ReferenceStrategy < Search::BaseStrategy
     ref_field = Field.find_by(uuid: criteria[:filter_field_uuid])
     return scope if ref_field.nil?
 
+    if ref_field.type == "Field::ChoiceSet"
+      criteria[:category_field] = ref_field.slug
+      criteria[:category_criteria] = criteria
+      criteria[:default] = criteria[:exact]
+    end
+
     klass = "Search::#{ref_field.type.sub(/^Field::/, '')}Strategy"
     strategy = klass.constantize.new(ref_field, locale)
     strategy.sql_select_name = "children_items"
 
-    scope = if field.multiple?
-              strategy.search(
-                scope
-                  .joins("LEFT JOIN items children_items ON (items.data->>'#{field.uuid}')::jsonb ?| array[children_items.id::text]"),
-                criteria)
-            else
-              strategy.search(
-                scope
-                  .joins("LEFT JOIN items children_items ON items.data->>'#{field.uuid}' = children_items.id::text"),
-                criteria)
-            end
-
-    scope
+    if field.multiple?
+      strategy.search(
+        scope
+          .joins("LEFT JOIN items children_items ON (items.data->>'#{field.uuid}')::jsonb ?| array[children_items.id::text]"),
+        criteria)
+    else
+      strategy.search(
+        scope
+          .joins("LEFT JOIN items children_items ON items.data->>'#{field.uuid}' = children_items.id::text"),
+        criteria)
+    end
   end
 end

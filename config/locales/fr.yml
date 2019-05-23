@@ -90,6 +90,8 @@ fr:
         zero: "Votre recherche avancée n'a pas donné de résultat"
         one: "1 résultat de recherche avancée"
         other: "%{count_delimited} résultats de recherche avancée"
+      searches_add: Sauvegarder la recherche
+      searches_remove: Supprimer des recherches sauvegardées
     text_search_field:
       all_words: tous les mots
       exact: expression exacte
@@ -251,17 +253,36 @@ fr:
         register: "Enregistrement"
         my_profile: "Mon profile"
         my_favorites: "Mes favoris"
+        my_searches: Mes recherches
         my_groups: Mes groupes
-  simple_search:
+  simple_searches:
     form:
       advanced: "Avancé"
       submit: "Chercher"
       placeholder: Chercher dans %{item_type}
-    index:
+    show:
       title:
         zero: "Rien trouvé pour “%{query}”"
         one: "1 résultat pour “%{query}”"
         other: "%{count_delimited} résultats pour “%{query}”"
+      searches_add: Sauvegarder la recherche
+      searches_remove: Supprimer des recherches sauvegardées
+  searches:
+    index:
+      title: Mes recherches sauvegardées
+      in_use: Désolé cette recherche est utilisée dans un conteneur
+    list:
+      empty: "Vous n'avez pas encore de recherches!"
+      empty_for_catalog: "Vous n'avez pas encore de recherches pour ce catalogue!"
+      back_to_list: "Retour à la liste"
+      selected_catalog: "Catalogue sélectionné"
+    edit:
+      name: Nom
+      rename_search: Renommer la recherche sauvegardée
+      update_search: Mettre à jour
+      success: La recherche a été modifée
+    buttons:
+      rename: Renommer
   helpers:
     help:
       field/url: Une URL complète, y compris la partie http
@@ -302,6 +323,7 @@ fr:
   delete: 'Supprimer'
   delete_confirm: "Vous voulez vraiment supprimer “%{model}”?"
   edit: 'Éditer'
+  view: Voir
   actions: 'Actions'
   duplicate: 'Dupliquer'
   i18n: i18n
@@ -328,11 +350,10 @@ fr:
   approved: Validé
   rejected: Rejeté
   users: Utilisateurs
-  users+groups: Utilisateurs & groupes
+  users_and_groups: Utilisateurs & groupes
   new_user: Nouvel utilisateur
   send_invitation: Envoyer l'invitation
   visible: Visible
-  not_visible: Non visible
   email: E-mail
   role: Rôle
   role-with-groups: Rôle avec les groupes
@@ -370,6 +391,8 @@ fr:
       send: Envoyer le message
       request_sent: Message envoyé
       invalid_captcha: Veuillez vérifiez que vous êtes un humain
+    map:
+      view_item: Consulter la fiche
 
   catalog_admin:
 
@@ -467,6 +490,13 @@ fr:
           help: L'adresse email qui recevra les message du formulaire de contact
       item_list_inputs:
         display_style: "Style d'affichage des fiches (s'adapte automatiquement au contenu si rien n'est sélectionné)"
+      search_inputs:
+        display_type:
+          label: Style
+          help: "Style d'affichage des fiches (s'adapte automatiquement au contenu si rien n'est sélectionné)"
+        search:
+          label: Recherche sauvergardée
+          help: Veuillez sélectionner la recherche sauvegardée à afficher.
 
     csv_imports:
       new:
@@ -537,7 +567,11 @@ fr:
         multiple_required_choice: "Plusieurs valeurs – au moins une"
       geometry_option_inputs:
         bounds: Étendue spatiale par défaut
-        bounds_help: Si modifiée, la carte utilisera la zone sélectionnée comme étendue spatiale par défaut
+        bounds_help: Si modifiée, la carte utilisera la zone sélectionnée comme étendue spatiale par défaut en mode édition.
+        layers: Calques supplémentaires
+        layers_help: Vous pouvez ajouter des calques supplémentaires à votre carte (par défaut, la couche standard OpenStreetMap est utilisée). Si des calques sont ajoutées, le premier sera le claque par défaut de votre carte.
+        layers_component_no_options: Plus de calques à ajouter
+        layers_component_placeholder: Ajouter des calques
       decimal_option_inputs:
         min_value: "Valeur minimale (optionnel)"
         max_value: "Valeur maximale (optionnel)"
@@ -558,9 +592,9 @@ fr:
       table:
         name: 'Nom'
         type: 'Type'
-        required?: 'Exigé?'
-        list_view?: "En édition?"
-        public_list_view?: 'En consultation?'
+        required: 'Exigé?'
+        list_view: "En édition?"
+        public_list_view: 'En consultation?'
       text_option_inputs:
         has_formatted_text: "Contient du texte formaté"
         min_length: "Longueur minimale (optionnel)"

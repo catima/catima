@@ -1,0 +1,11 @@
+<h4>
+  <%= link_to(
+    popup_display_name(@item),
+    item_path(
+      :catalog_slug => @item.catalog.slug,
+      :locale => I18n.locale,
+      :item_type_slug => @item.item_type.slug,
+      :id => @item
+    ),
+    :target => '_blank') %>
+</h4>
