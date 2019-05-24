@@ -74,9 +74,9 @@ class Field::File < ::Field
     value = super
 
     if value.is_a?(Hash)
-      process_single_file(value)
+      process_single_file(value, item)
     elsif value.is_a?(Array)
-      process_multiple_files(value)
+      process_multiple_files(value, item)
     end
   end
 
@@ -105,19 +105,23 @@ class Field::File < ::Field
 
   private
 
-  def process_single_file(value)
-    return if value["path"].blank?
-
-    value["path"]
+  def format_path_for_export(path, item)
+    path.gsub!("upload/#{item.catalog.slug}", "files")
   end
 
-  def process_multiple_files(values)
+  def process_single_file(value, item)
+    return if value["path"].blank?
+
+    format_path_for_export(value["path"], item)
+  end
+
+  def process_multiple_files(values, item)
     return if values.blank?
 
     values.map do |i|
       next if i["path"].blank?
 
-      i["path"]
+      format_path_for_export(i["path"], item)
     end.join('; ')
   end
 end
