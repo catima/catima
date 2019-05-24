@@ -151,7 +151,9 @@ class Field::DateTime < ::Field
   end
 
   def field_value_for_all_item(item)
-    Field::DateTimePresenter.new(nil, item, self).value
+    I18n.with_locale(item.catalog.primary_language) do
+      Field::DateTimePresenter.new(nil, item, self).value
+    end
   end
 
   def sql_type
