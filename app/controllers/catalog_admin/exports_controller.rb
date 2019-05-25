@@ -10,14 +10,13 @@ class CatalogAdmin::ExportsController < CatalogAdmin::BaseController
     category = find_category
     build_export(catalog)
     authorize(@export)
-    # Export async task (Sidekiq) is triggered
-    # with the after_commit callback
-    Export.create(
+    export = Export.create(
       user: current_user,
       catalog: catalog,
       category: category,
       status: "processing"
     )
+    export.export_catalog(params[:locale])
     redirect_back fallback_location: catalog_admin_exports_path, :alert => @message
   end
 

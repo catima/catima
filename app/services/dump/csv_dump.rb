@@ -4,26 +4,28 @@ class Dump::CsvDump < ::Dump
   def initialize
   end
 
-  def dump(catalog, directory)
-    cat = Catalog.find_by(slug: catalog)
-    raise "ERROR. Catalog '#{catalog}' not found." if cat.nil?
+  def dump(catalog, directory, locale)
+    I18n.with_locale(locale) do
+      cat = Catalog.find_by(slug: catalog)
+      raise "ERROR. Catalog '#{catalog}' not found." if cat.nil?
 
-    # Check if directory exists; create if necessary,
-    # if not empty raise an error.
-    create_output_dir directory unless File.directory?(directory)
+      # Check if directory exists; create if necessary,
+      # if not empty raise an error.
+      create_output_dir directory unless File.directory?(directory)
 
-    # Write meta.json file. Contains information about
-    # the dump, format version etc.
-    write_meta directory
+      # Write meta.json file. Contains information about
+      # the dump, format version etc.
+      write_meta directory
 
-    create_files(cat, directory)
+      create_files(cat, directory)
 
-    # First loop to check if there are categories among choices
-    categories_fields = build_csv_header(cat)
+      # First loop to check if there are categories among choices
+      categories_fields = build_csv_header(cat)
 
-    dump_data(cat, categories_fields, directory)
+      dump_data(cat, categories_fields, directory)
 
-    dump_files(cat, directory)
+      dump_files(cat, directory)
+    end
   end
 
   private
@@ -75,7 +77,7 @@ class Dump::CsvDump < ::Dump
   def dump_data(catalog, categories_fields, directory)
     catalog.items.each do |item|
       CSV.open(File.join(directory, "#{item.item_type.slug}.csv"), "a+") do |csv|
-        columns = item.fields.map(&:slug)
+        columns = item.fields.map(&:name)
 
         if categories_fields[item.item_type.id].present?
           categories_fields[item.item_type.id].each do |field|

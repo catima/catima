@@ -24,7 +24,7 @@ class Export < ApplicationRecord
   validates_inclusion_of :category, :in => CATEGORY_OPTIONS
   validates_inclusion_of :status, :in => STATUS_OPTIONS
 
-  after_commit :export_catalog, on: :create
+  # after_commit :export_catalog, on: :create
 
   def pathname
     ext = Rails.env.test? ? "test" : "zip"
@@ -47,7 +47,7 @@ class Export < ApplicationRecord
     1.week
   end
 
-  def export_catalog
-    ExportWorker.perform_async(id, category)
+  def export_catalog(locale)
+    ExportWorker.perform_async(id, category, locale)
   end
 end

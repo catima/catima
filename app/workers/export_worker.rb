@@ -3,7 +3,7 @@ require 'zip'
 class ExportWorker
   include Sidekiq::Worker
 
-  def perform(export_id, category)
+  def perform(export_id, category, locale)
     dir = Rails.env.development? ? Rails.root.join('tmp', 'exports') : Dir.mktmpdir(SecureRandom.hex)
     export = find_export(export_id)
 
@@ -13,7 +13,7 @@ class ExportWorker
     when "sql"
       sql_export(export, dir)
     when "csv"
-      csv_export(export, dir)
+      csv_export(export, dir, locale)
     else
       export.update(status: "error")
     end
@@ -49,10 +49,11 @@ class ExportWorker
     send_mail(export)
   end
 
-  def csv_export(export, dir)
+  # CSV dumps language is set according to the admin interface language
+  def csv_export(export, dir, locale)
     status = "ready"
     begin
-      Dump::CsvDump.new.dump(export.catalog.slug, File.join(dir, 'csv'))
+      Dump::CsvDump.new.dump(export.catalog.slug, File.join(dir, 'csv'), locale)
       zip(dir, export.pathname)
     rescue StandardError => er
       status = "error"

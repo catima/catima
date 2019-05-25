@@ -151,13 +151,11 @@ class Field::DateTime < ::Field
   end
 
   def field_value_for_all_item(item)
-    I18n.with_locale(item.catalog.primary_language) do
-      Field::DateTimePresenter.new(nil, item, self).value
-    end
+    Field::DateTimePresenter.new(nil, item, self).value
   end
 
   def sql_type
-    "VARCHAR(255)"
+    "JSON"
   end
 
   private
