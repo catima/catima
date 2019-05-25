@@ -44,8 +44,10 @@ class ReferenceSearch extends Component {
         this.setState({selectedCondition: this.props.selectCondition[0].key});
     }
 
-    axios.get(`/api/v2/${this.props.catalog}/${this.props.locale}/${this.props.itemType}?simple_fields=true`, config)
-    .then(res => {
+    axios.get(
+      `/api/v2/${this.props.catalog}/${this.props.locale}/${this.props.itemType}?simple_fields=true&page=1`,
+      config
+    ).then(res => {
       this.setState({ items: res.data.items });
       this.setState({ fields: res.data.fields });
       this.setState({ isLoading: false });
@@ -211,7 +213,8 @@ class ReferenceSearch extends Component {
                 inputName={this._buildInputNameCondition(this.state.selectedCondition)}
                 srcRef={this.props.srcRef}
                 srcId={this.props.srcId}
-                req={this.props.req} />
+                req={this.props.req}
+                itemsUrl={`/api/v2/${this.props.catalog}/${this.props.locale}/${this.props.itemType}?simple_fields=true`} />
   }
 
   renderFilter(){

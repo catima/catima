@@ -45,6 +45,7 @@
     "react-on-rails": "^11.2.2",
     "react-s3-uploader": "^4.6.2",
     "react-select": "^2.1.1",
+    "react-select-async-paginate": "^0.3.0",
     "resolve-url-loader": "^2.2.1",
     "sass-loader": "^6.0.6",
     "striptags": "^3.1.1",

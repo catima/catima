@@ -1,6 +1,7 @@
+import AsyncPaginate from 'react-select-async-paginate';
+import axios from 'axios';
 import React, { Component } from 'react';
 import ReactDOM from 'react-dom';
-import ReactSelect from 'react-select';
 import striptags from 'striptags';
 
 class SelectedReferenceSearch extends Component {
@@ -8,6 +9,8 @@ class SelectedReferenceSearch extends Component {
     super(props);
 
     this.state = {
+      items: [],
+      options: [],
       selectedItem: [],
       hiddenInputValue: []
     };
@@ -15,6 +18,9 @@ class SelectedReferenceSearch extends Component {
     this.referenceSearchId = `${this.props.srcRef}-editor`;
     this.filterId = `${this.props.srcRef}-filters`;
     this.selectItem = this._selectItem.bind(this);
+    this.loadOptions = this._loadOptions.bind(this);
+    this.getItemOptions = this._getItemOptions.bind(this);
+    this.state.items = this.props.items;
   }
 
   _save(){
@@ -56,11 +62,14 @@ class SelectedReferenceSearch extends Component {
     }
   }
 
-  _getItemOptions(){
+  _getItemOptions(items){
     var optionsList = [];
-    optionsList = this.props.items.map(item =>
-      this._getJSONItem(item)
-    );
+
+    if (typeof items !== 'undefined') {
+      optionsList = items.map(item =>
+        this._getJSONItem(item)
+      );
+    }
 
     return optionsList;
   }
@@ -73,10 +82,41 @@ class SelectedReferenceSearch extends Component {
     return {value: item.id, label: this._itemName(item)};
   }
 
+  async _loadOptions(search, loadedOptions, { page }) {
+    const response = await fetch(`${this.props.itemsUrl}&search=${search}&page=${page}`);
+    const responseJSON = await response.json();
+
+    return {
+      options: this.getItemOptions(responseJSON.items),
+      hasMore: responseJSON.hasMore,
+      additional: {
+        page: page + 1,
+      },
+    };
+  }
+
   render() {
     return (
       <div>
-        <ReactSelect id={this.referenceSearchId} name={this.props.inputName} delimiter="," isMulti={this.props.multiple} options={this._getItemOptions()} className="basic-multi-select" onChange={this.selectItem} classNamePrefix="select" placeholder={this.props.searchPlaceholder} noOptionsMessage={this.props.noOptionsMessage}/>
+        <AsyncPaginate
+          id={this.referenceSearchId}
+          name={this.props.inputName}
+          delimiter=","
+          isMulti={this.props.multiple}
+          options={this.state.options}
+          className="basic-multi-select"
+          classNamePrefix="select"
+          debounceTimeout={800}
+          placeholder={this.props.searchPlaceholder}
+          noOptionsMessage={this.props.noOptionsMessage}
+          value={this.state.selectedItem}
+          options={this.getItemOptions()}
+          loadOptions={this.loadOptions}
+          onChange={this.selectItem}
+          additional={{
+            page: 1,
+          }}
+        />
       </div>
     );
   }
