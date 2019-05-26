@@ -1,4 +1,6 @@
 import React, { Component } from 'react';
+import axios from 'axios';
+import AsyncPaginate from 'react-select-async-paginate';
 import ReactDOM from 'react-dom';
 import ReactSelect from 'react-select';
 import striptags from 'striptags';
@@ -12,7 +14,11 @@ class MultiReferenceEditor extends Component {
     const selItems = this._load(v);
 
     this.state = {
+      items: [],
+      page:1,
+      isFetching: false,
       selectedItems: selItems,
+      selectedItemsToRender: [],
       availableRefsSelectedFilter: null,
       selectedRefsSelectedFilter: null,
       filterAvailableInputValue: '',
@@ -30,6 +36,13 @@ class MultiReferenceEditor extends Component {
     this.selectedRefsSelectFilter = this._selectedRefsSelectFilter.bind(this);
     this.filterAvailableReferences = this._filterAvailableReferences.bind(this);
     this.filterSelectedReferences = this._filterSelectedReferences.bind(this);
+
+    this.fetchItems = this._fetchItems.bind(this);
+    this.state.items = this.props.items;
+
+    selItems.forEach((item) => {
+      this.state.selectedItemsToRender = this.state.selectedItemsToRender.concat(this.state.items.filter(it => it.id === item))
+    });
   }
 
   _highlightItem(e){
@@ -39,6 +52,7 @@ class MultiReferenceEditor extends Component {
 
   _selectItems(){
     const itms = this.highlightedItems('availableReferences');
+
     this.setState(
       { selectedItems: this.state.selectedItems.concat(itms) },
       () => this._save()
@@ -57,6 +71,29 @@ class MultiReferenceEditor extends Component {
     );
   }
 
+  _fetchItems = async (search, page) => {
+    const csrfToken = $('meta[name="csrf-token"]').attr('content');
+    let config = {
+      retry: 3,
+      retryDelay: 1000,
+      headers: {'X-CSRF-Token': csrfToken}
+    };
+
+    this.state.page++;
+    this.setState({isFetching: true})
+    if (this.state.filterAvailableInputValue === null) {
+      this.setState({filterAvailableInputValue: ''})
+    }
+    await axios.get(`${this.props.itemsUrl}?search=${this.state.filterAvailableInputValue}&page=${this.state.page}`, config)
+      .then(res => {
+        console.log(res.data.items);
+        this.setState({
+          items: this.state.items.concat(res.data.items),
+          isFetching: false
+        });
+      });
+  }
+
   _load(v){
     if (v == null || v == '') return [];
     let selItems = JSON.parse(v);
@@ -72,17 +109,38 @@ class MultiReferenceEditor extends Component {
       )
     );
     document.getElementById(this.props.srcRef).value = v;
+
+    this.setState({ selectedItemsToRender: [] });
+    this.state.selectedItems.forEach((item) => {
+      this.setState((state) =>
+        ({ selectedItemsToRender: state.selectedItemsToRender.concat(state.items.filter(it => it.id === item)) })
+      );
+    });
   }
 
   _availableRefsItemName(item){
     if(typeof this.state === 'undefined') return striptags(item.default_display_name);
-    if(typeof this.state !== 'undefined' && (this.state.availableRefsSelectedFilter === null || item[this.state.availableRefsSelectedFilter.value] === null || item[this.state.availableRefsSelectedFilter.value].length === 0)) return striptags(item.default_display_name);
+    if(typeof this.state !== 'undefined'
+        && (this.state.availableRefsSelectedFilter === null
+            || item[this.state.availableRefsSelectedFilter.value] === null
+            || typeof item[this.state.availableRefsSelectedFilter.value] === 'undefined'
+            || item[this.state.availableRefsSelectedFilter.value].length === 0)
+    ) {
+      return striptags(item.default_display_name);
+    }
     return striptags(item.default_display_name) + ' - ' + item[this.state.availableRefsSelectedFilter.value];
   }
 
   _selectedRefsItemName(item){
     if(typeof this.state === 'undefined') return striptags(item.default_display_name);
-    if(typeof this.state !== 'undefined' && (this.state.selectedRefsSelectedFilter === null || item[this.state.selectedRefsSelectedFilter.value] === null || item[this.state.selectedRefsSelectedFilter.value].length === 0)) return striptags(item.default_display_name);
+    if(typeof this.state !== 'undefined'
+        && (this.state.selectedRefsSelectedFilter === null
+          || item[this.state.selectedRefsSelectedFilter.value] === null
+          || typeof item[this.state.selectedRefsSelectedFilter.value] === 'undefined'
+          || item[this.state.selectedRefsSelectedFilter.value].length === 0)
+    ) {
+      return striptags(item.default_display_name);
+    }
     return striptags(item.default_display_name) + ' - ' + item[this.state.selectedRefsSelectedFilter.value];
   }
 
@@ -113,8 +171,36 @@ class MultiReferenceEditor extends Component {
     return {value: field.slug, label: field.name};
   }
 
-  _filterAvailableReferences(e) {
-    this.setState({filterAvailableInputValue: e.target.value});
+  _filterAvailableReferences = async (e) => {
+    var searchTerm = e.target.value;
+    this.setState({filterAvailableInputValue: searchTerm});
+
+    if (!this.state.isFetching) {
+      const csrfToken = $('meta[name="csrf-token"]').attr('content');
+      let config = {
+        retry: 3,
+        retryDelay: 1000,
+        headers: {'X-CSRF-Token': csrfToken}
+      };
+
+      this.state.page = 1;
+      this.state.isFetching = true;
+      if (this.state.filterAvailableInputValue === null) {
+        this.state.filterAvailableInputValue = '';
+      }
+      var itemsUrl = `${this.props.itemsUrl}?search=${searchTerm}&page=${this.state.page}`
+      console.log('selected items: ', this.state.selectedItems);
+      this.state.selectedItems.forEach((itemId) => {
+        itemsUrl = itemsUrl + `&except[]=${itemId}`
+      });
+
+      await axios.get(itemsUrl, config)
+        .then(res => {
+          console.log(res.data.items);
+          this.state.isFetching = false;
+          this.setState({ items: res.data.items });
+        });
+    }
   }
 
   _filterSelectedReferences(e) {
@@ -139,6 +225,16 @@ class MultiReferenceEditor extends Component {
       document.querySelector(`#${this.editorId} .referenceControls .btn-danger`).removeAttribute('disabled');
     else
       document.querySelector(`#${this.editorId} .referenceControls .btn-danger`).setAttribute('disabled', 'disabled');
+  }
+
+  handleScroll = (e) => {
+    const bottom = e.target.clientHeight - (e.target.scrollHeight - e.target.scrollTop) > 0;
+    if (bottom) {
+      console.log('bootom');
+      if (!this.state.isFetching) {
+        this.fetchItems();
+      }
+    }
   }
 
   renderAvailableItemDiv(item, selectedItems){
@@ -200,15 +296,32 @@ class MultiReferenceEditor extends Component {
     return (
       <div className="multiple-reference-container">
         <div id={this.editorId} className="wrapper">
-          <div className="availableReferences">
+          <div className="availableReferences" onScroll={this.handleScroll}>
               <div className="input-group">
-                <input className="form-control" type="text" value={this.state.filterAvailableInputValue} onChange={this.filterAvailableReferences} placeholder={this.props.searchPlaceholder}/>
-                <div className="input-group-addon"><ReactSelect id={this.availableRefsFilterId} className="multiple-reference-filter" isSearchable={false} isClearable={true} value={this.state.availableRefsSelectedFilter} onChange={this.availableRefsSelectFilter} options={this._getFilterOptions()} placeholder={this.props.filterPlaceholder} noOptionsMessage={this.props.noOptionsMessage}/></div>
+                <input
+                  className="form-control"
+                  type="text"
+                  value={this.state.filterAvailableInputValue}
+                  onChange={this.filterAvailableReferences}
+                  placeholder={this.props.searchPlaceholder}/>
+                <div className="input-group-addon">
+                  <ReactSelect
+                    id={this.availableRefsFilterId}
+                    className="multiple-reference-filter"
+                    isSearchable={false}
+                    isClearable={true}
+                    value={this.state.availableRefsSelectedFilter}
+                    onChange={this.availableRefsSelectFilter}
+                    options={this._getFilterOptions()}
+                    placeholder={this.props.filterPlaceholder}
+                    noOptionsMessage={this.props.noOptionsMessage}/>
+                </div>
               </div>
             <div>
-              {this.props.items.map(item =>
+              {this.state.items.map(item =>
                 this.renderAvailableItemDiv(item, false)
               )}
+              { this.state.isFetching && <div className="loader"></div> }
             </div>
           </div>
           <div className="referenceControls">
@@ -225,7 +338,7 @@ class MultiReferenceEditor extends Component {
               <div className="input-group-addon"><ReactSelect id={this.selectedRefsFilterId} className="multiple-reference-filter" isSearchable={false} isClearable={true} value={this.state.selectedRefsSelectedFilter} onChange={this.selectedRefsSelectFilter} options={this._getFilterOptions()} placeholder={this.props.filterPlaceholder} noOptionsMessage={this.props.noOptionsMessage}/></div>
             </div>
             <div>
-              {this.props.items.map(item =>
+              {this.state.selectedItemsToRender.map(item =>
                 this.renderSelectedItemDiv(item, true)
               )}
             </div>

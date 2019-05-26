@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
-import ReactSelect from 'react-select';
+import AsyncPaginate from 'react-select-async-paginate';
 import striptags from 'striptags';
+import ReactSelect from 'react-select';
 
 class SingleReferenceEditor extends Component {
   constructor(props){
@@ -10,6 +11,7 @@ class SingleReferenceEditor extends Component {
     const selItem = this._load(v);
 
     this.state = {
+      items: [],
       selectedItem: selItem,
       selectedFilter: null
     };
@@ -18,6 +20,9 @@ class SingleReferenceEditor extends Component {
     this.filterId = `${this.props.srcRef}-filters`;
     this.selectItem = this._selectItem.bind(this);
     this.selectFilter = this._selectFilter.bind(this);
+    this.loadOptions = this._loadOptions.bind(this);
+    this.getItemOptions = this._getItemOptions.bind(this);
+    this.state.items = this.props.items;
   }
 
   componentDidMount(){
@@ -53,11 +58,14 @@ class SingleReferenceEditor extends Component {
     }
   }
 
-  _getItemOptions(){
+  _getItemOptions(items){
     var optionsList = [];
-    optionsList = this.props.items.map(item =>
-      this._getJSONItem(item)
-    );
+
+    if (typeof items !== 'undefined') {
+      optionsList = items.map(item =>
+        this._getJSONItem(item)
+      );
+    }
 
     return optionsList;
   }
@@ -98,18 +106,37 @@ class SingleReferenceEditor extends Component {
     return {value: field.slug, label: field.name};
   }
 
+  async _loadOptions(search, loadedOptions, { page }) {
+    const response = await fetch(`${this.props.itemsUrl}?search=${search}&page=${page}`);
+    const responseJSON = await response.json();
+
+    return {
+      options: this.getItemOptions(responseJSON.items),
+      hasMore: responseJSON.hasMore,
+      additional: {
+        page: page + 1,
+      },
+    };
+  }
+
   render(){
     return (
       <div className="input-group single-reference-container">
-        <ReactSelect
+        <AsyncPaginate
           id={this.editorId}
           className="single-reference"
-          value={this.state.selectedItem}
-          onChange={this.selectItem}
-          options={this._getItemOptions()}
-          isSearchable={true}
+          debounceTimeout={800}
           isClearable={!this.props.req}
+          isMulti={false}
+          isSearchable={true}
+          loadOptions={this.loadOptions}
+          onChange={this.selectItem}
+          options={this.getItemOptions()}
           noOptionsMessage={this.props.noOptionsMessage}
+          value={this.state.selectedItem}
+          additional={{
+            page: 1,
+          }}
         />
         <div className="input-group-addon">
           <ReactSelect

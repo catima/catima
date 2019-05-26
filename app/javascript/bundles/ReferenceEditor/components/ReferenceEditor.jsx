@@ -25,7 +25,7 @@ class ReferenceEditor extends Component {
       headers: {'X-CSRF-Token': csrfToken}
     };
 
-    axios.get(`/api/v2/${this.props.catalog}/${this.props.locale}/${this.props.itemType}`, config)
+    axios.get(`/api/v2/${this.props.catalog}/${this.props.locale}/${this.props.itemType}?page=1`, config)
       .then(res => {
         this.setState({ searchPlaceholder: res.data.search_placeholder });
         this.setState({ filterPlaceholder: res.data.filter_placeholder });
@@ -69,6 +69,7 @@ class ReferenceEditor extends Component {
     if (this.props.multiple)
       return <MultiReferenceEditor
                 items={this.state.items}
+                itemsUrl={`/api/v2/${this.props.catalog}/${this.props.locale}/${this.props.itemType}`}
                 fields={this.state.fields}
                 searchPlaceholder={this.state.searchPlaceholder}
                 filterPlaceholder={this.state.filterPlaceholder}
@@ -79,6 +80,7 @@ class ReferenceEditor extends Component {
     else
       return <SingleReferenceEditor
                 items={this.state.items}
+                itemsUrl={`/api/v2/${this.props.catalog}/${this.props.locale}/${this.props.itemType}`}
                 fields={this.state.fields}
                 searchPlaceholder={this.state.searchPlaceholder}
                 filterPlaceholder={this.state.filterPlaceholder}

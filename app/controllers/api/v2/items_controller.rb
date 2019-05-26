@@ -21,6 +21,7 @@ class API::V2::ItemsController < API::ApplicationController
 
     items = apply_sort(item_type.items)
     items = apply_search(items)
+    items = apply_except(items)
     items = apply_pagination(items)
 
     render(json:
@@ -53,6 +54,12 @@ class API::V2::ItemsController < API::ApplicationController
     return items if params[:search].blank?
 
     items.where("LOWER(search_data_#{I18n.locale}) LIKE ?", "%#{params[:search].downcase}%")
+  end
+
+  def apply_except(items)
+    return items if params[:except].blank?
+
+    items.where("id NOT IN (#{params[:except].join(', ')})")
   end
 
   def apply_pagination(items)
