@@ -4,6 +4,7 @@ import AsyncPaginate from 'react-select-async-paginate';
 import ReactDOM from 'react-dom';
 import ReactSelect from 'react-select';
 import striptags from 'striptags';
+import LoadingDots from '../../StyleControl/components/LoadingDots';
 
 class MultiReferenceEditor extends Component {
   constructor(props){
@@ -15,8 +16,10 @@ class MultiReferenceEditor extends Component {
 
     this.state = {
       items: [],
-      page:1,
+      page: 1,
+      loadMore: true,
       isFetching: false,
+      isSearching: false,
       selectedItems: selItems,
       selectedItemsToRender: [],
       availableRefsSelectedFilter: null,
@@ -89,6 +92,7 @@ class MultiReferenceEditor extends Component {
         console.log(res.data.items);
         this.setState({
           items: this.state.items.concat(res.data.items),
+          loadMore: res.data.items.length > 0,
           isFetching: false
         });
       });
@@ -173,7 +177,10 @@ class MultiReferenceEditor extends Component {
 
   _filterAvailableReferences = async (e) => {
     var searchTerm = e.target.value;
-    this.setState({filterAvailableInputValue: searchTerm});
+    this.setState({
+      filterAvailableInputValue: searchTerm,
+      isSearching: true
+    });
 
     if (!this.state.isFetching) {
       const csrfToken = $('meta[name="csrf-token"]').attr('content');
@@ -184,7 +191,6 @@ class MultiReferenceEditor extends Component {
       };
 
       this.state.page = 1;
-      this.state.isFetching = true;
       if (this.state.filterAvailableInputValue === null) {
         this.state.filterAvailableInputValue = '';
       }
@@ -197,8 +203,10 @@ class MultiReferenceEditor extends Component {
       await axios.get(itemsUrl, config)
         .then(res => {
           console.log(res.data.items);
-          this.state.isFetching = false;
-          this.setState({ items: res.data.items });
+          this.setState({
+            items: res.data.items,
+            isSearching: false
+          });
         });
     }
   }
@@ -229,9 +237,9 @@ class MultiReferenceEditor extends Component {
 
   handleScroll = (e) => {
     const bottom = e.target.clientHeight - (e.target.scrollHeight - e.target.scrollTop) > 0;
+
     if (bottom) {
-      console.log('bootom');
-      if (!this.state.isFetching) {
+      if (!this.state.isFetching && this.state.loadMore) {
         this.fetchItems();
       }
     }
@@ -293,17 +301,29 @@ class MultiReferenceEditor extends Component {
   }
 
   render(){
+    const loadingDotsStyle = {
+      minWidth: 20,
+      verticalAlign: "top"
+    };
+
     return (
       <div className="multiple-reference-container">
         <div id={this.editorId} className="wrapper">
           <div className="availableReferences" onScroll={this.handleScroll}>
               <div className="input-group">
+
                 <input
                   className="form-control"
                   type="text"
                   value={this.state.filterAvailableInputValue}
                   onChange={this.filterAvailableReferences}
                   placeholder={this.props.searchPlaceholder}/>
+
+                  {this.state.isSearching ? (
+                    <div className="input-group-addon" style={loadingDotsStyle}>
+                      <LoadingDots/>
+                    </div> ) : ( '' )}
+
                 <div className="input-group-addon">
                   <ReactSelect
                     id={this.availableRefsFilterId}
@@ -321,7 +341,7 @@ class MultiReferenceEditor extends Component {
               {this.state.items.map(item =>
                 this.renderAvailableItemDiv(item, false)
               )}
-              { this.state.isFetching && <div className="loader"></div> }
+              { this.state.isFetching && <LoadingDots/> }
             </div>
           </div>
           <div className="referenceControls">
