@@ -131,7 +131,7 @@ class SingleReferenceEditor extends Component {
           isSearchable={true}
           loadOptions={this.loadOptions}
           onChange={this.selectItem}
-          options={this.getItemOptions()}
+          options={this.getItemOptions(this.props.items)}
           noOptionsMessage={this.props.noOptionsMessage}
           value={this.state.selectedItem}
           additional={{

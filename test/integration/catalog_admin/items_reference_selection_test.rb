@@ -45,7 +45,7 @@ class CatalogAdmin::ItemReferenceSelectionTest < ActionDispatch::IntegrationTest
       :editor => {
         :filter_name => 'Editor',
         :text_to_enter => 'one',
-        :text_that_should_display => 'one-admin@example.com'
+        :text_that_should_display => 'one-user@example.com'
       },
       :email => {
         :filter_name => 'Email',
