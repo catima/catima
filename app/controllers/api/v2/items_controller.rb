@@ -29,6 +29,7 @@ class API::V2::ItemsController < API::ApplicationController
         slug: item_type.slug, name: item_type.name,
         search_placeholder: t("catalog_admin.items.reference_editor.reference_editor_search"),
         filter_placeholder: t("catalog_admin.items.reference_editor.reference_editor_filter", locale: params[:locale]),
+        loading_message: t("loading", locale: params[:locale]),
         fields: fields.map { |fld| field_json_attributes(fld) },
         items: items.map { |itm| itm.describe([:default_display_name], [:requires_review, :uuid], true) },
         hasMore: params[:page].present? && params[:page].to_i < items.total_pages

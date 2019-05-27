@@ -48,9 +48,12 @@ class ReferenceSearch extends Component {
       `/api/v2/${this.props.catalog}/${this.props.locale}/${this.props.itemType}?simple_fields=true&page=1`,
       config
     ).then(res => {
-      this.setState({ items: res.data.items });
-      this.setState({ fields: res.data.fields });
-      this.setState({ isLoading: false });
+      this.setState({
+        items: res.data.items,
+        fields: res.data.fields,
+        isLoading: false,
+        loadingMessage: res.data.loading_message
+      });
     });
 
     // Retry failed requests
@@ -206,6 +209,7 @@ class ReferenceSearch extends Component {
       return <SelectedReferenceSearch
                 updateSelectedItem={this.updateSelectedItem}
                 searchPlaceholder={this.state.searchPlaceholder}
+                loadingMessage={this.state.loadingMessage}
                 noOptionsMessage={this._getNoOptionsMessage()}
                 items={this.state.items}
                 fields={this.state.fields}

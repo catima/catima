@@ -376,6 +376,7 @@ fr:
   reactivate: Réactiver
   and: et
   exclude: sauf
+  loading: Chargement
 
   layouts:
     catalog_admin:

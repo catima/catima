@@ -29,6 +29,7 @@ class ReferenceEditor extends Component {
       .then(res => {
         this.setState({ searchPlaceholder: res.data.search_placeholder });
         this.setState({ filterPlaceholder: res.data.filter_placeholder });
+        this.setState({ loadingMessage: res.data.loading_message });
         this.setState({ items: res.data.items });
         this.setState({ fields: res.data.fields });
         this.setState({ isLoading: false });
@@ -84,6 +85,7 @@ class ReferenceEditor extends Component {
                 fields={this.state.fields}
                 searchPlaceholder={this.state.searchPlaceholder}
                 filterPlaceholder={this.state.filterPlaceholder}
+                loadingMessage={this.state.loadingMessage}
                 srcRef={this.props.srcRef}
                 srcId={this.props.srcId}
                 req={this.props.req}

@@ -381,6 +381,7 @@ en:
   options: Options
   deactivate: Deactivate
   reactivate: Reactivate
+  loading: Loading
 
   layouts:
     catalog_admin:

@@ -107,6 +107,7 @@ class SelectedReferenceSearch extends Component {
           className="basic-multi-select"
           classNamePrefix="select"
           debounceTimeout={800}
+          loadingMessage={() => this.props.loadingMessage}
           placeholder={this.props.searchPlaceholder}
           noOptionsMessage={this.props.noOptionsMessage}
           value={this.state.selectedItem}

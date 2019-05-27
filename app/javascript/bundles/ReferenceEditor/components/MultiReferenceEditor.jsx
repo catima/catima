@@ -6,6 +6,8 @@ import ReactSelect from 'react-select';
 import striptags from 'striptags';
 import LoadingDots from '../../StyleControl/components/LoadingDots';
 
+const WAIT_INTERVAL = 800;
+
 class MultiReferenceEditor extends Component {
   constructor(props){
     super(props);
@@ -46,6 +48,10 @@ class MultiReferenceEditor extends Component {
     selItems.forEach((item) => {
       this.state.selectedItemsToRender = this.state.selectedItemsToRender.concat(this.state.items.filter(it => it.id === item))
     });
+  }
+
+  componentWillMount() {
+    this.timer = null;
   }
 
   _highlightItem(e){
@@ -176,39 +182,42 @@ class MultiReferenceEditor extends Component {
   }
 
   _filterAvailableReferences = async (e) => {
+    clearTimeout(this.timer);
+
     var searchTerm = e.target.value;
     this.setState({
       filterAvailableInputValue: searchTerm,
       isSearching: true
     });
 
-    if (!this.state.isFetching) {
-      const csrfToken = $('meta[name="csrf-token"]').attr('content');
-      let config = {
-        retry: 3,
-        retryDelay: 1000,
-        headers: {'X-CSRF-Token': csrfToken}
-      };
+    this.timer = setTimeout(() => {
+      if (!this.state.isFetching) {
+        const csrfToken = $('meta[name="csrf-token"]').attr('content');
+        let config = {
+          retry: 3,
+          retryDelay: 1000,
+          headers: {'X-CSRF-Token': csrfToken}
+        };
 
-      this.state.page = 1;
-      if (this.state.filterAvailableInputValue === null) {
-        this.state.filterAvailableInputValue = '';
-      }
-      var itemsUrl = `${this.props.itemsUrl}?search=${searchTerm}&page=${this.state.page}`
-      console.log('selected items: ', this.state.selectedItems);
-      this.state.selectedItems.forEach((itemId) => {
-        itemsUrl = itemsUrl + `&except[]=${itemId}`
-      });
-
-      await axios.get(itemsUrl, config)
-        .then(res => {
-          console.log(res.data.items);
-          this.setState({
-            items: res.data.items,
-            isSearching: false
-          });
+        this.state.page = 1;
+        if (this.state.filterAvailableInputValue === null) {
+          this.state.filterAvailableInputValue = '';
+        }
+        var itemsUrl = `${this.props.itemsUrl}?search=${searchTerm}&page=${this.state.page}`
+        console.log('selected items: ', this.state.selectedItems);
+        this.state.selectedItems.forEach((itemId) => {
+          itemsUrl = itemsUrl + `&except[]=${itemId}`
         });
-    }
+
+        axios.get(itemsUrl, config)
+          .then(res => {
+            this.setState({
+              items: res.data.items,
+              isSearching: false
+            });
+          });
+      }
+    }, WAIT_INTERVAL);
   }
 
   _filterSelectedReferences(e) {

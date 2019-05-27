@@ -129,9 +129,11 @@ class SingleReferenceEditor extends Component {
           isClearable={!this.props.req}
           isMulti={false}
           isSearchable={true}
+          loadingMessage={() => this.props.loadingMessage}
           loadOptions={this.loadOptions}
           onChange={this.selectItem}
           options={this.getItemOptions(this.props.items)}
+          placeholder={this.props.searchPlaceholder}
           noOptionsMessage={this.props.noOptionsMessage}
           value={this.state.selectedItem}
           additional={{
