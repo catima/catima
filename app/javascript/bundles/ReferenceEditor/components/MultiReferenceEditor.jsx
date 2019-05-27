@@ -95,7 +95,6 @@ class MultiReferenceEditor extends Component {
     }
     await axios.get(`${this.props.itemsUrl}?search=${this.state.filterAvailableInputValue}&page=${this.state.page}`, config)
       .then(res => {
-        console.log(res.data.items);
         this.setState({
           items: this.state.items.concat(res.data.items),
           loadMore: res.data.items.length > 0,
@@ -204,7 +203,6 @@ class MultiReferenceEditor extends Component {
           this.state.filterAvailableInputValue = '';
         }
         var itemsUrl = `${this.props.itemsUrl}?search=${searchTerm}&page=${this.state.page}`
-        console.log('selected items: ', this.state.selectedItems);
         this.state.selectedItems.forEach((itemId) => {
           itemsUrl = itemsUrl + `&except[]=${itemId}`
         });
