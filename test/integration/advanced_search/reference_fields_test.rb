@@ -280,5 +280,38 @@ class AdvancedSearch::ReferenceFieldTest < ActionDispatch::IntegrationTest
     refute(page.has_selector?('h4', text: 'Young apprentice'))
     refute(page.has_selector?('h4', text: 'Very Young'))
   end
+
+  test "search for an author by single tag reference field wih pagination" do
+    # Populates the references search container with more than 25 items to paginate
+    author = Item.where("search_data_en LIKE '%apprentice%'").first
+    30.times do |i|
+      author = author.dup
+      author.uuid = i
+      author.data['one_author_name_uuid'] = "Author #{i}"
+      author.save!
+    end
+
+    visit("/one/en")
+    click_on("Advanced")
+
+    find("#default_search_type").click
+    within("#default_search_type") do
+      click_on("Author")
+    end
+
+    within all(".reference-search-container")[0] do
+      sleep 2
+      find("#react-select-6-input").set("old")
+      sleep 5
+    end
+
+    find('.select__option--is-focused', text: "Very Old", match: :first).click
+
+    click_on("Search")
+
+    assert(page.has_selector?('h4', text: 'Stephen King'))
+    refute(page.has_selector?('h4', text: 'Very Old'))
+    refute(page.has_selector?('h4', text: 'Very Young'))
+  end
 end
 # rubocop:enable Metrics/ClassLength

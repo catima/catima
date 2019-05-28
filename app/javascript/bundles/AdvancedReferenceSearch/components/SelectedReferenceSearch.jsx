@@ -83,7 +83,9 @@ class SelectedReferenceSearch extends Component {
   }
 
   async _loadOptions(search, loadedOptions, { page }) {
-    const response = await fetch(`${this.props.itemsUrl}&search=${search}&page=${page}`);
+    const csrfToken = $('meta[name="csrf-token"]').attr('content');
+    let config = { headers: {'X-CSRF-Token': csrfToken} };
+    const response = await fetch(`${this.props.itemsUrl}&search=${search}&page=${page}`, config);
     const responseJSON = await response.json();
 
     return {
