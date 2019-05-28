@@ -32,7 +32,7 @@ gem 'omniauth-github'
 gem 'omniauth-shibboleth'
 gem "panoramic"
 gem "pg", "~> 1.0"
-gem "pg_search", "~> 2.1.2"
+gem "pg_search", "~> 2.2.0"
 gem "pgcli-rails", "~> 0.3.0"
 gem "pundit"
 gem "rails", "~> 5.2.2.0"
