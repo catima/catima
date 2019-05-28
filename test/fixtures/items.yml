@@ -127,6 +127,7 @@ one_author_apprentice:
   creator: one_admin
   updater: one_admin
   item_type: one_author
+  uuid: one_author_apprentice
   data: {
     "one_author_age_uuid": 22,
     "one_author_name_uuid": "Young apprentice",

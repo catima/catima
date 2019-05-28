@@ -243,7 +243,7 @@ class MultiReferenceEditor extends Component {
   }
 
   handleScroll = (e) => {
-    const bottom = e.target.clientHeight - (e.target.scrollHeight - e.target.scrollTop) > 0;
+    const bottom = e.target.clientHeight - (e.target.scrollHeight - e.target.scrollTop) > -10;
 
     if (bottom) {
       if (!this.state.isFetching && this.state.loadMore) {
@@ -253,6 +253,10 @@ class MultiReferenceEditor extends Component {
   }
 
   renderAvailableItemDiv(item, selectedItems){
+    if (item.default_display_name === null) {
+      return null;
+    }
+
     const itemDivId = `${this.props.srcId}-${item.id}`;
     if (selectedItems == false && this.state.selectedItems.indexOf(item.id) > -1) return null;
     if (selectedItems == true && this.state.selectedItems.indexOf(item.id) == -1) return null;
