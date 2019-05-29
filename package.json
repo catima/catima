@@ -11,7 +11,7 @@
     "classnames": "^2.2.5",
     "codemirror": "^5.33.0",
     "coffeescript": "2.4.1",
-    "css-loader": "^0.28.8",
+    "css-loader": "^2.1.1",
     "eonasdan-bootstrap-datetimepicker": "^4.17.47",
     "es6-shim": "^0.35.3",
     "file-loader": "^1.1.6",
