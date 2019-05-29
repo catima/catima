@@ -236,7 +236,7 @@ GEM
     kgio (2.11.2)
     launchy (2.4.3)
       addressable (~> 2.3)
-    leaflet-rails (1.3.1)
+    leaflet-rails (1.4.0)
       rails (>= 4.2.0)
     letter_opener (1.6.0)
       launchy (~> 2.2)
@@ -550,7 +550,7 @@ DEPENDENCIES
   json_schema
   kaminari
   launchy
-  leaflet-rails (~> 1.3.1)
+  leaflet-rails (~> 1.4.0)
   letter_opener
   liquid
   liquid-rails

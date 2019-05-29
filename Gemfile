@@ -18,7 +18,7 @@ gem "jquery-minicolors-rails"
 gem "jquery-rails"
 gem "jquery-turbolinks"
 gem "kaminari"
-gem 'leaflet-rails', '~> 1.3.1'
+gem 'leaflet-rails', '~> 1.4.0'
 gem "liquid"
 gem "liquid-rails"
 gem "mail", ">= 2.7.0"
