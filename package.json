@@ -18,7 +18,7 @@
     "immutable": "^3.8.2",
     "jquery": "^3.4.0",
     "js-yaml": "^3.0.0",
-    "json-beautify": "^1.0.1",
+    "json-beautify": "^1.1.0",
     "leaflet": "^1.2.0",
     "leaflet-draw": "^0.4.13",
     "leaflet-editable": "^1.1.0",
