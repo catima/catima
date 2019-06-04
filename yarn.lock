@@ -6221,7 +6221,7 @@ promise@^7.1.1:
   dependencies:
     asap "~2.0.3"
 
-prop-types@^15.5.10, prop-types@^15.5.6, prop-types@^15.5.8, prop-types@^15.6.0, prop-types@^15.6.2, prop-types@^15.7.2:
+prop-types@>=15.5.8, prop-types@^15.5.10, prop-types@^15.5.6, prop-types@^15.5.8, prop-types@^15.6.0, prop-types@^15.6.2, prop-types@^15.7.2:
   version "15.7.2"
   resolved "https://registry.yarnpkg.com/prop-types/-/prop-types-15.7.2.tgz#52c41e75b8c87e72b9d9360e0206b99dcbffa6c5"
   integrity sha512-8QQikdH7//R2vurIJSutZ1smHYTcLpRWEOlHnzcWHmBYrOGUysKwSsrC89BCiFj3CbrfJ/nXFdJepOVrY1GCHQ==
@@ -6442,10 +6442,12 @@ react-fontawesome@^1.6.1:
   dependencies:
     prop-types "^15.5.6"
 
-react-image-crop@^3.0.7:
-  version "3.0.11"
-  resolved "http://registry.npmjs.org/react-image-crop/-/react-image-crop-3.0.11.tgz#c1588805d8d220b7b70332f04161aa1e04e13efc"
-  integrity sha512-n4t9P7pc8NMHpAavyN2ZeYyG9qjgCsn4UPwNZk4MTolBgIRYsHllpwA9aMLtdqHBtL/U0N34T48DWL/i4eMNcw==
+react-image-crop@^7.0.3:
+  version "7.0.3"
+  resolved "https://registry.yarnpkg.com/react-image-crop/-/react-image-crop-7.0.3.tgz#d2301c1bcf1044597c4bb175b575754ae547c22c"
+  integrity sha512-7T57tCysT8pIaWwBk+Rv2H7ihMtdlJSu01M5lrMzS6usMjwzGTbMQRLAZdvuLu4n8zas0pzk06e2FD1nHt2x+g==
+  dependencies:
+    prop-types ">=15.5.8"
 
 react-image-lightbox@^4.3.0:
   version "4.6.0"
