@@ -21,4 +21,10 @@ class CatalogAdmin::BaseController < ApplicationController
     @catalog = Catalog.where(:slug => params[:catalog_slug]).first!
     authorize(@catalog, :show?)
   end
+
+  protected
+
+  def track_action
+    ahoy.track catalog.slug, request.path_parameters.merge(:scope => "catalog_admin")
+  end
 end

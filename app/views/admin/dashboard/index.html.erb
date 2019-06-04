@@ -1,5 +1,8 @@
 <% provide(:title, "CATIMA admin") %>
 
+<%= line_chart @catalogs.map { |catalog|
+  {name: catalog.name, data: Ahoy::Event.where_props(catalog_slug: catalog.slug).group_by_week(:time).count}
+} %>
 
 <% if @configuration %>
 <div class="panel panel-default">
