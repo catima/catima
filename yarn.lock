@@ -4163,10 +4163,10 @@ jsesc@~0.5.0:
   resolved "http://registry.npmjs.org/jsesc/-/jsesc-0.5.0.tgz#e7dee66e35d6fc16f710fe91d5cf69f70f08911d"
   integrity sha1-597mbjXW/Bb3EP6R1c9p9w8IkR0=
 
-json-beautify@^1.0.1:
-  version "1.0.1"
-  resolved "https://registry.yarnpkg.com/json-beautify/-/json-beautify-1.0.1.tgz#598b50d4c8ea9b8fca5abbb40b7e2cbd3ad4c2fc"
-  integrity sha1-WYtQ1Mjqm4/KWru0C34svTrUwvw=
+json-beautify@^1.1.0:
+  version "1.1.0"
+  resolved "https://registry.yarnpkg.com/json-beautify/-/json-beautify-1.1.0.tgz#5da1a4cccd0cd680d12bc6e2ff475d73ddef00c4"
+  integrity sha512-Y8lEcqhyJKRq2IhYBGtRIQO7EgOlyeSCYXnQCzAnGO5DhCBzMBEZ90PTw620NwpfQccJ/sj4+bU+r4GBI0b2Lw==
 
 json-parse-better-errors@^1.0.1, json-parse-better-errors@^1.0.2:
   version "1.0.2"
