@@ -96,8 +96,7 @@ GEM
     autoprefixer-rails (9.4.9)
       execjs
     awesome_print (1.8.0)
-    bcrypt (3.1.12)
-    bcrypt (3.1.12-x64-mingw32)
+    bcrypt (3.1.13)
     bcrypt_pbkdf (1.0.0)
     bcrypt_pbkdf (1.0.0-x64-mingw32)
     better_errors (2.5.1)
@@ -519,7 +518,7 @@ DEPENDENCIES
   annotate
   autoprefixer-rails (>= 8.6.4)
   awesome_print
-  bcrypt (~> 3.1.12)
+  bcrypt (~> 3.1.13)
   bcrypt_pbkdf
   better_errors
   binding_of_caller
