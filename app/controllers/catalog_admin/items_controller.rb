@@ -90,7 +90,7 @@ class CatalogAdmin::ItemsController < CatalogAdmin::BaseController
     build_simple_search
     redirect_to :action => index unless @saved_search.update(simple_search_params)
 
-    @search_results = ItemList::SimpleSearchResult.new(
+    @search_results = ItemList::SimpleSearchAdminResult.new(
       :catalog => catalog,
       :query => params[:q],
       :page => params[:page],
