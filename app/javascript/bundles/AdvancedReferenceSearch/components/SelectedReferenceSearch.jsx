@@ -83,6 +83,16 @@ class SelectedReferenceSearch extends Component {
   }
 
   async _loadOptions(search, loadedOptions, { page }) {
+    if (this.props.items.length < 25) {
+      return {
+        options: this.getItemOptions(this.props.items),
+        hasMore: false,
+        additional: {
+          page: page,
+        },
+      };
+    }
+
     const csrfToken = $('meta[name="csrf-token"]').attr('content');
     let config = { headers: {'X-CSRF-Token': csrfToken} };
     const response = await fetch(`${this.props.itemsUrl}&search=${search}&page=${page}`, config);
