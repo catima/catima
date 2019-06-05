@@ -345,6 +345,7 @@ de:
   options: Options
   deactivate: Deactivate
   reactivate: Reactivate
+  loading: Laden
 
   layouts:
     catalog_admin:

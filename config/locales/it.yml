@@ -337,6 +337,7 @@ it:
   options: Options
   deactivate: Deactivate
   reactivate: Reactivate
+  loading: Caricamento
 
   layouts:
     catalog_admin:
