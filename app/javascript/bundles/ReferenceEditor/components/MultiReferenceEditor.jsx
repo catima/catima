@@ -81,26 +81,32 @@ class MultiReferenceEditor extends Component {
   }
 
   _fetchItems = async (search, page) => {
-    const csrfToken = $('meta[name="csrf-token"]').attr('content');
-    let config = {
-      retry: 3,
-      retryDelay: 1000,
-      headers: {'X-CSRF-Token': csrfToken}
-    };
+    if (!this.state.isFetching && this.state.loadMore) {
+      const csrfToken = $('meta[name="csrf-token"]').attr('content');
+      let config = {
+        retry: 3,
+        retryDelay: 1000,
+        headers: {'X-CSRF-Token': csrfToken}
+      };
 
-    this.state.page++;
-    this.setState({isFetching: true})
-    if (this.state.filterAvailableInputValue === null) {
-      this.setState({filterAvailableInputValue: ''})
-    }
-    await axios.get(`${this.props.itemsUrl}?search=${this.state.filterAvailableInputValue}&page=${this.state.page}`, config)
-      .then(res => {
-        this.setState({
-          items: this.state.items.concat(res.data.items),
-          loadMore: res.data.items.length > 0,
-          isFetching: false
+      this.setState({
+        isFetching: true
+      })
+      if (this.state.filterAvailableInputValue === null) {
+        this.setState({filterAvailableInputValue: ''})
+      }
+      let currentPage = this.state.page+1;
+      let currentItems = this.state.items;
+      await axios.get(`${this.props.itemsUrl}?search=${this.state.filterAvailableInputValue}&page=${currentPage}`, config)
+        .then(res => {
+          this.setState({
+            items: currentItems.concat(res.data.items),
+            loadMore: res.data.items.length === 25,
+            isFetching: false,
+            page: currentPage
+          });
         });
-      });
+    }
   }
 
   _load(v){

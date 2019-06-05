@@ -19,7 +19,8 @@ class API::V2::ItemsController < API::ApplicationController
 
     fields = params[:simple_fields].blank? ? item_type.fields : item_type.simple_fields
 
-    items = apply_sort(item_type.items)
+    # Here we add to the current order another order in case some items have exactly the same primary_text_field value
+    items = apply_sort(item_type.items).order(:id)
     items = apply_search(items)
     items = apply_except(items)
     items = apply_pagination(items)
