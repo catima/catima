@@ -24,9 +24,9 @@ class ExportWorker
     begin
       CatalogDump.new.dump(export.catalog.slug, dir)
       zip(dir, export.pathname)
-    rescue StandardError => er
+    rescue StandardError => e
       status = "error"
-      Rails.logger.error "[ERROR] Catalog dump: #{er.message}"
+      Rails.logger.error "[ERROR] Catalog dump: #{e.message}"
     end
     export.update(status: status)
     send_mail(export)

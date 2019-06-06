@@ -7,7 +7,7 @@ module Field::Style
     "single" => "Single value – optional",
     "single-required" => "Single value – required",
     "multiple" => "Multiple values – optional",
-    "multiple-required" => "Multiple values – at least one",
+    "multiple-required" => "Multiple values – at least one"
     # TODO: uncomment once ordering behavior is supported
     # "multiple-ordered" => "Multiple ordered values – optional",
     # "multiple-ordered-required" => "Multiple ordered values – at least one"

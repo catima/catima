@@ -207,7 +207,6 @@ Rails.application.routes.draw do
 
     scope :path => "#{catalog_slug}/:locale",
           :constraints => CatalogsController::Constraint do
-
       if File.exist?(Rails.root.join('catalogs', catalog_slug, 'controllers', "#{catalog_snake_slug}_simple_searches_controller.rb"))
         get "search/simple/:uuid",
             :controller => "#{catalog_snake_slug}_simple_searches",
@@ -260,7 +259,6 @@ Rails.application.routes.draw do
   # Generating the default routes.
   scope :path => ":catalog_slug/:locale",
         :constraints => CatalogsController::Constraint do
-
     # Route for simple search legacy URLs
     get "search", :to => "simple_searches#new"
 
@@ -292,16 +290,16 @@ Rails.application.routes.draw do
   # Image thumbnails
 
   get '/thumbs/:catalog_slug/:size/fill/:crop/:field_uuid/:image.:ext',
-    :to => 'images#thumbnail_cropped',
-    :constraints => CatalogsController::Constraint
+      :to => 'images#thumbnail_cropped',
+      :constraints => CatalogsController::Constraint
 
   get '/thumbs/:catalog_slug/:size/fill/:field_uuid/:image.:ext',
-    :to => 'images#thumbnail_default_cropped',
-    :constraints => CatalogsController::Constraint
+      :to => 'images#thumbnail_default_cropped',
+      :constraints => CatalogsController::Constraint
 
   get '/thumbs/:catalog_slug/:size/resize/:field_uuid/:image.:ext',
-    :to => 'images#thumbnail',
-    :constraints => CatalogsController::Constraint
+      :to => 'images#thumbnail',
+      :constraints => CatalogsController::Constraint
 
   # ===========================================================================
   # Service URLs
