@@ -635,6 +635,7 @@ de:
       reference_editor:
         reference_editor_filter: "Filter..."
         reference_editor_search: "Suche..."
+        reference_editor_select: "Auswählen..."
         no_options: Keine Optionen verfügbar
 
     users:

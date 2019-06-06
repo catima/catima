@@ -28,6 +28,7 @@ class ReferenceEditor extends Component {
     axios.get(`/api/v2/${this.props.catalog}/${this.props.locale}/${this.props.itemType}?page=1`, config)
       .then(res => {
         this.setState({ searchPlaceholder: res.data.search_placeholder });
+        this.setState({ selectPlaceholder: res.data.select_placeholder });
         this.setState({ filterPlaceholder: res.data.filter_placeholder });
         this.setState({ loadingMessage: res.data.loading_message });
         this.setState({ items: res.data.items });
@@ -83,7 +84,7 @@ class ReferenceEditor extends Component {
                 items={this.state.items}
                 itemsUrl={`/api/v2/${this.props.catalog}/${this.props.locale}/${this.props.itemType}`}
                 fields={this.state.fields}
-                searchPlaceholder={this.state.searchPlaceholder}
+                searchPlaceholder={this.state.selectPlaceholder}
                 filterPlaceholder={this.state.filterPlaceholder}
                 loadingMessage={this.state.loadingMessage}
                 srcRef={this.props.srcRef}

@@ -660,6 +660,7 @@ en:
       reference_editor:
         reference_editor_filter: "Filter..."
         reference_editor_search: "Search..."
+        reference_editor_select: "Select..."
         no_options: No options
     pages:
       new:

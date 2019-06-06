@@ -28,6 +28,7 @@ class API::V2::ItemsController < API::ApplicationController
     render(json:
       {
         slug: item_type.slug, name: item_type.name,
+        select_placeholder: t("catalog_admin.items.reference_editor.reference_editor_select"),
         search_placeholder: t("catalog_admin.items.reference_editor.reference_editor_search"),
         filter_placeholder: t("catalog_admin.items.reference_editor.reference_editor_filter", locale: params[:locale]),
         loading_message: t("loading", locale: params[:locale]),

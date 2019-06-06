@@ -656,6 +656,7 @@ fr:
       reference_editor:
         reference_editor_filter: "Filtrer..."
         reference_editor_search: "Chercher..."
+        reference_editor_select: "Choisir..."
         no_options: Aucune option
     pages:
       new:
