@@ -1,5 +1,4 @@
 import AsyncPaginate from 'react-select-async-paginate';
-import axios from 'axios';
 import React, { Component } from 'react';
 import ReactDOM from 'react-dom';
 import striptags from 'striptags';
@@ -9,6 +8,7 @@ class SelectedReferenceSearch extends Component {
     super(props);
 
     this.state = {
+      isInitialized: false,
       items: [],
       options: [],
       selectedItem: [],
@@ -20,7 +20,15 @@ class SelectedReferenceSearch extends Component {
     this.selectItem = this._selectItem.bind(this);
     this.loadOptions = this._loadOptions.bind(this);
     this.getItemOptions = this._getItemOptions.bind(this);
-    this.state.items = this.props.items;
+  }
+
+  componentWillReceiveProps(nextProps) {
+    if (nextProps.items.length !== this.state.items.length) {
+      this.setState({
+        isInitialized: true,
+        items: nextProps.items
+      });
+    }
   }
 
   _save(){
@@ -63,6 +71,10 @@ class SelectedReferenceSearch extends Component {
   }
 
   _getItemOptions(items){
+    if (typeof items === 'undefined') {
+     items = this.state.items;
+    }
+
     var optionsList = [];
 
     if (typeof items !== 'undefined') {
@@ -83,10 +95,10 @@ class SelectedReferenceSearch extends Component {
   }
 
   async _loadOptions(search, loadedOptions, { page }) {
-    if (this.props.items.length < 25) {
+    if (loadedOptions.length < 25 && this.state.isInitialized) {
       return {
-        options: this.getItemOptions(this.props.items),
-        hasMore: false,
+        options: this.getItemOptions(),
+        hasMore: this.state.items.length === 25,
         additional: {
           page: page,
         },
@@ -97,6 +109,11 @@ class SelectedReferenceSearch extends Component {
     let config = { headers: {'X-CSRF-Token': csrfToken} };
     const response = await fetch(`${this.props.itemsUrl}&search=${search}&page=${page}`, config);
     const responseJSON = await response.json();
+
+    if (!this.state.isInitialized) {
+      this.setState({isInitialized: true});
+      this.props.onFocus(responseJSON.fields);
+    }
 
     return {
       options: this.getItemOptions(responseJSON.items),
@@ -115,7 +132,6 @@ class SelectedReferenceSearch extends Component {
           name={this.props.inputName}
           delimiter=","
           isMulti={this.props.multiple}
-          options={this.state.options}
           className="basic-multi-select"
           classNamePrefix="select"
           debounceTimeout={800}
