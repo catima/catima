@@ -109,7 +109,7 @@ class SingleReferenceEditor extends Component {
   async _loadOptions(search, loadedOptions, { page }) {
     if (this.props.items.length < 25) {
       return {
-        options: this.getItemOptions(this.props.items),
+        options: [],
         hasMore: false,
         additional: {
           page: page,

@@ -44,6 +44,9 @@ class MultiReferenceEditor extends Component {
 
     this.fetchItems = this._fetchItems.bind(this);
     this.state.items = this.props.items;
+    if (this.props.items.length < 25) {
+      this.state.loadMore = false;
+    }
 
     selItems.forEach((item) => {
       this.state.selectedItemsToRender = this.state.selectedItemsToRender.concat(this.state.items.filter(it => it.id === item))
