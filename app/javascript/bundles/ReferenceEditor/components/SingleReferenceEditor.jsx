@@ -70,18 +70,26 @@ class SingleReferenceEditor extends Component {
     return optionsList;
   }
 
-  _itemName(item){
-    if(typeof this.state === 'undefined') return striptags(item.default_display_name);
-    if(typeof this.state !== 'undefined' && (this.state.selectedFilter === null || item[this.state.selectedFilter.value] === null || item[this.state.selectedFilter.value].length === 0)) return striptags(item.default_display_name);
-    return striptags(item.default_display_name) + ' - ' + item[this.state.selectedFilter.value];
-  }
-
   _getJSONItem(item) {
     return {value: item.id, label: this._itemName(item)};
   }
 
+  _itemName(item){
+    if(typeof this.state === 'undefined') { return striptags(item.default_display_name); }
+
+    if(typeof this.state !== 'undefined' &&
+            (this.state.selectedFilter === null
+          || item[this.state.selectedFilter.value] === null
+          || item[this.state.selectedFilter.value].length === 0)
+        ) {
+      return striptags(item.default_display_name);
+    }
+
+    return striptags(item.default_display_name) + ' - ' + item[this.state.selectedFilter.value];
+  }
+
   _selectFilter(filter){
-    this.setState({ selectedFilter: filter }, () => {
+    this.setState({ selectedFilter: filter}, () => {
       if(typeof this.state.selectedItem !== 'undefined' && this.state.selectedItem !== null) {
         const currentItem = this._getItemOptions().find(item => item.value === this.state.selectedItem.value);
         this.setState({ selectedItem: currentItem });
@@ -107,9 +115,18 @@ class SingleReferenceEditor extends Component {
   }
 
   async _loadOptions(search, loadedOptions, { page }) {
-    if (this.props.items.length < 25) {
+    // Avoir useless API calls if there are less than 25 loaded items and the user searches
+    if (this.props.items.length < 25 && search.length > 0) {
+      var regexExp = new RegExp(search, 'i')
+
+      this.setState({items:
+        this.props.items.filter(function(item) {
+          return item.name !== null && item.name.match(regexExp) !== null && item.name.match(regexExp).length > 0
+        })
+      });
+
       return {
-        options: [],
+        options: this.getItemOptions(this.state.items),
         hasMore: false,
         additional: {
           page: page,
@@ -117,16 +134,26 @@ class SingleReferenceEditor extends Component {
       };
     }
 
-    const csrfToken = $('meta[name="csrf-token"]').attr('content');
-    let config = { headers: {'X-CSRF-Token': csrfToken} };
-    const response = await fetch(`${this.props.itemsUrl}?search=${search}&page=${page}`, config);
-    const responseJSON = await response.json();
+    if (this.props.items.length === 25) {
+      const csrfToken = $('meta[name="csrf-token"]').attr('content');
+      let config = { headers: {'X-CSRF-Token': csrfToken} };
+      const response = await fetch(`${this.props.itemsUrl}?search=${search}&page=${page}`, config);
+      const responseJSON = await response.json();
+
+      return {
+        options: this.getItemOptions(responseJSON.items),
+        hasMore: responseJSON.hasMore,
+        additional: {
+          page: page + 1,
+        },
+      };
+    }
 
     return {
-      options: this.getItemOptions(responseJSON.items),
-      hasMore: responseJSON.hasMore,
+      options: [],
+      hasMore: false,
       additional: {
-        page: page + 1,
+        page: page,
       },
     };
   }
@@ -144,7 +171,7 @@ class SingleReferenceEditor extends Component {
           loadingMessage={() => this.props.loadingMessage}
           loadOptions={this.loadOptions}
           onChange={this.selectItem}
-          options={this.getItemOptions(this.props.items)}
+          options={this.getItemOptions(this.state.items)}
           placeholder={this.props.searchPlaceholder}
           noOptionsMessage={this.props.noOptionsMessage}
           value={this.state.selectedItem}

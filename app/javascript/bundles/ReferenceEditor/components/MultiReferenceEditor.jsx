@@ -85,6 +85,25 @@ class MultiReferenceEditor extends Component {
 
   _fetchItems = async (search, page) => {
     if (!this.state.isFetching && this.state.loadMore) {
+      // Avoir useless API calls if there are less than 25 loaded items and the user searches
+      if (this.props.items.length < 25 && search.length > 0) {
+        var regexExp = new RegExp(search, 'i')
+
+        this.setState({items:
+          this.props.items.filter(function(item) {
+            return item.name !== null && item.name.match(regexExp) !== null && item.name.match(regexExp).length > 0
+          })
+        });
+
+        return {
+          options: this.getItemOptions(this.state.items),
+          hasMore: false,
+          additional: {
+            page: page,
+          },
+        };
+      }
+
       const csrfToken = $('meta[name="csrf-token"]').attr('content');
       let config = {
         retry: 3,
