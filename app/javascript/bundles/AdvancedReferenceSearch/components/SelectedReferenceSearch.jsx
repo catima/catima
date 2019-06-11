@@ -10,7 +10,7 @@ class SelectedReferenceSearch extends Component {
     this.state = {
       isInitialized: false,
       items: [],
-      options: [],
+      optionsList: [],
       selectedItem: [],
       hiddenInputValue: []
     };
@@ -96,6 +96,22 @@ class SelectedReferenceSearch extends Component {
 
   async _loadOptions(search, loadedOptions, { page }) {
     if (loadedOptions.length < 25 && this.state.isInitialized) {
+      if (search.length > 0) {
+        var regexExp = new RegExp(search, 'i')
+
+        var items = this.state.optionsList.filter(function (item) {
+          return item.label !== null && item.label.match(regexExp) !== null && item.label.match(regexExp).length > 0
+        });
+
+        return {
+          options: items,
+          hasMore: false,
+          additional: {
+            page: page,
+          },
+        };
+      }
+
       return {
         options: this.getItemOptions(),
         hasMore: this.state.items.length === 25,
@@ -111,7 +127,10 @@ class SelectedReferenceSearch extends Component {
     const responseJSON = await response.json();
 
     if (!this.state.isInitialized) {
-      this.setState({isInitialized: true});
+      this.setState({
+        isInitialized: true,
+        optionsList: responseJSON.items.map(item => this._getJSONItem(item))
+      });
       this.props.onFocus(responseJSON.fields);
     }
 

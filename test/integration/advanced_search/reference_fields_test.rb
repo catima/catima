@@ -263,10 +263,9 @@ class AdvancedSearch::ReferenceFieldTest < ActionDispatch::IntegrationTest
     end
 
     within all(".reference-search-container")[2] do
-      find(".css-vj8t7z").click # Click on the filter input
-
+      find(".single-reference-filter").click # Click on the filter input
       within(".css-11unzgr") do # Within the filter list
-        find('div', text: "Name", match: :first).click
+        find('div', text: "Name", :match => :first).click
       end
 
       fill_in(
@@ -301,7 +300,7 @@ class AdvancedSearch::ReferenceFieldTest < ActionDispatch::IntegrationTest
 
     within all(".reference-search-container")[0] do
       sleep 2
-      find("#react-select-6-input").set("old")
+      find(".select__input input").set("old")
       sleep 5
     end
 

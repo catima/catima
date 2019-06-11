@@ -13,7 +13,8 @@ class SingleReferenceEditor extends Component {
     this.state = {
       items: [],
       selectedItem: selItem,
-      selectedFilter: null
+      selectedFilter: null,
+      optionsList: this.props.items.map(item => this._getJSONItem(item))
     };
 
     this.editorId = `${this.props.srcRef}-editor`;
@@ -28,8 +29,7 @@ class SingleReferenceEditor extends Component {
   componentDidMount(){
     // If reference value is empty but field is required, insert the default value.
     if (document.getElementById(this.props.srcRef).value == '' && this.props.req) {
-      const itemList = this._getItemOptions();
-      this._selectItem(itemList[0]);
+      this._selectItem(this.state.optionsList[0]);
     }
   }
 
@@ -58,14 +58,18 @@ class SingleReferenceEditor extends Component {
     }
   }
 
-  _getItemOptions(items){
+  _getItemOptions(items) {
     var optionsList = [];
 
-    if (typeof items !== 'undefined') {
-      optionsList = items.map(item =>
-        this._getJSONItem(item)
-      );
-    }
+    var stateItems = this.state.items;
+    if (typeof items !== 'undefined') { stateItems = stateItems.concat(items); }
+
+    optionsList = stateItems.map(item => this._getJSONItem(item) );
+
+    this.setState({
+      items: stateItems,
+      optionsList: optionsList
+    });
 
     return optionsList;
   }
@@ -90,8 +94,9 @@ class SingleReferenceEditor extends Component {
 
   _selectFilter(filter){
     this.setState({ selectedFilter: filter}, () => {
+      var optionsList = this._getItemOptions();
       if(typeof this.state.selectedItem !== 'undefined' && this.state.selectedItem !== null) {
-        const currentItem = this._getItemOptions().find(item => item.value === this.state.selectedItem.value);
+        const currentItem = optionsList.find(item => item.value === this.state.selectedItem.value);
         this.setState({ selectedItem: currentItem });
       } else {
         this.setState({ selectedItem: [] });
@@ -115,18 +120,16 @@ class SingleReferenceEditor extends Component {
   }
 
   async _loadOptions(search, loadedOptions, { page }) {
-    // Avoir useless API calls if there are less than 25 loaded items and the user searches
+    // Avoir useless API calls if there are less than 25 loaded items and the user searches by filtering options with JS
     if (this.props.items.length < 25 && search.length > 0) {
       var regexExp = new RegExp(search, 'i')
 
-      this.setState({items:
-        this.props.items.filter(function(item) {
-          return item.name !== null && item.name.match(regexExp) !== null && item.name.match(regexExp).length > 0
-        })
+      var items = this.state.optionsList.filter(function(item) {
+        return item.label !== null && item.label.match(regexExp) !== null && item.label.match(regexExp).length > 0
       });
 
       return {
-        options: this.getItemOptions(this.state.items),
+        options: items,
         hasMore: false,
         additional: {
           page: page,
@@ -135,14 +138,20 @@ class SingleReferenceEditor extends Component {
     }
 
     if (this.props.items.length === 25) {
+      var hasMore;
+      var newOptions;
+
       const csrfToken = $('meta[name="csrf-token"]').attr('content');
       let config = { headers: {'X-CSRF-Token': csrfToken} };
-      const response = await fetch(`${this.props.itemsUrl}?search=${search}&page=${page}`, config);
+      const response = await fetch(`${this.props.itemsUrl}?search=${search}&page=${page+1}`, config);
       const responseJSON = await response.json();
 
+      newOptions = responseJSON.items.map(item => this._getJSONItem(item));
+      hasMore = responseJSON.hasMore;
+
       return {
-        options: this.getItemOptions(responseJSON.items),
-        hasMore: responseJSON.hasMore,
+        options: newOptions,
+        hasMore: hasMore,
         additional: {
           page: page + 1,
         },
@@ -162,6 +171,7 @@ class SingleReferenceEditor extends Component {
     return (
       <div className="input-group single-reference-container">
         <AsyncPaginate
+          cacheUniq={JSON.stringify(this.state.optionsList)} // used to update the options loaded on page load
           id={this.editorId}
           className="single-reference"
           debounceTimeout={800}
@@ -171,7 +181,7 @@ class SingleReferenceEditor extends Component {
           loadingMessage={() => this.props.loadingMessage}
           loadOptions={this.loadOptions}
           onChange={this.selectItem}
-          options={this.getItemOptions(this.state.items)}
+          options={this.state.optionsList}
           placeholder={this.props.searchPlaceholder}
           noOptionsMessage={this.props.noOptionsMessage}
           value={this.state.selectedItem}
