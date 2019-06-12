@@ -31,7 +31,7 @@ gem 'omniauth-facebook'
 gem 'omniauth-github'
 gem 'omniauth-shibboleth'
 gem "panoramic"
-gem "pg", "~> 1.0"
+gem "pg", "~> 1.1"
 gem "pg_search", "~> 2.2.0"
 gem "pgcli-rails", "~> 0.3.0"
 gem "pundit"
