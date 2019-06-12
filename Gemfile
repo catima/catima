@@ -106,7 +106,6 @@ group :development do
   gem "terminal-notifier", :require => false
   gem "terminal-notifier-guard", :require => false
   gem "thin", :require => false
-  # gem "xray-rails"
 
   platforms :mswin, :mingw, :x64_mingw do
     gem "tzinfo-data"
@@ -126,9 +125,6 @@ group :test do
   gem "selenium-webdriver"
   gem "shoulda-context"
   gem "shoulda-matchers"
-  # gem "shoulda-matchers",
-  #     :git => "https://github.com/mattbrictson/shoulda-matchers.git",
-  #     :branch => "with-fixes"
   gem "vcr"
   gem "webmock"
 end
