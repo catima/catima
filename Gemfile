@@ -114,7 +114,7 @@ end
 
 group :test do
   gem "capybara"
-  gem "chromedriver-helper"
+  gem "webdrivers"
   gem "connection_pool"
   gem "json_schema"
   gem "launchy"
