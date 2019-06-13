@@ -121,7 +121,7 @@ class SingleReferenceEditor extends Component {
 
   async _loadOptions(search, loadedOptions, { page }) {
     // Avoir useless API calls if there are less than 25 loaded items and the user searches by filtering options with JS
-    if (this.props.items.length < 25 && search.length > 0) {
+    if (this.props.items.length < 25) {
       var regexExp = new RegExp(search, 'i')
 
       var items = this.state.optionsList.filter(function(item) {
