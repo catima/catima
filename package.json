@@ -3,7 +3,7 @@
     "@babel/core": "^7.4.5",
     "@babel/preset-react": "^7.0.0",
     "@claviska/jquery-minicolors": "^2.2.6",
-    "@rails/webpacker": "4.0.2",
+    "@rails/webpacker": "4.0.7",
     "axios": "^0.18.1",
     "bootstrap-loader": "^3.0.3",
     "bootstrap-sass": "^3.4.1",
@@ -13,7 +13,7 @@
     "coffeescript": "2.4.1",
     "css-loader": "^2.1.1",
     "eonasdan-bootstrap-datetimepicker": "^4.17.47",
-    "es6-shim": "^0.35.3",
+    "es6-shim": "^0.35.5",
     "file-loader": "^1.1.6",
     "immutable": "^3.8.2",
     "jquery": "^3.4.0",
@@ -34,7 +34,7 @@
     "quill-table": "^1.0",
     "react": "^16.8.6",
     "react-color": "^2.13.8",
-    "react-dom": "^16.1.1",
+    "react-dom": "^16.8.6",
     "react-draggable": "^3.0.5",
     "react-fontawesome": "^1.6.1",
     "react-image-crop": "^3.0.7",
@@ -46,6 +46,7 @@
     "react-s3-uploader": "^4.6.2",
     "react-select": "^2.1.1",
     "react-select-async-paginate": "^0.3.0",
+    "regenerator-runtime": "^0.13.2",
     "resolve-url-loader": "^2.2.1",
     "sass-loader": "^7.1.0",
     "striptags": "^3.1.1",
@@ -54,6 +55,6 @@
     "webpack": "^4.0.0"
   },
   "devDependencies": {
-    "webpack-dev-server": "3.2.1"
+    "webpack-dev-server": "3.6.0"
   }
 }
