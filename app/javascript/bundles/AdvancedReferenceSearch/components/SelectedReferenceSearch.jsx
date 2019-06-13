@@ -95,7 +95,7 @@ class SelectedReferenceSearch extends Component {
   }
 
   async _loadOptions(search, loadedOptions, { page }) {
-    if (loadedOptions.length < 25 && this.state.isInitialized) {
+    if (this.state.optionsList.length < 25 && this.state.isInitialized) {
       if (search.length > 0) {
         var regexExp = new RegExp(search, 'i')
 

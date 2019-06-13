@@ -141,9 +141,11 @@ class SingleReferenceEditor extends Component {
       var hasMore;
       var newOptions;
 
+      if (search.length === 0) { page++; }
+
       const csrfToken = $('meta[name="csrf-token"]').attr('content');
       let config = { headers: {'X-CSRF-Token': csrfToken} };
-      const response = await fetch(`${this.props.itemsUrl}?search=${search}&page=${page+1}`, config);
+      const response = await fetch(`${this.props.itemsUrl}?search=${search}&page=${page}`, config);
       const responseJSON = await response.json();
 
       newOptions = responseJSON.items.map(item => this._getJSONItem(item));

@@ -79,9 +79,11 @@ class CatalogAdmin::ItemReferenceSelectionTest < ActionDispatch::IntegrationTest
 
     filters_and_associated_text.each do |_item_type, test_elements|
       visit("/one/en/admin/authors/#{author.to_param}/edit")
-      sleep 1 # Wait for Ajax request to complete
+
+      sleep 1
       within("#item_one_author_collaborator_uuid_json-filters") do
         find(".css-vj8t7z").click # Click on the filter input
+        sleep 1
 
         within(".css-11unzgr") do # Within the filter list
           find('div', text: test_elements[:filter_name], match: :first).click
