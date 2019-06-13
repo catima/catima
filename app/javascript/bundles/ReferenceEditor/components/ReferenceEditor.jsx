@@ -75,6 +75,7 @@ class ReferenceEditor extends Component {
                 fields={this.state.fields}
                 searchPlaceholder={this.state.searchPlaceholder}
                 filterPlaceholder={this.state.filterPlaceholder}
+                selectedReferences={this.props.selectedReferences}
                 srcRef={this.props.srcRef}
                 srcId={this.props.srcId}
                 req={this.props.req}

@@ -12,18 +12,14 @@ class MultiReferenceEditor extends Component {
   constructor(props){
     super(props);
 
-    // Load the selected items
-    const v = document.getElementById(this.props.srcRef).value;
-    const selItems = this._load(v);
-
     this.state = {
       items: [],
       page: 1,
       loadMore: true,
       isFetching: false,
       isSearching: false,
-      selectedItems: selItems,
-      selectedItemsToRender: [],
+      selectedItems: this.props.selectedReferences.map((item) => item.id),
+      selectedItemsToRender: this.props.selectedReferences,
       availableRefsSelectedFilter: null,
       selectedRefsSelectedFilter: null,
       filterAvailableInputValue: '',
@@ -47,10 +43,6 @@ class MultiReferenceEditor extends Component {
     if (this.props.items.length < 25) {
       this.state.loadMore = false;
     }
-
-    selItems.forEach((item) => {
-      this.state.selectedItemsToRender = this.state.selectedItemsToRender.concat(this.state.items.filter(it => it.id === item))
-    });
   }
 
   componentWillMount() {
@@ -129,13 +121,6 @@ class MultiReferenceEditor extends Component {
           });
         });
     }
-  }
-
-  _load(v){
-    if (v == null || v == '') return [];
-    let selItems = JSON.parse(v);
-    if (typeof(selItems) !== 'object') return [ parseInt(selItems) ];
-    return selItems && selItems.map( v => parseInt(v) );
   }
 
   _save(){
@@ -322,7 +307,10 @@ class MultiReferenceEditor extends Component {
     // Filtering the selected items ItemList
     if(selectedItems == true && this.state.filterSelectedInputValue !== '') {
       var isInString = -1;
-      if((this.state.selectedRefsSelectedFilter !== null && item[this.state.selectedRefsSelectedFilter.value] !== null && item[this.state.selectedRefsSelectedFilter.value].length !== 0)) {
+      if(this.state.selectedRefsSelectedFilter !== null &&
+          item[this.state.selectedRefsSelectedFilter.value] !== null &&
+          item[this.state.selectedRefsSelectedFilter.value].length !== 0
+      ) {
         var searchString = item.default_display_name.toLowerCase() + ' - ' + JSON.stringify(item[this.state.selectedRefsSelectedFilter.value]).toLowerCase();
           isInString = searchString.indexOf(this.state.filterSelectedInputValue.toLowerCase());
       } else {
