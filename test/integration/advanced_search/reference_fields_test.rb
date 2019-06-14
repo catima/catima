@@ -312,5 +312,27 @@ class AdvancedSearch::ReferenceFieldTest < ActionDispatch::IntegrationTest
     refute(page.has_selector?('h4', text: 'Very Old'))
     refute(page.has_selector?('h4', text: 'Very Young'))
   end
+
+  test "search before first loading has finished does not prevent further loading of results" do
+    visit("/one/en")
+    click_on("Advanced")
+
+    find("#default_search_type").click
+    within("#default_search_type") do
+      click_on("Author")
+    end
+
+    within all(".reference-search-container")[0] do
+      find(".select__input input").set("i'm searching before the first loading")
+    end
+
+    assert(page.has_text?('No options'))
+
+    within all(".reference-search-container")[0] do
+      find(".select__input input").set("")
+    end
+
+    refute(page.has_text?('No options'))
+  end
 end
 # rubocop:enable Metrics/ClassLength

@@ -128,7 +128,7 @@ class SelectedReferenceSearch extends Component {
 
     if (!this.state.isInitialized) {
       this.setState({
-        isInitialized: true,
+        isInitialized: search.length === 0,
         optionsList: responseJSON.items.map(item => this._getJSONItem(item))
       });
       this.props.onFocus(responseJSON.fields);

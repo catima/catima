@@ -128,6 +128,10 @@ class SingleReferenceEditor extends Component {
         return item.label !== null && item.label.match(regexExp) !== null && item.label.match(regexExp).length > 0
       });
 
+      if (search.length === 0) {
+        items = [];
+      }
+
       return {
         options: items,
         hasMore: false,

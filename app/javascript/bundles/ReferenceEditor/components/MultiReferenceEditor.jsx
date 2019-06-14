@@ -197,6 +197,11 @@ class MultiReferenceEditor extends Component {
     clearTimeout(this.timer);
 
     var searchTerm = e.target.value;
+
+    if (searchTerm !== this.state.filterAvailableInputValue) {
+      this.setState({ loadMore: true });
+    }
+
     this.setState({
       filterAvailableInputValue: searchTerm,
       isSearching: true
