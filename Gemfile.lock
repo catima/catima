@@ -235,7 +235,7 @@ GEM
     letter_opener (1.6.0)
       launchy (~> 2.2)
     libv8 (6.7.288.46.1)
-    liquid (4.0.0)
+    liquid (4.0.3)
     liquid-rails (0.2.0)
       kaminari (~> 1.1.1)
       liquid (~> 4.0.0)
