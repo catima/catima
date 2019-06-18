@@ -55,20 +55,45 @@ class MultiReferenceEditor extends Component {
   }
 
   _selectItems(){
-    const itms = this.highlightedItems('availableReferences');
+    const items = this.highlightedItems('availableReferences');
 
-    this.setState(
-      { selectedItems: this.state.selectedItems.concat(itms) },
-      () => this._save()
-    );
+    let previouslySelectedItemsToRender = this.state.selectedItemsToRender;
+    let newSelectedItems = [];
+
+    this.setState({ selectedItemsToRender: [] });
+    items.forEach((item) => {
+      let filteredItems = this.state.items.filter(it => it.id === item)
+      if (filteredItems.length > 0) {
+        newSelectedItems.push(filteredItems[0]);
+      }
+    });
+
+    newSelectedItems = previouslySelectedItemsToRender.concat(newSelectedItems);
+    this.setState({
+      selectedItems: this.state.selectedItems.concat(items),
+      selectedItemsToRender: newSelectedItems,
+    },
+    () => this._save());
   }
 
   _unselectItems(){
-    const itms = this.highlightedItems('selectedReferences');
+    const items = this.highlightedItems('selectedReferences');
+
+    let selectedItemsToRemove = [];
+    items.forEach((item) => {
+      let filteredItems = this.state.selectedItemsToRender.filter(it => it.id === item)
+      if (filteredItems.length > 0) {
+        selectedItemsToRemove.push(filteredItems[0]);
+      }
+    });
+
     this.setState(
       {
+        selectedItemsToRender: this.state.selectedItemsToRender.filter(itm =>
+          selectedItemsToRemove.indexOf(itm) === -1
+        ),
         selectedItems: this.state.selectedItems.filter(itm =>
-          itms.indexOf(itm) == -1
+          items.indexOf(itm) === -1
         )
       },
       () => this._save()
@@ -111,7 +136,11 @@ class MultiReferenceEditor extends Component {
       }
       let currentPage = this.state.page+1;
       let currentItems = this.state.items;
-      await axios.get(`${this.props.itemsUrl}?search=${this.state.filterAvailableInputValue}&page=${currentPage}`, config)
+      var itemsUrl = `${this.props.itemsUrl}?search=${this.state.filterAvailableInputValue}&page=${currentPage}`
+      this.state.selectedItems.forEach((itemId) => {
+        itemsUrl = itemsUrl + `&except[]=${itemId}`
+      });
+      await axios.get(itemsUrl, config)
         .then(res => {
           this.setState({
             items: currentItems.concat(res.data.items),
@@ -131,13 +160,6 @@ class MultiReferenceEditor extends Component {
       )
     );
     document.getElementById(this.props.srcRef).value = v;
-
-    this.setState({ selectedItemsToRender: [] });
-    this.state.selectedItems.forEach((item) => {
-      this.setState((state) =>
-        ({ selectedItemsToRender: state.selectedItemsToRender.concat(state.items.filter(it => it.id === item)) })
-      );
-    });
   }
 
   _availableRefsItemName(item){
@@ -304,13 +326,11 @@ class MultiReferenceEditor extends Component {
     );
   }
 
-  renderSelectedItemDiv(item, selectedItems){
+  renderSelectedItemDiv(item){
     const itemDivId = `${this.props.srcId}-${item.id}`;
-    if (selectedItems == false && this.state.selectedItems.indexOf(item.id) > -1) return null;
-    if (selectedItems == true && this.state.selectedItems.indexOf(item.id) == -1) return null;
 
     // Filtering the selected items ItemList
-    if(selectedItems == true && this.state.filterSelectedInputValue !== '') {
+    if(this.state.filterSelectedInputValue !== '') {
       var isInString = -1;
       if(this.state.selectedRefsSelectedFilter !== null &&
           item[this.state.selectedRefsSelectedFilter.value] !== null &&
@@ -391,7 +411,7 @@ class MultiReferenceEditor extends Component {
             </div>
             <div>
               {this.state.selectedItemsToRender.map(item =>
-                this.renderSelectedItemDiv(item, true)
+                this.renderSelectedItemDiv(item)
               )}
             </div>
           </div>

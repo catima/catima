@@ -14,7 +14,7 @@ class SingleReferenceEditor extends Component {
       items: [],
       selectedItem: selItem,
       selectedFilter: null,
-      optionsList: this.props.items.map(item => this._getJSONItem(item))
+      optionsList: []
     };
 
     this.editorId = `${this.props.srcRef}-editor`;
@@ -123,13 +123,17 @@ class SingleReferenceEditor extends Component {
     // Avoir useless API calls if there are less than 25 loaded items and the user searches by filtering options with JS
     if (this.props.items.length < 25) {
       var regexExp = new RegExp(search, 'i')
-
-      var items = this.state.optionsList.filter(function(item) {
+      var optionsList = this._getItemOptions();
+      var items = optionsList.filter(function(item) {
         return item.label !== null && item.label.match(regexExp) !== null && item.label.match(regexExp).length > 0
       });
 
       if (search.length === 0) {
-        items = [];
+        if (this.state.optionsList === this.props.items && this.state.selectedFilter === null) {
+          items = [];
+        } else {
+          items = this.props.items.map(item => this._getJSONItem(item));
+        }
       }
 
       return {
@@ -144,8 +148,6 @@ class SingleReferenceEditor extends Component {
     if (this.props.items.length === 25) {
       var hasMore;
       var newOptions;
-
-      if (search.length === 0) { page++; }
 
       const csrfToken = $('meta[name="csrf-token"]').attr('content');
       let config = { headers: {'X-CSRF-Token': csrfToken} };

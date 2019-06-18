@@ -9,9 +9,7 @@ class CatalogAdmin::ItemReferenceSelectionTest < ActionDispatch::IntegrationTest
     author = items(:one_author_stephen_king)
     visit("/one/en/admin/authors/#{author.to_param}/edit")
 
-    sleep 2 # Wait for Ajax request to complete
-
-    within("#item_one_author_collaborator_uuid_json-editor") do
+    within("#item_one_author_collaborator_uuid_json-editor", :wait => 30) do
       find("input").set("stephen")
     end
 
@@ -105,11 +103,38 @@ class CatalogAdmin::ItemReferenceSelectionTest < ActionDispatch::IntegrationTest
     author = items(:one_author_stephen_king)
     visit("/one/en/admin/authors/#{author.to_param}/edit")
 
+    find("#item_one_author_collaborator_uuid_json-editor", :wait => 30).click
+    assert(find("#item_one_author_collaborator_uuid_json-editor").has_text?("King", :count => 1, :wait => 30))
+  end
+
+  test "displays all the unpaginated items" do
+    log_in_as("one-admin@example.com", "password")
+
+    author = items(:one_author_stephen_king)
+    visit("/one/en/admin/authors/#{author.to_param}/edit")
+
+    find("#item_one_author_collaborator_uuid_json-editor", :wait => 30).click
+    assert(page.has_css?("#item_one_author_collaborator_uuid_json-editor div[role=\"option\"]", :count => 6))
+  end
+
+  test "displays the items after a filter has been selected and deselected" do
+    log_in_as("one-admin@example.com", "password")
+
+    author = items(:one_author_stephen_king)
+    visit("/one/en/admin/authors/#{author.to_param}/edit")
+
     sleep 2 # Wait for Ajax request to complete
 
     find("#item_one_author_collaborator_uuid_json-editor").click
+    assert(find("#item_one_author_collaborator_uuid_json-editor").has_text?("King", :count => 1))
 
-    refute(page.has_text?("Loading"))
+    find("#item_one_author_collaborator_uuid_json-filters").click
+    within(".css-11unzgr") do # Within the filter list
+      sleep 1
+      find('div', text: "Age", match: :first).click
+    end
+
+    find("#item_one_author_collaborator_uuid_json-editor").click
     assert(find("#item_one_author_collaborator_uuid_json-editor").has_text?("King", :count => 1))
   end
   # rubocop:enable Metrics/BlockLength
