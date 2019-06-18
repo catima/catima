@@ -101,8 +101,6 @@ class CatalogAdmin::ItemsTest < ActionDispatch::IntegrationTest
       click_on("Save Author")
     end
 
-    sleep 2
-
     author = Item.find(author_id).behaving_as_type
     assert_equal("Changed by test", author.public_send(:one_author_name_uuid))
   end
@@ -123,7 +121,7 @@ class CatalogAdmin::ItemsTest < ActionDispatch::IntegrationTest
     click_on("Authors")
 
     assert_difference("Item.count", -1) do
-      page.accept_alert(:wait => 2) do
+      page.accept_alert(:wait => 30) do
         first("a.item-action-delete").click
       end
       sleep 2
@@ -138,7 +136,6 @@ class CatalogAdmin::ItemsTest < ActionDispatch::IntegrationTest
 
     assert_difference("Item.count", +1) do
       first("a.item-action-duplicate").click
-      sleep 2 # Wait to initialize JS
       click_on("Create Author")
     end
   end

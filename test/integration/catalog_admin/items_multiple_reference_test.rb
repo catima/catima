@@ -9,10 +9,8 @@ class CatalogAdmin::ItemMultipleReferenceTest < ActionDispatch::IntegrationTest
     author = items(:one_author_stephen_king)
     visit("/one/en/admin/authors/#{author.to_param}/edit")
 
-    sleep 2 # Wait for Ajax request to complete
-
-    within(".availableReferences") do
-      find("input").set("king")
+    within(".availableReferences", :wait => 30) do
+      find("input", :wait => 30).set("king")
     end
 
     assert(find("#item_one_author_other_collaborators_uuid_json-editor").has_text?("King", :count => 1))

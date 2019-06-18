@@ -298,10 +298,8 @@ class AdvancedSearch::ReferenceFieldTest < ActionDispatch::IntegrationTest
       click_on("Author")
     end
 
-    within all(".reference-search-container")[0] do
-      sleep 2
-      find(".select__input input").set("old")
-      sleep 5
+    within all(".reference-search-container", :wait => 30)[0] do
+      find(".select__input input", :wait => 30).set("old")
     end
 
     find('.select__option--is-focused', text: "Very Old", match: :first).click
