@@ -1,3 +1,4 @@
+# rubocop:disable Metrics/ClassLength
 class CatalogAdmin::ItemsController < CatalogAdmin::BaseController
   include ControlsItemSorting
   before_action :find_item_type
@@ -171,3 +172,4 @@ class CatalogAdmin::ItemsController < CatalogAdmin::BaseController
     catalog.simple_searches
   end
 end
+# rubocop:enable Metrics/ClassLength

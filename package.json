@@ -45,10 +45,12 @@
     "react-on-rails": "^11.2.2",
     "react-s3-uploader": "^4.6.2",
     "react-select": "^2.1.1",
+    "react-select-async-paginate": "^0.3.0",
     "regenerator-runtime": "^0.13.2",
     "resolve-url-loader": "^2.2.1",
     "sass-loader": "^7.1.0",
     "striptags": "^3.1.1",
+    "styled-components": "^4.2.0",
     "url-loader": "^0.6.2",
     "webpack": "^4.0.0"
   },

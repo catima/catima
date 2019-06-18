@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
-import ReactSelect from 'react-select';
+import AsyncPaginate from 'react-select-async-paginate';
 import striptags from 'striptags';
+import ReactSelect from 'react-select';
 
 class SingleReferenceEditor extends Component {
   constructor(props){
@@ -10,21 +11,25 @@ class SingleReferenceEditor extends Component {
     const selItem = this._load(v);
 
     this.state = {
+      items: [],
       selectedItem: selItem,
-      selectedFilter: null
+      selectedFilter: null,
+      optionsList: []
     };
 
     this.editorId = `${this.props.srcRef}-editor`;
     this.filterId = `${this.props.srcRef}-filters`;
     this.selectItem = this._selectItem.bind(this);
     this.selectFilter = this._selectFilter.bind(this);
+    this.loadOptions = this._loadOptions.bind(this);
+    this.getItemOptions = this._getItemOptions.bind(this);
+    this.state.items = this.props.items;
   }
 
   componentDidMount(){
     // If reference value is empty but field is required, insert the default value.
     if (document.getElementById(this.props.srcRef).value == '' && this.props.req) {
-      const itemList = this._getItemOptions();
-      this._selectItem(itemList[0]);
+      this._selectItem(this.state.optionsList[0]);
     }
   }
 
@@ -53,29 +58,45 @@ class SingleReferenceEditor extends Component {
     }
   }
 
-  _getItemOptions(){
+  _getItemOptions(items) {
     var optionsList = [];
-    optionsList = this.props.items.map(item =>
-      this._getJSONItem(item)
-    );
+
+    var stateItems = this.state.items;
+    if (typeof items !== 'undefined') { stateItems = stateItems.concat(items); }
+
+    optionsList = stateItems.map(item => this._getJSONItem(item) );
+
+    this.setState({
+      items: stateItems,
+      optionsList: optionsList
+    });
 
     return optionsList;
-  }
-
-  _itemName(item){
-    if(typeof this.state === 'undefined') return striptags(item.default_display_name);
-    if(typeof this.state !== 'undefined' && (this.state.selectedFilter === null || item[this.state.selectedFilter.value] === null || item[this.state.selectedFilter.value].length === 0)) return striptags(item.default_display_name);
-    return striptags(item.default_display_name) + ' - ' + item[this.state.selectedFilter.value];
   }
 
   _getJSONItem(item) {
     return {value: item.id, label: this._itemName(item)};
   }
 
+  _itemName(item){
+    if(typeof this.state === 'undefined') { return striptags(item.default_display_name); }
+
+    if(typeof this.state !== 'undefined' &&
+            (this.state.selectedFilter === null
+          || item[this.state.selectedFilter.value] === null
+          || item[this.state.selectedFilter.value].length === 0)
+        ) {
+      return striptags(item.default_display_name);
+    }
+
+    return striptags(item.default_display_name) + ' - ' + item[this.state.selectedFilter.value];
+  }
+
   _selectFilter(filter){
-    this.setState({ selectedFilter: filter }, () => {
+    this.setState({ selectedFilter: filter}, () => {
+      var optionsList = this._getItemOptions();
       if(typeof this.state.selectedItem !== 'undefined' && this.state.selectedItem !== null) {
-        const currentItem = this._getItemOptions().find(item => item.value === this.state.selectedItem.value);
+        const currentItem = optionsList.find(item => item.value === this.state.selectedItem.value);
         this.setState({ selectedItem: currentItem });
       } else {
         this.setState({ selectedItem: [] });
@@ -98,18 +119,83 @@ class SingleReferenceEditor extends Component {
     return {value: field.slug, label: field.name};
   }
 
+  async _loadOptions(search, loadedOptions, { page }) {
+    // Avoir useless API calls if there are less than 25 loaded items and the user searches by filtering options with JS
+    if (this.props.items.length < 25) {
+      var regexExp = new RegExp(search, 'i')
+      var optionsList = this._getItemOptions();
+      var items = optionsList.filter(function(item) {
+        return item.label !== null && item.label.match(regexExp) !== null && item.label.match(regexExp).length > 0
+      });
+
+      if (search.length === 0) {
+        if (this.state.optionsList === this.props.items && this.state.selectedFilter === null) {
+          items = [];
+        } else {
+          items = this.props.items.map(item => this._getJSONItem(item));
+        }
+      }
+
+      return {
+        options: items,
+        hasMore: false,
+        additional: {
+          page: page,
+        },
+      };
+    }
+
+    if (this.props.items.length === 25) {
+      var hasMore;
+      var newOptions;
+
+      const csrfToken = $('meta[name="csrf-token"]').attr('content');
+      let config = { headers: {'X-CSRF-Token': csrfToken} };
+      const response = await fetch(`${this.props.itemsUrl}?search=${search}&page=${page}`, config);
+      const responseJSON = await response.json();
+
+      newOptions = responseJSON.items.map(item => this._getJSONItem(item));
+      hasMore = responseJSON.hasMore;
+
+      return {
+        options: newOptions,
+        hasMore: hasMore,
+        additional: {
+          page: page + 1,
+        },
+      };
+    }
+
+    return {
+      options: [],
+      hasMore: false,
+      additional: {
+        page: page,
+      },
+    };
+  }
+
   render(){
     return (
       <div className="input-group single-reference-container">
-        <ReactSelect
+        <AsyncPaginate
+          cacheUniq={JSON.stringify(this.state.optionsList)} // used to update the options loaded on page load
           id={this.editorId}
           className="single-reference"
-          value={this.state.selectedItem}
-          onChange={this.selectItem}
-          options={this._getItemOptions()}
-          isSearchable={true}
+          debounceTimeout={800}
           isClearable={!this.props.req}
+          isMulti={false}
+          isSearchable={true}
+          loadingMessage={() => this.props.loadingMessage}
+          loadOptions={this.loadOptions}
+          onChange={this.selectItem}
+          options={this.state.optionsList}
+          placeholder={this.props.searchPlaceholder}
           noOptionsMessage={this.props.noOptionsMessage}
+          value={this.state.selectedItem}
+          additional={{
+            page: 1,
+          }}
         />
         <div className="input-group-addon">
           <ReactSelect
