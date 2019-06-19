@@ -263,10 +263,9 @@ class AdvancedSearch::ReferenceFieldTest < ActionDispatch::IntegrationTest
     end
 
     within all(".reference-search-container")[2] do
-      find(".css-vj8t7z").click # Click on the filter input
-
+      find(".single-reference-filter").click # Click on the filter input
       within(".css-11unzgr") do # Within the filter list
-        find('div', text: "Name", match: :first).click
+        find('div', text: "Name", :match => :first).click
       end
 
       fill_in(
@@ -279,6 +278,59 @@ class AdvancedSearch::ReferenceFieldTest < ActionDispatch::IntegrationTest
 
     refute(page.has_selector?('h4', text: 'Young apprentice'))
     refute(page.has_selector?('h4', text: 'Very Young'))
+  end
+
+  test "search for an author by single tag reference field wih pagination" do
+    # Populates the references search container with more than 25 items to paginate
+    author = Item.where("search_data_en LIKE '%apprentice%'").first
+    30.times do |i|
+      author = author.dup
+      author.uuid = i
+      author.data['one_author_name_uuid'] = "Author #{i}"
+      author.save!
+    end
+
+    visit("/one/en")
+    click_on("Advanced")
+
+    find("#default_search_type").click
+    within("#default_search_type") do
+      click_on("Author")
+    end
+
+    within all(".reference-search-container", :wait => 30)[0] do
+      find(".select__input input", :wait => 30).set("old")
+    end
+
+    find('.select__option--is-focused', text: "Very Old", match: :first).click
+
+    click_on("Search")
+
+    assert(page.has_selector?('h4', text: 'Stephen King'))
+    refute(page.has_selector?('h4', text: 'Very Old'))
+    refute(page.has_selector?('h4', text: 'Very Young'))
+  end
+
+  test "search before first loading has finished does not prevent further loading of results" do
+    visit("/one/en")
+    click_on("Advanced")
+
+    find("#default_search_type").click
+    within("#default_search_type") do
+      click_on("Author")
+    end
+
+    within all(".reference-search-container")[0] do
+      find(".select__input input").set("i'm searching before the first loading")
+    end
+
+    assert(page.has_text?('No options'))
+
+    within all(".reference-search-container")[0] do
+      find(".select__input input").set("")
+    end
+
+    refute(page.has_text?('No options'))
   end
 end
 # rubocop:enable Metrics/ClassLength

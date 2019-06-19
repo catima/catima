@@ -28,9 +28,9 @@ class ExportWorker
     begin
       Dump::CatalogDump.new.dump(export.catalog.slug, File.join(dir, 'catima'))
       zip(dir, export.pathname)
-    rescue StandardError => er
+    rescue StandardError => e
       status = "error"
-      Rails.logger.error "[ERROR] Catalog dump: #{er.message}"
+      Rails.logger.error "[ERROR] Catalog dump: #{e.message}"
     end
     export.update(status: status)
     send_mail(export)
@@ -41,9 +41,9 @@ class ExportWorker
     begin
       Dump::SqlDump.new.dump(export.catalog.slug, File.join(dir, 'sql'))
       zip(dir, export.pathname)
-    rescue StandardError => er
+    rescue StandardError => e
       status = "error"
-      Rails.logger.error "[ERROR] Catalog dump: #{er.message}"
+      Rails.logger.error "[ERROR] Catalog dump: #{e.message}"
     end
     export.update(status: status)
     send_mail(export)
@@ -55,9 +55,9 @@ class ExportWorker
     begin
       Dump::CsvDump.new.dump(export.catalog.slug, File.join(dir, 'csv'), locale)
       zip(dir, export.pathname)
-    rescue StandardError => er
+    rescue StandardError => e
       status = "error"
-      Rails.logger.error "[ERROR] Catalog dump: #{er.message}"
+      Rails.logger.error "[ERROR] Catalog dump: #{e.message}"
     end
     export.update(status: status)
     send_mail(export)

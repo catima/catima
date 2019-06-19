@@ -65,13 +65,13 @@ one_author_stephen_king:
         "size": 192000,
         "type": "document/doc"
       },
-      "one_author_language_uuid": <%= ActiveRecord::FixtureSet.identify(:one_spanish) %>,
+      "one_author_language_uuid": "<%= ActiveRecord::FixtureSet.identify(:one_spanish) %>",
       "one_author_other_languages_uuid": [
         "<%= ActiveRecord::FixtureSet.identify(:one_spanish) %>",
         "<%= ActiveRecord::FixtureSet.identify(:one_english) %>"
       ],
-      "one_author_editor_uuid": <%= ActiveRecord::FixtureSet.identify(:one_author_editor) %>,
-      "one_author_collaborator_uuid": <%= ActiveRecord::FixtureSet.identify(:one_author_very_old) %>,
+      "one_author_editor_uuid": "<%= ActiveRecord::FixtureSet.identify(:one_author_editor) %>",
+      "one_author_collaborator_uuid": "<%= ActiveRecord::FixtureSet.identify(:one_author_very_old) %>",
       "one_author_other_collaborators_uuid": [
         "<%= ActiveRecord::FixtureSet.identify(:one_author_apprentice) %>"
         ],
@@ -80,7 +80,7 @@ one_author_stephen_king:
       "one_author_most_active_month_uuid": {"M": 6},
       "one_author_most_active_hour_uuid": {"h": 10}
     }
-  "search_data_en": "Steve"
+  "search_data_en": "Steve spanish 21 1.88891 one sk@stephenking.com 2456 Very Old Stephen index.html"
 
 one_author_very_old:
   catalog: one
@@ -99,12 +99,12 @@ one_author_very_old:
       "<%= ActiveRecord::FixtureSet.identify(:one_french) %>",
       "<%= ActiveRecord::FixtureSet.identify(:one_english) %>"
     ],
-    "one_author_collaborator_uuid": <%= ActiveRecord::FixtureSet.identify(:one_author_very_young) %>,
+    "one_author_collaborator_uuid": "<%= ActiveRecord::FixtureSet.identify(:one_author_very_young) %>",
     "one_author_born_uuid": {"Y": 1947, "M": 11, "D": 11},
     "one_author_most_active_month_uuid": {"M": 1},
     "one_author_most_active_hour_uuid": {"h": 1}
     }
-  "search_data_en": "too old"
+  "search_data_en": "too old yes"
 
 one_author_very_young:
   catalog: one
@@ -127,6 +127,7 @@ one_author_apprentice:
   creator: one_admin
   updater: one_admin
   item_type: one_author
+  uuid: one_author_apprentice
   data: {
     "one_author_age_uuid": 22,
     "one_author_name_uuid": "Young apprentice",
@@ -152,7 +153,10 @@ one_book_end_of_watch:
   creator: one_admin
   updater: one_admin
   item_type: one_book
-  data: { "one_book_title_uuid": "End of Watch" }
+  data: {
+    "one_book_title_uuid": "End of Watch",
+    "one_book_author_uuid": one_author_very_young
+    }
 
 one_book_finders_keepers:
   catalog: one

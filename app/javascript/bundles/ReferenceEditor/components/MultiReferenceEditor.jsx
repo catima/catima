@@ -1,18 +1,25 @@
 import React, { Component } from 'react';
+import axios from 'axios';
+import AsyncPaginate from 'react-select-async-paginate';
 import ReactDOM from 'react-dom';
 import ReactSelect from 'react-select';
 import striptags from 'striptags';
+import LoadingDots from '../../StyleControl/components/LoadingDots';
+
+const WAIT_INTERVAL = 800;
 
 class MultiReferenceEditor extends Component {
   constructor(props){
     super(props);
 
-    // Load the selected items
-    const v = document.getElementById(this.props.srcRef).value;
-    const selItems = this._load(v);
-
     this.state = {
-      selectedItems: selItems,
+      items: [],
+      page: 1,
+      loadMore: true,
+      isFetching: false,
+      isSearching: false,
+      selectedItems: this.props.selectedReferences.map((item) => item.id),
+      selectedItemsToRender: this.props.selectedReferences,
       availableRefsSelectedFilter: null,
       selectedRefsSelectedFilter: null,
       filterAvailableInputValue: '',
@@ -30,6 +37,16 @@ class MultiReferenceEditor extends Component {
     this.selectedRefsSelectFilter = this._selectedRefsSelectFilter.bind(this);
     this.filterAvailableReferences = this._filterAvailableReferences.bind(this);
     this.filterSelectedReferences = this._filterSelectedReferences.bind(this);
+
+    this.fetchItems = this._fetchItems.bind(this);
+    this.state.items = this.props.items;
+    if (this.props.items.length < 25) {
+      this.state.loadMore = false;
+    }
+  }
+
+  componentWillMount() {
+    this.timer = null;
   }
 
   _highlightItem(e){
@@ -38,30 +55,101 @@ class MultiReferenceEditor extends Component {
   }
 
   _selectItems(){
-    const itms = this.highlightedItems('availableReferences');
-    this.setState(
-      { selectedItems: this.state.selectedItems.concat(itms) },
-      () => this._save()
-    );
+    const items = this.highlightedItems('availableReferences');
+
+    let previouslySelectedItemsToRender = this.state.selectedItemsToRender;
+    let newSelectedItems = [];
+
+    this.setState({ selectedItemsToRender: [] });
+    items.forEach((item) => {
+      let filteredItems = this.state.items.filter(it => it.id === item)
+      if (filteredItems.length > 0) {
+        newSelectedItems.push(filteredItems[0]);
+      }
+    });
+
+    newSelectedItems = previouslySelectedItemsToRender.concat(newSelectedItems);
+    this.setState({
+      selectedItems: this.state.selectedItems.concat(items),
+      selectedItemsToRender: newSelectedItems,
+    },
+    () => this._save());
   }
 
   _unselectItems(){
-    const itms = this.highlightedItems('selectedReferences');
+    const items = this.highlightedItems('selectedReferences');
+
+    let selectedItemsToRemove = [];
+    items.forEach((item) => {
+      let filteredItems = this.state.selectedItemsToRender.filter(it => it.id === item)
+      if (filteredItems.length > 0) {
+        selectedItemsToRemove.push(filteredItems[0]);
+      }
+    });
+
     this.setState(
       {
+        selectedItemsToRender: this.state.selectedItemsToRender.filter(itm =>
+          selectedItemsToRemove.indexOf(itm) === -1
+        ),
         selectedItems: this.state.selectedItems.filter(itm =>
-          itms.indexOf(itm) == -1
+          items.indexOf(itm) === -1
         )
       },
       () => this._save()
     );
   }
 
-  _load(v){
-    if (v == null || v == '') return [];
-    let selItems = JSON.parse(v);
-    if (typeof(selItems) !== 'object') return [ parseInt(selItems) ];
-    return selItems && selItems.map( v => parseInt(v) );
+  _fetchItems = async (search, page) => {
+    if (!this.state.isFetching && this.state.loadMore) {
+      // Avoir useless API calls if there are less than 25 loaded items and the user searches
+      if (this.props.items.length < 25 && search.length > 0) {
+        var regexExp = new RegExp(search, 'i')
+
+        this.setState({items:
+          this.props.items.filter(function(item) {
+            return item.name !== null && item.name.match(regexExp) !== null && item.name.match(regexExp).length > 0
+          })
+        });
+
+        return {
+          options: this.getItemOptions(this.state.items),
+          hasMore: false,
+          additional: {
+            page: page,
+          },
+        };
+      }
+
+      const csrfToken = $('meta[name="csrf-token"]').attr('content');
+      let config = {
+        retry: 3,
+        retryDelay: 1000,
+        headers: {'X-CSRF-Token': csrfToken}
+      };
+
+      this.setState({
+        isFetching: true
+      })
+      if (this.state.filterAvailableInputValue === null) {
+        this.setState({filterAvailableInputValue: ''})
+      }
+      let currentPage = this.state.page+1;
+      let currentItems = this.state.items;
+      var itemsUrl = `${this.props.itemsUrl}?search=${this.state.filterAvailableInputValue}&page=${currentPage}`
+      this.state.selectedItems.forEach((itemId) => {
+        itemsUrl = itemsUrl + `&except[]=${itemId}`
+      });
+      await axios.get(itemsUrl, config)
+        .then(res => {
+          this.setState({
+            items: currentItems.concat(res.data.items),
+            loadMore: res.data.items.length === 25,
+            isFetching: false,
+            page: currentPage
+          });
+        });
+    }
   }
 
   _save(){
@@ -76,13 +164,27 @@ class MultiReferenceEditor extends Component {
 
   _availableRefsItemName(item){
     if(typeof this.state === 'undefined') return striptags(item.default_display_name);
-    if(typeof this.state !== 'undefined' && (this.state.availableRefsSelectedFilter === null || item[this.state.availableRefsSelectedFilter.value] === null || item[this.state.availableRefsSelectedFilter.value].length === 0)) return striptags(item.default_display_name);
+    if(typeof this.state !== 'undefined'
+        && (this.state.availableRefsSelectedFilter === null
+            || item[this.state.availableRefsSelectedFilter.value] === null
+            || typeof item[this.state.availableRefsSelectedFilter.value] === 'undefined'
+            || item[this.state.availableRefsSelectedFilter.value].length === 0)
+    ) {
+      return striptags(item.default_display_name);
+    }
     return striptags(item.default_display_name) + ' - ' + item[this.state.availableRefsSelectedFilter.value];
   }
 
   _selectedRefsItemName(item){
     if(typeof this.state === 'undefined') return striptags(item.default_display_name);
-    if(typeof this.state !== 'undefined' && (this.state.selectedRefsSelectedFilter === null || item[this.state.selectedRefsSelectedFilter.value] === null || item[this.state.selectedRefsSelectedFilter.value].length === 0)) return striptags(item.default_display_name);
+    if(typeof this.state !== 'undefined'
+        && (this.state.selectedRefsSelectedFilter === null
+          || item[this.state.selectedRefsSelectedFilter.value] === null
+          || typeof item[this.state.selectedRefsSelectedFilter.value] === 'undefined'
+          || item[this.state.selectedRefsSelectedFilter.value].length === 0)
+    ) {
+      return striptags(item.default_display_name);
+    }
     return striptags(item.default_display_name) + ' - ' + item[this.state.selectedRefsSelectedFilter.value];
   }
 
@@ -113,8 +215,47 @@ class MultiReferenceEditor extends Component {
     return {value: field.slug, label: field.name};
   }
 
-  _filterAvailableReferences(e) {
-    this.setState({filterAvailableInputValue: e.target.value});
+  _filterAvailableReferences = async (e) => {
+    clearTimeout(this.timer);
+
+    var searchTerm = e.target.value;
+
+    if (searchTerm !== this.state.filterAvailableInputValue) {
+      this.setState({ loadMore: true });
+    }
+
+    this.setState({
+      filterAvailableInputValue: searchTerm,
+      isSearching: true
+    });
+
+    this.timer = setTimeout(() => {
+      if (!this.state.isFetching) {
+        const csrfToken = $('meta[name="csrf-token"]').attr('content');
+        let config = {
+          retry: 3,
+          retryDelay: 1000,
+          headers: {'X-CSRF-Token': csrfToken}
+        };
+
+        this.state.page = 1;
+        if (this.state.filterAvailableInputValue === null) {
+          this.state.filterAvailableInputValue = '';
+        }
+        var itemsUrl = `${this.props.itemsUrl}?search=${searchTerm}&page=${this.state.page}`
+        this.state.selectedItems.forEach((itemId) => {
+          itemsUrl = itemsUrl + `&except[]=${itemId}`
+        });
+
+        axios.get(itemsUrl, config)
+          .then(res => {
+            this.setState({
+              items: res.data.items,
+              isSearching: false
+            });
+          });
+      }
+    }, WAIT_INTERVAL);
   }
 
   _filterSelectedReferences(e) {
@@ -141,7 +282,21 @@ class MultiReferenceEditor extends Component {
       document.querySelector(`#${this.editorId} .referenceControls .btn-danger`).setAttribute('disabled', 'disabled');
   }
 
+  handleScroll = (e) => {
+    const bottom = e.target.clientHeight - (e.target.scrollHeight - e.target.scrollTop) > -10;
+
+    if (bottom) {
+      if (!this.state.isFetching && this.state.loadMore) {
+        this.fetchItems();
+      }
+    }
+  }
+
   renderAvailableItemDiv(item, selectedItems){
+    if (item.default_display_name === null) {
+      return null;
+    }
+
     const itemDivId = `${this.props.srcId}-${item.id}`;
     if (selectedItems == false && this.state.selectedItems.indexOf(item.id) > -1) return null;
     if (selectedItems == true && this.state.selectedItems.indexOf(item.id) == -1) return null;
@@ -171,15 +326,16 @@ class MultiReferenceEditor extends Component {
     );
   }
 
-  renderSelectedItemDiv(item, selectedItems){
+  renderSelectedItemDiv(item){
     const itemDivId = `${this.props.srcId}-${item.id}`;
-    if (selectedItems == false && this.state.selectedItems.indexOf(item.id) > -1) return null;
-    if (selectedItems == true && this.state.selectedItems.indexOf(item.id) == -1) return null;
 
     // Filtering the selected items ItemList
-    if(selectedItems == true && this.state.filterSelectedInputValue !== '') {
+    if(this.state.filterSelectedInputValue !== '') {
       var isInString = -1;
-      if((this.state.selectedRefsSelectedFilter !== null && item[this.state.selectedRefsSelectedFilter.value] !== null && item[this.state.selectedRefsSelectedFilter.value].length !== 0)) {
+      if(this.state.selectedRefsSelectedFilter !== null &&
+          item[this.state.selectedRefsSelectedFilter.value] !== null &&
+          item[this.state.selectedRefsSelectedFilter.value].length !== 0
+      ) {
         var searchString = item.default_display_name.toLowerCase() + ' - ' + JSON.stringify(item[this.state.selectedRefsSelectedFilter.value]).toLowerCase();
           isInString = searchString.indexOf(this.state.filterSelectedInputValue.toLowerCase());
       } else {
@@ -197,18 +353,47 @@ class MultiReferenceEditor extends Component {
   }
 
   render(){
+    const loadingDotsStyle = {
+      minWidth: 20,
+      verticalAlign: "top"
+    };
+
     return (
       <div className="multiple-reference-container">
         <div id={this.editorId} className="wrapper">
-          <div className="availableReferences">
+          <div className="availableReferences" onScroll={this.handleScroll}>
               <div className="input-group">
-                <input className="form-control" type="text" value={this.state.filterAvailableInputValue} onChange={this.filterAvailableReferences} placeholder={this.props.searchPlaceholder}/>
-                <div className="input-group-addon"><ReactSelect id={this.availableRefsFilterId} className="multiple-reference-filter" isSearchable={false} isClearable={true} value={this.state.availableRefsSelectedFilter} onChange={this.availableRefsSelectFilter} options={this._getFilterOptions()} placeholder={this.props.filterPlaceholder} noOptionsMessage={this.props.noOptionsMessage}/></div>
+
+                <input
+                  className="form-control"
+                  type="text"
+                  value={this.state.filterAvailableInputValue}
+                  onChange={this.filterAvailableReferences}
+                  placeholder={this.props.searchPlaceholder}/>
+
+                  {this.state.isSearching ? (
+                    <div className="input-group-addon" style={loadingDotsStyle}>
+                      <LoadingDots/>
+                    </div> ) : ( '' )}
+
+                <div className="input-group-addon">
+                  <ReactSelect
+                    id={this.availableRefsFilterId}
+                    className="multiple-reference-filter"
+                    isSearchable={false}
+                    isClearable={true}
+                    value={this.state.availableRefsSelectedFilter}
+                    onChange={this.availableRefsSelectFilter}
+                    options={this._getFilterOptions()}
+                    placeholder={this.props.filterPlaceholder}
+                    noOptionsMessage={this.props.noOptionsMessage}/>
+                </div>
               </div>
             <div>
-              {this.props.items.map(item =>
+              {this.state.items.map(item =>
                 this.renderAvailableItemDiv(item, false)
               )}
+              { this.state.isFetching && <LoadingDots/> }
             </div>
           </div>
           <div className="referenceControls">
@@ -225,8 +410,8 @@ class MultiReferenceEditor extends Component {
               <div className="input-group-addon"><ReactSelect id={this.selectedRefsFilterId} className="multiple-reference-filter" isSearchable={false} isClearable={true} value={this.state.selectedRefsSelectedFilter} onChange={this.selectedRefsSelectFilter} options={this._getFilterOptions()} placeholder={this.props.filterPlaceholder} noOptionsMessage={this.props.noOptionsMessage}/></div>
             </div>
             <div>
-              {this.props.items.map(item =>
-                this.renderSelectedItemDiv(item, true)
+              {this.state.selectedItemsToRender.map(item =>
+                this.renderSelectedItemDiv(item)
               )}
             </div>
           </div>
