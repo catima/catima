@@ -15,6 +15,7 @@ AllCops:
     - Gemfile
     - Guardfile
     - Rakefile
+    - db/migrate/*
 
 # Metrics/AbcSize:
 #   Exclude:
