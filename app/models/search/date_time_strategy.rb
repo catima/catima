@@ -13,10 +13,12 @@ class Search::DateTimeStrategy < Search::BaseStrategy
     return scope if criteria[:start].blank?
 
     start_condition = criteria[:start].keys.first
-    end_condition = criteria[:end].keys.first
-
     start_date_time = criteria[:start][start_condition]
-    end_date_time = criteria[:end][end_condition] if end_date?(criteria)
+
+    if criteria.key?(:end)
+      end_condition = criteria[:end].keys.first
+      end_date_time = criteria[:end][end_condition] if end_date?(criteria)
+    end
 
     return scope if components_empty?(start_date_time) && components_empty?(end_date_time)
 

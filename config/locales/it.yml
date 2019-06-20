@@ -337,6 +337,7 @@ it:
   options: Options
   deactivate: Deactivate
   reactivate: Reactivate
+  loading: Caricamento
 
   layouts:
     catalog_admin:
@@ -364,6 +365,7 @@ it:
       reference_editor:
         reference_editor_filter: "Filtro..."
         reference_editor_search: "Ricerca per..."
+        reference_editor_select: "Seleziona..."
         no_options: Nessuna opzione disponibile
 
     catalog:

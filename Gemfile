@@ -4,7 +4,7 @@ gem "active_model_serializers", "~> 0.10.7"
 gem "active_type", ">= 0.7.5"
 gem "ahoy_matey", "~> 2.2.0"
 gem "autoprefixer-rails", ">= 8.6.4"
-gem "bcrypt", "~> 3.1.12"
+gem "bcrypt", "~> 3.1.13"
 gem "bootstrap-sass", "~> 3.4.1"
 gem "bootstrap_form", "~> 2.7.0"
 gem "chartkick", "~> 3.1.0"
@@ -34,7 +34,7 @@ gem 'omniauth-facebook'
 gem 'omniauth-github'
 gem 'omniauth-shibboleth'
 gem "panoramic"
-gem "pg", "~> 1.0"
+gem "pg", "~> 1.1"
 gem "pg_search", "~> 2.2.0"
 gem "pgcli-rails", "~> 0.3.0"
 gem "pundit"
@@ -109,7 +109,6 @@ group :development do
   gem "terminal-notifier", :require => false
   gem "terminal-notifier-guard", :require => false
   gem "thin", :require => false
-  # gem "xray-rails"
 
   platforms :mswin, :mingw, :x64_mingw do
     gem "tzinfo-data"
@@ -118,7 +117,7 @@ end
 
 group :test do
   gem "capybara"
-  gem "chromedriver-helper"
+  gem "webdrivers"
   gem "connection_pool"
   gem "json_schema"
   gem "launchy"
@@ -129,9 +128,6 @@ group :test do
   gem "selenium-webdriver"
   gem "shoulda-context"
   gem "shoulda-matchers"
-  # gem "shoulda-matchers",
-  #     :git => "https://github.com/mattbrictson/shoulda-matchers.git",
-  #     :branch => "with-fixes"
   gem "vcr"
   gem "webmock"
 end
