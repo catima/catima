@@ -75,6 +75,7 @@ Rails.application.routes.draw do
 
   namespace "admin" do
     get "/" => "dashboard#index", :as => :dashboard
+    get "/stats" => "dashboard#stats"
     resources :catalogs, :param => :slug, :except => [:index]
     resources :template_storages, :except => :index
     resources :configurations, :only => :update

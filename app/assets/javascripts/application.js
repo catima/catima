@@ -14,5 +14,3 @@
 //= require cocoon
 //= require refile
 //= require_tree ./application
-//= require chartkick
-//= require Chart.bundle

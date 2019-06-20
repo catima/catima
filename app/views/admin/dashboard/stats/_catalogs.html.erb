@@ -1,0 +1,41 @@
+<div class="stats-chart">
+  <h4>Pageview, all (top <%= @top %> catalogs)</h4>
+  <%= line_chart Ahoy::Event.top(@top, @from).map { |catalog_slug|
+    {
+        name: catalog_slug.first,
+        data: Ahoy::Event
+            .where(name: catalog_slug.first)
+            .where(["time > ?", @from])
+            .group_by_week(:time)
+            .count
+    }
+  }, download: true %>
+</div>
+<div class="stats-chart">
+  <h4>Pageview, admin (top <%= @top %> catalogs)</h4>
+  <%= line_chart Ahoy::Event.top(@top, @from, 'catalog_admin').map { |catalog_slug|
+    {
+        name: catalog_slug.first,
+        data: Ahoy::Event
+            .where(name: catalog_slug.first)
+            .where_props(scope: 'catalog_admin')
+            .where(["time > ?", @from])
+            .group_by_week(:time)
+            .count
+    }
+  }, download: true %>
+</div>
+<div class="stats-chart">
+  <h4>Pageview, front (top <%= @top %> catalogs)</h4>
+  <%= line_chart Ahoy::Event.top(@top, @from, 'catalog_front').map { |catalog_slug|
+    {
+        name: catalog_slug.first,
+        data: Ahoy::Event
+            .where(name: catalog_slug.first)
+            .where_props(scope: 'catalog_front')
+            .where(["time > ?", @from])
+            .group_by_week(:time)
+            .count
+    }
+  }, download: true %>
+</div>

@@ -22,6 +22,18 @@ class Admin::DashboardController < Admin::BaseController
     skip_authorization
   end
 
+  def stats
+    if current_user.system_admin?
+      authorize(Catalog, :index?)
+
+      @scope = params[:scope]
+      @from = 3.months.ago
+      @top = 5
+    else
+      redirect_to admin_dashboard_path
+    end
+  end
+
   private
 
   # Retrieve users for index with pagination & search params

@@ -1,9 +1,5 @@
 <% provide(:title, "CATIMA admin") %>
 
-<%= line_chart @catalogs.map { |catalog|
-  {name: catalog.name, data: Ahoy::Event.where_props(catalog_slug: catalog.slug).group_by_week(:time).count}
-} %>
-
 <% if @configuration %>
 <div class="panel panel-default">
   <div class="panel-heading">
@@ -17,9 +13,16 @@
   <div class="panel-heading">
     <% if current_user.system_admin? %>
       <span class="pull-right">
-        <%= link_to(new_admin_catalog_path) do %>
-          <%= fa_icon(:"plus-square", :text => "New catalog") %>
-        <% end %>
+        <span style="margin-right: 15px">
+          <%= link_to(admin_stats_path({:scope => 'catalogs'})) do %>
+            <%= fa_icon(:"bar-chart", :text => "Stats") %>
+          <% end %>
+        </span>
+        <span>
+          <%= link_to(new_admin_catalog_path) do %>
+            <%= fa_icon(:"plus-square", :text => "New catalog") %>
+          <% end %>
+        </span>
       </span>
     <% end %>
     Catalogs
