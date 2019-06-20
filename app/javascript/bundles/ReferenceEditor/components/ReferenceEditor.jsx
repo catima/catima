@@ -87,6 +87,7 @@ class ReferenceEditor extends Component {
                 fields={this.state.fields}
                 searchPlaceholder={this.state.selectPlaceholder}
                 filterPlaceholder={this.state.filterPlaceholder}
+                selectedReference={this.props.selectedReferences}
                 loadingMessage={this.state.loadingMessage}
                 srcRef={this.props.srcRef}
                 srcId={this.props.srcId}
