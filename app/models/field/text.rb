@@ -126,7 +126,7 @@ class Field::Text < ::Field
     end
 
     # A primary key must have a max length
-    primary? ? "VARCHAR(255)" : "TEXT"
+    primary? ? "VARCHAR(255)" : "MEDIUMTEXT"
   end
 
   private
