@@ -5,7 +5,7 @@
         name: catalog_slug.first,
         data: Ahoy::Event
             .where(name: catalog_slug.first)
-            .where(["time > ?", @from])
+            .where(["time > ?", @from.ago])
             .group_by_week(:time)
             .count
     }
@@ -19,7 +19,7 @@
         data: Ahoy::Event
             .where(name: catalog_slug.first)
             .where_props(scope: 'catalog_admin')
-            .where(["time > ?", @from])
+            .where(["time > ?", @from.ago])
             .group_by_week(:time)
             .count
     }
@@ -33,7 +33,7 @@
         data: Ahoy::Event
             .where(name: catalog_slug.first)
             .where_props(scope: 'catalog_front')
-            .where(["time > ?", @from])
+            .where(["time > ?", @from.ago])
             .group_by_week(:time)
             .count
     }

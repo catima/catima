@@ -23,15 +23,14 @@ class Admin::DashboardController < Admin::BaseController
   end
 
   def stats
-    if current_user.system_admin?
-      authorize(Catalog, :index?)
+    raise Pundit::NotAuthorizedError unless current_user.system_admin?
 
-      @scope = params[:scope]
-      @from = 3.months.ago
-      @top = 5
-    else
-      redirect_to admin_dashboard_path
-    end
+    authorize(Catalog, :index?)
+    authorize(User, :index?)
+
+    @scope = stats_scope
+    @from = 3.months
+    @top = 5
   end
 
   private
@@ -41,5 +40,13 @@ class Admin::DashboardController < Admin::BaseController
     users = User.sorted
     users = users.search(search) if search
     users.page(page)
+  end
+
+  # Retrieve scope parameter for the stats view
+  def stats_scope
+    redirect_to admin_dashboard_path, alert: "Scope not available" unless
+        params[:scope].present? && %w(catalogs).include?(params[:scope])
+
+    params[:scope]
   end
 end

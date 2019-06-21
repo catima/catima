@@ -10,8 +10,6 @@
     Stats | <%= @scope %>
   </div>
   <div class="stats-content">
-    <% if @scope == 'catalogs' %>
-      <%= render("admin/dashboard/stats/" + @scope) %>
-    <% end %>
+    <%= render("admin/dashboard/stats/" + @scope) %>
   </div>
 </div>

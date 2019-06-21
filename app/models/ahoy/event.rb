@@ -18,8 +18,8 @@ class Ahoy::Event < ApplicationRecord
   belongs_to :visit
   belongs_to :user, optional: true
 
-  def self.top(limit=5, from=3.months.ago, scope=nil)
-    tops = select(:name).where(["time > ?", from])
+  def self.top(limit=5, from=3.months, scope=nil)
+    tops = select(:name).where("time > ?", from.ago)
 
     tops = tops.where('properties @> ?', { scope: scope }.to_json) if scope
 
@@ -27,5 +27,9 @@ class Ahoy::Event < ApplicationRecord
         .count
         .sort_by(&:last)
         .reverse.first(limit)
+  end
+
+  def self.validity
+    4.months
   end
 end

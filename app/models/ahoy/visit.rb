@@ -33,6 +33,10 @@
 class Ahoy::Visit < ApplicationRecord
   self.table_name = "ahoy_visits"
 
-  has_many :events, class_name: "Ahoy::Event"
+  has_many :events, class_name: "Ahoy::Event", dependent: :nullify
   belongs_to :user, optional: true
+
+  def self.validity
+    6.months
+  end
 end
