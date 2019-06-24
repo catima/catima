@@ -32,4 +32,10 @@ class PagesController < ApplicationController
     slug = request[:slug]
     @page = catalog.pages.where(:slug => slug).first!
   end
+
+  protected
+
+  def track_action
+    ahoy.track catalog.slug, request.path_parameters.merge(:scope => "catalog_front")
+  end
 end

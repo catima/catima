@@ -54,6 +54,12 @@ class ItemsController < ApplicationController
     end
   end
 
+  protected
+
+  def track_action
+    ahoy.track catalog.slug, request.path_parameters.merge(:scope => "catalog_front")
+  end
+
   private
 
   attr_reader :item_type

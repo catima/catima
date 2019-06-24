@@ -37,6 +37,12 @@ class SimpleSearchesController < ApplicationController
     )
   end
 
+  protected
+
+  def track_action
+    ahoy.track catalog.slug, request.path_parameters.merge(:scope => "catalog_front")
+  end
+
   private
 
   def build_simple_search
