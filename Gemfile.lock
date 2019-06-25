@@ -143,7 +143,7 @@ GEM
       xpath (~> 3.2)
     case_transform (0.2)
       activesupport
-    chartkick (3.1.0)
+    chartkick (3.2.0)
     childprocess (0.9.0)
       ffi (~> 1.0, >= 1.0.11)
     cocoon (1.2.12)
@@ -543,7 +543,7 @@ DEPENDENCIES
   capistrano-nc
   capistrano-rails
   capybara
-  chartkick (~> 3.1.0)
+  chartkick (~> 3.2.0)
   cocoon
   coffee-rails (~> 4.2.2)
   connection_pool
