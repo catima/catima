@@ -40,7 +40,8 @@ class SimpleSearchesController < ApplicationController
   protected
 
   def track_action
-    ahoy.track catalog.slug, request.path_parameters.merge(:scope => "catalog_front")
+    # Only lof an event for the show action
+    ahoy.track catalog.slug, request.path_parameters.merge(:scope => "catalog_front") if params[:action] == 'show'
   end
 
   private
