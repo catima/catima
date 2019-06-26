@@ -37,6 +37,6 @@ class Ahoy::Visit < ApplicationRecord
   belongs_to :user, optional: true
 
   def self.validity
-    6.months
+    ENV["AHOY_VISITS_VALIDITY"].present? ? Integer(ENV["AHOY_VISITS_VALIDITY"]).months : 6.months
   end
 end

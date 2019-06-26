@@ -82,7 +82,8 @@ class AdvancedSearchesController < ApplicationController
   protected
 
   def track_action
-    ahoy.track catalog.slug, request.path_parameters.merge(:scope => "catalog_front")
+    # Log event only if item_type param is present to avoid duplicates
+    ahoy.track catalog.slug, request.path_parameters.merge(:scope => "catalog_front") if params[:item_type].present?
   end
 
   private

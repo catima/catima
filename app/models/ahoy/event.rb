@@ -30,6 +30,6 @@ class Ahoy::Event < ApplicationRecord
   end
 
   def self.validity
-    4.months
+    ENV["AHOY_EVENTS_VALIDITY"].present? ? Integer(ENV["AHOY_EVENTS_VALIDITY"]).months : 4.months
   end
 end
