@@ -56,8 +56,8 @@ class ItemsController < ApplicationController
 
   protected
 
-  def track_action
-    ahoy.track catalog.slug, request.path_parameters.merge(:scope => "catalog_front")
+  def track
+    track_event("catalog_front")
   end
 
   private

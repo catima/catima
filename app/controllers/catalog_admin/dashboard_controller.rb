@@ -21,6 +21,6 @@ class CatalogAdmin::DashboardController < CatalogAdmin::BaseController
 
   # Avoid login an event for the catalog admin dashboard.
   # An other catalog admin controller will do the job.
-  def track_action
+  def track
   end
 end

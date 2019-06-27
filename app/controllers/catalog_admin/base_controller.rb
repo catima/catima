@@ -24,7 +24,7 @@ class CatalogAdmin::BaseController < ApplicationController
 
   protected
 
-  def track_action
-    ahoy.track catalog.slug, request.path_parameters.merge(:scope => "catalog_admin")
+  def track
+    track_event("catalog_admin")
   end
 end

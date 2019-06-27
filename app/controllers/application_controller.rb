@@ -5,7 +5,7 @@ class ApplicationController < ActionController::Base
 
   before_action :set_locale
 
-  after_action :track_action
+  after_action :track
 
   # This is a hook for Devise so that it knows to include the required :locale
   # parameter in generated login page URLs.
@@ -15,10 +15,14 @@ class ApplicationController < ActionController::Base
 
   protected
 
-  # This is used to track events for the Ahoy analytics. The main one is empty
-  # because we don't want to track everything, but subclasses my override and
-  # track specific actions and add specific tags.
-  def track_action
+  # Track action for the Ahoy analytics. The main one is empty
+  # because we don't want to track everything, but subclasses may override and
+  # add a specific scope tag & name.
+  def track
+  end
+
+  def track_event(scope, name=catalog.slug)
+    ahoy.track name, request.path_parameters.merge(:scope => scope)
   end
 
   private
