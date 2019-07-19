@@ -1,3 +1,4 @@
+# rubocop:disable Metrics/ClassLength
 class CatalogAdmin::ItemsController < CatalogAdmin::BaseController
   include ControlsItemSorting
   before_action :find_item_type
@@ -90,7 +91,7 @@ class CatalogAdmin::ItemsController < CatalogAdmin::BaseController
     build_simple_search
     redirect_to :action => index unless @saved_search.update(simple_search_params)
 
-    @search_results = ItemList::SimpleSearchResult.new(
+    @search_results = ItemList::SimpleSearchAdminResult.new(
       :catalog => catalog,
       :query => params[:q],
       :page => params[:page],
@@ -171,3 +172,4 @@ class CatalogAdmin::ItemsController < CatalogAdmin::BaseController
     catalog.simple_searches
   end
 end
+# rubocop:enable Metrics/ClassLength

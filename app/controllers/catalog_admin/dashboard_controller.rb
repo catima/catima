@@ -16,4 +16,11 @@ class CatalogAdmin::DashboardController < CatalogAdmin::BaseController
       redirect_to(catalog_admin_settings_path(catalog, I18n.locale))
     end
   end
+
+  protected
+
+  # Avoid login an event for the catalog admin dashboard.
+  # An other catalog admin controller will do the job.
+  def track
+  end
 end

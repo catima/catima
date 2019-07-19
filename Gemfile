@@ -2,10 +2,12 @@ source "https://rubygems.org"
 
 gem "active_model_serializers", "~> 0.10.7"
 gem "active_type", ">= 0.7.5"
+gem "ahoy_matey", "~> 3.0.0"
 gem "autoprefixer-rails", ">= 8.6.4"
-gem "bcrypt", "~> 3.1.12"
+gem "bcrypt", "~> 3.1.13"
 gem "bootstrap-sass", "~> 3.4.1"
 gem "bootstrap_form", "~> 2.7.0"
+gem "chartkick", "~> 3.2.0"
 gem "cocoon"
 gem "coffee-rails", "~> 4.2.2"
 gem "devise", "~> 4.6"
@@ -13,12 +15,13 @@ gem "dotenv-rails", ">= 2.5.0"
 gem "faraday"
 gem "faraday_middleware"
 gem "font-awesome-rails"
+gem 'groupdate', "~> 4.1.2"
 gem "jquery-fileupload-rails"
 gem "jquery-minicolors-rails"
 gem "jquery-rails"
 gem "jquery-turbolinks"
 gem "kaminari"
-gem 'leaflet-rails', '~> 1.3.1'
+gem 'leaflet-rails', '~> 1.4.0'
 gem "liquid"
 gem "liquid-rails"
 gem "mail", ">= 2.7.0"
@@ -31,8 +34,8 @@ gem 'omniauth-facebook'
 gem 'omniauth-github'
 gem 'omniauth-shibboleth'
 gem "panoramic"
-gem "pg", "~> 1.0"
-gem "pg_search", "~> 2.1.2"
+gem "pg", "~> 1.1"
+gem "pg_search", "~> 2.2.0"
 gem "pgcli-rails", "~> 0.3.0"
 gem "pundit"
 gem "rails", "~> 5.2.2.0"
@@ -106,7 +109,6 @@ group :development do
   gem "terminal-notifier", :require => false
   gem "terminal-notifier-guard", :require => false
   gem "thin", :require => false
-  # gem "xray-rails"
 
   platforms :mswin, :mingw, :x64_mingw do
     gem "tzinfo-data"
@@ -115,7 +117,7 @@ end
 
 group :test do
   gem "capybara"
-  gem "chromedriver-helper"
+  gem "webdrivers"
   gem "connection_pool"
   gem "json_schema"
   gem "launchy"
@@ -126,9 +128,6 @@ group :test do
   gem "selenium-webdriver"
   gem "shoulda-context"
   gem "shoulda-matchers"
-  # gem "shoulda-matchers",
-  #     :git => "https://github.com/mattbrictson/shoulda-matchers.git",
-  #     :branch => "with-fixes"
   gem "vcr"
   gem "webmock"
 end

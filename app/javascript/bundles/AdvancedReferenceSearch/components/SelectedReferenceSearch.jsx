@@ -1,6 +1,6 @@
+import AsyncPaginate from 'react-select-async-paginate';
 import React, { Component } from 'react';
 import ReactDOM from 'react-dom';
-import ReactSelect from 'react-select';
 import striptags from 'striptags';
 
 class SelectedReferenceSearch extends Component {
@@ -8,6 +8,9 @@ class SelectedReferenceSearch extends Component {
     super(props);
 
     this.state = {
+      isInitialized: false,
+      items: [],
+      optionsList: [],
       selectedItem: [],
       hiddenInputValue: []
     };
@@ -15,6 +18,17 @@ class SelectedReferenceSearch extends Component {
     this.referenceSearchId = `${this.props.srcRef}-editor`;
     this.filterId = `${this.props.srcRef}-filters`;
     this.selectItem = this._selectItem.bind(this);
+    this.loadOptions = this._loadOptions.bind(this);
+    this.getItemOptions = this._getItemOptions.bind(this);
+  }
+
+  componentWillReceiveProps(nextProps) {
+    if (nextProps.items.length !== this.state.items.length) {
+      this.setState({
+        isInitialized: true,
+        items: nextProps.items
+      });
+    }
   }
 
   _save(){
@@ -56,11 +70,18 @@ class SelectedReferenceSearch extends Component {
     }
   }
 
-  _getItemOptions(){
+  _getItemOptions(items){
+    if (typeof items === 'undefined') {
+     items = this.state.items;
+    }
+
     var optionsList = [];
-    optionsList = this.props.items.map(item =>
-      this._getJSONItem(item)
-    );
+
+    if (typeof items !== 'undefined') {
+      optionsList = items.map(item =>
+        this._getJSONItem(item)
+      );
+    }
 
     return optionsList;
   }
@@ -73,10 +94,77 @@ class SelectedReferenceSearch extends Component {
     return {value: item.id, label: this._itemName(item)};
   }
 
+  async _loadOptions(search, loadedOptions, { page }) {
+    if (this.state.optionsList.length < 25 && this.state.isInitialized) {
+      if (search.length > 0) {
+        var regexExp = new RegExp(search, 'i')
+
+        var items = this.state.optionsList.filter(function (item) {
+          return item.label !== null && item.label.match(regexExp) !== null && item.label.match(regexExp).length > 0
+        });
+
+        return {
+          options: items,
+          hasMore: false,
+          additional: {
+            page: page,
+          },
+        };
+      }
+
+      return {
+        options: this.getItemOptions(),
+        hasMore: this.state.items.length === 25,
+        additional: {
+          page: page,
+        },
+      };
+    }
+
+    const csrfToken = $('meta[name="csrf-token"]').attr('content');
+    let config = { headers: {'X-CSRF-Token': csrfToken} };
+    const response = await fetch(`${this.props.itemsUrl}&search=${search}&page=${page}`, config);
+    const responseJSON = await response.json();
+
+    if (!this.state.isInitialized) {
+      this.setState({
+        isInitialized: search.length === 0,
+        optionsList: responseJSON.items.map(item => this._getJSONItem(item))
+      });
+      this.props.onFocus(responseJSON.fields);
+    }
+
+    return {
+      options: this.getItemOptions(responseJSON.items),
+      hasMore: responseJSON.hasMore,
+      additional: {
+        page: page + 1,
+      },
+    };
+  }
+
   render() {
     return (
       <div>
-        <ReactSelect id={this.referenceSearchId} name={this.props.inputName} delimiter="," isMulti={this.props.multiple} options={this._getItemOptions()} className="basic-multi-select" onChange={this.selectItem} classNamePrefix="select" placeholder={this.props.searchPlaceholder} noOptionsMessage={this.props.noOptionsMessage}/>
+        <AsyncPaginate
+          id={this.referenceSearchId}
+          name={this.props.inputName}
+          delimiter=","
+          isMulti={this.props.multiple}
+          className="basic-multi-select"
+          classNamePrefix="select"
+          debounceTimeout={800}
+          loadingMessage={() => this.props.loadingMessage}
+          placeholder={this.props.searchPlaceholder}
+          noOptionsMessage={this.props.noOptionsMessage}
+          value={this.state.selectedItem}
+          options={this.getItemOptions()}
+          loadOptions={this.loadOptions}
+          onChange={this.selectItem}
+          additional={{
+            page: 1,
+          }}
+        />
       </div>
     );
   }
