@@ -116,6 +116,9 @@ class Dump::SqlDump < ::Dump
     inserts << render_comment("Choices")
     inserts << dump_choices_data(cat)
 
+    inserts << render_comment("Categories")
+    # inserts << dump_categories_data(cat)
+
     inserts << render_footer_comment
     File.open(File.join(dir, @holder.dump_file_name(cat)), 'a+') { |f| f << inserts }
   end
@@ -292,6 +295,28 @@ class Dump::SqlDump < ::Dump
         choice_set_inserts << insert_template
       end
       inserts << choice_set_inserts
+    end
+
+    inserts
+  end
+
+  def dump_categories_data(cat)
+    inserts = ""
+    cat.categories.each do |category|
+      category_inserts = ""
+      category.fields.each do |choice|
+        columns = Choice.sql_columns.map { |c_name, _c| "`#{c_name}`" }.join(',')
+
+        values = ""
+        Choice.sql_columns.each do |column_name, column|
+          value = convert_active_storage_value_to_sql_value(column.type, choice.public_send(column_name))
+          values << "#{value}#{', ' unless column_name == Choice.columns_hash.keys.last}"
+        end
+
+        insert_template = insert_into(@holder.table_name(choice_set, "name"), columns, values)
+        category_inserts << insert_template
+      end
+      inserts << category_inserts
     end
 
     inserts
@@ -486,7 +511,7 @@ class Dump::SqlDump < ::Dump
     end
   end
 
-  # rubocop:disable Metrics/CyclomaticComplexity, Metrics/PerceivedComplexity
+  # rubocop:disable Metrics/CyclomaticComplexity
   def sql_value(field, item)
     value = field.value_for_item(item)
     return "NULL" if value.blank? && field.type != "Field::Editor"
@@ -500,16 +525,14 @@ class Dump::SqlDump < ::Dump
       value == "0" ? "FALSE" : "TRUE"
     when "Field::DateTime"
       "'#{value.to_json}'"
-    when "Field::Geometry", "Field::File", "Field::Image"
+    when "Field::Geometry", "Field::File", "Field::Image", "Field::Text"
       "'#{field.sql_value(item)}'"
     when "Field::Editor"
       "'#{field.field_value_for_item(item)}'"
     else
-      value = field.field_value_for_all_item(item) if field.is_a?(Field::Text) && field.formatted?
-
       "'#{value.to_s.gsub("'") { "\\'" }}'"
     end
   end
-  # rubocop:enable Metrics/CyclomaticComplexity, Metrics/PerceivedComplexity
+  # rubocop:enable Metrics/CyclomaticComplexity
 end
 # rubocop:enable Metrics/ClassLength

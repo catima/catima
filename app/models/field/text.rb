@@ -118,6 +118,16 @@ class Field::Text < ::Field
     super
   end
 
+  def sql_value(item)
+    value = value_for_item(item)
+
+    return field_value_for_all_item(item) if formatted?
+
+    return value['_translations'] if i18n?
+
+    value
+  end
+
   def sql_type
     if maximum.present?
       maximum = [maximum.to_i, 21_845].max
