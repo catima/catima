@@ -114,7 +114,7 @@ class ChoiceSetSearch extends Component {
   }
 
   _getJSONCategory(item) {
-    return {value: item.slug, label: item.name_translations['name_' + this.props.locale], key: item.id, choiceSetId: item.field_set_id};
+    return {value: item.uuid, label: item.name_translations['name_' + this.props.locale], key: item.id, choiceSetId: item.field_set_id};
   }
 
   _getItemOptions(){

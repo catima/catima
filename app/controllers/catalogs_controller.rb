@@ -29,4 +29,10 @@ class CatalogsController < ApplicationController
 
   def show
   end
+
+  protected
+
+  def track
+    track_event("catalog_front")
+  end
 end

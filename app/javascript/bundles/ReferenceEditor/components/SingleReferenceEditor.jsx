@@ -45,7 +45,7 @@ class SingleReferenceEditor extends Component {
 
   _load(v){
     if (v !== null && v !== '') {
-      let initItem = this.props.items.filter(item => item.id === parseInt(JSON.parse(v)));
+      let initItem = this.props.selectedReference;
       if(initItem.length === 1) return this._getJSONItem(initItem[0]);
     }
     return [];

@@ -32,4 +32,10 @@ class PagesController < ApplicationController
     slug = request[:slug]
     @page = catalog.pages.where(:slug => slug).first!
   end
+
+  protected
+
+  def track
+    track_event("catalog_front")
+  end
 end

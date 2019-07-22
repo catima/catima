@@ -54,6 +54,12 @@ class ItemsController < ApplicationController
     end
   end
 
+  protected
+
+  def track
+    track_event("catalog_front")
+  end
+
   private
 
   attr_reader :item_type
