@@ -1,9 +1,12 @@
-<%= react_component("GeoViewer",
+<%= react_component("GeoContainerViewer2",
       id: "results_map_container",
       props: {
-        features: results,
+        features: results.to_json,
         noResultsMessage: t('advanced_searches.new.no_map_results'),
-        mapHeight: 600
+        mapHeight: 600,
+        maxBBZoom: 13,
+        catalog: @catalog.slug,
+        locale: I18n.locale
       },
     prerender: false)
 %>

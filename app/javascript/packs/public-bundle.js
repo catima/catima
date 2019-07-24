@@ -12,11 +12,12 @@ import ChoiceSetSearch from '../bundles/AdvancedChoiceSetSearch/components/Choic
 import ImageViewer from '../bundles/ImageViewer/components/ImageViewer';
 import GeoViewer from '../bundles/GeoViewer/components/GeoViewer';
 import GeoContainerViewer from "../bundles/GeoViewer/components/GeoContainerViewer";
+import GeoContainerViewer2 from "../bundles/GeoViewer/components/GeoContainerViewer2";
 
 ReactOnRails.register({
   ReferenceSearchContainer, ReferenceSearch, SelectedReferenceSearch, ItemTypesReferenceSearch,
   DateTimeSearch, DateTimeInput,
   ChoiceSetSearchContainer, ChoiceSetSearch,
   ImageViewer,
-  GeoViewer, GeoContainerViewer
+  GeoViewer, GeoContainerViewer, GeoContainerViewer2
 });
