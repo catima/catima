@@ -85,23 +85,15 @@ class Dump::SqlDump < ::Dump
   end
   # rubocop:enable Metrics/AbcSize
 
-  # rubocop:disable Metrics/AbcSize
   def dump_data(cat, dir)
     inserts = render_header_comment("INSERT INTO statements")
 
     # ItemsTypes become tables, ItemType fields become columns
     inserts << render_comment("Fields: single and multiple non ref fields")
-    cat.items.each do |item|
-      fields = item.item_type.fields.reject { |f| f.multiple? && (f.is_a?(Field::Reference) || f.is_a?(Field::ChoiceSet)) }
+    inserts << dump_fields_data(cat)
 
-      common_fields = COMMON_SQL_COLUMNS.map { |column_name, _column_type| "`#{column_name}`" }.join(',')
-      common_fields << ", `primary_field`" if item.primary_field.present?
-      common_fields << ", " if fields.count.positive?
-
-      column_names = common_fields << fields.map { |f| "`#{f.sql_slug}`" }.join(',')
-
-      inserts << insert_into(@holder.table_name(item.item_type, "sql_slug"), column_names, concat_item_data(item))
-    end
+    inserts << render_comment("Fields: Categories")
+    inserts << dump_categories_data(cat)
 
     inserts << render_comment("Fields: multiple references")
     cat.items.each do |item|
@@ -116,13 +108,9 @@ class Dump::SqlDump < ::Dump
     inserts << render_comment("Choices")
     inserts << dump_choices_data(cat)
 
-    inserts << render_comment("Categories")
-    # inserts << dump_categories_data(cat)
-
     inserts << render_footer_comment
     File.open(File.join(dir, @holder.dump_file_name(cat)), 'a+') { |f| f << inserts }
   end
-  # rubocop:enable Metrics/AbcSize
 
   def dump_references(cat, dir)
     # Export primary keys
@@ -130,13 +118,28 @@ class Dump::SqlDump < ::Dump
     alters << dump_primary_keys(cat)
 
     alters << render_header_comment("REFERENCES")
-    alters << dump_single_references_and_choices(cat)
+    alters << dump_single_references(cat)
+
+    alters << render_header_comment("CHOICES")
+    alters << dump_single_choices(cat)
+
+    alters << render_header_comment("CATEGORY REFERENCES")
+    alters << dump_category_single_references(cat)
+
+    alters << render_header_comment("CATEGORY CHOICES")
+    alters << dump_category_single_choices(cat)
 
     alters << render_header_comment("MULTIPLE REFERENCES")
     alters << dump_references_multiple_reference(cat)
 
+    alters << render_header_comment("CATEGORY MULTIPLE REFERENCES")
+    alters << dump_category_references_multiple_reference(cat)
+
     alters << render_header_comment("MULTIPLE CHOICESET")
     alters << dump_references_multiple_choiceset(cat)
+
+    alters << render_header_comment("CATEGORY MULTIPLE CHOICESET")
+    alters << dump_category_references_multiple_choiceset(cat)
 
     File.open(File.join(dir, @holder.dump_file_name(cat)), 'a+') { |f| f << alters }
   end
@@ -159,7 +162,7 @@ class Dump::SqlDump < ::Dump
 
   def dump_create_multiple_reference_table(item_type)
     tables = ""
-    item_type.fields.select { |f| f.multiple? && f.is_a?(Field::Reference) }.each do |field|
+    item_type.all_fields.select { |f| f.multiple? && f.is_a?(Field::Reference) }.each do |field|
       columns = "`#{item_type.sql_slug}` #{convert_app_type_to_sql_type(nil)},"
       column_name = "#{field.sql_slug}_#{field.related_item_type.sql_slug}"
       columns << "`#{column_name}` #{convert_app_type_to_sql_type(nil)}"
@@ -199,10 +202,13 @@ class Dump::SqlDump < ::Dump
     columns = ""
 
     Category.columns_hash.each do |col_name, col|
+      next unless %w[id created_at updated_at].include?(col_name)
+
       columns << "`#{col_name}` #{convert_active_storage_type_to_sql_type(col.type)} #{'NOT NULL' unless col.null},"
     end
 
-    category.fields.each do |field|
+    fields = category.fields.reject { |f| f.multiple? && (f.is_a?(Field::Reference) || f.is_a?(Field::ChoiceSet)) }
+    fields.each do |field|
       columns << "`#{field.sql_slug}` #{field.sql_type} #{field.sql_nullable} #{field.sql_default} #{field.sql_unique},"
     end
 
@@ -231,17 +237,10 @@ class Dump::SqlDump < ::Dump
   def dump_mulitple_field_reference_item_data(item)
     inserts = ""
 
-    fields = item.item_type.fields.select { |field| field.multiple? && field.is_a?(Field::Reference) }
+    fields = item.item_type.all_fields.select { |field| field.multiple? && field.is_a?(Field::Reference) }
     fields.each do |field|
       # Rule: the primary key is always the id
       value = item.id
-      # value = if item.item_type.primary_field.nil? ||
-      #            item.item_type.primary_field&.is_a?(Field::Reference) ||
-      #            item.item_type.primary_field&.is_a?(Field::ChoiceSet)
-      #           item.id
-      #         else
-      #           "'#{item.item_type.primary_field&.value_for_item(item)}'"
-      #         end
 
       next if value == "''"
 
@@ -260,7 +259,7 @@ class Dump::SqlDump < ::Dump
   def dump_mulitple_field_choiceset_item_data(item)
     inserts = ""
 
-    fields = item.item_type.fields.select { |field| field.multiple? && field.is_a?(Field::ChoiceSet) }
+    fields = item.item_type.all_fields.select { |field| field.multiple? && field.is_a?(Field::ChoiceSet) }
     fields.each do |field|
       # Rule: the primary key is always the id
       value = item.id
@@ -300,27 +299,55 @@ class Dump::SqlDump < ::Dump
     inserts
   end
 
-  def dump_categories_data(cat)
+  def dump_fields_data(cat)
     inserts = ""
-    cat.categories.each do |category|
-      category_inserts = ""
-      category.fields.each do |choice|
-        columns = Choice.sql_columns.map { |c_name, _c| "`#{c_name}`" }.join(',')
+    cat.items.each do |item|
+      fields = item.item_type.fields.reject { |f| f.multiple? && (f.is_a?(Field::Reference) || f.is_a?(Field::ChoiceSet)) }
 
-        values = ""
-        Choice.sql_columns.each do |column_name, column|
-          value = convert_active_storage_value_to_sql_value(column.type, choice.public_send(column_name))
-          values << "#{value}#{', ' unless column_name == Choice.columns_hash.keys.last}"
-        end
+      common_fields = COMMON_SQL_COLUMNS.map { |column_name, _column_type| "`#{column_name}`" }.join(',')
+      common_fields << ", `primary_field`" if item.primary_field.present?
+      common_fields << ", " if fields.count.positive?
 
-        insert_template = insert_into(@holder.table_name(choice_set, "name"), columns, values)
-        category_inserts << insert_template
-      end
-      inserts << category_inserts
+      column_names = common_fields << fields.map { |f| "`#{f.sql_slug}`" }.join(',')
+
+      inserts << insert_into(@holder.table_name(item.item_type, "sql_slug"), column_names, concat_item_data(item))
     end
 
     inserts
   end
+
+  # rubocop:disable Metrics/PerceivedComplexity
+  def dump_categories_data(cat)
+    inserts = ""
+    categories_processed_by_item = {}
+    cat.items.each do |item|
+      cat.categories.each do |category|
+        fields = category.fields.reject { |f| f.multiple? && (f.is_a?(Field::Reference) || f.is_a?(Field::ChoiceSet)) }
+        fields.each do |field|
+          next if item.data[field.uuid].blank? || (categories_processed_by_item[item.id].present? && categories_processed_by_item[item.id].include?(category.id))
+
+          column_names = '`id`, '
+          column_names << fields.map { |f| "`#{f.sql_slug}`" }.join(',')
+
+          values = "#{item.id}, "
+          fields.each { |f| values << "#{sql_value(f, item)}," }
+
+          remove_ending_comma!(values)
+
+          inserts << insert_into(@holder.table_name(category, "name"), column_names, values)
+
+          if categories_processed_by_item[item.id].present?
+            categories_processed_by_item[item.id] << category.id
+          else
+            categories_processed_by_item[item.id] = [category.id]
+          end
+        end
+      end
+    end
+
+    inserts
+  end
+  # rubocop:enable Metrics/PerceivedComplexity
 
   def dump_primary_keys(cat)
     alters = render_comment("ITEMS")
@@ -331,16 +358,6 @@ class Dump::SqlDump < ::Dump
       alters << alter unless alters.include?(alter)
     end
 
-    # Primary keys on intermediate tables are not needed
-    # alters << render_comment("FIELDS multiple:true")
-    # cat.items.each do |item|
-    #   item.fields.select { |f| f.multiple? && f.is_a?(Field::Reference) }.each do |field|
-    #     alter = add_primary_key(field.sql_slug, "#{item.item_type.sql_slug}`, `#{field.sql_slug}_#{field.related_item_type.sql_slug}")
-    #
-    #     alters << alter unless alters.include?(alter)
-    #   end
-    # end
-
     alters << render_comment("CHOICE SETS")
     cat.choice_sets.each do |choice_set|
       alters << add_primary_key(@holder.table_name(choice_set, "name"), "id")
@@ -348,16 +365,13 @@ class Dump::SqlDump < ::Dump
 
     alters << render_comment("CATEGORIES")
     cat.categories.each do |category|
-      # primary_field = category.fields.select(&:primary?).first
-      # constraint = primary_key_constraint(primary_field&.item_type)
-      # alters << add_primary_key(@holder.table_name(category, "name"), primary_field&.sql_slug.presence || 'id', constraint)
       alters << add_primary_key(@holder.table_name(category, "name"), 'id')
     end
 
     alters << render_footer_comment
   end
 
-  def dump_single_references_and_choices(cat)
+  def dump_single_references(cat)
     alters = render_comment("Single references")
     cat.items.each do |item|
       # Single references and choices
@@ -372,6 +386,10 @@ class Dump::SqlDump < ::Dump
       end
     end
 
+    alters
+  end
+
+  def dump_single_choices(cat)
     alters = render_comment("Single choices")
     cat.items.each do |item|
       # Single references and choices
@@ -380,6 +398,45 @@ class Dump::SqlDump < ::Dump
         foreign_column_name = 'id'
 
         table_name = @holder.table_name(item.item_type, "sql_slug")
+        related_table_name = @holder.table_name(field.choice_set, "name")
+        alter = add_foreign_key(table_name, field.sql_slug, related_table_name, foreign_column_name)
+        alters << alter unless alters.include?(alter)
+      end
+    end
+
+    alters
+  end
+
+  def dump_category_single_references(cat)
+    alters = render_comment("Single references for categories")
+    cat.categories.each do |category|
+      # Single references and choices
+      fields = category.fields.select { |field| !field.multiple? && field.is_a?(Field::Reference) }
+      fields.each do |field|
+        foreign_column_name = 'id'
+
+        category = Category.find_by(id: field.category_id)
+        table_name = @holder.table_name(category, "name")
+        related_table_name = @holder.table_name(field.related_item_type, "sql_slug")
+        alter = add_foreign_key(table_name, field.sql_slug, related_table_name, foreign_column_name)
+        alters << alter unless alters.include?(alter)
+      end
+    end
+
+    alters
+  end
+
+  def dump_category_single_choices(cat)
+    alters = render_comment("Single choices for categories")
+
+    cat.categories.each do |category|
+      # Single references and choices
+      fields = category.fields.select { |field| !field.multiple? && field.is_a?(Field::ChoiceSet) }
+      fields.each do |field|
+        foreign_column_name = 'id'
+
+        category = Category.find_by(id: field.category_id)
+        table_name = @holder.table_name(category, "name")
         related_table_name = @holder.table_name(field.choice_set, "name")
         alter = add_foreign_key(table_name, field.sql_slug, related_table_name, foreign_column_name)
         alters << alter unless alters.include?(alter)
@@ -414,6 +471,33 @@ class Dump::SqlDump < ::Dump
     alters
   end
 
+  def dump_category_references_multiple_reference(cat)
+    alters = render_comment("Mulitple references for categories")
+    cat.categories.each do |category|
+      # Multiple references
+      fields = category.fields.select { |field| field.multiple? && field.is_a?(Field::Reference) }
+      fields.each do |field|
+        foreign_column_name = "id"
+
+        # Manually find an Item using this field
+        item = Item.where("data->>'#{field.uuid}' IS NOT NULL").first
+        table_name = @holder.table_name(field, "sql_slug")
+        related_table_name = @holder.table_name(category, "name")
+        related_item_type_table_name = @holder.table_name(field.related_item_type, "sql_slug")
+        alter = add_foreign_key(
+          table_name, item.item_type.sql_slug, related_table_name, foreign_column_name
+        )
+        alter2 = add_foreign_key(
+          table_name, "#{field.sql_slug}_#{field.related_item_type.sql_slug}", related_item_type_table_name, foreign_column_name
+        )
+        alters << alter unless alters.include?(alter)
+        alters << alter2 unless alters.include?(alter2)
+      end
+    end
+
+    alters
+  end
+
   def dump_references_multiple_choiceset(cat)
     alters = render_comment("Mulitple choicesets")
     cat.items.each do |item|
@@ -424,6 +508,29 @@ class Dump::SqlDump < ::Dump
 
         table_name = @holder.table_name(field, "sql_slug")
         related_table_name = @holder.table_name(item.item_type, "sql_slug")
+        choiceset_table_name = @holder.table_name(field.choice_set, "name")
+        alter = add_foreign_key(table_name, item.item_type.sql_slug, related_table_name, foreign_column_name)
+        alter2 = add_foreign_key(table_name, field.sql_slug, choiceset_table_name, foreign_column_name)
+        alters << alter unless alters.include?(alter)
+        alters << alter2 unless alters.include?(alter2)
+      end
+    end
+
+    alters
+  end
+
+  def dump_category_references_multiple_choiceset(cat)
+    alters = render_comment("Mulitple choicesets for categories")
+    cat.categories.each do |category|
+      # Multiple choices
+      fields = category.fields.select { |field| field.multiple? && field.is_a?(Field::ChoiceSet) }
+      fields.each do |field|
+        foreign_column_name = 'id'
+
+        # Manually find an Item using this field
+        item = Item.where("data->>'#{field.uuid}' IS NOT NULL").first
+        table_name = @holder.table_name(field, "sql_slug")
+        related_table_name = @holder.table_name(category, "name")
         choiceset_table_name = @holder.table_name(field.choice_set, "name")
         alter = add_foreign_key(table_name, item.item_type.sql_slug, related_table_name, foreign_column_name)
         alter2 = add_foreign_key(table_name, field.sql_slug, choiceset_table_name, foreign_column_name)
