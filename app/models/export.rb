@@ -24,8 +24,6 @@ class Export < ApplicationRecord
   validates_inclusion_of :category, :in => CATEGORY_OPTIONS
   validates_inclusion_of :status, :in => STATUS_OPTIONS
 
-  # after_commit :export_catalog, on: :create
-
   def pathname
     ext = Rails.env.test? ? "test" : "zip"
     Rails.root.join('exports').to_s + "/#{id}_#{catalog.slug}.#{ext}"
