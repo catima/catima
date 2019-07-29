@@ -35,6 +35,7 @@ class Field::ReferencePresenter < FieldPresenter
       props: {
         srcRef: "item_#{method}_json",
         srcId: method,
+        selectedReferences: selected_references(item).map { |item| item.describe([:default_display_name], [], true) },
         multiple: field.multiple,
         req: field.required,
         category: field.category_id,

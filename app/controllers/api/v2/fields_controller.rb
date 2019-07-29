@@ -63,7 +63,7 @@ class API::V2::FieldsController < API::ApplicationController
       # In case we search for a category field in a reference
       field = item_type.all_fields.select { |fld| fld.slug == params[:field_uuid] }.first if field.nil?
     else
-      field = category.fields.find_by(:slug => params[:field_uuid])
+      field = category.fields.find_by(:uuid => params[:field_uuid])
     end
 
     raise InvalidField, "field not found: #{params[:field_uuid]}" if field.nil?

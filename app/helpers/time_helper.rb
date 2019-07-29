@@ -22,11 +22,11 @@ module TimeHelper
 
       {
         :include_seconds => format =~ /s/,
-        :discard_minute  => format !~ /m/,
-        :discard_hour    => format !~ /h/,
-        :discard_day     => format !~ /D/,
-        :discard_month   => format !~ /M/,
-        :discard_year    => format !~ /Y/
+        :discard_minute => format !~ /m/,
+        :discard_hour => format !~ /h/,
+        :discard_day => format !~ /D/,
+        :discard_month => format !~ /M/,
+        :discard_year => format !~ /Y/
       }
     end
   end

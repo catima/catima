@@ -44,7 +44,7 @@ class Export < ApplicationRecord
   end
 
   def self.validity
-    1.week
+    ENV["EXPORTS_VALIDITY"].present? ? Integer(ENV["EXPORTS_VALIDITY"]).days : 7.days
   end
 
   def export_catalog

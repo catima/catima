@@ -1,5 +1,5 @@
 GIT
-  remote: https://github.com/refile/refile-mini_magick.git
+  remote: git://github.com/refile/refile-mini_magick.git
   revision: 466e30cf5878844b0e0bc4588f766bb18dabdd2b
   specs:
     refile-mini_magick (0.2.0)
@@ -8,16 +8,16 @@ GIT
       refile (~> 0.6)
 
 GIT
-  remote: https://github.com/refile/refile.git
-  revision: e910f5ca5a9060c307bd0a5e813f1fec73219ed5
+  remote: git://github.com/refile/refile.git
+  revision: e690bf5c2d83b3dfd805764d54e8f5daf14993b0
   specs:
     refile (0.7.0)
       mime-types
       sinatra (>= 2.0.0, <= 3.0.0)
 
 GIT
-  remote: https://github.com/sinatra/sinatra.git
-  revision: 1aa64f9858edc3f93cc8d46e26f724c1ae103b1c
+  remote: git://github.com/sinatra/sinatra.git
+  revision: eee711bce740d38a9a91aa6028688c9a6d74b23b
   branch: master
   specs:
     rack-protection (2.0.5)
@@ -82,24 +82,26 @@ GEM
       tzinfo (~> 1.1)
     addressable (2.6.0)
       public_suffix (>= 2.0.2, < 4.0)
+    ahoy_matey (3.0.0)
+      activesupport (>= 5)
+      device_detector
+      geocoder (>= 1.4.5)
+      safely_block (>= 0.2.1)
     airbrussh (1.3.0)
       sshkit (>= 1.6.1, != 1.7.0)
     annotate (2.7.4)
       activerecord (>= 3.2, < 6.0)
       rake (>= 10.4, < 13.0)
     ansi (1.5.0)
-    archive-zip (0.11.0)
-      io-like (~> 0.3.0)
     arel (9.0.0)
     ast (2.4.0)
     autoprefixer-rails (9.4.9)
       execjs
     awesome_print (1.8.0)
-    bcrypt (3.1.12)
-    bcrypt (3.1.12-x64-mingw32)
-    bcrypt_pbkdf (1.0.0)
-    bcrypt_pbkdf (1.0.0-x64-mingw32)
-    better_errors (2.5.0)
+    bcrypt (3.1.13)
+    bcrypt_pbkdf (1.0.1)
+    bcrypt_pbkdf (1.0.1-x64-mingw32)
+    better_errors (2.5.1)
       coderay (>= 1.0.0)
       erubi (>= 1.0.0)
       rack (>= 0.9.0)
@@ -119,9 +121,8 @@ GEM
       i18n
       rake (>= 10.0.0)
       sshkit (>= 1.9.0)
-    capistrano-bundler (1.3.0)
+    capistrano-bundler (1.5.0)
       capistrano (~> 3.1)
-      sshkit (~> 1.2)
     capistrano-mb (0.35.0)
       capistrano (>= 3.3.5)
       sshkit (>= 1.6.1)
@@ -131,21 +132,20 @@ GEM
     capistrano-rails (1.4.0)
       capistrano (~> 3.1)
       capistrano-bundler (~> 1.1)
-    capybara (3.8.2)
+    capybara (3.23.0)
       addressable
       mini_mime (>= 0.1.3)
       nokogiri (~> 1.8)
       rack (>= 1.6.0)
       rack-test (>= 0.6.3)
-      xpath (~> 3.1)
+      regexp_parser (~> 1.5)
+      xpath (~> 3.2)
     case_transform (0.2)
       activesupport
+    chartkick (3.2.0)
     childprocess (0.9.0)
       ffi (~> 1.0, >= 1.0.11)
-    chromedriver-helper (2.1.0)
-      archive-zip (~> 0.10)
-      nokogiri (~> 1.8)
-    cocoon (1.2.11)
+    cocoon (1.2.12)
     coderay (1.1.2)
     coffee-rails (4.2.2)
       coffee-script (>= 2.2.0)
@@ -161,17 +161,19 @@ GEM
     crass (1.0.4)
     daemons (1.2.6)
     debug_inspector (0.0.3)
-    devise (4.6.1)
+    device_detector (1.0.1)
+    devise (4.6.2)
       bcrypt (~> 3.0)
       orm_adapter (~> 0.1)
       railties (>= 4.1.0, < 6.0)
       responders
       warden (~> 1.2.3)
     docile (1.3.1)
-    dotenv (2.5.0)
-    dotenv-rails (2.5.0)
-      dotenv (= 2.5.0)
-      railties (>= 3.2, < 6.0)
+    dotenv (2.7.2)
+    dotenv-rails (2.7.2)
+      dotenv (= 2.7.2)
+      railties (>= 3.2, < 6.1)
+    errbase (0.1.1)
     erubi (1.8.0)
     eventmachine (1.2.7)
     eventmachine (1.2.7-x64-mingw32)
@@ -182,23 +184,25 @@ GEM
       multipart-post (>= 1.2, < 3)
     faraday_middleware (0.12.2)
       faraday (>= 0.7.4, < 1.0)
-    ffi (1.9.25)
-    ffi (1.9.25-x64-mingw32)
-    font-awesome-rails (4.7.0.4)
-      railties (>= 3.2, < 6.0)
+    ffi (1.11.1)
+    ffi (1.11.1-x64-mingw32)
+    font-awesome-rails (4.7.0.5)
+      railties (>= 3.2, < 6.1)
+    geocoder (1.5.1)
     get_process_mem (0.2.2)
     globalid (0.4.2)
       activesupport (>= 4.2.0)
-    hashdiff (0.3.8)
+    groupdate (4.1.2)
+      activesupport (>= 4.2)
+    hashdiff (0.4.0)
     hashie (3.5.7)
     i18n (1.6.0)
       concurrent-ruby (~> 1.0)
-    image_processing (1.7.1)
-      mini_magick (~> 4.0)
+    image_processing (1.9.1)
+      mini_magick (>= 4.9.3, < 5)
       ruby-vips (>= 2.0.13, < 3)
     iniparse (1.4.4)
-    io-like (0.3.0)
-    jaro_winkler (1.5.1)
+    jaro_winkler (1.5.2)
     jquery-fileupload-rails (0.4.7)
       actionpack (>= 3.1)
       railties (>= 3.1)
@@ -213,7 +217,7 @@ GEM
     jquery-turbolinks (2.1.0)
       railties (>= 3.1.0)
       turbolinks
-    json (2.1.0)
+    json (2.2.0)
     json_schema (0.19.1)
     jsonapi-renderer (0.2.0)
     jwt (1.5.6)
@@ -232,7 +236,7 @@ GEM
     kgio (2.11.2)
     launchy (2.4.3)
       addressable (~> 2.3)
-    leaflet-rails (1.3.1)
+    leaflet-rails (1.4.0)
       rails (>= 4.2.0)
     letter_opener (1.6.0)
       launchy (~> 2.2)
@@ -260,13 +264,13 @@ GEM
       mime-types-data (~> 3.2015)
     mime-types-data (3.2019.0331)
     mimemagic (0.3.3)
-    mini_magick (4.9.2)
+    mini_magick (4.9.3)
     mini_mime (1.0.1)
     mini_portile2 (2.4.0)
     mini_racer (0.2.3)
       libv8 (>= 6.3)
     minitest (5.11.3)
-    minitest-reporters (1.3.5)
+    minitest-reporters (1.3.6)
       ansi
       builder
       minitest (>= 5.0)
@@ -277,13 +281,13 @@ GEM
     multi_xml (0.6.0)
     multipart-post (2.0.0)
     mustermann (1.0.3)
-    net-scp (1.2.1)
-      net-ssh (>= 2.6.5)
-    net-ssh (5.0.2)
+    net-scp (2.0.0)
+      net-ssh (>= 2.6.5, < 6.0.0)
+    net-ssh (5.2.0)
     nio4r (2.3.1)
-    nokogiri (1.10.2)
+    nokogiri (1.10.3)
       mini_portile2 (~> 2.4.0)
-    nokogiri (1.10.2-x64-mingw32)
+    nokogiri (1.10.3-x64-mingw32)
       mini_portile2 (~> 2.4.0)
     oauth2 (1.4.0)
       faraday (>= 0.8, < 0.13)
@@ -305,28 +309,26 @@ GEM
     omniauth-shibboleth (1.3.0)
       omniauth (>= 1.0.0)
     orm_adapter (0.5.0)
-    overcommit (0.46.0)
+    overcommit (0.48.1)
       childprocess (~> 0.6, >= 0.6.3)
       iniparse (~> 1.4)
     panoramic (0.0.6)
       rails (>= 3.0.7)
-    parallel (1.12.1)
-    parser (2.5.1.2)
+    parallel (1.17.0)
+    parser (2.6.3.0)
       ast (~> 2.4.0)
-    pg (1.1.3)
-    pg (1.1.3-x64-mingw32)
-    pg_search (2.1.2)
+    pg (1.1.4)
+    pg (1.1.4-x64-mingw32)
+    pg_search (2.2.0)
       activerecord (>= 4.2)
       activesupport (>= 4.2)
-      arel (>= 6)
     pgcli-rails (0.3.0)
       railties (>= 4.2.0)
-    powerpack (0.1.2)
-    pry (0.11.3)
+    pry (0.12.2)
       coderay (~> 1.1.0)
       method_source (~> 0.9.0)
-    public_suffix (3.0.3)
-    puma (3.12.0)
+    public_suffix (3.1.0)
+    puma (3.12.1)
     pundit (2.0.0)
       activesupport (>= 3.0.0)
     rack (2.0.7)
@@ -363,12 +365,12 @@ GEM
     rainbow (3.0.0)
     raindrops (0.19.0)
     rake (12.3.2)
-    ranked-model (0.4.1)
-      activerecord (>= 3.1.12)
+    ranked-model (0.4.4)
+      activerecord (>= 4.1.16)
     rb-fsevent (0.10.3)
     rb-inotify (0.10.0)
       ffi (~> 1.0)
-    rbnacl (5.0.0)
+    rbnacl (7.0.0)
       ffi
     rbnacl-libsodium (1.0.16)
       rbnacl (>= 3.0.1)
@@ -378,31 +380,33 @@ GEM
       execjs (~> 2.5)
       rails (>= 3.2)
       rainbow (~> 3.0)
-    recaptcha (4.13.0)
+    recaptcha (4.14.0)
       json
     redcarpet (3.4.0)
-    redis (4.0.2)
+    redis (4.1.2)
     redis-namespace (1.6.0)
       redis (>= 3.0.4)
+    regexp_parser (1.5.1)
     responders (2.4.1)
       actionpack (>= 4.2.0, < 6.0)
       railties (>= 4.2.0, < 6.0)
     rollbar (2.18.0)
       multi_json
-    rubocop (0.59.2)
+    rubocop (0.71.0)
       jaro_winkler (~> 1.5.1)
       parallel (~> 1.10)
-      parser (>= 2.5, != 2.5.1.1)
-      powerpack (~> 0.1)
+      parser (>= 2.6)
       rainbow (>= 2.2.2, < 4.0)
       ruby-progressbar (~> 1.7)
-      unicode-display_width (~> 1.0, >= 1.0.1)
+      unicode-display_width (>= 1.4.0, < 1.7)
     ruby-progressbar (1.10.0)
-    ruby-vips (2.0.13)
+    ruby-vips (2.0.14)
       ffi (~> 1.9)
     ruby_dep (1.5.0)
     rubyzip (1.2.2)
     safe_yaml (1.0.5)
+    safely_block (0.2.1)
+      errbase
     sass (3.7.3)
       sass-listen (~> 4.0.0)
     sass-listen (4.0.0)
@@ -414,20 +418,21 @@ GEM
       sprockets (>= 2.8, < 4.0)
       sprockets-rails (>= 2.0, < 4.0)
       tilt (>= 1.1, < 3)
-    sassc (2.0.0)
-      ffi (~> 1.9.6)
+    sassc (2.0.1)
+      ffi (~> 1.9)
       rake
     secure_headers (6.0.0)
     select2-rails (4.0.3)
       thor (~> 0.14)
-    selenium-webdriver (3.14.0)
-      childprocess (~> 0.5)
-      rubyzip (~> 1.2)
+    selenium-webdriver (3.142.3)
+      childprocess (>= 0.5, < 2.0)
+      rubyzip (~> 1.2, >= 1.2.2)
     shoulda-context (1.2.2)
     shoulda-matchers (3.1.2)
       activesupport (>= 4.0.0)
-    sidekiq (5.2.2)
+    sidekiq (5.2.7)
       connection_pool (~> 2.2, >= 2.2.2)
+      rack (>= 1.5.0)
       rack-protection (>= 1.5.0)
       redis (>= 3.3.5, < 5)
     simplecov (0.16.1)
@@ -463,9 +468,9 @@ GEM
     turbolinks-source (5.2.0)
     tzinfo (1.2.5)
       thread_safe (~> 0.1)
-    tzinfo-data (1.2018.7)
+    tzinfo-data (1.2019.1)
       tzinfo (>= 1.0.0)
-    unicode-display_width (1.4.0)
+    unicode-display_width (1.6.0)
     unicorn (5.4.1)
       kgio (~> 2.6)
       raindrops (~> 0.7)
@@ -475,10 +480,14 @@ GEM
     vcr (4.0.0)
     warden (1.2.8)
       rack (>= 2.0.6)
-    webmock (3.5.1)
+    webdrivers (4.0.0)
+      nokogiri (~> 1.6)
+      rubyzip (~> 1.0)
+      selenium-webdriver (~> 3.0)
+    webmock (3.6.0)
       addressable (>= 2.3.6)
       crack (>= 0.3.2)
-      hashdiff
+      hashdiff (>= 0.4.0, < 2.0.0)
     webpacker (4.0.2)
       activesupport (>= 4.2)
       rack-proxy (>= 0.6.1)
@@ -486,9 +495,9 @@ GEM
     websocket-driver (0.7.0)
       websocket-extensions (>= 0.1.0)
     websocket-extensions (0.1.3)
-    xpath (3.1.0)
+    xpath (3.2.0)
       nokogiri (~> 1.8)
-    zaru (0.2.0)
+    zaru (0.3.0)
 
 PLATFORMS
   ruby
@@ -497,11 +506,12 @@ PLATFORMS
 DEPENDENCIES
   active_model_serializers (~> 0.10.7)
   active_type (>= 0.7.5)
+  ahoy_matey (~> 3.0.0)
   airbrussh
   annotate
   autoprefixer-rails (>= 8.6.4)
   awesome_print
-  bcrypt (~> 3.1.12)
+  bcrypt (~> 3.1.13)
   bcrypt_pbkdf
   better_errors
   binding_of_caller
@@ -515,7 +525,7 @@ DEPENDENCIES
   capistrano-nc
   capistrano-rails
   capybara
-  chromedriver-helper
+  chartkick (~> 3.2.0)
   cocoon
   coffee-rails (~> 4.2.2)
   connection_pool
@@ -525,6 +535,7 @@ DEPENDENCIES
   faraday
   faraday_middleware
   font-awesome-rails
+  groupdate (~> 4.1.2)
   jquery-fileupload-rails
   jquery-minicolors-rails
   jquery-rails
@@ -532,7 +543,7 @@ DEPENDENCIES
   json_schema
   kaminari
   launchy
-  leaflet-rails (~> 1.3.1)
+  leaflet-rails (~> 1.4.0)
   letter_opener
   liquid
   liquid-rails
@@ -550,8 +561,8 @@ DEPENDENCIES
   omniauth-shibboleth
   overcommit
   panoramic
-  pg (~> 1.0)
-  pg_search (~> 2.1.2)
+  pg (~> 1.1)
+  pg_search (~> 2.2.0)
   pgcli-rails (~> 0.3.0)
   pry
   puma
@@ -595,6 +606,7 @@ DEPENDENCIES
   unicorn
   unicorn-worker-killer
   vcr
+  webdrivers
   webmock
   webpacker (~> 4.0.2)
   zaru

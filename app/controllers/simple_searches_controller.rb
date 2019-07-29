@@ -37,6 +37,13 @@ class SimpleSearchesController < ApplicationController
     )
   end
 
+  protected
+
+  def track
+    # Log event only for the show action to avoid duplicates
+    track_event("catalog_front") if params[:action].eql? 'show'
+  end
+
   private
 
   def build_simple_search

@@ -21,4 +21,10 @@ class CatalogAdmin::BaseController < ApplicationController
     @catalog = Catalog.where(:slug => params[:catalog_slug]).first!
     authorize(@catalog, :show?)
   end
+
+  protected
+
+  def track
+    track_event("catalog_admin")
+  end
 end

@@ -26,7 +26,7 @@
       <% end %>
 
       <p><b>Catalogues disponibles:</b><br/>
-      <% @catalogs.where({advertize: true}).each do |catalog| %>
+      <% @catalogs.where({advertize: true, deactivated_at: nil, visible: true, restricted: false}).each do |catalog| %>
         <%= link_to(catalog.name, catalog_home_path(catalog)) %><br/>
       <% end %>
       </p>

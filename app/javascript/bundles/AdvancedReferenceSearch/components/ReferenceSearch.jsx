@@ -12,7 +12,7 @@ class ReferenceSearch extends Component {
     this.state = {
       items: [],
       fields: [],
-      isLoading: true,
+      isLoading: false,
       selectedFilter: null,
       itemTypeSearch: this.props.itemTypeSearch,
       selectCondition: this.props.selectCondition,
@@ -30,9 +30,21 @@ class ReferenceSearch extends Component {
     this.updateSelectCondition = this._updateSelectCondition.bind(this);
     this.addComponent = this._addComponent.bind(this);
     this.deleteComponent = this._deleteComponent.bind(this);
+    this.fetchItems = this._fetchItems.bind(this);
+    this.setFields = this._setFields.bind(this);
   }
 
   componentDidMount(){
+    if(typeof this.props.selectCondition !== 'undefined' && this.props.selectCondition.length !== 0) {
+        this.setState({selectedCondition: this.props.selectCondition[0].key});
+    }
+  }
+
+  _fetchItems() {
+    if (this.state.items.length !== 0 || this.state.fields.length !== 0) {
+      return;
+    }
+
     const csrfToken = $('meta[name="csrf-token"]').attr('content');
     let config = {
       retry: 3,
@@ -40,15 +52,16 @@ class ReferenceSearch extends Component {
       headers: {'X-CSRF-Token': csrfToken}
     };
 
-    if(typeof this.props.selectCondition !== 'undefined' && this.props.selectCondition.length !== 0) {
-        this.setState({selectedCondition: this.props.selectCondition[0].key});
-    }
-
-    axios.get(`/api/v2/${this.props.catalog}/${this.props.locale}/${this.props.itemType}?simple_fields=true`, config)
-    .then(res => {
-      this.setState({ items: res.data.items });
-      this.setState({ fields: res.data.fields });
-      this.setState({ isLoading: false });
+    axios.get(
+      `/api/v2/${this.props.catalog}/${this.props.locale}/${this.props.itemType}?simple_fields=true&page=1`,
+      config
+    ).then(res => {
+      this.setState({
+        items: res.data.items,
+        fields: res.data.fields,
+        isLoading: false,
+        loadingMessage: res.data.loading_message
+      });
     });
 
     // Retry failed requests
@@ -118,6 +131,10 @@ class ReferenceSearch extends Component {
         this.setState({ selectedCondition: '' });
       }
     }
+  }
+
+  _setFields(fields) {
+    this.setState({fields: fields})
   }
 
   _selectFilter(value){
@@ -204,6 +221,7 @@ class ReferenceSearch extends Component {
       return <SelectedReferenceSearch
                 updateSelectedItem={this.updateSelectedItem}
                 searchPlaceholder={this.state.searchPlaceholder}
+                loadingMessage={this.state.loadingMessage}
                 noOptionsMessage={this._getNoOptionsMessage()}
                 items={this.state.items}
                 fields={this.state.fields}
@@ -211,11 +229,24 @@ class ReferenceSearch extends Component {
                 inputName={this._buildInputNameCondition(this.state.selectedCondition)}
                 srcRef={this.props.srcRef}
                 srcId={this.props.srcId}
-                req={this.props.req} />
+                req={this.props.req}
+                itemsUrl={`/api/v2/${this.props.catalog}/${this.props.locale}/${this.props.itemType}?simple_fields=true`}
+                onFocus={this.setFields} />
   }
 
   renderFilter(){
-    return <ReactSelect className="single-reference-filter" name={this.props.referenceFilterName} isSearchable={false} isClearable={true} isDisabled={this._isFilterDisabled()} value={this.state.selectedFilter} onChange={this.selectFilter} options={this._getFilterOptions()} placeholder={this.state.filterPlaceholder} noOptionsMessage={this._getNoOptionsMessage()}/>
+    return <ReactSelect
+      className="single-reference-filter"
+      name={this.props.referenceFilterName}
+      isSearchable={false}
+      isClearable={true}
+      isDisabled={this._isFilterDisabled()}
+      value={this.state.selectedFilter}
+      onChange={this.selectFilter}
+      options={this._getFilterOptions()}
+      placeholder={this.state.filterPlaceholder}
+      noOptionsMessage={this._getNoOptionsMessage()}
+      onFocus={this.fetchItems} />
   }
 
   renderFieldConditionElement(){

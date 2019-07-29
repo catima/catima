@@ -18,7 +18,6 @@ class CatalogAdmin::ItemsTest < ActionDispatch::IntegrationTest
     fill_in("Email", :with => "test@example.com")
     fill_in("Rank", :with => "1.25")
 
-    sleep 2
     add_single_reference('#item_one_author_collaborator_uuid_json-editor', 'Very Old')
 
     add_multiple_reference('#item_one_author_other_collaborators_uuid_json-editor', 'Very Old')
@@ -112,8 +111,6 @@ class CatalogAdmin::ItemsTest < ActionDispatch::IntegrationTest
       click_on("Save Author")
     end
 
-    sleep 2
-
     author = Item.find(author_id).behaving_as_type
     assert_equal("Changed by test", author.public_send(:one_author_name_uuid))
   end
@@ -134,7 +131,7 @@ class CatalogAdmin::ItemsTest < ActionDispatch::IntegrationTest
     click_on("Authors")
 
     assert_difference("Item.count", -1) do
-      page.accept_alert(:wait => 2) do
+      page.accept_alert(:wait => 30) do
         first("a.item-action-delete").click
       end
       sleep 2
@@ -149,7 +146,6 @@ class CatalogAdmin::ItemsTest < ActionDispatch::IntegrationTest
 
     assert_difference("Item.count", +1) do
       first("a.item-action-duplicate").click
-      sleep 2 # Wait to initialize JS
       click_on("Create Author")
     end
   end

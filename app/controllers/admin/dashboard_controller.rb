@@ -22,6 +22,17 @@ class Admin::DashboardController < Admin::BaseController
     skip_authorization
   end
 
+  def stats
+    raise Pundit::NotAuthorizedError unless current_user.system_admin?
+
+    authorize(Catalog, :index?)
+    authorize(User, :index?)
+
+    @scope = stats_scope
+    @from = 3.months
+    @top = 5
+  end
+
   private
 
   # Retrieve users for index with pagination & search params
@@ -29,5 +40,13 @@ class Admin::DashboardController < Admin::BaseController
     users = User.sorted
     users = users.search(search) if search
     users.page(page)
+  end
+
+  # Retrieve scope parameter for the stats view
+  def stats_scope
+    redirect_to admin_dashboard_path, alert: "Scope not available" unless
+        params[:scope].present? && %w(catalogs).include?(params[:scope])
+
+    params[:scope]
   end
 end

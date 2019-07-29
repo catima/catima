@@ -79,6 +79,13 @@ class AdvancedSearchesController < ApplicationController
     redirect_to(:action => :new)
   end
 
+  protected
+
+  def track
+    # Log event only if item_type param is present to avoid duplicates
+    track_event("catalog_front") if params[:item_type].present?
+  end
+
   private
 
   def build_advanced_search

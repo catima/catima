@@ -77,7 +77,9 @@ class Field < ApplicationRecord
 
   before_validation :assign_default_components
   before_create :assign_uuid
-  after_update :recreate_cache
+  # TODO: uncomment when item cache worker is fixed
+  # Recreate cache only if the primary attribute has changed
+  # after_update :recreate_cache if saved_changes.include?(:primary)
   after_save :remove_primary, :if => :primary?
 
   def self.sorted
@@ -364,9 +366,6 @@ class Field < ApplicationRecord
   end
 
   def recreate_cache
-    # Recreate cache only if the primary attribute has changed
-    return unless saved_changes.include?(:primary)
-
     ItemsCacheWorker.perform_async(catalog.slug, item_type.slug)
   end
 

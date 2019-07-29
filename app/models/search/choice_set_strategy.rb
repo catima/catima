@@ -26,7 +26,7 @@ class Search::ChoiceSetStrategy < Search::BaseStrategy
 
       register_second_condition(criteria, condition)
 
-      cat_field = Field.find_by(slug: criteria[:category_field])
+      cat_field = Field.find_by(uuid: criteria[:category_field])
       return scope if cat_field.nil?
 
       if cat_field.type == "Field::ChoiceSet"
@@ -53,20 +53,6 @@ class Search::ChoiceSetStrategy < Search::BaseStrategy
     return if name.blank?
 
     field.choices.short_named(name, locale).first
-  end
-
-  def search_in_category_field(scope, criteria)
-    category_field = Field.find_by(slug: criteria[:category_field])
-
-    criteria[criteria[:category_criteria].keys[0]] = criteria[:category_criteria][criteria[:category_criteria].keys[0]]
-
-    klass = "Search::#{category_field.type.sub(/^Field::/, '')}Strategy"
-    strategy = klass.constantize.new(category_field, locale)
-    strategy.search(
-      scope.select('"parent_items".*')
-        .from("items parent_items")
-        .joins("LEFT JOIN items ON parent_items.data->>'#{field.uuid}' = items.id::text AND parent_items.item_type_id = #{field.item_type.id}"),
-      criteria)
   end
 
   def register_second_condition(criteria, condition)
