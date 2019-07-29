@@ -21,44 +21,44 @@ class ChoiceSetEditor extends Component {
   }
 
   componentDidMount(){
-      this.setState({ selectedItems: this.props.inputDefaults });
-      this._selectItem(this.props.inputDefaults);
+    this.setState({ selectedItems: this.props.inputDefaults });
+    this._selectItem(this.props.inputDefaults);
   }
 
   _selectItem(items){
-      if(typeof items !== 'undefined') {
-          var itemData = this._getItemData(this.props.items, items);
-          if(typeof itemData !== 'undefined') {
-              items.data = itemData;
-          } else {
-              items.data = [];
-          }
+    if (typeof items !== 'undefined') {
+      var itemData = this._getItemData(this.props.items, items);
+      if(typeof itemData !== 'undefined') {
+          items.data = itemData;
       } else {
-          items = [];
+          items.data = [];
       }
+    } else {
+      items = {data: []};
+    }
 
-          if(this.props.multiple) {
-              this.setState({ hiddenInputValue: [
-                JSON.stringify(
-                  items.map((selectedItem) => {
-                    return selectedItem.value.toString();
-                  })
-                )
-              ]
-              });
-          } else {
-              if(items.length > 0) {
-                  this.setState({ hiddenInputValue: [
-                      items[0].value.toString()
-                  ]});
-              } else if (items.value) {
-                  this.setState({ hiddenInputValue: [
-                      items.value.toString()
-                  ]});
-              }
-          }
+    if(this.props.multiple) {
+      this.setState({ hiddenInputValue: [
+        JSON.stringify(
+          items.map((selectedItem) => {
+            return selectedItem.value.toString();
+          })
+        )
+      ]
+      });
+    } else {
+      if(items.length > 0) {
+          this.setState({ hiddenInputValue: [
+              items[0].value.toString()
+          ]});
+      } else if (items.value) {
+          this.setState({ hiddenInputValue: [
+              items.value.toString()
+          ]});
+      }
+    }
 
-      this.setState({ selectedItems: items });
+    this.setState({ selectedItems: items });
   }
 
   _getItemData(list, searchItem) {
@@ -126,7 +126,7 @@ class ChoiceSetEditor extends Component {
               labelInValue
               treeDefaultExpandAll
               treeNodeFilterProp="title"
-              multiple={false}
+              multiple={this.props.multiple}
               defaultValue={this.state.defaultValues}
               onChange={this.selectItem}>
                 { this.props.items.map((item) => {
@@ -140,7 +140,7 @@ class ChoiceSetEditor extends Component {
   render() {
     return (
       <div className="choiceset-editor-container">
-            { this.renderChoiceSetElement() }
+        { this.renderChoiceSetElement() }
       </div>
     );
   }

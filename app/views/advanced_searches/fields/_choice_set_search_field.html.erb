@@ -17,7 +17,7 @@
         inputName: "advanced_search[criteria][#{field.uuid}][0][default]",
         selectConditionName: "advanced_search[criteria][#{field.uuid}][0][condition]",
         selectCondition: field.search_conditions_as_hash(I18n.locale),
-        multiple: true,
+        multiple: false,
         fieldConditionName: "advanced_search[criteria][#{field.uuid}][0][field_condition]",
         fieldConditionData: field.search_field_conditions_as_hash
       },

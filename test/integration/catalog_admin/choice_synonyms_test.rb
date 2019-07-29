@@ -23,7 +23,6 @@ class CatalogAdmin::ChoiceSynonymsTest < ActionDispatch::IntegrationTest
     all("input[name^=\"choice_synonyms\"]")[1].set("Eng (US)")
     click_on("Save")
 
-    click_on("Cancel")
     click_on("Synonyms")
 
     assert_equal(all("input[name^=\"choice_synonyms\"]")[1].value, "Eng (US)")
@@ -47,7 +46,6 @@ class CatalogAdmin::ChoiceSynonymsTest < ActionDispatch::IntegrationTest
     first("input[name^=\"choice_synonyms\"]").set("Eng (AU)")
     click_on("Save")
 
-    click_on("Cancel")
     click_on("Synonyms")
 
     assert_equal(first("input[name^=\"choice_synonyms\"]").value, "Eng (AU)")

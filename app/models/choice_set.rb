@@ -44,7 +44,7 @@ class ChoiceSet < ApplicationRecord
     choices_as_options = []
 
     choices.select { |c| c.parent.blank? }.each do |choice|
-      option = { :value => choice.short_name, :key => choice.id }
+      option = { :value => choice.short_name_with_synonyms, :key => choice.id }
       option[:category_data] = choice.filterable_category_fields
 
       option[:children] = []

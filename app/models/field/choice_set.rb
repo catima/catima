@@ -147,9 +147,14 @@ class Field::ChoiceSet < ::Field
   def search_data_as_hash
     choices_as_options = []
 
-    choices.each do |choice|
-      option = { :value => choice.short_name, :key => choice.id }
+    choices.select { |c| c.parent.blank? }.each do |choice|
+      option = { :value => choice.short_name_with_synonyms, :key => choice.id }
       option[:category_data] = choice.category.present? && choice.category.active? ? choice.category.fields : []
+
+      option[:children] = []
+      choice.children.each do |child|
+        option[:children] << child.children_as_options
+      end
 
       choices_as_options << option
     end
@@ -167,7 +172,7 @@ class Field::ChoiceSet < ::Field
     choices_as_options = []
 
     selected_choices(item).each do |choice|
-      option = { :value => choice.id, :label => choice.short_name }
+      option = { :value => choice.id, :label => choice.short_name_with_synonyms }
       choices_as_options << option
     end
 

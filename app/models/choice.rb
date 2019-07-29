@@ -82,7 +82,7 @@ class Choice < ApplicationRecord
   # Used in the advanced search
   def children_as_options
     options = {
-      :value => short_name,
+      :value => short_name_with_synonyms,
       :key => id,
       :children => []
     }
@@ -111,6 +111,21 @@ class Choice < ApplicationRecord
     end
 
     choices.reverse
+  end
+
+  def short_name_with_synonyms
+    "#{short_name} #{concat_synonyms}"
+  end
+
+  def concat_synonyms
+    return "" if synonyms.blank?
+
+    syn = " | "
+    synonyms.each do |synonym|
+      syn << "#{synonym[I18n.locale.to_s]} | "
+    end
+
+    syn.chomp(" | ")
   end
 
   private
