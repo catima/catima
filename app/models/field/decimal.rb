@@ -84,6 +84,10 @@ class Field::Decimal < ::Field
     ]
   end
 
+  def sql_type
+    "DOUBLE"
+  end
+
   private
 
   def build_validators

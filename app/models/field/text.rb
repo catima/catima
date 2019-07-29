@@ -79,7 +79,7 @@ class Field::Text < ::Field
 
   def raw_value(item, locale=I18n.locale, suffix="")
     attrib = i18n? ? "#{uuid}_#{locale}#{suffix}" : uuid
-    v = item.behaving_as_type.public_send(attrib)
+    v = item.behaving_as_type.public_send(attrib) if item.behaving_as_type.respond_to?(attrib)
     return v if v.nil? || !formatted?
 
     begin
@@ -110,6 +110,33 @@ class Field::Text < ::Field
     return options if formatted?
 
     options << { :value => I18n.t("advanced_searches.text_search_field.exact", locale: locale), :key => "exact"}
+  end
+
+  def sql_default
+    return "" if formatted? || sql_type.include?("TEXT")
+
+    super
+  end
+
+  def sql_value(item)
+    value = value_for_item(item)
+
+    return field_value_for_all_item(item).to_s.gsub("'") { "\\'" } if formatted?
+
+    return value['_translations'].to_s.gsub("'") { "\\'" } if i18n?
+
+    value.to_s.gsub("'") { "\\'" }
+  end
+
+  def sql_type
+    if maximum.present?
+      maximum = [maximum.to_i, 21_845].max
+      # 21845 is the max length of the SQL TEXT type
+      return "VARCHAR(#{maximum})" if maximum < 500
+    end
+
+    # A primary key must have a max length
+    primary? ? "VARCHAR(255)" : "MEDIUMTEXT"
   end
 
   private

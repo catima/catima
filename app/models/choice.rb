@@ -57,4 +57,30 @@ class Choice < ApplicationRecord
   def assign_uuid
     self.uuid ||= SecureRandom.uuid
   end
+
+  def filterable_category_fields
+    fields = []
+
+    return fields unless category.present? && category.active?
+
+    category.fields.each do |field|
+      next unless field.filterable_field?
+
+      fields << field
+    end
+
+    fields
+  end
+
+  def self.sql_columns
+    columns = {}
+
+    Choice.columns_hash.each do |column_name, column|
+      next if %w[choice_set_id long_name_old short_name_old catalog_id category_id].include?(column_name)
+
+      columns[column_name] = column
+    end
+
+    columns
+  end
 end

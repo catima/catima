@@ -20,6 +20,7 @@ class ItemType < ApplicationRecord
   include HasFields
   include HasTranslations
   include HasSlug
+  include HasSqlSlug
 
   has_many :items
   has_many :item_views, :dependent => :destroy

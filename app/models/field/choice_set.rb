@@ -159,6 +159,17 @@ class Field::ChoiceSet < ::Field
     ]
   end
 
+  def field_value_for_all_item(it)
+    return selected_choices(it).map(&:short_name).join('; ') if multiple?
+
+    ch = selected_choice(it)
+    ch.nil? ? nil : ch.short_name
+  end
+
+  def sql_type
+    "INT"
+  end
+
   private
 
   # Should return true if the choice set holds a choice linked to

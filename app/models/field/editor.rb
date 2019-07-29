@@ -64,4 +64,12 @@ class Field::Editor < ::Field
   def allows_style?
     false
   end
+
+  def field_value_for_all_item(item)
+    field_value_for_item(item)
+  end
+
+  def sql_type
+    "VARCHAR(255)"
+  end
 end
