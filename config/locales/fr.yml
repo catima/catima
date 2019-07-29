@@ -478,6 +478,7 @@ fr:
         add: Ajouter un synonyme
         choice_placeholder: Sélectionner un choix
         save: Enregister
+        updated: Synonyme(s) enregistré(s)
 
     containers:
       item_type_warning: "Vous devez créer au moins un type de fiche pour utiliser ce type de conteneur"

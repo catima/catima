@@ -39,7 +39,7 @@ class CatalogAdmin::ChoiceSynonymsController < CatalogAdmin::BaseController
     # Removes synonyms that where not present in the params
     choice_set.choices.each { |c| c.update(:synonyms => nil) unless updated_choices.include?(c) }
 
-    redirect_to :action => :index
+    redirect_to(edit_catalog_admin_choice_set_path(:id => choice_set), :notice => t("catalog_admin.choice_sets.synonyms.updated"))
   end
 
   private
