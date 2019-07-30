@@ -1,7 +1,7 @@
 <%= react_component("GeoContainerViewer2",
       id: "results_map_container",
       props: {
-        features: results.to_json,
+        features: results.items_as_geojson.to_json,
         noResultsMessage: t('advanced_searches.new.no_map_results'),
         mapHeight: 600,
         maxBBZoom: 13,
