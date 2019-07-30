@@ -28,8 +28,6 @@ class GeoContainerViewer extends React.Component {
       this.features = this.features.features
     }
 
-    console.log(this.features)
-
     this.features = this.features.filter(function (el) {
       return el != null;
     });
