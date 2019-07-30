@@ -21,10 +21,19 @@ class GeoContainerViewer extends React.Component {
   constructor(props){
     super(props);
 
-    console.log("GEOCONTAINERVIEWER2");
-
     this.layers = this.props.layers ? this.props.layers : [];
     this.features = JSON.parse(this.props.features);
+
+    if(this.features.features) {
+      this.features = this.features.features
+    }
+
+    console.log(this.features)
+
+    this.features = this.features.filter(function (el) {
+      return el != null;
+    });
+
     this.mapHeight = this.props.mapHeight;
     this.catalog = this.props.catalog;
     this.locale = this.props.locale;
@@ -45,9 +54,11 @@ class GeoContainerViewer extends React.Component {
     };
 
     this.state = {
+      mapHeight: 300,
       mapZoom: 2,
       mapMinZoom: 1,
-      mapMaxZoom: 18
+      mapMaxZoom: 18,
+      maxBBZoom: 10,
     };
 
     this._mapInitialized = false;
@@ -64,20 +75,73 @@ class GeoContainerViewer extends React.Component {
   }
 
   componentDidMount(){
+    if (typeof this.props.mapHeight !== 'undefined') {
+      this.setState({mapHeight: this.props.mapHeight})
+    }
+
+    if(this.props.maxBBZoom) {
+      this.setState({maxBBZoom: this.props.maxBBZoom});
+    }
+
     this._map = this.refs.map.leafletElement;
     this._mapElement = this.refs.map;
-    this.flyToMarkersBounds();
+    //this.resetMapView();
+    this.mapBecomesVisible();
   }
 
-  flyToMarkersBounds() {
+  waitForMapDisplay(el){
+    const self = this;
+    const observer = new MutationObserver(function(mutations) {
+      mutations.forEach(function(mutationRecord) {
+        self.mapBecomesVisible();
+      });
+    });
+    observer.observe(el, { attributes : true, attributeFilter : ['style', 'class'] });
+  }
+
+  mapBecomesVisible(){
+    if (this._mapInitialized) return;
+    const mapHideElement = this.isMapHidden();
+    if (mapHideElement == null){
+      // Map is visible. Fix the map viewport.
+      var self = this;
+      setTimeout(self.resetMapView.bind(self), 500);
+      setTimeout(self.resetMapView.bind(self), 4500);
+      this._mapInitialized = true;
+    } else {
+      // Map is invisible. Define an event on the element that
+      // hides the map to fix the viewport once the map becomes visible.
+      console.log('Map is hidden. Waiting for map to show up.');
+      this.waitForMapDisplay(mapHideElement);
+    }
+  }
+
+  /**
+   * Returns the element that makes the map hidden,
+   * or if the map is shown, null.
+   */
+  isMapHidden(){
+    const mapDiv = this._mapElement.container;
+    if (getComputedStyle(mapDiv).display != 'none') {
+      return this._isAnyParentHidden(mapDiv);
+    }
+    return mapDiv;
+  }
+
+  _isAnyParentHidden(el){
+    if (el.tagName == 'BODY') return null;
+    if (getComputedStyle(el.parentElement).display == 'none') return el.parentElement;
+    return this._isAnyParentHidden(el.parentElement);
+  }
+
+  resetMapView() {
     const bbox = this.bbox();
     const w = bbox[1] - bbox[0], h = bbox[3] - bbox[2];
-    console.log(bbox);
     this._map.invalidateSize();
     this._map.flyToBounds([
       [bbox[2] - 0.2*h, bbox[0] - 0.2*w],
       [bbox[3] + 0.2*h, bbox[1] + 0.2*w]
-    ], { duration: 0.5, maxZoom: 10 });
+    ], { duration: 0.5, maxZoom: this.state.maxBBZoom });
   }
 
   center(){
@@ -86,7 +150,18 @@ class GeoContainerViewer extends React.Component {
   }
 
   bbox(){
-    const coords = this.features.features.map(function(feat, i){ return feat.geometry.coordinates; });
+    var coords = [];
+    this.features.map(function(feat, i){
+      if(feat.geometry) coords.push(feat.geometry.coordinates);
+      else {
+        feat.map(function(f, j) {
+          if (f !== "undefined" && f !== null) {
+            coords.push(f.geometry.coordinates);
+          }
+        });
+      }
+    });
+
     const minmax = this._minmax(coords);
     // Check if there are non valid numbers in the minmax. If so, we return a default bbox
     if (minmax.map((a) => isNaN(a)).reduce((a, b) => a || b, false)) return [-60, 60, -120, 120];
@@ -94,7 +169,7 @@ class GeoContainerViewer extends React.Component {
   }
 
   _minmax(coords){
-    if (typeof(coords[0]) == 'number') {
+    if (typeof(coords) !== 'undefined' && typeof(coords[0]) === 'number') {
       return [coords[0], coords[0], coords[1], coords[1]];
     }
     return this._minmaxArray(coords);
@@ -117,15 +192,17 @@ class GeoContainerViewer extends React.Component {
   }
 
   _onEachFeature = (feature, layer) => {
-    layer.on({
-      click: (event) => {
-        let marker = event.target;
-        if (marker._popup == null) {
-          marker.bindPopup(this.translations.loading[this.locale]).openPopup();
-          this.loadPopupContent(marker, feature);
+    if(feature.properties.id) {
+      layer.on({
+        click: (event) => {
+          let marker = event.target;
+          if (marker._popup == null) {
+            marker.bindPopup(this.translations.loading[this.locale]).openPopup();
+            this.loadPopupContent(marker, feature);
+          }
         }
-      }
-    });
+      });
+    }
   };
 
   loadPopupContent(marker, feature){
@@ -211,17 +288,22 @@ class GeoContainerViewer extends React.Component {
 
   renderMarkers() {
     // Create map markers
-    return this.features.features.map((feat, i) =>
-        <GeoJSON key={ i } data={ feat } pointToLayer={ this.pointToLayer } onEachFeature={this.onEachFeature} />
-    );
+      return this.features.map((feat, i) =>
+          <GeoJSON key={ i } data={ feat } pointToLayer={ this.pointToLayer } onEachFeature={ this.onEachFeature } />
+      );
   }
 
   render(){
     const center = this.center();
 
     return (
-        <div className="geoContainerViewer" style={{height: this.mapHeight}}>
+        <div className="geoViewer" style={{height: this.state.mapHeight}}>
           <Map ref="map" center={ center } zoom={ this.state.mapZoom } zoomControl={ true } minZoom={ this.state.mapMinZoom } maxZoom={ this.state.mapMaxZoom } >
+            { (this.features.length === 0) &&
+              <div className="messageBox">
+                <div className="message"><i className="fa fa-info-circle"></i> { this.props.noResultsMessage }</div>
+              </div>
+            }
             { this.renderLayer() }
             <MarkerClusterGroup showCoverageOnHover={ true }>
               { this.renderMarkers() }
