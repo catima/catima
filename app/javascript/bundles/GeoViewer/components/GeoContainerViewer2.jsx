@@ -192,15 +192,17 @@ class GeoContainerViewer2 extends React.Component {
   }
 
   _onEachFeature = (feature, layer) => {
-    layer.on({
-      click: (event) => {
-        let marker = event.target;
-        if (marker._popup == null) {
-          marker.bindPopup(this.translations.loading[this.locale]).openPopup();
-          this.loadPopupContent(marker, feature);
+    if(feature.properties.id) {
+      layer.on({
+        click: (event) => {
+          let marker = event.target;
+          if (marker._popup == null) {
+            marker.bindPopup(this.translations.loading[this.locale]).openPopup();
+            this.loadPopupContent(marker, feature);
+          }
         }
-      }
-    });
+      });
+    }
   };
 
   loadPopupContent(marker, feature){
