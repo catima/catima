@@ -9,7 +9,7 @@ import 'react-leaflet-markercluster/dist/styles.min.css';
 const subs = ['a', 'b', 'c'];
 const { BaseLayer } = LayersControl;
 
-class GeoContainerViewer extends React.Component {
+class GeoViewer extends React.Component {
   static propTypes = {
     features: PropTypes.string.isRequired,
     layers: PropTypes.array,
@@ -312,4 +312,4 @@ class GeoContainerViewer extends React.Component {
   }
 }
 
-export default GeoContainerViewer;
+export default GeoViewer;
