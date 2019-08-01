@@ -104,7 +104,6 @@ class GeoViewer extends React.Component {
       // Map is visible. Fix the map viewport.
       var self = this;
       setTimeout(self.resetMapView.bind(self), 500);
-      setTimeout(self.resetMapView.bind(self), 4500);
       this._mapInitialized = true;
     } else {
       // Map is invisible. Define an event on the element that
@@ -150,10 +149,11 @@ class GeoViewer extends React.Component {
   bbox(){
     var coords = [];
     this.features.map(function(feat, i){
-      if(feat.geometry) coords.push(feat.geometry.coordinates);
-      else {
+      if(feat.geometry) {
+        coords.push(feat.geometry.coordinates);
+      } else {
         feat.map(function(f, j) {
-          if (f !== "undefined" && f !== null) {
+          if (typeof f !== "undefined" && f !== null) {
             coords.push(f.geometry.coordinates);
           }
         });
