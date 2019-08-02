@@ -1,2 +1,2 @@
-$("#results_map_container").replaceWith("<%= j(render :partial => 'map', :locals => { :results => @advanced_search_results.items_as_geojson }) %>");
+$("#results_map_container").replaceWith("<%= j(render :partial => 'map', :locals => { :results => @advanced_search_results }) %>");
 ReactOnRails.reactOnRailsPageLoaded()
