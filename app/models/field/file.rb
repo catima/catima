@@ -86,13 +86,13 @@ class Field::File < ::Field
     files = []
     if value.is_a?(Hash) && value["path"].present?
       value["path"] = value["path"].gsub("upload/#{item.catalog.slug}", "files")
-      files << { :path => value["path"] }
+      files << { :path => value["path"].gsub("'") { "\'" } }
     elsif value.is_a?(Array) && value.present?
       value.map do |f|
         next if f["path"].blank?
 
         f["path"] = f["path"].gsub("upload/#{item.catalog.slug}", "files")
-        files << { :path => f["path"] }
+        files << { :path => f["path"].gsub("'") { "\'" } }
       end
     end
 
