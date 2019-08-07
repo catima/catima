@@ -1,6 +1,6 @@
-require 'csv'
-
 class Dump::CsvDump < ::Dump
+  require "csv"
+
   def initialize
   end
 
@@ -22,6 +22,8 @@ class Dump::CsvDump < ::Dump
       # First loop to check if there are categories among choices
       categories_fields = build_csv_header(cat)
 
+      dump_headers(cat, categories_fields, directory)
+
       dump_data(cat, categories_fields, directory)
 
       dump_files(cat, directory)
@@ -29,6 +31,10 @@ class Dump::CsvDump < ::Dump
   end
 
   private
+
+  def msg(txt)
+    puts txt unless Rails.env.test?
+  end
 
   def create_files(catalog, directory)
     catalog.item_types.each do |item_type|
@@ -74,25 +80,37 @@ class Dump::CsvDump < ::Dump
     categories_fields
   end
 
-  def dump_data(catalog, categories_fields, directory)
-    catalog.items.each do |item|
-      CSV.open(File.join(directory, "#{item.item_type.slug}.csv"), "a+") do |csv|
-        columns = item.fields.map(&:name)
+  def dump_headers(catalog, categories_fields, directory)
+    catalog.item_types.each do |item_type|
+      msg("Dumping headers for items of ItemType #{item_type.slug}")
 
-        if categories_fields[item.item_type.id].present?
-          categories_fields[item.item_type.id].each do |field|
-            columns << "#{Category.find(field.category_id)&.name}_#{field.slug}"
+      columns = item_type.fields.map(&:name)
+
+      if categories_fields[item_type.id].present?
+        categories_fields[item_type.id].each do |field|
+          columns << "#{Category.find(field.category_id)&.name}_#{field.slug}"
+        end
+      end
+
+      CSV.open(File.join(directory, "#{item_type.slug}.csv"), "a+") { |csv| csv << columns }
+    end
+  end
+
+  def dump_data(catalog, categories_fields, directory)
+    ActiveRecord::Base.uncached do
+      catalog.item_types.select(:id, :slug).each do |item_type|
+        msg("Dumping data for items of ItemType #{item_type.slug}")
+
+        fields = item_type.fields
+
+        item_type.items.find_in_batches(:batch_size => 100) do |items|
+          CSV.open(File.join(directory, "#{item_type.slug}.csv"), "a") do |csv|
+            items.each do |item|
+              csv << fields.map { |f| f.field_value_for_all_item(item) }
+              categories_fields[item_type.id].each { |f| csv << f.field_value_for_all_item(item) }
+            end
           end
         end
-
-        csv << columns unless csv.include?(columns)
-
-        values = item.fields.map { |f| f.field_value_for_all_item(item) }
-        categories_fields[item.item_type.id].each do |f|
-          values << f.field_value_for_all_item(item)
-        end
-
-        csv << values
       end
     end
   end
