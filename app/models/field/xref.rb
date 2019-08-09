@@ -78,7 +78,7 @@ class Field::Xref < ::Field
     "VARCHAR(255)"
   end
 
-  def field_value_for_all_item(item)
+  def csv_value(item)
     return '' if raw_value(item).blank? || external_type.nil?
   end
 

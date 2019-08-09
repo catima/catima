@@ -150,7 +150,7 @@ class Field::DateTime < ::Field
     ]
   end
 
-  def field_value_for_all_item(item)
+  def csv_value(item)
     Field::DateTimePresenter.new(nil, item, self).value
   end
 

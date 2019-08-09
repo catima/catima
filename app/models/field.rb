@@ -252,7 +252,7 @@ class Field < ApplicationRecord
   end
 
   # Even non readable. Useful for dumps
-  def field_value_for_all_item(it)
+  def csv_value(it)
     raw_value(it)
   end
 
