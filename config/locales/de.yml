@@ -505,6 +505,7 @@ de:
         submit: Modifizieren
       common_form_fields:
         search_display_type: Art der Suchanzeige
+        layers: Additional layers
     fields:
       choice_set_modals:
         create_new_choice_set: Create new choice set

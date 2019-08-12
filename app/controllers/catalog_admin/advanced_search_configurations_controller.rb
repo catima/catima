@@ -111,6 +111,7 @@ class CatalogAdmin::AdvancedSearchConfigurationsController < CatalogAdmin::BaseC
       :item_type,
       :field,
       :field_position,
+      @advanced_search_conf.custom_container_permitted_attributes,
       permitted_params)
   end
 

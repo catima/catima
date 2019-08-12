@@ -436,6 +436,7 @@ it:
         submit: Modificare
       common_form_fields:
         search_display_type: Tipo di ricerca visualizzata
+        layers: Additional layers
     fields:
       geometry_option_inputs:
         bounds: Estensione spaziale predefinita

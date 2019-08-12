@@ -542,6 +542,7 @@ en:
         submit: Submit
       common_form_fields:
         search_display_type: Search display type
+        layers: Additional layers
     fields:
       choice_set_modals:
         create_new_choice_set: Create new choice set
