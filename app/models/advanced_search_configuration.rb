@@ -9,6 +9,7 @@
 #  fields             :jsonb
 #  id                 :bigint(8)        not null, primary key
 #  item_type_id       :bigint(8)
+#  options            :jsonb
 #  search_type        :string           default("default")
 #  slug               :string
 #  title_translations :jsonb
@@ -22,6 +23,8 @@ class AdvancedSearchConfiguration < ApplicationRecord
     "Default" => "default",
     "Map" => "map"
   }.freeze
+
+  store_accessor :options, :layers
 
   include HasTranslations
   include HasLocales
@@ -39,6 +42,10 @@ class AdvancedSearchConfiguration < ApplicationRecord
 
   serialize :description, HashSerializer
   locales :description
+
+  def custom_container_permitted_attributes
+    %i(layers)
+  end
 
   def field_set
     field_set = []
@@ -105,5 +112,9 @@ class AdvancedSearchConfiguration < ApplicationRecord
 
   def search_type_map?
     search_type == AdvancedSearchConfiguration::TYPES['Map']
+  end
+
+  def geo_layers
+    layers.present? ? JSON.parse(layers) : []
   end
 end
