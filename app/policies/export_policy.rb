@@ -15,6 +15,11 @@ class ExportPolicy
     return false unless user.authenticated?
     return true if user.system_admin?
 
+    # Only system admins can create sql & csv exports
+    unless @export.category.nil?
+      return false unless @export.category.eql? "catima"
+    end
+
     user.catalog_role_at_least?(catalog, "admin")
   end
 

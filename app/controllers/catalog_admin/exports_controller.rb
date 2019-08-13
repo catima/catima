@@ -8,7 +8,7 @@ class CatalogAdmin::ExportsController < CatalogAdmin::BaseController
 
   def create
     category = find_category
-    build_export(catalog)
+    build_export(catalog, category)
     authorize(@export)
     export = Export.create(
       user: current_user,
@@ -28,10 +28,11 @@ class CatalogAdmin::ExportsController < CatalogAdmin::BaseController
 
   private
 
-  def build_export(catalog)
+  def build_export(catalog, category=nil)
     @export = Export.new do |model|
       model.catalog = catalog
       model.user = current_user
+      model.category = category
     end
   end
 
