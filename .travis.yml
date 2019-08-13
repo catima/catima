@@ -1,4 +1,5 @@
 language: ruby
+dist: xenial
 cache:
   - yarn
   - bundler
@@ -22,7 +23,7 @@ script:
 services:
   - redis-server
 addons:
-  postgresql: '9.5'
+  postgresql: '10'
   chrome: stable
   apt:
     update: true
