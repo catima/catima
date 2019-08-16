@@ -17,7 +17,7 @@ class AdvancedSearchesController < ApplicationController
   include ControlsCatalog
 
   def new
-    @advance_search_confs = @catalog.advanced_search_configurations
+    @advance_search_confs = @catalog.advanced_search_configurations.with_active_item_type
     build_advanced_search
     find_advanced_search_configuration
 

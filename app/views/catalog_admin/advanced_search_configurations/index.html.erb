@@ -7,13 +7,13 @@
         class: 'btn btn-xs btn-default') %>
 <% end %>
 
-<% if catalog.advanced_search_configurations.count == 0 %>
+<% if catalog.advanced_search_configurations.with_active_item_type.count == 0 %>
   <div class="alert alert-warning" style="margin-bottom: 0;">
     <%= t('.no_advanced_search_configurations_for_catalog_warning') %>
   </div>
 <% end %>
 
-<% if catalog.advanced_search_configurations.count > 0 %>
+<% if catalog.advanced_search_configurations.with_active_item_type.count > 0 %>
   <table class="table" id="group-permissions-table">
     <thead>
       <tr>
@@ -24,7 +24,7 @@
       </tr>
     </thead>
   <tbody>
-    <% catalog.advanced_search_configurations.each do |conf| %>
+    <% catalog.advanced_search_configurations.with_active_item_type.each do |conf| %>
       <tr>
         <td><%= conf.title %></td>
         <td><%= conf.description %></td>
@@ -37,4 +37,3 @@
   </tbody>
 </table>
 <% end %>
-
