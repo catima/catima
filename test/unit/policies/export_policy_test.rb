@@ -13,6 +13,13 @@ class ExportPolicyTest < ActiveSupport::TestCase
     assert(policy(users(:system_admin), exports(:one)).create?)
   end
 
+  test "#create? allows system admins for csv & sql formats" do
+    refute(policy(users(:one_admin), exports(:one_csv)).create?)
+    refute(policy(users(:one_admin), exports(:one_sql)).create?)
+    assert(policy(users(:system_admin), exports(:one_csv)).create?)
+    assert(policy(users(:system_admin), exports(:one_sql)).create?)
+  end
+
   test "#download? allows admins of the catalog" do
     refute(policy(Guest.new, exports(:one)).download?)
     refute(policy(users(:one), exports(:one)).download?)
