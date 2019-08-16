@@ -8,17 +8,13 @@ class ExportPolicy
   end
 
   def index?
-    create?
+    user_check
   end
 
   def create?
     return false unless user.authenticated?
     return true if user.system_admin?
-
-    # Only system admins can create sql & csv exports
-    unless @export.category.nil?
-      return false unless @export.category.eql? "catima"
-    end
+    return false unless @export.category.eql? "catima"
 
     user.catalog_role_at_least?(catalog, "admin")
   end
@@ -28,6 +24,13 @@ class ExportPolicy
     return false unless export.ready?
     return false unless export.file?
 
-    create?
+    user_check
+  end
+
+  def user_check
+    return false unless user.authenticated?
+    return true if user.system_admin?
+
+    user.catalog_role_at_least?(catalog, "admin")
   end
 end
