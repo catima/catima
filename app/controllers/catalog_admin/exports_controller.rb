@@ -17,7 +17,7 @@ class CatalogAdmin::ExportsController < CatalogAdmin::BaseController
       status: "processing"
     )
     export.export_catalog(params[:locale])
-    redirect_to(catalog_admin_exports_path, :alert => @message)
+    redirect_to(catalog_admin_exports_path)
   end
 
   def download
@@ -50,7 +50,7 @@ class CatalogAdmin::ExportsController < CatalogAdmin::BaseController
   end
 
   def find_category(category=request[:category])
-    @message = t("catalog_admin.exports.create.invalid_category") unless Export::CATEGORY_OPTIONS.include? category
+    raise Pundit::NotAuthorizedError unless Export::CATEGORY_OPTIONS.include? category
 
     category
   end

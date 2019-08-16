@@ -519,8 +519,6 @@ fr:
         format: "Format"
         status: "Statut"
         validity: "Validité"
-      create:
-        invalid_category: "Format d'exportation invalide"
 
     advanced_search_configurations:
       index:
