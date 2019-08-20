@@ -538,6 +538,7 @@ fr:
         submit: Modifier
       common_form_fields:
         search_display_type: Type d'affichage de la recherche
+        layers: Calques supplémentaires
     fields:
       choice_set_modals:
         create_new_choice_set: Créer nouvel ensemble de choix
