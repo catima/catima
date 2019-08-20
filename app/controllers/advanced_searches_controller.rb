@@ -17,7 +17,7 @@ class AdvancedSearchesController < ApplicationController
   include ControlsCatalog
 
   def new
-    @advance_search_confs = @catalog.advanced_search_configurations
+    @advance_search_confs = @catalog.advanced_search_configurations.with_active_item_type
     build_advanced_search
     find_advanced_search_configuration
 
@@ -55,6 +55,7 @@ class AdvancedSearchesController < ApplicationController
         f.js do
           params[:uuid] = @advanced_search.uuid
           find_advanced_search
+          find_advanced_search_configuration
           @advanced_search_results = ItemList::AdvancedSearchResult.new(
             :model => @saved_search,
             :page => params[:page]

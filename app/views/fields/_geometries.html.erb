@@ -1,1 +1,2 @@
-<%= react_component('GeoViewer', props: { features: features, layers: layers }) %>
+<%= react_component('GeoViewer', props: { features: features.to_json, layers: layers, catalog: @catalog.slug, maxBBZoom: 13,
+locale: I18n.locale }) %>
