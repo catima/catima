@@ -34,7 +34,7 @@
 
 class Field::Email < ::Field
   def sql_type
-    "VARCHAR(255)"
+    "VARCHAR(512)"
   end
 
   private
