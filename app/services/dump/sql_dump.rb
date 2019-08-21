@@ -96,12 +96,12 @@ class Dump::SqlDump < ::Dump
     inserts << dump_categories_data(cat)
 
     inserts << render_comment("Fields: multiple references")
-    cat.items.each do |item|
+    cat.items.find_each do |item|
       inserts << dump_mulitple_field_reference_item_data(item)
     end
 
     inserts << render_comment("Fields: multiple choicesets")
-    cat.items.each do |item|
+    cat.items.find_each do |item|
       inserts << dump_mulitple_field_choiceset_item_data(item)
     end
 
@@ -301,7 +301,7 @@ class Dump::SqlDump < ::Dump
 
   def dump_fields_data(cat)
     inserts = ""
-    cat.items.each do |item|
+    cat.items.find_each do |item|
       fields = item.item_type.fields.reject { |f| f.multiple? && (f.is_a?(Field::Reference) || f.is_a?(Field::ChoiceSet)) }
 
       common_fields = COMMON_SQL_COLUMNS.map { |column_name, _column_type| "`#{column_name}`" }.join(',')
@@ -320,7 +320,7 @@ class Dump::SqlDump < ::Dump
   def dump_categories_data(cat)
     inserts = ""
     categories_processed_by_item = {}
-    cat.items.each do |item|
+    cat.items.find_each do |item|
       cat.categories.each do |category|
         fields = category.fields.reject { |f| f.multiple? && (f.is_a?(Field::Reference) || f.is_a?(Field::ChoiceSet)) }
         fields.each do |field|
@@ -351,7 +351,7 @@ class Dump::SqlDump < ::Dump
 
   def dump_primary_keys(cat)
     alters = render_comment("ITEMS")
-    cat.items.each do |item|
+    cat.items.find_each do |item|
       # constraint = primary_key_constraint(item.item_type)
       alter = add_primary_key(@holder.table_name(item.item_type, "sql_slug"), primary_key(item.item_type))
 
@@ -373,7 +373,7 @@ class Dump::SqlDump < ::Dump
 
   def dump_single_references(cat)
     alters = render_comment("Single references")
-    cat.items.each do |item|
+    cat.items.find_each do |item|
       # Single references and choices
       fields = item.item_type.fields.select { |field| !field.multiple? && field.is_a?(Field::Reference) }
       fields.each do |field|
@@ -391,7 +391,7 @@ class Dump::SqlDump < ::Dump
 
   def dump_single_choices(cat)
     alters = render_comment("Single choices")
-    cat.items.each do |item|
+    cat.items.find_each do |item|
       # Single references and choices
       fields = item.item_type.fields.select { |field| !field.multiple? && field.is_a?(Field::ChoiceSet) }
       fields.each do |field|
@@ -448,7 +448,7 @@ class Dump::SqlDump < ::Dump
 
   def dump_references_multiple_reference(cat)
     alters = render_comment("Mulitple references")
-    cat.items.each do |item|
+    cat.items.find_each do |item|
       # Multiple references
       fields = item.item_type.fields.select { |field| field.multiple? && field.is_a?(Field::Reference) }
       fields.each do |field|
@@ -500,7 +500,7 @@ class Dump::SqlDump < ::Dump
 
   def dump_references_multiple_choiceset(cat)
     alters = render_comment("Mulitple choicesets")
-    cat.items.each do |item|
+    cat.items.find_each do |item|
       # Multiple choices
       fields = item.item_type.fields.select { |field| field.multiple? && field.is_a?(Field::ChoiceSet) }
       fields.each do |field|
@@ -608,7 +608,7 @@ class Dump::SqlDump < ::Dump
     when :integer
       value
     when :json
-      "'#{value.to_json.to_s.gsub("'") { "\\'" }.gsub('\\t') { 't' }}'"
+      "'#{value.to_json.to_s.gsub("'") { "\\'" }.gsub('\\t') { 't' }.gsub('"') { '\\"' }}'"
     when :datetime
       "'#{value.utc.to_s.gsub(' UTC', '')}'"
     else

@@ -71,7 +71,7 @@ class Field::Image < ::Field::File
       end
     end
 
-    images.to_json
+    images.to_json.gsub("'") { "\\'" }
   end
 
   def sql_type
@@ -88,8 +88,8 @@ class Field::Image < ::Field::File
 
   def add_image_hash(images, image, item)
     format_path_for_export(image["path"], item)
-    img = { :path => image["path"].gsub("'") { "\'" } }
-    img[:legend] = image["legend"].gsub("'") { "\'" } if image["legend"].present?
+    img = { :path => image["path"] }
+    img[:legend] = image["legend"].gsub("\"") { "\\\"" } if image["legend"].present?
 
     images << img
   end

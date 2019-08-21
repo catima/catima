@@ -65,11 +65,11 @@ class Field::Editor < ::Field
     false
   end
 
-  def field_value_for_all_item(item)
+  def csv_value(item)
     field_value_for_item(item)
   end
 
   def sql_type
-    "VARCHAR(255)"
+    "VARCHAR(512)"
   end
 end

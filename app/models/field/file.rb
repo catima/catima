@@ -70,7 +70,7 @@ class Field::File < ::Field
     false
   end
 
-  def field_value_for_all_item(item)
+  def csv_value(item)
     value = super
 
     if value.is_a?(Hash)

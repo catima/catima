@@ -121,7 +121,7 @@ class Field::Text < ::Field
   def sql_value(item)
     value = value_for_item(item)
 
-    return field_value_for_all_item(item).to_s.gsub("'") { "\\'" } if formatted?
+    return csv_value(item).to_s.gsub("'") { "\\'" } if formatted?
 
     return value['_translations'].to_s.gsub("'") { "\\'" } if i18n?
 

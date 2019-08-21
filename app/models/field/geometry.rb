@@ -60,7 +60,7 @@ class Field::Geometry < ::Field
     layers.present? ? JSON.parse(layers) : []
   end
 
-  def field_value_for_all_item(_it)
+  def csv_value(_item)
     return if super.blank?
 
     super["features"].map do |f|
@@ -68,7 +68,7 @@ class Field::Geometry < ::Field
     end.join("; ")
   end
 
-  def sql_value(_it)
+  def sql_value(_item)
     return if super.blank?
 
     coordinates = []
