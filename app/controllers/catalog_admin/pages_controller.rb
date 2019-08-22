@@ -39,8 +39,12 @@ class CatalogAdmin::PagesController < CatalogAdmin::BaseController
   def destroy
     find_page
     authorize(@page)
-    @page.destroy
-    redirect_to(catalog_admin_pages_path, :notice => destroyed_message)
+    if @page.id == catalog.custom_root_page_id
+      redirect_to(catalog_admin_pages_path, :alert => error_message)
+    else
+      @page.destroy
+      redirect_to(catalog_admin_pages_path, :notice => destroyed_message)
+    end
   end
 
   private
@@ -69,6 +73,10 @@ class CatalogAdmin::PagesController < CatalogAdmin::BaseController
 
   def destroyed_message
     "Page “#{@page.slug}” has been deleted."
+  end
+
+  def error_message
+    "The page “#{@page.slug}” is the custom root page of this catalog. You cannot delete it."
   end
 
   def after_create_path
