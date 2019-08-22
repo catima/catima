@@ -40,7 +40,7 @@ class SQLExport::Holder
               model.id
             else
               # 10 is an arbitraty value
-              model.uuid.truncate(10, omission: '')
+              model.uuid.truncate(10, :omission => '')
             end
 
     tables.key("#{index}_#{model.class.name}_#{model.public_send(method)}")
