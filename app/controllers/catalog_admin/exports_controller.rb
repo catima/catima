@@ -8,7 +8,7 @@ class CatalogAdmin::ExportsController < CatalogAdmin::BaseController
 
   def create
     category = find_category
-    build_export(catalog)
+    build_export(catalog, category)
     authorize(@export)
     export = Export.create(
       user: current_user,
@@ -17,7 +17,7 @@ class CatalogAdmin::ExportsController < CatalogAdmin::BaseController
       status: "processing"
     )
     export.export_catalog(params[:locale])
-    redirect_back fallback_location: catalog_admin_exports_path, :alert => @message
+    redirect_to(catalog_admin_exports_path)
   end
 
   def download
@@ -28,10 +28,11 @@ class CatalogAdmin::ExportsController < CatalogAdmin::BaseController
 
   private
 
-  def build_export(catalog)
+  def build_export(catalog, category=nil)
     @export = Export.new do |model|
       model.catalog = catalog
       model.user = current_user
+      model.category = category
     end
   end
 
@@ -49,7 +50,8 @@ class CatalogAdmin::ExportsController < CatalogAdmin::BaseController
   end
 
   def find_category(category=request[:category])
-    @message = t(".invalid_category") unless Export::CATEGORY_OPTIONS.include? category
+    raise Pundit::NotAuthorizedError unless Export::CATEGORY_OPTIONS.include? category
+
     category
   end
 
