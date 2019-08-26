@@ -15,9 +15,9 @@ class CatalogLoadStructure
   private
 
   def load_categories(catalog, categories_file)
+    @categories = []
     return unless File.exist?(categories_file)
 
-    @categories = []
     File.open(categories_file) do |f|
       JSON.parse(f.read)['categories'].each do |cat_info|
         cat = load_category(catalog, cat_info)
