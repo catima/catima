@@ -20,4 +20,12 @@ module CatalogAdmin::ExportsHelper
     badge = export.validity? ? { :label => t("valid"), :type => "success" } : { :label => t("expired"), :type => "danger" }
     content_tag(:span, badge[:label], class: "label label-#{badge[:type]}")
   end
+
+  def available_categories
+    # Only system admins can create sql & csv exports
+    return Export::CATEGORY_OPTIONS if current_user.system_admin?
+
+    # Catalog admins are restricted to the catima format
+    Export::CATEGORY_OPTIONS.select { |cat| cat.eql? "catima" }
+  end
 end

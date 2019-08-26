@@ -47,3 +47,17 @@ one_error:
   catalog: one
   category: "catima"
   status: "error"
+
+one_csv:
+  id: 6
+  user: one_admin
+  catalog: one
+  category: "csv"
+  status: "ready"
+
+one_sql:
+  id: 7
+  user: one_admin
+  catalog: one
+  category: "sql"
+  status: "ready"
