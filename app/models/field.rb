@@ -337,7 +337,7 @@ class Field < ApplicationRecord
 
   def sql_unique
     # MEDIUMTEXT can't be unique because MySQL doesn't know how many characters it has
-    "UNIQUE" if unique && sql_type != "MEDIUMTEXT"
+    "UNIQUE" if unique && sql_type != "MEDIUMTEXT" && sql_type != "JSON"
   end
 
   def sql_default

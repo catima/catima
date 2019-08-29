@@ -81,6 +81,11 @@ class Dump::SqlDump < ::Dump
       creates << dump_create_categories_table(category)
     end
 
+    creates << render_comment("Additional tables ==> multiple references fields of Categories")
+    cat.categories.each do |category|
+      creates << dump_create_multiple_category_reference_table(category)
+    end
+
     creates << render_comment("Additional tables ==> multiple choicesets fields of Categories")
     cat.categories.each do |category|
       creates << dump_create_multiple_category_choiceset_table(category)
@@ -219,6 +224,23 @@ class Dump::SqlDump < ::Dump
 
     table_name = @holder.guess_table_name(category, "name")
     create_table(table_name, columns)
+  end
+
+  def dump_create_multiple_category_reference_table(category)
+    tables = ""
+    category.fields.select { |f| f.multiple? && f.is_a?(Field::Reference) }.each do |field|
+      one_referenced_item = Item.where("data->>'#{field.uuid}' IS NOT NULL").first
+      next if one_referenced_item.nil?
+
+      columns = "`#{one_referenced_item.item_type.slug}` #{convert_app_type_to_sql_type(nil)},"
+      column_name = "#{field.sql_slug}_#{field.related_item_type.sql_slug}"
+      columns << "`#{column_name}` #{convert_app_type_to_sql_type(nil)}"
+
+      table_name = @holder.guess_table_name(field, "sql_slug")
+      tables << create_table(table_name, columns)
+    end
+
+    tables
   end
 
   def dump_create_multiple_category_choiceset_table(category)
@@ -416,6 +438,8 @@ class Dump::SqlDump < ::Dump
   def dump_single_references(cat)
     alters = render_comment("Single references")
     cat.items.find_each do |item|
+      next unless item.item_type.active?
+
       # Single references and choices
       fields = item.item_type.fields.select { |field| !field.multiple? && field.is_a?(Field::Reference) }
       fields.each do |field|
