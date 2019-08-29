@@ -487,8 +487,6 @@ de:
         format: "Format"
         status: "Status"
         validity: "Gültigkeit"
-      create:
-        invalid_category: "Exportformat ungültig"
 
     advanced_search_configurations:
       index:

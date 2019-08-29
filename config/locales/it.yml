@@ -418,8 +418,7 @@ it:
         format: "Formato"
         status: "Stato"
         validity: "Validità"
-      create:
-        invalid_category: "Formato di esportazione non valido"
+
     advanced_search_configurations:
       index:
         advanced_search_configurations: Configurazioni di ricerca

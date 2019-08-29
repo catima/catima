@@ -524,8 +524,6 @@ en:
         format: "Format"
         status: "Status"
         validity: "Validity"
-      create:
-        invalid_category: "Export format invalid"
 
     advanced_search_configurations:
       index:
