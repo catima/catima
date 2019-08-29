@@ -416,6 +416,8 @@ class Dump::SqlDump < ::Dump
   def dump_single_references(cat)
     alters = render_comment("Single references")
     cat.items.find_each do |item|
+      next unless item.item_type.active?
+
       # Single references and choices
       fields = item.item_type.fields.select { |field| !field.multiple? && field.is_a?(Field::Reference) }
       fields.each do |field|
