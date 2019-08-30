@@ -28,6 +28,11 @@ Rails.application.routes.draw do
   end
 
   # ===========================================================================
+  # Maintenance mode
+
+  get :maintenance, to: 'maintenance#show'
+
+  # ===========================================================================
   # Devise, favorites & group memberships
 
   scope :path => ":locale" do

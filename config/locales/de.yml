@@ -40,6 +40,10 @@ de:
   xref_field: Xref-Feld
   slug_help_text: "Nur Kleinbuchstaben, Zahlen und Bindestriche. Keine akzentuierten Zeichen."
   add_another: "Erstellen und fügen Sie einen weiteren hinzu"
+  maintenance:
+    show:
+      title: Geplante Aktualisierung heute
+      subtitle: Catima ist aufgrund eines geplanten Upgrades vorübergehend nicht verfügbar. Bitte kommen Sie später wieder.
   advanced_searches:
     menu: Erweiterte Suche
     fields:

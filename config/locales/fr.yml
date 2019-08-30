@@ -55,6 +55,10 @@ fr:
   xref_field: Champ Xref
   slug_help_text: "Minuscules, chiffres et traits d'union seulement. Pas de caractères accentués."
   add_another: "Créer et ajouter un autre"
+  maintenance:
+    show:
+      title: Mise à jour prévue aujourd'hui
+      subtitle: Catima est temporairement indisponible en raison d'une mise à jour prévue. Revenez plus tard, s'il vous plaît.
   advanced_searches:
     menu: Recherches avancées
     fields:

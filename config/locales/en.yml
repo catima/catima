@@ -55,6 +55,10 @@ en:
   xref_field: Xref field
   slug_help_text: "Lower case letters, numbers, and hyphens only. No accented characters."
   add_another: "Create and add another"
+  maintenance:
+    show:
+      title: Planned Upgrade Today
+      subtitle: Catima is temporarily unavailable due to a planned upgrade. Please come back later.
   advanced_searches:
     menu: Advanced searches
     fields:

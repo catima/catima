@@ -1,5 +1,7 @@
 class ApplicationController < ActionController::Base
   include Pundit
+  include FriendlyForwarding
+  include MaintenanceMode
 
   protect_from_forgery :with => :exception
 
