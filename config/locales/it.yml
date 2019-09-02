@@ -40,6 +40,10 @@ it:
   xref_field: Campo Xref
   slug_help_text: "Solo lettere minuscole, numeri e trattini. Nessun personaggio accentato."
   add_another: "Crea e aggiungi un altro"
+  maintenance:
+    show:
+      title: Aggiornamento pianificato oggi
+      subtitle: Catima è temporaneamente indisponibile a causa di un aggiornamento programmato. Vi preghiamo di tornare più tardi.
   advanced_searches:
     menu: Ricerche avanzate
     fields:
