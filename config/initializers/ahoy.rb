@@ -11,6 +11,11 @@ class Ahoy::Store < Ahoy::DatabaseStore
     super(data)
   end
 
+  def authenticate(data)
+    # GDPR Compliance
+    # Disables automatic linking of visits and users
+  end
+
   private
 
   def enabled?
@@ -32,3 +37,11 @@ Ahoy.user_agent_parser = :device_detector
 Ahoy.bot_detection_version = 2
 
 Ahoy.geocode = false
+
+# GDPR Compliance
+# Masks IP addresses
+Ahoy.mask_ips = true
+
+# GDPR Compliance
+# Switches from cookies to anonymity sets
+Ahoy.cookies = false
