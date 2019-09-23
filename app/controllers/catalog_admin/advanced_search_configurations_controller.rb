@@ -104,6 +104,8 @@ class CatalogAdmin::AdvancedSearchConfigurationsController < CatalogAdmin::BaseC
       permitted_params << "title_#{locale}".to_sym
     end
 
+    custom_attributes = @advanced_search_conf.present? ? @advanced_search_conf.custom_container_permitted_attributes : nil
+
     params.require(:advanced_search_configuration).permit(
       :title,
       :description,
@@ -111,6 +113,7 @@ class CatalogAdmin::AdvancedSearchConfigurationsController < CatalogAdmin::BaseC
       :item_type,
       :field,
       :field_position,
+      custom_attributes,
       permitted_params)
   end
 

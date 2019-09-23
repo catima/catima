@@ -60,6 +60,29 @@ class Field::Geometry < ::Field
     layers.present? ? JSON.parse(layers) : []
   end
 
+  def csv_value(_item)
+    return if super.blank?
+
+    super["features"].map do |f|
+      "#{f['geometry']['coordinates'][1]},#{f['geometry']['coordinates'][0]}"
+    end.join("; ")
+  end
+
+  def sql_value(_item)
+    return if super.blank?
+
+    coordinates = []
+    super["features"].map do |f|
+      coordinates << { :lat => f['geometry']['coordinates'][1], :lon => f['geometry']['coordinates'][0] }
+    end
+
+    coordinates.to_json
+  end
+
+  def sql_type
+    "JSON"
+  end
+
   private
 
   def build_validators

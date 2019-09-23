@@ -20,10 +20,13 @@ class ItemType < ApplicationRecord
   include HasFields
   include HasTranslations
   include HasSlug
+  include HasSqlSlug
 
   has_many :items
   has_many :item_views, :dependent => :destroy
   has_many :menu_items, :dependent => :destroy
+  has_many :advanced_search_configurations, :dependent => :destroy
+
   store_translations :name, :name_plural
   validates_slug :scope => [:catalog_id, :deactivated_at]
 

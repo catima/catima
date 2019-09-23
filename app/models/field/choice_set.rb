@@ -179,6 +179,17 @@ class Field::ChoiceSet < ::Field
     choices_as_options
   end
 
+  def csv_value(it)
+    return selected_choices(it).map(&:short_name).join('; ') if multiple?
+
+    ch = selected_choice(it)
+    ch.nil? ? '' : ch.short_name
+  end
+
+  def sql_type
+    "INT"
+  end
+
   private
 
   # Should return true if the choice set holds a choice linked to

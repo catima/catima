@@ -12,7 +12,7 @@
 #
 
 class Export < ApplicationRecord
-  CATEGORY_OPTIONS = %w(catima).freeze
+  CATEGORY_OPTIONS = %w(catima sql csv).freeze
   STATUS_OPTIONS = %w(error processing ready).freeze
 
   belongs_to :user
@@ -23,8 +23,6 @@ class Export < ApplicationRecord
 
   validates_inclusion_of :category, :in => CATEGORY_OPTIONS
   validates_inclusion_of :status, :in => STATUS_OPTIONS
-
-  after_commit :export_catalog, on: :create
 
   def pathname
     ext = Rails.env.test? ? "test" : "zip"
@@ -47,7 +45,7 @@ class Export < ApplicationRecord
     ENV["EXPORTS_VALIDITY"].present? ? Integer(ENV["EXPORTS_VALIDITY"]).days : 7.days
   end
 
-  def export_catalog
-    ExportWorker.perform_async(id, category)
+  def export_catalog(locale)
+    ExportWorker.perform_async(id, category, locale)
   end
 end

@@ -73,7 +73,8 @@ CREATE TABLE public.advanced_search_configurations (
     search_type character varying DEFAULT 'default'::character varying,
     fields jsonb DEFAULT '{}'::jsonb,
     created_at timestamp without time zone NOT NULL,
-    updated_at timestamp without time zone NOT NULL
+    updated_at timestamp without time zone NOT NULL,
+    options jsonb
 );
 
 
@@ -1398,14 +1399,6 @@ ALTER TABLE ONLY public.pages
 
 
 --
--- Name: schema_migrations schema_migrations_pkey; Type: CONSTRAINT; Schema: public; Owner: -
---
-
-ALTER TABLE ONLY public.schema_migrations
-    ADD CONSTRAINT schema_migrations_pkey PRIMARY KEY (version);
-
-
---
 -- Name: searches searches_pkey; Type: CONSTRAINT; Schema: public; Owner: -
 --
 
@@ -1851,6 +1844,13 @@ CREATE UNIQUE INDEX index_users_on_reset_password_token ON public.users USING bt
 
 
 --
+-- Name: unique_schema_migrations; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE UNIQUE INDEX unique_schema_migrations ON public.schema_migrations USING btree (version);
+
+
+--
 -- Name: catalog_permissions fk_rails_025bd80d15; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
@@ -2256,4 +2256,6 @@ INSERT INTO "schema_migrations" (version) VALUES
 ('20190215124856'),
 ('20190215125849'),
 ('20190404113244');
-('20190529123835');
+('20190529123835'),
+('20190529125845'),
+('20190812114658');

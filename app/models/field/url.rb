@@ -33,6 +33,10 @@
 #
 
 class Field::URL < ::Field
+  def sql_type
+    "VARCHAR(512)"
+  end
+
   private
 
   def build_validators

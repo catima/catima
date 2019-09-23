@@ -78,7 +78,7 @@ class Choice < ApplicationRecord
 
     fields
   end
-
+  
   # Used in the advanced search
   def children_as_options
     options = {
@@ -133,5 +133,17 @@ class Choice < ApplicationRecord
   def locale_synonyms(choice)
     synonyms = choice.synonyms&.map { |s| s[I18n.locale.to_s] }
     synonyms&.join(", ")
+  end
+  
+  def self.sql_columns
+    columns = {}
+
+    Choice.columns_hash.each do |column_name, column|
+      next if %w[choice_set_id long_name_old short_name_old catalog_id category_id].include?(column_name)
+
+      columns[column_name] = column
+    end
+
+    columns
   end
 end

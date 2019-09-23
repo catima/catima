@@ -69,4 +69,59 @@ class Field::File < ::Field
   def allows_unique?
     false
   end
+
+  def csv_value(item)
+    value = super
+
+    if value.is_a?(Hash)
+      process_single_file(value, item)
+    elsif value.is_a?(Array)
+      process_multiple_files(value, item)
+    end
+  end
+
+  def sql_value(item)
+    value = super
+
+    files = []
+    if value.is_a?(Hash) && value["path"].present?
+      value["path"] = value["path"].gsub("upload/#{item.catalog.slug}", "files")
+      files << { :path => value["path"].gsub("'") { "\'" } }
+    elsif value.is_a?(Array) && value.present?
+      value.map do |f|
+        next if f["path"].blank?
+
+        f["path"] = f["path"].gsub("upload/#{item.catalog.slug}", "files")
+        files << { :path => f["path"].gsub("'") { "\'" } }
+      end
+    end
+
+    files.to_json
+  end
+
+  def sql_type
+    "JSON"
+  end
+
+  private
+
+  def format_path_for_export(path, item)
+    path.gsub!("upload/#{item.catalog.slug}", "files")
+  end
+
+  def process_single_file(value, item)
+    return if value["path"].blank?
+
+    format_path_for_export(value["path"], item)
+  end
+
+  def process_multiple_files(values, item)
+    return if values.blank?
+
+    values.map do |i|
+      next if i["path"].blank?
+
+      format_path_for_export(i["path"], item)
+    end.join('; ')
+  end
 end

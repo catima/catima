@@ -7,9 +7,9 @@
       <span class="caret"></span>
     </button>
     <ul class="dropdown-menu dropdown-menu-right" aria-labelledby="add-field-dropdown">
-      <% Export::CATEGORY_OPTIONS.each do |format| %>
+      <% available_categories.each do |format| %>
         <li>
-          <%= link_to(format.capitalize, catalog_admin_exports_path(:category => format), method: :post) %>
+          <%= link_to(format.capitalize, catalog_admin_exports_path(:category => format, :locale => params[:locale]), method: :post) %>
         </li>
       <% end %>
     </ul>

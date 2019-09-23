@@ -29,18 +29,10 @@ class ItemList::AdvancedSearchResult < ItemList
       geometry_aware_items = unpaginaged_items.reject { |it| it.data[field.uuid].blank? }
 
       return geometry_aware_items.map do |item|
-        # TODO: part 3 : display only fields that have been selected to be displayed in the advanced search configuration
-        popup_content = ApplicationController.render(
-          :partial => 'shared/modals/map_popup_content',
-          :assigns => {
-            :item => item
-          }
-        )
-
         next if item.data[field.uuid]["features"].blank?
 
         item.data[field.uuid]["features"].each_with_index do |_feat, i|
-          item.data[field.uuid]["features"][i]["properties"]["popupContent"] = popup_content
+          item.data[field.uuid]["features"][i]["properties"]["id"] = item.id
           item.data[field.uuid]["features"]
         end
       end

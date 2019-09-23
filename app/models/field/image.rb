@@ -57,11 +57,40 @@ class Field::Image < ::Field::File
     ENV["IMAGE_MAX_UPLOAD_SIZE"].present? ? Integer(ENV["IMAGE_MAX_UPLOAD_SIZE"]) : 15
   end
 
+  def sql_value(item)
+    value = raw_value(item)
+
+    images = []
+    if value.is_a?(Hash) && value["path"].present?
+      images = add_image_hash(images, value, item)
+    elsif value.is_a?(Array) && value.present?
+      value.map do |i|
+        next if i["path"].blank?
+
+        images = add_image_hash(images, i, item)
+      end
+    end
+
+    images.to_json.gsub("'") { "\\'" }
+  end
+
+  def sql_type
+    "JSON"
+  end
+
   private
 
   def set_default_types
     return if persisted? || types.present?
 
     self.types = "jpg, jpeg, png, gif"
+  end
+
+  def add_image_hash(images, image, item)
+    format_path_for_export(image["path"], item)
+    img = { :path => image["path"] }
+    img[:legend] = image["legend"].gsub("\"") { "\\\"" } if image["legend"].present?
+
+    images << img
   end
 end

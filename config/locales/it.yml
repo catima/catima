@@ -40,6 +40,10 @@ it:
   xref_field: Campo Xref
   slug_help_text: "Solo lettere minuscole, numeri e trattini. Nessun personaggio accentato."
   add_another: "Crea e aggiungi un altro"
+  maintenance:
+    show:
+      title: Aggiornamento pianificato oggi
+      subtitle: Catima è temporaneamente indisponibile a causa di un aggiornamento programmato. Vi preghiamo di tornare più tardi.
   advanced_searches:
     menu: Ricerche avanzate
     fields:
@@ -418,8 +422,7 @@ it:
         format: "Formato"
         status: "Stato"
         validity: "Validità"
-      create:
-        invalid_category: "Formato di esportazione non valido"
+
     advanced_search_configurations:
       index:
         advanced_search_configurations: Configurazioni di ricerca
@@ -436,6 +439,7 @@ it:
         submit: Modificare
       common_form_fields:
         search_display_type: Tipo di ricerca visualizzata
+        layers: Additional layers
     fields:
       geometry_option_inputs:
         bounds: Estensione spaziale predefinita

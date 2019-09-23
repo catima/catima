@@ -34,6 +34,7 @@
       <% end %>
     </tbody>
   </table>
+  <%= hidden_field_tag(:advanced_search_conf, params[:advanced_search_conf]) %>
   <%= f.primary(t("advanced_searches.new.submit")) %>
   <%= link_to(
         t("advanced_searches.new.start_over"),

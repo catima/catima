@@ -55,6 +55,10 @@ fr:
   xref_field: Champ Xref
   slug_help_text: "Minuscules, chiffres et traits d'union seulement. Pas de caractères accentués."
   add_another: "Créer et ajouter un autre"
+  maintenance:
+    show:
+      title: Mise à jour prévue aujourd'hui
+      subtitle: Catima est temporairement indisponible en raison d'une mise à jour prévue. Revenez plus tard, s'il vous plaît.
   advanced_searches:
     menu: Recherches avancées
     fields:
@@ -527,8 +531,6 @@ fr:
         format: "Format"
         status: "Statut"
         validity: "Validité"
-      create:
-        invalid_category: "Format d'exportation invalide"
 
     advanced_search_configurations:
       index:
@@ -546,6 +548,7 @@ fr:
         submit: Modifier
       common_form_fields:
         search_display_type: Type d'affichage de la recherche
+        layers: Calques supplémentaires
     fields:
       choice_set_modals:
         create_new_choice_set: Créer nouvel ensemble de choix

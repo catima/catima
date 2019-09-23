@@ -100,7 +100,7 @@ class Field::Reference < ::Field
     if multiple?
       refs.map(&:default_display_name).join(', ')
     else
-      refs.nil? ? nil : refs.default_display_name
+      refs.nil? ? '' : refs.default_display_name
     end
   end
 
@@ -114,5 +114,15 @@ class Field::Reference < ::Field
 
   def search_conditions_as_hash
     []
+  end
+
+  def csv_value(item)
+    return '' if related_item_type.is_a?(Category)
+
+    field_value_for_item(item)
+  end
+
+  def sql_type
+    "INT"
   end
 end

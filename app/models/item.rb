@@ -105,10 +105,10 @@ class Item < ApplicationRecord
     end
   end
 
-  # True if this item has an image as one of its list view fields.
+  # True if this item has a public displayable image as one of its fields.
   def image?
-    list_view_fields.any? do |f|
-      next unless f.is_a?(Field::Image)
+    fields.any? do |f|
+      next unless f.is_a?(Field::Image) && f.display_in_public_list
 
       f.file_count(self) > 0
     end

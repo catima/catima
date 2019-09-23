@@ -40,6 +40,10 @@ de:
   xref_field: Xref-Feld
   slug_help_text: "Nur Kleinbuchstaben, Zahlen und Bindestriche. Keine akzentuierten Zeichen."
   add_another: "Erstellen und fügen Sie einen weiteren hinzu"
+  maintenance:
+    show:
+      title: Geplante Aktualisierung heute
+      subtitle: Catima ist aufgrund eines geplanten Upgrades vorübergehend nicht verfügbar. Bitte kommen Sie später wieder.
   advanced_searches:
     menu: Erweiterte Suche
     fields:
@@ -488,8 +492,6 @@ de:
         format: "Format"
         status: "Status"
         validity: "Gültigkeit"
-      create:
-        invalid_category: "Exportformat ungültig"
 
     advanced_search_configurations:
       index:
@@ -506,6 +508,7 @@ de:
         submit: Modifizieren
       common_form_fields:
         search_display_type: Art der Suchanzeige
+        layers: Additional layers
     fields:
       choice_set_modals:
         create_new_choice_set: Create new choice set
