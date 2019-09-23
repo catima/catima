@@ -32,7 +32,7 @@ class CatalogAdmin::ChoiceSynonymsController < CatalogAdmin::BaseController
         choice.synonyms << synonym
       end
 
-      choice.save
+      choice.save!
       updated_choices << choice
     end
 

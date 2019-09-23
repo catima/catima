@@ -9,7 +9,8 @@ class ChoiceSetInput extends Component {
     super(props);
 
     this.state = {
-      componentsList: []
+      componentsList: [],
+      missingChoiceTranslations: false
     };
 
     this.nextUniqueId = 0;
@@ -64,6 +65,19 @@ class ChoiceSetInput extends Component {
               var currentData = this.props.data.choices[i];
 
               var newComponent = currentData;
+
+              // We manually fill the choices without translation
+              if (Object.keys(newComponent.short_name_translations).length !== this.props.available_locales) {
+                this.props.available_locales.forEach((lang) => {
+                  if (!newComponent.short_name_translations['short_name_' + lang]) {
+                    this.setState({ missingChoiceTranslations: true });
+                    newComponent.short_name_translations['short_name_' + lang] = '';
+                  }
+                  if (!newComponent.long_name_translations['long_name_' + lang]) {
+                    newComponent.long_name_translations['long_name_' + lang] = '';
+                  }
+                });
+              }
 
               newComponent.id = counter;
               newComponent.hidden_input_name = this._buildHiddenInputName({}, counter, false);
@@ -743,6 +757,13 @@ class ChoiceSetInput extends Component {
   render() {
     return (
       <div className="choiceset-input-container">
+        {this.state.missingChoiceTranslations &&
+          <div className="row alert alert-danger" >
+            <div className="col-md-12">
+              { this.props.missingChoiceTranslationWarning }
+            </div>
+          </div>
+        }
         <div className="row"><div className="col-md-12"><label>{ this.props.choiceNameLabel }</label></div></div>
         <div className="row">
           <div className="col-md-4"><label>{ this.props.shortNameLabel }</label></div>

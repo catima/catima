@@ -429,6 +429,7 @@ de:
         long_name_optional: 'Long name (optional)'
         category_optional: 'Category (optional)'
         add_choice: 'Add choice'
+        missing_choice_translation: Bitte füllen Sie alle Auswahlmöglichkeiten aus, bevor Sie neue Synonyme hinzufügen.
       edit:
         edit_choice_set: Edit choice set
         update_choice_set: Update choice set

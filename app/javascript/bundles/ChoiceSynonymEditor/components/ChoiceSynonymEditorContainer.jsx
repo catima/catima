@@ -12,11 +12,30 @@ class ChoiceSynonymEditorContainer extends Component {
 
     this.addSynonym = this._addSynonym.bind(this);
     this.deleteSynonym = this._deleteSynonym.bind(this);
+    this.initSynonyms = this._initSynonyms.bind(this);
   }
 
   componentDidMount(){
-      this.setState({ choices: this.props.choices });
-      this.setState({ synonyms: this.props.synonyms });
+    this.initSynonyms();
+
+    this.setState({ choices: this.props.choices });
+  }
+
+  _initSynonyms() {
+    let languagesCount = this.props.available_languages.length;
+    let synonyms = this.props.synonyms;
+
+    synonyms.forEach((choice_synonyms) => {
+      if (Object.keys(choice_synonyms.synonym).length !== languagesCount) {
+        this.props.available_languages.forEach(language => {
+          if (!choice_synonyms.synonym[language]) {
+            choice_synonyms.synonym[language] = '';
+          }
+        });
+      }
+    });
+
+    this.setState({ synonyms: synonyms });
   }
 
   _addSynonym(){
@@ -39,9 +58,9 @@ class ChoiceSynonymEditorContainer extends Component {
 
   renderSynonymComponent(item, index, list){
       return (
-        <div>
+        <div
+          key={"choice_synonym_editor_" + index}>
           <ChoiceSynonymEditor
-            key={index}
             synonym={item}
             position={index}
             choices={list}

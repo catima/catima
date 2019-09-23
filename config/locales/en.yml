@@ -465,6 +465,7 @@ en:
         long_name_optional: 'Long name (optional)'
         category_optional: 'Category (optional)'
         add_choice: 'Add choice'
+        missing_choice_translation: Please fill in all the choices short name translations before adding new synonyms
       edit:
         edit_choice_set: Edit choice set
         update_choice_set: Update choice set

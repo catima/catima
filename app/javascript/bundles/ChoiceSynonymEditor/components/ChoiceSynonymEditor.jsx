@@ -152,7 +152,7 @@ class ChoiceSynonymEditor extends Component {
                 <div className="row">
                     { this.state.synonym.synonym && Object.keys(this.state.synonym.synonym).map((key) => {
                         return (
-                            <div key={key} className="col-md-6">
+                          <div key={"choice_synonym_" + this.state.synonym.choice_option.key + key} className="col-md-6">
                                 { Object.keys(this.state.synonym.synonym).length > 1 && this.renderMultiLangSynonymComponent(key, this.state.synonym.choice_id) }
                                 { Object.keys(this.state.synonym.synonym).length === 1 && this.renderSynonymComponent(key, this.state.synonym.choice_id) }
                             </div>
