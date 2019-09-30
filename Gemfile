@@ -55,7 +55,7 @@ gem "sinatra", github: "sinatra/sinatra", branch: "master"
 gem "sprockets"
 gem "sprockets-rails"
 gem "summernote-rails"
-gem "rubyzip", "~> 1.2.2"
+gem "rubyzip", "~> 1.3.0"
 gem "webpacker", "~> 4.0.2"
 gem "zaru"
 
