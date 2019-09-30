@@ -302,7 +302,7 @@ class AdvancedSearch::ReferenceFieldTest < ActionDispatch::IntegrationTest
       find(".select__input input", :wait => 30).set("old")
     end
 
-    find('.select__option--is-focused', text: "Very Old", match: :first).click
+    find('.select__option--is-focused', text: "Very Old", match: :first, :wait => 90).click
 
     click_on("Search")
 

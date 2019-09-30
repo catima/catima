@@ -68,10 +68,10 @@ class AdvancedSearch::ChoiceSetFieldTest < ActionDispatch::IntegrationTest
     end
 
     within(".select__menu") do
-      all("div")[1].click
+      find(".select__option", text: "Language origin", match: :first, wait: 10).click
     end
 
-    assert(page.has_selector?('input[name="advanced_search[criteria][one_author_language_uuid][0][category_criteria][exact]"]', wait: 10))
+    assert(page.has_selector?('input[name="advanced_search[criteria][one_author_language_uuid][0][category_criteria][exact]"]', wait: 90))
     fill_in(
       "advanced_search[criteria][one_author_language_uuid][0][category_criteria][exact]",
       :with => 'latin'
