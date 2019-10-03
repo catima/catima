@@ -47,7 +47,7 @@ gem "redis-namespace"
 gem "refile", github: "refile/refile", require: "refile/rails"
 gem "refile-mini_magick", github: "refile/refile-mini_magick"
 gem "rollbar"
-gem "sass-rails"
+gem "sassc-rails"
 gem "secure_headers"
 gem "select2-rails"
 gem "sidekiq"
@@ -102,7 +102,7 @@ group :development do
   gem "rb-fsevent", :require => false
   gem "rbnacl", :require => false
   gem "rbnacl-libsodium", :require => false
-  gem "rubocop", :require => false
+  gem "rubocop-rails", :require => false
   gem "ruby-progressbar", :require => false
   gem "spring"
   gem "sshkit", :require => false
