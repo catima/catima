@@ -17,6 +17,7 @@ before_install:
 before_script:
   - bundle exec bin/setup
   - yarn install
+  - git config --global url."https://".insteadOf git://
 script:
   - "NO_COVERAGE=1 bundle exec rake test:$TEST_SUITE"
 services:
