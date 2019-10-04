@@ -6,6 +6,9 @@ class ItemList
     "grid" => "items/grid"
   }.freeze
 
+  # Default number of items per page
+  PER = 24
+
   delegate :total_count, :to => :items
   delegate :empty?, :to => :unpaginaged_items
 
@@ -14,7 +17,7 @@ class ItemList
   def initialize(catalog, page, per)
     @catalog = catalog
     self.page = page
-    self.per = per || 24
+    self.per = per || PER
   end
 
   def more?
