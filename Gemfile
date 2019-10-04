@@ -1,3 +1,9 @@
+# Avoid git protocol not secure warning
+git_source(:github) do |repo_name|
+  repo_name = "#{repo_name}/#{repo_name}" unless repo_name.include?("/")
+  "https://github.com/#{repo_name}.git"
+end
+
 source "https://rubygems.org"
 
 gem "active_model_serializers", "~> 0.10.7"
@@ -132,8 +138,3 @@ group :test do
   gem "webmock"
 end
 
-# Avoid git protocol not secure warning
-git_source(:github) do |repo_name|
-  repo_name = "#{repo_name}/#{repo_name}" unless repo_name.include?("/")
-  "https://github.com/#{repo_name}.git"
-end
