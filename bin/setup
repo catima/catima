@@ -4,6 +4,7 @@ def setup!
   within_project_root do
     test "ruby -v" => ruby_version unless ENV['TRAVIS']
     run  "gem install bundler --no-document --conservative"
+    run  "bundle config --global github.https true"
     run  "bundle install"
     run  "bin/yarn install" if File.exist?("yarn.lock")
     run  "bundle exec overcommit --sign"
