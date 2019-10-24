@@ -81,7 +81,7 @@ class CatalogAdmin::ChoiceSetsController < CatalogAdmin::BaseController
   end
 
   def build_choice(params, position, parent)
-    choice = params["uuid"].present? ? Choice.find_by(:uuid => params["uuid"]) : Choice.new
+    choice = params["uuid"].present? ? Choice.find_or_initialize_by(:uuid => params["uuid"]) : Choice.new
     choice.assign_attributes(params)
     choice.row_order = position
     choice.parent = parent
