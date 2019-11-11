@@ -140,7 +140,7 @@ class CatalogAdmin::ItemsController < CatalogAdmin::BaseController
 
   def after_create_path
     case params[:commit]
-    when /another/i then { :action => "new" }
+    when I18n.t('add_another') then { :action => "new" }
     else { :action => "index" }
     end
   end
