@@ -1,11 +1,11 @@
 language: ruby
-dist: xenial
+dist: bionic
 cache:
   - yarn
   - bundler
 rvm:
   - 2.4.1
-  - 2.6.1
+  - 2.6.5
 env:
   # test/mailers, test/functional, test/controllers
   - TEST_SUITE=functionals
