@@ -33,7 +33,7 @@ gem "liquid-rails"
 gem "mail", ">= 2.7.0"
 gem "marco-polo"
 gem "mini_magick"
-gem "mini_racer", platforms: :ruby
+gem "mini_racer", '~> 0.2.6', platforms: :ruby
 gem "nokogiri"
 gem 'omniauth-oauth2'
 gem 'omniauth-facebook'
