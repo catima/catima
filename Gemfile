@@ -2,7 +2,7 @@ source "https://rubygems.org"
 
 gem "active_model_serializers", "~> 0.10.7"
 gem "active_type", ">= 0.7.5"
-gem "ahoy_matey", "~> 3.0.0"
+gem "ahoy_matey", "~> 3.0.1"
 gem "autoprefixer-rails", ">= 8.6.4"
 gem "bcrypt", "~> 3.1.13"
 gem "bootstrap-sass", "~> 3.4.1"
