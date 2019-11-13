@@ -16,7 +16,6 @@ class HomeTest < ActionDispatch::IntegrationTest
     with_customized_file(
       "test/custom/root.html.erb",
       "catalogs/root.html.erb") do
-
       visit("/")
       assert(page.has_content?(/this has been customized/i))
     end

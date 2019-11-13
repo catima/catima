@@ -13,7 +13,7 @@ gem "autoprefixer-rails", ">= 8.6.4"
 gem "bcrypt", "~> 3.1.13"
 gem "bootstrap-sass", "~> 3.4.1"
 gem "bootstrap_form", "~> 2.7.0"
-gem "chartkick", "~> 3.2.0"
+gem "chartkick", "~> 3.3.0"
 gem "cocoon"
 gem "coffee-rails", "~> 4.2.2"
 gem "devise", "~> 4.7"
@@ -44,7 +44,7 @@ gem "pg", "~> 1.1"
 gem "pg_search", "~> 2.2.0"
 gem "pgcli-rails", "~> 0.3.0"
 gem "pundit"
-gem "rails", "~> 5.2.2.0"
+gem "rails", "~> 5.2.3"
 gem "ranked-model"
 gem "react_on_rails", "~> 11.0.9"
 gem "recaptcha"
@@ -53,7 +53,7 @@ gem "redis-namespace"
 gem "refile", github: "refile/refile", require: "refile/rails"
 gem "refile-mini_magick", github: "refile/refile-mini_magick"
 gem "rollbar"
-gem "sass-rails"
+gem "sassc-rails"
 gem "secure_headers"
 gem "select2-rails"
 gem "sidekiq"
@@ -108,7 +108,7 @@ group :development do
   gem "rb-fsevent", :require => false
   gem "rbnacl", :require => false
   gem "rbnacl-libsodium", :require => false
-  gem "rubocop", :require => false
+  gem "rubocop-rails", :require => false
   gem "ruby-progressbar", :require => false
   gem "spring"
   gem "sshkit", :require => false

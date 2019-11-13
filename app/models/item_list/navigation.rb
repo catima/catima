@@ -48,7 +48,7 @@ class ItemList::Navigation
   private
 
   def window
-    @window ||= results.offset(window_offset).limit(11).to_a
+    @window ||= results.offset(window_offset).limit(ItemList::PER).to_a
   end
 
   def window_offset
