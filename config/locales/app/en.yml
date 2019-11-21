@@ -336,8 +336,8 @@ en:
   actions: 'Actions'
   duplicate: 'Duplicate'
   i18n: i18n
-  i18n_help: "With i18n enabled, editors will be able to specify a translation of this field for each language (%{languages})"
-  i18n_enable: "Enable i18n"
+  i18n_help: "With the multilingual option enabled, editors will be able to specify a translation of this field for each language (%{languages})"
+  i18n_enable: "Enable the multilingual option"
   formatted: Formatted
   legend_help: "If checked, a legend can be added to the image."
   legend_enable: "Add a legend"
@@ -610,6 +610,21 @@ en:
       xref_option_inputs:
         url: "Xref URL"
         url_help: "Full URL of the external service"
+      date_time_option_inputs:
+        months:
+          january: January
+          fabruary: February
+          march: March
+          april: April
+          may: May
+          june: June
+          july: July
+          august: August
+          september: September
+          october: October
+          november: November
+          december: December
+        define_thumbnail: Define Thumbnail
       edit:
         edit_field: "Edit %{field_set} “%{field}” field"
       index:

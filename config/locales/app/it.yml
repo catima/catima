@@ -464,6 +464,21 @@ it:
         public_list_view: 'Public mode?'
       editor_option_inputs:
         warning: <strong>Warning!</strong> Please note that this field will automatically show the editor's email address.
+      date_time_option_inputs:
+        months:
+          january: January
+          fabruary: February
+          march: March
+          april: April
+          may: May
+          june: June
+          july: July
+          august: August
+          september: September
+          october: October
+          november: November
+          december: December
+        define_thumbnail: Define Thumbnail
       index:
         add_field: "Add…"
 

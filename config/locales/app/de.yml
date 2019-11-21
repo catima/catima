@@ -572,6 +572,21 @@ de:
       xref_option_inputs:
         url: "Xref URL"
         url_help: "Full URL of the external service"
+      date_time_option_inputs:
+        months:
+          january: January
+          fabruary: February
+          march: March
+          april: April
+          may: May
+          june: June
+          july: July
+          august: August
+          september: September
+          october: October
+          november: November
+          december: December
+        define_thumbnail: Define Thumbnail
       edit:
         edit_field: "Edit %{field_set} “%{field}” field"
       index:

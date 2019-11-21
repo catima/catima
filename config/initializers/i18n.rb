@@ -1,5 +1,5 @@
 # The default locale is :en and all translations from config/locales/*.rb,yml are auto loaded.
-# config.i18n.load_path += Dir[Rails.root.join('my', 'locales', '*.{rb,yml}').to_s]
+Rails.application.config.i18n.load_path += Dir[Rails.root.join('config', 'locales', 'app', '*.{rb,yml}').to_s]
 
 # Add catalog specific translations from catalogs/:catalog_slug/locales/*.yml
 # This requires the database to exist. If it does not exist, we recover without

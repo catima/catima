@@ -38,4 +38,10 @@ ReactOnRails.configure do |config|
   # React components.
   #
   config.server_bundle_js_file = ""
+
+  # Path to the js locale files.
+  config.i18n_dir = Rails.root.join("app", "assets", "i18n")
+
+  # Path to the rails locale files.
+  config.i18n_yml_dir = Rails.root.join("config", "locales", "app")
 end

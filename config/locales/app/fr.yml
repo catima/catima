@@ -606,6 +606,21 @@ fr:
       xref_option_inputs:
         url: "URL Xref"
         url_help: "URL complète du service externe"
+      date_time_option_inputs:
+        months:
+          january: Janvier
+          fabruary: Février
+          march: Mars
+          april: Avril
+          may: Mai
+          june: Juin
+          july: Juillet
+          august: Août
+          september: Septembre
+          october: Octobre
+          november: Novembre
+          december: Décembre
+        define_thumbnail: Définir la vignette
       edit:
         edit_field: "Éditer champ %{field_set} “%{field}”"
       index:
