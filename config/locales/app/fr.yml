@@ -603,9 +603,34 @@ fr:
         has_formatted_text: "Contient du texte formaté"
         min_length: "Longueur minimale (optionnel)"
         max_length: "Longueur maximale (optionnel)"
+        add_footnote: Note de bas de page
+        enter_footnote: Entrer la note de bas de page
+        edit_footnote: Modifier la note de bas de page
+        add_endnote: Note en fin de texte
+        enter_endnote: Entrer la note en fin de texte
+        edit_endnote: Modifier la note en fin de texte
+        save_note: Sauver
+        import_docx: Importer un DOCX
+        import_error_not_supported: Erreur lors de l'importation du fichier Word. Seuls les fichiers DOCX sont supportés.
+        import_error: Erreur lors de l'importation du fichier Word.
       xref_option_inputs:
         url: "URL Xref"
         url_help: "URL complète du service externe"
+      date_time_option_inputs:
+        months:
+          january: Janvier
+          fabruary: Février
+          march: Mars
+          april: Avril
+          may: Mai
+          june: Juin
+          july: Juillet
+          august: Août
+          september: Septembre
+          october: Octobre
+          november: Novembre
+          december: Décembre
+        define_thumbnail: Définir la vignette
       edit:
         edit_field: "Éditer champ %{field_set} “%{field}”"
       index:

@@ -17,7 +17,7 @@ class CatalogAdmin::FieldsTest < ActionDispatch::IntegrationTest
 
     fill_in("Slug (singular)", :with => "birthplace")
     check("Use this as the primary field")
-    check("Enable i18n")
+    check("Enable the multilingual option")
     select("Single value – required", :from => "field[style]")
     fill_in("Minimum length (optional)", :with => 3)
     fill_in("Maximum length (optional)", :with => 50)

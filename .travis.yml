@@ -17,7 +17,6 @@ before_install:
   - sudo apt-get install -y imagemagick
 before_script:
   - bundle exec bin/setup
-  - yarn install
 script:
   - "NO_COVERAGE=1 bundle exec rake test:$TEST_SUITE"
 services:

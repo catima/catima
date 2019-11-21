@@ -1,15 +1,13 @@
 import 'es6-shim';
 import PropTypes from 'prop-types';
 import React from 'react';
+import Translations from '../../Translations/components/Translations';
 
 class DateTimeInput extends React.Component {
-
   static propTypes = {
     input: PropTypes.string.isRequired,
   };
-
   static defaultValues = {Y:"", M:"", D:"", h:"", m:"", s:""};
-
   static types = ["Y", "M", "h", "YM", "MD", "hm", "YMD", "hms", "MDh", "YMDh", "MDhm", "YMDhm", "MDhms", "YMDhms"];
 
   constructor(props){
@@ -28,7 +26,7 @@ class DateTimeInput extends React.Component {
     this.handleChangeMinutes = this._handleChangeMinutes.bind(this);
     this.handleChangeSeconds = this._handleChangeSeconds.bind(this);
 
-    this.isRequired = (document.querySelector(this.props.input).getAttribute('data-field-required') == 'true')
+    this.isRequired = (document.querySelector(this.props.input).getAttribute('data-field-required') === 'true')
   }
 
   componentDidMount() {
@@ -99,7 +97,7 @@ class DateTimeInput extends React.Component {
   }
 
   rawValueToDateTime(v){
-    const dt = new Date(v * 1000)
+    const dt = new Date(v * 1000);
     return {Y: dt.getFullYear(), M: dt.getMonth()+1, D: dt.getDate(), h: dt.getHours(), m: dt.getMinutes(), s: dt.getSeconds()};
   }
 
@@ -136,9 +134,9 @@ class DateTimeInput extends React.Component {
   }
 
   render(){
-    let dateValid = this.isCurrentFormatValid()
+    let dateValid = this.isCurrentFormatValid();
     let errorStl = dateValid ? {} : { border: "2px solid #f00" };
-    let errorMsg = dateValid ? "" : "Invalid value"
+    let errorMsg = dateValid ? "" : "Invalid value";
     let fmt = this.getFieldOptions().format;
     return (
       <div>
@@ -150,18 +148,42 @@ class DateTimeInput extends React.Component {
           {fmt.includes('M') ? (
             <select  style={errorStl} className="form-control" value={this.state.M} onChange={this.handleChangeMonth}>
               <option value=""></option>
-              <option value="1">January</option>
-              <option value="2">February</option>
-              <option value="3">March</option>
-              <option value="4">April</option>
-              <option value="5">May</option>
-              <option value="6">June</option>
-              <option value="7">July</option>
-              <option value="8">August</option>
-              <option value="9">September</option>
-              <option value="10">October</option>
-              <option value="11">November</option>
-              <option value="12">December</option>
+              <option value="1">
+                {Translations.messages['catalog_admin.fields.date_time_option_inputs.months.january']}
+              </option>
+              <option value="2">
+                {Translations.messages['catalog_admin.fields.date_time_option_inputs.months.fabruary']}
+              </option>
+              <option value="3">
+                {Translations.messages['catalog_admin.fields.date_time_option_inputs.months.march']}
+              </option>
+              <option value="4">
+                {Translations.messages['catalog_admin.fields.date_time_option_inputs.months.april']}
+              </option>
+              <option value="5">
+                {Translations.messages['catalog_admin.fields.date_time_option_inputs.months.may']}
+              </option>
+              <option value="6">
+                {Translations.messages['catalog_admin.fields.date_time_option_inputs.months.june']}
+              </option>
+              <option value="7">
+                {Translations.messages['catalog_admin.fields.date_time_option_inputs.months.july']}
+              </option>
+              <option value="8">
+                {Translations.messages['catalog_admin.fields.date_time_option_inputs.months.august']}
+              </option>
+              <option value="9">
+                {Translations.messages['catalog_admin.fields.date_time_option_inputs.months.september']}
+              </option>
+              <option value="10">
+                {Translations.messages['catalog_admin.fields.date_time_option_inputs.months.october']}
+              </option>
+              <option value="11">
+                {Translations.messages['catalog_admin.fields.date_time_option_inputs.months.november']}
+              </option>
+              <option value="12">
+                {Translations.messages['catalog_admin.fields.date_time_option_inputs.months.december']}
+              </option>
             </select>) : null
           }
           {fmt.includes('Y') ? (

@@ -464,6 +464,35 @@ it:
         public_list_view: 'Public mode?'
       editor_option_inputs:
         warning: <strong>Warning!</strong> Please note that this field will automatically show the editor's email address.
+      text_option_inputs:
+        has_formatted_text: "Has formatted text"
+        min_length: "Minimum length (optional)"
+        max_length: "Maximum length (optional)"
+        add_footnote: Add footnote
+        enter_footnote: Enter footnote
+        edit_footnote: Edit footnote
+        add_endnote: Add endnote
+        enter_endnote: Enter endnote
+        edit_endnote: Edit footnote
+        save_note: Save
+        import_docx: Import DOCX
+        import_error_not_supported: Error while importing Word file. Only DOCX files are supported.
+        import_error: Error while importing Word file.
+      date_time_option_inputs:
+        months:
+          january: January
+          fabruary: February
+          march: March
+          april: April
+          may: May
+          june: June
+          july: July
+          august: August
+          september: September
+          october: October
+          november: November
+          december: December
+        define_thumbnail: Define Thumbnail
       index:
         add_field: "Add…"
 

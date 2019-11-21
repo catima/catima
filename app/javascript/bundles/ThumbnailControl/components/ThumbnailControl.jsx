@@ -2,6 +2,7 @@ import 'es6-shim';
 import React from 'react';
 import PropTypes from 'prop-types';
 import ReactCrop from 'react-image-crop';
+import Translations from '../../Translations/components/Translations';
 
 class ThumbnailControl extends React.Component {
   static propTypes = {
@@ -16,11 +17,11 @@ class ThumbnailControl extends React.Component {
     this.multiple = props.multiple || false;
     const src = this._loadSrc();
     this.state = {
-      controlClass: (src.length == 0) ? 'hide' : 'show',
-      crop: (src.length == 0) ? {x: 0, y: 0} : $.extend(src[0].crop || {x: 0, y: 0}, {aspect: 1}),
+      controlClass: (src.length === 0) ? 'hide' : 'show',
+      crop: (src.length === 0) ? {x: 0, y: 0} : $.extend(src[0].crop || {x: 0, y: 0}, {aspect: 1}),
       modalClass: 'hide',
-      img: (src.length == 0) ? '' : '/'+src[0].path
-    }
+      img: (src.length === 0) ? '' : '/'+src[0].path
+    };
 
     this.onChange = this._onChange.bind(this);
     this.toggleModal = this._toggleModal.bind(this);
@@ -50,7 +51,7 @@ class ThumbnailControl extends React.Component {
 
   _toggleModal(e) {
     e.preventDefault();
-    if (this.state.modalClass == 'hide') {
+    if (this.state.modalClass === 'hide') {
       this.setState({ modalClass: 'show' });
     } else {
       this.setState({ modalClass: 'hide' });
@@ -63,7 +64,7 @@ class ThumbnailControl extends React.Component {
         <span
           className="btn btn-sm btn-default"
           onClick={this.toggleModal}>
-          Define thumbnail
+          {Translations.messages['catalog_admin.fields.date_time_option_inputs.define_thumbnail']}
         </span>
         <div className={this.state.modalClass}>
           <ReactCrop

@@ -26,6 +26,10 @@
 /config/database.yml
 /.env
 
+# Ignore the js locale files
+/app/assets/i18n/*
+!/app/assets/i18n/.keep
+
 # Ignore the geo layers file
 /config/geo_layers.yml
 
