@@ -603,6 +603,16 @@ fr:
         has_formatted_text: "Contient du texte formaté"
         min_length: "Longueur minimale (optionnel)"
         max_length: "Longueur maximale (optionnel)"
+        add_footnote: Note de bas de page
+        enter_footnote: Entrer la note de bas de page
+        edit_footnote: Modifier la note de bas de page
+        add_endnote: Note en fin de texte
+        enter_endnote: Entrer la note en fin de texte
+        edit_endnote: Modifier la note en fin de texte
+        save_note: Sauver
+        import_docx: Importer un DOCX
+        import_error_not_supported: Erreur lors de l'importation du fichier Word. Seuls les fichiers DOCX sont supportés.
+        import_error: Erreur lors de l'importation du fichier Word.
       xref_option_inputs:
         url: "URL Xref"
         url_help: "URL complète du service externe"

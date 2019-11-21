@@ -1,7 +1,7 @@
 button.ql-import_docx, button.ql-footnote, button.ql-endnote {
   border: 1px solid #ddd !important;
   font-size: 85%;
-  width: 100px !important;
+  width: 125px !important;
   margin-right: 5px;
 }
 button.ql-import_docx:hover, button.ql-footnote:hover, butotn.ql-endnote:hover {

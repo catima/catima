@@ -1,15 +1,16 @@
 import 'es6-shim';
 import PropTypes from 'prop-types';
 import React from 'react';
+import Translations from '../../Translations/components/Translations';
 
 import Quill from 'quill';
 import "quill/dist/quill.core.css";
 import "quill/dist/quill.snow.css";
 
-var icons = Quill.import('ui/icons');
-icons['footnote'] = 'Add footnote';
-icons['endnote'] = 'Add endnote';
-icons['import_docx'] = 'Import DOCX';
+let icons = Quill.import('ui/icons');
+icons['footnote'] = Translations.messages['catalog_admin.fields.text_option_inputs.add_footnote'];
+icons['endnote'] = Translations.messages['catalog_admin.fields.text_option_inputs.add_endnote'];
+icons['import_docx'] = Translations.messages['catalog_admin.fields.text_option_inputs.import_docx'];
 
 import "../modules/footnote";
 import "../modules/endnote";
@@ -175,7 +176,7 @@ class FormattedTextEditor extends React.Component {
     );
 
     const c = this._loadContent();
-    if (c.format == 'html' && typeof(c.doc) !== 'undefined'){
+    if (c.format === 'html' && typeof(c.doc) !== 'undefined'){
       this.editor.setContents(c.doc);
     } else {
       this.editor.clipboard.dangerouslyPasteHTML(c.content);
@@ -237,7 +238,7 @@ class FormattedTextEditor extends React.Component {
       el.value = "";
       let html = response.data.html;
       if (html.length < 1){
-        alert('Error while importing Word file. Only DOCX files are supported.');
+        alert(Translations.messages['catalog_admin.fields.text_option_inputs.import_error_not_supported']);
         return;
       }
 
@@ -246,7 +247,7 @@ class FormattedTextEditor extends React.Component {
     })
     .catch(function(err){
       console.log('Error while importing Word file', err);
-      alert('Error while importing Word file.')
+      alert(Translations.messages['catalog_admin.fields.text_option_inputs.import_error'])
     })
   }
 
@@ -255,7 +256,7 @@ class FormattedTextEditor extends React.Component {
     // which is by default the selection and editable.
     var range = this.editor.getSelection();
     if (range) {
-      let value = prompt('Enter footnote:');
+      let value = prompt(Translations.messages['catalog_admin.fields.text_option_inputs.enter_footnote']);
       if (value) this.editor.insertEmbed(range.index, "footnote", value, "user");
     }
     this.renderNotes();
@@ -264,7 +265,7 @@ class FormattedTextEditor extends React.Component {
   handleEndnote(){
     var range = this.editor.getSelection();
     if (range) {
-      let value = prompt('Enter endnote:');
+      let value = prompt(Translations.messages['catalog_admin.fields.text_option_inputs.enter_endnote']);
       if (value) this.editor.insertEmbed(range.index, "endnote", value, "user");
     }
     this.renderNotes();
@@ -285,12 +286,12 @@ class FormattedTextEditor extends React.Component {
 
   handleFootnoteClick(e){
     const footnoteEl = closest(e.target, '.footnote');
-    this.editNote(footnoteEl, 'Edit footnote');
+    this.editNote(footnoteEl, Translations.messages['catalog_admin.fields.text_option_inputs.edit_footnote']);
   }
 
   handleEndnoteClick(e){
     const endnoteEl = closest(e.target, '.endnote');
-    this.editNote(endnoteEl, 'Edit endnote');
+    this.editNote(endnoteEl, Translations.messages['catalog_admin.fields.text_option_inputs.edit_endnote']);
   }
 
   editNote(noteEl, lbl){
@@ -310,10 +311,6 @@ class FormattedTextEditor extends React.Component {
     this.setState({mainEditorDisplay: 'block'});
   }
 
-  // handleNoteTextChange(e){
-  //   this.setState({noteText: e.target.value});
-  // }
-
   // Return options array for Quill table module
   static tableOptions(maxRows = 10, maxCols = 5){
     let tableOptions = [];
@@ -326,14 +323,15 @@ class FormattedTextEditor extends React.Component {
   }
 
   render(){
-    // onChange={this.handleNoteTextChange} value={this.state.noteText}
     return (
       <div className="formattedTextEditor" id={this.uid + '-editor'}>
         <input id={this.uid + '-fileInput'} accept="application/vnd.openxmlformats-officedocument.wordprocessingml.document" type="file" onChange={this.docxUpload} className="hide" />
         <div id={this.uid + '-noteEditor'} className="noteEditor" style={{'display': this.state.noteDialogDisplay}}>
           <label>{this.state.noteLabel}</label><br/>
           <div id={this.uid + '-noteEditorInstance'}></div><br/>
-          <span onClick={this.saveNote} className="btn btn-sm btn-default">Save</span>
+          <span onClick={this.saveNote} className="btn btn-sm btn-default">
+            {Translations.messages['catalog_admin.fields.text_option_inputs.save_note']}
+          </span>
         </div>
         <div style={{'display': this.state.mainEditorDisplay}}>
           <div id={this.uid}></div>
