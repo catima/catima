@@ -1,12 +1,10 @@
 Sidekiq.configure_server do |config|
-  config.redis = { :namespace => "viim_core" }
-  # config.redis = { db: 1 }
+  config.redis = { db: 1 }
 end
 
 Sidekiq.configure_client do |config|
-  config.redis = { :namespace => "viim_core" }
-  # config.redis = { url: "redis://localhost:6379/1" }
-  # config.redis = { db: 1 }
+  config.redis = { url: "redis://" + ENV.fetch("REDIS_HOST", "localhost") + ":6379/1" }
+  config.redis = { db: 1 }
 end
 
 require "sidekiq/web"
