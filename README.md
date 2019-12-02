@@ -29,7 +29,7 @@ This README describes the purpose of this repository and how to set up a develop
 
 This project requires:
 
-* Ruby 2.4.1, preferably managed using [rbenv][]
+* Ruby 2.6.5, preferably managed using [rbenv][]
 * PostgreSQL must be installed and accepting connections
 * [Redis][] must be installed and running on localhost with the default port
 * Imagemagick must be installed (`brew install imagemagick`)
