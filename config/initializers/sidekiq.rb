@@ -1,14 +1,12 @@
 Sidekiq.configure_server do |config|
-  return config.redis = { :namespace => "viim_core" } if ENV['TRAVIS']
-
-  config.redis = { db: 1 }
+  config.redis = { :namespace => "viim_core" }
+  # config.redis = { db: 1 }
 end
 
 Sidekiq.configure_client do |config|
-  return config.redis = { :namespace => "viim_core" } if ENV['TRAVIS']
-
-  config.redis = { url: "redis://localhost:6379/1" }
-  config.redis = { db: 1 }
+  config.redis = { :namespace => "viim_core" }
+  # config.redis = { url: "redis://localhost:6379/1" }
+  # config.redis = { db: 1 }
 end
 
 require "sidekiq/web"
