@@ -76,12 +76,6 @@ group :production, :staging, :development do
   end
 end
 
-group :production, :staging do
-  platforms :ruby do
-    gem "unicorn-worker-killer"
-  end
-end
-
 group :development, :test do
   gem "simplecov", :require => false
 end
