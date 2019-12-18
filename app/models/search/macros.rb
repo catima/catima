@@ -11,7 +11,7 @@ module Search::Macros
   }.freeze
 
   extend ActiveSupport::Concern
-  include PgSearch
+  include PgSearch::Model
 
   included do
     # Define a `simple_search` scope that searches the current locale
