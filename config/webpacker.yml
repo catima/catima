@@ -34,8 +34,13 @@ default: &default
     - .woff2
 
   extensions:
+    - .coffee
+    - .erb
     - .mjs
     - .js
+    - .jsx
+    - .ts
+    - .vue
     - .sass
     - .scss
     - .css
@@ -47,7 +52,6 @@ default: &default
     - .gif
     - .jpeg
     - .jpg
-    - .jsx
 
 development:
   <<: *default
