@@ -54,7 +54,7 @@
     "react-leaflet-markercluster": "^1.1.8",
     "react-on-rails": "^11.2.2",
     "react-s3-uploader": "^4.6.2",
-    "react-select": "^2.1.1",
+    "react-select": "2.1.2",
     "react-select-async-paginate": "^0.3.0",
     "regenerator-runtime": "^0.13.3",
     "resolve-url-loader": "^2.2.1",
