@@ -20,7 +20,7 @@ before_script:
 script:
   - "NO_COVERAGE=1 bundle exec rake test:$TEST_SUITE"
 services:
-  - redis-server
+  - redis
 addons:
   postgresql: '10'
   chrome: stable
