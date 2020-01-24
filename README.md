@@ -30,12 +30,10 @@ This README describes the purpose of this repository and how to set up a develop
 This project requires:
 
 * Ruby 2.6.5, preferably managed using [rbenv][]
-* PostgreSQL must be installed and accepting connections
+* PostgreSQL 10 must be installed and accepting connections
 * [Redis][] must be installed and running on localhost with the default port
-* Imagemagick must be installed (`brew install imagemagick`)
+* Imagemagick must be installed (`brew install imagemagick`, `sudo apt install imagemagick`, ...)
 * Chrome (for testing with Selenium)
-
-If you need help setting up a Ruby development environment, check out this [Rails OS X Setup Guide](https://mattbrictson.com/rails-osx-setup-guide).
 
 ## Getting started
 

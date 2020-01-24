@@ -12,7 +12,7 @@ def setup!
     copy "config/database.example.yml"
     copy "config/geo_layers.example.yml"
     test_local_env_contains_required_keys
-  run    "bundle exec rake react_on_rails:locale"
+    run  "bundle exec rake react_on_rails:locale"
     run  "bundle exec rake db:create:all"
     run  "bundle exec rake db:migrate"
     run  "bundle exec rake db:seed"
