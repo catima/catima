@@ -6,6 +6,7 @@ cache:
   - bundler
 rvm:
   - 2.6.5
+  - 2.7.0
 env:
   # test/mailers, test/functional, test/controllers
   - TEST_SUITE=functionals
