@@ -44,10 +44,8 @@ module CatalogAdmin::ContainersHelper
         @catalog,
         I18n.locale,
         container,
-        {
-          :action => "update",
-          :container => { :row_order_position => direction }
-        }
+        :action => "update",
+        :container => { :row_order_position => direction }
       ),
       :method => :patch,
       :remote => true
