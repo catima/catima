@@ -41,9 +41,6 @@ AllCops:
 #     - "db/migrate/*"
 #     - "test/**/*"
 
-Performance/Casecmp:
-  Enabled: false
-
 Rails:
   Enabled: true
 
