@@ -176,6 +176,10 @@ Lint/ShadowingOuterLocalVariable:
     - 'app/helpers/admin/users_helper.rb'
     - 'app/helpers/advanced_searches_helper.rb'
 
+Lint/SuppressedException:
+  Exclude:
+    - 'app/models/data_store/json_attribute.rb'
+
 # Offense count: 3
 # Cop supports --auto-correct.
 # Configuration parameters: AllowUnusedKeywordArguments, IgnoreEmptyMethods.
@@ -301,12 +305,6 @@ Rails/BulkChangeTable:
 Rails/Delegate:
   Exclude:
     - 'app/models/container.rb'
-
-# Offense count: 1
-# Configuration parameters: EnforcedStyle.
-# SupportedStyles: slashes, arguments
-Rails/FilePath:
-  Enabled: false
 
 # Offense count: 2
 # Cop supports --auto-correct.

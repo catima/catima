@@ -4,7 +4,7 @@ require: rubocop-rails
 AllCops:
   DisplayCopNames: true
   DisplayStyleGuide: true
-  TargetRubyVersion: 2.4
+  TargetRubyVersion: 2.6
   Exclude:
     - "bin/*"
     - Capfile
@@ -43,6 +43,9 @@ AllCops:
 
 Rails:
   Enabled: true
+
+Rails/FilePath:
+  Enabled: false
 
 Rails/Validation:
   Enabled: false
