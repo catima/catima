@@ -10,7 +10,7 @@ class ContainerPresenter
   def html
     @view.render(
       'containers/'+@container.partial_name,
-      { container:@container, presenter:self }
+      container:@container, presenter:self
     )
   end
 end

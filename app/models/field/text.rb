@@ -49,7 +49,7 @@ class Field::Text < ::Field
   end
 
   def describe
-    super.merge({"i18n": i18n})
+    super.merge("i18n": i18n)
   end
 
   def human_readable?
@@ -66,7 +66,7 @@ class Field::Text < ::Field
     if value.is_a? Hash
       d = {}
       value.each do |k, v|
-        d.merge!({uuid + '_' + k => v}) if catalog.valid_locale?(k)
+        d.merge!(uuid + '_' + k => v) if catalog.valid_locale?(k)
       end
       return d
     end
@@ -83,9 +83,9 @@ class Field::Text < ::Field
     return v if v.nil? || !formatted?
 
     begin
-      return JSON.parse(v)['content']
+      JSON.parse(v)['content']
     rescue JSON::ParserError
-      return v
+      v
     end
   end
 

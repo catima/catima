@@ -23,7 +23,7 @@ class Container::Markdown < ::Container
   def renderer(options={})
     Redcarpet::Markdown.new(
       Redcarpet::Render::HTML,
-      { autolink: true, tables: true }
+      autolink: true, tables: true
     )
   end
 end
