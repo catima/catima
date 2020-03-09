@@ -55,7 +55,6 @@ class DataStore::JsonAttribute
     generate_json(data)
   end
 
-  # rubocop:disable Lint/HandleExceptions
   def set(item, json_string)
     item.instance_variable_set(json_string_variable, json_string)
     parsed_value = json_string.presence && JSON.parse(json_string)
@@ -63,7 +62,6 @@ class DataStore::JsonAttribute
   rescue JSON::ParserError
     # ignore
   end
-  # rubocop:enable Lint/HandleExceptions
 
   def validate(item)
     json_string = item.instance_variable_get(json_string_variable)
