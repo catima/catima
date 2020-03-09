@@ -306,8 +306,7 @@ Rails/Delegate:
 # Configuration parameters: EnforcedStyle.
 # SupportedStyles: slashes, arguments
 Rails/FilePath:
-  Exclude:
-    - 'app/controllers/home_controller.rb'
+  Enabled: false
 
 # Offense count: 2
 # Cop supports --auto-correct.
