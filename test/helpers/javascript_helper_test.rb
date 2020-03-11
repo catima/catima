@@ -5,7 +5,7 @@ class JavascriptHelperTest < ActionView::TestCase
   include JavascriptHelper
 
   test "#javascript_include_async_tag doesn't do anything in debug mode" do
-    Mocha::Configuration.allow(:stubbing_non_public_method) do
+    Mocha::Configuration.override(stubbing_non_public_method: :allow) do
       stubs(:request_debug_assets?).returns(true)
     end
     js_tag = javascript_include_tag("http://example.com/foo.js")

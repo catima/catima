@@ -62,11 +62,9 @@ class Field::Xref < ::Field
     return [] if raw_value(item).blank? || external_type.nil?
 
     Array.wrap(raw_value(item)).map do |id|
-      begin
-        external_type.find_item(id)
-      rescue ExternalType::Client::NotFound
-        nil
-      end
+      external_type.find_item(id)
+    rescue ExternalType::Client::NotFound
+      nil
     end.compact
   end
 

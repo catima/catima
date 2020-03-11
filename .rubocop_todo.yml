@@ -8,7 +8,7 @@
 
 # Offense count: 10
 # Cop supports --auto-correct.
-Layout/AlignArray:
+Layout/ArrayAlignment:
   Exclude:
     - 'app/presenters/field/choice_set_presenter.rb'
 
@@ -18,7 +18,7 @@ Layout/AlignArray:
 # SupportedHashRocketStyles: key, separator, table
 # SupportedColonStyles: key, separator, table
 # SupportedLastArgumentHashStyles: always_inspect, always_ignore, ignore_implicit, ignore_explicit
-Layout/AlignHash:
+Layout/HashAlignment:
   Exclude:
     - 'config/routes.rb'
 
@@ -26,7 +26,7 @@ Layout/AlignHash:
 # Cop supports --auto-correct.
 # Configuration parameters: EnforcedStyle, IndentationWidth.
 # SupportedStyles: with_first_parameter, with_fixed_indentation
-Layout/AlignParameters:
+Layout/ParameterAlignment:
   Exclude:
     - 'config/routes.rb'
 
@@ -41,13 +41,13 @@ Layout/ClosingParenthesisIndentation:
 # Cop supports --auto-correct.
 # Configuration parameters: EnforcedStyle, IndentationWidth.
 # SupportedStyles: consistent, consistent_relative_to_receiver, special_for_inner_method_call, special_for_inner_method_call_in_parentheses
-Layout/IndentFirstArgument:
+Layout/FirstArgumentIndentation:
   Exclude:
     - 'app/mailers/application_mailer.rb'
 
 # Offense count: 2
 # Cop supports --auto-correct.
-Layout/LeadingBlankLines:
+Layout/LeadingEmptyLines:
   Exclude:
     - 'app/controllers/images_controller.rb'
     - 'test/support/vcr.rb'
@@ -141,7 +141,7 @@ Layout/SpaceInsideHashLiteralBraces:
 # Cop supports --auto-correct.
 # Configuration parameters: EnforcedStyle.
 # SupportedStyles: final_newline, final_blank_line
-Layout/TrailingBlankLines:
+Layout/TrailingEmptyLines:
   Exclude:
     - 'config/initializers/secure_headers.rb'
 
@@ -175,6 +175,10 @@ Lint/ShadowingOuterLocalVariable:
   Exclude:
     - 'app/helpers/admin/users_helper.rb'
     - 'app/helpers/advanced_searches_helper.rb'
+
+Lint/SuppressedException:
+  Exclude:
+    - 'app/models/data_store/json_attribute.rb'
 
 # Offense count: 3
 # Cop supports --auto-correct.
@@ -245,7 +249,7 @@ Naming/MemoizedInstanceVariableName:
 # Offense count: 31
 # Configuration parameters: MinNameLength, AllowNamesEndingInNumbers, AllowedNames, ForbiddenNames.
 # AllowedNames: io, id, to, by, on, in, at
-Naming/UncommunicativeMethodParamName:
+Naming/MethodParameterName:
   Exclude:
     - 'app/models/container.rb'
     - 'app/models/container/item_list.rb'
@@ -260,13 +264,6 @@ Naming/UncommunicativeMethodParamName:
     - 'app/services/catalog_load_data.rb'
     - 'app/services/catalog_load_menus.rb'
     - 'app/services/catalog_load_structure.rb'
-
-# Offense count: 1
-# Cop supports --auto-correct.
-# Configuration parameters: MaxKeyValuePairs.
-Performance/RedundantMerge:
-  Exclude:
-    - 'app/models/search/date_time_strategy.rb'
 
 # Offense count: 13
 # Cop supports --auto-correct.
@@ -308,13 +305,6 @@ Rails/BulkChangeTable:
 Rails/Delegate:
   Exclude:
     - 'app/models/container.rb'
-
-# Offense count: 1
-# Configuration parameters: EnforcedStyle.
-# SupportedStyles: slashes, arguments
-Rails/FilePath:
-  Exclude:
-    - 'app/controllers/home_controller.rb'
 
 # Offense count: 2
 # Cop supports --auto-correct.
@@ -411,17 +401,6 @@ Rails/SkipsModelValidations:
 # SupportedStyles: prefer_alias, prefer_alias_method
 Style/Alias:
   Enabled: false
-
-# Offense count: 5
-# Cop supports --auto-correct.
-# Configuration parameters: EnforcedStyle.
-# SupportedStyles: braces, no_braces, context_dependent
-Style/BracesAroundHashParameters:
-  Exclude:
-    - 'app/helpers/catalog_admin/containers_helper.rb'
-    - 'app/models/container/markdown.rb'
-    - 'app/models/field/text.rb'
-    - 'app/presenters/container_presenter.rb'
 
 # Offense count: 1
 Style/CaseEquality:
@@ -623,7 +602,7 @@ Style/TrailingCommaInArrayLiteral:
 
 # Offense count: 1
 # Cop supports --auto-correct.
-Style/UnneededCondition:
+Style/RedundantCondition:
   Exclude:
     - 'app/presenters/field/image_presenter.rb'
 

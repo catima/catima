@@ -29,11 +29,9 @@ module AdvancedSearchesHelper
     partial_rendered = ""
     content = form.fields_for(:criteria) do |f|
       f.fields_for(field.uuid) do |f|
-        begin
-          partial_rendered = render(partial, :f => f, :field => field, :i => index)
-        rescue ActionView::MissingTemplate
-          partial_rendered = nil
-        end
+        partial_rendered = render(partial, :f => f, :field => field, :i => index)
+      rescue ActionView::MissingTemplate
+        partial_rendered = nil
       end
     end
     result = capture(content, &block)

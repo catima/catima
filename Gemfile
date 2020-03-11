@@ -1,9 +1,3 @@
-# Avoid using insecure git protocol
-git_source(:github) do |repo_name|
-  repo_name = "#{repo_name}/#{repo_name}" unless repo_name.include?("/")
-  "https://github.com/#{repo_name}.git"
-end
-
 source "https://rubygems.org"
 
 gem "active_model_serializers", "~> 0.10.7"
@@ -18,8 +12,8 @@ gem "cocoon"
 gem "coffee-rails", "~> 5.0.0"
 gem "devise", "~> 4.7"
 gem "dotenv-rails", ">= 2.5.0"
-gem "faraday", ">= 0.17.0"
-gem "faraday_middleware"
+gem "faraday", "~> 1.0.0"
+gem "faraday_middleware", "~> 1.0.0.rc1"
 gem "font-awesome-rails", '~> 4.7.0.5'
 gem 'groupdate', "~> 4.1.2"
 gem "jquery-fileupload-rails"
@@ -44,7 +38,7 @@ gem "pg", "~> 1.1.4"
 gem "pg_search", "~> 2.3.0"
 gem "pgcli-rails", "~> 0.3.0"
 gem "pundit", "~> 2.1.0"
-gem "rails", "~> 5.2.3"
+gem "rails", "~> 5.2.4"
 gem "ranked-model"
 gem "react_on_rails", "~> 11.3.0"
 gem "recaptcha", "~> 5.1.0"
@@ -56,7 +50,7 @@ gem "sassc-rails", "~> 2.1.2"
 gem "secure_headers"
 gem "select2-rails"
 gem "sidekiq", "~> 6.0.0"
-gem "sinatra", github: "sinatra/sinatra", branch: "master"
+gem "sinatra", "~> 2.0.8.1"
 gem "sprockets", "~> 3.7.2"
 gem "sprockets-rails", "~> 3.2.1"
 gem "summernote-rails", "~> 0.8.12.0"
@@ -87,7 +81,6 @@ group :development do
   gem "better_errors"
   gem "binding_of_caller"
   gem "brakeman", :require => false
-  gem "bundler-audit", :require => false
   gem "capistrano", :require => false
   gem "capistrano-bundler", :require => false
   gem "capistrano-mb", :require => false
@@ -115,7 +108,7 @@ group :development do
 end
 
 group :test do
-  gem "capybara", "~> 3.29.0"
+  gem "capybara", "~> 3.31.0"
   gem "webdrivers", "~> 4.1.3"
   gem "connection_pool"
   gem "json_schema"
@@ -128,5 +121,5 @@ group :test do
   gem "shoulda-context"
   gem "shoulda-matchers"
   gem "vcr"
-  gem "webmock"
+  gem "webmock", "~> 3.8.0"
 end

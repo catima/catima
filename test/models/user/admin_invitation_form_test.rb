@@ -43,7 +43,7 @@ class User::AdminInvitationFormTest < ActiveSupport::TestCase
       token.is_a?(String) &&
       token.strip.present?
     end
-    mock.returns(stub(:deliver_later))
+    mock.returns(stub('delivers_invitation', :deliver_later))
 
     create_form!
   end

@@ -6,6 +6,7 @@ cache:
   - bundler
 rvm:
   - 2.6.5
+  - 2.7.0
 env:
   # test/mailers, test/functional, test/controllers
   - TEST_SUITE=functionals
@@ -16,6 +17,7 @@ env:
 before_install:
   - sudo apt-get install -y imagemagick libsodium-dev
 before_script:
+  - gem install bundler:2.1.4
   - bundle exec bin/setup
 script:
   - "NO_COVERAGE=1 bundle exec rake test:$TEST_SUITE"
