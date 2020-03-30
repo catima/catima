@@ -165,7 +165,7 @@ GEM
       i18n (>= 1.6, < 2)
     faraday (1.0.0)
       multipart-post (>= 1.2, < 3)
-    faraday_middleware (1.0.0.rc1)
+    faraday_middleware (1.0.0)
       faraday (~> 1.0)
     ffi (1.12.2)
     ffi (1.12.2-x64-mingw32)
@@ -513,7 +513,7 @@ DEPENDENCIES
   dotenv-rails (>= 2.5.0)
   faker
   faraday (~> 1.0.0)
-  faraday_middleware (~> 1.0.0.rc1)
+  faraday_middleware (~> 1.0.0)
   font-awesome-rails (~> 4.7.0.5)
   groupdate (~> 4.1.2)
   jquery-fileupload-rails

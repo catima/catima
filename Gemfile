@@ -13,7 +13,7 @@ gem "coffee-rails", "~> 5.0.0"
 gem "devise", "~> 4.7"
 gem "dotenv-rails", ">= 2.5.0"
 gem "faraday", "~> 1.0.0"
-gem "faraday_middleware", "~> 1.0.0.rc1"
+gem "faraday_middleware", "~> 1.0.0"
 gem "font-awesome-rails", '~> 4.7.0.5'
 gem 'groupdate', "~> 4.1.2"
 gem "jquery-fileupload-rails"
