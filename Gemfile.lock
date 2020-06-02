@@ -202,18 +202,18 @@ GEM
     json_schema (0.20.8)
     jsonapi-renderer (0.2.2)
     jwt (2.2.1)
-    kaminari (1.1.1)
+    kaminari (1.2.1)
       activesupport (>= 4.1.0)
-      kaminari-actionview (= 1.1.1)
-      kaminari-activerecord (= 1.1.1)
-      kaminari-core (= 1.1.1)
-    kaminari-actionview (1.1.1)
+      kaminari-actionview (= 1.2.1)
+      kaminari-activerecord (= 1.2.1)
+      kaminari-core (= 1.2.1)
+    kaminari-actionview (1.2.1)
       actionview
-      kaminari-core (= 1.1.1)
-    kaminari-activerecord (1.1.1)
+      kaminari-core (= 1.2.1)
+    kaminari-activerecord (1.2.1)
       activerecord
-      kaminari-core (= 1.1.1)
-    kaminari-core (1.1.1)
+      kaminari-core (= 1.2.1)
+    kaminari-core (1.2.1)
     kgio (2.11.3)
     launchy (2.5.0)
       addressable (~> 2.7)
@@ -222,11 +222,6 @@ GEM
     letter_opener (1.7.0)
       launchy (~> 2.2)
     libv8 (7.3.492.27.1)
-    liquid (4.0.3)
-    liquid-rails (0.2.0)
-      kaminari (~> 1.1.1)
-      liquid (~> 4.0.0)
-      rails (>= 5.0.6)
     listen (3.2.1)
       rb-fsevent (~> 0.10, >= 0.10.3)
       rb-inotify (~> 0.9, >= 0.9.10)
@@ -524,12 +519,10 @@ DEPENDENCIES
   jquery-rails (~> 4.3.5)
   jquery-turbolinks
   json_schema
-  kaminari
+  kaminari (~> 1.2.1)
   launchy
   leaflet-rails (~> 1.5.0)
   letter_opener
-  liquid
-  liquid-rails
   listen
   mail (>= 2.7.0)
   marco-polo

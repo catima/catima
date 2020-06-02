@@ -20,10 +20,8 @@ gem "jquery-fileupload-rails"
 gem "jquery-minicolors-rails", '~> 2.2.6.2'
 gem "jquery-rails", '~> 4.3.5'
 gem "jquery-turbolinks"
-gem "kaminari"
+gem "kaminari", '~> 1.2.1'
 gem 'leaflet-rails', '~> 1.5.0'
-gem "liquid"
-gem "liquid-rails"
 gem "mail", ">= 2.7.0"
 gem "marco-polo"
 gem "mini_magick", '~> 4.9.5'
