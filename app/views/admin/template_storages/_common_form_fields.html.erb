@@ -1,9 +1,9 @@
 <%= f.text_field(:path, :autofocus => true) %>
 
-<%= f.select(:locale, options_for_select(["en", "de", "fr", "it" ], @template_storage.locale)) %>
+<%= f.select(:locale, options_for_select(["en", "de", "fr", "it"], @template_storage.locale)) %>
 
-<%= f.select(:handler, options_for_select(["erb", "liquid" ], @template_storage.handler)) %>
-<%= f.select(:format, options_for_select(["html" ], @template_storage.format)) %>
+<%= f.select(:handler, options_for_select(["erb"], @template_storage.handler)) %>
+<%= f.select(:format, options_for_select(["html"], @template_storage.format)) %>
 
 <%= f.form_group(
       :partial,
@@ -14,4 +14,3 @@
 
 
 <%= f.text_area(:body, :rows => 15) %>
-

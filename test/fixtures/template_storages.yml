@@ -22,12 +22,3 @@ erb_template:
   handler: erb
   partial: false
   format: html
-
-liquid_template:
-  body: Hello {{ 'world' | upcase }} has {{ 'world' | size }} letters!
-  path: home/liquid_tpl
-  locale: en
-  handler: liquid
-  partial: false
-  format: html
-
