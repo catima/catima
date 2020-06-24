@@ -30,7 +30,7 @@ This README describes the purpose of this repository and how to set up a develop
 This project requires:
 
 * Ruby 2.6.5, preferably managed using [rbenv][]
-* PostgreSQL 10 must be installed and accepting connections
+* PostgreSQL 12 must be installed and accepting connections
 * [Redis][] must be installed and running on localhost with the default port
 * Imagemagick must be installed (`brew install imagemagick`, `sudo apt install imagemagick`, ...)
 * Chrome (for testing with Selenium)

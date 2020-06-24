@@ -24,7 +24,7 @@ script:
 services:
   - redis
 addons:
-  postgresql: '10'
+  postgresql: '12'
   chrome: stable
   apt:
     update: true
