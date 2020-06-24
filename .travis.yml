@@ -8,12 +8,15 @@ rvm:
   - 2.6.5
   - 2.7.0
 env:
-  # test/mailers, test/functional, test/controllers
-  - TEST_SUITE=functionals
-  # test/integration
-  - TEST_SUITE=integration
-  # test/unit, test/models, test/helpers
-  - TEST_SUITE=units
+  global:
+    - PGPORT=5433
+  jobs:
+    # test/mailers, test/functional, test/controllers
+    - TEST_SUITE=functionals
+    # test/integration
+    - TEST_SUITE=integration
+    # test/unit, test/models, test/helpers
+    - TEST_SUITE=units
 before_install:
   - sudo apt-get install -y imagemagick libsodium-dev
 before_script:
