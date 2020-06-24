@@ -17,6 +17,7 @@ env:
 before_install:
   - sudo apt-get install -y imagemagick libsodium-dev
 before_script:
+  - psql -U postgres -c "create extension postgis"
   - gem install bundler:2.1.4
   - bundle exec bin/setup
 script:
@@ -24,10 +25,14 @@ script:
 services:
   - redis
 addons:
-  postgresql: '12'
   chrome: stable
+  postgresql: '12'
   apt:
     update: true
+    packages:
+      - postgresql-client-12
+      - postgresql-server-dev-12
+      - postgresql-12-postgis-3
 notifications:
   slack:
     rooms:
