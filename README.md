@@ -20,10 +20,8 @@ CATIMA is a Rails 5.2 app.
 
 This README describes the purpose of this repository and how to set up a development environment. Other sources of documentation are as follows:
 
-* Server setup instructions are in `PROVISIONING.md`
-* Staging and production deployment instructions are in `DEPLOYMENT.md`
-* End-user documentation is in [docs](docs)
-
+* End-user documentation is in [catima/userdoc](https://github.com/catima/userdoc)
+* Development documentation is in [catima/devdoc](https://github.com/catima/devdoc)
 
 ## Prerequisites
 
