@@ -19,8 +19,6 @@ class DateTimeInput extends React.Component {
   constructor(props){
     super(props);
 
-    //this.myRef = React.createRef();
-
     this.state = {
       disabled: this.props.disabled,
       isRange: this.props.isRange,
