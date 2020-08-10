@@ -23,7 +23,7 @@ class SelectedReferenceSearch extends Component {
   }
 
   componentDidUpdate(prevProps, prevState, snapshot) {
-    if (prevProps.items.length !== this.state.items.length) {
+    if (prevProps.items.length !== prevState.items.length) {
       this.setState({
         isInitialized: true,
         items: prevProps.items
