@@ -32,15 +32,15 @@ class ItemTypesReferenceSearch extends Component {
     this.selectItem = this._selectItem.bind(this);
   }
 
-  componentWillReceiveProps(nextProps) {
-    if (nextProps.selectedFilter !== this.state.selectedFilter) {
-      this._getDataFromServer(nextProps.selectedFilter);
-      this.setState({ selectedFilter: nextProps.selectedFilter });
+  componentDidUpdate(prevProps, prevState, snapshot) {
+    if (prevProps.selectedFilter !== this.state.selectedFilter) {
+      this._getDataFromServer(prevProps.selectedFilter);
+      this.setState({ selectedFilter: prevProps.selectedFilter });
     }
 
-    if (nextProps.inputName !== this.state.inputName) {
-      this._buildDateTimeInputNames(nextProps.inputName);
-      this.setState({ inputName: nextProps.inputName });
+    if (prevProps.inputName !== this.state.inputName) {
+      this._buildDateTimeInputNames(prevProps.inputName);
+      this.setState({ inputName: prevProps.inputName });
     }
   }
 
@@ -50,7 +50,7 @@ class ItemTypesReferenceSearch extends Component {
 
   _buildDateTimeInputNames(inputName) {
     if(this.state.inputType === 'Field::DateTime') {
-      var endName = inputName.split(this.state.inputNameArray[0]);
+      let endName = inputName.split(this.state.inputNameArray[0]);
       this.setState({startDateInputName: this.state.inputNameArray[0] + '[start]' + endName[1]});
       this.setState({endDateInputName: this.state.inputNameArray[0] + '[end]' + endName[1]});
     }
@@ -59,7 +59,7 @@ class ItemTypesReferenceSearch extends Component {
   _save(){
     if(this.state.selectedItem !== null && this.state.selectedItem.length !== 0) {
 
-      var idArray = [];
+      let idArray = [];
       this.state.selectedItem.forEach((item) => {
         idArray.push(item.value);
       });
@@ -144,27 +144,27 @@ class ItemTypesReferenceSearch extends Component {
   }
 
   _getDateTimeFormatOption() {
-    var formatOption = this._searchInArray(this.state.inputOptions, 'format');
+    let formatOption = this._searchInArray(this.state.inputOptions, 'format');
     if (formatOption === false) return 'YMDhms';
     else return formatOption.format;
   }
 
   _updateLocalizedDateTimeData(options) {
-    var option = this._searchInArray(options, 'localizedDateTimeData');
+    let option = this._searchInArray(options, 'localizedDateTimeData');
     if (option !== false) {
         this.setState({localizedDateTimeData: option.localizedDateTimeData});
     }
   }
 
   _getChoiceSetMultipleOption() {
-    var multipleOption = this._searchInArray(this.state.inputOptions, 'multiple');
+    let multipleOption = this._searchInArray(this.state.inputOptions, 'multiple');
     if (multipleOption === false) return false;
     else return multipleOption.multiple;
   }
 
   _searchInArray(array, key) {
     if(array !== null) {
-      for (var i = 0; i < array.length; i++) {
+      for (let i = 0; i < array.length; i++) {
           if (typeof array[i][key] !== 'undefined') {
               return array[i];
           }
@@ -174,7 +174,7 @@ class ItemTypesReferenceSearch extends Component {
   }
 
   _getMultipleChoiceSetOptions(){
-    var optionsList = [];
+    let optionsList = [];
     optionsList = this.state.inputData.map(option =>
       this._getJSONOption(option)
     );

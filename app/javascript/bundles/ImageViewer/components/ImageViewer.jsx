@@ -5,13 +5,12 @@ import Modal from 'react-modal';
 class ImageViewer extends Component {
   constructor(props) {
     super(props);
+
     this.state = {
       isOpen: false,
       idx: 0,
     };
-  }
 
-  componentWillMount() {
     Modal.setAppElement('body');
   }
 
@@ -27,8 +26,11 @@ class ImageViewer extends Component {
             <img
               className="imageViewer"
               src={thumb}
+              alt="image"
               data-idx={index}
-              onClick={(e) => this.setState({ idx: parseInt(e.target.getAttribute('data-idx')), isOpen: true })}
+              onClick={(e) => this.setState({
+                idx: parseInt(e.target.getAttribute('data-idx')), isOpen: true })
+              }
             />
             <br/>
             <span className="img-enlarge">Click to enlarge</span>
@@ -53,6 +55,6 @@ class ImageViewer extends Component {
       </div>
     );
   }
-};
+}
 
 export default ImageViewer;

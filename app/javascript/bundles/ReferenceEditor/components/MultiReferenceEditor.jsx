@@ -43,9 +43,7 @@ class MultiReferenceEditor extends Component {
     if (this.props.items.length < 25) {
       this.state.loadMore = false;
     }
-  }
 
-  componentWillMount() {
     this.timer = null;
   }
 
@@ -136,7 +134,7 @@ class MultiReferenceEditor extends Component {
       }
       let currentPage = this.state.page+1;
       let currentItems = this.state.items;
-      var itemsUrl = `${this.props.itemsUrl}?search=${this.state.filterAvailableInputValue}&page=${currentPage}`
+      let itemsUrl = `${this.props.itemsUrl}?search=${this.state.filterAvailableInputValue}&page=${currentPage}`
       this.state.selectedItems.forEach((itemId) => {
         itemsUrl = itemsUrl + `&except[]=${itemId}`
       });
@@ -242,7 +240,7 @@ class MultiReferenceEditor extends Component {
         if (this.state.filterAvailableInputValue === null) {
           this.state.filterAvailableInputValue = '';
         }
-        var itemsUrl = `${this.props.itemsUrl}?search=${searchTerm}&page=${this.state.page}`
+        let itemsUrl = `${this.props.itemsUrl}?search=${searchTerm}&page=${this.state.page}`
         this.state.selectedItems.forEach((itemId) => {
           itemsUrl = itemsUrl + `&except[]=${itemId}`
         });

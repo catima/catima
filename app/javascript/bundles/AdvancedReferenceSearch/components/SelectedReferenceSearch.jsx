@@ -22,11 +22,11 @@ class SelectedReferenceSearch extends Component {
     this.getItemOptions = this._getItemOptions.bind(this);
   }
 
-  componentWillReceiveProps(nextProps) {
-    if (nextProps.items.length !== this.state.items.length) {
+  componentDidUpdate(prevProps, prevState, snapshot) {
+    if (prevProps.items.length !== this.state.items.length) {
       this.setState({
         isInitialized: true,
-        items: nextProps.items
+        items: prevProps.items
       });
     }
   }
@@ -36,7 +36,7 @@ class SelectedReferenceSearch extends Component {
       //this.state.selectedItem is an array
       if(this.state.selectedItem !== null && this.state.selectedItem.length !== 0) {
 
-        var idArray = [];
+        let idArray = [];
         this.state.selectedItem.forEach((item) => {
           idArray.push(item.value);
         });
@@ -54,8 +54,6 @@ class SelectedReferenceSearch extends Component {
         document.getElementsByName(this.props.inputName)[0].value = this.state.hiddenInputValue;
       }
     }
-
-
   }
 
   _selectItem(item, event){
@@ -75,7 +73,7 @@ class SelectedReferenceSearch extends Component {
      items = this.state.items;
     }
 
-    var optionsList = [];
+    let optionsList = [];
 
     if (typeof items !== 'undefined') {
       optionsList = items.map(item =>
@@ -97,9 +95,9 @@ class SelectedReferenceSearch extends Component {
   async _loadOptions(search, loadedOptions, { page }) {
     if (this.state.optionsList.length < 25 && this.state.isInitialized) {
       if (search.length > 0) {
-        var regexExp = new RegExp(search, 'i')
+        let regexExp = new RegExp(search, 'i')
 
-        var items = this.state.optionsList.filter(function (item) {
+        let items = this.state.optionsList.filter(function (item) {
           return item.label !== null && item.label.match(regexExp) !== null && item.label.match(regexExp).length > 0
         });
 

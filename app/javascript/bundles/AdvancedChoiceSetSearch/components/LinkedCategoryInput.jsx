@@ -32,22 +32,22 @@ class LinkedCategoryInput extends Component {
     this.selectItem = this._selectItem.bind(this);
   }
 
-  componentWillReceiveProps(nextProps) {
-    if (nextProps.selectedCategory !== this.state.selectedCategory) {
-      this._getDataFromServer(nextProps.selectedCategory);
-      this.setState({ selectedCategory: nextProps.selectedCategory });
+  componentDidUpdate(prevProps, prevState, snapshot) {
+    if (prevProps.selectedCategory !== this.state.selectedCategory) {
+      this._getDataFromServer(prevProps.selectedCategory);
+      this.setState({ selectedCategory: prevProps.selectedCategory });
     }
 
-    if (nextProps.inputName !== this.state.inputName && nextProps.selectedCondition === this.state.selectedCondition) {
-      this._buildDateTimeInputNames(this.state.inputType, nextProps.inputName, this.state.selectedCondition);
-      this.setState({ inputName: nextProps.inputName });
-    } else if (nextProps.inputName === this.state.inputName && nextProps.selectedCondition !== this.state.selectedCondition) {
-      this._buildDateTimeInputNames(this.state.inputType, this.state.inputName, nextProps.selectedCondition);
-      this.setState({ selectedCondition: nextProps.selectedCondition });
+    if (prevProps.inputName !== this.state.inputName && prevProps.selectedCondition === this.state.selectedCondition) {
+      this._buildDateTimeInputNames(this.state.inputType, prevProps.inputName, this.state.selectedCondition);
+      this.setState({ inputName: prevProps.inputName });
+    } else if (prevProps.inputName === this.state.inputName && prevProps.selectedCondition !== this.state.selectedCondition) {
+      this._buildDateTimeInputNames(this.state.inputType, this.state.inputName, prevProps.selectedCondition);
+      this.setState({ selectedCondition: prevProps.selectedCondition });
     } else {
-        this._buildDateTimeInputNames(this.state.inputType, nextProps.inputName, nextProps.selectedCondition);
-        this.setState({ inputName: nextProps.inputName });
-        this.setState({ selectedCondition: nextProps.selectedCondition });
+        this._buildDateTimeInputNames(this.state.inputType, prevProps.inputName, prevProps.selectedCondition);
+        this.setState({ inputName: prevProps.inputName });
+        this.setState({ selectedCondition: prevProps.selectedCondition });
     }
   }
 
@@ -58,14 +58,14 @@ class LinkedCategoryInput extends Component {
 
   _buildDateTimeInputNames(type, inputName, condition) {
     if(type === 'Field::DateTime') {
-      var endName = inputName.split(this.state.inputNameArray[0]);
+      let endName = inputName.split(this.state.inputNameArray[0]);
       this.setState({startDateInputName: this.state.inputNameArray[0] + '[start]' + endName[1] + '[' + condition + ']' });
       this.setState({endDateInputName: this.state.inputNameArray[0] + '[end]' + endName[1] + '[' + condition + ']'});
     }
   }
 
   _buildInputNameCondition(condition) {
-      var nameArray = this.props.inputName.split("[category_criteria]");
+      let nameArray = this.props.inputName.split("[category_criteria]");
       if(nameArray.length === 2) {
         if(condition !== '') return nameArray[0] + "[category_criteria]" + '[' + condition + ']' + nameArray[1];
         else return nameArray[0] + "[category_criteria]" + '[default]' + nameArray[1];
@@ -77,7 +77,7 @@ class LinkedCategoryInput extends Component {
   _save(){
     if(this.state.selectedItem !== null && this.state.selectedItem.length !== 0) {
 
-      var idArray = [];
+      let idArray = [];
       this.state.selectedItem.forEach((item) => {
         idArray.push(item.value);
       });
@@ -158,7 +158,7 @@ class LinkedCategoryInput extends Component {
   }
 
   _updateDateTimeFormatOption(format) {
-    var formatOption = this._searchInArray(format, 'format');
+    let formatOption = this._searchInArray(format, 'format');
     if (formatOption === false) {
       this.setState({dateFormat: ''});
     }
@@ -168,27 +168,27 @@ class LinkedCategoryInput extends Component {
   }
 
   _updateLocalizedDateTimeData(options) {
-    var option = this._searchInArray(options, 'localizedDateTimeData');
+    let option = this._searchInArray(options, 'localizedDateTimeData');
     if (option !== false) {
         this.setState({localizedDateTimeData: option.localizedDateTimeData});
     }
   }
 
   _getInputOption(string) {
-    var option = this._searchInArray(this.state.inputOptions, string);
+    let option = this._searchInArray(this.state.inputOptions, string);
     if (option === false) return null;
     else return option;
   }
 
   _getChoiceSetMultipleOption() {
-    var multipleOption = this._searchInArray(this.state.inputOptions, 'multiple');
+    let multipleOption = this._searchInArray(this.state.inputOptions, 'multiple');
     if (multipleOption === false) return false;
     else return multipleOption.multiple;
   }
 
   _searchInArray(array, key) {
     if(array !== null) {
-      for (var i = 0; i < array.length; i++) {
+      for (let i = 0; i < array.length; i++) {
           if (typeof array[i][key] !== 'undefined') {
               return array[i];
           }
@@ -198,7 +198,7 @@ class LinkedCategoryInput extends Component {
   }
 
   _getMultipleChoiceSetOptions(){
-    var optionsList = [];
+    let optionsList = [];
     optionsList = this.state.inputData.map(option =>
       this._getJSONOption(option)
     );

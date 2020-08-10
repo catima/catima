@@ -18,6 +18,9 @@ class DateTimeInput extends React.Component {
 
   constructor(props){
     super(props);
+
+    this.myRef = React.createRef();
+
     this.state = {
       disabled: this.props.disabled,
       isRange: this.props.isRange,
@@ -55,13 +58,13 @@ class DateTimeInput extends React.Component {
     if (jQuery.isEmptyObject(this.getData())) return this.initData(DateTimeInput.defaultValues, this.getFieldOptions().format)
   }
 
-  componentWillReceiveProps(nextProps) {
-    if (nextProps.disabled !== this.state.disabled) {
-      this.setState({ disabled: nextProps.disabled });
+  componentDidUpdate(prevProps, prevState, snapshot) {
+    if (prevProps.disabled !== this.state.disabled) {
+      this.setState({ disabled: prevProps.disabled });
       //When the selected condition changes, we clear the inputs if the user has left une field empty
-      if(nextProps.disabled) {
-          var formatArray = this.props.format.split('');
-          var count = 0;
+      if(prevProps.disabled) {
+          let formatArray = this.props.format.split('');
+          let count = 0;
           formatArray.forEach((item) => {
               if(this.state[item] !== '') {
                   count++;
@@ -75,8 +78,8 @@ class DateTimeInput extends React.Component {
       }
     }
 
-    if (nextProps.isRange !== this.state.isRange) {
-      this.setState({ isRange: nextProps.isRange });
+    if (prevProps.isRange !== this.state.isRange) {
+      this.setState({ isRange: prevProps.isRange });
     }
   }
 
@@ -89,22 +92,22 @@ class DateTimeInput extends React.Component {
         this.styleMarginRight = ' margin-right';
       }
 
-      $(this.refs['hiddenInput']).datetimepicker({
+      $(this.myRef.hiddenInput).datetimepicker({
         format: this.props.format,
         locale: this.props.locale
       });
 
-      $(this.refs['hiddenInput']).datetimepicker().on('dp.change', (event) => this._onDatepickerChangerDate(event));
+      $(this.myRef.hiddenInput).datetimepicker().on('dp.change', (event) => this._onDatepickerChangerDate(event));
     }
   }
 
   _openCloseDatepicker() {
       if(this.state.isDatepickerOpen) {
           this.setState({isDatepickerOpen: false});
-          $(this.refs['hiddenInput']).data("DateTimePicker").hide();
+          $(this.myRef.hiddenInput).data("DateTimePicker").hide();
       } else {
           this.setState({isDatepickerOpen: true});
-          $(this.refs['hiddenInput']).data("DateTimePicker").show();
+          $(this.myRef.hiddenInput).data("DateTimePicker").show();
       }
   }
 
@@ -117,14 +120,21 @@ class DateTimeInput extends React.Component {
   }
 
   _clearDatepicker() {
-    $(this.refs['hiddenInput']).data("DateTimePicker").clear();
+    $(this.myRef.hiddenInput).data("DateTimePicker").clear();
     this.updateData({ Y: '', M: '', D: '', h: '', m: '', s: ''});
   }
 
   _onDatepickerChangerDate(data) {
     if(data.date !== false) {
       this.setState({selectedDate: data.date});
-      this.updateData({ Y: data.date.year(), M: (data.date.month() + 1), D: data.date.date(), h: data.date.hour(), m: data.date.minute(), s: data.date.second()});
+      this.updateData({
+        Y: data.date.year(),
+        M: (data.date.month() + 1),
+        D: data.date.date(),
+        h: data.date.hour(),
+        m: data.date.minute(),
+        s: data.date.second()
+      });
     } else {
       this.setState({selectedDate: ''});
       this.updateData({ Y: '', M: '', D: '', h: '', m: '', s: ''});
@@ -204,11 +214,11 @@ class DateTimeInput extends React.Component {
   }
 
   updateDatePicker(d) {
-    var newDate = {Y: this.state.Y, M: this.state.M, D: this.state.D, h: this.state.h, m: this.state.m, s: this.state.s};
+    let newDate = {Y: this.state.Y, M: this.state.M, D: this.state.D, h: this.state.h, m: this.state.m, s: this.state.s};
     Object.keys(d).forEach((index) => {
       newDate[index] = d[index];
     });
-    $(this.refs['hiddenInput']).data("DateTimePicker").date(new Date(newDate.Y, newDate.M - 1, newDate.D, newDate.h, newDate.m, newDate.s));
+    $(this.myRef.hiddenInput).data("DateTimePicker").date(new Date(newDate.Y, newDate.M - 1, newDate.D, newDate.h, newDate.m, newDate.s));
   }
 
   getData(){
@@ -311,9 +321,8 @@ class DateTimeInput extends React.Component {
         </div>
         <span className="error helptext">{errorMsg}</span>
       </div>
-);
+    );
+  }
 }
-
-};
 
 export default DateTimeInput;
