@@ -30,6 +30,7 @@ class DateTimeSearch extends Component {
   }
 
   componentDidMount(){
+
     if(typeof this.props.selectCondition !== 'undefined' && this.props.selectCondition.length !== 0) {
         this.setState({selectedCondition: this.props.selectCondition[0].key});
         this.setState({startDateInputNameArray: this.props.startDateInputName.split("["+ this.props.selectCondition[0].key +"]")})
@@ -38,17 +39,17 @@ class DateTimeSearch extends Component {
     }
   }
 
-  componentWillReceiveProps(nextProps) {
-    if(typeof nextProps.disableInputByCondition !== 'undefined') {
-        this._updateDisableState(nextProps.disableInputByCondition);
+  componentDidUpdate(prevProps, prevState, snapshot) {
+    if(typeof prevProps.disableInputByCondition !== 'undefined') {
+        this._updateDisableState(prevProps.disableInputByCondition);
     }
 
-    if (nextProps.startDateInputName !== this.state.startDateInputName) {
-      this.setState({ startDateInputName: nextProps.startDateInputName });
+    if (prevProps.startDateInputName !== prevState.startDateInputName) {
+      this.setState({ startDateInputName: prevProps.startDateInputName });
     }
 
-    if (nextProps.endDateInputName !== this.state.endDateInputName) {
-      this.setState({ endDateInputName: nextProps.endDateInputName });
+    if (prevProps.endDateInputName !== prevState.endDateInputName) {
+      this.setState({ endDateInputName: prevProps.endDateInputName });
     }
   }
 

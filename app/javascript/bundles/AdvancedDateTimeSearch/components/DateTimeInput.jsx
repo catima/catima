@@ -19,7 +19,7 @@ class DateTimeInput extends React.Component {
   constructor(props){
     super(props);
 
-    this.myRef = React.createRef();
+    //this.myRef = React.createRef();
 
     this.state = {
       disabled: this.props.disabled,
@@ -59,14 +59,14 @@ class DateTimeInput extends React.Component {
   }
 
   componentDidUpdate(prevProps, prevState, snapshot) {
-    if (prevProps.disabled !== this.state.disabled) {
+    if (prevProps.disabled !== prevState.disabled) {
       this.setState({ disabled: prevProps.disabled });
       //When the selected condition changes, we clear the inputs if the user has left une field empty
       if(prevProps.disabled) {
           let formatArray = this.props.format.split('');
           let count = 0;
           formatArray.forEach((item) => {
-              if(this.state[item] !== '') {
+              if(prevState[item] !== '') {
                   count++;
               }
           });
@@ -78,7 +78,7 @@ class DateTimeInput extends React.Component {
       }
     }
 
-    if (prevProps.isRange !== this.state.isRange) {
+    if (prevProps.isRange !== prevState.isRange) {
       this.setState({ isRange: prevProps.isRange });
     }
   }
@@ -92,22 +92,22 @@ class DateTimeInput extends React.Component {
         this.styleMarginRight = ' margin-right';
       }
 
-      $(this.myRef.hiddenInput).datetimepicker({
+      $(this.refs['hiddenInput']).datetimepicker({
         format: this.props.format,
         locale: this.props.locale
       });
 
-      $(this.myRef.hiddenInput).datetimepicker().on('dp.change', (event) => this._onDatepickerChangerDate(event));
+      $(this.refs['hiddenInput']).datetimepicker().on('dp.change', (event) => this._onDatepickerChangerDate(event));
     }
   }
 
   _openCloseDatepicker() {
       if(this.state.isDatepickerOpen) {
           this.setState({isDatepickerOpen: false});
-          $(this.myRef.hiddenInput).data("DateTimePicker").hide();
+          $(this.refs['hiddenInput']).data("DateTimePicker").hide();
       } else {
           this.setState({isDatepickerOpen: true});
-          $(this.myRef.hiddenInput).data("DateTimePicker").show();
+          $(this.refs['hiddenInput']).data("DateTimePicker").show();
       }
   }
 
@@ -120,7 +120,7 @@ class DateTimeInput extends React.Component {
   }
 
   _clearDatepicker() {
-    $(this.myRef.hiddenInput).data("DateTimePicker").clear();
+    $(this.refs['hiddenInput']).data("DateTimePicker").clear();
     this.updateData({ Y: '', M: '', D: '', h: '', m: '', s: ''});
   }
 
@@ -218,7 +218,7 @@ class DateTimeInput extends React.Component {
     Object.keys(d).forEach((index) => {
       newDate[index] = d[index];
     });
-    $(this.myRef.hiddenInput).data("DateTimePicker").date(new Date(newDate.Y, newDate.M - 1, newDate.D, newDate.h, newDate.m, newDate.s));
+    $(this.refs['hiddenInput']).data("DateTimePicker").date(new Date(newDate.Y, newDate.M - 1, newDate.D, newDate.h, newDate.m, newDate.s));
   }
 
   getData(){

@@ -33,19 +33,19 @@ class LinkedCategoryInput extends Component {
   }
 
   componentDidUpdate(prevProps, prevState, snapshot) {
-    if (prevProps.selectedCategory !== this.state.selectedCategory) {
+    if (prevProps.selectedCategory !== prevState.selectedCategory) {
       this._getDataFromServer(prevProps.selectedCategory);
       this.setState({ selectedCategory: prevProps.selectedCategory });
     }
 
-    if (prevProps.inputName !== this.state.inputName && prevProps.selectedCondition === this.state.selectedCondition) {
-      this._buildDateTimeInputNames(this.state.inputType, prevProps.inputName, this.state.selectedCondition);
+    if (prevProps.inputName !== prevState.inputName && prevProps.selectedCondition === prevState.selectedCondition) {
+      this._buildDateTimeInputNames(prevState.inputType, prevProps.inputName, prevState.selectedCondition);
       this.setState({ inputName: prevProps.inputName });
-    } else if (prevProps.inputName === this.state.inputName && prevProps.selectedCondition !== this.state.selectedCondition) {
-      this._buildDateTimeInputNames(this.state.inputType, this.state.inputName, prevProps.selectedCondition);
+    } else if (prevProps.inputName === prevState.inputName && prevProps.selectedCondition !== prevState.selectedCondition) {
+      this._buildDateTimeInputNames(prevState.inputType, prevState.inputName, prevProps.selectedCondition);
       this.setState({ selectedCondition: prevProps.selectedCondition });
     } else {
-        this._buildDateTimeInputNames(this.state.inputType, prevProps.inputName, prevProps.selectedCondition);
+        this._buildDateTimeInputNames(prevState.inputType, prevProps.inputName, prevProps.selectedCondition);
         this.setState({ inputName: prevProps.inputName });
         this.setState({ selectedCondition: prevProps.selectedCondition });
     }

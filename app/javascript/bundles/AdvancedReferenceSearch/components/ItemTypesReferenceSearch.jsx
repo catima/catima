@@ -33,12 +33,12 @@ class ItemTypesReferenceSearch extends Component {
   }
 
   componentDidUpdate(prevProps, prevState, snapshot) {
-    if (prevProps.selectedFilter !== this.state.selectedFilter) {
+    if (prevProps.selectedFilter !== prevState.selectedFilter) {
       this._getDataFromServer(prevProps.selectedFilter);
       this.setState({ selectedFilter: prevProps.selectedFilter });
     }
 
-    if (prevProps.inputName !== this.state.inputName) {
+    if (prevProps.inputName !== prevState.inputName) {
       this._buildDateTimeInputNames(prevProps.inputName);
       this.setState({ inputName: prevProps.inputName });
     }
