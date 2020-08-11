@@ -7,7 +7,7 @@ gem "autoprefixer-rails", "~> 9.7.3"
 gem "bcrypt", "~> 3.1.13"
 gem "bootstrap-sass", "~> 3.4.1" # TODO: Replace by https://github.com/twbs/bootstrap-rubygem for bootstrap 4
 gem "bootstrap_form", "~> 2.7.0" # TODO: Upgrade to 4.3.0 for rails6 (only compatible with bootstrap 4)
-gem "chartkick", "~> 3.3.0"
+gem "chartkick", "~> 3.4.0"
 gem "cocoon"
 gem "coffee-rails", "~> 5.0.0"
 gem "devise", "~> 4.7"
