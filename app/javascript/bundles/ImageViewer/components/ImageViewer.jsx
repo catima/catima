@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import Lightbox from 'react-image-lightbox';
+import 'react-image-lightbox/style.css';
 import Modal from 'react-modal';
 
 class ImageViewer extends Component {

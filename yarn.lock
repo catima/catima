@@ -7033,13 +7033,13 @@ react-image-crop@^3.0.7:
   resolved "https://registry.yarnpkg.com/react-image-crop/-/react-image-crop-3.0.11.tgz#c1588805d8d220b7b70332f04161aa1e04e13efc"
   integrity sha512-n4t9P7pc8NMHpAavyN2ZeYyG9qjgCsn4UPwNZk4MTolBgIRYsHllpwA9aMLtdqHBtL/U0N34T48DWL/i4eMNcw==
 
-react-image-lightbox@^4.3.0:
-  version "4.6.0"
-  resolved "https://registry.yarnpkg.com/react-image-lightbox/-/react-image-lightbox-4.6.0.tgz#14b823a1aaf914f471613dc4ca59d8ce4c3dbf97"
-  integrity sha512-77nhT4D90z1lK8ztR40EiiXp0H/Py7dIccNT993Nq1HT168WXKqVSCmjB6IEA1uxjpkseal/tptTU7eVWoFH1A==
+react-image-lightbox@^5.0.0:
+  version "5.1.1"
+  resolved "https://registry.yarnpkg.com/react-image-lightbox/-/react-image-lightbox-5.1.1.tgz#872d1a4336b5a6410ea7909b767cf59014081004"
+  integrity sha512-GprldD8AqpRb2hsOdns3sI7Xeo9hJlcybDxuli4RB+ml1J/GaFaUuRkT/7IrTLv2+4vkR74ahz2LD0HOUHI7wA==
   dependencies:
-    prop-types "^15.5.8"
-    react-modal "^3.1.10"
+    prop-types "^15.6.2"
+    react-modal "^3.8.1"
 
 react-input-autosize@^2.2.1:
   version "2.2.2"
@@ -7097,7 +7097,7 @@ react-lifecycles-compat@^3.0.0, react-lifecycles-compat@^3.0.4:
   resolved "https://registry.yarnpkg.com/react-lifecycles-compat/-/react-lifecycles-compat-3.0.4.tgz#4f1a273afdfc8f3488a8c516bfda78f872352362"
   integrity sha512-fBASbA6LnOU9dOU2eW7aQ8xmYBSXUIWr+UmF9b1efZBazGNO+rcXT/icdKnYm2pTwcRylVUYwW7H1PHfLekVzA==
 
-react-modal@^3.1.10:
+react-modal@^3.8.1:
   version "3.11.2"
   resolved "https://registry.yarnpkg.com/react-modal/-/react-modal-3.11.2.tgz#bad911976d4add31aa30dba8a41d11e21c4ac8a4"
   integrity sha512-o8gvvCOFaG1T7W6JUvsYjRjMVToLZgLIsi5kdhFIQCtHxDkA47LznX62j+l6YQkpXDbvQegsDyxe/+JJsFQN7w==
