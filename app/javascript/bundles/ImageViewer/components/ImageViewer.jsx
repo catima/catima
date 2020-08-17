@@ -1,7 +1,6 @@
 import React, { Component } from 'react';
 import Lightbox from 'react-image-lightbox';
 import 'react-image-lightbox/style.css';
-import Modal from 'react-modal';
 
 class ImageViewer extends Component {
   constructor(props) {
@@ -10,10 +9,6 @@ class ImageViewer extends Component {
       isOpen: false,
       idx: 0,
     };
-  }
-
-  componentWillMount() {
-    Modal.setAppElement('body');
   }
 
   render() {
@@ -40,8 +35,8 @@ class ImageViewer extends Component {
             ariaHideApp={false}
             mainSrc={images[idx]}
             imageCaption={legends[idx]}
-            nextSrc={images.length == 1 ? null : images[(idx + 1) % images.length]}
-            prevSrc={images.length == 1 ? null : images[(idx + images.length - 1) % images.length]}
+            nextSrc={images.length === 1 ? null : images[(idx + 1) % images.length]}
+            prevSrc={images.length === 1 ? null : images[(idx + images.length - 1) % images.length]}
             onCloseRequest={() => this.setState({ isOpen: false })}
             onMovePrevRequest={() => this.setState({
               idx: (idx + images.length - 1) % images.length,
