@@ -1,5 +1,4 @@
 import 'es6-shim';
-import PropTypes from 'prop-types';
 import React from 'react';
 import '@claviska/jquery-minicolors';
 
@@ -51,6 +50,6 @@ class FontColorButton extends React.Component {
       </div>
     );
   }
-};
+}
 
 export default FontColorButton;
