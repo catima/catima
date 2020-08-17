@@ -4,7 +4,7 @@ button.ql-import_docx, button.ql-footnote, button.ql-endnote {
   width: 125px !important;
   margin-right: 5px;
 }
-button.ql-import_docx:hover, button.ql-footnote:hover, butotn.ql-endnote:hover {
+button.ql-import_docx:hover, button.ql-footnote:hover, button.ql-endnote:hover {
   background-color: #f0f0f0;
 }
 
