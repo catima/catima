@@ -52,7 +52,7 @@ class TranslatedTextField extends React.Component {
       </div>
     );
   }
-};
+}
 
 
 export default TranslatedTextField;
