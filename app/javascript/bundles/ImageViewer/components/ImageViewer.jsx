@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import Lightbox from 'react-image-lightbox';
+import "../css/image-viewer.css";
 
 class ImageViewer extends Component {
   constructor(props) {
