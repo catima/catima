@@ -2,6 +2,7 @@ inherit_from: .rubocop_todo.yml
 require: rubocop-rails
 
 AllCops:
+  NewCops: enable
   DisplayCopNames: true
   DisplayStyleGuide: true
   TargetRubyVersion: 2.6
@@ -17,29 +18,6 @@ AllCops:
     - Guardfile
     - Rakefile
     - db/migrate/*
-
-# Metrics/AbcSize:
-#   Exclude:
-#     - "test/**/*"
-
-# Metrics/BlockLength:
-#   Exclude:
-#     - "config/**/*"
-#     - "test/**/*"
-
-# Metrics/ClassLength:
-#   Exclude:
-#     - "test/**/*"
-
-# Metrics/LineLength:
-#   Exclude:
-#     - "config/**/*"
-#     - "db/**/*"
-
-# Metrics/MethodLength:
-#   Exclude:
-#     - "db/migrate/*"
-#     - "test/**/*"
 
 Rails:
   Enabled: true
