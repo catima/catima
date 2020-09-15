@@ -1,6 +1,8 @@
 <%= f.text_field(:name, :autofocus => true) %>
 
-<%= f.text_field(:slug, :help => slug_help_text) %>
+<% unless @catalog.id %>
+  <%= f.text_field(:slug, :help => slug_help_text) %>
+<% end %>
 
 <%= locale_language_select(f, :primary_language) %>
 <%= locale_language_check_boxes(f, :other_languages) %>
