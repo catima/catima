@@ -8,13 +8,13 @@ class OmniauthCsrfTest < ActionDispatch::IntegrationTest
   end
 
   test "should not accept GET requests to OmniAuth endpoint" do
-    get '/auth/google_oauth2'
+    get '/users/auth/github'
     assert_response :missing
   end
 
   test "should not accept POST requests with invalid CSRF tokens to OmniAuth endpoint" do
     assert_raises ActionController::InvalidAuthenticityToken do
-      post '/auth/google_oauth2'
+      post '/users/auth/github'
     end
   end
 
