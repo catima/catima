@@ -1,5 +1,6 @@
 class FieldPresenter
   attr_reader :view, :item, :field, :options
+
   delegate :t, :to => I18n
   delegate :uuid, :label, :comment, :to => :field
   delegate :react_component, :to => :view

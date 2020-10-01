@@ -29,8 +29,8 @@
 # * unrecognized_columns (the column names that could not be mapped)
 #
 class CSVImport < ActiveType::Object
-  attr_accessor :creator
-  attr_accessor :item_type
+  attr_accessor :creator, :item_type
+
   attribute :file_id
   attribute :file_filename
   attribute :file_size, :integer

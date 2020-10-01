@@ -1,5 +1,6 @@
 class ExportPolicy
   attr_reader :user, :export
+
   delegate :catalog, :to => :export
 
   def initialize(user, export)

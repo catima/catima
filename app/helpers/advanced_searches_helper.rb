@@ -44,8 +44,8 @@ module AdvancedSearchesHelper
       options << [
         item_type.name,
         item_type.slug,
-        :selected => item_type.slug == selected_item_type_slug,
-        "data-has-map" => item_type.include_geographic_field?
+        { :selected => item_type.slug == selected_item_type_slug,
+          "data-has-map" => item_type.include_geographic_field? }
       ]
     end
 

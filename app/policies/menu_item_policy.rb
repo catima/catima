@@ -2,6 +2,7 @@
 # All users can of course view menu items, since they are public.
 class MenuItemPolicy
   attr_reader :user, :menu_item
+
   delegate :catalog, :to => :menu_item
 
   def initialize(user, menu_item)
