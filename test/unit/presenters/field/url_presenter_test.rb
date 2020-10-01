@@ -6,10 +6,10 @@ class Field::URLPresenterTest < ActionView::TestCase
     site_field = Field.find ActiveRecord::FixtureSet.identify('one_author_site')
     presenter = Field::URLPresenter.new(self, author, site_field)
     assert_equal(
-      '<a target="_blank" rel="noopener"'\
-      'href="http://stephenking.com/index.html">'\
-      "stephenking.com/index.html"\
-      "</a>",
+      '<a target="_blank"'\
+      'rel="noopener"rel="noopener" href="http://stephenking.com/index.html">'\
+      'stephenking.com/index.html'\
+      '</a>',
       presenter.value)
   end
 end
