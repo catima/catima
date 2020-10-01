@@ -2,6 +2,7 @@
 # of course view containers, since they are public.
 class ContainerPolicy
   attr_reader :user, :container
+
   delegate :catalog, :to => :container
 
   def initialize(user, container)

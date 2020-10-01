@@ -1,5 +1,5 @@
 require "test_helper"
-require_relative "../../../app/models/field/choice_set.rb"
+require_relative '../../../app/models/field/choice_set'
 
 class Field::ChoiceSetTest < ActiveSupport::TestCase
   should validate_presence_of(:choice_set)

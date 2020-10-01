@@ -5,6 +5,7 @@ class ItemList::AdvancedSearchResult < ItemList
   include ::Search::Strategies
 
   attr_reader :model
+
   delegate :catalog, :item_type, :criteria, :locale, :to_param, :to => :model
   delegate :fields, :to => :item_type
 

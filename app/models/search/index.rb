@@ -4,6 +4,7 @@ class Search::Index
   include ::Search::Strategies
 
   attr_reader :item, :locale
+
   delegate :fields, :to => :item
 
   def initialize(item:, locale:)

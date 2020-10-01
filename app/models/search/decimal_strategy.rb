@@ -16,7 +16,6 @@ class Search::DecimalStrategy < Search::BaseStrategy
     scope = less_than_search(scope, criteria[:less_than], negate, "float")
     scope = less_than_or_equal_to_search(scope, criteria[:less_than_or_equal_to], negate, "float")
     scope = greater_than_search(scope, criteria[:greater_than], negate, "float")
-    scope = greater_than_or_equal_to_search(scope, criteria[:greater_than_or_equal_to], negate, "float")
-    scope
+    greater_than_or_equal_to_search(scope, criteria[:greater_than_or_equal_to], negate, "float")
   end
 end

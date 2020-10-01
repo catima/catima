@@ -1,6 +1,7 @@
 # Base class of ItemTypePolicy and CategoryPolicy.
 class FieldSetPolicy
   attr_reader :user, :field_set
+
   delegate :catalog, :to => :field_set
 
   def initialize(user, field_set)

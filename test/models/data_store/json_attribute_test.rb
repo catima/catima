@@ -4,6 +4,7 @@ class DataStore::JsonAttributeTest < ActiveSupport::TestCase
   class TestItem
     include ActiveModel::Validations
     attr_accessor :name
+
     DataStore::JsonAttribute.define(self, :name)
   end
 

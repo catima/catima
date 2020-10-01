@@ -1,5 +1,6 @@
 class ItemList::References < ItemList::Filter
   attr_reader :item
+
   delegate :to_param, :to => :item
 
   def initialize(item:, field:, page:nil, per:nil)

@@ -1,5 +1,6 @@
 class AdvancedSearchConfigurationPolicy
   attr_reader :user, :advanced_search_configuration
+
   delegate :catalog, :to => :advanced_search_configuration
 
   def initialize(user, advanced_search_configuration)

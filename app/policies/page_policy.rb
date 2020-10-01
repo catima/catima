@@ -2,6 +2,7 @@
 # of course view pages, since they are public.
 class PagePolicy
   attr_reader :user, :page
+
   delegate :catalog, :to => :page
 
   def initialize(user, page)

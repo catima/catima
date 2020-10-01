@@ -12,13 +12,13 @@ class Field::TextPresenter < FieldPresenter
 
   def formatted_value(value)
     v = begin
-          JSON.parse(value || '') || { 'format': 'raw', 'content': '' }
-        rescue JSON::ParserError
-          {
-            'format' => field.formatted_text.to_i == 1 ? 'markdown' : 'raw',
-            'content' => value
-          }
-        end
+      JSON.parse(value || '') || { 'format': 'raw', 'content': '' }
+    rescue JSON::ParserError
+      {
+        'format' => field.formatted_text.to_i == 1 ? 'markdown' : 'raw',
+        'content' => value
+      }
+    end
     [
       '<div class="formatted-text">',
       v['format'] == 'markdown' ? render_markdown(v['content']) : v['content'],

@@ -2,6 +2,7 @@
 # of course view items, since they are public.
 class ItemPolicy
   attr_reader :user, :item
+
   delegate :catalog, :to => :item
 
   def initialize(user, item)

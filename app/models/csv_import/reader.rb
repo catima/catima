@@ -8,6 +8,7 @@ require "csv"
 #
 class CSVImport::Reader
   attr_reader :file, :contents
+
   delegate :encoding, :to => :contents
 
   def initialize(file)

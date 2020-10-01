@@ -5,6 +5,7 @@
 #
 class ItemListPresenter
   attr_reader :view, :item, :offset, :list
+
   delegate :capture, :link_to, :item_path, :render, :to => :view
   delegate :item_type, :to => :item
 

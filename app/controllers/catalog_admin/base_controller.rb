@@ -7,6 +7,7 @@ class CatalogAdmin::BaseController < ApplicationController
   private
 
   attr_reader :catalog
+
   helper_method :catalog
 
   def default_url_options

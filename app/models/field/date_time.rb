@@ -60,10 +60,9 @@ class Field::DateTime < ::Field
     return nil if value.nil?
 
     defaults = { "Y" => "", "M" => "", "D" => "", "h" => "", "m" => "", "s" => "" }
-    components = defaults.map do |key, default_value|
+    defaults.map do |key, default_value|
       value[key] || default_value
     end
-    components
   end
 
   # Translates YMD.. hash into an integer number (or nil).
