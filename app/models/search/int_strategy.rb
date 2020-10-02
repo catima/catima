@@ -16,7 +16,6 @@ class Search::IntStrategy < Search::BaseStrategy
     scope = less_than_search(scope, criteria[:less_than], negate, "int")
     scope = less_than_or_equal_to_search(scope, criteria[:less_than_or_equal_to], negate, "int")
     scope = greater_than_search(scope, criteria[:greater_than], negate, "int")
-    scope = greater_than_or_equal_to_search(scope, criteria[:greater_than_or_equal_to], negate, "int")
-    scope
+    greater_than_or_equal_to_search(scope, criteria[:greater_than_or_equal_to], negate, "int")
   end
 end

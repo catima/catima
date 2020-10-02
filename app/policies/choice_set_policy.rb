@@ -2,6 +2,7 @@
 # of course view choices, since they are all public.
 class ChoiceSetPolicy
   attr_reader :user, :choice_set
+
   delegate :catalog, :to => :choice_set
 
   def initialize(user, choice_set)

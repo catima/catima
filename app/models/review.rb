@@ -4,6 +4,7 @@
 #
 class Review
   attr_reader :item
+
   delegate :review_status, :review_status=, :reviewer=, :to => :item
 
   def self.public_items_in_catalog(catalog)

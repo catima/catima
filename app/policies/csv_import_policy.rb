@@ -1,5 +1,6 @@
 class CSVImportPolicy
   attr_reader :user, :csv_import
+
   delegate :catalog, :to => :csv_import
 
   def initialize(user, csv_import)

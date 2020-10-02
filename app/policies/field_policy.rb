@@ -2,6 +2,7 @@
 # of course view fields, since they are all public.
 class FieldPolicy
   attr_reader :user, :field
+
   delegate :catalog, :to => :field
 
   def initialize(user, field)

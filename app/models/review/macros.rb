@@ -6,6 +6,7 @@ module Review::Macros
 
   included do
     attr_accessor :submit_for_review
+
     belongs_to :reviewer, :class_name => "User", optional: true
     validates_inclusion_of :review_status,
                            :in => %w(not-ready ready rejected approved)
