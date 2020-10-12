@@ -57,3 +57,10 @@ Style/TrivialAccessors:
 
 Naming/VariableNumber:
   Enabled: false
+
+Rails/UnknownEnv:
+  Environments:
+    - production
+    - development
+    - test
+    - staging
