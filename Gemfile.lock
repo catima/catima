@@ -99,6 +99,8 @@ GEM
       sassc (>= 2.0.0)
     bootstrap_form (2.7.0)
     brakeman (4.8.2)
+    bugsnag (6.17.0)
+      concurrent-ruby (~> 1.0)
     builder (3.2.4)
     capistrano (3.14.0)
       airbrussh (>= 1.0.0)
@@ -369,7 +371,6 @@ GEM
       actionpack (>= 5.0)
       railties (>= 5.0)
     rexml (3.2.4)
-    rollbar (2.22.1)
     rubocop (0.89.1)
       parallel (~> 1.10)
       parser (>= 2.7.1.1)
@@ -502,6 +503,7 @@ DEPENDENCIES
   bootstrap-sass (~> 3.4.1)
   bootstrap_form (~> 2.7.0)
   brakeman
+  bugsnag (~> 6.17)
   capistrano
   capistrano-bundler
   capistrano-mb
@@ -562,7 +564,6 @@ DEPENDENCIES
   redcarpet (~> 3.5.0)
   refile!
   refile-mini_magick!
-  rollbar (~> 2.22.0)
   rubocop-rails
   ruby-progressbar
   rubyzip (~> 2.0.0)
