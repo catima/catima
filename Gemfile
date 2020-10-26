@@ -92,7 +92,6 @@ group :development do
   gem "rainbow", :require => false
   gem "rb-fsevent", :require => false
   gem "rbnacl", :require => false
-  gem "rbnacl-libsodium", :require => false
   gem "rubocop-rails", :require => false
   gem "ruby-progressbar", :require => false
   gem "spring"
