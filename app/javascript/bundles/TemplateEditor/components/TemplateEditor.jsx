@@ -17,26 +17,6 @@ class TemplateEditor extends React.Component {
     super(props);
     this.uid = `summernote-${uuidv4()}`;
     this.updateContent = this._updateContent.bind(this);
-    this.options = {
-      minHeight: 150,
-      toolbar: [
-        ['style', ['bold', 'italic', 'underline', 'clear']],
-        ['font', ['strikethrough', 'superscript', 'subscript']],
-        ['fontsize', ['fontsize']],
-        ['color', ['color']],
-        ['para', ['ul', 'ol', 'paragraph']],
-        ['height', ['height']],
-        ['insert', ['picture', 'link', 'table', 'hr']],
-        ['templateEditor', ['fieldsMenu', 'itemLinkButton']]
-      ],
-      buttons: {
-        fieldsMenu: this.fieldsMenu(this.props.fields),
-        itemLinkButton: this.itemLinkButton(),
-      },
-      callbacks: {
-        onChange: this.updateContent
-      }
-    };
   }
 
   _loadContent(){
@@ -53,9 +33,31 @@ class TemplateEditor extends React.Component {
 
   componentDidMount(){
     const html = this._loadContent();
+
     this.editor = $(`#${this.uid}`);
+    this.options = {
+      minHeight: 150,
+      toolbar: [
+        ['style', ['bold', 'italic', 'underline', 'clear']],
+        ['font', ['strikethrough', 'superscript', 'subscript']],
+        ['fontsize', ['fontsize']],
+        ['color', ['color']],
+        ['para', ['ul', 'ol', 'paragraph']],
+        ['height', ['height']],
+        ['insert', ['picture', 'link', 'table', 'hr']],
+        ['templateEditor', ['fieldsMenu', 'itemLinkButton']]
+      ],
+      buttons: {
+        fieldsMenu: this.fieldsMenu(this.editor, this.props.fields),
+        itemLinkButton: this.itemLinkButton(this.editor),
+      },
+      callbacks: {
+        onChange: this.updateContent
+      }
+    };
     this.editor.summernote(this.options);
     this.editor.summernote('code', html);
+
     $('.note-link-popover').css('display', 'none');
     $('.dropdown-toggle').dropdown();
   }
@@ -64,8 +66,8 @@ class TemplateEditor extends React.Component {
     this.editor.summernote('destroy');
   }
 
-  fieldsMenu(fields){
-    return function(context){
+  fieldsMenu(editor, fields){
+    return function(){
       const ui = $.summernote.ui;
       let fieldsMenu = [];
       for (let i in fields){
@@ -86,7 +88,7 @@ class TemplateEditor extends React.Component {
           click: function(e){
             e.preventDefault();
             const fieldSlug = $(e.target).text();
-            context.invoke('editor.insertText', ' {{'+fieldSlug+'}} ');
+            editor.summernote('editor.insertText', ' {{'+fieldSlug+'}} ');
           },
         })
       ]);
@@ -94,16 +96,16 @@ class TemplateEditor extends React.Component {
     };
   }
 
-  itemLinkButton(){
-    return function(context) {
+  itemLinkButton(editor){
+    return function() {
       const ui = $.summernote.ui;
       const button = ui.button({
         contents: 'Item link',
         click: function(){
-          const range = context.invoke('editor.createRange');
+          const range = editor.summernote('editor.createRange');
           let selectedText = range.toString();
           if (selectedText.length < 1) selectedText = 'item-link';
-          context.invoke('editor.createLink', {text: selectedText, url: '{{_itemLink}}'});
+          editor.summernote('editor.createLink', {text: selectedText, url: '{{_itemLink}}'});
         }
       });
       return button.render();
