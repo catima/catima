@@ -352,8 +352,6 @@ GEM
     rb-fsevent (0.10.4)
     rb-inotify (0.10.1)
       ffi (~> 1.0)
-    rbnacl (7.1.1)
-      ffi
     react_on_rails (11.3.0)
       addressable
       connection_pool
@@ -555,7 +553,6 @@ DEPENDENCIES
   rainbow
   ranked-model
   rb-fsevent
-  rbnacl
   react_on_rails (~> 11.3.0)
   recaptcha (~> 5.1.0)
   redcarpet (~> 3.5.0)
