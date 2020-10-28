@@ -31,6 +31,7 @@ This project requires:
 * PostgreSQL 12 must be installed and accepting connections
 * [Redis][] must be installed and running on localhost with the default port
 * Imagemagick must be installed (`brew install imagemagick`, `sudo apt install imagemagick`, ...)
+* Sodium must be installed (`brew install libsodium`, ...)
 * Chrome (for testing with Selenium)
 
 ## Getting started
