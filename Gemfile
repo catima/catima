@@ -73,25 +73,18 @@ group :development, :test do
 end
 
 group :development do
-  gem "airbrussh", :require => false
   gem "annotate"
   gem "awesome_print"
   gem "bcrypt_pbkdf", :require => false
   gem "better_errors"
   gem "binding_of_caller"
   gem "brakeman", :require => false
-  gem "capistrano", :require => false
-  gem "capistrano-bundler", :require => false
-  gem "capistrano-mb", :require => false
-  gem "capistrano-nc", :require => false
-  gem "capistrano-rails", :require => false
   gem "faker", :require => false
   gem "letter_opener"
   gem "listen"
   gem "overcommit", :require => false
   gem "rainbow", :require => false
   gem "rb-fsevent", :require => false
-  gem "rbnacl", :require => false
   gem "rubocop-rails", :require => false
   gem "ruby-progressbar", :require => false
   gem "spring"
