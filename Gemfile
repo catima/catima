@@ -73,18 +73,12 @@ group :development, :test do
 end
 
 group :development do
-  gem "airbrussh", :require => false
   gem "annotate"
   gem "awesome_print"
   gem "bcrypt_pbkdf", :require => false
   gem "better_errors"
   gem "binding_of_caller"
   gem "brakeman", :require => false
-  gem "capistrano", :require => false # TODO: not used, can be removed
-  gem "capistrano-bundler", :require => false # TODO: not used, can be removed
-  gem "capistrano-mb", :require => false # TODO: not used, can be removed
-  gem "capistrano-nc", :require => false # TODO: not used, can be removed
-  gem "capistrano-rails", :require => false # TODO: not used, can be removed
   gem "faker", :require => false
   gem "letter_opener"
   gem "listen"
