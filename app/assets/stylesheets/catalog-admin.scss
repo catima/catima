@@ -1,13 +1,13 @@
-//= require jquery.fileupload
-//= require jquery.fileupload-ui
-//= require jquery.minicolors
+@import 'jquery.fileupload';
+@import 'jquery.fileupload-ui';
+@import 'jquery.minicolors';
 
 /*
 Summernote Rails CSS does not load correctly the Summernote font.
 In vendor/assets/stylesheets is a the original summernote.css file
 that we are including here instead of the one from the gem
 */
-//= require summernote/summernote
+@import 'summernote/summernote';
 
 .data-search {
   margin-bottom: 20px;
