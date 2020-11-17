@@ -1,2 +1,2 @@
-class Container::HTMLPresenter < ContainerPresenter
+class Container::HtmlPresenter < ContainerPresenter
 end

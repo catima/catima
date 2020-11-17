@@ -20,7 +20,7 @@ class Dump::SqlDump < ::Dump
   }.freeze
 
   def initialize
-    @holder = SQLExport::Holder.new
+    @holder = SqlExport::Holder.new
   end
 
   def dump(catalog, directory)

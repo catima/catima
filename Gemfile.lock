@@ -516,7 +516,6 @@ DEPENDENCIES
   rails (~> 6.0.3)
   rails-assets-autosize!
   rails-assets-mousetrap!
-  rails-html-sanitizer
   rainbow
   ranked-model
   rb-fsevent

@@ -1,5 +1,5 @@
 # Model to help with SQL exports and duplicates
-class SQLExport::Holder
+class SqlExport::Holder
   include CatalogAdmin::SqlDumpHelper
   # tables = { :table_name => id|uuid + class + item_type_slug|id + class + category_name|id + class + choiceset_name... }
   attr_accessor :tables

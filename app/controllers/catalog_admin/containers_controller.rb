@@ -58,7 +58,7 @@ class CatalogAdmin::ContainersController < CatalogAdmin::BaseController
   end
 
   def container_class
-    Container::TYPES.fetch(params[:type], "Container::HTML").constantize
+    Container::TYPES.fetch(params[:type], "Container::Html").constantize
   end
 
   def find_container
