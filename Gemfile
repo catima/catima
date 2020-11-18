@@ -32,7 +32,7 @@ gem 'omniauth-facebook'
 gem 'omniauth-github'
 gem 'omniauth-shibboleth'
 gem "omniauth-rails_csrf_protection", "~> 0.1.2" # Mitigation against CVE-2015-9284
-gem "panoramic"
+gem "panoramic", git: "https://github.com/andreapavoni/panoramic.git", branch: "c14036efaa13f58c390731606dc477804d773d6e" # Fixed commit version while waiting for the PR https://github.com/andreapavoni/panoramic/pull/27 to be merged on the next gem version
 gem "pg"
 gem "pg_search"
 gem "pgcli-rails"
