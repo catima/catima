@@ -13,7 +13,7 @@
 #  updated_at :datetime         not null
 #
 
-class Container::Html < ::Container
+class Container::HTML < ::Container
   store_accessor :content, :html
 
   def custom_container_permitted_attributes

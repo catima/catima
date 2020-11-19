@@ -15,7 +15,7 @@
 
 class Container < ApplicationRecord
   TYPES = {
-    "html" => 'Container::Html',
+    "html" => 'Container::HTML',
     "markdown" => 'Container::Markdown',
     "itemlist" => 'Container::ItemList',
     "map" => 'Container::Map',

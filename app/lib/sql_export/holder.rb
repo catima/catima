@@ -1,6 +1,6 @@
 # Model to help with SQL exports and duplicates
-class SqlExport::Holder
-  include CatalogAdmin::SqlDumpHelper
+class SQLExport::Holder
+  include CatalogAdmin::SQLDumpHelper
   # tables = { :table_name => id|uuid + class + item_type_slug|id + class + category_name|id + class + choiceset_name... }
   attr_accessor :tables
 
@@ -53,6 +53,6 @@ class SqlExport::Holder
     name += "#{index}_" unless index.nil?
     name += model.public_send(method)
 
-    name.truncate(CatalogAdmin::SqlDumpHelper::MAX_SQL_NAME_LENGTH).downcase
+    name.truncate(CatalogAdmin::SQLDumpHelper::MAX_SQL_NAME_LENGTH).downcase
   end
 end

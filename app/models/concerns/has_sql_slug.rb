@@ -1,4 +1,4 @@
-module HasSqlSlug
+module HasSQLSlug
   extend ActiveSupport::Concern
 
   MYSQL_NAME_MAX_LENGTH = 64

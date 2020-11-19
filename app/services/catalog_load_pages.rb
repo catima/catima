@@ -30,7 +30,7 @@ class CatalogLoadPages
   end
 
   def load_container(page, container_json)
-    container_class = container_json['type'].sub("HTML", "Html").constantize # convert "HTML" to "Html" to prevent error with record saved with wrong naming (prevent error `NameError: uninitialized constant #<Class:XXXX>::HTML`)
+    container_class = container_json['type'].constantize
     c = container_class.new(container_json.except('type', 'content').merge('page' => page))
     c.update_from_json('content': container_json['content'])
   end
