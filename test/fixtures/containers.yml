@@ -16,7 +16,7 @@
 # Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
 
 one:
-  type: Container::HTML
+  type: Container::Html
   slug: content1
   row_order: 1
   page_id: 1
