@@ -1,7 +1,7 @@
 GIT
-  remote: https://github.com/andreapavoni/panoramic.git
-  revision: c14036efaa13f58c390731606dc477804d773d6e
-  branch: c14036efaa13f58c390731606dc477804d773d6e
+  remote: https://github.com/catima/panoramic.git
+  revision: d5da3928757a3b2782a05aa27119354bb616890d
+  branch: master
   specs:
     panoramic (0.0.7)
       rails (>= 4.2.0)
