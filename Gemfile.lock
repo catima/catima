@@ -112,10 +112,13 @@ GEM
       rack (>= 0.9.0)
     binding_of_caller (0.8.0)
       debug_inspector (>= 0.0.1)
-    bootstrap-sass (3.4.1)
-      autoprefixer-rails (>= 5.2.1)
-      sassc (>= 2.0.0)
-    bootstrap_form (2.7.0)
+    bootstrap (4.5.3)
+      autoprefixer-rails (>= 9.1.0)
+      popper_js (>= 1.14.3, < 2)
+      sassc-rails (>= 2.0.0)
+    bootstrap_form (4.3.0)
+      actionpack (>= 5.0)
+      activemodel (>= 5.0)
     brakeman (4.10.0)
     bugsnag (6.18.0)
       concurrent-ruby (~> 1.0)
@@ -294,6 +297,7 @@ GEM
       activesupport (>= 5.2)
     pgcli-rails (0.5.1)
       railties (>= 4.2.0)
+    popper_js (1.16.0)
     pry (0.13.1)
       coderay (~> 1.1)
       method_source (~> 1.0)
@@ -474,8 +478,8 @@ DEPENDENCIES
   bcrypt_pbkdf
   better_errors
   binding_of_caller
-  bootstrap-sass (~> 3.4.1)
-  bootstrap_form (~> 2.7.0)
+  bootstrap (~> 4)
+  bootstrap_form (~> 4.3.0)
   brakeman
   bugsnag
   capybara

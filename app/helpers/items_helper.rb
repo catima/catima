@@ -66,7 +66,7 @@ module ItemsHelper
       # Remove field if value is blank
       next if value.blank?
 
-      html << [content_tag(:b, "#{fld.name}:"), value].join(" ")
+      html << [tag.b("#{fld.name}:"), value].join(" ")
     end.join("; ").html_safe
   end
 

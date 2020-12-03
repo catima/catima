@@ -1,7 +1,7 @@
 <% provide(:title, t('.add_members_to_group', group: @group.name)) %>
 
 
-<div class='panel-body'>
+<div class='card-body'>
   <%= bootstrap_form_for(@membership, url:catalog_admin_group_memberships_path) do |f| %>
 
     <%= f.form_group do %>

@@ -150,9 +150,9 @@ class ChoiceSetSearch extends Component {
 
   _getChoiceSetClassname() {
     if(this.state.selectedItem.length === 0 || this.state.selectedItem.data.length === 0) {
-      return 'col-md-6';
+      return 'col-lg-6';
     } else {
-      return 'col-md-3';
+      return 'col-lg-3';
     }
   }
 
@@ -209,46 +209,44 @@ class ChoiceSetSearch extends Component {
 
   render() {
     return (
-      <div className="col-md-12 choiceset-search-container">
+      <div className="col-lg-12 choiceset-search-container">
         <div className="row">
-          <div className="col-md-2">
+          <div className="col-lg-2">
               { this.renderFieldConditionElement() }
           </div>
-          <div>
             <div className={this._getChoiceSetClassname()}>
                 { this.renderChoiceSetElement() }
             </div>
             { (this.state.selectedItem.length !== 0 && this.state.selectedItem.data.length !== 0) &&
-              <div className="col-md-3">
+              <div className="col-lg-3">
                 { this.renderChoiceSetItemCategory() }
               </div>
             }
-          </div>
           { (this.props.itemId === this.props.componentList[0].itemId && this.props.componentList.length === 1) &&
-          <div className="col-md-1 icon-container">
+          <div className="col-lg-1 icon-container">
             <a type="button" onClick={this.addComponent}><i className="fa fa-plus"></i></a>
           </div>
           }
           { (((this.props.itemId !== this.props.componentList[0].itemId) && (this.props.itemId !== this.props.componentList[this.props.componentList.length - 1].itemId)) || (this.props.itemId === this.props.componentList[0].itemId && this.props.componentList.length > 1)) &&
-          <div className="col-md-1 icon-container">
+          <div className="col-lg-1 icon-container">
             <a type="button" onClick={this.deleteComponent}><i className="fa fa-trash"></i></a>
           </div>
           }
           { ((this.props.itemId === this.props.componentList[this.props.componentList.length - 1].itemId) && (this.props.itemId !== this.props.componentList[0].itemId)) &&
-          <div className="col-md-1">
+          <div className="col-lg-1">
             <div className="row">
-              <div className="col-md-12"><a type="button" onClick={this.addComponent}><i className="fa fa-plus"></i></a></div>
-              <div className="col-md-12"><a type="button" onClick={this.deleteComponent}><i className="fa fa-trash"></i></a></div>
+              <div className="col-lg-12"><a type="button" onClick={this.addComponent}><i className="fa fa-plus"></i></a></div>
+              <div className="col-lg-12"><a type="button" onClick={this.deleteComponent}><i className="fa fa-trash"></i></a></div>
             </div>
           </div>
           }
-          <div className="col-md-3">
+          <div className="col-lg-3">
             { this.renderSelectConditionElement() }
           </div>
         </div>
         { (Object.keys(this.state.selectedCategory).length !== 0 && this.state.selectedItem.data.length !== 0) &&
         <div className="row">
-          <div className="col-md-offset-2 col-md-6">{ this.renderLinkedCategoryElement() }</div>
+          <div className="col-lg-offset-2 col-lg-6">{ this.renderLinkedCategoryElement() }</div>
         </div>
         }
       </div>

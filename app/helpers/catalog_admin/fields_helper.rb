@@ -30,25 +30,25 @@ module CatalogAdmin::FieldsHelper
   def field_primary_badge(field)
     return unless field.primary?
 
-    content_tag(:span, t("primary"), :class => "label label-warning")
+    tag.span(t("primary"), :class => "badge badge-warning")
   end
 
   def field_restricted_badge(field)
     return unless field.restricted?
 
-    content_tag(:span, fa_icon(:lock), class: 'label label-danger')
+    tag.span(fa_icon(:lock), class: 'badge badge-danger')
   end
 
   def field_i18n_badge(field)
     return unless field.i18n?
 
-    content_tag(:span, t("i18n"), :class => "label label-info")
+    tag.span(t("i18n"), :class => "badge badge-info")
   end
 
   def field_formatted_badge(field)
     return unless field.respond_to?(:formatted?) && field.formatted?
 
-    content_tag(:span, t("formatted"), :class => "label label-info")
+    tag.span(t("formatted"), :class => "badge badge-info")
   end
 
   def field_move_up_link(field)

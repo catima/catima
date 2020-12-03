@@ -26,17 +26,16 @@
       <%= link_to(
             fa_icon(:"plus-square", :text => t('.new_item_type', item_type: @item_type.name)),
             new_catalog_admin_item_path(catalog, I18n.locale, @item_type),
-            :class => "btn btn-xs btn-default") %>
+            :class => "btn btn-sm btn-outline-secondary") %>
       <button type="button"
-              class="btn btn-xs btn-default dropdown-toggle"
+              class="btn btn-sm btn-outline-secondary dropdown-toggle"
               data-toggle="dropdown"
               aria-haspopup="true"
               aria-expanded="false">
-        <span class="caret"></span>
         <span class="sr-only">Toggle Dropdown</span>
       </button>
       <ul class="dropdown-menu">
-        <li>
+        <li class="dropdown-item">
           <%= link_to(t('.import_csv'), new_catalog_admin_csv_import_path) %>
         </li>
       </ul>

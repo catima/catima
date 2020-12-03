@@ -1,49 +1,39 @@
 <% if current_user.authenticated? %>
-  <li class="dropdown" id="user-menu">
-    <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+  <li class="dropdown nav-item" id="user-menu">
+    <a href="#" class="dropdown-toggle  nav-link" data-toggle="dropdown">
       <%= fa_icon(:user) %>
       <%= current_user.email %>
       <b class="caret"></b>
     </a>
 
     <ul class="dropdown-menu">
-      <li>
         <%= link_to(
               t(".my_profile"),
-              edit_user_registration_path(:locale => I18n.locale)) %>
-      </li>
-      <li>
+              edit_user_registration_path(:locale => I18n.locale), class:"dropdown-item") %>
         <%= link_to(
               t('.my_groups'),
-              memberships_path(locale: I18n.locale)) %>
-      </li>
-      <li>
+              memberships_path(locale: I18n.locale), class:"dropdown-item") %>
         <%= link_to(
-                t(".my_favorites"),
-                favorites_path(:locale => I18n.locale)) %>
-      </li>
-      <li>
+              t(".my_favorites"),
+              favorites_path(:locale => I18n.locale), class:"dropdown-item") %>
         <%= link_to(
-                t(".my_searches"),
-                searches_path(:locale => I18n.locale)) %>
-      </li>
-      <li>
+              t(".my_searches"),
+              searches_path(:locale => I18n.locale), class:"dropdown-item") %>
         <%= link_to(
               t(".log_out"),
               destroy_user_session_path(:locale => I18n.locale),
-              :method => "delete") %>
-      </li>
+              :method => "delete", class:"dropdown-item") %>
     </ul>
   </li>
 <% else %>
-  <li>
+  <li class="nav-item">
     <%= link_to(
           t(".log_in"),
-          new_user_session_path(:locale => I18n.locale)) %>
+          new_user_session_path(:locale => I18n.locale), class: "nav-link") %>
   </li>
-  <li>
+  <li class="nav-item">
     <%= link_to(
           t(".register"),
-          new_user_registration_path(:locale => I18n.locale)) %>
+          new_user_registration_path(:locale => I18n.locale), class: "nav-link") %>
   </li>
 <% end %>

@@ -7,16 +7,16 @@
   <%= link_to(
         t('.edit_field_set', field_set: @field_set.model_name.human.downcase),
         edit_field_set_path(@field_set),
-        :class => "btn btn-xs btn-text") %>
+        :class => "btn btn-sm btn-text") %>
 
   <span class="dropdown">
-    <button class="btn btn-xs btn-default dropdown-toggle" type="button" id="add-field-dropdown" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+    <button class="btn btn-sm btn-outline-secondary dropdown-toggle" type="button" id="add-field-dropdown" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
       <%= fa_icon(:"plus-square", :text => t('.add_field')) %>
-      <span class="caret"></span>
+    </button>
     </button>
     <ul class="dropdown-menu dropdown-menu-right" aria-labelledby="add-field-dropdown">
       <% Field.type_choices.each do |key, label| %>
-        <li>
+        <li class="dropdown-item">
           <%= link_to(t("#{translation_type_name(label)}_field"), { :action => :new, :type => key }) %>
         </li>
       <% end %>

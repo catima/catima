@@ -27,7 +27,7 @@
         <td>
           <%= current_user.catalog_role(membership.group.catalog).capitalize %>
           <% unless user_role(current_user, membership.group.catalog) == user_role(current_user, membership.group.catalog, true) %>
-            <span class="label label-info"><%= t('.group_role') %></span>
+            <span class="badge badge-info"><%= t('.group_role') %></span>
           <% end %>
         <td>
         <td style="text-align: right;">
@@ -36,7 +36,7 @@
                   membership_path(id: membership.id),
                   method: :delete,
                   data: { confirm: t('.delete_confirm', group: membership.group.name) },
-                  class: 'btn btn-xs btn-default'
+                  class: 'btn btn-sm btn-outline-secondary'
                 ) %>
         </td>
       </tr>

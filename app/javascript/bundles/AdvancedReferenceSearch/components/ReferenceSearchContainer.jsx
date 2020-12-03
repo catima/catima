@@ -169,9 +169,9 @@ class ReferenceSearchContainer extends Component {
 
   render() {
     return (
-      <div>
+      <React.Fragment>
       {this.renderComponentList()}
-      </div>
+      </React.Fragment>
     );
   }
 }

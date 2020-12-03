@@ -1,11 +1,11 @@
-<div class="panel panel-default">
-  <div class="panel-heading"><%= t '.categories' %></div>
-  <ul class="list-group">
+<div class="card panel-default">
+  <div class="card-header"><%= t '.categories' %></div>
+  <ul class="list-group list-group-flush">
     <% catalog.categories.sorted.each do |type| %>
       <%= setup_category_nav_link(type) %>
     <% end %>
   </ul>
-  <div class="panel-body">
+  <div class="card-body">
     <p>
       <%= link_to(new_catalog_admin_category_path) do %>
         <%= fa_icon(:"plus-square", :text => t('.new_category')) %>

@@ -36,9 +36,9 @@ class FontStyle extends React.Component {
   render(){
     return (
       <div className="btn-group" role="group" aria-label="Font style">
-        <button type="button" onClick={this.handleBoldChange} data-active={this.state.bold} className="btn btn-sm btn-default"><b>B</b></button>
-        <button type="button" onClick={this.handleItalicChange} data-active={this.state.italic} className="btn btn-sm btn-default"><i>I</i></button>
-        <button type="button" onClick={this.handleUnderlineChange} data-active={this.state.underline} data-active={this.state.underline} className="btn btn-sm btn-default"><u>U</u></button>
+        <button type="button" onClick={this.handleBoldChange} data-active={this.state.bold} className="btn btn-sm btn-outline-secondary"><b>B</b></button>
+        <button type="button" onClick={this.handleItalicChange} data-active={this.state.italic} className="btn btn-sm btn-outline-secondary"><i>I</i></button>
+        <button type="button" onClick={this.handleUnderlineChange} data-active={this.state.underline} data-active={this.state.underline} className="btn btn-sm btn-outline-secondary"><u>U</u></button>
       </div>
     )
   }

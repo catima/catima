@@ -1,6 +1,6 @@
 <% provide(:title, t('.new_group_for_catalog', catalog: catalog.name)) %>
 
-<div class='panel-body'>
+<div class='card-body'>
   <%= bootstrap_form_for([:catalog_admin, @group]) do |f| %>
 
     <%= render('common_form_fields', :f => f) %>

@@ -10,7 +10,7 @@
     "@babel/preset-env": "^7.7.1",
     "@babel/preset-react": "^7.0.0",
     "@claviska/jquery-minicolors": "^2.2.6",
-    "@rails/webpacker": "^5.1.1",
+    "@rails/webpacker": "5.2.1",
     "axios": "^0.18.1",
     "babel-loader": "^8.0.6",
     "bootstrap-loader": "^3.0.3",
@@ -67,6 +67,6 @@
     "webpack-cli": "^3.3.10"
   },
   "devDependencies": {
-    "webpack-dev-server": "^3.10.1"
+    "webpack-dev-server": "^3.11.0"
   }
 }

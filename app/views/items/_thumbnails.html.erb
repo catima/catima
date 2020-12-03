@@ -1,7 +1,7 @@
 <% item_list.items.each_slice(4).with_index do |items, row| %>
   <div class="row">
     <% items.each_with_index do |item, col| %>
-      <div class="col-md-3 col-xs-6">
+      <div class="col-lg-3 col-sm-6">
         <div class="thumbnail">
           <%= item_list_link(item_list, item, row * col) do %>
             <%= item_thumbnail(item, :style => :medium) %>

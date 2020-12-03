@@ -64,9 +64,9 @@ class DateTimeSearch extends Component {
 
   _getDateTimeClassname() {
     if(this.props.selectCondition.length > 0) {
-      return 'col-md-7';
+      return 'col-lg-7';
     } else {
-      return 'col-md-12';
+      return 'col-lg-12';
     }
   }
 
@@ -142,7 +142,7 @@ class DateTimeSearch extends Component {
 
   renderDateTimeElement(){
     return (
-        <div className="col-md-12">
+        <div className="col-lg-12">
             <DateTimeInput input={this.props.inputStart} inputId={this.dateTimeSearchId} inputSuffixId="start_date" inputName={this.state.startDateInputName} ref={this.dateTimeSearchRef} localizedDateTimeData={this.props.localizedDateTimeData} disabled={this.state.disabled} isRange={this.state.isRange} datepicker={true} locale={this.props.locale} format={this.props.format}/>
             { this.state.isRange &&
               <i className="fa fa-chevron-down"></i>
@@ -166,20 +166,20 @@ class DateTimeSearch extends Component {
     return (
       <div className="datetime-search-container row">
         { this.props.selectCondition.length > 0 &&
-        <div className="col-md-2">
+        <div className="col-lg-2">
             { this.renderFieldConditionElement() }
         </div>
         }
         <div className={this._getDateTimeClassname()}>
           { this.renderDateTimeElement() }
           <div className="collapse" id={this.dateTimeCollapseId}>
-             <div className="col-md-12">
+             <div className="col-lg-12">
                 <DateTimeInput input={this.props.inputEnd} inputId={this.dateTimeSearchId} inputSuffixId="end_date" inputName={this.state.endDateInputName} localizedDateTimeData={this.props.localizedDateTimeData} disabled={this.state.disabled} isRange={this.state.isRange} ref={this.dateTimeSearchRef2} datepicker={true} locale={this.props.locale} format={this.props.format}/>
              </div>
           </div>
         </div>
         { this.props.selectCondition.length > 0 &&
-        <div className="col-md-3">
+        <div className="col-lg-3">
           { this.renderSelectConditionElement() }
         </div>
         }

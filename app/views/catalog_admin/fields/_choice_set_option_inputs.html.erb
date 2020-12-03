@@ -1,5 +1,5 @@
 <div class="row" style="margin-top:20px;">
-  <div class="col-xs-8">
+  <div class="col-sm-8">
 <%= f.collection_select(
       :choice_set_id,
       f.object.choice_set_choices,
@@ -7,7 +7,7 @@
       :name,
       :label => t('.choice_set')) %>
   </div>
-  <div class="col-xs-4" style="padding-top: 25px; margin-left: -15px;">
-    <a class="btn btn-sm btn-default" data-toggle="modal" data-target="#new-choice-set-modal" href="#"><span class="glyphicon glyphicon-plus"></span> <%= t('.new_choice_set') %></a>
+  <div class="col-sm-4" style="padding-top: 30px; margin-left: -15px;">
+    <a class="btn btn-sm btn-outline-secondary" data-toggle="modal" data-target="#new-choice-set-modal" href="#"><i class="fa fa-plus"></i> <%= t('.new_choice_set') %></a>
   </div>
 </div>

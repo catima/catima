@@ -1,14 +1,15 @@
 class Field::ChoiceSetPresenter < FieldPresenter
   delegate :choices, :selected_choices, :selected_choice?, :to => :field
-  delegate :select2_select, :browse_similar_items_link, :content_tag,
+  delegate :select2_select, :browse_similar_items_link, :tag,
            :to => :view
 
+  # rubocop:disable Style/StringConcatenation
   def input(form, method, options={})
     category = field.belongs_to_category? ? "data-field-category=\"#{field.category_id}\"" : ''
     [
       '<div class="form-component">',
         "<div class=\"row\" #{category} data-choice-set=\"#{field.choice_set.id}\" data-field=\"#{field.id}\">",
-          '<div class="col-xs-8">',
+          '<div class="col-sm-8">',
             select2_select(
               form,
               method,
@@ -17,15 +18,16 @@ class Field::ChoiceSetPresenter < FieldPresenter
               &method(:options_for_select)
             ),
           '</div>',
-          '<div class="col-xs-4" style="padding-top: 25px; margin-left: -15px;">',
-            '<a class="btn btn-sm btn-default" style="color: #aaa;" data-toggle="modal" data-target="#choice-modal-'+method+'" href="#">',
-              '<span class="glyphicon glyphicon-plus"></span>',
+          '<div class="col-sm-4" style="padding-top: 30px; margin-left: -15px;">',
+            '<a class="btn btn-sm btn-outline-secondary" style="color: #aaa;" data-toggle="modal" data-target="#choice-modal-'+method+'" href="#">',
+              '<i class="fa fa-plus"></i>',
             '</a>',
           '</div>',
         '</div>',
       '</div>'
     ].join.html_safe
   end
+  # rubocop:enable Style/StringConcatenation
 
   def value
     choices = selected_choices(item)
@@ -49,8 +51,7 @@ class Field::ChoiceSetPresenter < FieldPresenter
       data = {}
       data["choice-category"] = choice.category_id if choice.category_id
 
-      content_tag(
-        :option,
+      tag.option(
         choice.short_name,
         :value => choice.id,
         :selected => selected_choice?(item, choice),

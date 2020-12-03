@@ -2,13 +2,12 @@
 
 <% provide(:actions) do %>
   <span class="dropdown">
-    <button class="btn btn-xs btn-default dropdown-toggle" type="button" id="add-field-dropdown" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+    <button class="btn btn-sm btn-outline-secondary dropdown-toggle" type="button" id="add-field-dropdown" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
       <%= fa_icon(:"plus-square", :text => t(".new_export")) %>
-      <span class="caret"></span>
     </button>
     <ul class="dropdown-menu dropdown-menu-right" aria-labelledby="add-field-dropdown">
       <% available_categories.each do |format| %>
-        <li>
+        <li class="dropdown-item">
           <%= link_to(format.capitalize, catalog_admin_exports_path(:category => format, :locale => params[:locale]), method: :post) %>
         </li>
       <% end %>

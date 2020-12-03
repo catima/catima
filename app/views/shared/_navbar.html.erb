@@ -1,14 +1,9 @@
-<div class="navbar navbar-default navbar-static-top" role="navigation">
-  <div class="container">
-    <div class="navbar-header">
-      <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
-        <span class="sr-only">Toggle navigation</span>
-        <span class="icon-bar"></span>
-        <span class="icon-bar"></span>
-        <span class="icon-bar"></span>
-      </button>
-      <%= render("shared/navlogo") if catalog_scoped? %>
-    </div>
+<div class="navbar navbar-light navbar-static-top navbar-expand-md bg-light" role="navigation">
+  <div class="container-lg">
+    <%= render("shared/navlogo") if catalog_scoped? %>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target=".navbar-collapse" aria-controls="navbarToggleExternalContent" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
     <%= render("shared/navbar/navbar_catalog") if catalog_scoped? %>
     <%= render("shared/navbar/navbar_user") if user_scoped? %>
   </div>

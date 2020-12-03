@@ -1,16 +1,16 @@
 <% provide(:title, "CATIMA admin") %>
 
 <% if @configuration %>
-<div class="panel panel-default">
-  <div class="panel-heading">
+<div class="card panel-default">
+  <div class="card-header">
     Global settings
   </div>
   <%= render("admin/configurations/form") %>
 </div>
 <% end %>
 
-<div class="panel panel-default catalogs">
-  <div class="panel-heading">
+<div class="card panel-default catalogs">
+  <div class="card-header">
     <% if current_user.system_admin? %>
       <span class="pull-right">
         <span style="margin-right: 15px">
@@ -31,8 +31,8 @@
 </div>
 
 <% if @users %>
-  <div class="panel panel-default users">
-    <div class="panel-heading">
+  <div class="card panel-default users">
+    <div class="card-header">
       <%= render 'shared/search_form',
                  :controller => 'admin/dashboard',
                  :action => 'index',
@@ -50,8 +50,8 @@
 <% end %>
 
 <% if @template_storages %>
-<div class="panel panel-default templates">
-  <div class="panel-heading">
+<div class="card panel-default templates">
+  <div class="card-header">
     <span class="pull-right">
       <%= link_to(new_admin_template_storage_path) do %>
         <%= fa_icon(:"plus-square", :text => "New template") %>

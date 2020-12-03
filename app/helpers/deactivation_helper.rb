@@ -1,7 +1,7 @@
 module DeactivationHelper
   def deactivation_status_label(model)
     text, klass = model.active? ? %w(Active success) : %w(Inactive default)
-    content_tag(:span, text, :class => "label label-#{klass}")
+    tag.span(text, :class => "badge badge-#{klass}")
   end
 
   def deactivation_toggle(model, path_method, *args)
@@ -16,7 +16,7 @@ module DeactivationHelper
       path,
       options.reverse_merge(
         :method => :patch,
-        :class => "btn btn-xs btn-default #{model.model_name.to_s.downcase}-action-#{label.to_s.downcase}",
+        :class => "btn btn-sm btn-outline-secondary #{model.model_name.to_s.downcase}-action-#{label.to_s.downcase}",
         "data-toggle" => "tooltip",
         "data-placement" => "top",
         "title" => label

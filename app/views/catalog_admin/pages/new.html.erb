@@ -1,6 +1,6 @@
 <% provide(:title, t('new_page')) %>
 
-<div class="panel-body">
+<div class="card-body">
   <%= bootstrap_form_for([:catalog_admin, @page]) do |f| %>
 
     <%= render("common_form_fields", :f => f) %>

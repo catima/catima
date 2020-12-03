@@ -329,7 +329,7 @@ class FormattedTextEditor extends React.Component {
         <div id={this.uid + '-noteEditor'} className="noteEditor" style={{'display': this.state.noteDialogDisplay}}>
           <label>{this.state.noteLabel}</label><br/>
           <div id={this.uid + '-noteEditorInstance'}></div><br/>
-          <span onClick={this.saveNote} className="btn btn-sm btn-default">
+          <span onClick={this.saveNote} className="btn btn-sm btn-outline-secondary">
             {Translations.messages['catalog_admin.fields.text_option_inputs.save_note']}
           </span>
         </div>

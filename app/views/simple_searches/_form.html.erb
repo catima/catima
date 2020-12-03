@@ -2,7 +2,7 @@
       :url => { :controller => controller, :action => action, :uuid => '' },
       :method => "POST",
       :layout => :inline,
-      :html => { :style => "text-align: center" }) do |f| %>
+      :html => { :class => "justify-content-center my-4" }) do |f| %>
 
     <div class="clearable-input">
       <div class="input-group">
@@ -25,7 +25,7 @@
       </div>
     </div>
 
-    <%= f.submit(t(".submit")) %>
+    <%= f.submit(t(".submit"), class: 'btn btn-outline-secondary') %>
 
     <% if display_advanced_search %>
       <%= link_to(

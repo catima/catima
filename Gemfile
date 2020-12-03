@@ -5,8 +5,8 @@ gem "active_type"
 gem "ahoy_matey"
 gem "autoprefixer-rails"
 gem "bcrypt"
-gem "bootstrap-sass", "~> 3.4.1" # TODO: Replace by https://github.com/twbs/bootstrap-rubygem for bootstrap 4
-gem "bootstrap_form", "~> 2.7.0" # TODO: Upgrade to 4.3.0 for rails6 (only compatible with bootstrap 4)
+gem "bootstrap", "~> 4"
+gem "bootstrap_form", "~> 4.3.0" # TODO: Upgrade to 4.3.0 for rails6 (only compatible with bootstrap 4)
 gem "bugsnag"
 gem "chartkick"
 gem "cocoon"

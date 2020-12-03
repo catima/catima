@@ -4,7 +4,7 @@
     <%= link_to(
       fa_icon('github') + ' ' + t('.log_in_with', provider: 'Github'),
       user_github_omniauth_authorize_path,
-      class: 'btn btn-default',
+      class: 'btn btn-outline-secondary',
       style: 'width: 100%; margin-bottom: 10px;',
       method: :post) %>
   <% end %>
@@ -13,7 +13,7 @@
     <%= link_to(
       fa_icon('facebook-square') + ' ' + t('.log_in_with', provider: 'Facebook'),
       user_facebook_omniauth_authorize_path,
-      class: 'btn btn-default',
+      class: 'btn btn-outline-secondary',
       style: 'width: 100%; margin-bottom: 10px;',
       method: :post) %>
   <% end %>
@@ -22,7 +22,7 @@
     <%= link_to(
       t('.log_in_with', provider: ENV['AUTH_SHIB_NAME'] || 'Shibboleth'),
       user_shibboleth_omniauth_authorize_path,
-      class: 'btn btn-default',
+      class: 'btn btn-outline-secondary',
       style: 'width: 100%; margin-bottom: 10px;',
       method: :post) %>
   <% end %>

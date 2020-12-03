@@ -1,13 +1,12 @@
 <% if search_results.item_counts_by_type.many? %>
   <ul class="nav nav-tabs">
     <% search_results.item_counts_by_type do |type, count| %>
-      <%= content_tag(
-            :li,
+      <%= tag.li(
             :role => "presentation",
             :class => ("active" if search_results.active?(type))) do %>
         <%= link_to(:type => type.slug, :q => search_results.query) do %>
           <%= type.name_plural %>
-          <span class="badge">
+          <span class="badge-pill badge-dark float-right">
             <%= number_with_delimiter(count) %>
           </span>
         <% end %>

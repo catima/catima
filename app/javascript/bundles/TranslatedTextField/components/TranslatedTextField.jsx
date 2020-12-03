@@ -44,7 +44,7 @@ class TranslatedTextField extends React.Component {
         {this.locales.map((locale, i) =>
           (
             <div key={i} className="input-group">
-              <span className="input-group-addon">{locale}</span>
+              <span className="input-group-prepend btn btn-secondary">{locale}</span>
               <input className="form-control" data-locale={locale} type="text" value={this._value[locale]} onChange={this.handleChange} disabled={this.state.disabled} />
             </div>
           )

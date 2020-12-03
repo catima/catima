@@ -11,16 +11,15 @@
   <div class="container-list">
     <div class="form-group">
         <div class="row">
-            <div class="col-md-12">
+            <div class="col-lg-12">
                 <span class="dropdown" style="float: right;">
                   <% if @available_fields.present? && @available_fields.size.positive? %>
-                    <button class="btn btn-xs btn-default dropdown-toggle" type="button" id="add-field-dropdown" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+                    <button class="btn btn-sm btn-outline-secondary dropdown-toggle" type="button" id="add-field-dropdown" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
                       <%= fa_icon(:"plus-square", :text => t('.add_field')) %>
-                      <span class="caret"></span>
                     </button>
                     <ul class="dropdown-menu dropdown-menu-right" aria-labelledby="add-field-dropdown">
                       <% @available_fields.each do |field| %>
-                        <li>
+                        <li  class="dropdown-item">
                           <%= link_to(field.name, {
                             :action => :update,
                             :catalog_slug => @advanced_search_conf.catalog.slug,
@@ -37,7 +36,7 @@
             </div>
         </div>
         <div class="row">
-            <div class="col-md-12"><%= render("index", locale: locale) %></div>
+            <div class="col-lg-12"><%= render("index", locale: locale) %></div>
         </div>
     </div>
   </div>

@@ -3,11 +3,11 @@
 
   <% if params[:item_type].present? || @advanced_search_config.present? %>
     <div class="row">
-      <div class="col-md-12">
+      <div class="col-lg-12">
         <h3><%= t("advanced_searches.new.item_type_search",  item_type: @advanced_search_config.present? ? @advanced_search_config.item_type.name : @advanced_search.item_type.name) %></h3>
       </div>
       <% if displayable_fields(@fields).count.zero? %>
-        <div class="col-md-12">
+        <div class="col-lg-12">
           <%= t("advanced_searches.new.no_field_in_advance_search_configuration") %>
         </div>
       <% end %>

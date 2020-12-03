@@ -1,17 +1,15 @@
 <% if locale_language_choices.many? %>
-  <li class="dropdown">
-    <a href="#" class="dropdown-toggle" data-toggle="dropdown">
+  <li class="dropdown nav-item">
+    <a href="#" class="dropdown-toggle nav-link" data-toggle="dropdown">
       <%= current_locale_language %>
       <b class="caret"></b>
     </a>
 
     <ul class="dropdown-menu">
       <% locale_language_choices.each do |locale, language, current| %>
-        <%= content_tag(:li, :class => ("disabled" if current)) do %>
-          <%= link_to(params.to_unsafe_h.merge(:locale => locale)) do %>
-            <%= fa_icon(:check) if current %>
-            <%= language %>
-          <% end %>
+        <%= link_to(params.to_unsafe_h.merge(:locale => locale), :class => ["dropdown-item ", ("disabled" if current)]) do %>
+          <%= fa_icon(:check) if current %>
+          <%= language %>
         <% end %>
       <% end %>
     </ul>

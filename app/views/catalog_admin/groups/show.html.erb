@@ -4,7 +4,7 @@
   <%= link_to(
         fa_icon(:'user-plus', text: t('.add_users')),
         new_catalog_admin_group_membership_path(group_id: @group.id),
-        class: 'btn btn-xs btn-default') %>
+        class: 'btn btn-sm btn-outline-secondary') %>
 <% end %>
 
 <% if @group.users.count == 0 %>
@@ -25,7 +25,7 @@
                   catalog_admin_group_membership_path(group_id: @group.id, id: membership.id),
                   method: :delete,
                   data: { confirm: t('.delete_confirm', user: membership.user.email) },
-                  class: 'btn btn-xs btn-default'
+                  class: 'btn btn-sm btn-outline-secondary'
                 ) %>
           </td>
         </tr>

@@ -13,7 +13,7 @@ class NavbarHelperTest < ActionView::TestCase
       :active_when => { :controller => "users" })
 
     assert_equal(
-      '<li class="active"><a title="foo" href="http://example.com">Test</a></li>',
+      '<li class="nav-item active"><a title="foo" class="nav-link" href="http://example.com">Test</a></li>',
       tag
       )
   end
@@ -27,7 +27,7 @@ class NavbarHelperTest < ActionView::TestCase
       :active_when => { :controller => /^user.*/ })
 
     assert_equal(
-      '<li class="active"><a href="http://example.com">Test</a></li>',
+      '<li class="nav-item active"><a class="nav-link" href="http://example.com">Test</a></li>',
       tag
       )
   end
@@ -35,6 +35,6 @@ class NavbarHelperTest < ActionView::TestCase
   test "#navbar_link_to otherwise doesn't add active class" do
     stubs(:params).returns(:controller => "users")
     tag = navbar_link_to("Home", "/", :active_when => { :controller => "home" })
-    assert_equal('<li><a href="/">Home</a></li>', tag)
+    assert_equal('<li class="nav-item "><a class="nav-link" href="/">Home</a></li>', tag)
   end
 end

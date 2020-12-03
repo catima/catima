@@ -7,14 +7,14 @@
     <%= link_to(
             fa_icon("bookmark", :text => t(".searches_remove")),
             search_path(I18n.locale, @saved_search.search),
-            :class => "btn btn-default btn-xs",
+            :class => "btn btn-outline-secondary btn-sm",
             method: :delete
         ) %>
   <% else %>
     <%= link_to(
             fa_icon("bookmark-o", :text => t(".searches_add")),
             searches_path(I18n.locale, related_search_uuid: @saved_search.uuid),
-            :class => "btn btn-default btn-xs",
+            :class => "btn btn-outline-secondary btn-sm",
             method: :post
         ) %>
   <% end %>

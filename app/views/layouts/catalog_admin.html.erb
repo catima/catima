@@ -4,21 +4,17 @@
   <%= javascript_include_async_tag('catalog-admin') %>
 <% end %>
 
-<div class="navbar navbar-inverse navbar-static-top" role="navigation">
-  <div class="container">
-    <div class="navbar-header">
-      <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-collapse">
-        <span class="sr-only">Toggle navigation</span>
-        <span class="icon-bar"></span>
-        <span class="icon-bar"></span>
-        <span class="icon-bar"></span>
-      </button>
-      <%= link_to(catalog_admin_data_path, :class => "navbar-brand") do %>
-        <%= catalog.name %> Admin
-      <% end %>
-    </div>
+<div class="navbar navbar-dark bg-dark navbar-static-top navbar-expand-md" role="navigation">
+  <div class="container-lg">
+    <%= link_to(catalog_admin_data_path, :class => "navbar-brand") do %>
+      <%= catalog.name %> Admin
+    <% end %>
+    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target=".navbar-collapse" aria-controls="navbarToggleExternalContent" aria-expanded="false" aria-label="Toggle navigation">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+
     <div class="navbar-collapse collapse">
-      <ul class="nav navbar-nav">
+      <ul class="nav navbar-nav mr-auto">
         <%= navbar_link_to(
               fa_icon(:book, :text => "Data"),
               catalog_admin_contextual_data_path,
@@ -34,26 +30,26 @@
                 }) %>
         <% end %>
       </ul>
-      <ul class="nav navbar-nav navbar-right">
-        <li>
+      <ul class="nav navbar-nav">
+        <li class="nav-item">
           <%= link_to(catalog_home_path(
                         catalog,
-                        :locale => current_user.primary_language)) do %>
+                        :locale => current_user.primary_language), class: "nav-link") do %>
             <%= fa_icon(:"sign-out") %>
             Return to site
           <% end %>
         </li>
         <% if policy(Configuration).update? %>
-          <li>
-            <%= link_to(admin_dashboard_path) do %>
+          <li class="nav-item">
+            <%= link_to(admin_dashboard_path, class: "nav-link") do %>
               <%= fa_icon(:cogs, :text => "CATIMA admin") %>
             <% end %>
           </li>
         <% end %>
         <%= render("shared/navbar/locale_menu") if params[:locale] %>
         <%= render("shared/navbar/user_menu") %>
-        <li class="help">
-          <%= link_to(doc_path, html_options = {}) do
+        <li class="nav-item help">
+          <%= link_to(doc_path, html_options = {class: "nav-link"}) do
             fa_icon("question-circle")
           end %>
         </li>

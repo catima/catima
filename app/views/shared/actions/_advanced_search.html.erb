@@ -2,7 +2,7 @@
   <%= link_to(
           fa_icon(:pencil),
           edit_catalog_admin_advanced_search_configuration_path(model.catalog.slug, I18n.locale, model.id),
-          class: "btn btn-xs btn-default menu-action-edit",
+          class: "btn btn-sm btn-outline-secondary menu-action-edit",
           "data-toggle" => "tooltip", "data-placement" => "top", "title" => t("edit")
       ) %>
 <% end %>
@@ -14,7 +14,7 @@
           :data => {
               :confirm => t("delete_confirm", {model: model.title})
           },
-          class: "btn btn-xs btn-default menu-action-delete",
+          class: "btn btn-sm btn-outline-secondary menu-action-delete",
           "data-toggle" => "tooltip", "data-placement" => "top", "title" => t("delete")
       ) %>
 <% end %>

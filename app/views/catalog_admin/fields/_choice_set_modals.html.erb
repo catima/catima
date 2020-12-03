@@ -10,12 +10,12 @@
           <h4 class="modal-title"><%= t('.create_new_choice_set') %></h4>
         </div>
         <div class="modal-body">
-          <div class="panel-body">
+          <div class="card-body">
             <%= render("catalog_admin/choice_sets/common_form_fields", :f => f) %>
           </div>
         </div>
         <div class="modal-footer">
-          <button type="button" class="btn btn-default" data-dismiss="modal"><%= t('cancel') %></button>
+          <button type="button" class="btn btn-outline-secondary" data-dismiss="modal"><%= t('cancel') %></button>
           <%= f.submit t('create'), class: 'btn btn-success' %>
         </div>
 

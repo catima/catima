@@ -15,7 +15,7 @@ class FontSize extends React.Component {
 
   render(){
     return (
-      <select className="form-control btn btn-sm btn-default"
+      <select className="form-control btn btn-sm btn-outline-secondary"
         value={this.props.value}
         onChange={this.handleChange}
         style={{height: '30px', width: '70px'}}>

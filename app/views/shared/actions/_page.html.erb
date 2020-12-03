@@ -2,7 +2,7 @@
   <%= link_to(
           fa_icon(:pencil),
           edit_catalog_admin_page_path(model.catalog, I18n.locale, model),
-          class: "btn btn-xs btn-default page-action-edit",
+          class: "btn btn-sm btn-outline-secondary page-action-edit",
           "data-toggle" => "tooltip", "data-placement" => "top", "title" => t("edit")
       ) %>
 <% end %>
@@ -14,7 +14,7 @@
           :data => {
               :confirm => t("delete_confirm", model: model.slug)
           },
-          class: "btn btn-xs btn-default page-action-delete",
+          class: "btn btn-sm btn-outline-secondary page-action-delete",
           "data-toggle" => "tooltip", "data-placement" => "top", "title" => t("delete")
       ) %>
 <% end %>

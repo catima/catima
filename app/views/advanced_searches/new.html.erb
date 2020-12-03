@@ -1,31 +1,27 @@
 <% provide(:title, t(".title")) %>
 
 <ul class="nav nav-tabs">
-  <li id="default_search_type" class="dropdown <%= "active" if current_page?(new_advanced_search_path) && params[:advanced_search_conf].blank? %>">
-      <a href="#" data-toggle="dropdown" class="dropdown-toggle"><%= t(".default_search") %> <b class="caret"></b></a>
-      <ul class="dropdown-menu">
-        <% @item_types.each do |item_type| %>
-          <%= content_tag(
-            :li,
-            :class => ("active" if item_type.slug == params[:item_type])) do %>
-            <a href="<%= url_for(:item_type => item_type.slug) %>"><%= item_type.name %></a>
-          <% end %>
-        <% end %>
-      </ul>
+  <li id="default_search_type" class="nav-item dropdown">
+    <a href="#" data-toggle="dropdown" class="dropdown-toggle dropdown-toggle nav-link <%= "active" if current_page?(new_advanced_search_path) && params[:advanced_search_conf].blank? %>"><%= t(".default_search") %>
+      <b class="caret"></b></a>
+    <ul class="dropdown-menu">
+      <% @item_types.each do |item_type| %>
+        <a class="dropdown-item <%= "active" if (item_type.slug == params[:item_type]) %>" href="<%= url_for(:item_type => item_type.slug) %>"><%= item_type.name %></a>
+      <% end %>
+    </ul>
   </li>
   <% @advance_search_confs.each do |search_config| %>
-    <%= content_tag(
-          :li,
+    <%= tag.li(
           :role => "presentation",
-          :class => ("active" if search_config.id == @advanced_search_config&.id)) do %>
-      <%= link_to(search_config.title, :advanced_search_conf => search_config.id) %>
+          :class => "nav-item") do %>
+      <%= link_to(search_config.title, {:advanced_search_conf => search_config.id}, class: ["nav-link", ("active" if search_config.id == @advanced_search_config&.id)]) %>
     <% end %>
   <% end %>
 </ul>
 
 <% if @advanced_search_config.present? && @advanced_search_config.description %>
   <div class="row">
-    <div class="col-md-12 description"><%= @advanced_search_config.description %>
+    <div class="col-lg-12 description"><%= @advanced_search_config.description %>
     </div>
   </div>
 <% end %>
@@ -33,5 +29,5 @@
 <%= render :partial => "form" %>
 
 <% if @advanced_search_config&.search_type_map? %>
-  <%= render :partial => "map", :locals => { :results => @search } %>
+  <%= render :partial => "map", :locals => {:results => @search} %>
 <% end %>

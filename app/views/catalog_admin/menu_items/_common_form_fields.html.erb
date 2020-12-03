@@ -20,7 +20,7 @@
   }
 ) %>
 
-<div class="well help-block">
+<div class="card p-4 my-4 help-block">
   <p><%= t('.help_block_intro') %></p>
   <ul>
     <li><%= t('.help_block_item_1').html_safe %></li>
@@ -81,7 +81,7 @@ function updateFieldDisplay(){
 }
 </script>
 
-<%= f.text_field(:url, :class => 'hide', :value => @menu_item.url_str) %>
+<%= f.text_field(:url, :class => 'd-none', :value => @menu_item.url_str) %>
 <div id="url_component"></div>
 <script>
   var urlFieldComponent = ReactOnRails.render(
