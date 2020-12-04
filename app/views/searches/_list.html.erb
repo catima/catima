@@ -13,7 +13,7 @@
 <% @list.unpaginaged_items.each_with_index do |search, i| %>
   <div class="media">
     <div class="media-body">
-      <h4 class="media-heading">
+      <h4 class="mt-0 mb-1">
         <%= search.search_name %>
         <% if search.name.present? %>
           <small><%= search_name(search) %></small>
