@@ -17,9 +17,9 @@
               :style => "width: 25em"
               ) %>
 
-        <div class="input-group-addon">
+        <div class="input-group-append">
           <% unless params[:q].nil? %>
-            <a href="<%= request.path.remove('search', '') %>" class="clear-input"><i class="fa fa-times"></i></a>
+            <a href="<%= request.path.remove('search', '') %>" class="clear-input btn btn-outline-primary"><i class="fa fa-times"></i></a>
           <% end %>
         </div>
       </div>

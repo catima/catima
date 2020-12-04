@@ -126,9 +126,12 @@ button[data-active=true]:focus {
       }
     }
 
-    .input-group-addon {
+    .input-group-append a{
       background: none;
       border: none;
+      &:hover {
+        color: #337ab7;
+      }
     }
   }
 }
