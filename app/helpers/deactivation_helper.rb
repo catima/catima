@@ -1,6 +1,6 @@
 module DeactivationHelper
   def deactivation_status_label(model)
-    text, klass = model.active? ? %w(Active success) : %w(Inactive default)
+    text, klass = model.active? ? %w(Active success) : %w(Inactive secondary)
     tag.span(text, :class => "badge badge-#{klass}")
   end
 
