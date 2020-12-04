@@ -15,6 +15,7 @@
 .nav-tabs .nav-link.active, .nav-tabs .nav-item.show .nav-link {
   background-color: unset;
 }
+
 h1, .h1, h2, .h2, h3, .h3 {
   margin-top: 20px;
 }
@@ -52,10 +53,29 @@ h4, .h4, h5, .h5, h6, .h6 {
   display: none;
 }
 
-.btn-text{
+.btn-text {
   color: $primary;
 }
 
 label {
   font-weight: 700;
+}
+
+.btn-xs {
+  padding: 1px 5px;
+  font-size: 12px;
+  line-height: 1.5;
+  border-radius: 3px;
+}
+
+.btn-outline-secondary {
+  color: #333;
+  background-color: #fff;
+  border-color: #ccc;
+
+  &:hover {
+    color: #333;
+    background-color: #e6e6e6;
+    border-color: #adadad;
+  }
 }

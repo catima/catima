@@ -16,7 +16,7 @@ module DeactivationHelper
       path,
       options.reverse_merge(
         :method => :patch,
-        :class => "btn btn-sm btn-outline-secondary #{model.model_name.to_s.downcase}-action-#{label.to_s.downcase}",
+        :class => "btn btn-xs btn-outline-secondary #{model.model_name.to_s.downcase}-action-#{label.to_s.downcase}",
         "data-toggle" => "tooltip",
         "data-placement" => "top",
         "title" => label

@@ -26,9 +26,9 @@
       <%= link_to(
             fa_icon(:"plus-square", :text => t('.new_item_type', item_type: @item_type.name)),
             new_catalog_admin_item_path(catalog, I18n.locale, @item_type),
-            :class => "btn btn-sm btn-outline-secondary") %>
+            :class => "btn btn-xs btn-outline-secondary") %>
       <button type="button"
-              class="btn btn-sm btn-outline-secondary dropdown-toggle"
+              class="btn btn-xs btn-outline-secondary dropdown-toggle"
               data-toggle="dropdown"
               aria-haspopup="true"
               aria-expanded="false">
