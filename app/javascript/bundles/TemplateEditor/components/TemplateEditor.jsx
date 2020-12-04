@@ -2,8 +2,6 @@ import 'es6-shim';
 import PropTypes from 'prop-types';
 import React from 'react';
 
-require('bootstrap-loader');
-
 const uuidv4 = require('uuid/v4');
 
 class TemplateEditor extends React.Component {
