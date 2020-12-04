@@ -75,7 +75,7 @@ class TemplateEditor extends React.Component {
       const button = ui.buttonGroup([
         ui.button({
           className: 'dropdown-toggle',
-          contents: 'Add field <i class="fa fa-caret-down"></i>',
+          contents: 'Add field',
           data: {
             toggle: 'dropdown'
           }
