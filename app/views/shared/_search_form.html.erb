@@ -2,7 +2,7 @@
   <%= form_tag url_for(:controller => controller, :action => action), method: "get" do %>
     <div class="input-group">
       <input type="text" class="form-control" placeholder="<%= placeholder %>" name="search">
-      <div class="input-group-btn">
+      <div class="input-group-append">
         <button class="btn btn-outline-secondary" type="submit"><%= fa_icon "search" %></button>
       </div>
     </div>
