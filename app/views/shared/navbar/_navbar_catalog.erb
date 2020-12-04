@@ -6,6 +6,7 @@
         $('.navbar-header').css('padding-top', pad+'px');
     }
 </script>
+
 <div class="navbar-collapse collapse">
   <ul class="nav navbar-nav mr-auto">
 
@@ -19,15 +20,15 @@
             <% if submenus.count > 0 %><% end %>
           </a>
           <% if submenus.count > 0 %>
-            <ul class="dropdown-menu">
+            <div class="dropdown-menu">
               <% submenus.each do |sub_menu| %>
                 <% if sub_menu.title == '---' %>
-                  <li role="separator" class="dropdown-divider"></li>
+                  <div role="separator" class="dropdown-divider"></div>
                 <% else %>
-                 <a class="dropdown-item <%= "active" if menu_item_active?(sub_menu) %>" href="<%= sub_menu.get_url %>"><%= sub_menu.title %></a>
+                  <a class="dropdown-item <%= "active" if menu_item_active?(sub_menu) %>" href="<%= sub_menu.get_url %>"><%= sub_menu.title %></a>
                 <% end %>
               <% end %>
-            </ul>
+            </div>
           <% end %>
         </li>
       <% end %>

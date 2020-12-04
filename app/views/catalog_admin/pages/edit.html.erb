@@ -11,9 +11,9 @@
 
     <%= f.primary(t('.update_page')) %>
     <%= link_to(
-          t('cancel'),
-          catalog_admin_pages_path,
-          :class => "btn btn-link") %>
+            t('cancel'),
+            catalog_admin_pages_path,
+            :class => "btn btn-link") %>
 
   <% end %>
 </div>
@@ -31,16 +31,15 @@
           <button class="btn btn-xs btn-outline-secondary dropdown-toggle" type="button" id="add-field-dropdown" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
             <%= fa_icon(:"plus-square", :text => t('catalog_admin.fields.index.add_field')) %>
           </button>
-          <ul class="dropdown-menu" style="right: 0; left: auto;" aria-labelledby="add-field-dropdown">
+          <div class="dropdown-menu" style="right: 0; left: auto;" aria-labelledby="add-field-dropdown">
             <% Container.type_choices.each do |key, label| %>
-              <li class="dropdown-item">
-                <%= link_to(
+              <%= link_to(
                       "#{label}",
-                      new_catalog_admin_page_container_path(page_slug:@page.slug, type:key, l:locale)
-                    ) %>
-              </li>
+                      new_catalog_admin_page_container_path(page_slug: @page.slug, type: key, l: locale),
+                      class: "dropdown-item"
+                  ) %>
             <% end %>
-          </ul>
+          </div>
         </span>
       </div>
 

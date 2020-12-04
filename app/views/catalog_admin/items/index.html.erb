@@ -1,9 +1,9 @@
 <% provide(:extra_nav) do %>
   <div class="data-search">
     <%= render("simple_searches/form",
-        :controller => "items",
-        :action => "search",
-        :display_advanced_search => false) %>
+               :controller => "items",
+               :action => "search",
+               :display_advanced_search => false) %>
   </div>
 <% end %>
 
@@ -13,8 +13,8 @@
 
 <% if @item_type.fields.count == 0 %>
   <div class="alert alert-warning" style="margin-bottom: 0;">
-  <%= t('.no_fields_warning') %><br>
-  <%= t('.add_fields') %>
+    <%= t('.no_fields_warning') %><br>
+    <%= t('.add_fields') %>
   </div>
 <% end %>
 
@@ -24,9 +24,9 @@
     <%= render("sort_menu") if sort_field_choices.any? %>
     <div class="btn-group">
       <%= link_to(
-            fa_icon(:"plus-square", :text => t('.new_item_type', item_type: @item_type.name)),
-            new_catalog_admin_item_path(catalog, I18n.locale, @item_type),
-            :class => "btn btn-xs btn-outline-secondary") %>
+              fa_icon(:"plus-square", :text => t('.new_item_type', item_type: @item_type.name)),
+              new_catalog_admin_item_path(catalog, I18n.locale, @item_type),
+              :class => "btn btn-xs btn-outline-secondary") %>
       <button type="button"
               class="btn btn-xs btn-outline-secondary dropdown-toggle"
               data-toggle="dropdown"
@@ -34,40 +34,38 @@
               aria-expanded="false">
         <span class="sr-only">Toggle Dropdown</span>
       </button>
-      <ul class="dropdown-menu">
-        <li class="dropdown-item">
-          <%= link_to(t('.import_csv'), new_catalog_admin_csv_import_path) %>
-        </li>
-      </ul>
+      <div class="dropdown-menu dropdown-menu-right">
+        <%= link_to(t('.import_csv'), new_catalog_admin_csv_import_path, class: "dropdown-item") %>
+      </div>
     </div>
   <% end %>
 
   <table class="table">
     <thead>
-      <tr>
-        <% @fields.each do |field| %>
-          <th><%= field.label %></th>
-        <% end %>
-        <% if catalog.requires_review? %>
-          <th><%= t('.status') %></th>
-        <% end %>
-        <th></th>
-      </tr>
+    <tr>
+      <% @fields.each do |field| %>
+        <th><%= field.label %></th>
+      <% end %>
+      <% if catalog.requires_review? %>
+        <th><%= t('.status') %></th>
+      <% end %>
+      <th></th>
+    </tr>
     </thead>
     <tbody>
-      <% @items.each do |item| %>
-        <tr>
-          <% @fields.each do |field| %>
-            <td><%= field_value(item, field, :style => :compact) %></td>
-          <% end %>
-          <% if catalog.requires_review? %>
-            <td><%= review_status_label(item) %></td>
-          <% end %>
-          <td align="right">
-            <%= render "shared/actions/item", :model => item %>
-          </td>
-        </tr>
-      <% end %>
+    <% @items.each do |item| %>
+      <tr>
+        <% @fields.each do |field| %>
+          <td><%= field_value(item, field, :style => :compact) %></td>
+        <% end %>
+        <% if catalog.requires_review? %>
+          <td><%= review_status_label(item) %></td>
+        <% end %>
+        <td align="right">
+          <%= render "shared/actions/item", :model => item %>
+        </td>
+      </tr>
+    <% end %>
     </tbody>
   </table>
 

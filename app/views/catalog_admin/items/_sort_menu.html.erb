@@ -2,13 +2,11 @@
   <button class="btn btn-xs btn-link dropdown-toggle" type="button" id="choose-sort-dropdown" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
     <%= t('.sorted_by', field: current_sort_field.name) %>
   </button>
-  <ul class="dropdown-menu" aria-labelledby="choose-sort-dropdown">
+  <div class="dropdown-menu" aria-labelledby="choose-sort-dropdown">
     <% sort_field_choices.each do |field| %>
-      <li class="dropdown-item">
-        <%= link_to(:params => param_for_sort(field).merge(:q => params[:q])) do %>
-          <%= prepend_icon_if(field == current_sort_field, :check, field.name) %>
-        <% end %>
-      </li>
+      <%= link_to({params: param_for_sort(field).merge(:q => params[:q])}, class: "dropdown-item") do %>
+        <%= prepend_icon_if(field == current_sort_field, :check, field.name) %>
+      <% end %>
     <% end %>
-  </ul>
+  </div>
 </span>
