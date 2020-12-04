@@ -42,12 +42,13 @@
 <%= f.label(:template) %>
 
 <div id="template-tabs">
-
-  <ul class="nav nav-tabs" style="margin-bottom: 15px;">
+  <div class="nav nav-tabs" style="margin-bottom: 15px;">
     <% @item_view.item_type.catalog.valid_locales.each_with_index do |l, i| %>
-      <li role="presentation" class="<% if i==0 %>active<% end %>"><a href="#<%= l %>"><%= l %></a></li>
+      <li role="presentation" class="nav-item">
+        <%= link_to l, "##{l}", class: ["nav-link", ("active" if i == 0)] %>
+      </li>
     <% end %>
-  </ul>
+  </div>
 
   <div class="tab-content">
     <% @item_view.item_type.catalog.valid_locales.each_with_index do |l, i| %>

@@ -1,12 +1,12 @@
 <% if search_results.item_counts_by_type.many? %>
-  <ul class="nav nav-tabs">
+  <ul class="nav nav-tabs mb-3">
     <% search_results.item_counts_by_type do |type, count| %>
       <%= tag.li(
-            :role => "presentation",
-            :class => ("active" if search_results.active?(type))) do %>
-        <%= link_to(:type => type.slug, :q => search_results.query) do %>
+          :role => "presentation",
+          :class => "nav-item") do %>
+        <%= link_to({type: type.slug, q: search_results.query}, class: ["nav-link", ("active" if search_results.active?(type))]) do %>
           <%= type.name_plural %>
-          <span class="badge-pill badge-dark float-right">
+          <span class="badge badge-pill badge-secondary ml-2">
             <%= number_with_delimiter(count) %>
           </span>
         <% end %>
