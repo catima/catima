@@ -2,8 +2,6 @@ require "test_helper"
 
 class Field::DateTimePresenterTest < ActionView::TestCase
   include JsonHelper
-  # include BootstrapForm::Helper
-  # include React::Rails::ViewHelper
 
   test "#value" do
     author = items(:one_author_stephen_king)
