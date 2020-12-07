@@ -86,3 +86,7 @@ blockquote {
 .popover-header {
   margin-top: 0; // because this use h3 style which contain a top margin
 }
+
+.navbar-light .nav-item.active a{
+  text-decoration: underline;
+}
