@@ -79,7 +79,8 @@ class ReferenceEditor extends Component {
                 srcRef={this.props.srcRef}
                 srcId={this.props.srcId}
                 req={this.props.req}
-                noOptionsMessage={this._getNoOptionsMessage()} />
+                noOptionsMessage={this._getNoOptionsMessage()}
+      />
     else
       return <SingleReferenceEditor
                 items={this.state.items}
@@ -92,7 +93,8 @@ class ReferenceEditor extends Component {
                 srcRef={this.props.srcRef}
                 srcId={this.props.srcId}
                 req={this.props.req}
-                noOptionsMessage={this._getNoOptionsMessage()} />
+                noOptionsMessage={this._getNoOptionsMessage()}
+      />
   }
 
   render() {
