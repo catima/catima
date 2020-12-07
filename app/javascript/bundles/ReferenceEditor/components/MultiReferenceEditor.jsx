@@ -5,6 +5,7 @@ import ReactDOM from 'react-dom';
 import ReactSelect from 'react-select';
 import striptags from 'striptags';
 import LoadingDots from '../../StyleControl/components/LoadingDots';
+import Validation from "../modules/validation";
 
 const WAIT_INTERVAL = 800;
 
@@ -23,7 +24,12 @@ class MultiReferenceEditor extends Component {
       availableRefsSelectedFilter: null,
       selectedRefsSelectedFilter: null,
       filterAvailableInputValue: '',
-      filterSelectedInputValue: ''
+      filterSelectedInputValue: '',
+      isValid: Validation.isValid(
+          this.props.req,
+          this.props.srcRef,
+          this.constructor.name
+      )
     };
 
     this.editorId = `${this.props.srcRef}-editor`;
@@ -160,6 +166,14 @@ class MultiReferenceEditor extends Component {
       )
     );
     document.getElementById(this.props.srcRef).value = v;
+
+    this.setState({
+      isValid: Validation.isValid(
+          this.props.req,
+          this.props.srcRef,
+          this.constructor.name
+      )
+    });
   }
 
   _availableRefsItemName(item){
@@ -359,7 +373,9 @@ class MultiReferenceEditor extends Component {
     };
 
     return (
-      <div className="multiple-reference-container">
+      <div className="multiple-reference-container"
+           style={Validation.getStyle(this.props.req, this.props.srcRef, this.constructor.name)}
+      >
         <div id={this.editorId} className="wrapper">
           <div className="availableReferences" onScroll={this.handleScroll}>
               <div className="input-group">

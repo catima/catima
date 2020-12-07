@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import AsyncPaginate from 'react-select-async-paginate';
 import striptags from 'striptags';
 import ReactSelect from 'react-select';
+import Validation from '../modules/validation';
 
 class SingleReferenceEditor extends Component {
   constructor(props){
@@ -14,7 +15,12 @@ class SingleReferenceEditor extends Component {
       items: [],
       selectedItem: selItem,
       selectedFilter: null,
-      optionsList: []
+      optionsList: [],
+      isValid: Validation.isValid(
+          this.props.req,
+          this.props.srcRef,
+          this.constructor.name
+      )
     };
 
     this.editorId = `${this.props.srcRef}-editor`;
@@ -55,6 +61,14 @@ class SingleReferenceEditor extends Component {
     if(this.state.selectedItem !== null) {
       const v = (this.state.selectedItem.value == '' || this.state.selectedItem.value == null) ? '' : JSON.stringify(this.state.selectedItem.value);
       document.getElementById(this.props.srcRef).value = v;
+
+      this.setState({
+        isValid: Validation.isValid(
+            this.props.req,
+            this.props.srcRef,
+            this.constructor.name
+        )
+      });
     }
   }
 
@@ -177,7 +191,9 @@ class SingleReferenceEditor extends Component {
 
   render(){
     return (
-      <div className="input-group single-reference-container">
+      <div className="input-group single-reference-container"
+           style={Validation.getStyle(this.props.req, this.props.srcRef, this.constructor.name)}
+      >
         <AsyncPaginate
           cacheUniq={JSON.stringify(this.state.optionsList)} // used to update the options loaded on page load
           id={this.editorId}
@@ -211,7 +227,7 @@ class SingleReferenceEditor extends Component {
           />
         </div>
       </div>
-    );
+    )
   }
 }
 
