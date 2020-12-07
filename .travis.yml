@@ -19,6 +19,8 @@ env:
     - TEST_SUITE=units
 before_install:
   - sudo apt-get install -y imagemagick libsodium-dev
+  - nvm install 12
+  - nvm use 12
 before_script:
   - gem install bundler:2.1.4
   - bundle exec bin/setup
