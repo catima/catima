@@ -59,6 +59,11 @@ jobs:
                   sudo apt-get update
                   sudo apt-get install -y imagemagick libsodium-dev libpq-dev
 
+            - name: Bundler installation & configuration
+              run: |
+                  gem install bundler:2.1.4 --no-document --conservative
+                  bundle config build.libv8 --with-system-v8
+
             - name: Build app
               id: app-build
               run: ruby bin/setup
