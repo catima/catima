@@ -29,6 +29,8 @@ jobs:
 
             - name: Setup Ruby
               uses: ruby/setup-ruby@v1
+              env:
+                  ImageOS: 'ubuntu18'
               with:
                   ruby-version: 2.6
 
@@ -42,8 +44,6 @@ jobs:
 
             - name: Setup Node
               uses: actions/setup-node@v1
-              env:
-                  ImageOS: 'ubuntu18'
               with:
                   node-version: '12'
 
