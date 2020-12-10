@@ -58,7 +58,7 @@ jobs:
                   apt-get install -y imagemagick libsodium-dev
 
             - name: Install specific bundler version
-              run: gem install bundler:2.1.4
+              run: bundle update --bundler
 
             - name: Build app
               id: app-build
