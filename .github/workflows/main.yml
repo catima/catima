@@ -10,13 +10,15 @@ jobs:
         services:
             postgres:
                 image: postgres
+                env:
+                    POSTGRES_PASSWORD: postgres
                 options: >-
                   --health-cmd pg_isready
                   --health-interval 10s
                   --health-timeout 5s
                   --health-retries 5
                 ports:
-                  - 5432:5432
+                    - 5432:5432
 
             redis:
                 image: redis
@@ -35,10 +37,10 @@ jobs:
             - name: Cache Gems
               uses: actions/cache@v2
               with:
-                path: vendor/bundle
-                key: ${{ runner.os }}-gems-${{ hashFiles('**/Gemfile.lock') }}
-                restore-keys: |
-                  ${{ runner.os }}-gems-
+                  path: vendor/bundle
+                  key: ${{ runner.os }}-gems-${{ hashFiles('**/Gemfile.lock') }}
+                  restore-keys: |
+                    ${{ runner.os }}-gems-
 
             - name: Setup Node
               uses: actions/setup-node@v1
