@@ -26,7 +26,7 @@ gem 'leaflet-rails', '~> 1.5.0'
 gem "mail", ">= 2.7.0"
 gem "marco-polo"
 gem "mini_magick", '~> 4.9.5'
-gem "mini_racer", '~> 0.2.6', platforms: :ruby
+gem "mini_racer", '~> 0.3', platforms: :ruby
 gem "nokogiri"
 gem 'omniauth-oauth2', "~> 1.6.0"
 gem 'omniauth-facebook', "~> 5.0.0"
