@@ -57,12 +57,7 @@ jobs:
             - name: Install needed packages
               run: |
                   sudo apt-get update
-                  sudo apt-get install -y imagemagick libsodium-dev libpq-dev
-
-#            - name: Bundler installation & configuration
-#              run: |
-#                  gem install bundler:2.1.4
-#                  bundle config path vendor/bundle
+                  sudo apt-get install -y imagemagick libsodium-dev libpq-dev libv8-dev
 
             - name: Build app
               id: app-build
