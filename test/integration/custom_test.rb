@@ -12,7 +12,7 @@ class CustomTest < ActionDispatch::IntegrationTest
   end
 
   # TODO: find how to make it work with CI
-  unless ENV['TRAVIS']
+  unless ENV['CI']
     test "custom catalog controller is invoked correctly for catalog with a dash in slug" do
       visit("/custom-with-dash/en")
       assert(page.has_content?(/Welcome to custom catalog with dashes/i))
