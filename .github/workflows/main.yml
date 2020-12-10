@@ -7,16 +7,17 @@ jobs:
         env:
             SLACK_WEBHOOK_URL: ${{ secrets.SLACK_CI_WEBHOOK_URL }}
 
-        services:
-            postgres:
-                image: postgres:12
-                ports: [ "5432:5432" ]
-                options: >-
-                  --health-cmd pg_isready
-                  --health-interval 10s
-                  --health-timeout 5s
-                  --health-retries 5
+        container:
+            image: postgres:12
+            options: >-
+              --health-cmd pg_isready
+              --health-interval 10s
+              --health-timeout 5s
+              --health-retries 5
+            ports:
+              - 5432:5432
 
+        services:
             redis:
                 image: redis
                 ports: ['6379:6379']
