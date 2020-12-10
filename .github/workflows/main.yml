@@ -27,10 +27,16 @@ jobs:
             - name: Checkout Repository
               uses: actions/checkout@v2
 
-            - name: Setup Ruby
-              uses: actions/setup-ruby@v1
+            - name: Install Ruby 2.6.5
+              uses: clupprich/ruby-build-action@master
+              id: ruby
               with:
-                  ruby-version: 2.6
+                  ruby-version: 2.6.5
+                  cache-available: ${{ steps.ruby-cache.outputs.cache-hit == 'true' }}
+            - name: Remove ruby-build script
+              run: rm -rf ruby-build/script
+            - name: Print Ruby version
+              run: ${{ steps.ruby.outputs.ruby-path }} --version
 
             - name: Cache Gems
               uses: actions/cache@v2
