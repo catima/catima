@@ -32,7 +32,7 @@ jobs:
             - name: Setup Ruby
               uses: ruby/setup-ruby@v1
               with:
-                  ruby-version: 2.6
+                  ruby-version: 2.6.5
 
             - name: Cache Gems
               uses: actions/cache@v2
@@ -59,14 +59,14 @@ jobs:
                   sudo apt-get update
                   sudo apt-get install -y imagemagick libsodium-dev libpq-dev
 
-            - name: Bundler installation & configuration
-              run: |
-                  gem install bundler:2.1.4
-                  bundle config path vendor/bundle
+#            - name: Bundler installation & configuration
+#              run: |
+#                  gem install bundler:2.1.4
+#                  bundle config path vendor/bundle
 
             - name: Build app
               id: app-build
-              run: bundle exec bin/setup
+              run: ruby bin/setup
 
             - name: Test app
               id: app-test
