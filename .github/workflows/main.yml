@@ -6,12 +6,18 @@ jobs:
 
         env:
             SLACK_WEBHOOK_URL: ${{ secrets.SLACK_CI_WEBHOOK_URL }}
+            PG_DATABASE: postgres
+            PG_USER: postgres
+            PG_PASSWORD: postgres
+            RAILS_ENV: test
 
         services:
             postgres:
                 image: postgres:12
                 env:
+                    POSTGRES_USER: postgres
                     POSTGRES_PASSWORD: postgres
+                    POSTGRES_DB: postgres
                 options: >-
                   --health-cmd pg_isready
                   --health-interval 10s
@@ -58,11 +64,6 @@ jobs:
               run: |
                   sudo apt-get update
                   sudo apt-get install -y imagemagick libsodium-dev libpq-dev
-
-            - name: Bundler installation & configuration
-              run: |
-                  gem install bundler:2.1.4 --no-document --conservative
-                  bundle config build.libv8 --with-system-v8
 
             - name: Build app
               id: app-build
