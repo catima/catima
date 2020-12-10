@@ -57,6 +57,9 @@ jobs:
                   apt-get update
                   apt-get install -y imagemagick libsodium-dev libpq-dev
 
+            - name: Bundler install
+              run: gem install bundler
+
             - name: Build app
               id: app-build
               run: bundle exec bin/setup
