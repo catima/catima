@@ -28,14 +28,9 @@ jobs:
               uses: actions/checkout@v2
 
             - name: Setup Ruby
-              uses: actions/setup-ruby@v1
+              uses: ruby/setup-ruby@v1
               with:
-                  ruby-version: '2.6'
-
-            - name: Setup Node
-              uses: actions/setup-node@v1
-              with:
-                  node-version: '12'
+                  ruby-version: 2.6
 
             - name: Cache Gems
               uses: actions/cache@v2
@@ -44,6 +39,11 @@ jobs:
                 key: ${{ runner.os }}-gems-${{ hashFiles('**/Gemfile.lock') }}
                 restore-keys: |
                   ${{ runner.os }}-gems-
+
+            - name: Setup Node
+              uses: actions/setup-node@v1
+              with:
+                  node-version: '12'
 
             - name: Cache Yarn
               uses: actions/cache@v2
@@ -57,8 +57,8 @@ jobs:
                   apt-get update
                   apt-get install -y imagemagick libsodium-dev
 
-            - name: Install specific bundler version
-              run: bundle update --bundler
+            - name: Bundler configuration
+              run: bundle config path vendor/bundle
 
             - name: Build app
               id: app-build
