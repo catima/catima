@@ -1,95 +1,95 @@
 source "https://rubygems.org"
 
-gem "active_model_serializers", "~> 0.10"
-gem "active_type", "~> 1.5"
-gem "ahoy_matey", "~> 3.0"
-gem "autoprefixer-rails", "~> 10.0"
-gem "bcrypt", "~> 3.1"
-gem "bootstrap", "~> 4.5"
-gem "bootstrap_form", "~> 4.3"
-gem "bugsnag", "~> 6.18"
-gem "chartkick", "~> 3.4"
-gem "cocoon", "~> 1.2"
-gem "coffee-rails", "~> 5.0"
-gem "devise", "~> 4.7"
-gem "dotenv-rails", "~> 2.7"
-gem "faraday", "~> 1.1"
-gem "faraday_middleware", "~> 1.0"
-gem "font-awesome-rails", "~> 4.7"
-gem 'groupdate', "~> 5.2"
-gem "jquery-fileupload-rails", "~> 1.0"
-gem "jquery-minicolors-rails", "~> 2.2"
-gem "jquery-rails", "~> 4.4"
-gem "kaminari", "~> 1.2"
-gem 'leaflet-rails', "~> 1.7"
-gem "mail", "~> 2.7"
-gem "marco-polo", "~> 2.0"
-gem "mini_magick", "~> 4.11"
-gem "mini_racer", "~> 0.3"
-gem "nokogiri", "~> 1.10"
-gem 'omniauth-oauth2', "~> 1.7"
-gem 'omniauth-facebook', "~> 8.0"
-gem 'omniauth-github', "~> 1.4"
-gem 'omniauth-shibboleth', "~> 1.3"
+gem "active_model_serializers"
+gem "active_type"
+gem "ahoy_matey"
+gem "autoprefixer-rails"
+gem "bcrypt"
+gem "bootstrap", "~> 4.5.3"
+gem "bootstrap_form", "~> 4.3.0"
+gem "bugsnag"
+gem "chartkick"
+gem "cocoon"
+gem "coffee-rails"
+gem "devise"
+gem "dotenv-rails"
+gem "faraday"
+gem "faraday_middleware"
+gem "font-awesome-rails"
+gem 'groupdate'
+gem "jquery-fileupload-rails"
+gem "jquery-minicolors-rails"
+gem "jquery-rails"
+gem "kaminari"
+gem 'leaflet-rails'
+gem "mail"
+gem "marco-polo"
+gem "mini_magick"
+gem "mini_racer"
+gem "nokogiri"
+gem 'omniauth-oauth2'
+gem 'omniauth-facebook'
+gem 'omniauth-github'
+gem 'omniauth-shibboleth'
 gem "omniauth-rails_csrf_protection", "~> 0.1.2" # Mitigation against CVE-2015-9284
 gem "panoramic", git: "https://github.com/catima/panoramic.git", branch: "master" # Use a forked version because PR https://github.com/andreapavoni/panoramic/pull/27 isn't bumped on last gem version
-gem "pg", "~> 1.2"
-gem "pg_search", "~> 2.3"
-gem "pgcli-rails", "~> 0.5"
-gem "pundit", "~> 2.1"
-gem "rails", '~> 6.0'
-gem "ranked-model", "~> 0.4"
-gem "react_on_rails", "~> 11.3"
-gem "recaptcha", "~> 5.6"
-gem "redcarpet", "~> 3.5"
+gem "pg"
+gem "pg_search"
+gem "pgcli-rails"
+gem "pundit"
+gem "rails", '~> 6.0.3'
+gem "ranked-model"
+gem "react_on_rails", "~> 11.3.0"
+gem "recaptcha"
+gem "redcarpet"
 gem "refile", github: "refile/refile", require: "refile/rails"
 gem "refile-mini_magick", github: "refile/refile-mini_magick"
-gem 'sassc-rails', "~> 2.1"
-gem "secure_headers", "~> 6.3"
-gem "select2-rails", "~> 4.0"
-gem "sidekiq", "~> 6.1"
-gem "sinatra", "~> 2.1"
-gem "sprockets", "~> 4.0"
-gem "sprockets-rails", "~> 3.2"
-gem "summernote-rails", "~> 0.8"
-gem "rubyzip", "~> 2.3"
-gem "webpacker", "~> 5.2"
-gem "zaru", "~> 0.3"
+gem 'sassc-rails'
+gem "secure_headers"
+gem "select2-rails"
+gem "sidekiq"
+gem "sinatra"
+gem "sprockets"
+gem "sprockets-rails"
+gem "summernote-rails"
+gem "rubyzip"
+gem "webpacker"
+gem "zaru"
 
 source "https://rails-assets.org" do
-  gem "rails-assets-autosize", "~> 4.0"
-  gem "rails-assets-mousetrap", "~> 1.6"
+  gem "rails-assets-autosize"
+  gem "rails-assets-mousetrap"
 end
 
 group :production, :staging, :development do
   platforms :ruby do
-    gem "unicorn", "~> 5.7"
+    gem "unicorn"
   end
 end
 
 group :development, :test do
-  gem "simplecov", "~> 0.19", :require => false
+  gem "simplecov", :require => false
 end
 
 group :development do
-  gem "annotate", "~> 3.1"
-  gem "awesome_print", "~> 1.8"
-  gem "bcrypt_pbkdf", "~> 1.0", :require => false
-  gem "better_errors", "~> 2.9"
-  gem "binding_of_caller", "~> 0.8"
-  gem "brakeman", "~> 4.10", :require => false
-  gem "faker", "~> 2.14", :require => false
-  gem "letter_opener", "~> 1.7"
-  gem "listen", "~> 3.3"
-  gem "overcommit", "~> 0.57", :require => false
-  gem "rainbow", "~> 3.0", :require => false
-  gem "rb-fsevent", "~> 0.10", :require => false
-  gem "rubocop-rails", "~> 2.8", :require => false
-  gem "ruby-progressbar", "~> 1.10", :require => false
-  gem "spring", "~> 2.1"
-  gem "sshkit", "~> 1.21", :require => false
-  gem "terminal-notifier", "~> 2.0", :require => false
-  gem "terminal-notifier-guard", "~> 1.7", :require => false
+  gem "annotate"
+  gem "awesome_print"
+  gem "bcrypt_pbkdf", :require => false
+  gem "better_errors"
+  gem "binding_of_caller"
+  gem "brakeman", :require => false
+  gem "faker", :require => false
+  gem "letter_opener"
+  gem "listen"
+  gem "overcommit", :require => false
+  gem "rainbow", :require => false
+  gem "rb-fsevent", :require => false
+  gem "rubocop-rails", :require => false
+  gem "ruby-progressbar", :require => false
+  gem "spring"
+  gem "sshkit", :require => false
+  gem "terminal-notifier", :require => false
+  gem "terminal-notifier-guard", :require => false
 
   platforms :mswin, :mingw, :x64_mingw do
     gem "tzinfo-data"
@@ -97,18 +97,18 @@ group :development do
 end
 
 group :test do
-  gem "capybara", "~> 3.33"
-  gem "webdrivers", "~> 4.4"
-  gem "connection_pool", "~> 2.2"
-  gem "json_schema", "~> 0.20"
-  gem "launchy", "~> 2.5"
-  gem "minitest-reporters", "~> 1.4"
-  gem "mocha", "~> 1.11"
-  gem "puma", "~> 5.0"
-  gem "pry", "~> 0.13"
-  gem "selenium-webdriver", "~> 3.142"
-  gem "shoulda-context", "~> 2.0"
-  gem "shoulda-matchers", "~> 4.4"
-  gem "vcr", "~> 6.0"
-  gem "webmock", "~> 3.10"
+  gem "capybara"
+  gem "webdrivers"
+  gem "connection_pool"
+  gem "json_schema"
+  gem "launchy"
+  gem "minitest-reporters"
+  gem "mocha"
+  gem "puma"
+  gem "pry"
+  gem "selenium-webdriver"
+  gem "shoulda-context"
+  gem "shoulda-matchers"
+  gem "vcr"
+  gem "webmock"
 end
