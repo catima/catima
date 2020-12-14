@@ -205,7 +205,6 @@ GEM
       rails (>= 4.2.0)
     letter_opener (1.7.0)
       launchy (~> 2.2)
-    libv8 (8.4.255.0-x86_64-darwin-19)
     listen (3.2.1)
       rb-fsevent (~> 0.10, >= 0.10.3)
       rb-inotify (~> 0.9, >= 0.9.10)
@@ -225,8 +224,6 @@ GEM
     mini_magick (4.9.5)
     mini_mime (1.0.2)
     mini_portile2 (2.4.0)
-    mini_racer (0.2.14)
-      libv8 (> 7.3)
     minitest (5.14.2)
     minitest-reporters (1.4.2)
       ansi
@@ -506,7 +503,6 @@ DEPENDENCIES
   mail (>= 2.7.0)
   marco-polo
   mini_magick (~> 4.9.5)
-  mini_racer (~> 0.2.6)
   minitest-reporters
   mocha
   nokogiri
