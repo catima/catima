@@ -24,5 +24,6 @@
   <%= react_component('GeoBounds', props: {
     bounds: f.object.default_bounds(-145, 185, -60, 70),
     layers: f.object.geo_layers
-  }) %>
+  },
+  prerender: false) %>
 <% end %>

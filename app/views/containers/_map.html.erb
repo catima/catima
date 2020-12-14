@@ -1,7 +1,8 @@
 <%= react_component('GeoViewer', props: {
-    features: container.geojson,
-    layers: container.geo_layers,
-    mapHeight: container.map_height,
-    catalog: @catalog.slug,
-    locale: I18n.locale })
+      features: container.geojson,
+      layers: container.geo_layers,
+      mapHeight: container.map_height,
+      catalog: @catalog.slug,
+      locale: I18n.locale
+    }, prerender: false)
 %>
