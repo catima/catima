@@ -221,8 +221,6 @@ GEM
       rails (>= 4.2.0)
     letter_opener (1.7.0)
       launchy (~> 2.2)
-    libv8 (8.4.255.0)
-    libv8 (8.4.255.0-x86_64-linux)
     listen (3.3.3)
       rb-fsevent (~> 0.10, >= 0.10.3)
       rb-inotify (~> 0.9, >= 0.9.10)
@@ -243,8 +241,6 @@ GEM
     mini_magick (4.11.0)
     mini_mime (1.0.2)
     mini_portile2 (2.4.0)
-    mini_racer (0.3.1)
-      libv8 (~> 8.4.255)
     minitest (5.14.2)
     minitest-reporters (1.4.2)
       ansi
@@ -472,98 +468,97 @@ PLATFORMS
   x86_64-linux
 
 DEPENDENCIES
-  active_model_serializers
-  active_type
-  ahoy_matey
-  annotate
-  autoprefixer-rails
-  awesome_print
-  bcrypt
-  bcrypt_pbkdf
-  better_errors
-  binding_of_caller
-  bootstrap (~> 4.5.3)
-  bootstrap_form (~> 4.3.0)
-  brakeman
-  bugsnag
-  capybara
-  chartkick
-  cocoon
-  coffee-rails
-  connection_pool
-  devise
-  dotenv-rails
-  faker
-  faraday
-  faraday_middleware
-  font-awesome-rails
-  groupdate
-  jquery-fileupload-rails
-  jquery-minicolors-rails
-  jquery-rails
-  json_schema
-  kaminari
-  launchy
-  leaflet-rails
-  letter_opener
-  listen
-  mail
-  marco-polo
-  mini_magick
-  mini_racer
-  minitest-reporters
-  mocha
-  nokogiri
-  omniauth-facebook
-  omniauth-github
-  omniauth-oauth2
-  omniauth-rails_csrf_protection (~> 0.1.2)
-  omniauth-shibboleth
-  overcommit
+  active_model_serializers (~> 0.10)
+  active_type (~> 1.5)
+  ahoy_matey (~> 3.1)
+  annotate (~> 3.1)
+  autoprefixer-rails (~> 10.1)
+  awesome_print (~> 1.8)
+  bcrypt (~> 3.1)
+  bcrypt_pbkdf (~> 1.0)
+  better_errors (~> 2.9)
+  binding_of_caller (~> 0.8)
+  bootstrap (~> 4.5)
+  bootstrap_form (~> 4.3)
+  brakeman (~> 4.10)
+  bugsnag (~> 6.18)
+  capybara (~> 3.34)
+  chartkick (~> 3.4)
+  cocoon (~> 1.2)
+  coffee-rails (~> 5.0)
+  connection_pool (~> 2.2)
+  devise (~> 4.7)
+  dotenv-rails (~> 2.7)
+  faker (~> 2.15)
+  faraday (~> 1.1)
+  faraday_middleware (~> 1.0)
+  font-awesome-rails (~> 4.7)
+  groupdate (~> 5.2)
+  jquery-fileupload-rails (~> 1.0)
+  jquery-minicolors-rails (~> 2.2)
+  jquery-rails (~> 4.4)
+  json_schema (~> 0.20)
+  kaminari (~> 1.2)
+  launchy (~> 2.5)
+  leaflet-rails (~> 1.7)
+  letter_opener (~> 1.7)
+  listen (~> 3.3)
+  mail (~> 2.7)
+  marco-polo (~> 2.0)
+  mini_magick (~> 4.11)
+  minitest-reporters (~> 1.4)
+  mocha (~> 1.11)
+  nokogiri (~> 1.10)
+  omniauth-facebook (~> 8.0)
+  omniauth-github (~> 1.4)
+  omniauth-oauth2 (~> 1.7)
+  omniauth-rails_csrf_protection (~> 0.1)
+  omniauth-shibboleth (~> 1.3)
+  overcommit (~> 0.57)
   panoramic!
-  pg
-  pg_search
-  pgcli-rails
-  pry
-  puma
-  pundit
-  rails (~> 6.0.3)
-  rails-assets-autosize!
-  rails-assets-mousetrap!
-  rainbow
-  ranked-model
-  rb-fsevent
-  react_on_rails (~> 11.3.0)
-  recaptcha
-  redcarpet
+  pg (~> 1.2)
+  pg_search (~> 2.3)
+  pgcli-rails (~> 0.5)
+  pry (~> 0.13)
+  puma (~> 5.1)
+  pundit (~> 2.1)
+  rails (~> 6.0)
+  rails-assets-autosize (~> 4.0)!
+  rails-assets-mousetrap (~> 1.6)!
+  rainbow (~> 3.0)
+  ranked-model (~> 0.4)
+  rb-fsevent (~> 0.10)
+  react_on_rails (~> 11.3)
+  recaptcha (~> 5.6)
+  redcarpet (~> 3.5)
   refile!
   refile-mini_magick!
-  rubocop-rails
-  ruby-progressbar
-  rubyzip
-  sassc-rails
-  secure_headers
-  select2-rails
-  selenium-webdriver
-  shoulda-context
-  shoulda-matchers
-  sidekiq
-  simplecov
-  sinatra
-  spring
-  sprockets
-  sprockets-rails
-  sshkit
-  summernote-rails
-  terminal-notifier
-  terminal-notifier-guard
+  rubocop-rails (~> 2.9)
+  ruby-progressbar (~> 1.10)
+  rubyzip (~> 2.3)
+  sassc-rails (~> 2.1)
+  secure_headers (~> 6.3)
+  select2-rails (~> 4.0)
+  selenium-webdriver (~> 3.142)
+  shoulda-context (~> 2.0)
+  shoulda-matchers (~> 4.4)
+  sidekiq (~> 6.1)
+  simplecov (~> 0.20)
+  sinatra (~> 2.1)
+  spring (~> 2.1)
+  sprockets (~> 4.0)
+  sprockets-rails (~> 3.2)
+  sshkit (~> 1.21)
+  summernote-rails (~> 0.8)
+  terminal-notifier (~> 2.0)
+  terminal-notifier-guard (~> 1.7)
   tzinfo-data
-  unicorn
-  vcr
-  webdrivers
-  webmock
-  webpacker
-  zaru
+  unicorn (~> 5.7)
+  vcr (~> 6.0)
+  webdrivers (~> 4.4)
+  webmock (~> 3.10)
+  webpacker (~> 5.2)
+  zaru (~> 0.3)
 
 BUNDLED WITH
    2.2.0
