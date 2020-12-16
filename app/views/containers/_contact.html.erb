@@ -7,7 +7,7 @@
       parsed_value["input_type"],
       input.to_sym,
       :required => parsed_value["required"],
-      :label => t(parsed_value["label"])
+      :label => parsed_value["label"].present? ? t(parsed_value["label"]) : ''
     ) %>
   <% end %>
 
