@@ -42,6 +42,10 @@ development:
 test:
   adapter: postgresql
   encoding: unicode
-  database: viim-core_test
+  database: <%= ENV.fetch('PG_DATABASE', 'viim-core_test') %>
+  host:     <%= ENV.fetch('PG_HOST',  'localhost') %>
+  username: <%= ENV.fetch('PG_USER', nil) %>
+  password: <%= ENV.fetch('PG_PASSWORD', nil) %>
+  port:     <%= ENV.fetch('PG_PORT', 5432) %>
   min_messages: WARNING
   pool: 5

@@ -1,10 +1,10 @@
 # CATIMA
 
 Master:
-[![Build Status](https://travis-ci.com/catima/catima.svg?branch=master)](https://travis-ci.com/catima/catima)
+![ci](https://github.com/catima/catima/workflows/ci/badge.svg?branch=master)
 
 Development:
-[![Build Status](https://travis-ci.com/catima/catima.svg?branch=development)](https://travis-ci.com/catima/catima)
+![ci](https://github.com/catima/catima/workflows/ci/badge.svg?branch=development)
 
 ## Introduction
 

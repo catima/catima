@@ -16,7 +16,6 @@ GIT
 GIT
   remote: https://github.com/refile/refile-mini_magick.git
   revision: 5c7c30d57a94c4104d84eb4eb9e74ca757c1a773
-  branch: master
   specs:
     refile-mini_magick (0.2.0)
       image_processing (~> 1.1)
@@ -26,7 +25,6 @@ GIT
 GIT
   remote: https://github.com/refile/refile.git
   revision: c4ac577c6fdad92bc079a62a0e82888319daedc8
-  branch: master
   specs:
     refile (0.7.0)
       mime-types

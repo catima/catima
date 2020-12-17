@@ -1,0 +1,83 @@
+name: ci
+on: [push, pull_request]
+jobs:
+    build:
+        runs-on: ubuntu-18.04
+
+        env:
+            SLACK_WEBHOOK_URL: ${{ secrets.SLACK_CI_WEBHOOK_URL }}
+            CI: gha
+            PG_DATABASE: postgres
+            PG_USER: postgres
+            PG_PASSWORD: postgres
+            RAILS_ENV: test
+
+        services:
+            postgres:
+                image: postgres:12
+                env:
+                    POSTGRES_USER: postgres
+                    POSTGRES_PASSWORD: postgres
+                    POSTGRES_DB: postgres
+                options: >-
+                  --health-cmd pg_isready
+                  --health-interval 10s
+                  --health-timeout 5s
+                  --health-retries 5
+                ports:
+                    - 5432:5432
+
+            redis:
+                image: redis
+                ports: ['6379:6379']
+                options: --entrypoint redis-server
+
+        steps:
+            - name: Checkout Repository
+              uses: actions/checkout@v2
+
+            - name: Setup Ruby
+              uses: ruby/setup-ruby@v1
+              with:
+                  ruby-version: 2.6.5
+
+            - name: Cache Gems
+              uses: actions/cache@v2
+              with:
+                  path: vendor/bundle
+                  key: ${{ runner.os }}-gems-${{ hashFiles('**/Gemfile.lock') }}
+                  restore-keys: |
+                    ${{ runner.os }}-gems-
+
+            - name: Setup Node
+              uses: actions/setup-node@v1
+              with:
+                  node-version: '12'
+
+            - name: Cache Yarn
+              uses: actions/cache@v2
+              with:
+                  path: ~/.cache/yarn
+                  key: ${{ runner.os }}-yarn-${{ hashFiles('**/yarn.lock') }}
+                  restore-keys: ${{ runner.os }}-yarn-
+
+            - name: Install needed packages
+              run: |
+                  sudo apt-get update
+                  sudo apt-get install -y imagemagick libsodium-dev libpq-dev
+
+            - name: Build app
+              id: app-build
+              run: ruby bin/setup
+
+            - name: Test app
+              id: app-test
+              run: NO_COVERAGE=1 bundle exec rake test
+
+            - name: Notify Slack
+              uses: act10ns/slack@v1
+              with:
+                  status: ${{ job.status }}
+                  steps: ${{ toJson(steps) }}
+                  channel: '#-bot-ci'
+              if: always()

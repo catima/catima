@@ -1,1 +1,6 @@
-<%= react_component('ImageViewer', props: { thumbnails: thumbnails, images: images, legends: legends }) %>
+<%= react_component('ImageViewer', props: {
+      thumbnails: thumbnails,
+      images: images,
+      legends: legends
+    }, prerender: false)
+%>
