@@ -15,7 +15,7 @@ gem "devise", "~> 4.7"
 gem "dotenv-rails", "~> 2.7"
 gem "faraday", "~> 1.1"
 gem "faraday_middleware", "~> 1.0"
-gem "font-awesome-rails", git: "https://github.com/bokmann/font-awesome-rails.git" # use github version because gem isn't yet bumped
+gem "font-awesome-rails", "~> 4.7.0"
 gem 'groupdate', "~> 5.2"
 gem "jquery-fileupload-rails", "~> 1.0"
 gem "jquery-minicolors-rails", "~> 2.2"

@@ -7,13 +7,6 @@ GIT
       rails (>= 4.2.0)
 
 GIT
-  remote: https://github.com/bokmann/font-awesome-rails.git
-  revision: d4a2e506be0318e35d05ad22d36531b7da393615
-  specs:
-    font-awesome-rails (4.7.0.5)
-      railties (>= 3.2, < 6.2)
-
-GIT
   remote: https://github.com/refile/refile-mini_magick.git
   revision: 5c7c30d57a94c4104d84eb4eb9e74ca757c1a773
   specs:
@@ -183,6 +176,8 @@ GEM
     faraday_middleware (1.0.0)
       faraday (~> 1.0)
     ffi (1.13.1)
+    font-awesome-rails (4.7.0.6)
+      railties (>= 3.2, < 6.2)
     geocoder (1.6.4)
     globalid (0.4.2)
       activesupport (>= 4.2.0)
@@ -349,7 +344,7 @@ GEM
       thor (~> 1.0)
     rainbow (3.0.0)
     raindrops (0.19.1)
-    rake (13.0.1)
+    rake (13.0.3)
     ranked-model (0.4.6)
       activerecord (>= 4.2)
     rb-fsevent (0.10.4)
@@ -441,7 +436,7 @@ GEM
     terminal-notifier-guard (1.7.0)
     thor (1.0.1)
     tilt (2.0.10)
-    tzinfo (2.0.3)
+    tzinfo (2.0.4)
       concurrent-ruby (~> 1.0)
     unicode-display_width (1.7.0)
     unicorn (5.7.0)
@@ -500,7 +495,7 @@ DEPENDENCIES
   faker (~> 2.15)
   faraday (~> 1.1)
   faraday_middleware (~> 1.0)
-  font-awesome-rails!
+  font-awesome-rails (~> 4.7.0)
   groupdate (~> 5.2)
   jquery-fileupload-rails (~> 1.0)
   jquery-minicolors-rails (~> 2.2)
