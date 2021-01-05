@@ -31,8 +31,7 @@ gem 'omniauth-facebook', "~> 8.0"
 gem 'omniauth-github', "~> 1.4"
 gem 'omniauth-shibboleth', "~> 1.3"
 gem "omniauth-rails_csrf_protection", "~> 0.1" # Mitigation against CVE-2015-9284
-# gem "panoramic", git: "https://github.com/catima/panoramic.git", branch: "master" # Use a forked version because PR https://github.com/andreapavoni/panoramic/pull/27 isn't bumped on last gem version
-gem "panoramic", git: "https://github.com/abstracts33d/panoramic.git", branch: "master" # todo https://github.com/andreapavoni/panoramic/pull/46 : use official repo or stable fork before merge into master
+gem "panoramic", git: "https://github.com/catima/panoramic.git", branch: "master" # Use a forked version because PR https://github.com/andreapavoni/panoramic/pull/27 isn't bumped on last gem version
 gem "pg", "~> 1.2"
 gem "pg_search", "~> 2.3"
 gem "pgcli-rails", "~> 0.5"

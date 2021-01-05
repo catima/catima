@@ -1,6 +1,6 @@
 GIT
-  remote: https://github.com/abstracts33d/panoramic.git
-  revision: c9b33de1b2c0ba75fdfb16e2bf8b5fbd2bceea3e
+  remote: https://github.com/catima/panoramic.git
+  revision: 04e36a808b0c575d716d3b2012854938e9bcb647
   branch: master
   specs:
     panoramic (0.0.7)
