@@ -11,7 +11,7 @@
     "@babel/preset-react": "^7.0.0",
     "@claviska/jquery-minicolors": "^2.2.6",
     "@rails/webpacker": "^5.2.1",
-    "axios": "^0.18.1",
+    "axios": "^0.21.1",
     "babel-loader": "^8.0.6",
     "classnames": "^2.2.5",
     "codemirror": "^5.47.0",
