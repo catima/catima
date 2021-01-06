@@ -19,7 +19,9 @@
           <small><%= search_name(search) %></small>
         <% end %>
       </h4>
+      <div>
+        <%= render "searches/buttons", :search => search if searches_scoped? %>
+      </div>
     </div>
-    <%= render "searches/buttons", :search => search if searches_scoped? %>
   </div>
 <% end %>
