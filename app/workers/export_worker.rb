@@ -39,7 +39,7 @@ class ExportWorker
   def sql_export(export, dir)
     status = "ready"
     begin
-      Dump::SqlDump.new.dump(export.catalog.slug, File.join(dir, 'sql'))
+      Dump::SQLDump.new.dump(export.catalog.slug, File.join(dir, 'sql'))
       zip(dir, export.pathname)
     rescue StandardError => e
       status = "error"
@@ -53,7 +53,7 @@ class ExportWorker
   def csv_export(export, dir, locale)
     status = "ready"
     begin
-      Dump::CsvDump.new.dump(export.catalog.slug, File.join(dir, 'csv'), locale)
+      Dump::CSVDump.new.dump(export.catalog.slug, File.join(dir, 'csv'), locale)
       zip(dir, export.pathname)
     rescue StandardError => e
       status = "error"

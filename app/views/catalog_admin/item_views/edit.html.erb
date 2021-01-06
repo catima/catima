@@ -1,6 +1,6 @@
 <% provide(:title, "Edit item view") %>
 
-<div class="panel-body">
+<div class="card-body">
   <%= bootstrap_form_for(@item_view, url: catalog_admin_item_view_path) do |f| %>
 
     <%= render("common_form_fields", :f => f) %>

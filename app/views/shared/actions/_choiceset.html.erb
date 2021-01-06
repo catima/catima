@@ -2,7 +2,7 @@
   <%= link_to(
           fa_icon(:pencil),
           edit_catalog_admin_choice_set_path(model.catalog, I18n.locale, model),
-          class: "btn btn-xs btn-default choiceset-action-edit",
+          class: "btn btn-xs btn-outline-secondary choiceset-action-edit",
           "data-toggle" => "tooltip", "data-placement" => "top", "title" => t("edit")
       ) %>
   <%= deactivation_toggle(

@@ -1,6 +1,6 @@
 <% provide(:title, t('.rename_search', group: @search.name)) %>
 
-<div class='panel-body'>
+<div class='card-body'>
   <%= bootstrap_form_for(@search, url: search_path) do |f| %>
 
     <%= f.form_group(:name) do %>

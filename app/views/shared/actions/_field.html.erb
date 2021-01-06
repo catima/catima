@@ -2,7 +2,7 @@
   <%= link_to(
           fa_icon(:pencil),
           {:action => :edit, :slug => model},
-          class: "btn btn-xs btn-default field-action-edit",
+          class: "btn btn-xs btn-outline-secondary field-action-edit",
           "data-toggle" => "tooltip", "data-placement" => "top", "title" => t("edit")
       ) %>
 <% end %>
@@ -14,7 +14,7 @@
           :data => {
               :confirm => t("delete_confirm", model: model.slug)
           },
-          class: "btn btn-xs btn-default field-action-delete",
+          class: "btn btn-xs btn-outline-secondary field-action-delete",
           "data-toggle" => "tooltip", "data-placement" => "top", "title" => t("delete")
       ) %>
 <% end %>

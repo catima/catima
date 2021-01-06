@@ -9,7 +9,7 @@
     <% end %>
     <div class="media-body">
       <% if item.item_type.default_list_view.nil? == true %>
-        <h4 class="media-heading">
+        <h4 class="mt-0 mb-1">
           <%= item_list_link(item_list, item, i, item_display_name(item)) %>
         </h4>
         <%= item_summary(item) %>

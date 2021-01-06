@@ -10,8 +10,8 @@ require 'fileutils'
 #   - Fields slug of ItemTypes
 #   - Choices
 # rubocop:disable Metrics/ClassLength
-class Dump::SqlDump < ::Dump
-  include CatalogAdmin::SqlDumpHelper
+class Dump::SQLDump < ::Dump
+  include CatalogAdmin::SQLDumpHelper
 
   COMMON_SQL_COLUMNS = {
     :id => "INT",

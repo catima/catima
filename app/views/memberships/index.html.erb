@@ -3,7 +3,7 @@
 <div id="my-group-join">
   <div class="input-group">
     <input type="text" class="form-control" id="group-join-input" placeholder="<%= t('.group_identifier') %>">
-    <span class="input-group-btn">
+    <span class="input-group-append">
       <%=
         link_to(
             t('.join'),
@@ -16,8 +16,8 @@
   </div>
 </div>
 
-<div class="panel panel-default">
-  <div class="panel-heading">
+<div class="card panel-default">
+  <div class="card-header">
     <b><%= t('.my_groups') %></b>
   </div>
   <%= render 'list_memberships' %>

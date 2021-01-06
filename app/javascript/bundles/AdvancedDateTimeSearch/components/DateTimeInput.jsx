@@ -305,7 +305,7 @@ class DateTimeInput extends React.Component {
               </div>
               <div className="calendar-button-container">
                 <a id={this.props.inputId + '_calendar_icon' + '_' + this.props.inputSuffixId} onClick={this.openCloseDatepicker} type="button"><span className="glyphicon glyphicon-calendar"></span></a>
-                <a onClick={this.clearDatepicker} type="button"><span className="glyphicon glyphicon-remove"></span></a>
+                <a onClick={this.clearDatepicker} type="button"><i className="fa fa-plus"></i></a>
               </div>
             </div>
         </div>

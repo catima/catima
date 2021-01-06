@@ -272,45 +272,49 @@ class ReferenceSearch extends Component {
 
   render() {
     return (
-      <div>
-        <div className="col-md-2">
+      <React.Fragment>
+        <div className="col-lg-2">
           { this.renderFieldConditionElement() }
         </div>
-        <div className="col-md-7">
-          <div className="reference-search-container">
-            <div className="col-md-11 reference-input-container">
+        <div className="col-lg-7">
+          <div className="container">
+
+          <div className="reference-search-container row">
+            <div className="col-lg-11 reference-input-container">
               <div className="row">
-                <div className="col-md-7">
+                <div className="col-lg-7">
                   { this.state.isLoading && <div className="loader"></div> }
                   { this.renderSearch() }
                 </div>
-                <div className="col-md-5">{ this.renderFilter() }</div>
+                <div className="col-lg-5">{ this.renderFilter() }</div>
               </div>
             </div>
             { (this.props.itemId === this.props.componentList[0].itemId && this.props.componentList.length === 1) &&
-            <div className="col-md-1 icon-container">
+            <div className="col-lg-1 icon-container">
               <a type="button" onClick={this.addComponent}><i className="fa fa-plus"></i></a>
             </div>
             }
             { (((this.props.itemId !== this.props.componentList[0].itemId) && (this.props.itemId !== this.props.componentList[this.props.componentList.length - 1].itemId)) || (this.props.itemId === this.props.componentList[0].itemId && this.props.componentList.length > 1)) &&
-            <div className="col-md-1 icon-container">
+            <div className="col-lg-1 icon-container">
               <a type="button" onClick={this.deleteComponent}><i className="fa fa-trash"></i></a>
             </div>
             }
             { ((this.props.itemId === this.props.componentList[this.props.componentList.length - 1].itemId) && (this.props.itemId !== this.props.componentList[0].itemId)) &&
-            <div className="col-md-1">
+            <div className="col-lg-1">
               <div className="row">
-                <div className="col-md-12"><a type="button" onClick={this.addComponent}><i className="fa fa-plus"></i></a></div>
-                <div className="col-md-12"><a type="button" onClick={this.deleteComponent}><i className="fa fa-trash"></i></a></div>
+                <div className="col-lg-12"><a type="button" onClick={this.addComponent}><i className="fa fa-plus"></i></a></div>
+                <div className="col-lg-12"><a type="button" onClick={this.deleteComponent}><i className="fa fa-trash"></i></a></div>
               </div>
             </div>
             }
           </div>
         </div>
-        <div className="col-md-3 condition-input-container">
+        </div>
+
+        <div className="col-lg-3 condition-input-container">
             { this.renderSelectConditionElement() }
         </div>
-      </div>
+      </React.Fragment>
     );
   }
 }

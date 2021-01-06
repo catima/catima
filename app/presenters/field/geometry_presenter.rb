@@ -1,5 +1,5 @@
 class Field::GeometryPresenter < FieldPresenter
-  delegate :content_tag, :to => :view
+  delegate :tag, :to => :view
 
   def input(form, method, options={})
     form.text_area(

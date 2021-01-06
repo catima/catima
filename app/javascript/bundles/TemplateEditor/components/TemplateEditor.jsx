@@ -2,8 +2,6 @@ import 'es6-shim';
 import PropTypes from 'prop-types';
 import React from 'react';
 
-require('bootstrap-loader');
-
 const uuidv4 = require('uuid/v4');
 
 class TemplateEditor extends React.Component {
@@ -77,7 +75,7 @@ class TemplateEditor extends React.Component {
       const button = ui.buttonGroup([
         ui.button({
           className: 'dropdown-toggle',
-          contents: 'Add field <i class="fa fa-caret-down"></i>',
+          contents: 'Add field',
           data: {
             toggle: 'dropdown'
           }

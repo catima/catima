@@ -24,7 +24,7 @@ class Catalog < ApplicationRecord
   include AvailableLocales
   include HasDeactivation
   include HasSlug
-  include HasSqlSlug
+  include HasSQLSlug
 
   belongs_to :custom_root_page, class_name: "Page", optional: true
 

@@ -1,10 +1,13 @@
-//= require ./bootstrap
-//= require rails_bootstrap_forms
-//= require leaflet
-//= require font-awesome
-//= require select2
-//= require select2-bootstrap
-//= require_tree ./modules
-//= require_tree ./webpack
+@import "bootstrap_custom";
+@import "bootstrap";
+@import "summernote-bs4";
+@import 'rails_bootstrap_forms';
+@import 'leaflet';
+@import 'font-awesome';
+@import 'select2';
+@import 'select2-bootstrap';
+@import './modules/*';
+@import './webpack/**/*';
 //= require_self
 //= require eonasdan-bootstrap-datetimepicker
+@import './bootsrap_fixes/index';

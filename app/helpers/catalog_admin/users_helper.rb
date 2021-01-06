@@ -1,12 +1,13 @@
 module CatalogAdmin::UsersHelper
   def setup_catalog_users_nav_link
     active = (params[:controller] == "catalog_admin/users") || (params[:controller] == "catalog_admin/groups")
-    klass = "list-group-item"
+    klass = "list-group-item list-group-item-action"
     klass << " active" if active
 
     link_to(t("users_and_groups"), catalog_admin_users_path, :class => klass)
   end
 
+  # rubocop:disable Style/OptionalBooleanParameter
   def user_role(user, catalog, including_groups=false)
     return "Admin" if user.system_admin?
 
@@ -19,6 +20,7 @@ module CatalogAdmin::UsersHelper
     end
     role.to_s.titleize
   end
+  # rubocop:enable Style/OptionalBooleanParameter
 
   def render_catalog_admin_users_permission(form)
     render(

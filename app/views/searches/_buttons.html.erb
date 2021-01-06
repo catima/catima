@@ -2,18 +2,18 @@
   <%= link_to(
           fa_icon("eye", :text => t("view")),
           search_path(I18n.locale, search.id),
-          :class => "btn btn-default btn-xs",
+          :class => "btn btn-outline-secondary btn-xs",
           :target => '_blank') %>
 <% end %>
 <% if policy(search).edit? %>
   <%= link_to(
           fa_icon("pencil", :text => t(".rename")),
           edit_search_path(search),
-          :class => "btn btn-default btn-xs") %>
+          :class => "btn btn-outline-secondary btn-xs") %>
 <% end %>
 <%= link_to(
         fa_icon("bookmark", :text => t("simple_searches.show.searches_remove")),
         search_path(I18n.locale, search),
-        :class => "btn btn-default btn-xs",
+        :class => "btn btn-outline-secondary btn-xs",
         method: :delete
     ) %>

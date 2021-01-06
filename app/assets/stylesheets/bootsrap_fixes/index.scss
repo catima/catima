@@ -1,0 +1,92 @@
+.pagination {
+  margin: 20px 0;
+}
+
+.page-header {
+  padding-bottom: 9px;
+  margin: 40px 0 20px;
+  border-bottom: 1px solid #eeeeee;
+}
+
+.media {
+  margin-top: 15px;
+}
+
+h1, .h1, h2, .h2, h3, .h3 {
+  margin-top: 20px;
+}
+
+h4, .h4, h5, .h5, h6, .h6 {
+  margin-top: 10px;
+}
+
+.panel.panel-default {
+  overflow-y: auto;
+}
+
+.panel-default {
+  border-color: #ddd;
+  margin-bottom: 20px;
+}
+
+.card .help-block {
+  background-color: #f5f5f5;
+  border: 1px solid #e3e3e3;
+}
+
+.help-block {
+  display: block;
+  margin-top: 5px;
+  margin-bottom: 10px;
+  color: #737373;
+}
+
+.hide {
+  display: none !important;
+}
+
+[data-toggle="buttons"] > .btn input[type="radio"] {
+  display: none;
+}
+
+.btn-text {
+  color: $primary;
+}
+
+label {
+  font-weight: 600;
+}
+
+.btn-xs {
+  padding: 1px 5px;
+  font-size: 12px;
+  line-height: 1.5;
+  border-radius: 3px;
+}
+
+.btn-outline-secondary {
+  color: #333;
+  background-color: #fff;
+  border-color: #ccc;
+
+  &:hover {
+    color: #333;
+    background-color: #e6e6e6;
+    border-color: #adadad;
+  }
+}
+
+blockquote {
+  padding: 10px 20px;
+  margin: 0 0 20px;
+  font-size: 17.5px;
+  border-left: 5px solid #eeeeee;
+}
+
+.popover-header {
+  margin-top: 0; // because this use h3 style which contain a top margin
+}
+
+.navbar-light .nav-item.active a{
+  text-decoration: underline;
+}

@@ -1,6 +1,6 @@
 <% provide(:title, t('.edit')) %>
 
-<div class="panel-body">
+<div class="card-body">
   <%= bootstrap_form_for(@menu_item, :url => catalog_admin_menu_item_path) do |f| %>
 
     <%= render("common_form_fields", :f => f) %>

@@ -1,6 +1,6 @@
 <% provide(:title, t('.new_for_type', :item_type_slug => @item_type.slug)) %>
 
-<div class="panel-body">
+<div class="card-body">
   <%= bootstrap_form_for([:catalog_admin, @item_view]) do |f| %>
 
     <%= render("common_form_fields", :f => f) %>

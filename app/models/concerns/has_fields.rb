@@ -20,6 +20,7 @@ module HasFields
                ).sorted
              },
              :foreign_key => :field_set_id,
+             as: :polymorphic_list_view_fields,
              :foreign_type => :field_set_type,
              :class_name => "Field",
              :dependent => :destroy

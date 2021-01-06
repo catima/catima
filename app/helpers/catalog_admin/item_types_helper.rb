@@ -4,7 +4,7 @@ module CatalogAdmin::ItemTypesHelper
     active = params[:controller] =~ /item_types|fields/ &&
              slug == item_type.slug
 
-    klass = "list-group-item"
+    klass = "list-group-item list-group-item-action"
     klass << " active" if active
 
     link_to(
@@ -19,14 +19,13 @@ module CatalogAdmin::ItemTypesHelper
     active = params[:controller] == "catalog_admin/items" &&
              slug == item_type.slug
 
-    klass = "list-group-item"
+    klass = "list-group-item list-group-item-action"
     klass << " active" if active
 
     label = [h(item_type.name_plural)]
-    label << content_tag(
-      :span,
+    label << tag.span(
       number_with_delimiter(item_type.items.count),
-      :class => "badge"
+      :class => "badge-pill badge-secondary float-right"
     )
 
     link_to(

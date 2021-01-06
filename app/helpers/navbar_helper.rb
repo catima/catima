@@ -16,8 +16,19 @@ module NavbarHelper
       value === params[key].to_s
     end
 
-    content_tag(:li, :class => ("active" if active)) do
-      link_to(label, path, options)
+    tag.li(:class => ["nav-item", ("active" if active)]) do
+      link_to(label, path, options.merge(class: "nav-link"))
+    end
+  end
+
+  def menu_item_active?(menu_item, submenus: nil)
+    slug = params[:item_type_slug] || params[:slug]
+    if (item_type = menu_item.item_type)
+      slug == item_type.slug
+    elsif menu_item.page
+      slug == menu_item.page.slug
+    elsif submenus
+      submenus.any? { |sub| menu_item_active?(sub) }
     end
   end
 end

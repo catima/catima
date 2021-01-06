@@ -86,7 +86,7 @@ file_presenter_upload_finished = ($file_field, $file)->
       <td><a href="/#{$file.path}">#{$file.name}</a></td>
       <td>#{format_file_size($file.size,1)}</td>
       <td>
-        <button type="button" class="delete-file-btn btn btn-sm btn-danger"><span class="glyphicon glyphicon-trash"></span></button>
+        <button type="button" class="delete-file-btn btn btn-sm btn-danger"><i class="fa fa-trash"></i></span></button>
       </td>
     </tr>
     """
@@ -133,7 +133,7 @@ format_file_size = (bytes, decimals)->
 add_upload_button_for = ($file_field)->
   button_lbl = $("#fileupload_#{$file_field}").attr('data-button-text')
   $("#fileupload_#{$file_field}").append("""
-    <span class="btn btn-sm btn-success fileinput-button hidden">
+    <span class="btn btn-sm btn-success fileinput-button d-none">
       <i class="glyphicon glyphicon-plus"></i>
       <span>#{button_lbl}</span>
       <input id="fileinput_#{$file_field}" type="file" name="files[]" data-url="#{upload_url($file_field)}">
@@ -161,19 +161,19 @@ check_thumbnail_button_display = ($file_field)->
   shown = 1
   ctrl = $("##{$file_field}_thumbnail_control")
   if nfiles($file_field) == 0 or $.inArray($file_field, modified_file_fields) >= 0
-    ctrl.addClass('hidden')
+    ctrl.addClass('d-none')
     shown = 0
   else
-    ctrl.removeClass('hidden')
+    ctrl.removeClass('d-none')
     shown = 1
 
 # Check if we should display or not the upload button
 display_upload_button = ($file_field)->
   m = multiple($file_field)
   if nfiles($file_field) == 0 or m
-    $("#fileupload_#{$file_field} .fileinput-button").removeClass('hidden')
+    $("#fileupload_#{$file_field} .fileinput-button").removeClass('d-none')
   else
-    $("#fileupload_#{$file_field} .fileinput-button").addClass('hidden')
+    $("#fileupload_#{$file_field} .fileinput-button").addClass('d-none')
   check_thumbnail_button_display($file_field)
 
 fileupload_add_for = ($field, $data)->

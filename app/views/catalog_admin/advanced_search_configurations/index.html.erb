@@ -4,7 +4,7 @@
   <%= link_to(
         fa_icon(:"plus-square", text: t('.new_advanced_search_configuration')),
         new_catalog_admin_advanced_search_configuration_path,
-        class: 'btn btn-xs btn-default') %>
+        class: 'btn btn-xs btn-outline-secondary') %>
 <% end %>
 
 <% if catalog.advanced_search_configurations.with_active_item_type.count == 0 %>

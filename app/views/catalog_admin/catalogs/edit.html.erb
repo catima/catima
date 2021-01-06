@@ -1,6 +1,6 @@
 <% provide(:title, t('catalog_admin.catalog.edit_settings')) %>
 
-<div class="panel-body">
+<div class="card-body">
   <%= bootstrap_form_for(@catalog, :url => catalog_admin_settings_path) do |f| %>
     <%= render("common_form_fields", :f => f) %>
     <%= f.primary(t("catalog_admin.catalog.save_settings")) %>

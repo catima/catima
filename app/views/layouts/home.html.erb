@@ -4,10 +4,10 @@
   <%= render("shared/flash") %>
 
   <div class="row">
-    <div class="col-xs-8">
+    <div class="col-sm-8">
     <%= image_tag('catima-logo-500x58.png', alt:'CATIMA') %>
     </div>
-    <div class="col-xs-4 text-right">
+    <div class="col-sm-4 text-right">
       <%= image_tag('unilogo_noir_72dpi.png', alt:'UNIL') %>
     </div>
   </div>
@@ -15,13 +15,13 @@
   <hr style="border-color: #058bcc;"/>
 
   <div class="row" style="min-height: 350px;">
-    <div class="col-xs-7">
+    <div class="col-sm-7">
       <%= yield %>
     </div>
-    <div class="col-xs-1"></div>
-    <div class="col-xs-4" style="padding-top: 20px;">
+    <div class="col-sm-1"></div>
+    <div class="col-sm-4" style="padding-top: 20px;">
       <% unless current_user.authenticated? %>
-        <a class="btn btn-default" href="/fr/login" role="button">Se connecter / S'enregistrer</a>
+        <a class="btn btn-outline-secondary" href="/fr/login" role="button">Se connecter / S'enregistrer</a>
         <hr>
       <% end %>
 
@@ -34,10 +34,10 @@
   </div>
 
   <div class="row" style="background-color: #dedede; border-top: 1px solid #999; height: 80px; margin: 40px 0;">
-    <div class="col-xs-6" style="text-align: left; font-size: 80%; padding-top: 55px;">
+    <div class="col-sm-6" style="text-align: left; font-size: 80%; padding-top: 55px;">
       <% if ENV["APP_VERSION"] %>Version <%= ENV["APP_VERSION"] %> · <%= Time.zone.now.strftime("%Y") %><% end %>
     </div>
-    <div class="col-xs-6" style="text-align: right; font-size: 80%; padding-top: 40px;">
+    <div class="col-sm-6" style="text-align: right; font-size: 80%; padding-top: 40px;">
       <a href="/admin/" style="color: #000; margin: 0 10px;">Admin</a>
     </div>
 

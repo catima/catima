@@ -10,8 +10,8 @@
 
     <%= yield(:extra_nav) %>
 
-    <div class="panel panel-default">
-      <div class="panel-heading">
+    <div class="card panel-default">
+      <div class="card-header">
         <% if content_for?(:actions) %>
           <span class="pull-right"><%= content_for(:actions) %></span>
         <% end %>

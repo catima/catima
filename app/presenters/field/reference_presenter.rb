@@ -9,7 +9,7 @@ class Field::ReferencePresenter < FieldPresenter
         "#{method}_json",
         input_defaults(options).reverse_merge(
           "data-multiple": field.multiple?,
-          "class": 'hidden'
+          "class": 'd-none'
         )
       ),
       reference_control(method)
@@ -21,7 +21,7 @@ class Field::ReferencePresenter < FieldPresenter
     [
       '<div class="form-component">',
       "<div class=\"row\" #{category} data-field=\"#{field.id}\">",
-      '<div class="col-xs-12">',
+      '<div class="col-sm-12">',
       component(method),
       '</div>',
       '</div>',

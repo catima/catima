@@ -4,7 +4,7 @@
   <%= link_to(
         fa_icon(:"plus-square", text: t('.new_group')),
         new_catalog_admin_group_path,
-        class: 'btn btn-xs btn-default') %>
+        class: 'btn btn-xs btn-outline-secondary') %>
 <% end %>
 
 <% if catalog.groups.count == 0 %>
@@ -32,7 +32,7 @@
           <%= form_for([catalog, grp], url: catalog_admin_group_path(id: grp.id), remote: true, authenticity_token: true) do |f| %>
             <div class="btn-group" data-group="<%= grp.id %>" data-toggle="buttons">
               <% group_roles(grp, catalog).each do |role, active| %>
-                <label class="lbl-<%= role %> btn btn-default btn-xs <%= active ? 'active' : '' %>" style="padding-left: 1.5em; padding-right: 1.5em;">
+                <label class="lbl-<%= role %> btn btn-outline-secondary btn-xs <%= active ? 'active' : '' %>" style="padding-left: 1.5em; padding-right: 1.5em;">
                   <%= radio_button_tag(:role, role, !!active) %>
                   <%= role.capitalize %>
                 </label>
@@ -75,8 +75,8 @@
 <% provide(:extra_setup) do %>
 <hr/>
   <% if @users %>
-    <div class="panel panel-default user-panel">
-      <div class="panel-heading">
+    <div class="card panel-default user-panel">
+      <div class="card-header">
         <%= render 'shared/search_form',
                    :controller => 'catalog_admin/users',
                    :action => 'index',

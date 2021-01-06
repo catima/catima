@@ -2,14 +2,14 @@
   <%= link_to(
           fa_icon("pencil", :text => t("edit")),
           edit_catalog_admin_item_path(item.catalog, I18n.locale, item.item_type, item),
-          :class => "btn btn-default btn-xs",
+          :class => "btn btn-outline-secondary btn-xs",
           :target => '_blank') %>
 <% end %>
 <% if policy(item).destroy? %>
   <%= link_to(
           fa_icon("trash-o", :text => t("delete")),
           catalog_admin_item_path(item.catalog, locale, item.item_type, item),
-          :class => "btn btn-default btn-xs",
+          :class => "btn btn-outline-secondary btn-xs",
           :method => :delete,
           :data => {
               :confirm => t('.delete_confirm', item: default_display_name(item))
@@ -19,14 +19,14 @@
   <%= link_to(
           fa_icon("star", :text => t(".favorites_remove")),
           favorite_path(I18n.locale, item),
-          :class => "btn btn-default btn-xs favorites-remove",
+          :class => "btn btn-outline-secondary btn-xs favorites-remove",
           method: :delete
       ) %>
 <% else %>
   <%= link_to(
           fa_icon("star-o", :text => t(".favorites_add")),
           favorites_path(I18n.locale, id: item.id),
-          :class => "btn btn-default btn-xs favorites-add",
+          :class => "btn btn-outline-secondary btn-xs favorites-add",
           method: :post
       ) %>
 <% end %>

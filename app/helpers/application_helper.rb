@@ -14,8 +14,6 @@ module ApplicationHelper
         (Rails.env.staging? && current_user.system_admin?)
 
     env = ENV['CLUE_OVERRIDE'] || Rails.env.to_s.downcase
-    # rubocop:disable Rails/ContentTag
-    content_tag(:div, env, :class => 'environment', :id => env)
-    # rubocop:enable Rails/ContentTag
+    tag.div(env, :class => 'environment', :id => env)
   end
 end

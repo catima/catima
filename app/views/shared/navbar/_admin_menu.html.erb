@@ -1,43 +1,34 @@
-<li class="dropdown">
-  <a href="#" class="dropdown-toggle" data-toggle="dropdown">
-    Admin
-    <b class="caret"></b>
-  </a>
+<li class="dropdown nav-item">
+  <a href="#" class="dropdown-toggle nav-link" data-toggle="dropdown">Admin</a>
 
-  <ul class="dropdown-menu">
+  <div class="dropdown-menu dropdown-menu-right">
     <%# Catalog data entry %>
     <% if admin_menu_item_types.any? %>
-      <li class="dropdown-header">
+      <div class="dropdown-header">
         <%= fa_icon(:book, :text => "Catalog data") %>
-      </li>
+      </div>
       <% admin_menu_item_types.each do |item_type| %>
-        <li>
-          <%= link_to(
-                item_type.name_plural,
-                catalog_admin_items_path(catalog, item_type)) %>
-        </li>
+        <%= link_to(
+              item_type.name_plural,
+              catalog_admin_items_path(catalog, item_type), class: "dropdown-item") %>
       <% end %>
     <% end %>
 
     <%# Catalog setup %>
     <% if catalog_admin? %>
-      <li role="separator" class="divider"></li>
-      <li>
-        <%= link_to(catalog_admin_setup_path(catalog)) do %>
-          <%= fa_icon(:wrench, :text => "Catalog setup") %>
-        <% end %>
-      </li>
+      <div role="separator" class="dropdown-divider"></div>
+      <%= link_to(catalog_admin_setup_path(catalog), class: "dropdown-item") do %>
+        <%= fa_icon(:wrench, :text => "Catalog setup") %>
+      <% end %>
     <% end %>
 
     <% if viim_admin? %>
       <% if catalog_admin? %>
-        <li role="separator" class="divider"></li>
+        <div role="separator" class="dropdown-divider"></div>
       <% end %>
-      <li>
-        <%= link_to(admin_dashboard_path) do %>
-          <%= fa_icon(:cogs, :text => "CATIMA admin") %>
-        <% end %>
-      </li>
+      <%= link_to(admin_dashboard_path, class: "dropdown-item") do %>
+        <%= fa_icon(:cogs, :text => "CATIMA admin") %>
+      <% end %>
     <% end %>
-  </ul>
+  </div>
 </li>

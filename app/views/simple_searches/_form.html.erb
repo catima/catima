@@ -2,9 +2,9 @@
       :url => { :controller => controller, :action => action, :uuid => '' },
       :method => "POST",
       :layout => :inline,
-      :html => { :style => "text-align: center" }) do |f| %>
+      :html => { :class => "justify-content-center my-4" }) do |f| %>
 
-    <div class="clearable-input">
+    <div class="clearable-input mr-sm-2">
       <div class="input-group">
         <%= f.search_field(
               :q,
@@ -17,15 +17,15 @@
               :style => "width: 25em"
               ) %>
 
-        <div class="input-group-addon">
+        <div class="input-group-append">
           <% unless params[:q].nil? %>
-            <a href="<%= request.path.remove('search', '') %>" class="clear-input"><i class="fa fa-times"></i></a>
+            <a href="<%= request.path.remove('search', '') %>" class="clear-input btn btn-outline-primary"><i class="fa fa-times"></i></a>
           <% end %>
         </div>
       </div>
     </div>
 
-    <%= f.submit(t(".submit")) %>
+    <%= f.submit(t(".submit"), class: 'btn btn-outline-secondary mr-sm-2') %>
 
     <% if display_advanced_search %>
       <%= link_to(

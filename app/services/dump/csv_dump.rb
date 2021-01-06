@@ -1,4 +1,4 @@
-class Dump::CsvDump < ::Dump
+class Dump::CSVDump < ::Dump
   require "csv"
 
   def initialize

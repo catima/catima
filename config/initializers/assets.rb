@@ -11,7 +11,7 @@ Rails.application.config.assets.paths << Rails.root.join('node_modules')
 # Precompile additional assets.
 # application.js, application.css, and all non-JS/CSS in the app/assets
 # folder are already added.
-Rails.application.config.assets.precompile += %w(application-core.js admin.js admin-core.js admin.scss catalog-admin.js catalog-admin-core.js catalog-admin.scss translations.js default.js)
+# Rails.application.config.assets.precompile += %w()
 
 # The code below requires an existing database to set up catalog specific assets
 # This is not granted in every case, so we recover from an ActiveRecord::NoDatabaseError
@@ -26,10 +26,6 @@ begin
   # Add catalog-specific assets
   Catalog.overrides.each do |slug|
     Rails.application.config.assets.precompile += ["#{slug}.css", "#{slug}.js"]
-    loose_catalog_assets = lambda do |filename, path|
-      path =~ %r{catalogs/#{slug}/assets} && !%w(.js .css).include?(File.extname(filename))
-    end
-    Rails.application.config.assets.precompile << loose_catalog_assets
   end
 rescue ActiveRecord::NoDatabaseError, ActiveRecord::StatementInvalid, ActiveRecord::PendingMigrationError
   false

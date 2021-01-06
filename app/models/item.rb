@@ -58,7 +58,7 @@ class Item < ApplicationRecord
 
     if field.nil? ||
        (field.type != Field::TYPES['reference'] && field.type != Field::TYPES['choice'])
-      return reorder('').order(Arel.sql(sql.join(", ")))
+      return reorder(Arel.sql(sql.join(", ")))
     end
 
     sorted_by_ref_or_choice(sql, field)
@@ -67,15 +67,13 @@ class Item < ApplicationRecord
   def self.sorted_by_ref_or_choice(sql, field)
     if field.type == Field::TYPES['reference']
       return joins("LEFT JOIN items ref_items ON ref_items.id::text = items.data->>'#{field.uuid}'")
-             .reorder('')
-             .order(Arel.sql(sql.join(", ")))
+             .reorder(Arel.sql(sql.join(", ")))
     end
 
     return unless field.type == Field::TYPES['choice']
 
     joins("LEFT JOIN choices ON choices.id::text = items.data->>'#{field.uuid}'")
-      .reorder('')
-      .order(Arel.sql(sql.join(", ")))
+      .reorder(Arel.sql(sql.join(", ")))
   end
 
   def self.with_type(type)
@@ -121,6 +119,7 @@ class Item < ApplicationRecord
   # Returns a JSON representation of the item content.
   # It contains the field values for simple fields,
   # and an identifier for complex fields.
+  # rubocop:disable Style/OptionalBooleanParameter
   def describe(includes=[], excludes=[], for_api=false)
     d = Hash[applicable_fields.collect { |f| [f.slug, get_value_or_id(f, for_api)] }] \
         .merge('id': id) \
@@ -132,6 +131,7 @@ class Item < ApplicationRecord
 
     d
   end
+  # rubocop:enable Style/OptionalBooleanParameter
 
   # Sets the value of an item field by UUID
   def set_by_uuid(uuid, value)
@@ -169,25 +169,29 @@ class Item < ApplicationRecord
   def assign_default_values
     return if id || item_type.nil?
 
-    self.data = {} if self.data.nil?
+    data = {} if data.nil?
     fields.each do |f|
-      self.data[f.uuid] = f.default_value if f.default_value.present?
+      data[f.uuid] = f.default_value if f.default_value.present?
     end
   end
 
+  # rubocop:disable Metrics/CyclomaticComplexity
+  # rubocop:disable Metrics/PerceivedComplexity
   def assign_autoincrement_values
     return if id || item_type.nil?
 
-    self.data = {} if self.data.nil?
+    data = {} if data.nil?
     conn = ActiveRecord::Base.connection.raw_connection
     fields.each do |f|
-      next unless (f.type == 'Field::Int') && !f.options.nil? && f.auto_increment? && self.data[f.uuid].nil?
+      next unless (f.type == 'Field::Int') && !f.options.nil? && f.auto_increment? && data[f.uuid].nil?
 
       st = conn.exec(
         "SELECT MAX(CAST(NULLIF(data->>'#{f.uuid}', '') AS integer)) FROM items WHERE item_type_id = $1",
         [item_type_id]
       )
-      self.data[f.uuid] = st.getvalue(0, 0).to_i + 1
+      data[f.uuid] = st.getvalue(0, 0).to_i + 1
     end
   end
+  # rubocop:enable Metrics/CyclomaticComplexity
+  # rubocop:enable Metrics/PerceivedComplexity
 end

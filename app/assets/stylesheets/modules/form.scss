@@ -31,12 +31,25 @@ form > .form-component{
     margin: 0;
 }
 
+.form-group small {
+  font-size: 100%;
+}
+
 .form-component .row {
     margin-top: 20px;
 }
 
 .form-group.file-upload {
     margin-top: 0;
+}
+
+.form-check {
+  margin-top: 10px;
+  margin-bottom: 10px;
+}
+
+.form-check .form-check-label {
+  font-weight: normal;
 }
 
 .red {
@@ -113,9 +126,12 @@ button[data-active=true]:focus {
       }
     }
 
-    .input-group-addon {
+    .input-group-append a{
       background: none;
       border: none;
+      &:hover {
+        color: #337ab7;
+      }
     }
   }
 }

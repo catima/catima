@@ -3,9 +3,6 @@ module VisibilityHelper
     return nil unless catalog.active?
 
     case catalog_access(catalog)
-    when 1
-      text = 'Everyone'
-      klass = 'success'
     when 2
       text = 'Members'
       klass = 'warning'
@@ -17,6 +14,6 @@ module VisibilityHelper
       klass = 'success'
     end
 
-    content_tag(:span, text, :class => "label label-#{klass}")
+    tag.span(text, :class => "badge badge-#{klass}")
   end
 end

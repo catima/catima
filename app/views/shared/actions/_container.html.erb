@@ -2,7 +2,7 @@
   <%= link_to(
           fa_icon(:pencil),
           edit_catalog_admin_container_path(model.catalog, I18n.locale, model),
-          class: "btn btn-xs btn-default container-action-edit",
+          class: "btn btn-xs btn-outline-secondary container-action-edit",
           "data-toggle" => "tooltip", "data-placement" => "top", "title" => t("edit")
       ) %>
 <% end %>
@@ -14,7 +14,7 @@
           :data => {
               :confirm => "Are you sure you want to delete the container?"
           },
-          class: "btn btn-xs btn-default container-action-delete",
+          class: "btn btn-xs btn-outline-secondary container-action-delete",
           "data-toggle" => "tooltip", "data-placement" => "top", "title" => t("delete")
       ) %>
 <% end %>

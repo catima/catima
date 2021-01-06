@@ -1,5 +1,5 @@
 class Field::FilePresenter < FieldPresenter
-  delegate :content_tag, :number_to_human_size, :to => :view
+  delegate :tag, :number_to_human_size, :to => :view
 
   def input(form, method, options={})
     item_type = options[:item_type] || field.item_type.slug
@@ -40,6 +40,7 @@ class Field::FilePresenter < FieldPresenter
 
   private
 
+  # rubocop:disable Style/StringConcatenation
   def render_html(form, method, item_type, field_category, btn_label)
     [
       form.text_area(
@@ -48,16 +49,16 @@ class Field::FilePresenter < FieldPresenter
       ),
       '<div class="form-component">',
       "<div class=\"form-group file-upload\" #{field_category} " \
-        "id=\"fileupload_#{method}\" " \
-        "data-field=\"#{method}\" " \
-        "data-field-type=\"#{field.type}\" " \
-        "data-multiple=\"#{field.multiple}\" " \
-        "data-required=\"#{field.required?}\" " \
-        "data-fieldname=\"#{field.name}\" " \
-        "data-upload-url=\"/#{field.catalog.slug}/#{I18n.locale}/admin/#{item_type}/upload\" " \
-        "data-file-types=\"#{field.types}\" " \
-        "data-file-size=\"#{field.max_file_size.megabytes}\" " \
-        "data-button-text=\"" + btn_label + "\"></div>",
+      "id=\"fileupload_#{method}\" " \
+      "data-field=\"#{method}\" " \
+      "data-field-type=\"#{field.type}\" " \
+      "data-multiple=\"#{field.multiple}\" " \
+      "data-required=\"#{field.required?}\" " \
+      "data-fieldname=\"#{field.name}\" " \
+      "data-upload-url=\"/#{field.catalog.slug}/#{I18n.locale}/admin/#{item_type}/upload\" " \
+      "data-file-types=\"#{field.types}\" " \
+      "data-file-size=\"#{field.max_file_size.megabytes}\" " \
+      "data-button-text=\"" + btn_label + "\"></div>",
       "<h4>",
       "<small>#{t('presenters.field.file.size_constraint', :max_size => field.max_file_size)}</small><br>",
       "<small>#{t('presenters.field.file.types_constraint', :types => field.types)}</small>",
@@ -65,4 +66,5 @@ class Field::FilePresenter < FieldPresenter
       "</div>"
     ].compact.join.html_safe
   end
+  # rubocop:enable Style/StringConcatenation
 end
