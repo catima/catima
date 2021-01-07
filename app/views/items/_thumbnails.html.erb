@@ -2,11 +2,11 @@
   <div class="row">
     <% items.each_with_index do |item, col| %>
       <div class="col-lg-3 col-sm-6">
-        <div class="card mb-4">
+        <div class="card thumbnail">
           <%= item_list_link(item_list, item, row * col) do %>
             <%= item_thumbnail(item, :style => :medium) %>
           <% end %>
-          <div class="card-body">
+          <div class="caption">
             <%= item_list_link(item_list, item, row * col, item_display_name(item)) %>
           </div>
         </div>

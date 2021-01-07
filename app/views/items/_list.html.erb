@@ -1,7 +1,7 @@
 <% item_list.items.each_with_index do |item, i| %>
   <div class="media">
     <% if item_has_thumbnail?(item) %>
-      <div class="pull-left">
+      <div class="pull-left mr-3">
         <%= item_list_link(item_list, item, i) do %>
           <%= item_thumbnail(item, :class => "media-object") %>
         <% end %>
@@ -16,7 +16,9 @@
       <% else %>
         <%= item_list_view(item) %>
       <% end %>
+      <div>
+        <%= render "items/buttons", :item => item if favorites_scoped? %>
+      </div>
     </div>
-    <%= render "items/buttons", :item => item if favorites_scoped? %>
   </div>
 <% end %>
