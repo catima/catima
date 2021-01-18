@@ -4,18 +4,19 @@
 
       <% choice = field.choice_set.choices.new %>
       <%= bootstrap_form_for(
-                  choice,
-                  url: catalog_admin_choice_set_create_choice_path(field.catalog, I18n.locale, field.choice_set),
-                  remote: true) do |f| %>
+            choice,
+            url: catalog_admin_choice_set_create_choice_path(field.catalog, I18n.locale, field.choice_set),
+            remote: true) do |f| %>
 
         <div class="modal-header">
-          <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span></button>
           <h4 class="modal-title"><%= t('.create_new_field', field: field.name) %></h4>
         </div>
         <div class="modal-body">
           <div class="card-body">
-            <%= locale_form_group(f, :short_name, :text_field) %>
-            <%= locale_form_group(f, :long_name, :text_field) %>
+            <%= locale_form_group(f, :short_name, :text_field, :label => t("catalog_admin.choice_sets.common_form_fields.short_name")) %>
+            <%= locale_form_group(f, :long_name, :text_field, :label => t("catalog_admin.choice_sets.common_form_fields.long_name_optional")) %>
           </div>
         </div>
         <div class="modal-footer">

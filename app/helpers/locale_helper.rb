@@ -85,7 +85,7 @@ module LocaleHelper
   end
 
   def locale_form_input_options(locales, locale, options)
-    # options = options.reverse_merge(:hide_label => true)
+    options = options.reverse_merge(:hide_label => true)
     if locales.many?
       options.reverse_merge!(
         #:placeholder => locale_language(locale),
