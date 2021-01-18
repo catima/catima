@@ -197,7 +197,7 @@ class SingleReferenceEditor extends Component {
         <AsyncPaginate
           cacheUniq={JSON.stringify(this.state.optionsList)} // used to update the options loaded on page load
           id={this.editorId}
-          className="single-reference"
+          className="single-reference flex-fill"
           debounceTimeout={800}
           isClearable={!this.props.req}
           isMulti={false}
