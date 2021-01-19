@@ -74,10 +74,6 @@
     text-align: left;
 }
 
-.referenceEditor .single-reference{
-  width: 50%;
-}
-
 .referenceEditor .single-reference-container .input-group-addon {
     min-width: 10em;
     padding: 0;

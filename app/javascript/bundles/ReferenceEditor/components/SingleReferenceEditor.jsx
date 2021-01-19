@@ -213,7 +213,7 @@ class SingleReferenceEditor extends Component {
             page: 1,
           }}
         />
-        <div className="input-group-addon" style={{width: '50%'}}>
+        <div className="input-group-addon">
           <ReactSelect
             id={this.filterId}
             className="single-reference-filter"
