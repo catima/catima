@@ -54,8 +54,7 @@ module LocaleHelper
   def locale_form_group(form, method, builder_method, *args)
     options = args.extract_options!
     locales = form.object.catalog.valid_locales
-    group_label = options.delete(:hide_label) ? nil : {}
-    group_label[:text] = options[:label] if group_label && options[:label]
+    group_label = options.delete(:hide_label) ? nil : { text: options[:label] } # to prevent hidden label pass nil options because bootstrap_form 4.x required options even if nil (https://github.com/bootstrap-ruby/bootstrap_form/blob/5ab399b93c5ee454ebdf1c1328e899ec636e9668/lib/bootstrap_form/components/labels.rb#L11)
     help = options.delete(:help)
 
     form.form_group(method, :label => group_label, :help => help) do
