@@ -16,7 +16,7 @@ class Field::DateTimePresenter < FieldPresenter
     dt_value = Time.zone.at(dt["raw_value"])
     return dt_value if view.nil?
 
-    l(dt_value, format: field.format.to_sym)
+    I18n.l(dt_value, format: field.format.to_sym)
   end
 
   def new_style_value_text_repr(dt)
