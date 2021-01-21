@@ -169,9 +169,9 @@ class Item < ApplicationRecord
   def assign_default_values
     return if id || item_type.nil?
 
-    data = {} if data.nil?
+    self.data = {} if self.data.nil?
     fields.each do |f|
-      data[f.uuid] = f.default_value if f.default_value.present?
+      self.data[f.uuid] = f.default_value if f.default_value.present?
     end
   end
 
@@ -180,7 +180,7 @@ class Item < ApplicationRecord
   def assign_autoincrement_values
     return if id || item_type.nil?
 
-    data = {} if data.nil?
+    self.data = {} if self.data.nil?
     conn = ActiveRecord::Base.connection.raw_connection
     fields.each do |f|
       next unless (f.type == 'Field::Int') && !f.options.nil? && f.auto_increment? && data[f.uuid].nil?
@@ -189,7 +189,7 @@ class Item < ApplicationRecord
         "SELECT MAX(CAST(NULLIF(data->>'#{f.uuid}', '') AS integer)) FROM items WHERE item_type_id = $1",
         [item_type_id]
       )
-      data[f.uuid] = st.getvalue(0, 0).to_i + 1
+      self.data[f.uuid] = st.getvalue(0, 0).to_i + 1
     end
   end
   # rubocop:enable Metrics/CyclomaticComplexity
