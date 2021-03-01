@@ -8,6 +8,5 @@
 @import 'select2-bootstrap';
 @import './modules/*';
 @import './webpack/**/*';
-//= require_self
-//= require eonasdan-bootstrap-datetimepicker
+@import "eonasdan-bootstrap-datetimepicker/build/css/bootstrap-datetimepicker";
 @import './bootsrap_fixes/index';
