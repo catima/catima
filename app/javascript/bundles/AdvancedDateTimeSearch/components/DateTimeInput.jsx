@@ -95,12 +95,12 @@ class DateTimeInput extends React.Component {
         locale: this.props.locale,
         debug: true,
         icons: {
-          time: 'fa fa-calendar',
+          time: 'fa fa-clock-o',
           date: 'fa fa-calendar',
           up: 'fa fa-chevron-up',
           down: 'fa fa-chevron-down',
           previous: 'fa fa-arrow-left',
-          next: 'fa fa-arrow-right'.
+          next: 'fa fa-arrow-right',
           close: 'fa fa-times'
         }
       });
