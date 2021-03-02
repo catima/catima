@@ -99,7 +99,7 @@ class DateTimeInput extends React.Component {
           up: 'fa fa-chevron-up',
           down: 'fa fa-chevron-down',
           previous: 'fa fa-arrow-left',
-          next: 'fa fa-arrow-right'.
+          next: 'fa fa-arrow-right',
           close: 'fa fa-times'
         }
       });
