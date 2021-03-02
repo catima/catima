@@ -5,7 +5,6 @@ import axios from 'axios';
 import $ from 'jquery';
 import 'moment';
 import 'bootstrap4-datetimepicker';
-
 import DateTimeSearch from '../../AdvancedDateTimeSearch/components/DateTimeSearch';
 
 class ItemTypesReferenceSearch extends Component {

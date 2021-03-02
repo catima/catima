@@ -3,7 +3,7 @@ import ReactDOM from 'react-dom';
 import DateTimeInput from './DateTimeInput';
 import $ from 'jquery';
 import 'moment';
-import 'bootstrap4-datetimepicker'
+import 'bootstrap4-datetimepicker';
 
 class DateTimeSearch extends Component {
   constructor(props){
