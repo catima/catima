@@ -4,7 +4,6 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import $ from 'jquery';
 import 'moment';
-import 'fontawesome';
 import 'bootstrap4-datetimepicker'
 
 class DateTimeInput extends React.Component {
@@ -93,7 +92,7 @@ class DateTimeInput extends React.Component {
       $(this.refs['hiddenInput']).datetimepicker({
         format: this.props.format,
         locale: this.props.locale,
-        debug: true,
+        debug: false, // pass to `true` to inspect widget
         icons: {
           time: 'fa fa-clock-o',
           date: 'fa fa-calendar',
