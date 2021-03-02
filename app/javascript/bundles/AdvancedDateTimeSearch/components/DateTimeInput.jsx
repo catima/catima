@@ -3,8 +3,9 @@ import PropTypes from 'prop-types';
 import React from 'react';
 import ReactDOM from 'react-dom';
 import $ from 'jquery';
-import moment from 'moment';
-import 'eonasdan-bootstrap-datetimepicker';
+import 'moment';
+import 'fontawesome';
+import 'bootstrap4-datetimepicker'
 
 class DateTimeInput extends React.Component {
 
@@ -91,7 +92,17 @@ class DateTimeInput extends React.Component {
 
       $(this.refs['hiddenInput']).datetimepicker({
         format: this.props.format,
-        locale: this.props.locale
+        locale: this.props.locale,
+        debug: true,
+        icons: {
+          time: 'fa fa-calendar',
+          date: 'fa fa-calendar',
+          up: 'fa fa-chevron-up',
+          down: 'fa fa-chevron-down',
+          previous: 'fa fa-arrow-left',
+          next: 'fa fa-arrow-right'.
+          close: 'fa fa-times'
+        }
       });
 
       $(this.refs['hiddenInput']).datetimepicker().on('dp.change', (event) => this._onDatepickerChangerDate(event));
