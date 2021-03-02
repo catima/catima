@@ -93,7 +93,6 @@ class DateTimeInput extends React.Component {
       $(this.refs['hiddenInput']).datetimepicker({
         format: this.props.format,
         locale: this.props.locale,
-        debug: true,
         icons: {
           time: 'fa fa-calendar',
           date: 'fa fa-calendar',
