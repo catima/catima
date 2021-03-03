@@ -134,7 +134,7 @@ add_upload_button_for = ($file_field)->
   button_lbl = $("#fileupload_#{$file_field}").attr('data-button-text')
   $("#fileupload_#{$file_field}").append("""
     <span class="btn btn-sm btn-success fileinput-button d-none">
-      <i class="glyphicon glyphicon-plus"></i>
+      <i class="fa fa-plus"></i>
       <span>#{button_lbl}</span>
       <input id="fileinput_#{$file_field}" type="file" name="files[]" data-url="#{upload_url($file_field)}">
     </span>

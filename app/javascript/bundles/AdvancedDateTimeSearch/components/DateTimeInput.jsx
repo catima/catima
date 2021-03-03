@@ -3,8 +3,8 @@ import PropTypes from 'prop-types';
 import React from 'react';
 import ReactDOM from 'react-dom';
 import $ from 'jquery';
-import moment from 'moment';
-import 'eonasdan-bootstrap-datetimepicker';
+import 'moment';
+import 'bootstrap4-datetimepicker'
 
 class DateTimeInput extends React.Component {
 
@@ -91,7 +91,17 @@ class DateTimeInput extends React.Component {
 
       $(this.refs['hiddenInput']).datetimepicker({
         format: this.props.format,
-        locale: this.props.locale
+        locale: this.props.locale,
+        debug: false, // pass to `true` to inspect widget
+        icons: {
+          time: 'fa fa-clock-o',
+          date: 'fa fa-calendar',
+          up: 'fa fa-chevron-up',
+          down: 'fa fa-chevron-down',
+          previous: 'fa fa-arrow-left',
+          next: 'fa fa-arrow-right',
+          close: 'fa fa-times'
+        }
       });
 
       $(this.refs['hiddenInput']).datetimepicker().on('dp.change', (event) => this._onDatepickerChangerDate(event));
@@ -304,8 +314,8 @@ class DateTimeInput extends React.Component {
                 <input type="text" ref="hiddenInput" value={this.state.selectedDate} onChange={this.selectDate}/>
               </div>
               <div className="calendar-button-container">
-                <a id={this.props.inputId + '_calendar_icon' + '_' + this.props.inputSuffixId} onClick={this.openCloseDatepicker} type="button"><span className="glyphicon glyphicon-calendar"></span></a>
-                <a onClick={this.clearDatepicker} type="button"><i className="fa fa-plus"></i></a>
+                <a id={this.props.inputId + '_calendar_icon' + '_' + this.props.inputSuffixId} onClick={this.openCloseDatepicker} type="button"><i className="fa fa-calendar"></i></a>
+                <a onClick={this.clearDatepicker} type="button"><i className="fa fa-times"></i></a>
               </div>
             </div>
         </div>
