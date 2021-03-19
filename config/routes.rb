@@ -146,8 +146,10 @@ Rails.application.routes.draw do
               :path => ":item_type_slug/import",
               :only => [:new, :create]
 
-    resources :choice_sets, :path => "_choices", :except => :show do
-      post 'create_choice' => 'choice_sets#create_choice'
+    resources :choice_sets, :path => "_choice_sets", :except => :show do
+      resources :choices, :path => "_choices", :except => :show, on: :member do
+        post 'update_positions' => "choices#update_positions", on: :collection
+      end
     end
 
     resources :pages, :path => "_pages", :param => :slug do

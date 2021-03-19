@@ -1,17 +1,26 @@
 <% provide(:title, t(".edit_choice_set")) %>
 
-<div class="card-body">
+<% provide(:actions) do %>
+  <%= link_to(new_catalog_admin_choice_set_choice_path(@choice_set.catalog, I18n.locale, @choice_set)) do %>
+    <%= fa_icon(:"plus-square", :text => t('.new_choice')) %>
+  <% end %>
+<% end %>
+<div class="card-body" data-controller="sortable-choices  hover-list" data-sortable-choices-update-url="<%= update_positions_catalog_admin_choice_set_choices_path(@choice_set.catalog, I18n.locale, @choice_set) %>">
   <%= bootstrap_form_for(
         @choice_set,
         :url => catalog_admin_choice_set_path) do |f| %>
-
-    <%= render("common_form_fields", :f => f) %>
-
+    <%= f.text_field(:name) %>
+    <hr>
+    <%= label_tag :choices, t(".choices") %>
+    <ul class="w-100 pl-0" data-sortable-choices-target="sortableList">
+      <% @choice_set.choices.where(parent_id: nil).ordered.each do |choice| %>
+        <%= render 'choice', choice: choice, level: 0 %>
+      <% end %>
+    </ul>
     <%= f.primary(t(".update_choice_set")) %>
     <%= link_to(
           t("cancel"),
           catalog_admin_choice_sets_path,
           :class => "btn btn-link") %>
-
   <% end %>
 </div>

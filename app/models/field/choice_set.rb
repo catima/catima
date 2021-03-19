@@ -42,6 +42,8 @@ class Field::ChoiceSet < ::Field
                          :in => :choice_set_choices,
                          :allow_nil => true
 
+  delegate :choice_prefixed_label, :ordered_choices, to: :choice_set
+
   def type_name
     "Choice set" + (choice_set ? " (#{choice_set.name})" : "")
   end
@@ -122,7 +124,7 @@ class Field::ChoiceSet < ::Field
       selected_choices(it).map(&:long_display_name).join(', ')
     else
       ch = selected_choice(it)
-      ch.nil? ? nil : ch.long_display_name
+      ch.nil? ? nil : ch.choice_set.choice_prefixed_label(ch, format: :long)
     end
   end
 
@@ -137,8 +139,8 @@ class Field::ChoiceSet < ::Field
   def search_data_as_hash
     choices_as_options = []
 
-    choices.each do |choice|
-      option = { :value => choice.short_name, :key => choice.id }
+    ordered_choices.each do |choice|
+      option = {:value => choice.short_name, :key => choice.id, label: choice_prefixed_label(choice), has_childrens: choice.childrens.any?}
       option[:category_data] = choice.category.present? && choice.category.active? ? choice.category.fields : []
 
       choices_as_options << option
@@ -149,13 +151,13 @@ class Field::ChoiceSet < ::Field
 
   def search_conditions_as_hash(locale)
     [
-      { :value => I18n.t("advanced_searches.text_search_field.exact", locale: locale), :key => "exact"}
+      {:value => I18n.t("advanced_searches.text_search_field.exact", locale: locale), :key => "exact"}
     ]
   end
 
   def search_options_as_hash
     [
-      { :multiple => multiple? }
+      {:multiple => multiple?}
     ]
   end
 

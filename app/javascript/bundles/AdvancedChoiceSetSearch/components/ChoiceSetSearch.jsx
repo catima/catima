@@ -1,10 +1,10 @@
-import React, { Component } from 'react';
+import React, {Component} from 'react';
 import ReactDOM from 'react-dom';
 import ReactSelect from 'react-select';
 import LinkedCategoryInput from './LinkedCategoryInput';
 
 class ChoiceSetSearch extends Component {
-  constructor(props){
+  constructor(props) {
     super(props);
 
     this.state = {
@@ -13,6 +13,7 @@ class ChoiceSetSearch extends Component {
       selectedFieldCondition: '',
       selectedCategory: {},
       selectedItem: [],
+      selectedChildChoicesActivated: false,
       disabled: false,
       hiddenInputValue: [],
       inputName: this.props.inputName.split("[exact]")
@@ -24,6 +25,7 @@ class ChoiceSetSearch extends Component {
     this.selectCondition = this._selectCondition.bind(this);
     this.selectFieldCondition = this._selectFieldCondition.bind(this);
     this.selectCategory = this._selectCategory.bind(this);
+    this.selectChildChoicesActivated = this._selectChildChoicesActivated.bind(this);
     this.addComponent = this._addComponent.bind(this);
     this.deleteComponent = this._deleteComponent.bind(this);
     this.updateSelectCondition = this._updateSelectCondition.bind(this);
@@ -76,6 +78,18 @@ class ChoiceSetSearch extends Component {
     }
   }
 
+  _selectChildChoicesActivated(event) {
+    console.log(event)
+    if (typeof event === 'undefined' || event.action !== "pop-value" || !this.props.req) {
+      if (typeof event !== 'undefined') {
+        this.setState({selectedChildChoicesActivated: event.value});
+      } else {
+        this.setState({selectedChildChoicesActivated: false});
+      }
+    }
+  }
+
+
   _selectCategory(item, event){
     if(item !== null) {
       if(typeof event === 'undefined' || event.action !== "pop-value" || !this.props.req) {
@@ -113,8 +127,22 @@ class ChoiceSetSearch extends Component {
     return optionsList;
   }
 
+  _getChildChoicesActivatedOptions() {
+    var optionsList = [
+      {value: true, label: this.props.childChoicesActivatedYesLabel},
+      {value: false, label: this.props.childChoicesActivatedNoLabel}
+    ]
+
+    return optionsList;
+  }
+
   _getJSONCategory(item) {
-    return {value: item.uuid, label: item.name_translations['name_' + this.props.locale], key: item.id, choiceSetId: item.field_set_id};
+    return {
+      value: item.uuid,
+      label: item.name_translations['name_' + this.props.locale],
+      key: item.id,
+      choiceSetId: item.field_set_id
+    };
   }
 
   _getItemOptions(){
@@ -130,7 +158,7 @@ class ChoiceSetSearch extends Component {
     if(typeof item.category_data === 'undefined') {
       item.category_data = [];
     }
-    return {value: item.key, label: item.value, data: item.category_data};
+    return {value: item.key, label: item.label, data: item.category_data, has_childrens: item.has_childrens};
   }
 
   _addComponent() {
@@ -149,7 +177,7 @@ class ChoiceSetSearch extends Component {
   }
 
   _getChoiceSetClassname() {
-    if(this.state.selectedItem.length === 0 || this.state.selectedItem.data.length === 0) {
+    if (this.state.selectedItem.length === 0 || this.state.selectedItem.data.length === 0 && !this.state.selectedItem.has_childrens) {
       return 'col-lg-6';
     } else {
       return 'col-lg-3';
@@ -190,6 +218,14 @@ class ChoiceSetSearch extends Component {
     );
   }
 
+  renderChildChoicesActivated() {
+    return (
+      <ReactSelect id={this.choiceSetId + '_condition'} name={this.props.childChoicesActivatedInputName}
+                   options={this._getChildChoicesActivatedOptions()} onChange={this.selectChildChoicesActivated}
+                   classNamePrefix="select" placeholder={this.props.childChoicesActivatedPlaceholder}/>
+    );
+  }
+
   renderLinkedCategoryElement(){
     return (
       <div>
@@ -214,15 +250,20 @@ class ChoiceSetSearch extends Component {
           <div className="col-lg-2">
               { this.renderFieldConditionElement() }
           </div>
-            <div className={this._getChoiceSetClassname()}>
-                { this.renderChoiceSetElement() }
-            </div>
-            { (this.state.selectedItem.length !== 0 && this.state.selectedItem.data.length !== 0) &&
-              <div className="col-lg-3">
-                { this.renderChoiceSetItemCategory() }
-              </div>
-            }
-          { (this.props.itemId === this.props.componentList[0].itemId && this.props.componentList.length === 1) &&
+          <div className={this._getChoiceSetClassname()}>
+            {this.renderChoiceSetElement()}
+          </div>
+          {(this.state.selectedItem.length !== 0 && this.state.selectedItem.has_childrens == true) &&
+          <div className="col-lg-3">
+            {this.renderChildChoicesActivated()}
+          </div>
+          }
+          {(this.state.selectedItem.length !== 0 && this.state.selectedItem.data.length !== 0) &&
+          <div className="col-lg-3">
+            {this.renderChoiceSetItemCategory()}
+          </div>
+          }
+          {(this.props.itemId === this.props.componentList[0].itemId && this.props.componentList.length === 1) &&
           <div className="col-lg-1 icon-container">
             <a type="button" onClick={this.addComponent}><i className="fa fa-plus"></i></a>
           </div>
@@ -235,20 +276,29 @@ class ChoiceSetSearch extends Component {
           { ((this.props.itemId === this.props.componentList[this.props.componentList.length - 1].itemId) && (this.props.itemId !== this.props.componentList[0].itemId)) &&
           <div className="col-lg-1">
             <div className="row">
-              <div className="col-lg-12"><a type="button" onClick={this.addComponent}><i className="fa fa-plus"></i></a></div>
-              <div className="col-lg-12"><a type="button" onClick={this.deleteComponent}><i className="fa fa-trash"></i></a></div>
+              <div className="col-lg-12"><a type="button" onClick={this.addComponent}><i className="fa fa-plus"></i></a>
+              </div>
+              <div className="col-lg-12"><a type="button" onClick={this.deleteComponent}><i className="fa fa-trash"></i></a>
+              </div>
             </div>
           </div>
           }
+          {(this.state.selectedItem.length == 0 || (this.state.selectedItem.length !== 0 && this.state.selectedItem.data.length !== 0)) &&
           <div className="col-lg-3">
             { this.renderSelectConditionElement() }
           </div>
+          }
         </div>
-        { (Object.keys(this.state.selectedCategory).length !== 0 && this.state.selectedItem.data.length !== 0) &&
         <div className="row">
-          <div className="col-lg-offset-2 col-lg-6">{ this.renderLinkedCategoryElement() }</div>
+          {(this.state.selectedItem.length !== 0 && this.state.selectedItem.data.length !== 0) &&
+          <div className="col-lg-3" style={{marginTop: '10px'}}>
+            {this.renderSelectConditionElement()}
+          </div>
+          }
+          {(Object.keys(this.state.selectedCategory).length !== 0 && this.state.selectedItem.data.length !== 0) &&
+          <div className="col-lg-offset-2 col-lg-6">{this.renderLinkedCategoryElement()}</div>
+          }
         </div>
-        }
       </div>
     );
   }
