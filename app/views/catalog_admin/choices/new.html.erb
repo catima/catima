@@ -7,7 +7,7 @@
       <%= select2_select(f, :parent_id, @choice_set.ordered_choices.filter { |choice| choice.id != @choice.id }.map { |choice| [@choice_set.choice_prefixed_label(choice), choice.id] }, include_blank: ' ') %>
     </div>
     <div class="mb-4">
-      <%= f.select :position, [:first, :last] %>
+      <%= f.select :position, [[t('.position.first'), :first], [t('.position.last'), :last]] %>
     </div>
     <%= render("catalog_admin/choices/choice_fields", :f => f) %>
     <div class="mt-4">

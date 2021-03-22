@@ -1,5 +1,5 @@
-<%= locale_form_group(f, :short_name, :text_field) %>
-<%= locale_form_group(f, :long_name, :text_field) %>
+<%= locale_form_group(f, :short_name, :text_field, label: t('.short_name')) %>
+<%= locale_form_group(f, :long_name, :text_field, label: t('.long_name_optional')) %>
 <% if catalog.categories.any? %>
-  <%= choice_category_select(f) %>
+  <%= choice_category_select(f, label: t('.category_optional')) %>
 <% end %>

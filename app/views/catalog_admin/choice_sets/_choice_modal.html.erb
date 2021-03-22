@@ -17,7 +17,7 @@
               <%= f.select :parent_id, field.choice_set.ordered_choices.map { |choice| [field.choice_set.choice_prefixed_label(choice), choice.id] }, include_blank: '' %>
             </div>
             <div class="mb-4">
-              <%= f.select :position, [:first, :last] %>
+              <%= f.select :position, [[t('.position.first'), :first], [t('.position.last'), :last]] %>
             </div>
             <%= render("catalog_admin/choices/choice_fields", :f => f) %>
           </div>
