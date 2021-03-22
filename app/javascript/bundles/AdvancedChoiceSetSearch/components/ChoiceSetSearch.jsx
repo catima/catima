@@ -79,7 +79,6 @@ class ChoiceSetSearch extends Component {
   }
 
   _selectChildChoicesActivated(event) {
-    console.log(event)
     if (typeof event === 'undefined' || event.action !== "pop-value" || !this.props.req) {
       if (typeof event !== 'undefined') {
         this.setState({selectedChildChoicesActivated: event.value});
