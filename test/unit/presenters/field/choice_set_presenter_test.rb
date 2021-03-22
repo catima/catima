@@ -25,9 +25,11 @@ class Field::ChoiceSetPresenterTest < ActionView::TestCase
     author.data["one_author_other_language_uuid"] = choices.map(&:id)
 
     presenter = Field::ChoiceSetPresenter.new(self, author, languages_field)
-    assert_equal(
-      '<a href="/one/en/authors?other-language=en-Eng">English</a>, '\
-      '<a href="/one/en/authors?other-language=en-Spanish">Spanish</a>',
+    assert_equal(\
+    '<ul>'\
+      '<li><a href="/one/en/authors?other-language=en-Eng">English</a></li> '\
+      '<li><a href="/one/en/authors?other-language=en-Spanish">Spanish</a></li>'\
+      '</ul>',
       presenter.value
     )
   end

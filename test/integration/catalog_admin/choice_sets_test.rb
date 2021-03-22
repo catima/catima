@@ -3,19 +3,21 @@ require "test_helper"
 class CatalogAdmin::ChoiceSetsTest < ActionDispatch::IntegrationTest
   setup { use_javascript_capybara_driver }
 
-  test "add a choice set with choices" do
+  test "add a choice and add a choice to it" do
     log_in_as("one-admin@example.com", "password")
-    visit("/one/en/admin/_choices")
+    visit("/one/en/admin/_choice_sets")
     click_on("New choice set")
     fill_in("Name", :with => "Test Set")
-    click_on("Add choice")
+    assert_difference("catalogs(:one).choice_sets.count") do
+      click_on("Create choice set")
+    end
+    set = catalogs(:one).choice_sets.where(:name => "Test Set").first!
+    visit("/one/en/admin/_choice_sets/#{set.id}/edit")
+    click_on("New choice")
     fill_in("Short name", :with => "Eng")
     fill_in("Long name", :with => "English")
-
-    assert_difference("catalogs(:one).choice_sets.count") do
-      assert_difference("Choice.count") do
-        click_on("Create choice set")
-      end
+    assert_difference("Choice.count") do
+      click_on("Create choice")
     end
 
     set = catalogs(:one).choice_sets.where(:name => "Test Set").first!
@@ -24,29 +26,31 @@ class CatalogAdmin::ChoiceSetsTest < ActionDispatch::IntegrationTest
     assert_equal("English", set.choices.first.long_name)
   end
 
-  test "add a choice set with a multilingual choice" do
+  test "add a choice set and add a multilingual choice" do
     log_in_as("multilingual-admin@example.com", "password")
-    visit("/multilingual/en/admin/_choices")
+    visit("/multilingual/en/admin/_choice_sets")
     click_on("New choice set")
     fill_in("Name", :with => "Test Set")
-    click_on("Add choice")
-
-    fill_in("Short name de", :with => "Ger")
-    fill_in("Long name de", :with => "German")
-    fill_in("Short name en", :with => "Eng")
-    fill_in("Long name en", :with => "English")
-    fill_in("Short name fr", :with => "Fre")
-    fill_in("Long name fr", :with => "French")
-    fill_in("Short name it", :with => "Ita")
-    fill_in("Long name it", :with => "Italian")
-
     assert_difference("catalogs(:multilingual).choice_sets.count") do
-      assert_difference("Choice.count") do
-        click_on("Create choice set")
-      end
+      click_on("Create choice set")
+    end
+    set = catalogs(:multilingual).choice_sets.where(:name => "Test Set").first!
+    visit("/multilingual/en/admin/_choice_sets/#{set.id}/edit")
+
+    click_on("New choice")
+    fill_in("choice[short_name_en]", :with => "Eng")
+    fill_in("choice[long_name_en]", :with => "English")
+    fill_in("choice[short_name_fr]", :with => "Fre")
+    fill_in("choice[long_name_fr]", :with => "French")
+    fill_in("choice[short_name_it]", :with => "Ita")
+    fill_in("choice[long_name_it]", :with => "Italian")
+    fill_in("choice[short_name_de]", :with => "Ger")
+    fill_in("choice[long_name_de]", :with => "German")
+
+    assert_difference("Choice.count") do
+      click_on("Create choice")
     end
 
-    set = catalogs(:multilingual).choice_sets.where(:name => "Test Set").first!
     assert_equal(1, set.choices.count)
 
     assert_equal("Ger", set.choices.first.short_name_de)
@@ -84,7 +88,7 @@ class CatalogAdmin::ChoiceSetsTest < ActionDispatch::IntegrationTest
 
   test "edit a choice" do
     log_in_as("one-admin@example.com", "password")
-    visit("/one/en/admin/_choices")
+    visit("/one/en/admin/_choice_sets")
     first("a.choiceset-action-edit").click
     fill_in("Name", :with => "Changed")
 
@@ -98,7 +102,7 @@ class CatalogAdmin::ChoiceSetsTest < ActionDispatch::IntegrationTest
 
   test "delete a choice" do
     log_in_as("one-admin@example.com", "password")
-    visit("/one/en/admin/_choices")
+    visit("/one/en/admin/_choice_sets")
 
     assert_difference("catalogs(:one).choice_sets.active.count", -1) do
       first("a.choiceset-action-deactivate").click
