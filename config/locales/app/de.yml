@@ -51,9 +51,6 @@ de:
         any: "ist einer von"
         filter_placeholder: Ein Feld auswählen.......
         select_placeholder: Bitte wählen Sie...
-        child_choices_activated_placeholder: "Include childrens ?"
-        child_choices_activated_yes: "Yes"
-        child_choices_activated_no: "No"
       date_time_search_field:
         start_date: Startdatum
         end_date: Enddatum
@@ -425,37 +422,20 @@ de:
         new_category: New category
         create_category: Create category
 
-    choices:
-      new:
-        new_choice: "New choice"
-        create_choice: Create choice
-        position:
-          first: first
-          last: last
-      edit:
-        edit_choice: Edit choice
-        update_choice: Update choice
-      choice_fields:
-        short_name: 'Short name'
-        long_name_optional: 'Long name (optional)'
-        category_optional: 'Category (optional)'
-
     choice_sets:
-      choice:
+      choice_fields:
         remove: "Remove"
       choice_modal:
         create_new_field: Create new «%{field}»
-        position:
-          first: first
-          last: last
-      edit:
+      common_form_fields:
         choices: 'Choices'
-        edit_choice_set: "Edit choice set "
-        update_choice_set: Update choice set
         short_name: 'Short name'
         long_name_optional: 'Long name (optional)'
         category_optional: 'Category (optional)'
-        new_choice: "New choice"
+        add_choice: 'Add choice'
+      edit:
+        edit_choice_set: Edit choice set
+        update_choice_set: Update choice set
       index:
         choice_sets: Choice sets
         new_choice_set: "New choice set"
@@ -465,7 +445,6 @@ de:
       new:
         new_choice_set: "New choice set"
         create_choice_set: Create choice set
-
 
     containers:
       common_form_fields:
