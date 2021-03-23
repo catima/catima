@@ -90,16 +90,40 @@ class Choice < ApplicationRecord
     columns
   end
 
+  def save_with_position(position)
+    Choice.transaction do
+      parent = parent_id.present? ? choice_set.choices.find(parent_id) : nil
+      if position == 'first'
+        self.position = 1
+        if parent
+          parent.childrens.ordered.each_with_index do |choice, index|
+            choice.update!(position: index + 2)
+          end
+        else
+          choice_set.choices.where(parent_id: nil).ordered.each_with_index do |choice, index|
+            choice.update!(position: index + 2)
+          end
+        end
+      elsif position == 'last'
+        last_position = parent ? parent.childrens.count + 1 : choice_set.choices.where(parent_id: nil).count + 1
+        self.position = last_position
+      end
+      save!
+    end
+  end
+
   private
 
   def reorder_on_destroy
-    if parent.present?
-      parent.childrens.ordered.each_with_index do |choice, index|
-        choice.update!(position: index + 1)
-      end
-    else
-      choice_set.choices.where(parent_id: nil).ordered.each_with_index do |choice, index|
-        choice.update!(position: index + 1)
+    Choice.transaction do
+      if parent.present?
+        parent.childrens.ordered.each_with_index do |choice, index|
+          choice.update!(position: index + 1)
+        end
+      else
+        choice_set.choices.where(parent_id: nil).ordered.each_with_index do |choice, index|
+          choice.update!(position: index + 1)
+        end
       end
     end
   end

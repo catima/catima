@@ -14,7 +14,7 @@
         <div class="modal-body">
           <div class="card-body">
             <div class="mb-4">
-              <%= f.select :parent_id, field.choice_set.ordered_choices.map { |choice| [field.choice_set.choice_prefixed_label(choice), choice.id] }, include_blank: '' %>
+              <%= f.select :parent_id, field.choice_set.flat_ordered_choices.map { |choice| [field.choice_set.choice_prefixed_label(choice), choice.id] }, include_blank: '' %>
             </div>
             <div class="mb-4">
               <%= f.select :position, [[t('.position.first'), :first], [t('.position.last'), :last]] %>

@@ -1,6 +1,12 @@
-<li class="w-100 list-unstyled py-1 pl-1" data-action="mouseover->hover-list#on mouseout->hover-list#off" data-sortable-choices-id="<%= choice.id %>">
+<li class="w-100 list-unstyled py-1 pl-2" data-action="mouseover->hover-list#on mouseout->hover-list#off" data-sortable-choices-id="<%= choice.id %>">
   <div class="d-flex mb-1">
-    <div class="flex-grow-1"><i class="fa fa-bars pr-2"></i><%= choice.short_name %></div>
+    <div class="flex-grow-1">
+      <i class="fa fa-arrows-alt " style="transform: rotate(45deg);"></i>
+      <span class="pl-2"><%= choice.short_name %></span>
+      <% if choice.category.present? %>
+        <span class="badge badge-info"><%= choice.category.name %></span>
+      <% end %>
+    </div>
     <div class="px-2">
       <% if policy(@choice_set).edit? %>
         <%= link_to(

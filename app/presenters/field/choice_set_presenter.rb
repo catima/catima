@@ -1,5 +1,5 @@
 class Field::ChoiceSetPresenter < FieldPresenter
-  delegate :choices, :selected_choices, :selected_choice?, :choice_prefixed_label, :ordered_choices, :to => :field
+  delegate :choices, :selected_choices, :selected_choice?, :choice_prefixed_label, :flat_ordered_choices, :to => :field
   delegate :select2_select, :browse_similar_items_link, :tag,
            :to => :view
 
@@ -33,18 +33,39 @@ class Field::ChoiceSetPresenter < FieldPresenter
     choices = selected_choices(item)
     return if choices.empty?
 
-    links = choices.map do |choice|
+    links_and_prefixed_names = choices.map do |choice|
       value_slug = [I18n.locale, choice.short_name].join("-")
-      browse_similar_items_link(
-       choice_prefixed_label(choice, format: :long), item, field, value_slug
-      )
+      [
+        browse_similar_items_link(
+          choice.long_display_name, item, field, value_slug
+        ),
+        browse_similar_items_link(
+          choice_prefixed_label(choice, format: :long), item, field, value_slug
+        ),
+        choice_prefixed_label(choice, format: :long)
+      ]
     end
-    if links.size > 1 && options[:style] != :compact
+
+    if links_and_prefixed_names.size > 1 && options[:style] != :compact
       tag.ul(
-        links.map {|link| tag.li(link)}.join(" ").html_safe
+        links_and_prefixed_names.map do|link, prefixed_link|
+          tag.div(
+            tag.li(link + (tag.span(tag.i(class: "fa fa-sitemap"), class: 'pl-2', "data-toggle":"tooltip", title: t('catalog_admin.choice_sets.choice.show_hierarchy'), 'data-action':"click->hierarchy-revealable#toggle") if link != prefixed_link), 'data-hierarchy-revealable-target': 'choice') +
+              tag.li(prefixed_link + tag.span(tag.i(class: "fa fa-sitemap"), class: 'pl-2', "data-toggle":"tooltip", title: t('catalog_admin.choice_sets.choice.show_hierarchy'), 'data-action':"click->hierarchy-revealable#toggle"), 'data-hierarchy-revealable-target': 'choice', style:'display: none'),
+            "data-controller": "hierarchy-revealable"
+          )
+        end.join(" ").html_safe
       )
+    elsif links_and_prefixed_names.size == 1 && options[:style] != :compact
+      links_and_prefixed_names.map do|link, prefixed_link|
+        tag.div(
+          tag.div(link + (tag.span(tag.i(class: "fa fa-sitemap"), class: 'pl-2', "data-toggle":"tooltip", title: t('catalog_admin.choice_sets.choice.show_hierarchy'), 'data-action':"click->hierarchy-revealable#toggle") if link != prefixed_link), 'data-hierarchy-revealable-target': 'choice') +
+            tag.div(prefixed_link + tag.span(tag.i(class: "fa fa-sitemap"), class: 'pl-2', "data-toggle":"tooltip", title: t('catalog_admin.choice_sets.choice.show_hierarchy'), 'data-action':"click->hierarchy-revealable#toggle"), 'data-hierarchy-revealable-target': 'choice', style:'display: none'),
+          "data-controller": "hierarchy-revealable"
+        )
+      end.join(" ").html_safe
     else
-      links.join(", ").html_safe
+      links_and_prefixed_names.map(&:first).join(", ").html_safe
     end
   end
 
@@ -54,7 +75,7 @@ class Field::ChoiceSetPresenter < FieldPresenter
   # category the choice is linked to, if any. This allows us to show and hide
   # appropriate fields in JavaScript based on the category.
   def options_for_select
-    ordered_choices.map do |choice|
+    flat_ordered_choices.map do |choice|
       data = {}
       data["choice-category"] = choice.category_id if choice.category_id
 

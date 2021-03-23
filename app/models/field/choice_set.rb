@@ -42,7 +42,7 @@ class Field::ChoiceSet < ::Field
                          :in => :choice_set_choices,
                          :allow_nil => true
 
-  delegate :choice_prefixed_label, :ordered_choices, to: :choice_set
+  delegate :choice_prefixed_label, :flat_ordered_choices, to: :choice_set
 
   def type_name
     "Choice set" + (choice_set ? " (#{choice_set.name})" : "")
@@ -139,7 +139,7 @@ class Field::ChoiceSet < ::Field
   def search_data_as_hash
     choices_as_options = []
 
-    ordered_choices.each do |choice|
+    flat_ordered_choices.each do |choice|
       option = {:value => choice.short_name, :key => choice.id, label: choice_prefixed_label(choice), has_childrens: choice.childrens.any?}
       option[:category_data] = choice.category.present? && choice.category.active? ? choice.category.fields : []
 

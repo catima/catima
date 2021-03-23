@@ -44,8 +44,8 @@ class ChoiceSet < ApplicationRecord
     (parent_choices(choice) + [choice]).map { |d| (format == :long) ? d.long_display_name : d.short_name }.join(" / ")
   end
 
-  def ordered_choices
-    @ordered_choices ||= recursive_ordered_choices(choices.ordered.reject(&:parent_id?)).flatten
+  def flat_ordered_choices
+    @flat_ordered_choices ||= recursive_ordered_choices(choices.ordered.reject(&:parent_id?)).flatten
   end
 
   private

@@ -1,32 +1,23 @@
 class CatalogAdmin::ChoicesController < CatalogAdmin::BaseController
   layout "catalog_admin/setup"
 
+  before_action :find_choice_set
+  before_action :build_choice, only: %i(new)
+  before_action :find_choice, only: %i(edit destroy update)
   protect_from_forgery :except => [:update_positions]
 
   def new
-    find_choice_set
-    authorize(@choice_set)
-    build_choice
   end
 
   def edit
-    find_choice_set
-    find_choice
-    authorize(@choice_set)
   end
 
   def destroy
-    find_choice_set
-    find_choice
-    authorize(@choice_set)
     @choice.destroy
     redirect_to(edit_catalog_admin_choice_set_path(@choice_set.catalog, I18n.locale, @choice_set), :notice => destroyed_message)
   end
 
   def update
-    find_choice_set
-    find_choice
-    authorize(@choice_set)
     if @choice.update(choice_params)
       redirect_to(edit_catalog_admin_choice_set_path(@choice_set.catalog, I18n.locale, @choice_set), :notice => updated_message)
     else
@@ -35,11 +26,8 @@ class CatalogAdmin::ChoicesController < CatalogAdmin::BaseController
   end
 
   def create
-    find_choice_set
-    authorize(@choice_set)
     @choice = @choice_set.choices.build(choice_params)
-    assign_position_and_reorder_choices_on_create
-    if @choice.save
+    if @choice.save_with_position(params[:choice][:position])
       if request.xhr?
         render json: {
           catalog: @choice_set.catalog.id, choice_set: @choice_set.id,
@@ -61,8 +49,6 @@ class CatalogAdmin::ChoicesController < CatalogAdmin::BaseController
   end
 
   def update_positions
-    find_choice_set
-    authorize(@choice_set)
     params[:positions].each do |data|
       parent = data[:parent_id].present? ? @choice_set.choices.find(data[:parent_id]) : nil
       data[:children_ids].each.with_index do |id, i|
@@ -79,6 +65,7 @@ class CatalogAdmin::ChoicesController < CatalogAdmin::BaseController
 
   def find_choice_set
     @choice_set = catalog.choice_sets.find(params[:choice_set_id])
+    authorize(@choice_set)
   end
 
   def find_choice

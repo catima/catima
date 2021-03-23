@@ -4,7 +4,7 @@
         @choice,
         :url => catalog_admin_choice_set_choices_path) do |f| %>
     <div class="mb-4">
-      <%= select2_select(f, :parent_id, @choice_set.ordered_choices.filter { |choice| choice.id != @choice.id }.map { |choice| [@choice_set.choice_prefixed_label(choice), choice.id] }, include_blank: ' ') %>
+      <%= select2_select(f, :parent_id, @choice_set.flat_ordered_choices.filter { |choice| choice.id != @choice.id }.map { |choice| [@choice_set.choice_prefixed_label(choice), choice.id] }, include_blank: ' ') %>
     </div>
     <div class="mb-4">
       <%= f.select :position, [[t('.position.first'), :first], [t('.position.last'), :last]] %>

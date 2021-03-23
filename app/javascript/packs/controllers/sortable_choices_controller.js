@@ -6,7 +6,6 @@ export default class extends Controller {
   static targets = ["sortableList", "enabler"]
 
   connect() {
-    console.log(this.sortableListTargets)
     this.initializeSortable();
   }
 
