@@ -108,7 +108,7 @@ class Choice < ApplicationRecord
         last_position = parent ? parent.childrens.count + 1 : choice_set.choices.where(parent_id: nil).count + 1
         self.position = last_position
       end
-      save!
+      save
     end
   end
 
