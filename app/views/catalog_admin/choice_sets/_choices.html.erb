@@ -1,0 +1,5 @@
+<ul class="d-flex flex-column w-100" data-sortable-choices-target="sortableList" data-sortable-choices-parent-id="<%= parent_id %>">
+  <% choices.ordered.each do |choice| %>
+    <%= render 'choice', choice: choice, level: level %>
+  <% end %>
+</ul>

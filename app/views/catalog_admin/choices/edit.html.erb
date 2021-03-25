@@ -1,0 +1,18 @@
+<% provide(:title, t(".edit_choice")) %>
+<div class="card-body ">
+  <%= bootstrap_form_for(
+        @choice,
+        :url => catalog_admin_choice_set_choice_path) do |f| %>
+    <div class="mb-4">
+      <%= select2_select(f, :parent_id, @choice_set.flat_ordered_choices.filter { |choice| choice.id != @choice.id }.map { |choice| [@choice_set.choice_prefixed_label(choice), choice.id] }, include_blank: ' ') %>
+    </div>
+    <%= render("catalog_admin/choices/choice_fields", :f => f) %>
+    <div class="mt-4">
+      <%= f.primary(t(".update_choice")) %>
+      <%= link_to(
+            t("cancel"),
+            catalog_admin_choice_sets_path,
+            :class => "btn btn-link") %>
+    </div>
+  <% end %>
+</div>

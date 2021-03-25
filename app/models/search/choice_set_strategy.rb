@@ -3,7 +3,7 @@ class Search::ChoiceSetStrategy < Search::BaseStrategy
 
   permit_criteria :exact, :all_words, :one_word, :less_than, :less_than_or_equal_to, :greater_than,
                   :greater_than_or_equal_to, :field_condition, :filter_field_slug, :category_field,
-                  :after, :before, :between, :outside, :condition, :default, :category_criteria => {}
+                  :after, :before, :between, :outside, :condition, :default , :child_choices_activated, :category_criteria => {}
 
   def keywords_for_index(item)
     choices = field.selected_choices(item)
@@ -31,14 +31,24 @@ class Search::ChoiceSetStrategy < Search::BaseStrategy
 
       if cat_field.type == "Field::ChoiceSet"
         @field = cat_field
-        scope = search_data_matching_one_or_more(scope, criteria[:default], negate)
+        if criteria[:child_choices_activated] == "true"
+          choice = Choice.find(criteria[:default] || criteria[:exact])
+          scope = search_data_matching_more(scope, (choice.childrens.pluck(:id) + [criteria[:default] || criteria[:exact]]).flatten.map{|id| id.to_s}, negate)
+        else
+          scope = search_data_matching_one_or_more(scope, criteria[:default], negate)
+        end
       else
         klass = "Search::#{cat_field.type.sub(/^Field::/, '')}Strategy"
         strategy = klass.constantize.new(cat_field, locale)
         scope = strategy.search(scope, criteria)
       end
     else
-      scope = search_data_matching_one_or_more(scope, criteria[:default], negate)
+      if criteria[:child_choices_activated] == "true"
+        choice = Choice.find(criteria[:default] || criteria[:exact])
+        scope = search_data_matching_more(scope, (choice.childrens.pluck(:id) + [criteria[:default] || criteria[:exact]]).flatten.map{|id| id.to_s}, negate)
+      else
+        scope = search_data_matching_one_or_more(scope, criteria[:default] || criteria[:exact], negate)
+      end
     end
 
     scope = search_data_matching_one_or_more(scope, criteria[:any], false) if criteria[:any].present?

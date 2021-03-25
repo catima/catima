@@ -13,6 +13,7 @@ class ChoiceSetSearchContainer extends Component {
       selectConditionName: this.props.selectConditionName.split("[0]"),
       fieldConditionName: this.props.fieldConditionName.split("[0]"),
       categoryInputName: this.props.categoryInputName.split("[0]"),
+      childChoicesActivatedInputName: this.props.childChoicesActivatedInputName.split("[0]"),
       linkedCategoryInputName: this.props.linkedCategoryInputName.split("[0]")
     };
 
@@ -30,6 +31,10 @@ class ChoiceSetSearchContainer extends Component {
       label: this.props.label,
       items: this.props.items,
       categoryInputName: this._buildCategoryInputName(id),
+      childChoicesActivatedInputName: this._buildChildChoicesActivatedInputName(id),
+      childChoicesActivatedPlaceholder: this.props.childChoicesActivatedPlaceholder,
+      childChoicesActivatedYesLabel: this.props.childChoicesActivatedYesLabel,
+      childChoicesActivatedNoLabel: this.props.childChoicesActivatedNoLabel,
       linkedCategoryInputName: this._buildLinkedCategoryInputName(id),
       locale: this.props.locale,
       searchPlaceholder: this.props.searchPlaceholder,
@@ -62,6 +67,10 @@ class ChoiceSetSearchContainer extends Component {
       label: this.props.label,
       items: this.props.items,
       categoryInputName: this._buildCategoryInputName(id),
+      childChoicesActivatedInputName: this._buildChildChoicesActivatedInputName(id),
+      childChoicesActivatedPlaceholder: this.props.childChoicesActivatedPlaceholder,
+      childChoicesActivatedYesLabel: this.props.childChoicesActivatedYesLabel,
+      childChoicesActivatedNoLabel: this.props.childChoicesActivatedNoLabel,
       linkedCategoryInputName: this._buildLinkedCategoryInputName(id),
       locale: this.props.locale,
       searchPlaceholder: this.props.searchPlaceholder,
@@ -143,6 +152,14 @@ class ChoiceSetSearchContainer extends Component {
       }
   }
 
+  _buildChildChoicesActivatedInputName(id) {
+    if(this.state.childChoicesActivatedInputName.length === 2) {
+      return this.state.childChoicesActivatedInputName[0] + '[' + id + ']' + this.state.childChoicesActivatedInputName[1];
+    } else {
+      return this.props.childChoicesActivatedInputName;
+    }
+  }
+
   _buildLinkedCategoryInputName(id) {
       if(this.state.linkedCategoryInputName.length === 2) {
         return this.state.linkedCategoryInputName[0] + '[' + id + ']' + this.state.linkedCategoryInputName[1];
@@ -161,6 +178,10 @@ class ChoiceSetSearchContainer extends Component {
       label={item.label}
       items={item.items}
       categoryInputName={item.categoryInputName}
+      childChoicesActivatedInputName={item.childChoicesActivatedInputName}
+      childChoicesActivatedPlaceholder={item.childChoicesActivatedPlaceholder}
+      childChoicesActivatedYesLabel={item.childChoicesActivatedYesLabel}
+      childChoicesActivatedNoLabel={item.childChoicesActivatedNoLabel}
       linkedCategoryInputName={item.linkedCategoryInputName}
       locale={item.locale}
       inputName={item.inputName}

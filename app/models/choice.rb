@@ -22,12 +22,18 @@ class Choice < ApplicationRecord
   belongs_to :category, optional: true
   belongs_to :choice_set, optional: true
 
+  has_many :childrens, :class_name => Choice.to_s, foreign_key: 'parent_id', dependent: :destroy
+  belongs_to :parent, :class_name => Choice.to_s, foreign_key: 'parent_id', :optional => true
+
   store_translations :short_name, :required => true
   store_translations :long_name, :required => false
+
+  scope :ordered, -> { order(:position) }
 
   validates_presence_of :catalog
 
   before_create :assign_uuid
+  after_destroy :reorder_on_destroy
 
   %w(de en fr it).each do |locale|
     define_method("long_display_name_#{locale}") do
@@ -37,15 +43,15 @@ class Choice < ApplicationRecord
     end
   end
 
-  def long_display_name(locale=I18n.locale)
+  def long_display_name(locale = I18n.locale)
     public_send("long_display_name_#{locale}")
   end
 
-  def self.sorted(locale=I18n.locale)
+  def self.sorted(locale = I18n.locale)
     order(Arel.sql("LOWER(choices.short_name_translations->>'short_name_#{locale}') ASC"))
   end
 
-  def self.short_named(name, locale=I18n.locale)
+  def self.short_named(name, locale = I18n.locale)
     where("choices.short_name_translations->>'short_name_#{locale}' = ?", name)
   end
 
@@ -82,5 +88,43 @@ class Choice < ApplicationRecord
     end
 
     columns
+  end
+
+  def save_with_position(position)
+    Choice.transaction do
+      parent = parent_id.present? ? choice_set.choices.find(parent_id) : nil
+      if position == 'first'
+        self.position = 1
+        if parent
+          parent.childrens.ordered.each_with_index do |choice, index|
+            choice.update!(position: index + 2)
+          end
+        else
+          choice_set.choices.where(parent_id: nil).ordered.each_with_index do |choice, index|
+            choice.update!(position: index + 2)
+          end
+        end
+      elsif position == 'last'
+        last_position = parent ? parent.childrens.count + 1 : choice_set.choices.where(parent_id: nil).count + 1
+        self.position = last_position
+      end
+      save
+    end
+  end
+
+  private
+
+  def reorder_on_destroy
+    Choice.transaction do
+      if parent.present?
+        parent.childrens.ordered.each_with_index do |choice, index|
+          choice.update!(position: index + 1)
+        end
+      else
+        choice_set.choices.where(parent_id: nil).ordered.each_with_index do |choice, index|
+          choice.update!(position: index + 1)
+        end
+      end
+    end
   end
 end

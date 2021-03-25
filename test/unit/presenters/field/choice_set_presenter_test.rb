@@ -12,7 +12,12 @@ class Field::ChoiceSetPresenterTest < ActionView::TestCase
 
     presenter = Field::ChoiceSetPresenter.new(self, author, language_field)
     assert_equal(
-      '<a href="/one/en/authors?language=en-Eng">English</a>',
+      "<div data-controller=\"hierarchy-revealable\">"\
+          "<div data-hierarchy-revealable-target=\"choice\">"\
+          "<a href=\"/one/en/authors?language=en-Eng\">English</a></div><div data-hierarchy-revealable-target=\"choice\" style=\"display: none\">"\
+          "<a href=\"/one/en/authors?language=en-Eng\">English</a><span class=\"pl-2\" data-toggle=\"tooltip\" title=\"translation missing: en.catalog_admin.choice_sets.choice.show_hierarchy\" data-action=\"click-&gt;hierarchy-revealable#toggle\"><i class=\"fa fa-sitemap\"></i></span>"\
+          "</div>"\
+          "</div>",
       presenter.value
     )
   end
@@ -25,10 +30,18 @@ class Field::ChoiceSetPresenterTest < ActionView::TestCase
     author.data["one_author_other_language_uuid"] = choices.map(&:id)
 
     presenter = Field::ChoiceSetPresenter.new(self, author, languages_field)
-    assert_equal(
-      '<a href="/one/en/authors?other-language=en-Eng">English</a>, '\
-      '<a href="/one/en/authors?other-language=en-Spanish">Spanish</a>',
-      presenter.value
+    assert_equal(\
+    "<ul>"\
+        "<div data-controller=\"hierarchy-revealable\">"\
+        "<li data-hierarchy-revealable-target=\"choice\"><a href=\"/one/en/authors?other-language=en-Eng\">English</a></li>"\
+        "<li data-hierarchy-revealable-target=\"choice\" style=\"display: none\"><a href=\"/one/en/authors?other-language=en-Eng\">English</a><span class=\"pl-2\" data-toggle=\"tooltip\" title=\"translation missing: en.catalog_admin.choice_sets.choice.show_hierarchy\" data-action=\"click-&gt;hierarchy-revealable#toggle\"><i class=\"fa fa-sitemap\"></i></span></li>"\
+        "</div> "\
+        "<div data-controller=\"hierarchy-revealable\">"\
+        "<li data-hierarchy-revealable-target=\"choice\"><a href=\"/one/en/authors?other-language=en-Spanish\">Spanish</a></li><"\
+        "li data-hierarchy-revealable-target=\"choice\" style=\"display: none\"><a href=\"/one/en/authors?other-language=en-Spanish\">Spanish</a><span class=\"pl-2\" data-toggle=\"tooltip\" title=\"translation missing: en.catalog_admin.choice_sets.choice.show_hierarchy\" data-action=\"click-&gt;hierarchy-revealable#toggle\"><i class=\"fa fa-sitemap\"></i></span></li>"\
+        "</div>"\
+        "</ul>",
+    presenter.value
     )
   end
 end

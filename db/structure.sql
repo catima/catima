@@ -383,7 +383,9 @@ CREATE TABLE public.choices (
     long_name_translations json,
     catalog_id integer,
     category_id integer,
-    uuid character varying
+    uuid character varying,
+    parent_id bigint,
+    "position" integer
 );
 
 
@@ -1569,6 +1571,13 @@ CREATE INDEX index_choices_on_choice_set_id ON public.choices USING btree (choic
 
 
 --
+-- Name: index_choices_on_parent_id; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX index_choices_on_parent_id ON public.choices USING btree (parent_id);
+
+
+--
 -- Name: index_choices_on_uuid_and_choice_set_id; Type: INDEX; Schema: public; Owner: -
 --
 
@@ -1964,6 +1973,14 @@ ALTER TABLE ONLY public.fields
 
 
 --
+-- Name: choices fk_rails_6723565f06; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.choices
+    ADD CONSTRAINT fk_rails_6723565f06 FOREIGN KEY (parent_id) REFERENCES public.choices(id);
+
+
+--
 -- Name: items fk_rails_6bed0f90a5; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
@@ -2232,6 +2249,8 @@ INSERT INTO "schema_migrations" (version) VALUES
 ('20190215124856'),
 ('20190215125849'),
 ('20190529123835'),
-('20190812114658');
+('20190812114658'),
+('20210204081043'),
+('20210310082628');
 
 

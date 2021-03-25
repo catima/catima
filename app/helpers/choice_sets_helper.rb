@@ -18,6 +18,8 @@ module ChoiceSetsHelper
       {
         :value => choice[:value],
         :key => choice[:key],
+        label: choice[:label],
+        has_childrens: choice[:has_childrens],
         :category_data => displayable_category_fields(choice[:category_data])
       }
     end

@@ -28,4 +28,5 @@ class ChoiceSetPolicy
   alias_method :new?, :user_is_catalog_admin?
   alias_method :show?, :user_is_catalog_admin?
   alias_method :update?, :user_is_catalog_admin?
+  alias_method :update_positions?, :user_is_catalog_admin?
 end
