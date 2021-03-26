@@ -36,15 +36,13 @@ class CatalogAdmin::ChoicesController < CatalogAdmin::BaseController
       else
         redirect_to(edit_catalog_admin_choice_set_path(@choice_set.catalog, I18n.locale, @choice_set), :notice => created_message)
       end
+    elsif request.xhr?
+      render json: {
+        errors: @choice.errors.full_messages.join(', '),
+        catalog: @choice_set.catalog.id, choice_set: @choice_set.id
+      }, status: :unprocessable_entity
     else
-      if request.xhr?
-        render json: {
-          errors: @choice.errors.full_messages.join(', '),
-          catalog: @choice_set.catalog.id, choice_set: @choice_set.id
-        }, status: :unprocessable_entity
-      else
-        render("new")
-      end
+      render("new")
     end
   end
 
@@ -91,12 +89,12 @@ class CatalogAdmin::ChoicesController < CatalogAdmin::BaseController
           choice.update!(position: index + 2)
         end
       else
-        @choice_set.choices.where(parent_id:nil).ordered.each_with_index do |choice, index|
+        @choice_set.choices.where(parent_id: nil).ordered.each_with_index do |choice, index|
           choice.update!(position: index + 2)
         end
       end
     elsif params[:choice][:position] == 'last'
-      last_position = parent ? parent.childrens.count + 1 : @choice_set.choices.where(parent_id:nil).count + 1
+      last_position = parent ? parent.childrens.count + 1 : @choice_set.choices.where(parent_id: nil).count + 1
       @choice.position = last_position
     end
   end
@@ -115,7 +113,7 @@ class CatalogAdmin::ChoicesController < CatalogAdmin::BaseController
 
   def after_create_path
     case params[:commit]
-    when /another/i then
+    when /another/i
       new_catalog_admin_choice_set_path
     else
       catalog_admin_choice_sets_path(catalog, I18n.locale, @item_type)

@@ -48,19 +48,23 @@ class Field::ChoiceSetPresenter < FieldPresenter
 
     if links_and_prefixed_names.size > 1 && options[:style] != :compact
       tag.ul(
-        links_and_prefixed_names.map do|link, prefixed_link|
+        links_and_prefixed_names.map do |link, prefixed_link|
           tag.div(
-            tag.li(link + (tag.span(tag.i(class: "fa fa-sitemap"), class: 'pl-2', "data-toggle":"tooltip", title: t('catalog_admin.choice_sets.choice.show_hierarchy'), 'data-action':"click->hierarchy-revealable#toggle") if link != prefixed_link), 'data-hierarchy-revealable-target': 'choice') +
-              tag.li(prefixed_link + tag.span(tag.i(class: "fa fa-sitemap"), class: 'pl-2', "data-toggle":"tooltip", title: t('catalog_admin.choice_sets.choice.show_hierarchy'), 'data-action':"click->hierarchy-revealable#toggle"), 'data-hierarchy-revealable-target': 'choice', style:'display: none'),
+            tag.li(link + (if link != prefixed_link
+                             tag.span(tag.i(class: "fa fa-sitemap"), class: 'pl-2', "data-toggle": "tooltip", title: t('catalog_admin.choice_sets.choice.show_hierarchy'), 'data-action': "click->hierarchy-revealable#toggle")
+                           end), 'data-hierarchy-revealable-target': 'choice') +
+              tag.li(prefixed_link + tag.span(tag.i(class: "fa fa-sitemap"), class: 'pl-2', "data-toggle": "tooltip", title: t('catalog_admin.choice_sets.choice.show_hierarchy'), 'data-action': "click->hierarchy-revealable#toggle"), 'data-hierarchy-revealable-target': 'choice', style: 'display: none'),
             "data-controller": "hierarchy-revealable"
           )
         end.join(" ").html_safe
       )
     elsif links_and_prefixed_names.size == 1 && options[:style] != :compact
-      links_and_prefixed_names.map do|link, prefixed_link|
+      links_and_prefixed_names.map do |link, prefixed_link|
         tag.div(
-          tag.div(link + (tag.span(tag.i(class: "fa fa-sitemap"), class: 'pl-2', "data-toggle":"tooltip", title: t('catalog_admin.choice_sets.choice.show_hierarchy'), 'data-action':"click->hierarchy-revealable#toggle") if link != prefixed_link), 'data-hierarchy-revealable-target': 'choice') +
-            tag.div(prefixed_link + tag.span(tag.i(class: "fa fa-sitemap"), class: 'pl-2', "data-toggle":"tooltip", title: t('catalog_admin.choice_sets.choice.show_hierarchy'), 'data-action':"click->hierarchy-revealable#toggle"), 'data-hierarchy-revealable-target': 'choice', style:'display: none'),
+          tag.div(link + (if link != prefixed_link
+                            tag.span(tag.i(class: "fa fa-sitemap"), class: 'pl-2', "data-toggle": "tooltip", title: t('catalog_admin.choice_sets.choice.show_hierarchy'), 'data-action': "click->hierarchy-revealable#toggle")
+                          end), 'data-hierarchy-revealable-target': 'choice') +
+            tag.div(prefixed_link + tag.span(tag.i(class: "fa fa-sitemap"), class: 'pl-2', "data-toggle": "tooltip", title: t('catalog_admin.choice_sets.choice.show_hierarchy'), 'data-action': "click->hierarchy-revealable#toggle"), 'data-hierarchy-revealable-target': 'choice', style: 'display: none'),
           "data-controller": "hierarchy-revealable"
         )
       end.join(" ").html_safe
@@ -93,7 +97,7 @@ class Field::ChoiceSetPresenter < FieldPresenter
     field = Field.where(:uuid => method).first!
     ActionController::Base.new.render_to_string(
       :partial => 'catalog_admin/choice_sets/choice_modal',
-      :locals => {field: field}
+      :locals => { field: field }
     )
   end
 end

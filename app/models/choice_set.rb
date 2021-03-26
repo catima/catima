@@ -33,7 +33,7 @@ class ChoiceSet < ApplicationRecord
   end
 
   def describe
-    as_json(only: %i(uuid name)).merge("choices": choices.map(&:describe))
+    as_json(only: %i(uuid name)).merge(choices: choices.map(&:describe))
   end
 
   def assign_uuid
@@ -69,8 +69,6 @@ class ChoiceSet < ApplicationRecord
   end
 
   def find_parent(choice)
-    if choice.parent_id?
-      choices.detect { |item| item.id == choice.parent_id }
-    end
+    choices.detect { |item| item.id == choice.parent_id } if choice.parent_id?
   end
 end
