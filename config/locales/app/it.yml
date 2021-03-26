@@ -408,6 +408,11 @@ it:
         item_labels: "Item labels"
         item_text: "Item text"
 
+    choice_sets:
+      choice:
+        show_hierarchy: "Mostrare la gerarchia"
+        hide_hierarchy: "Nascondere la gerarchia"
+
     item_types:
       common_form_fields:
         display-options: "Opzioni di visualizzazione"

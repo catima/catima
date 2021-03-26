@@ -479,6 +479,8 @@ en:
     choice_sets:
       choice:
         remove: "Remove"
+        show_hierarchy: "Show hierarchy"
+        hide_hierarchy: "Hide hierarchy"
       choice_modal:
         create_new_field: Create new «%{field}»
         position:

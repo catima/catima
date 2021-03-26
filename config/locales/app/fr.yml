@@ -475,7 +475,8 @@ fr:
     choice_sets:
       choice:
         remove: "Supprimer"
-        show_hierarchy: "Afficher la hierarchie"
+        show_hierarchy: "Afficher la hiérarchie"
+        hide_hierarchy: "Cacher la hiérarchie"
       choice_modal:
         create_new_field: Créer nouvelle entrée dans «%{field}»
         position:

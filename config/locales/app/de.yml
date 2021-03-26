@@ -423,6 +423,9 @@ de:
         create_category: Create category
 
     choice_sets:
+      choice:
+        show_hierarchy: "Hierarchie anzeigen"
+        hide_hierarchy: "Hierarchie ausblenden"
       choice_fields:
         remove: "Remove"
       choice_modal:

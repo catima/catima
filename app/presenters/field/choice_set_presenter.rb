@@ -46,28 +46,18 @@ class Field::ChoiceSetPresenter < FieldPresenter
       ]
     end
 
-    if links_and_prefixed_names.size > 1 && options[:style] != :compact
-      tag.ul(
+    if links_and_prefixed_names.size >= 1 && options[:style] != :compact
+      tag.div(
         links_and_prefixed_names.map do |link, prefixed_link|
           tag.div(
-            tag.li(link + (if link != prefixed_link
-                             tag.span(tag.i(class: "fa fa-sitemap"), class: 'pl-2', "data-toggle": "tooltip", title: t('catalog_admin.choice_sets.choice.show_hierarchy'), 'data-action': "click->hierarchy-revealable#toggle")
-                           end), 'data-hierarchy-revealable-target': 'choice') +
-              tag.li(prefixed_link + tag.span(tag.i(class: "fa fa-sitemap"), class: 'pl-2', "data-toggle": "tooltip", title: t('catalog_admin.choice_sets.choice.show_hierarchy'), 'data-action': "click->hierarchy-revealable#toggle"), 'data-hierarchy-revealable-target': 'choice', style: 'display: none'),
+            tag.div(link + (if link != prefixed_link
+                              tag.span(tag.i(class: "fa fa-angle-right toggle-hierarchy"), class: 'pl-2', "data-toggle": "tooltip", title: t('catalog_admin.choice_sets.choice.show_hierarchy'), 'data-action': "click->hierarchy-revealable#toggle")
+                            end), 'data-hierarchy-revealable-target': 'choice') +
+              tag.div(prefixed_link + tag.span(tag.i(class: "fa fa-angle-left toggle-hierarchy"), class: 'pl-2', "data-toggle": "tooltip", title: t('catalog_admin.choice_sets.choice.hide_hierarchy'), 'data-action': "click->hierarchy-revealable#toggle"), 'data-hierarchy-revealable-target': 'choice', style: 'display: none'),
             "data-controller": "hierarchy-revealable"
           )
         end.join(" ").html_safe
       )
-    elsif links_and_prefixed_names.size == 1 && options[:style] != :compact
-      links_and_prefixed_names.map do |link, prefixed_link|
-        tag.div(
-          tag.div(link + (if link != prefixed_link
-                            tag.span(tag.i(class: "fa fa-sitemap"), class: 'pl-2', "data-toggle": "tooltip", title: t('catalog_admin.choice_sets.choice.show_hierarchy'), 'data-action': "click->hierarchy-revealable#toggle")
-                          end), 'data-hierarchy-revealable-target': 'choice') +
-            tag.div(prefixed_link + tag.span(tag.i(class: "fa fa-sitemap"), class: 'pl-2', "data-toggle": "tooltip", title: t('catalog_admin.choice_sets.choice.show_hierarchy'), 'data-action': "click->hierarchy-revealable#toggle"), 'data-hierarchy-revealable-target': 'choice', style: 'display: none'),
-          "data-controller": "hierarchy-revealable"
-        )
-      end.join(" ").html_safe
     else
       links_and_prefixed_names.map(&:first).join(", ").html_safe
     end
