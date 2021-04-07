@@ -14,7 +14,10 @@
       <%= f.primary(t(".create_choice")) %>
       <%= link_to(
             t("cancel"),
-            catalog_admin_choice_sets_path,
+            edit_catalog_admin_choice_set_path(
+              @choice_set.catalog,
+              I18n.locale,
+              @choice_set),
             :class => "btn btn-link") %>
     </div>
   <% end %>
