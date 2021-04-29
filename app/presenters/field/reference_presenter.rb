@@ -3,7 +3,7 @@ class Field::ReferencePresenter < FieldPresenter
   delegate :item_path, :link_to, :item_display_name,
            :to => :view
 
-  def input(form, method, options={})
+  def input(form, method, options = {})
     [
       form.text_area(
         "#{method}_json",
@@ -17,7 +17,7 @@ class Field::ReferencePresenter < FieldPresenter
   end
 
   def reference_control(method)
-    category = field.belongs_to_category? ? "data-field-category=\"#{field.category_id}\"" : ''
+    category = field.belongs_to_category? ? "data-field-category=\"#{field.category_id}\" data-field-category-choice-id=\"#{field.category_choice.id}\" data-field-category-choice-set-id=\"#{field.category_choice_set.id}\"" : ""
     [
       '<div class="form-component">',
       "<div class=\"row\" #{category} data-field=\"#{field.id}\">",

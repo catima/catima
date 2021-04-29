@@ -71,6 +71,8 @@ class Field < ApplicationRecord
 
   store_translations :name, :name_plural
 
+  attr_accessor :category_choice, :category_choice_set
+
   validates_presence_of :field_set
   validate :default_value_passes_field_validations
   validate :components_are_valid
@@ -107,7 +109,7 @@ class Field < ApplicationRecord
   #
   # A restricted field should not be displayed if the user is not a staff
   # (>= editor) of the current catalog
-  def displayable_to_user?(user, cat=catalog)
+  def displayable_to_user?(user, cat = catalog)
     at_least_editor = user.catalog_role_at_least?(cat, 'editor')
     at_least_editor || !restricted?
   end
@@ -178,14 +180,14 @@ class Field < ApplicationRecord
     true
   end
 
-  def raw_value(item, locale=I18n.locale, suffix="")
+  def raw_value(item, locale = I18n.locale, suffix = "")
     return nil unless applicable_to_item(item)
 
     attrib = i18n? ? "#{uuid}_#{locale}#{suffix}" : uuid
     item.behaving_as_type.public_send(attrib)
   end
 
-  def raw_json_value(item, locale=I18n.locale)
+  def raw_json_value(item, locale = I18n.locale)
     raw_value(item, locale, "_json")
   end
 
@@ -231,7 +233,7 @@ class Field < ApplicationRecord
                 name_plural_translations comment default_value primary
                 required unique options display_in_list display_in_public_list
               ]
-           ).merge(allows_multiple? ? as_json(only: [:multiple]) : {})
+    ).merge(allows_multiple? ? as_json(only: [:multiple]) : {})
   end
 
   # Returns the field value for a given item
@@ -274,7 +276,7 @@ class Field < ApplicationRecord
   end
 
   # Remove html tags & base64 from field content
-  def strip_extra_content(item, locale=I18n.locale)
+  def strip_extra_content(item, locale = I18n.locale)
     strip_tags(exclude_base64(raw_value(item, locale)))
   end
 
@@ -301,9 +303,9 @@ class Field < ApplicationRecord
   # override.
   def search_conditions_as_hash(locale)
     [
-      { :value => I18n.t("advanced_searches.text_search_field.all_words", locale: locale), :key => "all_words"},
-      { :value => I18n.t("advanced_searches.text_search_field.one_word", locale: locale), :key => "one_word"},
-      { :value => I18n.t("advanced_searches.text_search_field.exact", locale: locale), :key => "exact"}
+      {:value => I18n.t("advanced_searches.text_search_field.all_words", locale: locale), :key => "all_words"},
+      {:value => I18n.t("advanced_searches.text_search_field.one_word", locale: locale), :key => "one_word"},
+      {:value => I18n.t("advanced_searches.text_search_field.exact", locale: locale), :key => "exact"}
     ]
   end
 
@@ -311,9 +313,9 @@ class Field < ApplicationRecord
   # override.
   def search_field_conditions_as_hash
     [
-      { :value => I18n.t("and"), :key => "and"},
-      { :value => I18n.t("or"), :key => "or"},
-      { :value => I18n.t("exclude"), :key => "exclude"}
+      {:value => I18n.t("and"), :key => "and"},
+      {:value => I18n.t("or"), :key => "or"},
+      {:value => I18n.t("exclude"), :key => "exclude"}
     ]
   end
 
@@ -406,4 +408,5 @@ class Field < ApplicationRecord
     value
   end
 end
+
 # rubocop:enable Metrics/ClassLength

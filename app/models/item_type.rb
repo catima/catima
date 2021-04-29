@@ -30,7 +30,7 @@ class ItemType < ApplicationRecord
   store_translations :name, :name_plural
   validates_slug :scope => [:catalog_id, :deactivated_at]
 
-  def self.sorted(locale=I18n.locale)
+  def self.sorted(locale = I18n.locale)
     order(Arel.sql("LOWER(item_types.name_translations->>'name_#{locale}') ASC"))
   end
 
@@ -44,7 +44,7 @@ class ItemType < ApplicationRecord
 
       field.choices.each do |choice|
         category = choice.category
-        all.concat(category.fields) if category && category.active?
+        all.concat(category.fields.map { |f| f.category_choice = choice; f.category_choice_set = field.choice_set; f }) if category && category.active?
       end
     end
   end
