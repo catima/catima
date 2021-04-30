@@ -41,6 +41,6 @@ class FieldPresenter
   def input_data_defaults(data)
     return data unless field.belongs_to_category?
 
-    data.reverse_merge("field-category" => field.category_id)
+    data.reverse_merge("field-category" => field.category_id, "field-category-choice-id" => field.category_choice_id, "field-category-choice-set-id" => field.category_choice_set_id)
   end
 end

@@ -4,10 +4,14 @@ class Field::BooleanPresenter < FieldPresenter
   end
 
   def input(form, method, options={})
+    # rubocop:disable Layout/LineLength
+    category = field.belongs_to_category? ? { "field-category": field.category_id, "field-category-choice-id": field.category_choice.id, "field-category-choice-set-id": field.category_choice_set.id } : {}
+    # rubocop:enable Layout/LineLength
     form.select(
       method,
       select_values,
-      input_defaults(options).merge(:selected => raw_value, :include_blank => !@field.required)
+      input_defaults(options).merge(:selected => raw_value, :include_blank => !@field.required),
+      data: category
     )
   end
 

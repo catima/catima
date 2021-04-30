@@ -9,7 +9,7 @@ class Field::ReferencePresenter < FieldPresenter
         "#{method}_json",
         input_defaults(options).reverse_merge(
           "data-multiple": field.multiple?,
-          "class": 'd-none'
+          class: 'd-none'
         )
       ),
       reference_control(method)
@@ -17,7 +17,9 @@ class Field::ReferencePresenter < FieldPresenter
   end
 
   def reference_control(method)
-    category = field.belongs_to_category? ? "data-field-category=\"#{field.category_id}\"" : ''
+    # rubocop:disable Layout/LineLength
+    category = field.belongs_to_category? ? "data-field-category=\"#{field.category_id}\" data-field-category-choice-id=\"#{field.category_choice.id}\" data-field-category-choice-set-id=\"#{field.category_choice_set.id}\"" : ""
+    # rubocop:enable Layout/LineLength
     [
       '<div class="form-component">',
       "<div class=\"row\" #{category} data-field=\"#{field.id}\">",
