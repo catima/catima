@@ -5,7 +5,9 @@ class Field::ChoiceSetPresenter < FieldPresenter
 
   # rubocop:disable Style/StringConcatenation
   def input(form, method, options = {})
+    # rubocop:disable Layout/LineLength
     category = field.belongs_to_category? ? "data-field-category=\"#{field.category_id}\" data-field-category-choice-id=\"#{field.category_choice.id}\" data-field-category-choice-set-id=\"#{field.category_choice_set.id}\"" : ""
+    # rubocop:enable Layout/LineLength
     [
       '<div class="form-component">',
         "<div class=\"row\" #{category} data-choice-set=\"#{field.choice_set.id}\" data-field=\"#{field.id}\">",
@@ -14,7 +16,7 @@ class Field::ChoiceSetPresenter < FieldPresenter
               form,
               method,
               nil,
-              input_defaults(options).merge(:multiple => field.multiple?, data: {choice_set_id: field.choice_set.id}),
+              input_defaults(options).merge(:multiple => field.multiple?, data: { choice_set_id: field.choice_set.id }),
               &method(:options_for_select)
             ),
           '</div>',

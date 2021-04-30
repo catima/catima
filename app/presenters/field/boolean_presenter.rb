@@ -3,8 +3,10 @@ class Field::BooleanPresenter < FieldPresenter
     raw_value.to_i == 1 ? t('yes') : t('no')
   end
 
-  def input(form, method, options = {})
-    category = field.belongs_to_category? ? {"field-category": field.category_id, "field-category-choice-id": field.category_choice.id, "field-category-choice-set-id": field.category_choice_set.id} : {}
+  def input(form, method, options={})
+    # rubocop:disable Layout/LineLength
+    category = field.belongs_to_category? ? { "field-category": field.category_id, "field-category-choice-id": field.category_choice.id, "field-category-choice-set-id": field.category_choice_set.id } : {}
+    # rubocop:enable Layout/LineLength
     form.select(
       method,
       select_values,
@@ -14,6 +16,6 @@ class Field::BooleanPresenter < FieldPresenter
   end
 
   def select_values
-    {t('yes') => "1", t('no') => "0"}
+    { t('yes') => "1", t('no') => "0" }
   end
 end
