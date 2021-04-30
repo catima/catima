@@ -314,6 +314,6 @@ check_filerequired = ($field)->
     $('#'+$field+'_required_alert').remove()
 
 
-$(document).ready(init_category_triggers)
 $(document).ready(init_multivalued_selects)
+$(document).ready(init_category_triggers)
 $(document).ready(init_file_upload_controls)
