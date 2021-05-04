@@ -3,7 +3,10 @@ class Field::FilePresenter < FieldPresenter
 
   def input(form, method, options={})
     item_type = options[:item_type] || field.item_type.slug
-    field_category = field.belongs_to_category? ? "data-field-category=\"#{field.category_id}\"" : ''
+    # rubocop:disable Layout/LineLength
+    field_category = field.belongs_to_category? ? "data-field-category=\"#{field.category_id}\" data-field-category-choice-id=\"#{field.category_choice.id}\" data-field-category-choice-set-id=\"#{field.category_choice_set.id}\"" : ""
+    # rubocop:enable Layout/LineLength
+
     btn_label = field.multiple ? t('presenters.field.file.add_files') : t('presenters.field.file.add_file')
 
     render_html(form, method, item_type, field_category, btn_label)
@@ -66,5 +69,6 @@ class Field::FilePresenter < FieldPresenter
       "</div>"
     ].compact.join.html_safe
   end
+
   # rubocop:enable Style/StringConcatenation
 end

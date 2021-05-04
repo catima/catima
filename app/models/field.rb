@@ -71,6 +71,8 @@ class Field < ApplicationRecord
 
   store_translations :name, :name_plural
 
+  attr_accessor :category_choice, :category_choice_set
+
   validates_presence_of :field_set
   validate :default_value_passes_field_validations
   validate :components_are_valid
@@ -114,6 +116,14 @@ class Field < ApplicationRecord
 
   def category_id
     field_set.is_a?(Category) ? field_set.id : nil
+  end
+
+  def category_choice_id
+    field_set.is_a?(Category) ? category_choice&.id : nil
+  end
+
+  def category_choice_set_id
+    field_set.is_a?(Category) ? category_choice_set&.id : nil
   end
 
   def type_name
@@ -406,4 +416,5 @@ class Field < ApplicationRecord
     value
   end
 end
+
 # rubocop:enable Metrics/ClassLength

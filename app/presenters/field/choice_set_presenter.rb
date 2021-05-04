@@ -5,7 +5,9 @@ class Field::ChoiceSetPresenter < FieldPresenter
 
   # rubocop:disable Style/StringConcatenation
   def input(form, method, options = {})
-    category = field.belongs_to_category? ? "data-field-category=\"#{field.category_id}\"" : ''
+    # rubocop:disable Layout/LineLength
+    category = field.belongs_to_category? ? "data-field-category=\"#{field.category_id}\" data-field-category-choice-id=\"#{field.category_choice.id}\" data-field-category-choice-set-id=\"#{field.category_choice_set.id}\"" : ""
+    # rubocop:enable Layout/LineLength
     [
       '<div class="form-component">',
         "<div class=\"row\" #{category} data-choice-set=\"#{field.choice_set.id}\" data-field=\"#{field.id}\">",
@@ -14,7 +16,7 @@ class Field::ChoiceSetPresenter < FieldPresenter
               form,
               method,
               nil,
-              input_defaults(options).merge(:multiple => field.multiple?),
+              input_defaults(options).merge(:multiple => field.multiple?, data: { choice_set_id: field.choice_set.id }),
               &method(:options_for_select)
             ),
           '</div>',
@@ -72,6 +74,8 @@ class Field::ChoiceSetPresenter < FieldPresenter
     flat_ordered_choices.map do |choice|
       data = {}
       data["choice-category"] = choice.category_id if choice.category_id
+      data["choice-id"] = choice.id if choice.category_id
+      data["choice-set-id"] = choice.choice_set.id if choice.category_id
 
       tag.option(
         choice_prefixed_label(choice),

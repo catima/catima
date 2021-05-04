@@ -5,18 +5,26 @@ init_category_triggers = ->
   $choice_sets.each ->
     show_selected_category_fields($form, $(this))
   $choice_sets.on "change", (evt)->
-    hide_all_category_fields($form)
+    hide_related_category_fields($form, $(this))
     show_selected_category_fields($form, $(this))
 
 show_selected_category_fields = ($form, $choice_set)->
   $choice = $choice_set.find("option:selected")
-  category = $choice.data("choice-category")
-  $form.find("[data-field-category=#{category}]").parent(".form-group").show()
-  $form.find("[data-field-category=#{category}]").closest(".form-component").show()
+  $choice.each (i, element) ->
+    category = $(element).data("choice-category")
+    choice_id = $(element).data("choice-id")
+    choice_set_id = $(element).data("choice-set-id")
+    $form.find("[data-field-category=#{category}][data-field-category-choice-id=#{choice_id}][data-field-category-choice-set-id=#{choice_set_id}]").parent(".form-group").show()
+    $form.find("[data-field-category=#{category}][data-field-category-choice-id=#{choice_id}][data-field-category-choice-set-id=#{choice_set_id}]").closest(".form-component").show()
 
 hide_all_category_fields = ($form)->
   $form.find("[data-field-category]").parent(".form-group").hide()
   $form.find("[data-field-category]").closest(".form-component").hide()
+
+hide_related_category_fields = ($form, $choice_set)->
+  choice_set_id = $choice_set.data("choice-set-id")
+  $form.find("[data-field-category][data-field-category-choice-set-id=#{choice_set_id}]").parent(".form-group").hide()
+  $form.find("[data-field-category][data-field-category-choice-set-id=#{choice_set_id}]").closest(".form-component").hide()
 
 init_multivalued_selects = ->
   $("select[data-select2-tagging]").select2(theme: "bootstrap")
