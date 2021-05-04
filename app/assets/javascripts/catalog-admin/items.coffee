@@ -10,11 +10,12 @@ init_category_triggers = ->
 
 show_selected_category_fields = ($form, $choice_set)->
   $choice = $choice_set.find("option:selected")
-  category = $choice.data("choice-category")
-  choice_id = $choice.data("choice-id")
-  choice_set_id = $choice.data("choice-set-id")
-  $form.find("[data-field-category=#{category}][data-field-category-choice-id=#{choice_id}][data-field-category-choice-set-id=#{choice_set_id}]").parent(".form-group").show()
-  $form.find("[data-field-category=#{category}][data-field-category-choice-id=#{choice_id}][data-field-category-choice-set-id=#{choice_set_id}]").closest(".form-component").show()
+  $choice.each (i, element) ->
+    category = $(element).data("choice-category")
+    choice_id = $(element).data("choice-id")
+    choice_set_id = $(element).data("choice-set-id")
+    $form.find("[data-field-category=#{category}][data-field-category-choice-id=#{choice_id}][data-field-category-choice-set-id=#{choice_set_id}]").parent(".form-group").show()
+    $form.find("[data-field-category=#{category}][data-field-category-choice-id=#{choice_id}][data-field-category-choice-set-id=#{choice_set_id}]").closest(".form-component").show()
 
 hide_all_category_fields = ($form)->
   $form.find("[data-field-category]").parent(".form-group").hide()
@@ -321,6 +322,6 @@ check_filerequired = ($field)->
     $('#'+$field+'_required_alert').remove()
 
 
-$(document).ready(init_category_triggers)
 $(document).ready(init_multivalued_selects)
+$(document).ready(init_category_triggers)
 $(document).ready(init_file_upload_controls)
