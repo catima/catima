@@ -208,7 +208,7 @@ class LinkedCategoryInput extends Component {
   }
 
   _getJSONOption(option) {
-    return {value: option.key, label: option.value};
+    return {value: option.key, label: option.label};
   }
 
   renderInput(){
