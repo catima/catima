@@ -15,7 +15,7 @@
     "babel-loader": "^8.0.6",
     "bootstrap4-datetimepicker": "^5.2.3",
     "classnames": "^2.2.5",
-    "codemirror": "^5.47.0",
+    "codemirror": "^5.58.2",
     "coffeescript": "2.4.1",
     "core-js": "^3.4.5",
     "css-loader": "^2.1.1",
