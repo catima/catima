@@ -18,7 +18,11 @@ module JsonHelper
     id = json_hidden_field_id(form, field)
     data = options.fetch(:data, {}).merge(json_input_data(field))
     if field.belongs_to_category?
-      data = data.reverse_merge("field-category" => field.category_id, "field-category-choice-id" => field.category_choice_id, "field-category-choice-set-id" => field.category_choice_set_id)
+      data = data.reverse_merge(
+        "field-category" => field.category_id,
+        "field-category-choice-id" => field.category_choice_id,
+        "field-category-choice-set-id" => field.category_choice_set_id
+      )
     end
     form.hidden_field(method, options.merge(:data => data, :id => id))
   end
