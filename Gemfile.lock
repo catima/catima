@@ -304,7 +304,7 @@ GEM
       coderay (~> 1.1)
       method_source (~> 1.0)
     public_suffix (4.0.6)
-    puma (5.1.1)
+    puma (5.3.1)
       nio4r (~> 2.0)
     pundit (2.1.0)
       activesupport (>= 3.0.0)
@@ -525,7 +525,7 @@ DEPENDENCIES
   pg_search (~> 2.3)
   pgcli-rails (~> 0.5)
   pry (~> 0.13)
-  puma (~> 5.1)
+  puma (~> 5.3)
   pundit (~> 2.1)
   rails (~> 6.1)
   rails-assets-autosize (~> 4.0)!
