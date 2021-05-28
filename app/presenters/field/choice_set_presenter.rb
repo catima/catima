@@ -4,10 +4,19 @@ class Field::ChoiceSetPresenter < FieldPresenter
            :to => :view
 
   # rubocop:disable Style/StringConcatenation
-  def input(form, method, options = {})
+  def input(form, method, options={})
     # rubocop:disable Layout/LineLength
     category = field.belongs_to_category? ? "data-field-category=\"#{field.category_id}\" data-field-category-choice-id=\"#{field.category_choice.id}\" data-field-category-choice-set-id=\"#{field.category_choice_set.id}\"" : ""
     # rubocop:enable Layout/LineLength
+
+    choice_modal = [
+      '<div class="col-sm-4" style="padding-top: 30px; margin-left: -15px;">',
+        '<a class="btn btn-sm btn-outline-secondary" style="color: #aaa;" data-toggle="modal" data-target="#choice-modal-' + method + '" href="#">',
+          '<i class="fa fa-plus"></i>',
+        '</a>',
+      '</div>'
+    ]
+
     [
       '<div class="form-component">',
         "<div class=\"row\" #{category} data-choice-set=\"#{field.choice_set.id}\" data-field=\"#{field.id}\">",
@@ -20,11 +29,7 @@ class Field::ChoiceSetPresenter < FieldPresenter
               &method(:options_for_select)
             ),
           '</div>',
-          '<div class="col-sm-4" style="padding-top: 30px; margin-left: -15px;">',
-            '<a class="btn btn-sm btn-outline-secondary" style="color: #aaa;" data-toggle="modal" data-target="#choice-modal-' + method + '" href="#">',
-              '<i class="fa fa-plus"></i>',
-            '</a>',
-          '</div>',
+          (choice_modal if options[:current_user].catalog_role_at_least?(options[:catalog], "super-editor")),
         '</div>',
       '</div>'
     ].join.html_safe
