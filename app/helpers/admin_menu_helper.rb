@@ -1,6 +1,6 @@
 module AdminMenuHelper
   def admin_menu_visible?
-    admin_menu_item_types.any? || viim_admin? || catalog_admin?
+    admin_menu_item_types.any? || system_admin? || catalog_admin?
   end
 
   def admin_menu_item_types
@@ -10,13 +10,13 @@ module AdminMenuHelper
     catalog.item_types.sorted
   end
 
-  def viim_admin?
+  def system_admin?
     policy(Configuration).update?
   end
 
   def catalog_admin?
     return false unless catalog_scoped?
 
-    policy(catalog).show?
+    policy(catalog).setup?
   end
 end
