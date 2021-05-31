@@ -194,9 +194,9 @@ de:
     user:
       member_role: Als Mitglied können Sie die öffentlichen Bereiche eines eingeschränkten Katalogs sehen.
       editor_role: Als Katalog-Editor können Sie Einträge erstellen und editieren.
-      super_editor_role: Als Katalog-Super-Editor können Sie alle Einträge erstellen und editieren.
+      super_editor_role: Als Katalog-Super-Editor können Sie alle Einträge erstellen und editieren. Sie können auch neue Auswahlen erstellen.
       invited_to_access_html: "%{invited_by} hat Sie eingeladen %{catalog} zu konsultieren."
-      reviewer_role: Als Katalog-Validator können Sie Einträge erstellen und editieren, sowie auch Einträge zur Publikation annehmen.
+      reviewer_role: Als Katalog-Validator können Sie Einträge erstellen und editieren, sowie auch Einträge zur Publikation annehmen. Sie können auch neue Auswahlen erstellen.
       subject: "Sie wurden eingeladen bei %{catalog} teilzunehmen"
     group:
       subject: "Du bist eingeladen, Mitglied in der Gruppe %{group} zu werden."
@@ -675,8 +675,9 @@ de:
         user_role: "<b>Users</b> can view the public areas of the non-restricted catalogs.<br>"
         member_role: "<b>Members</b> are users that can view the public areas of a restricted catalog.<br>"
         editor_role: "<b>Editors</b> are members that can create and edit their own items in the catalog.<br>"
-        super_editor_role: "<b>Super-editors</b> are editors that can create and edit all the items in the catalog.<br>"
+        super_editor_role: "<b>Super-editors</b> are editors that can create and edit all the items in the catalog. They can also create new choices.<br>"
         reviewer_role: "<b>Reviewers</b> are super-editors that can approve items to make them visible to the public.<br>"
+        admin_role: "<b>Admins</b> can do all these things, plus change the catalog design and manage users.<br>"
       index:
         name: Name
         roles: Roles

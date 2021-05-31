@@ -195,9 +195,9 @@ it:
     user:
       member_role: Come membro sarete in grado di vedere le aree pubbliche di un catalogo limitato.
       editor_role: Come redattore di catalogo sarete in grado di aggiungere e modificarle registrazioni nel catalogo.
-      super_editor_role: Come super-redattore di catalogo sarete in grado di aggingere e modificare tutte le registrazione nel catalogo.
+      super_editor_role: Come super-redattore di catalogo sarete in grado di aggingere e modificare tutte le registrazione nel catalogo. Potete anche creare nuove scelte.
       invited_to_access_html: "%{invited_by} ti ha invitato a accessere al catalogo %{catalog}."
-      reviewer_role: Come validatore di catalogo sarete in grado di agginguere e modificare tutte le registrazione nel catalogo e di convalidare per la pubblicazione.
+      reviewer_role: Come validatore di catalogo sarete in grado di agginguere e modificare tutte le registrazione nel catalogo, creare nuove scelte, e di convalidare per la pubblicazione.
       subject: "Viene chiesto di unirsi %{catalog}"
     group:
       subject: "Sei invitato a diventare membro del gruppo %{group}"
@@ -525,8 +525,9 @@ it:
         user_role: "<b>Users</b> can view the public areas of the non-restricted catalogs.<br>"
         member_role: "<b>Members</b> are users that can view the public areas of a restricted catalog.<br>"
         editor_role: "<b>Editors</b> are members that can create and edit their own items in the catalog.<br>"
-        super_editor_role: "<b>Super-editors</b> are editors that can create and edit all the items in the catalog.<br>"
+        super_editor_role: "<b>Super-editors</b> are editors that can create and edit all the items in the catalog. They can also create new choices.<br>"
         reviewer_role: "<b>Reviewers</b> are super-editors that can approve items to make them visible to the public.<br>"
+        admin_role: "<b>Admins</b> can do all these things, plus change the catalog design and manage users.<br>"
       index:
         name: Name
         roles: Roles
