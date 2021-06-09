@@ -9,7 +9,7 @@ module Admin::UsersHelper
 
   def last_signed_in(user)
     at = [user.last_sign_in_at, user.current_sign_in_at].compact.max
-    sentence_case("#{distance_of_time_in_words_to_now(at)} ago") unless at.nil?
+    sentence_case(distance_of_time_in_words_to_now(at).to_s) unless at.nil?
   end
 
   def render_admin_users_nested_permissions(form)
