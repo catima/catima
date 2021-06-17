@@ -853,5 +853,7 @@ en:
       title: Documentation
       guest: Catalog visitor
       user: Catalog user
-      editors: Catalog editor
+      editor: Catalog editor
+      super-editor: Catalog super-editor
+      reviewer: Catalog reviewer
       admin: Catalog administrator

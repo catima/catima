@@ -791,5 +791,7 @@ de:
       title: Dokumentation
       guest: Katalogbesucher
       user: Katalog-Benutzer
-      editors: Katalog-Editor
+      editor: Katalog-Editor
+      super-editor: Katalog Super-Editor
+      reviewer: Katalog-Reviewer
       admin: Katalogverwalter

@@ -851,5 +851,7 @@ fr:
       title: Documentation
       guest: Visiteur de catalogue
       user: Utilisateur de catalogue
-      editors: Éditeur de catalogue
+      editor: Éditeur de catalogue
+      super-editor: Super-éditeur de catalogue
+      reviewer: Superviseur de catalogue
       admin: Administrateur de catalogue

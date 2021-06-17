@@ -608,5 +608,7 @@ it:
       title: Documentazione
       guest: Visitatore del catalogo
       user: Utente del catalogo
-      editors: Editore del catalogo
+      editor: Editore del catalogo
+      super-editor: Super-editore del catalogo
+      reviewer: Supervisore del catalogo
       admin: Amministratore del catalogo
