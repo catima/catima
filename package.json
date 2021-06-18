@@ -48,7 +48,7 @@
     "react-leaflet": "^1.9.1",
     "react-leaflet-draw": "^0.18.0",
     "react-leaflet-markercluster": "^1.1.8",
-    "react-on-rails": "^11.2.2",
+    "react-on-rails": "^12.2.0",
     "react-select": "2.1.2",
     "react-select-async-paginate": "^0.3.0",
     "regenerator-runtime": "^0.13.3",
