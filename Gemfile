@@ -38,7 +38,7 @@ gem "pgcli-rails", "~> 0.5"
 gem "pundit", "~> 2.1"
 gem "rails", '~> 6.1'
 gem "ranked-model", "~> 0.4"
-gem "react_on_rails", "~> 11.3"
+gem "react_on_rails", "~> 12.2"
 gem "recaptcha", "~> 5.6"
 gem "redcarpet", "~> 3.5"
 gem "refile", github: "refile/refile", require: "refile/rails"
