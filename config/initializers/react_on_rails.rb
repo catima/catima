@@ -44,4 +44,7 @@ ReactOnRails.configure do |config|
 
   # Path to the rails locale files.
   config.i18n_yml_dir = Rails.root.join("config", "locales", "app")
+
+  # i18n format
+  config.i18n_output_format = 'js'
 end

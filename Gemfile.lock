@@ -352,12 +352,13 @@ GEM
     rb-fsevent (0.10.4)
     rb-inotify (0.10.1)
       ffi (~> 1.0)
-    react_on_rails (11.3.1)
+    react_on_rails (12.2.0)
       addressable
       connection_pool
       execjs (~> 2.5)
       rails (>= 3.2)
       rainbow (~> 3.0)
+      webpacker (>= 4.0)
     recaptcha (5.6.0)
       json
     redcarpet (3.5.1)
@@ -533,7 +534,7 @@ DEPENDENCIES
   rainbow (~> 3.0)
   ranked-model (~> 0.4)
   rb-fsevent (~> 0.10)
-  react_on_rails (~> 11.3)
+  react_on_rails (~> 12.2)
   recaptcha (~> 5.6)
   redcarpet (~> 3.5)
   refile!
