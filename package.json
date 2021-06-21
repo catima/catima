@@ -16,7 +16,7 @@
     "bootstrap4-datetimepicker": "^5.2.3",
     "classnames": "^2.2.5",
     "codemirror": "^5.58.2",
-    "coffeescript": "2.4.1",
+    "coffeescript": "2.5.1",
     "core-js": "^3.4.5",
     "css-loader": "^2.1.1",
     "es6-shim": "^0.35.5",
