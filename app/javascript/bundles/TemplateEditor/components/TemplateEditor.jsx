@@ -1,8 +1,7 @@
 import 'es6-shim';
 import PropTypes from 'prop-types';
 import React from 'react';
-
-const uuidv4 = require('uuid/v4');
+import { v4 as uuidv4 } from 'uuid';
 
 class TemplateEditor extends React.Component {
   static propTypes = {

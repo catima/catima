@@ -2,6 +2,7 @@ import 'es6-shim';
 import PropTypes from 'prop-types';
 import React from 'react';
 import Translations from '../../Translations/components/Translations';
+import { v4 as uuidv4 } from 'uuid';
 
 import Quill from 'quill';
 import "quill/dist/quill.core.css";
@@ -23,9 +24,6 @@ import "../modules/table";
 import axios from 'axios';
 
 import "../css/formatted-text-editor.css";
-
-const uuidv4 = require('uuid/v4');
-
 
 // Function to return closest element based on a selector.
 // If self attribute is true, search is also applied to the element itself
