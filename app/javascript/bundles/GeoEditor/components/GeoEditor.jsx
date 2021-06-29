@@ -2,7 +2,7 @@ import 'es6-shim';
 import PropTypes from 'prop-types';
 import React from 'react';
 import L from 'leaflet';
-import uuid from 'uuid';
+import { v4 as uuidv4 } from 'uuid';
 
 const subs = ['a', 'b', 'c'];
 
@@ -33,7 +33,7 @@ class GeoEditor extends React.Component {
     this.markers = [];
 
     // Create unique IDs for the different DOM elements
-    const editorId = uuid.v4();
+    const editorId = uuidv4();
     this.mapId = 'map_' + editorId;
     this.editMarkerPaneId = 'editMarkerPane_' + editorId;
 

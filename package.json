@@ -10,13 +10,13 @@
     "@babel/preset-env": "^7.7.1",
     "@babel/preset-react": "^7.0.0",
     "@claviska/jquery-minicolors": "^2.2.6",
-    "@rails/webpacker": "^5.2.1",
+    "@rails/webpacker": "5.4.0",
     "axios": "^0.21.1",
     "babel-loader": "^8.0.6",
     "bootstrap4-datetimepicker": "^5.2.3",
     "classnames": "^2.2.5",
     "codemirror": "^5.58.2",
-    "coffeescript": "2.4.1",
+    "coffeescript": "2.5.1",
     "core-js": "^3.4.5",
     "css-loader": "^2.1.1",
     "es6-shim": "^0.35.5",
@@ -48,8 +48,7 @@
     "react-leaflet": "^1.9.1",
     "react-leaflet-draw": "^0.18.0",
     "react-leaflet-markercluster": "^1.1.8",
-    "react-on-rails": "^11.2.2",
-    "react-s3-uploader": "^4.6.2",
+    "react-on-rails": "^12.2.0",
     "react-select": "2.1.2",
     "react-select-async-paginate": "^0.3.0",
     "regenerator-runtime": "^0.13.3",
@@ -58,10 +57,11 @@
     "striptags": "^3.1.1",
     "style-loader": "^1.0.0",
     "styled-components": "^4.2.0",
-    "webpack": "^4.0.0",
-    "webpack-cli": "^3.3.10"
+    "uuid": "^8.3.2",
+    "webpack": "^4.46.0",
+    "webpack-cli": "^3.3.12"
   },
   "devDependencies": {
-    "webpack-dev-server": "^3.11.0"
+    "webpack-dev-server": "^3.11.2"
   }
 }

@@ -22,7 +22,7 @@
               :active_when => {
                 :controller => /$?(dashboard)|(items)/
               }) %>
-        <% if policy(ItemType).index? %>
+        <% if policy(catalog).setup? %>
           <%= navbar_link_to(
                 fa_icon(:wrench, :text => "Setup"),
                 catalog_admin_contextual_setup_path,

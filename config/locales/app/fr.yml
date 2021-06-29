@@ -214,9 +214,9 @@ fr:
     user:
       member_role: Comme membre vous allez pouvoir voir les zones publiques d'un catalogue restreint.
       editor_role: Comme éditeur de catalogue vous allez pouvoir ajouter et éditer vos propres entrées.
-      super_editor_role: Comme super-éditeur de catalogue vous allez pouvoir ajouter et éditer toutes les entrées.
+      super_editor_role: Comme super-éditeur de catalogue vous allez pouvoir ajouter et éditer toutes les entrées. Vous pouvez également créer de nouveaux choix.
       invited_to_access_html: "%{invited_by} vous a invité d'accéder %{catalog}."
-      reviewer_role: Comme validateur de catalogue, vous allez pouvoir ajouter des entrées, éditer toutes les entrées, mais également valider des entrées en vue de leur publication.
+      reviewer_role: Comme validateur de catalogue, vous allez pouvoir ajouter des entrées, éditer toutes les entrées, créer de nouveaux choix, mais également valider des entrées en vue de leur publication.
       subject: "Vous êtes invité(e) à joindre %{catalog}"
     group:
       subject: "Vous êtes invité à devenir membre du groupe %{group}"
@@ -724,8 +724,9 @@ fr:
         user_role: "<b>Users</b> peuvent afficher les zones publiques des catalogues non restreints.<br>"
         member_role: "<b>Members</b> sont des utilisateurs qui peuvent afficher les zones publiques d'un catalogue restreint.<br>"
         editor_role: "<b>Editors</b> sont des membres qui peuvent créer et modifier leurs propres éléments dans le catalogue.<br>"
-        super_editor_role: "<b>Super-editors</b> sont des éditeurs qui peuvent créer et éditer tous les éléments du catalogue.<br>"
+        super_editor_role: "<b>Super-editors</b> sont des éditeurs qui peuvent créer et éditer tous les éléments du catalogue. Ils peuvent également créer de nouveaux choix.<br>"
         reviewer_role: "<b>Reviewers</b> sont des super-éditeurs qui peuvent approuver des éléments pour les rendre visibles au public.<br>"
+        admin_role: "<b>Admins</b> peuvent faire tout cela, mais aussi modifier la conception du catalogue et gérer les utilisateurs.<br>"
       index:
         name: Nom
         roles: Rôles
@@ -850,5 +851,7 @@ fr:
       title: Documentation
       guest: Visiteur de catalogue
       user: Utilisateur de catalogue
-      editors: Éditeur de catalogue
+      editor: Éditeur de catalogue
+      super-editor: Super-éditeur de catalogue
+      reviewer: Superviseur de catalogue
       admin: Administrateur de catalogue

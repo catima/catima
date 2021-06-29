@@ -23,8 +23,24 @@
 
     <% if current_user.catalog_role_at_least?(@catalog, 'editor') %>
       <%= render("documentation/accordion_item",
-                 title: t(".editors"),
+                 title: t(".editor"),
                  file_name: "editors.md",
+                 id: random_id)
+      %>
+    <% end %>
+
+    <% if current_user.catalog_role_at_least?(@catalog, 'super-editor') %>
+      <%= render("documentation/accordion_item",
+                 title: t(".super-editor"),
+                 file_name: "supereditors.md",
+                 id: random_id)
+      %>
+    <% end %>
+
+    <% if current_user.catalog_role_at_least?(@catalog, 'reviewer') %>
+      <%= render("documentation/accordion_item",
+                 title: t(".reviewer"),
+                 file_name: "reviewer.md",
                  id: random_id)
       %>
     <% end %>

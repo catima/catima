@@ -42,6 +42,11 @@ jobs:
       - name: Checkout Repository
         uses: actions/checkout@v2
 
+      - name: Node Setup
+        uses: actions/setup-node@v2
+        with:
+          node-version: '14'
+
       - name: Setup Ruby
         uses: ruby/setup-ruby@v1
         with:

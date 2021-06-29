@@ -23,12 +23,12 @@ module DocumentationHelper
 
   def raw_content(file_name)
     Net::HTTP.get(
-      URI.parse(content_url(file_name, define_locale(file_name)))
+      content_url(file_name, define_locale(file_name))
     ).force_encoding("UTF-8")
   end
 
   def content_url(file_name, locale=I18n.locale)
-    ENV['DOC_BASE_URL'] + "/" + locale.to_s + "/" + file_name
+    URI("#{ENV['DOC_BASE_URL']}/#{locale}/#{file_name}")
   end
 
   # Define current locale for the content url if the
@@ -40,8 +40,8 @@ module DocumentationHelper
   end
 
   def file_available?(file_name)
-    Net::HTTP.get(
-      URI.parse(content_url(file_name))
+    Net::HTTP.get_response(
+      content_url(file_name)
     ).is_a?(Net::HTTPSuccess)
   end
 end

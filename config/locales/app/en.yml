@@ -217,9 +217,9 @@ en:
     user:
       member_role: As a member you will be able to see the public areas of a restricted catalog.
       editor_role: As a catalog editor, you will be able to add and edit your own records.
-      super_editor_role: As a catalog super-editor, you will be able to add and edit all the records.
+      super_editor_role: As a catalog super-editor, you will be able to add and edit all the records. You can also create new choices.
       invited_to_access_html: "%{invited_by} has invited you to access %{catalog}."
-      reviewer_role: As a catalog reviewer, you will be able to add records, edit all the records, as well as approve records to be published to the public.
+      reviewer_role: As a catalog reviewer, you will be able to add records, edit all the records, create new choices, as well as approve records to be published to the public.
       subject: "You are invited to join %{catalog}"
     group:
       subject: "You are invited to become a member in group %{group}"
@@ -727,8 +727,9 @@ en:
         user_role: "<b>Users</b> can view the public areas of the non-restricted catalogs.<br>"
         member_role: "<b>Members</b> are users that can view the public areas of a restricted catalog.<br>"
         editor_role: "<b>Editors</b> are members that can create and edit their own items in the catalog.<br>"
-        super_editor_role: "<b>Super-editors</b> are editors that can create and edit all the items in the catalog.<br>"
+        super_editor_role: "<b>Super-editors</b> are editors that can create and edit all the items in the catalog. They can also create new choices.<br>"
         reviewer_role: "<b>Reviewers</b> are super-editors that can approve items to make them visible to the public.<br>"
+        admin_role: "<b>Admins</b> can do all these things, plus change the catalog design and manage users.<br>"
       index:
         name: Name
         roles: Roles
@@ -852,5 +853,7 @@ en:
       title: Documentation
       guest: Catalog visitor
       user: Catalog user
-      editors: Catalog editor
+      editor: Catalog editor
+      super-editor: Catalog super-editor
+      reviewer: Catalog reviewer
       admin: Catalog administrator
