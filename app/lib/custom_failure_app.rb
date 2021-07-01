@@ -3,7 +3,11 @@ class CustomFailureApp < Devise::FailureApp
     if warden_options[:scope] == :api_v3_user
       self.status = 401
       self.content_type = 'json'
-      request.original_fullpath == "/api/v3/login" ? self.response_body = '{"message": "Authentication error","code": "authentication_error"}' : self.response_body = '{"message": "Invalid authentication token","code": "invalid_token"}'
+      self.response_body = if request.original_fullpath == "/api/v3/login"
+                             '{"message": "Authentication error","code": "authentication_error"}'
+                           else
+                             '{"message": "Invalid authentication token","code": "invalid_token"}'
+                           end
     elsif http_auth?
       http_auth
     elsif warden_options[:recall]
@@ -13,4 +17,3 @@ class CustomFailureApp < Devise::FailureApp
     end
   end
 end
-

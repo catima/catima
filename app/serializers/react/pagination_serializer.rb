@@ -37,7 +37,7 @@ class React::PaginationSerializer
     @page_size = valid_page_size(params[:page_size].to_i) || DEFAULT_PAGE_SIZE
   end
 
-  def as_json(_options = nil)
+  def as_json(_options=nil)
     {
       key => serialized_paginated_records,
       :_links => links_json,
@@ -62,7 +62,7 @@ class React::PaginationSerializer
   end
 
   def paginated_records
-    @_paginated_records ||= scope.order(:id).page(page_number).per(page_size)
+    @paginated_records ||= scope.order(:id).page(page_number).per(page_size)
   end
 
   def serialized_paginated_records

@@ -6,27 +6,29 @@ class API::V3::SessionsController < Devise::SessionsController
   def create
     unless request.format == :json
       sign_out
-      render status: 406,
-             json: {message: "JSON requests only", code: "json_only"} and return
+      render status: :not_acceptable,
+             json: { message: "JSON requests only", code: "json_only" } and return
     end
     # auth_options should have `scope: :api_v3_user`
     resource = warden.authenticate!(auth_options)
     if resource.blank?
-      render status: 401,
-             json: {message: "Authentication error", code: "authentication_error"} and return
+      render status: :unauthorized,
+             json: { message: "Authentication error", code: "authentication_error" } and return
     end
+
     sign_in(resource_name, resource)
     log_request(resource)
     respond_with resource, location:
       after_sign_in_path_for(resource) do |format|
-      format.json { render json:
-                             {
-                               token: current_token,
-                               valid_until: Time.now + 23.hours,
-                               message: "Authentication successful",
-                               code: "authentication_success"
-                             }
-      }
+      format.json do
+        render json:
+                 {
+                   token: current_token,
+                   valid_until: Time.current + 23.hours,
+                   message: "Authentication successful",
+                   code: "authentication_success"
+                 }
+      end
     end
   end
 
@@ -34,7 +36,7 @@ class API::V3::SessionsController < Devise::SessionsController
     APILog.create(
       user: resource,
       endpoint: request.fullpath,
-      remote_ip: request.remote_ip,
+      remote_ip: request.remote_ip
     )
   end
 

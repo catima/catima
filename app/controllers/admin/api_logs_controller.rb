@@ -11,5 +11,4 @@ class Admin::APILogsController < Admin::BaseController
   def find_catalog
     @catalog = Catalog.where(:slug => params[:catalog_slug]).first!
   end
-
 end

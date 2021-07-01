@@ -10,7 +10,7 @@ class API::V3::Catalog::BaseController < API::V3::BaseController
     super([:"api/v3", scope])
   end
 
-  def authorize(record, query = nil)
+  def authorize(record, query=nil)
     super([:"api/v3", record], query)
   end
 
@@ -22,7 +22,7 @@ class API::V3::Catalog::BaseController < API::V3::BaseController
       catalog: @catalog,
       endpoint: request.fullpath,
       remote_ip: request.remote_ip,
-      payload: params,
+      payload: params
     )
   end
 
@@ -32,15 +32,15 @@ class API::V3::Catalog::BaseController < API::V3::BaseController
     count = REDIS.get(key)
 
     unless count
-      throttle_time_window = @catalog.throttle_time_window ? @catalog.throttle_time_window : DEFAULT_THROTTLE_TIME_WINDOW
+      throttle_time_window = @catalog.throttle_time_window || DEFAULT_THROTTLE_TIME_WINDOW
       REDIS.set(key, 0)
       REDIS.expire(key, throttle_time_window)
       return true
     end
 
-    throttle_max_requests = @catalog.throttle_max_requests ? @catalog.throttle_max_requests : DEFAULT_THROTTLE_MAX_REQUESTS
+    throttle_max_requests = @catalog.throttle_max_requests || DEFAULT_THROTTLE_MAX_REQUESTS
     if count.to_i >= throttle_max_requests
-      render :status => 429, :json => {code: 'too_many_requests', message: "You have fired too many requests. Please wait for some time."}
+      render :status => :too_many_requests, :json => { code: 'too_many_requests', message: "You have fired too many requests. Please wait for some time." }
       return
     end
     REDIS.incr(key)

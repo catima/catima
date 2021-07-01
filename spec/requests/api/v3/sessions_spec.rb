@@ -19,7 +19,7 @@ RSpec.describe 'api/v3/sessions', type: :request do
     post('Create Session') do
       tags 'Authentication'
       consumes 'application/json'
-      parameter name: :api_v3_user, in: :body, schema: {'$ref' => '#/components/schemas/api_v3_user'}
+      parameter name: :api_v3_user, in: :body, schema: { '$ref' => '#/components/schemas/api_v3_user' }
 
       response(200, 'authentication_success') do
         run_test! do |response|
@@ -52,7 +52,6 @@ RSpec.describe 'api/v3/sessions', type: :request do
       tags 'Authentication'
       consumes 'application/json'
       security [BearerAuth: []]
-
       response(200, 'successful') do
         before do |example|
           submit_request(example.metadata)

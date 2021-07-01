@@ -11,11 +11,11 @@ class API::V3::BaseController < ApplicationController
   before_action :set_locale
 
   def set_locale
-    if I18n.locale_available?(params[:locale])
-      I18n.locale = params[:locale]
-    else
-      I18n.locale = I18n.default_locale
-    end
+    I18n.locale = if I18n.locale_available?(params[:locale])
+                    params[:locale]
+                  else
+                    I18n.default_locale
+                  end
   end
 
   def routing_error
@@ -34,11 +34,11 @@ class API::V3::BaseController < ApplicationController
     render_response(code, :unauthorized)
   end
 
-  def render_forbidden(code, options = {})
+  def render_forbidden(code, options={})
     render_response(code, :forbidden, options: options)
   end
 
-  def render_not_found(code, options = {})
+  def render_not_found(code, options={})
     render_response(code, :not_found, options: options)
   end
 
@@ -67,11 +67,11 @@ class API::V3::BaseController < ApplicationController
   end
 
   def render_response(code, status, options: {})
-    message = t(code, options.merge({scope: api_i18n_scope}))
-    render json: {message: message, code: code}, status: status
+    message = t(code, options.merge({ scope: api_i18n_scope }))
+    render json: { message: message, code: code }, status: status
   end
 
-  def set_pagination_header(name, options = {})
+  def set_pagination_header(name, options={})
     scope = instance_variable_get("@#{name}")
     request_params = request.query_parameters
     url_without_params = request.original_url.slice(0..(request.original_url.index("?") - 1)) unless request_params.empty?
@@ -85,7 +85,7 @@ class API::V3::BaseController < ApplicationController
 
     pagination_links = []
     page.each do |k, v|
-      new_request_hash = request_params.merge({:page => v})
+      new_request_hash = request_params.merge({ :page => v })
       pagination_links << "<#{url_without_params}?#{new_request_hash.to_param}>; rel=\"#{k}\""
     end
     headers["Link"] = pagination_links.join(", ")

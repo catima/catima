@@ -18,7 +18,6 @@ RSpec.describe 'api/v3/catalogs', type: :request do
       consumes 'application/json'
       security [BearerAuth: []]
       response(200, 'successful') do
-
         run_test! do
           body = JSON.parse(response.body)
           expect(body).to have_key("data")

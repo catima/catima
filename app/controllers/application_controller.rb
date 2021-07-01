@@ -17,7 +17,7 @@ class ApplicationController < ActionController::Base
   # This is a hook for Devise so that it knows to include the required :locale
   # parameter in generated login page URLs.
   def self.default_url_options
-    {:locale => I18n.locale}
+    { :locale => I18n.locale }
   end
 
   protected
@@ -28,7 +28,7 @@ class ApplicationController < ActionController::Base
   def track
   end
 
-  def track_event(scope, name = catalog.slug)
+  def track_event(scope, name=catalog.slug)
     ahoy.track name, request.path_parameters.merge(:scope => scope)
   end
 
@@ -40,14 +40,16 @@ class ApplicationController < ActionController::Base
 
   # Use api_v3_user Devise scope for JSON access
   def authenticate_user!(*args)
-    super and return unless args.blank?
+    super and return if args.present?
+
     json_request? ? authenticate_api_v3_user! : super
   end
 
   def invalid_auth_token
     respond_to do |format|
-      format.html { redirect_to sign_in_path,
-                                error: 'Login invalid or expired' }
+      format.html do
+        redirect_to sign_in_path, error: 'Login invalid or expired'
+      end
       format.json { head 401 }
     end
   end
@@ -68,24 +70,27 @@ class ApplicationController < ActionController::Base
   def user_scoped?
     false
   end
+
   helper_method :user_scoped?
 
   def favorites_scoped?
     false
   end
+
   helper_method :favorites_scoped?
 
   def searches_scoped?
     false
   end
+
   helper_method :searches_scoped?
 
   def set_locale
-    if I18n.locale_available?(params[:locale])
-      I18n.locale = params[:locale]
-    else
-      I18n.locale = I18n.default_locale
-    end
+    I18n.locale = if I18n.locale_available?(params[:locale])
+                    params[:locale]
+                  else
+                    I18n.default_locale
+                  end
   end
 
   def current_user
@@ -97,6 +102,7 @@ class ApplicationController < ActionController::Base
   def after_devise_action_for(resource)
     stored_location_for(resource) || root_url
   end
+
   alias_method :after_sign_in_path_for, :after_devise_action_for
   alias_method :after_sign_out_path_for, :after_devise_action_for
   alias_method :after_sign_up_path_for, :after_devise_action_for

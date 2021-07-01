@@ -15,7 +15,7 @@ class API::V3::CatalogsController < API::V3::BaseController
       user: @current_user,
       endpoint: request.fullpath,
       remote_ip: request.remote_ip,
-      payload: params,
+      payload: params
     )
   end
 

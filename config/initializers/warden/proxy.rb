@@ -1,10 +1,10 @@
 module Warden
   class Proxy
-    def user(argument = {})
-      opts = argument.is_a?(Hash) ? argument : {:scope => argument}
+    def user(argument={})
+      opts = argument.is_a?(Hash) ? argument : { :scope => argument }
       scope = (opts[:scope] ||= @config.default_scope)
 
-      if @users.has_key?(scope)
+      if @users.key?(scope)
         @users[scope]
       else
         unless user = request.original_fullpath.starts_with?("/api/v3") ? nil : session_serializer.fetch(scope)

@@ -26,7 +26,7 @@ RSpec.configure do |config|
         securitySchemes: {
           BearerAuth: {
             type: 'http',
-            scheme: 'bearer',
+            scheme: 'bearer'
           }
         },
         schemas: {
@@ -36,10 +36,10 @@ RSpec.configure do |config|
               api_v3_user: {
                 type: 'object',
                 properties: {
-                  email: {type: 'string'},
-                  password: {type: 'string'}
-                },
-              },
+                  email: { type: 'string' },
+                  password: { type: 'string' }
+                }
+              }
             },
             required: %w[email password]
           }

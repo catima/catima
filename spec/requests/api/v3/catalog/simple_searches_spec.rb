@@ -10,7 +10,7 @@ RSpec.describe 'api/v3/{catalog_id}/search', type: :request do
   let!(:catalog_one) { catalogs(:one) }
   let!(:catalog_id) { catalog_one.id }
 
-  let(:search) { {q: 'one'} }
+  let(:search) { { q: 'one' } }
   let(:uuid) { 'unique-book-search-uuid' }
 
   path '/api/v3/{catalog_id}/search' do
@@ -24,14 +24,13 @@ RSpec.describe 'api/v3/{catalog_id}/search', type: :request do
       parameter name: :search, in: :body, schema: {
         type: :object,
         properties: {
-          q: {type: :string, description: 'search query'},
-          type: {type: :string, description: 'item type slug'}
+          q: { type: :string, description: 'search query' },
+          type: { type: :string, description: 'item type slug' }
         },
         required: ['q']
       }
 
       response(200, 'successful') do
-
         run_test! do
           body = JSON.parse(response.body)
           expect(body).to have_key("data")
@@ -55,7 +54,6 @@ RSpec.describe 'api/v3/{catalog_id}/search', type: :request do
       consumes 'application/json'
       security [BearerAuth: []]
       response(200, 'successful') do
-
         run_test! do
           body = JSON.parse(response.body)
           expect(body).to have_key("data")

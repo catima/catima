@@ -51,12 +51,13 @@ class React::ItemsController < React::BaseController
   private
 
   def items_scope
-    @_items_scope ||= begin
-                        catalog.public_items
-                               .includes(:catalog)
-                               .includes(:item_type)
-                               .includes(:item_type => :fields)
-                      end
+    @items_scope ||=
+      begin
+        catalog.public_items
+               .includes(:catalog)
+               .includes(:item_type)
+               .includes(:item_type => :fields)
+      end
   end
 
   def item_type

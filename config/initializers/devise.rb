@@ -256,7 +256,7 @@ Devise.setup do |config|
       shib_session_id_field: ENV['AUTH_SHIB_SESSION_ID'],
       shib_application_id_field: ENV['AUTH_SHIB_APP_ID'],
       uid_field: 'eppn',
-      info_fields: {email: 'mail'}
+      info_fields: { email: 'mail' }
     )
   end
 
@@ -294,7 +294,7 @@ Devise.setup do |config|
       ['DELETE', %r{^/api/v3/logout.json$}]
     ]
     jwt.expiration_time = 1.day.to_i
-    jwt.request_formats = {api_v3_user: [nil, :json]}
+    jwt.request_formats = { api_v3_user: [nil, :json] }
   end
   config.navigational_formats = ['*/*', :html, :json]
 end
