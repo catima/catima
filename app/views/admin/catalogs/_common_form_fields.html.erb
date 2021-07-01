@@ -10,19 +10,19 @@
 <hr>
 
 <%= f.form_group(
-      :requires_review,
-      :help => "If checked, editors of this catalog will not be able to "\
+  :requires_review,
+  :help => "If checked, editors of this catalog will not be able to "\
                "create items that are immediately visible to the public. "\
                "An additional review and approval step is required."
-      ) do %>
+) do %>
   <%= f.check_box(:requires_review) %>
 <% end %>
 
 <%= f.form_group(
-      :advertize,
-      :help => "If checked, this catalog will be publicly listed "\
+  :advertize,
+  :help => "If checked, this catalog will be publicly listed "\
                "on the welcome page."
-      ) do %>
+) do %>
   <%= f.check_box(:advertize) %>
 <% end %>
 
@@ -35,24 +35,39 @@
 <% end %>
 
 <hr>
+<%= f.form_group(
+  :api_enabled,
+  :help => "If checked, this catalog will be accessible via tha api "
+) do %>
+  <label for="api_enabled"><%= t('catalog_admin.catalogs.common_form_fields.api_enabled') %></label>
+  <%= link_to('API doc', url_for('/api-docs')) %>
+
+  <%= f.check_box(:api_enabled) %>
+<% end %>
+
+<%= f.number_field(:throttle_time_window, min: 0, step: 1, label: t('catalog_admin.catalogs.common_form_fields.throttle_time_window')) %>
+<%= f.number_field(:throttle_max_requests, min: 0, step: 1, label: t('catalog_admin.catalogs.common_form_fields.throttle_max_requests')) %>
+<hr>
 
 <%= f.select(
-  :custom_root_page_id,
-  options_from_collection_for_select(
-    @catalog.pages, "id", "title", @catalog.custom_root_page_id
-  ),
-  { include_blank: true }
-) %>
+      :custom_root_page_id,
+      options_from_collection_for_select(
+        @catalog.pages, "id", "title", @catalog.custom_root_page_id
+      ),
+      {include_blank: true}
+    ) %>
 
 <% if @admins.present? %>
   <hr>
   <label>
-    <% if @admins.count >  1 %>Administrators<% else %>Administrator<% end %>
+    <% if @admins.count > 1 %>Administrators
+    <% else %>Administrator
+    <% end %>
   </label>
   <ul>
     <% @admins.each do |user| %>
       <li>
-      <%= link_to(
+        <%= link_to(
               user.email,
               edit_admin_user_path(user)
             ) %>

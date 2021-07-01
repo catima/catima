@@ -1,14 +1,20 @@
 <% if current_user.system_admin? %>
   <%= link_to(
-          fa_icon(:pencil),
-          edit_admin_catalog_path(model, model.valid_locale),
-          class: "btn btn-xs btn-outline-secondary catalog-action-edit",
-          "data-toggle" => "tooltip", "data-placement" => "top", "title" => "Edit"
+        fa_icon(:history),
+        admin_catalog_api_logs_path(model, model.valid_locale),
+        class: "btn btn-xs btn-outline-secondary catalog-action-edit",
+        "data-toggle" => "tooltip", "data-placement" => "top", "title" => "Logs"
+      ) %>
+  <%= link_to(
+        fa_icon(:pencil),
+        edit_admin_catalog_path(model, model.valid_locale),
+        class: "btn btn-xs btn-outline-secondary catalog-action-edit",
+        "data-toggle" => "tooltip", "data-placement" => "top", "title" => "Edit"
       ) %>
   <%= deactivation_toggle(
-          model,
-          :admin_catalog_path,
-          model,
+        model,
+        :admin_catalog_path,
+        model,
           model.valid_locale
       )%>
   <%= link_to(

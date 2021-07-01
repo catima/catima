@@ -112,7 +112,7 @@ class LinkedCategoryInput extends Component {
       this.props.selectedCategory.label = selectedCategory.label;
     }
 
-    axios.get(`/api/v2/${this.props.catalog}/${this.props.locale}/categories/${this.props.selectedCategory.choiceSetId}/${this.props.selectedCategory.value}`, config)
+    axios.get(`/react/${this.props.catalog}/${this.props.locale}/categories/${this.props.selectedCategory.choiceSetId}/${this.props.selectedCategory.value}`, config)
     .then(res => {
       if(res.data.inputData === null) this.setState({ inputData: [] });
       else this.setState({ inputData: res.data.inputData });

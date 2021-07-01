@@ -30,3 +30,14 @@
 <% end %>
 
 <hr>
+
+<%= f.form_group(
+  :api_enabled,
+  :help => "If checked, this catalog will be accessible via tha api "
+) do %>
+  <label for="api_enabled"><%= t('catalog_admin.catalogs.common_form_fields.api_enabled') %></label>
+  <%= link_to('API doc', url_for('/api-docs')) %>
+
+  <%= f.check_box(:api_enabled) %>
+<% end %>
+<hr>

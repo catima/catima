@@ -54,4 +54,8 @@ class ItemList
 
     unpaginated_list_items.order(Arel.sql("items.data->>'#{item_type.primary_human_readable_field.uuid}'"))
   end
+
+  def items_grouped_by_item_types
+    items.group_by(&:item_type_id)
+  end
 end

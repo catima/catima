@@ -53,6 +53,8 @@ class User < ApplicationRecord
   validates_presence_of :primary_language
   validates_inclusion_of :primary_language, :in => :available_locales
 
+  before_create :add_jti
+
   def self.sorted
     order(:email => "ASC")
   end
@@ -95,5 +97,15 @@ class User < ApplicationRecord
 
   def describe
     as_json(only: %i[id email])
+  end
+
+  def jwt_subject
+    id
+  end
+
+  private
+
+  def add_jti
+    self.jti ||= SecureRandom.uuid
   end
 end

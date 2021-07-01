@@ -1,5 +1,7 @@
 # rubocop:disable Metrics/BlockLength
 Rails.application.routes.draw do
+  mount Rswag::Ui::Engine => '/api-docs'
+  mount Rswag::Api::Engine => '/api-docs'
   # ===========================================================================
   # API
 
@@ -27,6 +29,67 @@ Rails.application.routes.draw do
     end
   end
 
+  namespace :react, format: 'json' do
+    scope :path => ':catalog_slug' do
+      scope :path => ':locale' do
+        get '/' => 'catalogs#show'
+        get ':item_type' => 'items#index', as: 'items'
+        get 'items' => 'items#geo_viewer_index'
+        get 'items/:id' => 'items#geo_viewer_show'
+        get ':item_type_slug/:field_uuid' => 'fields#index', as: 'fields'
+        get '/categories/:category_id/:field_uuid' => 'fields#index', as: 'category_fields'
+      end
+    end
+  end
+
+  namespace :api, format: 'json' do
+    namespace :v3 do
+      devise_for :users, defaults: {format: :json},
+                 class_name: 'APIUser',
+                 skip: [:registrations, :invitations, :passwords, :confirmations, :unlocks, :omniauth_callbacks],
+                 path: '', path_names: {sign_in: 'login', sign_out: 'logout'}
+      resources :catalogs, only: %i(index)
+
+      scope module: 'catalog' do
+        scope ':catalog_id' do
+
+          resources :simple_searches, path: "search", param: :uuid, only: [:create, :show]
+          resources :advanced_searches, :path => "search/advanced", :param => :uuid, :only => [:new, :create, :show]
+
+          resources :users, only: %i(index)
+          resources :groups, only: %i(index)
+          resources :categories, only: %i(index)
+          resources :item_types, only: %i(index)
+          get '/item_type/:item_type_id' => 'item_types#show'
+          resources :choice_sets, only: %i(index)
+          get '/choice_set/:choice_set_id' => 'choice_sets#show'
+
+          namespace 'item_type' do
+            scope ':item_type_id' do
+              resources :fields, only: %i(index)
+              get '/field/:field_id' => 'fields#show'
+              resources :items, only: %i(index)
+              get '/item/:item_id' => 'items#show'
+            end
+          end
+
+          namespace 'category' do
+            scope ':category_id' do
+              resources :fields, only: %i(index)
+            end
+          end
+
+          namespace 'choice_set' do
+            scope ':choice_set_id' do
+              resources :choices, only: %i(index)
+              get '/choice/:choice_id' => 'choices#show'
+            end
+          end
+        end
+      end
+    end
+  end
+
   # ===========================================================================
   # Maintenance mode
 
@@ -49,7 +112,7 @@ Rails.application.routes.draw do
       get "register" => "users/registrations#new",
           :as => :new_user_registration
       post "register" => "users/registrations#create",
-          :as => :user_registration
+           :as => :user_registration
       get "my-profile" => "users/registrations#edit",
           :as => :edit_user_registration
       patch "my-profile" => "users/registrations#update"
@@ -73,7 +136,7 @@ Rails.application.routes.draw do
     resources :memberships, only: %i(index create destroy), path: '_groups'
   end
 
-  devise_for :users, only: :omniauth_callbacks, controllers: { omniauth_callbacks: 'users/omniauth_callbacks' }
+  devise_for :users, only: :omniauth_callbacks, controllers: {omniauth_callbacks: 'users/omniauth_callbacks'}
 
   # ===========================================================================
   # System administration
@@ -81,7 +144,9 @@ Rails.application.routes.draw do
   namespace "admin" do
     get "/" => "dashboard#index", :as => :dashboard
     get "/stats" => "dashboard#stats"
-    resources :catalogs, :param => :slug, :except => [:index]
+    resources :catalogs, :param => :slug, :except => [:index] do
+      resources :api_logs, only: [:index], on: :member
+    end
     resources :template_storages, :except => :index
     resources :configurations, :only => :update
     resources :users, :except => :index
@@ -318,8 +383,8 @@ Rails.application.routes.draw do
   # ===========================================================================
   # Error pages
 
-  match '/404', to:'errors#error_404', :via => :all
-  match '/422', to:'errors#error_404', :via => :all
-  match '/500', to:'errors#error_500', :via => :all
-  match '/505', to:'errors#error_500', :via => :all
+  match '/404', to: 'errors#error_404', :via => :all
+  match '/422', to: 'errors#error_404', :via => :all
+  match '/500', to: 'errors#error_500', :via => :all
+  match '/505', to: 'errors#error_500', :via => :all
 end

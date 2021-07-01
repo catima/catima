@@ -256,7 +256,7 @@ Devise.setup do |config|
       shib_session_id_field: ENV['AUTH_SHIB_SESSION_ID'],
       shib_application_id_field: ENV['AUTH_SHIB_APP_ID'],
       uid_field: 'eppn',
-      info_fields: { email: 'mail' }
+      info_fields: {email: 'mail'}
     )
   end
 
@@ -264,10 +264,11 @@ Devise.setup do |config|
   # If you want to use other strategies, that are not supported by Devise, or
   # change the failure app, you can configure them inside the config.warden block.
   #
-  # config.warden do |manager|
-  #   manager.intercept_401 = false
-  #   manager.default_strategies(scope: :user).unshift :some_external_strategy
-  # end
+  config.warden do |manager|
+    # manager.intercept_401 = false
+    # manager.default_strategies(scope: :user).unshift :some_external_strategy
+    manager.failure_app = CustomFailureApp
+  end
 
   # ==> Mountable engine configurations
   # When using Devise inside an engine, let's call it `MyEngine`, and this engine
@@ -282,4 +283,18 @@ Devise.setup do |config|
   # When using OmniAuth, Devise cannot automatically set OmniAuth path,
   # so you need to do it manually. For the users scope, it would be:
   # config.omniauth_path_prefix = '/my_engine/users/auth'
+  config.jwt do |jwt|
+    jwt.secret = ENV['DEVISE_JWT_SECRET_KEY']
+    jwt.dispatch_requests = [
+      ['POST', %r{^/api/v3/login$}],
+      ['POST', %r{^/api/v3/login.json$}]
+    ]
+    jwt.revocation_requests = [
+      ['DELETE', %r{^/api/v3/logout$}],
+      ['DELETE', %r{^/api/v3/logout.json$}]
+    ]
+    jwt.expiration_time = 1.day.to_i
+    jwt.request_formats = {api_v3_user: [nil, :json]}
+  end
+  config.navigational_formats = ['*/*', :html, :json]
 end

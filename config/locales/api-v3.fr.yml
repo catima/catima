@@ -1,0 +1,10 @@
+fr:
+  api-v3:
+    responses:
+      unauthorized: "Unauthorized"
+      forbidden: "Forbidden"
+      not_found: "Not Found"
+      validation_failed: "Validation Failed"
+      not_allowed: "Not Allowed"
+      invalid_token: "Invalid authentication token"
+      authentication_error: "Authentication error"

@@ -214,7 +214,7 @@ class GeoViewer extends React.Component {
     };
 
     let self = this;
-    axios.get('/api/v1/'+this.locale+'/catalogs/'+this.catalog+'/items/'+fid+'.json', config)
+    axios.get('/react/' + this.catalog + '/' + this.locale + '/items/' + fid + '.json', config)
         .then(res => {
           marker._popup.setContent(res.data.views.map_popup);
         })

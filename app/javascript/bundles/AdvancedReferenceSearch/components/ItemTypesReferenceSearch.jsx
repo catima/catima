@@ -97,7 +97,7 @@ class ItemTypesReferenceSearch extends Component {
       }
     }
 
-    axios.get(`/api/v2/${this.props.catalog}/${this.props.locale}/${this.props.itemType}/${this.props.selectedFilter.value}`, config)
+    axios.get(`/react/${this.props.catalog}/${this.props.locale}/${this.props.itemType}/${this.props.selectedFilter.value}`, config)
     .then(res => {
 
       if(res.data.inputData === null) this.setState({ inputData: [] });

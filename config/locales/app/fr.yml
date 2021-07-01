@@ -23,6 +23,7 @@ fr:
       catalog:
         name: "Nom"
         advertize: "Promouvoir"
+        api_enabled: "API activée"
         visible: "Visible"
         custom_root_page_id: "Page d'accueil personnalisée"
       group:
@@ -428,6 +429,9 @@ fr:
         open_for_everyone: Ouvert à tous
         open_to_members: Ouvert aux membres
         open_to_catalog_staff: Ouvert au personnel du catalogue
+        api_enabled: API V3 activée
+        throttle_time_window: Fenetre temporelle de limitation api en secondes
+        throttle_max_requests: Nombre maximum de requetes par utilisateur par catalogue
       edit_style:
         custom_style_catalog: "Personnaliser le style de catalogue"
         general: "Général"

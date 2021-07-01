@@ -1,0 +1,20 @@
+<table class="table">
+  <thead>
+  <tr>
+    <th>user</th>
+    <th>endpoint</th>
+    <th>remote_ip</th>
+    <th>payload</th>
+  </tr>
+  </thead>
+  <tbody>
+  <% @api_logs.each do |api_log| %>
+    <tr>
+      <td><%= "#{api_log.user.id} : #{api_log.user.email}" %></td>
+      <td><%= api_log.endpoint %></td>
+      <td><%= api_log.remote_ip %></td>
+      <td><%= api_log.payload %></td>
+    </tr>
+  <% end %>
+  </tbody>
+</table>
