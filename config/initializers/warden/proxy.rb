@@ -1,3 +1,4 @@
+# rubocop:disable Metrics/PerceivedComplexity
 module Warden
   class Proxy
     def user(argument={})
@@ -17,3 +18,4 @@ module Warden
     end
   end
 end
+# rubocop:enable Metrics/PerceivedComplexity

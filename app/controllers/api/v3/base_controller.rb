@@ -71,6 +71,7 @@ class API::V3::BaseController < ApplicationController
     render json: { message: message, code: code }, status: status
   end
 
+  # rubocop:disable Metrics/PerceivedComplexity
   def set_pagination_header(name, _options={})
     scope = instance_variable_get("@#{name}")
     request_params = request.query_parameters
@@ -91,4 +92,5 @@ class API::V3::BaseController < ApplicationController
     headers["Link"] = pagination_links.join(", ")
     headers["Total"] = scope.total_count
   end
+  # rubocop:enable Metrics/PerceivedComplexity
 end

@@ -3,6 +3,7 @@ class API::V3::SessionsController < Devise::SessionsController
 
   skip_before_action :verify_signed_out_user
 
+  # rubocop:disable Metrics/MethodLength
   def create
     unless request.format == :json
       sign_out
@@ -31,6 +32,7 @@ class API::V3::SessionsController < Devise::SessionsController
       end
     end
   end
+  # rubocop:enable Metrics/MethodLength
 
   def log_request(resource)
     APILog.create(
