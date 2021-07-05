@@ -55,9 +55,11 @@ class ApplicationController < ActionController::Base
   end
 
   # So we can use Pundit policies for api_users
+  # rubocop:disable Naming/MemoizedInstanceVariableName
   def set_current_user
     @current_user ||= warden.authenticate(scope: :api_v3_user)
   end
+  # rubocop:enable Naming/MemoizedInstanceVariableName
 
   # Overridden in other controllers to indicate whether the controller is
   # scoped to a specific catalog.
