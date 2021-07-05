@@ -300,4 +300,3 @@ Devise.setup do |config|
   config.navigational_formats = ['*/*', :html, :json]
 end
 # rubocop:enable Metrics/BlockLength
-
