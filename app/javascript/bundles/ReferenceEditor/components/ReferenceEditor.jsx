@@ -18,11 +18,9 @@ class ReferenceEditor extends Component {
   }
 
   componentDidMount(){
-    const csrfToken = $('meta[name="csrf-token"]').attr('content');
     let config = {
       retry: 3,
       retryDelay: 1000,
-      headers: {'X-CSRF-Token': csrfToken}
     };
 
     axios.get(`/react/${this.props.catalog}/${this.props.locale}/${this.props.itemType}?page=1`, config)

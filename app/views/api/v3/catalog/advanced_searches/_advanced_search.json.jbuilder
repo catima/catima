@@ -1,8 +1,7 @@
-json.id simple_search.id
-json.uuid simple_search.uuid
-json.query simple_search.query
+json.id advanced_search.id
+json.uuid advanced_search.uuid
 json.item_types do
-  json.array! simple_search_results.items_grouped_by_item_types do |item_type_id, items|
+  json.array! advanced_search_results.items_grouped_by_item_types do |item_type_id, items|
     if item_type = items.first&.item_type
       json.id item_type_id
       json.slug item_type.slug

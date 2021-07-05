@@ -100,11 +100,9 @@ class LinkedCategoryInput extends Component {
   }
 
   _getDataFromServer(selectedCategory) {
-    const csrfToken = $('meta[name="csrf-token"]').attr('content');
     let config = {
       retry: 3,
       retryDelay: 1000,
-      headers: {'X-CSRF-Token': csrfToken}
     };
 
     if (typeof selectedCategory !== 'undefined' && this.state.selectedItem !== null) {

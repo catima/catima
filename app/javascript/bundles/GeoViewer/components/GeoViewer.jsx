@@ -205,12 +205,10 @@ class GeoViewer extends React.Component {
 
   loadPopupContent(marker, feature){
     const fid = feature.properties.id;
-    const csrfToken = $('meta[name="csrf-token"]').attr('content');
 
     let config = {
       retry: 3,
       retryDelay: 1000,
-      headers: {'X-CSRF-Token': csrfToken}
     };
 
     let self = this;

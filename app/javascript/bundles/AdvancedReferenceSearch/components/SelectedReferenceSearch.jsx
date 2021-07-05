@@ -121,9 +121,7 @@ class SelectedReferenceSearch extends Component {
       };
     }
 
-    const csrfToken = $('meta[name="csrf-token"]').attr('content');
-    let config = { headers: {'X-CSRF-Token': csrfToken} };
-    const response = await fetch(`${this.props.itemsUrl}&search=${search}&page=${page}`, config);
+    const response = await fetch(`${this.props.itemsUrl}&search=${search}&page=${page}`);
     const responseJSON = await response.json();
 
     if (!this.state.isInitialized) {

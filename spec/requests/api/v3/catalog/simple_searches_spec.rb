@@ -44,8 +44,6 @@ RSpec.describe 'api/v3/{catalog_id}/search', type: :request do
   end
 
   path '/api/v3/{catalog_id}/search/{uuid}' do
-    parameter name: 'page', in: :query, type: :integer, description: 'page number', default: 1, required: false
-
     parameter name: 'catalog_id', in: :path, type: :integer, description: 'catalog_id'
     parameter name: 'uuid', in: :path, type: :string, description: 'search uuid'
 

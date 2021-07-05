@@ -81,4 +81,3 @@ yarn-debug.log*
 
 /swagger
 .byebug_history
-redis.yml

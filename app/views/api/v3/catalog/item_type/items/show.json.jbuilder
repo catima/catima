@@ -1,3 +1,3 @@
 json.data do
-  json.partial! 'item', item: @item
+  json.partial! partial: 'item', locals: { item: @item, with_field_values: true }
 end

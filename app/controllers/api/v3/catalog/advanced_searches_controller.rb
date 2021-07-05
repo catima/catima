@@ -1,5 +1,4 @@
-class AdvancedSearchesController < ApplicationController
-  include ControlsCatalog
+class API::V3::Catalog::AdvancedSearchesController < API::V3::Catalog::BaseController
 
   def new
     @advance_search_confs = @catalog.advanced_search_configurations.with_active_item_type
@@ -12,7 +11,7 @@ class AdvancedSearchesController < ApplicationController
 
       # Initial display of map
       if @advanced_search_config.search_type_map?
-        params[:item_type] = @advanced_search_config.item_type.slug
+        params[:item_type_id] = @advanced_search_config.item_type.z
         build_advanced_search
         @search = ItemList::AdvancedSearchResult.new(
           :model => @advanced_search
@@ -28,31 +27,20 @@ class AdvancedSearchesController < ApplicationController
 
       @fields = @advanced_search.fields
 
-      return redirect_to :action => :new, :item_type => @item_types.first if params[:item_type].blank?
+      return redirect_to :action => :new, :item_type => @item_types.first if params[:item_type_id].blank?
     end
   end
 
   def create
     build_advanced_search
     if @advanced_search.update(advanced_search_params)
-      respond_to do |f|
-        f.html { redirect_to(:action => :show, :uuid => @advanced_search) }
-        f.js do
-          params[:uuid] = @advanced_search.uuid
-          find_advanced_search
-          find_advanced_search_configuration
-          @advanced_search_results = ItemList::AdvancedSearchResult.new(
-            :model => @saved_search,
-            :page => params[:page]
-          )
-          render("show")
-        end
-      end
-    else
-      render("new")
+      @saved_search = scope.where(:uuid => @advanced_search.uuid).first
+      @advanced_search_results = ItemList::AdvancedSearchResult.new(
+        :model => @saved_search,
+        :page => params[:page]
+      )
+      render("show")
     end
-  rescue StandardError
-    redirect_to(:action => :new)
   end
 
   def show
@@ -67,18 +55,13 @@ class AdvancedSearchesController < ApplicationController
 
   protected
 
-  def track
-    # Log event only if item_type param is present to avoid duplicates
-    track_event("catalog_front") if params[:item_type].present?
-  end
-
   private
 
   def build_advanced_search
-    type = catalog.item_types.where(:slug => params[:item_type]).first
+    type = @catalog.item_types.find(params[:item_type_id])
 
     @advanced_search = scope.new do |model|
-      model.item_type = type || catalog.item_types.sorted.first
+      model.item_type = type || @catalog.item_types.sorted.first
       model.creator = current_user if current_user.authenticated?
     end
   end
@@ -97,6 +80,6 @@ class AdvancedSearchesController < ApplicationController
   end
 
   def scope
-    catalog.advanced_searches
+    @catalog.advanced_searches
   end
 end

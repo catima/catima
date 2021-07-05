@@ -3,7 +3,6 @@ class API::V3::Catalog::SimpleSearchesController < API::V3::Catalog::BaseControl
     paginate
     build_simple_search
     if @simple_search.update(simple_search_params)
-      # byebug
       @simple_search_results = ItemList::SimpleSearchResult.new(
         :catalog => @catalog,
         :query => @simple_search.query,

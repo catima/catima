@@ -45,11 +45,9 @@ class ReferenceSearch extends Component {
       return;
     }
 
-    const csrfToken = $('meta[name="csrf-token"]').attr('content');
     let config = {
       retry: 3,
       retryDelay: 1000,
-      headers: {'X-CSRF-Token': csrfToken}
     };
 
     axios.get(

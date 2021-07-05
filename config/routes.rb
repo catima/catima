@@ -44,16 +44,14 @@ Rails.application.routes.draw do
 
   namespace :api, format: 'json' do
     namespace :v3 do
-      devise_for :users, defaults: { format: :json },
+      devise_for :users, defaults: {format: :json},
                  class_name: 'APIUser',
                  skip: [:registrations, :invitations, :passwords, :confirmations, :unlocks, :omniauth_callbacks],
-                 path: '', path_names: { sign_in: 'login', sign_out: 'logout' }
+                 path: '', path_names: {sign_in: 'login', sign_out: 'logout'}
       resources :catalogs, only: %i(index)
 
       scope module: 'catalog' do
         scope ':catalog_id' do
-          resources :simple_searches, path: "search", param: :uuid, only: [:create, :show]
-          resources :advanced_searches, :path => "search/advanced", :param => :uuid, :only => [:new, :create, :show]
 
           resources :users, only: %i(index)
           resources :groups, only: %i(index)
@@ -83,6 +81,13 @@ Rails.application.routes.draw do
               resources :choices, only: %i(index)
               get '/choice/:choice_id' => 'choices#show'
             end
+          end
+
+          resources :simple_searches, path: "search", param: :uuid, only: [:create, :show]
+          scope 'advanced_search' do
+            get ':item_type_id/new' => 'advanced_searches#new'
+            post ':item_type_id' => 'advanced_searches#create'
+            get ':uuid' => 'advanced_searches#show'
           end
         end
       end
@@ -135,7 +140,7 @@ Rails.application.routes.draw do
     resources :memberships, only: %i(index create destroy), path: '_groups'
   end
 
-  devise_for :users, only: :omniauth_callbacks, controllers: { omniauth_callbacks: 'users/omniauth_callbacks' }
+  devise_for :users, only: :omniauth_callbacks, controllers: {omniauth_callbacks: 'users/omniauth_callbacks'}
 
   # ===========================================================================
   # System administration

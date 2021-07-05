@@ -5,15 +5,19 @@ json.type field.type
 json.created_at field.created_at
 json.updated_at field.updated_at
 
-json.name_fr field.name_fr
-json.name_en field.name_en
-json.name_de field.name_de
-json.name_it field.name_it
+json.set! "name_#{field.catalog.primary_language}", field.public_send("name_#{field.catalog.primary_language}")
+if field.catalog.other_languages
+  field.catalog.other_languages do | lang |
+    json.set! "name_#{lang}", item_type.public_send("name_#{lang}")
+  end
+end
 
-json.name_plural_fr field.name_plural_fr
-json.name_plural_en field.name_plural_en
-json.name_plural_de field.name_plural_de
-json.name_plural_it field.name_plural_it
+json.set! "name_plural_#{field.catalog.primary_language}", field.public_send("name_plural_#{field.catalog.primary_language}")
+if field.catalog.other_languages
+  field.catalog.other_languages do | lang |
+    json.set! "name_plural_#{lang}", field.public_send("name_plural_#{lang}")
+  end
+end
 
 json.comment field.comment
 json.default_value field.default_value
