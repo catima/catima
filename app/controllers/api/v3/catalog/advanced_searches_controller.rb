@@ -1,5 +1,4 @@
 class API::V3::Catalog::AdvancedSearchesController < API::V3::Catalog::BaseController
-
   def new
     @advance_search_confs = @catalog.advanced_search_configurations.with_active_item_type
     build_advanced_search
@@ -33,14 +32,13 @@ class API::V3::Catalog::AdvancedSearchesController < API::V3::Catalog::BaseContr
 
   def create
     build_advanced_search
-    if @advanced_search.update(advanced_search_params)
-      @saved_search = scope.where(:uuid => @advanced_search.uuid).first
-      @advanced_search_results = ItemList::AdvancedSearchResult.new(
-        :model => @saved_search,
-        :page => params[:page]
-      )
-      render("show")
-    end
+    return unless @advanced_search.update(advanced_search_params)
+    @saved_search = scope.where(:uuid => @advanced_search.uuid).first
+    @advanced_search_results = ItemList::AdvancedSearchResult.new(
+      :model => @saved_search,
+      :page => params[:page]
+    )
+    render("show")
   end
 
   def show

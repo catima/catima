@@ -44,15 +44,14 @@ Rails.application.routes.draw do
 
   namespace :api, format: 'json' do
     namespace :v3 do
-      devise_for :users, defaults: {format: :json},
+      devise_for :users, defaults: { format: :json },
                  class_name: 'APIUser',
                  skip: [:registrations, :invitations, :passwords, :confirmations, :unlocks, :omniauth_callbacks],
-                 path: '', path_names: {sign_in: 'login', sign_out: 'logout'}
+                 path: '', path_names: { sign_in: 'login', sign_out: 'logout' }
       resources :catalogs, only: %i(index)
 
       scope module: 'catalog' do
         scope ':catalog_id' do
-
           resources :users, only: %i(index)
           resources :groups, only: %i(index)
           resources :categories, only: %i(index)
@@ -140,7 +139,7 @@ Rails.application.routes.draw do
     resources :memberships, only: %i(index create destroy), path: '_groups'
   end
 
-  devise_for :users, only: :omniauth_callbacks, controllers: {omniauth_callbacks: 'users/omniauth_callbacks'}
+  devise_for :users, only: :omniauth_callbacks, controllers: { omniauth_callbacks: 'users/omniauth_callbacks' }
 
   # ===========================================================================
   # System administration
