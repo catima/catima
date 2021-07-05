@@ -7,7 +7,7 @@ module Warden
       if @users.key?(scope)
         @users[scope]
       else
-        unless user = request.original_fullpath.starts_with?("/api/v3") ? nil : session_serializer.fetch(scope)
+        unless (user = request.original_fullpath.starts_with?("/api/v3") ? nil : session_serializer.fetch(scope))
           run_callbacks = opts.fetch(:run_callbacks, true)
           manager._run_callbacks(:after_failed_fetch, user, self, :scope => scope) if run_callbacks
         end

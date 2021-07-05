@@ -40,10 +40,6 @@ class API::V3::SessionsController < Devise::SessionsController
     )
   end
 
-  def destroy
-    super
-  end
-
   private
 
   def current_token

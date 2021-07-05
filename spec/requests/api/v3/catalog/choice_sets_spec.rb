@@ -1,3 +1,4 @@
+# rubocop:disable Metrics/BlockLength
 require 'swagger_helper'
 
 RSpec.describe 'api/v3/{catalog_id}/choice_set(s)', type: :request do
@@ -32,3 +33,4 @@ RSpec.describe 'api/v3/{catalog_id}/choice_set(s)', type: :request do
     end
   end
 end
+# rubocop:enable Metrics/BlockLength

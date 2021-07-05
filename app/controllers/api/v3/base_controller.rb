@@ -22,11 +22,11 @@ class API::V3::BaseController < ApplicationController
     render_not_found("not_found")
   end
 
-  rescue_from ActiveRecord::RecordNotFound do |e|
+  rescue_from ActiveRecord::RecordNotFound do
     render_not_found("not_found")
   end
 
-  rescue_from Pundit::NotAuthorizedError do |e|
+  rescue_from Pundit::NotAuthorizedError do
     render_forbidden("not_allowed")
   end
 
@@ -71,7 +71,7 @@ class API::V3::BaseController < ApplicationController
     render json: { message: message, code: code }, status: status
   end
 
-  def set_pagination_header(name, options={})
+  def set_pagination_header(name, _options={})
     scope = instance_variable_get("@#{name}")
     request_params = request.query_parameters
     url_without_params = request.original_url.slice(0..(request.original_url.index("?") - 1)) unless request_params.empty?

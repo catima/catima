@@ -1,3 +1,4 @@
+# rubocop:disable Metrics/BlockLength
 require 'swagger_helper'
 
 RSpec.describe 'api/v3/{catalog_id}/advanced_search', type: :request do
@@ -117,3 +118,4 @@ RSpec.describe 'api/v3/{catalog_id}/advanced_search', type: :request do
     end
   end
 end
+# rubocop:enable Metrics/BlockLength

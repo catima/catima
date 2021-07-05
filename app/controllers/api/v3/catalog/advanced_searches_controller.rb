@@ -33,6 +33,7 @@ class API::V3::Catalog::AdvancedSearchesController < API::V3::Catalog::BaseContr
   def create
     build_advanced_search
     return unless @advanced_search.update(advanced_search_params)
+
     @saved_search = scope.where(:uuid => @advanced_search.uuid).first
     @advanced_search_results = ItemList::AdvancedSearchResult.new(
       :model => @saved_search,
@@ -50,8 +51,6 @@ class API::V3::Catalog::AdvancedSearchesController < API::V3::Catalog::BaseContr
   rescue StandardError
     redirect_to(:action => :new)
   end
-
-  protected
 
   private
 

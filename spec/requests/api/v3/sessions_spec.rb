@@ -1,3 +1,4 @@
+# rubocop:disable Metrics/BlockLength
 require 'swagger_helper'
 require 'devise/jwt/test_helpers'
 
@@ -34,7 +35,7 @@ RSpec.describe 'api/v3/sessions', type: :request do
       end
 
       response(401, 'authentication_error') do
-        let!(:api_v3_user) {}
+        let!(:api_v3_user) { {} }
 
         run_test! do |response|
           body = JSON.parse(response.body)
@@ -64,3 +65,4 @@ RSpec.describe 'api/v3/sessions', type: :request do
     end
   end
 end
+# rubocop:enable Metrics/BlockLength

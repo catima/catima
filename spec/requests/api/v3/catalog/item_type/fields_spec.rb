@@ -1,3 +1,4 @@
+# rubocop:disable Metrics/BlockLength
 require 'swagger_helper'
 
 RSpec.describe 'api/v3/{catalog_id}/item_type/{item_type_id}/field(s)', type: :request do
@@ -59,3 +60,4 @@ RSpec.describe 'api/v3/{catalog_id}/item_type/{item_type_id}/field(s)', type: :r
     end
   end
 end
+# rubocop:enable Metrics/BlockLength
