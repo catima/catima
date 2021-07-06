@@ -22,16 +22,16 @@ class Admin::CatalogsTest < ActionDispatch::IntegrationTest
     assert(catalog.requires_review?)
   end
 
-  # test "edit a catalog" do
-  #   log_in_as("system-admin@example.com", "password")
-  #   visit("/admin")
-  #   first("a.catalog-action-edit").click
-  #   fill_in("Name", :with => "Changed by test")
-  #
-  #   assert_difference("Catalog.where(:name => 'Changed by test').count") do
-  #     click_on("Save catalog")
-  #   end
-  # end
+  test "edit a catalog" do
+    log_in_as("system-admin@example.com", "password")
+    visit("/admin")
+    first("a.catalog-action-edit").click
+    fill_in("Name", :with => "Changed by test")
+
+    assert_difference("Catalog.where(:name => 'Changed by test').count") do
+      click_on("Save catalog")
+    end
+  end
 
   test "deactivate a catalog" do
     log_in_as("system-admin@example.com", "password")
