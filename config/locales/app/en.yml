@@ -414,13 +414,17 @@ en:
         approved: 'approved'
       destroy:
         rejected: 'rejected'
-
+    api_logs:
+      user: User
+      endpoint: Endpoint
+      remote_ip: Remote IP
+      payload: Payload
     catalog:
       settings: 'Catalog settings'
       edit_settings: 'Edit catalog settings'
       save_settings: 'Save'
       save_style: 'Save style'
-
+      no_api_logs: No API Logs
     catalogs:
       common_form_fields:
         advertize_help: "If checked, this catalog can be found in public catalog lists."

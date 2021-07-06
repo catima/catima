@@ -412,13 +412,17 @@ fr:
         approved: 'approuvé'
       destroy:
         rejected: 'rejeté'
-
+    api_logs:
+      user: Utilisateur
+      endpoint: Adresse requete
+      remote_ip: Adresse Ip
+      payload: Données
     catalog:
       settings: 'Catalogue'
       edit_settings: 'Éditer les paramètres du catalogue'
       save_settings: 'Enregistrer'
       save_style: 'Enregistrer le style'
-
+      no_api_logs: 'Aucun logs api'
     catalogs:
       common_form_fields:
         advertize_help: "Si coché, ce catalogue peut être trouvé dans les listes de catalogue publiques."

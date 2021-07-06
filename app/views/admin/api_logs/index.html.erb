@@ -1,20 +1,33 @@
-<table class="table">
-  <thead>
-  <tr>
-    <th>user</th>
-    <th>endpoint</th>
-    <th>remote_ip</th>
-    <th>payload</th>
-  </tr>
-  </thead>
-  <tbody>
-  <% @api_logs.each do |api_log| %>
+<div class="card panel-default catalogs">
+  <div class="card-header">
+    API Logs
+  </div>
+  <table class="table">
+    <thead>
     <tr>
-      <td><%= "#{api_log.user.id} : #{api_log.user.email}" %></td>
-      <td><%= api_log.endpoint %></td>
-      <td><%= api_log.remote_ip %></td>
-      <td><%= api_log.payload %></td>
+      <th><%= t('catalog_admin.api_logs.user') %></th>
+      <th><%= t('catalog_admin.api_logs.endpoint') %></th>
+      <th><%= t('catalog_admin.api_logs.remote_ip') %></th>
+      <th><%= t('catalog_admin.api_logs.payload') %></th>
     </tr>
-  <% end %>
-  </tbody>
-</table>
+    </thead>
+    <tbody>
+    <% if @api_logs.any? %>
+      <% @api_logs.each do |api_log| %>
+        <tr>
+          <td><%= "#{api_log.user.id} : #{api_log.user.email}" %></td>
+          <td><%= api_log.endpoint %></td>
+          <td><%= api_log.remote_ip %></td>
+          <td><%= api_log.payload %></td>
+        </tr>
+      <% end %>
+    <% else %>
+      <tr>
+        <td colspan="4">
+          <%= t('catalog_admin.catalog.no_api_logs') %>
+        </td>
+      </tr>
+    <% end %>
+    </tbody>
+  </table>
+</div>
