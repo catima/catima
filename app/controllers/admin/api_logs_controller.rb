@@ -9,6 +9,6 @@ class Admin::APILogsController < Admin::BaseController
   private
 
   def find_catalog
-    @catalog = Catalog.where(:slug => params[:catalog_slug]).first!
+    @catalog = Catalog.find_by(slug: params[:catalog_slug])
   end
 end

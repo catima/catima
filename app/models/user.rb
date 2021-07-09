@@ -53,7 +53,7 @@ class User < ApplicationRecord
   validates_presence_of :primary_language
   validates_inclusion_of :primary_language, :in => :available_locales
 
-  before_create :add_jti
+  before_create :set_jti_uuid
 
   def self.sorted
     order(:email => "ASC")
@@ -103,9 +103,13 @@ class User < ApplicationRecord
     id
   end
 
+  def public_and_accessible_catalogs
+    Catalog.where(visible: true, restricted: false) + Catalog.where(id: catalog_permissions.pluck(:catalog_id))
+  end
+
   private
 
-  def add_jti
+  def set_jti_uuid
     self.jti ||= SecureRandom.uuid
   end
 end

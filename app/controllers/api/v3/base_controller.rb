@@ -1,12 +1,19 @@
 class API::V3::BaseController < ApplicationController
   respond_to :json
 
+  DEFAULT_PAGE_SIZE = 1
   before_action :authenticate_user!
 
   protect_from_forgery with: :null_session
   skip_before_action :verify_authenticity_token
-  rescue_from ActionController::InvalidAuthenticityToken,
-              with: :invalid_auth_token
+
+  rescue_from ActionController::InvalidAuthenticityToken, with: :invalid_auth_token
+  rescue_from ActiveRecord::RecordNotFound do
+    render_not_found("not_found")
+  end
+  rescue_from Pundit::NotAuthorizedError do
+    render_forbidden("not_allowed")
+  end
 
   before_action :set_locale
 
@@ -20,14 +27,6 @@ class API::V3::BaseController < ApplicationController
 
   def routing_error
     render_not_found("not_found")
-  end
-
-  rescue_from ActiveRecord::RecordNotFound do
-    render_not_found("not_found")
-  end
-
-  rescue_from Pundit::NotAuthorizedError do
-    render_forbidden("not_allowed")
   end
 
   def render_unauthorized(code)

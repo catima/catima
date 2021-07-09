@@ -26,6 +26,9 @@ fr:
         api_enabled: "API activée"
         visible: "Visible"
         custom_root_page_id: "Page d'accueil personnalisée"
+        api_enabled: API V3 activée
+        throttle_time_window: Fenetre temporelle de limitation api en secondes
+        throttle_max_requests: Nombre maximum de requetes par utilisateur par catalogue
       group:
         name: "Nom"
         description: "Description"
@@ -33,6 +36,11 @@ fr:
         title: Titre
         description: Description
         item_type: Type de fiche
+      api_logs:
+        user_id: Utilisateur
+        endpoint: Adresse requete
+        remote_ip: Adresse Ip
+        payload: Données
   presenters:
     field:
       file:
@@ -412,11 +420,6 @@ fr:
         approved: 'approuvé'
       destroy:
         rejected: 'rejeté'
-    api_logs:
-      user: Utilisateur
-      endpoint: Adresse requete
-      remote_ip: Adresse Ip
-      payload: Données
     catalog:
       settings: 'Catalogue'
       edit_settings: 'Éditer les paramètres du catalogue'
@@ -433,9 +436,7 @@ fr:
         open_for_everyone: Ouvert à tous
         open_to_members: Ouvert aux membres
         open_to_catalog_staff: Ouvert au personnel du catalogue
-        api_enabled: API V3 activée
-        throttle_time_window: Fenetre temporelle de limitation api en secondes
-        throttle_max_requests: Nombre maximum de requetes par utilisateur par catalogue
+        api_enabled_help: "Si activé le catalogue sera accessible via l api "
       edit_style:
         custom_style_catalog: "Personnaliser le style de catalogue"
         general: "Général"

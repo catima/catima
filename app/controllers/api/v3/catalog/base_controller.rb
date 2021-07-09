@@ -40,7 +40,7 @@ class API::V3::Catalog::BaseController < API::V3::BaseController
 
     throttle_max_requests = @catalog.throttle_max_requests || DEFAULT_THROTTLE_MAX_REQUESTS
     if count.to_i >= throttle_max_requests
-      render :status => :too_many_requests, :json => { code: 'too_many_requests', message: "You have fired too many requests. Please wait for some time." }
+      render :status => :too_many_requests, :json => { code: 'too_many_requests', message: t('api-v3.responses.too_many_requests') }
       return
     end
     REDIS.incr(key)
@@ -48,8 +48,8 @@ class API::V3::Catalog::BaseController < API::V3::BaseController
   end
 
   def find_catalogs
-    ids = Catalog.where(visible: true, restricted: false).pluck(:id) + Catalog.where(id: @current_user.catalog_permissions.pluck(:catalog_id)).pluck(:id)
-    @catalogs = Catalog.where(id: ids.uniq, api_enabled: true).page(params[:page] || 1).per(params[:per] || 25)
+    ids = @current_user.public_and_accessible_catalogs.pluck(:id)
+    @catalogs = Catalog.where(id: ids.uniq, api_enabled: true).page(params[:page])
   end
 
   def find_catalog

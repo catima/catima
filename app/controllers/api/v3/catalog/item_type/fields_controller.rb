@@ -1,6 +1,6 @@
 class API::V3::Catalog::ItemType::FieldsController < API::V3::Catalog::ItemType::BaseController
   def index
-    @fields = @item_type.fields.page(params[:page] || 1).per(params[:per] || 25)
+    @fields = @item_type.fields.page(params[:page] ).per(params[:per] || DEFAULT_PAGE_SIZE)
   end
 
   def show

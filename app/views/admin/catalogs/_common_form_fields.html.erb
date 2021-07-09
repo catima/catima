@@ -37,16 +37,16 @@
 <hr>
 <%= f.form_group(
   :api_enabled,
-  :help => "If checked, this catalog will be accessible via tha api "
+  :help => t('catalog_admin.catalogs.common_form_fields.api_enabled_help')
 ) do %>
-  <label for="api_enabled"><%= t('catalog_admin.catalogs.common_form_fields.api_enabled') %></label>
+  <label for="api_enabled"><%= Catalog.human_attribute_name(:api_enabled) %></label>
   <%= link_to('API doc', url_for('/api-docs')) %>
 
   <%= f.check_box(:api_enabled) %>
 <% end %>
 
-<%= f.number_field(:throttle_time_window, min: 0, step: 1, label: t('catalog_admin.catalogs.common_form_fields.throttle_time_window')) %>
-<%= f.number_field(:throttle_max_requests, min: 0, step: 1, label: t('catalog_admin.catalogs.common_form_fields.throttle_max_requests')) %>
+<%= f.number_field(:throttle_time_window, min: 0, step: 1) %>
+<%= f.number_field(:throttle_max_requests, min: 0, step: 1) %>
 <hr>
 
 <%= f.select(

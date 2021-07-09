@@ -20,7 +20,7 @@ class API::V3::CatalogsController < API::V3::BaseController
   end
 
   def find_catalogs
-    ids = Catalog.where(visible: true, restricted: false).pluck(:id) + Catalog.where(id: @current_user.catalog_permissions.pluck(:catalog_id)).pluck(:id)
+    ids = @current_user.public_and_accessible_catalogs.pluck(:id)
     @catalogs = Catalog.where(id: ids.uniq)
   end
 end

@@ -8,3 +8,4 @@ fr:
       not_allowed: "Not Allowed"
       invalid_token: "Invalid authentication token"
       authentication_error: "Authentication error"
+      too_many_requests: "You have fired too many requests. Please wait for some time."

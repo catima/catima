@@ -13,7 +13,7 @@ class API::V3::Catalog::AdvancedSearchesController < API::V3::Catalog::BaseContr
         params[:item_type_id] = @advanced_search_config.item_type.z
         build_advanced_search
         @search = ItemList::AdvancedSearchResult.new(
-          :model => @advanced_search
+          model: @advanced_search
         )
       end
     else
@@ -26,7 +26,7 @@ class API::V3::Catalog::AdvancedSearchesController < API::V3::Catalog::BaseContr
 
       @fields = @advanced_search.fields
 
-      return redirect_to :action => :new, :item_type => @item_types.first if params[:item_type_id].blank?
+      return redirect_to action: :new, item_type: @item_types.first if params[:item_type_id].blank?
     end
   end
 
@@ -34,10 +34,10 @@ class API::V3::Catalog::AdvancedSearchesController < API::V3::Catalog::BaseContr
     build_advanced_search
     return unless @advanced_search.update(advanced_search_params)
 
-    @saved_search = scope.where(:uuid => @advanced_search.uuid).first
+    @saved_search = scope.where(uuid: @advanced_search.uuid).first
     @advanced_search_results = ItemList::AdvancedSearchResult.new(
-      :model => @saved_search,
-      :page => params[:page]
+      model: @saved_search,
+      page: params[:page]
     )
     render("show")
   end
@@ -45,18 +45,17 @@ class API::V3::Catalog::AdvancedSearchesController < API::V3::Catalog::BaseContr
   def show
     find_advanced_search
     @advanced_search_results = ItemList::AdvancedSearchResult.new(
-      :model => @saved_search,
-      :page => params[:page]
+      model: @saved_search,
+      page: params[:page]
     )
   rescue StandardError
-    redirect_to(:action => :new)
+    redirect_to(action: :new)
   end
 
   private
 
   def build_advanced_search
     type = @catalog.item_types.find(params[:item_type_id])
-
     @advanced_search = scope.new do |model|
       model.item_type = type || @catalog.item_types.sorted.first
       model.creator = current_user if current_user.authenticated?
@@ -64,7 +63,7 @@ class API::V3::Catalog::AdvancedSearchesController < API::V3::Catalog::BaseContr
   end
 
   def find_advanced_search
-    @saved_search = scope.where(:uuid => params[:uuid]).first
+    @saved_search = scope.where(uuid: params[:uuid]).first
   end
 
   def advanced_search_params
