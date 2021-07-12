@@ -1,4 +1,3 @@
-# rubocop disable Rails/ApplicationController
 class API::V3::BaseController < ActionController::Base
   include Pundit
 
@@ -123,4 +122,3 @@ class API::V3::BaseController < ActionController::Base
   end
   # rubocop:enable Metrics/PerceivedComplexity
 end
-# rubocop enable Rails/ApplicationController
