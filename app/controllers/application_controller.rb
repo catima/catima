@@ -3,12 +3,7 @@ class ApplicationController < ActionController::Base
   include FriendlyForwarding
   include MaintenanceMode
 
-  protect_from_forgery :with => :exception, unless: :json_request?
-  protect_from_forgery with: :null_session, if: :json_request?
-  skip_before_action :verify_authenticity_token, if: :json_request?
-  rescue_from ActionController::InvalidAuthenticityToken,
-              with: :invalid_auth_token
-  before_action :set_current_user, if: :json_request?
+  protect_from_forgery with: :exception
 
   before_action :set_locale
 
@@ -34,31 +29,6 @@ class ApplicationController < ActionController::Base
 
   private
 
-  def json_request?
-    request.format.json?
-  end
-
-  # Use api_v3_user Devise scope for JSON access
-  def authenticate_user!(*args)
-    super and return if args.present?
-
-    json_request? ? authenticate_api_v3_user! : super
-  end
-
-  def invalid_auth_token
-    respond_to do |format|
-      format.html do
-        redirect_to sign_in_path, error: 'Login invalid or expired'
-      end
-      format.json { head 401 }
-    end
-  end
-
-  # So we can use Pundit policies for api_users
-  # rubocop:disable Naming/MemoizedInstanceVariableName
-  def set_current_user
-    @current_user ||= warden.authenticate(scope: :api_v3_user)
-  end
   # rubocop:enable Naming/MemoizedInstanceVariableName
 
   # Overridden in other controllers to indicate whether the controller is

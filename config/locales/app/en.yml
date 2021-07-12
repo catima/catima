@@ -427,7 +427,8 @@ en:
       edit_settings: 'Edit catalog settings'
       save_settings: 'Save'
       save_style: 'Save style'
-      no_api_logs: No API Logs
+      no_api_logs: No API V3 Logs
+      api_v3_logs: 'API V3 Logs'
     catalogs:
       common_form_fields:
         advertize_help: "If checked, this catalog can be found in public catalog lists."

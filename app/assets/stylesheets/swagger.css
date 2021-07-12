@@ -1,0 +1,6 @@
+.swagger-ui .markdown p, .swagger-ui .markdown pre, .swagger-ui .renderedMarkdown p, .swagger-ui .renderedMarkdown pre {
+  margin: 1em auto;
+  word-break: break-all;
+  word-break: break-word;
+  margin-top: 0!important;
+}

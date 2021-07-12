@@ -33,9 +33,7 @@ class API::V3::Catalog::BaseController < API::V3::BaseController
 
     unless count
       throttle_time_window = @catalog.throttle_time_window || DEFAULT_THROTTLE_TIME_WINDOW
-      REDIS.set(key, 0)
-      REDIS.expire(key, throttle_time_window)
-      return true
+      REDIS.set(key, '0', ex: throttle_time_window)
     end
 
     throttle_max_requests = @catalog.throttle_max_requests || DEFAULT_THROTTLE_MAX_REQUESTS
@@ -44,7 +42,6 @@ class API::V3::Catalog::BaseController < API::V3::BaseController
       return
     end
     REDIS.incr(key)
-    true
   end
 
   def find_catalogs

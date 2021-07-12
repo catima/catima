@@ -1,5 +1,7 @@
 json.id catalog.id
 json.name catalog.name
+json.slug catalog.slug
+json.api_enabled catalog.api_enabled
 json.primary_language catalog.primary_language
 json.other_languages catalog.other_languages
 json.requires_review catalog.requires_review

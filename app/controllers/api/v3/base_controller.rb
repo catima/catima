@@ -1,11 +1,17 @@
-class API::V3::BaseController < ApplicationController
+class API::V3::BaseController < ActionController::Base
+  include Pundit
+
   respond_to :json
 
   DEFAULT_PAGE_SIZE = 1
+
   before_action :authenticate_user!
 
   protect_from_forgery with: :null_session
   skip_before_action :verify_authenticity_token
+  rescue_from ActionController::InvalidAuthenticityToken,
+              with: :invalid_auth_token
+  before_action :set_current_user
 
   rescue_from ActionController::InvalidAuthenticityToken, with: :invalid_auth_token
   rescue_from ActiveRecord::RecordNotFound do
@@ -60,6 +66,28 @@ class API::V3::BaseController < ApplicationController
   end
 
   protected
+
+  # Use api_v3_user Devise scope for JSON access
+  def authenticate_user!(*args)
+    super and return if args.present?
+    authenticate_api_v3_user!
+  end
+
+
+  def invalid_auth_token
+    respond_to do |format|
+      format.html do
+        redirect_to sign_in_path, error: 'Login invalid or expired'
+      end
+      format.json { head 401 }
+    end
+  end
+
+  # So we can use Pundit policies for api_users
+  # rubocop:disable Naming/MemoizedInstanceVariableName
+  def set_current_user
+    @current_user ||= warden.authenticate(scope: :api_v3_user)
+  end
 
   def api_i18n_scope
     "api-v3.responses"

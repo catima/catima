@@ -1,6 +1,10 @@
 class API::V3::SessionsController < Devise::SessionsController
   respond_to :json
 
+  protect_from_forgery with: :null_session
+  skip_before_action :verify_authenticity_token
+  rescue_from ActionController::InvalidAuthenticityToken,
+              with: :invalid_auth_token
   skip_before_action :verify_signed_out_user
 
   # rubocop:disable Metrics/MethodLength
