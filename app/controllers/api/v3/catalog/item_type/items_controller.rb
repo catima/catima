@@ -3,7 +3,7 @@ class API::V3::Catalog::ItemType::ItemsController < API::V3::Catalog::ItemType::
 
   def index
     @items = @item_type.items
-    @items.page(params[:page] ).per(params[:per] || DEFAULT_PAGE_SIZE)
+    @items.page(params[:page]).per(params[:per] || DEFAULT_PAGE_SIZE)
   end
 
   def show

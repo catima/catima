@@ -1,3 +1,4 @@
+# rubocop disable Rails/ApplicationController
 class API::V3::BaseController < ActionController::Base
   include Pundit
 
@@ -70,9 +71,9 @@ class API::V3::BaseController < ActionController::Base
   # Use api_v3_user Devise scope for JSON access
   def authenticate_user!(*args)
     super and return if args.present?
+
     authenticate_api_v3_user!
   end
-
 
   def invalid_auth_token
     respond_to do |format|
@@ -88,6 +89,7 @@ class API::V3::BaseController < ActionController::Base
   def set_current_user
     @current_user ||= warden.authenticate(scope: :api_v3_user)
   end
+  # rubocop:enable Naming/MemoizedInstanceVariableName
 
   def api_i18n_scope
     "api-v3.responses"
@@ -121,3 +123,4 @@ class API::V3::BaseController < ActionController::Base
   end
   # rubocop:enable Metrics/PerceivedComplexity
 end
+# rubocop enable Rails/ApplicationController

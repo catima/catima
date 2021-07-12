@@ -2,7 +2,7 @@ class API::V3::Catalog::ItemTypesController < API::V3::Catalog::BaseController
   before_action :find_item_types
 
   def index
-    @item_types = @item_types.page(params[:page] ).per(params[:per] || DEFAULT_PAGE_SIZE)
+    @item_types = @item_types.page(params[:page]).per(params[:per] || DEFAULT_PAGE_SIZE)
   end
 
   def show

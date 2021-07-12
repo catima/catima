@@ -29,8 +29,6 @@ class ApplicationController < ActionController::Base
 
   private
 
-  # rubocop:enable Naming/MemoizedInstanceVariableName
-
   # Overridden in other controllers to indicate whether the controller is
   # scoped to a specific catalog.
   def catalog_scoped?
