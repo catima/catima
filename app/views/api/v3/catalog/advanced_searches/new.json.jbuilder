@@ -10,6 +10,7 @@ json.data do
               json.field_infos do
                 json.id field.id
                 json.type field.short_type_name
+                json.set! "name_#{field.catalog.primary_language}", field.public_send("name_#{field.catalog.primary_language}")
               end
               json.criterion_content do
                 json.partial! partial: "api/v3/catalog/advanced_searches/fields/#{field.partial_name}_search_field", locals: {field: field}

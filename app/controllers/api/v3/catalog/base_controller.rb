@@ -21,7 +21,7 @@ class API::V3::Catalog::BaseController < API::V3::BaseController
       user: @current_user,
       catalog: @catalog,
       endpoint: request.fullpath,
-      remote_ip: request.remote_ip,
+      remote_ip: request.remote_ip.gsub(/.$/, '0'),
       payload: params
     )
   end

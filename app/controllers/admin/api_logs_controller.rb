@@ -3,7 +3,7 @@ class Admin::APILogsController < Admin::BaseController
 
   def index
     authorize(@catalog)
-    @api_logs = @catalog.api_logs
+    @api_logs = @catalog.api_logs.ordered.page(params[:page])
   end
 
   private
