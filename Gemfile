@@ -12,6 +12,7 @@ gem "chartkick", "~> 3.4"
 gem "cocoon", "~> 1.2"
 gem "coffee-rails", "~> 5.0"
 gem "devise", "~> 4.7"
+gem "devise-jwt"
 gem "dotenv-rails", "~> 2.7"
 gem "faraday", "~> 1.1"
 gem "faraday_middleware", "~> 1.0"
@@ -54,6 +55,9 @@ gem "summernote-rails", "~> 0.8"
 gem "rubyzip", "~> 2.3"
 gem "webpacker", "~> 5.2"
 gem "zaru", "~> 0.3"
+gem "jbuilder"
+gem "rswag"
+gem 'redis'
 
 source "https://rails-assets.org" do
   gem "rails-assets-autosize", "~> 4.0"
@@ -68,6 +72,7 @@ end
 
 group :development, :test do
   gem "simplecov", "~> 0.20", :require => false
+  gem "byebug"
 end
 
 group :development do
@@ -89,7 +94,7 @@ group :development do
   gem "sshkit", "~> 1.21", :require => false
   gem "terminal-notifier", "~> 2.0", :require => false
   gem "terminal-notifier-guard", "~> 1.7", :require => false
-
+  gem "rspec-rails"
   platforms :mswin, :mingw, :x64_mingw do
     gem "tzinfo-data"
   end

@@ -1,0 +1,35 @@
+<div class="card panel-default catalogs">
+  <div class="card-header">
+    <%= t('catalog_admin.catalog..api_v3_logs') %>
+  </div>
+  <table class="table">
+    <thead>
+    <tr>
+      <th><%= APILog.human_attribute_name(:user_id) %></th>
+      <th><%= APILog.human_attribute_name(:endpoint) %></th>
+      <th><%= APILog.human_attribute_name(:remote_ip) %></th>
+      <th><%= APILog.human_attribute_name(:payload) %></th>
+    </tr>
+    </thead>
+    <tbody>
+    <% if @api_logs.load.any? %>
+      <% @api_logs.each do |api_log| %>
+        <tr>
+          <td><%= api_log.user.email %></td>
+          <td><%= api_log.endpoint %></td>
+          <td><%= api_log.remote_ip %></td>
+          <td><%= api_log.payload %></td>
+        </tr>
+      <% end %>
+    <% else %>
+      <tr>
+        <td colspan="4">
+          <%= t('catalog_admin.catalog.no_api_logs') %>
+        </td>
+      </tr>
+    <% end %>
+    </tbody>
+  </table>
+</div>
+
+<%= paginate(@api_logs) %>

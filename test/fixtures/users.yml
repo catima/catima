@@ -32,108 +32,135 @@ system_admin:
   email: system-admin@example.com
   encrypted_password: <%= BCrypt::Password.create("password") %>
   system_admin: true
+  jti: f186060c-cbd2-4345-b3a9-751e4fa3df4e
 
 nested_admin:
   email: nested-admin@example.com
   encrypted_password: <%= BCrypt::Password.create("password") %>
+  jti: 3599050d-b9e4-4964-9c85-18a70f525322
 
 one:
   email: one@example.com
   encrypted_password: <%= BCrypt::Password.create("password") %>
+  jti: 410261a9-6b4e-49ce-8d37-091ade37bc0d
 
 one_user:
   email: one-user@example.com
   encrypted_password: <%= BCrypt::Password.create("password") %>
+  jti: 53654c68-8198-4c53-8976-54aa082e77f4
 
 one_member:
   email: one-member@example.com
   encrypted_password: <%= BCrypt::Password.create("password") %>
+  jti: 536424bc-1500-4ef3-8b31-e1da63e0b0fa
 
 one_editor:
   email: one-editor@example.com
   encrypted_password: <%= BCrypt::Password.create("password") %>
+  jti: e7edc0b0-d40b-45d3-b965-ff62c9e6b388
 
 one_super_editor:
   email: one-super-editor@example.com
   encrypted_password: <%= BCrypt::Password.create("password") %>
+  jti: 378da247-8b7f-47a6-b16d-a996c2fb5d30
 
 one_reviewer:
   email: one-reviewer@example.com
   encrypted_password: <%= BCrypt::Password.create("password") %>
+  jti: 175a6528-68ee-40f5-b9d9-ca161cd1faa9
 
 one_admin:
   email: one-admin@example.com
   encrypted_password: <%= BCrypt::Password.create("password") %>
+  jti: 523bece0-b233-49fc-8540-e1ff9b57e03e
 
 two:
   email: two@example.com
   encrypted_password: <%= BCrypt::Password.create("password") %>
+  jti: 793fd11d-8d6e-4d56-b4e0-2b08d40f1cab
 
 two_user:
   email: two-user@example.com
   encrypted_password: <%= BCrypt::Password.create("password") %>
+  jti: f3faa3a7-0d12-421e-bad0-589386f02347
 
 two_editor:
   email: two-editor@example.com
   encrypted_password: <%= BCrypt::Password.create("password") %>
+  jti: 9abd2142-6590-41e5-98fd-d9df0b1fafc7
 
 two_admin:
   email: two-admin@example.com
   encrypted_password: <%= BCrypt::Password.create("password") %>
   invited_by: system_admin
+  jti: 7ac1fd76-a57c-4c85-a988-bb243822383b
 
 group:
   email: group@example.com
   encrypted_password: <%= BCrypt::Password.create("password") %>
+  jti: b410463e-142e-4e55-9e6d-505621662d59
 
 group_two:
   email: group-two@example.com
   encrypted_password: <%= BCrypt::Password.create("password") %>
+  jti: 9c11bb9a-2ce5-4a92-89a4-57b69f9c3373
 
 group_user:
   email: group-user@example.com
   encrypted_password: <%= BCrypt::Password.create("password") %>
+  jti: e3f96910-0714-4236-aa76-fea3b6d46ddf
 
 group_admin:
   email: group-admin@example.com
   encrypted_password: <%= BCrypt::Password.create("password") %>
   invited_by: system_admin
+  jti: d9a22358-546f-4a5c-8601-556951f2ecd3
 
 multilingual_admin:
   email: multilingual-admin@example.com
   encrypted_password: <%= BCrypt::Password.create("password") %>
+  jti: 971b9127-4570-4785-91d7-2918190d9cf7
 
 multilingual_editor:
   email: multilingual-editor@example.com
   encrypted_password: <%= BCrypt::Password.create("password") %>
+  jti: c6f8d26a-bbcc-4c70-97d4-109012e783f9
 
 multilingual_member:
   email: multilingual-member@example.com
   encrypted_password: <%= BCrypt::Password.create("password") %>
+  jti: 625f03cf-7db1-41eb-bf50-de61ed002db5
 
 multilingual_user:
   email: multilingual-user@example.com
   encrypted_password: <%= BCrypt::Password.create("password") %>
+  jti: d3dcff8c-f736-4ba8-bd50-3f10e47d1618
 
 reviewed_editor:
   email: reviewed-editor@example.com
   encrypted_password: <%= BCrypt::Password.create("password") %>
+  jti: b524b463-1623-4771-883e-1186d46b910d
 
 reviewed_reviewer:
   email: reviewed-reviewer@example.com
   encrypted_password: <%= BCrypt::Password.create("password") %>
+  jti: f5a5da0e-2304-4095-8a76-173b647398e5
 
 system_admin_invited_by_one:
   email: system-admin-invited-by-one@example.com
   encrypted_password: <%= BCrypt::Password.create("password") %>
   system_admin: true
   invited_by: one
+  jti: 54b79baf-9440-4cdb-9700-f10d9bf8bdfd
 
 de:
   email: de@example.com
   encrypted_password: <%= BCrypt::Password.create("password") %>
   primary_language: de
+  jti: 923ec2f3-2714-4f1e-831f-9940cc562c35
 
 search:
   email: test-search@example.com
   encrypted_password: <%= BCrypt::Password.create("password") %>
+  jti: 141a8936-1e2c-4edf-9a0c-36414a4e6be4
+

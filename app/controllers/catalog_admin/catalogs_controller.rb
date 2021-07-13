@@ -37,6 +37,7 @@ class CatalogAdmin::CatalogsController < CatalogAdmin::BaseController
       :requires_review,
       :advertize,
       :bounds,
+      :api_enabled,
       :custom_root_page_id,
       :visible,
       :restricted,

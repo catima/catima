@@ -28,6 +28,9 @@ nested:
   primary_language: en
   other_languages:
   requires_review: false
+  throttle_time_window: 1 * 3600
+  throttle_max_requests: 1000
+  api_enabled: true
 
 one:
   name: one
@@ -36,6 +39,9 @@ one:
   other_languages:
   requires_review: false
   style: null
+  throttle_time_window: 1 * 3600
+  throttle_max_requests: 1000
+  api_enabled: true
 
 two:
   name: two
@@ -43,7 +49,10 @@ two:
   primary_language: en
   other_languages:
   requires_review: false
-  style: {"base-font": {"font": "Arial, Helvetica, sans-serif"}}
+  style: { "base-font": { "font": "Arial, Helvetica, sans-serif" } }
+  throttle_time_window: 1 * 3600
+  throttle_max_requests: 1000
+  api_enabled: true
 
 with_dash:
   name: Catalog with a dash in the slug
@@ -51,6 +60,9 @@ with_dash:
   primary_language: en
   other_languages:
   requires_review: false
+  throttle_time_window: 1 * 3600
+  throttle_max_requests: 1000
+  api_enabled: true
 
 custom_with_dash:
   name: Custom catalog controller with a dash in the catalog slug
@@ -58,12 +70,18 @@ custom_with_dash:
   primary_language: en
   other_languages:
   requires_review: false
+  throttle_time_window: 1 * 3600
+  throttle_max_requests: 1000
+  api_enabled: true
 
 multilingual:
   name: Multilingual
   slug: multilingual
   primary_language: fr
-  other_languages: [it, en, de]
+  other_languages: [ it, en, de ]
+  throttle_time_window: 1 * 3600
+  throttle_max_requests: 1000
+  api_enabled: true
 
 inactive:
   name: Inactive Catalog
@@ -83,14 +101,23 @@ search:
   name: Catalog with Search Data
   slug: search
   primary_language: en
+  throttle_time_window: 1 * 3600
+  throttle_max_requests: 1000
+  api_enabled: true
 
 not_visible:
   name: Catalog without visibility
   slug: not-visible
   primary_language: en
   visible: false
+  throttle_time_window: 1 * 3600
+  throttle_max_requests: 1000
+  api_enabled: true
 
 to_be_deleted:
   name: Catalog to be destroyed
   slug: to-be-deleted
   primary_language: en
+  throttle_time_window: 1 * 3600
+  throttle_max_requests: 1000
+  api_enabled: true

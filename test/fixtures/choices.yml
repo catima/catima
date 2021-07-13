@@ -56,6 +56,27 @@ two_english:
   long_name_translations: { "long_name_en": "English" }
   short_name_translations: { "short_name_en": "Eng" }
 
+two_english_uk:
+  catalog: two
+  choice_set: two_languages
+  parent: two_english
+  long_name_translations: { "long_name_en": "English UK" }
+  short_name_translations: { "short_name_en": "Eng UK" }
+
+two_english_us:
+  catalog: two
+  choice_set: two_languages
+  parent: two_english
+  long_name_translations: { "long_name_en": "English US" }
+  short_name_translations: { "short_name_en": "Eng US" }
+
+two_english_us_redneck_mode:
+  catalog: two
+  choice_set: two_languages
+  parent: two_english_us
+  long_name_translations: { "long_name_en": "English US Redneck Mode" }
+  short_name_translations: { "short_name_en": "Eng USRM" }
+
 search_sedan:
   catalog: search
   choice_set: search_car_styles
