@@ -1,12 +1,18 @@
 class API::V3::Catalog::ItemType::ItemsController < API::V3::Catalog::ItemType::BaseController
   include ControlsItemSorting
 
+  after_action -> { set_pagination_header(:items) }, only: :index
+
   def index
+    authorize(@catalog, :item_type_items_index?)
+
     @items = @item_type.items
-    @items.page(params[:page]).per(params[:per] || DEFAULT_PAGE_SIZE)
+    @items = @items.page(params[:page]).per(params[:per])
   end
 
   def show
+    authorize(@catalog, :item_type_item_show?)
+
     @item = @item_type.items.find(params[:item_id])
   end
 

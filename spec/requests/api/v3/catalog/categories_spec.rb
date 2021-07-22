@@ -20,6 +20,10 @@ RSpec.describe 'api/v3/{catalog_id}/categories', type: :request do
       tags 'Catalog'
       consumes 'application/json'
       security [BearerAuth: []]
+      description <<-HTML.squish
+        <p><b>Authorization: Admin+</b></p>
+      HTML
+
       response(200, 'successful') do
         run_test! do
           body = JSON.parse(response.body)

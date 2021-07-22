@@ -21,12 +21,15 @@ RSpec.describe 'api/v3/{catalog_id}/search', type: :request do
       tags 'SimpleSearch'
       consumes 'application/json'
       security [BearerAuth: []]
+      description <<-HTML.squish
+        <p><b>Authorization: User+/Member+/Editor+ (according to catalog\'s visibility)</b></p>
+      HTML
 
       parameter name: :search, in: :body, schema: {
         type: :object,
         properties: {
           q: { type: :string, description: 'search query' },
-          type: { type: :string, description: 'item type slug' }
+          item_type_slug: { type: :string, description: 'item type slug' }
         },
         required: ['q']
       }
@@ -47,11 +50,16 @@ RSpec.describe 'api/v3/{catalog_id}/search', type: :request do
   path '/api/v3/{catalog_id}/search/{uuid}' do
     parameter name: 'catalog_id', in: :path, type: :integer, description: 'catalog_id'
     parameter name: 'uuid', in: :path, type: :string, description: 'search uuid'
+    parameter name: 'item_type_slug', in: :query, type: :string, description: 'item type slug', required: false
 
     get("Return a Catalog's SimpleSearch") do
       tags 'SimpleSearch'
       consumes 'application/json'
       security [BearerAuth: []]
+      description <<-HTML.squish
+        <p><b>Authorization: User+/Member+/Editor+ (according to catalog\'s visibility)</b></p>
+      HTML
+
       response(200, 'successful') do
         run_test! do
           body = JSON.parse(response.body)

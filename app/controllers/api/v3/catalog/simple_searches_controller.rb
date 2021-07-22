@@ -1,13 +1,15 @@
 class API::V3::Catalog::SimpleSearchesController < API::V3::Catalog::BaseController
   def create
     paginate
+    authorize(@catalog, :simple_search_create?)
+
     build_simple_search
     if @simple_search.update(simple_search_params)
       @simple_search_results = ItemList::SimpleSearchResult.new(
         :catalog => @catalog,
         :query => @simple_search.query,
         :page => params[:page],
-        :item_type_slug => params[:type],
+        :item_type_slug => params[:item_type_slug],
         :search_uuid => @simple_search.uuid
       )
       render("api/v3/catalog/simple_searches/show")
@@ -18,6 +20,8 @@ class API::V3::Catalog::SimpleSearchesController < API::V3::Catalog::BaseControl
 
   def show
     paginate
+    authorize(@catalog, :simple_search_show?)
+
     find_simple_search
     return routing_error if @simple_search.nil?
 
@@ -25,7 +29,7 @@ class API::V3::Catalog::SimpleSearchesController < API::V3::Catalog::BaseControl
       :catalog => @catalog,
       :query => @simple_search.query,
       :page => params[:page],
-      :item_type_slug => params[:type],
+      :item_type_slug => params[:item_type_slug],
       :search_uuid => @simple_search.uuid
     )
   end
@@ -48,7 +52,7 @@ class API::V3::Catalog::SimpleSearchesController < API::V3::Catalog::BaseControl
   end
 
   def simple_search_params
-    params.permit(:q, :type)
+    params.permit(:q)
   end
 
   def scope

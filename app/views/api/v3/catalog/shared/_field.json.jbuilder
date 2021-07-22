@@ -4,20 +4,9 @@ json.slug field.slug
 json.type field.type
 json.created_at field.created_at
 json.updated_at field.updated_at
+json.name field.name_translations
 
-json.set! "name_#{field.catalog.primary_language}", field.public_send("name_#{field.catalog.primary_language}")
-if field.catalog.other_languages
-  field.catalog.other_languages do | lang |
-    json.set! "name_#{lang}", item_type.public_send("name_#{lang}")
-  end
-end
-
-json.set! "name_plural_#{field.catalog.primary_language}", field.public_send("name_plural_#{field.catalog.primary_language}")
-if field.catalog.other_languages
-  field.catalog.other_languages do | lang |
-    json.set! "name_plural_#{lang}", field.public_send("name_plural_#{lang}")
-  end
-end
+json.name_plural field.name_plural_translations
 
 json.comment field.comment
 json.default_value field.default_value
@@ -26,7 +15,7 @@ json.primary field.primary
 json.display_in_list field.display_in_list
 json.display_in_public_list field.display_in_public_list
 json.restricted field.restricted
-json.restricted field.style
+json.style field.style
 json.unique field.unique
 
 json.field_specific_keys do
@@ -82,18 +71,17 @@ json.field_specific_keys do
   end
 end
 
-json.category_item_type_id field.category_item_type_id
-json.display_component field.display_component
-json.editor_component field.editor_component
-json.field_set_id field.field_set_id
 json.field_set_type field.field_set_type
-json.i18n field.i18n
 json.multiple field.multiple
-json.name_plural_translations field.name_plural_translations
-json.name_translations field.name_translations
-json.options field.options
-json.ordered field.ordered
-json.related_item_type_id field.related_item_type_id
 json.required field.required
 json.row_order field.row_order
+
+# json.category_item_type_id field.category_item_type_id
+# json.display_component field.display_component
+# json.editor_component field.editor_component
+# json.field_set_id field.field_set_id
+# json.i18n field.i18n
+# json.options field.options
+# json.ordered field.ordered
+# json.related_item_type_id field.related_item_type_id
 

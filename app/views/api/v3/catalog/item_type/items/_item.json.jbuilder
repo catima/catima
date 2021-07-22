@@ -9,6 +9,9 @@ json.primary_field do
   end
   json.review_status item.review_status if item.catalog.requires_review
 end
+if with_summary
+  json.item_summary strip_tags(item_summary(item))
+end
 if with_field_values
   json.field_values do
     json.array! item.item_type.fields do |field|

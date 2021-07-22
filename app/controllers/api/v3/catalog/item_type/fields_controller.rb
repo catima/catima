@@ -1,9 +1,24 @@
 class API::V3::Catalog::ItemType::FieldsController < API::V3::Catalog::ItemType::BaseController
+  before_action :find_fields
+  after_action -> { set_pagination_header(:fields) }, only: :index
+
   def index
-    @fields = @item_type.fields.page(params[:page]).per(params[:per] || DEFAULT_PAGE_SIZE)
+    authorize(@catalog, :item_type_fields_index?)
+
+    @fields = @fields.page(params[:page]).per(params[:per])
   end
 
   def show
-    @field = @item_type.fields.find(params[:field_id])
+    authorize(@catalog, :item_type_field_show?)
+
+    @field = @fields.find(params[:field_id])
+  end
+
+  private
+  def find_fields
+    @fields = @item_type.fields
+    unless @current_user.catalog_role_at_least?(@catalog, "editor")
+      @fields = @fields.where(restricted: false)
+    end
   end
 end

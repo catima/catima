@@ -18,6 +18,7 @@ RSpec.describe 'api/v3/catalogs', type: :request do
       tags 'Catalogs'
       consumes 'application/json'
       security [BearerAuth: []]
+
       response(200, 'successful') do
         run_test! do
           body = JSON.parse(response.body)

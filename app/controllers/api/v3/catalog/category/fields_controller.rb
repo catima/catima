@@ -1,5 +1,14 @@
 class API::V3::Catalog::Category::FieldsController < API::V3::Catalog::Category::BaseController
+
+  after_action -> { set_pagination_header(:fields) }, only: :index
+
   def index
-    @fields = @category.fields.page(params[:page]).per(params[:per] || DEFAULT_PAGE_SIZE)
+    authorize(@catalog, :category_fields_index?)
+
+    @fields = @category.fields
+    unless @current_user.catalog_role_at_least?(@catalog, "editor")
+      @fields = @fields.where(restricted: false)
+    end
+    @fields = @fields.page(params[:page]).per(params[:per])
   end
 end

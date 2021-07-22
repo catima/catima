@@ -20,6 +20,10 @@ module CatalogAdmin::CatalogsHelper
     3
   end
 
+  def catalog_access_label(catalog)
+      [t('catalog_admin.catalogs.common_form_fields.open_for_everyone_short'), t('catalog_admin.catalogs.common_form_fields.open_to_members_short'), t('catalog_admin.catalogs.common_form_fields.open_to_catalog_staff_short')][catalog_access(catalog) - 1]
+  end
+
   def catalog_access_select(catalog)
     select_tag(
       :catalog_access,

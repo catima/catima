@@ -439,6 +439,9 @@ en:
         open_for_everyone: Open for everyone
         open_to_members: Open to members
         open_to_catalog_staff: Open to catalog staff
+        open_for_everyone_short: everyone
+        open_to_members_short: members
+        open_to_catalog_staff_short: catalog_staff
         api_enabled_help: "If checked, this catalog will be accessible via tha api "
       edit_style:
         custom_style_catalog: "Customize catalog style"

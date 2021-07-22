@@ -25,6 +25,10 @@ RSpec.describe 'api/v3/{catalog_id}/choice_set/{choice_set_id}/choice(s)', type:
       tags 'ChoiceSet'
       consumes 'application/json'
       security [BearerAuth: []]
+      description <<-HTML.squish
+        <p><b>Authorization: Admin+</b></p>
+      HTML
+
       response(200, 'successful') do
         run_test! do
           body = JSON.parse(response.body)
@@ -47,6 +51,10 @@ RSpec.describe 'api/v3/{catalog_id}/choice_set/{choice_set_id}/choice(s)', type:
       tags 'Choice'
       consumes 'application/json'
       security [BearerAuth: []]
+      description <<-HTML.squish
+        <p><b>Authorization: Admin+</b></p>
+      HTML
+
       response(200, 'successful') do
         run_test! do
           body = JSON.parse(response.body)

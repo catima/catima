@@ -1,14 +1,11 @@
 json.id user.id
 json.email user.email
 json.language user.primary_language
-json.roles user.catalog_permissions.where(catalog_id: @catalog.id)
+json.role user_role(user, @catalog, true)
 json.last_signed_in_at user.current_sign_in_at
 if json.provider
   json.provider user.provider
 end
 json.groups do
-  json.array! user.my_groups.where(catalog_id: @catalog.id, active: true) do |group|
-    json.id group.id
-    json.name group.name
-  end
+  json.partial! '/api/v3/catalog/shared/group', collection: user.groups, as: :group
 end

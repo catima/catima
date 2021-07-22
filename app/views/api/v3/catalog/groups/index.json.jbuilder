@@ -1,3 +1,3 @@
 json.data do
-  json.partial! 'group', collection: @groups, as: :group
+  json.partial! '/api/v3/catalog/shared/group', collection: @groups, as: :group
 end

@@ -3,7 +3,8 @@ class API::V3::BaseController < ActionController::Base
 
   respond_to :json
 
-  DEFAULT_PAGE_SIZE = 1
+  DEFAULT_PAGE_SIZE = 25
+  MAX_PAGE_SIZE = 100
 
   before_action :authenticate_user!
 
@@ -12,6 +13,7 @@ class API::V3::BaseController < ActionController::Base
   rescue_from ActionController::InvalidAuthenticityToken,
               with: :invalid_auth_token
   before_action :set_current_user
+  before_action :set_pagination_params
 
   rescue_from ActionController::InvalidAuthenticityToken, with: :invalid_auth_token
   rescue_from ActiveRecord::RecordNotFound do
@@ -66,6 +68,12 @@ class API::V3::BaseController < ActionController::Base
   end
 
   protected
+
+  def set_pagination_params
+    params[:page] ||= 1
+    params[:per] ||=  DEFAULT_PAGE_SIZE
+    params[:per] = [params[:per].to_i, MAX_PAGE_SIZE].min
+  end
 
   # Use api_v3_user Devise scope for JSON access
   def authenticate_user!(*args)

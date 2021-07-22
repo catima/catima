@@ -22,6 +22,10 @@ RSpec.describe 'api/v3/{catalog_id}/item_type(s)', type: :request do
       tags 'Catalog'
       consumes 'application/json'
       security [BearerAuth: []]
+      description <<-HTML.squish
+        <p><b>Authorization: Editor+</b></p>
+      HTML
+
       response(200, 'successful') do
         run_test! do
           body = JSON.parse(response.body)
@@ -43,6 +47,10 @@ RSpec.describe 'api/v3/{catalog_id}/item_type(s)', type: :request do
       tags 'ItemType'
       consumes 'application/json'
       security [BearerAuth: []]
+      description <<-HTML.squish
+        <p><b>Authorization: Editor+</b></p>
+      HTML
+
       response(200, 'successful') do
         run_test! do
           body = JSON.parse(response.body)
