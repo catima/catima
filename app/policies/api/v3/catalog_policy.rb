@@ -2,6 +2,8 @@ class API::V3::CatalogPolicy < CatalogPolicy
   include CatalogAdmin::CatalogsHelper
 
   def user_requirements_according_to_visibility?
+    return true if user.system_admin?
+
     case catalog_access(catalog)
     when 1 then
       true

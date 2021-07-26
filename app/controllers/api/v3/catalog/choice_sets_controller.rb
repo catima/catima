@@ -4,7 +4,7 @@ class API::V3::Catalog::ChoiceSetsController < API::V3::Catalog::BaseController
   after_action -> { set_pagination_header(:choice_sets) }, only: :index
 
   def index
-    authorize(@catalog,:choice_sets_index?)
+    authorize(@catalog, :choice_sets_index?)
 
     @choice_sets = @choice_sets.page(params[:page]).per(params[:per])
   end
