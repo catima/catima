@@ -1,4 +1,6 @@
 class API::V3::Catalog::AdvancedSearchesController < API::V3::Catalog::BaseController
+  include AdvancedSearchesHelper
+
   def new
     @advance_search_confs = @catalog.advanced_search_configurations.with_active_item_type
     build_advanced_search
@@ -68,7 +70,7 @@ class API::V3::Catalog::AdvancedSearchesController < API::V3::Catalog::BaseContr
 
   def advanced_search_params
     search = ItemList::AdvancedSearchResult.new(:model => @advanced_search)
-    search.permit_criteria(params.require(:advanced_search))
+    search.permit_criteria(ActionController::Parameters.new(formatted_api_params(params.require(:advanced_search))))
   end
 
   def find_advanced_search_configuration

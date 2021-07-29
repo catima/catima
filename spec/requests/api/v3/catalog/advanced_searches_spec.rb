@@ -20,7 +20,9 @@ RSpec.describe 'api/v3/{catalog_id}/advanced_search', type: :request do
       advanced_search: {
         criteria: {
           "#{item_type.items.first.fields.first.uuid.to_sym}": {
-            default: 'query'
+            field_condition: 'and',
+            condition: 'one_word',
+            value: 'query'
           }
         }
       }
