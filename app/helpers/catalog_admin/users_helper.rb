@@ -22,7 +22,7 @@ module CatalogAdmin::UsersHelper
   # rubocop:enable Style/OptionalBooleanParameter
 
   def user_role(user, catalog, including_groups=false)
-    user_role_symbol(user, catalog, including_groups=false).to_s.titleize
+    user_role_symbol(user, catalog, including_groups).to_s.titleize
   end
 
   def user_role_id(user, catalog)
