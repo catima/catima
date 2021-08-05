@@ -5,11 +5,11 @@ class API::V3::CatalogPolicy < CatalogPolicy
     return true if user.system_admin?
 
     case catalog_access(catalog)
-    when 1 then
+    when 1
       true
-    when 2 then
+    when 2
       user_is_at_least_a_member?
-    when 3 then
+    when 3
       user_is_at_least_an_editor?
     end
   end

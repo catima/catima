@@ -1,5 +1,4 @@
 class API::V3::Catalog::CategoriesController < API::V3::Catalog::BaseController
-
   after_action -> { set_pagination_header(:categories) }, only: :index
 
   def index

@@ -10,7 +10,7 @@ class API::V3::Catalog::BaseController < API::V3::BaseController
     super([:"api/v3", scope])
   end
 
-  def authorize(record, query = nil)
+  def authorize(record, query=nil)
     super([:"api/v3", record], query)
   end
 
@@ -38,7 +38,7 @@ class API::V3::Catalog::BaseController < API::V3::BaseController
 
     throttle_max_requests = @catalog.throttle_max_requests || DEFAULT_THROTTLE_MAX_REQUESTS
     if count.to_i >= throttle_max_requests
-      render :status => :too_many_requests, :json => {code: 'too_many_requests', message: t('api-v3.responses.too_many_requests')}
+      render :status => :too_many_requests, :json => { code: 'too_many_requests', message: t('api-v3.responses.too_many_requests') }
       return
     end
     REDIS.incr(key)

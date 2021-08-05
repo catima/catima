@@ -15,10 +15,9 @@ class API::V3::Catalog::ItemType::FieldsController < API::V3::Catalog::ItemType:
   end
 
   private
+
   def find_fields
     @fields = @item_type.fields
-    unless @current_user.catalog_role_at_least?(@catalog, "editor")
-      @fields = @fields.where(restricted: false)
-    end
+    @fields = @fields.where(restricted: false) unless @current_user.catalog_role_at_least?(@catalog, "editor")
   end
 end

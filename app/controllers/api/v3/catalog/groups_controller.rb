@@ -1,5 +1,4 @@
 class API::V3::Catalog::GroupsController < API::V3::Catalog::BaseController
-
   after_action -> { set_pagination_header(:groups) }, only: :index
 
   def index

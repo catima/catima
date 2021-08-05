@@ -1,5 +1,4 @@
 class API::V3::Catalog::ChoiceSet::ChoicesController < API::V3::Catalog::ChoiceSet::BaseController
-
   after_action -> { set_pagination_header(:choices) }, only: :index
 
   def index
