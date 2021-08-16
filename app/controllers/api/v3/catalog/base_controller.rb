@@ -46,9 +46,9 @@ class API::V3::Catalog::BaseController < API::V3::BaseController
 
   def find_catalogs
     ids = if @current_user.system_admin?
-            @current_user.public_and_accessible_catalogs.pluck(:id)
-          else
             Catalog.all.pluck(:id)
+          else
+            @current_user.public_and_accessible_catalogs.pluck(:id)
           end
     @catalogs = Catalog.where(id: ids.uniq, api_enabled: true).page(params[:page])
   end
