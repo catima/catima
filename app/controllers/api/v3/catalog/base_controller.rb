@@ -45,15 +45,25 @@ class API::V3::Catalog::BaseController < API::V3::BaseController
   end
 
   def find_catalogs
-    ids = if @current_user.system_admin?
-            Catalog.all.pluck(:id)
-          else
-            @current_user.public_and_accessible_catalogs.pluck(:id)
-          end
+    if authenticated_catalog?
+      ids = [@authenticated_catalog.id]
+    else
+      ids = if @current_user.system_admin?
+              Catalog.all.pluck(:id)
+            else
+              @current_user.public_and_accessible_catalogs.pluck(:id)
+            end
+    end
+
     @catalogs = Catalog.where(id: ids.uniq, api_enabled: true).page(params[:page])
   end
 
   def find_catalog
-    @catalog = @catalogs.find(params[:catalog_id])
+    @catalog = @catalogs.find_by(id: params[:catalog_id])
+    if authenticated_catalog? && !@catalog.present?
+      render_forbidden("not_allowed")
+    elsif !@catalog.present?
+      render_not_found("not_found")
+    end
   end
 end

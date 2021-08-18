@@ -1,0 +1,26 @@
+<div class="modal fade" id="api-key-edit-modal-<%= key.id %>" tabindex="-1" role="dialog" aria-labelledby="Edit API key">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <%= bootstrap_form_for(key, url: catalog_admin_api_key_path(@catalog, I18n.locale, key)) do |f| %>
+        <div class="modal-header">
+          <h4 class="modal-title"><%= t('.edit_api_key') %></h4>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+            <span aria-hidden="true">&times;</span></button>
+        </div>
+        <div class="modal-body">
+          <div class="card-body">
+            <%= f.form_group(
+              :api_key
+            ) do %>
+              <%= f.text_field(:label) %>
+            <% end %>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-outline-secondary" data-dismiss="modal"><%= t('cancel') %></button>
+          <%= f.submit t('save'), class: 'btn btn-success' %>
+        </div>
+      <% end %>
+    </div>
+  </div>
+</div>

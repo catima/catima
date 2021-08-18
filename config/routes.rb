@@ -179,6 +179,8 @@ Rails.application.routes.draw do
       resources :memberships
     end
 
+    resources :api_keys, :only => [:create, :update, :destroy]
+
     resources :categories, :path => "_categories", :except => [:show] do
       resources :fields, :param => :slug, :except => :show
     end

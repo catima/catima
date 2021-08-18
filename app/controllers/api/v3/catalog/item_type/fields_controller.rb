@@ -3,7 +3,7 @@ class API::V3::Catalog::ItemType::FieldsController < API::V3::Catalog::ItemType:
   after_action -> { set_pagination_header(:fields) }, only: :index
 
   def index
-    authorize(@catalog, :item_type_fields_index?)
+    authorize(@catalog, :item_type_fields_index?) unless authenticated_catalog?
 
     @fields = @fields.page(params[:page]).per(params[:per])
   end

@@ -1,21 +1,21 @@
 <%= f.text_field(:name, :autofocus => true) %>
 
 <%= f.form_group(
-      :advertize,
-      :help => t('.advertize_help')
-      ) do %>
+  :advertize,
+  :help => t('.advertize_help')
+) do %>
   <%= f.check_box(:advertize) %>
 <% end %>
 
 <hr>
 
 <%= f.select(
-  :custom_root_page_id,
-  options_from_collection_for_select(
-    @catalog.pages, "id", "title", @catalog.custom_root_page_id
-  ),
-  { include_blank: true }
-) %>
+      :custom_root_page_id,
+      options_from_collection_for_select(
+        @catalog.pages, "id", "title", @catalog.custom_root_page_id
+      ),
+      {include_blank: true}
+    ) %>
 
 <hr>
 
@@ -28,16 +28,4 @@
   <label for="catalog_access"><%= t('.catalog_access') %></label>
   <%= catalog_access_select(@catalog) %>
 <% end %>
-
-<hr>
-
-<%= f.form_group(
-  :api_enabled,
-  :help => "If checked, this catalog will be accessible via tha api "
-) do %>
-  <label for="api_enabled"><%= t('catalog_admin.catalogs.common_form_fields.api_enabled') %></label>
-  <%= link_to('API doc', url_for('/api-docs')) %>
-
-  <%= f.check_box(:api_enabled) %>
-<% end %>
-<hr>
+<br>

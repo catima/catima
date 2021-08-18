@@ -1,0 +1,25 @@
+<div class="modal fade" id="new-api-key-modal" tabindex="-1" role="dialog" aria-labelledby="Create a new API key">
+  <div class="modal-dialog" role="document">
+    <div class="modal-content">
+      <%= bootstrap_form_for([:catalog_admin, @catalog.api_keys.new]) do |f| %>
+        <div class="modal-header">
+          <h4 class="modal-title"><%= t('.create_new_api_key') %></h4>
+          <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+        </div>
+        <div class="modal-body">
+          <div class="card-body">
+            <%= f.form_group(
+              :api_key
+            ) do %>
+              <%= f.text_field(:label) %>
+            <% end %>
+          </div>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-outline-secondary" data-dismiss="modal"><%= t('cancel') %></button>
+          <%= f.submit t('create'), class: 'btn btn-success' %>
+        </div>
+      <% end %>
+    </div>
+  </div>
+</div>

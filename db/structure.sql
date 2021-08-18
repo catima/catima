@@ -206,17 +206,50 @@ ALTER SEQUENCE public.ahoy_visits_id_seq OWNED BY public.ahoy_visits.id;
 
 
 --
+-- Name: api_keys; Type: TABLE; Schema: public; Owner: -
+--
+
+CREATE TABLE public.api_keys (
+    id bigint NOT NULL,
+    catalog_id bigint,
+    label character varying NOT NULL,
+    api_key character varying NOT NULL,
+    revoked boolean DEFAULT false,
+    created_at timestamp(6) without time zone NOT NULL,
+    updated_at timestamp(6) without time zone NOT NULL
+);
+
+
+--
+-- Name: api_keys_id_seq; Type: SEQUENCE; Schema: public; Owner: -
+--
+
+CREATE SEQUENCE public.api_keys_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+--
+-- Name: api_keys_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
+--
+
+ALTER SEQUENCE public.api_keys_id_seq OWNED BY public.api_keys.id;
+
+
+--
 -- Name: api_logs; Type: TABLE; Schema: public; Owner: -
 --
 
-CREATE TABLE public.api_logs
-(
-    id         bigint                         NOT NULL,
-    user_id    bigint,
+CREATE TABLE public.api_logs (
+    id bigint NOT NULL,
+    user_id bigint,
     catalog_id bigint,
-    endpoint   character varying,
-    remote_ip  character varying,
-    payload    json,
+    endpoint character varying,
+    remote_ip character varying,
+    payload json,
     created_at timestamp(6) without time zone NOT NULL,
     updated_at timestamp(6) without time zone NOT NULL
 );
@@ -245,10 +278,9 @@ ALTER SEQUENCE public.api_logs_id_seq OWNED BY public.api_logs.id;
 -- Name: ar_internal_metadata; Type: TABLE; Schema: public; Owner: -
 --
 
-CREATE TABLE public.ar_internal_metadata
-(
-    key        character varying           NOT NULL,
-    value      character varying,
+CREATE TABLE public.ar_internal_metadata (
+    key character varying NOT NULL,
+    value character varying,
     created_at timestamp without time zone NOT NULL,
     updated_at timestamp without time zone NOT NULL
 );
@@ -293,25 +325,25 @@ ALTER SEQUENCE public.catalog_permissions_id_seq OWNED BY public.catalog_permiss
 --
 
 CREATE TABLE public.catalogs (
-                                 id                    integer                                           NOT NULL,
-                                 name                  character varying,
-                                 slug                  character varying,
-                                 primary_language      character varying DEFAULT 'en'::character varying NOT NULL,
-                                 other_languages       json,
-                                 requires_review       boolean           DEFAULT false                   NOT NULL,
-                                 deactivated_at        timestamp without time zone,
-                                 created_at            timestamp without time zone                       NOT NULL,
-                                 updated_at            timestamp without time zone                       NOT NULL,
-                                 custom_root_page_id   integer,
-                                 advertize             boolean,
-                                 style                 jsonb,
-                                 logo_id               character varying,
-                                 navlogo_id            character varying,
-                                 visible               boolean           DEFAULT true                    NOT NULL,
-                                 restricted            boolean           DEFAULT false                   NOT NULL,
-                                 api_enabled           boolean           DEFAULT false,
-                                 throttle_time_window  integer           DEFAULT 1,
-                                 throttle_max_requests integer           DEFAULT 5
+    id integer NOT NULL,
+    name character varying,
+    slug character varying,
+    primary_language character varying DEFAULT 'en'::character varying NOT NULL,
+    other_languages json,
+    requires_review boolean DEFAULT false NOT NULL,
+    deactivated_at timestamp without time zone,
+    created_at timestamp without time zone NOT NULL,
+    updated_at timestamp without time zone NOT NULL,
+    custom_root_page_id integer,
+    advertize boolean,
+    style jsonb,
+    logo_id character varying,
+    navlogo_id character varying,
+    visible boolean DEFAULT true NOT NULL,
+    restricted boolean DEFAULT false NOT NULL,
+    api_enabled boolean DEFAULT false,
+    throttle_time_window integer DEFAULT 1,
+    throttle_max_requests integer DEFAULT 5
 );
 
 
@@ -822,20 +854,20 @@ ALTER SEQUENCE public.memberships_id_seq OWNED BY public.memberships.id;
 --
 
 CREATE TABLE public.menu_items (
-                                   id           integer NOT NULL,
-                                   catalog_id   integer,
-                                   slug         character varying,
-                                   title_old    character varying,
-                                   item_type_id integer,
-                                   page_id      integer,
-                                   url_old      text,
-                                   parent_id    integer,
-                                   rank         integer,
-                                   created_at   timestamp without time zone NOT NULL,
-                                   updated_at   timestamp without time zone NOT NULL,
-                                   locale_bckp  character varying(10),
-                                   title        jsonb,
-                                   url          jsonb
+    id integer NOT NULL,
+    catalog_id integer,
+    slug character varying,
+    title_old character varying,
+    item_type_id integer,
+    page_id integer,
+    url_old text,
+    parent_id integer,
+    rank integer,
+    created_at timestamp without time zone NOT NULL,
+    updated_at timestamp without time zone NOT NULL,
+    locale_bckp character varying(10),
+    title jsonb,
+    url jsonb
 );
 
 
@@ -843,20 +875,19 @@ CREATE TABLE public.menu_items (
 -- Name: menu_items_bckp1; Type: TABLE; Schema: public; Owner: -
 --
 
-CREATE TABLE public.menu_items_bckp1
-(
-    id           integer,
-    catalog_id   integer,
-    slug         character varying,
-    title        character varying,
+CREATE TABLE public.menu_items_bckp1 (
+    id integer,
+    catalog_id integer,
+    slug character varying,
+    title character varying,
     item_type_id integer,
-    page_id      integer,
-    url          text,
-    parent_id    integer,
-    rank         integer,
-    created_at   timestamp without time zone,
-    updated_at   timestamp without time zone,
-    locale       character varying
+    page_id integer,
+    url text,
+    parent_id integer,
+    rank integer,
+    created_at timestamp without time zone,
+    updated_at timestamp without time zone,
+    locale character varying
 );
 
 
@@ -884,17 +915,17 @@ ALTER SEQUENCE public.menu_items_id_seq OWNED BY public.menu_items.id;
 --
 
 CREATE TABLE public.pages (
-                              id          integer NOT NULL,
-                              catalog_id  integer,
-                              creator_id  integer,
-                              reviewer_id integer,
-                              slug        character varying,
-                              title_old   text,
-                              locale_old  character varying,
-                              status      character varying,
-                              created_at  timestamp without time zone NOT NULL,
-                              updated_at  timestamp without time zone NOT NULL,
-                              title       jsonb
+    id integer NOT NULL,
+    catalog_id integer,
+    creator_id integer,
+    reviewer_id integer,
+    slug character varying,
+    title_old text,
+    locale_old character varying,
+    status character varying,
+    created_at timestamp without time zone NOT NULL,
+    updated_at timestamp without time zone NOT NULL,
+    title jsonb
 );
 
 
@@ -902,19 +933,18 @@ CREATE TABLE public.pages (
 -- Name: pages_bckp1; Type: TABLE; Schema: public; Owner: -
 --
 
-CREATE TABLE public.pages_bckp1
-(
-    id          integer,
-    catalog_id  integer,
-    creator_id  integer,
+CREATE TABLE public.pages_bckp1 (
+    id integer,
+    catalog_id integer,
+    creator_id integer,
     reviewer_id integer,
-    slug        character varying,
-    title       text,
-    content     text,
-    locale      character varying,
-    status      character varying,
-    created_at  timestamp without time zone,
-    updated_at  timestamp without time zone
+    slug character varying,
+    title text,
+    content text,
+    locale character varying,
+    status character varying,
+    created_at timestamp without time zone,
+    updated_at timestamp without time zone
 );
 
 
@@ -1056,25 +1086,25 @@ ALTER SEQUENCE public.template_storages_id_seq OWNED BY public.template_storages
 --
 
 CREATE TABLE public.users (
-                              id                     integer NOT NULL,
-                              email                  character varying DEFAULT ''::character varying NOT NULL,
-                              encrypted_password     character varying DEFAULT ''::character varying NOT NULL,
-                              reset_password_token   character varying,
-                              reset_password_sent_at timestamp without time zone,
-                              remember_created_at    timestamp without time zone,
-                              sign_in_count          integer DEFAULT 0 NOT NULL,
-                              current_sign_in_at     timestamp without time zone,
-                              last_sign_in_at        timestamp without time zone,
-                              current_sign_in_ip     inet,
-                              last_sign_in_ip        inet,
-                              created_at             timestamp without time zone NOT NULL,
-                              updated_at             timestamp without time zone NOT NULL,
-                              system_admin           boolean           DEFAULT false NOT NULL,
-                              primary_language       character varying DEFAULT 'en'::character varying NOT NULL,
-                              invited_by_id          integer,
-                              provider               character varying,
-                              uid                    character varying,
-                              jti                    character varying NOT NULL
+    id integer NOT NULL,
+    email character varying DEFAULT ''::character varying NOT NULL,
+    encrypted_password character varying DEFAULT ''::character varying NOT NULL,
+    reset_password_token character varying,
+    reset_password_sent_at timestamp without time zone,
+    remember_created_at timestamp without time zone,
+    sign_in_count integer DEFAULT 0 NOT NULL,
+    current_sign_in_at timestamp without time zone,
+    last_sign_in_at timestamp without time zone,
+    current_sign_in_ip inet,
+    last_sign_in_ip inet,
+    created_at timestamp without time zone NOT NULL,
+    updated_at timestamp without time zone NOT NULL,
+    system_admin boolean DEFAULT false NOT NULL,
+    primary_language character varying DEFAULT 'en'::character varying NOT NULL,
+    invited_by_id integer,
+    provider character varying,
+    uid character varying,
+    jti character varying NOT NULL
 );
 
 
@@ -1126,19 +1156,24 @@ ALTER TABLE ONLY public.ahoy_visits ALTER COLUMN id SET DEFAULT nextval('public.
 
 
 --
+-- Name: api_keys id; Type: DEFAULT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.api_keys ALTER COLUMN id SET DEFAULT nextval('public.api_keys_id_seq'::regclass);
+
+
+--
 -- Name: api_logs id; Type: DEFAULT; Schema: public; Owner: -
 --
 
-ALTER TABLE ONLY public.api_logs
-    ALTER COLUMN id SET DEFAULT nextval('public.api_logs_id_seq'::regclass);
+ALTER TABLE ONLY public.api_logs ALTER COLUMN id SET DEFAULT nextval('public.api_logs_id_seq'::regclass);
 
 
 --
 -- Name: catalog_permissions id; Type: DEFAULT; Schema: public; Owner: -
 --
 
-ALTER TABLE ONLY public.catalog_permissions
-    ALTER COLUMN id SET DEFAULT nextval('public.catalog_permissions_id_seq'::regclass);
+ALTER TABLE ONLY public.catalog_permissions ALTER COLUMN id SET DEFAULT nextval('public.catalog_permissions_id_seq'::regclass);
 
 
 --
@@ -1311,6 +1346,14 @@ ALTER TABLE ONLY public.ahoy_events
 
 ALTER TABLE ONLY public.ahoy_visits
     ADD CONSTRAINT ahoy_visits_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: api_keys api_keys_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.api_keys
+    ADD CONSTRAINT api_keys_pkey PRIMARY KEY (id);
 
 
 --
@@ -1572,6 +1615,20 @@ CREATE INDEX index_ahoy_visits_on_user_id ON public.ahoy_visits USING btree (use
 --
 
 CREATE UNIQUE INDEX index_ahoy_visits_on_visit_token ON public.ahoy_visits USING btree (visit_token);
+
+
+--
+-- Name: index_api_keys_on_api_key; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX index_api_keys_on_api_key ON public.api_keys USING btree (api_key);
+
+
+--
+-- Name: index_api_keys_on_catalog_id; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX index_api_keys_on_catalog_id ON public.api_keys USING btree (catalog_id);
 
 
 --
@@ -1943,7 +2000,7 @@ CREATE UNIQUE INDEX unique_schema_migrations ON public.schema_migrations USING b
 --
 
 ALTER TABLE ONLY public.catalog_permissions
-    ADD CONSTRAINT fk_rails_025bd80d15 FOREIGN KEY (user_id) REFERENCES public.users (id);
+    ADD CONSTRAINT fk_rails_025bd80d15 FOREIGN KEY (user_id) REFERENCES public.users(id);
 
 
 --
@@ -2119,7 +2176,7 @@ ALTER TABLE ONLY public.catalogs
 --
 
 ALTER TABLE ONLY public.pages
-    ADD CONSTRAINT fk_rails_73cabaed53 FOREIGN KEY (creator_id) REFERENCES public.users (id);
+    ADD CONSTRAINT fk_rails_73cabaed53 FOREIGN KEY (creator_id) REFERENCES public.users(id);
 
 
 --
@@ -2127,7 +2184,7 @@ ALTER TABLE ONLY public.pages
 --
 
 ALTER TABLE ONLY public.api_logs
-    ADD CONSTRAINT fk_rails_7508ab7655 FOREIGN KEY (user_id) REFERENCES public.users (id);
+    ADD CONSTRAINT fk_rails_7508ab7655 FOREIGN KEY (user_id) REFERENCES public.users(id);
 
 
 --
@@ -2135,7 +2192,7 @@ ALTER TABLE ONLY public.api_logs
 --
 
 ALTER TABLE ONLY public.exports
-    ADD CONSTRAINT fk_rails_7563b31b52 FOREIGN KEY (catalog_id) REFERENCES public.catalogs (id);
+    ADD CONSTRAINT fk_rails_7563b31b52 FOREIGN KEY (catalog_id) REFERENCES public.catalogs(id);
 
 
 --
@@ -2144,6 +2201,14 @@ ALTER TABLE ONLY public.exports
 
 ALTER TABLE ONLY public.containers
     ADD CONSTRAINT fk_rails_8a017573a6 FOREIGN KEY (page_id) REFERENCES public.pages(id);
+
+
+--
+-- Name: api_keys fk_rails_9143567f22; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.api_keys
+    ADD CONSTRAINT fk_rails_9143567f22 FOREIGN KEY (catalog_id) REFERENCES public.catalogs(id);
 
 
 --
@@ -2273,99 +2338,100 @@ ALTER TABLE ONLY public.choice_sets
 SET search_path TO "$user", public;
 
 INSERT INTO "schema_migrations" (version) VALUES
-                                              ('20151005181012'),
-                                              ('20151005201520'),
-                                              ('20151005203028'),
-                                              ('20151005203921'),
-                                              ('20151005205146'),
-                                              ('20151005210132'),
-                                              ('20151005221339'),
-                                              ('20151007172059'),
-                                              ('20151013214402'),
-                                              ('20151013214815'),
-                                              ('20151013232152'),
-                                              ('20151013232606'),
-                                              ('20151014232335'),
-                                              ('20151015161910'),
-                                              ('20151015214240'),
-                                              ('20151015233520'),
-                                              ('20151016001005'),
-                                              ('20151019204634'),
-                                              ('20151019205434'),
-                                              ('20151020171305'),
-                                              ('20151021003024'),
-                                              ('20151027162712'),
-                                              ('20151027173025'),
-                                              ('20151027213627'),
-                                              ('20151027221141'),
-                                              ('20151028165346'),
-                                              ('20151028165822'),
-                                              ('20151102213009'),
-                                              ('20151105175029'),
-                                              ('20151106003745'),
-                                              ('20151109224327'),
-                                              ('20151130193143'),
-                                              ('20151130214821'),
-                                              ('20151205003146'),
-                                              ('20151205005311'),
-                                              ('20151205011325'),
-                                              ('20151206234336'),
-                                              ('20151210000035'),
-                                              ('20151212000308'),
-                                              ('20151214213046'),
-                                              ('20160307163846'),
-                                              ('20160425072020'),
-                                              ('20160425125350'),
-                                              ('20160509095147'),
-                                              ('20160509194619'),
-                                              ('20160720053135'),
-                                              ('20161231140032'),
-                                              ('20170121055843'),
-                                              ('20170507231151'),
-                                              ('20170507231610'),
-                                              ('20170513155612'),
-                                              ('20170513160403'),
-                                              ('20170705191550'),
-                                              ('20170830180816'),
-                                              ('20170830181451'),
-                                              ('20170830182339'),
-                                              ('20170831075823'),
-                                              ('20170913085323'),
-                                              ('20170926095141'),
-                                              ('20171106080707'),
-                                              ('20171109063607'),
-                                              ('20171118121553'),
-                                              ('20171205064929'),
-                                              ('20171214171741'),
-                                              ('20171216182821'),
-                                              ('20171219054741'),
-                                              ('20180220093412'),
-                                              ('20180308085259'),
-                                              ('20180504082040'),
-                                              ('20180615090214'),
-                                              ('20180702145421'),
-                                              ('20180822150656'),
-                                              ('20180907111339'),
-                                              ('20180918114846'),
-                                              ('20180919104449'),
-                                              ('20180920073829'),
-                                              ('20180922224350'),
-                                              ('20180923135339'),
-                                              ('20180923135401'),
-                                              ('20180925152745'),
-                                              ('20181022124602'),
-                                              ('20181207103025'),
-                                              ('20181207145518'),
-                                              ('20181210123619'),
-                                              ('20181214095728'),
-                                              ('20190215124856'),
-                                              ('20190215125849'),
-                                              ('20190529123835'),
-                                              ('20190812114658'),
-                                              ('20210204081043'),
-                                              ('20210310082628'),
-                                              ('20210503071636'),
-                                              ('20210503073049'),
-                                              ('20210624100735');
+('20151005181012'),
+('20151005201520'),
+('20151005203028'),
+('20151005203921'),
+('20151005205146'),
+('20151005210132'),
+('20151005221339'),
+('20151007172059'),
+('20151013214402'),
+('20151013214815'),
+('20151013232152'),
+('20151013232606'),
+('20151014232335'),
+('20151015161910'),
+('20151015214240'),
+('20151015233520'),
+('20151016001005'),
+('20151019204634'),
+('20151019205434'),
+('20151020171305'),
+('20151021003024'),
+('20151027162712'),
+('20151027173025'),
+('20151027213627'),
+('20151027221141'),
+('20151028165346'),
+('20151028165822'),
+('20151102213009'),
+('20151105175029'),
+('20151106003745'),
+('20151109224327'),
+('20151130193143'),
+('20151130214821'),
+('20151205003146'),
+('20151205005311'),
+('20151205011325'),
+('20151206234336'),
+('20151210000035'),
+('20151212000308'),
+('20151214213046'),
+('20160307163846'),
+('20160425072020'),
+('20160425125350'),
+('20160509095147'),
+('20160509194619'),
+('20160720053135'),
+('20161231140032'),
+('20170121055843'),
+('20170507231151'),
+('20170507231610'),
+('20170513155612'),
+('20170513160403'),
+('20170705191550'),
+('20170830180816'),
+('20170830181451'),
+('20170830182339'),
+('20170831075823'),
+('20170913085323'),
+('20170926095141'),
+('20171106080707'),
+('20171109063607'),
+('20171118121553'),
+('20171205064929'),
+('20171214171741'),
+('20171216182821'),
+('20171219054741'),
+('20180220093412'),
+('20180308085259'),
+('20180504082040'),
+('20180615090214'),
+('20180702145421'),
+('20180822150656'),
+('20180907111339'),
+('20180918114846'),
+('20180919104449'),
+('20180920073829'),
+('20180922224350'),
+('20180923135339'),
+('20180923135401'),
+('20180925152745'),
+('20181022124602'),
+('20181207103025'),
+('20181207145518'),
+('20181210123619'),
+('20181214095728'),
+('20190215124856'),
+('20190215125849'),
+('20190529123835'),
+('20190812114658'),
+('20210204081043'),
+('20210310082628'),
+('20210503071636'),
+('20210503073049'),
+('20210624100735'),
+('20210730100707');
 
 

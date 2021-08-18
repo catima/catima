@@ -75,11 +75,29 @@ class API::V3::BaseController < ActionController::Base
     params[:per] = [params[:per].to_i, MAX_PAGE_SIZE].min
   end
 
+  def bearer_token
+    pattern = /^Bearer /
+    header  = request.headers['Authorization']
+    header.gsub(pattern, '') if header && header.match(pattern)
+  end
+
+  def authenticate_app
+    @api_key = APIKey.active.find_by(api_key: bearer_token)
+    @authenticated_catalog = @api_key&.catalog
+  end
+
+  def authenticated_catalog?
+    @authenticated_catalog.present?
+  end
+
   # Use api_v3_user Devise scope for JSON access
   def authenticate_user!(*args)
-    super and return if args.present?
-
-    authenticate_api_v3_user!
+    if authenticate_app
+      true
+    else
+      super and return if args.present?
+      authenticate_api_v3_user!
+    end
   end
 
   def invalid_auth_token
@@ -94,7 +112,7 @@ class API::V3::BaseController < ActionController::Base
   # So we can use Pundit policies for api_users
   # rubocop:disable Naming/MemoizedInstanceVariableName
   def set_current_user
-    @current_user ||= warden.authenticate(scope: :api_v3_user)
+    @current_user ||= warden.authenticate(scope: :api_v3_user) unless authenticated_catalog?
   end
   # rubocop:enable Naming/MemoizedInstanceVariableName
 

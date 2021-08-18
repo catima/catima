@@ -1,7 +1,7 @@
 class API::V3::Catalog::SimpleSearchesController < API::V3::Catalog::BaseController
   def create
     paginate
-    authorize(@catalog, :simple_search_create?)
+    authorize(@catalog, :simple_search_create?) unless authenticated_catalog?
 
     build_simple_search
     if @simple_search.update(simple_search_params)
@@ -20,7 +20,7 @@ class API::V3::Catalog::SimpleSearchesController < API::V3::Catalog::BaseControl
 
   def show
     paginate
-    authorize(@catalog, :simple_search_show?)
+    authorize(@catalog, :simple_search_show?) unless authenticated_catalog?
 
     find_simple_search
     return routing_error if @simple_search.nil?

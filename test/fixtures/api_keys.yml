@@ -1,0 +1,21 @@
+one:
+  catalog: one
+  label: key1
+  api_key: thisisnotasecureapikey_one
+
+one_revoked:
+  catalog: one
+  label: key1
+  api_key: thisisnotasecureapikey_one_revoked
+  revoked: true
+
+two:
+  catalog: two
+  label: key1
+  api_key: thisisnotasecureapikey_two
+
+two_revoked:
+  catalog: two
+  label: key1
+  api_key: thisisnotasecureapikey_two_revoked
+  revoked: true

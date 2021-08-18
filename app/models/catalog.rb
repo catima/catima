@@ -40,6 +40,7 @@ class Catalog < ApplicationRecord
 
   serialize :style, HashSerializer
 
+  has_many :api_keys
   has_many :api_logs, :dependent => :destroy
   has_many :advanced_searches, :dependent => :destroy
   has_many :simple_searches, :dependent => :destroy

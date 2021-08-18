@@ -41,6 +41,8 @@ fr:
         endpoint: Adresse requete
         remote_ip: Adresse Ip
         payload: Données
+      api_keys:
+        api_key: "Tokens d'authentications"
   presenters:
     field:
       file:
@@ -341,6 +343,7 @@ fr:
   delete: 'Supprimer'
   delete_confirm: "Vous voulez vraiment supprimer “%{model}”?"
   edit: 'Éditer'
+  save: 'Sauvegarder'
   view: Voir
   actions: 'Actions'
   duplicate: 'Dupliquer'
@@ -423,11 +426,20 @@ fr:
     catalog:
       settings: 'Catalogue'
       edit_settings: 'Éditer les paramètres du catalogue'
+      api_settings: 'API Admin'
       save_settings: 'Enregistrer'
       save_style: 'Enregistrer le style'
       no_api_logs: 'Aucun log api v3'
       api_v3_logs: 'API V3 Logs'
     catalogs:
+      edit:
+        api_key_doc_link: "Documentation"
+        no_api_keys_found: "Aucune clé API trouvée"
+        new_api_key: 'Créer une nouvelle clé API'
+      api_key_modal:
+        create_new_api_key: 'Créer une nouvelle clé API'
+      api_key_edit_modal:
+        edit_api_key: 'Modifier une clé API'
       common_form_fields:
         advertize_help: "Si coché, ce catalogue peut être trouvé dans les listes de catalogue publiques."
         visible_help: "Si coché, ce catalogue sera disponible pour tout le monde. Sinon, seul le personnel du catalogue pourra voir le contenu."

@@ -27,6 +27,34 @@ RSpec.describe 'api/v3/catalogs', type: :request do
         end
       end
 
+      # test catalog authentication
+      let!(:api_key) { api_keys(:two).api_key }
+      response(200, 'successful') do
+        let!(:Authorization) { "Bearer #{api_key}" }
+
+        run_test! do
+          body = JSON.parse(response.body)
+          expect(body).to have_key("data")
+          expect(body["data"].length).to eq(1)
+        end
+      end
+
+      # test catalog authentication
+      let!(:api_key_revoked) { api_keys(:two_revoked).api_key }
+      response(401, 'Unauthorized') do
+        let!(:Authorization) { "Bearer #{api_key_revoked}" }
+        before do |example|
+          submit_request(example.metadata)
+        end
+
+        it 'returns a 401 Unauthorized', skip_after: true do
+          expect(response.code).to eq("401")
+          body = JSON.parse(response.body)
+          expect(body).to have_key("code")
+          expect(body["code"]).to eq("invalid_token")
+        end
+      end
+
       response(401, 'Unauthorized') do
         include_examples "Unauthorized"
       end

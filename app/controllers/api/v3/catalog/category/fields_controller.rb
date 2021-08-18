@@ -2,7 +2,7 @@ class API::V3::Catalog::Category::FieldsController < API::V3::Catalog::Category:
   after_action -> { set_pagination_header(:fields) }, only: :index
 
   def index
-    authorize(@catalog, :category_fields_index?)
+    authorize(@catalog, :category_fields_index?) unless authenticated_catalog?
 
     @fields = @category.fields
     @fields = @fields.where(restricted: false) unless @current_user.catalog_role_at_least?(@catalog, "editor")
