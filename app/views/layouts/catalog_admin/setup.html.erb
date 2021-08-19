@@ -25,6 +25,9 @@
       <ul class="list-group list-group list-group-flush">
         <%= setup_catalog_settings_nav_link %>
         <%= setup_catalog_style_nav_link %>
+        <% if @catalog.api_enabled? %>
+          <%= setup_catalog_api_link %>
+        <% end %>
       </ul>
     </div>
 

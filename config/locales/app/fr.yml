@@ -387,6 +387,7 @@ fr:
   item_type: Type de fiche
   general: Général
   style: Style
+  api: API
   export: Export
   valid: "valide"
   expired: "expiré"
@@ -426,13 +427,13 @@ fr:
     catalog:
       settings: 'Catalogue'
       edit_settings: 'Éditer les paramètres du catalogue'
-      api_settings: 'API Admin'
+      api_settings: "Éditer les paramètres de l'API"
       save_settings: 'Enregistrer'
       save_style: 'Enregistrer le style'
       no_api_logs: 'Aucun log api v3'
       api_v3_logs: 'API V3 Logs'
     catalogs:
-      edit:
+      api:
         api_key_doc_link: "Documentation"
         no_api_keys_found: "Aucune clé API trouvée"
         new_api_key: 'Créer une nouvelle clé API'

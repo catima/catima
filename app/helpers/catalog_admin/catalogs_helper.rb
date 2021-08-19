@@ -13,6 +13,13 @@ module CatalogAdmin::CatalogsHelper
     link_to(I18n.t('style'), catalog_admin_style_path, :class => klass)
   end
 
+  def setup_catalog_api_link
+    active = (params[:controller] == "catalog_admin/catalogs" && params[:action] == "api")
+    klass = "list-group-item  list-group-item-action"
+    klass << " active" if active
+    link_to(I18n.t('api'), catalog_admin_api_path, :class => klass)
+  end
+
   def catalog_access(catalog)
     return 1 if catalog.visible && !catalog.restricted
     return 2 if catalog.visible && catalog.restricted

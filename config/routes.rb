@@ -170,6 +170,7 @@ Rails.application.routes.draw do
     get "/_data" => "dashboard#data", :as => :data
 
     get "/_settings" => "catalogs#edit", :as => :settings
+    get "/_api" => "catalogs#api", :as => :api
     patch "/_settings" => "catalogs#update"
 
     get "/_style" => "catalogs#edit_style", :as => :style

@@ -5,33 +5,4 @@
     <%= render("common_form_fields", :f => f) %>
     <%= f.primary(t("catalog_admin.catalog.save_settings")) %>
   <% end %>
-
-  <br>
-  <h4><%= t('catalog_admin.catalog.api_settings') %></h4>
-
-  <% if @catalog.api_enabled? %>
-    <%= t('.api_key_doc_link') %>
-    <br>
-    <%= link_to(url_for('/api-docs')) %>
-    <br>
-    <br>
-
-    <%= APIKey.human_attribute_name(:api_key) %>
-    <% if @catalog.api_keys.any? %>
-      <% @catalog.api_keys.active.each do |key| %>
-        <br>
-        <%= render 'api_key', key: key, status: 'active' %>
-      <% end %>
-      <% @catalog.api_keys.revoked.each do |key| %>
-        <br>
-        <%= render 'api_key', key: key, status: 'revoked' %>
-      <% end %>
-    <% else %>
-      <%= t('.no_api_keys_found') %>
-    <% end %>
-    <div class="col-sm-4" style="padding-top: 30px; margin-left: -15px;">
-      <a class="btn btn-sm btn-outline-secondary" data-toggle="modal" data-target="#new-api-key-modal" href="#"><i class="fa fa-plus"></i> <%= t('.new_api_key') %></a>
-    </div>
-  <% end %>
 </div>
-<%= render("catalog_admin/catalogs/api_key_modal") %>
