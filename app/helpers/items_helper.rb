@@ -48,11 +48,11 @@ module ItemsHelper
     presenter.render
   end
 
-  def item_summary(item)
+  def item_summary(item, bypass_displayable = false)
     # Retrieve all applicable fields for the summary & join the values
     item.applicable_list_view_fields.each_with_object([]) do |fld, html|
       # Remove field if restricted
-      next unless fld.displayable_to_user?(current_user)
+      next unless bypass_displayable ||  fld.displayable_to_user?(current_user)
 
       # Remove field if primary
       next if fld == item.primary_field

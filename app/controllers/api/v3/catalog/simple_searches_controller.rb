@@ -43,7 +43,7 @@ class API::V3::Catalog::SimpleSearchesController < API::V3::Catalog::BaseControl
 
   def build_simple_search
     @simple_search = scope.new do |simple_search|
-      simple_search.creator = @current_user if @current_user.authenticated?
+      simple_search.creator = @current_user if !authenticated_catalog? && @current_user.authenticated?
     end
   end
 

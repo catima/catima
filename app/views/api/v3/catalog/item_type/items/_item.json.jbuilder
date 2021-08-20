@@ -10,8 +10,8 @@ json.primary_field do
   json.review_status item.review_status if item.catalog.requires_review
 end
 if with_summary
-  json.item_summary strip_tags(item_summary(item))
-  json.thumbnail item_thumbnail(item) unless item.try(:image?)
+  json.item_summary strip_tags(item_summary(item, bypass_displayable: true))
+  json.thumbnail item_thumbnail(item) if item.try(:image?)
 end
 if with_field_values
   json.field_values do

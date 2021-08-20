@@ -5,7 +5,7 @@ class API::V3::Catalog::Category::FieldsController < API::V3::Catalog::Category:
     authorize(@catalog, :category_fields_index?) unless authenticated_catalog?
 
     @fields = @category.fields
-    @fields = @fields.where(restricted: false) unless @current_user.catalog_role_at_least?(@catalog, "editor")
+    @fields = @fields.where(restricted: false) unless authenticated_catalog? || @current_user.catalog_role_at_least?(@catalog, "editor")
     @fields = @fields.page(params[:page]).per(params[:per])
   end
 end

@@ -32,14 +32,8 @@ RSpec.describe 'api/v3/{catalog_id}/users', type: :request do
       end
 
       # test catalog authentication
-      let!(:api_key) { api_keys(:one).api_key }
       response(200, 'successful') do
-        let!(:Authorization) { "Bearer #{api_key}" }
-
-        run_test! do
-          body = JSON.parse(response.body)
-          expect(body).to have_key("data")
-        end
+        include_examples "API_KEY_Success", :one
       end
 
       # test catalog authentication

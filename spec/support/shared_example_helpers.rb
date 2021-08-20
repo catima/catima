@@ -1,4 +1,18 @@
 module SharedExampleHelpers
+  RSpec.shared_examples "API_KEY_Success" do |catalog_symbol|
+    let!(:api_key) { api_keys(catalog_symbol).api_key }
+    let!(:Authorization) { "Bearer #{api_key}" }
+
+    before do |example|
+      submit_request(example.metadata)
+    end
+
+    it 'returns a 200', skip_after: true do
+      body = JSON.parse(response.body)
+      expect(body).to have_key("data")
+    end
+  end
+
   RSpec.shared_examples "Unauthorized" do
     let!(:Authorization) { "" }
 

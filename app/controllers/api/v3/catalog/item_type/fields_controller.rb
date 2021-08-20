@@ -9,7 +9,7 @@ class API::V3::Catalog::ItemType::FieldsController < API::V3::Catalog::ItemType:
   end
 
   def show
-    authorize(@catalog, :item_type_field_show?)
+    authorize(@catalog, :item_type_field_show?) unless authenticated_catalog?
 
     @field = @fields.find(params[:field_id])
   end
@@ -18,6 +18,6 @@ class API::V3::Catalog::ItemType::FieldsController < API::V3::Catalog::ItemType:
 
   def find_fields
     @fields = @item_type.fields
-    @fields = @fields.where(restricted: false) unless @current_user.catalog_role_at_least?(@catalog, "editor")
+    @fields = @fields.where(restricted: false) unless authenticated_catalog? || @current_user.catalog_role_at_least?(@catalog, "editor")
   end
 end

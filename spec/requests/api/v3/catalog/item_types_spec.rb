@@ -33,6 +33,11 @@ RSpec.describe 'api/v3/{catalog_id}/item_type(s)', type: :request do
         end
       end
 
+      # test catalog authentication
+      response(200, 'successful') do
+        include_examples "API_KEY_Success", :two
+      end
+
       response(401, 'Unauthorized') do
         include_examples "Unauthorized"
       end
@@ -56,6 +61,11 @@ RSpec.describe 'api/v3/{catalog_id}/item_type(s)', type: :request do
           body = JSON.parse(response.body)
           expect(body).to have_key("data")
         end
+      end
+
+      # test catalog authentication
+      response(200, 'successful') do
+        include_examples "API_KEY_Success", :two
       end
 
       response(401, 'Unauthorized') do

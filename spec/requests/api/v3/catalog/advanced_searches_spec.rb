@@ -3,7 +3,6 @@ require 'swagger_helper'
 
 RSpec.describe 'api/v3/{catalog_id}/advanced_search', type: :request do
   fixtures :all
-
   let(:locale) { 'fr' }
   let!(:one_admin) { users(:one_admin) }
   let!(:Authorization) { generate_auth_header(one_admin) }
@@ -37,6 +36,9 @@ RSpec.describe 'api/v3/{catalog_id}/advanced_search', type: :request do
       tags 'AdvancedSearch'
       consumes 'application/json'
       security [BearerAuth: []]
+      description <<-HTML.squish
+        <p><b>Authorization: User+/Member+/Editor+ (according to catalog\'s visibility)</b></p>
+      HTML
 
       response(200, 'successful') do
         run_test! do
@@ -59,6 +61,9 @@ RSpec.describe 'api/v3/{catalog_id}/advanced_search', type: :request do
       tags 'AdvancedSearch'
       consumes 'application/json'
       security [BearerAuth: []]
+      description <<-HTML.squish
+        <p><b>Authorization: User+/Member+/Editor+ (according to catalog\'s visibility)</b></p>
+      HTML
 
       parameter name: :advanced_search, in: :body, schema: {
         type: :object,
@@ -107,6 +112,10 @@ RSpec.describe 'api/v3/{catalog_id}/advanced_search', type: :request do
       tags 'AdvancedSearch'
       consumes 'application/json'
       security [BearerAuth: []]
+      description <<-HTML.squish
+        <p><b>Authorization: User+/Member+/Editor+ (according to catalog\'s visibility)</b></p>
+      HTML
+
       response(200, 'successful') do
         run_test! do
           body = JSON.parse(response.body)

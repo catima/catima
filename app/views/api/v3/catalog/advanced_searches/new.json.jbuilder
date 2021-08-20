@@ -20,6 +20,5 @@ json.data do
         end
       end
     end
-    json.advanced_search_conf ''
   end
 end

@@ -36,6 +36,11 @@ RSpec.describe 'api/v3/{catalog_id}/item_type/{item_type_id}/fields', type: :req
         end
       end
 
+      # test catalog authentication
+      response(200, 'successful') do
+        include_examples "API_KEY_Success", :one
+      end
+
       response(401, 'Unauthorized') do
         include_examples "Unauthorized"
       end

@@ -75,15 +75,11 @@ class API::V3::BaseController < ActionController::Base
     params[:per] = [params[:per].to_i, MAX_PAGE_SIZE].min
   end
 
-  def bearer_token
-    pattern = /^Bearer /
-    header  = request.headers['Authorization']
-    header.gsub(pattern, '') if header && header.match(pattern)
-  end
-
-  def authenticate_app
-    @api_key = APIKey.active.find_by(api_key: bearer_token)
-    @authenticated_catalog = @api_key&.catalog
+  def authenticate_catalog
+    authenticate_with_http_token do |token|
+      @api_key = APIKey.active.find_by(api_key: token)
+      @authenticated_catalog = @api_key&.catalog
+    end
   end
 
   def authenticated_catalog?
@@ -92,7 +88,7 @@ class API::V3::BaseController < ActionController::Base
 
   # Use api_v3_user Devise scope for JSON access
   def authenticate_user!(*args)
-    if authenticate_app
+    if authenticate_catalog
       true
     else
       super and return if args.present?
