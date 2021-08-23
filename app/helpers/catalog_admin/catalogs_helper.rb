@@ -28,8 +28,6 @@ module CatalogAdmin::CatalogsHelper
   end
 
   def catalog_access_label(catalog)
-    # ROLE_OPTIONS = %w(user member editor super-editor reviewer admin).freeze
-    # CatalogPermission::ROLE_OPTIONS
     [:everyone, :members, :catalog_staff][catalog_access(catalog) - 1].to_s
   end
 

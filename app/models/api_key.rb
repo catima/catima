@@ -6,12 +6,4 @@ class APIKey < ApplicationRecord
   validates :label, uniqueness: { scope: :catalog_id }
 
   has_secure_token :api_key, length: 256
-
-  scope :revoked, -> { where(revoked: true) }
-  scope :active, -> { where(revoked: false) }
-
-  def revoke
-    self.revoked = true
-    save
-  end
 end

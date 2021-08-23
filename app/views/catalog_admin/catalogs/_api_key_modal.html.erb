@@ -8,11 +8,7 @@
         </div>
         <div class="modal-body">
           <div class="card-body">
-            <%= f.form_group(
-              :api_key
-            ) do %>
-              <%= f.text_field(:label) %>
-            <% end %>
+            <%= render 'form', form: f %>
           </div>
         </div>
         <div class="modal-footer">

@@ -40,9 +40,8 @@ RSpec.describe 'api/v3/catalogs', type: :request do
       end
 
       # test catalog authentication
-      let!(:api_key_revoked) { api_keys(:two_revoked).api_key }
       response(401, 'Unauthorized') do
-        let!(:Authorization) { "Bearer #{api_key_revoked}" }
+        let!(:Authorization) { "Bearer WRONG_KEY" }
         before do |example|
           submit_request(example.metadata)
         end

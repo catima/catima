@@ -3,14 +3,11 @@
     <div class="d-flex justify-content-between">
       <div>
         <%= key.label %>
-        <%= tag.span(APIKey.human_attribute_name(:revoked), :class => "badge badge-danger") if status == "revoked" %>
       </div>
-      <% if status != "revoked" %>
-        <div class="d-flex">
-          <a href="#" data-toggle="modal" data-target="#api-key-edit-modal-<%= key.id %>" href="#"><%= fa_icon(:pencil, class: "text-primary") %></a>
-          <%= link_to(fa_icon(:trash), catalog_admin_api_key_path(id: key.id), method: :delete, class: 'px-1 text-danger') %>
-        </div>
-      <% end %>
+      <div class="d-flex">
+        <a href="#" data-toggle="modal" data-target="#api-key-edit-modal-<%= key.id %>" href="#"><%= fa_icon(:pencil, class: "text-primary") %></a>
+        <%= link_to(fa_icon(:trash), catalog_admin_api_key_path(id: key.id), method: :delete, class: 'px-1 text-danger') %>
+      </div>
     </div>
     <div data-toggle-display-target="revealable">
       <%= key.api_key %>

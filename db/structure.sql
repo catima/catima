@@ -214,7 +214,6 @@ CREATE TABLE public.api_keys (
     catalog_id bigint,
     label character varying NOT NULL,
     api_key character varying NOT NULL,
-    revoked boolean DEFAULT false,
     created_at timestamp(6) without time zone NOT NULL,
     updated_at timestamp(6) without time zone NOT NULL
 );

@@ -3,20 +3,16 @@
 <div class="card-body">
   <% if @catalog.api_enabled? %>
     <%= t('.api_key_doc_link') %>
-    <br>
-    <%= link_to(url_for('/api-docs'),url_for('/api-docs')) %>
-    <br>
-    <br>
+    <p>
+      <%= link_to(url_for('/api-docs'),url_for('/api-docs')) %>
+    </p>
 
     <%= APIKey.human_attribute_name(:api_key) %>
     <% if @catalog.api_keys.any? %>
-      <% @catalog.api_keys.active.each do |key| %>
-        <br>
-        <%= render 'api_key', key: key, status: 'active' %>
-      <% end %>
-      <% @catalog.api_keys.revoked.each do |key| %>
-        <br>
-        <%= render 'api_key', key: key, status: 'revoked' %>
+      <% @catalog.api_keys.each do |key| %>
+        <div>
+          <%= render 'api_key', key: key %>
+        </div>
       <% end %>
     <% else %>
       <%= t('.no_api_keys_found') %>

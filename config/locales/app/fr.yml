@@ -139,7 +139,7 @@ fr:
     update:
       success: L API key a étée modifée
     destroy:
-      success: L API key a étée révoquée
+      success: L API key a étée supprimée
   common:
     back: "Retour"
     greeting: "Bonjour"

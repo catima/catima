@@ -73,6 +73,8 @@ RSpec.describe 'api/v3/{catalog_id}/advanced_search', type: :request do
             properties: {
               criteria: {
                 type: :object
+                # COMMENT TO REMEMBER THE STRUCTURE OF THE OBJECT
+
                 # properties: {
                 #   __field_uuid: {
                 #     index: {

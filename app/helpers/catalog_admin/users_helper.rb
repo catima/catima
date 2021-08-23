@@ -28,7 +28,7 @@ module CatalogAdmin::UsersHelper
   def user_role_id(user, catalog)
     return false unless user_role_symbol(user, catalog) != user_role_symbol(user, catalog, true)
 
-    user.groups.select { |g| g.role_for_catalog(catalog) == user_role_symbol(user, catalog, true) }.first.id
+    user.groups.detect { |g| g.role_for_catalog(catalog) == user_role_symbol(user, catalog, true) }.id
   end
 
   def render_catalog_admin_users_permission(form)

@@ -2,16 +2,11 @@ json.id simple_search.id
 json.uuid simple_search.uuid
 json.query simple_search.query
 json.item_types do
-  json.array! simple_search_results.items.select { |i| i.item_type.present? }.group_by(&:item_type_id) do |item_type_id, items|
-    item_type = items.first&.item_type
-    json.id item_type_id
+  json.array! simple_search_results.items.joins(:item_type).group_by(&:item_type) do |item_type, items|
+    json.id item_type.id
     json.slug item_type.slug
     json.name item_type.name_translations
     json.display_emtpy_fields item_type&.display_emtpy_fields
-    json.items do
-      json.array! items do |item|
-        json.partial! partial: '/api/v3/catalog/item_type/items/item', locals: {item: item, with_field_values: false, with_summary: true}
-      end
-    end
+    json.items items, as: :item, partial: '/api/v3/catalog/item_type/items/item', locals: {with_field_values: false, with_summary: true}
   end
 end

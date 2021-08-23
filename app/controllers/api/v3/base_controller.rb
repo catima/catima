@@ -77,7 +77,7 @@ class API::V3::BaseController < ActionController::Base
 
   def authenticate_catalog
     authenticate_with_http_token do |token|
-      @api_key = APIKey.active.find_by(api_key: token)
+      @api_key = APIKey.find_by(api_key: token)
       @authenticated_catalog = @api_key&.catalog
     end
   end

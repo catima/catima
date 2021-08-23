@@ -75,13 +75,3 @@ json.field_set_type field.field_set_type
 json.multiple field.multiple
 json.required field.required
 json.row_order field.row_order
-
-# json.category_item_type_id field.category_item_type_id
-# json.display_component field.display_component
-# json.editor_component field.editor_component
-# json.field_set_id field.field_set_id
-# json.i18n field.i18n
-# json.options field.options
-# json.ordered field.ordered
-# json.related_item_type_id field.related_item_type_id
-

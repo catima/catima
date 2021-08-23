@@ -4,7 +4,6 @@ class CreateAPIKeys < ActiveRecord::Migration[6.1]
       t.references :catalog, index: true, foreign_key: true
       t.string :label, null: false
       t.string :api_key, null: false, unique: true, index: true
-      t.boolean :revoked, default: false
       t.timestamps
     end
   end
