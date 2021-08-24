@@ -1,7 +1,5 @@
-import React, { Component } from 'react';
+import React from 'react';
 import axios from 'axios';
-import AsyncPaginate from 'react-select-async-paginate';
-import ReactDOM from 'react-dom';
 import ReactSelect from 'react-select';
 import striptags from 'striptags';
 import LoadingDots from '../../StyleControl/components/LoadingDots';
@@ -9,7 +7,7 @@ import Validation from "../modules/validation";
 
 const WAIT_INTERVAL = 800;
 
-class MultiReferenceEditor extends Component {
+class MultiReferenceEditor extends React.Component {
   constructor(props){
     super(props);
 

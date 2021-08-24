@@ -1,11 +1,10 @@
-import React, { Component } from 'react';
-import ReactDOM from 'react-dom';
+import React from 'react';
 import DateTimeInput from './DateTimeInput';
 import $ from 'jquery';
 import 'moment';
 import 'bootstrap4-datetimepicker';
 
-class DateTimeSearch extends Component {
+class DateTimeSearch extends React.Component {
   constructor(props){
     super(props);
 

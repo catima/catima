@@ -1,9 +1,8 @@
+import React from "react";
 import AsyncPaginate from 'react-select-async-paginate';
-import React, { Component } from 'react';
-import ReactDOM from 'react-dom';
 import striptags from 'striptags';
 
-class SelectedReferenceSearch extends Component {
+class SelectedReferenceSearch extends React.Component {
   constructor(props){
     super(props);
 

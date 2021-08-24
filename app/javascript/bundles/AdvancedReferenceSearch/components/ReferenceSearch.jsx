@@ -1,11 +1,10 @@
-import React, { Component } from 'react';
-import ReactDOM from 'react-dom';
+import React from "react";
 import axios from 'axios';
 import SelectedReferenceSearch from './SelectedReferenceSearch';
 import ItemTypesReferenceSearch from './ItemTypesReferenceSearch';
 import ReactSelect from 'react-select';
 
-class ReferenceSearch extends Component {
+class ReferenceSearch extends React.Component {
   constructor(props){
     super(props);
 

@@ -1,10 +1,10 @@
-import React, { Component } from 'react';
+import React from 'react';
 import AsyncPaginate from 'react-select-async-paginate';
 import striptags from 'striptags';
 import ReactSelect from 'react-select';
 import Validation from '../modules/validation';
 
-class SingleReferenceEditor extends Component {
+class SingleReferenceEditor extends React.Component {
   constructor(props){
     super(props);
 

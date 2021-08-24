@@ -1,7 +1,7 @@
-import React, { Component } from 'react';
+import React from "react";
 import ReferenceSearch from './ReferenceSearch';
 
-class ReferenceSearchContainer extends Component {
+class ReferenceSearchContainer extends React.Component {
   constructor(props){
     super(props);
 

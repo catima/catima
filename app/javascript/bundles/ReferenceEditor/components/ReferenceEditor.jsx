@@ -1,10 +1,9 @@
-import React, { Component } from 'react';
-import ReactDOM from 'react-dom';
+import React from 'react';
 import axios from 'axios';
 import SingleReferenceEditor from './SingleReferenceEditor';
 import MultiReferenceEditor from './MultiReferenceEditor';
 
-class ReferenceEditor extends Component {
+class ReferenceEditor extends React.Component {
   constructor(props){
     super(props);
 

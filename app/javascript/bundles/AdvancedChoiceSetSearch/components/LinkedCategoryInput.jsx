@@ -1,5 +1,4 @@
-import React, { Component } from 'react';
-import ReactDOM from 'react-dom';
+import React from 'react';
 import ReactSelect from 'react-select';
 import axios from 'axios';
 import $ from 'jquery';
@@ -8,7 +7,7 @@ import 'bootstrap4-datetimepicker';
 
 import DateTimeSearch from '../../AdvancedDateTimeSearch/components/DateTimeSearch';
 
-class LinkedCategoryInput extends Component {
+class LinkedCategoryInput extends React.Component {
   constructor(props){
     super(props);
 

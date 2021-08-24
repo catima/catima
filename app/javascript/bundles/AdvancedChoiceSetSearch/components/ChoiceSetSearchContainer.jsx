@@ -1,7 +1,7 @@
-import React, { Component } from 'react';
+import React from 'react';
 import ChoiceSetSearch from './ChoiceSetSearch';
 
-class ChoiceSetSearchContainer extends Component {
+class ChoiceSetSearchContainer extends React.Component {
   constructor(props){
     super(props);
 

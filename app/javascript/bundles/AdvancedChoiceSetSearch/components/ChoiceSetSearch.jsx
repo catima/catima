@@ -1,9 +1,8 @@
-import React, {Component} from 'react';
-import ReactDOM from 'react-dom';
+import React from 'react';
 import ReactSelect from 'react-select';
 import LinkedCategoryInput from './LinkedCategoryInput';
 
-class ChoiceSetSearch extends Component {
+class ChoiceSetSearch extends React.Component {
   constructor(props) {
     super(props);
 

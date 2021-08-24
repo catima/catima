@@ -1,5 +1,4 @@
 import 'es6-shim';
-import PropTypes from 'prop-types';
 import React from 'react';
 import FontMenu from './FontMenu';
 import FontSize from './FontSize';

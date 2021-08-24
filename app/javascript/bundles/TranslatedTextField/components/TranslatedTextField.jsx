@@ -2,7 +2,6 @@ import 'es6-shim';
 import PropTypes from 'prop-types';
 import React from 'react';
 
-
 class TranslatedTextField extends React.Component {
 
   static propTypes = {
@@ -53,6 +52,5 @@ class TranslatedTextField extends React.Component {
     );
   }
 }
-
 
 export default TranslatedTextField;
