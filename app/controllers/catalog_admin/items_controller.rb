@@ -24,7 +24,7 @@ class CatalogAdmin::ItemsController < CatalogAdmin::BaseController
   def create
     build_item
     authorize(@item)
-    if @item.update(item_params)
+    if @item.update_and_log(item_params, author: current_user, catalog: @catalog)
       redirect_to(after_create_path, :notice => created_message)
     else
       render("new")
@@ -47,8 +47,8 @@ class CatalogAdmin::ItemsController < CatalogAdmin::BaseController
     find_item
     authorize(@item)
     @item.updater = current_user
-    if @item.update(item_params)
-      redirect_to({ :action => "index" }, :notice => updated_message)
+    if @item.update_and_log(item_params, author: current_user, catalog: @catalog)
+      redirect_to({:action => "index"}, :notice => updated_message)
     else
       render("edit")
     end
@@ -57,8 +57,8 @@ class CatalogAdmin::ItemsController < CatalogAdmin::BaseController
   def destroy
     find_item
     authorize(@item)
-    @item.destroy
-    redirect_to({ :action => "index" }, :notice => deleted_message)
+    @item.destroy_and_log(author: current_user, catalog: @catalog)
+    redirect_to({:action => "index"}, :notice => deleted_message)
   end
 
   def upload
@@ -110,8 +110,8 @@ class CatalogAdmin::ItemsController < CatalogAdmin::BaseController
 
   def find_item_type
     @item_type = catalog.item_types
-                 .where(:slug => params[:item_type_slug])
-                 .first!
+                        .where(:slug => params[:item_type_slug])
+                        .first!
   end
 
   def item_scope
@@ -140,8 +140,10 @@ class CatalogAdmin::ItemsController < CatalogAdmin::BaseController
 
   def after_create_path
     case params[:commit]
-    when I18n.t('add_another') then { :action => "new" }
-    else { :action => "index" }
+    when I18n.t('add_another') then
+      {:action => "new"}
+    else
+      {:action => "index"}
     end
   end
 
@@ -172,4 +174,5 @@ class CatalogAdmin::ItemsController < CatalogAdmin::BaseController
     catalog.simple_searches
   end
 end
+
 # rubocop:enable Metrics/ClassLength

@@ -3,6 +3,12 @@ en:
   activerecord:
     models:
       category: "Category"
+      log_entry:
+        one: Log
+        other: Logs
+      api_log:
+        one: API Log
+        other: API Logs
     attributes:
       choice_set:
         name: "Name"
@@ -38,6 +44,13 @@ en:
         endpoint: Endpoint
         remote_ip: Remote IP
         payload: Payload
+      log_entries:
+        author: Author
+        subject: "Subject"
+        subject_id: "Subject ID"
+        subject_type: "Subject type"
+        action: Action
+        created_at: Creation date
   presenters:
     field:
       file:
@@ -428,7 +441,7 @@ en:
       save_settings: 'Save'
       save_style: 'Save style'
       no_api_logs: No API V3 Logs
-      api_v3_logs: 'API V3 Logs'
+      no_log_entries: 'No Logs'
     catalogs:
       common_form_fields:
         advertize_help: "If checked, this catalog can be found in public catalog lists."

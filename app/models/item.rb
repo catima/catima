@@ -26,6 +26,7 @@ class Item < ApplicationRecord
   include Review::Macros
   include Search::Macros
   include HasHumanId
+  include Loggable
 
   human_id :primary_text_value
 
@@ -48,6 +49,10 @@ class Item < ApplicationRecord
   after_initialize :assign_default_values
   after_initialize :assign_autoincrement_values
   before_create :assign_uuid
+
+  def log_name
+    item_type.primary_text_field&.raw_value(self) || ''
+  end
 
   # TODO: uncomment when item cache worker is fixed
   # after_commit :update_views_cache, if: proc { |record| record.saved_changes.key?(:data) }

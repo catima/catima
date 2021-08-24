@@ -1,9 +1,9 @@
 <% if current_user.system_admin? %>
   <%= link_to(
         fa_icon(:history),
-        admin_catalog_api_logs_path(model, model.valid_locale),
+        admin_catalog_log_entries_path(model, model.valid_locale),
         class: "btn btn-xs btn-outline-secondary catalog-action-logs",
-        "data-toggle" => "tooltip", "data-placement" => "top", "title" => t('catalog_admin.catalog..api_v3_logs')
+        "data-toggle" => "tooltip", "data-placement" => "top", "title" => LogEntry.model_name.human(count: 2)
       ) %>
   <%= link_to(
         fa_icon(:pencil),

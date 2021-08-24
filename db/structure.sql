@@ -816,6 +816,42 @@ ALTER SEQUENCE public.items_id_seq OWNED BY public.items.id;
 
 
 --
+-- Name: log_entries; Type: TABLE; Schema: public; Owner: -
+--
+
+CREATE TABLE public.log_entries (
+    id bigint NOT NULL,
+    catalog_id bigint NOT NULL,
+    subject_type character varying NOT NULL,
+    subject_id bigint NOT NULL,
+    author_id bigint NOT NULL,
+    action character varying NOT NULL,
+    record_changes jsonb DEFAULT '{}'::jsonb,
+    created_at timestamp(6) without time zone NOT NULL,
+    updated_at timestamp(6) without time zone NOT NULL
+);
+
+
+--
+-- Name: log_entries_id_seq; Type: SEQUENCE; Schema: public; Owner: -
+--
+
+CREATE SEQUENCE public.log_entries_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+--
+-- Name: log_entries_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
+--
+
+ALTER SEQUENCE public.log_entries_id_seq OWNED BY public.log_entries.id;
+
+
+--
 -- Name: memberships; Type: TABLE; Schema: public; Owner: -
 --
 
@@ -1267,6 +1303,13 @@ ALTER TABLE ONLY public.items ALTER COLUMN id SET DEFAULT nextval('public.items_
 
 
 --
+-- Name: log_entries id; Type: DEFAULT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.log_entries ALTER COLUMN id SET DEFAULT nextval('public.log_entries_id_seq'::regclass);
+
+
+--
 -- Name: memberships id; Type: DEFAULT; Schema: public; Owner: -
 --
 
@@ -1481,6 +1524,14 @@ ALTER TABLE ONLY public.item_views
 
 ALTER TABLE ONLY public.items
     ADD CONSTRAINT items_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: log_entries log_entries_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.log_entries
+    ADD CONSTRAINT log_entries_pkey PRIMARY KEY (id);
 
 
 --
@@ -1880,6 +1931,27 @@ CREATE INDEX index_items_on_reviewer_id ON public.items USING btree (reviewer_id
 --
 
 CREATE UNIQUE INDEX index_items_on_uuid_and_catalog_id ON public.items USING btree (uuid, catalog_id);
+
+
+--
+-- Name: index_log_entries_on_author_id; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX index_log_entries_on_author_id ON public.log_entries USING btree (author_id);
+
+
+--
+-- Name: index_log_entries_on_catalog_id; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX index_log_entries_on_catalog_id ON public.log_entries USING btree (catalog_id);
+
+
+--
+-- Name: index_log_entries_on_subject; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX index_log_entries_on_subject ON public.log_entries USING btree (subject_type, subject_id);
 
 
 --
@@ -2291,6 +2363,14 @@ ALTER TABLE ONLY public.favorites
 
 
 --
+-- Name: log_entries fk_rails_de9938b49a; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.log_entries
+    ADD CONSTRAINT fk_rails_de9938b49a FOREIGN KEY (author_id) REFERENCES public.users(id);
+
+
+--
 -- Name: simple_searches fk_rails_e02a867d5d; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
@@ -2431,6 +2511,7 @@ INSERT INTO "schema_migrations" (version) VALUES
 ('20210503071636'),
 ('20210503073049'),
 ('20210624100735'),
-('20210730100707');
+('20210730100707'),
+('20210823103708');
 
 

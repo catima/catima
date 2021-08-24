@@ -149,6 +149,7 @@ Rails.application.routes.draw do
     get "/stats" => "dashboard#stats"
     resources :catalogs, :param => :slug, :except => [:index] do
       resources :api_logs, only: [:index], on: :member
+      resources :log_entries, only: [:index], on: :member
     end
     resources :template_storages, :except => :index
     resources :configurations, :only => :update

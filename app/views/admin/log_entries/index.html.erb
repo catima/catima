@@ -1,0 +1,45 @@
+<%= render 'admin/shared/log_navbar' %>
+<div class="card panel-default catalogs">
+  <table class="table">
+    <thead>
+    <tr>
+      <th></th>
+      <th><%= LogEntry.human_attribute_name(:author) %></th>
+      <th><%= LogEntry.human_attribute_name(:subject) %></th>
+      <th><%= LogEntry.human_attribute_name(:subject_id) %></th>
+      <th><%= LogEntry.human_attribute_name(:subject_type) %></th>
+      <th><%= LogEntry.human_attribute_name(:action) %></th>
+      <th><%= LogEntry.human_attribute_name(:created_at) %></th>
+      <th></th>
+    </tr>
+    </thead>
+    <tbody>
+    <% if @log_entries.load.any? %>
+      <% @log_entries.each do |log_entry| %>
+        <tr style="<%= log_entry.action == "DELETE" ? 'text-decoration: line-through;' : '' %>" data-controller="toggle-display">
+          <td><%= fa_icon(:eye, "data-action": "click->toggle-display#reveal") %></td>
+          <td><%= log_entry.author.email %></td>
+          <td><%= log_entry.subject&.log_name %></td>
+          <td><%= log_entry.subject_id %></td>
+          <td><%= log_entry.subject_type %></td>
+          <td><%= log_entry.action %></td>
+          <td><%= l(log_entry.created_at) %></td>
+          <td data-toggle-display-target="revealable">
+            <pre>
+            <%= JSON.pretty_generate(log_entry.record_changes) %>
+            </pre>
+          </td>
+        </tr>
+      <% end %>
+    <% else %>
+      <tr>
+        <td colspan="4">
+          <%= t('catalog_admin.catalog.no_log_entries') %>
+        </td>
+      </tr>
+    <% end %>
+    </tbody>
+  </table>
+</div>
+
+<%= paginate(@log_entries) %>
