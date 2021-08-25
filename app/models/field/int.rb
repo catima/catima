@@ -48,8 +48,8 @@ class Field::Int < ::Field
     %i(maximum minimum auto_increment)
   end
 
-  def order_items_by
-    "(items.data->>'#{uuid}')::int ASC"
+  def order_items_by(direction: 'ASC')
+    "(items.data->>'#{uuid}')::int #{direction}"
   end
 
   def auto_increment?

@@ -18,6 +18,8 @@ RSpec.describe 'api/v3/{catalog_id}/item_type/{item_type_id}/item(s)', type: :re
   path '/api/v3/{catalog_id}/item_type/{item_type_id}/items' do
     parameter name: 'page', in: :query, type: :integer, description: 'page number', default: 1, required: false
     parameter name: 'per', in: :query, type: :integer, description: 'records number per page', default: 25, required: false
+    parameter name: 'sort', in: :query, type: :string, description: 'sort field slug', required: false
+    parameter name: 'direction', in: :query, type: :string, description: 'sort direction ASC / DESC', required: false
     parameter name: 'catalog_id', in: :path, type: :integer, description: 'catalog_id'
     parameter name: 'item_type_id', in: :path, type: :integer, description: 'item_type_id'
 
@@ -79,3 +81,13 @@ RSpec.describe 'api/v3/{catalog_id}/item_type/{item_type_id}/item(s)', type: :re
   end
 end
 # rubocop:enable Metrics/BlockLength
+
+# 39
+# 170
+#
+# {
+#   "api_v3_user": {
+#     "email": "christian.kaiser@unil.ch",
+#     "password": "pwddwpok"
+#   }
+# }

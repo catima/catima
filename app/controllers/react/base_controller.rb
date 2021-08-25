@@ -9,6 +9,6 @@ class React::BaseController < ApplicationController
 
   def catalog_request_valid?
     catalog = Catalog.find_by(slug: request[:catalog_slug])
-    catalog.public? || @current_user
+    catalog.public? || current_user
   end
 end

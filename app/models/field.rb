@@ -289,9 +289,9 @@ class Field < ApplicationRecord
   end
 
   # Returns the order by for items with a sort by a field
-  def order_items_by
+  def order_items_by(direction: 'ASC')
     # "data->>'#{uuid}' ASC"
-    "items.data->>'#{uuid}' ASC"
+    "items.data->>'#{uuid}' #{direction}"
   end
 
   def order_items_by_primary_field

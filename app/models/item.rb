@@ -57,9 +57,9 @@ class Item < ApplicationRecord
   # TODO: uncomment when item cache worker is fixed
   # after_commit :update_views_cache, if: proc { |record| record.saved_changes.key?(:data) }
 
-  def self.sorted_by_field(field)
+  def self.sorted_by_field(field, direction: "ASC")
     sql = []
-    sql << field.order_items_by unless field.nil?
+    sql << field.order_items_by(direction: direction) unless field.nil?
 
     if field.nil? ||
        (field.type != Field::TYPES['reference'] && field.type != Field::TYPES['choice'])
