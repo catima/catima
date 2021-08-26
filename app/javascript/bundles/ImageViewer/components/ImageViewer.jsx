@@ -6,7 +6,6 @@ import 'react-image-lightbox/style.css';
 class ImageViewer extends React.Component {
   constructor(props) {
     super(props);
-    console.log(props);
     this.state = {
       isOpen: false,
       idx: 0,
