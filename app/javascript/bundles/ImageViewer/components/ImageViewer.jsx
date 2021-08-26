@@ -1,7 +1,6 @@
 import 'es6-shim';
 import React from 'react';
 import Lightbox from 'react-image-lightbox';
-import 'react-image-lightbox/style.css';
 
 class ImageViewer extends React.Component {
   constructor(props) {
