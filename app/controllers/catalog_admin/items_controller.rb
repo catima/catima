@@ -48,7 +48,7 @@ class CatalogAdmin::ItemsController < CatalogAdmin::BaseController
     authorize(@item)
     @item.updater = current_user
     if @item.update_and_log(item_params, author: current_user, catalog: @catalog)
-      redirect_to({:action => "index"}, :notice => updated_message)
+      redirect_to({ :action => "index" }, :notice => updated_message)
     else
       render("edit")
     end
@@ -58,7 +58,7 @@ class CatalogAdmin::ItemsController < CatalogAdmin::BaseController
     find_item
     authorize(@item)
     @item.destroy_and_log(author: current_user, catalog: @catalog)
-    redirect_to({:action => "index"}, :notice => deleted_message)
+    redirect_to({ :action => "index" }, :notice => deleted_message)
   end
 
   def upload
@@ -140,17 +140,18 @@ class CatalogAdmin::ItemsController < CatalogAdmin::BaseController
 
   def after_create_path
     case params[:commit]
-    when I18n.t('add_another') then
-      {:action => "new"}
+    when I18n.t('add_another')
+    then
+      { :action => "new" }
     else
-      {:action => "index"}
+      { :action => "index" }
     end
   end
 
   %w(created updated deleted).each do |verb|
     define_method("#{verb}_message") do
-      "#{@item_type.name} “#{view_context.default_display_name(@item)}” "\
-      "has been #{verb}."
+      "#{@item_type.name} “#{view_context.default_display_name(@item)}” " \
+        "has been #{verb}."
     end
   end
 

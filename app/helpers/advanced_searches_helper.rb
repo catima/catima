@@ -68,7 +68,7 @@ module AdvancedSearchesHelper
   def formatted_api_params(required_params)
     formatted_params = {}
     if required_params[:criteria]
-      required_params[:criteria].keys.each do |key|
+      required_params[:criteria].each_key do |key|
         field = Field.find_by(uuid: key)
         value = required_params[:criteria][key.to_sym].delete(:value)
 
@@ -76,7 +76,7 @@ module AdvancedSearchesHelper
           formatted_params[key.to_sym] = required_params[:criteria][key.to_sym].to_enum.to_h
           formatted_params[key.to_sym][:exact] = value
         elsif field.is_a?(Field::ChoiceSet)
-          required_params[:criteria][key.to_sym].keys.each do |k|
+          required_params[:criteria][key.to_sym].each_key do |k|
             formatted_params[key.to_sym] = {}
             nested_value = required_params[:criteria][key.to_sym][k.to_sym].delete(:value)
             formatted_params[key.to_sym][k.to_sym] = required_params[:criteria][key.to_sym][k.to_sym].to_enum.to_h
@@ -96,7 +96,7 @@ module AdvancedSearchesHelper
           required_params[:criteria][key.to_sym].keys.each do |k|
             formatted_params[key.to_sym] = {}
             nested_value = required_params[:criteria][key.to_sym][k.to_sym].delete(:value)
-            if condition = required_params[:criteria][key.to_sym][:condition]
+            if (condition = required_params[:criteria][key.to_sym][:condition])
               formatted_params[key.to_sym] = required_params[:criteria][key.to_sym].to_enum.to_h
               formatted_params[key.to_sym][condition.to_sym] = nested_value
             else
@@ -104,7 +104,7 @@ module AdvancedSearchesHelper
             end
           end
         else
-          if condition = required_params[:criteria][key.to_sym][:condition]
+          if (condition = required_params[:criteria][key.to_sym][:condition])
             formatted_params[key.to_sym] = required_params[:criteria][key.to_sym].to_enum.to_h
             formatted_params[key.to_sym][condition.to_sym] = value
           else
@@ -113,6 +113,6 @@ module AdvancedSearchesHelper
         end
       end
     end
-    {criteria: formatted_params}
+    { criteria: formatted_params }
   end
 end

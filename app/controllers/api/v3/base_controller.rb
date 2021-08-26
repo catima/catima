@@ -92,6 +92,7 @@ class API::V3::BaseController < ActionController::Base
       true
     else
       super and return if args.present?
+
       authenticate_api_v3_user!
     end
   end

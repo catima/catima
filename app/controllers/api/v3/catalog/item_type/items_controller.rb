@@ -1,4 +1,6 @@
 class API::V3::Catalog::ItemType::ItemsController < API::V3::Catalog::ItemType::BaseController
+  attr_reader :item_type
+
   include ControlsItemSorting
 
   after_action -> { set_pagination_header(:items) }, only: :index
@@ -21,11 +23,7 @@ class API::V3::Catalog::ItemType::ItemsController < API::V3::Catalog::ItemType::
   private
 
   def validate_sort_field
-    render_unprocessable_entity('invalid_sort') unless !params[:sort].present? || @item_type.fields.select(&:human_readable?).reject(&:multiple).pluck(:slug).include?(params[:sort])
-  end
-
-  def item_type
-    @item_type
+    render_unprocessable_entity('invalid_sort') unless params[:sort].blank? || @item_type.fields.select(&:human_readable?).reject(&:multiple).pluck(:slug).include?(params[:sort])
   end
 
   def apply_search(items)

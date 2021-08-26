@@ -103,7 +103,7 @@ class Field::ChoiceSet < ::Field
   end
 
   def describe
-    super.merge("choice_set": choice_set.uuid)
+    super.merge(choice_set: choice_set.uuid)
   end
 
   def value_for_item(it)

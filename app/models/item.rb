@@ -127,9 +127,9 @@ class Item < ApplicationRecord
   # rubocop:disable Style/OptionalBooleanParameter
   def describe(includes=[], excludes=[], for_api=false)
     d = Hash[applicable_fields.collect { |f| [f.slug, get_value_or_id(f, for_api)] }] \
-        .merge('id': id) \
-        .merge('review_status': review_status) \
-        .merge('uuid': uuid)
+        .merge(id: id) \
+        .merge(review_status: review_status) \
+        .merge(uuid: uuid)
 
     includes.each { |i| d[i] = public_send(i) }
     excludes.each { |e| d.delete(e) }

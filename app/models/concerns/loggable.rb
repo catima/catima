@@ -4,13 +4,13 @@ module Loggable
   attr_accessor :additional_logs
 
   module ClassMethods
-    def create_and_log(attr = nil, author:, catalog:, additional_logs: nil)
+    def create_and_log(attr=nil, author:, catalog:, additional_logs: nil)
       object = new(attr)
       object.save_and_log(author: author, catalog: catalog, additional_logs: additional_logs)
       object
     end
 
-    def create_and_log!(attr = nil, author:, catalog:, additional_logs: nil)
+    def create_and_log!(attr=nil, author:, catalog:, additional_logs: nil)
       object = new(attr)
       object.save_and_log!(author: author, catalog: catalog, additional_logs: additional_logs)
       object
@@ -65,9 +65,7 @@ module Loggable
         changes.store(k, data) unless data.empty?
       else
         if values.first.present? || values.last.present? || values.last.is_a?(FalseClass)
-          if values.one? || values.uniq.many?
-            changes.store(k, values)
-          end
+          changes.store(k, values) if values.one? || values.uniq.many?
         end
       end
     end

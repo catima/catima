@@ -40,5 +40,4 @@ class CatalogPolicy
   alias_method :update_style?, :user_is_catalog_admin?
   alias_method :show?, :user_is_at_least_an_editor?
   alias_method :setup?, :user_is_catalog_admin?
-  alias_method :setup?, :user_is_catalog_admin?
 end

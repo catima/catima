@@ -37,6 +37,5 @@ class API::V3::CatalogsController < API::V3::BaseController
                 else
                   @current_user.public_and_accessible_catalogs
                 end
-    @catalogs = @catalogs
   end
 end

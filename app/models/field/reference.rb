@@ -71,7 +71,7 @@ class Field::Reference < ::Field
   end
 
   def describe
-    super.merge("related_item_type": related_item_type.slug)
+    super.merge(related_item_type: related_item_type.slug)
   end
 
   def prepare_value(value)

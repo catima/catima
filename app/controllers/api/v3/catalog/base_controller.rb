@@ -7,11 +7,11 @@ class API::V3::Catalog::BaseController < API::V3::BaseController
   before_action :throttle
 
   def policy_scope(scope)
-    super([:"api/v3", scope])
+    super([:'api/v3', scope])
   end
 
   def authorize(record, query=nil)
-    super([:"api/v3", record], query)
+    super([:'api/v3', record], query)
   end
 
   private
@@ -58,7 +58,7 @@ class API::V3::Catalog::BaseController < API::V3::BaseController
 
   def find_catalog
     @catalog = @catalogs.find_by(id: params[:catalog_id])
-    return render_forbidden("not_allowed") if authenticated_catalog? && !@catalog.present?
-    return render_not_found("not_found") unless @catalog.present?
+    return render_forbidden("not_allowed") if authenticated_catalog? && @catalog.blank?
+    return render_not_found("not_found") if @catalog.blank?
   end
 end
