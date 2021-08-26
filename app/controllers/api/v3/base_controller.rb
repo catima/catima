@@ -102,7 +102,7 @@ class API::V3::BaseController < ActionController::Base
       format.html do
         redirect_to sign_in_path, error: 'Login invalid or expired'
       end
-      format.json { head 401 }
+      render_unauthorized(:invalid_auth_token)
     end
   end
 

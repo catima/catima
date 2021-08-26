@@ -93,7 +93,7 @@ module AdvancedSearchesHelper
           formatted_params[key.to_sym][:start][:exact] = start_value.to_enum.to_h
           formatted_params[key.to_sym][:end][:exact] = end_value.to_enum.to_h
         elsif field.is_a?(Field::Reference)
-          required_params[:criteria][key.to_sym].keys.each do |k|
+          required_params[:criteria][key.to_sym].each_key do |k|
             formatted_params[key.to_sym] = {}
             nested_value = required_params[:criteria][key.to_sym][k.to_sym].delete(:value)
             if (condition = required_params[:criteria][key.to_sym][:condition])
