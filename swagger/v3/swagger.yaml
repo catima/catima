@@ -1,0 +1,722 @@
+---
+openapi: 3.0.1
+info:
+  title: API V3
+  version: v3
+paths:
+  "/api/v3/{catalog_id}/advanced_search/{item_type_id}/new":
+    parameters:
+    - name: catalog_id
+      in: path
+      description: catalog_id
+      required: true
+      schema:
+        type: integer
+    - name: item_type_id
+      in: path
+      description: item_type_id
+      required: true
+      schema:
+        type: integer
+    get:
+      summary: Get a Catalog's ItemType AdvancedSearch parmeters
+      tags:
+      - AdvancedSearch
+      security:
+      - BearerAuth: []
+      description: "<p><b>Authorization: User+/Member+/Editor+ (according to catalog's
+        visibility)</b></p>"
+      responses:
+        '200':
+          description: successful
+        '401':
+          description: Unauthorized
+  "/api/v3/{catalog_id}/advanced_search/{item_type_id}":
+    parameters:
+    - name: catalog_id
+      in: path
+      description: catalog_id
+      required: true
+      schema:
+        type: integer
+    - name: item_type_id
+      in: path
+      description: item_type_id
+      required: true
+      schema:
+        type: integer
+    post:
+      summary: Create a AdvancedSearch in a Catalog
+      tags:
+      - AdvancedSearch
+      security:
+      - BearerAuth: []
+      description: "<p><b>Authorization: User+/Member+/Editor+ (according to catalog's
+        visibility)</b></p>"
+      parameters: []
+      responses:
+        '200':
+          description: successful
+        '401':
+          description: Unauthorized
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                advanced_search:
+                  type: object
+                  properties:
+                    criteria:
+                      type: object
+              required:
+              - advanced_search
+  "/api/v3/{catalog_id}/advanced_search/{uuid}":
+    parameters:
+    - name: catalog_id
+      in: path
+      description: catalog_id
+      required: true
+      schema:
+        type: integer
+    - name: uuid
+      in: path
+      description: search uuid
+      required: true
+      schema:
+        type: string
+    get:
+      summary: Return a Catalog's AdvancedSearch
+      tags:
+      - AdvancedSearch
+      security:
+      - BearerAuth: []
+      description: "<p><b>Authorization: User+/Member+/Editor+ (according to catalog's
+        visibility)</b></p>"
+      responses:
+        '200':
+          description: successful
+        '401':
+          description: Unauthorized
+  "/api/v3/{catalog_id}/categories":
+    parameters:
+    - name: page
+      in: query
+      description: page number
+      default: 1
+      required: false
+      schema:
+        type: integer
+    - name: per
+      in: query
+      description: records number per page
+      default: 25
+      required: false
+      schema:
+        type: integer
+    - name: catalog_id
+      in: path
+      description: catalog_id
+      required: true
+      schema:
+        type: integer
+    get:
+      summary: List Catalog's Groups
+      tags:
+      - Catalog
+      security:
+      - BearerAuth: []
+      description: "<p><b>Authorization: Admin+</b></p>"
+      responses:
+        '200':
+          description: successful
+        '401':
+          description: Unauthorized
+  "/api/v3/{catalog_id}/category/{category_id}/fields":
+    parameters:
+    - name: page
+      in: query
+      description: page number
+      default: 1
+      required: false
+      schema:
+        type: integer
+    - name: per
+      in: query
+      description: records number per page
+      default: 25
+      required: false
+      schema:
+        type: integer
+    - name: catalog_id
+      in: path
+      description: catalog_id
+      required: true
+      schema:
+        type: integer
+    - name: category_id
+      in: path
+      description: category_id
+      required: true
+      schema:
+        type: integer
+    get:
+      summary: List Category's Fields
+      tags:
+      - Category
+      security:
+      - BearerAuth: []
+      description: "<p><b>Authorization: Admin+</b></p>"
+      responses:
+        '200':
+          description: successful
+        '401':
+          description: Unauthorized
+  "/api/v3/{catalog_id}/choice_set/{choice_set_id}/choices":
+    parameters:
+    - name: page
+      in: query
+      description: page number
+      default: 1
+      required: false
+      schema:
+        type: integer
+    - name: per
+      in: query
+      description: records number per page
+      default: 25
+      required: false
+      schema:
+        type: integer
+    - name: catalog_id
+      in: path
+      description: catalog_id
+      required: true
+      schema:
+        type: integer
+    - name: choice_set_id
+      in: path
+      description: choice_set_id
+      required: true
+      schema:
+        type: integer
+    get:
+      summary: List ChoiceSet's Choices
+      tags:
+      - ChoiceSet
+      security:
+      - BearerAuth: []
+      description: "<p><b>Authorization: Admin+</b></p>"
+      responses:
+        '200':
+          description: successful
+        '401':
+          description: Unauthorized
+  "/api/v3/{catalog_id}/choice_set/{choice_set_id}/choice/{choice_id}":
+    parameters:
+    - name: catalog_id
+      in: path
+      description: catalog_id
+      required: true
+      schema:
+        type: integer
+    - name: choice_set_id
+      in: path
+      description: choice_set_id
+      required: true
+      schema:
+        type: integer
+    - name: choice_id
+      in: path
+      description: choice_id
+      required: true
+      schema:
+        type: integer
+    get:
+      summary: Return an ChoiceSet's Choice
+      tags:
+      - Choice
+      security:
+      - BearerAuth: []
+      description: "<p><b>Authorization: Admin+</b></p>"
+      responses:
+        '200':
+          description: successful
+        '401':
+          description: Unauthorized
+  "/api/v3/{catalog_id}/choice_sets":
+    parameters:
+    - name: page
+      in: query
+      description: page number
+      default: 1
+      required: false
+      schema:
+        type: integer
+    - name: per
+      in: query
+      description: records number per page
+      default: 25
+      required: false
+      schema:
+        type: integer
+    - name: catalog_id
+      in: path
+      description: catalog_id
+      required: true
+      schema:
+        type: integer
+    get:
+      summary: List Catalog's ChoiceSets
+      tags:
+      - Catalog
+      security:
+      - BearerAuth: []
+      description: "<p><b>Authorization: Admin+</b></p>"
+      responses:
+        '200':
+          description: successful
+        '401':
+          description: Unauthorized
+  "/api/v3/{catalog_id}/groups":
+    parameters:
+    - name: page
+      in: query
+      description: page number
+      default: 1
+      required: false
+      schema:
+        type: integer
+    - name: per
+      in: query
+      description: records number per page
+      default: 25
+      required: false
+      schema:
+        type: integer
+    - name: catalog_id
+      in: path
+      description: catalog_id
+      required: true
+      schema:
+        type: integer
+    get:
+      summary: List Catalog's Groups
+      tags:
+      - Catalog
+      security:
+      - BearerAuth: []
+      description: "<p><b>Authorization: Admin+</b></p>"
+      responses:
+        '200':
+          description: successful
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+  "/api/v3/{catalog_id}/item_type/{item_type_id}/fields":
+    parameters:
+    - name: page
+      in: query
+      description: page number
+      default: 1
+      required: false
+      schema:
+        type: integer
+    - name: per
+      in: query
+      description: records number per page
+      default: 25
+      required: false
+      schema:
+        type: integer
+    - name: catalog_id
+      in: path
+      description: catalog_id
+      required: true
+      schema:
+        type: integer
+    - name: item_type_id
+      in: path
+      description: item_type_id
+      required: true
+      schema:
+        type: integer
+    get:
+      summary: List ItemType's Fields
+      tags:
+      - ItemType
+      security:
+      - BearerAuth: []
+      description: "<p><b>Authorization: Admin+</b></p>"
+      responses:
+        '200':
+          description: successful
+        '401':
+          description: Unauthorized
+  "/api/v3/{catalog_id}/item_type/{item_type_id}/field/{field_id}":
+    parameters:
+    - name: catalog_id
+      in: path
+      description: catalog_id
+      required: true
+      schema:
+        type: integer
+    - name: item_type_id
+      in: path
+      description: item_type_id
+      required: true
+      schema:
+        type: integer
+    - name: field_id
+      in: path
+      description: field_id
+      required: true
+      schema:
+        type: integer
+    get:
+      summary: Return an ItemType's Field
+      tags:
+      - Field
+      security:
+      - BearerAuth: []
+      description: "<p><b>Authorization: Admin+</b></p>"
+      responses:
+        '200':
+          description: successful
+        '401':
+          description: Unauthorized
+  "/api/v3/{catalog_id}/item_type/{item_type_id}/items":
+    parameters:
+    - name: page
+      in: query
+      description: page number
+      default: 1
+      required: false
+      schema:
+        type: integer
+    - name: per
+      in: query
+      description: records number per page
+      default: 25
+      required: false
+      schema:
+        type: integer
+    - name: sort
+      in: query
+      description: sort field slug
+      required: false
+      schema:
+        type: string
+    - name: direction
+      in: query
+      description: sort direction ASC / DESC
+      required: false
+      schema:
+        type: string
+    - name: catalog_id
+      in: path
+      description: catalog_id
+      required: true
+      schema:
+        type: integer
+    - name: item_type_id
+      in: path
+      description: item_type_id
+      required: true
+      schema:
+        type: integer
+    get:
+      summary: List ItemType's Items
+      tags:
+      - ItemType
+      security:
+      - BearerAuth: []
+      description: "<p><b>Authorization: User+/Member+/Editor+ (according to catalog's
+        visibility)</b></p>"
+      responses:
+        '200':
+          description: successful
+        '401':
+          description: Unauthorized
+  "/api/v3/{catalog_id}/item_type/{item_type_id}/item/{item_id}":
+    parameters:
+    - name: catalog_id
+      in: path
+      description: catalog_id
+      required: true
+      schema:
+        type: integer
+    - name: item_type_id
+      in: path
+      description: item_type_id
+      required: true
+      schema:
+        type: integer
+    - name: item_id
+      in: path
+      description: item_id
+      required: true
+      schema:
+        type: integer
+    get:
+      summary: Return an ItemType's Item
+      tags:
+      - Item
+      security:
+      - BearerAuth: []
+      description: "<p><b>Authorization: User+/Member+/Editor+ (according to catalog's
+        visibility)</b></p>"
+      responses:
+        '200':
+          description: successful
+        '401':
+          description: Unauthorized
+  "/api/v3/{catalog_id}/item_types":
+    parameters:
+    - name: page
+      in: query
+      description: page number
+      default: 1
+      required: false
+      schema:
+        type: integer
+    - name: per
+      in: query
+      description: records number per page
+      default: 25
+      required: false
+      schema:
+        type: integer
+    - name: catalog_id
+      in: path
+      description: catalog_id
+      required: true
+      schema:
+        type: integer
+    get:
+      summary: List Catalog's ItemTypes
+      tags:
+      - Catalog
+      security:
+      - BearerAuth: []
+      description: "<p><b>Authorization: Editor+</b></p>"
+      responses:
+        '200':
+          description: successful
+        '401':
+          description: Unauthorized
+  "/api/v3/{catalog_id}/item_type/{item_type_id}":
+    parameters:
+    - name: catalog_id
+      in: path
+      description: catalog_id
+      required: true
+      schema:
+        type: integer
+    - name: item_type_id
+      in: path
+      description: item_type_id
+      required: true
+      schema:
+        type: integer
+    get:
+      summary: Return an ItemType
+      tags:
+      - ItemType
+      security:
+      - BearerAuth: []
+      description: "<p><b>Authorization: Editor+</b></p>"
+      responses:
+        '200':
+          description: successful
+        '401':
+          description: Unauthorized
+  "/api/v3/{catalog_id}/search":
+    parameters:
+    - name: catalog_id
+      in: path
+      description: catalog_id
+      required: true
+      schema:
+        type: integer
+    post:
+      summary: Create a SimpleSearch in a Catalog
+      tags:
+      - SimpleSearch
+      security:
+      - BearerAuth: []
+      description: "<p><b>Authorization: User+/Member+/Editor+ (according to catalog's
+        visibility)</b></p>"
+      parameters: []
+      responses:
+        '200':
+          description: successful
+        '401':
+          description: Unauthorized
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                q:
+                  type: string
+                  description: search query
+                item_type_slug:
+                  type: string
+                  description: item type slug
+              required:
+              - q
+  "/api/v3/{catalog_id}/search/{uuid}":
+    parameters:
+    - name: catalog_id
+      in: path
+      description: catalog_id
+      required: true
+      schema:
+        type: integer
+    - name: uuid
+      in: path
+      description: search uuid
+      required: true
+      schema:
+        type: string
+    - name: item_type_slug
+      in: query
+      description: item type slug
+      required: false
+      schema:
+        type: string
+    get:
+      summary: Return a Catalog's SimpleSearch
+      tags:
+      - SimpleSearch
+      security:
+      - BearerAuth: []
+      description: "<p><b>Authorization: User+/Member+/Editor+ (according to catalog's
+        visibility)</b></p>"
+      responses:
+        '200':
+          description: successful
+        '401':
+          description: Unauthorized
+  "/api/v3/{catalog_id}/users":
+    parameters:
+    - name: page
+      in: query
+      description: page number
+      default: 1
+      required: false
+      schema:
+        type: integer
+    - name: per
+      in: query
+      description: records number per page
+      default: 25
+      required: false
+      schema:
+        type: integer
+    - name: catalog_id
+      in: path
+      description: catalog_id
+      required: true
+      schema:
+        type: integer
+    get:
+      summary: List Catalog's Users
+      tags:
+      - Catalog
+      security:
+      - BearerAuth: []
+      description: "<p><b>Authorization: Admin+</b></p>"
+      responses:
+        '200':
+          description: successful
+        '401':
+          description: Unauthorized
+        '403':
+          description: Forbidden
+  "/api/v3/catalogs":
+    parameters:
+    - name: page
+      in: query
+      description: page number
+      default: 1
+      required: false
+      schema:
+        type: integer
+    - name: per
+      in: query
+      description: records number per page
+      default: 25
+      required: false
+      schema:
+        type: integer
+    get:
+      summary: List Catalogs
+      tags:
+      - Catalogs
+      security:
+      - BearerAuth: []
+      responses:
+        '200':
+          description: successful
+        '401':
+          description: Unauthorized
+  "/api/v3/login":
+    post:
+      summary: Create Session
+      tags:
+      - Authentication
+      parameters: []
+      responses:
+        '200':
+          description: authentication_success
+        '401':
+          description: authentication_error
+          content:
+            application/json:
+              example:
+                message: Authentication error
+                code: authentication_error
+      requestBody:
+        content:
+          application/json:
+            schema:
+              "$ref": "#/components/schemas/api_v3_user"
+  "/api/v3/logout":
+    delete:
+      summary: Delete Session
+      tags:
+      - Authentication
+      security:
+      - BearerAuth: []
+      responses:
+        '200':
+          description: successful
+components:
+  securitySchemes:
+    BearerAuth:
+      type: http
+      scheme: bearer
+  schemas:
+    api_v3_user:
+      type: object
+      properties:
+        api_v3_user:
+          type: object
+          properties:
+            email:
+              type: string
+            password:
+              type: string
+      required:
+      - email
+      - password
+servers:
+- url: http://{defaultHost}
+  variables:
+    defaultHost:
+      default: localhost:3000
