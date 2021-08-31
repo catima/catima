@@ -3,7 +3,7 @@ fr:
   activerecord:
     models:
       category: "Sous-fiche"
-      log_entry:
+      entry_log:
         one: Log
         other: Logs
       api_log:
@@ -47,11 +47,10 @@ fr:
         endpoint: Adresse requete
         remote_ip: Adresse Ip
         payload: Données
-      log_entries:
+      entry_logs:
         author: Auteur
         subject: "Entrée"
-        subject_id: "ID de l entrée"
-        subject_type: "Type de l'entrée"
+        record_changes: Data
         action: Action
         created_at: Date de création
       api_keys:
@@ -451,7 +450,7 @@ fr:
       save_settings: 'Enregistrer'
       save_style: 'Enregistrer le style'
       no_api_logs: 'Aucun log api v3'
-      no_log_entries: 'Aucun log'
+      no_entry_logs: 'Aucun log'
     catalogs:
       api:
         api_key_doc_link: "Documentation"

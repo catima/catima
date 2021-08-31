@@ -104,10 +104,10 @@ class User < ApplicationRecord
   end
 
   def public_and_accessible_catalogs
-    Catalog.where(visible: true, restricted: false) + # everyone
-      Catalog.where(visible: true, restricted: true, id: catalog_permissions.reject { |p| p.role_at_least?("member") }.pluck(:catalog_id)) + # members+
-      Catalog.where(visible: false, restricted: true, id: catalog_permissions.reject { |p| p.role_at_least?("editor") }.pluck(:catalog_id)) + # staff
-      Catalog.where(visible: false, restricted: false, id: catalog_permissions.reject { |p| p.role_at_least?("editor") }.pluck(:catalog_id)) # staff
+    Catalog.where(visible: true, restricted: false) # everyone
+           .or(Catalog.where(visible: true, restricted: true, id: catalog_permissions.reject { |p| p.role_at_least?("member") }.pluck(:catalog_id))) # members+
+           .or(Catalog.where(visible: false, restricted: true, id: catalog_permissions.reject { |p| p.role_at_least?("editor") }.pluck(:catalog_id))) # staff
+           .or(Catalog.where(visible: false, restricted: false, id: catalog_permissions.reject { |p| p.role_at_least?("editor") }.pluck(:catalog_id))) # staff
   end
 
   private

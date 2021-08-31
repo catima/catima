@@ -3,7 +3,7 @@ en:
   activerecord:
     models:
       category: "Category"
-      log_entry:
+      entry_log:
         one: Log
         other: Logs
       api_log:
@@ -44,7 +44,7 @@ en:
         endpoint: Endpoint
         remote_ip: Remote IP
         payload: Payload
-      log_entries:
+      entry_logs:
         author: Author
         subject: "Subject"
         subject_id: "Subject ID"
@@ -441,7 +441,7 @@ en:
       save_settings: 'Save'
       save_style: 'Save style'
       no_api_logs: No API V3 Logs
-      no_log_entries: 'No Logs'
+      no_entry_logs: 'No Logs'
     catalogs:
       common_form_fields:
         advertize_help: "If checked, this catalog can be found in public catalog lists."

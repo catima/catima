@@ -60,7 +60,7 @@ class API::V3::Catalog::AdvancedSearchesController < API::V3::Catalog::BaseContr
     type = @catalog.item_types.find(params[:item_type_id])
     @advanced_search = scope.new do |model|
       model.item_type = type || @catalog.item_types.sorted.first
-      model.creator = current_user if current_user.authenticated?
+      model.creator = current_user if !authenticated_catalog? && current_user.authenticated?
     end
   end
 

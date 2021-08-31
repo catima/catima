@@ -5,18 +5,25 @@
     <tr>
       <th><%= APILog.human_attribute_name(:user_id) %></th>
       <th><%= APILog.human_attribute_name(:endpoint) %></th>
-      <th><%= APILog.human_attribute_name(:remote_ip) %></th>
+      <th><%= APILog.human_attribute_name(:created_at) %></th>
       <th><%= APILog.human_attribute_name(:payload) %></th>
     </tr>
     </thead>
     <tbody>
     <% if @api_logs.load.any? %>
       <% @api_logs.each do |api_log| %>
-        <tr>
+        <tr data-controller="toggle-display">
           <td><%= api_log.user.email %></td>
           <td><%= api_log.endpoint %></td>
-          <td><%= api_log.remote_ip %></td>
-          <td><%= api_log.payload %></td>
+          <td><%= l(api_log.created_at) %></td>
+          <td>
+            <%= fa_icon(:eye, "data-action": "click->toggle-display#reveal") %>
+            <div data-toggle-display-target="revealable">
+              <pre>
+                <%= JSON.pretty_generate(api_log.payload) %>
+              </pre>
+            </div>
+          </td>
         </tr>
       <% end %>
     <% else %>

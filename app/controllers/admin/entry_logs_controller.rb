@@ -1,9 +1,9 @@
-class Admin::LogEntriesController < Admin::BaseController
+class Admin::EntryLogsController < Admin::BaseController
   before_action :find_catalog
 
   def index
     authorize(@catalog)
-    @log_entries = @catalog.log_entries.ordered.page(params[:page])
+    @entry_logs = @catalog.entry_logs.ordered.page(params[:page])
   end
 
   private

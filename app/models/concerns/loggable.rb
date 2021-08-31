@@ -73,7 +73,7 @@ module Loggable
   end
 
   def create_log(author, catalog, action)
-    LogEntry.create!(
+    EntryLog.create!(
       subject: self,
       catalog: catalog,
       author_id: author&.id,

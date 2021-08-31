@@ -87,8 +87,7 @@ RSpec.describe 'api/v3/{catalog_id}/advanced_search', type: :request do
                 # }
               }
             }
-          },
-          advanced_search_conf: { type: :string, description: '' }
+          }
         },
         required: ['advanced_search']
       }

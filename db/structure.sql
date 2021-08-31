@@ -247,7 +247,6 @@ CREATE TABLE public.api_logs (
     user_id bigint,
     catalog_id bigint,
     endpoint character varying,
-    remote_ip character varying,
     payload json,
     created_at timestamp(6) without time zone NOT NULL,
     updated_at timestamp(6) without time zone NOT NULL
@@ -543,6 +542,42 @@ ALTER SEQUENCE public.containers_id_seq OWNED BY public.containers.id;
 
 
 --
+-- Name: entry_logs; Type: TABLE; Schema: public; Owner: -
+--
+
+CREATE TABLE public.entry_logs (
+    id bigint NOT NULL,
+    catalog_id bigint NOT NULL,
+    subject_type character varying NOT NULL,
+    subject_id bigint NOT NULL,
+    author_id bigint NOT NULL,
+    action character varying NOT NULL,
+    record_changes jsonb DEFAULT '{}'::jsonb,
+    created_at timestamp(6) without time zone NOT NULL,
+    updated_at timestamp(6) without time zone NOT NULL
+);
+
+
+--
+-- Name: entry_logs_id_seq; Type: SEQUENCE; Schema: public; Owner: -
+--
+
+CREATE SEQUENCE public.entry_logs_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+--
+-- Name: entry_logs_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
+--
+
+ALTER SEQUENCE public.entry_logs_id_seq OWNED BY public.entry_logs.id;
+
+
+--
 -- Name: exports; Type: TABLE; Schema: public; Owner: -
 --
 
@@ -813,42 +848,6 @@ CREATE SEQUENCE public.items_id_seq
 --
 
 ALTER SEQUENCE public.items_id_seq OWNED BY public.items.id;
-
-
---
--- Name: log_entries; Type: TABLE; Schema: public; Owner: -
---
-
-CREATE TABLE public.log_entries (
-    id bigint NOT NULL,
-    catalog_id bigint NOT NULL,
-    subject_type character varying NOT NULL,
-    subject_id bigint NOT NULL,
-    author_id bigint NOT NULL,
-    action character varying NOT NULL,
-    record_changes jsonb DEFAULT '{}'::jsonb,
-    created_at timestamp(6) without time zone NOT NULL,
-    updated_at timestamp(6) without time zone NOT NULL
-);
-
-
---
--- Name: log_entries_id_seq; Type: SEQUENCE; Schema: public; Owner: -
---
-
-CREATE SEQUENCE public.log_entries_id_seq
-    START WITH 1
-    INCREMENT BY 1
-    NO MINVALUE
-    NO MAXVALUE
-    CACHE 1;
-
-
---
--- Name: log_entries_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
---
-
-ALTER SEQUENCE public.log_entries_id_seq OWNED BY public.log_entries.id;
 
 
 --
@@ -1254,6 +1253,13 @@ ALTER TABLE ONLY public.containers ALTER COLUMN id SET DEFAULT nextval('public.c
 
 
 --
+-- Name: entry_logs id; Type: DEFAULT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.entry_logs ALTER COLUMN id SET DEFAULT nextval('public.entry_logs_id_seq'::regclass);
+
+
+--
 -- Name: exports id; Type: DEFAULT; Schema: public; Owner: -
 --
 
@@ -1300,13 +1306,6 @@ ALTER TABLE ONLY public.item_views ALTER COLUMN id SET DEFAULT nextval('public.i
 --
 
 ALTER TABLE ONLY public.items ALTER COLUMN id SET DEFAULT nextval('public.items_id_seq'::regclass);
-
-
---
--- Name: log_entries id; Type: DEFAULT; Schema: public; Owner: -
---
-
-ALTER TABLE ONLY public.log_entries ALTER COLUMN id SET DEFAULT nextval('public.log_entries_id_seq'::regclass);
 
 
 --
@@ -1471,6 +1470,14 @@ ALTER TABLE ONLY public.containers
 
 
 --
+-- Name: entry_logs entry_logs_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.entry_logs
+    ADD CONSTRAINT entry_logs_pkey PRIMARY KEY (id);
+
+
+--
 -- Name: exports exports_pkey; Type: CONSTRAINT; Schema: public; Owner: -
 --
 
@@ -1524,14 +1531,6 @@ ALTER TABLE ONLY public.item_views
 
 ALTER TABLE ONLY public.items
     ADD CONSTRAINT items_pkey PRIMARY KEY (id);
-
-
---
--- Name: log_entries log_entries_pkey; Type: CONSTRAINT; Schema: public; Owner: -
---
-
-ALTER TABLE ONLY public.log_entries
-    ADD CONSTRAINT log_entries_pkey PRIMARY KEY (id);
 
 
 --
@@ -1794,6 +1793,27 @@ CREATE INDEX index_containers_on_slug ON public.containers USING btree (slug);
 
 
 --
+-- Name: index_entry_logs_on_author_id; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX index_entry_logs_on_author_id ON public.entry_logs USING btree (author_id);
+
+
+--
+-- Name: index_entry_logs_on_catalog_id; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX index_entry_logs_on_catalog_id ON public.entry_logs USING btree (catalog_id);
+
+
+--
+-- Name: index_entry_logs_on_subject; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX index_entry_logs_on_subject ON public.entry_logs USING btree (subject_type, subject_id);
+
+
+--
 -- Name: index_exports_on_catalog_id; Type: INDEX; Schema: public; Owner: -
 --
 
@@ -1931,27 +1951,6 @@ CREATE INDEX index_items_on_reviewer_id ON public.items USING btree (reviewer_id
 --
 
 CREATE UNIQUE INDEX index_items_on_uuid_and_catalog_id ON public.items USING btree (uuid, catalog_id);
-
-
---
--- Name: index_log_entries_on_author_id; Type: INDEX; Schema: public; Owner: -
---
-
-CREATE INDEX index_log_entries_on_author_id ON public.log_entries USING btree (author_id);
-
-
---
--- Name: index_log_entries_on_catalog_id; Type: INDEX; Schema: public; Owner: -
---
-
-CREATE INDEX index_log_entries_on_catalog_id ON public.log_entries USING btree (catalog_id);
-
-
---
--- Name: index_log_entries_on_subject; Type: INDEX; Schema: public; Owner: -
---
-
-CREATE INDEX index_log_entries_on_subject ON public.log_entries USING btree (subject_type, subject_id);
 
 
 --
@@ -2219,6 +2218,14 @@ ALTER TABLE ONLY public.items
 
 
 --
+-- Name: entry_logs fk_rails_6e3610b994; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.entry_logs
+    ADD CONSTRAINT fk_rails_6e3610b994 FOREIGN KEY (author_id) REFERENCES public.users(id);
+
+
+--
 -- Name: fields fk_rails_6f848ad005; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
@@ -2360,14 +2367,6 @@ ALTER TABLE ONLY public.advanced_search_configurations
 
 ALTER TABLE ONLY public.favorites
     ADD CONSTRAINT fk_rails_d15744e438 FOREIGN KEY (user_id) REFERENCES public.users(id);
-
-
---
--- Name: log_entries fk_rails_de9938b49a; Type: FK CONSTRAINT; Schema: public; Owner: -
---
-
-ALTER TABLE ONLY public.log_entries
-    ADD CONSTRAINT fk_rails_de9938b49a FOREIGN KEY (author_id) REFERENCES public.users(id);
 
 
 --

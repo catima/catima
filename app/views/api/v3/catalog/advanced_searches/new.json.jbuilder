@@ -4,7 +4,8 @@ json.data do
     json.item_type_id params[:item_type_id]
     json.advanced_search do
       json.criteria do
-        displayable_fields(@fields).each_with_index do |field, i|
+        fields = @authenticated_catalog ? @fields : displayable_fields(@fields)
+        fields.each_with_index do |field, i|
           unless field.is_a?(Field::File) || field.is_a?(Field::Geometry)
             json.set! field.uuid do
               json.field_infos do
