@@ -247,6 +247,7 @@ CREATE TABLE public.api_logs (
     user_id bigint,
     catalog_id bigint,
     endpoint character varying,
+    remote_ip character varying,
     payload json,
     created_at timestamp(6) without time zone NOT NULL,
     updated_at timestamp(6) without time zone NOT NULL

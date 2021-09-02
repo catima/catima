@@ -23,7 +23,12 @@
             <%= fa_icon(:eye, "data-action": "click->toggle-display#reveal") %>
             <div data-toggle-display-target="revealable">
               <pre>
-                <%= JSON.pretty_generate(entry_log.record_changes) %>
+                <% changes = entry_log.record_changes  %>
+                <% changes.delete("search_data_de")  %>
+                <% changes.delete("search_data_en")  %>
+                <% changes.delete("search_data_fr")  %>
+                <% changes.delete("search_data_it")  %>
+                <%= JSON.pretty_generate(changes) %>
               </pre>
             </div>
           </td>
