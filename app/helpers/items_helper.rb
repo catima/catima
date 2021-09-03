@@ -35,7 +35,7 @@ module ItemsHelper
 
   def item_thumbnail_url(item)
     f = item.fields.select{|f| f.is_a?(Field::Image) && f.display_in_public_list}.first
-    if (path = f.value_for_item(item)&['path'])
+    if (path = f.value_for_item(item)['path'])
       "#{root_url}#{path}"
     end
   end
