@@ -11,7 +11,7 @@ json.primary_field do
 end
 if with_summary
   json.item_summary strip_tags(item_summary(item, bypass_displayable: true))
-  json.thumbnail item_thumbnail_url(item) if item.try(:image?)
+  json.thumbnail item_thumbnail(item, {no_html: true}) if item.try(:image?)
 end
 if with_field_values
   json.field_values do

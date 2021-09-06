@@ -33,16 +33,6 @@ module ItemsHelper
     item.image?
   end
 
-  def item_thumbnail_url(item)
-    f = item.fields.find { |f| f.is_a?(Field::Image) && f.display_in_public_list }
-    return if f.nil?
-
-    if (value = f.value_for_item(item))
-      value = value.is_a?(Array) ? value.first : value
-      "#{root_url}#{value['path'].to_s}"
-    end
-  end
-
   def item_thumbnail(item, options={})
     field = item.fields.find { |f| f.is_a?(Field::Image) && f.display_in_public_list }
     return if field.nil?
