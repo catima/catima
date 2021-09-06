@@ -5,7 +5,7 @@ class API::V3::Catalog::UsersController < API::V3::Catalog::BaseController
     authorize(@catalog, :users_index?) unless authenticated_catalog?
 
     @users = User.where(id: @catalog.user_with_role_in(%w[member editor super-editor reviewer admin]))
-                 .or(User.where(id: @catalog.groups.flat_map(&:user_ids)))
+                 .or(User.where(id: @catalog.groups.where(active: true).flat_map(&:user_ids)))
                  .page(params[:page]).per(params[:per])
   end
 end

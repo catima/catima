@@ -2,7 +2,8 @@ class API::V3::Catalog::BaseController < API::V3::BaseController
   DEFAULT_THROTTLE_TIME_WINDOW = 1
   DEFAULT_THROTTLE_MAX_REQUESTS = 5
 
-  before_action :find_catalogs, :find_catalog
+  before_action :find_catalogs
+  before_action :find_catalog
   before_action :log_request
   before_action :throttle
 
@@ -53,7 +54,7 @@ class API::V3::Catalog::BaseController < API::V3::BaseController
             @current_user.public_and_accessible_catalogs.pluck(:id)
           end
 
-    @catalogs = Catalog.where(id: ids.uniq, api_enabled: true).page(params[:page])
+    @catalogs = Catalog.where(id: ids.uniq, api_enabled: true)
   end
 
   def find_catalog
