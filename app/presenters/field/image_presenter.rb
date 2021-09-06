@@ -36,7 +36,6 @@ class Field::ImagePresenter < Field::FilePresenter
   end
 
   def image_cropped
-    byebug
     # If multiple images, we select the first one for the thumbnail
     img = raw_value.class == Array ? raw_value[0] : raw_value
     return nil if img.nil?
