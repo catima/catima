@@ -29,9 +29,13 @@ class Field::ImagePresenter < Field::FilePresenter
 
   def image_full
     images = files_as_array.map do |image|
-      url = file_url(image, '600x600', :resize)
-      image_tag(url, options.merge(self.options)) if options[:no_html]
+      if options[:no_html]
+        file_url(image, '600x600', :resize)
+      else
+        image_tag(file_url(image, '600x600', :resize), options.merge(self.options))
+      end
     end
+
     images.join(' ').html_safe
   end
 
