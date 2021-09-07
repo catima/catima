@@ -8,19 +8,28 @@ module CatalogAdmin::UsersHelper
   end
 
   # rubocop:disable Style/OptionalBooleanParameter
-  def user_role(user, catalog, including_groups=false)
+  def user_role_symbol(user, catalog, including_groups=false)
     return "Admin" if user.system_admin?
 
     catalog = catalog.nil? ? cat : catalog
     options = CatalogPermission::ROLE_OPTIONS.reverse
     options.delete("reviewer") unless catalog.requires_review?
 
-    role = options.find do |each|
+    options.find do |each|
       user.catalog_role_at_least?(catalog, each, including_groups)
     end
-    role.to_s.titleize
+  end
+
+  def user_role(user, catalog, including_groups=false)
+    user_role_symbol(user, catalog, including_groups).to_s.titleize
   end
   # rubocop:enable Style/OptionalBooleanParameter
+
+  def user_role_id(user, catalog)
+    return false unless user_role_symbol(user, catalog) != user_role_symbol(user, catalog, true)
+
+    user.groups.detect { |g| g.role_for_catalog(catalog) == user_role_symbol(user, catalog, true) }.id
+  end
 
   def render_catalog_admin_users_permission(form)
     render(

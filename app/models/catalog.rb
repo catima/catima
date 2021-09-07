@@ -40,6 +40,9 @@ class Catalog < ApplicationRecord
 
   serialize :style, HashSerializer
 
+  has_many :api_keys, dependent: :destroy
+  has_many :api_logs, dependent: :destroy
+  has_many :entry_logs, :dependent => :destroy
   has_many :advanced_searches, :dependent => :destroy
   has_many :simple_searches, :dependent => :destroy
   has_many :catalog_permissions, :dependent => :destroy
@@ -131,6 +134,12 @@ class Catalog < ApplicationRecord
     return nil unless CatalogPermission::ROLE_OPTIONS.include? role
 
     CatalogPermission.where(catalog_id: id, role: role).map(&:user)
+  end
+
+  def user_with_role_in(roles)
+    return nil unless (roles - CatalogPermission::ROLE_OPTIONS).empty?
+
+    User.where(id: CatalogPermission.where(catalog_id: id, role: roles).map(&:user_id)).uniq
   end
 
   private

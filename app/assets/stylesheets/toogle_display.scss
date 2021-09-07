@@ -1,0 +1,11 @@
+.toggle-display {
+  display: none;
+  height: 0;
+  overflow: hidden;
+  transition: height 250ms ease-in-out;
+
+  &.is-visible {
+    display: block;
+    height: auto;
+  }
+}

@@ -229,9 +229,8 @@ class FormattedTextEditor extends React.Component {
     const data = new FormData();
     data.append('docx', f);
 
-    const csrfToken = $('meta[name="csrf-token"]').attr('content');
 
-    axios.post('/s/docx2html', data, { headers: {'X-CSRF-Token': csrfToken} })
+    axios.post('/s/docx2html', data)
     .then(function(response){
       el.value = "";
       let html = response.data.html;

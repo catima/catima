@@ -163,8 +163,6 @@ class SingleReferenceEditor extends React.Component {
       var hasMore;
       var newOptions;
 
-      const csrfToken = $('meta[name="csrf-token"]').attr('content');
-      let config = { headers: {'X-CSRF-Token': csrfToken} };
       const response = await fetch(`${this.props.itemsUrl}?search=${search}&page=${page}`, config);
       const responseJSON = await response.json();
 

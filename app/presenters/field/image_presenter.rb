@@ -35,8 +35,13 @@ class Field::ImagePresenter < Field::FilePresenter
 
   def image_full
     images = files_as_array.map do |image|
-      image_tag(file_url(image, '600x600', :resize), options.merge(self.options))
+      if options[:no_html]
+        file_url(image, '600x600', :resize)
+      else
+        image_tag(file_url(image, '600x600', :resize), options.merge(self.options))
+      end
     end
+
     images.join(' ').html_safe
   end
 
@@ -45,17 +50,21 @@ class Field::ImagePresenter < Field::FilePresenter
     img = raw_value.instance_of?(Array) ? raw_value[0] : raw_value
     return nil if img.nil?
 
-    crop = img['crop'].nil? ? { 'x' => 0, 'y' => 0, 'width' => 100, 'height' => 100 } : img['crop']
+    crop = img['crop'].nil? ? {'x' => 0, 'y' => 0, 'width' => 100, 'height' => 100} : img['crop']
     crop = [crop['x'], crop['y'], crop['width'], crop['height']].map(&:round)
     transform = case options[:class]
-                when :compact then [:fill, '100x100']
-                else [:fill, '250x250']
+                when :compact then
+                  [:fill, '100x100']
+                else
+                  [:fill, '250x250']
                 end
     images = files_as_array
+    return file_url(images[0], transform[1], transform[0], crop) if options[:no_html]
+
     image_tag(file_url(images[0], transform[1], transform[0], crop), options.merge(self.options)).html_safe
   end
 
-  def file_url(file, size=nil, mode=:fill, crop=[0, 0, 100, 100])
+  def file_url(file, size = nil, mode = :fill, crop = [0, 0, 100, 100])
     return nil if file['path'].nil?
     return "/#{file['path']}" if size.nil?
 

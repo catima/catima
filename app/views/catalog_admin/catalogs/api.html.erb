@@ -1,0 +1,25 @@
+<% provide(:title, t('catalog_admin.catalog.api_settings')) %>
+
+<div class="card-body">
+  <% if @catalog.api_enabled? %>
+    <%= t('.api_key_doc_link') %>
+    <p>
+      <%= link_to(url_for('/api-docs'),url_for('/api-docs')) %>
+    </p>
+
+    <%= APIKey.human_attribute_name(:api_key) %>
+    <% if @catalog.api_keys.any? %>
+      <% @catalog.api_keys.each do |key| %>
+        <div>
+          <%= render 'api_key', key: key %>
+        </div>
+      <% end %>
+    <% else %>
+      <%= t('.no_api_keys_found') %>
+    <% end %>
+    <div class="col-sm-4" style="padding-top: 30px; margin-left: -15px;">
+      <a class="btn btn-sm btn-outline-secondary" data-toggle="modal" data-target="#new-api-key-modal" href="#"><i class="fa fa-plus"></i> <%= t('.new_api_key') %></a>
+    </div>
+  <% end %>
+</div>
+<%= render("catalog_admin/catalogs/api_key_modal") %>

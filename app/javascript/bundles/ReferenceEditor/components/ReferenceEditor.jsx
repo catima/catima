@@ -17,14 +17,12 @@ class ReferenceEditor extends React.Component {
   }
 
   componentDidMount(){
-    const csrfToken = $('meta[name="csrf-token"]').attr('content');
     let config = {
       retry: 3,
       retryDelay: 1000,
-      headers: {'X-CSRF-Token': csrfToken}
     };
 
-    axios.get(`/api/v2/${this.props.catalog}/${this.props.locale}/${this.props.itemType}?page=1`, config)
+    axios.get(`/react/${this.props.catalog}/${this.props.locale}/${this.props.itemType}?page=1`, config)
       .then(res => {
         this.setState({ searchPlaceholder: res.data.search_placeholder });
         this.setState({ selectPlaceholder: res.data.select_placeholder });
@@ -69,30 +67,30 @@ class ReferenceEditor extends React.Component {
     if (this.state.isLoading) return null;
     if (this.props.multiple)
       return <MultiReferenceEditor
-                items={this.state.items}
-                itemsUrl={`/api/v2/${this.props.catalog}/${this.props.locale}/${this.props.itemType}`}
-                fields={this.state.fields}
-                searchPlaceholder={this.state.searchPlaceholder}
-                filterPlaceholder={this.state.filterPlaceholder}
-                selectedReferences={this.props.selectedReferences}
-                srcRef={this.props.srcRef}
-                srcId={this.props.srcId}
-                req={this.props.req}
-                noOptionsMessage={this._getNoOptionsMessage()}
+        items={this.state.items}
+        itemsUrl={`/react/${this.props.catalog}/${this.props.locale}/${this.props.itemType}`}
+        fields={this.state.fields}
+        searchPlaceholder={this.state.searchPlaceholder}
+        filterPlaceholder={this.state.filterPlaceholder}
+        selectedReferences={this.props.selectedReferences}
+        srcRef={this.props.srcRef}
+        srcId={this.props.srcId}
+        req={this.props.req}
+        noOptionsMessage={this._getNoOptionsMessage()}
       />
     else
       return <SingleReferenceEditor
-                items={this.state.items}
-                itemsUrl={`/api/v2/${this.props.catalog}/${this.props.locale}/${this.props.itemType}`}
-                fields={this.state.fields}
-                searchPlaceholder={this.state.selectPlaceholder}
-                filterPlaceholder={this.state.filterPlaceholder}
-                selectedReference={this.props.selectedReferences}
-                loadingMessage={this.state.loadingMessage}
-                srcRef={this.props.srcRef}
-                srcId={this.props.srcId}
-                req={this.props.req}
-                noOptionsMessage={this._getNoOptionsMessage()}
+        items={this.state.items}
+        itemsUrl={`/react/${this.props.catalog}/${this.props.locale}/${this.props.itemType}`}
+        fields={this.state.fields}
+        searchPlaceholder={this.state.selectPlaceholder}
+        filterPlaceholder={this.state.filterPlaceholder}
+        selectedReference={this.props.selectedReferences}
+        loadingMessage={this.state.loadingMessage}
+        srcRef={this.props.srcRef}
+        srcId={this.props.srcId}
+        req={this.props.req}
+        noOptionsMessage={this._getNoOptionsMessage()}
       />
   }
 

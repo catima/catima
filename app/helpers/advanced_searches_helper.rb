@@ -64,4 +64,55 @@ module AdvancedSearchesHelper
       :class => "field-condition"
     )
   end
+
+  def formatted_api_params(required_params)
+    formatted_params = {}
+    if required_params[:criteria]
+      required_params[:criteria].each_key do |key|
+        field = Field.find_by(uuid: key)
+        value = required_params[:criteria][key.to_sym].delete(:value)
+
+        if field.is_a?(Field::Boolean)
+          formatted_params[key.to_sym] = required_params[:criteria][key.to_sym].to_enum.to_h
+          formatted_params[key.to_sym][:exact] = value
+        elsif field.is_a?(Field::ChoiceSet)
+          required_params[:criteria][key.to_sym].each_key do |k|
+            formatted_params[key.to_sym] = {}
+            nested_value = required_params[:criteria][key.to_sym][k.to_sym].delete(:value)
+            formatted_params[key.to_sym][k.to_sym] = required_params[:criteria][key.to_sym][k.to_sym].to_enum.to_h
+            formatted_params[key.to_sym][k.to_sym][:default] = nested_value
+          end
+        elsif field.is_a?(Field::DateTime)
+          start_value = required_params[:criteria][key.to_sym][:start].delete(:value)
+          end_value = required_params[:criteria][key.to_sym][:end].delete(:value)
+          required_params[:criteria][key.to_sym].delete(:start)
+          required_params[:criteria][key.to_sym].delete(:end)
+          formatted_params[key.to_sym] = required_params[:criteria][key.to_sym].to_enum.to_h
+          formatted_params[key.to_sym][:start] = {}
+          formatted_params[key.to_sym][:end] = {}
+          formatted_params[key.to_sym][:start][:exact] = start_value.to_enum.to_h
+          formatted_params[key.to_sym][:end][:exact] = end_value.to_enum.to_h
+        elsif field.is_a?(Field::Reference)
+          required_params[:criteria][key.to_sym].each_key do |k|
+            formatted_params[key.to_sym] = {}
+            nested_value = required_params[:criteria][key.to_sym][k.to_sym].delete(:value)
+            if (condition = required_params[:criteria][key.to_sym][:condition])
+              formatted_params[key.to_sym] = required_params[:criteria][key.to_sym].to_enum.to_h
+              formatted_params[key.to_sym][condition.to_sym] = nested_value
+            else
+              formatted_params[key.to_sym] = required_params[:criteria][key.to_sym].to_enum.to_h
+            end
+          end
+        else
+          if (condition = required_params[:criteria][key.to_sym][:condition])
+            formatted_params[key.to_sym] = required_params[:criteria][key.to_sym].to_enum.to_h
+            formatted_params[key.to_sym][condition.to_sym] = value
+          else
+            formatted_params[key.to_sym] = required_params[:criteria][key.to_sym].to_enum.to_h
+          end
+        end
+      end
+    end
+    { criteria: formatted_params }
+  end
 end

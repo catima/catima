@@ -105,7 +105,6 @@ CREATE TABLE public.advanced_searches (
 --
 
 CREATE SEQUENCE public.advanced_searches_id_seq
-    AS integer
     START WITH 1
     INCREMENT BY 1
     NO MINVALUE
@@ -207,6 +206,74 @@ ALTER SEQUENCE public.ahoy_visits_id_seq OWNED BY public.ahoy_visits.id;
 
 
 --
+-- Name: api_keys; Type: TABLE; Schema: public; Owner: -
+--
+
+CREATE TABLE public.api_keys (
+    id bigint NOT NULL,
+    catalog_id bigint,
+    label character varying NOT NULL,
+    api_key character varying NOT NULL,
+    created_at timestamp(6) without time zone NOT NULL,
+    updated_at timestamp(6) without time zone NOT NULL
+);
+
+
+--
+-- Name: api_keys_id_seq; Type: SEQUENCE; Schema: public; Owner: -
+--
+
+CREATE SEQUENCE public.api_keys_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+--
+-- Name: api_keys_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
+--
+
+ALTER SEQUENCE public.api_keys_id_seq OWNED BY public.api_keys.id;
+
+
+--
+-- Name: api_logs; Type: TABLE; Schema: public; Owner: -
+--
+
+CREATE TABLE public.api_logs (
+    id bigint NOT NULL,
+    user_id bigint,
+    catalog_id bigint,
+    endpoint character varying,
+    remote_ip character varying,
+    payload json,
+    created_at timestamp(6) without time zone NOT NULL,
+    updated_at timestamp(6) without time zone NOT NULL
+);
+
+
+--
+-- Name: api_logs_id_seq; Type: SEQUENCE; Schema: public; Owner: -
+--
+
+CREATE SEQUENCE public.api_logs_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+--
+-- Name: api_logs_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
+--
+
+ALTER SEQUENCE public.api_logs_id_seq OWNED BY public.api_logs.id;
+
+
+--
 -- Name: ar_internal_metadata; Type: TABLE; Schema: public; Owner: -
 --
 
@@ -238,7 +305,6 @@ CREATE TABLE public.catalog_permissions (
 --
 
 CREATE SEQUENCE public.catalog_permissions_id_seq
-    AS integer
     START WITH 1
     INCREMENT BY 1
     NO MINVALUE
@@ -273,7 +339,10 @@ CREATE TABLE public.catalogs (
     logo_id character varying,
     navlogo_id character varying,
     visible boolean DEFAULT true NOT NULL,
-    restricted boolean DEFAULT false NOT NULL
+    restricted boolean DEFAULT false NOT NULL,
+    api_enabled boolean DEFAULT false,
+    throttle_time_window integer DEFAULT 1,
+    throttle_max_requests integer DEFAULT 5
 );
 
 
@@ -282,7 +351,6 @@ CREATE TABLE public.catalogs (
 --
 
 CREATE SEQUENCE public.catalogs_id_seq
-    AS integer
     START WITH 1
     INCREMENT BY 1
     NO MINVALUE
@@ -317,7 +385,6 @@ CREATE TABLE public.categories (
 --
 
 CREATE SEQUENCE public.categories_id_seq
-    AS integer
     START WITH 1
     INCREMENT BY 1
     NO MINVALUE
@@ -353,7 +420,6 @@ CREATE TABLE public.choice_sets (
 --
 
 CREATE SEQUENCE public.choice_sets_id_seq
-    AS integer
     START WITH 1
     INCREMENT BY 1
     NO MINVALUE
@@ -394,7 +460,6 @@ CREATE TABLE public.choices (
 --
 
 CREATE SEQUENCE public.choices_id_seq
-    AS integer
     START WITH 1
     INCREMENT BY 1
     NO MINVALUE
@@ -427,7 +492,6 @@ CREATE TABLE public.configurations (
 --
 
 CREATE SEQUENCE public.configurations_id_seq
-    AS integer
     START WITH 1
     INCREMENT BY 1
     NO MINVALUE
@@ -464,7 +528,6 @@ CREATE TABLE public.containers (
 --
 
 CREATE SEQUENCE public.containers_id_seq
-    AS integer
     START WITH 1
     INCREMENT BY 1
     NO MINVALUE
@@ -477,6 +540,42 @@ CREATE SEQUENCE public.containers_id_seq
 --
 
 ALTER SEQUENCE public.containers_id_seq OWNED BY public.containers.id;
+
+
+--
+-- Name: entry_logs; Type: TABLE; Schema: public; Owner: -
+--
+
+CREATE TABLE public.entry_logs (
+    id bigint NOT NULL,
+    catalog_id bigint NOT NULL,
+    subject_type character varying NOT NULL,
+    subject_id bigint NOT NULL,
+    author_id bigint NOT NULL,
+    action character varying NOT NULL,
+    record_changes jsonb DEFAULT '{}'::jsonb,
+    created_at timestamp(6) without time zone NOT NULL,
+    updated_at timestamp(6) without time zone NOT NULL
+);
+
+
+--
+-- Name: entry_logs_id_seq; Type: SEQUENCE; Schema: public; Owner: -
+--
+
+CREATE SEQUENCE public.entry_logs_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+--
+-- Name: entry_logs_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
+--
+
+ALTER SEQUENCE public.entry_logs_id_seq OWNED BY public.entry_logs.id;
 
 
 --
@@ -499,7 +598,6 @@ CREATE TABLE public.exports (
 --
 
 CREATE SEQUENCE public.exports_id_seq
-    AS integer
     START WITH 1
     INCREMENT BY 1
     NO MINVALUE
@@ -532,7 +630,6 @@ CREATE TABLE public.favorites (
 --
 
 CREATE SEQUENCE public.favorites_id_seq
-    AS integer
     START WITH 1
     INCREMENT BY 1
     NO MINVALUE
@@ -588,7 +685,6 @@ CREATE TABLE public.fields (
 --
 
 CREATE SEQUENCE public.fields_id_seq
-    AS integer
     START WITH 1
     INCREMENT BY 1
     NO MINVALUE
@@ -662,7 +758,6 @@ CREATE TABLE public.item_types (
 --
 
 CREATE SEQUENCE public.item_types_id_seq
-    AS integer
     START WITH 1
     INCREMENT BY 1
     NO MINVALUE
@@ -699,7 +794,6 @@ CREATE TABLE public.item_views (
 --
 
 CREATE SEQUENCE public.item_views_id_seq
-    AS integer
     START WITH 1
     INCREMENT BY 1
     NO MINVALUE
@@ -743,7 +837,6 @@ CREATE TABLE public.items (
 --
 
 CREATE SEQUENCE public.items_id_seq
-    AS integer
     START WITH 1
     INCREMENT BY 1
     NO MINVALUE
@@ -807,8 +900,29 @@ CREATE TABLE public.menu_items (
     rank integer,
     created_at timestamp without time zone NOT NULL,
     updated_at timestamp without time zone NOT NULL,
+    locale_bckp character varying(10),
     title jsonb,
     url jsonb
+);
+
+
+--
+-- Name: menu_items_bckp1; Type: TABLE; Schema: public; Owner: -
+--
+
+CREATE TABLE public.menu_items_bckp1 (
+    id integer,
+    catalog_id integer,
+    slug character varying,
+    title character varying,
+    item_type_id integer,
+    page_id integer,
+    url text,
+    parent_id integer,
+    rank integer,
+    created_at timestamp without time zone,
+    updated_at timestamp without time zone,
+    locale character varying
 );
 
 
@@ -817,7 +931,6 @@ CREATE TABLE public.menu_items (
 --
 
 CREATE SEQUENCE public.menu_items_id_seq
-    AS integer
     START WITH 1
     INCREMENT BY 1
     NO MINVALUE
@@ -852,11 +965,29 @@ CREATE TABLE public.pages (
 
 
 --
+-- Name: pages_bckp1; Type: TABLE; Schema: public; Owner: -
+--
+
+CREATE TABLE public.pages_bckp1 (
+    id integer,
+    catalog_id integer,
+    creator_id integer,
+    reviewer_id integer,
+    slug character varying,
+    title text,
+    content text,
+    locale character varying,
+    status character varying,
+    created_at timestamp without time zone,
+    updated_at timestamp without time zone
+);
+
+
+--
 -- Name: pages_id_seq; Type: SEQUENCE; Schema: public; Owner: -
 --
 
 CREATE SEQUENCE public.pages_id_seq
-    AS integer
     START WITH 1
     INCREMENT BY 1
     NO MINVALUE
@@ -971,7 +1102,6 @@ CREATE TABLE public.template_storages (
 --
 
 CREATE SEQUENCE public.template_storages_id_seq
-    AS integer
     START WITH 1
     INCREMENT BY 1
     NO MINVALUE
@@ -1008,7 +1138,8 @@ CREATE TABLE public.users (
     primary_language character varying DEFAULT 'en'::character varying NOT NULL,
     invited_by_id integer,
     provider character varying,
-    uid character varying
+    uid character varying,
+    jti character varying NOT NULL
 );
 
 
@@ -1017,7 +1148,6 @@ CREATE TABLE public.users (
 --
 
 CREATE SEQUENCE public.users_id_seq
-    AS integer
     START WITH 1
     INCREMENT BY 1
     NO MINVALUE
@@ -1058,6 +1188,20 @@ ALTER TABLE ONLY public.ahoy_events ALTER COLUMN id SET DEFAULT nextval('public.
 --
 
 ALTER TABLE ONLY public.ahoy_visits ALTER COLUMN id SET DEFAULT nextval('public.ahoy_visits_id_seq'::regclass);
+
+
+--
+-- Name: api_keys id; Type: DEFAULT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.api_keys ALTER COLUMN id SET DEFAULT nextval('public.api_keys_id_seq'::regclass);
+
+
+--
+-- Name: api_logs id; Type: DEFAULT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.api_logs ALTER COLUMN id SET DEFAULT nextval('public.api_logs_id_seq'::regclass);
 
 
 --
@@ -1107,6 +1251,13 @@ ALTER TABLE ONLY public.configurations ALTER COLUMN id SET DEFAULT nextval('publ
 --
 
 ALTER TABLE ONLY public.containers ALTER COLUMN id SET DEFAULT nextval('public.containers_id_seq'::regclass);
+
+
+--
+-- Name: entry_logs id; Type: DEFAULT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.entry_logs ALTER COLUMN id SET DEFAULT nextval('public.entry_logs_id_seq'::regclass);
 
 
 --
@@ -1240,6 +1391,22 @@ ALTER TABLE ONLY public.ahoy_visits
 
 
 --
+-- Name: api_keys api_keys_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.api_keys
+    ADD CONSTRAINT api_keys_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: api_logs api_logs_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.api_logs
+    ADD CONSTRAINT api_logs_pkey PRIMARY KEY (id);
+
+
+--
 -- Name: ar_internal_metadata ar_internal_metadata_pkey; Type: CONSTRAINT; Schema: public; Owner: -
 --
 
@@ -1301,6 +1468,14 @@ ALTER TABLE ONLY public.configurations
 
 ALTER TABLE ONLY public.containers
     ADD CONSTRAINT containers_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: entry_logs entry_logs_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.entry_logs
+    ADD CONSTRAINT entry_logs_pkey PRIMARY KEY (id);
 
 
 --
@@ -1381,14 +1556,6 @@ ALTER TABLE ONLY public.menu_items
 
 ALTER TABLE ONLY public.pages
     ADD CONSTRAINT pages_pkey PRIMARY KEY (id);
-
-
---
--- Name: schema_migrations schema_migrations_pkey; Type: CONSTRAINT; Schema: public; Owner: -
---
-
-ALTER TABLE ONLY public.schema_migrations
-    ADD CONSTRAINT schema_migrations_pkey PRIMARY KEY (version);
 
 
 --
@@ -1501,6 +1668,34 @@ CREATE UNIQUE INDEX index_ahoy_visits_on_visit_token ON public.ahoy_visits USING
 
 
 --
+-- Name: index_api_keys_on_api_key; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX index_api_keys_on_api_key ON public.api_keys USING btree (api_key);
+
+
+--
+-- Name: index_api_keys_on_catalog_id; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX index_api_keys_on_catalog_id ON public.api_keys USING btree (catalog_id);
+
+
+--
+-- Name: index_api_logs_on_catalog_id; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX index_api_logs_on_catalog_id ON public.api_logs USING btree (catalog_id);
+
+
+--
+-- Name: index_api_logs_on_user_id; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX index_api_logs_on_user_id ON public.api_logs USING btree (user_id);
+
+
+--
 -- Name: index_catalog_permissions_on_catalog_id; Type: INDEX; Schema: public; Owner: -
 --
 
@@ -1596,6 +1791,27 @@ CREATE INDEX index_containers_on_page_id ON public.containers USING btree (page_
 --
 
 CREATE INDEX index_containers_on_slug ON public.containers USING btree (slug);
+
+
+--
+-- Name: index_entry_logs_on_author_id; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX index_entry_logs_on_author_id ON public.entry_logs USING btree (author_id);
+
+
+--
+-- Name: index_entry_logs_on_catalog_id; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX index_entry_logs_on_catalog_id ON public.entry_logs USING btree (catalog_id);
+
+
+--
+-- Name: index_entry_logs_on_subject; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX index_entry_logs_on_subject ON public.entry_logs USING btree (subject_type, subject_id);
 
 
 --
@@ -1830,10 +2046,24 @@ CREATE UNIQUE INDEX index_users_on_email ON public.users USING btree (email);
 
 
 --
+-- Name: index_users_on_jti; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE UNIQUE INDEX index_users_on_jti ON public.users USING btree (jti);
+
+
+--
 -- Name: index_users_on_reset_password_token; Type: INDEX; Schema: public; Owner: -
 --
 
 CREATE UNIQUE INDEX index_users_on_reset_password_token ON public.users USING btree (reset_password_token);
+
+
+--
+-- Name: unique_schema_migrations; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE UNIQUE INDEX unique_schema_migrations ON public.schema_migrations USING btree (version);
 
 
 --
@@ -1989,6 +2219,14 @@ ALTER TABLE ONLY public.items
 
 
 --
+-- Name: entry_logs fk_rails_6e3610b994; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.entry_logs
+    ADD CONSTRAINT fk_rails_6e3610b994 FOREIGN KEY (author_id) REFERENCES public.users(id);
+
+
+--
 -- Name: fields fk_rails_6f848ad005; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
@@ -2021,6 +2259,14 @@ ALTER TABLE ONLY public.pages
 
 
 --
+-- Name: api_logs fk_rails_7508ab7655; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.api_logs
+    ADD CONSTRAINT fk_rails_7508ab7655 FOREIGN KEY (user_id) REFERENCES public.users(id);
+
+
+--
 -- Name: exports fk_rails_7563b31b52; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
@@ -2034,6 +2280,14 @@ ALTER TABLE ONLY public.exports
 
 ALTER TABLE ONLY public.containers
     ADD CONSTRAINT fk_rails_8a017573a6 FOREIGN KEY (page_id) REFERENCES public.pages(id);
+
+
+--
+-- Name: api_keys fk_rails_9143567f22; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.api_keys
+    ADD CONSTRAINT fk_rails_9143567f22 FOREIGN KEY (catalog_id) REFERENCES public.catalogs(id);
 
 
 --
@@ -2200,6 +2454,7 @@ INSERT INTO "schema_migrations" (version) VALUES
 ('20151205005311'),
 ('20151205011325'),
 ('20151206234336'),
+('20151210000035'),
 ('20151212000308'),
 ('20151214213046'),
 ('20160307163846'),
@@ -2208,6 +2463,7 @@ INSERT INTO "schema_migrations" (version) VALUES
 ('20160509095147'),
 ('20160509194619'),
 ('20160720053135'),
+('20161231140032'),
 ('20170121055843'),
 ('20170507231151'),
 ('20170507231610'),
@@ -2251,6 +2507,12 @@ INSERT INTO "schema_migrations" (version) VALUES
 ('20190529123835'),
 ('20190812114658'),
 ('20210204081043'),
-('20210310082628');
+('20210310082628'),
+('20210503071636'),
+('20210503073049'),
+('20210624100735'),
+('20210730100707'),
+('20210823103708'),
+('20210906124258');
 
 

@@ -80,11 +80,9 @@ class ItemTypesReferenceSearch extends React.Component {
   }
 
   _getDataFromServer(selectedFilter) {
-    const csrfToken = $('meta[name="csrf-token"]').attr('content');
     let config = {
       retry: 3,
       retryDelay: 1000,
-      headers: {'X-CSRF-Token': csrfToken}
     };
 
     if (typeof selectedFilter !== 'undefined' && this.state.selectedItem !== null) {
@@ -96,7 +94,7 @@ class ItemTypesReferenceSearch extends React.Component {
       }
     }
 
-    axios.get(`/api/v2/${this.props.catalog}/${this.props.locale}/${this.props.itemType}/${this.props.selectedFilter.value}`, config)
+    axios.get(`/react/${this.props.catalog}/${this.props.locale}/${this.props.itemType}/${this.props.selectedFilter.value}`, config)
     .then(res => {
 
       if(res.data.inputData === null) this.setState({ inputData: [] });

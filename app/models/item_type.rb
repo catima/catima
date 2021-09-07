@@ -21,6 +21,7 @@ class ItemType < ApplicationRecord
   include HasTranslations
   include HasSlug
   include HasSQLSlug
+  include Loggable
 
   has_many :items
   has_many :item_views, :dependent => :destroy
@@ -29,6 +30,8 @@ class ItemType < ApplicationRecord
 
   store_translations :name, :name_plural
   validates_slug :scope => [:catalog_id, :deactivated_at]
+
+  alias_method :log_name, :name
 
   def self.sorted(locale=I18n.locale)
     order(Arel.sql("LOWER(item_types.name_translations->>'name_#{locale}') ASC"))

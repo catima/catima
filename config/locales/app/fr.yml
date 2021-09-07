@@ -3,6 +3,12 @@ fr:
   activerecord:
     models:
       category: "Sous-fiche"
+      entry_log:
+        one: Log
+        other: Logs
+      api_log:
+        one: API Log
+        other: API Logs
     attributes:
       choice_set:
         name: "Nom"
@@ -23,8 +29,12 @@ fr:
       catalog:
         name: "Nom"
         advertize: "Promouvoir"
+        api_enabled: "API activée"
         visible: "Visible"
         custom_root_page_id: "Page d'accueil personnalisée"
+        api_enabled: API V3 activée
+        throttle_time_window: Fenetre temporelle de limitation api en secondes
+        throttle_max_requests: Nombre maximum de requetes par utilisateur par catalogue
       group:
         name: "Nom"
         description: "Description"
@@ -32,6 +42,19 @@ fr:
         title: Titre
         description: Description
         item_type: Type de fiche
+      api_logs:
+        user_id: Utilisateur
+        endpoint: Adresse requete
+        remote_ip: Adresse Ip
+        payload: Données
+      entry_logs:
+        author: Auteur
+        subject: "Entrée"
+        record_changes: Data
+        action: Action
+        created_at: Date de création
+      api_keys:
+        api_key: "Tokens d'authentications"
   presenters:
     field:
       file:
@@ -122,6 +145,13 @@ fr:
       has_exact_phrase: "possède l'expression exacte"
     boolean_search_field:
       correspond_to: "correspond à"
+  api_keys:
+    create:
+      success: L API key a étée créée
+    update:
+      success: L API key a étée modifée
+    destroy:
+      success: L API key a étée supprimée
   common:
     back: "Retour"
     greeting: "Bonjour"
@@ -332,6 +362,7 @@ fr:
   delete: 'Supprimer'
   delete_confirm: "Vous voulez vraiment supprimer “%{model}”?"
   edit: 'Éditer'
+  save: 'Sauvegarder'
   view: Voir
   actions: 'Actions'
   duplicate: 'Dupliquer'
@@ -375,6 +406,7 @@ fr:
   item_type: Type de fiche
   general: Général
   style: Style
+  api: API
   export: Export
   valid: "valide"
   expired: "expiré"
@@ -411,14 +443,23 @@ fr:
         approved: 'approuvé'
       destroy:
         rejected: 'rejeté'
-
     catalog:
       settings: 'Catalogue'
       edit_settings: 'Éditer les paramètres du catalogue'
+      api_settings: "Éditer les paramètres de l'API"
       save_settings: 'Enregistrer'
       save_style: 'Enregistrer le style'
-
+      no_api_logs: 'Aucun log api v3'
+      no_entry_logs: 'Aucun log'
     catalogs:
+      api:
+        api_key_doc_link: "Documentation"
+        no_api_keys_found: "Aucune clé API trouvée"
+        new_api_key: 'Créer une nouvelle clé API'
+      api_key_modal:
+        create_new_api_key: 'Créer une nouvelle clé API'
+      api_key_edit_modal:
+        edit_api_key: 'Modifier une clé API'
       common_form_fields:
         advertize_help: "Si coché, ce catalogue peut être trouvé dans les listes de catalogue publiques."
         visible_help: "Si coché, ce catalogue sera disponible pour tout le monde. Sinon, seul le personnel du catalogue pourra voir le contenu."
@@ -428,6 +469,7 @@ fr:
         open_for_everyone: Ouvert à tous
         open_to_members: Ouvert aux membres
         open_to_catalog_staff: Ouvert au personnel du catalogue
+        api_enabled_help: "Si activé le catalogue sera accessible via l api "
       edit_style:
         custom_style_catalog: "Personnaliser le style de catalogue"
         general: "Général"

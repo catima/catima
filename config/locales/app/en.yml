@@ -3,6 +3,12 @@ en:
   activerecord:
     models:
       category: "Category"
+      entry_log:
+        one: Log
+        other: Logs
+      api_log:
+        one: API Log
+        other: API Logs
     attributes:
       choice_set:
         name: "Name"
@@ -23,6 +29,9 @@ en:
         advertize: "Advertize"
         visible: "Visible"
         custom_root_page_id: "Custom root page"
+        api_enabled: API V3 activated
+        throttle_time_window: Throttle time window
+        throttle_max_requests: Throttle maximum requests
       group:
         name: "Name"
         description: "Description"
@@ -30,6 +39,18 @@ en:
         title: Title
         description: Description
         item_type: Item type
+      api_logs:
+        user_id: User
+        endpoint: Endpoint
+        remote_ip: Remote IP
+        payload: Payload
+      entry_logs:
+        author: Author
+        subject: "Subject"
+        subject_id: "Subject ID"
+        subject_type: "Subject type"
+        action: Action
+        created_at: Creation date
   presenters:
     field:
       file:
@@ -414,13 +435,13 @@ en:
         approved: 'approved'
       destroy:
         rejected: 'rejected'
-
     catalog:
       settings: 'Catalog settings'
       edit_settings: 'Edit catalog settings'
       save_settings: 'Save'
       save_style: 'Save style'
-
+      no_api_logs: No API V3 Logs
+      no_entry_logs: 'No Logs'
     catalogs:
       common_form_fields:
         advertize_help: "If checked, this catalog can be found in public catalog lists."
@@ -431,6 +452,7 @@ en:
         open_for_everyone: Open for everyone
         open_to_members: Open to members
         open_to_catalog_staff: Open to catalog staff
+        api_enabled_help: "If checked, this catalog will be accessible via tha api "
       edit_style:
         custom_style_catalog: "Customize catalog style"
         general: "General"

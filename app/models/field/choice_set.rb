@@ -103,7 +103,7 @@ class Field::ChoiceSet < ::Field
   end
 
   def describe
-    super.merge("choice_set": choice_set.uuid)
+    super.merge(choice_set: choice_set.uuid)
   end
 
   def value_for_item(it)
@@ -128,8 +128,8 @@ class Field::ChoiceSet < ::Field
     end
   end
 
-  def order_items_by
-    "(choices.long_name_translations->>'long_name_#{I18n.locale}') ASC" unless choices.nil?
+  def order_items_by(direction: 'ASC')
+    "(choices.long_name_translations->>'long_name_#{I18n.locale}') #{direction}" unless choices.nil?
   end
 
   def allows_unique?

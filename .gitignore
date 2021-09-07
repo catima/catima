@@ -78,3 +78,6 @@ yarn-debug.log*
 .yarn-integrity
 
 .ruby-gemset
+
+/swagger
+.byebug_history

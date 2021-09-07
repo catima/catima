@@ -44,15 +44,13 @@ class ReferenceSearch extends React.Component {
       return;
     }
 
-    const csrfToken = $('meta[name="csrf-token"]').attr('content');
     let config = {
       retry: 3,
       retryDelay: 1000,
-      headers: {'X-CSRF-Token': csrfToken}
     };
 
     axios.get(
-      `/api/v2/${this.props.catalog}/${this.props.locale}/${this.props.itemType}?simple_fields=true&page=1`,
+      `/react/${this.props.catalog}/${this.props.locale}/${this.props.itemType}?simple_fields=true&page=1`,
       config
     ).then(res => {
       this.setState({
@@ -218,19 +216,19 @@ class ReferenceSearch extends React.Component {
                 locale={this.props.locale} />
     else
       return <SelectedReferenceSearch
-                updateSelectedItem={this.updateSelectedItem}
-                searchPlaceholder={this.state.searchPlaceholder}
-                loadingMessage={this.state.loadingMessage}
-                noOptionsMessage={this._getNoOptionsMessage()}
-                items={this.state.items}
-                fields={this.state.fields}
-                multiple={this.props.multiple}
-                inputName={this._buildInputNameCondition(this.state.selectedCondition)}
-                srcRef={this.props.srcRef}
-                srcId={this.props.srcId}
-                req={this.props.req}
-                itemsUrl={`/api/v2/${this.props.catalog}/${this.props.locale}/${this.props.itemType}?simple_fields=true`}
-                onFocus={this.setFields} />
+        updateSelectedItem={this.updateSelectedItem}
+        searchPlaceholder={this.state.searchPlaceholder}
+        loadingMessage={this.state.loadingMessage}
+        noOptionsMessage={this._getNoOptionsMessage()}
+        items={this.state.items}
+        fields={this.state.fields}
+        multiple={this.props.multiple}
+        inputName={this._buildInputNameCondition(this.state.selectedCondition)}
+        srcRef={this.props.srcRef}
+        srcId={this.props.srcId}
+        req={this.props.req}
+        itemsUrl={`/react/${this.props.catalog}/${this.props.locale}/${this.props.itemType}?simple_fields=true`}
+        onFocus={this.setFields} />
   }
 
   renderFilter(){

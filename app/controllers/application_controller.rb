@@ -3,7 +3,7 @@ class ApplicationController < ActionController::Base
   include FriendlyForwarding
   include MaintenanceMode
 
-  protect_from_forgery :with => :exception
+  protect_from_forgery with: :exception
 
   before_action :set_locale
 
@@ -34,29 +34,33 @@ class ApplicationController < ActionController::Base
   def catalog_scoped?
     false
   end
+
   helper_method :catalog_scoped?
 
   def user_scoped?
     false
   end
+
   helper_method :user_scoped?
 
   def favorites_scoped?
     false
   end
+
   helper_method :favorites_scoped?
 
   def searches_scoped?
     false
   end
+
   helper_method :searches_scoped?
 
   def set_locale
-    if I18n.locale_available?(params[:locale])
-      I18n.locale = params[:locale]
-    else
-      I18n.locale = I18n.default_locale
-    end
+    I18n.locale = if I18n.locale_available?(params[:locale])
+                    params[:locale]
+                  else
+                    I18n.default_locale
+                  end
   end
 
   def current_user
@@ -68,6 +72,7 @@ class ApplicationController < ActionController::Base
   def after_devise_action_for(resource)
     stored_location_for(resource) || root_url
   end
+
   alias_method :after_sign_in_path_for, :after_devise_action_for
   alias_method :after_sign_out_path_for, :after_devise_action_for
   alias_method :after_sign_up_path_for, :after_devise_action_for

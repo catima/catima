@@ -20,6 +20,10 @@ class CatalogPolicy
     user_is_system_admin? || user.catalog_role_at_least?(catalog, "editor")
   end
 
+  def user_is_at_least_a_member?
+    user_is_system_admin? || user.catalog_role_at_least?(catalog, "member")
+  end
+
   def destroy?
     return false unless user_is_system_admin?
 

@@ -99,11 +99,9 @@ class LinkedCategoryInput extends React.Component {
   }
 
   _getDataFromServer(selectedCategory) {
-    const csrfToken = $('meta[name="csrf-token"]').attr('content');
     let config = {
       retry: 3,
       retryDelay: 1000,
-      headers: {'X-CSRF-Token': csrfToken}
     };
 
     if (typeof selectedCategory !== 'undefined' && this.state.selectedItem !== null) {
@@ -111,7 +109,7 @@ class LinkedCategoryInput extends React.Component {
       this.props.selectedCategory.label = selectedCategory.label;
     }
 
-    axios.get(`/api/v2/${this.props.catalog}/${this.props.locale}/categories/${this.props.selectedCategory.choiceSetId}/${this.props.selectedCategory.value}`, config)
+    axios.get(`/react/${this.props.catalog}/${this.props.locale}/categories/${this.props.selectedCategory.choiceSetId}/${this.props.selectedCategory.value}`, config)
     .then(res => {
       if(res.data.inputData === null) this.setState({ inputData: [] });
       else this.setState({ inputData: res.data.inputData });

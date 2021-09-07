@@ -44,8 +44,8 @@ class Field::Decimal < ::Field
     %i(maximum minimum)
   end
 
-  def order_items_by
-    "(items.data->>'#{uuid}')::float ASC"
+  def order_items_by(direction: 'ASC')
+    "(items.data->>'#{uuid}')::float #{direction}"
   end
 
   # Useful for the advanced search
