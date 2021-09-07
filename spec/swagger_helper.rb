@@ -28,21 +28,6 @@ RSpec.configure do |config|
             type: 'http',
             scheme: 'bearer'
           }
-        },
-        schemas: {
-          api_v3_user: {
-            type: 'object',
-            properties: {
-              api_v3_user: {
-                type: 'object',
-                properties: {
-                  email: { type: 'string' },
-                  password: { type: 'string' }
-                }
-              }
-            },
-            required: %w[email password]
-          }
         }
       },
       servers: [

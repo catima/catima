@@ -20,7 +20,19 @@ RSpec.describe 'api/v3/sessions', type: :request do
     post('Create Session') do
       tags 'Authentication'
       consumes 'application/json'
-      parameter name: :api_v3_user, in: :body, schema: { '$ref' => '#/components/schemas/api_v3_user' }
+      parameter name: :api_v3_user, in: :body, schema: {
+        type: 'object',
+        properties: {
+          api_v3_user: {
+            type: 'object',
+            properties: {
+              email: {type: 'string'},
+              password: {type: 'string'}
+            }
+          }
+        },
+        required: %w[email password]
+      }
 
       response(200, 'authentication_success') do
         run_test! do |response|
