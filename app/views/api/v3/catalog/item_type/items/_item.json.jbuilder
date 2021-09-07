@@ -10,12 +10,13 @@ json.primary_field do
   json.review_status item.review_status if item.catalog.requires_review
 end
 if with_summary
-  json.item_summary strip_tags(item_summary(item, bypass_displayable: true))
+  # bypass_displayable is used when no user is available, mainly with an api key
+  json.item_summary strip_tags(item_summary(item, bypass_displayable: @authenticated_catalog.present?))
   json.thumbnail item_thumbnail(item, {style: :medium, no_html: true}) if item.try(:image?)
 end
 if with_field_values
   json.field_values do
-    json.array! item.item_type.fields do |field|
+    json.array! fields do |field|
       json.value item.data["#{field.uuid}"]
       json.field do
         json.partial! '/api/v3/catalog/shared/field', field: field

@@ -3,13 +3,13 @@ class API::V3::Catalog::ItemType::ItemsController < API::V3::Catalog::ItemType::
 
   include ControlsItemSorting
 
-  after_action -> { set_pagination_header(:items) }, only: :index
+  before_action :find_items
   before_action :validate_sort_field, only: :index
+  after_action -> { set_pagination_header(:items) }, only: :index
 
   def index
     authorize(@catalog, :item_type_items_index?) unless authenticated_catalog?
 
-    @items = @item_type.items
     @items = apply_sort(@items, direction: params[:direction] == 'ASC' ? 'ASC' : 'DESC')
     @items = @items.page(params[:page]).per(params[:per])
   end
@@ -17,10 +17,16 @@ class API::V3::Catalog::ItemType::ItemsController < API::V3::Catalog::ItemType::
   def show
     authorize(@catalog, :item_type_item_show?) unless authenticated_catalog?
 
-    @item = @item_type.items.find(params[:item_id])
+    @item = @items.find(params[:item_id])
+    @fields = @item_type.fields
+    @fields = @fields.where(restricted: false) unless authenticated_catalog? || @current_user.catalog_role_at_least?(@catalog, "editor")
   end
 
   private
+
+  def find_items
+    @items = (authenticated_catalog? || @current_user.catalog_role_at_least?(@catalog, "editor")) ? @item_type.items : @catalog.public_items.where(item_type_id: @item_type.id)
+  end
 
   def validate_sort_field
     render_unprocessable_entity('invalid_sort') unless params[:sort].blank? || @item_type.fields.select(&:human_readable?).reject(&:multiple).pluck(:slug).include?(params[:sort])
