@@ -452,7 +452,7 @@ fr:
       no_entry_logs: 'Aucun log'
     catalogs:
       api:
-        api_key_description: "Une clé API donne un accès complet aux données de votre catalogue, les rôles et les autorisations sont contournés. Ne partagez jamais une clé API publiquement."
+        api_key_description: "Une clé API donne un accès complet aux données de votre catalogue, les rôles et les autorisations sont contournés. <b>Ne partagez jamais une clé API publiquement</b>."
         api_key_doc_link: "L'ensemble des requêtes disponibles sont consultables dans la documentation"
         no_api_keys_found: "Aucune clé API trouvée"
         new_api_key: 'Créer une nouvelle clé API'

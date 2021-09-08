@@ -11,7 +11,10 @@
   <tbody>
     <% @catalogs.each do |catalog| %>
       <tr>
-        <td><%= fa_icon(:book, :text => catalog.name) %></td>
+        <td>
+          <%= fa_icon(:book, :text => catalog.name) %>
+          <%= catalog_api_badge(catalog) %>
+        </td>
         <td>
           <%= link_to_if(
                 catalog.active?,

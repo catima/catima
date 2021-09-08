@@ -456,7 +456,7 @@ en:
       no_entry_logs: 'No Logs'
     catalogs:
       api:
-        api_key_description: "An API key give full access to the data in your catalog, roles and permissions are bypassed. Never share an API key publicly."
+        api_key_description: "An API key give full access to the data in your catalog, roles and permissions are bypassed. <b>Never share an API key publicly</b>."
         api_key_doc_link: "All available queries can be found in the documentation"
         no_api_keys_found: "No API keys found"
         new_api_key: 'Create a new API key'

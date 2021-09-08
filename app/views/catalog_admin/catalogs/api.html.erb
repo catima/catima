@@ -3,7 +3,7 @@
 <div class="card-body">
   <% if @catalog.api_enabled? %>
     <p>
-      <%= t('.api_key_description') %>
+      <%= t('.api_key_description').html_safe %>
       <%= t('.api_key_doc_link') %> (<%= link_to('API doc', url_for('/api-docs'), target: "_blank") %>).
     </p>
 
