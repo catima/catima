@@ -13,11 +13,11 @@ def setup!
     copy "config/geo_layers.example.yml"
     test_local_env_contains_required_keys
     run  "bundle exec rake react_on_rails:locale"
+    run  "bundle exec rake swag:run"
     run  "bundle exec rake db:create" if ENV['CI']
     run  "bundle exec rake db:create:all" unless ENV['CI']
     run  "bundle exec rake db:migrate"
     run  "bundle exec rake db:seed"
-    run  "bundle exec rake swag:run"
   end
 end
 
