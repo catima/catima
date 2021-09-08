@@ -17,6 +17,7 @@ def setup!
     run  "bundle exec rake db:create:all" unless ENV['CI']
     run  "bundle exec rake db:migrate"
     run  "bundle exec rake db:seed"
+    run  "bundle exec rake swag:run"
   end
 end
 

@@ -10,5 +10,5 @@ if json.provider
   json.provider user.provider
 end
 json.groups do
-  json.partial! partial: '/api/v3/catalog/shared/group', collection: user.groups, as: :group, locals: {with_users: false}
+  json.partial! partial: '/api/v3/catalog/shared/group', collection: user.groups.where(catalog_id: @catalog.id), as: :group, locals: {with_users: false}
 end
