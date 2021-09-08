@@ -35,19 +35,6 @@
 <% end %>
 
 <hr>
-<%= f.form_group(
-  :api_enabled,
-  :help => t('catalog_admin.catalogs.common_form_fields.api_enabled_help')
-) do %>
-  <label for="api_enabled"><%= Catalog.human_attribute_name(:api_enabled) %></label>
-  <%= link_to('API doc', url_for('/api-docs')) %>
-
-  <%= f.check_box(:api_enabled) %>
-<% end %>
-
-<%= f.number_field(:throttle_time_window, min: 0, step: 1) %>
-<%= f.number_field(:throttle_max_requests, min: 0, step: 1) %>
-<hr>
 
 <%= f.select(
       :custom_root_page_id,
@@ -56,6 +43,21 @@
       ),
       {include_blank: true}
     ) %>
+
+<hr>
+
+<%= f.form_group(
+  :api_enabled,
+  :help => t(
+    'catalog_admin.catalogs.common_form_fields.api_enabled_help',
+    api_doc: link_to('API', url_for('/api-docs'), target: "_blank")
+  ).html_safe
+) do %>
+  <%= f.check_box(:api_enabled) %>
+<% end %>
+
+<%= f.number_field(:throttle_time_window, min: 0, step: 1) %>
+<%= f.number_field(:throttle_max_requests, min: 0, step: 1) %>
 
 <% if @admins.present? %>
   <hr>

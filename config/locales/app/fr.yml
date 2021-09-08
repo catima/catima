@@ -29,10 +29,9 @@ fr:
       catalog:
         name: "Nom"
         advertize: "Promouvoir"
-        api_enabled: "API activée"
         visible: "Visible"
         custom_root_page_id: "Page d'accueil personnalisée"
-        api_enabled: API V3 activée
+        api_enabled: "Activer l'API (v3)"
         throttle_time_window: Fenetre temporelle de limitation api en secondes
         throttle_max_requests: Nombre maximum de requetes par utilisateur par catalogue
       group:
@@ -147,11 +146,11 @@ fr:
       correspond_to: "correspond à"
   api_keys:
     create:
-      success: L API key a étée créée
+      success: "La clé API a été créée"
     update:
-      success: L API key a étée modifée
+      success: "La clé API a été modifiée"
     destroy:
-      success: L API key a étée supprimée
+      success: "La clé API a été supprimée"
   common:
     back: "Retour"
     greeting: "Bonjour"
@@ -446,14 +445,15 @@ fr:
     catalog:
       settings: 'Catalogue'
       edit_settings: 'Éditer les paramètres du catalogue'
-      api_settings: "Éditer les paramètres de l'API"
+      api_settings: "Paramètres de l'API"
       save_settings: 'Enregistrer'
       save_style: 'Enregistrer le style'
       no_api_logs: 'Aucun log api v3'
       no_entry_logs: 'Aucun log'
     catalogs:
       api:
-        api_key_doc_link: "Documentation"
+        api_key_description: "Une clé API donne un accès complet aux données de votre catalogue, les rôles et les autorisations sont contournés. Ne partagez jamais une clé API publiquement."
+        api_key_doc_link: "L'ensemble des requêtes disponibles sont consultables dans la documentation"
         no_api_keys_found: "Aucune clé API trouvée"
         new_api_key: 'Créer une nouvelle clé API'
       api_key_modal:
@@ -469,7 +469,7 @@ fr:
         open_for_everyone: Ouvert à tous
         open_to_members: Ouvert aux membres
         open_to_catalog_staff: Ouvert au personnel du catalogue
-        api_enabled_help: "Si activé le catalogue sera accessible via l api "
+        api_enabled_help: "Si activé le catalogue sera accessible via l'%{api_doc}"
       edit_style:
         custom_style_catalog: "Personnaliser le style de catalogue"
         general: "Général"
