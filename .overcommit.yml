@@ -43,6 +43,7 @@ PreCommit:
       - "**/db/structure.sql"
       - "docs/**/*"
       - "test/cassettes/**/*"
+      - "swagger/**/*"
 
   YamlSyntax:
     enabled: true

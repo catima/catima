@@ -79,5 +79,4 @@ yarn-debug.log*
 
 .ruby-gemset
 
-/swagger
 .byebug_history
