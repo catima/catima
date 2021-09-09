@@ -50,7 +50,6 @@ Run the `bin/setup` script. This script will:
 1. Install NPM packages using `yarn install`
 2. Install [foreman](https://github.com/ddollar/foreman) with `gem install foreman`
 3. Run `foreman start -f Procfile.dev` to start the Rails app.
-4. In a separate console, run `bundle exec sidekiq` to start the Sidekiq background job processor.
 
 [rbenv]:https://github.com/sstephenson/rbenv
 [redis]:http://redis.io
