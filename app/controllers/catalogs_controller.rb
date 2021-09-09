@@ -21,7 +21,7 @@ class CatalogsController < ApplicationController
   module Constraint
     def self.matches?(request)
       catalog_slug = request[:catalog_slug]
-      catalog_slug && Catalog.active.where(:slug => catalog_slug).exists?
+      catalog_slug && Catalog.not_deactivated.where(:slug => catalog_slug).exists?
     end
   end
 

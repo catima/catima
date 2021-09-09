@@ -62,7 +62,7 @@ class CatalogAdmin::ChoicesController < CatalogAdmin::BaseController
   end
 
   def find_choice_set
-    @choice_set = catalog.choice_sets.find(params[:choice_set_id])
+    @choice_set = catalog.choice_sets.active.find(params[:choice_set_id])
     authorize(@choice_set)
   end
 

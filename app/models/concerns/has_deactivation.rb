@@ -1,7 +1,7 @@
 module HasDeactivation
   extend ActiveSupport::Concern
 
-  def active?
+  def not_deactivated?
     deactivated_at.nil?
   end
 
@@ -10,7 +10,7 @@ module HasDeactivation
   end
 
   module ClassMethods
-    def active
+    def not_deactivated
       where(:deactivated_at => nil)
     end
   end

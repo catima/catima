@@ -4,7 +4,7 @@
 #
 #  catalog_id     :integer
 #  created_at     :datetime         not null
-#  deactivated_at :datetime
+#  deleted_at :datetime
 #  id             :integer          not null, primary key
 #  name           :string
 #  slug           :string
@@ -27,6 +27,12 @@ class ChoiceSet < ApplicationRecord
   validates_presence_of :name
 
   before_create :assign_uuid
+
+  scope :active, -> { where(deleted_at: nil) }
+
+  def active?
+    deleted_at.nil?
+  end
 
   def self.sorted
     order(Arel.sql("LOWER(choice_sets.name)"))

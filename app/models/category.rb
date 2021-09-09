@@ -4,7 +4,7 @@
 #
 #  catalog_id     :integer
 #  created_at     :datetime         not null
-#  deactivated_at :datetime
+#  deleted_at :datetime
 #  id             :integer          not null, primary key
 #  name           :string
 #  updated_at     :datetime         not null
@@ -12,7 +12,6 @@
 #
 
 class Category < ApplicationRecord
-  include HasDeactivation
   include HasFields
   include HasHumanId
 
@@ -21,6 +20,12 @@ class Category < ApplicationRecord
 
   before_create :assign_uuid
   before_destroy :unset_category_in_choice_sets
+
+  scope :active, -> { where(deleted_at: nil) }
+
+  def active?
+    deleted_at.nil?
+  end
 
   def self.sorted
     order(Arel.sql("LOWER(categories.name) ASC"))

@@ -16,7 +16,7 @@ class CatalogPermission < ApplicationRecord
   # This is to help the implementation of `role_at_least?`.
   ROLE_OPTIONS = %w(user member editor super-editor reviewer admin).freeze
 
-  delegate :active?, :to => :catalog
+  delegate :not_deactivated?, :to => :catalog
 
   belongs_to :catalog
   belongs_to :user, optional: true

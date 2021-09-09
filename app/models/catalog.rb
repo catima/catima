@@ -77,7 +77,7 @@ class Catalog < ApplicationRecord
 
   def self.valid?(slug)
     c = Catalog.find_by(slug: slug)
-    !c.nil? && c.active?
+    !c.nil? && c.not_deactivated?
   end
 
   def self.overrides

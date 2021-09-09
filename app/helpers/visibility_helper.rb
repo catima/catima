@@ -1,6 +1,6 @@
 module VisibilityHelper
   def visibility_status_label(catalog)
-    return nil unless catalog.active?
+    return nil unless catalog.not_deactivated?
 
     case catalog_access(catalog)
     when 2

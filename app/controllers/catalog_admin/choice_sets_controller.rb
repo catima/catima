@@ -3,7 +3,7 @@ class CatalogAdmin::ChoiceSetsController < CatalogAdmin::BaseController
 
   def index
     authorize(ChoiceSet)
-    @choice_sets = catalog.choice_sets.sorted
+    @choice_sets = catalog.choice_sets.active.sorted
   end
 
   def new
@@ -44,6 +44,13 @@ class CatalogAdmin::ChoiceSetsController < CatalogAdmin::BaseController
     end
   end
 
+  def destroy
+    find_choice_set
+    authorize(@choice_set)
+    @choice_set.touch(:deleted_at)
+    redirect_to(catalog_admin_choice_sets_path, notice: deleted_message)
+  end
+
   private
 
   def build_choice_set
@@ -51,7 +58,7 @@ class CatalogAdmin::ChoiceSetsController < CatalogAdmin::BaseController
   end
 
   def find_choice_set
-    @choice_set = catalog.choice_sets.find(params[:id])
+    @choice_set = catalog.choice_sets.active.find(params[:id])
   end
 
   def choice_set_params
@@ -73,11 +80,15 @@ class CatalogAdmin::ChoiceSetsController < CatalogAdmin::BaseController
   def updated_message
     message = "Choice set “#{@choice_set.name}” has been "
     message << if choice_set_params.key?(:deactivated_at)
-                 (@choice_set.active? ? "reactivated." : "deactivated.")
+                 (@choice_set.not_deactivated? ? "reactivated." : "deactivated.")
                else
                  "updated."
                end
     message
+  end
+
+  def deleted_message
+    "Choice set “#{@choice_set.name}” has been deleted."
   end
 
   def after_create_path

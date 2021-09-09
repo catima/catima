@@ -50,7 +50,7 @@ module ControlsCatalog
   end
 
   def find_active_catalog
-    @catalog = Catalog.active.where(:slug => params[:catalog_slug]).first!
+    @catalog = Catalog.not_deactivated.where(:slug => params[:catalog_slug]).first!
   end
 
   def redirect_to_valid_locale

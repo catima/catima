@@ -19,7 +19,7 @@ module Admin::UsersHelper
         :f => form,
         :permissions => sorted_permissions_for_edit(
           form.object,
-          Catalog.active.sorted
+          Catalog.not_deactivated.sorted
         )
       })
   end

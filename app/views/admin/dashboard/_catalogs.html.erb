@@ -14,7 +14,7 @@
         <td><%= fa_icon(:book, :text => catalog.name) %></td>
         <td>
           <%= link_to_if(
-                catalog.active?,
+                catalog.not_deactivated?,
                 "/#{catalog.slug}",
                 catalog_admin_setup_path(catalog, catalog.valid_locale)) %>
         </td>
