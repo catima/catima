@@ -1,8 +1,8 @@
 #!/usr/bin/env ruby
 
-def setup
+def setup(ci)
   within_project_root do
-    test "ruby -v" => ruby_version
+    test "ruby -v" => ruby_version unless ci
     run  "gem install bundler:2.1.4 --no-document --conservative"
     run  "bundle install"
     run  "bin/yarn install" if File.exist?("yarn.lock")
@@ -13,26 +13,7 @@ def setup
     copy "config/geo_layers.example.yml"
     test_local_env_contains_required_keys
     run  "bundle exec rake react_on_rails:locale"
-    run  "bundle exec rake db:create:all"
-    run  "bundle exec rake db:migrate"
-    run  "bundle exec rake db:seed"
-    run  "bundle exec rake swag:run"
-  end
-end
-
-def setup_ci
-  within_project_root do
-    run  "gem install bundler:2.1.4 --no-document --conservative"
-    run  "bundle install"
-    run  "bin/yarn install" if File.exist?("yarn.lock")
-    run  "bundle exec overcommit --sign"
-    run  "bundle exec overcommit --install"
-    copy "example.env"
-    copy "config/database.example.yml"
-    copy "config/geo_layers.example.yml"
-    test_local_env_contains_required_keys
-    run  "bundle exec rake react_on_rails:locale"
-    run  "bundle exec rake db:create"
+    run  "bundle exec rake db:create#{':all' unless ci}"
     run  "bundle exec rake db:migrate"
     run  "bundle exec rake db:seed"
   end
@@ -119,10 +100,4 @@ def die(message)
   exit(1)
 end
 
-if ENV['CI']
-  # Setup Catima for continuous integration
-  setup_ci
-else
-  # Setup Catima for development
-  setup
-end
+setup(ENV['CI'])
