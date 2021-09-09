@@ -60,4 +60,4 @@ Run the `bin/setup` script. This script will:
 * To run the full suite, run `rails test`
 * To run a single test, specify the line with `rails test path/to/file:line_number`
 * To view the integration tests running in the browser prepend `HEADLESS=0` to the commands above
-* To run api requests specs and generate api doc `rake swag:run`
+* To run api requests specs and generate api doc `rails swag:run`

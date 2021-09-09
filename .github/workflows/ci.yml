@@ -78,7 +78,7 @@ jobs:
 
       - name: Test app
         id: app-test
-        run: NO_COVERAGE=1 bundle exec rake test
+        run: NO_COVERAGE=1 rails test
 
       - name: Notify Slack
         uses: act10ns/slack@v1
