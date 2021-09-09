@@ -54,7 +54,7 @@ RSpec.describe 'api/v3/{catalog_id}/users', type: :request do
       # test catalog authentication
       let!(:api_key_two) { api_keys(:two).api_key }
       response(403, 'Forbidden') do
-        let!(:Authorization) { "Bearer #{api_key_}" }
+        let!(:Authorization) { "Bearer #{api_key_two}" }
 
         before do |example|
           submit_request(example.metadata)
