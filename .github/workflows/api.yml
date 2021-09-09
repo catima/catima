@@ -80,6 +80,13 @@ jobs:
         id: api-test
         run: rails swag:run
 
+      - name: Upload artifact
+        id: upload-artifact
+        uses: actions/upload-artifact@v2
+        with:
+          name: swagger-documentation
+          path: /home/runner/work/catima/catima/swagger/v3/swagger.yaml
+
       - name: Notify Slack
         uses: act10ns/slack@v1
         with:
