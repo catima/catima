@@ -32,8 +32,8 @@ fr:
         visible: "Visible"
         custom_root_page_id: "Page d'accueil personnalisée"
         api_enabled: "Activer l'API (v3)"
-        throttle_time_window: Fenetre temporelle de limitation api en secondes
-        throttle_max_requests: Nombre maximum de requetes par utilisateur par catalogue
+        throttle_time_window: "Fenêtre temporelle de limitation api en secondes"
+        throttle_max_requests: "Nombre maximum de requêtes"
       group:
         name: "Nom"
         description: "Description"

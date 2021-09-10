@@ -30,8 +30,8 @@ en:
         visible: "Visible"
         custom_root_page_id: "Custom root page"
         api_enabled: "Activate the API (v3)"
-        throttle_time_window: Throttle time window
-        throttle_max_requests: Throttle maximum requests
+        throttle_time_window: "Throttle time window in seconds"
+        throttle_max_requests: "Throttle maximum requests"
       group:
         name: "Name"
         description: "Description"
