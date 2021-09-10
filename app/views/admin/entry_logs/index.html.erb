@@ -4,6 +4,7 @@
     <thead>
     <tr>
       <th><%= EntryLog.human_attribute_name(:author) %></th>
+      <th><%= EntryLog.human_attribute_name(:subject_type) %></th>
       <th><%= EntryLog.human_attribute_name(:subject) %></th>
       <th><%= EntryLog.human_attribute_name(:action) %></th>
       <th><%= EntryLog.human_attribute_name(:created_at) %></th>
@@ -16,21 +17,27 @@
         <tr style="<%= entry_log.action == "DELETE" ? 'text-decoration: line-through;' : '' %>" data-controller="toggle-display">
 
           <td><%= entry_log.author.email %></td>
-          <td><%= entry_log.subject_id %> (<%= "#{entry_log.subject_type}: #{entry_log.subject&.log_name}" %>) </td>
+          <td><%= entry_log.subject_type %></td>
+          <td>
+            <%= entry_log.subject_id %>
+            <%= "(#{truncate(entry_log.subject&.log_name)})" unless entry_log.subject&.log_name.nil? %>
+          </td>
           <td><%= entry_log.action %></td>
           <td><%= l(entry_log.created_at) %></td>
           <td>
-            <%= fa_icon(:eye, "data-action": "click->toggle-display#reveal") %>
-            <div data-toggle-display-target="revealable">
-              <pre>
-                <% changes = entry_log.record_changes  %>
-                <% changes.delete("search_data_de")  %>
-                <% changes.delete("search_data_en")  %>
-                <% changes.delete("search_data_fr")  %>
-                <% changes.delete("search_data_it")  %>
-                <%= JSON.pretty_generate(changes) %>
-              </pre>
-            </div>
+            <% if entry_log.action != 'DELETE' %>
+              <%= fa_icon(:eye, "data-action": "click->toggle-display#reveal") %>
+              <div data-toggle-display-target="revealable">
+                <pre>
+                  <% changes = entry_log.record_changes  %>
+                  <% changes.delete("search_data_de")  %>
+                  <% changes.delete("search_data_en")  %>
+                  <% changes.delete("search_data_fr")  %>
+                  <% changes.delete("search_data_it")  %>
+                  <%= JSON.pretty_generate(changes) %>
+                </pre>
+              </div>
+            <% end %>
           </td>
           <td></td>
         </tr>
