@@ -28,9 +28,9 @@ class ChoiceSet < ApplicationRecord
 
   before_create :assign_uuid
 
-  scope :active, -> { where(deleted_at: nil) }
+  scope :not_deleted, -> { where(deleted_at: nil) }
 
-  def active?
+  def not_deleted?
     deleted_at.nil?
   end
 

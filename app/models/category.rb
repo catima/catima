@@ -21,9 +21,9 @@ class Category < ApplicationRecord
   before_create :assign_uuid
   before_destroy :unset_category_in_choice_sets
 
-  scope :active, -> { where(deleted_at: nil) }
+  scope :not_deleted?, -> { where(deleted_at: nil) }
 
-  def active?
+  def not_deleted?
     deleted_at.nil?
   end
 

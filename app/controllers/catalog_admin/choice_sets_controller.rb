@@ -3,7 +3,7 @@ class CatalogAdmin::ChoiceSetsController < CatalogAdmin::BaseController
 
   def index
     authorize(ChoiceSet)
-    @choice_sets = catalog.choice_sets.active.sorted
+    @choice_sets = catalog.choice_sets.not_deleted.sorted
   end
 
   def new
@@ -58,7 +58,7 @@ class CatalogAdmin::ChoiceSetsController < CatalogAdmin::BaseController
   end
 
   def find_choice_set
-    @choice_set = catalog.choice_sets.active.find(params[:id])
+    @choice_set = catalog.choice_sets.not_deleted.find(params[:id])
   end
 
   def choice_set_params

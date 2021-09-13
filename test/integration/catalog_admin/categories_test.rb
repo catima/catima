@@ -38,6 +38,6 @@ class CatalogAdmin::CategoriesTest < ActionDispatch::IntegrationTest
     end
 
     category = categories(:one)
-    refute(category.active?)
+    refute(category.not_deleted?)
   end
 end

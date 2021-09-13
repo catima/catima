@@ -49,7 +49,7 @@ class ItemType < ApplicationRecord
 
       field.choices.each do |choice|
         category = choice.category
-        next unless category&.active?
+        next unless category&.not_deleted?
 
         additional_fields = category.fields.map do |f|
           f.category_choice = choice

@@ -26,7 +26,7 @@ class Configuration < ApplicationRecord
 
   def cannot_redirect_if_no_active_catalogs
     return unless root_mode == "redirect"
-    return if Catalog.active.any?
+    return if Catalog.not_deactivated.any?
 
     errors.add(:root_mode, "no catalogs to redirect to")
   end

@@ -14,7 +14,7 @@ class User::AdminInvitationFormTest < ActiveSupport::TestCase
 
   test "#catalog_choices" do
     assert_equal(
-      Catalog.active.sorted,
+      Catalog.not_deactivated.sorted,
       User::AdminInvitationForm.new.catalog_choices
     )
   end

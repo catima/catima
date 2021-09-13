@@ -55,7 +55,7 @@ class Field::ChoiceSet < ::Field
   end
 
   def choice_set_choices
-    catalog.choice_sets.active.sorted
+    catalog.choice_sets.not_deleted.sorted
   end
 
   def custom_field_permitted_attributes
@@ -141,7 +141,7 @@ class Field::ChoiceSet < ::Field
 
     flat_ordered_choices.each do |choice|
       option = {:value => choice.short_name, :key => choice.id, label: choice_prefixed_label(choice), has_childrens: choice.childrens.any?}
-      option[:category_data] = choice.category.present? && choice.category.active? ? choice.category.fields : []
+      option[:category_data] = choice.category.present? && choice.category.not_deleted? ? choice.category.fields : []
 
       choices_as_options << option
     end
@@ -178,7 +178,7 @@ class Field::ChoiceSet < ::Field
   # a category, false otherwise.
   def linked_category?
     return true if choices.any? do |choice|
-      choice.category.present? && choice.category.active?
+      choice.category.present? && choice.category.not_deleted?
     end
 
     false
