@@ -53,7 +53,7 @@ module FieldsHelper
     return true if item.item_type.display_emtpy_fields
 
     if %w[Field::Geometry Field::File Field::Image].include?(field.type)
-      field_value(item, field).present?
+      field_presenter(item, field).value?
     else
       strip_tags(field_value(item, field)).present?
     end

@@ -1,0 +1,19 @@
+<div class="card" data-controller="toggle-display">
+  <div class="card-body">
+    <div class="d-flex justify-content-between">
+      <div>
+        <b><%= key.label %></b>
+      </div>
+      <div class="d-flex">
+        <a href="#" data-toggle="modal" data-target="#api-key-edit-modal-<%= key.id %>" href="#"><%= fa_icon(:pencil, class: "text-primary") %></a>
+        <%= link_to(fa_icon(:trash), catalog_admin_api_key_path(id: key.id), method: :delete, class: 'px-1 text-danger') %>
+      </div>
+    </div>
+    <div data-toggle-display-target="revealable">
+      <%= key.api_key %>
+    </div>
+    <%= fa_icon(:eye, "data-action": "click->toggle-display#reveal") %>
+  </div>
+</div>
+
+<%= render("catalog_admin/catalogs/api_key_edit_modal", key: key) %>

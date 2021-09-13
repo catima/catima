@@ -42,7 +42,7 @@ jobs:
       - name: Checkout Repository
         uses: actions/checkout@v2
 
-      - name: Node Setup
+      - name: Setup Node
         uses: actions/setup-node@v2
         with:
           node-version: '14'
@@ -59,11 +59,6 @@ jobs:
           key: ${{ runner.os }}-gems-${{ hashFiles('**/Gemfile.lock') }}
           restore-keys: |
             ${{ runner.os }}-gems-
-
-      - name: Setup Node
-        uses: actions/setup-node@v1
-        with:
-          node-version: '12'
 
       - name: Cache Yarn
         uses: actions/cache@v2
@@ -83,7 +78,7 @@ jobs:
 
       - name: Test app
         id: app-test
-        run: NO_COVERAGE=1 bundle exec rake test
+        run: NO_COVERAGE=1 rails test
 
       - name: Notify Slack
         uses: act10ns/slack@v1

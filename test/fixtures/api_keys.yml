@@ -1,0 +1,9 @@
+one:
+  catalog: one
+  label: key1
+  api_key: thisisnotasecureapikey_one
+
+two:
+  catalog: two
+  label: key2
+  api_key: thisisnotasecureapikey_two

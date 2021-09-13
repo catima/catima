@@ -26,6 +26,7 @@ class Item < ApplicationRecord
   include Review::Macros
   include Search::Macros
   include HasHumanId
+  include Loggable
 
   human_id :primary_text_value
 
@@ -49,12 +50,16 @@ class Item < ApplicationRecord
   after_initialize :assign_autoincrement_values
   before_create :assign_uuid
 
+  def log_name
+    item_type.primary_text_field&.raw_value(self) || ''
+  end
+
   # TODO: uncomment when item cache worker is fixed
   # after_commit :update_views_cache, if: proc { |record| record.saved_changes.key?(:data) }
 
-  def self.sorted_by_field(field)
+  def self.sorted_by_field(field, direction: "ASC")
     sql = []
-    sql << field.order_items_by unless field.nil?
+    sql << field.order_items_by(direction: direction) unless field.nil?
 
     if field.nil? ||
        (field.type != Field::TYPES['reference'] && field.type != Field::TYPES['choice'])
@@ -122,9 +127,9 @@ class Item < ApplicationRecord
   # rubocop:disable Style/OptionalBooleanParameter
   def describe(includes=[], excludes=[], for_api=false)
     d = Hash[applicable_fields.collect { |f| [f.slug, get_value_or_id(f, for_api)] }] \
-        .merge('id': id) \
-        .merge('review_status': review_status) \
-        .merge('uuid': uuid)
+        .merge(id: id) \
+        .merge(review_status: review_status) \
+        .merge(uuid: uuid)
 
     includes.each { |i| d[i] = public_send(i) }
     excludes.each { |e| d.delete(e) }

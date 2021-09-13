@@ -62,7 +62,7 @@ class API::V1::PaginationSerializer
   end
 
   def paginated_records
-    @_paginated_records ||= scope.order(:id).page(page_number).per(page_size)
+    @paginated_records ||= scope.order(:id).page(page_number).per(page_size)
   end
 
   def serialized_paginated_records

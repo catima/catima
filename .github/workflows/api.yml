@@ -1,0 +1,96 @@
+name: api
+on: [push, pull_request]
+jobs:
+  build:
+    runs-on: ubuntu-18.04
+
+    env:
+      SLACK_WEBHOOK_URL: ${{ secrets.SLACK_CI_WEBHOOK_URL }}
+      CI: gha
+      PG_DATABASE: postgres
+      PG_USER: postgres
+      PG_PASSWORD: postgres
+      RAILS_ENV: test
+
+    services:
+      postgres:
+        image: postgres:12
+        env:
+          POSTGRES_USER: postgres
+          POSTGRES_PASSWORD: postgres
+          POSTGRES_DB: postgres
+        options: >-
+          --health-cmd pg_isready
+          --health-interval 10s
+          --health-timeout 5s
+          --health-retries 5
+        ports:
+          - 5432:5432
+
+      redis:
+        image: redis
+        ports: ['6379:6379']
+        options: --entrypoint redis-server
+
+    strategy:
+      matrix:
+        ruby-versions: [ '2.6.5','2.7.2' ]
+
+    name: RUBY${{ matrix.ruby-versions }}
+
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v2
+
+      - name: Setup Node
+        uses: actions/setup-node@v2
+        with:
+          node-version: '14'
+
+      - name: Setup Ruby
+        uses: ruby/setup-ruby@v1
+        with:
+          ruby-version: ${{ matrix.ruby-versions }}
+
+      - name: Cache Gems
+        uses: actions/cache@v2
+        with:
+          path: vendor/bundle
+          key: ${{ runner.os }}-gems-${{ hashFiles('**/Gemfile.lock') }}
+          restore-keys: |
+            ${{ runner.os }}-gems-
+
+      - name: Cache Yarn
+        uses: actions/cache@v2
+        with:
+          path: ~/.cache/yarn
+          key: ${{ runner.os }}-yarn-${{ hashFiles('**/yarn.lock') }}
+          restore-keys: ${{ runner.os }}-yarn-
+
+      - name: Install needed packages
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y imagemagick libsodium-dev libpq-dev
+
+      - name: Build app
+        id: app-build
+        run: ruby bin/setup
+
+      - name: Build & test api
+        id: api-test
+        run: rails swag:run
+
+      - name: Upload artifact
+        id: upload-artifact
+        uses: actions/upload-artifact@v2
+        with:
+          name: swagger-documentation
+          path: /home/runner/work/catima/catima/swagger/v3/swagger.yaml
+
+      - name: Notify Slack
+        uses: act10ns/slack@v1
+        with:
+          status: ${{ job.status }}
+          steps: ${{ toJson(steps) }}
+          channel: '#-bot-ci'
+        if: always()

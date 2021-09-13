@@ -1,4 +1,4 @@
-import React, { Component } from "react";
+import React from 'react';
 import styled, { keyframes } from "styled-components";
 
 const BounceAnimation = keyframes`
@@ -23,7 +23,7 @@ const Dot = styled.span`
   animation-delay: ${props => props.delay};
 `;
 
-class LoadingDots extends Component {
+class LoadingDots extends React.Component {
   render() {
     return (
       <DotWrapper>

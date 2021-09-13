@@ -13,12 +13,18 @@ class Field::FilePresenter < FieldPresenter
   end
 
   def value
+    return nil unless value?
+
     file_info
   end
 
-  def file_info
-    return nil if raw_value.blank?
+  def value?
+    return false if raw_value.blank?
 
+    true
+  end
+
+  def file_info
     info = files_as_array.map do |file|
       "<div class=\"file-link\">" \
         "<a href=\"#{file_url(file)}\" target=\"_blank\">" \

@@ -2,11 +2,17 @@ class Field::ImagePresenter < Field::FilePresenter
   delegate :image_tag, :to => :view
 
   def value
-    return nil if raw_value.blank?
+    return nil unless value?
     return image_viewer unless options[:style]
 
     options[:class] = options[:style] ? options[:style] : :full
     options[:class] == :full ? image_full : image_cropped
+  end
+
+  def value?
+    return false if raw_value.blank?
+
+    true
   end
 
   def input(form, method, options={})
@@ -29,23 +35,38 @@ class Field::ImagePresenter < Field::FilePresenter
 
   def image_full
     images = files_as_array.map do |image|
-      image_tag(file_url(image, '600x600', :resize), options.merge(self.options))
+      if options[:no_html]
+        # Return the relative url of the resized image
+        file_url(image, '600x600', :resize)
+      else
+        # Return the html needed to show the resized image
+        image_tag(file_url(image, '600x600', :resize), options.merge(self.options))
+      end
     end
+
     images.join(' ').html_safe
   end
 
   def image_cropped
     # If multiple images, we select the first one for the thumbnail
-    img = raw_value.class == Array ? raw_value[0] : raw_value
+    img = raw_value.instance_of?(Array) ? raw_value[0] : raw_value
     return nil if img.nil?
 
     crop = img['crop'].nil? ? { 'x' => 0, 'y' => 0, 'width' => 100, 'height' => 100 } : img['crop']
     crop = [crop['x'], crop['y'], crop['width'], crop['height']].map(&:round)
     transform = case options[:class]
-                when :compact then [:fill, '100x100']
-                else [:fill, '250x250']
+                when :compact
+                  [:fill, '100x100']
+                when :medium
+                  [:fill, '250x250']
+                else
+                  [:fill, '150x150']
                 end
     images = files_as_array
+    # Return the relative url of the cropped image
+    return file_url(images[0], transform[1], transform[0], crop) if options[:no_html]
+
+    # Return the html needed to show the cropped image
     image_tag(file_url(images[0], transform[1], transform[0], crop), options.merge(self.options)).html_safe
   end
 
@@ -54,15 +75,13 @@ class Field::ImagePresenter < Field::FilePresenter
     return "/#{file['path']}" if size.nil?
 
     path_parts = file['path'].split('/')
-    crop_str = mode == :fill ? '/' + crop.map(&:to_s).join(',') : ''
+    crop_str = mode == :fill ? "/#{crop.map(&:to_s).join(',')}" : ''
     "/thumbs/#{path_parts[1]}/#{size}/#{mode}#{crop_str}/#{path_parts[2]}/#{path_parts[3]}"
   end
 
   def image_viewer
     size = '300x200'
-    if options[:size]
-      size = options[:size] if /^\d+x\d+$/.match?(options[:size])
-    end
+    size = options[:size] if options[:size] && /^\d+x\d+$/.match?(options[:size])
     thumbs = files_as_array.map do |image|
       file_url(image, size, :resize)
     end

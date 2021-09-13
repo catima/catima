@@ -50,13 +50,13 @@ Run the `bin/setup` script. This script will:
 1. Install NPM packages using `yarn install`
 2. Install [foreman](https://github.com/ddollar/foreman) with `gem install foreman`
 3. Run `foreman start -f Procfile.dev` to start the Rails app.
-4. In a separate console, run `bundle exec sidekiq` to start the Sidekiq background job processor.
 
 [rbenv]:https://github.com/sstephenson/rbenv
 [redis]:http://redis.io
 
-## Tests
+## Tests & API specs
 
 * To run the full suite, run `rails test`
 * To run a single test, specify the line with `rails test path/to/file:line_number`
 * To view the integration tests running in the browser prepend `HEADLESS=0` to the commands above
+* To run API requests specs and generate API doc `rails swag:run`. The API doc should be regenerated & committed everytime a change is made.

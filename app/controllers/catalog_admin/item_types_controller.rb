@@ -9,7 +9,7 @@ class CatalogAdmin::ItemTypesController < CatalogAdmin::BaseController
   def create
     build_item_type
     authorize(@item_type)
-    if @item_type.update(item_type_params)
+    if @item_type.update_and_log(item_type_params, author: current_user, catalog: @catalog)
       redirect_to(after_create_path, :notice => created_message)
     else
       render("new")
@@ -24,7 +24,7 @@ class CatalogAdmin::ItemTypesController < CatalogAdmin::BaseController
   def update
     find_item_type
     authorize(@item_type)
-    if @item_type.update(item_type_params)
+    if @item_type.update_and_log(item_type_params, author: current_user, catalog: @catalog)
       redirect_to(
         catalog_admin_item_type_fields_path(catalog, I18n.locale, @item_type),
         :notice => updated_message

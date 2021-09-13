@@ -1,7 +1,8 @@
-import React, { Component } from 'react';
+import 'es6-shim';
+import React from 'react';
 import Lightbox from 'react-image-lightbox';
 
-class ImageViewer extends Component {
+class ImageViewer extends React.Component {
   constructor(props) {
     super(props);
     this.state = {

@@ -9,10 +9,15 @@ class Field::GeometryPresenter < FieldPresenter
   end
 
   def value
-    json = raw_value
-    return nil if json.blank? || json['features'].blank?
+    return nil unless value?
 
     geo_viewer
+  end
+
+  def value?
+    return false if raw_value.blank? || raw_value['features'].blank?
+
+    true
   end
 
   private

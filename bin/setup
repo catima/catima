@@ -1,8 +1,8 @@
 #!/usr/bin/env ruby
 
-def setup!
+def setup(ci)
   within_project_root do
-    test "ruby -v" => ruby_version unless ENV['CI']
+    test "ruby -v" => ruby_version unless ci
     run  "gem install bundler:2.1.4 --no-document --conservative"
     run  "bundle install"
     run  "bin/yarn install" if File.exist?("yarn.lock")
@@ -13,13 +13,11 @@ def setup!
     copy "config/geo_layers.example.yml"
     test_local_env_contains_required_keys
     run  "bundle exec rake react_on_rails:locale"
-    run  "bundle exec rake db:create" if ENV['CI']
-    run  "bundle exec rake db:create:all" unless ENV['CI']
+    run  "bundle exec rake db:create#{':all' unless ci}"
     run  "bundle exec rake db:migrate"
     run  "bundle exec rake db:seed"
   end
 end
-
 
 require "fileutils"
 begin
@@ -102,4 +100,4 @@ def die(message)
   exit(1)
 end
 
-setup!
+setup(ENV['CI'])

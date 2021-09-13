@@ -3,6 +3,12 @@ en:
   activerecord:
     models:
       category: "Category"
+      entry_log:
+        one: Log
+        other: Logs
+      api_log:
+        one: API Log
+        other: API Logs
     attributes:
       choice_set:
         name: "Name"
@@ -23,6 +29,9 @@ en:
         advertize: "Advertize"
         visible: "Visible"
         custom_root_page_id: "Custom root page"
+        api_enabled: "Activate the API (v3)"
+        throttle_time_window: "Throttle time window in seconds"
+        throttle_max_requests: "Throttle maximum requests"
       group:
         name: "Name"
         description: "Description"
@@ -30,6 +39,20 @@ en:
         title: Title
         description: Description
         item_type: Item type
+      api_logs:
+        user_id: User
+        endpoint: Endpoint
+        remote_ip: Remote IP
+        payload: Payload
+      entry_logs:
+        author: Author
+        subject: "Subject"
+        subject_id: "Subject ID"
+        subject_type: "Subject type"
+        action: Action
+        created_at: Creation date
+      api_keys:
+        api_key: "Authentication tokens"
   presenters:
     field:
       file:
@@ -125,6 +148,13 @@ en:
       has_exact_phrase: "has exact phrase"
     boolean_search_field:
       correspond_to: "correspond to"
+  api_keys:
+    create:
+      success: "The API key has been created"
+    update:
+      success: "The API key has been updated"
+    destroy:
+      success: "The API key has been removed"
   common:
     back: "Back"
     greeting: "Hello"
@@ -335,6 +365,7 @@ en:
   delete: 'Delete'
   delete_confirm: "Are you sure you want to delete “%{model}”?"
   edit: 'Edit'
+  save: 'Save'
   view: Show
   actions: 'Actions'
   duplicate: 'Duplicate'
@@ -378,6 +409,7 @@ en:
   item_type: Item type
   general: General
   style: Style
+  api: API
   export: Export
   valid: "valid"
   expired: "expired"
@@ -414,14 +446,24 @@ en:
         approved: 'approved'
       destroy:
         rejected: 'rejected'
-
     catalog:
       settings: 'Catalog settings'
       edit_settings: 'Edit catalog settings'
+      api_settings: "API settings"
       save_settings: 'Save'
       save_style: 'Save style'
-
+      no_api_logs: No API V3 Logs
+      no_entry_logs: 'No Logs'
     catalogs:
+      api:
+        api_key_description: "An API key give full access to the data in your catalog, roles and permissions are bypassed. <b>Never share an API key publicly</b>."
+        api_key_doc_link: "All available queries can be found in the documentation"
+        no_api_keys_found: "No API keys found"
+        new_api_key: 'Create a new API key'
+      api_key_modal:
+        create_new_api_key: 'Create a new API key'
+      api_key_edit_modal:
+        edit_api_key: 'Edit the API key'
       common_form_fields:
         advertize_help: "If checked, this catalog can be found in public catalog lists."
         visible_help: "If checked, this catalog will be available for everyone. Otherwise only catalog staff will be able to see the content."
@@ -431,6 +473,7 @@ en:
         open_for_everyone: Open for everyone
         open_to_members: Open to members
         open_to_catalog_staff: Open to catalog staff
+        api_enabled_help: "If checked, this catalog will be accessible via the %{api_doc}"
       edit_style:
         custom_style_catalog: "Customize catalog style"
         general: "General"

@@ -17,14 +17,14 @@
 
 one:
   uuid: MyString
-  item_type_id:
+  item_type: :one_author
   catalog: one
   creator_id: 1
   criteria:
 
 two:
   uuid: MyString
-  item_type_id:
+  item_type: :one_author
   catalog: one
   creator_id: 1
   criteria:
