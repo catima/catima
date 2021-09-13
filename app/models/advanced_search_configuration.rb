@@ -33,7 +33,7 @@ class AdvancedSearchConfiguration < ApplicationRecord
 
   belongs_to :catalog
   belongs_to :creator, :class_name => "User", optional: true
-  belongs_to :item_type, -> { active }, :inverse_of => false
+  belongs_to :item_type, -> { not_deleted }, :inverse_of => false
 
   store_translations :title
 

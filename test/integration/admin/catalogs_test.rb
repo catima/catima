@@ -37,7 +37,7 @@ class Admin::CatalogsTest < ActionDispatch::IntegrationTest
     log_in_as("system-admin@example.com", "password")
     visit("/admin")
 
-    assert_difference("Catalog.active.count", -1) do
+    assert_difference("Catalog.not_deactivated.count", -1) do
       first("a.catalog-action-deactivate").click
     end
   end
@@ -46,7 +46,7 @@ class Admin::CatalogsTest < ActionDispatch::IntegrationTest
     log_in_as("system-admin@example.com", "password")
     visit("/admin")
 
-    assert_difference("Catalog.active.count") do
+    assert_difference("Catalog.not_deactivated.count") do
       first("a.catalog-action-reactivate").click
     end
   end
@@ -58,7 +58,7 @@ class Admin::CatalogsTest < ActionDispatch::IntegrationTest
     # Delete button should be disabled for an active catalog
     assert(find("td", :text => "Catalog to be destroyed").find(:xpath, '..').first("a.catalog-action-delete")[:class].include?("disabled"))
 
-    assert_difference("Catalog.active.count", -1) do
+    assert_difference("Catalog.not_deactivated.count", -1) do
       # First deactivate the catalog
       find("td", :text => "Catalog to be destroyed").find(:xpath, '..').first("a.catalog-action-deactivate").click
       # Then delete it

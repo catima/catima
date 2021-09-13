@@ -1,7 +1,7 @@
 <% item.fields.where(type: 'Field::ChoiceSet').each_with_index do |field, i| %>
   <%= render("catalog_admin/choice_sets/choice_modal", :field => field) %>
   <% field.choices.each do |choice| %>
-    <% if (category = choice.category) && category.active? %>
+    <% if (category = choice.category) && category.not_deleted? %>
       <% category.fields.each do |cat_field| %>
         <% if cat_field.is_a?(Field::ChoiceSet) %>
           <%= render("catalog_admin/choice_sets/choice_modal", :field => cat_field) %>

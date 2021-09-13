@@ -23,7 +23,7 @@ class AdvancedSearch < ApplicationRecord
 
   belongs_to :catalog
   belongs_to :creator, :class_name => "User", optional: true
-  belongs_to :item_type, -> { active }
+  belongs_to :item_type, -> { not_deleted }
 
   has_one :search, :as => :related_search, dependent: :destroy
 

@@ -30,9 +30,9 @@ class ItemType < ApplicationRecord
   store_translations :name, :name_plural
   validates_slug :scope => [:catalog_id, :deleted_at]
 
-  scope :active, -> { where(deleted_at: nil) }
+  scope :not_deleted, -> { where(deleted_at: nil) }
 
-  def active?
+  def not_deleted?
     deleted_at.nil?
   end
 

@@ -11,9 +11,6 @@
         :url => catalog_admin_choice_set_path) do |f| %>
     <%= f.text_field(:name) %>
 
-    <%= f.form_group do %>
-      <%= f.check_box :deactivated_at, {checked: @choice_set.deactivated_at?, label: t('deactivate')}, Time.now, "" %>
-    <% end %>
   <div class="mt-2">
     <%= f.primary(t(".update_choice_set")) %>
     <%= link_to(

@@ -5,6 +5,13 @@
           class: "btn btn-xs btn-outline-secondary choiceset-action-edit",
           "data-toggle" => "tooltip", "data-placement" => "top", "title" => t("edit")
       ) %>
+  <%= deactivation_toggle(
+        model,
+        :catalog_admin_choice_set_path,
+        model.catalog,
+        I18n.locale,
+        model
+      )%>
   <%= link_to(
         fa_icon(:trash),
         catalog_admin_choice_set_path(model.catalog, I18n.locale, model),
