@@ -76,7 +76,8 @@ class Field::ChoiceSetPresenter < FieldPresenter
   # category the choice is linked to, if any. This allows us to show and hide
   # appropriate fields in JavaScript based on the category.
   def options_for_select
-    flat_ordered_choices.map do |choice|
+    choices = !field.choice_set.not_deleted? || !field.choice_set.not_deactivated? ? [] : flat_ordered_choices
+    choices.map do |choice|
       data = {}
       data["choice-category"] = choice.category_id if choice.category_id
       data["choice-id"] = choice.id if choice.category_id

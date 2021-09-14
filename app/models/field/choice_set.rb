@@ -55,7 +55,7 @@ class Field::ChoiceSet < ::Field
   end
 
   def choice_set_choices
-    catalog.choice_sets.not_deleted.sorted
+    catalog.choice_sets.not_deactivated.not_deleted.sorted
   end
 
   def custom_field_permitted_attributes
@@ -71,7 +71,7 @@ class Field::ChoiceSet < ::Field
   end
 
   def selected_choices(item)
-    return [] if raw_value(item).blank?
+    return [] if raw_value(item).blank? || !choice_set.not_deleted? || !choice_set.not_deactivated?
 
     choices.where(:id => raw_value(item))
   end
