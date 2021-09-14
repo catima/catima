@@ -37,7 +37,7 @@ class Field::ChoiceSet < ::Field
 
   belongs_to :choice_set, :class_name => "::ChoiceSet"
 
-  validates_presence_of :choice_set
+  validates_presence_of :choice_set_id
   validates_inclusion_of :choice_set,
                          :in => :choice_set_choices,
                          :allow_nil => true
