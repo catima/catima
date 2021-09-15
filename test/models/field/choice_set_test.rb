@@ -2,7 +2,7 @@ require "test_helper"
 require_relative '../../../app/models/field/choice_set'
 
 class Field::ChoiceSetTest < ActiveSupport::TestCase
-  should validate_presence_of(:choice_set)
+  should belong_to(:choice_set)
 
   test "doesn't allow choice set from different catalog" do
     choice_set_field = fields(:one_author_language)
