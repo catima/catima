@@ -30,7 +30,7 @@ class ItemList::SimpleSearchResult < ItemList
     sorted_item_types.each do |type|
       next unless found_type_ids.include?(type.id)
 
-      yield(type, type.items.merge(relation).count)
+      yield([type, type.items.merge(relation).count])
     end
   end
 
