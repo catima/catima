@@ -46,11 +46,11 @@ class Catalog < ApplicationRecord
   has_many :advanced_searches, :dependent => :destroy
   has_many :simple_searches, :dependent => :destroy
   has_many :catalog_permissions, :dependent => :destroy
-  has_many :categories, -> { active }
+  has_many :categories, -> { not_deleted }
   has_many :all_categories, :class_name => "Category", :dependent => :destroy
   has_many :choice_sets, :dependent => :destroy
   has_many :items, :dependent => :destroy
-  has_many :item_types, -> { active }
+  has_many :item_types, -> { not_deleted }
   has_many :all_item_types, :class_name => "ItemType", :dependent => :destroy
   has_many :pages, :dependent => :destroy
   has_many :menu_items, :dependent => :destroy
@@ -80,7 +80,7 @@ class Catalog < ApplicationRecord
 
   def self.valid?(slug)
     c = Catalog.find_by(slug: slug)
-    !c.nil? && c.active?
+    !c.nil? && c.not_deactivated?
   end
 
   def self.overrides

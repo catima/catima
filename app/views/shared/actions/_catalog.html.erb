@@ -24,7 +24,7 @@
           :data => {
               :confirm => "Are you sure you want to delete the “#{model.name}” catalog?"
           },
-          class: "btn btn-xs btn-outline-secondary catalog-action-delete #{'disabled' if model.active?}",
+          class: "btn btn-xs btn-outline-secondary catalog-action-delete #{'disabled' if model.not_deactivated?}",
           "data-toggle" => "tooltip", "data-placement" => "top", "title" => "Delete"
       ) %>
 <% end %>

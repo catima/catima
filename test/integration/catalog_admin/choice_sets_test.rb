@@ -104,7 +104,7 @@ class CatalogAdmin::ChoiceSetsTest < ActionDispatch::IntegrationTest
     log_in_as("one-admin@example.com", "password")
     visit("/one/en/admin/_choice_sets")
 
-    assert_difference("catalogs(:one).choice_sets.active.count", -1) do
+    assert_difference("catalogs(:one).choice_sets.not_deactivated.count", -1) do
       first("a.choiceset-action-deactivate").click
     end
   end

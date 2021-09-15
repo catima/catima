@@ -4,7 +4,7 @@
 #
 #  catalog_id     :integer
 #  created_at     :datetime         not null
-#  deactivated_at :datetime
+#  deleted_at :datetime
 #  id             :integer          not null, primary key
 #  name           :string
 #  slug           :string
@@ -14,6 +14,7 @@
 
 class ChoiceSet < ApplicationRecord
   include HasDeactivation
+  include HasDeletion
 
   belongs_to :catalog
   has_many :choices, ->(set) { where(:catalog_id => set.catalog_id).order(:position) }, :dependent => :destroy

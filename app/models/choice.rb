@@ -67,7 +67,7 @@ class Choice < ApplicationRecord
   def filterable_category_fields
     fields = []
 
-    return fields unless category.present? && category.active?
+    return fields unless category.present? && category.not_deleted?
 
     category.fields.each do |field|
       next unless field.filterable_field?

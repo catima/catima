@@ -375,7 +375,7 @@ CREATE TABLE public.categories (
     name character varying,
     created_at timestamp without time zone NOT NULL,
     updated_at timestamp without time zone NOT NULL,
-    deactivated_at timestamp without time zone,
+    deleted_at timestamp without time zone,
     uuid character varying
 );
 
@@ -411,7 +411,8 @@ CREATE TABLE public.choice_sets (
     created_at timestamp without time zone NOT NULL,
     updated_at timestamp without time zone NOT NULL,
     slug character varying,
-    uuid character varying
+    uuid character varying,
+    deleted_at timestamp without time zone
 );
 
 
@@ -748,7 +749,7 @@ CREATE TABLE public.item_types (
     updated_at timestamp without time zone NOT NULL,
     name_translations json,
     name_plural_translations json,
-    deactivated_at timestamp without time zone,
+    deleted_at timestamp without time zone,
     display_emtpy_fields boolean DEFAULT true NOT NULL
 );
 

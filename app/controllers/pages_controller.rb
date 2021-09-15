@@ -20,7 +20,7 @@ class PagesController < ApplicationController
   # wildcard to valid page slugs.
   module Constraint
     def self.matches?(request)
-      catalog = Catalog.active.where(:slug => request[:catalog_slug]).first!
+      catalog = Catalog.not_deactivated.where(:slug => request[:catalog_slug]).first!
       slug = request[:slug]
       catalog.pages.where(:slug => slug).exists?
     end

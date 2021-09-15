@@ -22,7 +22,7 @@ class ItemsController < ApplicationController
   # wildcard to valid item type slugs.
   module Constraint
     def self.matches?(request)
-      catalog = Catalog.active.where(:slug => request[:catalog_slug]).first!
+      catalog = Catalog.not_deactivated.where(:slug => request[:catalog_slug]).first!
       slug = request[:item_type_slug]
       slug && catalog.item_types.where(:slug => slug).exists?
     end

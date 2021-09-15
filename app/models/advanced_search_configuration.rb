@@ -33,14 +33,14 @@ class AdvancedSearchConfiguration < ApplicationRecord
 
   belongs_to :catalog
   belongs_to :creator, :class_name => "User", optional: true
-  belongs_to :item_type, -> { active }, :inverse_of => false
+  belongs_to :item_type, -> { not_deleted }, :inverse_of => false
 
   store_translations :title
 
   validates_presence_of :catalog
   validates_presence_of :item_type
 
-  scope :with_active_item_type, -> { joins(:item_type).where('item_types.deactivated_at IS NULL') }
+  scope :with_active_item_type, -> { joins(:item_type).where('item_types.deleted_at IS NULL') }
 
   serialize :description, HashSerializer
   locales :description

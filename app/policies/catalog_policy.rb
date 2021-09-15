@@ -27,7 +27,7 @@ class CatalogPolicy
   def destroy?
     return false unless user_is_system_admin?
 
-    return false if @catalog.active?
+    return false if @catalog.not_deactivated?
 
     true
   end

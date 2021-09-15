@@ -46,7 +46,7 @@ class CatalogAdmin::CategoriesController < CatalogAdmin::BaseController
   def destroy
     find_category
     authorize(@category)
-    @category.update!(:deactivated_at => Time.current)
+    @category.touch(:deleted_at)
     redirect_to({ :action => "index" }, :notice => deleted_message)
   end
 

@@ -1,6 +1,6 @@
 module DeactivationHelper
   def deactivation_status_label(model)
-    text, klass = model.active? ? %w(Active success) : %w(Inactive secondary)
+    text, klass = model.not_deactivated? ? %w(Active success) : %w(Inactive secondary)
     tag.span(text, :class => "badge badge-#{klass}")
   end
 
@@ -8,8 +8,8 @@ module DeactivationHelper
     options = args.extract_options!
     param = model.model_name.param_key
 
-    at, icon = model.active? ? %w(now lock) : ["", "unlock"]
-    label = model.active? ? t('deactivate') : t('reactivate')
+    at, icon = model.not_deactivated? ? %w(now lock) : ["", "unlock"]
+    label = model.not_deactivated? ? t('deactivate') : t('reactivate')
     path = public_send(path_method, *args, param => { :deactivated_at => at })
     link_to(
       fa_icon(icon),

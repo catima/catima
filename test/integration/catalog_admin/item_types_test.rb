@@ -44,7 +44,7 @@ class CatalogAdmin::ItemTypesTest < ActionDispatch::IntegrationTest
     end
 
     type = item_types(:two_author)
-    refute(type.active?)
+    refute(type.not_deleted?)
   end
 
   test "data entry without item types defined" do

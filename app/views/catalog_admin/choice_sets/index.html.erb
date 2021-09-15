@@ -21,7 +21,7 @@
         <td><%= set.name %></td>
         <td><%= deactivation_status_label(set) %></td>
         <td><%= choice_set_abbreviated_choices(set) %></td>
-        <td align="right">
+        <td align="right" class="whitespace-nowrap">
           <%= render "shared/actions/choiceset", :model => set %>
         </td>
       </tr>

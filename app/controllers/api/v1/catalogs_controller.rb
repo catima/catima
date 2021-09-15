@@ -13,6 +13,6 @@ class API::V1::CatalogsController < API::ApplicationController
   private
 
   def catalogs_scope
-    Catalog.active
+    Catalog.not_deactivated
   end
 end

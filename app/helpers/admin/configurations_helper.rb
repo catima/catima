@@ -7,7 +7,7 @@ module Admin::ConfigurationsHelper
 
   def configuration_root_mode_choices(form)
     choices = ROOT_CHOICES.dup
-    choices.delete(:redirect) if Catalog.active.none?
+    choices.delete(:redirect) if Catalog.not_deactivated.none?
 
     form.collection_select(
       :root_mode,
@@ -21,7 +21,7 @@ module Admin::ConfigurationsHelper
   def configuration_redirect_choices(form)
     form.collection_select(
       :default_catalog_id,
-      Catalog.active.sorted,
+      Catalog.not_deactivated.sorted,
       :id,
       :name,
       :hide_label => true

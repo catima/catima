@@ -42,7 +42,7 @@ class User::AdminInvitationForm < ActiveType::Record[User]
   end
 
   def catalog_choices
-    Catalog.active.sorted
+    Catalog.not_deactivated.sorted
   end
 
   private

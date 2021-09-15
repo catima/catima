@@ -4,7 +4,7 @@
 #
 #  catalog_id               :integer
 #  created_at               :datetime         not null
-#  deactivated_at           :datetime
+#  deleted_at           :datetime
 #  display_emtpy_fields     :boolean          default(TRUE), not null
 #  id                       :integer          not null, primary key
 #  name_plural_translations :json
@@ -16,12 +16,12 @@
 require_dependency 'field/choice_set'
 
 class ItemType < ApplicationRecord
-  include HasDeactivation
   include HasFields
   include HasTranslations
   include HasSlug
   include HasSQLSlug
   include Loggable
+  include HasDeletion
 
   has_many :items
   has_many :item_views, :dependent => :destroy
@@ -29,7 +29,7 @@ class ItemType < ApplicationRecord
   has_many :advanced_search_configurations, :dependent => :destroy
 
   store_translations :name, :name_plural
-  validates_slug :scope => [:catalog_id, :deactivated_at]
+  validates_slug :scope => [:catalog_id, :deleted_at]
 
   alias_method :log_name, :name
 
@@ -47,7 +47,7 @@ class ItemType < ApplicationRecord
 
       field.choices.each do |choice|
         category = choice.category
-        next unless category&.active?
+        next unless category&.not_deleted?
 
         additional_fields = category.fields.map do |f|
           f.category_choice = choice

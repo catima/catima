@@ -451,8 +451,8 @@ paths:
                             name_en: Name
                           name_plural:
                             name_plural_en: Names
-                          comment: 
-                          default_value: 
+                          comment:
+                          default_value:
                           primary: true
                           display_in_list: true
                           display_in_public_list: true
@@ -460,9 +460,9 @@ paths:
                           style: single-required
                           unique: false
                           field_specific_keys:
-                            maximum: 
-                            minimum: 
-                            formatted_text: 
+                            maximum:
+                            minimum:
+                            formatted_text:
                           field_set_type: ItemType
                           multiple: false
                           required: true
@@ -496,8 +496,8 @@ paths:
                             name_en: Name
                           name_plural:
                             name_plural_en: Names
-                          comment: 
-                          default_value: 
+                          comment:
+                          default_value:
                           primary: true
                           display_in_list: true
                           display_in_public_list: true
@@ -505,9 +505,9 @@ paths:
                           style: single-required
                           unique: false
                           field_specific_keys:
-                            maximum: 
-                            minimum: 
-                            formatted_text: 
+                            maximum:
+                            minimum:
+                            formatted_text:
                           field_set_type: ItemType
                           multiple: false
                           required: true
@@ -536,8 +536,8 @@ paths:
                             name_en: Name
                           name_plural:
                             name_plural_en: Names
-                          comment: 
-                          default_value: 
+                          comment:
+                          default_value:
                           primary: true
                           display_in_list: true
                           display_in_public_list: true
@@ -545,9 +545,9 @@ paths:
                           style: single-required
                           unique: false
                           field_specific_keys:
-                            maximum: 
-                            minimum: 
-                            formatted_text: 
+                            maximum:
+                            minimum:
+                            formatted_text:
                           field_set_type: ItemType
                           multiple: false
                           required: true
@@ -573,8 +573,8 @@ paths:
                             name_en: Name
                           name_plural:
                             name_plural_en: Names
-                          comment: 
-                          default_value: 
+                          comment:
+                          default_value:
                           primary: true
                           display_in_list: true
                           display_in_public_list: true
@@ -582,9 +582,9 @@ paths:
                           style: single-required
                           unique: false
                           field_specific_keys:
-                            maximum: 
-                            minimum: 
-                            formatted_text: 
+                            maximum:
+                            minimum:
+                            formatted_text:
                           field_set_type: ItemType
                           multiple: false
                           required: true
@@ -598,7 +598,7 @@ paths:
                       created_at: '2021-09-15T10:53:19.416+02:00'
                       updated_at: '2021-09-15T10:53:19.416+02:00'
                       primary_field:
-                        value: 
+                        value:
                         field:
                           id: 173782069
                           uuid: one_author_name_uuid
@@ -610,8 +610,8 @@ paths:
                             name_en: Name
                           name_plural:
                             name_plural_en: Names
-                          comment: 
-                          default_value: 
+                          comment:
+                          default_value:
                           primary: true
                           display_in_list: true
                           display_in_public_list: true
@@ -619,9 +619,9 @@ paths:
                           style: single-required
                           unique: false
                           field_specific_keys:
-                            maximum: 
-                            minimum: 
-                            formatted_text: 
+                            maximum:
+                            minimum:
+                            formatted_text:
                           field_set_type: ItemType
                           multiple: false
                           required: true
@@ -634,7 +634,7 @@ paths:
                       created_at: '2021-09-15T10:53:19.416+02:00'
                       updated_at: '2021-09-15T10:53:19.416+02:00'
                       primary_field:
-                        value: 
+                        value:
                         field:
                           id: 173782069
                           uuid: one_author_name_uuid
@@ -646,8 +646,8 @@ paths:
                             name_en: Name
                           name_plural:
                             name_plural_en: Names
-                          comment: 
-                          default_value: 
+                          comment:
+                          default_value:
                           primary: true
                           display_in_list: true
                           display_in_public_list: true
@@ -655,9 +655,9 @@ paths:
                           style: single-required
                           unique: false
                           field_specific_keys:
-                            maximum: 
-                            minimum: 
-                            formatted_text: 
+                            maximum:
+                            minimum:
+                            formatted_text:
                           field_set_type: ItemType
                           multiple: false
                           required: true
@@ -798,7 +798,7 @@ paths:
                   field_set_type: Category
                   multiple: false
                   required: true
-                  row_order: 
+                  row_order:
         '401':
           description: Unauthorized
   "/api/v3/{catalog_id}/choice_set/{choice_set_id}/choices":
@@ -844,27 +844,27 @@ paths:
               example:
                 data:
                 - id: 265976863
-                  position: 
+                  position:
                   long_name_translations:
                     long_name_en: English
                   short_name_translations:
                     short_name_en: Eng
                   childrens:
                   - id: 570144867
-                    position: 
+                    position:
                     long_name_translations:
                       long_name_en: English UK
                     short_name_translations:
                       short_name_en: Eng UK
                   - id: 848764985
-                    position: 
+                    position:
                     long_name_translations:
                       long_name_en: English US
                     short_name_translations:
                       short_name_en: Eng US
                     childrens:
                     - id: 323152131
-                      position: 
+                      position:
                       long_name_translations:
                         long_name_en: English US Redneck Mode
                       short_name_translations:
@@ -906,21 +906,21 @@ paths:
               example:
                 data:
                   id: 323152131
-                  position: 
+                  position:
                   long_name_translations:
                     long_name_en: English US Redneck Mode
                   short_name_translations:
                     short_name_en: Eng USRM
                   parent:
                     id: 848764985
-                    position: 
+                    position:
                     long_name_translations:
                       long_name_en: English US
                     short_name_translations:
                       short_name_en: Eng US
                     parent:
                       id: 265976863
-                      position: 
+                      position:
                       long_name_translations:
                         long_name_en: English
                       short_name_translations:
@@ -1030,7 +1030,7 @@ paths:
                     email: group-two@example.com
                   - id: 617188667
                     email: group-user@example.com
-                  identifier: 
+                  identifier:
         '401':
           description: Unauthorized
         '403':
@@ -1087,8 +1087,8 @@ paths:
                     name_en: Name
                   name_plural:
                     name_plural_en: Names
-                  comment: 
-                  default_value: 
+                  comment:
+                  default_value:
                   primary: true
                   display_in_list: true
                   display_in_public_list: true
@@ -1096,9 +1096,9 @@ paths:
                   style: single-required
                   unique: false
                   field_specific_keys:
-                    maximum: 
-                    minimum: 
-                    formatted_text: 
+                    maximum:
+                    minimum:
+                    formatted_text:
                   field_set_type: ItemType
                   multiple: false
                   required: true
@@ -1113,8 +1113,8 @@ paths:
                     name_en: Age
                   name_plural:
                     name_plural_en: Ages
-                  comment: 
-                  default_value: 
+                  comment:
+                  default_value:
                   primary: false
                   display_in_list: true
                   display_in_public_list: false
@@ -1122,9 +1122,9 @@ paths:
                   style: single-required
                   unique: false
                   field_specific_keys:
-                    maximum: 
-                    minimum: 
-                    auto_increment: 
+                    maximum:
+                    minimum:
+                    auto_increment:
                   field_set_type: ItemType
                   multiple: false
                   required: true
@@ -1271,7 +1271,7 @@ paths:
                   field_set_type: ItemType
                   multiple: false
                   required: false
-                  row_order: 
+                  row_order:
                 - id: 53209949
                   uuid: one_author_editor_uuid
                   slug: editor
@@ -1282,8 +1282,8 @@ paths:
                     name_en: Editor
                   name_plural:
                     name_plural_en: Editors
-                  comment: 
-                  default_value: 
+                  comment:
+                  default_value:
                   primary: false
                   display_in_list: true
                   display_in_public_list: true
@@ -1291,8 +1291,8 @@ paths:
                   style: single-required
                   unique: false
                   field_specific_keys:
-                    updater: 
-                    timestamps: 
+                    updater:
+                    timestamps:
                   field_set_type: ItemType
                   multiple: false
                   required: true
@@ -1464,7 +1464,7 @@ paths:
                   field_set_type: ItemType
                   multiple: true
                   required: false
-                  row_order: 
+                  row_order:
                 - id: 524145375
                   uuid: one_author_picture_uuid
                   slug: picture
@@ -1475,8 +1475,8 @@ paths:
                     name_en: Picture
                   name_plural:
                     name_plural_en: Pictures
-                  comment: 
-                  default_value: 
+                  comment:
+                  default_value:
                   primary: false
                   display_in_list: true
                   display_in_public_list: true
@@ -1489,7 +1489,7 @@ paths:
                   field_set_type: ItemType
                   multiple: false
                   required: false
-                  row_order: 
+                  row_order:
                 - id: 558751894
                   uuid: one_author_picture_inactive_legend_uuid
                   slug: picture_inactive_legend
@@ -1500,8 +1500,8 @@ paths:
                     name_en: New picture
                   name_plural:
                     name_plural_en: New pictures
-                  comment: 
-                  default_value: 
+                  comment:
+                  default_value:
                   primary: false
                   display_in_list: true
                   display_in_public_list: true
@@ -1585,7 +1585,7 @@ paths:
                   field_set_type: ItemType
                   multiple: false
                   required: false
-                  row_order: 
+                  row_order:
         '401':
           description: Unauthorized
   "/api/v3/{catalog_id}/item_type/{item_type_id}/field/{field_id}":
@@ -1632,8 +1632,8 @@ paths:
                     name_en: Birthplace
                   name_plural:
                     name_plural_en: Birthplaces
-                  comment: 
-                  default_value: 
+                  comment:
+                  default_value:
                   primary: false
                   display_in_list: true
                   display_in_public_list: true
@@ -1641,12 +1641,12 @@ paths:
                   style: single
                   unique: false
                   field_specific_keys:
-                    bounds: 
-                    layers: 
+                    bounds:
+                    layers:
                   field_set_type: ItemType
                   multiple: false
                   required: false
-                  row_order: 
+                  row_order:
         '401':
           description: Unauthorized
   "/api/v3/{catalog_id}/item_type/{item_type_id}/items":
@@ -1709,7 +1709,7 @@ paths:
                   created_at: '2021-09-15T10:53:19.416+02:00'
                   updated_at: '2021-09-15T10:53:19.416+02:00'
                   primary_field:
-                    value: 
+                    value:
                     field:
                       id: 173782069
                       uuid: one_author_name_uuid
@@ -1721,8 +1721,8 @@ paths:
                         name_en: Name
                       name_plural:
                         name_plural_en: Names
-                      comment: 
-                      default_value: 
+                      comment:
+                      default_value:
                       primary: true
                       display_in_list: true
                       display_in_public_list: true
@@ -1730,9 +1730,9 @@ paths:
                       style: single-required
                       unique: false
                       field_specific_keys:
-                        maximum: 
-                        minimum: 
-                        formatted_text: 
+                        maximum:
+                        minimum:
+                        formatted_text:
                       field_set_type: ItemType
                       multiple: false
                       required: true
@@ -1744,7 +1744,7 @@ paths:
                   created_at: '2021-09-15T10:53:19.416+02:00'
                   updated_at: '2021-09-15T10:53:19.416+02:00'
                   primary_field:
-                    value: 
+                    value:
                     field:
                       id: 173782069
                       uuid: one_author_name_uuid
@@ -1756,8 +1756,8 @@ paths:
                         name_en: Name
                       name_plural:
                         name_plural_en: Names
-                      comment: 
-                      default_value: 
+                      comment:
+                      default_value:
                       primary: true
                       display_in_list: true
                       display_in_public_list: true
@@ -1765,9 +1765,9 @@ paths:
                       style: single-required
                       unique: false
                       field_specific_keys:
-                        maximum: 
-                        minimum: 
-                        formatted_text: 
+                        maximum:
+                        minimum:
+                        formatted_text:
                       field_set_type: ItemType
                       multiple: false
                       required: true
@@ -1776,6 +1776,7 @@ paths:
                   thumbnail: "/thumbs/one/250x250/fill/0,0,100,100/authors/picture.jpg"
                 - id: 817242637
                   item_type_id: 373039959
+
                   created_at: '2021-09-15T10:53:19.416+02:00'
                   updated_at: '2021-09-15T10:53:19.416+02:00'
                   primary_field:
@@ -1791,8 +1792,8 @@ paths:
                         name_en: Name
                       name_plural:
                         name_plural_en: Names
-                      comment: 
-                      default_value: 
+                      comment:
+                      default_value:
                       primary: true
                       display_in_list: true
                       display_in_public_list: true
@@ -1800,9 +1801,9 @@ paths:
                       style: single-required
                       unique: false
                       field_specific_keys:
-                        maximum: 
-                        minimum: 
-                        formatted_text: 
+                        maximum:
+                        minimum:
+                        formatted_text:
                       field_set_type: ItemType
                       multiple: false
                       required: true
@@ -1826,8 +1827,8 @@ paths:
                         name_en: Name
                       name_plural:
                         name_plural_en: Names
-                      comment: 
-                      default_value: 
+                      comment:
+                      default_value:
                       primary: true
                       display_in_list: true
                       display_in_public_list: true
@@ -1835,9 +1836,9 @@ paths:
                       style: single-required
                       unique: false
                       field_specific_keys:
-                        maximum: 
-                        minimum: 
-                        formatted_text: 
+                        maximum:
+                        minimum:
+                        formatted_text:
                       field_set_type: ItemType
                       multiple: false
                       required: true
@@ -1861,8 +1862,8 @@ paths:
                         name_en: Name
                       name_plural:
                         name_plural_en: Names
-                      comment: 
-                      default_value: 
+                      comment:
+                      default_value:
                       primary: true
                       display_in_list: true
                       display_in_public_list: true
@@ -1870,9 +1871,9 @@ paths:
                       style: single-required
                       unique: false
                       field_specific_keys:
-                        maximum: 
-                        minimum: 
-                        formatted_text: 
+                        maximum:
+                        minimum:
+                        formatted_text:
                       field_set_type: ItemType
                       multiple: false
                       required: true
@@ -1898,8 +1899,8 @@ paths:
                         name_en: Name
                       name_plural:
                         name_plural_en: Names
-                      comment: 
-                      default_value: 
+                      comment:
+                      default_value:
                       primary: true
                       display_in_list: true
                       display_in_public_list: true
@@ -1907,9 +1908,9 @@ paths:
                       style: single-required
                       unique: false
                       field_specific_keys:
-                        maximum: 
-                        minimum: 
-                        formatted_text: 
+                        maximum:
+                        minimum:
+                        formatted_text:
                       field_set_type: ItemType
                       multiple: false
                       required: true
@@ -1974,8 +1975,8 @@ paths:
                         name_en: Name
                       name_plural:
                         name_plural_en: Names
-                      comment: 
-                      default_value: 
+                      comment:
+                      default_value:
                       primary: true
                       display_in_list: true
                       display_in_public_list: true
@@ -1983,9 +1984,9 @@ paths:
                       style: single-required
                       unique: false
                       field_specific_keys:
-                        maximum: 
-                        minimum: 
-                        formatted_text: 
+                        maximum:
+                        minimum:
+                        formatted_text:
                       field_set_type: ItemType
                       multiple: false
                       required: true
@@ -2003,8 +2004,8 @@ paths:
                         name_en: Name
                       name_plural:
                         name_plural_en: Names
-                      comment: 
-                      default_value: 
+                      comment:
+                      default_value:
                       primary: true
                       display_in_list: true
                       display_in_public_list: true
@@ -2012,9 +2013,9 @@ paths:
                       style: single-required
                       unique: false
                       field_specific_keys:
-                        maximum: 
-                        minimum: 
-                        formatted_text: 
+                        maximum:
+                        minimum:
+                        formatted_text:
                       field_set_type: ItemType
                       multiple: false
                       required: true
@@ -2031,8 +2032,8 @@ paths:
                         name_en: Age
                       name_plural:
                         name_plural_en: Ages
-                      comment: 
-                      default_value: 
+                      comment:
+                      default_value:
                       primary: false
                       display_in_list: true
                       display_in_public_list: false
@@ -2040,9 +2041,9 @@ paths:
                       style: single-required
                       unique: false
                       field_specific_keys:
-                        maximum: 
-                        minimum: 
-                        auto_increment: 
+                        maximum:
+                        minimum:
+                        auto_increment:
                       field_set_type: ItemType
                       multiple: false
                       required: true
@@ -2210,7 +2211,7 @@ paths:
                       field_set_type: ItemType
                       multiple: false
                       required: false
-                      row_order: 
+                      row_order:
                   - value: '53209949'
                     field:
                       id: 53209949
@@ -2223,8 +2224,8 @@ paths:
                         name_en: Editor
                       name_plural:
                         name_plural_en: Editors
-                      comment: 
-                      default_value: 
+                      comment:
+                      default_value:
                       primary: false
                       display_in_list: true
                       display_in_public_list: true
@@ -2232,8 +2233,8 @@ paths:
                       style: single-required
                       unique: false
                       field_specific_keys:
-                        updater: 
-                        timestamps: 
+                        updater:
+                        timestamps:
                       field_set_type: ItemType
                       multiple: false
                       required: true
@@ -2369,7 +2370,7 @@ paths:
                       field_set_type: ItemType
                       multiple: false
                       required: false
-                      row_order: 
+                      row_order:
                   - value:
                     - '817242637'
                     field:
@@ -2424,8 +2425,8 @@ paths:
                       field_set_type: ItemType
                       multiple: true
                       required: false
-                      row_order: 
-                  - value: 
+                      row_order:
+                  - value:
                     field:
                       id: 524145375
                       uuid: one_author_picture_uuid
@@ -2437,8 +2438,8 @@ paths:
                         name_en: Picture
                       name_plural:
                         name_plural_en: Pictures
-                      comment: 
-                      default_value: 
+                      comment:
+                      default_value:
                       primary: false
                       display_in_list: true
                       display_in_public_list: true
@@ -2451,8 +2452,8 @@ paths:
                       field_set_type: ItemType
                       multiple: false
                       required: false
-                      row_order: 
-                  - value: 
+                      row_order:
+                  - value:
                     field:
                       id: 558751894
                       uuid: one_author_picture_inactive_legend_uuid
@@ -2464,8 +2465,8 @@ paths:
                         name_en: New picture
                       name_plural:
                         name_plural_en: New pictures
-                      comment: 
-                      default_value: 
+                      comment:
+                      default_value:
                       primary: false
                       display_in_list: true
                       display_in_public_list: true
@@ -2561,7 +2562,7 @@ paths:
                       field_set_type: ItemType
                       multiple: false
                       required: false
-                      row_order: 
+                      row_order:
         '401':
           description: Unauthorized
   "/api/v3/{catalog_id}/item_types":
@@ -2782,7 +2783,7 @@ paths:
                   role:
                     role: super-editor
                     group_id: 980190962
-                  last_signed_in_at: 
+                  last_signed_in_at:
                   groups:
                   - id: 980190962
                     name: Group for catalog one
@@ -2797,7 +2798,7 @@ paths:
                   role:
                     role: member
                     group_id: false
-                  last_signed_in_at: 
+                  last_signed_in_at:
                   groups: []
                 - id: 660736550
                   email: one-editor@example.com
@@ -2805,7 +2806,7 @@ paths:
                   role:
                     role: editor
                     group_id: false
-                  last_signed_in_at: 
+                  last_signed_in_at:
                   groups: []
                 - id: 673074196
                   email: one-super-editor@example.com
@@ -2813,7 +2814,7 @@ paths:
                   role:
                     role: super-editor
                     group_id: false
-                  last_signed_in_at: 
+                  last_signed_in_at:
                   groups: []
                 - id: 1022439906
                   email: one-reviewer@example.com
@@ -2821,7 +2822,7 @@ paths:
                   role:
                     role: super-editor
                     group_id: false
-                  last_signed_in_at: 
+                  last_signed_in_at:
                   groups: []
                 - id: 767575238
                   email: group@example.com
@@ -2829,7 +2830,7 @@ paths:
                   role:
                     role: super-editor
                     group_id: 980190962
-                  last_signed_in_at: 
+                  last_signed_in_at:
                   groups:
                   - id: 980190962
                     name: Group for catalog one
@@ -2884,7 +2885,7 @@ paths:
                   slug: two
                   api_enabled: true
                   primary_language: en
-                  other_languages: 
+                  other_languages:
                   requires_review: false
                   catalog_access: everyone
                   administrators:

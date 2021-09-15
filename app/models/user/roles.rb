@@ -41,7 +41,7 @@ module User::Roles
   end
 
   def can_list_item?(item)
-    return false unless item.catalog.active?
+    return false unless item.catalog.not_deactivated?
     return false unless item.catalog.public_items.exists?(item.id)
     return false unless catalog_visible_for_role?(item.catalog)
 
@@ -74,7 +74,7 @@ module User::Roles
 
   def role_catalog_ids(role)
     all_catalog_permissions.to_a.each_with_object([]) do |perm, admin|
-      next unless perm.active?
+      next unless perm.not_deactivated?
 
       admin << perm.catalog_id if perm.role_at_least?(role)
     end

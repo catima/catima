@@ -10,19 +10,20 @@
         @choice_set,
         :url => catalog_admin_choice_set_path) do |f| %>
     <%= f.text_field(:name) %>
-    <div class="mt-2">
-      <%= f.primary(t(".update_choice_set")) %>
-      <%= link_to(
-            t("cancel"),
-            catalog_admin_choice_sets_path,
-            :class => "btn btn-link") %>
-    </div>
-    <hr>
-    <%= label_tag :choices, t(".choices") %>
-    <ul class="w-100 pl-0" data-sortable-choices-target="sortableList">
-      <% @choice_set.choices.where(parent_id: nil).ordered.each do |choice| %>
-        <%= render 'choice', choice: choice, level: 0 %>
-      <% end %>
-    </ul>
+
+  <div class="mt-2">
+    <%= f.primary(t(".update_choice_set")) %>
+    <%= link_to(
+          t("cancel"),
+          catalog_admin_choice_sets_path,
+          :class => "btn btn-link") %>
+  </div>
+  <hr>
+  <%= label_tag :choices, t(".choices") %>
+  <ul class="w-100 pl-0" data-sortable-choices-target="sortableList">
+    <% @choice_set.choices.where(parent_id: nil).ordered.each do |choice| %>
+      <%= render 'choice', choice: choice, level: 0 %>
+    <% end %>
+  </ul>
   <% end %>
 </div>

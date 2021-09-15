@@ -6,7 +6,7 @@ class CustomController < ApplicationController
   # wildcard to only match views that exist in the custom/ directory.
   module Constraint
     def self.matches?(request)
-      catalog = Catalog.active.where(:slug => request[:catalog_slug]).first!
+      catalog = Catalog.not_deactivated.where(:slug => request[:catalog_slug]).first!
       view = CustomController.slug_to_view(request[:slug])
       return false if view.blank?
 

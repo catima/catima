@@ -18,6 +18,6 @@ class API::V3::Catalog::ItemTypesController < API::V3::Catalog::BaseController
   private
 
   def find_item_types
-    @item_types = @catalog.item_types.where(deactivated_at: nil)
+    @item_types = @catalog.item_types.not_deleted
   end
 end

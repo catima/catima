@@ -4,7 +4,7 @@
 #
 #  catalog_id     :integer
 #  created_at     :datetime         not null
-#  deactivated_at :datetime
+#  deleted_at :datetime
 #  id             :integer          not null, primary key
 #  name           :string
 #  updated_at     :datetime         not null
@@ -12,9 +12,9 @@
 #
 
 class Category < ApplicationRecord
-  include HasDeactivation
   include HasFields
   include HasHumanId
+  include HasDeletion
 
   human_id :name
   validates_presence_of :name

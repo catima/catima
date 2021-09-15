@@ -3,7 +3,7 @@ class HomeController < ApplicationController
 
   def index
     @config = ::Configuration.first!
-    @catalogs = Catalog.active.sorted
+    @catalogs = Catalog.not_deactivated.sorted
 
     if (catalog = @config.active_redirect_catalog)
       redirect_to_catalog(catalog)
