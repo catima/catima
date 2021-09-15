@@ -14,18 +14,13 @@
 class Category < ApplicationRecord
   include HasFields
   include HasHumanId
+  include HasDeletion
 
   human_id :name
   validates_presence_of :name
 
   before_create :assign_uuid
   before_destroy :unset_category_in_choice_sets
-
-  scope :not_deleted, -> { where(deleted_at: nil) }
-
-  def not_deleted?
-    deleted_at.nil?
-  end
 
   def self.sorted
     order(Arel.sql("LOWER(categories.name) ASC"))

@@ -21,6 +21,7 @@ class ItemType < ApplicationRecord
   include HasSlug
   include HasSQLSlug
   include Loggable
+  include HasDeletion
 
   has_many :items
   has_many :item_views, :dependent => :destroy
@@ -29,12 +30,6 @@ class ItemType < ApplicationRecord
 
   store_translations :name, :name_plural
   validates_slug :scope => [:catalog_id, :deleted_at]
-
-  scope :not_deleted, -> { where(deleted_at: nil) }
-
-  def not_deleted?
-    deleted_at.nil?
-  end
 
   alias_method :log_name, :name
 

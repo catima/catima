@@ -14,6 +14,7 @@
 
 class ChoiceSet < ApplicationRecord
   include HasDeactivation
+  include HasDeletion
 
   belongs_to :catalog
   has_many :choices, ->(set) { where(:catalog_id => set.catalog_id).order(:position) }, :dependent => :destroy
@@ -27,12 +28,6 @@ class ChoiceSet < ApplicationRecord
   validates_presence_of :name
 
   before_create :assign_uuid
-
-  scope :not_deleted, -> { where(deleted_at: nil) }
-
-  def not_deleted?
-    deleted_at.nil?
-  end
 
   def self.sorted
     order(Arel.sql("LOWER(choice_sets.name)"))
