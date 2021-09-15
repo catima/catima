@@ -69,131 +69,11 @@ paths:
                           - greater_than
                           - greater_than_or_equal_to
                           value: ":integer"
-                      one_author_site_uuid:
+                      one_author_birth_month_uuid:
                         field_infos:
-                          id: 1027326935
-                          type: url
-                          name_en: Site
-                        criterion_content:
-                          field_condition:
-                          - and
-                          - or
-                          - exclude
-                          condition:
-                          - all_words
-                          - one_word
-                          - exact
-                          value: ":query"
-                      one_author_email_uuid:
-                        field_infos:
-                          id: 404121001
-                          type: email
-                          name_en: Email
-                        criterion_content:
-                          field_condition:
-                          - and
-                          - or
-                          - exclude
-                          condition:
-                          - all_words
-                          - one_word
-                          - exact
-                          value: ":query"
-                      one_author_rank_uuid:
-                        field_infos:
-                          id: 469836505
-                          type: decimal
-                          name_en: Rank
-                        criterion_content:
-                          field_condition:
-                          - and
-                          - or
-                          - exclude
-                          condition:
-                          - exact
-                          - less_than
-                          - less_than_or_equal_to
-                          - greater_than
-                          - greater_than_or_equal_to
-                          value: ":decimal"
-                      one_author_collaborator_uuid:
-                        field_infos:
-                          id: 698366592
-                          type: reference
-                          name_en: Collaborator
-                        criterion_content:
-                          '0':
-                            field_condition:
-                            - and
-                            - or
-                            - exclude
-                            condition:
-                            - one_word
-                            - all_word
-                            default: ":reference_id"
-                            value: ":query"
-                      one_author_other_collaborators_uuid:
-                        field_infos:
-                          id: 645383401
-                          type: reference
-                          name_en: Other Collaborator
-                        criterion_content:
-                          '0':
-                            field_condition:
-                            - and
-                            - or
-                            - exclude
-                            condition:
-                            - one_word
-                            - all_word
-                            default: ":reference_id"
-                            value: ":query"
-                      one_author_editor_uuid:
-                        field_infos:
-                          id: 53209949
-                          type: editor
-                          name_en: Editor
-                        criterion_content:
-                          field_condition:
-                          - and
-                          - or
-                          - exclude
-                          condition:
-                          - all_words
-                          - one_word
-                          - exact
-                          value: ":query"
-                      one_author_language_uuid:
-                        field_infos:
-                          id: 563958655
-                          type: choice
-                          name_en: Language
-                        criterion_content:
-                          '0':
-                            field_condition:
-                            - and
-                            - or
-                            - exclude
-                            value: ":choice_id"
-                            child_choices_activated: true false
-                      one_author_other_languages_uuid:
-                        field_infos:
-                          id: 976024904
-                          type: choice
-                          name_en: Other Language
-                        criterion_content:
-                          '0':
-                            field_condition:
-                            - and
-                            - or
-                            - exclude
-                            value: ":choice_id"
-                            child_choices_activated: true false
-                      one_author_born_uuid:
-                        field_infos:
-                          id: 278655377
+                          id: 295840715
                           type: datetime
-                          name_en: Born
+                          name_en: Birth Month
                         criterion_content:
                           field_condition:
                           - and
@@ -241,11 +121,109 @@ paths:
                               D: ":day"
                               M: ":month"
                               Y: ":year"
-                      one_author_birth_month_uuid:
+                      one_author_born_uuid:
                         field_infos:
-                          id: 295840715
+                          id: 278655377
                           type: datetime
-                          name_en: Birth Month
+                          name_en: Born
+                        criterion_content:
+                          field_condition:
+                          - and
+                          - or
+                          - exclude
+                          condition:
+                          - exact
+                          - after
+                          - before
+                          - between
+                          - outside
+                          start:
+                            value:
+                              D: ":day"
+                              M: ":month"
+                              Y: ":year"
+                          end:
+                            value:
+                              D: ":day"
+                              M: ":month"
+                              Y: ":year"
+                      one_author_collaborator_uuid:
+                        field_infos:
+                          id: 698366592
+                          type: reference
+                          name_en: Collaborator
+                        criterion_content:
+                          '0':
+                            field_condition:
+                            - and
+                            - or
+                            - exclude
+                            condition:
+                            - one_word
+                            - all_word
+                            default: ":reference_id"
+                            value: ":query"
+                      one_author_deceased_uuid:
+                        field_infos:
+                          id: 92391846
+                          type: boolean
+                          name_en: Deceased
+                        criterion_content:
+                          field_condition:
+                          - and
+                          - or
+                          - exclude
+                          value:
+                          - 0
+                          - 1
+                      one_author_editor_uuid:
+                        field_infos:
+                          id: 53209949
+                          type: editor
+                          name_en: Editor
+                        criterion_content:
+                          field_condition:
+                          - and
+                          - or
+                          - exclude
+                          condition:
+                          - all_words
+                          - one_word
+                          - exact
+                          value: ":query"
+                      one_author_email_uuid:
+                        field_infos:
+                          id: 404121001
+                          type: email
+                          name_en: Email
+                        criterion_content:
+                          field_condition:
+                          - and
+                          - or
+                          - exclude
+                          condition:
+                          - all_words
+                          - one_word
+                          - exact
+                          value: ":query"
+                      one_author_language_uuid:
+                        field_infos:
+                          id: 563958655
+                          type: choice
+                          name_en: Language
+                        criterion_content:
+                          '0':
+                            field_condition:
+                            - and
+                            - or
+                            - exclude
+                            value: ":choice_id"
+                            child_choices_activated: true false
+                      one_author_most_active_hour_uuid:
+                        field_infos:
+                          id: 935473249
+                          type: datetime
+                          name_en: Most Active Hour
                         criterion_content:
                           field_condition:
                           - and
@@ -293,11 +271,55 @@ paths:
                               D: ":day"
                               M: ":month"
                               Y: ":year"
-                      one_author_most_active_hour_uuid:
+                      one_author_nickname_uuid:
                         field_infos:
-                          id: 935473249
-                          type: datetime
-                          name_en: Most Active Hour
+                          id: 349101231
+                          type: text
+                          name_en: Nickname
+                        criterion_content:
+                          field_condition:
+                          - and
+                          - or
+                          - exclude
+                          condition:
+                          - all_words
+                          - one_word
+                          - exact
+                          value: ":query"
+                      one_author_other_collaborators_uuid:
+                        field_infos:
+                          id: 645383401
+                          type: reference
+                          name_en: Other Collaborator
+                        criterion_content:
+                          '0':
+                            field_condition:
+                            - and
+                            - or
+                            - exclude
+                            condition:
+                            - one_word
+                            - all_word
+                            default: ":reference_id"
+                            value: ":query"
+                      one_author_other_languages_uuid:
+                        field_infos:
+                          id: 976024904
+                          type: choice
+                          name_en: Other Language
+                        criterion_content:
+                          '0':
+                            field_condition:
+                            - and
+                            - or
+                            - exclude
+                            value: ":choice_id"
+                            child_choices_activated: true false
+                      one_author_rank_uuid:
+                        field_infos:
+                          id: 469836505
+                          type: decimal
+                          name_en: Rank
                         criterion_content:
                           field_condition:
                           - and
@@ -305,38 +327,16 @@ paths:
                           - exclude
                           condition:
                           - exact
-                          - after
-                          - before
-                          - between
-                          - outside
-                          start:
-                            value:
-                              D: ":day"
-                              M: ":month"
-                              Y: ":year"
-                          end:
-                            value:
-                              D: ":day"
-                              M: ":month"
-                              Y: ":year"
-                      one_author_deceased_uuid:
+                          - less_than
+                          - less_than_or_equal_to
+                          - greater_than
+                          - greater_than_or_equal_to
+                          value: ":decimal"
+                      one_author_site_uuid:
                         field_infos:
-                          id: 92391846
-                          type: boolean
-                          name_en: Deceased
-                        criterion_content:
-                          field_condition:
-                          - and
-                          - or
-                          - exclude
-                          value:
-                          - 0
-                          - 1
-                      one_author_nickname_uuid:
-                        field_infos:
-                          id: 349101231
-                          type: text
-                          name_en: Nickname
+                          id: 1027326935
+                          type: url
+                          name_en: Site
                         criterion_content:
                           field_condition:
                           - and
@@ -380,7 +380,7 @@ paths:
               example:
                 data:
                   id: 980190963
-                  uuid: dfd60f0e-d640-4687-9295-85a14c167df3
+                  uuid: f572723d-d2a7-44ad-acd2-ee7622bb0220
                   item_types: []
         '401':
           description: Unauthorized
@@ -433,12 +433,11 @@ paths:
                     slug: authors
                     name:
                       name_en: Author
-                    display_emtpy_fields: false
                     items:
                     - id: 971904516
                       item_type_id: 373039959
-                      created_at: '2021-09-15T11:11:21.477+02:00'
-                      updated_at: '2021-09-15T11:11:21.477+02:00'
+                      created_at: '2021-09-15T10:53:19.416+02:00'
+                      updated_at: '2021-09-15T10:53:19.416+02:00'
                       primary_field:
                         value: Stephen King
                         field:
@@ -446,8 +445,8 @@ paths:
                           uuid: one_author_name_uuid
                           slug: name
                           type: Field::Text
-                          created_at: '2021-09-15T11:11:21.452+02:00'
-                          updated_at: '2021-09-15T11:11:21.452+02:00'
+                          created_at: '2021-09-15T10:53:19.423+02:00'
+                          updated_at: '2021-09-15T10:53:19.423+02:00'
                           name:
                             name_en: Name
                           name_plural:
@@ -468,22 +467,22 @@ paths:
                           multiple: false
                           required: true
                           row_order: 1
-                      item_summary: 'Site: stephenking.com/index.html; Email: sk@stephenking.com;
-                        Rank: 1.88891; Collaborator: Very Old; Other Collaborator:
-                        Young apprentice; Editor: one-user@example.com; Language:
-                        Spanish; Other Language: English, Spanish; Born: 21 September,
-                        1947; Birth Time: 21 September, 1947 10:10:10; Most Active
-                        Month: June; Most Active Hour: 10h; Deceased: No; Nickname:
-                        Steve; Deceased: No; Nickname: Steve; Site: stephenking.com/index.html;
-                        Email: sk@stephenking.com; Rank: 1.88891; Collaborator: Very
-                        Old; Other Collaborator: Young apprentice; Editor: one-user@example.com;
-                        Language: Spanish; Other Language: English, Spanish; Born:
-                        21 September, 1947; Birth Time: 21 September, 1947 10:10:10;
-                        Most Active Month: June; Most Active Hour: 10h'
+                      item_summary: 'Birth Time: 21 September, 1947 10:10:10; Born:
+                        21 September, 1947; Collaborator: Very Old; Deceased: No;
+                        Editor: one-user@example.com; Email: sk@stephenking.com; Language:
+                        Spanish; Most Active Hour: 10h; Most Active Month: June; Nickname:
+                        Steve; Other Collaborator: Young apprentice; Other Language:
+                        English, Spanish; Rank: 1.88891; Site: stephenking.com/index.html;
+                        Site: stephenking.com/index.html; Birth Time: 21 September,
+                        1947 10:10:10; Born: 21 September, 1947; Collaborator: Very
+                        Old; Deceased: No; Editor: one-user@example.com; Email: sk@stephenking.com;
+                        Language: Spanish; Most Active Hour: 10h; Most Active Month:
+                        June; Nickname: Steve; Other Collaborator: Young apprentice;
+                        Other Language: English, Spanish; Rank: 1.88891'
                     - id: 42941060
                       item_type_id: 373039959
-                      created_at: '2021-09-15T11:11:21.477+02:00'
-                      updated_at: '2021-09-15T11:11:21.477+02:00'
+                      created_at: '2021-09-15T10:53:19.416+02:00'
+                      updated_at: '2021-09-15T10:53:19.416+02:00'
                       primary_field:
                         value: Very Old
                         field:
@@ -491,8 +490,8 @@ paths:
                           uuid: one_author_name_uuid
                           slug: name
                           type: Field::Text
-                          created_at: '2021-09-15T11:11:21.452+02:00'
-                          updated_at: '2021-09-15T11:11:21.452+02:00'
+                          created_at: '2021-09-15T10:53:19.423+02:00'
+                          updated_at: '2021-09-15T10:53:19.423+02:00'
                           name:
                             name_en: Name
                           name_plural:
@@ -513,18 +512,17 @@ paths:
                           multiple: false
                           required: true
                           row_order: 1
-                      item_summary: 'Email: so@old.com; Rank: 2.12; Collaborator:
-                        Very Young; Editor: one-admin@example.com; Other Language:
-                        English, French; Born: 11 November, 1947; Most Active Month:
-                        January; Most Active Hour: 01h; Deceased: Yes; Deceased: Yes;
-                        Email: so@old.com; Rank: 2.12; Collaborator: Very Young; Editor:
-                        one-admin@example.com; Other Language: English, French; Born:
-                        11 November, 1947; Most Active Month: January; Most Active
-                        Hour: 01h'
+                      item_summary: 'Born: 11 November, 1947; Collaborator: Very Young;
+                        Deceased: Yes; Editor: one-admin@example.com; Email: so@old.com;
+                        Most Active Hour: 01h; Most Active Month: January; Other Language:
+                        English, French; Rank: 2.12; Born: 11 November, 1947; Collaborator:
+                        Very Young; Deceased: Yes; Editor: one-admin@example.com;
+                        Email: so@old.com; Most Active Hour: 01h; Most Active Month:
+                        January; Other Language: English, French; Rank: 2.12'
                     - id: 756291218
                       item_type_id: 373039959
-                      created_at: '2021-09-15T11:11:21.477+02:00'
-                      updated_at: '2021-09-15T11:11:21.477+02:00'
+                      created_at: '2021-09-15T10:53:19.416+02:00'
+                      updated_at: '2021-09-15T10:53:19.416+02:00'
                       primary_field:
                         value: Very Young
                         field:
@@ -532,8 +530,8 @@ paths:
                           uuid: one_author_name_uuid
                           slug: name
                           type: Field::Text
-                          created_at: '2021-09-15T11:11:21.452+02:00'
-                          updated_at: '2021-09-15T11:11:21.452+02:00'
+                          created_at: '2021-09-15T10:53:19.423+02:00'
+                          updated_at: '2021-09-15T10:53:19.423+02:00'
                           name:
                             name_en: Name
                           name_plural:
@@ -554,13 +552,14 @@ paths:
                           multiple: false
                           required: true
                           row_order: 1
-                      item_summary: 'Other Collaborator: Stephen King, Very Old; Editor:
-                        one-admin@example.com; Deceased: No; Deceased: No; Other Collaborator:
-                        Stephen King, Very Old; Editor: one-admin@example.com'
+                      item_summary: 'Deceased: No; Editor: one-admin@example.com;
+                        Other Collaborator: Stephen King, Very Old; Deceased: No;
+                        Editor: one-admin@example.com; Other Collaborator: Stephen
+                        King, Very Old'
                     - id: 817242637
                       item_type_id: 373039959
-                      created_at: '2021-09-15T11:11:21.477+02:00'
-                      updated_at: '2021-09-15T11:11:21.477+02:00'
+                      created_at: '2021-09-15T10:53:19.416+02:00'
+                      updated_at: '2021-09-15T10:53:19.416+02:00'
                       primary_field:
                         value: Young apprentice
                         field:
@@ -568,8 +567,8 @@ paths:
                           uuid: one_author_name_uuid
                           slug: name
                           type: Field::Text
-                          created_at: '2021-09-15T11:11:21.452+02:00'
-                          updated_at: '2021-09-15T11:11:21.452+02:00'
+                          created_at: '2021-09-15T10:53:19.423+02:00'
+                          updated_at: '2021-09-15T10:53:19.423+02:00'
                           name:
                             name_en: Name
                           name_plural:
@@ -590,13 +589,14 @@ paths:
                           multiple: false
                           required: true
                           row_order: 1
-                      item_summary: 'Other Collaborator: Stephen King, Very Old; Editor:
-                        one-admin@example.com; Deceased: No; Deceased: No; Other Collaborator:
-                        Stephen King, Very Old; Editor: one-admin@example.com'
+                      item_summary: 'Deceased: No; Editor: one-admin@example.com;
+                        Other Collaborator: Stephen King, Very Old; Deceased: No;
+                        Editor: one-admin@example.com; Other Collaborator: Stephen
+                        King, Very Old'
                     - id: 525911936
                       item_type_id: 373039959
-                      created_at: '2021-09-15T11:11:21.477+02:00'
-                      updated_at: '2021-09-15T11:11:21.477+02:00'
+                      created_at: '2021-09-15T10:53:19.416+02:00'
+                      updated_at: '2021-09-15T10:53:19.416+02:00'
                       primary_field:
                         value:
                         field:
@@ -604,8 +604,8 @@ paths:
                           uuid: one_author_name_uuid
                           slug: name
                           type: Field::Text
-                          created_at: '2021-09-15T11:11:21.452+02:00'
-                          updated_at: '2021-09-15T11:11:21.452+02:00'
+                          created_at: '2021-09-15T10:53:19.423+02:00'
+                          updated_at: '2021-09-15T10:53:19.423+02:00'
                           name:
                             name_en: Name
                           name_plural:
@@ -626,13 +626,13 @@ paths:
                           multiple: false
                           required: true
                           row_order: 1
-                      item_summary: 'Editor: one-admin@example.com; Deceased: No;
+                      item_summary: 'Deceased: No; Editor: one-admin@example.com;
                         Deceased: No; Editor: one-admin@example.com'
                       thumbnail: "/thumbs/one/250x250/fill/0,0,100,100/authors/picture.jpg"
                     - id: 722088510
                       item_type_id: 373039959
-                      created_at: '2021-09-15T11:11:21.477+02:00'
-                      updated_at: '2021-09-15T11:11:21.477+02:00'
+                      created_at: '2021-09-15T10:53:19.416+02:00'
+                      updated_at: '2021-09-15T10:53:19.416+02:00'
                       primary_field:
                         value:
                         field:
@@ -640,8 +640,8 @@ paths:
                           uuid: one_author_name_uuid
                           slug: name
                           type: Field::Text
-                          created_at: '2021-09-15T11:11:21.452+02:00'
-                          updated_at: '2021-09-15T11:11:21.452+02:00'
+                          created_at: '2021-09-15T10:53:19.423+02:00'
+                          updated_at: '2021-09-15T10:53:19.423+02:00'
                           name:
                             name_en: Name
                           name_plural:
@@ -662,9 +662,9 @@ paths:
                           multiple: false
                           required: true
                           row_order: 1
-                      item_summary: 'Editor: one-admin@example.com; Deceased: No;
-                        Nickname: Empty Author; Deceased: No; Nickname: Empty Author;
-                        Editor: one-admin@example.com'
+                      item_summary: 'Deceased: No; Editor: one-admin@example.com;
+                        Nickname: Empty Author; Deceased: No; Editor: one-admin@example.com;
+                        Nickname: Empty Author'
         '401':
           description: Unauthorized
   "/api/v3/{catalog_id}/categories":
@@ -749,44 +749,18 @@ paths:
             application/json:
               example:
                 data:
-                - id: 115359998
-                  uuid: language_category_uuid
-                  slug: language-origin
-                  type: Field::Text
-                  created_at: '2021-09-15T11:11:21.452+02:00'
-                  updated_at: '2021-09-15T11:11:21.452+02:00'
-                  name:
-                    name_en: Language origin
-                  name_plural:
-                    name_plural_en: Language origins
-                  comment:
-                  default_value:
-                  primary: false
-                  display_in_list: true
-                  display_in_public_list: true
-                  restricted: false
-                  style: single-required
-                  unique: false
-                  field_specific_keys:
-                    maximum:
-                    minimum:
-                    formatted_text:
-                  field_set_type: Category
-                  multiple: false
-                  required: true
-                  row_order:
                 - id: 384438823
                   uuid: one_author_language_earliest_recollection_uuid
                   slug: language-earliest-recollection
                   type: Field::DateTime
-                  created_at: '2021-09-15T11:11:21.452+02:00'
-                  updated_at: '2021-09-15T11:11:21.452+02:00'
+                  created_at: '2021-09-15T10:53:19.423+02:00'
+                  updated_at: '2021-09-15T10:53:19.423+02:00'
                   name:
                     name_en: Language earlier recollection
                   name_plural:
                     name_plural_en: Language earliest recollections
-                  comment:
-                  default_value:
+                  comment: 
+                  default_value: 
                   primary: false
                   display_in_list: true
                   display_in_public_list: true
@@ -795,6 +769,32 @@ paths:
                   unique: false
                   field_specific_keys:
                     format: Y
+                  field_set_type: Category
+                  multiple: false
+                  required: true
+                  row_order: 
+                - id: 115359998
+                  uuid: language_category_uuid
+                  slug: language-origin
+                  type: Field::Text
+                  created_at: '2021-09-15T10:53:19.423+02:00'
+                  updated_at: '2021-09-15T10:53:19.423+02:00'
+                  name:
+                    name_en: Language origin
+                  name_plural:
+                    name_plural_en: Language origins
+                  comment: 
+                  default_value: 
+                  primary: false
+                  display_in_list: true
+                  display_in_public_list: true
+                  restricted: false
+                  style: single-required
+                  unique: false
+                  field_specific_keys:
+                    maximum: 
+                    minimum: 
+                    formatted_text: 
                   field_set_type: Category
                   multiple: false
                   required: true
@@ -965,9 +965,9 @@ paths:
                 data:
                 - id: 671137802
                   name: Languages
-                  slug:
-                  created_at: '2021-09-15T11:11:21.437+02:00'
-                  deactivated_at:
+                  slug: 
+                  created_at: '2021-09-15T10:53:19.402+02:00'
+                  deactivated_at: 
         '401':
           description: Unauthorized
   "/api/v3/{catalog_id}/groups":
@@ -1081,8 +1081,8 @@ paths:
                   uuid: one_author_name_uuid
                   slug: name
                   type: Field::Text
-                  created_at: '2021-09-15T11:11:21.452+02:00'
-                  updated_at: '2021-09-15T11:11:21.452+02:00'
+                  created_at: '2021-09-15T10:53:19.423+02:00'
+                  updated_at: '2021-09-15T10:53:19.423+02:00'
                   name:
                     name_en: Name
                   name_plural:
@@ -1107,8 +1107,8 @@ paths:
                   uuid: one_author_age_uuid
                   slug: age
                   type: Field::Int
-                  created_at: '2021-09-15T11:11:21.452+02:00'
-                  updated_at: '2021-09-15T11:11:21.452+02:00'
+                  created_at: '2021-09-15T10:53:19.423+02:00'
+                  updated_at: '2021-09-15T10:53:19.423+02:00'
                   name:
                     name_en: Age
                   name_plural:
@@ -1129,135 +1129,18 @@ paths:
                   multiple: false
                   required: true
                   row_order: 2
-                - id: 1027326935
-                  uuid: one_author_site_uuid
-                  slug: site
-                  type: Field::URL
-                  created_at: '2021-09-15T11:11:21.452+02:00'
-                  updated_at: '2021-09-15T11:11:21.452+02:00'
+                - id: 295840715
+                  uuid: one_author_birth_month_uuid
+                  slug: birth-month
+                  type: Field::DateTime
+                  created_at: '2021-09-15T10:53:19.423+02:00'
+                  updated_at: '2021-09-15T10:53:19.423+02:00'
                   name:
-                    name_en: Site
+                    name_en: Birth Month
                   name_plural:
-                    name_plural_en: Sites
-                  comment:
-                  default_value:
-                  primary: false
-                  display_in_list: true
-                  display_in_public_list: true
-                  restricted: false
-                  style: single-required
-                  unique: false
-                  field_set_type: ItemType
-                  multiple: false
-                  required: true
-                  row_order:
-                - id: 404121001
-                  uuid: one_author_email_uuid
-                  slug: email
-                  type: Field::Email
-                  created_at: '2021-09-15T11:11:21.452+02:00'
-                  updated_at: '2021-09-15T11:11:21.452+02:00'
-                  name:
-                    name_en: Email
-                  name_plural:
-                    name_plural_en: Emails
-                  comment:
-                  default_value:
-                  primary: false
-                  display_in_list: true
-                  display_in_public_list: true
-                  restricted: false
-                  style: single-required
-                  unique: false
-                  field_set_type: ItemType
-                  multiple: false
-                  required: true
-                  row_order:
-                - id: 469836505
-                  uuid: one_author_rank_uuid
-                  slug: rank
-                  type: Field::Decimal
-                  created_at: '2021-09-15T11:11:21.452+02:00'
-                  updated_at: '2021-09-15T11:11:21.452+02:00'
-                  name:
-                    name_en: Rank
-                  name_plural:
-                    name_plural_en: Ranks
-                  comment:
-                  default_value:
-                  primary: false
-                  display_in_list: true
-                  display_in_public_list: true
-                  restricted: false
-                  style: single-required
-                  unique: false
-                  field_specific_keys:
-                    maximum:
-                    minimum:
-                  field_set_type: ItemType
-                  multiple: false
-                  required: true
-                  row_order:
-                - id: 698366592
-                  uuid: one_author_collaborator_uuid
-                  slug: collaborator
-                  type: Field::Reference
-                  created_at: '2021-09-15T11:11:21.452+02:00'
-                  updated_at: '2021-09-15T11:11:21.452+02:00'
-                  name:
-                    name_en: Collaborator
-                  name_plural:
-                    name_plural_en: Collaborators
-                  comment:
-                  default_value:
-                  primary: false
-                  display_in_list: true
-                  display_in_public_list: true
-                  restricted: false
-                  style: single-required
-                  unique: false
-                  field_specific_keys:
-                    related_item_type_id: 373039959
-                  field_set_type: ItemType
-                  multiple: false
-                  required: true
-                  row_order:
-                - id: 645383401
-                  uuid: one_author_other_collaborators_uuid
-                  slug: other-collaborator
-                  type: Field::Reference
-                  created_at: '2021-09-15T11:11:21.452+02:00'
-                  updated_at: '2021-09-15T11:11:21.452+02:00'
-                  name:
-                    name_en: Other Collaborator
-                  name_plural:
-                    name_plural_en: Other Collaborators
-                  comment:
-                  default_value:
-                  primary: false
-                  display_in_list: true
-                  display_in_public_list: true
-                  restricted: false
-                  style: multiple
-                  unique: false
-                  field_specific_keys:
-                    related_item_type_id: 373039959
-                  field_set_type: ItemType
-                  multiple: true
-                  required: false
-                  row_order:
-                - id: 1002270862
-                  uuid: one_author_bio_uuid
-                  slug: bio
-                  type: Field::File
-                  created_at: '2021-09-15T11:11:21.452+02:00'
-                  updated_at: '2021-09-15T11:11:21.452+02:00'
-                  name:
-                    name_en: Biography
-                  name_plural:
-                    name_plural_en: Biographies
-                  comment:
-                  default_value:
+                    name_plural_en: Birth Months
+                  comment: 
+                  default_value: 
                   primary: false
                   display_in_list: true
                   display_in_public_list: true
@@ -1265,7 +1148,126 @@ paths:
                   style: single
                   unique: false
                   field_specific_keys:
-                    types:
+                    format: YM
+                  field_set_type: ItemType
+                  multiple: false
+                  required: false
+                  row_order: 
+                - id: 72085510
+                  uuid: one_author_birth_time_uuid
+                  slug: birth-time
+                  type: Field::DateTime
+                  created_at: '2021-09-15T10:53:19.423+02:00'
+                  updated_at: '2021-09-15T10:53:19.423+02:00'
+                  name:
+                    name_en: Birth Time
+                  name_plural:
+                    name_plural_en: Birth Times
+                  comment: 
+                  default_value: 
+                  primary: false
+                  display_in_list: true
+                  display_in_public_list: true
+                  restricted: false
+                  style: single
+                  unique: false
+                  field_specific_keys:
+                    format: YMDhms
+                  field_set_type: ItemType
+                  multiple: false
+                  required: false
+                  row_order: 
+                - id: 48712594
+                  uuid: one_author_birthplace_uuid
+                  slug: birthplace
+                  type: Field::Geometry
+                  created_at: '2021-09-15T10:53:19.423+02:00'
+                  updated_at: '2021-09-15T10:53:19.423+02:00'
+                  name:
+                    name_en: Birthplace
+                  name_plural:
+                    name_plural_en: Birthplaces
+                  comment: 
+                  default_value: 
+                  primary: false
+                  display_in_list: true
+                  display_in_public_list: true
+                  restricted: false
+                  style: single
+                  unique: false
+                  field_specific_keys:
+                    bounds: 
+                    layers: 
+                  field_set_type: ItemType
+                  multiple: false
+                  required: false
+                  row_order: 
+                - id: 278655377
+                  uuid: one_author_born_uuid
+                  slug: born
+                  type: Field::DateTime
+                  created_at: '2021-09-15T10:53:19.423+02:00'
+                  updated_at: '2021-09-15T10:53:19.423+02:00'
+                  name:
+                    name_en: Born
+                  name_plural:
+                    name_plural_en: Born
+                  comment: 
+                  default_value: 
+                  primary: false
+                  display_in_list: true
+                  display_in_public_list: true
+                  restricted: false
+                  style: single
+                  unique: false
+                  field_specific_keys:
+                    format: YMD
+                  field_set_type: ItemType
+                  multiple: false
+                  required: false
+                  row_order: 
+                - id: 698366592
+                  uuid: one_author_collaborator_uuid
+                  slug: collaborator
+                  type: Field::Reference
+                  created_at: '2021-09-15T10:53:19.423+02:00'
+                  updated_at: '2021-09-15T10:53:19.423+02:00'
+                  name:
+                    name_en: Collaborator
+                  name_plural:
+                    name_plural_en: Collaborators
+                  comment: 
+                  default_value: 
+                  primary: false
+                  display_in_list: true
+                  display_in_public_list: true
+                  restricted: false
+                  style: single-required
+                  unique: false
+                  field_specific_keys:
+                    related_item_type_id: 373039959
+                  field_set_type: ItemType
+                  multiple: false
+                  required: true
+                  row_order: 
+                - id: 92391846
+                  uuid: one_author_deceased_uuid
+                  slug: deceased
+                  type: Field::Boolean
+                  created_at: '2021-09-15T10:53:19.423+02:00'
+                  updated_at: '2021-09-15T10:53:19.423+02:00'
+                  name:
+                    name_en: Deceased
+                  name_plural:
+                    name_plural_en: Deceased
+                  comment: 
+                  default_value: 
+                  primary: false
+                  display_in_list: true
+                  display_in_public_list: true
+                  restricted: false
+                  style: single
+                  unique: false
                   field_set_type: ItemType
                   multiple: false
                   required: false
@@ -1274,8 +1276,8 @@ paths:
                   uuid: one_author_editor_uuid
                   slug: editor
                   type: Field::Editor
-                  created_at: '2021-09-15T11:11:21.452+02:00'
-                  updated_at: '2021-09-15T11:11:21.452+02:00'
+                  created_at: '2021-09-15T10:53:19.423+02:00'
+                  updated_at: '2021-09-15T10:53:19.423+02:00'
                   name:
                     name_en: Editor
                   name_plural:
@@ -1294,19 +1296,41 @@ paths:
                   field_set_type: ItemType
                   multiple: false
                   required: true
-                  row_order:
+                  row_order: 
+                - id: 404121001
+                  uuid: one_author_email_uuid
+                  slug: email
+                  type: Field::Email
+                  created_at: '2021-09-15T10:53:19.423+02:00'
+                  updated_at: '2021-09-15T10:53:19.423+02:00'
+                  name:
+                    name_en: Email
+                  name_plural:
+                    name_plural_en: Emails
+                  comment: 
+                  default_value: 
+                  primary: false
+                  display_in_list: true
+                  display_in_public_list: true
+                  restricted: false
+                  style: single-required
+                  unique: false
+                  field_set_type: ItemType
+                  multiple: false
+                  required: true
+                  row_order: 
                 - id: 563958655
                   uuid: one_author_language_uuid
                   slug: language
                   type: Field::ChoiceSet
-                  created_at: '2021-09-15T11:11:21.452+02:00'
-                  updated_at: '2021-09-15T11:11:21.452+02:00'
+                  created_at: '2021-09-15T10:53:19.423+02:00'
+                  updated_at: '2021-09-15T10:53:19.423+02:00'
                   name:
                     name_en: Language
                   name_plural:
                     name_plural_en: Languages
-                  comment:
-                  default_value:
+                  comment: 
+                  default_value: 
                   primary: false
                   display_in_list: true
                   display_in_public_list: true
@@ -1318,19 +1342,117 @@ paths:
                   field_set_type: ItemType
                   multiple: false
                   required: true
-                  row_order:
+                  row_order: 
+                - id: 935473249
+                  uuid: one_author_most_active_hour_uuid
+                  slug: most-active-hour
+                  type: Field::DateTime
+                  created_at: '2021-09-15T10:53:19.423+02:00'
+                  updated_at: '2021-09-15T10:53:19.423+02:00'
+                  name:
+                    name_en: Most Active Hour
+                  name_plural:
+                    name_plural_en: Most Active Hours
+                  comment: 
+                  default_value: 
+                  primary: false
+                  display_in_list: true
+                  display_in_public_list: true
+                  restricted: false
+                  style: single
+                  unique: false
+                  field_specific_keys:
+                    format: h
+                  field_set_type: ItemType
+                  multiple: false
+                  required: false
+                  row_order: 
+                - id: 308789737
+                  uuid: one_author_most_active_month_uuid
+                  slug: most-active-month
+                  type: Field::DateTime
+                  created_at: '2021-09-15T10:53:19.423+02:00'
+                  updated_at: '2021-09-15T10:53:19.423+02:00'
+                  name:
+                    name_en: Most Active Month
+                  name_plural:
+                    name_plural_en: Most Active Months
+                  comment: 
+                  default_value: 
+                  primary: false
+                  display_in_list: true
+                  display_in_public_list: true
+                  restricted: false
+                  style: single
+                  unique: false
+                  field_specific_keys:
+                    format: M
+                  field_set_type: ItemType
+                  multiple: false
+                  required: false
+                  row_order: 
+                - id: 349101231
+                  uuid: one_author_nickname_uuid
+                  slug: nickname
+                  type: Field::Text
+                  created_at: '2021-09-15T10:53:19.423+02:00'
+                  updated_at: '2021-09-15T10:53:19.423+02:00'
+                  name:
+                    name_en: Nickname
+                  name_plural:
+                    name_plural_en: Nicknames
+                  comment: 
+                  default_value: 
+                  primary: false
+                  display_in_list: true
+                  display_in_public_list: true
+                  restricted: false
+                  style: single
+                  unique: false
+                  field_specific_keys:
+                    maximum: 
+                    minimum: 
+                    formatted_text: 
+                  field_set_type: ItemType
+                  multiple: false
+                  required: false
+                  row_order: 
+                - id: 645383401
+                  uuid: one_author_other_collaborators_uuid
+                  slug: other-collaborator
+                  type: Field::Reference
+                  created_at: '2021-09-15T10:53:19.423+02:00'
+                  updated_at: '2021-09-15T10:53:19.423+02:00'
+                  name:
+                    name_en: Other Collaborator
+                  name_plural:
+                    name_plural_en: Other Collaborators
+                  comment: 
+                  default_value: 
+                  primary: false
+                  display_in_list: true
+                  display_in_public_list: true
+                  restricted: false
+                  style: multiple
+                  unique: false
+                  field_specific_keys:
+                    related_item_type_id: 373039959
+                  field_set_type: ItemType
+                  multiple: true
+                  required: false
+                  row_order: 
                 - id: 976024904
                   uuid: one_author_other_languages_uuid
                   slug: other-language
                   type: Field::ChoiceSet
-                  created_at: '2021-09-15T11:11:21.452+02:00'
-                  updated_at: '2021-09-15T11:11:21.452+02:00'
+                  created_at: '2021-09-15T10:53:19.423+02:00'
+                  updated_at: '2021-09-15T10:53:19.423+02:00'
                   name:
                     name_en: Other Language
                   name_plural:
                     name_plural_en: Other Languages
-                  comment:
-                  default_value:
+                  comment: 
+                  default_value: 
                   primary: false
                   display_in_list: true
                   display_in_public_list: true
@@ -1343,157 +1465,12 @@ paths:
                   multiple: true
                   required: false
                   row_order:
-                - id: 278655377
-                  uuid: one_author_born_uuid
-                  slug: born
-                  type: Field::DateTime
-                  created_at: '2021-09-15T11:11:21.452+02:00'
-                  updated_at: '2021-09-15T11:11:21.452+02:00'
-                  name:
-                    name_en: Born
-                  name_plural:
-                    name_plural_en: Born
-                  comment:
-                  default_value:
-                  primary: false
-                  display_in_list: true
-                  display_in_public_list: true
-                  restricted: false
-                  style: single
-                  unique: false
-                  field_specific_keys:
-                    format: YMD
-                  field_set_type: ItemType
-                  multiple: false
-                  required: false
-                  row_order:
-                - id: 72085510
-                  uuid: one_author_birth_time_uuid
-                  slug: birth-time
-                  type: Field::DateTime
-                  created_at: '2021-09-15T11:11:21.452+02:00'
-                  updated_at: '2021-09-15T11:11:21.452+02:00'
-                  name:
-                    name_en: Birth Time
-                  name_plural:
-                    name_plural_en: Birth Times
-                  comment:
-                  default_value:
-                  primary: false
-                  display_in_list: true
-                  display_in_public_list: true
-                  restricted: false
-                  style: single
-                  unique: false
-                  field_specific_keys:
-                    format: YMDhms
-                  field_set_type: ItemType
-                  multiple: false
-                  required: false
-                  row_order:
-                - id: 295840715
-                  uuid: one_author_birth_month_uuid
-                  slug: birth-month
-                  type: Field::DateTime
-                  created_at: '2021-09-15T11:11:21.452+02:00'
-                  updated_at: '2021-09-15T11:11:21.452+02:00'
-                  name:
-                    name_en: Birth Month
-                  name_plural:
-                    name_plural_en: Birth Months
-                  comment:
-                  default_value:
-                  primary: false
-                  display_in_list: true
-                  display_in_public_list: true
-                  restricted: false
-                  style: single
-                  unique: false
-                  field_specific_keys:
-                    format: YM
-                  field_set_type: ItemType
-                  multiple: false
-                  required: false
-                  row_order:
-                - id: 308789737
-                  uuid: one_author_most_active_month_uuid
-                  slug: most-active-month
-                  type: Field::DateTime
-                  created_at: '2021-09-15T11:11:21.452+02:00'
-                  updated_at: '2021-09-15T11:11:21.452+02:00'
-                  name:
-                    name_en: Most Active Month
-                  name_plural:
-                    name_plural_en: Most Active Months
-                  comment:
-                  default_value:
-                  primary: false
-                  display_in_list: true
-                  display_in_public_list: true
-                  restricted: false
-                  style: single
-                  unique: false
-                  field_specific_keys:
-                    format: M
-                  field_set_type: ItemType
-                  multiple: false
-                  required: false
-                  row_order:
-                - id: 935473249
-                  uuid: one_author_most_active_hour_uuid
-                  slug: most-active-hour
-                  type: Field::DateTime
-                  created_at: '2021-09-15T11:11:21.452+02:00'
-                  updated_at: '2021-09-15T11:11:21.452+02:00'
-                  name:
-                    name_en: Most Active Hour
-                  name_plural:
-                    name_plural_en: Most Active Hours
-                  comment:
-                  default_value:
-                  primary: false
-                  display_in_list: true
-                  display_in_public_list: true
-                  restricted: false
-                  style: single
-                  unique: false
-                  field_specific_keys:
-                    format: h
-                  field_set_type: ItemType
-                  multiple: false
-                  required: false
-                  row_order:
-                - id: 48712594
-                  uuid: one_author_birthplace_uuid
-                  slug: birthplace
-                  type: Field::Geometry
-                  created_at: '2021-09-15T11:11:21.452+02:00'
-                  updated_at: '2021-09-15T11:11:21.452+02:00'
-                  name:
-                    name_en: Birthplace
-                  name_plural:
-                    name_plural_en: Birthplaces
-                  comment:
-                  default_value:
-                  primary: false
-                  display_in_list: true
-                  display_in_public_list: true
-                  restricted: false
-                  style: single
-                  unique: false
-                  field_specific_keys:
-                    bounds:
-                    layers:
-                  field_set_type: ItemType
-                  multiple: false
-                  required: false
-                  row_order:
                 - id: 524145375
                   uuid: one_author_picture_uuid
                   slug: picture
                   type: Field::Image
-                  created_at: '2021-09-15T11:11:21.452+02:00'
-                  updated_at: '2021-09-15T11:11:21.452+02:00'
+                  created_at: '2021-09-15T10:53:19.423+02:00'
+                  updated_at: '2021-09-15T10:53:19.423+02:00'
                   name:
                     name_en: Picture
                   name_plural:
@@ -1517,8 +1494,8 @@ paths:
                   uuid: one_author_picture_inactive_legend_uuid
                   slug: picture_inactive_legend
                   type: Field::Image
-                  created_at: '2021-09-15T11:11:21.452+02:00'
-                  updated_at: '2021-09-15T11:11:21.452+02:00'
+                  created_at: '2021-09-15T10:53:19.423+02:00'
+                  updated_at: '2021-09-15T10:53:19.423+02:00'
                   name:
                     name_en: New picture
                   name_plural:
@@ -1537,41 +1514,66 @@ paths:
                   field_set_type: ItemType
                   multiple: false
                   required: false
-                  row_order:
-                - id: 92391846
-                  uuid: one_author_deceased_uuid
-                  slug: deceased
-                  type: Field::Boolean
-                  created_at: '2021-09-15T11:11:21.452+02:00'
-                  updated_at: '2021-09-15T11:11:21.452+02:00'
+                  row_order: 
+                - id: 469836505
+                  uuid: one_author_rank_uuid
+                  slug: rank
+                  type: Field::Decimal
+                  created_at: '2021-09-15T10:53:19.423+02:00'
+                  updated_at: '2021-09-15T10:53:19.423+02:00'
                   name:
-                    name_en: Deceased
+                    name_en: Rank
                   name_plural:
-                    name_plural_en: Deceased
-                  comment:
-                  default_value:
+                    name_plural_en: Ranks
+                  comment: 
+                  default_value: 
                   primary: false
                   display_in_list: true
                   display_in_public_list: true
                   restricted: false
-                  style: single
+                  style: single-required
+                  unique: false
+                  field_specific_keys:
+                    maximum: 
+                    minimum: 
+                  field_set_type: ItemType
+                  multiple: false
+                  required: true
+                  row_order: 
+                - id: 1027326935
+                  uuid: one_author_site_uuid
+                  slug: site
+                  type: Field::URL
+                  created_at: '2021-09-15T10:53:19.423+02:00'
+                  updated_at: '2021-09-15T10:53:19.423+02:00'
+                  name:
+                    name_en: Site
+                  name_plural:
+                    name_plural_en: Sites
+                  comment: 
+                  default_value: 
+                  primary: false
+                  display_in_list: true
+                  display_in_public_list: true
+                  restricted: false
+                  style: single-required
                   unique: false
                   field_set_type: ItemType
                   multiple: false
-                  required: false
-                  row_order:
-                - id: 349101231
-                  uuid: one_author_nickname_uuid
-                  slug: nickname
-                  type: Field::Text
-                  created_at: '2021-09-15T11:11:21.452+02:00'
-                  updated_at: '2021-09-15T11:11:21.452+02:00'
+                  required: true
+                  row_order: 
+                - id: 1002270862
+                  uuid: one_author_bio_uuid
+                  slug: bio
+                  type: Field::File
+                  created_at: '2021-09-15T10:53:19.423+02:00'
+                  updated_at: '2021-09-15T10:53:19.423+02:00'
                   name:
-                    name_en: Nickname
+                    name_en: Biography
                   name_plural:
-                    name_plural_en: Nicknames
-                  comment:
-                  default_value:
+                    name_plural_en: Biographies
+                  comment: 
+                  default_value: 
                   primary: false
                   display_in_list: true
                   display_in_public_list: true
@@ -1579,9 +1581,7 @@ paths:
                   style: single
                   unique: false
                   field_specific_keys:
-                    maximum:
-                    minimum:
-                    formatted_text:
+                    types: 
                   field_set_type: ItemType
                   multiple: false
                   required: false
@@ -1626,8 +1626,8 @@ paths:
                   uuid: one_author_birthplace_uuid
                   slug: birthplace
                   type: Field::Geometry
-                  created_at: '2021-09-15T11:11:21.452+02:00'
-                  updated_at: '2021-09-15T11:11:21.452+02:00'
+                  created_at: '2021-09-15T10:53:19.423+02:00'
+                  updated_at: '2021-09-15T10:53:19.423+02:00'
                   name:
                     name_en: Birthplace
                   name_plural:
@@ -1706,8 +1706,8 @@ paths:
                 data:
                 - id: 722088510
                   item_type_id: 373039959
-                  created_at: '2021-09-15T11:11:21.477+02:00'
-                  updated_at: '2021-09-15T11:11:21.477+02:00'
+                  created_at: '2021-09-15T10:53:19.416+02:00'
+                  updated_at: '2021-09-15T10:53:19.416+02:00'
                   primary_field:
                     value:
                     field:
@@ -1715,8 +1715,8 @@ paths:
                       uuid: one_author_name_uuid
                       slug: name
                       type: Field::Text
-                      created_at: '2021-09-15T11:11:21.452+02:00'
-                      updated_at: '2021-09-15T11:11:21.452+02:00'
+                      created_at: '2021-09-15T10:53:19.423+02:00'
+                      updated_at: '2021-09-15T10:53:19.423+02:00'
                       name:
                         name_en: Name
                       name_plural:
@@ -1737,12 +1737,12 @@ paths:
                       multiple: false
                       required: true
                       row_order: 1
-                  item_summary: 'Editor: one-admin@example.com; Deceased: No; Nickname:
+                  item_summary: 'Deceased: No; Editor: one-admin@example.com; Nickname:
                     Empty Author'
                 - id: 525911936
                   item_type_id: 373039959
-                  created_at: '2021-09-15T11:11:21.477+02:00'
-                  updated_at: '2021-09-15T11:11:21.477+02:00'
+                  created_at: '2021-09-15T10:53:19.416+02:00'
+                  updated_at: '2021-09-15T10:53:19.416+02:00'
                   primary_field:
                     value:
                     field:
@@ -1750,8 +1750,8 @@ paths:
                       uuid: one_author_name_uuid
                       slug: name
                       type: Field::Text
-                      created_at: '2021-09-15T11:11:21.452+02:00'
-                      updated_at: '2021-09-15T11:11:21.452+02:00'
+                      created_at: '2021-09-15T10:53:19.423+02:00'
+                      updated_at: '2021-09-15T10:53:19.423+02:00'
                       name:
                         name_en: Name
                       name_plural:
@@ -1772,12 +1772,13 @@ paths:
                       multiple: false
                       required: true
                       row_order: 1
-                  item_summary: 'Editor: one-admin@example.com; Deceased: No'
+                  item_summary: 'Deceased: No; Editor: one-admin@example.com'
                   thumbnail: "/thumbs/one/250x250/fill/0,0,100,100/authors/picture.jpg"
                 - id: 817242637
                   item_type_id: 373039959
-                  created_at: '2021-09-15T11:11:21.477+02:00'
-                  updated_at: '2021-09-15T11:11:21.477+02:00'
+
+                  created_at: '2021-09-15T10:53:19.416+02:00'
+                  updated_at: '2021-09-15T10:53:19.416+02:00'
                   primary_field:
                     value: Young apprentice
                     field:
@@ -1785,8 +1786,8 @@ paths:
                       uuid: one_author_name_uuid
                       slug: name
                       type: Field::Text
-                      created_at: '2021-09-15T11:11:21.452+02:00'
-                      updated_at: '2021-09-15T11:11:21.452+02:00'
+                      created_at: '2021-09-15T10:53:19.423+02:00'
+                      updated_at: '2021-09-15T10:53:19.423+02:00'
                       name:
                         name_en: Name
                       name_plural:
@@ -1807,12 +1808,12 @@ paths:
                       multiple: false
                       required: true
                       row_order: 1
-                  item_summary: 'Other Collaborator: Stephen King, Very Old; Editor:
-                    one-admin@example.com; Deceased: No'
+                  item_summary: 'Deceased: No; Editor: one-admin@example.com; Other
+                    Collaborator: Stephen King, Very Old'
                 - id: 756291218
                   item_type_id: 373039959
-                  created_at: '2021-09-15T11:11:21.477+02:00'
-                  updated_at: '2021-09-15T11:11:21.477+02:00'
+                  created_at: '2021-09-15T10:53:19.416+02:00'
+                  updated_at: '2021-09-15T10:53:19.416+02:00'
                   primary_field:
                     value: Very Young
                     field:
@@ -1820,8 +1821,8 @@ paths:
                       uuid: one_author_name_uuid
                       slug: name
                       type: Field::Text
-                      created_at: '2021-09-15T11:11:21.452+02:00'
-                      updated_at: '2021-09-15T11:11:21.452+02:00'
+                      created_at: '2021-09-15T10:53:19.423+02:00'
+                      updated_at: '2021-09-15T10:53:19.423+02:00'
                       name:
                         name_en: Name
                       name_plural:
@@ -1842,12 +1843,12 @@ paths:
                       multiple: false
                       required: true
                       row_order: 1
-                  item_summary: 'Other Collaborator: Stephen King, Very Old; Editor:
-                    one-admin@example.com; Deceased: No'
+                  item_summary: 'Deceased: No; Editor: one-admin@example.com; Other
+                    Collaborator: Stephen King, Very Old'
                 - id: 42941060
                   item_type_id: 373039959
-                  created_at: '2021-09-15T11:11:21.477+02:00'
-                  updated_at: '2021-09-15T11:11:21.477+02:00'
+                  created_at: '2021-09-15T10:53:19.416+02:00'
+                  updated_at: '2021-09-15T10:53:19.416+02:00'
                   primary_field:
                     value: Very Old
                     field:
@@ -1855,8 +1856,8 @@ paths:
                       uuid: one_author_name_uuid
                       slug: name
                       type: Field::Text
-                      created_at: '2021-09-15T11:11:21.452+02:00'
-                      updated_at: '2021-09-15T11:11:21.452+02:00'
+                      created_at: '2021-09-15T10:53:19.423+02:00'
+                      updated_at: '2021-09-15T10:53:19.423+02:00'
                       name:
                         name_en: Name
                       name_plural:
@@ -1877,14 +1878,14 @@ paths:
                       multiple: false
                       required: true
                       row_order: 1
-                  item_summary: 'Email: so@old.com; Rank: 2.12; Collaborator: Very
-                    Young; Editor: one-admin@example.com; Other Language: English,
-                    French; Born: 11 November, 1947; Most Active Month: January; Most
-                    Active Hour: 01h; Deceased: Yes'
+                  item_summary: 'Born: 11 November, 1947; Collaborator: Very Young;
+                    Deceased: Yes; Editor: one-admin@example.com; Email: so@old.com;
+                    Most Active Hour: 01h; Most Active Month: January; Other Language:
+                    English, French; Rank: 2.12'
                 - id: 971904516
                   item_type_id: 373039959
-                  created_at: '2021-09-15T11:11:21.477+02:00'
-                  updated_at: '2021-09-15T11:11:21.477+02:00'
+                  created_at: '2021-09-15T10:53:19.416+02:00'
+                  updated_at: '2021-09-15T10:53:19.416+02:00'
                   primary_field:
                     value: Stephen King
                     field:
@@ -1892,8 +1893,8 @@ paths:
                       uuid: one_author_name_uuid
                       slug: name
                       type: Field::Text
-                      created_at: '2021-09-15T11:11:21.452+02:00'
-                      updated_at: '2021-09-15T11:11:21.452+02:00'
+                      created_at: '2021-09-15T10:53:19.423+02:00'
+                      updated_at: '2021-09-15T10:53:19.423+02:00'
                       name:
                         name_en: Name
                       name_plural:
@@ -1914,12 +1915,12 @@ paths:
                       multiple: false
                       required: true
                       row_order: 1
-                  item_summary: 'Site: stephenking.com/index.html; Email: sk@stephenking.com;
-                    Rank: 1.88891; Collaborator: Very Old; Other Collaborator: Young
-                    apprentice; Editor: one-user@example.com; Language: Spanish; Other
-                    Language: English, Spanish; Born: 21 September, 1947; Birth Time:
-                    21 September, 1947 10:10:10; Most Active Month: June; Most Active
-                    Hour: 10h; Deceased: No; Nickname: Steve'
+                  item_summary: 'Birth Time: 21 September, 1947 10:10:10; Born: 21
+                    September, 1947; Collaborator: Very Old; Deceased: No; Editor:
+                    one-user@example.com; Email: sk@stephenking.com; Language: Spanish;
+                    Most Active Hour: 10h; Most Active Month: June; Nickname: Steve;
+                    Other Collaborator: Young apprentice; Other Language: English,
+                    Spanish; Rank: 1.88891; Site: stephenking.com/index.html'
         '401':
           description: Unauthorized
   "/api/v3/{catalog_id}/item_type/{item_type_id}/item/{item_id}":
@@ -1959,8 +1960,8 @@ paths:
                 data:
                   id: 971904516
                   item_type_id: 373039959
-                  created_at: '2021-09-15T11:11:21.477+02:00'
-                  updated_at: '2021-09-15T11:11:21.477+02:00'
+                  created_at: '2021-09-15T10:53:19.416+02:00'
+                  updated_at: '2021-09-15T10:53:19.416+02:00'
                   primary_field:
                     value: Stephen King
                     field:
@@ -1968,8 +1969,8 @@ paths:
                       uuid: one_author_name_uuid
                       slug: name
                       type: Field::Text
-                      created_at: '2021-09-15T11:11:21.452+02:00'
-                      updated_at: '2021-09-15T11:11:21.452+02:00'
+                      created_at: '2021-09-15T10:53:19.423+02:00'
+                      updated_at: '2021-09-15T10:53:19.423+02:00'
                       name:
                         name_en: Name
                       name_plural:
@@ -1997,8 +1998,8 @@ paths:
                       uuid: one_author_name_uuid
                       slug: name
                       type: Field::Text
-                      created_at: '2021-09-15T11:11:21.452+02:00'
-                      updated_at: '2021-09-15T11:11:21.452+02:00'
+                      created_at: '2021-09-15T10:53:19.423+02:00'
+                      updated_at: '2021-09-15T10:53:19.423+02:00'
                       name:
                         name_en: Name
                       name_plural:
@@ -2025,8 +2026,8 @@ paths:
                       uuid: one_author_age_uuid
                       slug: age
                       type: Field::Int
-                      created_at: '2021-09-15T11:11:21.452+02:00'
-                      updated_at: '2021-09-15T11:11:21.452+02:00'
+                      created_at: '2021-09-15T10:53:19.423+02:00'
+                      updated_at: '2021-09-15T10:53:19.423+02:00'
                       name:
                         name_en: Age
                       name_plural:
@@ -2047,154 +2048,20 @@ paths:
                       multiple: false
                       required: true
                       row_order: 2
-                  - value: http://stephenking.com/index.html
+                  - value: 
                     field:
-                      id: 1027326935
-                      uuid: one_author_site_uuid
-                      slug: site
-                      type: Field::URL
-                      created_at: '2021-09-15T11:11:21.452+02:00'
-                      updated_at: '2021-09-15T11:11:21.452+02:00'
+                      id: 295840715
+                      uuid: one_author_birth_month_uuid
+                      slug: birth-month
+                      type: Field::DateTime
+                      created_at: '2021-09-15T10:53:19.423+02:00'
+                      updated_at: '2021-09-15T10:53:19.423+02:00'
                       name:
-                        name_en: Site
+                        name_en: Birth Month
                       name_plural:
-                        name_plural_en: Sites
-                      comment:
-                      default_value:
-                      primary: false
-                      display_in_list: true
-                      display_in_public_list: true
-                      restricted: false
-                      style: single-required
-                      unique: false
-                      field_set_type: ItemType
-                      multiple: false
-                      required: true
-                      row_order:
-                  - value: sk@stephenking.com
-                    field:
-                      id: 404121001
-                      uuid: one_author_email_uuid
-                      slug: email
-                      type: Field::Email
-                      created_at: '2021-09-15T11:11:21.452+02:00'
-                      updated_at: '2021-09-15T11:11:21.452+02:00'
-                      name:
-                        name_en: Email
-                      name_plural:
-                        name_plural_en: Emails
-                      comment:
-                      default_value:
-                      primary: false
-                      display_in_list: true
-                      display_in_public_list: true
-                      restricted: false
-                      style: single-required
-                      unique: false
-                      field_set_type: ItemType
-                      multiple: false
-                      required: true
-                      row_order:
-                  - value: '1.88891'
-                    field:
-                      id: 469836505
-                      uuid: one_author_rank_uuid
-                      slug: rank
-                      type: Field::Decimal
-                      created_at: '2021-09-15T11:11:21.452+02:00'
-                      updated_at: '2021-09-15T11:11:21.452+02:00'
-                      name:
-                        name_en: Rank
-                      name_plural:
-                        name_plural_en: Ranks
-                      comment:
-                      default_value:
-                      primary: false
-                      display_in_list: true
-                      display_in_public_list: true
-                      restricted: false
-                      style: single-required
-                      unique: false
-                      field_specific_keys:
-                        maximum:
-                        minimum:
-                      field_set_type: ItemType
-                      multiple: false
-                      required: true
-                      row_order:
-                  - value: '42941060'
-                    field:
-                      id: 698366592
-                      uuid: one_author_collaborator_uuid
-                      slug: collaborator
-                      type: Field::Reference
-                      created_at: '2021-09-15T11:11:21.452+02:00'
-                      updated_at: '2021-09-15T11:11:21.452+02:00'
-                      name:
-                        name_en: Collaborator
-                      name_plural:
-                        name_plural_en: Collaborators
-                      comment:
-                      default_value:
-                      primary: false
-                      display_in_list: true
-                      display_in_public_list: true
-                      restricted: false
-                      style: single-required
-                      unique: false
-                      field_specific_keys:
-                        related_item_type_id: 373039959
-                      field_set_type: ItemType
-                      multiple: false
-                      required: true
-                      row_order:
-                  - value:
-                    - '817242637'
-                    field:
-                      id: 645383401
-                      uuid: one_author_other_collaborators_uuid
-                      slug: other-collaborator
-                      type: Field::Reference
-                      created_at: '2021-09-15T11:11:21.452+02:00'
-                      updated_at: '2021-09-15T11:11:21.452+02:00'
-                      name:
-                        name_en: Other Collaborator
-                      name_plural:
-                        name_plural_en: Other Collaborators
-                      comment:
-                      default_value:
-                      primary: false
-                      display_in_list: true
-                      display_in_public_list: true
-                      restricted: false
-                      style: multiple
-                      unique: false
-                      field_specific_keys:
-                        related_item_type_id: 373039959
-                      field_set_type: ItemType
-                      multiple: true
-                      required: false
-                      row_order:
-                  - value:
-                      id: dummy
-                      name: bio.doc
-                      path: public/upload/one/authors/Steve/bio.doc
-                      size: 192000
-                      type: document/doc
-                      filename: bio.doc
-                    field:
-                      id: 1002270862
-                      uuid: one_author_bio_uuid
-                      slug: bio
-                      type: Field::File
-                      created_at: '2021-09-15T11:11:21.452+02:00'
-                      updated_at: '2021-09-15T11:11:21.452+02:00'
-                      name:
-                        name_en: Biography
-                      name_plural:
-                        name_plural_en: Biographies
-                      comment:
-                      default_value:
+                        name_plural_en: Birth Months
+                      comment: 
+                      default_value: 
                       primary: false
                       display_in_list: true
                       display_in_public_list: true
@@ -2202,7 +2069,145 @@ paths:
                       style: single
                       unique: false
                       field_specific_keys:
-                        types:
+                        format: YM
+                      field_set_type: ItemType
+                      multiple: false
+                      required: false
+                      row_order: 
+                  - value:
+                      D: 21
+                      M: 9
+                      Y: 1947
+                      h: 10
+                      m: 10
+                      s: 10
+                    field:
+                      id: 72085510
+                      uuid: one_author_birth_time_uuid
+                      slug: birth-time
+                      type: Field::DateTime
+                      created_at: '2021-09-15T10:53:19.423+02:00'
+                      updated_at: '2021-09-15T10:53:19.423+02:00'
+                      name:
+                        name_en: Birth Time
+                      name_plural:
+                        name_plural_en: Birth Times
+                      comment: 
+                      default_value: 
+                      primary: false
+                      display_in_list: true
+                      display_in_public_list: true
+                      restricted: false
+                      style: single
+                      unique: false
+                      field_specific_keys:
+                        format: YMDhms
+                      field_set_type: ItemType
+                      multiple: false
+                      required: false
+                      row_order: 
+                  - value: 
+                    field:
+                      id: 48712594
+                      uuid: one_author_birthplace_uuid
+                      slug: birthplace
+                      type: Field::Geometry
+                      created_at: '2021-09-15T10:53:19.423+02:00'
+                      updated_at: '2021-09-15T10:53:19.423+02:00'
+                      name:
+                        name_en: Birthplace
+                      name_plural:
+                        name_plural_en: Birthplaces
+                      comment: 
+                      default_value: 
+                      primary: false
+                      display_in_list: true
+                      display_in_public_list: true
+                      restricted: false
+                      style: single
+                      unique: false
+                      field_specific_keys:
+                        bounds: 
+                        layers: 
+                      field_set_type: ItemType
+                      multiple: false
+                      required: false
+                      row_order: 
+                  - value:
+                      D: 21
+                      M: 9
+                      Y: 1947
+                    field:
+                      id: 278655377
+                      uuid: one_author_born_uuid
+                      slug: born
+                      type: Field::DateTime
+                      created_at: '2021-09-15T10:53:19.423+02:00'
+                      updated_at: '2021-09-15T10:53:19.423+02:00'
+                      name:
+                        name_en: Born
+                      name_plural:
+                        name_plural_en: Born
+                      comment: 
+                      default_value: 
+                      primary: false
+                      display_in_list: true
+                      display_in_public_list: true
+                      restricted: false
+                      style: single
+                      unique: false
+                      field_specific_keys:
+                        format: YMD
+                      field_set_type: ItemType
+                      multiple: false
+                      required: false
+                      row_order: 
+                  - value: '42941060'
+                    field:
+                      id: 698366592
+                      uuid: one_author_collaborator_uuid
+                      slug: collaborator
+                      type: Field::Reference
+                      created_at: '2021-09-15T10:53:19.423+02:00'
+                      updated_at: '2021-09-15T10:53:19.423+02:00'
+                      name:
+                        name_en: Collaborator
+                      name_plural:
+                        name_plural_en: Collaborators
+                      comment: 
+                      default_value: 
+                      primary: false
+                      display_in_list: true
+                      display_in_public_list: true
+                      restricted: false
+                      style: single-required
+                      unique: false
+                      field_specific_keys:
+                        related_item_type_id: 373039959
+                      field_set_type: ItemType
+                      multiple: false
+                      required: true
+                      row_order: 
+                  - value: 
+                    field:
+                      id: 92391846
+                      uuid: one_author_deceased_uuid
+                      slug: deceased
+                      type: Field::Boolean
+                      created_at: '2021-09-15T10:53:19.423+02:00'
+                      updated_at: '2021-09-15T10:53:19.423+02:00'
+                      name:
+                        name_en: Deceased
+                      name_plural:
+                        name_plural_en: Deceased
+                      comment: 
+                      default_value: 
+                      primary: false
+                      display_in_list: true
+                      display_in_public_list: true
+                      restricted: false
+                      style: single
+                      unique: false
                       field_set_type: ItemType
                       multiple: false
                       required: false
@@ -2213,8 +2218,8 @@ paths:
                       uuid: one_author_editor_uuid
                       slug: editor
                       type: Field::Editor
-                      created_at: '2021-09-15T11:11:21.452+02:00'
-                      updated_at: '2021-09-15T11:11:21.452+02:00'
+                      created_at: '2021-09-15T10:53:19.423+02:00'
+                      updated_at: '2021-09-15T10:53:19.423+02:00'
                       name:
                         name_en: Editor
                       name_plural:
@@ -2233,21 +2238,45 @@ paths:
                       field_set_type: ItemType
                       multiple: false
                       required: true
-                      row_order:
+                      row_order: 
+                  - value: sk@stephenking.com
+                    field:
+                      id: 404121001
+                      uuid: one_author_email_uuid
+                      slug: email
+                      type: Field::Email
+                      created_at: '2021-09-15T10:53:19.423+02:00'
+                      updated_at: '2021-09-15T10:53:19.423+02:00'
+                      name:
+                        name_en: Email
+                      name_plural:
+                        name_plural_en: Emails
+                      comment: 
+                      default_value: 
+                      primary: false
+                      display_in_list: true
+                      display_in_public_list: true
+                      restricted: false
+                      style: single-required
+                      unique: false
+                      field_set_type: ItemType
+                      multiple: false
+                      required: true
+                      row_order: 
                   - value: '335800347'
                     field:
                       id: 563958655
                       uuid: one_author_language_uuid
                       slug: language
                       type: Field::ChoiceSet
-                      created_at: '2021-09-15T11:11:21.452+02:00'
-                      updated_at: '2021-09-15T11:11:21.452+02:00'
+                      created_at: '2021-09-15T10:53:19.423+02:00'
+                      updated_at: '2021-09-15T10:53:19.423+02:00'
                       name:
                         name_en: Language
                       name_plural:
                         name_plural_en: Languages
-                      comment:
-                      default_value:
+                      comment: 
+                      default_value: 
                       primary: false
                       display_in_list: true
                       display_in_public_list: true
@@ -2259,7 +2288,116 @@ paths:
                       field_set_type: ItemType
                       multiple: false
                       required: true
+                      row_order: 
+                  - value:
+                      h: 10
+                    field:
+                      id: 935473249
+                      uuid: one_author_most_active_hour_uuid
+                      slug: most-active-hour
+                      type: Field::DateTime
+                      created_at: '2021-09-15T10:53:19.423+02:00'
+                      updated_at: '2021-09-15T10:53:19.423+02:00'
+                      name:
+                        name_en: Most Active Hour
+                      name_plural:
+                        name_plural_en: Most Active Hours
+                      comment: 
+                      default_value: 
+                      primary: false
+                      display_in_list: true
+                      display_in_public_list: true
+                      restricted: false
+                      style: single
+                      unique: false
+                      field_specific_keys:
+                        format: h
+                      field_set_type: ItemType
+                      multiple: false
+                      required: false
+                      row_order: 
+                  - value:
+                      M: 6
+                    field:
+                      id: 308789737
+                      uuid: one_author_most_active_month_uuid
+                      slug: most-active-month
+                      type: Field::DateTime
+                      created_at: '2021-09-15T10:53:19.423+02:00'
+                      updated_at: '2021-09-15T10:53:19.423+02:00'
+                      name:
+                        name_en: Most Active Month
+                      name_plural:
+                        name_plural_en: Most Active Months
+                      comment: 
+                      default_value: 
+                      primary: false
+                      display_in_list: true
+                      display_in_public_list: true
+                      restricted: false
+                      style: single
+                      unique: false
+                      field_specific_keys:
+                        format: M
+                      field_set_type: ItemType
+                      multiple: false
+                      required: false
+                      row_order: 
+                  - value: Steve
+                    field:
+                      id: 349101231
+                      uuid: one_author_nickname_uuid
+                      slug: nickname
+                      type: Field::Text
+                      created_at: '2021-09-15T10:53:19.423+02:00'
+                      updated_at: '2021-09-15T10:53:19.423+02:00'
+                      name:
+                        name_en: Nickname
+                      name_plural:
+                        name_plural_en: Nicknames
+                      comment: 
+                      default_value: 
+                      primary: false
+                      display_in_list: true
+                      display_in_public_list: true
+                      restricted: false
+                      style: single
+                      unique: false
+                      field_specific_keys:
+                        maximum: 
+                        minimum: 
+                        formatted_text: 
+                      field_set_type: ItemType
+                      multiple: false
+                      required: false
                       row_order:
+                  - value:
+                    - '817242637'
+                    field:
+                      id: 645383401
+                      uuid: one_author_other_collaborators_uuid
+                      slug: other-collaborator
+                      type: Field::Reference
+                      created_at: '2021-09-15T10:53:19.423+02:00'
+                      updated_at: '2021-09-15T10:53:19.423+02:00'
+                      name:
+                        name_en: Other Collaborator
+                      name_plural:
+                        name_plural_en: Other Collaborators
+                      comment: 
+                      default_value: 
+                      primary: false
+                      display_in_list: true
+                      display_in_public_list: true
+                      restricted: false
+                      style: multiple
+                      unique: false
+                      field_specific_keys:
+                        related_item_type_id: 373039959
+                      field_set_type: ItemType
+                      multiple: true
+                      required: false
+                      row_order: 
                   - value:
                     - '335800347'
                     - '211296047'
@@ -2268,14 +2406,14 @@ paths:
                       uuid: one_author_other_languages_uuid
                       slug: other-language
                       type: Field::ChoiceSet
-                      created_at: '2021-09-15T11:11:21.452+02:00'
-                      updated_at: '2021-09-15T11:11:21.452+02:00'
+                      created_at: '2021-09-15T10:53:19.423+02:00'
+                      updated_at: '2021-09-15T10:53:19.423+02:00'
                       name:
                         name_en: Other Language
                       name_plural:
                         name_plural_en: Other Languages
-                      comment:
-                      default_value:
+                      comment: 
+                      default_value: 
                       primary: false
                       display_in_list: true
                       display_in_public_list: true
@@ -2289,181 +2427,13 @@ paths:
                       required: false
                       row_order:
                   - value:
-                      D: 21
-                      M: 9
-                      Y: 1947
-                    field:
-                      id: 278655377
-                      uuid: one_author_born_uuid
-                      slug: born
-                      type: Field::DateTime
-                      created_at: '2021-09-15T11:11:21.452+02:00'
-                      updated_at: '2021-09-15T11:11:21.452+02:00'
-                      name:
-                        name_en: Born
-                      name_plural:
-                        name_plural_en: Born
-                      comment:
-                      default_value:
-                      primary: false
-                      display_in_list: true
-                      display_in_public_list: true
-                      restricted: false
-                      style: single
-                      unique: false
-                      field_specific_keys:
-                        format: YMD
-                      field_set_type: ItemType
-                      multiple: false
-                      required: false
-                      row_order:
-                  - value:
-                      D: 21
-                      M: 9
-                      Y: 1947
-                      h: 10
-                      m: 10
-                      s: 10
-                    field:
-                      id: 72085510
-                      uuid: one_author_birth_time_uuid
-                      slug: birth-time
-                      type: Field::DateTime
-                      created_at: '2021-09-15T11:11:21.452+02:00'
-                      updated_at: '2021-09-15T11:11:21.452+02:00'
-                      name:
-                        name_en: Birth Time
-                      name_plural:
-                        name_plural_en: Birth Times
-                      comment:
-                      default_value:
-                      primary: false
-                      display_in_list: true
-                      display_in_public_list: true
-                      restricted: false
-                      style: single
-                      unique: false
-                      field_specific_keys:
-                        format: YMDhms
-                      field_set_type: ItemType
-                      multiple: false
-                      required: false
-                      row_order:
-                  - value:
-                    field:
-                      id: 295840715
-                      uuid: one_author_birth_month_uuid
-                      slug: birth-month
-                      type: Field::DateTime
-                      created_at: '2021-09-15T11:11:21.452+02:00'
-                      updated_at: '2021-09-15T11:11:21.452+02:00'
-                      name:
-                        name_en: Birth Month
-                      name_plural:
-                        name_plural_en: Birth Months
-                      comment:
-                      default_value:
-                      primary: false
-                      display_in_list: true
-                      display_in_public_list: true
-                      restricted: false
-                      style: single
-                      unique: false
-                      field_specific_keys:
-                        format: YM
-                      field_set_type: ItemType
-                      multiple: false
-                      required: false
-                      row_order:
-                  - value:
-                      M: 6
-                    field:
-                      id: 308789737
-                      uuid: one_author_most_active_month_uuid
-                      slug: most-active-month
-                      type: Field::DateTime
-                      created_at: '2021-09-15T11:11:21.452+02:00'
-                      updated_at: '2021-09-15T11:11:21.452+02:00'
-                      name:
-                        name_en: Most Active Month
-                      name_plural:
-                        name_plural_en: Most Active Months
-                      comment:
-                      default_value:
-                      primary: false
-                      display_in_list: true
-                      display_in_public_list: true
-                      restricted: false
-                      style: single
-                      unique: false
-                      field_specific_keys:
-                        format: M
-                      field_set_type: ItemType
-                      multiple: false
-                      required: false
-                      row_order:
-                  - value:
-                      h: 10
-                    field:
-                      id: 935473249
-                      uuid: one_author_most_active_hour_uuid
-                      slug: most-active-hour
-                      type: Field::DateTime
-                      created_at: '2021-09-15T11:11:21.452+02:00'
-                      updated_at: '2021-09-15T11:11:21.452+02:00'
-                      name:
-                        name_en: Most Active Hour
-                      name_plural:
-                        name_plural_en: Most Active Hours
-                      comment:
-                      default_value:
-                      primary: false
-                      display_in_list: true
-                      display_in_public_list: true
-                      restricted: false
-                      style: single
-                      unique: false
-                      field_specific_keys:
-                        format: h
-                      field_set_type: ItemType
-                      multiple: false
-                      required: false
-                      row_order:
-                  - value:
-                    field:
-                      id: 48712594
-                      uuid: one_author_birthplace_uuid
-                      slug: birthplace
-                      type: Field::Geometry
-                      created_at: '2021-09-15T11:11:21.452+02:00'
-                      updated_at: '2021-09-15T11:11:21.452+02:00'
-                      name:
-                        name_en: Birthplace
-                      name_plural:
-                        name_plural_en: Birthplaces
-                      comment:
-                      default_value:
-                      primary: false
-                      display_in_list: true
-                      display_in_public_list: true
-                      restricted: false
-                      style: single
-                      unique: false
-                      field_specific_keys:
-                        bounds:
-                        layers:
-                      field_set_type: ItemType
-                      multiple: false
-                      required: false
-                      row_order:
-                  - value:
                     field:
                       id: 524145375
                       uuid: one_author_picture_uuid
                       slug: picture
                       type: Field::Image
-                      created_at: '2021-09-15T11:11:21.452+02:00'
-                      updated_at: '2021-09-15T11:11:21.452+02:00'
+                      created_at: '2021-09-15T10:53:19.423+02:00'
+                      updated_at: '2021-09-15T10:53:19.423+02:00'
                       name:
                         name_en: Picture
                       name_plural:
@@ -2489,8 +2459,8 @@ paths:
                       uuid: one_author_picture_inactive_legend_uuid
                       slug: picture_inactive_legend
                       type: Field::Image
-                      created_at: '2021-09-15T11:11:21.452+02:00'
-                      updated_at: '2021-09-15T11:11:21.452+02:00'
+                      created_at: '2021-09-15T10:53:19.423+02:00'
+                      updated_at: '2021-09-15T10:53:19.423+02:00'
                       name:
                         name_en: New picture
                       name_plural:
@@ -2509,45 +2479,78 @@ paths:
                       field_set_type: ItemType
                       multiple: false
                       required: false
-                      row_order:
-                  - value:
+                      row_order: 
+                  - value: '1.88891'
                     field:
-                      id: 92391846
-                      uuid: one_author_deceased_uuid
-                      slug: deceased
-                      type: Field::Boolean
-                      created_at: '2021-09-15T11:11:21.452+02:00'
-                      updated_at: '2021-09-15T11:11:21.452+02:00'
+                      id: 469836505
+                      uuid: one_author_rank_uuid
+                      slug: rank
+                      type: Field::Decimal
+                      created_at: '2021-09-15T10:53:19.423+02:00'
+                      updated_at: '2021-09-15T10:53:19.423+02:00'
                       name:
-                        name_en: Deceased
+                        name_en: Rank
                       name_plural:
-                        name_plural_en: Deceased
-                      comment:
-                      default_value:
+                        name_plural_en: Ranks
+                      comment: 
+                      default_value: 
                       primary: false
                       display_in_list: true
                       display_in_public_list: true
                       restricted: false
-                      style: single
+                      style: single-required
+                      unique: false
+                      field_specific_keys:
+                        maximum: 
+                        minimum: 
+                      field_set_type: ItemType
+                      multiple: false
+                      required: true
+                      row_order: 
+                  - value: http://stephenking.com/index.html
+                    field:
+                      id: 1027326935
+                      uuid: one_author_site_uuid
+                      slug: site
+                      type: Field::URL
+                      created_at: '2021-09-15T10:53:19.423+02:00'
+                      updated_at: '2021-09-15T10:53:19.423+02:00'
+                      name:
+                        name_en: Site
+                      name_plural:
+                        name_plural_en: Sites
+                      comment: 
+                      default_value: 
+                      primary: false
+                      display_in_list: true
+                      display_in_public_list: true
+                      restricted: false
+                      style: single-required
                       unique: false
                       field_set_type: ItemType
                       multiple: false
-                      required: false
-                      row_order:
-                  - value: Steve
+                      required: true
+                      row_order: 
+                  - value:
+                      id: dummy
+                      name: bio.doc
+                      path: public/upload/one/authors/Steve/bio.doc
+                      size: 192000
+                      type: document/doc
+                      filename: bio.doc
                     field:
-                      id: 349101231
-                      uuid: one_author_nickname_uuid
-                      slug: nickname
-                      type: Field::Text
-                      created_at: '2021-09-15T11:11:21.452+02:00'
-                      updated_at: '2021-09-15T11:11:21.452+02:00'
+                      id: 1002270862
+                      uuid: one_author_bio_uuid
+                      slug: bio
+                      type: Field::File
+                      created_at: '2021-09-15T10:53:19.423+02:00'
+                      updated_at: '2021-09-15T10:53:19.423+02:00'
                       name:
-                        name_en: Nickname
+                        name_en: Biography
                       name_plural:
-                        name_plural_en: Nicknames
-                      comment:
-                      default_value:
+                        name_plural_en: Biographies
+                      comment: 
+                      default_value: 
                       primary: false
                       display_in_list: true
                       display_in_public_list: true
@@ -2555,9 +2558,7 @@ paths:
                       style: single
                       unique: false
                       field_specific_keys:
-                        maximum:
-                        minimum:
-                        formatted_text:
+                        types: 
                       field_set_type: ItemType
                       multiple: false
                       required: false
@@ -2604,13 +2605,11 @@ paths:
                   slug: twos
                   name:
                     name_en: Two
-                  display_emtpy_fields: true
                   sort_fields_slugs: []
                 - id: 416395691
                   slug: authors
                   name:
                     name_en: Author
-                  display_emtpy_fields: true
                   sort_fields_slugs: []
         '401':
           description: Unauthorized
@@ -2646,7 +2645,6 @@ paths:
                   slug: twos
                   name:
                     name_en: Two
-                  display_emtpy_fields: true
                   sort_fields_slugs: []
         '401':
           description: Unauthorized
@@ -2675,61 +2673,13 @@ paths:
               example:
                 data:
                   id: 1009501286
-                  uuid: 229e6e45-b523-4630-a514-162cfe1155d9
+                  uuid: ac04fa59-e0e6-4a3a-a81c-a346d98f523e
                   query: one
                   item_types:
                   - id: 373039959
                     slug: authors
-                    name:
-                      name_en: Author
-                    display_emtpy_fields: false
-                    items:
-                    - id: 971904516
-                      item_type_id: 373039959
-                      created_at: '2021-09-15T11:11:21.477+02:00'
-                      updated_at: '2021-09-15T11:11:21.477+02:00'
-                      primary_field:
-                        value: Stephen King
-                        field:
-                          id: 173782069
-                          uuid: one_author_name_uuid
-                          slug: name
-                          type: Field::Text
-                          created_at: '2021-09-15T11:11:21.452+02:00'
-                          updated_at: '2021-09-15T11:11:21.452+02:00'
-                          name:
-                            name_en: Name
-                          name_plural:
-                            name_plural_en: Names
-                          comment:
-                          default_value:
-                          primary: true
-                          display_in_list: true
-                          display_in_public_list: true
-                          restricted: false
-                          style: single-required
-                          unique: false
-                          field_specific_keys:
-                            maximum:
-                            minimum:
-                            formatted_text:
-                          field_set_type: ItemType
-                          multiple: false
-                          required: true
-                          row_order: 1
-                      item_summary: 'Nickname: Steve; Site: stephenking.com/index.html;
-                        Email: sk@stephenking.com; Rank: 1.88891; Collaborator: Very
-                        Old; Other Collaborator: Young apprentice; Editor: one-user@example.com;
-                        Language: Spanish; Other Language: English, Spanish; Born:
-                        21 September, 1947; Birth Time: 21 September, 1947 10:10:10;
-                        Most Active Month: June; Most Active Hour: 10h; Deceased:
-                        No; Nickname: Steve; Site: stephenking.com/index.html; Email:
-                        sk@stephenking.com; Rank: 1.88891; Collaborator: Very Old;
-                        Other Collaborator: Young apprentice; Editor: one-user@example.com;
-                        Language: Spanish; Other Language: English, Spanish; Born:
-                        21 September, 1947; Birth Time: 21 September, 1947 10:10:10;
-                        Most Active Month: June; Most Active Hour: 10h; Deceased:
-                        No'
+                    count: 1
+                    link: http://www.example.com/api/v3/980190962/search/ac04fa59-e0e6-4a3a-a81c-a346d98f523e?item_type_slug=authors
         '401':
           description: Unauthorized
       requestBody:
@@ -2787,56 +2737,8 @@ paths:
                   item_types:
                   - id: 373039959
                     slug: authors
-                    name:
-                      name_en: Author
-                    display_emtpy_fields: false
-                    items:
-                    - id: 971904516
-                      item_type_id: 373039959
-                      created_at: '2021-09-15T11:11:21.477+02:00'
-                      updated_at: '2021-09-15T11:11:21.477+02:00'
-                      primary_field:
-                        value: Stephen King
-                        field:
-                          id: 173782069
-                          uuid: one_author_name_uuid
-                          slug: name
-                          type: Field::Text
-                          created_at: '2021-09-15T11:11:21.452+02:00'
-                          updated_at: '2021-09-15T11:11:21.452+02:00'
-                          name:
-                            name_en: Name
-                          name_plural:
-                            name_plural_en: Names
-                          comment:
-                          default_value:
-                          primary: true
-                          display_in_list: true
-                          display_in_public_list: true
-                          restricted: false
-                          style: single-required
-                          unique: false
-                          field_specific_keys:
-                            maximum:
-                            minimum:
-                            formatted_text:
-                          field_set_type: ItemType
-                          multiple: false
-                          required: true
-                          row_order: 1
-                      item_summary: 'Nickname: Steve; Site: stephenking.com/index.html;
-                        Email: sk@stephenking.com; Rank: 1.88891; Collaborator: Very
-                        Old; Other Collaborator: Young apprentice; Editor: one-user@example.com;
-                        Language: Spanish; Other Language: English, Spanish; Born:
-                        21 September, 1947; Birth Time: 21 September, 1947 10:10:10;
-                        Most Active Month: June; Most Active Hour: 10h; Deceased:
-                        No; Nickname: Steve; Site: stephenking.com/index.html; Email:
-                        sk@stephenking.com; Rank: 1.88891; Collaborator: Very Old;
-                        Other Collaborator: Young apprentice; Editor: one-user@example.com;
-                        Language: Spanish; Other Language: English, Spanish; Born:
-                        21 September, 1947; Birth Time: 21 September, 1947 10:10:10;
-                        Most Active Month: June; Most Active Hour: 10h; Deceased:
-                        No'
+                    count: 1
+                    link: http://www.example.com/api/v3/980190962/search/unique-book-search-uuid?item_type_slug=authors
         '401':
           description: Unauthorized
   "/api/v3/{catalog_id}/users":
@@ -2943,7 +2845,7 @@ paths:
                   role:
                     role: admin
                     group_id: false
-                  last_signed_in_at: '2021-09-15T11:11:24.678+02:00'
+                  last_signed_in_at: '2021-09-15T10:53:22.526+02:00'
                   groups: []
         '401':
           description: Unauthorized
@@ -3002,8 +2904,8 @@ paths:
           content:
             application/json:
               example:
-                token: eyJhbGciOiJIUzI1NiJ9.eyJqdGkiOiJmMTg2MDYwYy1jYmQyLTQzNDUtYjNhOS03NTFlNGZhM2RmNGUiLCJzdWIiOiI0ODI0NDkxMzUiLCJzY3AiOiJhcGlfdjNfdXNlciIsImF1ZCI6bnVsbCwiaWF0IjoxNjMxNjk3MDg0LCJleHAiOjE2MzE3ODM0ODR9.WTcrrDwHoUgMUcmiYUAsFGC3OBeUZZDzMGF5twoNzgY
-                valid_until: '2021-09-16T10:11:24.984+02:00'
+                token: eyJhbGciOiJIUzI1NiJ9.eyJqdGkiOiJmMTg2MDYwYy1jYmQyLTQzNDUtYjNhOS03NTFlNGZhM2RmNGUiLCJzdWIiOiI0ODI0NDkxMzUiLCJzY3AiOiJhcGlfdjNfdXNlciIsImF1ZCI6bnVsbCwiaWF0IjoxNjMxNjk2MDAyLCJleHAiOjE2MzE3ODI0MDJ9.S9BfV4cOWB6Q3WyzEizbE110Av8IWAhtzNfdky2kQ5U
+                valid_until: '2021-09-16T09:53:22.871+02:00'
                 message: Authentication successful
                 code: authentication_success
         '401':
