@@ -1,0 +1,13 @@
+<div class="stats-chart">
+  <%= line_chart ['catalog_front','catalog_admin'].map { |scope|
+    {
+      name: t(".#{scope}") ,
+      data: Ahoy::Event
+        .where(name: @catalog.slug)
+        .where_props(scope: scope)
+        .where(["time > ?", @from.ago])
+        .group_by_week(:time)
+        .count
+    }
+  }, download: true %>
+</div>

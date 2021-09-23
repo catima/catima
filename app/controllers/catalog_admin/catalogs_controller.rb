@@ -21,6 +21,12 @@ class CatalogAdmin::CatalogsController < CatalogAdmin::BaseController
     end
   end
 
+  def stats
+    authorize(@catalog)
+
+    @from = 3.months
+  end
+
   private
 
   def find_catalog
