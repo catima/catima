@@ -24,8 +24,13 @@ GIT
       sinatra (>= 2.0.0, <= 3.0.0)
 
 GEM
-  remote: https://rubygems.org/
   remote: https://rails-assets.org/
+  specs:
+    rails-assets-autosize (4.0.2)
+    rails-assets-mousetrap (1.6.2)
+
+GEM
+  remote: https://rubygems.org/
   specs:
     actioncable (6.1.4.1)
       actionpack (= 6.1.4.1)
@@ -278,10 +283,10 @@ GEM
       net-ssh (>= 2.6.5, < 7.0.0)
     net-ssh (6.1.0)
     nio4r (2.5.8)
-    nokogiri (1.12.4)
+    nokogiri (1.12.5)
       mini_portile2 (~> 2.6.1)
       racc (~> 1.4)
-    nokogiri (1.12.4-x86_64-linux)
+    nokogiri (1.12.5-x86_64-linux)
       racc (~> 1.4)
     oauth2 (1.4.4)
       faraday (>= 0.8, < 2.0)
@@ -350,8 +355,6 @@ GEM
       bundler (>= 1.15.0)
       railties (= 6.1.4.1)
       sprockets-rails (>= 2.0.0)
-    rails-assets-autosize (4.0.2)
-    rails-assets-mousetrap (1.6.2)
     rails-dom-testing (2.0.3)
       activesupport (>= 4.2.0)
       nokogiri (>= 1.6)
@@ -571,7 +574,7 @@ DEPENDENCIES
   mini_magick (~> 4.11)
   minitest-reporters (~> 1.4)
   mocha (~> 1.11)
-  nokogiri (~> 1.11)
+  nokogiri (~> 1.12)
   omniauth-facebook (~> 8.0)
   omniauth-github (~> 1.4)
   omniauth-oauth2 (~> 1.7)
