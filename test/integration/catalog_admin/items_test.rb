@@ -121,10 +121,10 @@ class CatalogAdmin::ItemsTest < ActionDispatch::IntegrationTest
     click_on("Authors")
 
     assert_difference("Item.count", -1) do
-      page.accept_alert(:wait => 30) do
+      page.accept_alert(:wait => 2) do
         first("a.item-action-delete").click
       end
-      sleep 2
+      sleep 2 # Wait for page count to be correct
     end
   end
 

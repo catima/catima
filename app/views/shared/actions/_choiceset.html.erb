@@ -12,6 +12,8 @@
         I18n.locale,
         model
       )%>
+<% end %>
+<% if policy(model).destroy? %>
   <%= link_to(
         fa_icon(:trash),
         catalog_admin_choice_set_path(model.catalog, I18n.locale, model),
