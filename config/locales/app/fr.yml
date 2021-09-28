@@ -447,7 +447,7 @@ fr:
       settings: 'Catalogue'
       edit_settings: 'Éditer les paramètres du catalogue'
       api_settings: "Paramètres de l'API"
-      stats: "Statistiques"
+      stats: "Statistiques (Pages vues)"
       save_settings: 'Enregistrer'
       save_style: 'Enregistrer le style'
       no_api_logs: 'Aucun log api v3'
@@ -455,8 +455,8 @@ fr:
     catalogs:
       stats:
         catalog:
-          catalog_front: 'Front'
-          catalog_admin: 'Admin'
+          catalog_front: 'Consultations'
+          catalog_admin: 'Administration (Setup & Data)'
       api:
         api_key_description: "Une clé API donne un accès complet aux données de votre catalogue, les rôles et les autorisations sont contournés. <b>Ne partagez jamais une clé API publiquement</b>."
         api_key_doc_link: "L'ensemble des requêtes disponibles sont consultables dans la documentation"

@@ -1,5 +1,6 @@
 class React::FieldsController < React::BaseController
   include ControlsItemSorting
+  include ChoiceSetsHelper
   before_action :catalog_request_clearance
 
   InvalidItemType = Class.new(RuntimeError)
@@ -22,9 +23,9 @@ class React::FieldsController < React::BaseController
     category = find_category
     field = find_field(it, category)
 
-    inputData = field.search_data_as_hash
+    input_data = field.search_data_as_hash
     if field.is_a?(Field::ChoiceSet)
-      inputData = (!field.choice_set.not_deleted? || !field.choice_set.not_deactivated?) ? [] : filter_category_fields(field.search_data_as_hash)
+      input_data = !field.choice_set.not_deleted? || !field.choice_set.not_deactivated? ? [] : filter_category_fields(field.search_data_as_hash)
     end
 
     render(json:
@@ -36,7 +37,7 @@ class React::FieldsController < React::BaseController
                selectCondition: field.search_conditions_as_hash(params[:locale]),
                displayFieldCondition: true,
                inputType: field.type,
-               inputData: inputData,
+               inputData: input_data,
                inputOptions: field.search_options_as_hash
              })
   end

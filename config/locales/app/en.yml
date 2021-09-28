@@ -410,6 +410,7 @@ en:
   general: General
   style: Style
   api: API
+  stats: "Stats"
   export: Export
   valid: "valid"
   expired: "expired"
@@ -450,11 +451,16 @@ en:
       settings: 'Catalog settings'
       edit_settings: 'Edit catalog settings'
       api_settings: "API settings"
+      stats: "Stats (Pageview)"
       save_settings: 'Save'
       save_style: 'Save style'
       no_api_logs: No API V3 Logs
       no_entry_logs: 'No Logs'
     catalogs:
+      stats:
+        catalog:
+          catalog_front: 'Visits'
+          catalog_admin: 'Administration (Setup & Data)'
       api:
         api_key_description: "An API key give full access to the data in your catalog, roles and permissions are bypassed. <b>Never share an API key publicly</b>."
         api_key_doc_link: "All available queries can be found in the documentation"
