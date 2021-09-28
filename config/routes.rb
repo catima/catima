@@ -177,6 +177,8 @@ Rails.application.routes.draw do
     get "/_style" => "catalogs#edit_style", :as => :style
     patch "/_style" => "catalogs#update_style"
 
+    get "/stats" => "catalogs#stats"
+
     resources :groups, path: '_groups' do
       resources :memberships
     end

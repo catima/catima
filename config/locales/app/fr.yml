@@ -406,6 +406,7 @@ fr:
   general: Général
   style: Style
   api: API
+  stats: Statistiques
   export: Export
   valid: "valide"
   expired: "expiré"
@@ -446,11 +447,16 @@ fr:
       settings: 'Catalogue'
       edit_settings: 'Éditer les paramètres du catalogue'
       api_settings: "Paramètres de l'API"
+      stats: "Statistiques"
       save_settings: 'Enregistrer'
       save_style: 'Enregistrer le style'
       no_api_logs: 'Aucun log api v3'
       no_entry_logs: 'Aucun log'
     catalogs:
+      stats:
+        catalog:
+          catalog_front: 'Front'
+          catalog_admin: 'Admin'
       api:
         api_key_description: "Une clé API donne un accès complet aux données de votre catalogue, les rôles et les autorisations sont contournés. <b>Ne partagez jamais une clé API publiquement</b>."
         api_key_doc_link: "L'ensemble des requêtes disponibles sont consultables dans la documentation"

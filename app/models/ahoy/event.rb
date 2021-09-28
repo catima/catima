@@ -18,10 +18,11 @@ class Ahoy::Event < ApplicationRecord
   belongs_to :visit
   belongs_to :user, optional: true
 
-  def self.top(limit=5, from=3.months, scope=nil)
+  def self.top(limit=5, from=3.months, scope=nil, catalog_slug=nil)
     tops = select(:name).where("time > ?", from.ago)
 
     tops = tops.where('properties @> ?', { scope: scope }.to_json) if scope
+    tops = tops.where('properties @> ?', { catalog_slug: catalog_slug }.to_json) if catalog_slug
 
     tops.group(:name)
         .count

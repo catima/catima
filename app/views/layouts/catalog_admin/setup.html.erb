@@ -26,8 +26,9 @@
         <%= setup_catalog_settings_nav_link %>
         <%= setup_catalog_style_nav_link %>
         <% if @catalog.api_enabled? %>
-          <%= setup_catalog_api_link %>
+          <%= setup_catalog_api_nav_link %>
         <% end %>
+        <%= setup_catalog_stats_nav_link %>
       </ul>
     </div>
 
