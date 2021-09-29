@@ -4,35 +4,34 @@ class Catalog < ApplicationRecord
 
     def clone!
       Catalog.transaction do
-        cloned = self.dup
+        cloned = dup
 
-        cloned.created_at = nil
-        cloned.name = "Copy of #{self.name}"
-        cloned.slug = "copy-#{self.slug}"
+        cloned.name = "Copy of #{name}"
+        cloned.slug = "copy-#{slug}"
         cloned.save!
 
         # cloned.pages = nil
         # cloned.menu_items = nil (with page_id)
-        cloned.clone_pages(self.pages)
+        cloned.clone_pages(pages)
 
         # cloned.menu_items = nil (without page_id && item_type_id)
-        cloned.clone_menu_items(self.menu_items.where(item_type_id: nil, page_id: nil, parent_id: nil))
+        cloned.clone_menu_items(menu_items.where(item_type_id: nil, page_id: nil, parent_id: nil))
 
         # cloned.categories = nil
-        cloned.clone_categories!(self.all_categories)
+        cloned.clone_categories!(all_categories)
         # cloned.choice_sets = nil
-        cloned.clone_choice_sets!(self.choice_sets)
+        cloned.clone_choice_sets!(choice_sets)
 
         # cloned.item_types = nil
         # cloned.menu_items = nil (with item_type_id)
-        cloned.clone_item_types!(self.all_item_types)
+        cloned.clone_item_types!(all_item_types)
 
-        cloned.clone_categories_relations!(self.all_categories)
+        cloned.clone_categories_relations!(all_categories)
 
-        cloned.clone_item_types_relations(self.all_item_types)
+        cloned.clone_item_types_relations(all_item_types)
 
         # cloned.advanced_search_configurations = nil
-        cloned.clone_advanced_search_configurations!(self.advanced_search_configurations)
+        cloned.clone_advanced_search_configurations!(advanced_search_configurations)
         cloned
       end
     end
@@ -41,7 +40,7 @@ class Catalog < ApplicationRecord
 
     def clone_pages(original_pages)
       original_pages.each do |original_page|
-        page = self.pages.new(original_page.attributes.except("id", "reviewer_id"))
+        page = pages.new(original_page.attributes.except("id", "reviewer_id"))
         page.save(validate: false)
         page.clone_menu_items(original_page.menu_items.where(parent_id: nil))
       end
@@ -49,7 +48,7 @@ class Catalog < ApplicationRecord
 
     def clone_menu_items(original_menu_items)
       original_menu_items.each do |original_menu_item|
-        menu_item = self.menu_items.new(original_menu_item.attributes.except("id"))
+        menu_item = menu_items.new(original_menu_item.attributes.except("id"))
         menu_item.save(validate: false)
         menu_item.recursively_clone_children(original_menu_item.children)
       end
@@ -57,7 +56,7 @@ class Catalog < ApplicationRecord
 
     def clone_categories!(original_categories)
       original_categories.each do |original_category|
-        category = self.categories.new(original_category.attributes.except("id", "uuid"))
+        category = categories.new(original_category.attributes.except("id", "uuid"))
         category.save!
       end
     end
@@ -71,7 +70,7 @@ class Catalog < ApplicationRecord
 
     def clone_choice_sets!(original_choice_sets)
       original_choice_sets.each do |original_choice_set|
-        choice_set = self.choice_sets.new(original_choice_set.attributes.except("id", "uuid"))
+        choice_set = choice_sets.new(original_choice_set.attributes.except("id", "uuid"))
         choice_set.save!
 
         choice_set.clone_choices!(original_choice_set.choices.where(parent_id: nil))
@@ -80,7 +79,7 @@ class Catalog < ApplicationRecord
 
     def clone_item_types!(original_item_types)
       original_item_types.each do |original_item_type|
-        item_type = self.item_types.new(original_item_type.attributes.except("id", "item_ids", "field_ids", "item_view_ids", "menu_item_ids", "advanced_search_configuration_ids"))
+        item_type = item_types.new(original_item_type.attributes.except("id", "item_ids", "field_ids", "item_view_ids", "menu_item_ids", "advanced_search_configuration_ids"))
         item_type.save!
       end
     end
@@ -96,7 +95,7 @@ class Catalog < ApplicationRecord
 
     def clone_advanced_search_configurations!(original_advanced_search_configurations)
       original_advanced_search_configurations.each do |original_advanced_search_configuration|
-        advanced_search_configuration = self.advanced_search_configurations.new(original_advanced_search_configuration.attributes.except('id', 'item_type_id'))
+        advanced_search_configuration = advanced_search_configurations.new(original_advanced_search_configuration.attributes.except('id', 'item_type_id'))
         advanced_search_configuration.item_type_id = all_item_types.find_by(slug: original_advanced_search_configuration.item_type.slug).id
         advanced_search_configuration.fields = advanced_search_configuration.fields.transform_keys do |k|
           advanced_search_configuration.item_type.fields.find_by(slug: Field.find_by(uuid: k).slug).uuid
