@@ -39,7 +39,6 @@ class Catalog < ApplicationRecord
 
     protected
 
-    # TODO fix menu_item_ids
     def clone_pages(original_pages)
       for original_page in original_pages
         page = self.pages.new(original_page.attributes.except("id", "reviewer_id"))
