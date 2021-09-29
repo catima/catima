@@ -23,13 +23,12 @@ class Field::ImagePresenter < Field::FilePresenter
 
   def thumbnail_control(method)
     react_component(
-      'ThumbnailControl',
-      props: {
+      'ThumbnailControl/components/ThumbnailControl',
+      {
         srcRef: "item_#{method}_json",
         srcId: method,
         multiple: field.multiple
-      },
-      prerender: false
+      }
     )
   end
 

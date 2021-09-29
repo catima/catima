@@ -76,9 +76,8 @@ class Field::TextPresenter < FieldPresenter
 
   def formatted_text_component(content_ref)
     react_component(
-      'FormattedTextEditor',
-      props: { contentRef: content_ref },
-      prerender: false
+      'FormattedTextEditor/components/FormattedTextEditor',
+      { contentRef: content_ref }
     )
   end
 

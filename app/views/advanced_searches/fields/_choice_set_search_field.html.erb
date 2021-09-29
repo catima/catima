@@ -1,6 +1,6 @@
 <div class="search-container col-lg-12">
-  <%= react_component('ChoiceSetSearchContainer',
-                      props: {
+  <%= react_component('ChoiceSetSearchContainer/components/ChoiceSetSearchContainer',
+                      {
                         catalog: field.catalog.slug,
                         itemType: field.item_type.slug,
                         label: t(".any"),
@@ -23,6 +23,5 @@
                         multiple: true,
                         fieldConditionName: "advanced_search[criteria][#{field.uuid}][0][field_condition]",
                         fieldConditionData: field.search_field_conditions_as_hash
-                      },
-                      prerender: false) %>
+                      }) %>
 </div>

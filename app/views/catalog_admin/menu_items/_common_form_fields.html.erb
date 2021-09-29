@@ -4,7 +4,7 @@
 <%= f.text_field(:slug, :help => slug_help_text, :autofocus => true) %>
 
 <%= f.text_field(:title, :class => 'hide', :value => @menu_item.title_str) %>
-<%= react_component('TranslatedTextField', props: { input: 'menu_item_title', locales: catalog.valid_locales }, prerender: false) %>
+<%= react_component('TranslatedTextField/components/TranslatedTextField', { input: 'menu_item_title', locales: catalog.valid_locales }) %>
 
 
 <%= f.number_field(:rank, help: t('.rank_help')) %>
