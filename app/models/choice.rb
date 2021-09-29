@@ -56,7 +56,7 @@ class Choice < ApplicationRecord
   end
 
   def describe
-    as_json(only: %i(uuid short_name_translations long_name_translations)) \
+    as_json(only: %i(parent_id uuid short_name_translations long_name_translations)) \
       .merge("category": category.nil? ? nil : category.uuid)
   end
 
