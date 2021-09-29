@@ -4,15 +4,14 @@
   :help => t(".layers_help")
 ) do %>
   <%= f.hidden_field(:layers) %>
-  <%= react_component('GeoLayers',
-    props: {
+  <%= react_component('GeoLayers/components/GeoLayers',
+    {
       layers: f.object.geo_layers,
       options: load_geo_layers,
       inputId: "field_layers",
       placeholder: t(".layers_component_placeholder"),
       noOptionsMessage: t(".layers_component_no_options")
-    },
-    prerender: false) %>
+    }) %>
 <% end %>
 
 <%= f.form_group(
@@ -21,9 +20,8 @@
   :help => t(".bounds_help")
 ) do %>
   <%= f.hidden_field(:bounds) %>
-  <%= react_component('GeoBounds', props: {
+  <%= react_component('GeoBounds/components/GeoBounds', {
     bounds: f.object.default_bounds(-145, 185, -60, 70),
     layers: f.object.geo_layers
-  },
-  prerender: false) %>
+  }) %>
 <% end %>
