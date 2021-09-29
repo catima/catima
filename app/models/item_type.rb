@@ -22,6 +22,7 @@ class ItemType < ApplicationRecord
   include HasSQLSlug
   include Loggable
   include HasDeletion
+  include Clone
 
   has_many :items
   has_many :item_views, :dependent => :destroy

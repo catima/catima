@@ -17,6 +17,7 @@
 
 class Choice < ApplicationRecord
   include HasTranslations
+  include Clone
 
   belongs_to :catalog
   belongs_to :category, optional: true

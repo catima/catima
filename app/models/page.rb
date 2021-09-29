@@ -18,6 +18,7 @@
 class Page < ApplicationRecord
   include HasSlug
   include HasLocales
+  include Clone
 
   belongs_to :catalog
   belongs_to :creator, :class_name => "User"

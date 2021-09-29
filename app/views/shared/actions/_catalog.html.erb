@@ -11,6 +11,15 @@
         class: "btn btn-xs btn-outline-secondary catalog-action-edit",
         "data-toggle" => "tooltip", "data-placement" => "top", "title" => "Edit"
       ) %>
+  <%= link_to(
+        fa_icon(:copy),
+        duplicate_admin_catalog_path(
+          model,
+          model.valid_locale
+        ),
+        class: "btn btn-xs btn-outline-secondary item-action-duplicate",
+        "data-toggle" => "tooltip", "data-placement" => "top", "title" => t("duplicate"),
+        ) %>
   <%= deactivation_toggle(
         model,
         :admin_catalog_path,

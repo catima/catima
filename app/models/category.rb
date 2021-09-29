@@ -15,6 +15,7 @@ class Category < ApplicationRecord
   include HasFields
   include HasHumanId
   include HasDeletion
+  include Clone
 
   human_id :name
   validates_presence_of :name

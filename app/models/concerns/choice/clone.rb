@@ -1,0 +1,17 @@
+class Choice < ApplicationRecord
+  module Clone
+    extend ActiveSupport::Concern
+
+    def recursively_clone_children!(original_children)
+      for original_child in original_children
+        child = self.childrens.new(original_child.attributes.except("id", "catalog_id", "category_id", "choice_set_id"))
+        child.catalog_id = catalog_id
+        child.category_id = catalog.all_categories.find_by(name: original_child.category.name).id if original_child.category_id?
+        child.parent_id = id
+        child.save!
+
+        child.recursively_clone_children!(original_child.childrens)
+      end
+    end
+  end
+end
