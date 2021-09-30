@@ -10,27 +10,19 @@ class Catalog < ApplicationRecord
         cloned.slug = "copy-#{slug}"
         cloned.save!
 
-        # cloned.pages = nil
-        # cloned.menu_items = nil (with page_id)
         cloned.clone_pages(pages)
 
-        # cloned.menu_items = nil (without page_id && item_type_id)
         cloned.clone_menu_items(menu_items.where(item_type_id: nil, page_id: nil, parent_id: nil))
 
-        # cloned.categories = nil
         cloned.clone_categories!(all_categories)
-        # cloned.choice_sets = nil
         cloned.clone_choice_sets!(choice_sets)
 
-        # cloned.item_types = nil
-        # cloned.menu_items = nil (with item_type_id)
         cloned.clone_item_types!(all_item_types)
 
         cloned.clone_categories_relations!(all_categories)
 
         cloned.clone_item_types_relations(all_item_types)
 
-        # cloned.advanced_search_configurations = nil
         cloned.clone_advanced_search_configurations!(advanced_search_configurations)
         cloned
       end
