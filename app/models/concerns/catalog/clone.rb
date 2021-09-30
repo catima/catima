@@ -11,18 +11,12 @@ class Catalog < ApplicationRecord
         cloned.save!
 
         cloned.clone_pages(pages)
-
         cloned.clone_menu_items(menu_items.where(item_type_id: nil, page_id: nil, parent_id: nil))
-
         cloned.clone_categories!(all_categories)
         cloned.clone_choice_sets!(choice_sets)
-
         cloned.clone_item_types!(all_item_types)
-
         cloned.clone_categories_relations!(all_categories)
-
         cloned.clone_item_types_relations(all_item_types)
-
         cloned.clone_advanced_search_configurations!(advanced_search_configurations)
         cloned
       end
