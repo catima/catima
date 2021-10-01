@@ -25,6 +25,7 @@ class Catalog < ApplicationRecord
   include HasDeactivation
   include HasSlug
   include HasSQLSlug
+  include Clone
 
   belongs_to :custom_root_page, class_name: "Page", optional: true
 

@@ -19,6 +19,7 @@
 
 class MenuItem < ApplicationRecord
   include HasLocales
+  include Clone
 
   belongs_to :catalog
   belongs_to :item_type, optional: true

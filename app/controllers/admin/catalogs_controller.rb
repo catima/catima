@@ -17,6 +17,13 @@ class Admin::CatalogsController < Admin::BaseController
     end
   end
 
+  def duplicate
+    find_catalog
+    authorize(@catalog)
+    @catalog.clone!
+    redirect_to(admin_dashboard_path, :notice => duplicated_message)
+  end
+
   def edit
     find_catalog
     authorize(@catalog)
@@ -79,6 +86,10 @@ class Admin::CatalogsController < Admin::BaseController
 
   def destroyed_message
     "The “#{@catalog.name}” catalog has been deleted."
+  end
+
+  def duplicated_message
+    "The “#{@catalog.name}” catalog has been duplicated."
   end
 
   def updated_message

@@ -15,6 +15,7 @@
 class ChoiceSet < ApplicationRecord
   include HasDeactivation
   include HasDeletion
+  include Clone
 
   belongs_to :catalog
   has_many :choices, ->(set) { where(:catalog_id => set.catalog_id).order(:position) }, :dependent => :destroy

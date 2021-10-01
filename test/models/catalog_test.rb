@@ -65,4 +65,15 @@ class CatalogTest < ActiveSupport::TestCase
     c1.update(deactivated_at: nil)
     assert_not_equal(c1.slug, new_slug)
   end
+
+  test "clone!" do
+    catalog = catalogs(:two)
+    cloned = catalog.clone!
+    assert_equal(catalog.item_types.pluck(:slug), cloned.item_types.pluck(:slug))
+    assert_equal(catalog.item_types.first.fields.pluck(:name_translations), cloned.item_types.first.fields.pluck(:name_translations))
+    assert_equal(catalog.choice_sets.pluck(:name), cloned.choice_sets.pluck(:name))
+    assert_equal(catalog.menu_items.pluck(:title), cloned.menu_items.pluck(:title))
+    assert_equal(catalog.categories.pluck(:name), cloned.categories.pluck(:name))
+    assert_equal(catalog.advanced_search_configurations.pluck(:slug), cloned.advanced_search_configurations.pluck(:slug))
+  end
 end
