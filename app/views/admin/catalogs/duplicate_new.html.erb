@@ -1,4 +1,4 @@
-<% provide(:title, "Ducplicate catalog") %>
+<% provide(:title, "Duplicate catalog") %>
 
 <%= bootstrap_form_for([:duplicate, :admin, @catalog]) do |f| %>
   <%= f.text_field(:slug, :help => slug_help_text) %>
