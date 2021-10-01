@@ -47,7 +47,6 @@ class Search::ReferenceStrategy < Search::BaseStrategy
   end
 
   def search_in_ref_field(scope, criteria)
-    byebug
     ref_field = Field.find_by(uuid: criteria[:filter_field_uuid])
     return scope if ref_field.nil?
 
