@@ -17,11 +17,21 @@ class Admin::CatalogsController < Admin::BaseController
     end
   end
 
+  def duplicate_new
+    find_catalog
+    authorize(@catalog)
+  end
+
   def duplicate
     find_catalog
     authorize(@catalog)
-    @catalog.clone!
-    redirect_to(admin_dashboard_path, :notice => duplicated_message)
+    if (Catalog.all.pluck(:slug) & [params[:catalog][:slug]]).empty?
+      @catalog.clone!(params[:catalog][:slug])
+      redirect_to(admin_dashboard_path, :notice => duplicated_message)
+    else
+      @catalog.errors.add(:slug, "Slug must be unique")
+      render 'duplicate_new'
+    end
   end
 
   def edit

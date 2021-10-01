@@ -148,7 +148,8 @@ Rails.application.routes.draw do
     get "/" => "dashboard#index", :as => :dashboard
     get "/stats" => "dashboard#stats"
     resources :catalogs, :param => :slug, :except => [:index] do
-      get "duplicate", on: :member
+      get "duplicate_new", on: :member
+      patch "duplicate", on: :member
       resources :api_logs, only: [:index], on: :member
       resources :entry_logs, only: [:index], on: :member
     end

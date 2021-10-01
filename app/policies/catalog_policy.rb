@@ -42,4 +42,5 @@ class CatalogPolicy
   alias_method :setup?, :user_is_catalog_admin?
   alias_method :stats?, :user_is_catalog_admin?
   alias_method :duplicate?, :user_is_system_admin?
+  alias_method :duplicate_new?, :user_is_system_admin?
 end
