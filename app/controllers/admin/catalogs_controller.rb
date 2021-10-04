@@ -26,7 +26,7 @@ class Admin::CatalogsController < Admin::BaseController
   def duplicate
     find_catalog
     authorize(@catalog)
-    @catalog_cloner = CatalogCloner.new(@catalog, slug: params[:catalog_cloner][:slug])
+    @catalog_cloner = CatalogCloner.new(@catalog, slug: catalog_cloner_params[:slug])
     if (@catalog_cloner.call)
       redirect_to(admin_dashboard_path, :notice => duplicated_message)
     else
@@ -72,6 +72,9 @@ class Admin::CatalogsController < Admin::BaseController
     @catalog.destroy
   end
 
+  def catalog_cloner_params
+    params.require(:catalog_cloner).permit(:slug)
+  end
   def catalog_params
     params.require(:catalog).permit(
       :name,
