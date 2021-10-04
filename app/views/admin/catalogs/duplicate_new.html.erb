@@ -1,6 +1,6 @@
 <% provide(:title, "Duplicate catalog") %>
 
-<%= bootstrap_form_for([:duplicate, :admin, @catalog]) do |f| %>
+<%= bootstrap_form_for(@catalog_cloner, url: duplicate_admin_catalog_path) do |f| %>
   <%= f.text_field(:slug, :help => slug_help_text) %>
   <%= f.primary("Duplicate catalog") %>
   <%= link_to "Cancel", admin_dashboard_path, :class => "btn btn-link" %>
