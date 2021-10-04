@@ -167,7 +167,6 @@ class ReferenceSearch extends React.Component {
     const res = await axios.get(
       `/react/${this.props.catalog}/${this.props.locale}/${this.props.itemType}?simple_fields=true&page=${page}`
     )
-    console.log(res)
 
     if (!this.state.isInitialized) {
       this.setState({
