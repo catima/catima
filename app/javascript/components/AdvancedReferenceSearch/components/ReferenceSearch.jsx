@@ -101,15 +101,15 @@ class ReferenceSearch extends React.Component {
     this.setState({fields: fields})
   }
 
-  _selectFilter(value){
-    this.setState({ selectedFilter: value });
-
-    if(typeof value !== 'undefined' && value === null) {
+  _selectFilter(filter, event){
+    if(typeof event === 'undefined' || event.action !== "pop-value" || !this.props.req) {
+      if(typeof filter !== 'undefined' && filter !== null) {
+        this.setState({ selectedFilter: filter });
         this.setState({ selectedCondition: '' });
         this.setState({ selectCondition: [] });
-      this.setState({ itemTypeSearch: false });
-    } else {
-      this.setState({ itemTypeSearch: true });
+      } else {
+        this.setState({ itemTypeSearch: true });
+      }
     }
   }
 
@@ -256,6 +256,9 @@ class ReferenceSearch extends React.Component {
       delimiter=","
       loadOptions={this.loadOptions}
       debounceTimeout={800}
+      isSearchable={false}
+      isClearable={true}
+      isDisabled={this._isFilterDisabled()}
       loadingMessage={() => this.state.loadingMessage}
       additional={{
         page: 1,
