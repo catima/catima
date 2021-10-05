@@ -2,12 +2,12 @@ class Catalog < ApplicationRecord
   module Clone
     extend ActiveSupport::Concern
 
-    def clone!(new_slug)
+    def clone!(slug:)
       Catalog.transaction do
         cloned = dup
 
         cloned.name = "Copy of #{name}"
-        cloned.slug = new_slug
+        cloned.slug = slug
         cloned.save!
 
         cloned.clone_pages(pages)

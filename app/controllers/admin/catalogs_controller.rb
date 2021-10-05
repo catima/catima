@@ -75,6 +75,7 @@ class Admin::CatalogsController < Admin::BaseController
   def catalog_cloner_params
     params.require(:catalog_cloner).permit(:slug)
   end
+
   def catalog_params
     params.require(:catalog).permit(
       :name,

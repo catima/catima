@@ -2,6 +2,7 @@ class CatalogCloner
   include ActiveModel::Model
   include HasSlug
 
+  # this method is overrides HasSlug because validates_uniqueness_of is not present in Class Object
   def self.validates_uniqueness_of(*args)
   end
 
@@ -18,7 +19,7 @@ class CatalogCloner
   def call
     return unless valid?
 
-    catalog.clone!(slug)
+    catalog.clone!(slug: slug)
     self
   end
 
