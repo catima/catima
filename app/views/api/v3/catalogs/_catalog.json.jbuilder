@@ -6,6 +6,7 @@ json.primary_language catalog.primary_language
 json.other_languages catalog.other_languages
 json.requires_review catalog.requires_review
 json.catalog_access catalog_access_label(catalog)
+json.is_active active?(catalog)
 json.administrators do
   json.array! catalog.users_with_role("admin") do |user|
     json.email user.email

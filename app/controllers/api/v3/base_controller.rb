@@ -1,5 +1,6 @@
 class API::V3::BaseController < ActionController::Base
   include Pundit
+  include CatalogAdmin::CatalogsHelper
 
   respond_to :json
 
@@ -78,7 +79,10 @@ class API::V3::BaseController < ActionController::Base
   def authenticate_catalog
     authenticate_with_http_token do |token|
       @api_key = APIKey.find_by(api_key: token)
-      @authenticated_catalog = @api_key&.catalog
+      catalog = @api_key&.catalog
+      raise Pundit::NotAuthorizedError if catalog && !active?(catalog)
+
+      @authenticated_catalog = catalog
     end
   end
 
@@ -88,13 +92,11 @@ class API::V3::BaseController < ActionController::Base
 
   # Use api_v3_user Devise scope for JSON access
   def authenticate_user!(*args)
-    if authenticate_catalog
-      true
-    else
-      super and return if args.present?
+    return true if authenticate_catalog
 
-      authenticate_api_v3_user!
-    end
+    super and return if args.present?
+
+    authenticate_api_v3_user!
   end
 
   def invalid_auth_token

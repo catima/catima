@@ -105,10 +105,10 @@ class User < ApplicationRecord
 
   def public_and_accessible_catalogs
     catalog_ids =
-      Catalog.where(visible: true, restricted: false).pluck(:id) + # everyone
-      Catalog.where(visible: true, restricted: true, id: (catalog_permissions + groups.where(active: true).map(&:catalog_permissions)).flatten.select { |p| p.role_at_least?("member") }.pluck(:catalog_id)).pluck(:id) + # members+
-      Catalog.where(visible: false, restricted: true, id: (catalog_permissions + groups.where(active: true).map(&:catalog_permissions)).flatten.select { |p| p.role_at_least?("editor") }.pluck(:catalog_id)).pluck(:id) + # staff
-      Catalog.where(visible: false, restricted: false, id: (catalog_permissions + groups.where(active: true).map(&:catalog_permissions)).flatten.select { |p| p.role_at_least?("editor") }.pluck(:catalog_id)).pluck(:id) # staff
+      Catalog.where(visible: true, restricted: false, deactivated_at: nil).pluck(:id) + # everyone
+      Catalog.where(visible: true, restricted: true, deactivated_at: nil, id: (catalog_permissions + groups.where(active: true).map(&:catalog_permissions)).flatten.select { |p| p.role_at_least?("member") }.pluck(:catalog_id)).pluck(:id) + # members+
+      Catalog.where(visible: false, restricted: true, deactivated_at: nil, id: (catalog_permissions + groups.where(active: true).map(&:catalog_permissions)).flatten.select { |p| p.role_at_least?("editor") }.pluck(:catalog_id)).pluck(:id) + # staff
+      Catalog.where(visible: false, restricted: false, deactivated_at: nil, id: (catalog_permissions + groups.where(active: true).map(&:catalog_permissions)).flatten.select { |p| p.role_at_least?("editor") }.pluck(:catalog_id)).pluck(:id) # staff
     Catalog.where(id: catalog_ids)
   end
 
