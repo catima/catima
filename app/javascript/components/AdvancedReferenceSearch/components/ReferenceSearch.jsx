@@ -2,13 +2,16 @@ import React from "react";
 import axios from 'axios';
 import SelectedReferenceSearch from './SelectedReferenceSearch';
 import ItemTypesReferenceSearch from './ItemTypesReferenceSearch';
-import ReactSelect from 'react-select';
+import AsyncPaginate from 'react-select-async-paginate';
 
 class ReferenceSearch extends React.Component {
   constructor(props){
     super(props);
 
     this.state = {
+      loadingMessage: "",
+      isInitialized: false,
+      optionsList: [],
       items: [],
       fields: [],
       isLoading: false,
@@ -29,62 +32,26 @@ class ReferenceSearch extends React.Component {
     this.updateSelectCondition = this._updateSelectCondition.bind(this);
     this.addComponent = this._addComponent.bind(this);
     this.deleteComponent = this._deleteComponent.bind(this);
-    this.fetchItems = this._fetchItems.bind(this);
     this.setFields = this._setFields.bind(this);
+    this.loadOptions = this._loadOptions.bind(this);
+    this.getFilterOptions = this._getFilterOptions.bind(this);
   }
 
   componentDidMount(){
+    this._fetchLoadingMessage()
     if(typeof this.props.selectCondition !== 'undefined' && this.props.selectCondition.length !== 0) {
         this.setState({selectedCondition: this.props.selectCondition[0].key});
     }
   }
 
-  _fetchItems() {
-    if (this.state.items.length !== 0 || this.state.fields.length !== 0) {
-      return;
-    }
-
-    let config = {
-      retry: 3,
-      retryDelay: 1000,
-    };
-
+  async _fetchLoadingMessage() {
     axios.get(
-      `/react/${this.props.catalog}/${this.props.locale}/${this.props.itemType}?simple_fields=true&page=1`,
-      config
+      `/react/${this.props.catalog}/${this.props.locale}/${this.props.itemType}?simple_fields=true&page=1`
     ).then(res => {
       this.setState({
-        items: res.data.items,
-        fields: res.data.fields,
-        isLoading: false,
         loadingMessage: res.data.loading_message
       });
-    });
-
-    // Retry failed requests
-    axios.interceptors.response.use(undefined, (err) => {
-      let config = err.config;
-
-      if(!config || !config.retry) return Promise.reject(err);
-
-      config.__retryCount = config.__retryCount || 0;
-
-      if(config.__retryCount >= config.retry) {
-        return Promise.reject(err);
-      }
-
-      config.__retryCount += 1;
-
-      let backoff = new Promise(function(resolve) {
-        setTimeout(function() {
-          resolve();
-        }, config.retryDelay || 1);
-      });
-
-      return backoff.then(function() {
-        return axios(config);
-      });
-    });
+    })
   }
 
   _buildInputNameCondition(condition) {
@@ -136,10 +103,9 @@ class ReferenceSearch extends React.Component {
 
   _selectFilter(value){
     this.setState({ selectedFilter: value });
-
     if(typeof value !== 'undefined' && value === null) {
-        this.setState({ selectedCondition: '' });
-        this.setState({ selectCondition: [] });
+      this.setState({ selectedCondition: '' });
+      this.setState({ selectCondition: [] });
       this.setState({ itemTypeSearch: false });
     } else {
       this.setState({ itemTypeSearch: true });
@@ -169,11 +135,60 @@ class ReferenceSearch extends React.Component {
     }
   }
 
+  async _loadOptions(search, loadedOptions, {page}) {
+    if (this.state.optionsList.length < 25 && this.state.isInitialized) {
+      if (search.length > 0) {
+        var regexExp = new RegExp(search, 'i')
+
+        var items = this.state.optionsList.filter(function (item) {
+          return item.label !== null && item.label.match(regexExp) !== null && item.label.match(regexExp).length > 0
+        });
+        console.log('1')
+        return {
+          options: items,
+          hasMore: false,
+          additional: {
+            page: page,
+          },
+        };
+      }
+      return {
+        options: this.getFilterOptions(),
+        hasMore: this.state.fields.length === 25,
+        additional: {
+          page: page,
+        },
+      };
+    }
+
+
+    const res = await axios.get(
+      `/react/${this.props.catalog}/${this.props.locale}/${this.props.itemType}?simple_fields=true&page=${page}`
+    )
+    if (!this.state.isInitialized) {
+      this.setState({
+        items: res.data.items,
+        fields: res.data.fields,
+        isLoading: false,
+        loadingMessage: res.data.loading_message,
+        isInitialized: search.length === 0,
+        optionsList: res.data.fields.map(field => this._getJSONFilter(field))
+      });
+    }
+    return {
+      options: this.getFilterOptions(),
+      hasMore: false,
+      additional: {
+        page: page + 1,
+      },
+    };
+  }
+
   _getJSONFilter(field) {
     return {value: field.uuid, label: field.name};
   }
 
-  _getConditionOptions(){
+  _getConditionOptions() {
     var optionsList = [];
     optionsList = this.state.selectCondition.map(item =>
       this._getJSONItem(item)
@@ -232,18 +247,25 @@ class ReferenceSearch extends React.Component {
   }
 
   renderFilter(){
-    return <ReactSelect
+    return <AsyncPaginate
       className="single-reference-filter"
-      name={this.props.referenceFilterName}
+      delimiter=","
+      loadOptions={this.loadOptions}
+      debounceTimeout={800}
       isSearchable={false}
       isClearable={true}
       isDisabled={this._isFilterDisabled()}
+      loadingMessage={() => this.state.loadingMessage}
+      additional={{
+        page: 1,
+      }}
+      name={this.props.referenceFilterName}
       value={this.state.selectedFilter}
       onChange={this.selectFilter}
       options={this._getFilterOptions()}
       placeholder={this.state.filterPlaceholder}
       noOptionsMessage={this._getNoOptionsMessage()}
-      onFocus={this.fetchItems} />
+    />
   }
 
   renderFieldConditionElement(){
@@ -280,8 +302,7 @@ class ReferenceSearch extends React.Component {
             <div className="col-lg-11 reference-input-container">
               <div className="row">
                 <div className="col-lg-7">
-                  { this.state.isLoading && <div className="loader"></div> }
-                  { this.renderSearch() }
+                  {this.renderSearch()}
                 </div>
                 <div className="col-lg-5">{ this.renderFilter() }</div>
               </div>
