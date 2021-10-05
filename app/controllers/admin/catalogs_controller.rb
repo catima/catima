@@ -17,11 +17,21 @@ class Admin::CatalogsController < Admin::BaseController
     end
   end
 
+  def duplicate_new
+    find_catalog
+    authorize(@catalog)
+    @catalog_cloner = CatalogCloner.new(@catalog)
+  end
+
   def duplicate
     find_catalog
     authorize(@catalog)
-    @catalog.clone!
-    redirect_to(admin_dashboard_path, :notice => duplicated_message)
+    @catalog_cloner = CatalogCloner.new(@catalog, slug: catalog_cloner_params[:slug])
+    if @catalog_cloner.call
+      redirect_to(admin_dashboard_path, :notice => duplicated_message)
+    else
+      render 'duplicate_new'
+    end
   end
 
   def edit
@@ -60,6 +70,10 @@ class Admin::CatalogsController < Admin::BaseController
   def destroy_catalog
     @catalog.update(custom_root_page_id: nil)
     @catalog.destroy
+  end
+
+  def catalog_cloner_params
+    params.require(:catalog_cloner).permit(:slug)
   end
 
   def catalog_params

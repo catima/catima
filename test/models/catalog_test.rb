@@ -68,7 +68,7 @@ class CatalogTest < ActiveSupport::TestCase
 
   test "clone!" do
     catalog = catalogs(:two)
-    cloned = catalog.clone!
+    cloned = catalog.clone!(slug: "newuniqueslug")
     assert_equal(catalog.item_types.pluck(:slug), cloned.item_types.pluck(:slug))
     assert_equal(catalog.item_types.first.fields.pluck(:name_translations), cloned.item_types.first.fields.pluck(:name_translations))
     assert_equal(catalog.choice_sets.pluck(:name), cloned.choice_sets.pluck(:name))
