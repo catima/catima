@@ -41,17 +41,19 @@ class ItemList
   end
 
   def items
-    unpaginated_list_items = unpaginaged_items.includes(:item_type)
-                                              .includes(:item_type => :fields)
-                                              .page(page)
-                                              .per(per)
+    @items ||= begin
+                 unpaginated_list_items = unpaginaged_items.includes(:item_type)
+                                                           .includes(:item_type => :fields)
+                                                           .page(page)
+                                                           .per(per)
 
-    item_type ||= unpaginated_list_items.first&.item_type
-    return unpaginated_list_items if item_type.nil?
+                 item_type ||= unpaginated_list_items.first&.item_type
+                 return unpaginated_list_items if item_type.nil?
 
-    item_type ||= (catalog.presence || @selected_catalog).item_types.first
-    return unpaginated_list_items if item_type.primary_human_readable_field.nil?
+                 item_type ||= (catalog.presence || @selected_catalog).item_types.first
+                 return unpaginated_list_items if item_type.primary_human_readable_field.nil?
 
-    unpaginated_list_items.order(Arel.sql("items.data->>'#{item_type.primary_human_readable_field.uuid}'"))
+                 unpaginated_list_items.order(Arel.sql("items.data->>'#{item_type.primary_human_readable_field.uuid}'"))
+               end
   end
 end

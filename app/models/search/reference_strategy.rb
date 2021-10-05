@@ -51,7 +51,7 @@ class Search::ReferenceStrategy < Search::BaseStrategy
     return scope if ref_field.nil?
 
     if ref_field.type == "Field::ChoiceSet"
-      criteria[:category_field] = ref_field.slug
+      criteria[:category_field] = ref_field.uuid
       criteria[:category_criteria] = criteria
       criteria[:default] = criteria[:exact]
     end
