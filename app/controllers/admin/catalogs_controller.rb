@@ -27,7 +27,7 @@ class Admin::CatalogsController < Admin::BaseController
     find_catalog
     authorize(@catalog)
     @catalog_cloner = CatalogCloner.new(@catalog, slug: catalog_cloner_params[:slug])
-    if (@catalog_cloner.call)
+    if @catalog_cloner.call
       redirect_to(admin_dashboard_path, :notice => duplicated_message)
     else
       render 'duplicate_new'
