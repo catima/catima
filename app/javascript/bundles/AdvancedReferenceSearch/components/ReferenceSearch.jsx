@@ -101,15 +101,14 @@ class ReferenceSearch extends React.Component {
     this.setState({fields: fields})
   }
 
-  _selectFilter(filter, event){
-    if(typeof event === 'undefined' || event.action !== "pop-value" || !this.props.req) {
-      if(typeof filter !== 'undefined' && filter !== null) {
-        this.setState({ selectedFilter: filter });
-        this.setState({ selectedCondition: '' });
-        this.setState({ selectCondition: [] });
-      } else {
-        this.setState({ itemTypeSearch: true });
-      }
+  _selectFilter(value){
+    this.setState({ selectedFilter: value });
+    if(typeof value !== 'undefined' && value === null) {
+      this.setState({ selectedCondition: '' });
+      this.setState({ selectCondition: [] });
+      this.setState({ itemTypeSearch: false });
+    } else {
+      this.setState({ itemTypeSearch: true });
     }
   }
 
@@ -144,7 +143,7 @@ class ReferenceSearch extends React.Component {
         var items = this.state.optionsList.filter(function (item) {
           return item.label !== null && item.label.match(regexExp) !== null && item.label.match(regexExp).length > 0
         });
-
+        console.log('1')
         return {
           options: items,
           hasMore: false,
@@ -153,7 +152,6 @@ class ReferenceSearch extends React.Component {
           },
         };
       }
-
       return {
         options: this.getFilterOptions(),
         hasMore: this.state.fields.length === 25,
@@ -167,7 +165,6 @@ class ReferenceSearch extends React.Component {
     const res = await axios.get(
       `/react/${this.props.catalog}/${this.props.locale}/${this.props.itemType}?simple_fields=true&page=${page}`
     )
-
     if (!this.state.isInitialized) {
       this.setState({
         items: res.data.items,
@@ -178,10 +175,9 @@ class ReferenceSearch extends React.Component {
         optionsList: res.data.fields.map(field => this._getJSONFilter(field))
       });
     }
-
     return {
       options: this.getFilterOptions(),
-      hasMore: res.data.hasMore,
+      hasMore: false,
       additional: {
         page: page + 1,
       },
