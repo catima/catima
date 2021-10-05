@@ -200,8 +200,8 @@ class AdvancedSearch::ReferenceFieldTest < ActionDispatch::IntegrationTest
     within(".single-reference-filter", match: :first) do
       find(".css-vj8t7z").click # Click on the filter input
 
-      within(".css-11unzgr") do # Within the filter list
-        find('div', text: "Email", match: :first).click
+      within(".css-15k3avv") do # Within the filter list
+        find('div.css-v73v8k', text: "Email", match: :first).click
       end
     end
 
@@ -228,8 +228,8 @@ class AdvancedSearch::ReferenceFieldTest < ActionDispatch::IntegrationTest
     within all(".single-reference-filter")[1] do
       find(".css-vj8t7z").click # Click on the filter input
 
-      within(".css-11unzgr") do # Within the filter list
-        find('div', text: "Most Active Month", match: :first).click
+      within(".css-15k3avv") do # Within the filter list
+        find('div.css-v73v8k', text: "Most Active Month", match: :first).click
       end
     end
 
@@ -254,8 +254,8 @@ class AdvancedSearch::ReferenceFieldTest < ActionDispatch::IntegrationTest
     within("#advanced_search_criteria_one_author_other_collaborators_uuid_0_exact-editor") do
       find(".css-vj8t7z").click # Click on the filter input
 
-      within(".css-11unzgr") do # Within the filter list
-        find('div', text: "Very Old", match: :first).click
+      within(".css-15k3avv") do # Within the filter list
+        find('div.css-v73v8k', text: "Very Old", match: :first).click
       end
     end
 
