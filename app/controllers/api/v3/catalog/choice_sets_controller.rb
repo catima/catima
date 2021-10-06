@@ -12,6 +12,6 @@ class API::V3::Catalog::ChoiceSetsController < API::V3::Catalog::BaseController
   private
 
   def find_choice_sets
-    @choice_sets = @catalog.choice_sets
+    @choice_sets = @catalog.choice_sets.not_deleted
   end
 end

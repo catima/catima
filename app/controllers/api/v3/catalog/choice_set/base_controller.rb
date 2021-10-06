@@ -4,6 +4,6 @@ class API::V3::Catalog::ChoiceSet::BaseController < API::V3::Catalog::BaseContro
   private
 
   def find_choice_set
-    @choice_set = @catalog.choice_sets.find(params[:choice_set_id])
+    @choice_set = @catalog.choice_sets.not_deleted.not_deactivated.find(params[:choice_set_id])
   end
 end
