@@ -24,8 +24,13 @@ GIT
       sinatra (>= 2.0.0, <= 3.0.0)
 
 GEM
-  remote: https://rubygems.org/
   remote: https://rails-assets.org/
+  specs:
+    rails-assets-autosize (4.0.2)
+    rails-assets-mousetrap (1.6.2)
+
+GEM
+  remote: https://rubygems.org/
   specs:
     actioncable (6.1.4.1)
       actionpack (= 6.1.4.1)
@@ -350,8 +355,6 @@ GEM
       bundler (>= 1.15.0)
       railties (= 6.1.4.1)
       sprockets-rails (>= 2.0.0)
-    rails-assets-autosize (4.0.2)
-    rails-assets-mousetrap (1.6.2)
     rails-dom-testing (2.0.3)
       activesupport (>= 4.2.0)
       nokogiri (>= 1.6)
@@ -456,7 +459,7 @@ GEM
     shoulda-context (2.0.0)
     shoulda-matchers (4.4.1)
       activesupport (>= 4.2.0)
-    sidekiq (6.1.2)
+    sidekiq (6.2.1)
       connection_pool (>= 2.2.2)
       rack (~> 2.0)
       redis (>= 4.2.0)
@@ -608,7 +611,7 @@ DEPENDENCIES
   selenium-webdriver (~> 3.142)
   shoulda-context (~> 2.0)
   shoulda-matchers (~> 4.4)
-  sidekiq (~> 6.1)
+  sidekiq (~> 6.2)
   simplecov (~> 0.20)
   sinatra (~> 2.1)
   spring (~> 2.1)
