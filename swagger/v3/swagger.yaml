@@ -380,7 +380,7 @@ paths:
               example:
                 data:
                   id: 980190963
-                  uuid: e009c157-b5d8-451e-ae97-8f0b8156566a
+                  uuid: 4cc92d03-e417-4372-9511-37619b5a7b57
                   item_types: []
         '401':
           description: Unauthorized
@@ -436,8 +436,8 @@ paths:
                     items:
                     - id: 971904516
                       item_type_id: 373039959
-                      created_at: '2021-10-06T10:37:42.956+02:00'
-                      updated_at: '2021-10-06T10:37:42.956+02:00'
+                      created_at: '2021-10-06T10:47:32.839+02:00'
+                      updated_at: '2021-10-06T10:47:32.839+02:00'
                       primary_field:
                         value: Stephen King
                         field:
@@ -445,8 +445,8 @@ paths:
                           uuid: one_author_name_uuid
                           slug: name
                           type: Field::Text
-                          created_at: '2021-10-06T10:37:42.961+02:00'
-                          updated_at: '2021-10-06T10:37:42.961+02:00'
+                          created_at: '2021-10-06T10:47:32.845+02:00'
+                          updated_at: '2021-10-06T10:47:32.845+02:00'
                           name:
                             name_en: Name
                           name_plural:
@@ -481,8 +481,8 @@ paths:
                         Most Active Month: June; Most Active Hour: 10h'
                     - id: 42941060
                       item_type_id: 373039959
-                      created_at: '2021-10-06T10:37:42.956+02:00'
-                      updated_at: '2021-10-06T10:37:42.956+02:00'
+                      created_at: '2021-10-06T10:47:32.839+02:00'
+                      updated_at: '2021-10-06T10:47:32.839+02:00'
                       primary_field:
                         value: Very Old
                         field:
@@ -490,8 +490,8 @@ paths:
                           uuid: one_author_name_uuid
                           slug: name
                           type: Field::Text
-                          created_at: '2021-10-06T10:37:42.961+02:00'
-                          updated_at: '2021-10-06T10:37:42.961+02:00'
+                          created_at: '2021-10-06T10:47:32.845+02:00'
+                          updated_at: '2021-10-06T10:47:32.845+02:00'
                           name:
                             name_en: Name
                           name_plural:
@@ -522,8 +522,8 @@ paths:
                         Hour: 01h'
                     - id: 756291218
                       item_type_id: 373039959
-                      created_at: '2021-10-06T10:37:42.956+02:00'
-                      updated_at: '2021-10-06T10:37:42.956+02:00'
+                      created_at: '2021-10-06T10:47:32.839+02:00'
+                      updated_at: '2021-10-06T10:47:32.839+02:00'
                       primary_field:
                         value: Very Young
                         field:
@@ -531,8 +531,8 @@ paths:
                           uuid: one_author_name_uuid
                           slug: name
                           type: Field::Text
-                          created_at: '2021-10-06T10:37:42.961+02:00'
-                          updated_at: '2021-10-06T10:37:42.961+02:00'
+                          created_at: '2021-10-06T10:47:32.845+02:00'
+                          updated_at: '2021-10-06T10:47:32.845+02:00'
                           name:
                             name_en: Name
                           name_plural:
@@ -558,8 +558,8 @@ paths:
                         Stephen King, Very Old; Editor: one-admin@example.com'
                     - id: 817242637
                       item_type_id: 373039959
-                      created_at: '2021-10-06T10:37:42.956+02:00'
-                      updated_at: '2021-10-06T10:37:42.956+02:00'
+                      created_at: '2021-10-06T10:47:32.839+02:00'
+                      updated_at: '2021-10-06T10:47:32.839+02:00'
                       primary_field:
                         value: Young apprentice
                         field:
@@ -567,8 +567,8 @@ paths:
                           uuid: one_author_name_uuid
                           slug: name
                           type: Field::Text
-                          created_at: '2021-10-06T10:37:42.961+02:00'
-                          updated_at: '2021-10-06T10:37:42.961+02:00'
+                          created_at: '2021-10-06T10:47:32.845+02:00'
+                          updated_at: '2021-10-06T10:47:32.845+02:00'
                           name:
                             name_en: Name
                           name_plural:
@@ -594,8 +594,8 @@ paths:
                         Stephen King, Very Old; Editor: one-admin@example.com'
                     - id: 525911936
                       item_type_id: 373039959
-                      created_at: '2021-10-06T10:37:42.956+02:00'
-                      updated_at: '2021-10-06T10:37:42.956+02:00'
+                      created_at: '2021-10-06T10:47:32.839+02:00'
+                      updated_at: '2021-10-06T10:47:32.839+02:00'
                       primary_field:
                         value: 
                         field:
@@ -603,8 +603,8 @@ paths:
                           uuid: one_author_name_uuid
                           slug: name
                           type: Field::Text
-                          created_at: '2021-10-06T10:37:42.961+02:00'
-                          updated_at: '2021-10-06T10:37:42.961+02:00'
+                          created_at: '2021-10-06T10:47:32.845+02:00'
+                          updated_at: '2021-10-06T10:47:32.845+02:00'
                           name:
                             name_en: Name
                           name_plural:
@@ -630,8 +630,8 @@ paths:
                       thumbnail: "/thumbs/one/250x250/fill/0,0,100,100/authors/picture.jpg"
                     - id: 722088510
                       item_type_id: 373039959
-                      created_at: '2021-10-06T10:37:42.956+02:00'
-                      updated_at: '2021-10-06T10:37:42.956+02:00'
+                      created_at: '2021-10-06T10:47:32.839+02:00'
+                      updated_at: '2021-10-06T10:47:32.839+02:00'
                       primary_field:
                         value: 
                         field:
@@ -639,8 +639,8 @@ paths:
                           uuid: one_author_name_uuid
                           slug: name
                           type: Field::Text
-                          created_at: '2021-10-06T10:37:42.961+02:00'
-                          updated_at: '2021-10-06T10:37:42.961+02:00'
+                          created_at: '2021-10-06T10:47:32.845+02:00'
+                          updated_at: '2021-10-06T10:47:32.845+02:00'
                           name:
                             name_en: Name
                           name_plural:
@@ -752,8 +752,8 @@ paths:
                   uuid: language_category_uuid
                   slug: language-origin
                   type: Field::Text
-                  created_at: '2021-10-06T10:37:42.961+02:00'
-                  updated_at: '2021-10-06T10:37:42.961+02:00'
+                  created_at: '2021-10-06T10:47:32.845+02:00'
+                  updated_at: '2021-10-06T10:47:32.845+02:00'
                   name:
                     name_en: Language origin
                   name_plural:
@@ -778,8 +778,8 @@ paths:
                   uuid: one_author_language_earliest_recollection_uuid
                   slug: language-earliest-recollection
                   type: Field::DateTime
-                  created_at: '2021-10-06T10:37:42.961+02:00'
-                  updated_at: '2021-10-06T10:37:42.961+02:00'
+                  created_at: '2021-10-06T10:47:32.845+02:00'
+                  updated_at: '2021-10-06T10:47:32.845+02:00'
                   name:
                     name_en: Language earlier recollection
                   name_plural:
@@ -964,7 +964,7 @@ paths:
                 data:
                 - id: 671137802
                   name: Languages
-                  created_at: '2021-10-06T10:37:42.944+02:00'
+                  created_at: '2021-10-06T10:47:32.827+02:00'
                   is_active: true
         '401':
           description: Unauthorized
@@ -1007,9 +1007,9 @@ paths:
                 - id: 298486374
                   name: Group for catalog two
                   description: This group belongs to catalog two
-                  active: true
+                  is_active: true
+                  is_public: false
                   role: member
-                  public: false
                   users:
                   - id: 197214824
                     email: two-user@example.com
@@ -1020,9 +1020,9 @@ paths:
                 - id: 678837066
                   name: Inactive group for catalog two
                   description: This inactive group belongs to catalog two
-                  active: false
+                  is_active: false
+                  is_public: true
                   role: user
-                  public: true
                   users:
                   - id: 307782177
                     email: group-two@example.com
@@ -1079,8 +1079,8 @@ paths:
                   uuid: one_author_name_uuid
                   slug: name
                   type: Field::Text
-                  created_at: '2021-10-06T10:37:42.961+02:00'
-                  updated_at: '2021-10-06T10:37:42.961+02:00'
+                  created_at: '2021-10-06T10:47:32.845+02:00'
+                  updated_at: '2021-10-06T10:47:32.845+02:00'
                   name:
                     name_en: Name
                   name_plural:
@@ -1105,8 +1105,8 @@ paths:
                   uuid: one_author_age_uuid
                   slug: age
                   type: Field::Int
-                  created_at: '2021-10-06T10:37:42.961+02:00'
-                  updated_at: '2021-10-06T10:37:42.961+02:00'
+                  created_at: '2021-10-06T10:47:32.845+02:00'
+                  updated_at: '2021-10-06T10:47:32.845+02:00'
                   name:
                     name_en: Age
                   name_plural:
@@ -1131,8 +1131,8 @@ paths:
                   uuid: one_author_site_uuid
                   slug: site
                   type: Field::URL
-                  created_at: '2021-10-06T10:37:42.961+02:00'
-                  updated_at: '2021-10-06T10:37:42.961+02:00'
+                  created_at: '2021-10-06T10:47:32.845+02:00'
+                  updated_at: '2021-10-06T10:47:32.845+02:00'
                   name:
                     name_en: Site
                   name_plural:
@@ -1153,8 +1153,8 @@ paths:
                   uuid: one_author_email_uuid
                   slug: email
                   type: Field::Email
-                  created_at: '2021-10-06T10:37:42.961+02:00'
-                  updated_at: '2021-10-06T10:37:42.961+02:00'
+                  created_at: '2021-10-06T10:47:32.845+02:00'
+                  updated_at: '2021-10-06T10:47:32.845+02:00'
                   name:
                     name_en: Email
                   name_plural:
@@ -1175,8 +1175,8 @@ paths:
                   uuid: one_author_rank_uuid
                   slug: rank
                   type: Field::Decimal
-                  created_at: '2021-10-06T10:37:42.961+02:00'
-                  updated_at: '2021-10-06T10:37:42.961+02:00'
+                  created_at: '2021-10-06T10:47:32.845+02:00'
+                  updated_at: '2021-10-06T10:47:32.845+02:00'
                   name:
                     name_en: Rank
                   name_plural:
@@ -1200,8 +1200,8 @@ paths:
                   uuid: one_author_collaborator_uuid
                   slug: collaborator
                   type: Field::Reference
-                  created_at: '2021-10-06T10:37:42.961+02:00'
-                  updated_at: '2021-10-06T10:37:42.961+02:00'
+                  created_at: '2021-10-06T10:47:32.845+02:00'
+                  updated_at: '2021-10-06T10:47:32.845+02:00'
                   name:
                     name_en: Collaborator
                   name_plural:
@@ -1224,8 +1224,8 @@ paths:
                   uuid: one_author_other_collaborators_uuid
                   slug: other-collaborator
                   type: Field::Reference
-                  created_at: '2021-10-06T10:37:42.961+02:00'
-                  updated_at: '2021-10-06T10:37:42.961+02:00'
+                  created_at: '2021-10-06T10:47:32.845+02:00'
+                  updated_at: '2021-10-06T10:47:32.845+02:00'
                   name:
                     name_en: Other Collaborator
                   name_plural:
@@ -1248,8 +1248,8 @@ paths:
                   uuid: one_author_bio_uuid
                   slug: bio
                   type: Field::File
-                  created_at: '2021-10-06T10:37:42.961+02:00'
-                  updated_at: '2021-10-06T10:37:42.961+02:00'
+                  created_at: '2021-10-06T10:47:32.845+02:00'
+                  updated_at: '2021-10-06T10:47:32.845+02:00'
                   name:
                     name_en: Biography
                   name_plural:
@@ -1272,8 +1272,8 @@ paths:
                   uuid: one_author_editor_uuid
                   slug: editor
                   type: Field::Editor
-                  created_at: '2021-10-06T10:37:42.961+02:00'
-                  updated_at: '2021-10-06T10:37:42.961+02:00'
+                  created_at: '2021-10-06T10:47:32.845+02:00'
+                  updated_at: '2021-10-06T10:47:32.845+02:00'
                   name:
                     name_en: Editor
                   name_plural:
@@ -1297,8 +1297,8 @@ paths:
                   uuid: one_author_language_uuid
                   slug: language
                   type: Field::ChoiceSet
-                  created_at: '2021-10-06T10:37:42.961+02:00'
-                  updated_at: '2021-10-06T10:37:42.961+02:00'
+                  created_at: '2021-10-06T10:47:32.845+02:00'
+                  updated_at: '2021-10-06T10:47:32.845+02:00'
                   name:
                     name_en: Language
                   name_plural:
@@ -1321,8 +1321,8 @@ paths:
                   uuid: one_author_other_languages_uuid
                   slug: other-language
                   type: Field::ChoiceSet
-                  created_at: '2021-10-06T10:37:42.961+02:00'
-                  updated_at: '2021-10-06T10:37:42.961+02:00'
+                  created_at: '2021-10-06T10:47:32.845+02:00'
+                  updated_at: '2021-10-06T10:47:32.845+02:00'
                   name:
                     name_en: Other Language
                   name_plural:
@@ -1345,8 +1345,8 @@ paths:
                   uuid: one_author_born_uuid
                   slug: born
                   type: Field::DateTime
-                  created_at: '2021-10-06T10:37:42.961+02:00'
-                  updated_at: '2021-10-06T10:37:42.961+02:00'
+                  created_at: '2021-10-06T10:47:32.845+02:00'
+                  updated_at: '2021-10-06T10:47:32.845+02:00'
                   name:
                     name_en: Born
                   name_plural:
@@ -1369,8 +1369,8 @@ paths:
                   uuid: one_author_birth_time_uuid
                   slug: birth-time
                   type: Field::DateTime
-                  created_at: '2021-10-06T10:37:42.961+02:00'
-                  updated_at: '2021-10-06T10:37:42.961+02:00'
+                  created_at: '2021-10-06T10:47:32.845+02:00'
+                  updated_at: '2021-10-06T10:47:32.845+02:00'
                   name:
                     name_en: Birth Time
                   name_plural:
@@ -1393,8 +1393,8 @@ paths:
                   uuid: one_author_birth_month_uuid
                   slug: birth-month
                   type: Field::DateTime
-                  created_at: '2021-10-06T10:37:42.961+02:00'
-                  updated_at: '2021-10-06T10:37:42.961+02:00'
+                  created_at: '2021-10-06T10:47:32.845+02:00'
+                  updated_at: '2021-10-06T10:47:32.845+02:00'
                   name:
                     name_en: Birth Month
                   name_plural:
@@ -1417,8 +1417,8 @@ paths:
                   uuid: one_author_most_active_month_uuid
                   slug: most-active-month
                   type: Field::DateTime
-                  created_at: '2021-10-06T10:37:42.961+02:00'
-                  updated_at: '2021-10-06T10:37:42.961+02:00'
+                  created_at: '2021-10-06T10:47:32.845+02:00'
+                  updated_at: '2021-10-06T10:47:32.845+02:00'
                   name:
                     name_en: Most Active Month
                   name_plural:
@@ -1441,8 +1441,8 @@ paths:
                   uuid: one_author_most_active_hour_uuid
                   slug: most-active-hour
                   type: Field::DateTime
-                  created_at: '2021-10-06T10:37:42.961+02:00'
-                  updated_at: '2021-10-06T10:37:42.961+02:00'
+                  created_at: '2021-10-06T10:47:32.845+02:00'
+                  updated_at: '2021-10-06T10:47:32.845+02:00'
                   name:
                     name_en: Most Active Hour
                   name_plural:
@@ -1465,8 +1465,8 @@ paths:
                   uuid: one_author_birthplace_uuid
                   slug: birthplace
                   type: Field::Geometry
-                  created_at: '2021-10-06T10:37:42.961+02:00'
-                  updated_at: '2021-10-06T10:37:42.961+02:00'
+                  created_at: '2021-10-06T10:47:32.845+02:00'
+                  updated_at: '2021-10-06T10:47:32.845+02:00'
                   name:
                     name_en: Birthplace
                   name_plural:
@@ -1490,8 +1490,8 @@ paths:
                   uuid: one_author_picture_uuid
                   slug: picture
                   type: Field::Image
-                  created_at: '2021-10-06T10:37:42.961+02:00'
-                  updated_at: '2021-10-06T10:37:42.961+02:00'
+                  created_at: '2021-10-06T10:47:32.845+02:00'
+                  updated_at: '2021-10-06T10:47:32.845+02:00'
                   name:
                     name_en: Picture
                   name_plural:
@@ -1515,8 +1515,8 @@ paths:
                   uuid: one_author_picture_inactive_legend_uuid
                   slug: picture_inactive_legend
                   type: Field::Image
-                  created_at: '2021-10-06T10:37:42.961+02:00'
-                  updated_at: '2021-10-06T10:37:42.961+02:00'
+                  created_at: '2021-10-06T10:47:32.845+02:00'
+                  updated_at: '2021-10-06T10:47:32.845+02:00'
                   name:
                     name_en: New picture
                   name_plural:
@@ -1540,8 +1540,8 @@ paths:
                   uuid: one_author_deceased_uuid
                   slug: deceased
                   type: Field::Boolean
-                  created_at: '2021-10-06T10:37:42.961+02:00'
-                  updated_at: '2021-10-06T10:37:42.961+02:00'
+                  created_at: '2021-10-06T10:47:32.845+02:00'
+                  updated_at: '2021-10-06T10:47:32.845+02:00'
                   name:
                     name_en: Deceased
                   name_plural:
@@ -1562,8 +1562,8 @@ paths:
                   uuid: one_author_nickname_uuid
                   slug: nickname
                   type: Field::Text
-                  created_at: '2021-10-06T10:37:42.961+02:00'
-                  updated_at: '2021-10-06T10:37:42.961+02:00'
+                  created_at: '2021-10-06T10:47:32.845+02:00'
+                  updated_at: '2021-10-06T10:47:32.845+02:00'
                   name:
                     name_en: Nickname
                   name_plural:
@@ -1624,8 +1624,8 @@ paths:
                   uuid: one_author_birthplace_uuid
                   slug: birthplace
                   type: Field::Geometry
-                  created_at: '2021-10-06T10:37:42.961+02:00'
-                  updated_at: '2021-10-06T10:37:42.961+02:00'
+                  created_at: '2021-10-06T10:47:32.845+02:00'
+                  updated_at: '2021-10-06T10:47:32.845+02:00'
                   name:
                     name_en: Birthplace
                   name_plural:
@@ -1704,8 +1704,8 @@ paths:
                 data:
                 - id: 722088510
                   item_type_id: 373039959
-                  created_at: '2021-10-06T10:37:42.956+02:00'
-                  updated_at: '2021-10-06T10:37:42.956+02:00'
+                  created_at: '2021-10-06T10:47:32.839+02:00'
+                  updated_at: '2021-10-06T10:47:32.839+02:00'
                   primary_field:
                     value: 
                     field:
@@ -1713,8 +1713,8 @@ paths:
                       uuid: one_author_name_uuid
                       slug: name
                       type: Field::Text
-                      created_at: '2021-10-06T10:37:42.961+02:00'
-                      updated_at: '2021-10-06T10:37:42.961+02:00'
+                      created_at: '2021-10-06T10:47:32.845+02:00'
+                      updated_at: '2021-10-06T10:47:32.845+02:00'
                       name:
                         name_en: Name
                       name_plural:
@@ -1739,8 +1739,8 @@ paths:
                     Empty Author'
                 - id: 525911936
                   item_type_id: 373039959
-                  created_at: '2021-10-06T10:37:42.956+02:00'
-                  updated_at: '2021-10-06T10:37:42.956+02:00'
+                  created_at: '2021-10-06T10:47:32.839+02:00'
+                  updated_at: '2021-10-06T10:47:32.839+02:00'
                   primary_field:
                     value: 
                     field:
@@ -1748,8 +1748,8 @@ paths:
                       uuid: one_author_name_uuid
                       slug: name
                       type: Field::Text
-                      created_at: '2021-10-06T10:37:42.961+02:00'
-                      updated_at: '2021-10-06T10:37:42.961+02:00'
+                      created_at: '2021-10-06T10:47:32.845+02:00'
+                      updated_at: '2021-10-06T10:47:32.845+02:00'
                       name:
                         name_en: Name
                       name_plural:
@@ -1774,8 +1774,8 @@ paths:
                   thumbnail: "/thumbs/one/250x250/fill/0,0,100,100/authors/picture.jpg"
                 - id: 817242637
                   item_type_id: 373039959
-                  created_at: '2021-10-06T10:37:42.956+02:00'
-                  updated_at: '2021-10-06T10:37:42.956+02:00'
+                  created_at: '2021-10-06T10:47:32.839+02:00'
+                  updated_at: '2021-10-06T10:47:32.839+02:00'
                   primary_field:
                     value: Young apprentice
                     field:
@@ -1783,8 +1783,8 @@ paths:
                       uuid: one_author_name_uuid
                       slug: name
                       type: Field::Text
-                      created_at: '2021-10-06T10:37:42.961+02:00'
-                      updated_at: '2021-10-06T10:37:42.961+02:00'
+                      created_at: '2021-10-06T10:47:32.845+02:00'
+                      updated_at: '2021-10-06T10:47:32.845+02:00'
                       name:
                         name_en: Name
                       name_plural:
@@ -1809,8 +1809,8 @@ paths:
                     one-admin@example.com; Deceased: No'
                 - id: 756291218
                   item_type_id: 373039959
-                  created_at: '2021-10-06T10:37:42.956+02:00'
-                  updated_at: '2021-10-06T10:37:42.956+02:00'
+                  created_at: '2021-10-06T10:47:32.839+02:00'
+                  updated_at: '2021-10-06T10:47:32.839+02:00'
                   primary_field:
                     value: Very Young
                     field:
@@ -1818,8 +1818,8 @@ paths:
                       uuid: one_author_name_uuid
                       slug: name
                       type: Field::Text
-                      created_at: '2021-10-06T10:37:42.961+02:00'
-                      updated_at: '2021-10-06T10:37:42.961+02:00'
+                      created_at: '2021-10-06T10:47:32.845+02:00'
+                      updated_at: '2021-10-06T10:47:32.845+02:00'
                       name:
                         name_en: Name
                       name_plural:
@@ -1844,8 +1844,8 @@ paths:
                     one-admin@example.com; Deceased: No'
                 - id: 42941060
                   item_type_id: 373039959
-                  created_at: '2021-10-06T10:37:42.956+02:00'
-                  updated_at: '2021-10-06T10:37:42.956+02:00'
+                  created_at: '2021-10-06T10:47:32.839+02:00'
+                  updated_at: '2021-10-06T10:47:32.839+02:00'
                   primary_field:
                     value: Very Old
                     field:
@@ -1853,8 +1853,8 @@ paths:
                       uuid: one_author_name_uuid
                       slug: name
                       type: Field::Text
-                      created_at: '2021-10-06T10:37:42.961+02:00'
-                      updated_at: '2021-10-06T10:37:42.961+02:00'
+                      created_at: '2021-10-06T10:47:32.845+02:00'
+                      updated_at: '2021-10-06T10:47:32.845+02:00'
                       name:
                         name_en: Name
                       name_plural:
@@ -1881,8 +1881,8 @@ paths:
                     Active Hour: 01h; Deceased: Yes'
                 - id: 971904516
                   item_type_id: 373039959
-                  created_at: '2021-10-06T10:37:42.956+02:00'
-                  updated_at: '2021-10-06T10:37:42.956+02:00'
+                  created_at: '2021-10-06T10:47:32.839+02:00'
+                  updated_at: '2021-10-06T10:47:32.839+02:00'
                   primary_field:
                     value: Stephen King
                     field:
@@ -1890,8 +1890,8 @@ paths:
                       uuid: one_author_name_uuid
                       slug: name
                       type: Field::Text
-                      created_at: '2021-10-06T10:37:42.961+02:00'
-                      updated_at: '2021-10-06T10:37:42.961+02:00'
+                      created_at: '2021-10-06T10:47:32.845+02:00'
+                      updated_at: '2021-10-06T10:47:32.845+02:00'
                       name:
                         name_en: Name
                       name_plural:
@@ -1957,8 +1957,8 @@ paths:
                 data:
                   id: 971904516
                   item_type_id: 373039959
-                  created_at: '2021-10-06T10:37:42.956+02:00'
-                  updated_at: '2021-10-06T10:37:42.956+02:00'
+                  created_at: '2021-10-06T10:47:32.839+02:00'
+                  updated_at: '2021-10-06T10:47:32.839+02:00'
                   primary_field:
                     value: Stephen King
                     field:
@@ -1966,8 +1966,8 @@ paths:
                       uuid: one_author_name_uuid
                       slug: name
                       type: Field::Text
-                      created_at: '2021-10-06T10:37:42.961+02:00'
-                      updated_at: '2021-10-06T10:37:42.961+02:00'
+                      created_at: '2021-10-06T10:47:32.845+02:00'
+                      updated_at: '2021-10-06T10:47:32.845+02:00'
                       name:
                         name_en: Name
                       name_plural:
@@ -1995,8 +1995,8 @@ paths:
                       uuid: one_author_name_uuid
                       slug: name
                       type: Field::Text
-                      created_at: '2021-10-06T10:37:42.961+02:00'
-                      updated_at: '2021-10-06T10:37:42.961+02:00'
+                      created_at: '2021-10-06T10:47:32.845+02:00'
+                      updated_at: '2021-10-06T10:47:32.845+02:00'
                       name:
                         name_en: Name
                       name_plural:
@@ -2023,8 +2023,8 @@ paths:
                       uuid: one_author_age_uuid
                       slug: age
                       type: Field::Int
-                      created_at: '2021-10-06T10:37:42.961+02:00'
-                      updated_at: '2021-10-06T10:37:42.961+02:00'
+                      created_at: '2021-10-06T10:47:32.845+02:00'
+                      updated_at: '2021-10-06T10:47:32.845+02:00'
                       name:
                         name_en: Age
                       name_plural:
@@ -2051,8 +2051,8 @@ paths:
                       uuid: one_author_site_uuid
                       slug: site
                       type: Field::URL
-                      created_at: '2021-10-06T10:37:42.961+02:00'
-                      updated_at: '2021-10-06T10:37:42.961+02:00'
+                      created_at: '2021-10-06T10:47:32.845+02:00'
+                      updated_at: '2021-10-06T10:47:32.845+02:00'
                       name:
                         name_en: Site
                       name_plural:
@@ -2075,8 +2075,8 @@ paths:
                       uuid: one_author_email_uuid
                       slug: email
                       type: Field::Email
-                      created_at: '2021-10-06T10:37:42.961+02:00'
-                      updated_at: '2021-10-06T10:37:42.961+02:00'
+                      created_at: '2021-10-06T10:47:32.845+02:00'
+                      updated_at: '2021-10-06T10:47:32.845+02:00'
                       name:
                         name_en: Email
                       name_plural:
@@ -2099,8 +2099,8 @@ paths:
                       uuid: one_author_rank_uuid
                       slug: rank
                       type: Field::Decimal
-                      created_at: '2021-10-06T10:37:42.961+02:00'
-                      updated_at: '2021-10-06T10:37:42.961+02:00'
+                      created_at: '2021-10-06T10:47:32.845+02:00'
+                      updated_at: '2021-10-06T10:47:32.845+02:00'
                       name:
                         name_en: Rank
                       name_plural:
@@ -2126,8 +2126,8 @@ paths:
                       uuid: one_author_collaborator_uuid
                       slug: collaborator
                       type: Field::Reference
-                      created_at: '2021-10-06T10:37:42.961+02:00'
-                      updated_at: '2021-10-06T10:37:42.961+02:00'
+                      created_at: '2021-10-06T10:47:32.845+02:00'
+                      updated_at: '2021-10-06T10:47:32.845+02:00'
                       name:
                         name_en: Collaborator
                       name_plural:
@@ -2153,8 +2153,8 @@ paths:
                       uuid: one_author_other_collaborators_uuid
                       slug: other-collaborator
                       type: Field::Reference
-                      created_at: '2021-10-06T10:37:42.961+02:00'
-                      updated_at: '2021-10-06T10:37:42.961+02:00'
+                      created_at: '2021-10-06T10:47:32.845+02:00'
+                      updated_at: '2021-10-06T10:47:32.845+02:00'
                       name:
                         name_en: Other Collaborator
                       name_plural:
@@ -2185,8 +2185,8 @@ paths:
                       uuid: one_author_bio_uuid
                       slug: bio
                       type: Field::File
-                      created_at: '2021-10-06T10:37:42.961+02:00'
-                      updated_at: '2021-10-06T10:37:42.961+02:00'
+                      created_at: '2021-10-06T10:47:32.845+02:00'
+                      updated_at: '2021-10-06T10:47:32.845+02:00'
                       name:
                         name_en: Biography
                       name_plural:
@@ -2211,8 +2211,8 @@ paths:
                       uuid: one_author_editor_uuid
                       slug: editor
                       type: Field::Editor
-                      created_at: '2021-10-06T10:37:42.961+02:00'
-                      updated_at: '2021-10-06T10:37:42.961+02:00'
+                      created_at: '2021-10-06T10:47:32.845+02:00'
+                      updated_at: '2021-10-06T10:47:32.845+02:00'
                       name:
                         name_en: Editor
                       name_plural:
@@ -2238,8 +2238,8 @@ paths:
                       uuid: one_author_language_uuid
                       slug: language
                       type: Field::ChoiceSet
-                      created_at: '2021-10-06T10:37:42.961+02:00'
-                      updated_at: '2021-10-06T10:37:42.961+02:00'
+                      created_at: '2021-10-06T10:47:32.845+02:00'
+                      updated_at: '2021-10-06T10:47:32.845+02:00'
                       name:
                         name_en: Language
                       name_plural:
@@ -2266,8 +2266,8 @@ paths:
                       uuid: one_author_other_languages_uuid
                       slug: other-language
                       type: Field::ChoiceSet
-                      created_at: '2021-10-06T10:37:42.961+02:00'
-                      updated_at: '2021-10-06T10:37:42.961+02:00'
+                      created_at: '2021-10-06T10:47:32.845+02:00'
+                      updated_at: '2021-10-06T10:47:32.845+02:00'
                       name:
                         name_en: Other Language
                       name_plural:
@@ -2295,8 +2295,8 @@ paths:
                       uuid: one_author_born_uuid
                       slug: born
                       type: Field::DateTime
-                      created_at: '2021-10-06T10:37:42.961+02:00'
-                      updated_at: '2021-10-06T10:37:42.961+02:00'
+                      created_at: '2021-10-06T10:47:32.845+02:00'
+                      updated_at: '2021-10-06T10:47:32.845+02:00'
                       name:
                         name_en: Born
                       name_plural:
@@ -2327,8 +2327,8 @@ paths:
                       uuid: one_author_birth_time_uuid
                       slug: birth-time
                       type: Field::DateTime
-                      created_at: '2021-10-06T10:37:42.961+02:00'
-                      updated_at: '2021-10-06T10:37:42.961+02:00'
+                      created_at: '2021-10-06T10:47:32.845+02:00'
+                      updated_at: '2021-10-06T10:47:32.845+02:00'
                       name:
                         name_en: Birth Time
                       name_plural:
@@ -2353,8 +2353,8 @@ paths:
                       uuid: one_author_birth_month_uuid
                       slug: birth-month
                       type: Field::DateTime
-                      created_at: '2021-10-06T10:37:42.961+02:00'
-                      updated_at: '2021-10-06T10:37:42.961+02:00'
+                      created_at: '2021-10-06T10:47:32.845+02:00'
+                      updated_at: '2021-10-06T10:47:32.845+02:00'
                       name:
                         name_en: Birth Month
                       name_plural:
@@ -2380,8 +2380,8 @@ paths:
                       uuid: one_author_most_active_month_uuid
                       slug: most-active-month
                       type: Field::DateTime
-                      created_at: '2021-10-06T10:37:42.961+02:00'
-                      updated_at: '2021-10-06T10:37:42.961+02:00'
+                      created_at: '2021-10-06T10:47:32.845+02:00'
+                      updated_at: '2021-10-06T10:47:32.845+02:00'
                       name:
                         name_en: Most Active Month
                       name_plural:
@@ -2407,8 +2407,8 @@ paths:
                       uuid: one_author_most_active_hour_uuid
                       slug: most-active-hour
                       type: Field::DateTime
-                      created_at: '2021-10-06T10:37:42.961+02:00'
-                      updated_at: '2021-10-06T10:37:42.961+02:00'
+                      created_at: '2021-10-06T10:47:32.845+02:00'
+                      updated_at: '2021-10-06T10:47:32.845+02:00'
                       name:
                         name_en: Most Active Hour
                       name_plural:
@@ -2433,8 +2433,8 @@ paths:
                       uuid: one_author_birthplace_uuid
                       slug: birthplace
                       type: Field::Geometry
-                      created_at: '2021-10-06T10:37:42.961+02:00'
-                      updated_at: '2021-10-06T10:37:42.961+02:00'
+                      created_at: '2021-10-06T10:47:32.845+02:00'
+                      updated_at: '2021-10-06T10:47:32.845+02:00'
                       name:
                         name_en: Birthplace
                       name_plural:
@@ -2460,8 +2460,8 @@ paths:
                       uuid: one_author_picture_uuid
                       slug: picture
                       type: Field::Image
-                      created_at: '2021-10-06T10:37:42.961+02:00'
-                      updated_at: '2021-10-06T10:37:42.961+02:00'
+                      created_at: '2021-10-06T10:47:32.845+02:00'
+                      updated_at: '2021-10-06T10:47:32.845+02:00'
                       name:
                         name_en: Picture
                       name_plural:
@@ -2487,8 +2487,8 @@ paths:
                       uuid: one_author_picture_inactive_legend_uuid
                       slug: picture_inactive_legend
                       type: Field::Image
-                      created_at: '2021-10-06T10:37:42.961+02:00'
-                      updated_at: '2021-10-06T10:37:42.961+02:00'
+                      created_at: '2021-10-06T10:47:32.845+02:00'
+                      updated_at: '2021-10-06T10:47:32.845+02:00'
                       name:
                         name_en: New picture
                       name_plural:
@@ -2514,8 +2514,8 @@ paths:
                       uuid: one_author_deceased_uuid
                       slug: deceased
                       type: Field::Boolean
-                      created_at: '2021-10-06T10:37:42.961+02:00'
-                      updated_at: '2021-10-06T10:37:42.961+02:00'
+                      created_at: '2021-10-06T10:47:32.845+02:00'
+                      updated_at: '2021-10-06T10:47:32.845+02:00'
                       name:
                         name_en: Deceased
                       name_plural:
@@ -2538,8 +2538,8 @@ paths:
                       uuid: one_author_nickname_uuid
                       slug: nickname
                       type: Field::Text
-                      created_at: '2021-10-06T10:37:42.961+02:00'
-                      updated_at: '2021-10-06T10:37:42.961+02:00'
+                      created_at: '2021-10-06T10:47:32.845+02:00'
+                      updated_at: '2021-10-06T10:47:32.845+02:00'
                       name:
                         name_en: Nickname
                       name_plural:
@@ -2670,13 +2670,13 @@ paths:
               example:
                 data:
                   id: 1009501286
-                  uuid: 006b7489-caf7-4ad9-8f12-c3d26a1248aa
+                  uuid: 15d26490-c695-40a8-a08d-fc5e8af78f59
                   query: one
                   item_types:
                   - id: 373039959
                     slug: authors
                     count: 1
-                    link: http://www.example.com/api/v3/980190962/search/006b7489-caf7-4ad9-8f12-c3d26a1248aa?item_type_slug=authors
+                    link: http://www.example.com/api/v3/980190962/search/15d26490-c695-40a8-a08d-fc5e8af78f59?item_type_slug=authors
         '401':
           description: Unauthorized
       requestBody:
@@ -2785,9 +2785,9 @@ paths:
                   - id: 980190962
                     name: Group for catalog one
                     description: This group belongs to catalog one
-                    active: true
+                    is_active: true
+                    is_public: true
                     role: super-editor
-                    public: true
                     identifier: one-11-44444444
                 - id: 460784106
                   email: one-member@example.com
@@ -2832,9 +2832,9 @@ paths:
                   - id: 980190962
                     name: Group for catalog one
                     description: This group belongs to catalog one
-                    active: true
+                    is_active: true
+                    is_public: true
                     role: super-editor
-                    public: true
                     identifier: one-11-44444444
                 - id: 180931420
                   email: one-admin@example.com
@@ -2842,7 +2842,7 @@ paths:
                   role:
                     role: admin
                     group_id: false
-                  last_signed_in_at: '2021-10-06T10:37:46.087+02:00'
+                  last_signed_in_at: '2021-10-06T10:47:35.933+02:00'
                   groups: []
         '401':
           description: Unauthorized
@@ -2902,8 +2902,8 @@ paths:
           content:
             application/json:
               example:
-                token: eyJhbGciOiJIUzI1NiJ9.eyJqdGkiOiJmMTg2MDYwYy1jYmQyLTQzNDUtYjNhOS03NTFlNGZhM2RmNGUiLCJzdWIiOiI0ODI0NDkxMzUiLCJzY3AiOiJhcGlfdjNfdXNlciIsImF1ZCI6bnVsbCwiaWF0IjoxNjMzNTA5NDY2LCJleHAiOjE2MzM1OTU4NjZ9.R-RP5NH1oZNTnktGpebJx8TxS3bxUStOKzRgppDk0rw
-                valid_until: '2021-10-07T09:37:46.412+02:00'
+                token: eyJhbGciOiJIUzI1NiJ9.eyJqdGkiOiJmMTg2MDYwYy1jYmQyLTQzNDUtYjNhOS03NTFlNGZhM2RmNGUiLCJzdWIiOiI0ODI0NDkxMzUiLCJzY3AiOiJhcGlfdjNfdXNlciIsImF1ZCI6bnVsbCwiaWF0IjoxNjMzNTEwMDU2LCJleHAiOjE2MzM1OTY0NTZ9.nPZHbK4SvWrq29OYXOVEpFbMsvQtny_rIy7Yo2a8Yys
+                valid_until: '2021-10-07T09:47:36.267+02:00'
                 message: Authentication successful
                 code: authentication_success
         '401':
