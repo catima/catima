@@ -80,7 +80,7 @@ class API::V3::BaseController < ActionController::Base
     authenticate_with_http_token do |token|
       @api_key = APIKey.find_by(api_key: token)
       catalog = @api_key&.catalog
-      raise Pundit::NotAuthorizedError if catalog && !active?(catalog)
+      raise Pundit::NotAuthorizedError if catalog && !catalog.not_deactivated?
 
       @authenticated_catalog = catalog
     end

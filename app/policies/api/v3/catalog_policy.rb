@@ -3,7 +3,7 @@ class API::V3::CatalogPolicy < CatalogPolicy
 
   def initialize(user, catalog)
     super
-    raise Pundit::NotAuthorizedError unless active?(catalog)
+    raise Pundit::NotAuthorizedError unless catalog.not_deactivated?
   end
 
   def user_requirements_according_to_visibility?

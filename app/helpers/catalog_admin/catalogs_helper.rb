@@ -34,10 +34,6 @@ module CatalogAdmin::CatalogsHelper
     3
   end
 
-  def active?(catalog)
-    !catalog.deactivated_at
-  end
-
   def catalog_access_label(catalog)
     [:everyone, :members, :catalog_staff][catalog_access(catalog) - 1].to_s
   end
