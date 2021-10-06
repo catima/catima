@@ -2,6 +2,8 @@ class API::V3::Catalog::AdvancedSearchesController < API::V3::Catalog::BaseContr
   include AdvancedSearchesHelper
 
   def new
+    authorize(@catalog, :advanced_search_new?) unless authenticated_catalog?
+
     @advance_search_confs = @catalog.advanced_search_configurations.with_active_item_type
     build_advanced_search
     find_advanced_search_configuration
@@ -33,6 +35,8 @@ class API::V3::Catalog::AdvancedSearchesController < API::V3::Catalog::BaseContr
   end
 
   def create
+    authorize(@catalog, :advanced_search_create?) unless authenticated_catalog?
+
     build_advanced_search
     return unless @advanced_search.update(advanced_search_params)
 
@@ -45,6 +49,8 @@ class API::V3::Catalog::AdvancedSearchesController < API::V3::Catalog::BaseContr
   end
 
   def show
+    authorize(@catalog, :advanced_search_show?) unless authenticated_catalog?
+
     find_advanced_search
     @advanced_search_results = ItemList::AdvancedSearchResult.new(
       model: @saved_search,

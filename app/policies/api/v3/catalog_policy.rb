@@ -1,15 +1,24 @@
 class API::V3::CatalogPolicy < CatalogPolicy
   include CatalogAdmin::CatalogsHelper
 
+  def initialize(user, catalog)
+    super
+    raise Pundit::NotAuthorizedError unless catalog.not_deactivated?
+  end
+
   def user_requirements_according_to_visibility?
     return true if user.system_admin?
 
     case catalog_access(catalog)
     when 1
+      # Access to everyone
       true
     when 2
+      # Access to members
       user_is_at_least_a_member?
     when 3
+    else
+      # Access to catalog staff
       user_is_at_least_an_editor?
     end
   end
@@ -25,7 +34,7 @@ class API::V3::CatalogPolicy < CatalogPolicy
   # Category
   alias_method :category_fields_index?, :user_is_catalog_admin?
 
-  #  ChoiceSet
+  # ChoiceSet
   alias_method :choice_set_choices_index?, :user_is_catalog_admin?
   alias_method :choice_set_choice_show?, :user_is_catalog_admin?
 
@@ -39,4 +48,9 @@ class API::V3::CatalogPolicy < CatalogPolicy
   # SimpleSearch
   alias_method :simple_search_create?, :user_requirements_according_to_visibility?
   alias_method :simple_search_show?, :user_requirements_according_to_visibility?
+
+  # AdvancedSearch
+  alias_method :advanced_search_new?, :user_requirements_according_to_visibility?
+  alias_method :advanced_search_create?, :user_requirements_according_to_visibility?
+  alias_method :advanced_search_show?, :user_requirements_according_to_visibility?
 end
