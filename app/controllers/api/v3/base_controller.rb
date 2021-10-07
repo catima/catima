@@ -1,6 +1,5 @@
 class API::V3::BaseController < ActionController::Base
   include Pundit
-  include CatalogAdmin::CatalogsHelper
 
   respond_to :json
 
