@@ -1,7 +1,14 @@
+require 'sidekiq/web'
+
 # rubocop:disable Metrics/BlockLength
 Rails.application.routes.draw do
   mount Rswag::Ui::Engine => '/api-docs'
   mount Rswag::Api::Engine => '/api-docs'
+
+  authenticate :user, ->(u) { u.system_admin? } do
+    mount Sidekiq::Web => '/sidekiq' # monitoring console
+  end
+
   # ===========================================================================
   # API
 
@@ -158,7 +165,6 @@ Rails.application.routes.draw do
     resources :users, :except => :index
   end
 
-  mount Sidekiq::Web => "/sidekiq" # monitoring console
   root "home#index"
 
   # ===========================================================================
