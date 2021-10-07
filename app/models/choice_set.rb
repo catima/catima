@@ -35,7 +35,7 @@ class ChoiceSet < ApplicationRecord
   end
 
   def describe
-    as_json(only: %i(uuid name)).merge(choices: choices.map(&:describe))
+    as_json(only: %i(uuid name deactivated_at)).merge(choices: choices.map(&:describe))
   end
 
   def assign_uuid

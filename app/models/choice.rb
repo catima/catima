@@ -94,7 +94,8 @@ class Choice < ApplicationRecord
   def save_with_position(position)
     Choice.transaction do
       parent = parent_id.present? ? choice_set.choices.find(parent_id) : nil
-      if position == 'first'
+      case position
+      when 'first'
         self.position = 1
         if parent
           parent.childrens.ordered.each_with_index do |choice, index|
@@ -105,7 +106,7 @@ class Choice < ApplicationRecord
             choice.update!(position: index + 2)
           end
         end
-      elsif position == 'last'
+      when 'last'
         last_position = parent ? parent.childrens.count + 1 : choice_set.choices.where(parent_id: nil).count + 1
         self.position = last_position
       end

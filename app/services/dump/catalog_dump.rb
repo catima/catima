@@ -82,7 +82,7 @@ class Dump::CatalogDump < ::Dump
   def dump_choice_sets(cat, struct_dir)
     File.write(
       File.join(struct_dir, 'choice-sets.json'),
-      JSON.pretty_generate("choice-sets": cat.choice_sets.map(&:describe))
+      JSON.pretty_generate("choice-sets": cat.choice_sets.not_deleted.map(&:describe))
     )
   end
 

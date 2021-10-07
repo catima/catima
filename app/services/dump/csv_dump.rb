@@ -101,19 +101,13 @@ class Dump::CSVDump < ::Dump
 
         fields = item_type.fields
 
-        # index = 0
         item_type.items.find_in_batches(:batch_size => 100) do |items|
-          # next if index >= 1
-
           CSV.open(File.join(directory, "#{item_type.slug}.csv"), "a") do |csv|
             items.each do |item|
               values = fields.map { |f| f.csv_value(item) }
               csv << values.concat(categories_fields[item_type.id].map { |f| f.csv_value(item) })
             end
           end
-
-          # index += 1
-          # msg("Processed #{index * 100} items")
         end
       end
     end

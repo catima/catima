@@ -72,7 +72,7 @@ class Dump::SQLDump < ::Dump
     end
 
     creates << render_comment("Additional tables ==> ChoiceSets")
-    cat.choice_sets.each do |choice_set|
+    cat.choice_sets.not_deleted.each do |choice_set|
       creates << dump_create_choice_sets_table(choice_set)
     end
 
@@ -278,7 +278,7 @@ class Dump::SQLDump < ::Dump
   end
 
   def dump_mulitple_field_reference_item_data(item)
-    return "" unless item.item_type.active?
+    return "" unless item.item_type.not_deleted?
 
     inserts = ""
 
@@ -306,7 +306,7 @@ class Dump::SQLDump < ::Dump
 
     fields = item.item_type.all_fields.select { |field| field.multiple? && field.is_a?(Field::ChoiceSet) }
     fields.each do |field|
-      next unless item.item_type.active?
+      next unless item.item_type.not_deleted?
 
       # Rule: the primary key is always the id
       value = item.id
@@ -326,7 +326,7 @@ class Dump::SQLDump < ::Dump
 
   def dump_choices_data(cat)
     inserts = ""
-    cat.choice_sets.each do |choice_set|
+    cat.choice_sets.not_deleted.each do |choice_set|
       choice_set_inserts = ""
       choice_set.choices.each do |choice|
         columns = Choice.sql_columns.map { |c_name, _c| "`#{c_name}`" }.join(',')
@@ -349,7 +349,7 @@ class Dump::SQLDump < ::Dump
   def dump_fields_data(cat)
     inserts = ""
     cat.items.find_each do |item|
-      next unless item.item_type.active?
+      next unless item.item_type.not_deleted?
 
       fields = item.item_type.fields.reject { |f| f.multiple? && (f.is_a?(Field::Reference) || f.is_a?(Field::ChoiceSet)) }
 
@@ -414,7 +414,7 @@ class Dump::SQLDump < ::Dump
   def dump_primary_keys(cat)
     alters = render_comment("ITEMS")
     cat.items.find_each do |item|
-      next unless item.item_type.active?
+      next unless item.item_type.not_deleted?
 
       # constraint = primary_key_constraint(item.item_type)
       alter = add_primary_key(@holder.table_name(item.item_type, "sql_slug"), primary_key(item.item_type))
@@ -423,7 +423,7 @@ class Dump::SQLDump < ::Dump
     end
 
     alters << render_comment("CHOICE SETS")
-    cat.choice_sets.each do |choice_set|
+    cat.choice_sets.not_deleted.each do |choice_set|
       alters << add_primary_key(@holder.table_name(choice_set, "name"), "id")
     end
 
@@ -438,7 +438,7 @@ class Dump::SQLDump < ::Dump
   def dump_single_references(cat)
     alters = render_comment("Single references")
     cat.items.find_each do |item|
-      next unless item.item_type.active?
+      next unless item.item_type.not_deleted?
 
       # Single references and choices
       fields = item.item_type.fields.select { |field| !field.multiple? && field.is_a?(Field::Reference) }
@@ -458,7 +458,7 @@ class Dump::SQLDump < ::Dump
   def dump_single_choices(cat)
     alters = render_comment("Single choices")
     cat.items.find_each do |item|
-      next unless item.item_type.active?
+      next unless item.item_type.not_deleted?
 
       # Single references and choices
       fields = item.item_type.fields.select { |field| !field.multiple? && field.is_a?(Field::ChoiceSet) }
@@ -517,7 +517,7 @@ class Dump::SQLDump < ::Dump
   def dump_references_multiple_reference(cat)
     alters = render_comment("Mulitple references")
     cat.items.find_each do |item|
-      next unless item.item_type.active?
+      next unless item.item_type.not_deleted?
 
       # Multiple references
       fields = item.item_type.fields.select { |field| field.multiple? && field.is_a?(Field::Reference) }
@@ -574,7 +574,7 @@ class Dump::SQLDump < ::Dump
   def dump_references_multiple_choiceset(cat)
     alters = render_comment("Mulitple choicesets")
     cat.items.find_each do |item|
-      next unless item.item_type.active?
+      next unless item.item_type.not_deleted?
 
       # Multiple choices
       fields = item.item_type.fields.select { |field| field.multiple? && field.is_a?(Field::ChoiceSet) }
@@ -601,7 +601,7 @@ class Dump::SQLDump < ::Dump
       # Multiple choices
       fields = category.fields.select { |field| field.multiple? && field.is_a?(Field::ChoiceSet) }
       fields.each do |field|
-        next unless field.item_type.active?
+        next unless field.item_type.not_deleted?
 
         foreign_column_name = 'id'
 
