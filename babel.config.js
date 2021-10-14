@@ -18,21 +18,30 @@ module.exports = function(api) {
   return {
     presets: [
       isTestEnv && [
-        '@babel/preset-react',
+        '@babel/preset-env',
         {
           targets: {
             node: 'current'
-          }
-        }
+          },
+          modules: 'commonjs'
+        },
+        '@babel/preset-react'
       ],
       (isProductionEnv || isDevelopmentEnv) && [
-        '@babel/preset-react',
+        '@babel/preset-env',
         {
           forceAllTransforms: true,
           useBuiltIns: 'entry',
           corejs: 3,
           modules: false,
           exclude: ['transform-typeof-symbol']
+        }
+      ],
+      [
+        '@babel/preset-react',
+        {
+          development: isDevelopmentEnv || isTestEnv,
+          useBuiltIns: true
         }
       ]
     ].filter(Boolean),
@@ -47,6 +56,7 @@ module.exports = function(api) {
           loose: true
         }
       ],
+      ["@babel/plugin-proposal-private-property-in-object", { "loose": true }]
       [
         '@babel/plugin-proposal-object-rest-spread',
         {
@@ -67,10 +77,10 @@ module.exports = function(api) {
           async: false
         }
       ],
-      [
-        '@babel/plugin-proposal-private-methods',
+      isProductionEnv && [
+        'babel-plugin-transform-react-remove-prop-types',
         {
-          "loose": true
+          removeImport: true
         }
       ]
     ].filter(Boolean)

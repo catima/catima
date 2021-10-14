@@ -1,48 +1,43 @@
 import 'es6-shim';
 import PropTypes from 'prop-types';
-import React from 'react';
+import React, {useState, useEffect} from 'react';
 import L from "leaflet";
 import "leaflet.path.drag";
 import "leaflet-editable";
 
 const subs = ['a', 'b', 'c'];
 
-class GeoBounds extends React.Component {
-  static propTypes = {
-    bounds: PropTypes.object
-  };
+const GeoBounds = (props) => {
+  const {
+    layers: layersProps,
+    bounds: boundsProps
+  } = props
 
-  constructor(props){
-    super(props);
-    this.layers = this.props.layers ? this.props.layers : [];
-    this.bounds = this.bbox();
-    this.mapId = 'geo-bounds-map';
-    this.map = null;
-    this.state = {
-      mapHeight: 300
-    };
-  }
+  const [layers, setLayers] = useState(layersProps ? layersProps : [])
+  const [bounds, setBounds] = useState(bbox())
+  const [mapId, setMapId] = useState('geo-bounds-map')
+  const [map, setMap] = useState(null)
+  const [state, setState] = useState({
+    mapHeight: 300
+  })
 
-  _initLayers(map){
-    if (this.layers.length === 1) {
-      this.layers.forEach((layer) => {
+  function _initLayers(map) {
+    if (layers.length === 1) {
+      layers.forEach((layer) => {
         L.tileLayer(layer.value, {
           subdomains: subs,
           attribution: layer.attribution
         }).addTo(map);
       });
-    } else if (this.layers.length > 1) {
+    } else if (layers.length > 1) {
       let baseMaps = {};
-
-      this.layers.forEach((layer) => {
+      layers.forEach((layer) => {
         baseMaps[layer.label] = L.tileLayer(layer.value, {
           subdomains: subs,
           attribution: layer.attribution
         });
       });
-
       Object.values(baseMaps)[0].addTo(map);
-
       L.control.layers(baseMaps, {}).addTo(map);
     } else {
       L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
@@ -52,34 +47,29 @@ class GeoBounds extends React.Component {
     }
   }
 
-  bbox(){
-    let field_bounds = this.props.bounds;
-    let bounds = [[],[]];
+  function bbox() {
+    let field_bounds = boundsProps;
+    let b = [[], []];
+    if (field_bounds.xmin) b[0][1] = field_bounds.xmin;
+    if (field_bounds.ymin) b[0][0] = field_bounds.ymin;
+    if (field_bounds.xmax) b[1][1] = field_bounds.xmax;
+    if (field_bounds.ymax) b[1][0] = field_bounds.ymax;
 
-    if (field_bounds.xmin) bounds[0][1] = field_bounds.xmin;
-    if (field_bounds.ymin) bounds[0][0] = field_bounds.ymin;
-    if (field_bounds.xmax) bounds[1][1] = field_bounds.xmax;
-    if (field_bounds.ymax) bounds[1][0] = field_bounds.ymax;
-
-    return bounds;
+    return b;
   }
 
-  createMap(){
-    this.map = L.map(this.mapId, {editable: true}).fitBounds(this.bounds, {padding: [10,10]});
-
-    // Initialize map layers & layer control if needed
-    this._initLayers(this.map);
+  function createMap() {
+    setMap(L.map(mapId, {editable: true}).fitBounds(bounds, {padding: [10, 10]}))
   }
 
-  drawBounds(){
-    let boundsRect = L.rectangle(this.bounds, {weight: 2, draggable: true}).addTo(this.map);
+  function drawBounds() {
+    let boundsRect = L.rectangle(bounds, {weight: 2, draggable: true}).addTo(map);
     boundsRect.enableEdit();
-
-    this.boundsEvent(boundsRect);
+    boundsEvent(boundsRect);
   }
 
-  boundsEvent(boundsRect){
-    this.map.on('editable:editing', function(_){
+  function boundsEvent(boundsRect) {
+    map.on('editable:editing', function (_) {
       let bnds = boundsRect.getBounds();
       let boundsValue = {
         xmin: bnds.getWest(), xmax: bnds.getEast(),
@@ -89,16 +79,26 @@ class GeoBounds extends React.Component {
     });
   }
 
-  componentDidMount(){
-    this.createMap();
-    this.drawBounds();
-  }
+  useEffect(() => {
+    createMap();
+  }, [])
 
-  render(){
-    return (
-      <div id={this.mapId} style={{height: this.state.mapHeight}}></div>
-    );
-  }
+
+  useEffect(() => {
+    if (map) {
+      _initLayers(map);
+      drawBounds();
+    }
+  }, [map])
+
+  return (
+    <div id={mapId} style={{height: state.mapHeight}}></div>
+  );
+};
+
+
+GeoBounds.propTypes = {
+  bounds: PropTypes.object
 };
 
 export default GeoBounds;

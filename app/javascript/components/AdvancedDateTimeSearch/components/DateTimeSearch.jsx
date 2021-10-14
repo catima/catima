@@ -1,191 +1,216 @@
-import React from 'react';
+import React, {useState, useEffect, useRef, createRef} from 'react';
 import DateTimeInput from './DateTimeInput';
 import $ from 'jquery';
 import 'moment';
 import 'bootstrap4-datetimepicker';
 
-class DateTimeSearch extends React.Component {
-  constructor(props){
-    super(props);
+const DateTimeSearch = (props) => {
+  const {
+    startDateInputName: startDateInputNameProps,
+    endDateInputName: endDateInputNameProps,
+    disableInputByCondition: disableInputByConditionProps,
+    srcId,
+    srcRef,
+    selectCondition,
+    selectConditionName,
+    inputStart,
+    localizedDateTimeData,
+    locale,
+    format,
+    fieldConditionName,
+    fieldConditionData,
+    inputEnd
+  } = props
 
-    this.state = {
-      selectedCondition: '',
-      selectedFieldCondition: '',
-      startDateInputName: this.props.startDateInputName,
-      endDateInputName: this.props.endDateInputName,
-      startDateInputNameArray: this.props.startDateInputName.split("[exact]"),
-      endDateInputNameArray: this.props.endDateInputName.split("[exact]"),
-      disabled: false,
-      isRange: false
-    };
+  const [selectedCondition, setSelectedCondition] = useState('')
+  const [selectedFieldCondition, setSelectedFieldCondition] = useState('')
+  const [startDateInputName, setStartDateInputName] = useState(startDateInputNameProps)
+  const [endDateInputName, setEndDateInputName] = useState(endDateInputNameProps)
+  const [startDateInputNameArray, setStartDateInputNameArray] = useState(startDateInputNameProps.split("[exact]"))
+  const [endDateInputNameArray, setEndDateInputNameArray] = useState(endDateInputNameProps.split("[exact]"))
+  const [disabled, setDisabled] = useState(false)
+  const [isRange, setIsRange] = useState(false)
 
-    this.dateTimeSearchId = `${this.props.srcId}-datetime`;
-    this.dateTimeSearchRef = `${this.props.srcRef}-datetime`;
-    this.dateTimeSearchRef2 = `${this.props.srcRef}-datetime2`;
-    this.dateTimeCollapseId = `${this.props.srcId}-collapse`;
+  const dateTimeSearchId = `${srcId}-datetime`;
+  const dateTimeCollapseId = `${srcId}-collapse`;
 
-    this.selectCondition = this._selectCondition.bind(this);
-    this.selectFieldCondition = this._selectFieldCondition.bind(this);
-  }
+  const dateTimeSearchRef1 = createRef()
+  const dateTimeSearchRef2 = createRef()
+  const hiddenInputRef1 = createRef()
+  const hiddenInputRef2 = createRef()
 
-  componentDidMount(){
+  useEffect(() => {
+    if (typeof selectCondition !== 'undefined' && selectCondition.length !== 0) {
+      setSelectedCondition(selectCondition[0].key);
+      setStartDateInputNameArray(startDateInputNameProps.split("[" + selectCondition[0].key + "]"))
+      setEndDateInputNameArray(endDateInputNameProps.split("[" + selectCondition[0].key + "]"))
+      _updateDisableState(selectCondition[0].key);
+    }
+  }, [])
 
-    if(typeof this.props.selectCondition !== 'undefined' && this.props.selectCondition.length !== 0) {
-        this.setState({selectedCondition: this.props.selectCondition[0].key});
-        this.setState({startDateInputNameArray: this.props.startDateInputName.split("["+ this.props.selectCondition[0].key +"]")})
-        this.setState({endDateInputNameArray: this.props.endDateInputName.split("["+ this.props.selectCondition[0].key +"]")})
-        this._updateDisableState(this.props.selectCondition[0].key);
+  useEffect(() => {
+    if (typeof disableInputByConditionProps !== 'undefined') {
+      _updateDisableState(disableInputByConditionProps);
+    }
+  }, [])
+
+  useEffect(() => {
+    if (startDateInputNameProps !== startDateInputName) {
+      setStartDateInputName(startDateInputNameProps);
+    }
+  }, [startDateInputNameProps])
+
+  useEffect(() => {
+    if (endDateInputNameProps !== endDateInputName) {
+      setEndDateInputName(endDateInputNameProps);
+    }
+  }, [endDateInputNameProps])
+
+
+  function _buildInputNameCondition(inputName, condition) {
+    if (inputName.length === 2) {
+      if (condition !== '') return inputName[0] + '[' + condition + ']' + inputName[1];
+      else return inputName[0] + '[default]' + inputName[1];
+    } else {
+      return inputName;
     }
   }
 
-  componentWillReceiveProps(nextProps) {
-    if(typeof nextProps.disableInputByCondition !== 'undefined') {
-        this._updateDisableState(nextProps.disableInputByCondition);
-    }
-
-    if (nextProps.startDateInputName !== this.state.startDateInputName) {
-      this.setState({ startDateInputName: nextProps.startDateInputName });
-    }
-
-    if (nextProps.endDateInputName !== this.state.endDateInputName) {
-      this.setState({ endDateInputName: nextProps.endDateInputName });
-    }
-  }
-
-  _buildInputNameCondition(inputName, condition) {
-      if(inputName.length === 2) {
-        if (condition !== '') return inputName[0] + '[' + condition + ']' + inputName[1];
-        else return inputName[0] + '[default]' + inputName[1];
-      } else {
-        return inputName;
-      }
-  }
-
-  _getDateTimeClassname() {
-    if(this.props.selectCondition.length > 0) {
+  function _getDateTimeClassname() {
+    if (selectCondition.length > 0) {
       return 'col-lg-7';
     } else {
       return 'col-lg-12';
     }
   }
 
-  _linkRangeDatepickers(ref1, ref2, disabled) {
-    if(!disabled) {
-      $(this.refs[ref1].refs.hiddenInput).datetimepicker().on("dp.change", (e) => {
-        $(this.refs[ref2].refs.hiddenInput).data("DateTimePicker").minDate(e.date);
-      });
-      $(this.refs[ref2].refs.hiddenInput).datetimepicker().on("dp.change", (e) => {
-        $(this.refs[ref1].refs.hiddenInput).data("DateTimePicker").maxDate(e.date);
-      });
-    } else {
-      $(this.refs[ref2].refs.hiddenInput).data("DateTimePicker").clear();
-    }
-  }
-
-  _updateDisableState(value) {
-    if(typeof value !== 'undefined') {
-      if(value === 'between' || value === 'outside') {
-        this.setState({ disabled: true });
-        this.setState({ isRange: true });
-        $('#' + this.dateTimeCollapseId).slideDown();
-        this._linkRangeDatepickers(this.dateTimeSearchRef, this.dateTimeSearchRef2, false);
-    } else if (value === 'after' || value === 'before') {
-        this.setState({ disabled: true });
-        this.setState({ isRange: false });
-        $('#' + this.dateTimeCollapseId).slideUp();
-        this._linkRangeDatepickers(this.dateTimeSearchRef, this.dateTimeSearchRef2, true);
-    } else {
-        this.setState({ disabled: false });
-        this.setState({ isRange: false });
-        $('#' + this.dateTimeCollapseId).slideUp();
-        this._linkRangeDatepickers(this.dateTimeSearchRef, this.dateTimeSearchRef2, true);
-      }
-    }
-  }
-
-  _selectCondition(event){
-    if(typeof event === 'undefined' || event.action !== "pop-value" || !this.props.req) {
-      if(typeof event !== 'undefined') {
-        this.setState({ startDateInputName: this._buildInputNameCondition(this.state.startDateInputNameArray, event.target.value)});
-        this.setState({ endDateInputName: this._buildInputNameCondition(this.state.endDateInputNameArray, event.target.value)});
-        this.setState({ selectedCondition: event.target.value });
-        this._updateDisableState(event.target.value);
+  function _linkRangeDatepickers(ref1, ref2, disabled) {
+    if (ref1 && ref2) {
+      if (!disabled) {
+        $(ref1).datetimepicker().on("dp.change", (e) => {
+          $(ref2).data("DateTimePicker").minDate(e.date);
+        });
+        $(ref2).datetimepicker().on("dp.change", (e) => {
+          $(ref1).data("DateTimePicker").maxDate(e.date);
+        });
       } else {
-        this.setState({ startDateInputName: this._buildInputNameCondition(this.state.startDateInputNameArray, 'exact')});
-        this.setState({ endDateInputName: this._buildInputNameCondition(this.state.endDateInputNameArray, 'exact')});
-        this.setState({ selectedCondition: '' });
-        this._updateDisableState('');
+        $(ref2).data("DateTimePicker").clear();
       }
     }
   }
 
-  _selectFieldCondition(event){
-    if(typeof event === 'undefined' || event.action !== "pop-value" || !this.props.req) {
-      if(typeof event !== 'undefined') {
-        this.setState({ selectedFieldCondition: event.target.value });
+  function _updateDisableState(value) {
+    if (typeof value !== 'undefined') {
+      if (value === 'between' || value === 'outside') {
+        setDisabled(true);
+        setIsRange(true);
+        $('#' + dateTimeCollapseId).slideDown();
+        _linkRangeDatepickers(hiddenInputRef1.current, hiddenInputRef2.current, false);
+      } else if (value === 'after' || value === 'before') {
+        setDisabled(true);
+        setIsRange(false);
+        $('#' + dateTimeCollapseId).slideUp();
+        _linkRangeDatepickers(hiddenInputRef1.current, hiddenInputRef2.current, true);
       } else {
-        this.setState({ selectedFieldCondition: '' });
+        setDisabled(false);
+        setIsRange(false);
+        $('#' + dateTimeCollapseId).slideUp();
+        _linkRangeDatepickers(hiddenInputRef1.current, hiddenInputRef2.current, true);
       }
     }
   }
 
-  renderSelectConditionElement(){
+  function _selectCondition(event) {
+    if (typeof event === 'undefined' || event.action !== "pop-value" || !req) {
+      if (typeof event !== 'undefined') {
+        setStartDateInputName(_buildInputNameCondition(startDateInputNameArray, event.target.value));
+        setEndDateInputName(_buildInputNameCondition(endDateInputNameArray, event.target.value));
+        setSelectedCondition(event.target.value);
+        _updateDisableState(event.target.value);
+      } else {
+        setStartDateInputName(_buildInputNameCondition(startDateInputNameArray, 'exact'));
+        setEndDateInputName(_buildInputNameCondition(endDateInputNameArray, 'exact'));
+        setSelectedCondition('');
+        _updateDisableState('');
+      }
+    }
+  }
+
+  function _selectFieldCondition(event) {
+    if (typeof event === 'undefined' || event.action !== "pop-value" || !req) {
+      if (typeof event !== 'undefined') {
+        setSelectedFieldCondition(event.target.value);
+      } else {
+        setSelectedFieldCondition('');
+      }
+    }
+  }
+
+  function renderSelectConditionElement() {
     return (
-      <select className="form-control filter-condition" name={this.props.selectConditionName} value={this.state.selectedCondition} onChange={this.selectCondition}>
-      { this.props.selectCondition.map((item) => {
-        return <option key={item.key} value={item.key}>{item.value}</option>
-      })}
+      <select className="form-control filter-condition" name={selectConditionName} value={selectedCondition}
+              onChange={_selectCondition}>
+        {selectCondition.map((item) => {
+          return <option key={item.key} value={item.key}>{item.value}</option>
+        })}
       </select>
     );
   }
 
-  renderDateTimeElement(){
+  function renderDateTimeElement() {
     return (
-        <div className="col-lg-12">
-            <DateTimeInput input={this.props.inputStart} inputId={this.dateTimeSearchId} inputSuffixId="start_date" inputName={this.state.startDateInputName} ref={this.dateTimeSearchRef} localizedDateTimeData={this.props.localizedDateTimeData} disabled={this.state.disabled} isRange={this.state.isRange} datepicker={true} locale={this.props.locale} format={this.props.format}/>
-            { this.state.isRange &&
-              <i className="fa fa-chevron-down"></i>
-            }
-        </div>
-    );
-  }
-
-  renderFieldConditionElement(){
-    return (
-      <select className="form-control filter-condition" name={this.props.fieldConditionName} value={this.state.selectedFieldCondition} onChange={this.selectFieldCondition}>
-      { this.props.fieldConditionData.map((item) => {
-        return <option key={item.key} value={item.key}>{item.value}</option>
-      })}
-      </select>
-    );
-  }
-
-
-  render() {
-    return (
-      <div className="datetime-search-container row">
-        { this.props.selectCondition.length > 0 &&
-        <div className="col-lg-2">
-            { this.renderFieldConditionElement() }
-        </div>
-        }
-        <div className={this._getDateTimeClassname()}>
-          { this.renderDateTimeElement() }
-          <div className="collapse" id={this.dateTimeCollapseId}>
-             <div className="col-lg-12">
-                <DateTimeInput input={this.props.inputEnd} inputId={this.dateTimeSearchId} inputSuffixId="end_date" inputName={this.state.endDateInputName} localizedDateTimeData={this.props.localizedDateTimeData} disabled={this.state.disabled} isRange={this.state.isRange} ref={this.dateTimeSearchRef2} datepicker={true} locale={this.props.locale} format={this.props.format}/>
-             </div>
-          </div>
-        </div>
-        { this.props.selectCondition.length > 0 &&
-        <div className="col-lg-3">
-          { this.renderSelectConditionElement() }
-        </div>
+      <div className="col-lg-12">
+        <DateTimeInput input={inputStart} inputId={dateTimeSearchId} inputSuffixId="start_date"
+                       inputName={startDateInputName} ref={{
+          topRef: dateTimeSearchRef1,
+          hiddenInputRef: hiddenInputRef1
+        }} localizedDateTimeData={localizedDateTimeData} disabled={disabled} isRange={isRange} datepicker={true}
+                       locale={locale} format={format}/>
+        {isRange &&
+        <i className="fa fa-chevron-down"></i>
         }
       </div>
     );
   }
 
+  function renderFieldConditionElement() {
+    return (
+      <select className="form-control filter-condition" name={fieldConditionName} value={selectedFieldCondition}
+              onChange={_selectFieldCondition}>
+        {fieldConditionData.map((item) => {
+          return <option key={item.key} value={item.key}>{item.value}</option>
+        })}
+      </select>
+    );
+  }
+
+  return (
+    <div className="datetime-search-container row">
+      {selectCondition.length > 0 &&
+      <div className="col-lg-2">
+        {renderFieldConditionElement()}
+      </div>
+      }
+      <div className={_getDateTimeClassname()}>
+        {renderDateTimeElement()}
+        <div className="collapse" id={dateTimeCollapseId}>
+          <div className="col-lg-12">
+            <DateTimeInput input={inputEnd} inputId={dateTimeSearchId} inputSuffixId="end_date"
+                           inputName={endDateInputName} localizedDateTimeData={localizedDateTimeData}
+                           disabled={disabled} isRange={isRange} ref={{
+              topRef: dateTimeSearchRef2,
+              hiddenInputRef: hiddenInputRef2
+            }} datepicker={true} locale={locale} format={format}/>
+          </div>
+        </div>
+      </div>
+      {selectCondition.length > 0 &&
+      <div className="col-lg-3">
+        {renderSelectConditionElement()}
+      </div>
+      }
+    </div>
+  );
 }
 
 export default DateTimeSearch;

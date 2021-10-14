@@ -1,179 +1,181 @@
-import React from "react";
+import React, {useState, useEffect} from "react";
 import ReferenceSearch from './ReferenceSearch';
 
-class ReferenceSearchContainer extends React.Component {
-  constructor(props){
-    super(props);
+const ReferenceSearchContainer = (props) => {
+  const {
+    inputName: inputNameProps,
+    referenceFilterName: referenceFilterNameProps,
+    srcRef: srcRefProps,
+    selectConditionName: selectConditionNameProps,
+    fieldConditionName: fieldConditionNameProps,
+    catalog,
+    parentItemType,
+    itemType,
+    field,
+    locale,
+    multiple,
+    searchPlaceholder,
+    choosePlaceholder,
+    filterPlaceholder,
+    itemTypeSearch,
+    selectCondition,
+    fieldConditionData,
+    noOptionsMessage
+  } = props
 
-    this.state = {
-      componentsList: [],
-      inputName: this.props.inputName.split("[0]"),
-      referenceFilterName: this.props.referenceFilterName.split("[0]"),
-      srcRef: this.props.srcRef.split("_0_"),
-      selectConditionName: this.props.selectConditionName.split("[0]"),
-      fieldConditionName: this.props.fieldConditionName.split("[0]")
-    };
+  const [componentsList, setComponentsList] = useState([])
+  const [inputName, setInputName] = useState(inputNameProps.split("[0]"))
+  const [referenceFilterName, setReferenceFilterName] = useState(referenceFilterNameProps.split("[0]"))
+  const [srcRef, setSrcRef] = useState(srcRefProps.split("_0_"))
+  const [selectConditionName, setSelectConditionName] = useState(selectConditionNameProps.split("[0]"))
+  const [fieldConditionName, setFieldConditionName] = useState(fieldConditionNameProps.split("[0]"))
 
-    this.addComponent = this._addComponent.bind(this);
-    this.deleteComponent = this._deleteComponent.bind(this);
-  }
-
-  componentDidMount(){
-    const componentsList = this.state.componentsList;
-    var id = 0;
-    var item = {
+  useEffect(() => {
+    let computedComponentsList = componentsList;
+    let id = 0;
+    let item = {
       itemId: id,
-      catalog: this.props.catalog,
-      parentItemType: this.props.parentItemType,
-      itemType: this.props.itemType,
-      field: this.props.field,
-      locale: this.props.locale,
-      inputName: this._buildInputName(id),
-      referenceFilterName: this._buildReferenceFilterName(id),
-      multiple: this.props.multiple,
-      searchPlaceholder: this.props.searchPlaceholder,
-      choosePlaceholder: this.props.choosePlaceholder,
-      filterPlaceholder: this.props.filterPlaceholder,
-      srcRef: this._buildSrcRef(id),
-      itemTypeSearch: this.props.itemTypeSearch,
-      selectConditionName: this._buildSelectConditionName(id),
-      selectCondition: this.props.selectCondition,
-      fieldConditionName: this._buildFieldConditionName(id),
-      fieldConditionData: this.props.fieldConditionData,
-      addComponent: this.addComponent,
-      deleteComponent: this.deleteComponent,
+      catalog: catalog,
+      parentItemType: parentItemType,
+      itemType: itemType,
+      field: field,
+      locale: locale,
+      inputName: _buildInputName(id),
+      referenceFilterName: _buildReferenceFilterName(id),
+      multiple: multiple,
+      searchPlaceholder: searchPlaceholder,
+      choosePlaceholder: choosePlaceholder,
+      filterPlaceholder: filterPlaceholder,
+      srcRef: _buildSrcRef(id),
+      itemTypeSearch: itemTypeSearch,
+      selectConditionName: _buildSelectConditionName(id),
+      selectCondition: selectCondition,
+      fieldConditionName: _buildFieldConditionName(id),
+      fieldConditionData: fieldConditionData,
+      addComponent: _addComponent,
+      deleteComponent: _deleteComponent,
     };
+    computedComponentsList.push(item);
+    setComponentsList([...computedComponentsList]);
+  }, [])
 
-    componentsList.push(item);
-
-    this.setState({componentsList: componentsList});
-  }
-
-  _addComponent(itemId) {
-    const componentsList = this.state.componentsList;
-
-    var id = itemId + 1;
-    var item = {
+  function _addComponent(itemId) {
+    let computedComponentsList = componentsList;
+    let id = itemId + 1;
+    let item = {
       itemId: id,
-      catalog: this.props.catalog,
-      parentItemType: this.props.parentItemType,
-      itemType: this.props.itemType,
-      field: this.props.field,
-      locale: this.props.locale,
-      inputName: this._buildInputName(id),
-      referenceFilterName: this._buildReferenceFilterName(id),
-      multiple: this.props.multiple,
-      searchPlaceholder: this.props.searchPlaceholder,
-      choosePlaceholder: this.props.choosePlaceholder,
-      filterPlaceholder: this.props.filterPlaceholder,
-      srcRef: this._buildSrcRef(id),
-      itemTypeSearch: this.props.itemTypeSearch,
-      selectConditionName: this._buildSelectConditionName(id),
-      selectCondition: this.props.selectCondition,
-      fieldConditionName: this._buildFieldConditionName(id),
-      fieldConditionData: this.props.fieldConditionData,
-      addComponent: this.addComponent,
-      deleteComponent: this.deleteComponent,
+      catalog: catalog,
+      parentItemType: parentItemType,
+      itemType: itemType,
+      field: field,
+      locale: locale,
+      inputName: _buildInputName(id),
+      referenceFilterName: _buildReferenceFilterName(id),
+      multiple: multiple,
+      searchPlaceholder: searchPlaceholder,
+      choosePlaceholder: choosePlaceholder,
+      filterPlaceholder: filterPlaceholder,
+      srcRef: _buildSrcRef(id),
+      itemTypeSearch: itemTypeSearch,
+      selectConditionName: _buildSelectConditionName(id),
+      selectCondition: selectCondition,
+      fieldConditionName: _buildFieldConditionName(id),
+      fieldConditionData: fieldConditionData,
+      addComponent: _addComponent,
+      deleteComponent: _deleteComponent,
     };
-
-    componentsList.push(item);
-
-    this.setState({componentsList: componentsList});
+    computedComponentsList.push(item);
+    setComponentsList([...computedComponentsList]);
   }
 
-  _deleteComponent(itemId) {
-    var componentsList = this.state.componentsList;
-
-    componentsList.forEach((ref, index) => {
-      if(Object.keys(ref).length !== 0 && ref.itemId === itemId) {
-        componentsList.splice(index, 1);
+  function _deleteComponent(itemId) {
+    let computedComponentsList = componentsList;
+    computedComponentsList.forEach((ref, index) => {
+      if (Object.keys(ref).length !== 0 && ref.itemId === itemId) {
+        computedComponentsList.splice(index, 1);
       }
     });
-
-    this.setState({componentsList: componentsList});
+    setComponentsList([...computedComponentsList]);
   }
 
-  _buildInputName(id) {
-      if(this.state.inputName.length === 2) {
-        return this.state.inputName[0] + '[' + id + ']' + this.state.inputName[1];
-      } else {
-        return this.props.inputName;
-      }
+  function _buildInputName(id) {
+    if (inputName.length === 2) {
+      return inputName[0] + '[' + id + ']' + inputName[1];
+    } else {
+      return inputNameProps;
+    }
   }
 
-  _buildReferenceFilterName(id) {
-      if(this.state.referenceFilterName.length === 2) {
-        return this.state.referenceFilterName[0] + '[' + id + ']' + this.state.referenceFilterName[1];
-      } else {
-        return this.props.referenceFilterName;
-      }
+  function _buildReferenceFilterName(id) {
+    if (referenceFilterName.length === 2) {
+      return referenceFilterName[0] + '[' + id + ']' + referenceFilterName[1];
+    } else {
+      return referenceFilterNameProps;
+    }
   }
 
-  _buildSrcRef(id) {
-      if(this.state.srcRef.length === 2) {
-        return this.state.srcRef[0] + '_' + id + '_' + this.state.srcRef[1];
-      } else {
-        return this.props.srcRef;
-      }
+  function _buildSrcRef(id) {
+    if (srcRef.length === 2) {
+      return srcRef[0] + '_' + id + '_' + srcRef[1];
+    } else {
+      return srcRefProps;
+    }
   }
 
-  _buildSelectConditionName(id) {
-      if(this.state.selectConditionName.length === 2) {
-        return this.state.selectConditionName[0] + '[' + id + ']' + this.state.selectConditionName[1];
-      } else {
-        return this.props.selectConditionName;
-      }
+  function _buildSelectConditionName(id) {
+    if (selectConditionName.length === 2) {
+      return selectConditionName[0] + '[' + id + ']' + selectConditionName[1];
+    } else {
+      return selectConditionNameProps;
+    }
   }
 
-  _buildFieldConditionName(id) {
-      if(this.state.fieldConditionName.length === 2) {
-        return this.state.fieldConditionName[0] + '[' + id + ']' + this.state.fieldConditionName[1];
-      } else {
-        return this.props.fieldConditionName;
-      }
+  function _buildFieldConditionName(id) {
+    if (fieldConditionName.length === 2) {
+      return fieldConditionName[0] + '[' + id + ']' + fieldConditionName[1];
+    } else {
+      return fieldConditionNameProps;
+    }
   }
 
-  renderComponent(item, index, list) {
-    if(Object.keys(item).length > 0) {
+  function renderComponent(item, index, list) {
+    if (Object.keys(item).length > 0) {
       return (<div key={item.itemId} className="component-search-row row"><ReferenceSearch
-      itemId={item.itemId}
-      componentList={list}
-      catalog={item.catalog}
-      parentItemType={item.parentItemType}
-      itemType={item.itemType}
-      field={item.field}
-      locale={item.locale}
-      inputName={item.inputName}
-      referenceFilterName={item.referenceFilterName}
-      multiple={this.props.multiple}
-      searchPlaceholder={item.searchPlaceholder}
-      choosePlaceholder={item.choosePlaceholder}
-      filterPlaceholder={item.filterPlaceholder}
-      srcRef={item.srcRef}
-      itemTypeSearch={item.itemTypeSearch}
-      selectConditionName={item.selectConditionName}
-      selectCondition={item.selectCondition}
-      fieldConditionName={item.fieldConditionName}
-      fieldConditionData={item.fieldConditionData}
-      addComponent={item.addComponent}
-      deleteComponent={item.deleteComponent}
-      noOptionsMessage={this.props.noOptionsMessage}
+        itemId={item.itemId}
+        componentList={list}
+        catalog={item.catalog}
+        parentItemType={item.parentItemType}
+        itemType={item.itemType}
+        field={item.field}
+        locale={item.locale}
+        inputName={item.inputName}
+        referenceFilterName={item.referenceFilterName}
+        multiple={multiple}
+        searchPlaceholder={item.searchPlaceholder}
+        choosePlaceholder={item.choosePlaceholder}
+        filterPlaceholder={item.filterPlaceholder}
+        srcRef={item.srcRef}
+        itemTypeSearch={item.itemTypeSearch}
+        selectConditionName={item.selectConditionName}
+        selectCondition={item.selectCondition}
+        fieldConditionName={item.fieldConditionName}
+        fieldConditionData={item.fieldConditionData}
+        addComponent={item.addComponent}
+        deleteComponent={item.deleteComponent}
+        noOptionsMessage={noOptionsMessage}
       /></div>);
     }
   }
 
-  renderComponentList() {
-    const list = this.state.componentsList;
-    return this.state.componentsList.map((item, index, list) => this.renderComponent(item, index, list));
+  function renderComponentList() {
+    return componentsList.map((item, index, list) => renderComponent(item, index, list));
   }
 
-  render() {
-    return (
-      <React.Fragment>
-      {this.renderComponentList()}
-      </React.Fragment>
-    );
-  }
+  return (
+    <React.Fragment>
+      {renderComponentList()}
+    </React.Fragment>
+  );
 }
 
 export default ReferenceSearchContainer;

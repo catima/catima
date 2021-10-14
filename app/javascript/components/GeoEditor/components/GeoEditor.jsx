@@ -1,62 +1,118 @@
 import 'es6-shim';
 import PropTypes from 'prop-types';
-import React from 'react';
+import React, {useState, useEffect, useRef} from 'react';
 import L from 'leaflet';
-import { v4 as uuidv4 } from 'uuid';
+import {v4 as uuidv4} from 'uuid';
 
 const subs = ['a', 'b', 'c'];
 
-class GeoEditor extends React.Component {
+const GeoEditor = (props) => {
+  const {
+    input,
+    layers: layersProps,
+    bounds: boundsProps
+  } = props
 
-  static propTypes = {
-    input: PropTypes.string.isRequired,
-    bounds: PropTypes.object,
-    layers: PropTypes.array
-  };
+  const editorId = uuidv4();
 
-  constructor(props){
-    super(props);
-    this.input = this.props.input;
-    this.layers = this.props.layers ? this.props.layers : [];
-    this.bounds = this.props.bounds || {xmin: -60, xmax: 60, ymin: -45, ymax: 60};
-    const obj = $(this.input).val();
-    this.fc = JSON.parse((obj == '' || obj == null) ? '{"type": "FeatureCollection", "features": []}' : obj);
-    this.state = {
-      mapHeight: 300,
-      mapMinZoom: 1,
-      mapMaxZoom: 18,
-      selectedMarkerLatitude: '',
-      selectedMarkerLongitude: '',
-    };
+  const [bounds, setBounds] = useState()
+  const [layers, setLayers] = useState()
+  const [fc, setFc] = useState()
+  const [selectedMarker, setSelectedMarker] = useState(null)
+  const [markers, setMarkers] = useState([])
+  const [map, setMap] = useState()
+  const [markerIconNormal, setMarkerIconNormal] = useState()
+  const [markerIconSelected, setMarkerIconSelected] = useState()
+  const [state, setState] = useState({
+    mapHeight: 300,
+    mapMinZoom: 1,
+    mapMaxZoom: 18,
+    selectedMarkerLatitude: '',
+    selectedMarkerLongitude: '',
+  })
+  const [mapId, setMapId] = useState()
+  const [editMarkerPaneId, setEditMarkerPaneId] = useState()
 
-    this.selectedMarker = null;
-    this.markers = [];
+  const markersRef = useRef([])
+  markersRef.current = markers
 
-    // Create unique IDs for the different DOM elements
-    const editorId = uuidv4();
-    this.mapId = 'map_' + editorId;
-    this.editMarkerPaneId = 'editMarkerPane_' + editorId;
+  useEffect(() => {
+    setBounds(boundsProps || {xmin: -60, xmax: 60, ymin: -45, ymax: 60})
+    setLayers(layersProps ? layersProps : [])
+  }, [layersProps, boundsProps])
 
+  useEffect(() => {
+    const _mapId = 'map_' + editorId;
+    const _editMarkerPaneId = 'editMarkerPane_' + editorId;
+    setMapId(_mapId)
+    setEditMarkerPaneId(_editMarkerPaneId)
+  }, [])
+
+  useEffect(() => {
+    if (input) {
+      let o = $(input).val()
+      if (o) {
+        setFc(JSON.parse((o == '' || o == null) ? '{"type": "FeatureCollection", "features": []}' : o))
+      }
+    }
+  }, [input])
+
+  useEffect(() => {
+    if (mapId && !map) {
+      setMap(L.map(mapId, {
+        minZoom: state.mapMinZoom,
+        maxZoom: state.mapMaxZoom
+      }).setView([47, 7], 7))
+    }
+  }, [mapId])
+
+  useEffect(() => {
+    if (map) {
+      // Initialize map layers & layer control if needed
+      _initLayers(map);
+      L.control.createMarkerControl({position: 'topleft'}).addTo(map);
+      map.on('click', function (e) {
+        _unselectAllMarkers();
+      });
+      // Add the markers for existing features
+      _addMarkersFromFeatureCollection();
+      // Display all markers
+      map.fitBounds(_bbox());
+    }
+  }, [map])
+
+  useEffect(() => {
     // Create marker icons
-    this._createMarkerIcons();
+    setMarkerIconNormal(L.icon({
+      iconUrl: '/icons/circle-marker.png',
+      iconSize: [24, 24],
+      iconAnchor: [12, 12],
+      popupAnchor: [-3, -3],
+    }))
 
+    setMarkerIconSelected(L.icon({
+      iconUrl: '/icons/circle-marker-selected.png',
+      iconSize: [24, 24],
+      iconAnchor: [12, 12],
+      popupAnchor: [-3, -3],
+    }))
     // Initialize the custom Leaflet control
-    this._buildMarkerControl();
+    _buildMarkerControl();
+  }, [map])
 
-    this.handleChangeLatitude = this._handleChangeLatitude.bind(this);
-    this.handleChangeLongitude = this._handleChangeLongitude.bind(this);
-    this.deleteSelectedMarker = this._deleteSelectedMarker.bind(this);
+  useEffect(() => {
+    _buildMarkerControl();
+  }, [markerIconNormal, markerIconSelected])
+
+  function _features() {
+    return fc?.features || [];
   }
 
-  _features(){
-    return this.fc.features || [];
-  }
-
-  _bbox(){
-    const features = this._features();
-    if (features.length == 0) return [[this.bounds.ymin, this.bounds.xmin], [this.bounds.ymax, this.bounds.xmax]];
+  function _bbox() {
+    const features = _features();
+    if (features.length == 0) return [[bounds.ymin, bounds.xmin], [bounds.ymax, bounds.xmax]];
     let bbox = {ymin: 90, xmin: 180, ymax: -90, xmax: -180};
-    for (let i=0; i < features.length; i++){
+    for (let i = 0; i < features.length; i++) {
       let c = features[i].geometry.coordinates;
       if (c[0] < bbox.xmin) bbox.xmin = c[0];
       if (c[1] < bbox.ymin) bbox.ymin = c[1];
@@ -67,15 +123,18 @@ class GeoEditor extends React.Component {
     let yext = (bbox.ymax - bbox.ymin) / 2;
     if (xext < 0.0001) xext = 0.3;
     if (yext < 0.0001) yext = 0.3;
-    bbox.xmin -= xext; bbox.xmax += xext;
-    bbox.ymin -= yext; bbox.ymax += xext;
+    bbox.xmin -= xext;
+    bbox.xmax += xext;
+    bbox.ymin -= yext;
+    bbox.ymax += xext;
     return [[bbox.ymin, bbox.xmin], [bbox.ymax, bbox.xmax]];
   }
 
-  _writeFeatures(){
+  function _writeFeatures(m = false) {
     let newFeatures = [];
-    for (let i=0; i < this.markers.length; i++){
-      let pos = this.markers[i].getLatLng();
+    let marks = m ? m : markers
+    for (let i = 0; i < marks.length; i++) {
+      let pos = marks[i].getLatLng();
       newFeatures.push({
         type: "Feature",
         geometry: {
@@ -85,176 +144,172 @@ class GeoEditor extends React.Component {
         properties: {}
       })
     }
-    this.fc.features = newFeatures;
-    this._save(this.fc);
+    setFc({...fc, features: newFeatures})
+    _save({...fc, features: newFeatures});
   }
 
-  _save(fc){
-    $(this.input).val(JSON.stringify(fc));
+  function _save(fc) {
+    $(input).val(JSON.stringify(fc));
   }
 
   // Returns the coordinates of the feature.
-  _coords(feat){
+  function _coords(feat) {
     return [feat.geometry.coordinates[1], feat.geometry.coordinates[0]];
   }
 
-  _addMarkersFromFeatureCollection(){
-    const feats = this._features();
-    for (let i=0; i < feats.length; i++){
-      let m = L.marker(this._coords(feats[i]), { icon: this.markerIconNormal, draggable: true }).addTo(this._map);
-      this._initMarker(m);
-      this.markers.push(m);
+  function _addMarkersFromFeatureCollection() {
+    const feats = _features();
+    let ms = []
+    for (let i = 0; i < feats.length; i++) {
+      let m = L.marker(_coords(feats[i]), {icon: markerIconNormal, draggable: true}).addTo(map);
+      _initMarker(m);
+      ms.push(m)
     }
-  }
-
-  _createMarkerIcons(){
-    this.markerIconNormal = L.icon({
-      iconUrl: '/icons/circle-marker.png',
-      iconSize: [24, 24],
-      iconAnchor: [12, 12],
-      popupAnchor: [-3, -3],
-    });
-
-    this.markerIconSelected = L.icon({
-      iconUrl: '/icons/circle-marker-selected.png',
-      iconSize: [24, 24],
-      iconAnchor: [12, 12],
-      popupAnchor: [-3, -3],
-    });
+    setMarkers(ms);
   }
 
   // Builds the create marker control
-  _buildMarkerControl() {
-    const self = this;
+  function _buildMarkerControl() {
     L.Control.CreateMarkerControl = L.Control.extend({
-      onAdd: function(map){
+      onAdd: function (m) {
         const container = L.DomUtil.create('div', 'leaflet-create-marker');
         L.DomEvent
-          .on(container, 'click', function(e){
+          .on(container, 'click', function (e) {
             e.stopPropagation();
             e.preventDefault();
-            self._createNewMarker();
+            _createNewMarker(m);
           });
         return container;
       },
-      onRemove: function(map){}
+      onRemove: function (m) {
+      }
     });
 
-    L.control.createMarkerControl = function(opts){
+    L.control.createMarkerControl = function (opts) {
       return new L.Control.CreateMarkerControl(opts);
     }
   }
 
-  _initMarker(m){
-    const self = this;
-    m.on('click', function(e){
-      self._unselectAllMarkers();
-      self._selectMarker(e.target);
+  function _initMarker(m) {
+    m.on('click', function (e) {
+      _unselectAllMarkers();
+      _selectMarker(e.target);
     });
-    m.on('drag', function(e){
-      self._showMarkerEditPane(e.target);
+    m.on('drag', function (e) {
+      _showMarkerEditPane(e.target);
     });
-    m.on('moveend', function(e){
-      self._unselectAllMarkers();
-      self._selectMarker(e.target);
-      self._writeFeatures();
+    m.on('moveend', function (e) {
+      const marks = markersRef.current
+      _unselectAllMarkers();
+      _selectMarker(e.target);
+      _writeFeatures(marks);
     });
   }
 
-  _initLayers(map){
-    if (this.layers.length === 1) {
-      this.layers.forEach((layer) => {
+  function _initLayers(m) {
+    if (layers.length === 1) {
+      layers.forEach((layer) => {
         L.tileLayer(layer.value, {
           subdomains: subs,
           attribution: layer.attribution
-        }).addTo(map);
+        }).addTo(m);
       });
-    } else if (this.layers.length > 1) {
+    } else if (layers.length > 1) {
       let baseMaps = {};
 
-      this.layers.forEach((layer) => {
+      layers.forEach((layer) => {
         baseMaps[layer.label] = L.tileLayer(layer.value, {
           subdomains: subs,
           attribution: layer.attribution
         });
       });
-
-      Object.values(baseMaps)[0].addTo(map);
-
-      L.control.layers(baseMaps, {}).addTo(map);
+      Object.values(baseMaps)[0].addTo(m);
+      L.control.layers(baseMaps, {}).addTo(m);
     } else {
       L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
         subdomains: subs,
         attribution: 'Map data &copy; <a href="http://openstreetmap.org">OpenStreetMap</a> contributors'
-      }).addTo(map);
+      }).addTo(m);
     }
   }
 
-  _unselectAllMarkers(){
-    for (var i=0; i < this.markers.length; i++) {
-      this.markers[i].setIcon(this.markerIconNormal);
+  function _unselectAllMarkers() {
+    for (let i = 0; i < markers.length; i++) {
+      markers[i].setIcon(markerIconNormal);
     }
-    this.selectedMarker = null;
-    this.setState({
+    setSelectedMarker(null)
+    setState({
+      ...state,
       selectedMarkerLatitude: '',
       selectedMarkerLongitude: ''
     });
-    this._hideMarkerEditPane();
+    _hideMarkerEditPane();
   }
 
-  _selectMarker(m){
-    m.setIcon(this.markerIconSelected);
-    this.selectedMarker = m;
+  function _selectMarker(m) {
+    m.setIcon(markerIconSelected);
+    setSelectedMarker(m)
     // Update position in direct edit control
-    this._showMarkerEditPane(m);
+    _showMarkerEditPane(m);
   }
 
-  _showMarkerEditPane(m){
+  function _showMarkerEditPane(m) {
     const pos = m.getLatLng();
-    this.setState({
+    setState({
+      ...state,
       selectedMarkerLatitude: pos.lat.toFixed(8),
       selectedMarkerLongitude: pos.lng.toFixed(8)
     })
-    document.getElementById(this.editMarkerPaneId).style.display = 'block';
+    document.getElementById(editMarkerPaneId).style.display = 'block';
   }
 
-  _hideMarkerEditPane(){
-    document.getElementById(this.editMarkerPaneId).style.display = 'none';
+  function _hideMarkerEditPane() {
+    document.getElementById(editMarkerPaneId).style.display = 'none';
   }
 
-  _updatePositionOfSelectedMarker(){
-    if (this.selectedMarker == null) return;
-    let lat = parseFloat(this.state.selectedMarkerLatitude);
-    let lng = parseFloat(this.state.selectedMarkerLongitude);
+  function _updatePositionOfSelectedMarker() {
+    if (selectedMarker == null) return;
+    let lat = parseFloat(state.selectedMarkerLatitude);
+    let lng = parseFloat(state.selectedMarkerLongitude);
     if (isNaN(lat) || isNaN(lng)) return;
-    this.selectedMarker.setLatLng([lat, lng]);
-    this._writeFeatures();
+    const marks = markersRef.current
+    selectedMarker.setLatLng([lat, lng]);
+    _writeFeatures(marks);
   }
 
-  _handleChangeLatitude(e){
-    this.setState({selectedMarkerLatitude: e.target.value});
-    this._updatePositionOfSelectedMarker();
+  function _handleChangeLatitude(e) {
+    setState({
+      ...state,
+      selectedMarkerLatitude: e.target.value
+    });
+    _updatePositionOfSelectedMarker();
   }
 
-  _handleChangeLongitude(e){
-    this.setState({selectedMarkerLongitude: e.target.value});
-    this._updatePositionOfSelectedMarker();
+  function _handleChangeLongitude(e) {
+    setState({
+      ...state,
+      selectedMarkerLongitude: e.target.value
+    });
+    _updatePositionOfSelectedMarker();
   }
 
-  _createNewMarker(){
-    const m = L.marker(this._newMarkerPostion(), { icon: this.markerIconNormal, draggable: true }).addTo(this._map);
-    this.markers.push(m);
-    this._initMarker(m);
-    this._unselectAllMarkers();
-    this._selectMarker(m);
-    this._writeFeatures();
+  function _createNewMarker(map) {
+    const m = L.marker(_newMarkerPostion(map), {icon: markerIconNormal, draggable: true}).addTo(map);
+    const marks = markersRef.current
+    setMarkers([...marks, m]);
+
+    _initMarker(m);
+    _unselectAllMarkers();
+    _selectMarker(m);
+
+    _writeFeatures([...marks, m]);
   }
 
   // Returns the position of the new marker to create.
   // Currently this is a random position within the central part of the current view.
   // There is no overlay check implemented as it can be computationally quite expensive.
-  _newMarkerPostion(){
-    let bbox = this._map.getBounds();
+  function _newMarkerPostion(map) {
+    let bbox = map.getBounds();
     const xr = Math.random(), yr = Math.random();
     const xext = bbox.getEast() - bbox.getWest();
     const yext = bbox.getNorth() - bbox.getSouth();
@@ -263,51 +318,37 @@ class GeoEditor extends React.Component {
     return [y, x];
   }
 
-  _deleteSelectedMarker(){
-    if (this.selectedMarker == null) return;
-    this.selectedMarker.remove();
-    const idx = this.markers.indexOf(this.selectedMarker);
-    if (idx > -1) this.markers.splice(idx, 1);
-    this._unselectAllMarkers();
-    this._writeFeatures();
+  function _deleteSelectedMarker() {
+    if (selectedMarker == null) return;
+    const marks = markersRef.current
+    selectedMarker.remove();
+    const idx = marks.indexOf(selectedMarker);
+    if (idx > -1) {
+      const splicedMarks = marks.splice(idx, 1)
+      setMarkers(splicedMarks)
+      _writeFeatures(splicedMarks);
+    }
+    _unselectAllMarkers();
   }
 
-  componentDidMount() {
-    const self = this;
-    this._map = L.map(this.mapId, {
-      minZoom: this.state.mapMinZoom,
-      maxZoom: this.state.mapMaxZoom
-    }).setView([47, 7], 7);
-
-    // Initialize map layers & layer control if needed
-    this._initLayers(this._map);
-
-    L.control.createMarkerControl({ position: 'topleft' }).addTo(this._map);
-    this._map.on('click', function(e){
-      self._unselectAllMarkers();
-    });
-
-    // Add the markers for existing features
-    this._addMarkersFromFeatureCollection();
-
-    // Display all markers
-    this._map.fitBounds(this._bbox());
-  }
-
-  render(){
-    let markerEditPaneDisplay = 'none';
-    return (
-      <div className="geoEditor">
-        <div id={this.mapId} style={{height: this.state.mapHeight}}></div>
-        <div id={this.editMarkerPaneId} className="geo-edit-pane" style={{display: "none"}}>
-          <label>Latitude: <input onKeyUp={this.handleChangeLatitude} onChange={this.handleChangeLatitude} value={this.state.selectedMarkerLatitude} /></label>
-          <label>&nbsp;Longitude: <input onKeyUp={this.handleChangeLongitude} onChange={this.handleChangeLongitude} value={this.state.selectedMarkerLongitude} /></label>
-          <img onClick={this.deleteSelectedMarker} src="/icons/delete-marker-white.png" />
-        </div>
+  return (
+    <div className="geoEditor">
+      <div id={mapId} style={{height: state.mapHeight}}></div>
+      <div id={editMarkerPaneId} className="geo-edit-pane" style={{display: "none"}}>
+        <label>Latitude: <input onKeyUp={_handleChangeLatitude} onChange={_handleChangeLatitude}
+                                value={state.selectedMarkerLatitude}/></label>
+        <label>&nbsp;Longitude: <input onKeyUp={_handleChangeLongitude} onChange={_handleChangeLongitude}
+                                       value={state.selectedMarkerLongitude}/></label>
+        <img onClick={_deleteSelectedMarker} src="/icons/delete-marker-white.png"/>
       </div>
-    );
-  }
+    </div>
+  );
+};
 
+GeoEditor.propTypes = {
+  input: PropTypes.string.isRequired,
+  bounds: PropTypes.object,
+  layers: PropTypes.array
 };
 
 export default GeoEditor;

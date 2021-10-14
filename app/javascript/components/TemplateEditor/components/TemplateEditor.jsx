@@ -1,73 +1,72 @@
 import 'es6-shim';
-import PropTypes from 'prop-types';
-import React from 'react';
-import { v4 as uuidv4 } from 'uuid';
+import PropTypes from "prop-types";
+import React, {useState, useEffect} from 'react';
+import {v4 as uuidv4} from 'uuid';
 
-class TemplateEditor extends React.Component {
-  static propTypes = {
-    contentRef: PropTypes.string.isRequired,
-    locale: PropTypes.string.isRequired,
-    fields: PropTypes.array.isRequired,
-  };
+const TemplateEditor = (props) => {
+  const {
+    contentRef,
+    locale,
+    fields
+  } = props
 
-  constructor(props){
-    super(props);
-    this.uid = `summernote-${uuidv4()}`;
-    this.updateContent = this._updateContent.bind(this);
+  const uid = `summernote-${uuidv4()}`;
+  const [editor, setEditor] = useState(false)
+  const [html, setHtml] = useState(false)
+
+  function _loadContent() {
+    let v = JSON.parse(document.getElementById(contentRef).value || {});
+    return v[locale] || '';
   }
 
-  _loadContent(){
-    let v = JSON.parse(document.getElementById(this.props.contentRef).value || {});
-    return v[this.props.locale] || '';
-  }
-
-  _updateContent(html){
-    const el = document.getElementById(this.props.contentRef)
+  function _updateContent(html) {
+    const el = document.getElementById(contentRef)
     let v = JSON.parse(el.value || {});
-    v[this.props.locale] = html;
+    v[locale] = html;
     el.value = JSON.stringify(v);
   }
 
-  componentDidMount(){
-    const html = this._loadContent();
+  useEffect(() => {
+    setHtml(_loadContent())
 
-    this.editor = $(`#${this.uid}`);
-    this.options = {
-      minHeight: 150,
-      toolbar: [
-        ['style', ['bold', 'italic', 'underline', 'clear']],
-        ['font', ['strikethrough', 'superscript', 'subscript']],
-        ['fontsize', ['fontsize']],
-        ['color', ['color']],
-        ['para', ['ul', 'ol', 'paragraph']],
-        ['height', ['height']],
-        ['insert', ['picture', 'link', 'table', 'hr']],
-        ['templateEditor', ['fieldsMenu', 'itemLinkButton']]
-      ],
-      buttons: {
-        fieldsMenu: this.fieldsMenu(this.editor, this.props.fields),
-        itemLinkButton: this.itemLinkButton(this.editor),
-      },
-      callbacks: {
-        onChange: this.updateContent
-      }
-    };
-    this.editor.summernote(this.options);
-    this.editor.summernote('code', html);
+    setEditor($(`#${uid}`))
+  }, [])
 
-    $('.note-link-popover').css('display', 'none');
-    $('.dropdown-toggle').dropdown();
-  }
+  useEffect(() => {
+    if (editor && html !== false) {
+      const options = {
+        minHeight: 150,
+        toolbar: [
+          ['style', ['bold', 'italic', 'underline', 'clear']],
+          ['font', ['strikethrough', 'superscript', 'subscript']],
+          ['fontsize', ['fontsize']],
+          ['color', ['color']],
+          ['para', ['ul', 'ol', 'paragraph']],
+          ['height', ['height']],
+          ['insert', ['picture', 'link', 'table', 'hr']],
+          ['templateEditor', ['fieldsMenu', 'itemLinkButton']]
+        ],
+        buttons: {
+          fieldsMenu: fieldsMenu(editor, fields),
+          itemLinkButton: itemLinkButton(editor),
+        },
+        callbacks: {
+          onChange: _updateContent
+        }
+      };
+      editor.summernote(options);
+      editor.summernote('code', html);
 
-  componentWillUnmount(){
-    this.editor.summernote('destroy');
-  }
+      $('.note-link-popover').css('display', 'none');
+      $('.dropdown-toggle').dropdown();
+    }
+  }, [editor, html])
 
-  fieldsMenu(editor, fields){
-    return function(){
+  function fieldsMenu(editor, fields) {
+    return function () {
       const ui = $.summernote.ui;
       let fieldsMenu = [];
-      for (let i in fields){
+      for (let i in fields) {
         let f = fields[i];
         fieldsMenu.push(`<${f.type}Field>${f.slug}</${f.type}Field>`);
       }
@@ -82,10 +81,10 @@ class TemplateEditor extends React.Component {
         ui.dropdown({
           className: 'dropdown-fontsize',
           items: fieldsMenu,
-          click: function(e){
+          click: function (e) {
             e.preventDefault();
             const fieldSlug = $(e.target).text();
-            editor.summernote('editor.insertText', ' {{'+fieldSlug+'}} ');
+            editor.summernote('editor.insertText', ' {{' + fieldSlug + '}} ');
           },
         })
       ]);
@@ -93,12 +92,12 @@ class TemplateEditor extends React.Component {
     };
   }
 
-  itemLinkButton(editor){
-    return function() {
+  function itemLinkButton(editor) {
+    return function () {
       const ui = $.summernote.ui;
       const button = ui.button({
         contents: 'Item link',
-        click: function(){
+        click: function () {
           const range = editor.summernote('editor.createRange');
           let selectedText = range.toString();
           if (selectedText.length < 1) selectedText = 'item-link';
@@ -109,13 +108,17 @@ class TemplateEditor extends React.Component {
     };
   }
 
-  render(){
-    return (
-      <div className="templateEditor">
-        <div id={this.uid}></div>
-      </div>
-    );
-  }
+  return (
+    <div className="templateEditor">
+      <div id={uid}></div>
+    </div>
+  );
 }
+
+TemplateEditor.propTypes = {
+  contentRef: PropTypes.string.isRequired,
+  locale: PropTypes.string.isRequired,
+  fields: PropTypes.array.isRequired,
+};
 
 export default TemplateEditor;

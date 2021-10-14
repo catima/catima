@@ -1,16 +1,13 @@
 import 'es6-shim';
 import React from 'react';
-import { translations } from "../../../../assets/i18n/translations";
-import { defaultMessages } from "../../../../assets/i18n/default";
+import {translations} from "../../../../assets/i18n/translations";
+import {defaultMessages} from "../../../../assets/i18n/default";
 
-class Translations extends React.Component {
-  static messages = translations[document.querySelector('html').getAttribute('lang')] || defaultMessages;
+const Translations = (props) => {
 
-  constructor(props){
-    super(props)
-  }
-
-  render(){}
+  return
 }
+
+Translations.messages = translations[document.querySelector('html').getAttribute('lang')] || defaultMessages;
 
 export default Translations;

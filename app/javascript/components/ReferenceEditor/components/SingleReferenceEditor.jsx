@@ -1,157 +1,150 @@
-import React from 'react';
+import React, {useState, useEffect} from 'react';
 import AsyncPaginate from 'react-select-async-paginate';
 import striptags from 'striptags';
 import ReactSelect from 'react-select';
 import Validation from '../modules/validation';
 
-class SingleReferenceEditor extends React.Component {
-  constructor(props){
-    super(props);
+const SingleReferenceEditor = (props) => {
+  const {
+    srcRef,
+    req,
+    items: itemsProps,
+    selectedReference,
+    fields,
+    itemsUrl,
+    loadingMessage,
+    searchPlaceholder,
+    noOptionsMessage,
+    filterPlaceholder
+  } = props
 
-    const v = document.getElementById(this.props.srcRef).value;
-    const selItem = this._load(v);
+  const [items, setItems] = useState(itemsProps)
+  const [selectedItem, setSelectedItem] = useState(_load(document.getElementById(srcRef).value))
+  const [selectedFilter, setSelectedFilter] = useState(null)
+  const [optionsList, setOptionsList] = useState([])
+  const [isValid, setIsValid] = useState(Validation.isValid(
+    req,
+    srcRef,
+    'SingleReferenceEditor'
+  ))
 
-    this.state = {
-      items: [],
-      selectedItem: selItem,
-      selectedFilter: null,
-      optionsList: [],
-      isValid: Validation.isValid(
-          this.props.req,
-          this.props.srcRef,
-          this.constructor.name
-      )
-    };
+  const editorId = `${srcRef}-editor`;
+  const filterId = `${srcRef}-filters`;
 
-    this.editorId = `${this.props.srcRef}-editor`;
-    this.filterId = `${this.props.srcRef}-filters`;
-    this.selectItem = this._selectItem.bind(this);
-    this.selectFilter = this._selectFilter.bind(this);
-    this.loadOptions = this._loadOptions.bind(this);
-    this.getItemOptions = this._getItemOptions.bind(this);
-    this.state.items = this.props.items;
-  }
-
-  componentDidMount(){
+  useEffect(() => {
     // If reference value is empty but field is required, insert the default value.
-    if (document.getElementById(this.props.srcRef).value == '' && this.props.req) {
-      this._selectItem(this.state.optionsList[0]);
+    if (document.getElementById(srcRef).value == '' && req) {
+      _selectItem(optionsList[0]);
     }
-  }
+  }, [])
 
-  _selectItem(item, event){
-    if(typeof event === 'undefined' || event.action !== "pop-value" || !this.props.req) {
-      if(typeof item !== 'undefined' && item !== null) {
-        this.setState({ selectedItem: item }, () => this._save());
+  useEffect(() => {
+    _save()
+  }, [selectedItem])
+
+  function _selectItem(item, event) {
+    if (typeof event === 'undefined' || event.action !== "pop-value" || !req) {
+      if (typeof item !== 'undefined' && item !== null) {
+        setSelectedItem(item)
       } else {
-        this.setState({ selectedItem: [] }, () => this._save());
+        setSelectedItem([])
       }
     }
   }
 
-  _load(v){
+  function _load(v) {
     if (v !== null && v !== '') {
-      let initItem = this.props.selectedReference;
-      if(initItem.length === 1) return this._getJSONItem(initItem[0]);
+      let initItem = selectedReference;
+      if (initItem.length === 1) return _getJSONItem(initItem[0]);
     }
     return [];
   }
 
-  _save(){
-    if(this.state.selectedItem !== null) {
-      const v = (this.state.selectedItem.value == '' || this.state.selectedItem.value == null) ? '' : JSON.stringify(this.state.selectedItem.value);
-      document.getElementById(this.props.srcRef).value = v;
-
-      this.setState({
-        isValid: Validation.isValid(
-            this.props.req,
-            this.props.srcRef,
-            this.constructor.name
-        )
-      });
+  function _save() {
+    if (selectedItem) {
+      const v = (selectedItem.value == '' || selectedItem.value == null) ? '' : JSON.stringify(selectedItem.value);
+      document.getElementById(srcRef).value = v;
+      setIsValid(Validation.isValid(
+        req,
+        srcRef,
+        'SingleReferenceEditor'
+      ))
     }
   }
 
-  _getItemOptions(items) {
-    var optionsList = [];
-
-    var stateItems = this.state.items;
-    if (typeof items !== 'undefined') { stateItems = stateItems.concat(items); }
-
-    optionsList = stateItems.map(item => this._getJSONItem(item) );
-
-    this.setState({
-      items: stateItems,
-      optionsList: optionsList
-    });
-
+  function _getItemOptions(itemsVar) {
+    let optionsListVar = [];
+    let stateItems = items;
+    if (itemsVar) {
+      stateItems = stateItems.concat(itemsVar);
+    }
+    optionsListVar = stateItems.map(item => _getJSONItem(item));
+    setItems(stateItems)
+    setOptionsList(optionsListVar)
     return optionsList;
   }
 
-  _getJSONItem(item) {
-    return {value: item.id, label: this._itemName(item)};
+  function _getJSONItem(item) {
+    return {value: item.id, label: _itemName(item)};
   }
 
-  _itemName(item){
-    if(typeof this.state === 'undefined') { return striptags(item.default_display_name); }
-
-    if(typeof this.state !== 'undefined' &&
-            (this.state.selectedFilter === null
-          || item[this.state.selectedFilter.value] === null
-          || item[this.state.selectedFilter.value].length === 0)
-        ) {
+  function _itemName(item) {
+    if ((!selectedFilter
+      || item[selectedFilter.value] === null
+      || item[selectedFilter.value].length === 0)
+    ) {
       return striptags(item.default_display_name);
     }
-
-    return striptags(item.default_display_name) + ' - ' + item[this.state.selectedFilter.value];
+    return striptags(item.default_display_name) + ' - ' + item[selectedFilter.value];
   }
 
-  _selectFilter(filter){
-    this.setState({ selectedFilter: filter}, () => {
-      var optionsList = this._getItemOptions();
-      if(typeof this.state.selectedItem !== 'undefined' && this.state.selectedItem !== null) {
-        const currentItem = optionsList.find(item => item.value === this.state.selectedItem.value);
-        this.setState({ selectedItem: currentItem });
-      } else {
-        this.setState({ selectedItem: [] });
-      }
-    });
+  useEffect(() => {
+    let optionsList = _getItemOptions();
+    if (typeof selectedItem !== 'undefined' && selectedItem !== null) {
+      const currentItem = optionsList.find(item => item.value === selectedItem.value);
+      setSelectedItem(currentItem);
+    } else {
+      setSelectedItem([]);
+    }
+  }, [selectedFilter])
+
+  function _selectFilter(filter) {
+    setSelectedFilter(filter)
   }
 
-  _getFilterOptions(){
-    var optionsList = [];
-    optionsList = this.props.fields.filter(field => (field.human_readable));
-
-    optionsList = optionsList.map(field =>
-      this._getJSONFilter(field)
+  function _getFilterOptions() {
+    let optionsListVar = [];
+    optionsListVar = fields.filter(field => (field.human_readable));
+    optionsListVar = optionsListVar.map(field =>
+      _getJSONFilter(field)
     );
 
-    return optionsList;
+    return optionsListVar;
   }
 
-  _getJSONFilter(field) {
+  function _getJSONFilter(field) {
     return {value: field.slug, label: field.name};
   }
 
-  async _loadOptions(search, loadedOptions, { page }) {
+  async function _loadOptions(search, loadedOptions, {page}) {
     // Avoir useless API calls if there are less than 25 loaded items and the user searches by filtering options with JS
-    if (this.props.items.length < 25) {
-      var regexExp = new RegExp(search, 'i')
-      var optionsList = this._getItemOptions();
-      var items = optionsList.filter(function(item) {
+    if (itemsProps.length < 25) {
+      let regexExp = new RegExp(search, 'i')
+      let optionsListVar = _getItemOptions();
+      let itemsVar = optionsListVar.filter(function (item) {
         return item.label !== null && item.label.match(regexExp) !== null && item.label.match(regexExp).length > 0
       });
 
       if (search.length === 0) {
-        if (this.state.optionsList === this.props.items && this.state.selectedFilter === null) {
-          items = [];
+        if (optionsListVar === items && selectedFilter === null) {
+          itemsVar = [];
         } else {
-          items = this.props.items.map(item => this._getJSONItem(item));
+          itemsVar = itemsProps.map(item => _getJSONItem(item));
         }
       }
 
       return {
-        options: items,
+        options: itemsVar,
         hasMore: false,
         additional: {
           page: page,
@@ -159,14 +152,12 @@ class SingleReferenceEditor extends React.Component {
       };
     }
 
-    if (this.props.items.length === 25) {
-      var hasMore;
-      var newOptions;
-
-      const response = await fetch(`${this.props.itemsUrl}?search=${search}&page=${page}`, config);
+    if (items.length === 25) {
+      let hasMore;
+      let newOptions;
+      const response = await fetch(`${itemsUrl}?search=${search}&page=${page}`, config);
       const responseJSON = await response.json();
-
-      newOptions = responseJSON.items.map(item => this._getJSONItem(item));
+      newOptions = responseJSON.items.map(item => _getJSONItem(item));
       hasMore = responseJSON.hasMore;
 
       return {
@@ -187,46 +178,44 @@ class SingleReferenceEditor extends React.Component {
     };
   }
 
-  render(){
-    return (
-      <div className="input-group single-reference-container"
-           style={Validation.getStyle(this.props.req, this.props.srcRef, this.constructor.name)}
-      >
-        <AsyncPaginate
-          cacheUniq={JSON.stringify(this.state.optionsList)} // used to update the options loaded on page load
-          id={this.editorId}
-          className="single-reference flex-fill"
-          debounceTimeout={800}
-          isClearable={!this.props.req}
-          isMulti={false}
-          isSearchable={true}
-          loadingMessage={() => this.props.loadingMessage}
-          loadOptions={this.loadOptions}
-          onChange={this.selectItem}
-          options={this.state.optionsList}
-          placeholder={this.props.searchPlaceholder}
-          noOptionsMessage={this.props.noOptionsMessage}
-          value={this.state.selectedItem}
-          additional={{
-            page: 1,
-          }}
+  return (
+    <div className="input-group single-reference-container"
+         style={Validation.getStyle(req, srcRef, 'SingleReferenceEditor')}
+    >
+      <AsyncPaginate
+        cacheUniq={JSON.stringify(optionsList)} // used to update the options loaded on page load
+        id={editorId}
+        className="single-reference flex-fill"
+        debounceTimeout={800}
+        isClearable={!req}
+        isMulti={false}
+        isSearchable={true}
+        loadingMessage={() => loadingMessage}
+        loadOptions={_loadOptions}
+        onChange={_selectItem}
+        options={optionsList}
+        placeholder={searchPlaceholder}
+        noOptionsMessage={noOptionsMessage}
+        value={selectedItem}
+        additional={{
+          page: 1,
+        }}
+      />
+      <div className="input-group-addon">
+        <ReactSelect
+          id={filterId}
+          className="single-reference-filter"
+          isSearchable={false}
+          isClearable={true}
+          value={selectedFilter}
+          onChange={_selectFilter}
+          options={_getFilterOptions()}
+          placeholder={filterPlaceholder}
+          noOptionsMessage={noOptionsMessage}
         />
-        <div className="input-group-addon">
-          <ReactSelect
-            id={this.filterId}
-            className="single-reference-filter"
-            isSearchable={false}
-            isClearable={true}
-            value={this.state.selectedFilter}
-            onChange={this.selectFilter}
-            options={this._getFilterOptions()}
-            placeholder={this.props.filterPlaceholder}
-            noOptionsMessage={this.props.noOptionsMessage}
-          />
-        </div>
       </div>
-    )
-  }
+    </div>
+  )
 }
 
 export default SingleReferenceEditor;

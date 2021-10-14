@@ -1,34 +1,33 @@
 import 'es6-shim';
-import React from 'react';
-import PropTypes from 'prop-types';
+import PropTypes from "prop-types";
+import React, {useState, useEffect} from 'react';
 import ReactCrop from 'react-image-crop';
 import Translations from '../../Translations/components/Translations';
 
-class ThumbnailControl extends React.Component {
-  static propTypes = {
-    srcRef: PropTypes.string.isRequired,
-    srcId: PropTypes.string.isRequired,
-  };
+const ThumbnailControl = (props) => {
+  const {
+    srcRef: srcRefProps,
+    srcId,
+    multiple: multipleProps,
+  } = props
 
-  constructor(props){
-    super(props);
-    this.srcRef = props.srcRef;
-    this._id = props.srcId + '_thumbnail_control';
-    this.multiple = props.multiple || false;
-    const src = this._loadSrc();
-    this.state = {
-      controlClass: (src.length === 0) ? 'hide' : 'show',
-      crop: (src.length === 0) ? {x: 0, y: 0} : $.extend(src[0].crop || {x: 0, y: 0}, {aspect: 1}),
-      modalClass: 'hide',
-      img: (src.length === 0) ? '' : '/'+src[0].path
-    };
+  const _id = srcId + '_thumbnail_control';
+  const multiple = multipleProps || false;
 
-    this.onChange = this._onChange.bind(this);
-    this.toggleModal = this._toggleModal.bind(this);
-  }
+  const [src, setSrc] = useState(false)
+  const [controlClass, setControlClass] = useState((!src || src.length === 0) ? 'hide' : 'show')
+  const [crop, setCrop] = useState((!src || src.length === 0) ? {x: 0, y: 0} : $.extend(src[0].crop || {x: 0, y: 0}, {aspect: 1}))
+  const [modalClass, setModalClass] = useState('hide')
+  const [img, setImg] = useState((!src || src.length === 0) ? '' : '/' + src[0].path)
+  const [state, setState] = useState()
+  const [srcRef, setSrcRef] = useState(srcRefProps)
 
-  _loadSrc(){
-    const d = document.getElementById(this.srcRef).innerText;
+  useEffect(() => {
+    setSrc(_loadSrc())
+  }, [])
+
+  function _loadSrc() {
+    const d = document.getElementById(srcRef).innerText;
     try {
       const j = JSON.parse(d);
       return $.isArray(j) ? j : [j,];
@@ -37,45 +36,48 @@ class ThumbnailControl extends React.Component {
     }
   }
 
-  _saveSrc(src){
+  function _saveSrc(src) {
     const s = JSON.stringify(src);
-    document.getElementById(this.srcRef).innerText = s;
+    document.getElementById(srcRef).innerText = s;
   }
 
-  _onChange(crop){
-    this.setState({ crop });
-    const src = this._loadSrc();
+  function _onChange(crop) {
+    setState({crop});
+    const src = _loadSrc();
     src[0].crop = crop;
-    this._saveSrc(src);
+    _saveSrc(src);
   }
 
-  _toggleModal(e) {
+  function _toggleModal(e) {
     e.preventDefault();
-    if (this.state.modalClass === 'hide') {
-      this.setState({ modalClass: 'show' });
+    if (modalClass === 'hide') {
+      setModalClass('show');
     } else {
-      this.setState({ modalClass: 'hide' });
+      setModalClass('hide');
     }
   }
 
-  render(){
-    return (
-      <div id={this._id} className={this.state.controlClass}>
-        <span
-          className="btn btn-sm btn-default"
-          onClick={this.toggleModal}>
-          {Translations.messages['catalog_admin.fields.date_time_option_inputs.define_thumbnail']}
-        </span>
-        <div className={this.state.modalClass}>
-          <ReactCrop
-            {...this.state}
-            onChange={this.onChange}
-            src={this.state.img}
-          />
-        </div>
+  return (
+    <div id={_id} className={controlClass}>
+      <span
+        className="btn btn-sm btn-default"
+        onClick={_toggleModal}>
+        {Translations.messages['catalog_admin.fields.date_time_option_inputs.define_thumbnail']}
+      </span>
+      <div className={modalClass}>
+        <ReactCrop
+          {...state}
+          onChange={_onChange}
+          src={img}
+        />
       </div>
-    )
-  }
+    </div>
+  )
+}
+
+ThumbnailControl.propTypes = {
+  srcRef: PropTypes.string.isRequired,
+  srcId: PropTypes.string.isRequired,
 }
 
 export default ThumbnailControl;

@@ -1,5 +1,5 @@
 import React from 'react';
-import styled, { keyframes } from "styled-components";
+import styled, {keyframes} from "styled-components";
 
 const BounceAnimation = keyframes`
   {0%,80%,100%{opacity:0;}40%{opacity:1;}};
@@ -23,16 +23,14 @@ const Dot = styled.span`
   animation-delay: ${props => props.delay};
 `;
 
-class LoadingDots extends React.Component {
-  render() {
-    return (
-      <DotWrapper>
-        <Dot delay="0s" />
-        <Dot delay=".1s" />
-        <Dot delay=".2s" />
-      </DotWrapper>
-    )
-  }
+const LoadingDots = () => {
+  return (
+    <DotWrapper>
+      <Dot delay="0s"/>
+      <Dot delay=".1s"/>
+      <Dot delay=".2s"/>
+    </DotWrapper>
+  )
 }
 
 export default LoadingDots

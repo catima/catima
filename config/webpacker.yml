@@ -35,11 +35,9 @@ default: &default
   extensions:
     - .coffee
     - .erb
+    - .jsx
     - .mjs
     - .js
-    - .jsx
-    - .ts
-    - .vue
     - .sass
     - .scss
     - .css
