@@ -1,107 +1,100 @@
-import React from "react";
+import React, {useState, useEffect} from "react";
 import AsyncPaginate from 'react-select-async-paginate';
 import striptags from 'striptags';
 
-class SelectedReferenceSearch extends React.Component {
-  constructor(props){
-    super(props);
+const SelectedReferenceSearch = (props) => {
+  const {
+    srcRef,
+    multi,
+    inputName,
+    req,
+    updateSelectedItem,
+    itemsUrl,
+    onFocus,
+    multiple,
+    loadingMessage,
+    searchPlaceholder,
+    noOptionsMessage,
+    items: itemsProps
+  } = props
 
-    this.state = {
-      isInitialized: false,
-      items: [],
-      optionsList: [],
-      selectedItem: [],
-      hiddenInputValue: []
-    };
+  const [isInitialized, setIsInitialized] = useState(false)
+  const [items, setItems] = useState([])
+  const [optionsList, setOptionsList] = useState([])
+  const [selectedItem, setSelectedItem] = useState([])
+  const [hiddenInputValue, setHiddenInputValue] = useState([])
+  const [referenceSearchId, setReferenceSearchId] = useState(`${srcRef}-editor`)
 
-    this.referenceSearchId = `${this.props.srcRef}-editor`;
-    this.filterId = `${this.props.srcRef}-filters`;
-    this.selectItem = this._selectItem.bind(this);
-    this.loadOptions = this._loadOptions.bind(this);
-    this.getItemOptions = this._getItemOptions.bind(this);
-  }
-
-  componentWillReceiveProps(nextProps) {
-    if (nextProps.items.length !== this.state.items.length) {
-      this.setState({
-        isInitialized: true,
-        items: nextProps.items
-      });
+  useEffect(() => {
+    if (itemsProps.length !== items.length) {
+      setIsInitialized(true)
+      setItems(itemsProps)
     }
-  }
+  }, [itemsProps])
 
-  _save(){
-    if(this.props.multi) {
-      //this.state.selectedItem is an array
-      if(this.state.selectedItem !== null && this.state.selectedItem.length !== 0) {
+  useEffect(() => {
+    if (selectedItem != []) {
+      _save()
+    }
+  }, [selectedItem])
 
-        var idArray = [];
-        this.state.selectedItem.forEach((item) => {
+  function _save() {
+    if (multi) {
+      //selectedItem is an array
+      if (selectedItem !== null && selectedItem.length !== 0) {
+        let idArray = [];
+        selectedItem.forEach((item) => {
           idArray.push(item.value);
         });
-
-        this.setState({ hiddenInputValue: idArray });
-
-        document.getElementsByName(this.props.inputName)[0].value = this.state.hiddenInputValue;
+        setHiddenInputValue(idArray);
+        document.getElementsByName(inputName)[0].value = hiddenInputValue;
       }
     } else {
-      //this.state.selectedItem is a JSON
-      if(this.state.selectedItem !== null && Object.keys(this.state.selectedItem).length !== 0) {
-
-        this.setState({ hiddenInputValue: this.state.selectedItem.value });
-
-        document.getElementsByName(this.props.inputName)[0].value = this.state.hiddenInputValue;
+      //selectedItem is a JSON
+      if (selectedItem !== null && Object.keys(selectedItem).length !== 0) {
+        setHiddenInputValue(selectedItem.value);
+        document.getElementsByName(inputName)[0].value = hiddenInputValue;
       }
     }
-
-
   }
 
-  _selectItem(item, event){
-    if(typeof event === 'undefined' || event.action !== "pop-value" || !this.props.req) {
-      if(typeof item !== 'undefined') {
-        this.setState({ selectedItem: item }, () => this._save());
+  function _selectItem(item, event) {
+    if (typeof event === 'undefined' || event.action !== "pop-value" || !req) {
+      if (typeof item !== 'undefined') {
+        setSelectedItem(item)
       } else {
-        this.setState({ selectedItem: [] }, () => this._save());
+        setSelectedItem([])
       }
-
-      this.props.updateSelectedItem(item);
+      updateSelectedItem(item);
     }
   }
 
-  _getItemOptions(items){
-    if (typeof items === 'undefined') {
-     items = this.state.items;
-    }
-
-    var optionsList = [];
-
-    if (typeof items !== 'undefined') {
-      optionsList = items.map(item =>
-        this._getJSONItem(item)
+  function _getItemOptions(itemsArg) {
+    let itemVar = (typeof itemsArg === 'undefined') ? items : itemsArg
+    let optionsList = [];
+    if (typeof itemVar !== 'undefined') {
+      optionsList = itemVar.map(item =>
+        _getJSONItem(item)
       );
     }
-
     return optionsList;
   }
 
-  _itemName(item){
+  function _itemName(item) {
     return striptags(item.default_display_name);
   }
 
-  _getJSONItem(item) {
-    return {value: item.id, label: this._itemName(item)};
+  function _getJSONItem(item) {
+    return {value: item.id, label: _itemName(item)};
   }
 
-  async _loadOptions(search, loadedOptions, { page }) {
-    if (this.state.optionsList.length < 25 && this.state.isInitialized) {
+  async function _loadOptions(search, loadedOptions, {page}) {
+    if (optionsList.length < 25 && isInitialized) {
       if (search.length > 0) {
-        var regexExp = new RegExp(search, 'i')
-
-        var items = this.state.optionsList.filter(function (item) {
+        let regexExp = new RegExp(search, 'i')
+        let items = optionsList.filter(function (item) {
           return item.label !== null && item.label.match(regexExp) !== null && item.label.match(regexExp).length > 0
         });
-
         return {
           options: items,
           hasMore: false,
@@ -112,27 +105,25 @@ class SelectedReferenceSearch extends React.Component {
       }
 
       return {
-        options: this.getItemOptions(),
-        hasMore: this.state.items.length === 25,
+        options: _getItemOptions(),
+        hasMore: items.length === 25,
         additional: {
           page: page,
         },
       };
     }
 
-    const response = await fetch(`${this.props.itemsUrl}&search=${search}&page=${page}`);
+    const response = await fetch(`${itemsUrl}&search=${search}&page=${page}`);
     const responseJSON = await response.json();
 
-    if (!this.state.isInitialized) {
-      this.setState({
-        isInitialized: search.length === 0,
-        optionsList: responseJSON.items.map(item => this._getJSONItem(item))
-      });
-      this.props.onFocus(responseJSON.fields);
+    if (!isInitialized) {
+      setIsInitialized(search.length === 0)
+      setOptionsList(responseJSON.items.map(item => _getJSONItem(item)))
+      onFocus(responseJSON.fields);
     }
 
     return {
-      options: this.getItemOptions(responseJSON.items),
+      options: _getItemOptions(responseJSON.items),
       hasMore: responseJSON.hasMore,
       additional: {
         page: page + 1,
@@ -140,31 +131,29 @@ class SelectedReferenceSearch extends React.Component {
     };
   }
 
-  render() {
-    return (
-      <div>
-        <AsyncPaginate
-          id={this.referenceSearchId}
-          name={this.props.inputName}
-          delimiter=","
-          isMulti={this.props.multiple}
-          className="basic-multi-select"
-          classNamePrefix="select"
-          debounceTimeout={800}
-          loadingMessage={() => this.props.loadingMessage}
-          placeholder={this.props.searchPlaceholder}
-          noOptionsMessage={this.props.noOptionsMessage}
-          value={this.state.selectedItem}
-          options={this.getItemOptions()}
-          loadOptions={this.loadOptions}
-          onChange={this.selectItem}
-          additional={{
-            page: 1,
-          }}
-        />
-      </div>
-    );
-  }
+  return (
+    <div>
+      <AsyncPaginate
+        id={referenceSearchId}
+        name={inputName}
+        delimiter=","
+        isMulti={multiple}
+        className="basic-multi-select"
+        classNamePrefix="select"
+        debounceTimeout={800}
+        loadingMessage={() => loadingMessage}
+        placeholder={searchPlaceholder}
+        noOptionsMessage={noOptionsMessage}
+        value={selectedItem}
+        options={_getItemOptions()}
+        loadOptions={_loadOptions}
+        onChange={_selectItem}
+        additional={{
+          page: 1,
+        }}
+      />
+    </div>
+  );
 }
 
 export default SelectedReferenceSearch;

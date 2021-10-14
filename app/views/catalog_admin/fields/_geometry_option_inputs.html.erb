@@ -4,7 +4,7 @@
   :help => t(".layers_help")
 ) do %>
   <%= f.hidden_field(:layers) %>
-  <%= react_component('GeoLayers/components/GeoLayers',
+  <%= react_component('GeoEditor/components/GeoLayers',
     {
       layers: f.object.geo_layers,
       options: load_geo_layers,
@@ -20,7 +20,7 @@
   :help => t(".bounds_help")
 ) do %>
   <%= f.hidden_field(:bounds) %>
-  <%= react_component('GeoBounds/components/GeoBounds', {
+  <%= react_component('GeoEditor/components/GeoBounds', {
     bounds: f.object.default_bounds(-145, 185, -60, 70),
     layers: f.object.geo_layers
   }) %>

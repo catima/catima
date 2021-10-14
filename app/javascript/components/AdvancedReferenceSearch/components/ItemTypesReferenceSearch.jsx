@@ -1,4 +1,4 @@
-import React from "react";
+import React, {useEffect, useState, useRef} from "react";
 import ReactSelect from 'react-select';
 import axios from 'axios';
 import $ from 'jquery';
@@ -6,243 +6,248 @@ import 'moment';
 import 'bootstrap4-datetimepicker';
 import DateTimeSearch from '../../AdvancedDateTimeSearch/components/DateTimeSearch';
 
-class ItemTypesReferenceSearch extends React.Component {
-  constructor(props){
-    super(props);
+const ItemTypesReferenceSearch = (props) => {
+  const {
+    inputName: inputNameProps,
+    selectCondition: selectConditionProps,
+    selectedFilter: selectedFilterProps,
+    srcId,
+    srcRef,
+    req,
+    field,
+    catalog,
+    locale,
+    itemType,
+    updateSelectCondition,
+    selectedCondition,
+    choosePlaceholder,
+    noOptionsMessage
+  } = props
 
-    this.state = {
-      isLoading: true,
-      inputName: this.props.inputName,
-      inputNameArray: [],
-      startDateInputName: '',
-      endDateInputName: '',
-      inputType: 'Field::Text',
-      inputData: null,
-      inputOptions: null,
-      localizedDateTimeData: [],
-      selectedFilter: {},
-      selectedItem: [],
-      selectCondition: this.props.selectCondition,
-      hiddenInputValue: []
-    };
+  const [isLoading, setIsLoading] = useState(true)
+  const [inputName, setInputName] = useState(inputNameProps)
+  const [inputNameArray, setInputNameArray] = useState([])
+  const [startDateInputName, setStartDateInputName] = useState('')
+  const [endDateInputName, setEndDateInputName] = useState('')
+  const [inputType, setInputType] = useState('Field::Text')
+  const [inputData, setInputData] = useState(null)
+  const [inputOptions, setInputOptions] = useState(null)
+  const [localizedDateTimeData, setLocalizedDateTimeData] = useState([])
+  const [selectedFilter, setSelectedFilter] = useState({})
+  const [selectedItem, setSelectedItem] = useState([])
+  const [selectCondition, setSelectCondition] = useState(selectConditionProps)
+  const [hiddenInputValue, setHiddenInputValue] = useState([])
+  const [referenceSearchId, setReferenceSearchId] = useState(`${srcId}-search`)
 
-    this.referenceSearchId = `${this.props.srcId}-search`;
-    this.referenceSearchRef = `${this.props.srcRef}-search`;
-    this.selectItem = this._selectItem.bind(this);
-  }
+  const referenceSearchRef = useRef(`${srcRef}-search`)
 
-  componentWillReceiveProps(nextProps) {
-    if (nextProps.selectedFilter !== this.state.selectedFilter) {
-      this._getDataFromServer(nextProps.selectedFilter);
-      this.setState({ selectedFilter: nextProps.selectedFilter });
+  useEffect(() => {
+    _getDataFromServer();
+  }, [])
+
+  useEffect(() => {
+    _getDataFromServer(selectedFilterProps);
+    setSelectedFilter(selectedFilterProps);
+  }, [selectedFilterProps])
+
+  useEffect(() => {
+    _buildDateTimeInputNames(inputNameProps);
+    setSelectedFilter(inputNameProps);
+  }, [inputNameProps])
+
+  useEffect(() => {
+    if (selectedItem != []) _save();
+  }, [selectedItem])
+
+  function _buildDateTimeInputNames(inputName) {
+    if (inputType === 'Field::DateTime') {
+      let endName = inputName.split(inputNameArray[0]);
+      setStartDateInputName(inputNameArray[0] + '[start]' + endName[1]);
+      setEndDateInputName(inputNameArray[0] + '[end]' + endName[1]);
     }
-
-    if (nextProps.inputName !== this.state.inputName) {
-      this._buildDateTimeInputNames(nextProps.inputName);
-      this.setState({ inputName: nextProps.inputName });
-    }
   }
 
-  componentDidMount(){
-    this._getDataFromServer();
-  }
-
-  _buildDateTimeInputNames(inputName) {
-    if(this.state.inputType === 'Field::DateTime') {
-      var endName = inputName.split(this.state.inputNameArray[0]);
-      this.setState({startDateInputName: this.state.inputNameArray[0] + '[start]' + endName[1]});
-      this.setState({endDateInputName: this.state.inputNameArray[0] + '[end]' + endName[1]});
-    }
-  }
-
-  _save(){
-    if(this.state.selectedItem !== null && this.state.selectedItem.length !== 0) {
-
-      var idArray = [];
-      this.state.selectedItem.forEach((item) => {
+  function _save() {
+    if (selectedItem !== null && selectedItem.length !== 0) {
+      let idArray = [];
+      selectedItem.forEach((item) => {
         idArray.push(item.value);
       });
-
-      this.setState({ hiddenInputValue: idArray });
-
-      document.getElementsByName(this.state.inputName)[0].value = this.state.hiddenInputValue;
+      setHiddenInputValue(idArray);
+      document.getElementsByName(inputName)[0].value = hiddenInputValue;
     }
   }
 
-  _selectItem(event){
-    if(typeof event === 'undefined' || event === null || event.action !== "pop-value" || !this.props.req) {
-      if(typeof item !== 'undefined' && item !== null) {
-        this.setState({ selectedItem: event.target.value }, () => this._save());
+  function _selectItem(event) {
+    if (typeof event === 'undefined' || event === null || event.action !== "pop-value" || !req) {
+      if (typeof item !== 'undefined' && item !== null) {
+        setSelectedItem(event.target.value)
       } else {
-        this.setState({ selectedItem: [] }, () => this._save());
+        setSelectedItem([])
       }
     }
   }
 
-  _getDataFromServer(selectedFilter) {
+  function _getDataFromServer(selectedFilter) {
     let config = {
       retry: 3,
       retryDelay: 1000,
     };
-
-    if (typeof selectedFilter !== 'undefined' && this.state.selectedItem !== null) {
-      this.props.selectedFilter.value = selectedFilter.value;
-      this.props.selectedFilter.label = selectedFilter.label;
+    let updatedFilter = selectedFilter
+    if (typeof selectedFilter !== 'undefined' && selectedItem !== null) {
+      updatedFilter.value = selectedFilter.value;
+      updatedFilter.label = selectedFilter.label;
     } else {
-      if (typeof this.props.field !== 'undefined') {
-        this.props.selectedFilter.value = this.props.field;
+      if (typeof field !== 'undefined') {
+        updatedFilter.value = field;
       }
+      setSelectedFilter(updatedFilter)
     }
 
-    axios.get(`/react/${this.props.catalog}/${this.props.locale}/${this.props.itemType}/${this.props.selectedFilter.value}`, config)
-    .then(res => {
+    axios.get(`/react/${catalog}/${locale}/${itemType}/${selectedFilter?.value ? selectedFilter.value : selectedFilterProps.value}`, config)
+      .then(res => {
+        if (res.data.inputData === null) setInputData([]);
+        else setInputData(res.data.inputData);
 
-      if(res.data.inputData === null) this.setState({ inputData: [] });
-      else this.setState({ inputData: res.data.inputData });
-
-      this._updateSelectCondition(res.data.selectCondition);
-      this.setState({ inputNameArray: this.state.inputName.split('[' + res.data.selectCondition[0].key + ']')});
-      this._buildDateTimeInputNames(this.state.inputName);
-      this._updateLocalizedDateTimeData(res.data.inputOptions);
-      this.setState({ inputType: res.data.inputType });
-      this.setState({ inputOptions: res.data.inputOptions });
-      this.setState({ isLoading: false });
-    });
+        _updateSelectCondition(res.data.selectCondition);
+        setInputNameArray(inputName.split('[' + res.data.selectCondition[0].key + ']'));
+        _buildDateTimeInputNames(inputName);
+        _updateLocalizedDateTimeData(res.data.inputOptions);
+        setInputType(res.data.inputType);
+        setInputOptions(res.data.inputOptions);
+        setIsLoading(false);
+      });
 
     // Retry failed requests
     axios.interceptors.response.use(undefined, (err) => {
       let config = err.config;
-
-      if(!config || !config.retry) return Promise.reject(err);
-
+      if (!config || !config.retry) return Promise.reject(err);
       config.__retryCount = config.__retryCount || 0;
-
-      if(config.__retryCount >= config.retry) {
+      if (config.__retryCount >= config.retry) {
         return Promise.reject(err);
       }
-
       config.__retryCount += 1;
-
-      let backoff = new Promise(function(resolve) {
-        setTimeout(function() {
+      let backoff = new Promise(function (resolve) {
+        setTimeout(function () {
           resolve();
         }, config.retryDelay || 1);
       });
-
-      return backoff.then(function() {
+      return backoff.then(function () {
         return axios(config);
       });
     });
   }
 
-  _updateSelectCondition(array) {
-    this.props.updateSelectCondition(array);
-    this.setState({ selectCondition: array });
+  function _updateSelectCondition(array) {
+    updateSelectCondition(array);
+    setSelectCondition(array);
   }
 
-  _getDateTimeFormatOption() {
-    var formatOption = this._searchInArray(this.state.inputOptions, 'format');
+  function _getDateTimeFormatOption() {
+    let formatOption = _searchInArray(inputOptions, 'format');
     if (formatOption === false) return 'YMDhms';
     else return formatOption.format;
   }
 
-  _updateLocalizedDateTimeData(options) {
-    var option = this._searchInArray(options, 'localizedDateTimeData');
+  function _updateLocalizedDateTimeData(options) {
+    let option = _searchInArray(options, 'localizedDateTimeData');
     if (option !== false) {
-        this.setState({localizedDateTimeData: option.localizedDateTimeData});
+      setLocalizedDateTimeData(option.localizedDateTimeData);
     }
   }
 
-  _getChoiceSetMultipleOption() {
-    var multipleOption = this._searchInArray(this.state.inputOptions, 'multiple');
+  function _getChoiceSetMultipleOption() {
+    let multipleOption = _searchInArray(inputOptions, 'multiple');
     if (multipleOption === false) return false;
     else return multipleOption.multiple;
   }
 
-  _searchInArray(array, key) {
-    if(array !== null) {
-      for (var i = 0; i < array.length; i++) {
-          if (typeof array[i][key] !== 'undefined') {
-              return array[i];
-          }
+  function _searchInArray(array, key) {
+    if (array !== null) {
+      for (let i = 0; i < array.length; i++) {
+        if (typeof array[i][key] !== 'undefined') {
+          return array[i];
+        }
       }
     }
     return false;
   }
 
-  _getMultipleChoiceSetOptions(){
-    var optionsList = [];
-    optionsList = this.state.inputData.map(option =>
-      this._getJSONOption(option)
+  function _getMultipleChoiceSetOptions() {
+    let optionsList = [];
+    optionsList = inputData.map(option =>
+      _getJSONOption(option)
     );
 
     return optionsList;
   }
 
-  _getJSONOption(option) {
+  function _getJSONOption(option) {
     return {value: option.key, label: option.label};
   }
 
-  renderInput(){
-    if (this.state.isLoading) return null;
-    if (this.state.inputType === 'Field::DateTime') {
+  function renderInput() {
+    if (isLoading) return null;
+    if (inputType === 'Field::DateTime') {
       return <DateTimeSearch
-                id={this.referenceSearchId}
-                selectCondition={[]}
-                disableInputByCondition={this.props.selectedCondition}
-                startDateInputName={this.state.startDateInputName}
-                endDateInputName={this.state.endDateInputName}
-                localizedDateTimeData={this.state.localizedDateTimeData}
-                catalog={this.props.catalog}
-                itemType={this.props.itemType}
-                inputStart='input1'
-                inputEnd='input2'
-                isRange={true}
-                format={this._getDateTimeFormatOption()}
-                locale={this.props.locale}
-                onChange={this.selectItem}
-              />
-    } else if (this.state.inputType === 'Field::Decimal') {
-      return <input id={this.referenceSearchId} ref={this.referenceSearchRef} name={this.state.inputName} onChange={this.selectItem} type="number" className="form-control" step="any"/>
-    } else if (this.state.inputType === 'Field::Int') {
-      return <input id={this.referenceSearchId} ref={this.referenceSearchRef} name={this.state.inputName} onChange={this.selectItem} type="number" className="form-control"/>
-    } else if (this.state.inputType === 'Field::Boolean') {
+        id={referenceSearchId}
+        selectCondition={[]}
+        disableInputByCondition={selectedCondition}
+        startDateInputName={startDateInputName}
+        endDateInputName={endDateInputName}
+        localizedDateTimeData={localizedDateTimeData}
+        catalog={catalog}
+        itemType={itemType}
+        inputStart='input1'
+        inputEnd='input2'
+        isRange={true}
+        format={_getDateTimeFormatOption()}
+        locale={locale}
+        onChange={_selectItem}
+      />
+    } else if (inputType === 'Field::Decimal') {
+      return <input id={referenceSearchId} ref={referenceSearchRef} name={inputName} onChange={_selectItem}
+                    type="number" className="form-control" step="any"/>
+    } else if (inputType === 'Field::Int') {
+      return <input id={referenceSearchId} ref={referenceSearchRef} name={inputName} onChange={_selectItem}
+                    type="number" className="form-control"/>
+    } else if (inputType === 'Field::Boolean') {
       return (
-        <select id={this.referenceSearchId} ref={this.referenceSearchRef} name={this.state.inputName} onChange={this.selectItem} className="form-control">
-          { this.state.inputData.map((item) => {
+        <select id={referenceSearchId} ref={referenceSearchRef} name={inputName} onChange={_selectItem}
+                className="form-control">
+          {inputData.map((item) => {
             return <option key={item.key} value={item.key}>{item.value}</option>
-            })
+          })
           }
         </select>
       );
-    } else if (this.state.inputType === 'Field::ChoiceSet') {
+    } else if (inputType === 'Field::ChoiceSet') {
       return (
         <ReactSelect
-            id={this.referenceSearchId}
-            name={this.state.inputName}
-            isSearchable={ true }
-            isClearable={ true }
-            options={this._getMultipleChoiceSetOptions()}
-            className="basic-select"
-            onChange={this.selectItem}
-            classNamePrefix="select"
-            placeholder={this.props.choosePlaceholder}
-            noOptionsMessage={this.props.noOptionsMessage}
+          id={referenceSearchId}
+          name={inputName}
+          isSearchable={true}
+          isClearable={true}
+          options={_getMultipleChoiceSetOptions()}
+          className="basic-select"
+          onChange={_selectItem}
+          classNamePrefix="select"
+          placeholder={choosePlaceholder}
+          noOptionsMessage={noOptionsMessage}
         />
       );
     } else {
-      return <input id={this.referenceSearchId} ref={this.referenceSearchRef} name={this.state.inputName} onChange={this.selectItem} type="text" className="form-control"/>
+      return <input id={referenceSearchId} ref={referenceSearchRef} name={inputName} onChange={_selectItem} type="text"
+                    className="form-control"/>
     }
   }
 
-  render() {
-    return (
-      <div className="single-reference-container">
-        { this.state.isLoading && <div className="loader"></div> }
-        { this.renderInput() }
-      </div>
-    );
-  }
+  return (
+    <div className="single-reference-container">
+      {isLoading && <div className="loader"></div>}
+      {renderInput()}
+    </div>
+  );
 }
 
 export default ItemTypesReferenceSearch;

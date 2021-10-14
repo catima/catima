@@ -1,149 +1,154 @@
-import React from "react";
+import React, {useEffect, useState} from "react";
 import axios from 'axios';
 import SelectedReferenceSearch from './SelectedReferenceSearch';
 import ItemTypesReferenceSearch from './ItemTypesReferenceSearch';
 import AsyncPaginate from 'react-select-async-paginate';
 
-class ReferenceSearch extends React.Component {
-  constructor(props){
-    super(props);
+const ReferenceSearch = (props) => {
+  const {
+    itemTypeSearch: itemTypeSearchProps,
+    selectCondition: selectConditionProps,
+    inputName: inputNameProps,
+    searchPlaceholder: searchPlaceholderProps,
+    choosePlaceholder: choosePlaceholderProps,
+    filterPlaceholder: filterPlaceholderProps,
+    catalog,
+    locale,
+    itemType,
+    req,
+    addComponent: addComponentProps,
+    itemId,
+    deleteComponent: deleteComponentProps,
+    noOptionsMessage,
+    srcRef,
+    srcId,
+    multiple,
+    referenceFilterName,
+    fieldConditionName,
+    fieldConditionData,
+    selectConditionName,
+    componentList
+  } = props
 
-    this.state = {
-      loadingMessage: "",
-      isInitialized: false,
-      optionsList: [],
-      items: [],
-      fields: [],
-      isLoading: false,
-      selectedFilter: null,
-      itemTypeSearch: this.props.itemTypeSearch,
-      selectCondition: this.props.selectCondition,
-      inputName: this.props.inputName.split("[exact]"),
-      selectedCondition: '',
-      selectedItem: [],
-      searchPlaceholder: this.props.searchPlaceholder,
-      choosePlaceholder: this.props.choosePlaceholder,
-      filterPlaceholder: this.props.filterPlaceholder
-    };
+  const [loadingMessage, setLoadingMessage] = useState("")
+  const [isInitialized, setIsInitialized] = useState(false)
+  const [optionsList, setOptionsList] = useState([])
+  const [items, setItems] = useState([])
+  const [fields, setFields] = useState([])
+  const [isLoading, setIsLoading] = useState(false)
+  const [selectedFilter, setSelectedFilter] = useState([])
+  const [itemTypeSearch, setItemTypeSearch] = useState(itemTypeSearchProps)
+  const [selectCondition, setSelectCondition] = useState(selectConditionProps)
+  const [inputName, setInputName] = useState(inputNameProps.split("[exact]"))
+  const [selectedCondition, setSelectedCondition] = useState('')
+  const [selectedFieldCondition, setSelectedFieldCondition] = useState('')
+  const [selectedItem, setSelectedItem] = useState([])
+  const [searchPlaceholder, setSearchPlaceholder] = useState(searchPlaceholderProps)
+  const [choosePlaceholder, setChoosePlaceholder] = useState(choosePlaceholderProps)
+  const [filterPlaceholder, setFilterPlaceholder] = useState(filterPlaceholderProps)
 
-    this.selectFilter = this._selectFilter.bind(this);
-    this.selectCondition = this._selectCondition.bind(this);
-    this.updateSelectedItem = this._updateSelectedItem.bind(this);
-    this.updateSelectCondition = this._updateSelectCondition.bind(this);
-    this.addComponent = this._addComponent.bind(this);
-    this.deleteComponent = this._deleteComponent.bind(this);
-    this.setFields = this._setFields.bind(this);
-    this.loadOptions = this._loadOptions.bind(this);
-    this.getFilterOptions = this._getFilterOptions.bind(this);
-  }
-
-  componentDidMount(){
-    this._fetchLoadingMessage()
-    if(typeof this.props.selectCondition !== 'undefined' && this.props.selectCondition.length !== 0) {
-        this.setState({selectedCondition: this.props.selectCondition[0].key});
+  useEffect(() => {
+    _fetchLoadingMessage()
+    if (typeof selectConditionProps !== 'undefined' && selectConditionProps.length !== 0) {
+      setSelectedCondition(selectConditionProps[0].key);
     }
-  }
+  }, [])
 
-  async _fetchLoadingMessage() {
+  async function _fetchLoadingMessage() {
     axios.get(
-      `/react/${this.props.catalog}/${this.props.locale}/${this.props.itemType}?simple_fields=true&page=1`
+      `/react/${catalog}/${locale}/${itemType}?simple_fields=true&page=1`
     ).then(res => {
-      this.setState({
-        loadingMessage: res.data.loading_message
-      });
+      setLoadingMessage(res.data.loading_message);
     })
   }
 
-  _buildInputNameCondition(condition) {
-      if(this.state.inputName.length === 2) {
-        if(condition !== '') return this.state.inputName[0] + '[' + condition + ']' + this.state.inputName[1];
-        else return this.state.inputName[0] + '[default]' + this.state.inputName[1];
-      } else {
-        return this.props.inputName;
-      }
-  }
-
-  _updateSelectedItem(newVal) {
-    this.setState({ selectedItem: newVal });
-  }
-
-  _updateSelectCondition(newVal) {
-    if(this.state.selectedCondition === '' && newVal.length !== this.state.selectCondition.length) {
-      this.setState({selectedCondition: newVal[0].key});
+  function _buildInputNameCondition(condition) {
+    if (inputName.length === 2) {
+      if (condition !== '') return inputName[0] + '[' + condition + ']' + inputName[1];
+      else return inputName[0] + '[default]' + inputName[1];
+    } else {
+      return inputNameProps;
     }
-
-    this.setState({ selectCondition: newVal });
   }
 
-  _isConditionDisabled() {
-    if ((typeof this.state.selectedItem !== 'undefined'
-        && this.state.selectedItem.length >= 0
-        && this.state.selectedFilter === null)
-        || this.state.selectCondition.length === 0) {
-       return true;
+  function _updateSelectedItem(newVal) {
+    setSelectedItem(newVal);
+  }
+
+  function _updateSelectCondition(newVal) {
+    if (selectedCondition === '' && newVal.length !== selectCondition.length) {
+      setSearchPlaceholder(newVal[0].key);
     }
-    else {
+    setSelectCondition(newVal);
+  }
+
+  function _isConditionDisabled() {
+    if ((typeof selectedItem !== 'undefined'
+        && selectedItem.length >= 0
+        && selectedFilter === null)
+      || selectCondition.length === 0) {
+      return true;
+    } else {
       return false;
     }
   }
 
-  _selectCondition(event){
-    if(typeof event === 'undefined' || event.action !== "pop-value" || !this.props.req) {
-      if(typeof event !== 'undefined') {
-        this.setState({ selectedCondition: event.target.value });
+  function _selectCondition(event) {
+    if (typeof event === 'undefined' || event.action !== "pop-value" || !req) {
+      if (typeof event !== 'undefined') {
+        setSelectedCondition(event.target.value);
       } else {
-        this.setState({ selectedCondition: '' });
+        setSelectedCondition('');
       }
     }
   }
 
-  _setFields(fields) {
-    this.setState({fields: fields})
+  function _setFields(fields) {
+    setFields(fields)
   }
 
-  _selectFilter(value){
-    this.setState({ selectedFilter: value });
-    if(typeof value !== 'undefined' && value === null) {
-      this.setState({ selectedCondition: '' });
-      this.setState({ selectCondition: [] });
-      this.setState({ itemTypeSearch: false });
+  function _selectFilter(value) {
+    setSelectedFilter(value);
+    if (typeof value !== 'undefined' && value === null) {
+      setSelectedCondition('');
+      setSelectCondition([]);
+      setItemTypeSearch(false);
     } else {
-      this.setState({ itemTypeSearch: true });
+      setItemTypeSearch(true);
     }
   }
 
-  _getFilterOptions(){
-    let optionsList = this.state.fields.filter(
-        field => (
-            field.displayable_to_user
-        )
+  function _getFilterOptions(providedFields = false) {
+    let computedFields = providedFields ? providedFields : fields
+    let optionsList = computedFields.filter(
+      field => (
+        field.displayable_to_user
+      )
     );
 
     optionsList = optionsList.map(field =>
-      this._getJSONFilter(field)
+      _getJSONFilter(field)
     );
 
     return optionsList;
   }
 
-  _isFilterDisabled() {
-    if(typeof this.state.selectedItem !== 'undefined' && this.state.selectedItem.length > 0) {
-       return true;
-    }
-    else {
+  function _isFilterDisabled() {
+    if (typeof selectedItem !== 'undefined' && selectedItem.length > 0) {
+      return true;
+    } else {
       return false;
     }
   }
 
-  async _loadOptions(search, loadedOptions, {page}) {
-    if (this.state.optionsList.length < 25 && this.state.isInitialized) {
+  async function _loadOptions(search, loadedOptions, {page}) {
+    if (optionsList.length < 25 && isInitialized) {
       if (search.length > 0) {
-        var regexExp = new RegExp(search, 'i')
+        let regexExp = new RegExp(search, 'i')
 
-        var items = this.state.optionsList.filter(function (item) {
+        let items = optionsList.filter(function (item) {
           return item.label !== null && item.label.match(regexExp) !== null && item.label.match(regexExp).length > 0
         });
-        console.log('1')
         return {
           options: items,
           hasMore: false,
@@ -153,8 +158,8 @@ class ReferenceSearch extends React.Component {
         };
       }
       return {
-        options: this.getFilterOptions(),
-        hasMore: this.state.fields.length === 25,
+        options: _getFilterOptions(),
+        hasMore: fields.length === 25,
         additional: {
           page: page,
         },
@@ -162,179 +167,178 @@ class ReferenceSearch extends React.Component {
     }
 
 
-    const res = await axios.get(
-      `/react/${this.props.catalog}/${this.props.locale}/${this.props.itemType}?simple_fields=true&page=${page}`
-    )
-    if (!this.state.isInitialized) {
-      this.setState({
-        items: res.data.items,
-        fields: res.data.fields,
-        isLoading: false,
-        loadingMessage: res.data.loading_message,
-        isInitialized: search.length === 0,
-        optionsList: res.data.fields.map(field => this._getJSONFilter(field))
-      });
+    const res = await axios.get(`/react/${catalog}/${locale}/${itemType}?simple_fields=true&page=${page}`)
+    if (!isInitialized) {
+      setItems(res.data.items)
+      setFields(res.data.fields)
+      setIsLoading(false)
+      setLoadingMessage(res.data.loading_message)
+      setIsInitialized(search.length === 0)
+      setOptionsList(res.data.fields.map(field => _getJSONFilter(field)))
+
+      return {
+        options: _getFilterOptions(res.data.fields),
+        hasMore: false,
+        additional: {
+          page: page + 1,
+        },
+      };
     }
-    return {
-      options: this.getFilterOptions(),
-      hasMore: false,
-      additional: {
-        page: page + 1,
-      },
-    };
   }
 
-  _getJSONFilter(field) {
+  function _getJSONFilter(field) {
     return {value: field.uuid, label: field.name};
   }
 
-  _getConditionOptions() {
-    var optionsList = [];
-    optionsList = this.state.selectCondition.map(item =>
-      this._getJSONItem(item)
-    );
-
-    return optionsList;
+  function _addComponent() {
+    addComponentProps(itemId);
   }
 
-  _addComponent() {
-    this.props.addComponent(this.props.itemId);
+  function _deleteComponent() {
+    deleteComponentProps(itemId);
   }
 
-  _deleteComponent() {
-    this.props.deleteComponent(this.props.itemId);
+  function _getNoOptionsMessage() {
+    return () => noOptionsMessage;
   }
 
-  _getNoOptionsMessage() {
-    return () => this.props.noOptionsMessage;
+  function _selectFieldCondition(event) {
+    if (typeof event === 'undefined' || event.action !== "pop-value" || !this.props.req) {
+      if (typeof event !== 'undefined') {
+        setSelectedFieldCondition(event.target.value);
+      } else {
+        setSelectedFieldCondition('');
+      }
+    }
   }
 
-  renderSearch(){
-    if (this.state.isLoading) return null;
-    if (this.state.itemTypeSearch)
+  function renderSearch() {
+    if (isLoading) return null;
+    if (itemTypeSearch)
       return <ItemTypesReferenceSearch
-                updateSelectCondition={this.updateSelectCondition}
-                searchPlaceholder={this.state.searchPlaceholder}
-                choosePlaceholder={this.state.choosePlaceholder}
-                noOptionsMessage={this._getNoOptionsMessage()}
-                items={this.state.items}
-                fields={this.state.fields}
-                selectedFilter={this.state.selectedFilter}
-                selectedCondition={this.state.selectedCondition}
-                selectCondition={this.state.selectCondition}
-                itemType={this.props.itemType}
-                inputName={this._buildInputNameCondition(this.state.selectedCondition)}
-                srcRef={this.props.srcRef}
-                srcId={this.props.srcId}
-                req={this.props.req}
-                catalog={this.props.catalog}
-                locale={this.props.locale} />
+        updateSelectCondition={_updateSelectCondition}
+        searchPlaceholder={searchPlaceholder}
+        choosePlaceholder={choosePlaceholder}
+        noOptionsMessage={_getNoOptionsMessage()}
+        items={items}
+        fields={fields}
+        selectedFilter={selectedFilter}
+        selectedCondition={selectedCondition}
+        selectCondition={selectCondition}
+        itemType={itemType}
+        inputName={_buildInputNameCondition(selectedCondition)}
+        srcRef={srcRef}
+        srcId={srcId}
+        req={req}
+        catalog={catalog}
+        locale={locale}/>
     else
       return <SelectedReferenceSearch
-        updateSelectedItem={this.updateSelectedItem}
-        searchPlaceholder={this.state.searchPlaceholder}
-        loadingMessage={this.state.loadingMessage}
-        noOptionsMessage={this._getNoOptionsMessage()}
-        items={this.state.items}
-        fields={this.state.fields}
-        multiple={this.props.multiple}
-        inputName={this._buildInputNameCondition(this.state.selectedCondition)}
-        srcRef={this.props.srcRef}
-        srcId={this.props.srcId}
-        req={this.props.req}
-        itemsUrl={`/react/${this.props.catalog}/${this.props.locale}/${this.props.itemType}?simple_fields=true`}
-        onFocus={this.setFields} />
+        updateSelectedItem={_updateSelectedItem}
+        searchPlaceholder={searchPlaceholder}
+        loadingMessage={loadingMessage}
+        noOptionsMessage={_getNoOptionsMessage()}
+        items={items}
+        fields={fields}
+        multiple={multiple}
+        inputName={_buildInputNameCondition(selectedCondition)}
+        srcRef={srcRef}
+        srcId={srcId}
+        req={req}
+        itemsUrl={`/react/${catalog}/${locale}/${itemType}?simple_fields=true`}
+        onFocus={_setFields}/>
   }
 
-  renderFilter(){
+  function renderFilter() {
     return <AsyncPaginate
       className="single-reference-filter"
       delimiter=","
-      loadOptions={this.loadOptions}
+      loadOptions={_loadOptions}
       debounceTimeout={800}
       isSearchable={false}
       isClearable={true}
-      isDisabled={this._isFilterDisabled()}
-      loadingMessage={() => this.state.loadingMessage}
+      isDisabled={_isFilterDisabled()}
+      loadingMessage={() => loadingMessage}
       additional={{
         page: 1,
       }}
-      name={this.props.referenceFilterName}
-      value={this.state.selectedFilter}
-      onChange={this.selectFilter}
-      options={this._getFilterOptions()}
-      placeholder={this.state.filterPlaceholder}
-      noOptionsMessage={this._getNoOptionsMessage()}
+      name={referenceFilterName}
+      value={selectedFilter}
+      onChange={_selectFilter}
+      options={_getFilterOptions()}
+      placeholder={filterPlaceholder}
+      noOptionsMessage={_getNoOptionsMessage()}
     />
   }
 
-  renderFieldConditionElement(){
+  function renderFieldConditionElement() {
     return (
-      <select className="form-control filter-condition" name={this.props.fieldConditionName} value={this.state.selectedFieldCondition} onChange={this.selectFieldCondition}>
-      { this.props.fieldConditionData.map((item) => {
-        return <option key={item.key} value={item.key}>{item.value}</option>
-      })}
+      <select className="form-control filter-condition" name={fieldConditionName} value={selectedFieldCondition}
+              onChange={_selectFieldCondition}>
+        {fieldConditionData.map((item) => {
+          return <option key={item.key} value={item.key}>{item.value}</option>
+        })}
       </select>
     );
   }
 
-  renderSelectConditionElement(){
+  function renderSelectConditionElement() {
     return (
-      <select className="form-control filter-condition" name={this.props.selectConditionName} value={this.state.selectedCondition} onChange={this.selectCondition} disabled={this._isConditionDisabled()}>
-          { this.state.selectCondition.map((item) => {
-              return <option key={item.key} value={item.key}>{item.value}</option>
-            })
-          }
-        </select>
+      <select className="form-control filter-condition" name={selectConditionName} value={selectedCondition}
+              onChange={_selectCondition} disabled={_isConditionDisabled()}>
+        {selectCondition.map((item) => {
+          return <option key={item.key} value={item.key}>{item.value}</option>
+        })
+        }
+      </select>
     );
   }
 
-  render() {
-    return (
-      <React.Fragment>
-        <div className="col-lg-2">
-          { this.renderFieldConditionElement() }
-        </div>
-        <div className="col-lg-7">
-          <div className="container">
-
+  return (
+    <React.Fragment>
+      <div className="col-lg-2">
+        {renderFieldConditionElement()}
+      </div>
+      <div className="col-lg-7">
+        <div className="container">
           <div className="reference-search-container row">
             <div className="col-lg-11 reference-input-container">
               <div className="row">
                 <div className="col-lg-7">
-                  {this.renderSearch()}
+                  {renderSearch()}
                 </div>
-                <div className="col-lg-5">{ this.renderFilter() }</div>
+                <div className="col-lg-5">{renderFilter()}</div>
               </div>
             </div>
-            { (this.props.itemId === this.props.componentList[0].itemId && this.props.componentList.length === 1) &&
+            {(itemId === componentList[0].itemId && componentList.length === 1) &&
             <div className="col-lg-1 icon-container">
-              <a type="button" onClick={this.addComponent}><i className="fa fa-plus"></i></a>
+              <a type="button" onClick={_addComponent}><i className="fa fa-plus"></i></a>
             </div>
             }
-            { (((this.props.itemId !== this.props.componentList[0].itemId) && (this.props.itemId !== this.props.componentList[this.props.componentList.length - 1].itemId)) || (this.props.itemId === this.props.componentList[0].itemId && this.props.componentList.length > 1)) &&
+            {(((itemId !== componentList[0].itemId) && (itemId !== componentList[componentList.length - 1].itemId)) || (itemId === componentList[0].itemId && componentList.length > 1)) &&
             <div className="col-lg-1 icon-container">
-              <a type="button" onClick={this.deleteComponent}><i className="fa fa-trash"></i></a>
+              <a type="button" onClick={_deleteComponent}><i className="fa fa-trash"></i></a>
             </div>
             }
-            { ((this.props.itemId === this.props.componentList[this.props.componentList.length - 1].itemId) && (this.props.itemId !== this.props.componentList[0].itemId)) &&
+            {((itemId === componentList[componentList.length - 1].itemId) && (itemId !== componentList[0].itemId)) &&
             <div className="col-lg-1">
               <div className="row">
-                <div className="col-lg-12"><a type="button" onClick={this.addComponent}><i className="fa fa-plus"></i></a></div>
-                <div className="col-lg-12"><a type="button" onClick={this.deleteComponent}><i className="fa fa-trash"></i></a></div>
+                <div className="col-lg-12"><a type="button" onClick={_addComponent}><i className="fa fa-plus"></i></a>
+                </div>
+                <div className="col-lg-12"><a type="button" onClick={_deleteComponent}>
+                  <i className="fa fa-trash"></i></a></div>
               </div>
             </div>
             }
           </div>
         </div>
-        </div>
+      </div>
 
-        <div className="col-lg-3 condition-input-container">
-            { this.renderSelectConditionElement() }
-        </div>
-      </React.Fragment>
-    );
-  }
+      <div className="col-lg-3 condition-input-container">
+        {renderSelectConditionElement()}
+      </div>
+    </React.Fragment>
+  );
 }
 
 export default ReferenceSearch;

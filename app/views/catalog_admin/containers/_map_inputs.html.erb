@@ -13,7 +13,7 @@
   ) do %>
     <label class="control-label" for="container_layers"><%= t("catalog_admin.fields.geometry_option_inputs.layers") %></label>
     <%= f.hidden_field(:layers) %>
-    <%= react_component('GeoLayers/components/GeoLayers',
+    <%= react_component('GeoEditor/components/GeoLayers',
       {
         layers: f.object.geo_layers,
         options: load_geo_layers,

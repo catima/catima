@@ -1,313 +1,323 @@
-import React from 'react';
+import React, {useState, useEffect} from 'react';
 import ReactSelect from 'react-select';
 import LinkedCategoryInput from './LinkedCategoryInput';
 
-class ChoiceSetSearch extends React.Component {
-  constructor(props) {
-    super(props);
+const ChoiceSetSearch = (props) => {
+  const {
+    inputName: inputNameProps,
+    srcId,
+    srcRef,
+    req,
+    childChoicesActivatedYesLabel,
+    childChoicesActivatedNoLabel,
+    locale,
+    items,
+    addComponent,
+    itemId,
+    deleteComponent,
+    selectConditionName,
+    fieldConditionName,
+    fieldConditionData,
+    searchPlaceholder,
+    categoryInputName,
+    filterPlaceholder,
+    childChoicesActivatedInputName,
+    childChoicesActivatedPlaceholder,
+    catalog,
+    itemType,
+    linkedCategoryInputName,
+    componentList,
+    selectCondition: selectConditionProps
+  } = props
 
-    this.state = {
-      selectedCondition: '',
-      selectCondition: [],
-      selectedFieldCondition: '',
-      selectedCategory: {},
-      selectedItem: [],
-      selectedChildChoicesActivated: false,
-      disabled: false,
-      hiddenInputValue: [],
-      inputName: this.props.inputName.split("[exact]")
-    };
+  const [selectedCondition, setSelectedCondition] = useState('')
+  const [selectCondition, setSelectCondition] = useState([])
+  const [selectedFieldCondition, setSelectedFieldCondition] = useState('')
+  const [selectedCategory, setSelectedCategory] = useState({})
+  const [selectedItem, setSelectedItem] = useState([])
+  const [selectedChildChoicesActivated, setSelectedChildChoicesActivated] = useState(false)
+  const [disabled, setDisabled] = useState(false)
+  const [hiddenInputValue, setHiddenInputValue] = useState([])
+  const [inputName, setInputName] = useState(inputNameProps.split("[exact]"))
+  const [choiceSetId, setChoiceSetId] = useState(`${srcId}`)
+  const [choiceSetRef, setChoiceSetRef] = useState(`${srcRef}`)
 
-    this.choiceSetId = `${this.props.srcId}`;
-    this.choiceSetRef = `${this.props.srcRef}`;
-    this.selectItem = this._selectItem.bind(this);
-    this.selectCondition = this._selectCondition.bind(this);
-    this.selectFieldCondition = this._selectFieldCondition.bind(this);
-    this.selectCategory = this._selectCategory.bind(this);
-    this.selectChildChoicesActivated = this._selectChildChoicesActivated.bind(this);
-    this.addComponent = this._addComponent.bind(this);
-    this.deleteComponent = this._deleteComponent.bind(this);
-    this.updateSelectCondition = this._updateSelectCondition.bind(this);
-  }
+  useEffect(() => {
+    if (typeof selectConditionProps !== 'undefined' && selectConditionProps.length !== 0) {
+      setSelectedCondition(selectConditionProps[0].key)
+    }
+  }, [selectConditionProps])
 
-  componentDidMount() {
-    if (typeof this.props.selectCondition !== 'undefined' && this.props.selectCondition.length !== 0) {
-      this.setState({selectedCondition: this.props.selectCondition[0].key});
+  useEffect(() => {
+    _save()
+  }, [selectedItem])
+
+  function _save() {
+    if (selectedItem !== null) {
+      setHiddenInputValue(selectedItem);
+      document.getElementsByName(_buildInputNameCondition(selectedCondition))[0].value = hiddenInputValue;
     }
   }
 
-  _save() {
-    if (this.state.selectedItem !== null) {
-      this.setState({hiddenInputValue: this.state.selectedItem});
-      document.getElementsByName(this._buildInputNameCondition(this.state.selectedCondition))[0].value = this.state.hiddenInputValue;
-    }
-  }
-
-  _buildInputNameCondition(condition) {
-    if (this.state.inputName.length === 2) {
-      if (condition !== '') return this.state.inputName[0] + '[' + condition + ']' + this.state.inputName[1];
-      else return this.state.inputName[0] + '[default]' + this.state.inputName[1];
+  function _buildInputNameCondition(condition) {
+    if (inputName.length === 2) {
+      if (condition !== '') return inputName[0] + '[' + condition + ']' + inputName[1];
+      else return inputName[0] + '[default]' + inputName[1];
     } else {
-      return this.props.inputName;
+      return inputNameProps;
     }
   }
 
-  _selectItem(item, event) {
-    if (typeof event === 'undefined' || event.action !== "pop-value" || !this.props.req) {
+  function _selectItem(item, event) {
+    if (typeof event === 'undefined' || event.action !== "pop-value" || !req) {
       if (typeof item !== 'undefined') {
         if (item.data.length === 0) {
-          this.setState({selectedCategory: {}});
-          this.setState({selectedCondition: ''});
-          this.setState({selectCondition: []});
+          setSelectedCategory({});
+          setSelectedCondition('');
+          setSelectCondition([]);
         }
-        this.setState({selectedItem: item}, () => this._save());
+        setSelectedItem(item)
       } else {
-        this.setState({selectedItem: []}, () => this._save());
+        setSelectedItem([])
       }
     }
   }
 
-  _selectCondition(event) {
-    if (typeof event === 'undefined' || event.action !== "pop-value" || !this.props.req) {
+  function _selectCondition(event) {
+    if (typeof event === 'undefined' || event.action !== "pop-value" || !req) {
       if (typeof event !== 'undefined') {
-        this.setState({selectedCondition: event.target.value});
+        setSelectedCondition(event.target.value);
       } else {
-        this.setState({selectedCondition: ''});
+        setSelectedCondition('');
       }
     }
   }
 
-  _selectChildChoicesActivated(event) {
-    if (typeof event === 'undefined' || event.action !== "pop-value" || !this.props.req) {
+  function _selectChildChoicesActivated(event) {
+    if (typeof event === 'undefined' || event.action !== "pop-value" || !req) {
       if (typeof event !== 'undefined') {
-        this.setState({selectedChildChoicesActivated: event.value});
+        setSelectedChildChoicesActivated(event.value);
       } else {
-        this.setState({selectedChildChoicesActivated: false});
+        setSelectedChildChoicesActivated(false);
       }
     }
   }
 
-
-  _selectCategory(item, event) {
+  function _selectCategory(item, event) {
     if (item !== null) {
-      if (typeof event === 'undefined' || event.action !== "pop-value" || !this.props.req) {
+      if (typeof event === 'undefined' || event.action !== "pop-value" || !req) {
         if (typeof event !== 'undefined') {
-          this.setState({selectedCategory: item});
+          setSelectedCategory(item);
         } else {
-          this.setState({selectedCategory: {}});
-          this.setState({selectedCondition: ''});
-          this.setState({selectCondition: []});
+          setSelectedCategory({});
+          setSelectedCondition('');
+          setSelectCondition([]);
         }
       }
     } else {
-      this.setState({selectedCategory: {}});
-      this.setState({selectedCondition: ''});
-      this.setState({selectCondition: []});
+      setSelectedCategory({});
+      setSelectedCondition('');
+      setSelectCondition([]);
     }
   }
 
-  _selectFieldCondition(event) {
-    if (typeof event === 'undefined' || event.action !== "pop-value" || !this.props.req) {
+  function _selectFieldCondition(event) {
+    if (typeof event === 'undefined' || event.action !== "pop-value" || !req) {
       if (typeof event !== 'undefined') {
-        this.setState({selectedFieldCondition: event.target.value});
+        setSelectedFieldCondition(event.target.value);
       } else {
-        this.setState({selectedFieldCondition: ''});
+        setSelectedFieldCondition('');
       }
     }
   }
 
-  _getCategoryOptions() {
-    var optionsList = [];
-    optionsList = this.state.selectedItem.data.map(item =>
-      this._getJSONCategory(item)
+  function _getCategoryOptions() {
+    let optionsList = [];
+    optionsList = selectedItem.data.map(item =>
+      _getJSONCategory(item)
     );
 
     return optionsList;
   }
 
-  _getChildChoicesActivatedOptions() {
-    var optionsList = [
-      {value: true, label: this.props.childChoicesActivatedYesLabel},
-      {value: false, label: this.props.childChoicesActivatedNoLabel}
+  function _getChildChoicesActivatedOptions() {
+    return [
+      {value: true, label: childChoicesActivatedYesLabel},
+      {value: false, label: childChoicesActivatedNoLabel}
     ]
-
-    return optionsList;
   }
 
-  _getJSONCategory(item) {
+  function _getJSONCategory(item) {
     return {
       value: item.uuid,
-      label: item.name_translations['name_' + this.props.locale],
+      label: item.name_translations['name_' + locale],
       key: item.id,
       choiceSetId: item.field_set_id
     };
   }
 
-  _getItemOptions() {
-    var optionsList = [];
-    optionsList = this.props.items.map(item =>
-      this._getJSONItem(item)
+  function _getItemOptions() {
+    let optionsList = [];
+    optionsList = items.map(item =>
+      _getJSONItem(item)
     );
 
     return optionsList;
   }
 
-  _getJSONItem(item) {
+  function _getJSONItem(item) {
     if (typeof item.category_data === 'undefined') {
       item.category_data = [];
     }
     return {value: item.key, label: item.label, data: item.category_data, has_childrens: item.has_childrens};
   }
 
-  _addComponent() {
-    this.props.addComponent(this.props.itemId);
+  function _addComponent() {
+    addComponent(itemId);
   }
 
-  _deleteComponent() {
-    this.props.deleteComponent(this.props.itemId);
+  function _deleteComponent() {
+    deleteComponent(itemId);
   }
 
-  _updateSelectCondition(newVal) {
-    if (this.state.selectedCondition === '' && newVal.length !== this.state.selectCondition.length) {
-      this.setState({selectedCondition: newVal[0].key});
+  function _updateSelectCondition(newVal) {
+    if (selectedCondition === '' && newVal.length !== selectCondition.length) {
+      setSelectedCondition(newVal[0].key);
     }
-    this.setState({selectCondition: newVal});
+    setSelectCondition(newVal);
   }
 
-  _getChoiceSetClassname() {
-    if (this.state.selectedItem.length === 0 || this.state.selectedItem.data.length === 0 && !this.state.selectedItem.has_childrens) {
+  function _getChoiceSetClassname() {
+    if (selectedItem.length === 0 || selectedItem.data.length === 0 && !selectedItem.has_childrens) {
       return 'col-lg-6';
     } else {
       return 'col-lg-3';
     }
   }
 
-  renderSelectConditionElement() {
+  function renderSelectConditionElement() {
     return (
-      <select className="form-control filter-condition" name={this.props.selectConditionName}
-              value={this.state.selectedCondition} onChange={this.selectCondition}
-              disabled={this.state.selectedItem.length === 0 || Object.keys(this.state.selectedCategory).length === 0}>
-        {this.state.selectCondition.map((item) => {
+      <select className="form-control filter-condition" name={selectConditionName}
+              value={selectedCondition} onChange={_selectCondition}
+              disabled={selectedItem.length === 0 || Object.keys(selectedCategory).length === 0}>
+        {selectCondition.map((item) => {
           return <option key={item.key} value={item.key}>{item.value}</option>
         })}
       </select>
     );
   }
 
-  renderFieldConditionElement() {
+  function renderFieldConditionElement() {
     return (
-      <select className="form-control filter-condition" name={this.props.fieldConditionName}
-              value={this.state.selectedFieldCondition} onChange={this.selectFieldCondition}>
-        {this.props.fieldConditionData.map((item) => {
+      <select className="form-control filter-condition" name={fieldConditionName}
+              value={selectedFieldCondition} onChange={_selectFieldCondition}>
+        {fieldConditionData.map((item) => {
           return <option key={item.key} value={item.key}>{item.value}</option>
         })}
       </select>
     );
   }
 
-  renderChoiceSetElement() {
+  function renderChoiceSetElement() {
     return (
       <div>
-        <ReactSelect id={this.choiceSetId} name={this._buildInputNameCondition(this.state.selectedCondition)}
-                     options={this._getItemOptions()} className="basic-multi-select" onChange={this.selectItem}
-                     classNamePrefix="select" placeholder={this.props.searchPlaceholder}/>
+        <ReactSelect id={choiceSetId} name={_buildInputNameCondition(selectedCondition)}
+                     options={_getItemOptions()} className="basic-multi-select" onChange={_selectItem}
+                     classNamePrefix="select" placeholder={searchPlaceholder}/>
       </div>
     );
   }
 
-  renderChoiceSetItemCategory() {
+  function renderChoiceSetItemCategory() {
     return (
-      <ReactSelect id={this.choiceSetId + '_condition'} name={this.props.categoryInputName}
-                   options={this._getCategoryOptions()} className="basic-multi-select" onChange={this.selectCategory}
-                   classNamePrefix="select" placeholder={this.props.filterPlaceholder} isClearable={true}/>
+      <ReactSelect id={choiceSetId + '_condition'} name={categoryInputName}
+                   options={_getCategoryOptions()} className="basic-multi-select" onChange={_selectCategory}
+                   classNamePrefix="select" placeholder={filterPlaceholder} isClearable={true}/>
     );
   }
 
-  renderChildChoicesActivated() {
+  function renderChildChoicesActivated() {
     return (
-      <ReactSelect id={this.choiceSetId + '_condition'} name={this.props.childChoicesActivatedInputName}
-                   options={this._getChildChoicesActivatedOptions()} onChange={this.selectChildChoicesActivated}
-                   classNamePrefix="select" placeholder={this.props.childChoicesActivatedPlaceholder}/>
+      <ReactSelect id={choiceSetId + '_condition'} name={childChoicesActivatedInputName}
+                   options={_getChildChoicesActivatedOptions()} onChange={_selectChildChoicesActivated}
+                   classNamePrefix="select" placeholder={childChoicesActivatedPlaceholder}/>
     );
   }
 
-  renderLinkedCategoryElement() {
+  function renderLinkedCategoryElement() {
     return (
       <div>
         <LinkedCategoryInput
-          catalog={this.props.catalog}
-          locale={this.props.locale}
-          itemType={this.props.itemType}
-          inputName={this.props.linkedCategoryInputName}
-          selectedCategory={this.state.selectedCategory}
-          selectedCondition={this.state.selectedCondition}
-          updateSelectCondition={this.updateSelectCondition}
-          searchPlaceholder={this.props.searchPlaceholder}
+          catalog={catalog}
+          locale={locale}
+          itemType={itemType}
+          inputName={linkedCategoryInputName}
+          selectedCategory={selectedCategory}
+          selectedCondition={selectedCondition}
+          updateSelectCondition={_updateSelectCondition}
+          searchPlaceholder={searchPlaceholder}
         />
       </div>
     );
   }
 
-  render() {
-    return (
-      <div className="col-lg-12 choiceset-search-container">
-        <div className="row">
-          <div className="col-lg-2">
-            {this.renderFieldConditionElement()}
-          </div>
-          <div className={this._getChoiceSetClassname()}>
-            {this.renderChoiceSetElement()}
-          </div>
-          {(this.state.selectedItem.length !== 0 && this.state.selectedItem.has_childrens == true) &&
-          <div className="col-lg-3">
-            {this.renderChildChoicesActivated()}
-          </div>
-          }
-          {(this.state.selectedItem.length !== 0 && this.state.selectedItem.data.length !== 0) &&
-          <div className="col-lg-3">
-            {this.renderChoiceSetItemCategory()}
-          </div>
-          }
-          {(this.props.itemId === this.props.componentList[0].itemId && this.props.componentList.length === 1) &&
-          <div className="col-lg-1 icon-container">
-            <a type="button" onClick={this.addComponent}><i className="fa fa-plus"></i></a>
-          </div>
-          }
-          {(((this.props.itemId !== this.props.componentList[0].itemId) && (this.props.itemId !== this.props.componentList[this.props.componentList.length - 1].itemId)) || (this.props.itemId === this.props.componentList[0].itemId && this.props.componentList.length > 1)) &&
-          <div className="col-lg-1 icon-container">
-            <a type="button" onClick={this.deleteComponent}><i className="fa fa-trash"></i></a>
-          </div>
-          }
-          {((this.props.itemId === this.props.componentList[this.props.componentList.length - 1].itemId) && (this.props.itemId !== this.props.componentList[0].itemId)) &&
-          <div className="col-lg-1">
-            <div className="row">
-              <div className="col-lg-12"><a type="button" onClick={this.addComponent}><i className="fa fa-plus"></i></a>
-              </div>
-              <div className="col-lg-12"><a type="button" onClick={this.deleteComponent}><i className="fa fa-trash"></i></a>
-              </div>
+  return (
+    <div className="col-lg-12 choiceset-search-container">
+      <div className="row">
+        <div className="col-lg-2">
+          {renderFieldConditionElement()}
+        </div>
+        <div className={_getChoiceSetClassname()}>
+          {renderChoiceSetElement()}
+        </div>
+        {(selectedItem.length !== 0 && selectedItem.has_childrens == true) &&
+        <div className="col-lg-3">
+          {renderChildChoicesActivated()}
+        </div>
+        }
+        {(selectedItem.length !== 0 && selectedItem.data.length !== 0) &&
+        <div className="col-lg-3">
+          {renderChoiceSetItemCategory()}
+        </div>
+        }
+        {(itemId === componentList[0].itemId && componentList.length === 1) &&
+        <div className="col-lg-1 icon-container">
+          <a type="button" onClick={_addComponent}><i className="fa fa-plus"></i></a>
+        </div>
+        }
+        {(((itemId !== componentList[0].itemId) && (itemId !== componentList[componentList.length - 1].itemId)) || (itemId === componentList[0].itemId && componentList.length > 1)) &&
+        <div className="col-lg-1 icon-container">
+          <a type="button" onClick={_deleteComponent}><i className="fa fa-trash"></i></a>
+        </div>
+        }
+        {((itemId === componentList[componentList.length - 1].itemId) && (itemId !== componentList[0].itemId)) &&
+        <div className="col-lg-1">
+          <div className="row">
+            <div className="col-lg-12"><a type="button" onClick={_addComponent}><i className="fa fa-plus"></i></a>
+            </div>
+            <div className="col-lg-12"><a type="button" onClick={_deleteComponent}><i className="fa fa-trash"></i></a>
             </div>
           </div>
-          }
-          {!(((this.state.selectedItem.length !== 0 && this.state.selectedItem.has_childrens == true)) && ((this.state.selectedItem.length !== 0 && this.state.selectedItem.data.length !== 0))) &&
-          <div className="col-lg-3">
-            {this.renderSelectConditionElement()}
-          </div>
-          }
         </div>
-        <div className="row">
-          {(((this.state.selectedItem.length !== 0 && this.state.selectedItem.has_childrens == true)) && ((this.state.selectedItem.length !== 0 && this.state.selectedItem.data.length !== 0))) &&
-          <div className="col-lg-3" style={{marginTop: '10px'}}>
-            {this.renderSelectConditionElement()}
-          </div>
-          }
-          {(Object.keys(this.state.selectedCategory).length !== 0 && this.state.selectedItem.data.length !== 0) &&
-          <div className="col-lg-offset-2 col-lg-6">{this.renderLinkedCategoryElement()}</div>
-          }
+        }
+        {!(((selectedItem.length !== 0 && selectedItem.has_childrens == true)) && ((selectedItem.length !== 0 && selectedItem.data.length !== 0))) &&
+        <div className="col-lg-3">
+          {renderSelectConditionElement()}
         </div>
+        }
       </div>
-    );
-  }
-
+      <div className="row">
+        {(((selectedItem.length !== 0 && selectedItem.has_childrens == true)) && ((selectedItem.length !== 0 && selectedItem.data.length !== 0))) &&
+        <div className="col-lg-3" style={{marginTop: '10px'}}>
+          {renderSelectConditionElement()}
+        </div>
+        }
+        {(Object.keys(selectedCategory).length !== 0 && selectedItem.data.length !== 0) &&
+        <div className="col-lg-offset-2 col-lg-6">{renderLinkedCategoryElement()}</div>
+        }
+      </div>
+    </div>
+  );
 }
 
 export default ChoiceSetSearch;

@@ -25,7 +25,7 @@
         label: { text: t(".layers") }
     ) do %>
       <%= f.hidden_field(:layers) %>
-      <%= react_component('GeoLayers/components/GeoLayers',
+      <%= react_component('GeoEditor/components/GeoLayers',
         {
             layers: f.object.geo_layers,
             options: load_geo_layers,

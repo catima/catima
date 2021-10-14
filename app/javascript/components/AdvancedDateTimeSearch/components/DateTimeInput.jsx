@@ -1,97 +1,109 @@
 import 'es6-shim';
 import PropTypes from 'prop-types';
-import React from 'react';
-import ReactDOM from 'react-dom';
+import React, {useState, useEffect, useRef, forwardRef} from 'react';
 import $ from 'jquery';
 import 'moment';
 import 'bootstrap4-datetimepicker'
 
-class DateTimeInput extends React.Component {
+const DateTimeInput = forwardRef((props, ref) => {
+  const {
+    disabled: disabledProps,
+    isRange: isRangeProps,
+    input,
+    localizedDateTimeData: localizedDateTimeDataProps,
+    format,
+    datepicker,
+    locale,
+    req,
+    inputId,
+    inputSuffixId,
+    inputName
+  } = props
 
-  static propTypes = {
-    input: PropTypes.string.isRequired,
-  };
+  const {topRef, hiddenInputRef} = ref
 
-  static defaultValues = {Y:'', M:'', D:'', h:'', m:'', s:''};
+  const selectRef = useRef()
 
-  static types = ['Y', 'M', 'h', 'YM', 'MD', 'hm', 'YMD', 'hms', 'MDh', 'YMDh', 'MDhm', 'YMDhm', 'MDhms', 'YMDhms'];
+  const defaultValues = {Y: '', M: '', D: '', h: '', m: '', s: ''};
+  const types = ['Y', 'M', 'h', 'YM', 'MD', 'hm', 'YMD', 'hms', 'MDh', 'YMDh', 'MDhm', 'YMDhm', 'MDhms', 'YMDhms'];
 
-  constructor(props){
-    super(props);
-    this.state = {
-      disabled: this.props.disabled,
-      isRange: this.props.isRange,
-      selectedDate: '',
-      isDatepickerOpen: false,
-      localizedDateTimeData: []
-    };
-    const date = this.getData();
-    const granularity = this.getFieldOptions().format;
-    for (let i in granularity){
+  const [disabled, setDisabled] = useState(disabledProps)
+  const [isRange, setIsRange] = useState(isRangeProps)
+  const [selectedDate, setSelectedDate] = useState('')
+  const [isDatepickerOpen, setIsDatepickerOpen] = useState(false)
+  const [localizedDateTimeData, setLocalizedDateTimeData] = useState([])
+  const [date, setDate] = useState(getData())
+  const [granularity, setGranularity] = useState(getFieldOptions().format)
+  const [styleMarginRight, setStyleMarginRight] = useState('')
+  const [isRequired, setIsRequired] = useState(false)
+  const [state, setState] = useState(false)
+
+  let dateValid = isCurrentFormatValid()
+  let errorStl = dateValid ? {} : {border: "2px solid #f00"};
+  let errorMsg = dateValid ? "" : "Invalid value"
+  let fmt = getFieldOptions().format;
+
+  useEffect(() => {
+    let s = {}
+    for (let i in granularity) {
       let k = granularity[i];
-      this.state[k] = date[k] || (DateTimeInput.defaultValues)[k];
+      s[k] = date[k] || (defaultValues)[k];
     }
-    this.handleChangeDay = this._handleChangeDay.bind(this);
-    this.handleChangeMonth = this._handleChangeMonth.bind(this);
-    this.handleChangeYear = this._handleChangeYear.bind(this);
-    this.handleChangeHours = this._handleChangeHours.bind(this);
-    this.handleChangeMinutes = this._handleChangeMinutes.bind(this);
-    this.handleChangeSeconds = this._handleChangeSeconds.bind(this);
-    this.styleMarginRight = '';
+    setState(s);
+  }, [granularity])
 
-    if(document.querySelector(this.props.input) !== null) {
-      this.isRequired = (document.querySelector(this.props.input).getAttribute('data-field-required') == 'true');
-    }
 
-    this.selectDate = this._selectDate.bind(this);
-    this.openCloseDatepicker = this._openCloseDatepicker.bind(this);
-    this.clearDatepicker = this._clearDatepicker.bind(this);
-  }
-
-  componentDidMount() {
-    this._initDatePicker();
-    this.setState({ localizedDateTimeData: this.props.localizedDateTimeData });
-    window.addEventListener("click", this.onSelectMonthClick);
-    if (jQuery.isEmptyObject(this.getData())) return this.initData(DateTimeInput.defaultValues, this.getFieldOptions().format)
-  }
-
-  componentWillReceiveProps(nextProps) {
-    if (nextProps.disabled !== this.state.disabled) {
-      this.setState({ disabled: nextProps.disabled });
-      //When the selected condition changes, we clear the inputs if the user has left une field empty
-      if(nextProps.disabled) {
-          var formatArray = this.props.format.split('');
-          var count = 0;
-          formatArray.forEach((item) => {
-              if(this.state[item] !== '') {
-                  count++;
-              }
-          });
-
-          if(count < formatArray.length) {
-              //The user has left a field empty => clear all fields
-              this._clearDatepicker();
-          }
+  useEffect(() => {
+    if (topRef.current) {
+      _initDatePicker();
+      setLocalizedDateTimeData(localizedDateTimeDataProps);
+      // window.addEventListener("click", _onSelectMonthClick);
+      if (jQuery.isEmptyObject(getData())) return initData(defaultValues, getFieldOptions().format)
+      if (document.querySelector(input) !== null) {
+        setIsRequired(document.querySelector(input).getAttribute('data-field-required') == 'true')
       }
     }
+  }, [topRef])
 
-    if (nextProps.isRange !== this.state.isRange) {
-      this.setState({ isRange: nextProps.isRange });
+  useEffect(() => {
+    if (disabledProps !== disabled) {
+      setDisabled(disabledProps);
+      //When the selected condition changes, we clear the inputs if the user has left une field empty
+      if (disabledProps) {
+        let formatArray = format.split('');
+        let count = 0;
+        formatArray.forEach((item) => {
+          if (state[item] !== '') {
+            count++;
+          }
+        });
+
+        if (count < formatArray.length) {
+          //The user has left a field empty => clear all fields
+          _clearDatepicker();
+        }
+      }
     }
-  }
+  }, [disabledProps])
 
-  _initDatePicker() {
-    if(typeof this.props.datepicker !== 'undefined' && this.props.datepicker) {
-      const node = ReactDOM.findDOMNode(this);
+  useEffect(() => {
+    if (isRangeProps !== isRange) {
+      setIsRange(isRangeProps);
+    }
+  }, [isRangeProps])
+
+  function _initDatePicker() {
+    if (typeof datepicker !== 'undefined' && datepicker) {
+      const node = topRef.current
       const dateInputElements = node.querySelectorAll('.form-control');
 
-      if(dateInputElements.length > 3) {
-        this.styleMarginRight = ' margin-right';
+      if (dateInputElements.length > 3) {
+        setStyleMarginRight(' margin-right');
       }
 
-      $(this.refs['hiddenInput']).datetimepicker({
-        format: this.props.format,
-        locale: this.props.locale,
+      $(hiddenInputRef.current).datetimepicker({
+        format: format,
+        locale: locale,
         debug: false, // pass to `true` to inspect widget
         icons: {
           time: 'fa fa-clock-o',
@@ -104,226 +116,241 @@ class DateTimeInput extends React.Component {
         }
       });
 
-      $(this.refs['hiddenInput']).datetimepicker().on('dp.change', (event) => this._onDatepickerChangerDate(event));
+      $(hiddenInputRef.current).datetimepicker().on('dp.change', (event) => _onDatepickerChangerDate(event));
     }
   }
 
-  _openCloseDatepicker() {
-      if(this.state.isDatepickerOpen) {
-          this.setState({isDatepickerOpen: false});
-          $(this.refs['hiddenInput']).data("DateTimePicker").hide();
-      } else {
-          this.setState({isDatepickerOpen: true});
-          $(this.refs['hiddenInput']).data("DateTimePicker").show();
-      }
-  }
-
-  _getSelectClassNames() {
-      if(this.state.disabled) {
-          return "form-control disabled";
-      } else {
-          return "form-control";
-      }
-  }
-
-  _clearDatepicker() {
-    $(this.refs['hiddenInput']).data("DateTimePicker").clear();
-    this.updateData({ Y: '', M: '', D: '', h: '', m: '', s: ''});
-  }
-
-  _onDatepickerChangerDate(data) {
-    if(data.date !== false) {
-      this.setState({selectedDate: data.date});
-      this.updateData({ Y: data.date.year(), M: (data.date.month() + 1), D: data.date.date(), h: data.date.hour(), m: data.date.minute(), s: data.date.second()});
+  function _openCloseDatepicker() {
+    if (isDatepickerOpen) {
+      setIsDatepickerOpen(false);
+      $(hiddenInputRef.current).data("DateTimePicker").hide();
     } else {
-      this.setState({selectedDate: ''});
-      this.updateData({ Y: '', M: '', D: '', h: '', m: '', s: ''});
+      setIsDatepickerOpen(true);
+      $(hiddenInputRef.current).data("DateTimePicker").show();
     }
   }
 
-  _selectDate(event){
-    if(typeof event === 'undefined' || event.action !== "pop-value" || !this.props.req) {
-      if(typeof event !== 'undefined') {
-        this.setState({ selectedDate: event.target.value });
+  function _getSelectClassNames() {
+    if (disabled) {
+      return "form-control disabled";
+    } else {
+      return "form-control";
+    }
+  }
+
+  function _clearDatepicker() {
+    $(hiddenInputRef.current).data("DateTimePicker").clear();
+    updateData({Y: '', M: '', D: '', h: '', m: '', s: ''});
+  }
+
+  function _onDatepickerChangerDate(data) {
+    if (data.date !== false) {
+      setSelectedDate(data.date);
+      updateData({
+        Y: data.date.year(),
+        M: (data.date.month() + 1),
+        D: data.date.date(),
+        h: data.date.hour(),
+        m: data.date.minute(),
+        s: data.date.second()
+      });
+    } else {
+      setSelectedDate('');
+      updateData({Y: '', M: '', D: '', h: '', m: '', s: ''});
+    }
+  }
+
+  function _selectDate(event) {
+    if (typeof event === 'undefined' || event.action !== "pop-value" || !req) {
+      if (typeof event !== 'undefined') {
+        setSelectedDate(event.target.value);
       } else {
-        this.setState({ selectedDate: '' });
+        setSelectedDate('');
       }
     }
   }
 
-  _handleChangeDay(e){
+  function _handleChangeDay(e) {
     let v = parseInt(e.target.value);
     if (v < 1 || v > 31) return;
     if (isNaN(v)) v = "";
-    this.updateData({D: v});
-    //this.updateDatePicker({D: v});
+    updateData({D: v});
   }
 
-  _handleChangeMonth(e){
+  function _handleChangeMonth(e) {
     let v = parseInt(e.target.value);
     if (v < 1 || v > 12) return;
     if (isNaN(v)) v = "";
-    this.updateData({M: v});
-    //this.updateDatePicker({M: v});
+    updateData({M: v});
   }
 
-  _handleChangeYear(e){
+  function _handleChangeYear(e) {
     let v = parseInt(e.target.value);
     if (isNaN(v)) v = "";
-    this.updateData({Y: v});
-    //this.updateDatePicker({Y: v});
+    updateData({Y: v});
   }
 
-  _handleChangeHours(e){
+  function _handleChangeHours(e) {
     let v = parseInt(e.target.value);
     if (v < 0 || v > 23) return;
     if (isNaN(v)) v = "";
-    this.updateData({h: v});
-    //this.updateDatePicker({h: v});
+    updateData({h: v});
   }
 
-  _handleChangeMinutes(e){
+  function _handleChangeMinutes(e) {
     let v = parseInt(e.target.value);
     if (v < 0 || v > 59) return;
     if (isNaN(v)) v = "";
-    this.updateData({m: v});
-    //this.updateDatePicker({m: v});
+    updateData({m: v});
   }
 
-  _handleChangeSeconds(e){
+  function _handleChangeSeconds(e) {
     let v = parseInt(e.target.value);
     if (v < 0 || v > 59) return;
     if (isNaN(v)) v = "";
-    this.updateData({s: v});
-    //this.updateDatePicker({s: v});
+    updateData({s: v});
   }
 
-  initData(data, format) {
+  function initData(data, format) {
     let dt = {};
-    for (let i in data){
-      dt[i] = format.includes(i) ? data[i] || "" : null ;
+    for (let i in data) {
+      dt[i] = format.includes(i) ? data[i] || "" : null;
     }
-    this.updateData(dt);
+    updateData(dt);
   }
 
-  updateData(h){
-    this.setState(h);
-    const d = this.getData();
+  function updateData(h) {
+    setState(state ? {...state, ...h} : h);
+    const d = getData();
     for (let k in h) d[k] = h[k];
-    this.setData(d);
+    setData(d);
   }
 
-  updateDatePicker(d) {
-    var newDate = {Y: this.state.Y, M: this.state.M, D: this.state.D, h: this.state.h, m: this.state.m, s: this.state.s};
-    Object.keys(d).forEach((index) => {
-      newDate[index] = d[index];
-    });
-    $(this.refs['hiddenInput']).data("DateTimePicker").date(new Date(newDate.Y, newDate.M - 1, newDate.D, newDate.h, newDate.m, newDate.s));
-  }
-
-  getData(){
-    const value = this.getInput().val();
+  function getData() {
+    const value = getInput().val();
     if (!value) return {};
     let v = JSON.parse(value);
-    return v.raw_value ? this.rawValueToDateTime(v.raw_value) : v;
+    return v.raw_value ? rawValueToDateTime(v.raw_value) : v;
   }
 
-  rawValueToDateTime(v){
+  function rawValueToDateTime(v) {
     const dt = new Date(v * 1000)
-    return {Y: dt.getFullYear(), M: dt.getMonth()+1, D: dt.getDate(), h: dt.getHours(), m: dt.getMinutes(), s: dt.getSeconds()};
+    return {
+      Y: dt.getFullYear(),
+      M: dt.getMonth() + 1,
+      D: dt.getDate(),
+      h: dt.getHours(),
+      m: dt.getMinutes(),
+      s: dt.getSeconds()
+    };
   }
 
-  setData(d){
-    this.getInput().val(JSON.stringify(d));
+  function setData(d) {
+    getInput().val(JSON.stringify(d));
   }
 
-  getInput() {
-    return $(this.props.input);
+  function getInput() {
+    return $(input);
   }
 
-  getAllowedFormats() {
-    const granularity = this.getFieldOptions().format;
-    return DateTimeInput.types.filter(obj => {
+  function getAllowedFormats() {
+    const granularity = getFieldOptions().format;
+    return types.filter(obj => {
       if (granularity.includes(obj) || granularity == obj) return obj;
     });
   }
 
-  getCurrentFormat() {
-    let d = this.getData();
-    let f = this.props.format;
-    return f.split('').map(function(k){return d[k] ? k : ''; }).join('');
+  function getCurrentFormat() {
+    let d = getData();
+    let f = format;
+    return f.split('').map(function (k) {
+      return d[k] ? k : '';
+    }).join('');
   }
 
-  isCurrentFormatValid(){
-    let current = this.getCurrentFormat();
-    if (current == '' && !this.isRequired) return true;   // allow empty value if field is not required
-    let allowed = this.getAllowedFormats();
+  function isCurrentFormatValid() {
+    let current = getCurrentFormat();
+    if (current == '' && !isRequired) return true;   // allow empty value if field is not required
+    let allowed = getAllowedFormats();
     return allowed.indexOf(current) > -1;
   }
 
-  getFieldOptions() {
-    return this.getInput().data("field-options") || {format: this.props.format};
+  function getFieldOptions() {
+    return getInput().data("field-options") || {format: format};
   }
 
-  render(){
-    let dateValid = this.isCurrentFormatValid()
-    let errorStl = dateValid ? {} : { border: "2px solid #f00" };
-    let errorMsg = dateValid ? "" : "Invalid value"
-    let fmt = this.getFieldOptions().format;
-    return (
-      <div id={this.props.inputId + '_' + this.props.inputSuffixId}>
+  return (
+    <div id={inputId + '_' + inputSuffixId} ref={topRef}>
+      {state && localizedDateTimeData.month_names && (
         <div className="dateTimeInput rails-bootstrap-forms-datetime-select">
-            <div className="row">
-              {fmt.includes('D') ? (
-                <input id={this.props.inputId + '_' + this.props.inputSuffixId + '_day'} name={this.props.inputName + '[D]'} style={errorStl} type="number" min="0" max="31" className="input-2 form-control" value={this.state.D} onChange={this.handleChangeDay} readOnly={this.state.disabled || this.props.isRange} />
-              ) : null
-              }
-              {fmt.includes('M') ? (
-                    <select id={this.props.inputId + '_' + this.props.inputSuffixId + '_month'} style={errorStl} name={this.props.inputName + '[M]'} className={this._getSelectClassNames()} value={this.state.M} onChange={this.handleChangeMonth} ref={this.props.inputName + '[M]'} readOnly={this.state.disabled || this.props.isRange}>
-                    { this.props.localizedDateTimeData.month_names.map((month, index) => {
-                      if (month !== null) {
-                        month = month.charAt(0).toUpperCase() + month.slice(1);
-                      }
-                      if (index === 0) {
-                        index = ''
-                      }
-
-                      return <option key={index} value={index}>{ month }</option>
+          <div className="row">
+            {fmt.includes('D') ? (
+              <input id={inputId + '_' + inputSuffixId + '_day'} name={inputName + '[D]'} style={errorStl} type="number"
+                     min="0" max="31" className="input-2 form-control" value={state.D}
+                     onChange={_handleChangeDay} readOnly={disabled || isRangeProps}/>
+            ) : null
+            }
+            {fmt.includes('M') ? (
+              <select id={inputId + '_' + inputSuffixId + '_month'} style={errorStl} name={inputName + '[M]'}
+                      className={_getSelectClassNames()} value={state.M} onChange={_handleChangeMonth}
+                      ref={selectRef} readOnly={disabled || isRangeProps}>
+                {localizedDateTimeData.month_names.map((month, index) => {
+                    if (month !== null) {
+                      month = month.charAt(0).toUpperCase() + month.slice(1);
                     }
-                    )}
-                    </select>
-              ) : null
-              }
-              {fmt.includes('Y') ? (
-                <input id={this.props.inputId + '_' + this.props.inputSuffixId + '_year'} name={this.props.inputName + '[Y]'} style={errorStl} type="number" className={'input-4 form-control' + this.styleMarginRight} value={this.state.Y} onChange={this.handleChangeYear} readOnly={this.state.disabled || this.props.isRange} />
-              ) : null
-              }
-              {fmt.includes('h') ? (
-                <input id={this.props.inputId + '_' + this.props.inputSuffixId + '_hour'} name={this.props.inputName + '[h]'} style={errorStl} min="0" max="23" type="number" className="input-2 form-control" value={this.state.h} onChange={this.handleChangeHours} readOnly={this.state.disabled || this.props.isRange} />
-              ) : null
-              }
-              {fmt.includes('m') ? (
-                <input id={this.props.inputId + '_' + this.props.inputSuffixId + '_minute'} name={this.props.inputName + '[m]'} style={errorStl} min="0" max="59" type="number" className="input-2 form-control" value={this.state.m} onChange={this.handleChangeMinutes} readOnly={this.state.disabled || this.props.isRange} />
-              ) : null
-              }
-              {fmt.includes('s') ? (
-                <input id={this.props.inputId + '_' + this.props.inputSuffixId + '_second'} name={this.props.inputName + '[s]'} style={errorStl} min="0" max="59" type="number" className="input-2 form-control" value={this.state.s} onChange={this.handleChangeSeconds} readOnly={this.state.disabled || this.props.isRange} />
-              ) : null
-              }
-              <div className="hidden-datepicker">
-                <input type="text" ref="hiddenInput" value={this.state.selectedDate} onChange={this.selectDate}/>
-              </div>
-              <div className="calendar-button-container">
-                <a id={this.props.inputId + '_calendar_icon' + '_' + this.props.inputSuffixId} onClick={this.openCloseDatepicker} type="button"><i className="fa fa-calendar"></i></a>
-                <a onClick={this.clearDatepicker} type="button"><i className="fa fa-times"></i></a>
-              </div>
-            </div>
-        </div>
-        <span className="error helptext">{errorMsg}</span>
-      </div>
-);
-}
+                    if (index === 0) {
+                      index = ''
+                    }
 
-};
+                    return <option key={index} value={index}>{month}</option>
+                  }
+                )}
+              </select>
+            ) : null
+            }
+            {fmt.includes('Y') ? (
+              <input id={inputId + '_' + inputSuffixId + '_year'} name={inputName + '[Y]'} style={errorStl}
+                     type="number"
+                     className={'input-4 form-control' + styleMarginRight} value={state.Y}
+                     onChange={_handleChangeYear} readOnly={disabled || isRangeProps}/>
+            ) : null
+            }
+            {fmt.includes('h') ? (
+              <input id={inputId + '_' + inputSuffixId + '_hour'} name={inputName + '[h]'} style={errorStl} min="0"
+                     max="23" type="number" className="input-2 form-control" value={state.h}
+                     onChange={_handleChangeHours} readOnly={disabled || isRangeProps}/>
+            ) : null
+            }
+            {fmt.includes('m') ? (
+              <input id={inputId + '_' + inputSuffixId + '_minute'} name={inputName + '[m]'} style={errorStl} min="0"
+                     max="59" type="number" className="input-2 form-control" value={state.m}
+                     onChange={_handleChangeMinutes} readOnly={disabled || isRangeProps}/>
+            ) : null
+            }
+            {fmt.includes('s') ? (
+              <input id={inputId + '_' + inputSuffixId + '_second'} name={inputName + '[s]'} style={errorStl} min="0"
+                     max="59" type="number" className="input-2 form-control" value={state.s}
+                     onChange={_handleChangeSeconds} readOnly={disabled || isRangeProps}/>
+            ) : null
+            }
+            <div className="hidden-datepicker">
+              <input type="text" ref={hiddenInputRef} value={selectedDate} onChange={_selectDate}/>
+            </div>
+            <div className="calendar-button-container">
+              <a id={inputId + '_calendar_icon' + '_' + inputSuffixId} onClick={_openCloseDatepicker} type="button">
+                <i className="fa fa-calendar"></i></a>
+              <a onClick={_clearDatepicker} type="button"><i className="fa fa-times"></i></a>
+            </div>
+          </div>
+        </div>
+      )}
+      <span className="error helptext">{errorMsg}</span>
+    </div>
+  );
+})
+
+DateTimeInput.propTypes = {
+  input: PropTypes.string.isRequired,
+}
 
 export default DateTimeInput;

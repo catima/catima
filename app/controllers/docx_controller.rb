@@ -2,6 +2,8 @@ require 'nokogiri'
 
 # rubocop:disable Rails/OutputSafety
 class DocxController < ApplicationController
+  skip_before_action :verify_authenticity_token
+
   def convert_to_html
     # Get the uploaded DOCX file
     uploaded_file = params[:docx]
