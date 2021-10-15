@@ -51,20 +51,24 @@ const ItemTypesReferenceSearch = (props) => {
   }, [selectedFilterProps])
 
   useEffect(() => {
-    _buildDateTimeInputNames(inputNameProps);
-    setSelectedFilter(inputNameProps);
-  }, [inputNameProps])
+    setInputName(inputNameProps)
+    setSelectedFilter(selectedFilterProps);
+  }, [inputNameProps, selectedFilterProps])
+
+  useEffect(() => {
+    _buildDateTimeInputNames(inputName, inputName.split(/^(.*)(\[.*\])$/))
+  }, [selectCondition, inputName])
 
   useEffect(() => {
     if (selectedItem != []) _save();
   }, [selectedItem])
 
-  function _buildDateTimeInputNames(inputName) {
-    if (inputType === 'Field::DateTime') {
-      let endName = inputName.split(inputNameArray[0]);
-      setStartDateInputName(inputNameArray[0] + '[start]' + endName[1]);
-      setEndDateInputName(inputNameArray[0] + '[end]' + endName[1]);
-    }
+  function _buildDateTimeInputNames(inputName, inputNameArr) {
+    console.log(inputName)
+    console.log(inputNameArr)
+      let endName = inputName.split(inputNameArr[0]);
+      setStartDateInputName(inputNameArr[1] + '[start]' + inputNameArr[2]);
+      setEndDateInputName(inputNameArr[1] + '[end]' + inputNameArr[2]);
   }
 
   function _save() {
@@ -111,7 +115,6 @@ const ItemTypesReferenceSearch = (props) => {
 
         _updateSelectCondition(res.data.selectCondition);
         setInputNameArray(inputName.split('[' + res.data.selectCondition[0].key + ']'));
-        _buildDateTimeInputNames(inputName);
         _updateLocalizedDateTimeData(res.data.inputOptions);
         setInputType(res.data.inputType);
         setInputOptions(res.data.inputOptions);
@@ -200,9 +203,10 @@ const ItemTypesReferenceSearch = (props) => {
         itemType={itemType}
         inputStart='input1'
         inputEnd='input2'
-        isRange={true}
+        isRange={false}
         format={_getDateTimeFormatOption()}
         locale={locale}
+        srcId={srcId}
         onChange={_selectItem}
       />
     } else if (inputType === 'Field::Decimal') {

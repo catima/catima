@@ -13,10 +13,10 @@ class AdvancedSearch::ChoiceSetFieldTest < ActionDispatch::IntegrationTest
     end
 
     within("#advanced_search_criteria_search_vehicle_style_uuid_0_id") do
-      find(".css-vj8t7z").click # Click on the filter input
-
-      within(".css-11unzgr") do # Within the filter list
-        find('div', text: "Sedan", match: :first).click
+      find(".css-1wa3eu0-placeholder").click # Click on the filter input
+      sleep(2)
+      within(".select__menu-list") do # Within the filter list
+        find('.select__option', text: "Sedan", match: :first, visible: false).click
       end
     end
 
@@ -75,18 +75,18 @@ class AdvancedSearch::ChoiceSetFieldTest < ActionDispatch::IntegrationTest
     end
 
     within("#advanced_search_criteria_one_author_language_uuid_0_id") do
-      find(".css-vj8t7z").click # Click on the filter input
-
-      within(".css-11unzgr") do # Within the filter list
-        find('div', text: "French", match: :first).click
+      find(".css-1wa3eu0-placeholder").click # Click on the filter input
+      sleep(2)
+      within(".select__menu-list") do # Within the filter list
+        find('.select__option', text: "French", match: :first, visible: false).click
       end
     end
 
     within("#advanced_search_criteria_one_author_language_uuid_0_id_condition") do
-      find(".css-vj8t7z").click # Click on the filter input
-
-      within(".css-11unzgr") do # Within the filter list
-        find('div', text: "Language origin", match: :first).click
+      find(".css-1wa3eu0-placeholder").click # Click on the filter input
+      sleep(2)
+      within(".select__menu-list") do # Within the filter list
+        find('.select__option', text: "Language origin", match: :first, visible: false).click
       end
     end
 

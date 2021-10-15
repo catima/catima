@@ -25,6 +25,7 @@ class AdvancedSearch::DateTimeFieldTest < ActionDispatch::IntegrationTest
     refute(page.has_selector?('h4', text: 'Very Old'))
   end
 
+  TODO NOT WORKING BECAUSE SELECTION OF BEFORE CLEARS THE INPUT
   test "search for authors by before datetime" do
     visit("/one/en")
     click_on("Advanced")
@@ -39,6 +40,8 @@ class AdvancedSearch::DateTimeFieldTest < ActionDispatch::IntegrationTest
       "#advanced_search_criteria_one_author_birth_time_uuid_id-datetime_calendar_icon_start_date",
       27
     )
+
+    binding.pry
 
     select(
       "before",

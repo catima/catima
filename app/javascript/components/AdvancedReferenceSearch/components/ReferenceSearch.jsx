@@ -54,6 +54,11 @@ const ReferenceSearch = (props) => {
     }
   }, [])
 
+  useEffect(() => {
+    if (selectCondition?.[0]?.key && selectCondition?.[0]?.key != selectCondition) {
+      setSelectedCondition(selectCondition[0].key)
+    }
+  }, [selectCondition])
   async function _fetchLoadingMessage() {
     axios.get(
       `/react/${catalog}/${locale}/${itemType}?simple_fields=true&page=1`

@@ -68,16 +68,21 @@ const DateTimeInput = forwardRef((props, ref) => {
   useEffect(() => {
     if (disabledProps !== disabled) {
       setDisabled(disabledProps);
+      console.log(disabledProps)
+      console.log(disabled)
       //When the selected condition changes, we clear the inputs if the user has left une field empty
       if (disabledProps) {
         let formatArray = format.split('');
         let count = 0;
+        console.log(formatArray)
         formatArray.forEach((item) => {
+          console.log(state[item])
           if (state[item] !== '') {
             count++;
           }
         });
-
+        console.log('count < formatArray.length ', count < formatArray.length)
+        console.log('count < formatArray.length ', count < formatArray.length)
         if (count < formatArray.length) {
           //The user has left a field empty => clear all fields
           _clearDatepicker();

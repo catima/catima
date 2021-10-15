@@ -16,10 +16,11 @@ class AdvancedSearch::ReferenceFieldTest < ActionDispatch::IntegrationTest
     end
 
     within("#advanced_search_criteria_one_author_collaborator_uuid_0_exact-editor") do
-      find(".css-vj8t7z").click # Click on the filter input
+      find(".css-1wa3eu0-placeholder").click # Click on the filter input
+      sleep(2)
 
-      within(".css-11unzgr") do # Within the filter list
-        find('div', text: "Very Old", match: :first).click
+      within(".select__menu-list") do # Within the filter list
+        find('.select__option', text: "Very Old", match: :first).click
       end
     end
 
@@ -41,10 +42,11 @@ class AdvancedSearch::ReferenceFieldTest < ActionDispatch::IntegrationTest
 
     within(".reference-search-container", match: :first) do
       within("#advanced_search_criteria_one_author_collaborator_uuid_0_exact-editor") do
-        find(".css-vj8t7z").click # Click on the filter input
+        find(".css-1wa3eu0-placeholder").click # Click on the filter input
+        sleep(2)
 
-        within(".css-11unzgr") do # Within the filter list
-          find('div', text: "Very Old", match: :first).click
+        within(".select__menu-list") do # Within the filter list
+          find('.select__option', text: "Very Old", match: :first).click
         end
       end
 
@@ -55,9 +57,11 @@ class AdvancedSearch::ReferenceFieldTest < ActionDispatch::IntegrationTest
 
     within all(".reference-search-container")[1] do
       within("#advanced_search_criteria_one_author_collaborator_uuid_1_exact-editor") do
-        find(".css-vj8t7z").click # Click on the filter input
-        within(".css-11unzgr") do # Within the filter list
-          find('div', text: "Very Young", match: :first).click
+        find(".css-1wa3eu0-placeholder").click # Click on the filter input
+        sleep(2)
+
+        within(".select__menu-list") do # Within the filter list
+          find('.select__option', text: "Very Young", match: :first).click
         end
       end
     end
@@ -80,10 +84,11 @@ class AdvancedSearch::ReferenceFieldTest < ActionDispatch::IntegrationTest
     select("or", :from => "advanced_search[criteria][one_author_collaborator_uuid][0][field_condition]")
     within(".reference-search-container", match: :first) do
       within("#advanced_search_criteria_one_author_collaborator_uuid_0_exact-editor") do
-        find(".css-vj8t7z").click # Click on the filter input
+        find(".css-1wa3eu0-placeholder").click # Click on the filter input
+        sleep(2)
 
-        within(".css-11unzgr") do # Within the filter list
-          find('div', text: "Very Old", match: :first).click
+        within(".select__menu-list") do # Within the filter list
+          find('.select__option', text: "Very Old", match: :first).click
         end
       end
 
@@ -94,9 +99,11 @@ class AdvancedSearch::ReferenceFieldTest < ActionDispatch::IntegrationTest
 
     within all(".reference-search-container")[1] do
       within("#advanced_search_criteria_one_author_collaborator_uuid_1_exact-editor") do
-        find(".css-vj8t7z").click # Click on the filter input
-        within(".css-11unzgr") do # Within the filter list
-          find('div', text: "Very Young", match: :first).click
+        find(".css-1wa3eu0-placeholder").click # Click on the filter input
+        sleep(2)
+
+        within(".select__menu-list") do # Within the filter list
+          find('.select__option', text: "Very Young", match: :first).click
         end
       end
     end
@@ -148,24 +155,23 @@ class AdvancedSearch::ReferenceFieldTest < ActionDispatch::IntegrationTest
     within("#default_search_type") do
       click_on("Author")
     end
-
     # First multiple input reference
     within("#advanced_search_criteria_one_author_other_collaborators_uuid_0_exact-editor") do
-      find(".css-vj8t7z").click # Click on the filter input
 
-      within(".css-11unzgr") do # Within the filter list
-        find('div', text: "Very Old", match: :first).click
+      find(".css-1wa3eu0-placeholder").click # Click on the filter input
+      sleep(2)
+      within(".select__menu-list") do # Within the filter list
+        find('.select__option', text: "Very Old", match: :first, visible: false).click
       end
     end
 
-    find('.choiceset-search-container', match: :first).click
-
     within all(".reference-search-container")[1] do
       within("#advanced_search_criteria_one_author_other_collaborators_uuid_0_exact-editor") do
-        find(".css-vj8t7z").click # Click on the filter input
+        find(".select__control").click # Click on the filter input
+        sleep(2)
 
-        within(".css-11unzgr") do # Within the filter list
-          find('div', text: "Stephen King", match: :first).click
+        within(".select__menu-list") do # Within the filter list
+          find('.select__option', text: "Stephen King", match: :first).click
         end
       end
 
@@ -175,10 +181,11 @@ class AdvancedSearch::ReferenceFieldTest < ActionDispatch::IntegrationTest
     # Second multiple input reference
     select("exclude", :from => "advanced_search[criteria][one_author_other_collaborators_uuid][1][field_condition]")
     within("#advanced_search_criteria_one_author_other_collaborators_uuid_1_exact-editor") do
-      find(".css-vj8t7z").click # Click on the filter input
+      find(".css-1wa3eu0-placeholder").click # Click on the filter input
+      sleep(2)
 
-      within(".css-11unzgr") do # Within the filter list
-        find('div', text: "Stephen King", match: :first).click
+      within(".select__menu-list") do # Within the filter list
+        find('.select__option', text: "Stephen King", match: :first).click
       end
     end
 
@@ -198,16 +205,18 @@ class AdvancedSearch::ReferenceFieldTest < ActionDispatch::IntegrationTest
     end
 
     within(".single-reference-filter", match: :first) do
-      find(".css-vj8t7z").click # Click on the filter input
+      find(".css-1wa3eu0-placeholder").click # Click on the filter input
+      sleep(2)
 
-      within(".css-15k3avv") do # Within the filter list
-        find('div.css-v73v8k', text: "Email", match: :first).click
+      within(".css-4ljt47-MenuList") do # Within the filter list
+        find('div', text: "Email", match: :first, visible: false).click
       end
     end
 
     fill_in(
       "advanced_search[criteria][one_author_collaborator_uuid][0][all_words]",
-      :with => "so@old.com"
+      :with => "so@old.com",
+      wait: 5
     )
 
     click_on("Search")
@@ -226,12 +235,14 @@ class AdvancedSearch::ReferenceFieldTest < ActionDispatch::IntegrationTest
     end
 
     within all(".single-reference-filter")[1] do
-      find(".css-vj8t7z").click # Click on the filter input
+      find(".css-1wa3eu0-placeholder").click # Click on the filter input
+      sleep(2)
 
-      within(".css-15k3avv") do # Within the filter list
-        find('div.css-v73v8k', text: "Most Active Month", match: :first).click
+      within(".css-4ljt47-MenuList") do # Within the filter list
+        find('div', text: "Most Active Month", match: :first, visible: false).click
       end
     end
+    sleep(2)
 
     select("June", :from => "advanced_search[criteria][one_author_other_collaborators_uuid][0][start][exact][M]")
 
@@ -252,10 +263,11 @@ class AdvancedSearch::ReferenceFieldTest < ActionDispatch::IntegrationTest
     end
 
     within("#advanced_search_criteria_one_author_other_collaborators_uuid_0_exact-editor") do
-      find(".css-vj8t7z").click # Click on the filter input
+      find(".css-1wa3eu0-placeholder").click # Click on the filter input
+      sleep(2)
 
-      within(".css-15k3avv") do # Within the filter list
-        find('div.css-v73v8k', text: "Very Old", match: :first).click
+      within(".select__menu-list") do # Within the filter list
+        find('.select__option', text: "Very Old", match: :first, visible: false).click
       end
     end
 
@@ -265,13 +277,16 @@ class AdvancedSearch::ReferenceFieldTest < ActionDispatch::IntegrationTest
 
     within all(".reference-search-container")[2] do
       find(".single-reference-filter").click # Click on the filter input
-      within(".css-11unzgr") do # Within the filter list
-        find('div', text: "Name", :match => :first).click
+      sleep(2)
+
+      within(".css-26l3qy-menu") do # Within the filter list
+        find('.css-1n7v3ny-option', text: "Name", :match => :first, visible: false).click
       end
 
       fill_in(
         "advanced_search[criteria][one_author_other_collaborators_uuid][1][all_words]",
-        :with => "Young apprentice"
+        :with => "Young apprentice",
+        wait: true
       )
     end
 

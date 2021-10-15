@@ -19,7 +19,7 @@ const DateTimeSearch = (props) => {
     format,
     fieldConditionName,
     fieldConditionData,
-    inputEnd
+    inputEnd,
   } = props
 
   const [selectedCondition, setSelectedCondition] = useState('')
@@ -57,12 +57,14 @@ const DateTimeSearch = (props) => {
   useEffect(() => {
     if (startDateInputNameProps !== startDateInputName) {
       setStartDateInputName(startDateInputNameProps);
+      setStartDateInputNameArray(startDateInputNameProps.split("[exact]"))
     }
   }, [startDateInputNameProps])
 
   useEffect(() => {
     if (endDateInputNameProps !== endDateInputName) {
       setEndDateInputName(endDateInputNameProps);
+      setEndDateInputNameArray(endDateInputNameProps.split("[exact]"))
     }
   }, [endDateInputNameProps])
 
