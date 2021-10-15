@@ -41,8 +41,6 @@ class AdvancedSearch::DateTimeFieldTest < ActionDispatch::IntegrationTest
       27
     )
 
-    binding.pry
-
     select(
       "before",
       :from => "advanced_search[criteria][one_author_birth_time_uuid][condition]"
