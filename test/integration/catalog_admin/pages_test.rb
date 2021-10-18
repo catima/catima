@@ -100,6 +100,7 @@ class CatalogAdmin::PagesTest < ActionDispatch::IntegrationTest
     first('div.translatedTextField input[data-locale=en]').base.send_keys('Hello menu')
 
     fill_in('Rank', :with => '10')
+    binding.pry
     select('Hello', :from => 'Page')
     click_on('Create menu item')
 
