@@ -21,7 +21,6 @@ const DateTimeInput = forwardRef((props, ref) => {
   } = props
 
   const {topRef, hiddenInputRef} = ref
-
   const selectRef = useRef()
 
   const defaultValues = {Y: '', M: '', D: '', h: '', m: '', s: ''};
@@ -37,6 +36,7 @@ const DateTimeInput = forwardRef((props, ref) => {
   const [styleMarginRight, setStyleMarginRight] = useState('')
   const [isRequired, setIsRequired] = useState(false)
   const [state, setState] = useState(false)
+  const [initState, setInitState] = useState(false)
 
   let dateValid = isCurrentFormatValid()
   let errorStl = dateValid ? {} : {border: "2px solid #f00"};
@@ -57,8 +57,6 @@ const DateTimeInput = forwardRef((props, ref) => {
     if (topRef.current) {
       _initDatePicker();
       setLocalizedDateTimeData(localizedDateTimeDataProps);
-      // window.addEventListener("click", _onSelectMonthClick);
-      if (jQuery.isEmptyObject(getData())) return initData(defaultValues, getFieldOptions().format)
       if (document.querySelector(input) !== null) {
         setIsRequired(document.querySelector(input).getAttribute('data-field-required') == 'true')
       }
@@ -66,23 +64,17 @@ const DateTimeInput = forwardRef((props, ref) => {
   }, [topRef])
 
   useEffect(() => {
-    if (disabledProps !== disabled) {
+    if (disabledProps !== disabled && JSON.stringify(initState) !== JSON.stringify(state)) {
       setDisabled(disabledProps);
-      console.log(disabledProps)
-      console.log(disabled)
       //When the selected condition changes, we clear the inputs if the user has left une field empty
       if (disabledProps) {
         let formatArray = format.split('');
         let count = 0;
-        console.log(formatArray)
         formatArray.forEach((item) => {
-          console.log(state[item])
           if (state[item] !== '') {
             count++;
           }
         });
-        console.log('count < formatArray.length ', count < formatArray.length)
-        console.log('count < formatArray.length ', count < formatArray.length)
         if (count < formatArray.length) {
           //The user has left a field empty => clear all fields
           _clearDatepicker();

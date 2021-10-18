@@ -49,8 +49,8 @@
 
 
 <script>
-  const react_comp = '<%= react_component('TranslatedTextField/components/TranslatedTextField', { input: 'menu_item_url', locales: catalog.valid_locales}).to_s %>'
-  const react_comp_disabled = '<%= react_component('TranslatedTextField/components/TranslatedTextField', { input: 'menu_item_url', locales: catalog.valid_locales, disabled: true }).to_s %>'
+  const react_comp = '<%= react_component('TranslatedTextField/components/TranslatedTextField', { input: 'menu_item_url', locales: catalog.valid_locales, updateMenuItem: true}).to_s %>'
+  const react_comp_disabled = '<%= react_component('TranslatedTextField/components/TranslatedTextField', { input: 'menu_item_url', locales: catalog.valid_locales, updateMenuItem: true, disabled: true }).to_s %>'
 
   function url_field_is_empty() {
     var v = $('#menu_item_url').val();
@@ -91,5 +91,6 @@
 
   $('#menu_item_item_type_id').on('change', updateFieldDisplay);
   $('#menu_item_page_id').on('change', updateFieldDisplay);
+  updateFieldDisplay();
   updateFieldDisplay();
 </script>

@@ -4,6 +4,7 @@ import React, {useState, useEffect} from 'react';
 
 const TranslatedTextField = (props) => {
   const {
+    updateMenuItem,
     input: inputProps,
     locales: localesProps,
     disabled
@@ -40,7 +41,9 @@ const TranslatedTextField = (props) => {
 
   function _save(v) {
     document.getElementById(input).value = JSON.stringify(v);
-    updateMenuItemsDisabled(v)
+    if(updateMenuItem){
+      updateMenuItemsDisabled(v)
+    }
   }
 
   function updateMenuItemsDisabled(v) {

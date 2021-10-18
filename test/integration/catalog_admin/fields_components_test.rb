@@ -13,6 +13,16 @@ class CatalogAdmin::FieldsComponentsTest < ActionDispatch::IntegrationTest
 
     assert(page.has_selector?('div.ql-editor'))
     find('div.ql-editor').base.send_keys('Hello world')
+    within('#item_one_book_author_uuid_json-editor') do
+      find(".css-g1d714-ValueContainer").click # Click on the filter input
+      sleep(2)
+
+      within(".css-4ljt47-MenuList") do # Within the filter list
+        find('div', text: 'Very Old', match: :first, visible: false).click
+      end
+    end
+
+
     click_on('Save Book')
 
     b = book.reload
