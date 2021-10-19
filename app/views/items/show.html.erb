@@ -5,6 +5,7 @@
   <%= render_item_list_nav(item_list, @item) if item_list %>
 </div>
 
+<% if @item.item_type.default_item_view.nil? == true %>
 <table class="table item-table">
   <tbody>
     <% item_applicable_fields(@item).each do |field| %>
@@ -17,6 +18,9 @@
     <% end %>
   </tbody>
 </table>
+<% else %>
+  <%= item_list_view(@item) %>
+<% end %>
 
 <% fields_and_item_references(@item) do |field, browse| %>
   <h3>
