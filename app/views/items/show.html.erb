@@ -6,20 +6,20 @@
 </div>
 
 <% if @item.item_type.default_item_view.nil? == true %>
-<table class="table item-table">
-  <tbody>
-    <% item_applicable_fields(@item).each do |field| %>
-      <% if field_check_display(@item, field) %>
-        <tr>
-          <th style="width: 25%;"><%= field.label %></th>
-            <td class="<%= field.type %>"><%= field_value(@item, field) %></td>
-        </tr>
+  <table class="table item-table">
+    <tbody>
+      <% item_applicable_fields(@item).each do |field| %>
+        <% if field_check_display(@item, field) %>
+          <tr>
+            <th style="width: 25%;"><%= field.label %></th>
+              <td class="<%= field.type %>"><%= field_value(@item, field) %></td>
+          </tr>
+        <% end %>
       <% end %>
-    <% end %>
-  </tbody>
-</table>
+    </tbody>
+  </table>
 <% else %>
-  <%= item_list_view(@item) %>
+  <%= ItemViewPresenter.new(self, @item.item_type.default_item_view, @item, I18n.locale).render %>
 <% end %>
 
 <% fields_and_item_references(@item) do |field, browse| %>
