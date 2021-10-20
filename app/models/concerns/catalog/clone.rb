@@ -8,6 +8,7 @@ class Catalog < ApplicationRecord
 
         cloned.name = "Copy of #{name}"
         cloned.slug = slug
+        cloned.custom_root_page = nil
         cloned.save!
 
         cloned.clone_pages(pages)
