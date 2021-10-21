@@ -64,8 +64,6 @@ const ItemTypesReferenceSearch = (props) => {
   }, [selectedItem])
 
   function _buildDateTimeInputNames(inputName, inputNameArr) {
-    console.log(inputName)
-    console.log(inputNameArr)
       let endName = inputName.split(inputNameArr[0]);
       setStartDateInputName(inputNameArr[1] + '[start]' + inputNameArr[2]);
       setEndDateInputName(inputNameArr[1] + '[end]' + inputNameArr[2]);
