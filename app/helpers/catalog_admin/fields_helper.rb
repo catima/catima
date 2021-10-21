@@ -2,12 +2,16 @@ module CatalogAdmin::FieldsHelper
   include CatalogAdmin::MapHelper
 
   def field_style_select(form)
+    options = form.object.style_choices.keys
     form.collection_select(
       :style,
-      form.object.style_choices.keys,
+      options,
       :itself,
       ->(key) { I18n.t(".catalog_admin.fields.common_form_fields.#{translation_choice_name(key)}_choice") },
-      :hide_label => true
+      {
+        :hide_label => true,
+        :selected => options.first
+      }
     )
   end
 
@@ -68,7 +72,6 @@ module CatalogAdmin::FieldsHelper
 
   def field_json_input(form, field, props={})
     label = field_presenter(form.object, field).label
-
     form.form_group(field.uuid, :label => { :text => label }) do
       json_react_input_component(form, field, props)
     end
