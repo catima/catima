@@ -59,12 +59,12 @@ const ReferenceSearch = (props) => {
       setSelectedCondition(selectCondition[0].key)
     }
   }, [selectCondition])
+
   async function _fetchLoadingMessage() {
-    axios.get(
+    let {data} = await axios.get(
       `/react/${catalog}/${locale}/${itemType}?simple_fields=true&page=1`
-    ).then(res => {
-      setLoadingMessage(res.data.loading_message);
-    })
+    )
+    setLoadingMessage(data.loading_message);
   }
 
   function _buildInputNameCondition(condition) {
