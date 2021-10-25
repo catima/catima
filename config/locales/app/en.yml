@@ -390,6 +390,7 @@ en:
   url: URL
   draft: Draft
   review: Review
+  review_badge: Review
   approved: Approved
   rejected: Rejected
   users: Users
@@ -441,7 +442,6 @@ en:
       view_item: View item
 
   catalog_admin:
-
     approvals:
       create:
         approved: 'approved'
