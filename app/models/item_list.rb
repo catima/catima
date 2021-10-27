@@ -42,12 +42,13 @@ class ItemList
 
   def items
     @items ||= begin
-                 return unpaginated_list_items if item_type.nil?
+                 i_t = item_type
+                 return unpaginated_list_items if i_t.nil?
 
-                 item_type ||= (catalog.presence || @selected_catalog).item_types.first
+                 i_t ||= (catalog.presence || @selected_catalog).item_types.first
                  return unpaginated_list_items if item_type.primary_human_readable_field.nil?
 
-                 unpaginated_list_items.order(Arel.sql("items.data->>'#{item_type.primary_human_readable_field.uuid}'"))
+                 unpaginated_list_items.order(Arel.sql("items.data->>'#{i_t.primary_human_readable_field.uuid}'"))
                end.load
   end
 
