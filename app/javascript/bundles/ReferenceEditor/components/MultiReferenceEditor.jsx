@@ -67,7 +67,7 @@ class MultiReferenceEditor extends React.Component {
     this.setState({ selectedItemsToRender: [] });
     items.forEach((item) => {
       let filteredItems = this.state.items.filter(it => it.id === item)
-      if (filteredItems.length > 0) {
+      if (filteredItems.length > 0){
         newSelectedItems.push(filteredItems[0]);
       }
     });

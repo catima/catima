@@ -134,7 +134,7 @@ class SingleReferenceEditor extends React.Component {
   }
 
   async _loadOptions(search, loadedOptions, { page }) {
-    // Avoir useless API calls if there are less than 25 loaded items and the user searches by filtering options with JS
+    // Avoid useless API calls if there are less than 25 loaded items and the user searches by filtering options with JS
     if (this.props.items.length < 25) {
       var regexExp = new RegExp(search, 'i')
       var optionsList = this._getItemOptions();
@@ -163,7 +163,7 @@ class SingleReferenceEditor extends React.Component {
       var hasMore;
       var newOptions;
 
-      const response = await fetch(`${this.props.itemsUrl}?search=${search}&page=${page}`, config);
+      const response = await fetch(`${this.props.itemsUrl}?search=${search}&page=${page}`);
       const responseJSON = await response.json();
 
       newOptions = responseJSON.items.map(item => this._getJSONItem(item));

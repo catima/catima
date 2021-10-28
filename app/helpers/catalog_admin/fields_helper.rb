@@ -2,15 +2,13 @@ module CatalogAdmin::FieldsHelper
   include CatalogAdmin::MapHelper
 
   def field_style_select(form)
-    options = form.object.style_choices.keys
     form.collection_select(
       :style,
-      options,
+      form.object.style_choices.keys,
       :itself,
       ->(key) { I18n.t(".catalog_admin.fields.common_form_fields.#{translation_choice_name(key)}_choice") },
       {
-        :hide_label => true,
-        :selected => options.first
+        :hide_label => true
       }
     )
   end
