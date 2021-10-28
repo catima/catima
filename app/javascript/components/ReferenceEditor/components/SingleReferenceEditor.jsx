@@ -155,7 +155,7 @@ const SingleReferenceEditor = (props) => {
     if (items.length === 25) {
       let hasMore;
       let newOptions;
-      const response = await fetch(`${itemsUrl}?search=${search}&page=${page}`, config);
+      const response = await fetch(`${itemsUrl}?search=${search}&page=${page}`);
       const responseJSON = await response.json();
       newOptions = responseJSON.items.map(item => _getJSONItem(item));
       hasMore = responseJSON.hasMore;
