@@ -124,12 +124,12 @@ class Field::DateTime < ::Field
   end
 
   def order_items_by(direction: 'ASC')
-    "NULLIF(data->'#{uuid}'->>'Y', '')::int #{direction},
-    NULLIF(data->'#{uuid}'->>'M', '')::int #{direction},
-    NULLIF(data->'#{uuid}'->>'D', '')::int #{direction},
-    NULLIF(data->'#{uuid}'->>'h', '')::int #{direction},
-    NULLIF(data->'#{uuid}'->>'m', '')::int #{direction},
-    NULLIF(data->'#{uuid}'->>'s', '')::int #{direction}"
+    "NULLIF(items.data->'#{uuid}'->>'Y', '')::int #{direction},
+    NULLIF(items.data->'#{uuid}'->>'M', '')::int #{direction},
+    NULLIF(items.data->'#{uuid}'->>'D', '')::int #{direction},
+    NULLIF(items.data->'#{uuid}'->>'h', '')::int #{direction},
+    NULLIF(items.data->'#{uuid}'->>'m', '')::int #{direction},
+    NULLIF(items.data->'#{uuid}'->>'s', '')::int #{direction}"
   end
 
   def search_conditions_as_hash(locale)
