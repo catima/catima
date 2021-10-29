@@ -386,6 +386,7 @@ fr:
   url: URL
   draft: Brouillon
   review: Attente de validation
+  review_badge: Validation
   approved: Validé
   rejected: Rejeté
   users: Utilisateurs
@@ -437,7 +438,6 @@ fr:
       view_item: Consulter la fiche
 
   catalog_admin:
-
     approvals:
       create:
         approved: 'approuvé'

@@ -8,6 +8,6 @@ module Admin::CatalogsHelper
   def catalog_review_badge(catalog)
     return unless catalog.requires_review
 
-    tag.span(t("review").downcase, :class => "badge badge-info")
+    tag.span(t("review_badge").downcase, :class => "badge badge-info")
   end
 end

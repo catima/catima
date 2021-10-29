@@ -18,7 +18,7 @@ class ChoiceSet < ApplicationRecord
   include Clone
 
   belongs_to :catalog
-  has_many :choices, ->(set) { where(:catalog_id => set.catalog_id).order(:position) }, :dependent => :destroy
+  has_many :choices, ->(set) { where(:catalog_id => set.catalog_id).order(:position) }, :dependent => :delete_all
   has_many :fields, :dependent => :destroy
 
   accepts_nested_attributes_for :choices,

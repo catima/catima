@@ -7,7 +7,9 @@ module CatalogAdmin::FieldsHelper
       form.object.style_choices.keys,
       :itself,
       ->(key) { I18n.t(".catalog_admin.fields.common_form_fields.#{translation_choice_name(key)}_choice") },
-      :hide_label => true
+      {
+        :hide_label => true
+      }
     )
   end
 
@@ -68,7 +70,6 @@ module CatalogAdmin::FieldsHelper
 
   def field_json_input(form, field, props={})
     label = field_presenter(form.object, field).label
-
     form.form_group(field.uuid, :label => { :text => label }) do
       json_react_input_component(form, field, props)
     end
