@@ -77,6 +77,7 @@ fr:
   text_field: Champ de texte
   url_field: Champ URL
   xref_field: Champ Xref
+  embed_field: Champ embed
   slug_help_text: "Minuscules, chiffres et traits d'union seulement. Pas de caractères accentués."
   add_another: "Créer et ajouter un autre"
   maintenance:
@@ -650,6 +651,13 @@ fr:
       decimal_option_inputs:
         min_value: "Valeur minimale (optionnel)"
         max_value: "Valeur maximale (optionnel)"
+      embed_option_inputs:
+        width: "Largeur de l'iframe"
+        height: "Hauteur de l'iframe"
+        domains: Domaines supplémentaires
+        domains_help: Vous pouvez ajouter des domaines supplémentaires à votre liste
+        domains_component_no_options: Plus de domaines à ajouter
+        domains_component_placeholder: Ajouter des domaines
       file_option_inputs:
         types: 'Types'
         types_help: "Une liste d'extension de fichiers permis (avec séparateur virgule): p.ex. «doc, pdf»"

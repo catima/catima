@@ -1,21 +1,33 @@
 import {Controller} from "stimulus"
 
 export default class extends Controller {
-  static targets = ["revealable"]
+  static targets = ["revealable", "source"]
 
   connect() {
-    this.show = true
+    if ( this.data.get("value") && this.hasSourceTarget){
+      this.show = !(this.sourceTarget.value == this.data.get("value"))
+    } else {
+      this.show = true
+    }
     this.reveal();
     this.revealableTargets.forEach(function (el, _) {
       el.classList.add("toggle-display");
     })
   }
 
-  reveal() {
-    if (!this.show) {
-      this.showElement(this.revealableTarget);
+  reveal(e) {
+    if (e && this.data.get("value")) {
+      if (e.target.value == this.data.get("value")) {
+        this.showElement(this.revealableTarget);
+      } else {
+        this.hideElement(this.revealableTarget);
+      }
     } else {
-      this.hideElement(this.revealableTarget);
+      if (!this.show) {
+        this.showElement(this.revealableTarget);
+      } else {
+        this.hideElement(this.revealableTarget);
+      }
     }
   }
 

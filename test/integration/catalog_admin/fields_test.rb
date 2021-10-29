@@ -144,6 +144,38 @@ class CatalogAdmin::FieldsTest < ActionDispatch::IntegrationTest
     end
   end
 
+  test "add a embed url field" do
+    log_in_as("two-admin@example.com", "password")
+    visit("/two/en/admin/authors/fields")
+    click_on("Embed field")
+    fill_in("field[name_en]", :with => "Test")
+    fill_in("field[name_plural_en]", :with => "Tests")
+    fill_in("Slug (singular)", :with => "test")
+    select("url", :from => "Format")
+
+    fill_in("Iframe width", :with => 360)
+    fill_in("Iframe height", :with => 360)
+
+    assert_difference("item_types(:two_author).fields.count") do
+      click_on("Create field")
+    end
+  end
+
+  test "add a embed code field" do
+    log_in_as("two-admin@example.com", "password")
+    visit("/two/en/admin/authors/fields")
+    click_on("Embed field")
+    fill_in("field[name_en]", :with => "Test")
+    fill_in("field[name_plural_en]", :with => "Tests")
+    fill_in("Slug (singular)", :with => "test")
+    select("code", :from => "Format")
+    save_and_open_page
+
+    assert_difference("item_types(:two_author).fields.count") do
+      click_on("Create field")
+    end
+  end
+
   test "edit a field" do
     log_in_as("one-admin@example.com", "password")
     visit("/one/en/admin/authors/fields")

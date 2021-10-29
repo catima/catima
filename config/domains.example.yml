@@ -1,0 +1,10 @@
+-
+  label: 'Youtube'
+  value: 'youtube.com'
+-
+  label: 'Vimeo'
+  value: 'vimeo.com'
+
+-
+  label: '*.Vimeo'
+  value: '*.vimeo.com'

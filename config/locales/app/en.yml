@@ -76,6 +76,7 @@ en:
   text_field: Text field
   url_field: URL field
   xref_field: Xref field
+  embed_field: Embed field
   slug_help_text: "Lower case letters, numbers, and hyphens only. No accented characters."
   add_another: "Create and add another"
   maintenance:
@@ -654,6 +655,13 @@ en:
       decimal_option_inputs:
         min_value: "Minimum value (optional)"
         max_value: "Maximum value (optional)"
+      embed_option_inputs:
+        width: "Iframe width"
+        height: "Iframe height"
+        domains: Additional domains
+        domains_help: You can add additional domains to your list
+        domains_component_no_options: No more domains to add
+        domains_component_placeholder: Add some domains
       file_option_inputs:
         types: 'Types'
         types_help: "A comma-separated list of allowed file extensions: e.g. “doc, pdf”"
