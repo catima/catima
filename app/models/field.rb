@@ -167,6 +167,8 @@ class Field < ApplicationRecord
   #
   # Default depends on the presence of the human_readable method result, and subclasses can
   # override.
+  #
+  # Mainly used in advanced search configuration and ui.
   def filterable?
     human_readable?
   end
