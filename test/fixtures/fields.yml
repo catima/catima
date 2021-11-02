@@ -92,6 +92,7 @@ one_author_name:
   slug: name
   field_set: one_author (ItemType)
   primary: true
+  required: true
   uuid: one_author_name_uuid
   row_order: 1
 
@@ -136,6 +137,7 @@ one_author_rank:
   name_plural_translations: { "name_plural_en": "Ranks" }
   slug: rank
   field_set: one_author (ItemType)
+  required: true
   uuid: one_author_rank_uuid
 
 one_author_collaborator:
