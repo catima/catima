@@ -324,9 +324,9 @@ const GeoEditor = (props) => {
     selectedMarker.remove();
     const idx = marks.indexOf(selectedMarker);
     if (idx > -1) {
-      const splicedMarks = marks.splice(idx, 1)
-      setMarkers(splicedMarks)
-      _writeFeatures(splicedMarks);
+      marks.splice(idx, 1)
+      setMarkers(marks)
+      _writeFeatures(marks);
     }
     _unselectAllMarkers();
   }
