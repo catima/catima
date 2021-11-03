@@ -54,7 +54,7 @@ const GeoViewer = (props) => {
   });
 
   const [mapInitialized, setMapInitialized] = useState(false)
-  const [computedMapHeight, setComputedMapHeight] = useState(mapHeight !== 'undefined' ? mapHeight : 300)
+  const [computedMapHeight, setComputedMapHeight] = useState(mapHeight ? mapHeight : 300)
   const [computedMapZoom, setComputedMapZoom] = useState( maxBBZoom ? maxBBZoom : 2)
   const [computedMapMinZoom, setComputedMapMinZoom] = useState( 1)
   const [computedMapMaxZoom, setComputedMapMaxZoom] = useState( 18)
@@ -65,6 +65,10 @@ const GeoViewer = (props) => {
   useEffect(() => {
     mapBecomesVisible();
   }, [mapElement])
+
+  useEffect(() => {
+    setComputedMapHeight(mapHeight ? mapHeight : 300);
+  }, [mapHeight])
 
   function waitForMapDisplay(el){
     const observer = new MutationObserver(function(mutations) {
