@@ -82,7 +82,7 @@ const ReferenceSearch = (props) => {
 
   function _updateSelectCondition(newVal) {
     if (selectedCondition === '' && newVal.length !== selectCondition.length) {
-      setSearchPlaceholder(newVal[0].key);
+      setSelectedCondition(newVal[0].key);
     }
     setSelectCondition(newVal);
   }
