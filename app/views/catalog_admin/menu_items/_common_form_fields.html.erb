@@ -4,7 +4,7 @@
 <%= f.text_field(:slug, :help => slug_help_text, :autofocus => true) %>
 
 <%= f.text_field(:title, :class => 'hide', :value => @menu_item.title_str) %>
-<%= react_component('TranslatedTextField', props: { input: 'menu_item_title', locales: catalog.valid_locales }, prerender: false) %>
+<%= react_component('TranslatedTextField/components/TranslatedTextField', {input: 'menu_item_title', locales: catalog.valid_locales}) %>
 
 
 <%= f.number_field(:rank, help: t('.rank_help')) %>
@@ -35,64 +35,62 @@
   options_from_collection_for_select(
     @catalog.item_types, "id", "name", @menu_item.item_type_id
   ),
-  { include_blank: true, :label => t('item_type') }
+  {include_blank: true, :label => t('item_type')}
 ) %>
 
 <%= f.select(
   :page_id,
   options_for_select(
-    @catalog.pages.order('slug').collect { |p| [ "#{p.slug} | #{p.title}", p.id ] },
+    @catalog.pages.order('slug').collect { |p| ["#{p.slug} | #{p.title}", p.id] },
     @menu_item.page_id
   ),
-  { include_blank: true, :label => t('.page') }
+  {include_blank: true, :label => t('.page')}
 ) %>
 
 
 <script>
-function url_field_is_empty(){
-  var v = $('#menu_item_url').val();
-  if (v == '' || v == null) return true;
-  var obj = JSON.parse(v);
-  for (var k in obj){
-    if (obj[k] != '' && obj[k] != null) return false;
-  }
-  return true;
-}
+  const react_comp = '<%= react_component('TranslatedTextField/components/TranslatedTextField', { input: 'menu_item_url', locales: catalog.valid_locales, updateMenuItem: true}).to_s %>'
+  const react_comp_disabled = '<%= react_component('TranslatedTextField/components/TranslatedTextField', { input: 'menu_item_url', locales: catalog.valid_locales, updateMenuItem: true, disabled: true }).to_s %>'
 
-function updateFieldDisplay(){
-  $('#menu_item_item_type_id').attr('disabled', null);
-  $('#menu_item_page_id').attr('disabled', null);
-  urlFieldComponent.setState({'disabled': ''});
-
-  if ($('#menu_item_item_type_id').val()){
-    $('#menu_item_page_id').attr('disabled', 'disabled');
-    urlFieldComponent.setState({'disabled': 'disabled'});
+  function url_field_is_empty() {
+    var v = $('#menu_item_url').val();
+    if (v == '' || v == null) return true;
+    var obj = JSON.parse(v);
+    for (var k in obj) {
+      if (obj[k] != '' && obj[k] != null) return false;
+    }
+    return true;
   }
 
-  if ($('#menu_item_page_id').val()){
-    $('#menu_item_item_type_id').attr('disabled', 'disabled');
-    urlFieldComponent.setState({'disabled': 'disabled'});
-  }
+  function updateFieldDisplay() {
+    $('#menu_item_item_type_id').attr('disabled', null);
+    $('#menu_item_page_id').attr('disabled', null);
+    $('#url_component').html(react_comp)
 
-  if (url_field_is_empty() == false){
-    $('#menu_item_item_type_id').attr('disabled', 'disabled');
-    $('#menu_item_page_id').attr('disabled', 'disabled');
+    if ($('#menu_item_item_type_id').val()) {
+      $('#menu_item_page_id').attr('disabled', 'disabled');
+      $('#url_component').html(react_comp_disabled)
+    }
+
+    if ($('#menu_item_page_id').val()) {
+      $('#menu_item_item_type_id').attr('disabled', 'disabled');
+      $('#url_component').html(react_comp_disabled)
+    }
+    if (url_field_is_empty() == false) {
+      $('#menu_item_item_type_id').attr('disabled', 'disabled');
+      $('#menu_item_page_id').attr('disabled', 'disabled');
+    }
+    ReactRailsUJS.mountComponents("#url_component")
   }
-}
 </script>
 
 <%= f.text_field(:url, :class => 'd-none', :value => @menu_item.url_str) %>
 <div id="url_component"></div>
-<script>
-  var urlFieldComponent = ReactOnRails.render(
-    'TranslatedTextField',
-    { input: 'menu_item_url', locales: <%= JSON.dump(catalog.valid_locales).html_safe %>, onChange: updateFieldDisplay },
-    'url_component'
-  );
-</script>
 
 <script>
-$('#menu_item_item_type_id').on('change', updateFieldDisplay);
-$('#menu_item_page_id').on('change', updateFieldDisplay);
-updateFieldDisplay();
+
+  $('#menu_item_item_type_id').on('change', updateFieldDisplay);
+  $('#menu_item_page_id').on('change', updateFieldDisplay);
+  updateFieldDisplay();
+  updateFieldDisplay();
 </script>

@@ -108,6 +108,10 @@ GEM
     autoprefixer-rails (10.1.0.0)
       execjs
     awesome_print (1.8.0)
+    babel-source (5.8.35)
+    babel-transpiler (0.7.0)
+      babel-source (>= 4.0, < 6)
+      execjs (~> 2.0)
     bcrypt (3.1.16)
     bcrypt_pbkdf (1.0.1)
     better_errors (2.9.1)
@@ -371,13 +375,12 @@ GEM
     rb-fsevent (0.10.4)
     rb-inotify (0.10.1)
       ffi (~> 1.0)
-    react_on_rails (12.2.0)
-      addressable
+    react-rails (2.6.1)
+      babel-transpiler (>= 0.7.0)
       connection_pool
-      execjs (~> 2.5)
-      rails (>= 3.2)
-      rainbow (~> 3.0)
-      webpacker (>= 4.0)
+      execjs
+      railties (>= 3.2)
+      tilt
     recaptcha (5.6.0)
       json
     redcarpet (3.5.1)
@@ -591,7 +594,7 @@ DEPENDENCIES
   rainbow (~> 3.0)
   ranked-model (~> 0.4)
   rb-fsevent (~> 0.10)
-  react_on_rails (~> 12.2)
+  react-rails
   recaptcha (~> 5.6)
   redcarpet (~> 3.5)
   redis (~> 4.2.5)

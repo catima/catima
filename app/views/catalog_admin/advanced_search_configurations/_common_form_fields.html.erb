@@ -4,11 +4,11 @@
 <%= locale_form_group(f, :title, :text_field, :autofocus => true) %>
 <%= f.text_field(:description, :class => 'hide', :value => @advanced_search_conf.description_str) %>
 <%= react_component(
-  'TranslatedTextField',
-  props: {
+  'TranslatedTextField/components/TranslatedTextField',
+  {
     input: 'advanced_search_configuration_description',
-    locales: @advanced_search_conf.catalog.valid_locales },
-    prerender: false) %>
+    locales: @advanced_search_conf.catalog.valid_locales
+  }) %>
 
 <% if @advanced_search_conf.item_type.present? && @advanced_search_conf.item_type.include_geographic_field? %>
   <div id="searchType">
@@ -25,15 +25,14 @@
         label: { text: t(".layers") }
     ) do %>
       <%= f.hidden_field(:layers) %>
-      <%= react_component('GeoLayers',
-        props: {
+      <%= react_component('GeoEditor/components/GeoLayers',
+        {
             layers: f.object.geo_layers,
             options: load_geo_layers,
             inputId: "advanced_search_configuration_layers",
             placeholder: t("catalog_admin.fields.geometry_option_inputs.layers_component_placeholder"),
             noOptionsMessage: t("catalog_admin.fields.geometry_option_inputs.layers_component_no_options")
-        },
-        prerender: false) %>
+        }) %>
     <% end %>
   </div>
 <% end %>

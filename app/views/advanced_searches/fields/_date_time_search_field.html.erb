@@ -1,6 +1,6 @@
 <div class="search-container col-lg-12">
-    <%= react_component('DateTimeSearch',
-      props: {
+    <%= react_component('AdvancedDateTimeSearch/components/DateTimeSearch',
+      {
         catalog: field.catalog.slug,
         itemType: field.item_type,
         label: t(".after"),
@@ -19,6 +19,5 @@
         selectCondition: field.search_conditions_as_hash(I18n.locale),
         fieldConditionName: "advanced_search[criteria][#{field.uuid}][field_condition]",
         fieldConditionData: field.search_field_conditions_as_hash
-      },
-      prerender: false) %>
+      }) %>
 </div>

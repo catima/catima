@@ -69,7 +69,7 @@
     margin-bottom: 20px;
 }
 
-.referenceEditor .css-15k3avv, .reference-search-container .css-15k3avv {
+.referenceEditor .css1pahdxg-control, .reference-search-container .css1pahdxg-control, .referenceEditor .select__menu, .reference-search-container .select__menu {
     z-index: 1001;
     text-align: left;
 }
@@ -80,30 +80,30 @@
     border: 0;
 }
 
-.referenceEditor .single-reference .css-1ep9fjw,
-.referenceEditor .single-reference-filter .css-d8oujb,
-.referenceEditor .single-reference .css-d8oujb {
+.referenceEditor .single-reference .css-tlfecz-indicatorContainer,
+.referenceEditor .single-reference-filter .css-1okebmr-indicatorSeparator,
+.referenceEditor .single-reference .css-1okebmr-indicatorSeparator {
     display: none;
 }
 
-.referenceEditor .single-reference-filter .css-vj8t7z {
+.referenceEditor .single-reference-filter .css-yk16xz-control {
     border-top-left-radius: 0;
     border-bottom-left-radius: 0;
     border-left: 1px solid #CCCCCC;
 }
 
-.referenceEditor .single-reference-filter .css-2o5izw {
+.referenceEditor .single-reference-filter .css1pahdxg-control {
     border-top-left-radius: 0;
     border-bottom-left-radius: 0;
 }
 
-.referenceEditor .single-reference .css-vj8t7z {
+.referenceEditor .single-reference .css-yk16xz-control {
     border-right: none;
     border-top-right-radius: 0;
     border-bottom-right-radius: 0;
 }
 
-.referenceEditor .single-reference .css-2o5izw {
+.referenceEditor .single-reference .css1pahdxg-control {
     border-top-right-radius: 0;
     border-bottom-right-radius: 0;
     border-color: #66afe9;
@@ -111,7 +111,7 @@
     box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075), 0 0 8px rgba(102, 175, 233, 0.6);
 }
 
-.referenceEditor .css-vj8t7z:hover {
+.referenceEditor .css-yk16xz-control:hover {
     border-color: #CCCCCC;
 }
 
@@ -120,11 +120,11 @@
     border-radius: 0;
 }
 
-.referenceEditor .multiple-reference-container .css-vj8t7z, .referenceEditor .multiple-reference-container .css-2o5izw {
+.referenceEditor .multiple-reference-container .css-yk16xz-control, .referenceEditor .multiple-reference-container .css1pahdxg-control {
     margin-bottom: 20px;
 }
 
-.referenceEditor .multiple-reference-filter .css-vj8t7z {
+.referenceEditor .multiple-reference-filter .css-yk16xz-control {
     border-left: 1px solid #CCCCCC;
     border-top: none;
     border-right: none;
@@ -133,7 +133,7 @@
     margin: 0;
 }
 
-.referenceEditor .multiple-reference-filter .css-2o5izw {
+.referenceEditor .multiple-reference-filter .css1pahdxg-control {
     border-left: 1px solid #CCCCCC;
     border-top: none;
     border-right: none;
@@ -143,7 +143,7 @@
     margin-bottom: 0;
 }
 
-.referenceEditor .multiple-reference-filter .css-d8oujb {
+.referenceEditor .multiple-reference-filter .css-1okebmr-indicatorSeparator {
     display: none;
 }
 

@@ -1,4 +1,3 @@
-<%= javascript_pack_tag 'template-editor-bundle' %>
 
 <div class="form-group">
   <%= f.label(t('item_type')) %>
@@ -54,11 +53,11 @@
     <% @item_view.item_type.catalog.valid_locales.each_with_index do |l, i| %>
     <div role="tabpanel" class="tab-pane <% if i==0 %>active<% end %>" id="<%= l %>">
       <div class="tabcontent">
-        <%= react_component("TemplateEditor", props: {
+        <%= react_component("TemplateEditor/components/TemplateEditor", {
           :contentRef => "item_view_template",
           :locale => l,
           :fields => @item_view.item_type.fields.map { |f| {slug: f.slug, name: f.name, type: f.type[7..-1]} }
-        }, prerender: false) %>
+        }) %>
       </div>
     </div>
     <% end %>

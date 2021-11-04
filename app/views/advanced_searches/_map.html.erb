@@ -1,6 +1,5 @@
-<%= react_component("GeoViewer",
-      id: "results_map_container",
-      props: {
+<%= react_component("GeoViewer/components/GeoViewer",
+      {
         features: results.items_as_geojson.to_json,
         layers: @advanced_search_config.geo_layers,
         noResultsMessage: t('advanced_searches.new.no_map_results'),
@@ -9,5 +8,5 @@
         catalog: @catalog.slug,
         locale: I18n.locale
       },
-    prerender: false)
+      {id: "results_map_container"})
 %>

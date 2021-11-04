@@ -33,8 +33,8 @@ class Field::ReferencePresenter < FieldPresenter
 
   def component(method)
     react_component(
-      'ReferenceEditor',
-      props: {
+      'ReferenceEditor/components/ReferenceEditor',
+      {
         srcRef: "item_#{method}_json",
         srcId: method,
         selectedReferences: selected_references(item).map { |item| item.describe([:default_display_name], [], true) },
@@ -45,8 +45,7 @@ class Field::ReferencePresenter < FieldPresenter
         itemType: field.related_item_type.slug,
         locale: I18n.locale,
         noOptionsMessage: t('catalog_admin.items.reference_editor.no_options')
-      },
-      prerender: false
+      }
     )
   end
 
