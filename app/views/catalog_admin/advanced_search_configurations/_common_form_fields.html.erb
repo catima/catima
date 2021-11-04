@@ -1,5 +1,4 @@
 <%= javascript_pack_tag 'catalog-admin-bundle' %>
-<%= stylesheet_pack_tag 'catalog-admin-bundle' %>
 
 <%= locale_form_group(f, :title, :text_field, :autofocus => true) %>
 <%= f.text_field(:description, :class => 'hide', :value => @advanced_search_conf.description_str) %>
