@@ -22,7 +22,7 @@
 #  ordered                  :boolean          default(FALSE), not null
 #  primary                  :boolean          default(FALSE), not null
 #  related_item_type_id     :integer
-#  required                 :boolean          default(TRUE), not null
+#  required                 :boolean          default(FALSE), not null
 #  restricted               :boolean          default(FALSE), not null
 #  row_order                :integer
 #  slug                     :string
@@ -168,6 +168,8 @@ class Field < ApplicationRecord
   #
   # Default depends on the presence of the human_readable method result, and subclasses can
   # override.
+  #
+  # Mainly used in advanced search configuration and ui.
   def filterable?
     human_readable?
   end

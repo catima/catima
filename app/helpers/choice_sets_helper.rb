@@ -25,13 +25,10 @@ module ChoiceSetsHelper
     end
   end
 
-  # Returns all displayable fields for a category. Mainly used for the choiceset
+  # Returns all displayable fields for a category (filterable). Mainly used for the choiceset
   # component in advanced search.
   #
-  # Removes the following fields:
-  # - Restricted fields if the current user is not a catalog staff
-  # - Reference fields
-  # - Choiceset fields
+  # Also removes the restricted fields if the current user is not a catalog staff.
   def displayable_category_fields(fields)
     fields.select { |f| f.filterable? && f.displayable_to_user?(current_user) }
   end

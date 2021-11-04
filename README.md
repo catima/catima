@@ -59,4 +59,4 @@ Run the `bin/setup` script. This script will:
 * To run the full suite, run `rails test`
 * To run a single test, specify the line with `rails test path/to/file:line_number`
 * To view the integration tests running in the browser prepend `HEADLESS=0` to the commands above
-* To run API requests specs and generate API doc `rails swag:run`. The API doc should be regenerated & committed everytime a change is made.
+* To run API requests specs and generate API doc `rails swag:run`. The API doc is not versioned and should be added to the project during deployment.

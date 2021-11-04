@@ -22,7 +22,7 @@
 #  ordered                  :boolean          default(FALSE), not null
 #  primary                  :boolean          default(FALSE), not null
 #  related_item_type_id     :integer
-#  required                 :boolean          default(TRUE), not null
+#  required                 :boolean          default(FALSE), not null
 #  restricted               :boolean          default(FALSE), not null
 #  row_order                :integer
 #  slug                     :string
@@ -92,6 +92,7 @@ one_author_name:
   slug: name
   field_set: one_author (ItemType)
   primary: true
+  required: true
   uuid: one_author_name_uuid
   row_order: 1
 
@@ -136,6 +137,7 @@ one_author_rank:
   name_plural_translations: { "name_plural_en": "Ranks" }
   slug: rank
   field_set: one_author (ItemType)
+  required: true
   uuid: one_author_rank_uuid
 
 one_author_collaborator:
