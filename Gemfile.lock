@@ -626,7 +626,7 @@ DEPENDENCIES
   vcr (~> 6.0)
   webdrivers (~> 4.4)
   webmock (~> 3.10)
-  webpacker (~> 5.2)
+  webpacker (= 5.4.0)
   zaru (~> 0.3)
 
 BUNDLED WITH
