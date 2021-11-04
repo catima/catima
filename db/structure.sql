@@ -670,7 +670,7 @@ CREATE TABLE public.fields (
     comment text,
     multiple boolean DEFAULT false NOT NULL,
     ordered boolean DEFAULT false NOT NULL,
-    required boolean DEFAULT true NOT NULL,
+    required boolean DEFAULT false NOT NULL,
     i18n boolean DEFAULT false NOT NULL,
     "unique" boolean DEFAULT false NOT NULL,
     default_value text,
@@ -2491,6 +2491,7 @@ INSERT INTO "schema_migrations" (version) VALUES
 ('20210624100735'),
 ('20210730100707'),
 ('20210823103708'),
-('20210906124258');
+('20210906124258'),
+('20211101151726');
 
 
