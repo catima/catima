@@ -48,7 +48,8 @@ class Field < ApplicationRecord
     "reference" => "Field::Reference",
     "text" => "Field::Text",
     "url" => "Field::URL",
-    "xref" => "Field::Xref"
+    "xref" => "Field::Xref",
+    "compound" => "Field::Compound"
   }.freeze
 
   include ActionView::Helpers::SanitizeHelper
@@ -264,7 +265,7 @@ class Field < ApplicationRecord
   end
 
   # Even non readable. Useful for dumps
-  def csv_value(it)
+  def csv_value(it, current_user= false)
     raw_value(it)
   end
 

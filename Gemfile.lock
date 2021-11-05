@@ -354,8 +354,6 @@ GEM
       bundler (>= 1.15.0)
       railties (= 6.1.4.1)
       sprockets-rails (>= 2.0.0)
-    rails-assets-autosize (4.0.2)
-    rails-assets-mousetrap (1.6.2)
     rails-dom-testing (2.0.3)
       activesupport (>= 4.2.0)
       nokogiri (>= 1.6)
@@ -630,4 +628,4 @@ DEPENDENCIES
   zaru (~> 0.3)
 
 BUNDLED WITH
-   2.1.4
+   2.2.29

@@ -7,7 +7,8 @@ const TemplateEditor = (props) => {
   const {
     contentRef,
     locale,
-    fields
+    fields,
+    noItemField
   } = props
 
   const uid = `summernote-${uuidv4()}`;
@@ -44,7 +45,7 @@ const TemplateEditor = (props) => {
           ['para', ['ul', 'ol', 'paragraph']],
           ['height', ['height']],
           ['insert', ['picture', 'link', 'table', 'hr']],
-          ['templateEditor', ['fieldsMenu', 'itemLinkButton']]
+          ['templateEditor', noItemField ? ['fieldsMenu'] : ['fieldsMenu', 'itemLinkButton']]
         ],
         buttons: {
           fieldsMenu: fieldsMenu(editor, fields),

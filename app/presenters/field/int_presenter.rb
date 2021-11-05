@@ -1,5 +1,5 @@
 class Field::IntPresenter < FieldPresenter
-  delegate :number_with_delimiter, :to => :view
+  include ActionView::Helpers::NumberHelper
 
   def input(form, method, options={})
     form.number_field(method, input_defaults(options))

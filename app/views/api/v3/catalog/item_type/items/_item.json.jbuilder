@@ -19,7 +19,14 @@ end
 if with_field_values
   json.field_values do
     json.array! fields do |field|
-      json.value item.data["#{field.uuid}"]
+      case field
+      when Field::Compound
+        json.value field.csv_value(item, @authenticated_catalog.present? ? false : @current_user)
+      when Field::Editor
+        json.value Field::EditorPresenter.new(nil, item, field).value
+      else
+        json.value item.data["#{field.uuid}"]
+      end
       json.field do
         json.partial! '/api/v3/catalog/shared/field', field: field
       end

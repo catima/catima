@@ -60,7 +60,7 @@ class Field::Geometry < ::Field
     layers.present? ? JSON.parse(layers) : []
   end
 
-  def csv_value(_item)
+  def csv_value(_item, current_user=false)
     return if super.blank?
 
     super["features"].map do |f|

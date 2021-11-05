@@ -1,15 +1,17 @@
 class FieldPresenter
-  attr_reader :view, :item, :field, :options
+  attr_reader :view, :item, :field, :options, :current_user
 
   delegate :t, :to => I18n
-  delegate :uuid, :label, :comment, :to => :field
+  delegate :uuid, :comment, :to => :field
+  delegate :label, to: :field, prefix: :field
   delegate :react_component, :to => :view
 
-  def initialize(view, item, field, options={})
+  def initialize(view, item, field, options={}, current_user=false)
     @view = view
     @item = item
     @field = field
     @options = options
+    @current_user = current_user
   end
 
   def help
@@ -35,7 +37,7 @@ class FieldPresenter
 
   def input_defaults(options)
     data = input_data_defaults(options.fetch(:data, {}))
-    options.reverse_merge(:label => label, :data => data, :help => comment, :include_blank => !field.required)
+    options.reverse_merge(:label => field_label, :data => data, :help => comment, :include_blank => !field.required)
   end
 
   def input_data_defaults(data)

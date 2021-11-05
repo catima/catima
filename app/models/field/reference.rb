@@ -116,7 +116,7 @@ class Field::Reference < ::Field
     []
   end
 
-  def csv_value(item)
+  def csv_value(item, current_user=false)
     return '' if related_item_type.is_a?(Category)
 
     field_value_for_item(item)

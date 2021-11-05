@@ -144,6 +144,19 @@ class CatalogAdmin::FieldsTest < ActionDispatch::IntegrationTest
     end
   end
 
+  test "add a compound field" do
+    log_in_as("two-admin@example.com", "password")
+    visit("/two/en/admin/authors/fields")
+    click_on("Compound field")
+    fill_in("field[name_en]", :with => "Test")
+    fill_in("field[name_plural_en]", :with => "Tests")
+    fill_in("Slug (singular)", :with => "test")
+    first('input#field_template', visible: false).set('{"en":"{{test}}"}')
+    assert_difference("item_types(:two_author).fields.count") do
+      click_on("Create field")
+    end
+  end
+
   test "edit a field" do
     log_in_as("one-admin@example.com", "password")
     visit("/one/en/admin/authors/fields")

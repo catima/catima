@@ -59,6 +59,7 @@ gem "jbuilder", "~> 2.10.1"
 gem "rswag", "~> 2.4.0"
 gem 'redis', "~> 4.2.5"
 gem "rspec-rails", "~> 5.0.1"
+gem "byebug", "~> 11.1.3"
 
 source "https://rails-assets.org" do
   gem "rails-assets-autosize", "~> 4.0"
@@ -73,7 +74,6 @@ end
 
 group :development, :test do
   gem "simplecov", "~> 0.20", :require => false
-  gem "byebug", "~> 11.1.3", :require => false
 end
 
 group :development do
