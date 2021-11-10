@@ -27,6 +27,9 @@
 # Ignore the geo layers file
 /config/geo_layers.yml
 
+# Ignore the domains file
+/config/domains.yml
+
 # Ignore refile uploads
 /public/system/
 

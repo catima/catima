@@ -44,7 +44,7 @@ const Domains = (props) => {
       isSearchable={true}
       isClearable={true}
       name="domains"
-      options={options}
+      options={options.map(o =>  {return {value: o.value, label: `${o.label} (${o.value})`}})}
       onChange={handleSelectChange}
       className="basic-multi-select"
       classNamePrefix="select"

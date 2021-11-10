@@ -5,7 +5,7 @@ class Field::Embed < ::Field
   store_accessor :options, :width
   store_accessor :options, :height
   store_accessor :options, :domains
-  after_save :remove_width_height_value, :if => :code?
+  after_save :remove_width_height_value, if: :code?
 
   FORMATS = %w(url code).freeze
 
@@ -18,19 +18,11 @@ class Field::Embed < ::Field
   end
 
   def url?
-    options && options['format'] && options['format'] == 'url'
+    format == 'url'
   end
 
   def code?
-    options && options['format'] && options['format'] == 'code'
-  end
-
-  def width
-    options['width']
-  end
-
-  def height
-    options['height']
+    format == 'code'
   end
 
   def parsed_domains
@@ -50,7 +42,7 @@ class Field::Embed < ::Field
   end
 
   def remove_width_height_value
-    update(:options => options.except("width", "height")) if (options["widht"] || options["height"])
+    update!(:options => options.except("width", "height")) if (options["widht"] || options["height"])
   end
 
   def build_validators
@@ -66,16 +58,34 @@ class Field::Embed < ::Field
 
       return if value.blank?
       return if record.fields.find_by(uuid: attrib).parsed_domains.none?
-      domain_values = record.fields.find_by(uuid: attrib).parsed_domains.map { |domains| domains["value"] }
-      return if all_urls_valid?(value, domain_values)
+      begin
+        if record.fields.find_by(uuid: attrib).url?
+          uri = URI.parse(value)
+          if uri.host.blank?
+            add_invalid_url_error(record, attrib)
+          end
+        end
+      rescue URI::InvalidURIError
+        add_invalid_url_error(record, attrib)
+      ensure
+        domain_values = record.fields.find_by(uuid: attrib).parsed_domains.map { |domains| domains["value"] }
+        return if all_urls_valid?(value, domain_values)
 
-      record.errors.add(
-        attrib,
-        "urls does not appear to a match the list of valid domains (#{domain_values.to_sentence})"
-      )
+        record.errors.add(
+          attrib,
+          "urls does not appear to a match the list of valid domains (#{domain_values.to_sentence})"
+        )
+      end
     end
 
     private
+
+    def add_invalid_url_error(record, attrib)
+      record.errors.add(
+        attrib,
+        "url does not appear to be valid"
+      )
+    end
 
     def is_wildcard_domain?(domain)
       domain.start_with?('*.')
