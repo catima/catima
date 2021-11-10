@@ -227,13 +227,18 @@ const FormattedTextEditor = (props) => {
 
   function _updateContent() {
     const el = document.getElementById(contentRef)
-    el.value = JSON.stringify({
-      format: 'html',
-      doc: editor.getContents(),
-      content: '<p style="display:none;"></p>' +
-        _prepareHtmlForSaving(editor.root.innerHTML) +
-        '<p style="display:none;"></p>'
-    });
+
+    if (editor.getLength() > 1) {
+      el.value = JSON.stringify({
+        format: 'html',
+        doc: editor.getContents(),
+        content: '<p style="display:none;"></p>' +
+            _prepareHtmlForSaving(editor.root.innerHTML) +
+            '<p style="display:none;"></p>'
+      });
+    } else {
+      el.value = ''
+    }
   }
 
   function _prepareHtmlForSaving(html) {
