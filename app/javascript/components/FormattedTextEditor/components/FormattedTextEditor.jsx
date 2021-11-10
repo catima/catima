@@ -237,7 +237,7 @@ const FormattedTextEditor = (props) => {
             '<p style="display:none;"></p>'
       });
     } else {
-      el.value = ''
+      el.value = '';
     }
   }
 
