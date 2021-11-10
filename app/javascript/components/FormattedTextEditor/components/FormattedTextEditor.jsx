@@ -90,6 +90,7 @@ const FormattedTextEditor = (props) => {
           table: true
         },
         theme: 'snow',
+        readOnly: true
       }))
     }
   }, [])
@@ -164,6 +165,10 @@ const FormattedTextEditor = (props) => {
     } else {
       editor.clipboard.dangerouslyPasteHTML(c.content);
     }
+
+    // The editor is created with the read-only option activated and should be only enabled after content is set.
+    // This is to avoid the autofocus issue with quill.
+    editor.enable(true);
 
     editor.on('text-change', function (delta, oldDelta, source) {
       _updateContent();
