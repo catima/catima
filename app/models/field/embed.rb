@@ -69,7 +69,7 @@ class Field::Embed < ::Field
         add_invalid_url_error(record, attrib)
       ensure
         domain_values = record.fields.find_by(uuid: attrib).parsed_domains.map { |domains| domains["value"] }
-        return if all_urls_valid?(value, domain_values)
+        return if all_urls_are_valid?(value, domain_values)
 
         record.errors.add(
           attrib,
@@ -91,21 +91,11 @@ class Field::Embed < ::Field
       domain.start_with?('*.')
     end
 
-    def all_urls_valid?(value, domains)
+    def all_urls_are_valid?(value, domains)
       urls = URI.extract(value, ['http', 'https'])
-      urls.map! { |url| get_host_without_www(url) }
-
-      domains.each do |domain|
-        if is_wildcard_domain?(domain)
-          urls.map! { |url| url.include?(domain[2..-1]) ? remove_subdomain(url) : url }
-        end
-      end
-
-      urls.map! { |url| ([url] & domains.map { |d| is_wildcard_domain?(d) ? d[2..-1] : d }).any? }.all?
-    end
-
-    def remove_subdomain(url)
-      url.split('.').last(2).join('.')
+      parsed_urls = urls.map { |url| split_url(get_host_without_www(url)) }
+      parsed_domains = domains.map { |domain| replace_wildcard_with_regex(split_url(domain)) }
+      parsed_urls.map { |url| parsed_domains.map { |domain| url_is_valid_for_domain?(url, domain) }.any? }.all?
     end
 
     def get_host_without_www(url)
@@ -113,6 +103,27 @@ class Field::Embed < ::Field
       uri = URI.parse("http://#{url}") if uri.scheme.nil?
       host = uri.host.downcase
       host.start_with?('www.') ? host[4..-1] : host
+    end
+
+    def split_url(url)
+      case url.split('.').length
+      when 1
+        ['', url, '']
+      when 2
+        ['', url.split('.')].flatten
+      when 3
+        url.split('.')
+      else
+        ['', '', '']
+      end
+    end
+
+    def replace_wildcard_with_regex(split_url)
+      split_url.map { |d| d.gsub('*', '.*') }
+    end
+
+    def url_is_valid_for_domain?(url, domain)
+      url.each_with_index.map { |u_item, i| !!u_item.match(domain[i]) }.all?
     end
   end
 end

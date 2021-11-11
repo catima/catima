@@ -1,10 +1,26 @@
--
-  label: 'Youtube'
-  value: 'youtube.com'
--
-  label: 'Vimeo'
-  value: 'vimeo.com'
+# www.youtube.com => valid
+# *.youtube.com => valid
+# @ *.youtube.* => valid
+
+# youtube.com => invalid
+# www.youtube => invalid
 
 -
-  label: '*.Vimeo'
-  value: '*.vimeo.com'
+  label: 'Youtube.com'
+  value: 'www.youtube.com'
+
+-
+  label: 'Youtube.*'
+  value: 'www.youtube.*'
+
+-
+  label: '*.Youtube'
+  value: '*.youtube.com'
+
+-
+  label: '*.Youtube.*'
+  value: '*.youtube.*'
+
+-
+  label: 'Vimeo'
+  value: 'www.vimeo.com'
