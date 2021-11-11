@@ -42,7 +42,7 @@ class Field::Embed < ::Field
   end
 
   def remove_width_height_value
-    update!(:options => options.except("width", "height")) if (options["widht"] || options["height"])
+    update!(options: options.except("width", "height")) if (width || height)
   end
 
   def build_validators
