@@ -95,7 +95,7 @@ class Field::Embed < ::Field
       urls = URI.extract(value, ['http', 'https'])
       parsed_urls = urls.map { |url| split_url(get_host_without_www(url)) }
       parsed_domains = domains.map { |domain| replace_wildcard_with_regex(split_url(domain)) }
-      parsed_urls.map { |url| parsed_domains.map { |domain| url_is_valid_for_domain?(url, domain) }.any? }.all?
+      parsed_urls.all? { |url| parsed_domains.any? { |domain| url_is_valid_for_domain?(url, domain) } }
     end
 
     def get_host_without_www(url)
