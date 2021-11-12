@@ -169,7 +169,6 @@ class CatalogAdmin::FieldsTest < ActionDispatch::IntegrationTest
     fill_in("field[name_plural_en]", :with => "Tests")
     fill_in("Slug (singular)", :with => "test")
     select("code", :from => "Format")
-    save_and_open_page
 
     assert_difference("item_types(:two_author).fields.count") do
       click_on("Create field")

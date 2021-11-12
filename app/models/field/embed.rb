@@ -58,8 +58,16 @@ class Field::Embed < ::Field
 
       return if value.blank?
       return if record.fields.find_by(uuid: attrib).parsed_domains.none?
+      field = record.fields.find_by(uuid: attrib)
+      domains = field.parsed_domains.map { |d| d["value"] }
+      validate_by_domains(value, record, attrib, field.url?, domains)
+    end
+
+    private
+
+    def validate_by_domains(value, record, attrib, is_url, domains)
       begin
-        if record.fields.find_by(uuid: attrib).url?
+        if is_url
           uri = URI.parse(value)
           if uri.host.blank?
             add_invalid_url_error(record, attrib)
@@ -68,17 +76,15 @@ class Field::Embed < ::Field
       rescue URI::InvalidURIError
         add_invalid_url_error(record, attrib)
       ensure
-        domain_values = record.fields.find_by(uuid: attrib).parsed_domains.map { |domains| domains["value"] }
-        return if all_urls_are_valid?(value, domain_values)
+        return true if all_urls_are_valid?(value, domains)
 
         record.errors.add(
           attrib,
-          "urls does not appear to a match the list of valid domains (#{domain_values.to_sentence})"
+          "urls does not appear to a match the list of valid domains (#{domains.to_sentence})"
         )
+        return false
       end
     end
-
-    private
 
     def add_invalid_url_error(record, attrib)
       record.errors.add(
@@ -94,6 +100,7 @@ class Field::Embed < ::Field
     def all_urls_are_valid?(value, domains)
       urls = URI.extract(value, ['http', 'https'])
       parsed_urls = urls.map { |url| split_url(get_host_without_www(url)) }
+      parsed_urls.map! { |u| ["www#{u[0].blank? ? '' : '.'}#{u[0]}", u[1], u[2]] }
       parsed_domains = domains.map { |domain| replace_wildcard_with_regex(split_url(domain)) }
       parsed_urls.all? { |url| parsed_domains.any? { |domain| url_is_valid_for_domain?(url, domain) } }
     end
@@ -123,7 +130,7 @@ class Field::Embed < ::Field
     end
 
     def url_is_valid_for_domain?(url, domain)
-      url.each_with_index.map { |u_item, i| !!u_item.match(domain[i]) }.all?
+      url.each_with_index.all? { |u_item, i| domain[i] == '.*' ? true : u_item == domain[i] }
     end
   end
 end

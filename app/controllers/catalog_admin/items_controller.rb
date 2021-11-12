@@ -24,6 +24,7 @@ class CatalogAdmin::ItemsController < CatalogAdmin::BaseController
   def create
     build_item
     authorize(@item)
+    byebug
     if @item.update_and_log(item_params, author: current_user, catalog: @catalog)
       redirect_to(after_create_path, :notice => created_message)
     else
