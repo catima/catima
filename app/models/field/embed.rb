@@ -93,10 +93,6 @@ class Field::Embed < ::Field
       )
     end
 
-    def is_wildcard_domain?(domain)
-      domain.start_with?('*.')
-    end
-
     def all_urls_are_valid?(value, domains)
       urls = URI.extract(value, ['http', 'https'])
       parsed_urls = urls.map { |url| split_url(get_host_without_www(url)) }
