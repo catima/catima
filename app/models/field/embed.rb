@@ -42,7 +42,7 @@ class Field::Embed < ::Field
   end
 
   def remove_width_height_value
-    update!(options: options.except("width", "height")) if (width || height)
+    update!(options: options.except("width", "height")) if width || height
   end
 
   def build_validators
@@ -58,6 +58,7 @@ class Field::Embed < ::Field
 
       return if value.blank?
       return if record.fields.find_by(uuid: attrib).parsed_domains.none?
+
       field = record.fields.find_by(uuid: attrib)
       domains = field.parsed_domains.map { |d| d["value"] }
       validate_by_domains(value, record, attrib, field.url?, domains)
@@ -69,8 +70,7 @@ class Field::Embed < ::Field
       begin
         if is_url
           uri = URI.parse(value)
-          if uri.host.blank?
-            add_invalid_url_error(record, attrib)
+          add_invalid_url_error(record, attrib) if uri.host.blank?
           end
         end
       rescue URI::InvalidURIError
@@ -94,7 +94,7 @@ class Field::Embed < ::Field
     end
 
     def all_urls_are_valid?(value, domains)
-      urls = URI.extract(value, ['http', 'https'])
+      urls = URI.extract(value, %w[http https])
       parsed_urls = urls.map { |url| split_url(get_host_without_www(url)) }
       parsed_urls.map! { |u| ["www#{u[0].blank? ? '' : '.'}#{u[0]}", u[1], u[2]] }
       parsed_domains = domains.map { |domain| replace_wildcard_with_regex(split_url(domain)) }
@@ -105,7 +105,7 @@ class Field::Embed < ::Field
       uri = URI.parse(url)
       uri = URI.parse("http://#{url}") if uri.scheme.nil?
       host = uri.host.downcase
-      host.start_with?('www.') ? host[4..-1] : host
+      host.start_with?('www.') ? host[4..] : host
     end
 
     def split_url(url)
