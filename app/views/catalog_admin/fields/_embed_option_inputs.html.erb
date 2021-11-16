@@ -18,7 +18,15 @@
   }) %>
 
   <div data-toggle-display-target="revealable">
-    <%= f.number_field(:width, label: t('.width')) %>
-    <%= f.number_field(:height, label: t('.height')) %>
+    <%= f.number_field(
+          :width,
+          label: t('.width'),
+          :help => t('.width_default', width: Field::Embed::DEFAULT_IFRAME_WIDTH)
+        ) %>
+    <%= f.number_field(
+          :height,
+          label: t('.height'),
+          :help => t('.height_default', height: Field::Embed::DEFAULT_IFRAME_HEIGHT)
+        ) %>
   </div>
 </div>

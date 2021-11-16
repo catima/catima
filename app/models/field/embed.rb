@@ -8,9 +8,19 @@ class Field::Embed < ::Field
   after_save :remove_width_height_value, if: :code?
 
   FORMATS = %w(url code).freeze
+  DEFAULT_IFRAME_WIDTH = 900
+  DEFAULT_IFRAME_HEIGHT = 400
 
   def item_link
     "/#{@item.catalog.slug}/#{I18n.locale}/#{@item.item_type.slug}/#{@item.id}"
+  end
+
+  def iframe_width
+    width.present? ? width.to_i : DEFAULT_IFRAME_WIDTH
+  end
+
+  def iframe_height
+    height.present? ? height.to_i : DEFAULT_IFRAME_HEIGHT
   end
 
   def sql_type
@@ -79,7 +89,7 @@ class Field::Embed < ::Field
 
         record.errors.add(
           attrib,
-          "urls does not appear to a match the list of valid domains (#{domains.to_sentence})"
+          I18n.t("errors.messages.invalid_domain", domains: domains.to_sentence)
         )
         return false
       end
@@ -88,7 +98,7 @@ class Field::Embed < ::Field
     def add_invalid_url_error(record, attrib)
       record.errors.add(
         attrib,
-        "url does not appear to be valid"
+        I18n.t("errors.messages.invalid_url")
       )
     end
 

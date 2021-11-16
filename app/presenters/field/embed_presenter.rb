@@ -1,4 +1,6 @@
 class Field::EmbedPresenter < FieldPresenter
+  COMPACT_WIDTH = 300
+  COMPACT_HEIGHT = 150
 
   def input(form, method, options = {})
     if field.code?
@@ -11,9 +13,9 @@ class Field::EmbedPresenter < FieldPresenter
   def value
     if field.code?
       raw_value&.html_safe
-      compact? ? raw_value&.gsub(/width=["']\d+["']/, 'width="300"')&.gsub(/height=["']\d+["']/, 'height="300"')&.html_safe : raw_value&.html_safe
+      compact? ? raw_value&.gsub(/width=["']\d+["']/, "width=\"#{COMPACT_WIDTH}\"")&.gsub(/height=["']\d+["']/, "height=\"#{COMPACT_HEIGHT}\"")&.html_safe : raw_value&.html_safe
     elsif field.url? && raw_value
-      "<iframe width='#{compact? ? 300 : field.options['width']}' height='#{compact? ? 300 : field.options['height']}' style='border: none;' src='#{raw_value}'></iframe>".html_safe
+      "<iframe width='#{compact? ? COMPACT_WIDTH : field.iframe_width}' height='#{compact? ? COMPACT_HEIGHT : field.iframe_height}' style='border: none;' src='#{raw_value}'></iframe>".html_safe
     end
   end
 

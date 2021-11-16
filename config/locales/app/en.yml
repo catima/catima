@@ -656,8 +656,10 @@ en:
         min_value: "Minimum value (optional)"
         max_value: "Maximum value (optional)"
       embed_option_inputs:
-        width: "Iframe width"
-        height: "Iframe height"
+        width: "Iframe width (in pixel)"
+        width_default: "The default value is %{width}"
+        height: "Iframe height (in pixel)"
+        height_default: "The default value is %{height}"
         domains: Additional domains
         domains_help: You can add additional domains to your list
         domains_component_no_options: No more domains to add
