@@ -48,7 +48,8 @@ class Field < ApplicationRecord
     "reference" => "Field::Reference",
     "text" => "Field::Text",
     "url" => "Field::URL",
-    "xref" => "Field::Xref"
+    "xref" => "Field::Xref",
+    "embed" => "Field::Embed"
   }.freeze
 
   include ActionView::Helpers::SanitizeHelper
