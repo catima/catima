@@ -71,7 +71,6 @@ class Field::Embed < ::Field
         if is_url
           uri = URI.parse(value)
           add_invalid_url_error(record, attrib) if uri.host.blank?
-          end
         end
       rescue URI::InvalidURIError
         add_invalid_url_error(record, attrib)
