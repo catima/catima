@@ -19,6 +19,15 @@ json.style field.style
 json.unique field.unique
 
 json.field_specific_keys do
+  if field.is_a?(Field::Embed)
+    json.format field.code? ? 'code' : 'url'
+    json.domains field.parsed_domains
+    if field.url?
+      json.width field.width
+      json.height field.height
+    end
+  end
+
   if field.is_a?(Field::ChoiceSet)
     json.choice_set_id field.choice_set_id
   end

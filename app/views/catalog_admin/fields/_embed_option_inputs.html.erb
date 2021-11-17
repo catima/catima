@@ -1,0 +1,32 @@
+<div data-controller="toggle-display" data-toggle-display-value='url'>
+  <%= f.hidden_field(:domains) %>
+  <div class="my-2">
+    <%= f.label(t('.domains')) %>
+    <%= react_component('Domains/components/Domains',
+                        {
+                          domains: f.object.parsed_domains,
+                          options: load_domains,
+                          inputId: "field_domains",
+                          placeholder: t(".domains_component_placeholder"),
+                          noOptionsMessage: t(".domains_component_no_options")
+                        }) %>
+  </div>
+
+  <%= f.collection_select(:format, Field::Embed::FORMATS, :to_s, :to_s, {}, {
+    "data-action": "input->toggle-display#reveal",
+    "data-toggle-display-target": "source",
+  }) %>
+
+  <div data-toggle-display-target="revealable">
+    <%= f.number_field(
+          :width,
+          label: t('.width'),
+          :help => t('.width_default', width: Field::Embed::DEFAULT_IFRAME_WIDTH)
+        ) %>
+    <%= f.number_field(
+          :height,
+          label: t('.height'),
+          :help => t('.height_default', height: Field::Embed::DEFAULT_IFRAME_HEIGHT)
+        ) %>
+  </div>
+</div>

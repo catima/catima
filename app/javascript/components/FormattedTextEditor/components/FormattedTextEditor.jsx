@@ -90,6 +90,7 @@ const FormattedTextEditor = (props) => {
           table: true
         },
         theme: 'snow',
+        readOnly: true
       }))
     }
   }, [])
@@ -165,6 +166,10 @@ const FormattedTextEditor = (props) => {
       editor.clipboard.dangerouslyPasteHTML(c.content);
     }
 
+    // The editor is created with the read-only option activated and should be only enabled after content is set.
+    // This is to avoid the autofocus issue with quill.
+    editor.enable(true);
+
     editor.on('text-change', function (delta, oldDelta, source) {
       _updateContent();
       renderNotes();
@@ -222,13 +227,18 @@ const FormattedTextEditor = (props) => {
 
   function _updateContent() {
     const el = document.getElementById(contentRef)
-    el.value = JSON.stringify({
-      format: 'html',
-      doc: editor.getContents(),
-      content: '<p style="display:none;"></p>' +
-        _prepareHtmlForSaving(editor.root.innerHTML) +
-        '<p style="display:none;"></p>'
-    });
+
+    if (editor.getLength() > 1) {
+      el.value = JSON.stringify({
+        format: 'html',
+        doc: editor.getContents(),
+        content: '<p style="display:none;"></p>' +
+            _prepareHtmlForSaving(editor.root.innerHTML) +
+            '<p style="display:none;"></p>'
+      });
+    } else {
+      el.value = '';
+    }
   }
 
   function _prepareHtmlForSaving(html) {

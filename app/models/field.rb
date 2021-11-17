@@ -49,7 +49,8 @@ class Field < ApplicationRecord
     "text" => "Field::Text",
     "url" => "Field::URL",
     "xref" => "Field::Xref",
-    "compound" => "Field::Compound"
+    "compound" => "Field::Compound",
+    "embed" => "Field::Embed"
   }.freeze
 
   include ActionView::Helpers::SanitizeHelper
