@@ -2,7 +2,7 @@ class Field::EmbedPresenter < FieldPresenter
   COMPACT_WIDTH = 300
   COMPACT_HEIGHT = 150
 
-  def input(form, method, options = {})
+  def input(form, method, options={})
     if field.code?
       form.text_area(method, input_defaults(options))
     elsif field.url?

@@ -1,5 +1,5 @@
 class Field::CompoundPresenter < FieldPresenter
-  def input(form, method, options = {})
+  def input(form, method, options={})
     form.text_field(method, input_defaults(options).reverse_merge(:help => help, :value => field.template, :readonly => true))
   end
 
