@@ -21,7 +21,7 @@ class ItemViewPresenter
     local_template = local_template.sub('{{_itemLink}}', item_link)
     @item.fields.each do |field|
       presenter = "#{field.class.name}Presenter".constantize.new(@view, @item, field, {})
-      local_template = local_template.sub('{{' + field.slug + '}}', presenter.value || '')
+      local_template = local_template.sub("{{#{field.slug}}}", presenter.value || '')
     end
     (@options[:strip_p] == true ? strip_p(local_template) : local_template).html_safe
   end
