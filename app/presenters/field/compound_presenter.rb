@@ -10,16 +10,16 @@ class Field::CompoundPresenter < FieldPresenter
   def render_template
     tpl = JSON.parse(field.template)
 
-    local_tpl = tpl[I18n.locale.to_s] || ''
-    displayable_fields = @item.fields.where(slug: local_tpl.gsub('&nbsp', ' ').to_enum(:scan, /(\{\{.*?\}\})/i).map { |m,| m.gsub('{', '').gsub('}', '') })
+    local_template = tpl[I18n.locale.to_s] || ''
+    displayable_fields = @item.fields.where(slug: local_template.gsub('&nbsp', ' ').to_enum(:scan, /(\{\{.*?\}\})/i).map { |m, _| m.gsub('{', '').gsub('}', '') })
     displayable_fields = displayable_fields.select { |fld| fld.displayable_to_user?(@current_user) } if @current_user
     displayable_fields.each do |field|
       presenter = "#{field.class.name}Presenter".constantize.new(@view, @item, field, {}, @current_user)
 
-      local_tpl = local_tpl.gsub('{{' + field.slug + '}}', presenter.value || '')
+      local_template = local_template.gsub("{{#{field.slug}}}", presenter.value || '')
     end
-    local_tpl = local_tpl.gsub(/(\{\{.*?\}\})/i, '')
-    (@options[:strip_p] == true ? strip_p(local_tpl) : local_tpl).html_safe
+    local_template = local_template.gsub(/(\{\{.*?\}\})/i, '')
+    (@options[:strip_p] == true ? strip_p(local_template) : local_template).html_safe
   end
 
   def strip_p(html)

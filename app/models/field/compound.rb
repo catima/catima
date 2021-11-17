@@ -21,7 +21,7 @@ class Field::Compound < ::Field
     false
   end
 
-  def csv_value(item, current_user=false)
+  def csv_value(item, current_user=nil)
     Field::CompoundPresenter.new(ApplicationController.new, item, self, {}, current_user).value.to_s
   end
 

@@ -11,9 +11,7 @@
 
   <div class="tab-content">
     <% @field.item_type.catalog.valid_locales.each_with_index do |l, i| %>
-      <div role="tabpanel" class="tab-pane
-        <% if i == 0 %>active
-        <% end %>" id="<%= l %>">
+        <div id="<%= l %>" role="tabpanel" class="tab-pane <%= "active" if i == 0 %>">
         <div class="tabcontent">
           <%= react_component("TemplateEditor/components/TemplateEditor", {
             :contentRef => "field_template",
