@@ -25,7 +25,6 @@ class Field::Compound < ::Field
     Field::CompoundPresenter.new(ApplicationController.new, item, self, {}, current_user).value.to_s
   end
 
-
   def raw_value(item, locale=I18n.locale, suffix="")
     attrib = i18n? ? "#{uuid}_#{locale}#{suffix}" : uuid
     v = item.behaving_as_type.public_send(attrib) if item.behaving_as_type.respond_to?(attrib)
