@@ -85,6 +85,13 @@ class Field::Embed < ::Field
       rescue URI::InvalidURIError
         add_invalid_url_error(record, attrib)
       ensure
+        unless all_urls_starts_with_http?(value)
+          record.errors.add(
+            attrib,
+            I18n.t("errors.messages.non_http_url")
+          )
+          return false
+        end
         return true if all_urls_are_valid?(value, domains)
 
         record.errors.add(
@@ -100,6 +107,11 @@ class Field::Embed < ::Field
         attrib,
         I18n.t("errors.messages.invalid_url")
       )
+    end
+
+    def all_urls_starts_with_http?(value)
+      urls = Twitter::TwitterText::Extractor.extract_urls(value)
+      return urls.all? { |url| url.starts_with?('http') }
     end
 
     def all_urls_are_valid?(value, domains)

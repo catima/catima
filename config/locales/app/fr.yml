@@ -200,6 +200,7 @@ fr:
     messages:
       invalid_email: n'est pas une adresse e-mail valide
       invalid_url: est une URL invalide ou incomplète
+      non_http_url: est une URL invalide (sans protocole http/https)
       membership:
         no_identifier: Veuillez entrer un identifiant de groupe
         already_member: Vous êtes déjà membre

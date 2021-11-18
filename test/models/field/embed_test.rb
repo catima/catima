@@ -7,6 +7,12 @@ class Field::EmbedTest < ActiveSupport::TestCase
     attrib = item_type.fields.first.uuid
     is_url = true
     domains = ["www.youtube.com"]
+    value = "www.youtube.com"
+    refute(Field::Embed::EmbedValidator.new.send(:validate_by_domains, value, record, attrib, is_url, domains))
+    value = "youtube.com"
+    refute(Field::Embed::EmbedValidator.new.send(:validate_by_domains, value, record, attrib, is_url, domains))
+    value = "sub.youtube.com"
+    refute(Field::Embed::EmbedValidator.new.send(:validate_by_domains, value, record, attrib, is_url, domains))
     value = "https://www.youtube.com"
     assert(Field::Embed::EmbedValidator.new.send(:validate_by_domains, value, record, attrib, is_url, domains))
     value = "https://youtube.com"
