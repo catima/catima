@@ -206,7 +206,6 @@ GEM
     hashie (4.1.0)
     i18n (1.8.11)
       concurrent-ruby (~> 1.0)
-    idn-ruby (0.1.4)
     image_processing (1.12.1)
       mini_magick (>= 4.9.5, < 5)
       ruby-vips (>= 2.0.17, < 3)
@@ -492,14 +491,8 @@ GEM
     terminal-notifier-guard (1.7.0)
     thor (1.1.0)
     tilt (2.0.10)
-    twitter-text (3.1.0)
-      idn-ruby
-      unf (~> 0.1.0)
     tzinfo (2.0.4)
       concurrent-ruby (~> 1.0)
-    unf (0.1.4)
-      unf_ext
-    unf_ext (0.0.8)
     unicode-display_width (1.7.0)
     unicorn (5.7.0)
       kgio (~> 2.6)
@@ -628,7 +621,6 @@ DEPENDENCIES
   summernote-rails (~> 0.8)
   terminal-notifier (~> 2.0)
   terminal-notifier-guard (~> 1.7)
-  twitter-text
   tzinfo-data
   unicorn (~> 5.7)
   vcr (~> 6.0)
