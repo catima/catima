@@ -1,5 +1,4 @@
 require 'uri'
-require 'nokogiri'
 
 class Field::Embed < ::Field
   store_accessor :options, :format
@@ -76,7 +75,7 @@ class Field::Embed < ::Field
         validate_iframe(value, record, attrib, domains)
       else
         urls = URI.extract(value, %w[http https])
-        validate_by_domains(urls, record, attrib, domains)
+        validate_by_domains(urls, record, attrib, true, domains)
       end
     end
 
@@ -130,8 +129,7 @@ class Field::Embed < ::Field
         add_should_have_one_iframe_error(record, attrib) and return
       end
       record.data[attrib] = iframe_nodes.map { |node| node.to_s }.join('')
-      byebug
-      urls = iframe_nodes.map { |node| node.attr('src') }
+      urls = iframe_nodes.map { |node| node.attr('src') }.reject(&:nil?)
       validate_by_domains(urls, record, attrib, false, domains)
     end
 

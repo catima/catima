@@ -20,7 +20,7 @@ json.unique field.unique
 
 json.field_specific_keys do
   if field.is_a?(Field::Embed)
-    json.format field.iframe? ? 'code' : 'url'
+    json.format field.iframe? ? 'iframe' : 'url'
     json.domains field.parsed_domains
     if field.url?
       json.width field.width
