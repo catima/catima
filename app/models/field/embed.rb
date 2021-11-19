@@ -74,8 +74,7 @@ class Field::Embed < ::Field
       if field.iframe?
         validate_iframe(value, record, attrib, domains)
       else
-        urls = URI.extract(value, %w[http https])
-        validate_by_domains(urls, record, attrib, true, domains)
+        validate_by_domains(value, record, attrib, true, domains)
       end
     end
 
