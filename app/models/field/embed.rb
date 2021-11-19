@@ -74,7 +74,7 @@ class Field::Embed < ::Field
       if field.iframe?
         validate_iframe(value, record, attrib, domains)
       else
-        validate_by_domains(value, record, attrib, true, domains)
+        validate_by_domains([value], record, attrib, true, domains)
       end
     end
 
