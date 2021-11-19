@@ -61,7 +61,7 @@ module FieldsHelper
 
   def field_presenter(item, field, options={})
     field = resolve_field(item.try(:item_type), field)
-    "#{field.class.name}Presenter".constantize.new(self, item, field, options, current_user: current_user)
+    "#{field.class.name}Presenter".constantize.new(self, item, field, options, current_user)
   end
 
   # Returns all items of the given type that reference an item by a certain

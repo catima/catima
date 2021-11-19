@@ -6,7 +6,7 @@ class FieldPresenter
   delegate :label, to: :field, prefix: :field
   delegate :react_component, :to => :view
 
-  def initialize(view, item, field, options={}, current_user: false)
+  def initialize(view, item, field, options={}, current_user= false)
     @view = view
     @item = item
     @field = field
