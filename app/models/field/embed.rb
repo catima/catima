@@ -24,7 +24,7 @@ class Field::Embed < ::Field
   end
 
   def sql_type
-    "VARCHAR(512)"
+    "TEXT"
   end
 
   def url?
