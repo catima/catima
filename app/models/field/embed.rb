@@ -74,44 +74,38 @@ class Field::Embed < ::Field
       if field.iframe?
         validate_iframe(value, record, attrib, domains)
       else
-        validate_by_domains([value], record, attrib, true, domains)
+        validate_url(value, record, attrib, domains)
       end
     end
 
     private
 
-    def validate_by_domains(urls, record, attrib, is_url, domains)
-      begin
-        if is_url
-          uri = URI.parse(urls.first)
-          add_invalid_url_error(record, attrib) if uri.host.blank?
-        end
-
-      rescue URI::InvalidURIError
-        add_invalid_url_error(record, attrib)
-      ensure
-        unless all_urls_starts_with_http?(urls)
-          record.errors.add(
-            attrib,
-            I18n.t("errors.messages.non_http_url")
-          )
-          return false
-        end
-        return true if all_urls_are_valid?(urls, domains)
-
-        record.errors.add(
-          attrib,
-          I18n.t("errors.messages.invalid_domain", domains: domains.to_sentence)
-        )
+    def validate_url(url, record, attrib, domains)
+      unless is_a_valid_url?(url)
+        record.errors.add(attrib, I18n.t("errors.messages.invalid_url"))
         return false
       end
+
+      unless url.starts_with?('http')
+        record.errors.add(attrib, I18n.t("errors.messages.non_http_url"))
+        return false
+      end
+
+      unless domains_include_url?(url, domains)
+        record.errors.add(attrib, I18n.t("errors.messages.invalid_domain", domains: domains.to_sentence))
+        return false
+      end
+
+      true
     end
 
-    def add_invalid_url_error(record, attrib)
-      record.errors.add(
-        attrib,
-        I18n.t("errors.messages.should_have_one_iframe")
-      )
+    def is_a_valid_url?(url)
+      begin
+        uri = URI.parse(url)
+        uri.host.present?
+      rescue URI::InvalidURIError
+        false
+      end
     end
 
     def add_should_have_one_iframe_error(record, attrib)
@@ -121,26 +115,22 @@ class Field::Embed < ::Field
       )
     end
 
-    def validate_iframe(value, record, attrib, domains)
+    def validate_iframe(value, record, attrib, domain)
       html_doc = Nokogiri::HTML(value)
       iframe_nodes = html_doc.search('iframe')
       if iframe_nodes.length == 0
         add_should_have_one_iframe_error(record, attrib) and return
       end
       record.data[attrib] = iframe_nodes.map { |node| node.to_s }.join('')
-      urls = iframe_nodes.map { |node| node.attr('src') }.reject(&:nil?)
-      validate_by_domains(urls, record, attrib, false, domains)
+      iframe_nodes
+        .map { |node| node.attr('src') }.reject(&:nil?)
+        .each { |url| validate_url(url, record, attrib, domain) }
     end
 
-    def all_urls_starts_with_http?(urls)
-      return urls.all? { |url| url.starts_with?('http') }
-    end
-
-    def all_urls_are_valid?(urls, domains)
-      parsed_urls = urls.map { |url| split_url(get_host_without_www(url)) }
-      parsed_urls.map! { |u| ["www#{u[0].blank? ? '' : '.'}#{u[0]}", u[1], u[2]] }
+    def domains_include_url?(url, domains)
+      parsed_url = split_url(get_host_without_www(url))
       parsed_domains = domains.map { |domain| replace_wildcard_with_regex(split_url(domain)) }
-      parsed_urls.all? { |url| parsed_domains.any? { |domain| url_is_valid_for_domain?(url, domain) } }
+      parsed_domains.any? { |domain| parsed_url_is_valid_for_domain?(parsed_url, domain) }
     end
 
     def get_host_without_www(url)
@@ -167,8 +157,17 @@ class Field::Embed < ::Field
       split_url.map { |d| d.gsub('*', '.*') }
     end
 
-    def url_is_valid_for_domain?(url, domain)
-      url.each_with_index.all? { |u_item, i| domain[i] == '.*' ? true : u_item == domain[i] }
+    def parsed_url_is_valid_for_domain?(parsed_url, domain)
+      parsed_url.each_with_index.all? do |u_item, i|
+        case domain[i]
+        when ".*"
+          true
+        when "www"
+          u_item == ""
+        else
+          u_item == domain[i]
+        end
+      end
     end
   end
 end
