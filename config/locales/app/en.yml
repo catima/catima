@@ -204,6 +204,7 @@ en:
     messages:
       invalid_email: is not a valid email address
       invalid_url: is an invalid or incomplete URL
+      should_have_one_iframe: should have at least one iframe tag
       membership:
         no_identifier: Please enter a group identifier
         already_member: You are already a member

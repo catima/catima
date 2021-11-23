@@ -8,19 +8,15 @@
 -
   label: 'Youtube.com'
   value: 'www.youtube.com'
-
 -
   label: 'Youtube.*'
   value: 'www.youtube.*'
-
 -
   label: '*.Youtube'
   value: '*.youtube.com'
-
 -
   label: '*.Youtube.*'
   value: '*.youtube.*'
-
 -
   label: 'Vimeo'
   value: 'www.vimeo.com'
