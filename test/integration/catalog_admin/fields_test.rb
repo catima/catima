@@ -161,14 +161,14 @@ class CatalogAdmin::FieldsTest < ActionDispatch::IntegrationTest
     end
   end
 
-  test "add a embed code field" do
+  test "add a embed iframe field" do
     log_in_as("two-admin@example.com", "password")
     visit("/two/en/admin/authors/fields")
     click_on("Embed field")
     fill_in("field[name_en]", :with => "Test")
     fill_in("field[name_plural_en]", :with => "Tests")
     fill_in("Slug (singular)", :with => "test")
-    select("code", :from => "Format")
+    select("iframe", :from => "Format")
 
     assert_difference("item_types(:two_author).fields.count") do
       click_on("Create field")
