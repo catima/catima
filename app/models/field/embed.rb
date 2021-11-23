@@ -81,7 +81,7 @@ class Field::Embed < ::Field
     private
 
     def validate_url(url, record, attrib, domains)
-      unless is_a_valid_url?(url)
+      unless a_valid_url?(url)
         record.errors.add(attrib, I18n.t("errors.messages.invalid_url"))
         return false
       end
@@ -99,7 +99,7 @@ class Field::Embed < ::Field
       true
     end
 
-    def is_a_valid_url?(url)
+    def a_valid_url?(url)
       begin
         uri = URI.parse(url)
         uri.host.present?
@@ -118,10 +118,11 @@ class Field::Embed < ::Field
     def validate_iframe(value, record, attrib, domain)
       html_doc = Nokogiri::HTML(value)
       iframe_nodes = html_doc.search('iframe')
-      if iframe_nodes.length == 0
-        add_should_have_one_iframe_error(record, attrib) and return
+      if iframe_nodes.empty?
+        add_should_have_one_iframe_error(record, attrib)
+        return
       end
-      record.data[attrib] = iframe_nodes.map { |node| node.to_s }.join('')
+      record.data[attrib] = iframe_nodes.map(&:to_s).join('')
       iframe_nodes
         .map { |node| node.attr('src') }.reject(&:nil?)
         .each { |url| validate_url(url, record, attrib, domain) }
