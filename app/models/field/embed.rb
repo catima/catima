@@ -122,7 +122,7 @@ class Field::Embed < ::Field
         add_should_have_one_iframe_error(record, attrib)
         return
       end
-      record.data[attrib] = iframe_nodes.map(&:to_s).join('')
+      record.data[attrib] = iframe_nodes.map(&:to_s).join
       iframe_nodes
         .map { |node| node.attr('src') }.reject(&:nil?)
         .each { |url| validate_url(url, record, attrib, domain) }
