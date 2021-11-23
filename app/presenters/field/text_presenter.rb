@@ -12,7 +12,7 @@ class Field::TextPresenter < FieldPresenter
 
   def formatted_value(value)
     v = begin
-      JSON.parse(value || '') || { 'format': 'raw', 'content': '' }
+      JSON.parse(value || '') || { format: 'raw', content: '' }
     rescue JSON::ParserError
       {
         'format' => field.formatted_text.to_i == 1 ? 'markdown' : 'raw',
@@ -92,10 +92,10 @@ class Field::TextPresenter < FieldPresenter
   private
 
   def sanitize(v)
-    @white_list_sanitizer ||= Rails::Html::WhiteListSanitizer.new
-    # @white_listed_tags ||= Loofah::HTML5::WhiteList::ALLOWED_ELEMENTS_WITH_LIBXML2
-    @white_listed_attrs ||= Loofah::HTML5::SafeList::ALLOWED_ATTRIBUTES + %w[data-note table_id row_id cell_id]
-    @white_listed_tags ||= Loofah::HTML5::SafeList::ALLOWED_ELEMENTS
-    safe_join([@white_list_sanitizer.sanitize(v, tags: @white_listed_tags, attributes: @white_listed_attrs).html_safe])
+    @allow_list_sanitizer ||= Rails::Html::WhiteListSanitizer.new
+    # @allow_listed_tags ||= Loofah::HTML5::WhiteList::ALLOWED_ELEMENTS_WITH_LIBXML2
+    @allow_listed_attrs ||= Loofah::HTML5::SafeList::ALLOWED_ATTRIBUTES + %w[data-note table_id row_id cell_id]
+    @allow_listed_tags ||= Loofah::HTML5::SafeList::ALLOWED_ELEMENTS
+    safe_join([@allow_list_sanitizer.sanitize(v, tags: @allow_listed_tags, attributes: @allow_listed_attrs).html_safe])
   end
 end
