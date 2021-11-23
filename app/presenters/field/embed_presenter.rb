@@ -3,7 +3,7 @@ class Field::EmbedPresenter < FieldPresenter
   COMPACT_HEIGHT = 150
 
   def input(form, method, options={})
-    if field.code?
+    if field.iframe?
       form.text_area(method, input_defaults(options))
     elsif field.url?
       form.url_field(method, input_defaults(options).reverse_merge(help: help))
@@ -11,7 +11,7 @@ class Field::EmbedPresenter < FieldPresenter
   end
 
   def value
-    if field.code?
+    if field.iframe?
       raw_value&.html_safe
       compact? ? raw_value&.gsub(/width=["']\d+["']/, "width=\"#{COMPACT_WIDTH}\"")&.gsub(/height=["']\d+["']/, "height=\"#{COMPACT_HEIGHT}\"")&.html_safe : raw_value&.html_safe
     elsif field.url? && raw_value
