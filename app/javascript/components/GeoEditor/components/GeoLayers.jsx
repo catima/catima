@@ -25,6 +25,11 @@ const GeoLayers = (props) => {
   }
 
   function handleSelectChange(values) {
+    if (!values) {
+      document.getElementById(inputId).value = '';
+      return;
+    }
+
     // Keep only label, value & attribution properties
     let selection = values.map(l => getSubset(['label', 'value', 'attribution'], l));
     // Populate the hidden field with the selected values
