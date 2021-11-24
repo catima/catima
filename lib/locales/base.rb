@@ -178,7 +178,7 @@ module Locales
     def flatten_defaults(val)
       flatten(val).each_with_object({}) do |(k, v), h|
         key = format(k)
-        h[key] = {id: k, defaultMessage: v}
+        h[key] = { id: k, defaultMessage: v }
       end
     end
 

@@ -28,7 +28,7 @@ class Category < ApplicationRecord
   end
 
   def describe
-    as_json(only: %i(name uuid)).merge("fields": fields.map(&:describe))
+    as_json(only: %i(name uuid)).merge(fields: fields.map(&:describe))
   end
 
   def assign_uuid

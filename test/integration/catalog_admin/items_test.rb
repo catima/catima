@@ -30,7 +30,7 @@ class CatalogAdmin::ItemsTest < ActionDispatch::IntegrationTest
     select("Spanish", :from => "Other Languages")
     page.execute_script(
       "document.getElementById('item_one_author_birth_time_uuid_json').value = " \
-        "'{\"Y\":2015, \"M\":12, \"D\":31, \"h\":14, \"m\":30, \"s\":17}';"
+      "'{\"Y\":2015, \"M\":12, \"D\":31, \"h\":14, \"m\":30, \"s\":17}';"
     )
 
     assert_difference("item_types(:one_author).items.count") do

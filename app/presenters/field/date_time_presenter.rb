@@ -20,13 +20,13 @@ class Field::DateTimePresenter < FieldPresenter
   end
 
   def new_style_value_text_repr(dt)
-    format_str = field.format.split('').reject { |v| dt[v].blank? }.join
+    format_str = field.format.chars.reject { |v| dt[v].blank? }.join
     validate_datetime_format_string(format_str)
     return nil if format_str.empty?
 
     begin
       dt_value = DateTime.civil_from_format(:local, *prepare_datetime_array)
-      text_repr = I18n.localize(dt_value, format: format_str.to_sym)
+      text_repr = I18n.l(dt_value, format: format_str.to_sym)
       text_repr.sub('8888', dt[0].to_s) if dt["raw_value"].nil?
     rescue StandardError
       nil

@@ -22,7 +22,7 @@ class PagesController < ApplicationController
     def self.matches?(request)
       catalog = Catalog.not_deactivated.where(:slug => request[:catalog_slug]).first!
       slug = request[:slug]
-      catalog.pages.where(:slug => slug).exists?
+      catalog.pages.exists?(:slug => slug)
     end
   end
 

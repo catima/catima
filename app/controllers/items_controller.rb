@@ -24,7 +24,7 @@ class ItemsController < ApplicationController
     def self.matches?(request)
       catalog = Catalog.not_deactivated.where(:slug => request[:catalog_slug]).first!
       slug = request[:item_type_slug]
-      slug && catalog.item_types.where(:slug => slug).exists?
+      slug && catalog.item_types.exists?(:slug => slug)
     end
   end
 

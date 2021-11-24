@@ -46,8 +46,8 @@ class Page < ApplicationRecord
 
   def describe
     as_json(only: %i(slug)).merge(
-      "title": title_json,
-      "containers": containers.map(&:describe)
+      title: title_json,
+      containers: containers.map(&:describe)
     )
   end
 end

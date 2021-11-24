@@ -28,13 +28,13 @@ class Field::FilePresenter < FieldPresenter
     info = files_as_array.map do |file|
       "<div class=\"file-link\">" \
         "<a href=\"#{file_url(file)}\" target=\"_blank\">" \
-          "<i class=\"fa fa-file\"></i> #{file['name']}" \
+        "<i class=\"fa fa-file\"></i> #{file['name']}" \
         "</a>" \
         ", #{number_to_human_size(file['size'], :prefix => :si)}" \
         "<a style=\"margin-left: 7px;\" href=\"#{file_url(file)}\" download=\"#{file['name']}\">" \
-          "<i class=\"fa fa-download\"></i>" \
+        "<i class=\"fa fa-download\"></i>" \
         "</a>" \
-      "</div>"
+        "</div>"
     end
     info.join.html_safe
   end

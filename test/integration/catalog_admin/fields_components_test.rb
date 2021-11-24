@@ -22,7 +22,6 @@ class CatalogAdmin::FieldsComponentsTest < ActionDispatch::IntegrationTest
       end
     end
 
-
     click_on('Save Book')
 
     b = book.reload

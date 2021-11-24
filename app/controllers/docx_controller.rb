@@ -41,7 +41,7 @@ class DocxController < ApplicationController
     notes = frag.css('ol.notes li.note').collect do |nel|
       [nel['id'], nel.children[0].children.to_html.strip]
     end
-    notes = Hash[notes]
+    notes = notes.to_h
     # Remove the notes
     frag.css('ol.notes').remove
     # Insert the notes into the core HTML

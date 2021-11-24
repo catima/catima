@@ -75,14 +75,14 @@ class Dump::CatalogDump < ::Dump
   def dump_categories(cat, struct_dir)
     File.write(
       File.join(struct_dir, 'categories.json'),
-      JSON.pretty_generate("categories": cat.categories.map(&:describe))
+      JSON.pretty_generate(categories: cat.categories.map(&:describe))
     )
   end
 
   def dump_choice_sets(cat, struct_dir)
     File.write(
       File.join(struct_dir, 'choice-sets.json'),
-      JSON.pretty_generate("choice-sets": cat.choice_sets.not_deleted.map(&:describe))
+      JSON.pretty_generate('choice-sets': cat.choice_sets.not_deleted.map(&:describe))
     )
   end
 
@@ -95,7 +95,7 @@ class Dump::CatalogDump < ::Dump
   def dump_items(item_type, dir)
     File.write(
       File.join(dir, "#{item_type.slug}.json"),
-      JSON.pretty_generate("item-type": item_type.slug, "items": item_type.items.map(&:describe))
+      JSON.pretty_generate('item-type': item_type.slug, items: item_type.items.map(&:describe))
     )
   end
 
@@ -112,7 +112,7 @@ class Dump::CatalogDump < ::Dump
   def dump_menu_items(cat, dir)
     File.write(
       File.join(dir, "menus.json"),
-      JSON.pretty_generate("menu-items": cat.menu_items.map(&:describe))
+      JSON.pretty_generate('menu-items': cat.menu_items.map(&:describe))
     )
   end
 end

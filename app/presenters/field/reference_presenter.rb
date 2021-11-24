@@ -8,7 +8,7 @@ class Field::ReferencePresenter < FieldPresenter
       form.text_area(
         "#{method}_json",
         input_defaults(options).reverse_merge(
-          "data-multiple": field.multiple?,
+          'data-multiple': field.multiple?,
           class: 'd-none'
         )
       ),

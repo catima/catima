@@ -16,7 +16,7 @@
 #  updated_at         :datetime         not null
 #
 
-# Note: This is the ActiveRecord model for storing advanced search configurations created by an admin
+# NOTE: This is the ActiveRecord model for storing advanced search configurations created by an admin
 #
 class AdvancedSearchConfiguration < ApplicationRecord
   TYPES = {
@@ -40,7 +40,7 @@ class AdvancedSearchConfiguration < ApplicationRecord
   validates_presence_of :catalog
   validates_presence_of :item_type
 
-  scope :with_active_item_type, -> { joins(:item_type).where('item_types.deleted_at IS NULL') }
+  scope :with_active_item_type, -> { joins(:item_type).where(item_types: { deleted_at: nil }) }
 
   serialize :description, HashSerializer
   locales :description

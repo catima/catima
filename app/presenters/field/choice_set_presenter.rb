@@ -58,10 +58,10 @@ class Field::ChoiceSetPresenter < FieldPresenter
         links_and_prefixed_names.map do |link, prefixed_link|
           tag.div(
             tag.div(link + (if link != prefixed_link
-                              tag.span(tag.i(class: "fa fa-caret-right toggle-hierarchy"), class: 'pl-2', "data-toggle": "tooltip", title: t('catalog_admin.choice_sets.choice.show_hierarchy'), 'data-action': "click->hierarchy-revealable#toggle")
+                              tag.span(tag.i(class: "fa fa-caret-right toggle-hierarchy"), class: 'pl-2', 'data-toggle': "tooltip", title: t('catalog_admin.choice_sets.choice.show_hierarchy'), 'data-action': "click->hierarchy-revealable#toggle")
                             end), 'data-hierarchy-revealable-target': 'choice') +
-              tag.div(prefixed_link + tag.span(tag.i(class: "fa fa-caret-left toggle-hierarchy"), class: 'pl-2', "data-toggle": "tooltip", title: t('catalog_admin.choice_sets.choice.hide_hierarchy'), 'data-action': "click->hierarchy-revealable#toggle"), 'data-hierarchy-revealable-target': 'choice', style: 'display: none'),
-            "data-controller": "hierarchy-revealable"
+              tag.div(prefixed_link + tag.span(tag.i(class: "fa fa-caret-left toggle-hierarchy"), class: 'pl-2', 'data-toggle': "tooltip", title: t('catalog_admin.choice_sets.choice.hide_hierarchy'), 'data-action': "click->hierarchy-revealable#toggle"), 'data-hierarchy-revealable-target': 'choice', style: 'display: none'),
+            'data-controller': "hierarchy-revealable"
           )
         end.join(" ").html_safe
       )

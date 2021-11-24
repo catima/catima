@@ -82,7 +82,7 @@ class CatalogAdmin::ItemReferenceSelectionTest < ActionDispatch::IntegrationTest
         find(".css-1wa3eu0-placeholder").click # Click on the filter input
         sleep(2)
         within(".css-4ljt47-MenuList") do # Within the filter list
-          find('div', text: test_elements[:filter_name], match: :first, visible:false, :wait => 30).click
+          find('div', text: test_elements[:filter_name], match: :first, visible: false, :wait => 30).click
         end
       end
 
