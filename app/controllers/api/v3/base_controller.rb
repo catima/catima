@@ -1,4 +1,4 @@
-class API::V3::BaseController < ActionController::Base
+class API::V3::BaseController < ApplicationController
   include Pundit
 
   respond_to :json

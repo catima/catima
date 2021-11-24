@@ -26,8 +26,8 @@ RSpec.describe 'api/v3/sessions', type: :request do
           api_v3_user: {
             type: 'object',
             properties: {
-              email: {type: 'string'},
-              password: {type: 'string'}
+              email: { type: 'string' },
+              password: { type: 'string' }
             }
           }
         },

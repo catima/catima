@@ -100,7 +100,7 @@ class ItemList::AdvancedSearchResult < ItemList
   def build_complex_fields_relations(items_strategies, strategy, criteria, scope)
     # Remove previously added criteria[:field_condition]
     criteria = criteria.except(:field_condition)
-    criteria.keys.each do |key|
+    criteria.each_key do |key|
       criteria[key][:field_condition] = "and" if criteria[key][:field_condition].blank?
 
       next unless %w[or exclude and].include?(criteria[key][:field_condition])

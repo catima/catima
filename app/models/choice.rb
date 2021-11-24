@@ -24,7 +24,7 @@ class Choice < ApplicationRecord
   belongs_to :choice_set, optional: true
 
   has_many :childrens, :class_name => Choice.to_s, foreign_key: 'parent_id', dependent: :destroy
-  belongs_to :parent, :class_name => Choice.to_s, foreign_key: 'parent_id', :optional => true
+  belongs_to :parent, :class_name => Choice.to_s, :optional => true
 
   store_translations :short_name, :required => true
   store_translations :long_name, :required => false
@@ -58,7 +58,7 @@ class Choice < ApplicationRecord
 
   def describe
     as_json(only: %i(parent_id uuid short_name_translations long_name_translations)) \
-      .merge("category": category.nil? ? nil : category.uuid)
+      .merge(category: category.nil? ? nil : category.uuid)
   end
 
   def assign_uuid

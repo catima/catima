@@ -157,7 +157,6 @@ class AdvancedSearch::ReferenceFieldTest < ActionDispatch::IntegrationTest
     end
     # First multiple input reference
     within("#advanced_search_criteria_one_author_other_collaborators_uuid_0_exact-editor") do
-
       find(".css-1wa3eu0-placeholder").click # Click on the filter input
       sleep(2)
       within(".select__menu-list") do # Within the filter list

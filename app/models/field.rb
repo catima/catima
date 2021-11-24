@@ -404,7 +404,7 @@ class Field < ApplicationRecord
     return update(:primary => false) if restricted?
 
     # Remove primary from other fields if current field is human readable
-    field_set.fields.where("fields.id != ?", id).update_all(:primary => false)
+    field_set.fields.where.not(fields: { id: id }).update_all(:primary => false)
   end
 
   def recreate_cache
