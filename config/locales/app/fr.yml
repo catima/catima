@@ -77,7 +77,7 @@ fr:
   text_field: Champ de texte
   url_field: Champ URL
   xref_field: Champ Xref
-  embed_field: Champ embed
+  embed_field: Champ d’intégration (embed)
   slug_help_text: "Minuscules, chiffres et traits d'union seulement. Pas de caractères accentués."
   add_another: "Créer et ajouter un autre"
   maintenance:
