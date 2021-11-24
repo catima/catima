@@ -6,7 +6,7 @@
       </div>
       <div class="d-flex">
         <a href="#" data-toggle="modal" data-target="#api-key-edit-modal-<%= key.id %>" href="#"><%= fa_icon(:pencil, class: "text-primary") %></a>
-        <%= link_to(fa_icon(:trash), catalog_admin_api_key_path(id: key.id), method: :delete, class: 'px-1 text-danger') %>
+        <%= link_to(fa_icon(:trash), catalog_admin_api_key_path(id: key.id), method: :delete, class: 'px-1 text-danger delete-api-key') %>
       </div>
     </div>
     <div data-toggle-display-target="revealable">
