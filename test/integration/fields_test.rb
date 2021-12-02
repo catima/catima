@@ -76,7 +76,7 @@ class FieldsTest < ActionDispatch::IntegrationTest
 
     within("body>.container") do
       assert(page.has_content?(book.creator.email))
-      assert(page.has_content?("YMDhm"))
+      assert(page.has_content?(Time.current.year.to_s))
     end
   end
 
@@ -87,7 +87,7 @@ class FieldsTest < ActionDispatch::IntegrationTest
     within("body>.container") do
       assert(page.has_content?(book.creator.email))
       assert(page.has_content?('Updated by'))
-      assert(page.has_content?("YMDhm"))
+      assert(page.has_content?(Time.current.year.to_s))
     end
   end
 end
