@@ -12,9 +12,9 @@ class Field::CompoundPresenter < FieldPresenter
 
     local_template = tpl[I18n.locale.to_s] || ''
     displayable_fields = @item.fields.where(slug: local_template.gsub('&nbsp', ' ').to_enum(:scan, /(\{\{.*?\}\})/i).map { |m, _| m.gsub('{', '').gsub('}', '') })
-    displayable_fields = displayable_fields.select { |fld| fld.displayable_to_user?(@current_user) } if @current_user
+    displayable_fields = displayable_fields.select { |fld| fld.displayable_to_user?(@user) } if @user
     displayable_fields.each do |field|
-      presenter = "#{field.class.name}Presenter".constantize.new(@view, @item, field, {}, @current_user)
+      presenter = "#{field.class.name}Presenter".constantize.new(@view, @item, field, {}, @user)
 
       local_template = local_template.gsub("{{#{field.slug}}}", presenter.value || '')
     end

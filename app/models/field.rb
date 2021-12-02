@@ -266,7 +266,7 @@ class Field < ApplicationRecord
   end
 
   # Even non readable. Useful for dumps
-  def csv_value(it, _current_user=nil)
+  def csv_value(it, _user=nil)
     raw_value(it)
   end
 

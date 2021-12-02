@@ -1,17 +1,17 @@
 class FieldPresenter
-  attr_reader :view, :item, :field, :options, :current_user
+  attr_reader :view, :item, :field, :options, :user
 
   delegate :t, :to => I18n
   delegate :uuid, :comment, :to => :field
   delegate :label, to: :field, prefix: :field
   delegate :react_component, :to => :view
 
-  def initialize(view, item, field, options={}, current_user= false)
+  def initialize(view, item, field, options={}, user=nil)
     @view = view
     @item = item
     @field = field
     @options = options
-    @current_user = current_user
+    @user = user
   end
 
   def help

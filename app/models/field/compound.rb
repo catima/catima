@@ -21,8 +21,8 @@ class Field::Compound < ::Field
     false
   end
 
-  def csv_value(item, current_user=nil)
-    Field::CompoundPresenter.new(ApplicationController.new, item, self, {}, current_user).value.to_s
+  def csv_value(item, user=nil)
+    Field::CompoundPresenter.new(ApplicationController.new, item, self, {}, user).value.to_s
   end
 
   def raw_value(item, locale=I18n.locale, suffix="")

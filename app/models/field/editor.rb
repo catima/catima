@@ -65,7 +65,7 @@ class Field::Editor < ::Field
     false
   end
 
-  def csv_value(item, _current_user=nil)
+  def csv_value(item, _user=nil)
     field_value_for_item(item)
   end
 
