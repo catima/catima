@@ -96,20 +96,18 @@ module AdvancedSearchesHelper
           required_params[:criteria][key.to_sym].each_key do |k|
             formatted_params[key.to_sym] = {}
             nested_value = required_params[:criteria][key.to_sym][k.to_sym].delete(:value)
+            formatted_params[key.to_sym] = required_params[:criteria][key.to_sym].to_enum.to_h
             if (condition = required_params[:criteria][key.to_sym][:condition])
-              formatted_params[key.to_sym] = required_params[:criteria][key.to_sym].to_enum.to_h
               formatted_params[key.to_sym][condition.to_sym] = nested_value
             else
-              formatted_params[key.to_sym] = required_params[:criteria][key.to_sym].to_enum.to_h
-            end
+                        end
           end
         else
+          formatted_params[key.to_sym] = required_params[:criteria][key.to_sym].to_enum.to_h
           if (condition = required_params[:criteria][key.to_sym][:condition])
-            formatted_params[key.to_sym] = required_params[:criteria][key.to_sym].to_enum.to_h
             formatted_params[key.to_sym][condition.to_sym] = value
           else
-            formatted_params[key.to_sym] = required_params[:criteria][key.to_sym].to_enum.to_h
-          end
+                    end
         end
       end
     end

@@ -87,7 +87,7 @@ class Field::Embed < ::Field
       end
 
       unless url.starts_with?('http')
-        record.errors.add(attrib, I18n.t("errors.messages.non_http_url"))
+        record.errors.add(attrib, I18n.t("errors.messages.invalid_url"))
         return false
       end
 
@@ -100,12 +100,10 @@ class Field::Embed < ::Field
     end
 
     def a_valid_url?(url)
-      begin
-        uri = URI.parse(url)
-        uri.host.present?
-      rescue URI::InvalidURIError
-        false
-      end
+      uri = URI.parse(url)
+      uri.host.present?
+    rescue URI::InvalidURIError
+      false
     end
 
     def add_should_have_one_iframe_error(record, attrib)

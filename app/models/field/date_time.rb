@@ -97,7 +97,7 @@ class Field::DateTime < ::Field
     values += defaults[values.length..-1]
 
     k = %w(Y M D h m s)[0...format.length]
-    Hash[k.zip values]
+    (k.zip values).to_h
   end
 
   # To facilitate form helpers, we need to create a virtual attribute that

@@ -61,11 +61,11 @@ class MenuItem < ApplicationRecord
 
   def describe
     as_json(only: %i(slug rank)) \
-      .merge("parent": parent_id.nil? ? nil : MenuItem.find(parent_id).slug,
-             "page": page.nil? ? nil : page.slug,
-             "item-type": item_type.nil? ? nil : item_type.slug,
-             "title": title_json,
-             "url": url_json
+      .merge(parent: parent_id.nil? ? nil : MenuItem.find(parent_id).slug,
+             page: page.nil? ? nil : page.slug,
+             'item-type': item_type.nil? ? nil : item_type.slug,
+             title: title_json,
+             url: url_json
             )
   end
 

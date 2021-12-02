@@ -27,7 +27,7 @@ module Loggable
   end
 
   def save_and_log!(author:, catalog:, additional_logs: nil)
-    save_and_log(author: author, catalog: catalog, additional_logs: additional_logs) || raise(ActiveRecord::RecordInvalid.new(self))
+    save_and_log(author: author, catalog: catalog, additional_logs: additional_logs) || raise(ActiveRecord::RecordInvalid, self)
   end
 
   def update_and_log(attr, author:, catalog:, additional_logs: nil)
@@ -36,7 +36,7 @@ module Loggable
   end
 
   def update_and_log!(attr, author:, catalog:, additional_logs: nil)
-    update_and_log(attr, author: author, catalog: catalog, additional_logs: additional_logs) || raise(ActiveRecord::RecordInvalid.new(self))
+    update_and_log(attr, author: author, catalog: catalog, additional_logs: additional_logs) || raise(ActiveRecord::RecordInvalid, self)
   end
 
   def destroy_and_log(author:, catalog:, additional_logs: nil)
@@ -48,7 +48,7 @@ module Loggable
   end
 
   def destroy_and_log!(author:, catalog:, additional_logs: nil)
-    destroy_and_log(author: author, catalog: catalog, additional_logs: additional_logs) || raise(ActiveRecord::RecordInvalid.new(self))
+    destroy_and_log(author: author, catalog: catalog, additional_logs: additional_logs) || raise(ActiveRecord::RecordInvalid, self)
   end
 
   private
@@ -63,10 +63,8 @@ module Loggable
       if values.is_a?(Hash)
         data = without_blank_recursive(values)
         changes.store(k, data) unless data.empty?
-      else
-        if values.first.present? || values.last.present? || values.last.is_a?(FalseClass)
-          changes.store(k, values) if values.one? || values.uniq.many?
-        end
+      elsif values.first.present? || values.last.present? || values.last.is_a?(FalseClass)
+        changes.store(k, values) if values.one? || values.uniq.many?
       end
     end
     changes

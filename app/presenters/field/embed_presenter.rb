@@ -11,10 +11,12 @@ class Field::EmbedPresenter < FieldPresenter
   end
 
   def value
+    return nil if raw_value.blank?
+
     if field.iframe?
       raw_value&.html_safe
       compact? ? raw_value&.gsub(/width=["']\d+["']/, "width=\"#{COMPACT_WIDTH}\"")&.gsub(/height=["']\d+["']/, "height=\"#{COMPACT_HEIGHT}\"")&.html_safe : raw_value&.html_safe
-    elsif field.url? && raw_value
+    elsif field.url?
       "<iframe width='#{compact? ? COMPACT_WIDTH : field.iframe_width}' height='#{compact? ? COMPACT_HEIGHT : field.iframe_height}' style='border: none;' src='#{raw_value}'></iframe>".html_safe
     end
   end

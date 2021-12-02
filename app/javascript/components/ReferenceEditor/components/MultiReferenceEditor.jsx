@@ -4,6 +4,7 @@ import ReactSelect from 'react-select';
 import striptags from 'striptags';
 import LoadingDots from '../../StyleControl/components/LoadingDots';
 import Validation from "../modules/validation";
+import {loadingDotsStyle, filterDropdownStyle} from '../modules/styles';
 
 const WAIT_INTERVAL = 800;
 
@@ -331,11 +332,6 @@ const MultiReferenceEditor = (props) => {
     );
   }
 
-  const loadingDotsStyle = {
-    minWidth: 20,
-    verticalAlign: "top"
-  };
-
   return (
     <div className="multiple-reference-container"
          style={Validation.getStyle(req, srcRef, 'MultiReferenceEditor')}
@@ -366,7 +362,9 @@ const MultiReferenceEditor = (props) => {
                 onChange={_availableRefsSelectFilter}
                 options={_getFilterOptions()}
                 placeholder={filterPlaceholder}
-                noOptionsMessage={noOptionsMessage}/>
+                noOptionsMessage={noOptionsMessage}
+                styles={filterDropdownStyle}
+              />
             </div>
           </div>
           <div>
@@ -398,7 +396,9 @@ const MultiReferenceEditor = (props) => {
                 onChange={_selectedRefsSelectFilter}
                 options={_getFilterOptions()}
                 placeholder={filterPlaceholder}
-                noOptionsMessage={noOptionsMessage}/>
+                noOptionsMessage={noOptionsMessage}
+                styles={filterDropdownStyle}
+              />
             </div>
           </div>
           <div>

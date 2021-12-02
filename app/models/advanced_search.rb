@@ -13,7 +13,7 @@
 #  uuid         :string
 #
 
-# Note: This is the ActiveRecord model for storing advanced search criteria.
+# NOTE: This is the ActiveRecord model for storing advanced search criteria.
 # The actual logic for performing advanced searches is in a separate class
 # called ItemList::AdvancedSearchResult.
 #

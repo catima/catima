@@ -110,7 +110,7 @@ en:
       greater_than_or_equal_to: must be greater than or equal to %{count}
       inclusion: is not included in the list
       invalid: is invalid
-      invalid_domain: 'Invalid domain name (valid domains: %{domains})'
+      invalid_domain: 'Invalid domain name (allowed domain(s): %{domains})'
       less_than: must be less than %{count}
       less_than_or_equal_to: must be less than or equal to %{count}
       not_a_number: is not a number

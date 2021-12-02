@@ -50,4 +50,44 @@ class FieldsTest < ActionDispatch::IntegrationTest
     assert(page.has_selector?("iframe"))
     assert_equal("https://www.youtube.com/embed/C3-skAbrO2g", page.find('iframe')['src'])
   end
+
+  test "view item with editor" do
+    book = items(:one_book_theory_of_relativity)
+    visit("/one/en/other-books/#{book.to_param}")
+
+    within("body>.container") do
+      assert(page.has_content?(book.creator.email))
+    end
+  end
+
+  test "view item with editor and updater" do
+    book = items(:one_book_theory_of_relativity)
+    visit("/one/en/other-books/#{book.to_param}")
+
+    within("body>.container") do
+      assert(page.has_content?(book.creator.email))
+      assert(page.has_content?('Updated by'))
+    end
+  end
+
+  test "view item with editor and timestamps" do
+    book = items(:one_book_theory_of_relativity)
+    visit("/one/en/other-books/#{book.to_param}")
+
+    within("body>.container") do
+      assert(page.has_content?(book.creator.email))
+      assert(page.has_content?(Time.current.year.to_s))
+    end
+  end
+
+  test "view item with editor, updater and timestamps" do
+    book = items(:one_book_theory_of_relativity)
+    visit("/one/en/other-books/#{book.to_param}")
+
+    within("body>.container") do
+      assert(page.has_content?(book.creator.email))
+      assert(page.has_content?('Updated by'))
+      assert(page.has_content?(Time.current.year.to_s))
+    end
+  end
 end

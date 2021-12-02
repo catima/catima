@@ -78,7 +78,7 @@ fr:
   url_field: Champ URL
   xref_field: Champ Xref
   compound_field: Champ composé
-  embed_field: Champ embed
+  embed_field: Champ d’intégration (embed)
   slug_help_text: "Minuscules, chiffres et traits d'union seulement. Pas de caractères accentués."
   add_another: "Créer et ajouter un autre"
   maintenance:
@@ -201,7 +201,6 @@ fr:
     messages:
       invalid_email: n'est pas une adresse e-mail valide
       invalid_url: est une URL invalide ou incomplète
-      non_http_url: est une URL invalide (sans protocole http/https)
       should_have_one_iframe: doit comporter au moins une balise iframe
       membership:
         no_identifier: Veuillez entrer un identifiant de groupe

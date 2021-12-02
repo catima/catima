@@ -14,7 +14,9 @@ module ItemReferenceHelper
   def add_multiple_reference(id, name)
     assert(page.has_css?("#{id} div.item"), :wait => 30)
     page.execute_script(
-      "Array.from(document.querySelectorAll('#{id} div.availableReferences div')).find(el => el.textContent === '#{name}').click();"
+      "Array.from(document.querySelectorAll(" \
+      "'#{id} div.availableReferences div'" \
+      ")).find(el => el.textContent === '#{name}').click();"
     )
   end
 end
