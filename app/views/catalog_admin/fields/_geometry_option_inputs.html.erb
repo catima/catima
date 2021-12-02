@@ -21,7 +21,7 @@
 ) do %>
   <%= f.hidden_field(:bounds) %>
   <%= react_component('GeoEditor/components/GeoBounds', {
-    bounds: f.object.default_bounds(-145, 185, -60, 70),
+    bounds: f.object.default_bounds(xmin: -145, xmax: 185, ymin: -60, ymax: 70),
     layers: f.object.geo_layers
   }) %>
 <% end %>

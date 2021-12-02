@@ -27,7 +27,7 @@ class ItemViewPresenter
   end
 
   def strip_p(html)
-    white_list_sanitizer = Rails::Html::WhiteListSanitizer.new
-    white_list_sanitizer.sanitize(html, tags: %w(b strong i emph u strike sup sub a))
+    allow_list_sanitizer = Rails::Html::WhiteListSanitizer.new
+    allow_list_sanitizer.sanitize(html, tags: %w(b strong i emph u strike sup sub a))
   end
 end

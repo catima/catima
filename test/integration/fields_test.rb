@@ -1,7 +1,6 @@
 require "test_helper"
 
 class FieldsTest < ActionDispatch::IntegrationTest
-
   include ItemReferenceHelper
 
   test "create and view item with a compound field" do
@@ -44,7 +43,7 @@ class FieldsTest < ActionDispatch::IntegrationTest
       click_on("Twos")
     end
 
-    within('.container') do ||
+    within('.container') do
       all(:css, 'a').last.click
     end
 
