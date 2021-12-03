@@ -6,9 +6,7 @@
       </li>
     <% end %>
   </ul>
-
   <%= f.hidden_field(:template, value: f.object.template || JSON.dump(@field.item_type.catalog.valid_locales.map { |e| [e, ''] }.to_h)) %>
-
   <div class="tab-content">
     <% @field.item_type.catalog.valid_locales.each_with_index do |l, i| %>
         <div id="<%= l %>" role="tabpanel" class="tab-pane <%= "active" if i == 0 %>">
