@@ -15,7 +15,6 @@ class Field::CompoundPresenter < FieldPresenter
     displayable_fields = displayable_fields.select { |fld| fld.displayable_to_user?(@user) } if @user
     displayable_fields.each do |field|
       presenter = "#{field.class.name}Presenter".constantize.new(@view, @item, field, {}, @user)
-
       local_template = local_template.gsub("{{#{field.slug}}}", presenter.value || '')
     end
     local_template = local_template.gsub(/(\{\{.*?\}\})/i, '')
