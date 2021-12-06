@@ -9,11 +9,11 @@ class Field::CompoundPresenter < FieldPresenter
   def raw_input(form, method, options={}, i18n=false)
     return i18n_input(form, method, options) if i18n
 
-    form.text_field(method, input_defaults(options).reverse_merge(:help => help, :value => strip_tags(JSON.parse(field.template)[field.item_type.catalog.valid_locales.first]), :readonly => true))
+    form.text_field(method, input_defaults(options).reverse_merge(help: help, value: strip_tags(JSON.parse(field.template)[field.item_type.catalog.valid_locales.first]), readonly: true))
   end
 
   def i18n_input(form, method, options={})
-    locale_form_group(form, method, :text_field, input_defaults(options.reverse_merge(:help => help, :value => field.template, :readonly => true, is_compound: true)))
+    locale_form_group(form, method, :text_field, input_defaults(options.reverse_merge(help: help, value: field.template, readonly: true, is_compound: true)))
   end
 
   def value
@@ -28,7 +28,6 @@ class Field::CompoundPresenter < FieldPresenter
     displayable_fields = displayable_fields.select { |fld| fld.displayable_to_user?(@user) } if @user
     displayable_fields.each do |field|
       presenter = "#{field.class.name}Presenter".constantize.new(@view, @item, field, {}, @user)
-
       local_template = local_template.gsub("{{#{field.slug}}}", presenter.value || '')
     end
     local_template = local_template.gsub(/(\{\{.*?\}\})/i, '')
