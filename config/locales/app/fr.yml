@@ -327,6 +327,7 @@ fr:
   helpers:
     help:
       field/url: Une URL complète, y compris la partie http
+      field/compound: Markup du champ composé
     label:
       catalog:
         other_languages: Autres langues supportées

@@ -21,7 +21,6 @@ GIT
   specs:
     refile (0.7.0)
       mime-types
-      rails-assets-mousetrap (= 1.6.2)
       sinatra (>= 2.0.0, <= 3.0.0)
 
 GEM

@@ -79,6 +79,7 @@ module LocaleHelper
 
     method_localized = "#{method}_#{locale}"
     options_localized = locale_form_input_options(locales, locale, options)
+    options_localized[:value] = strip_tags(JSON.parse(options_localized[:value])[locale]) if options[:is_compound]
 
     form.public_send(builder_method, method_localized, *args, options_localized)
   end

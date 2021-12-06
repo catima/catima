@@ -1,6 +1,19 @@
 class Field::CompoundPresenter < FieldPresenter
+  delegate :locale_form_group, :strip_tags, :to => :view
+
   def input(form, method, options={})
-    form.text_field(method, input_defaults(options).reverse_merge(:help => help, :value => field.template, :readonly => true))
+    i18n = field.item_type.catalog.valid_locales.many?
+    raw_input(form, method, options, i18n)
+  end
+
+  def raw_input(form, method, options={}, i18n=false)
+    return i18n_input(form, method, options) if i18n
+
+    form.text_field(method, input_defaults(options).reverse_merge(:help => help, :value => strip_tags(JSON.parse(field.template)[field.item_type.catalog.valid_locales.first]), :readonly => true))
+  end
+
+  def i18n_input(form, method, options={})
+    locale_form_group(form, method, :text_field, input_defaults(options.reverse_merge(:help => help, :value => field.template, :readonly => true, is_compound: true)))
   end
 
   def value
