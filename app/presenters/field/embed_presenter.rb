@@ -14,14 +14,14 @@ class Field::EmbedPresenter < FieldPresenter
     return nil if raw_value.blank?
 
     if field.iframe?
-      raw_value&.html_safe
-
       if compact?
-        raw_value&.gsub(/style=["'].*["']/, "style=\"width:#{COMPACT_WIDTH}px; height:#{COMPACT_HEIGHT}px; border: none;\"")
-                         &.gsub(/width=["']\d+["']/, "width=\"#{COMPACT_WIDTH}\"")
-                         &.gsub(/height=["']\d+["']/, "height=\"#{COMPACT_HEIGHT}\"")
-                         &.html_safe
+        return raw_value&.gsub(/style=["'].*["']/, "style=\"width:#{COMPACT_WIDTH}px; height:#{COMPACT_HEIGHT}px; border: none;\"")
+                 &.gsub(/width=["']\d+["']/, "width=\"#{COMPACT_WIDTH}\"")
+                 &.gsub(/height=["']\d+["']/, "height=\"#{COMPACT_HEIGHT}\"")
+                 &.html_safe
       end
+
+      raw_value&.html_safe
     elsif field.url?
       "<iframe width='#{compact? ? COMPACT_WIDTH : field.iframe_width}' height='#{compact? ? COMPACT_HEIGHT : field.iframe_height}' style='border: none;' src='#{raw_value}'></iframe>".html_safe
     end
