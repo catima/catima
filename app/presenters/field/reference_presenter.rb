@@ -1,7 +1,9 @@
 class Field::ReferencePresenter < FieldPresenter
+  include ActionView::Helpers
+  include ItemsHelper
+  include FieldsHelper
+
   delegate :references, :selected_references, :to => :field
-  delegate :item_path, :link_to, :item_display_name,
-           :to => :view
 
   def input(form, method, options={})
     [
@@ -56,7 +58,7 @@ class Field::ReferencePresenter < FieldPresenter
     refs.map do |ref|
       link_to(
         item_display_name(ref),
-        item_path(
+        Rails.application.routes.url_helpers.item_path(
           :catalog_slug => ref.catalog,
           :item_type_slug => ref.item_type,
           :locale => I18n.locale,

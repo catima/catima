@@ -14,20 +14,20 @@ class ItemViewPresenter
 
   def render
     tpl = JSON.parse(@item_view.template)
-    local_tpl = tpl[@locale.to_s] || ''
+    local_template = tpl[@locale.to_s] || ''
     # Filter away http and https before item link
-    local_tpl = local_tpl.sub('http://{{_itemLink}}', '{{_itemLink}}')
-    local_tpl = local_tpl.sub('https://{{_itemLink}}', '{{_itemLink}}')
-    local_tpl = local_tpl.sub('{{_itemLink}}', item_link)
+    local_template = local_template.sub('http://{{_itemLink}}', '{{_itemLink}}')
+    local_template = local_template.sub('https://{{_itemLink}}', '{{_itemLink}}')
+    local_template = local_template.sub('{{_itemLink}}', item_link)
     @item.fields.each do |field|
       presenter = "#{field.class.name}Presenter".constantize.new(@view, @item, field, {})
-      local_tpl = local_tpl.sub('{{' + field.slug + '}}', presenter.value || '')
+      local_template = local_template.sub("{{#{field.slug}}}", presenter.value || '')
     end
-    (@options[:strip_p] == true ? strip_p(local_tpl) : local_tpl).html_safe
+    (@options[:strip_p] == true ? strip_p(local_template) : local_template).html_safe
   end
 
   def strip_p(html)
-    white_list_sanitizer = Rails::Html::WhiteListSanitizer.new
-    white_list_sanitizer.sanitize(html, tags: %w(b strong i emph u strike sup sub a))
+    allow_list_sanitizer = Rails::Html::WhiteListSanitizer.new
+    allow_list_sanitizer.sanitize(html, tags: %w(b strong i emph u strike sup sub a))
   end
 end

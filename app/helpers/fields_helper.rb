@@ -61,7 +61,7 @@ module FieldsHelper
 
   def field_presenter(item, field, options={})
     field = resolve_field(item.try(:item_type), field)
-    "#{field.class.name}Presenter".constantize.new(self, item, field, options)
+    "#{field.class.name}Presenter".constantize.new(self, item, field, options, @current_user)
   end
 
   # Returns all items of the given type that reference an item by a certain
@@ -134,7 +134,7 @@ module FieldsHelper
   # Returns all displayable fields for a collection of fields without the restricted ones
   def displayable_fields(fields)
     fields.select do |fld|
-      fld.displayable_to_user?(current_user)
+      fld.displayable_to_user?(@current_user)
     end
   end
 end

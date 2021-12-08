@@ -36,6 +36,10 @@ json.field_specific_keys do
     json.format field.format
   end
 
+  if field.is_a?(Field::Compound)
+    json.template field.template
+  end
+
   if field.is_a?(Field::Decimal)
     json.maximum field.maximum
     json.minimum field.minimum

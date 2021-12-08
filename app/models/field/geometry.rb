@@ -51,7 +51,7 @@ class Field::Geometry < ::Field
     %i(bounds layers)
   end
 
-  def default_bounds(xmin=-60, xmax=60, ymin=-45, ymax=65)
+  def default_bounds(xmin: -60, xmax: 60, ymin: -45, ymax: 65)
     geo_bounds = bounds.present? ? JSON.parse(bounds) : { 'xmin' => xmin, 'xmax' => xmax, 'ymin' => ymin, 'ymax' => ymax }
     geo_bounds.slice('xmin', 'xmax', 'ymin', 'ymax')
   end
@@ -60,7 +60,7 @@ class Field::Geometry < ::Field
     layers.present? ? JSON.parse(layers) : []
   end
 
-  def csv_value(_item)
+  def csv_value(_item, _user=nil)
     return if super.blank?
 
     super["features"].map do |f|

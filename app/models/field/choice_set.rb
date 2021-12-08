@@ -161,7 +161,7 @@ class Field::ChoiceSet < ::Field
     ]
   end
 
-  def csv_value(it)
+  def csv_value(it, _user=nil)
     return selected_choices(it).map(&:short_name).join('; ') if multiple?
 
     ch = selected_choice(it)

@@ -1,5 +1,6 @@
 class Field::URLPresenter < FieldPresenter
-  delegate :locale_form_group, :link_to, :to => :view
+  include ActionView::Helpers
+  include LocaleHelper
 
   def input(form, method, options={})
     i18n = options.fetch(:i18n) { field.i18n? }

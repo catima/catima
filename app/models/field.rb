@@ -49,6 +49,7 @@ class Field < ApplicationRecord
     "text" => "Field::Text",
     "url" => "Field::URL",
     "xref" => "Field::Xref",
+    "compound" => "Field::Compound",
     "embed" => "Field::Embed"
   }.freeze
 
@@ -265,7 +266,7 @@ class Field < ApplicationRecord
   end
 
   # Even non readable. Useful for dumps
-  def csv_value(it)
+  def csv_value(it, _user=nil)
     raw_value(it)
   end
 

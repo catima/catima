@@ -77,6 +77,7 @@ fr:
   text_field: Champ de texte
   url_field: Champ URL
   xref_field: Champ Xref
+  compound_field: Champ composé
   embed_field: Champ d’intégration (embed)
   slug_help_text: "Minuscules, chiffres et traits d'union seulement. Pas de caractères accentués."
   add_another: "Créer et ajouter un autre"
@@ -326,6 +327,7 @@ fr:
   helpers:
     help:
       field/url: Une URL complète, y compris la partie http
+      field/compound: Markup du champ composé
     label:
       catalog:
         other_languages: Autres langues supportées
