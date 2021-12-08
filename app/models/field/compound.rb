@@ -6,7 +6,7 @@ class Field::Compound < ::Field
   end
 
   def sql_type
-    "VARCHAR(512)"
+    "TEXT"
   end
 
   def human_readable?
