@@ -1,6 +1,7 @@
 import 'es6-shim';
 import PropTypes from "prop-types";
 import React, {useState, useEffect} from 'react';
+import Translations from '../../Translations/components/Translations';
 import {v4 as uuidv4} from 'uuid';
 
 const TemplateEditor = (props) => {
@@ -74,7 +75,7 @@ const TemplateEditor = (props) => {
       const button = ui.buttonGroup([
         ui.button({
           className: 'dropdown-toggle',
-          contents: 'Add field',
+          contents: Translations.messages['add_field'],
           data: {
             toggle: 'dropdown'
           }
@@ -97,7 +98,7 @@ const TemplateEditor = (props) => {
     return function () {
       const ui = $.summernote.ui;
       const button = ui.button({
-        contents: 'Item link',
+        contents: Translations.messages['item_link'],
         click: function () {
           const range = editor.summernote('editor.createRange');
           let selectedText = range.toString();

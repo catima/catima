@@ -331,6 +331,7 @@ en:
   helpers:
     help:
       field/url: A full URL, including the http part
+      field/compound: Representation of the compound field
     label:
       catalog:
         other_languages: Other supported languages
@@ -426,6 +427,8 @@ en:
   deactivate: Deactivate
   reactivate: Reactivate
   loading: Loading
+  add_field: Add field
+  item_link: Item link
 
   layouts:
     catalog_admin:
@@ -666,6 +669,8 @@ en:
         domains_help: You can add additional domains to your list
         domains_component_no_options: No more domains to add
         domains_component_placeholder: Add some domains
+      compound_option_inputs:
+        help: Please define the composition of the fields in the editor. The available fields can be selected with the "Add field" button. Please do not change the integration structure of the fields {{my_field}}.
       file_option_inputs:
         types: 'Types'
         types_help: "A comma-separated list of allowed file extensions: e.g. “doc, pdf”"

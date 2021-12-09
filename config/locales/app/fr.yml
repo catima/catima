@@ -327,7 +327,7 @@ fr:
   helpers:
     help:
       field/url: Une URL complète, y compris la partie http
-      field/compound: Markup du champ composé
+      field/compound: Représentation du champ composé
     label:
       catalog:
         other_languages: Autres langues supportées
@@ -423,6 +423,8 @@ fr:
   and: et
   exclude: sauf
   loading: Chargement
+  add_field: Ajouter un champ
+  item_link: Lien de la fiche
 
   layouts:
     catalog_admin:
@@ -663,6 +665,8 @@ fr:
         domains_help: Vous pouvez ajouter des domaines supplémentaires à votre liste
         domains_component_no_options: Plus de domaines à ajouter
         domains_component_placeholder: Ajouter des domaines
+      compound_option_inputs:
+        help: "Veuillez définir la composition des champs dans l'éditeur. Les champs disponibles sont sélectionables grâce au bouton \"Ajouter un champ\". Veuillez ne pas modifier la structure d'intégration des champs {{mon_champ}}."
       file_option_inputs:
         types: 'Types'
         types_help: "Une liste d'extension de fichiers permis (avec séparateur virgule): p.ex. «doc, pdf»"

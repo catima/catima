@@ -41,17 +41,17 @@
 <%= f.label(:template) %>
 
 <div id="template-tabs">
-  <div class="nav nav-tabs" style="margin-bottom: 15px;">
+  <ul class="nav nav-tabs" class="mb-0">
     <% @item_view.item_type.catalog.valid_locales.each_with_index do |l, i| %>
       <li role="presentation" class="nav-item">
-        <%= link_to l, "##{l}", class: ["nav-link", ("active" if i == 0)] %>
+        <%= link_to l, "##{l}", class: ["nav-link", ('active' if i == 0)], "data-toggle": "tab" %>
       </li>
     <% end %>
-  </div>
+  </ul>
 
   <div class="tab-content">
     <% @item_view.item_type.catalog.valid_locales.each_with_index do |l, i| %>
-    <div role="tabpanel" class="tab-pane <% if i==0 %>active<% end %>" id="<%= l %>">
+      <div id="<%= l %>" role="tabpanel" class="tab-pane <%= "active" if i == 0 %>">
       <div class="tabcontent">
         <%= react_component("TemplateEditor/components/TemplateEditor", {
           :contentRef => "item_view_template",
@@ -64,6 +64,7 @@
   </div>
 
 </div>
+
 <script>
   $('#template-tabs .nav-tabs a').click(function (e) {
     e.preventDefault();

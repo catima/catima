@@ -1,10 +1,8 @@
 <div class="modal fade" id="new-choice-set-modal" tabindex="-1" role="dialog" aria-labelledby="Create a new choice set">
   <div class="modal-dialog" role="document">
     <div class="modal-content">
-
       <% choice_set = field.catalog.choice_sets.new %>
       <%= bootstrap_form_for([:catalog_admin, choice_set], remote: true) do |f| %>
-
         <div class="modal-header">
           <h4 class="modal-title"><%= t('.create_new_choice_set') %></h4>
           <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
@@ -18,9 +16,7 @@
           <button type="button" class="btn btn-outline-secondary" data-dismiss="modal"><%= t('cancel') %></button>
           <%= f.submit t('create'), class: 'btn btn-success' %>
         </div>
-
       <% end %>
-
     </div>
   </div>
 </div>
