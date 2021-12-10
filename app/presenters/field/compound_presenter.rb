@@ -6,7 +6,7 @@ class Field::CompoundPresenter < FieldPresenter
     raw_input(form, method, options, i18n)
   end
 
-  def raw_input(form, method, options={}, i18n: false)
+  def raw_input(form, method, options={}, i18n=false)
     return i18n_input(form, method, options) if i18n
 
     form.text_field(
