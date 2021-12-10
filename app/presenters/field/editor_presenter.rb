@@ -10,18 +10,16 @@ class Field::EditorPresenter < FieldPresenter
   def value
     editor = field.original_editor(item.creator_id)
 
-    if options.key?(:style) && options[:style] == :compact
-      editor.email
-    else
-      updater = field.original_editor(item.updater_id)
-      [
-        I18n.t('items.editor.created_by', editor: editor.email),
-        (I18n.t('items.editor.at', date: I18n.l(item.created_at, format: 'YMDhm'.to_sym)) if timestamps_active?),
-        ('<br>' if updater_active? && updater&.email.present?),
-        (I18n.t('items.editor.updated_by', updater: updater&.email) if updater_active? && updater&.email.present?),
-        (I18n.t('items.editor.at', date: I18n.l(item.updated_at, format: 'YMDhm'.to_sym)) if updater_active? && updater&.email.present? && timestamps_active?)
-      ].join(' ')
-    end
+    return editor.email if options.key?(:style) && options[:style] == :compact
+
+    updater = field.original_editor(item.updater_id)
+    [
+      I18n.t('items.editor.created_by', editor: editor.email),
+      (I18n.t('items.editor.at', date: I18n.l(item.created_at, format: 'YMDhm'.to_sym)) if timestamps_active?),
+      ('<br>' if updater_active? && updater&.email.present?),
+      (I18n.t('items.editor.updated_by', updater: updater&.email) if updater_active? && updater&.email.present?),
+      (I18n.t('items.editor.at', date: I18n.l(item.updated_at, format: 'YMDhm'.to_sym)) if updater_active? && updater&.email.present? && timestamps_active?)
+    ].join(' ').html_safe
   end
 
   def field_value_for_item(item)
