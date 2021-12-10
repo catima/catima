@@ -14,8 +14,14 @@
           <%= react_component("TemplateEditor/components/TemplateEditor", {
             contentRef: "field_template",
             locale: l,
-            noItemField: true,
-            fields: @field.item_type.fields.reject { |f| f.id == @field.id || (!f.human_readable? && !f.is_a?(Field::Compound)) }.map { |f| {slug: f.slug, name: f.name, type: f.type[7..-1]} }
+            isCompact: true,
+            fields: @field.item_type.fields
+              .reject {
+                |f| f.id == @field.id || !compoundable?(f)
+              }
+              .map {
+                |f| {slug: f.slug, name: f.name, type: f.type[7..-1]}
+              }
           }) %>
         </div>
         <small class="form-text text-muted" style="font-size: 100%;">

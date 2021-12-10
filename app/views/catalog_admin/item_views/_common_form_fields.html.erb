@@ -56,6 +56,7 @@
         <%= react_component("TemplateEditor/components/TemplateEditor", {
           :contentRef => "item_view_template",
           :locale => l,
+          isCompact: false,
           :fields => @item_view.item_type.fields.map { |f| {slug: f.slug, name: f.name, type: f.type[7..-1]} }
         }) %>
       </div>

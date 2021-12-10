@@ -331,7 +331,6 @@ en:
   helpers:
     help:
       field/url: A full URL, including the http part
-      field/compound: Representation of the compound field
     label:
       catalog:
         other_languages: Other supported languages

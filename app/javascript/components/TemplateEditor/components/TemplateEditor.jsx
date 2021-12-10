@@ -9,12 +9,16 @@ const TemplateEditor = (props) => {
     contentRef,
     locale,
     fields,
-    noItemField
+    isCompact
   } = props
 
   const uid = `summernote-${uuidv4()}`;
-  const [editor, setEditor] = useState(false)
-  const [html, setHtml] = useState(false)
+  const [editor, setEditor] = useState(false);
+  const [html, setHtml] = useState(false);
+  let tools = [
+    ['style', ['bold', 'italic', 'underline', 'clear']],
+    ['font', ['strikethrough', 'superscript', 'subscript']]
+  ];
 
   function _loadContent() {
     let v = JSON.parse(document.getElementById(contentRef).value || {});
@@ -36,18 +40,24 @@ const TemplateEditor = (props) => {
 
   useEffect(() => {
     if (editor && html !== false) {
+      if(isCompact) {
+        tools.push(
+            ['templateEditor', ['fieldsMenu']]
+        );
+      } else {
+        tools.push(
+            ['fontsize', ['fontsize']],
+            ['color', ['color']],
+            ['para', ['ul', 'ol', 'paragraph']],
+            ['height', ['height']],
+            ['insert', ['picture', 'link', 'table', 'hr']],
+            ['templateEditor', ['fieldsMenu', 'itemLinkButton']]
+        );
+      }
+
       const options = {
         minHeight: 150,
-        toolbar: [
-          ['style', ['bold', 'italic', 'underline', 'clear']],
-          ['font', ['strikethrough', 'superscript', 'subscript']],
-          ['fontsize', ['fontsize']],
-          ['color', ['color']],
-          ['para', ['ul', 'ol', 'paragraph']],
-          ['height', ['height']],
-          ['insert', ['picture', 'link', 'table', 'hr']],
-          ['templateEditor', noItemField ? ['fieldsMenu'] : ['fieldsMenu', 'itemLinkButton']]
-        ],
+        toolbar: tools,
         buttons: {
           fieldsMenu: fieldsMenu(editor, fields),
           itemLinkButton: itemLinkButton(editor),
