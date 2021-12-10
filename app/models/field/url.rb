@@ -33,7 +33,17 @@
 #
 
 class Field::URL < ::Field
+  def sql_value(item)
+    value = value_for_item(item)
+
+    return value['_translations'].to_json.to_s.gsub("'") { "\\'" } if i18n?
+
+    value.to_s.gsub("'") { "\\'" }
+  end
+
   def sql_type
+    return "JSON" if i18n?
+
     "VARCHAR(512)"
   end
 

@@ -123,12 +123,14 @@ class Field::Text < ::Field
 
     return csv_value(item).to_s.gsub("'") { "\\'" } if formatted?
 
-    return value['_translations'].to_s.gsub("'") { "\\'" } if i18n?
+    return value['_translations'].to_json.to_s.gsub("'") { "\\'" } if i18n?
 
     value.to_s.gsub("'") { "\\'" }
   end
 
   def sql_type
+    return "JSON" if i18n?
+
     if maximum.present?
       maximum = [maximum.to_i, 21_845].max
       # 21845 is the max length of the SQL TEXT type
