@@ -35,6 +35,7 @@
 class Field::URL < ::Field
   def sql_value(item)
     value = value_for_item(item)
+    return unless value
 
     return value['_translations'].to_json.to_s.gsub("'") { "\\'" } if i18n?
 

@@ -120,10 +120,21 @@ class Field::Text < ::Field
 
   def sql_value(item)
     value = value_for_item(item)
+    return unless value
 
-    return csv_value(item).to_s.gsub("'") { "\\'" } if formatted?
+    if i18n?
+      translations = value['_translations']
 
-    return value['_translations'].to_json.to_s.gsub("'") { "\\'" } if i18n?
+      if formatted?
+        translations = JSON.generate(translations.map { |k,_| [k, raw_value(item, k)] }.to_h)
+      else
+        translations = translations.to_json
+      end
+
+      return translations.to_s.gsub('\"') { '\\\"' }
+    end
+
+    return raw_value(item).to_s.gsub("'") { "\\'" } if formatted?
 
     value.to_s.gsub("'") { "\\'" }
   end
