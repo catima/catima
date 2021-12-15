@@ -1,5 +1,6 @@
 class CatalogAdmin::PagesController < CatalogAdmin::BaseController
   layout "catalog_admin/setup"
+  skip_before_action :verify_authenticity_token, only: [:filterable_field_select_options, :field_format_select_options]
 
   def index
     authorize(Page)
@@ -45,6 +46,16 @@ class CatalogAdmin::PagesController < CatalogAdmin::BaseController
       @page.destroy
       redirect_to(catalog_admin_pages_path, :notice => destroyed_message)
     end
+  end
+
+  def filterable_field_select_options
+    @item_type = ItemType.find(params[:item_type_id])
+    render 'catalog_admin/containers/item_list/filterable_field_select_options', layout: false
+  end
+
+  def field_format_select_options
+    @field = Field.find(params[:field_id])
+    render json: {isDateTime: @field.is_a?(Field::DateTime)}
   end
 
   private

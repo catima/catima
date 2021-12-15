@@ -235,6 +235,8 @@ Rails.application.routes.draw do
     end
 
     resources :pages, :path => "_pages", :param => :slug do
+      post :filterable_field_select_options, on: :collection
+      post :field_format_select_options, on: :collection
       resources :containers,
                 :path => "_containers",
                 :shallow => true,
@@ -365,6 +367,10 @@ Rails.application.routes.draw do
     get ":slug" => "pages#show",
         :constraints => PagesController::Constraint,
         :as => :page
+
+    get ':slug/:container_id/items/' => "pages#items",
+        :constraints => PagesController::Constraint,
+        :as => :page_items
 
     resources :items,
               :path => ":item_type_slug",

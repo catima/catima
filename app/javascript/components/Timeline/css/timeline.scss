@@ -1,0 +1,67 @@
+.timeline {
+  overflow: hidden;
+  padding: 4rem 0;
+}
+
+.timeline__container {
+  overflow: hidden;
+  padding: 2em 0;
+  position: relative;
+
+  &::before { // this is the timeline vertical line
+    content: '';
+    position: absolute;
+    top: 0;
+    height: 100%;
+    width: 4px;
+    background: #8080801f;
+    left: 50%;
+    -webkit-transform: translateX(-50%);
+    -ms-transform: translateX(-50%);
+    transform: translateX(-50%);
+  }
+}
+
+.timeline__group {
+  display: flex;
+  position: relative;
+  z-index: 1;
+  min-height: 4rem;
+  margin-bottom: 1em;
+  //margin-bottom: 1rem;
+  .timeline__group__title {
+    padding: 0.5rem 1rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-shrink: 0;
+    order: 1; // flex order -> place the image after timeline__content
+    position: absolute;
+    left: 50%;
+    transform: translate(-50%, 0px);
+    background: white;
+    border: 1px solid #8080801f;
+
+  }
+  .timeline__group__items{
+    width: 100%;
+    display: flex;
+    position: relative;
+    flex-flow: column;
+    margin-top: 3.5rem
+  }
+  .timeline__group__item__wrapper {
+    display: flex;
+
+    &.odd {
+      flex-direction: row-reverse; // for even blocks -> lay out content from right to left
+    }
+  }
+  .timeline__group__item {
+    padding: 1rem;
+    width: 35%;
+    flex-grow: 1; // expand element so that it takes up all the available space inside its parent
+    flex-grow: 0; // prevent element from growing inside its parent
+    border: 1px solid #8080801f;
+  }
+}

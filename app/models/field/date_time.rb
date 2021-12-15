@@ -55,11 +55,12 @@ class Field::DateTime < ::Field
   end
 
   # Translates YMD.. hash into an array [Y, M, D, h, m, s] (or nil).
-  def value_as_array(item)
+  def value_as_array(item, format: "YMDhms" )
     value = raw_value(item)
     return nil if value.nil?
 
-    defaults = { "Y" => "", "M" => "", "D" => "", "h" => "", "m" => "", "s" => "" }
+    defaults = {}
+    format.each_char{|c| defaults[c] = "" }
     defaults.map do |key, default_value|
       value[key] || default_value
     end

@@ -4,23 +4,25 @@ class Field::DateTimePresenter < FieldPresenter
   # Returns the date time value as text for presentation.
   # As we support any date of any range, we format the date first with a fixed year (8888),
   # and replace the year after with the true one.
-  def value
+  def value(format: false)
     dt = raw_value
     return nil if dt.nil? || dt.values.all?(&:blank?)
 
-    dt["raw_value"].nil? ? new_style_value_text_repr(dt) : old_style_value_text_repr(dt)
+    dt["raw_value"].nil? ? new_style_value_text_repr(dt, format) : old_style_value_text_repr(dt, format)
   end
 
   # Text representation for old style values, such as {:raw_value => 45034034}
-  def old_style_value_text_repr(dt)
+  def old_style_value_text_repr(dt, format)
+    format = format ? format : field.format
     dt_value = Time.zone.at(dt["raw_value"])
     return dt_value if view.nil?
 
-    I18n.l(dt_value, format: field.format.to_sym)
+    I18n.l(dt_value, format: format.to_sym)
   end
 
-  def new_style_value_text_repr(dt)
-    format_str = field.format.chars.reject { |v| dt[v].blank? }.join
+  def new_style_value_text_repr(dt, format)
+    format = format ? format : field.format
+    format_str = format.chars.reject { |v| dt[v].blank? }.join
     validate_datetime_format_string(format_str)
     return nil if format_str.empty?
 

@@ -105,7 +105,6 @@ CREATE TABLE public.advanced_searches (
 --
 
 CREATE SEQUENCE public.advanced_searches_id_seq
-    AS integer
     START WITH 1
     INCREMENT BY 1
     NO MINVALUE
@@ -281,8 +280,8 @@ ALTER SEQUENCE public.api_logs_id_seq OWNED BY public.api_logs.id;
 CREATE TABLE public.ar_internal_metadata (
     key character varying NOT NULL,
     value character varying,
-    created_at timestamp(6) without time zone NOT NULL,
-    updated_at timestamp(6) without time zone NOT NULL
+    created_at timestamp without time zone NOT NULL,
+    updated_at timestamp without time zone NOT NULL
 );
 
 
@@ -306,7 +305,6 @@ CREATE TABLE public.catalog_permissions (
 --
 
 CREATE SEQUENCE public.catalog_permissions_id_seq
-    AS integer
     START WITH 1
     INCREMENT BY 1
     NO MINVALUE
@@ -353,7 +351,6 @@ CREATE TABLE public.catalogs (
 --
 
 CREATE SEQUENCE public.catalogs_id_seq
-    AS integer
     START WITH 1
     INCREMENT BY 1
     NO MINVALUE
@@ -388,7 +385,6 @@ CREATE TABLE public.categories (
 --
 
 CREATE SEQUENCE public.categories_id_seq
-    AS integer
     START WITH 1
     INCREMENT BY 1
     NO MINVALUE
@@ -425,7 +421,6 @@ CREATE TABLE public.choice_sets (
 --
 
 CREATE SEQUENCE public.choice_sets_id_seq
-    AS integer
     START WITH 1
     INCREMENT BY 1
     NO MINVALUE
@@ -466,7 +461,6 @@ CREATE TABLE public.choices (
 --
 
 CREATE SEQUENCE public.choices_id_seq
-    AS integer
     START WITH 1
     INCREMENT BY 1
     NO MINVALUE
@@ -499,7 +493,6 @@ CREATE TABLE public.configurations (
 --
 
 CREATE SEQUENCE public.configurations_id_seq
-    AS integer
     START WITH 1
     INCREMENT BY 1
     NO MINVALUE
@@ -527,7 +520,10 @@ CREATE TABLE public.containers (
     content jsonb,
     created_at timestamp without time zone NOT NULL,
     updated_at timestamp without time zone NOT NULL,
-    locale character varying
+    locale character varying,
+    filterable_field_id integer,
+    field_format character varying,
+    sort_direction character varying
 );
 
 
@@ -536,7 +532,6 @@ CREATE TABLE public.containers (
 --
 
 CREATE SEQUENCE public.containers_id_seq
-    AS integer
     START WITH 1
     INCREMENT BY 1
     NO MINVALUE
@@ -607,7 +602,6 @@ CREATE TABLE public.exports (
 --
 
 CREATE SEQUENCE public.exports_id_seq
-    AS integer
     START WITH 1
     INCREMENT BY 1
     NO MINVALUE
@@ -640,7 +634,6 @@ CREATE TABLE public.favorites (
 --
 
 CREATE SEQUENCE public.favorites_id_seq
-    AS integer
     START WITH 1
     INCREMENT BY 1
     NO MINVALUE
@@ -696,7 +689,6 @@ CREATE TABLE public.fields (
 --
 
 CREATE SEQUENCE public.fields_id_seq
-    AS integer
     START WITH 1
     INCREMENT BY 1
     NO MINVALUE
@@ -770,7 +762,6 @@ CREATE TABLE public.item_types (
 --
 
 CREATE SEQUENCE public.item_types_id_seq
-    AS integer
     START WITH 1
     INCREMENT BY 1
     NO MINVALUE
@@ -807,7 +798,6 @@ CREATE TABLE public.item_views (
 --
 
 CREATE SEQUENCE public.item_views_id_seq
-    AS integer
     START WITH 1
     INCREMENT BY 1
     NO MINVALUE
@@ -851,7 +841,6 @@ CREATE TABLE public.items (
 --
 
 CREATE SEQUENCE public.items_id_seq
-    AS integer
     START WITH 1
     INCREMENT BY 1
     NO MINVALUE
@@ -915,8 +904,29 @@ CREATE TABLE public.menu_items (
     rank integer,
     created_at timestamp without time zone NOT NULL,
     updated_at timestamp without time zone NOT NULL,
+    locale_bckp character varying(10),
     title jsonb,
     url jsonb
+);
+
+
+--
+-- Name: menu_items_bckp1; Type: TABLE; Schema: public; Owner: -
+--
+
+CREATE TABLE public.menu_items_bckp1 (
+    id integer,
+    catalog_id integer,
+    slug character varying,
+    title character varying,
+    item_type_id integer,
+    page_id integer,
+    url text,
+    parent_id integer,
+    rank integer,
+    created_at timestamp without time zone,
+    updated_at timestamp without time zone,
+    locale character varying
 );
 
 
@@ -925,7 +935,6 @@ CREATE TABLE public.menu_items (
 --
 
 CREATE SEQUENCE public.menu_items_id_seq
-    AS integer
     START WITH 1
     INCREMENT BY 1
     NO MINVALUE
@@ -960,11 +969,29 @@ CREATE TABLE public.pages (
 
 
 --
+-- Name: pages_bckp1; Type: TABLE; Schema: public; Owner: -
+--
+
+CREATE TABLE public.pages_bckp1 (
+    id integer,
+    catalog_id integer,
+    creator_id integer,
+    reviewer_id integer,
+    slug character varying,
+    title text,
+    content text,
+    locale character varying,
+    status character varying,
+    created_at timestamp without time zone,
+    updated_at timestamp without time zone
+);
+
+
+--
 -- Name: pages_id_seq; Type: SEQUENCE; Schema: public; Owner: -
 --
 
 CREATE SEQUENCE public.pages_id_seq
-    AS integer
     START WITH 1
     INCREMENT BY 1
     NO MINVALUE
@@ -1079,7 +1106,6 @@ CREATE TABLE public.template_storages (
 --
 
 CREATE SEQUENCE public.template_storages_id_seq
-    AS integer
     START WITH 1
     INCREMENT BY 1
     NO MINVALUE
@@ -1126,7 +1152,6 @@ CREATE TABLE public.users (
 --
 
 CREATE SEQUENCE public.users_id_seq
-    AS integer
     START WITH 1
     INCREMENT BY 1
     NO MINVALUE
@@ -1535,14 +1560,6 @@ ALTER TABLE ONLY public.menu_items
 
 ALTER TABLE ONLY public.pages
     ADD CONSTRAINT pages_pkey PRIMARY KEY (id);
-
-
---
--- Name: schema_migrations schema_migrations_pkey; Type: CONSTRAINT; Schema: public; Owner: -
---
-
-ALTER TABLE ONLY public.schema_migrations
-    ADD CONSTRAINT schema_migrations_pkey PRIMARY KEY (version);
 
 
 --
@@ -2005,10 +2022,10 @@ CREATE INDEX index_pages_on_reviewer_id ON public.pages USING btree (reviewer_id
 
 
 --
--- Name: index_searches_on_related_search; Type: INDEX; Schema: public; Owner: -
+-- Name: index_searches_on_related_search_type_and_related_search_id; Type: INDEX; Schema: public; Owner: -
 --
 
-CREATE INDEX index_searches_on_related_search ON public.searches USING btree (related_search_type, related_search_id);
+CREATE INDEX index_searches_on_related_search_type_and_related_search_id ON public.searches USING btree (related_search_type, related_search_id);
 
 
 --
@@ -2044,6 +2061,13 @@ CREATE UNIQUE INDEX index_users_on_jti ON public.users USING btree (jti);
 --
 
 CREATE UNIQUE INDEX index_users_on_reset_password_token ON public.users USING btree (reset_password_token);
+
+
+--
+-- Name: unique_schema_migrations; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE UNIQUE INDEX unique_schema_migrations ON public.schema_migrations USING btree (version);
 
 
 --
@@ -2434,6 +2458,7 @@ INSERT INTO "schema_migrations" (version) VALUES
 ('20151205005311'),
 ('20151205011325'),
 ('20151206234336'),
+('20151210000035'),
 ('20151212000308'),
 ('20151214213046'),
 ('20160307163846'),
@@ -2442,6 +2467,7 @@ INSERT INTO "schema_migrations" (version) VALUES
 ('20160509095147'),
 ('20160509194619'),
 ('20160720053135'),
+('20161231140032'),
 ('20170121055843'),
 ('20170507231151'),
 ('20170507231610'),
@@ -2492,6 +2518,7 @@ INSERT INTO "schema_migrations" (version) VALUES
 ('20210730100707'),
 ('20210823103708'),
 ('20210906124258'),
-('20211101151726');
+('20211101151726'),
+('20211209083903');
 
 

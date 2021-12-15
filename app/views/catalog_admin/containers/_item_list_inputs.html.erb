@@ -1,8 +1,21 @@
-<% if catalog.item_types.any? %>
-  <%= item_type_select(f) %>
-  <%= style_select(f, :help => t('.display_style')) %>
-<% else %>
-  <div class="alert alert-warning">
-    <%= t('catalog_admin.containers.item_type_warning') %>
-  </div>
-<% end %>
+<div class="mt-3" data-controller="item-list-inputs" data-item-list-inputs-urls="<%= {
+                                                                                       filterableFieldSelectOptionsUrl: filterable_field_select_options_catalog_admin_pages_path,
+                                                                                       fieldFormatSelectOptionsUrl: field_format_select_options_catalog_admin_pages_path,
+                                                                                     }.to_json %>">
+  <% if catalog.item_types.any? %>
+    <%= item_type_select(f, {}, {"data-action": "input->item-list-inputs#updateFilterableFieldSelect", "data-item-list-inputs-target": "itemTypeSelect"}) %>
+    <%= style_select(f, {:help => t('.display_style')}, {"data-action": "input->item-list-inputs#toggleDisplayFilterableFieldSelect", "data-item-list-inputs-target": "styleSelect"}) %>
+    <%= sort_direction_select(f, {}) %>
+    <div data-item-list-inputs-target="filterableFieldSelectWrapper" class="<%= (f.object.item_type.present? && f.object.style == 'timeline' ? 'qsdf' : 'd-none') %>">
+      <%= filterable_field_select(f, {"data-item-list-inputs-target": "filterableFieldSelect", "data-action": "input->item-list-inputs#updateFieldFormatSelect"}) %>
+    </div>
+    <div data-item-list-inputs-target="fieldFormatSelectWrapper"
+         class="<%= ('d-none' if ((f.object.style != 'timeline' && !f.object&.filterable_field_id.present?) || (f.object.style != 'timeline' && f.object&.filterable_field_id.present? && !Field.find(f.object&.filterable_field_id).is_a?(Field::DateTime)))) %>">
+      <%= field_format_select(f, {"data-item-list-inputs-target": "fieldFormatSelect"}) %>
+    </div>
+  <% else %>
+    <div class="alert alert-warning">
+      <%= t('catalog_admin.containers.item_type_warning') %>
+    </div>
+  <% end %>
+</div>

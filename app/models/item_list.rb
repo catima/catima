@@ -3,7 +3,8 @@ class ItemList
   STYLES = {
     "thumb" => "items/thumbnails",
     "list" => "items/list",
-    "grid" => "items/grid"
+    "grid" => "items/grid",
+    "timeline" => "items/timeline"
   }.freeze
 
   # Default number of items per page
