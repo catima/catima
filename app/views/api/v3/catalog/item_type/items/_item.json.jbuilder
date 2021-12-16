@@ -21,7 +21,10 @@ if with_field_values
     json.array! fields do |field|
       case field
       when Field::Compound
-        json.value field.csv_value(item, @authenticated_catalog.present? ? false : @current_user)
+        json.value field.csv_value(item, @authenticated_catalog.present? ? false : @current_user) unless field.i18n?
+        json.value do
+          json.set! :"_translations", field.translation_values(item, @authenticated_catalog.present? ? false : @current_user)
+        end
       when Field::Editor
         json.value Field::EditorPresenter.new(nil, item, field).value
       else

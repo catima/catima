@@ -29,15 +29,14 @@ class Field::CompoundPresenter < FieldPresenter
     )
   end
 
-  def value
-    render_template
+  def value(locale: I18n.locale)
+    render_template(locale)
   end
 
-  def render_template
+  def render_template(locale)
     tpl = JSON.parse(field.template)
 
-    local_template = tpl[I18n.locale.to_s] || ''
-
+    local_template = tpl[locale.to_s] || ''
     displayable_fields = @item.fields.where(slug: local_template.gsub('&nbsp', ' ').to_enum(:scan, /(\{\{.*?\}\})/i).map { |m, _| m.gsub('{', '').gsub('}', '') })
     displayable_fields = displayable_fields.select { |fld| fld.displayable_to_user?(@user) } if @user
     displayable_fields.each do |field|
