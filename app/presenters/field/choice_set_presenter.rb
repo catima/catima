@@ -1,7 +1,9 @@
 class Field::ChoiceSetPresenter < FieldPresenter
   delegate :choices, :selected_choices, :selected_choice?, :choice_prefixed_label, :flat_ordered_choices, :to => :field
-  delegate :select2_select, :browse_similar_items_link, :tag,
-           :to => :view
+  include Rails.application.routes.url_helpers
+  include ActionView::Helpers
+  include ItemsHelper
+  include Select2Helper
 
   # rubocop:disable Style/StringConcatenation
   def input(form, method, options={})

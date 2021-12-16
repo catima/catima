@@ -700,7 +700,7 @@ class Dump::SQLDump < ::Dump
   # rubocop:disable Metrics/CyclomaticComplexity
   def sql_value(field, item)
     value = field.value_for_item(item)
-    return "NULL" if value.blank? && field.type != "Field::Editor"
+    return "NULL" if value.blank? && field.type != "Field::Editor" && field.type != "Field::Compound"
 
     case field.type
     when "Field::Int", "Field::Decimal"
@@ -711,7 +711,7 @@ class Dump::SQLDump < ::Dump
       value == "0" ? "FALSE" : "TRUE"
     when "Field::DateTime"
       "'#{value.to_json}'"
-    when "Field::Geometry", "Field::File", "Field::Image", "Field::Text", "Field::URL"
+    when "Field::Geometry", "Field::File", "Field::Image", "Field::Text", "Field::URL", "Field::Compound"
       "'#{field.sql_value(item)}'"
     when "Field::Editor"
       "'#{field.field_value_for_item(item)}'"
