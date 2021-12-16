@@ -1,11 +1,12 @@
 <%= react_component('Timeline/components/Timeline', {
+  sort_direction: params[:sort_direction],
   url: [page_path(@page), "/#{@container.id}/items/?style=timeline", params[:sort_direction] ? "&sort_direction=#{params[:sort_direction]}" : ""].join(""),
   currentPage: params[:page] || 1,
   icons: {up: fa_icon("chevron-up"),
           down: fa_icon("chevron-down")},
   links: {
-    asc: link_to('Ascending', page_url(style: "timeline", sort_direction: "ASC")),
-    desc: link_to('Descending', page_url(style: "timeline", sort_direction: "DESC"))
+    asc: page_url(style: "timeline", sort_direction: "ASC"),
+    desc: page_url(style: "timeline", sort_direction: "DESC")
   },
   pageCount: (item_list.total_count / 24) + 1
 }) %>

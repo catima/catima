@@ -10,7 +10,7 @@
       <%= filterable_field_select(f, {"data-item-list-inputs-target": "filterableFieldSelect", "data-action": "input->item-list-inputs#updateFieldFormatSelect"}) %>
     </div>
     <div data-item-list-inputs-target="fieldFormatSelectWrapper"
-         class="<%= ('d-none' if ((f.object.style != 'timeline' && !f.object&.filterable_field_id.present?) || (f.object.style != 'timeline' && f.object&.filterable_field_id.present? && !Field.find(f.object&.filterable_field_id).is_a?(Field::DateTime)))) %>">
+         class="<%= ('d-none' if ((f.object.style != 'timeline') || !f.object&.filterable_field_id.present? || !Field.find(f.object&.filterable_field_id).is_a?(Field::DateTime))) %>">
       <%= field_format_select(f, {"data-item-list-inputs-target": "fieldFormatSelect"}) %>
     </div>
   <% else %>

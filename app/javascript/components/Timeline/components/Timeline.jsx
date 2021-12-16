@@ -2,10 +2,11 @@ import React, {useState, useEffect} from 'react';
 import PropTypes from "prop-types";
 import axios from 'axios';
 import "../css/timeline.scss";
-
+import ReactSelect from 'react-select';
 
 const Timeline = (props) => {
   const {
+    sort_direction,
     url,
     links,
     icons,
@@ -64,7 +65,8 @@ const Timeline = (props) => {
       <div className="timeline__group" key={`group-${key}`}>
         <div className="timeline__group__title">
           <div dangerouslySetInnerHTML={{__html: items[0].group_title}}></div>
-          <span className="px-2" onClick={() => toggleGroupIsOpen(groupIndex)} dangerouslySetInnerHTML={{__html: groupIsOpen[groupIndex] ? icons.up : icons.down}}></span>
+          <span className="px-2" onClick={() => toggleGroupIsOpen(groupIndex)}
+                dangerouslySetInnerHTML={{__html: groupIsOpen[groupIndex] ? icons.up : icons.down}}></span>
         </div>
 
         {groupIsOpen[groupIndex] && (
@@ -88,11 +90,34 @@ const Timeline = (props) => {
 
   if (!groupedItems) return 'loading'
 
+  const sortAscDesc = (e) => {
+    console.log(e)
+    if (e.value == 'ASC') {
+      window.location.assign(links.asc)
+    } else if (e.value == 'DESC') {
+      window.location.assign(links.desc)
+    }
+  }
+
   return (
     <div>
       <div className='d-flex justify-content-center'>
-        <span className="px-2" dangerouslySetInnerHTML={{__html: links.asc}}></span>
-        <span className="px-2" dangerouslySetInnerHTML={{__html: links.desc}}></span>
+        <ReactSelect
+          id='asc-desc'
+          name='asc-desc'
+          options={[{value: 'ASC', label: 'Ascending'}, {value: 'DESC', label: 'Descending'}]}
+          onChange={sortAscDesc}
+          placeholder='Select Sort Order'
+          value={[{value: 'ASC', label: 'Ascending'}, {
+            value: 'DESC',
+            label: 'Descending'
+          }].filter(o => o.value === sort_direction)}
+          styles={{
+            container: () => ({
+              width: 200,
+            })
+          }}
+        />
       </div>
       <div className='d-flex justify-content-center'>
         <button className="btn btn-sm m-2 btn-primary" onClick={() => toggleAllGroupAreOpen(true)}>Open All</button>

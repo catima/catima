@@ -49,12 +49,12 @@ module CatalogAdmin::ContainersHelper
   end
 
   def filterable_field_select(form, options = {})
-    item_type = ItemType.find(form.object.item_type)
+    item_type = form.object.item_type.empty? ?  nil : ItemType.find(form.object.item_type)
     form.select(
       :filterable_field_id,
-      (form.object.item_type.present? && form.object.style == 'timeline') ? item_type.fields.reject{|f| f == item_type.primary_field}.map { |f| [f.name, f.id] } : [],
+      (form.object.item_type.present? && form.object.style == 'timeline' && item_type) ? item_type.fields.map { |f| [f.name, f.id] } : [],
       {include_blank: true},
-      options
+      options.reverse_merge(required: true)
     )
   end
 

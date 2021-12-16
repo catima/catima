@@ -50,6 +50,8 @@ export default class extends Controller {
     if (this.styleSelectTarget.value == 'timeline' && this.itemTypeSelectTarget.value != '') {
       this.filterableFieldSelectWrapperTarget.classList.remove('d-none')
       this.updateFilterableFieldSelect({})
+      this.fieldFormatSelectWrapperTarget.selectedIndex = -1
+      this.fieldFormatSelectWrapperTarget.classList.add('d-none')
     } else {
       this.filterableFieldSelectWrapperTarget.selectedIndex = -1
       this.filterableFieldSelectWrapperTarget.classList.add('d-none')
