@@ -101,7 +101,7 @@ const Timeline = (props) => {
 
   return (
     <div>
-      <div className='d-flex justify-content-center'>
+      <div className='w-50' style={{marginLeft: '50%', transform: 'translate(-50%, 0)'}}>
         <ReactSelect
           id='asc-desc'
           name='asc-desc'
@@ -112,11 +112,7 @@ const Timeline = (props) => {
             value: 'DESC',
             label: 'Descending'
           }].filter(o => o.value === sort_direction)}
-          styles={{
-            container: () => ({
-              width: 200,
-            })
-          }}
+
         />
       </div>
       <div className='d-flex justify-content-center'>
