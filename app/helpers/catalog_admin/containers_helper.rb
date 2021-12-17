@@ -49,7 +49,7 @@ module CatalogAdmin::ContainersHelper
   end
 
   def filterable_field_select(form, options = {})
-    item_type = form.object.item_type.empty? ?  nil : ItemType.find(form.object.item_type)
+    item_type = form.object.item_type.nil? ?  nil : ItemType.find(form.object.item_type)
     form.select(
       :filterable_field_id,
       (form.object.item_type.present? && form.object.style == 'timeline' && item_type) ? item_type.fields.map { |f| [f.name, f.id] } : [],
