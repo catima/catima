@@ -1,6 +1,5 @@
 class CatalogAdmin::PagesController < CatalogAdmin::BaseController
   layout "catalog_admin/setup"
-  skip_before_action :verify_authenticity_token, only: [:filterable_field_select_options, :field_format_select_options]
 
   def index
     authorize(Page)
@@ -49,7 +48,7 @@ class CatalogAdmin::PagesController < CatalogAdmin::BaseController
   end
 
   def filterable_field_select_options
-    @item_type = ItemType.find(params[:item_type_id])
+    @item_type = catalog.item_types.find(params[:item_type_id])
     render 'catalog_admin/containers/item_list/filterable_field_select_options', layout: false
   end
 

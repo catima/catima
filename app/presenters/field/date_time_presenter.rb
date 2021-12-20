@@ -21,8 +21,7 @@ class Field::DateTimePresenter < FieldPresenter
   end
 
   def new_style_value_text_repr(dt, format)
-    format = format ? format : field.format
-    format_str = format.chars.reject { |v| dt[v].blank? }.join
+    format_str = (format || field.format).chars.reject { |v| dt[v].blank? }.join
     validate_datetime_format_string(format_str)
     return nil if format_str.empty?
 

@@ -12,7 +12,7 @@ class Container::ItemListPresenter < ContainerPresenter
         sort_direction: @container&.sort_direction || 'ASC'
         )
       @view.params[:style] = container.content["style"] if container.content["style"].present?
-      @view.render("containers/item_list", :item_list => @list)
+      @view.render("containers/item_list", :item_list => @list, container: @container)
     rescue ActiveRecord::RecordNotFound
       @view.render("containers/item_list", :item_list => nil)
     end

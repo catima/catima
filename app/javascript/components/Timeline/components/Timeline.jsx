@@ -20,11 +20,16 @@ const Timeline = (props) => {
   const [currentPage, setCurrentPage] = useState(parseInt(currentPageProps))
 
 
+
+
   useEffect(() => {
     setCurrentPage(parseInt(currentPageProps))
   }, [currentPageProps])
 
   useEffect(() => {
+    const csrfToken = (document.querySelector("meta[name=csrf-token]") || {}).content;
+    axios.defaults.headers.common["X-CSRF-Token"] = csrfToken;
+    axios.defaults.headers.common["X-Requested-With"] = 'XMLHttpRequest';
     fetchItems(currentPage)
   }, [])
 
@@ -34,7 +39,6 @@ const Timeline = (props) => {
   }, [groupedItems])
 
   const toggleGroupIsOpen = (idx) => {
-    console.log(idx)
     let g = groupIsOpen
     g[idx] = !g[idx]
     setGroupIsOpen([...g])
@@ -65,7 +69,7 @@ const Timeline = (props) => {
       <div className="timeline__group" key={`group-${key}`}>
         <div className="timeline__group__title">
           <div dangerouslySetInnerHTML={{__html: items[0].group_title}}></div>
-          <span className="px-2" onClick={() => toggleGroupIsOpen(groupIndex)}
+          <span className="px-2"  style={{cursor: "pointer"}} onClick={() => toggleGroupIsOpen(groupIndex)}
                 dangerouslySetInnerHTML={{__html: groupIsOpen[groupIndex] ? icons.up : icons.down}}></span>
         </div>
 
@@ -88,8 +92,6 @@ const Timeline = (props) => {
     )
   }
 
-  if (!groupedItems) return 'loading'
-
   const sortAscDesc = (e) => {
     console.log(e)
     if (e.value == 'ASC') {
@@ -98,6 +100,8 @@ const Timeline = (props) => {
       window.location.assign(links.desc)
     }
   }
+
+  if (!Object.keys(groupedItems).length) return  <div className="d-flex justify-content-center align-items-center"><div className="loader"></div></div>
 
   return (
     <div>
@@ -122,7 +126,6 @@ const Timeline = (props) => {
 
       <section className="timeline">
         <div className="container max-width-lg timeline__container">
-          {/*{renderItemGroups(groupedItems)}*/}
           {Object.entries(groupedItems).map(([k, v], index) => renderItems(v, k, index, groupIsOpen[index]))}
         </div>
       </section>

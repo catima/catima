@@ -38,14 +38,7 @@ module CatalogAdmin::ContainersHelper
   end
 
   def sort_direction_select(form, options = {}, html_options = {})
-    form.collection_select(
-      :sort_direction,
-      [["ASC", "ASC"], ["DESC", "DESC"]],
-      :first,
-      :first,
-      options,
-      html_options
-    )
+    form.select(:sort_direction, %w(ASC DESC), options, html_options)
   end
 
   def filterable_field_select(form, options = {})
@@ -61,7 +54,7 @@ module CatalogAdmin::ContainersHelper
   def field_format_select(form, options = {})
     form.select(
       :field_format,
-      Field::DateTime::FORMATS.map{ |f| [f.to_s, f.to_s] },
+      Field::DateTime::FORMATS.map(&:to_s),
       {include_blank: true},
       options
     )
