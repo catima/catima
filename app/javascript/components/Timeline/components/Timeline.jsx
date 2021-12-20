@@ -105,7 +105,7 @@ const Timeline = (props) => {
 
   return (
     <div>
-      <div className='w-50' style={{marginLeft: '50%', transform: 'translate(-50%, 0)'}}>
+       <div className='w-25' style={{marginLeft: '50%', transform: 'translate(-50%, 0)'}}>
         <ReactSelect
           id='asc-desc'
           name='asc-desc'
