@@ -66,7 +66,7 @@ class Field::Text < ::Field
     if value.is_a? Hash
       d = {}
       value.each do |k, v|
-        d.merge!(uuid + '_' + k => v) if catalog.valid_locale?(k)
+        d.merge!("#{uuid}_#{k}" => v) if catalog.valid_locale?(k)
       end
       return d
     end
@@ -123,18 +123,18 @@ class Field::Text < ::Field
     return unless value
 
     if i18n?
-      translations = value['_translations']
+      translations = if formatted?
+                       JSON.generate(
+                         value['_translations'].map { |k, _| [k, raw_value(item, k)] }.to_h
+                       )
+                     else
+                       value['_translations'].to_json
+                     end
 
-      if formatted?
-        translations = JSON.generate(translations.map { |k,_| [k, raw_value(item, k)] }.to_h)
-      else
-        translations = translations.to_json
-      end
-
-      return translations.to_s.gsub('\"') { '\\\"' }
+      return sql_escape_formatted(translations)
     end
 
-    return raw_value(item).to_s.gsub("'") { "\\'" } if formatted?
+    return sql_escape_formatted(raw_value(item)) if formatted?
 
     value.to_s.gsub("'") { "\\'" }
   end

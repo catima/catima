@@ -342,7 +342,7 @@ class Field < ApplicationRecord
   end
 
   def sql_type
-    ""
+    "TEXT"
   end
 
   def sql_nullable
@@ -362,6 +362,10 @@ class Field < ApplicationRecord
 
   def sql_value(item)
     raw_value(item)
+  end
+
+  def sql_escape_formatted(value)
+    value.to_s.gsub('\"') { '\\\"' }.gsub("'") { "\\'" }
   end
 
   private

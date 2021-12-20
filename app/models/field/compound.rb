@@ -7,26 +7,33 @@ class Field::Compound < ::Field
     )
   end
 
-  def value_for_item(it)
-    sql_value(it)
+  def value_for_item(item)
+    sql_value(item)
   end
 
   def sql_value(item)
-    return Field::CompoundPresenter.new(ApplicationController.new, item, self, {}, false).value.to_s unless i18n?
+    presenter = Field::CompoundPresenter.new(
+      ApplicationController.new,
+      item,
+      self,
+      {},
+      false
+    )
 
-    value = {'_translations': {}}
-    item_type.catalog.valid_locales.each do |locale|
-      value[:'_translations'][locale.to_s] = Field::CompoundPresenter.new(ApplicationController.new, item, self, {}, false).value(locale: locale).to_s
-    end
-    return {'_translations': translation_values(item)}.stringify_keys
-  end
+    if i18n?
+      translations = {}
+      item_type.catalog.valid_locales.each do |locale|
+        translations[locale.to_s] = presenter.value(locale: locale).gsub(/[[:space:]]/) { ' ' }
+      end
 
-  def translation_values(item, user = nil)
-    value = {}
-    item_type.catalog.valid_locales.each do |locale|
-      value[locale.to_s] = Field::CompoundPresenter.new(ApplicationController.new, item, self, {}, user).value(locale: locale).to_s
+      return sql_escape_formatted(
+        JSON.generate(translations)
+      )
     end
-    value
+
+    sql_escape_formatted(
+      presenter.value.gsub(/[[:space:]]/) { ' ' }
+    )
   end
 
   def sql_type
@@ -55,11 +62,11 @@ class Field::Compound < ::Field
     false
   end
 
-  def csv_value(item, user = nil)
+  def csv_value(item, user=nil)
     Field::CompoundPresenter.new(ApplicationController.new, item, self, {}, user).value.to_s
   end
 
-  def raw_value(item, locale = I18n.locale, suffix = "")
+  def raw_value(item, locale=I18n.locale, suffix="")
     attrib = i18n? ? "#{uuid}_#{locale}#{suffix}" : uuid
     v = item.behaving_as_type.public_send(attrib) if item.behaving_as_type.respond_to?(attrib)
     return v if v.nil? || !formatted?
