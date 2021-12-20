@@ -32,7 +32,7 @@ class ItemList::Filter < ItemList
       return unpaginated_list_items.reorder(Arel.sql("items.data->>'#{filter_field.uuid}' #{sort_direction || 'ASC'}"))
     end
     super
-    unpaginated_list_items.reorder(Arel.sql("items.data->>'#{item_type.primary_human_readable_field.uuid}' #{sort_direction || 'ASC'}"))
+    unpaginated_list_items.reorder(Arel.sql("items.data->>'#{item_type.primary_human_readable_field.uuid}' #{sort_direction || 'ASC'}")) if item_type.primary_human_readable_field
   end
 
   def to_param
