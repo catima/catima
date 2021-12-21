@@ -34,9 +34,9 @@ class ItemList::Filter < ItemList
     super
 
     if item_type.primary_human_readable_field
-      unpaginated_list_items
-    else
       unpaginated_list_items.reorder(Arel.sql("items.data->>'#{item_type.primary_human_readable_field.uuid}' #{sort_direction || 'ASC'}"))
+    else
+      unpaginated_list_items
     end
   end
 
