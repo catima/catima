@@ -47,7 +47,7 @@ class PagesController < ApplicationController
       :item_type => item_type,
       :page => params[:page],
       filter_field: filter_field,
-      sort_direction: params[:sort_direction] || container&.sort_direction || 'ASC',
+      sort_direction: params[:sort_direction] || container&.sort_direction || 'ASC'
     )
 
     formatted_sorted_items = @list.items.map { |item| helpers.formatted_item_for_timeline(item, list: @list, container: container, filter_field: filter_field) }

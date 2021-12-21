@@ -8,6 +8,7 @@ class ItemList::Filter < ItemList
   include ::Search::Strategies
 
   attr_reader :item_type, :field, :value, :filter_field, :sort_direction
+
   delegate :fields, :to => :item_type
   delegate :locale, :to => I18n
 
@@ -28,9 +29,8 @@ class ItemList::Filter < ItemList
   end
 
   def items
-    if filter_field
-      return unpaginated_list_items.reorder(Arel.sql("items.data->>'#{filter_field.uuid}' #{sort_direction || 'ASC'}"))
-    end
+    return unpaginated_list_items.reorder(Arel.sql("items.data->>'#{filter_field.uuid}' #{sort_direction || 'ASC'}")) if filter_field
+
     super
     item_type.primary_human_readable_field ? unpaginated_list_items : unpaginated_list_items.reorder(Arel.sql("items.data->>'#{item_type.primary_human_readable_field.uuid}' #{sort_direction || 'ASC'}"))
   end
