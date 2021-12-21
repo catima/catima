@@ -2,7 +2,7 @@ class ItemList::Filter < ItemList
   # This is the inverse of the to_param method, below.
   def self.parse_param(param)
     field_slug, value = param.to_s.split("_", 2)
-    field_slug.present? ? { :field_slug => field_slug, :value => value } : {}
+    field_slug.present? ? {:field_slug => field_slug, :value => value} : {}
   end
 
   include ::Search::Strategies
@@ -12,7 +12,7 @@ class ItemList::Filter < ItemList
   delegate :fields, :to => :item_type
   delegate :locale, :to => I18n
 
-  def initialize(item_type:, field:nil, value:nil, page:nil, per:nil, filter_field: false, sort_direction: 'ASC')
+  def initialize(item_type:, field: nil, value: nil, page: nil, per: nil, filter_field: false, sort_direction: 'ASC')
     super(item_type.catalog, page, per)
     @item_type = item_type
     @field = field
@@ -32,7 +32,12 @@ class ItemList::Filter < ItemList
     return unpaginated_list_items.reorder(Arel.sql("items.data->>'#{filter_field.uuid}' #{sort_direction || 'ASC'}")) if filter_field
 
     super
-    item_type.primary_human_readable_field ? unpaginated_list_items : unpaginated_list_items.reorder(Arel.sql("items.data->>'#{item_type.primary_human_readable_field.uuid}' #{sort_direction || 'ASC'}"))
+
+    if item_type.primary_human_readable_field
+      unpaginated_list_items
+    else
+      unpaginated_list_items.reorder(Arel.sql("items.data->>'#{item_type.primary_human_readable_field.uuid}' #{sort_direction || 'ASC'}"))
+    end
   end
 
   def to_param

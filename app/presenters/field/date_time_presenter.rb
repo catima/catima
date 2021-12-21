@@ -13,7 +13,7 @@ class Field::DateTimePresenter < FieldPresenter
 
   # Text representation for old style values, such as {:raw_value => 45034034}
   def old_style_value_text_repr(dt, format)
-    format = format || field.format
+    format ||= field.format
     dt_value = Time.zone.at(dt["raw_value"])
     return dt_value if view.nil?
 

@@ -33,14 +33,14 @@ module ItemsHelper
     item.image?
   end
 
-  def item_thumbnail(item, options={})
+  def item_thumbnail(item, options = {})
     field = item.fields.find { |f| f.is_a?(Field::Image) && f.display_in_public_list }
     return if field.nil?
 
     field_value(item, field, options.reverse_merge(:style => :compact))
   end
 
-  def item_list_view(item, options={})
+  def item_list_view(item, options = {})
     item_view = item.item_type.default_list_view
     return item_display_name(item) if item_view.nil?
 
@@ -86,14 +86,14 @@ module ItemsHelper
   end
 
   def formatted_item_for_timeline(item, list:, container:, filter_field:)
-    if item_has_thumbnail?(item)
-      title = tag.div(item_list_link(list, item, 0) { item_thumbnail(item, :class => "media-object") }, class: "pull-left mr-3")
-    else
-      title = tag.h4(item_list_link(list, item, 0, item_display_name(item)), class: "mt-0 mb-1")
-    end
+    title = if item_has_thumbnail?(item)
+              tag.div(item_list_link(list, item, 0) { item_thumbnail(item, :class => "media-object") }, class: "pull-left mr-3")
+            else
+              tag.h4(item_list_link(list, item, 0, item_display_name(item)), class: "mt-0 mb-1")
+            end
 
     item.attributes.merge(
-      title:  title,
+      title: title,
       summary: item_summary(item),
       primary_field_value: field_value(item, item.primary_field),
       filter_field_value: filter_field.is_a?(Field::DateTime) ? filter_field.value_as_array(item, format: container&.field_format) : field_value(item, filter_field),
