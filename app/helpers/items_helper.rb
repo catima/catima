@@ -33,14 +33,14 @@ module ItemsHelper
     item.image?
   end
 
-  def item_thumbnail(item, options = {})
+  def item_thumbnail(item, options={})
     field = item.fields.find { |f| f.is_a?(Field::Image) && f.display_in_public_list }
     return if field.nil?
 
     field_value(item, field, options.reverse_merge(:style => :compact))
   end
 
-  def item_list_view(item, options = {})
+  def item_list_view(item, options={})
     item_view = item.item_type.default_list_view
     return item_display_name(item) if item_view.nil?
 

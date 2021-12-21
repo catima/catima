@@ -2,7 +2,7 @@ class ItemList::Filter < ItemList
   # This is the inverse of the to_param method, below.
   def self.parse_param(param)
     field_slug, value = param.to_s.split("_", 2)
-    field_slug.present? ? {:field_slug => field_slug, :value => value} : {}
+    field_slug.present? ? { :field_slug => field_slug, :value => value } : {}
   end
 
   include ::Search::Strategies
