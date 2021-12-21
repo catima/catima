@@ -8,7 +8,7 @@ module ItemListsHelper
     first.try(:image?)
   end
 
-  def render_item_list(list, params=nil, container: nil)
+  def render_item_list(list, params=nil, container= nil)
     partial = item_list_has_images?(list) ? ItemList::STYLES["thumb"] : ItemList::STYLES["list"]
     partial = ItemList::STYLES["list"] if favorites_scoped?
     partial = ItemList::STYLES[params[:style]] if style_param?(params)

@@ -1,4 +1,4 @@
-import React, {useState, useEffect} from 'react';
+import React, {useState, useEffect, useRef} from 'react';
 import PropTypes from "prop-types";
 import axios from 'axios';
 import "../css/timeline.scss";
@@ -14,12 +14,13 @@ const Timeline = (props) => {
     pageCount
   } = props
 
+  const [isFetching, setIsFetching] = useState(false)
   const [groupedItems, setGroupedItems] = useState({})
   const [groupIsOpen, setGroupIsOpen] = useState([])
   const [allOpen, setAllOpen] = useState(true)
   const [currentPage, setCurrentPage] = useState(parseInt(currentPageProps))
 
-
+  const moreBtnRef = useRef(false)
 
 
   useEffect(() => {
@@ -50,6 +51,7 @@ const Timeline = (props) => {
   }
 
   async function fetchItems(page) {
+    setIsFetching(true)
     let {data: {items: newItems}} = await axios.get(url + `&page=${page}`)
     setCurrentPage(page)
     let newGroupedItems = groupedItems
@@ -61,6 +63,7 @@ const Timeline = (props) => {
       }
     })
     setGroupedItems({...newGroupedItems})
+    setIsFetching(false)
   }
 
   let i = 0
@@ -100,8 +103,8 @@ const Timeline = (props) => {
       window.location.assign(links.desc)
     }
   }
-
-  if (!Object.keys(groupedItems).length) return  <div className="d-flex justify-content-center align-items-center"><div className="loader"></div></div>
+  const loader = <div className="d-flex justify-content-center align-items-center"><div className="loader"></div></div>
+  if (!Object.keys(groupedItems).length) return  loader
 
   return (
     <div>
@@ -120,8 +123,9 @@ const Timeline = (props) => {
         />
       </div>
       <div className='d-flex justify-content-center'>
-        <button className="btn btn-sm m-2 btn-primary" onClick={() => toggleAllGroupAreOpen(true)}>Open All</button>
-        <button className="btn btn-sm m-2 btn-primary" onClick={() => toggleAllGroupAreOpen(false)}>Close All</button>
+        {allOpen && (
+          <a className="m-2" href="#" onClick={() => toggleAllGroupAreOpen(false)}>Close All</a>
+        ) || (<a className="m-4" href="#" onClick={() => toggleAllGroupAreOpen(true)}>Open All</a>)}
       </div>
 
       <section className="timeline">
@@ -131,7 +135,11 @@ const Timeline = (props) => {
       </section>
       {currentPage !== pageCount && (
         <div className='d-flex justify-content-center'>
-          <button className="btn btn-lg btn-primary" onClick={() => fetchItems(currentPage + 1)}>More</button>
+          {isFetching && (
+            loader
+          ) || (
+            <button className="btn btn-lg btn-primary" onClick={() => fetchItems(currentPage + 1)}>More</button>
+          )}
         </div>
       )}
     </div>
