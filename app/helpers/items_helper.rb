@@ -96,7 +96,7 @@ module ItemsHelper
   end
 
   def group_items_for_timeline(items, container:, filter_field:)
-    filter_field.is_a?(Field::DateTime) ? items.group_by { |item| container&.field_format && item[:filter_field_value].is_a?(Array) ? item[:filter_field_value].join('') : item[:filter_field_value] } : items.group_by { |item| item[:filter_field_value] }
+    filter_field.is_a?(Field::DateTime) ? items.group_by { |item| container&.field_format && item[:filter_field_value].is_a?(Array) ? item[:filter_field_value].join : item[:filter_field_value] } : items.group_by { |item| item[:filter_field_value] }
   end
 
   # Check that the referer is the item type list (Data mode)

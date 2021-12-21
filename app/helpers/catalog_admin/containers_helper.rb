@@ -15,7 +15,7 @@ module CatalogAdmin::ContainersHelper
     container_move_link(container, "down")
   end
 
-  def item_type_select(form, options = {}, html_options = {})
+  def item_type_select(form, options={}, html_options={})
     form.collection_select(
       :item_type,
       catalog.item_types.sorted,
@@ -37,25 +37,25 @@ module CatalogAdmin::ContainersHelper
     )
   end
 
-  def sort_direction_select(form, options = {}, html_options = {})
+  def sort_direction_select(form, options={}, html_options={})
     form.select(:sort_direction, %w(ASC DESC), options, html_options)
   end
 
-  def filterable_field_select(form, options = {})
+  def filterable_field_select(form, options={})
     item_type = form.object.item_type.nil? ?  nil : ItemType.find(form.object.item_type)
     form.select(
       :filterable_field_id,
       (form.object.item_type.present? && form.object.style == 'timeline' && item_type) ? item_type.fields.map { |f| [f.name, f.id] } : [],
-      {include_blank: true},
+      { include_blank: true },
       options.reverse_merge(required: true)
     )
   end
 
-  def field_format_select(form, options = {})
+  def field_format_select(form, options={})
     form.select(
       :field_format,
       Field::DateTime::FORMATS.map(&:to_s),
-      {include_blank: true},
+      { include_blank: true },
       options
     )
   end
@@ -70,7 +70,7 @@ module CatalogAdmin::ContainersHelper
         I18n.locale,
         container,
         :action => "update",
-        :container => {:row_order_position => direction}
+        :container => { :row_order_position => direction }
       ),
       :method => :patch,
       :remote => true

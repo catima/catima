@@ -54,7 +54,7 @@ class CatalogAdmin::PagesController < CatalogAdmin::BaseController
 
   def field_format_select_options
     @field = Field.find(params[:field_id])
-    render json: {isDateTime: @field.is_a?(Field::DateTime)}
+    render json: { isDateTime: @field.is_a?(Field::DateTime) }
   end
 
   private
