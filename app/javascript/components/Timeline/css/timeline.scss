@@ -60,7 +60,6 @@
   .timeline__group__item {
     padding: 1rem;
     width: 35%;
-    flex-grow: 1; // expand element so that it takes up all the available space inside its parent
     flex-grow: 0; // prevent element from growing inside its parent
     border: 1px solid #8080801f;
   }
