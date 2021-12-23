@@ -45,7 +45,6 @@ class ItemsController < ApplicationController
   end
 
   def show
-    # params.permit!
     begin
       @item = item_type.public_items.find(params[:id]).behaving_as_type
     rescue ActiveRecord::RecordNotFound => e
