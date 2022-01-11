@@ -32,6 +32,12 @@ jobs:
         ports: ['6379:6379']
         options: --entrypoint redis-server
 
+    strategy:
+      matrix:
+        ruby-versions: [ '2.7.5','3.0' ]
+
+    name: RUBY${{ matrix.ruby-versions }}
+
     steps:
       - name: Checkout Repository
         uses: actions/checkout@v2
@@ -44,7 +50,7 @@ jobs:
       - name: Setup Ruby
         uses: ruby/setup-ruby@v1
         with:
-          ruby-version: '2.7.5'
+          ruby-version: ${{ matrix.ruby-versions }}
 
       - name: Cache Gems
         uses: actions/cache@v2
