@@ -7,7 +7,7 @@ export default class extends Controller {
     if (this.data.get("value") && this.hasSourceTarget) {
       this.show = !(this.sourceTarget.value === this.data.get("value"))
     } else {
-      this.show = true
+      this.show = false
     }
     this.reveal()
     this.revealableTargets.forEach(function (el, _) {
@@ -16,22 +16,37 @@ export default class extends Controller {
   }
 
   reveal(e) {
-    if (e && this.data.get("value")) {
-      if (e.target.value === this.data.get("value")) {
-        this.showElement(this.revealableTarget)
-      } else {
-        this.hideElement(this.revealableTarget)
+    let target = e?.target || (this.hasSourceTarget ? this.sourceTarget : false)
+    if (target) {
+      switch (target.nodeName) {
+        case "SELECT":
+          this.show = target.options[target.selectedIndex].value === this.data.get("value");
+          break;
+        case "INPUT":
+          switch (target.type) {
+            case "radio":
+              targets.forEach((el) => {
+                if (el.checked) {
+                  this.show = el.value;
+                }
+              });
+              break;
+            case "checkbox":
+              this.show = target.checked ? target.id : "";
+              break;
+          }
       }
+    }
+
+    if (this.show) {
+      this.showElement(this.revealableTarget)
     } else {
-      if (!this.show) {
-        this.showElement(this.revealableTarget)
-      } else {
-        this.hideElement(this.revealableTarget)
-      }
+      this.hideElement(this.revealableTarget)
     }
   }
 
   showElement(el) {
+    console.log()
     this.show = !this.show
     // Get the natural height of the element
     let getHeight = function () {

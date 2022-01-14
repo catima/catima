@@ -79,6 +79,37 @@ RSpec.describe 'api/v3/{catalog_id}/item_type/{item_type_id}/item(s)', type: :re
       end
     end
   end
+
+  path '/api/v3/{catalog_id}/item_type/{item_type_id}/item/{item_id}/suggestions' do
+    parameter name: 'catalog_id', in: :path, type: :integer, description: 'catalog_id'
+    parameter name: 'item_type_id', in: :path, type: :integer, description: 'item_type_id'
+    parameter name: 'item_id', in: :path, type: :integer, description: 'item_id'
+
+    get("Return an Item's Suggestions") do
+      tags 'Item'
+      consumes 'application/json'
+      security [BearerAuth: []]
+      description <<-HTML.squish
+        <p><b>Authorization: Editor+</b></p>
+      HTML
+
+      response(200, 'successful') do
+        run_test! do
+          body = JSON.parse(response.body)
+          expect(body).to have_key("data")
+        end
+      end
+
+      # test catalog authentication
+      response(200, 'successful') do
+        include_examples "API_KEY_Success", :one
+      end
+
+      response(401, 'Unauthorized') do
+        include_examples "Unauthorized"
+      end
+    end
+  end
 end
 # rubocop:enable Metrics/BlockLength
 

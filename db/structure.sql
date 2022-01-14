@@ -105,7 +105,6 @@ CREATE TABLE public.advanced_searches (
 --
 
 CREATE SEQUENCE public.advanced_searches_id_seq
-    AS integer
     START WITH 1
     INCREMENT BY 1
     NO MINVALUE
@@ -281,8 +280,8 @@ ALTER SEQUENCE public.api_logs_id_seq OWNED BY public.api_logs.id;
 CREATE TABLE public.ar_internal_metadata (
     key character varying NOT NULL,
     value character varying,
-    created_at timestamp(6) without time zone NOT NULL,
-    updated_at timestamp(6) without time zone NOT NULL
+    created_at timestamp without time zone NOT NULL,
+    updated_at timestamp without time zone NOT NULL
 );
 
 
@@ -306,7 +305,6 @@ CREATE TABLE public.catalog_permissions (
 --
 
 CREATE SEQUENCE public.catalog_permissions_id_seq
-    AS integer
     START WITH 1
     INCREMENT BY 1
     NO MINVALUE
@@ -353,7 +351,6 @@ CREATE TABLE public.catalogs (
 --
 
 CREATE SEQUENCE public.catalogs_id_seq
-    AS integer
     START WITH 1
     INCREMENT BY 1
     NO MINVALUE
@@ -388,7 +385,6 @@ CREATE TABLE public.categories (
 --
 
 CREATE SEQUENCE public.categories_id_seq
-    AS integer
     START WITH 1
     INCREMENT BY 1
     NO MINVALUE
@@ -425,7 +421,6 @@ CREATE TABLE public.choice_sets (
 --
 
 CREATE SEQUENCE public.choice_sets_id_seq
-    AS integer
     START WITH 1
     INCREMENT BY 1
     NO MINVALUE
@@ -466,7 +461,6 @@ CREATE TABLE public.choices (
 --
 
 CREATE SEQUENCE public.choices_id_seq
-    AS integer
     START WITH 1
     INCREMENT BY 1
     NO MINVALUE
@@ -499,7 +493,6 @@ CREATE TABLE public.configurations (
 --
 
 CREATE SEQUENCE public.configurations_id_seq
-    AS integer
     START WITH 1
     INCREMENT BY 1
     NO MINVALUE
@@ -527,7 +520,10 @@ CREATE TABLE public.containers (
     content jsonb,
     created_at timestamp without time zone NOT NULL,
     updated_at timestamp without time zone NOT NULL,
-    locale character varying
+    locale character varying,
+    filterable_field_id integer,
+    field_format character varying,
+    sort_direction character varying
 );
 
 
@@ -536,7 +532,6 @@ CREATE TABLE public.containers (
 --
 
 CREATE SEQUENCE public.containers_id_seq
-    AS integer
     START WITH 1
     INCREMENT BY 1
     NO MINVALUE
@@ -607,7 +602,6 @@ CREATE TABLE public.exports (
 --
 
 CREATE SEQUENCE public.exports_id_seq
-    AS integer
     START WITH 1
     INCREMENT BY 1
     NO MINVALUE
@@ -640,7 +634,6 @@ CREATE TABLE public.favorites (
 --
 
 CREATE SEQUENCE public.favorites_id_seq
-    AS integer
     START WITH 1
     INCREMENT BY 1
     NO MINVALUE
@@ -696,7 +689,6 @@ CREATE TABLE public.fields (
 --
 
 CREATE SEQUENCE public.fields_id_seq
-    AS integer
     START WITH 1
     INCREMENT BY 1
     NO MINVALUE
@@ -761,7 +753,10 @@ CREATE TABLE public.item_types (
     name_translations json,
     name_plural_translations json,
     deleted_at timestamp without time zone,
-    display_emtpy_fields boolean DEFAULT true NOT NULL
+    display_emtpy_fields boolean DEFAULT true NOT NULL,
+    suggestions_activated boolean DEFAULT false,
+    suggestion_email character varying,
+    allow_anonymous_suggestions boolean DEFAULT false
 );
 
 
@@ -770,7 +765,6 @@ CREATE TABLE public.item_types (
 --
 
 CREATE SEQUENCE public.item_types_id_seq
-    AS integer
     START WITH 1
     INCREMENT BY 1
     NO MINVALUE
@@ -807,7 +801,6 @@ CREATE TABLE public.item_views (
 --
 
 CREATE SEQUENCE public.item_views_id_seq
-    AS integer
     START WITH 1
     INCREMENT BY 1
     NO MINVALUE
@@ -851,7 +844,6 @@ CREATE TABLE public.items (
 --
 
 CREATE SEQUENCE public.items_id_seq
-    AS integer
     START WITH 1
     INCREMENT BY 1
     NO MINVALUE
@@ -915,8 +907,29 @@ CREATE TABLE public.menu_items (
     rank integer,
     created_at timestamp without time zone NOT NULL,
     updated_at timestamp without time zone NOT NULL,
+    locale_bckp character varying(10),
     title jsonb,
     url jsonb
+);
+
+
+--
+-- Name: menu_items_bckp1; Type: TABLE; Schema: public; Owner: -
+--
+
+CREATE TABLE public.menu_items_bckp1 (
+    id integer,
+    catalog_id integer,
+    slug character varying,
+    title character varying,
+    item_type_id integer,
+    page_id integer,
+    url text,
+    parent_id integer,
+    rank integer,
+    created_at timestamp without time zone,
+    updated_at timestamp without time zone,
+    locale character varying
 );
 
 
@@ -925,7 +938,6 @@ CREATE TABLE public.menu_items (
 --
 
 CREATE SEQUENCE public.menu_items_id_seq
-    AS integer
     START WITH 1
     INCREMENT BY 1
     NO MINVALUE
@@ -960,11 +972,29 @@ CREATE TABLE public.pages (
 
 
 --
+-- Name: pages_bckp1; Type: TABLE; Schema: public; Owner: -
+--
+
+CREATE TABLE public.pages_bckp1 (
+    id integer,
+    catalog_id integer,
+    creator_id integer,
+    reviewer_id integer,
+    slug character varying,
+    title text,
+    content text,
+    locale character varying,
+    status character varying,
+    created_at timestamp without time zone,
+    updated_at timestamp without time zone
+);
+
+
+--
 -- Name: pages_id_seq; Type: SEQUENCE; Schema: public; Owner: -
 --
 
 CREATE SEQUENCE public.pages_id_seq
-    AS integer
     START WITH 1
     INCREMENT BY 1
     NO MINVALUE
@@ -1058,6 +1088,42 @@ ALTER SEQUENCE public.simple_searches_id_seq OWNED BY public.simple_searches.id;
 
 
 --
+-- Name: suggestions; Type: TABLE; Schema: public; Owner: -
+--
+
+CREATE TABLE public.suggestions (
+    id bigint NOT NULL,
+    content text,
+    catalog_id bigint,
+    item_id bigint,
+    item_type_id bigint,
+    user_id bigint,
+    processed_at timestamp without time zone,
+    created_at timestamp(6) without time zone NOT NULL,
+    updated_at timestamp(6) without time zone NOT NULL
+);
+
+
+--
+-- Name: suggestions_id_seq; Type: SEQUENCE; Schema: public; Owner: -
+--
+
+CREATE SEQUENCE public.suggestions_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+--
+-- Name: suggestions_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
+--
+
+ALTER SEQUENCE public.suggestions_id_seq OWNED BY public.suggestions.id;
+
+
+--
 -- Name: template_storages; Type: TABLE; Schema: public; Owner: -
 --
 
@@ -1079,7 +1145,6 @@ CREATE TABLE public.template_storages (
 --
 
 CREATE SEQUENCE public.template_storages_id_seq
-    AS integer
     START WITH 1
     INCREMENT BY 1
     NO MINVALUE
@@ -1126,7 +1191,6 @@ CREATE TABLE public.users (
 --
 
 CREATE SEQUENCE public.users_id_seq
-    AS integer
     START WITH 1
     INCREMENT BY 1
     NO MINVALUE
@@ -1321,6 +1385,13 @@ ALTER TABLE ONLY public.searches ALTER COLUMN id SET DEFAULT nextval('public.sea
 --
 
 ALTER TABLE ONLY public.simple_searches ALTER COLUMN id SET DEFAULT nextval('public.simple_searches_id_seq'::regclass);
+
+
+--
+-- Name: suggestions id; Type: DEFAULT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.suggestions ALTER COLUMN id SET DEFAULT nextval('public.suggestions_id_seq'::regclass);
 
 
 --
@@ -1538,14 +1609,6 @@ ALTER TABLE ONLY public.pages
 
 
 --
--- Name: schema_migrations schema_migrations_pkey; Type: CONSTRAINT; Schema: public; Owner: -
---
-
-ALTER TABLE ONLY public.schema_migrations
-    ADD CONSTRAINT schema_migrations_pkey PRIMARY KEY (version);
-
-
---
 -- Name: searches searches_pkey; Type: CONSTRAINT; Schema: public; Owner: -
 --
 
@@ -1559,6 +1622,14 @@ ALTER TABLE ONLY public.searches
 
 ALTER TABLE ONLY public.simple_searches
     ADD CONSTRAINT simple_searches_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: suggestions suggestions_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.suggestions
+    ADD CONSTRAINT suggestions_pkey PRIMARY KEY (id);
 
 
 --
@@ -2005,10 +2076,10 @@ CREATE INDEX index_pages_on_reviewer_id ON public.pages USING btree (reviewer_id
 
 
 --
--- Name: index_searches_on_related_search; Type: INDEX; Schema: public; Owner: -
+-- Name: index_searches_on_related_search_type_and_related_search_id; Type: INDEX; Schema: public; Owner: -
 --
 
-CREATE INDEX index_searches_on_related_search ON public.searches USING btree (related_search_type, related_search_id);
+CREATE INDEX index_searches_on_related_search_type_and_related_search_id ON public.searches USING btree (related_search_type, related_search_id);
 
 
 --
@@ -2023,6 +2094,34 @@ CREATE INDEX index_searches_on_user_id ON public.searches USING btree (user_id);
 --
 
 CREATE INDEX index_simple_searches_on_catalog_id ON public.simple_searches USING btree (catalog_id);
+
+
+--
+-- Name: index_suggestions_on_catalog_id; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX index_suggestions_on_catalog_id ON public.suggestions USING btree (catalog_id);
+
+
+--
+-- Name: index_suggestions_on_item_id; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX index_suggestions_on_item_id ON public.suggestions USING btree (item_id);
+
+
+--
+-- Name: index_suggestions_on_item_type_id; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX index_suggestions_on_item_type_id ON public.suggestions USING btree (item_type_id);
+
+
+--
+-- Name: index_suggestions_on_user_id; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX index_suggestions_on_user_id ON public.suggestions USING btree (user_id);
 
 
 --
@@ -2044,6 +2143,13 @@ CREATE UNIQUE INDEX index_users_on_jti ON public.users USING btree (jti);
 --
 
 CREATE UNIQUE INDEX index_users_on_reset_password_token ON public.users USING btree (reset_password_token);
+
+
+--
+-- Name: unique_schema_migrations; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE UNIQUE INDEX unique_schema_migrations ON public.schema_migrations USING btree (version);
 
 
 --
@@ -2156,6 +2262,14 @@ ALTER TABLE ONLY public.groups
 
 ALTER TABLE ONLY public.menu_items
     ADD CONSTRAINT fk_rails_55a0ee63e5 FOREIGN KEY (parent_id) REFERENCES public.menu_items(id);
+
+
+--
+-- Name: suggestions fk_rails_565b5500a0; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.suggestions
+    ADD CONSTRAINT fk_rails_565b5500a0 FOREIGN KEY (catalog_id) REFERENCES public.catalogs(id);
 
 
 --
@@ -2327,6 +2441,14 @@ ALTER TABLE ONLY public.choices
 
 
 --
+-- Name: suggestions fk_rails_bd6ab43066; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.suggestions
+    ADD CONSTRAINT fk_rails_bd6ab43066 FOREIGN KEY (item_id) REFERENCES public.items(id);
+
+
+--
 -- Name: menu_items fk_rails_d05e957707; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
@@ -2372,6 +2494,22 @@ ALTER TABLE ONLY public.categories
 
 ALTER TABLE ONLY public.searches
     ADD CONSTRAINT fk_rails_e192b86393 FOREIGN KEY (user_id) REFERENCES public.users(id);
+
+
+--
+-- Name: suggestions fk_rails_e40b042562; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.suggestions
+    ADD CONSTRAINT fk_rails_e40b042562 FOREIGN KEY (user_id) REFERENCES public.users(id);
+
+
+--
+-- Name: suggestions fk_rails_fa35566808; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.suggestions
+    ADD CONSTRAINT fk_rails_fa35566808 FOREIGN KEY (item_type_id) REFERENCES public.item_types(id);
 
 
 --
@@ -2434,6 +2572,7 @@ INSERT INTO "schema_migrations" (version) VALUES
 ('20151205005311'),
 ('20151205011325'),
 ('20151206234336'),
+('20151210000035'),
 ('20151212000308'),
 ('20151214213046'),
 ('20160307163846'),
@@ -2442,6 +2581,7 @@ INSERT INTO "schema_migrations" (version) VALUES
 ('20160509095147'),
 ('20160509194619'),
 ('20160720053135'),
+('20161231140032'),
 ('20170121055843'),
 ('20170507231151'),
 ('20170507231610'),
@@ -2492,6 +2632,9 @@ INSERT INTO "schema_migrations" (version) VALUES
 ('20210730100707'),
 ('20210823103708'),
 ('20210906124258'),
-('20211101151726');
+('20211101151726'),
+('20211209083903'),
+('20220112092308'),
+('20220112102223');
 
 

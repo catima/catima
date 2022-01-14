@@ -1,0 +1,31 @@
+<div class="card panel-default">
+  <ul class="list-group list-group-flush">
+    <li class="list-group-item"><b>Suggestions</b></li>
+    <% @item.suggestions.ordered.each do |suggestion| %>
+      <li data-controller="toggle-display" class="list-group-item" style="border-bottom: none">
+        <div class="d-flex justify-content-between">
+          <div>
+            <%= suggestion.content.truncate(20) %>
+          </div>
+          <div>
+            <%= fa_icon(:eye, "data-action": "click->toggle-display#reveal") %>
+            <%= link_to fa_icon(:check), update_processed_item_suggestion_path(item_id: @item.id, id: suggestion.id), method: :post, class: ['px-1', ('text-success' if suggestion.processed_at?)] %>
+            <%= link_to(fa_icon(:trash), item_suggestion_path(item_id: @item.id, id: suggestion.id), method: :delete, class: 'px-1 text-danger') %>
+          </div>
+        </div>
+        <div data-toggle-display-target="revealable" class="pl-4 ">
+          <div>
+            <%= l(suggestion.created_at, format: :MDh) %>
+          </div>
+          <div>
+            <%= suggestion.user&.email %>
+          </div>
+          <div class="text-muted">
+            <%= suggestion.content %>
+          </div>
+
+        </div>
+      </li>
+    <% end %>
+  </ul>
+</div>

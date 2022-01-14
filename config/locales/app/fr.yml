@@ -222,10 +222,13 @@ fr:
       favorites_remove: "Supprimer des favoris"
     show:
       view_more: "Voir plus"
+      add_suggestion: "Ajouter une suggestion"
     editor:
       created_by: Créé par %{editor}
       updated_by: Édité par %{updater}
       at: le %{date}
+    suggestions:
+      create: Créer la Suggestion
   invitations_mailer:
     account_information:
       email: "E-mail"
@@ -270,6 +273,15 @@ fr:
     name: "Nom :"
     email: "Email :"
     body: "Message :"
+  suggestions_mailer:
+    subject: Nouvelle suggestion
+    intro: Un utilisateur vous a envoyé une suggestion %{suggestion_link}.
+    content: "Contenu: %{content}"
+    catalog: "Catalogue: %{catalog}"
+    item_type: "Item Type: %{item_type}"
+    item: "Item: %{item}"
+    user: "Utilisateur: %{user}"
+    body: "Suggestion : %{suggestion_content}"
   favorites:
     index:
       title: "Mes favoris"
@@ -739,7 +751,9 @@ fr:
         display-options: "Options d'affichage"
         show-empty-fields: "Afficher les champs vides pour ce type de fiche"
         display-empty-fields: "Afficher les champs vides"
-
+        suggestions: "Suggestions"
+        suggestions_activated: "Activer les suggestions"
+        allow_anonymous_suggestions: "Activer les suggestions anonymes"
     items:
       approval:
         item_waiting_for_review: Cette fiche de type %{item_type} attend votre validation.

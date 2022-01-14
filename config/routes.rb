@@ -59,6 +59,7 @@ Rails.application.routes.draw do
 
       scope module: 'catalog' do
         scope ':catalog_id' do
+          resources :suggestions, only: %(index)
           resources :users, only: %i(index)
           resources :groups, only: %i(index)
           resources :categories, only: %i(index)
@@ -73,6 +74,7 @@ Rails.application.routes.draw do
               get '/field/:field_id' => 'fields#show'
               resources :items, only: %i(index)
               get '/item/:item_id' => 'items#show'
+              get '/item/:item_id/suggestions' => 'items#suggestions'
             end
           end
 
@@ -369,7 +371,11 @@ Rails.application.routes.draw do
     resources :items,
               :path => ":item_type_slug",
               :only => [:index, :show],
-              :constraints => ItemsController::Constraint
+              :constraints => ItemsController::Constraint do
+      resources :suggestions, :only => [:create, :destroy] do
+        post :update_processed, on: :member
+      end
+    end
 
     get ":slug" => "custom#show", :constraints => CustomController::Constraint
 

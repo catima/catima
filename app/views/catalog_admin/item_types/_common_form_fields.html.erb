@@ -4,7 +4,20 @@
 <hr>
 <h4><%= t(".display-options") %></h4>
 <%= f.form_group(
-    :display_emtpy_fields,
-    :help => t(".show-empty-fields")) do %>
-    <%= f.check_box(:display_emtpy_fields, :label => t(".display-empty-fields")) %>
+  :display_emtpy_fields,
+  :help => t(".show-empty-fields")) do %>
+  <%= f.check_box(:display_emtpy_fields, :label => t(".display-empty-fields")) %>
 <% end %>
+<h4><%= t(".suggestions") %></h4>
+<div data-controller="toggle-display">
+  <%= f.form_group(
+    :suggestions_activated,
+    :help => t(".suggestions_activated")) do %>
+    <%= f.check_box(:suggestions_activated, :label => t(".suggestions_activated"), "data-toggle-display-target": "source", "data-action": "click->toggle-display#reveal") %>
+    <%= f.check_box(:allow_anonymous_suggestions, :label => t(".allow_anonymous_suggestions")) %>
+    <div data-toggle-display-target="revealable">
+      <%= f.email_field(:suggestion_email) %>
+    </div>
+  <% end %>
+</div>
+

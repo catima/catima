@@ -226,10 +226,13 @@ en:
       favorites_remove: "Remove from favorites"
     show:
       view_more: "View more"
+      add_suggestion: "Add a suggestion"
     editor:
       created_by: Created by %{editor}
       updated_by: Updated by %{updater}
       at: on %{date}
+    suggestions:
+      create_suggestion: Create Suggestion
   invitations_mailer:
     account_information:
       email: "Email"
@@ -274,6 +277,15 @@ en:
     name: "Name:"
     email: "Email:"
     body: "Message:"
+  suggestions_mailer:
+    subject: New suggestion
+    intro:  A user sent you a suggestion %{suggestion_link}.
+    content: "Content: %{content}"
+    catalog: "Catalog: %{catalog}"
+    item_type: "Item Type: %{item_type}"
+    item: "Item: %{item}"
+    user: "User: %{user}"
+    body: "Suggestion : %{suggestion_content}"
   favorites:
     index:
       title: "My favorites"
@@ -743,6 +755,9 @@ en:
         display-options: "Display options"
         show-empty-fields: "Display empty fields for this item type"
         display-empty-fields: "Display empty fields"
+        suggestions: "Suggestions"
+        suggestions_activated: "Enable suggestion"
+        allow_anonymous_suggestions: "Enable anonymous suggestions"
 
     items:
       approval:
