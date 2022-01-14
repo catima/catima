@@ -75,7 +75,9 @@
     text-align: left;
 }
 
-.referenceEditor .css-26l3qy-menu, .reference-search-container .css-26l3qy-menu {
+.select__menu.css-26l3qy-menu,
+.referenceEditor .css-26l3qy-menu,
+.reference-search-container .css-26l3qy-menu {
     z-index: 1001; /*  ensure menu over the map  */
 }
 
