@@ -39,7 +39,7 @@ class Item < ApplicationRecord
   belongs_to :creator, :class_name => "User"
   belongs_to :updater, :class_name => "User", optional: true
   has_many :favorites, :dependent => :destroy
-  has_many :suggestions, :dependent => :destroy
+  has_many :suggestions, dependent: :destroy
 
   validates_presence_of :catalog
   validates_presence_of :creator
