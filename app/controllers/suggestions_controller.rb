@@ -10,8 +10,7 @@ class SuggestionsController < ApplicationController
     return if suggestion_params[:content].blank?
 
     unless verify_recaptcha
-      return redirect_back fallback_location: root_path,
-                           :alert => t('containers.contact.invalid_captcha')
+      return redirect_back fallback_location: root_path, :alert => t('containers.contact.invalid_captcha')
     end
 
     return if item_type.allow_anonymous_suggestions? && !current_user
