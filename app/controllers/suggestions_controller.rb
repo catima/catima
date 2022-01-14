@@ -1,5 +1,4 @@
 class SuggestionsController < ApplicationController
-
   include ControlsCatalog
   include ControlsItemList
 
@@ -11,12 +10,10 @@ class SuggestionsController < ApplicationController
     return if suggestion_params[:content].blank?
 
     unless verify_recaptcha
-      return redirect_back fallback_location: root_path,
-                           :alert => t('containers.contact.invalid_captcha')
+      return redirect_back fallback_location: root_path, :alert => t('containers.contact.invalid_captcha')
     end
 
     return if @item_type.allow_anonymous_suggestions? && !current_user
-
 
 
     if (suggestion = @item.suggestions.create(suggestion_params.merge(item_type_id: @item.item_type_id, catalog_id: @item.catalog_id, user_id: current_user.authenticated? ? current_user.id : nil)))

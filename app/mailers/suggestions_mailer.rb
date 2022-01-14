@@ -1,8 +1,8 @@
 class SuggestionsMailer < ApplicationMailer
   helper :fields
+  
   def send_request(receiver, suggestion)
     @suggestion = suggestion
-
     mail(
       :subject => "[Catima] - #{t('suggestions_mailer.subject')}",
       :to => receiver,

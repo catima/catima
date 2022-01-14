@@ -289,7 +289,7 @@ en:
     item_type: "Item Type: %{item_type}"
     item: "Item: %{item}"
     user: "User: %{user}"
-    body: "Suggestion : %{suggestion_content}"
+    body: "Suggestion: %{suggestion_content}"
   favorites:
     index:
       title: "My favorites"
