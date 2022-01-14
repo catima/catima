@@ -1,5 +1,4 @@
 class SuggestionsController < ApplicationController
-
   include ControlsCatalog
   include ControlsItemList
 
