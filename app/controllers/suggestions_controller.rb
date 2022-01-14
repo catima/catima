@@ -17,7 +17,6 @@ class SuggestionsController < ApplicationController
     return if item_type.allow_anonymous_suggestions? && !current_user
 
 
-
     if (suggestion = @item.suggestions.create(suggestion_params.merge(item_type_id: @item.item_type_id, catalog_id: @item.catalog_id, user_id: current_user.authenticated? ? current_user.id : nil)))
       receiver = @item_type.suggestion_email
 
