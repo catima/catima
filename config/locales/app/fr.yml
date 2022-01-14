@@ -26,6 +26,10 @@ fr:
       item_view:
         name: "Nom"
         template: "Template"
+      item:
+        suggestions_activated: "Activer les suggestions"
+        allow_anonymous_suggestions: "Activer les suggestions anonymes"
+        suggestion_email: "Email a notifier"
       catalog:
         name: "Nom"
         advertize: "Promouvoir"
@@ -752,8 +756,6 @@ fr:
         show-empty-fields: "Afficher les champs vides pour ce type de fiche"
         display-empty-fields: "Afficher les champs vides"
         suggestions: "Suggestions"
-        suggestions_activated: "Activer les suggestions"
-        allow_anonymous_suggestions: "Activer les suggestions anonymes"
     items:
       approval:
         item_waiting_for_review: Cette fiche de type %{item_type} attend votre validation.

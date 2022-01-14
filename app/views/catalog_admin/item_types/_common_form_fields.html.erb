@@ -11,12 +11,11 @@
 <h4><%= t(".suggestions") %></h4>
 <div data-controller="toggle-display">
   <%= f.form_group(
-    :suggestions_activated,
-    :help => t(".suggestions_activated")) do %>
-    <%= f.check_box(:suggestions_activated, :label => t(".suggestions_activated"), "data-toggle-display-target": "source", "data-action": "click->toggle-display#reveal") %>
-    <%= f.check_box(:allow_anonymous_suggestions, :label => t(".allow_anonymous_suggestions")) %>
+    :suggestions_activated) do %>
+    <%= f.check_box(:suggestions_activated, label: Item.human_attribute_name(:suggestions_activated), "data-toggle-display-target": "source", "data-action": "click->toggle-display#reveal") %>
+    <%= f.check_box(:allow_anonymous_suggestions, label: Item.human_attribute_name(:allow_anonymous_suggestions)) %>
     <div data-toggle-display-target="revealable">
-      <%= f.email_field(:suggestion_email) %>
+      <%= f.email_field(:suggestion_email, label: Item.human_attribute_name(:suggestion_email)) %>
     </div>
   <% end %>
 </div>

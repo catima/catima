@@ -24,6 +24,10 @@ en:
       item_view:
         name: "Name"
         template: "Template"
+      item:
+        suggestions_activated: "Enable suggestion"
+        allow_anonymous_suggestions: "Enable anonymous suggestions"
+        suggestion_email: "Email to notify"
       catalog:
         name: "Name"
         advertize: "Advertize"
@@ -756,9 +760,6 @@ en:
         show-empty-fields: "Display empty fields for this item type"
         display-empty-fields: "Display empty fields"
         suggestions: "Suggestions"
-        suggestions_activated: "Enable suggestion"
-        allow_anonymous_suggestions: "Enable anonymous suggestions"
-
     items:
       approval:
         item_waiting_for_review: This %{item_type} is awaiting your review.

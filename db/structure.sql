@@ -1094,9 +1094,9 @@ ALTER SEQUENCE public.simple_searches_id_seq OWNED BY public.simple_searches.id;
 CREATE TABLE public.suggestions (
     id bigint NOT NULL,
     content text,
-    catalog_id bigint,
-    item_id bigint,
-    item_type_id bigint,
+    catalog_id bigint NOT NULL,
+    item_id bigint NOT NULL,
+    item_type_id bigint NOT NULL,
     user_id bigint,
     processed_at timestamp without time zone,
     created_at timestamp(6) without time zone NOT NULL,

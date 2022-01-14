@@ -15,7 +15,7 @@ class SuggestionsController < ApplicationController
                            :alert => t('containers.contact.invalid_captcha')
     end
 
-    return if item_type.allow_anonymous_suggestions? && !current_user
+    return if @item_type.allow_anonymous_suggestions? && !current_user
 
 
 
@@ -31,7 +31,7 @@ class SuggestionsController < ApplicationController
   end
 
   def destroy
-    @suggestion.delete
+    @suggestion.destroy
     redirect_to edit_catalog_admin_item_path(id: @item.id)
   end
 
@@ -46,9 +46,6 @@ class SuggestionsController < ApplicationController
     params.require(:suggestion).permit(:content)
   end
 
-  attr_reader :item_type
-
-  helper_method :item_type
 
   def find_item_type
     @item_type =
@@ -56,7 +53,7 @@ class SuggestionsController < ApplicationController
   end
 
   def find_item
-    @item = item_type.public_items.find(params[:item_id]).behaving_as_type
+    @item = @item_type.public_items.find(params[:item_id]).behaving_as_type
   end
 
   def find_suggestion
