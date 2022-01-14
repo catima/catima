@@ -28,7 +28,7 @@ class ItemType < ApplicationRecord
   has_many :item_views, :dependent => :destroy
   has_many :menu_items, :dependent => :destroy
   has_many :advanced_search_configurations, :dependent => :destroy
-  has_many :suggestions, :dependent => :destroy
+  has_many :suggestions, dependent: :destroy
 
   store_translations :name, :name_plural
   validates_slug :scope => [:catalog_id, :deleted_at]
