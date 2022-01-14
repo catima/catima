@@ -46,7 +46,6 @@ export default class extends Controller {
   }
 
   showElement(el) {
-    console.log()
     this.show = !this.show
     // Get the natural height of the element
     let getHeight = function () {
