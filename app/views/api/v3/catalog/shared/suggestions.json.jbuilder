@@ -5,7 +5,7 @@ json.data do
     json.item_type_id suggestion.item_type_id
     json.item_id suggestion.item_id
     json.user_id suggestion.user_id
-    json.processed_at suggestion.processed_at? ? I18n.l(suggestion.processed_at) : nil
+    json.processed_at suggestion.processed_at
     json.content suggestion.content
   end
 end
