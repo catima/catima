@@ -236,7 +236,7 @@ en:
       updated_by: Updated by %{updater}
       at: on %{date}
     suggestions:
-      create_suggestion: Create Suggestion
+      create_suggestion: Send
   invitations_mailer:
     account_information:
       email: "Email"

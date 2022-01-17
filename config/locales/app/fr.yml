@@ -226,13 +226,13 @@ fr:
       favorites_remove: "Supprimer des favoris"
     show:
       view_more: "Voir plus"
-      add_suggestion: "Ajouter une suggestion"
+      add_suggestion: "Faire une suggestion"
     editor:
       created_by: Créé par %{editor}
       updated_by: Édité par %{updater}
       at: le %{date}
     suggestions:
-      create: Créer la Suggestion
+      create_suggestion: Envoyer
   invitations_mailer:
     account_information:
       email: "E-mail"
