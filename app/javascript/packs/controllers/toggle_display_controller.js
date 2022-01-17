@@ -47,32 +47,11 @@ export default class extends Controller {
 
   showElement(el) {
     this.show = !this.show
-    // Get the natural height of the element
-    let getHeight = function () {
-      el.style.display = 'block'
-      let height = el.scrollHeight + 'px'
-      el.style.display = ''
-      return height
-    }
-
-    let height = getHeight()
     el.classList.add('is-visible') // Make the element visible
-    el.style.height = height
   }
 
   hideElement(el) {
     this.show = !this.show
-    // Give the element a height to change from
-    el.style.height = el.scrollHeight + 'px'
-    // Set the height back to height = 0
-    window.setTimeout(function () {
-      el.style.height = '0'
-      el.style.overflow = ''
-    }, 1)
-
-    // When the transition is complete, hide it
-    window.setTimeout(function () {
-      el.classList.remove('is-visible')
-    }, 250)
+    el.classList.remove('is-visible')
   }
 }
