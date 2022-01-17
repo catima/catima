@@ -3,10 +3,9 @@ class SuggestionsController < ApplicationController
   include ControlsItemList
 
   before_action :find_item_type
-  before_action :ensure_valid_captcha, only: [:create]
-  before_action :allow_anonymous_suggestion, only: [:create]
-  before_action :find_item, only: [:create, :destroy, :update_processed]
-  before_action :find_suggestion, only: [:destroy, :update_processed]
+  before_action :ensure_valid_captcha
+  before_action :allow_anonymous_suggestion
+  before_action :find_item
 
   def create
     suggestion = @item.suggestions.new(suggestion_params.merge(item_type_id: @item.item_type_id, catalog_id: @item.catalog_id, user_id: current_user&.id))
@@ -17,16 +16,6 @@ class SuggestionsController < ApplicationController
       flash[:alert] = t(".error", errors: suggestion.errors.full_messages.to_sentence)
     end
     redirect_back fallback_location: item_path(id: @item.id)
-  end
-
-  def destroy
-    @suggestion.destroy
-    redirect_to edit_catalog_admin_item_path(id: @item.id)
-  end
-
-  def update_processed
-    @suggestion.process
-    redirect_to edit_catalog_admin_item_path(id: @item.id)
   end
 
   private
@@ -42,10 +31,6 @@ class SuggestionsController < ApplicationController
 
   def find_item
     @item = @item_type.public_items.find(params[:item_id]).behaving_as_type
-  end
-
-  def find_suggestion
-    @suggestion = @item.suggestions.find(params[:id])
   end
 
   def ensure_valid_captcha

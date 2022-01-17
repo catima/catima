@@ -865,6 +865,9 @@ fr:
 
 
     shared:
+      suggestions:
+        confirm_validate: "Vous voulez vraiment valider cette suggestion ?"
+        confirm_destroy: "Vous voulez vraiment supprimer cette suggestion ?"
       setup_categories_nav:
         categories: 'Sous-fiches'
         new_category: 'Nouvelle sous-fiche'

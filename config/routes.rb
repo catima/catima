@@ -253,6 +253,9 @@ Rails.application.routes.draw do
         post "approval" => "approvals#create"
         delete "approval" => "approvals#destroy"
         get "duplicate"
+        resources :suggestions, :only => [:destroy] do
+          post :update_processed, on: :member, as: :update_processed
+        end
       end
     end
     post ":item_type_slug/upload" => "items#upload", :as => 'item_file_upload'
@@ -372,9 +375,7 @@ Rails.application.routes.draw do
               :path => ":item_type_slug",
               :only => [:index, :show],
               :constraints => ItemsController::Constraint do
-      resources :suggestions, :only => [:create, :destroy] do
-        post :update_processed, on: :member
-      end
+      resources :suggestions, :only => [:create]
     end
 
     get ":slug" => "custom#show", :constraints => CustomController::Constraint

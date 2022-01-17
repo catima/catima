@@ -8,9 +8,9 @@
             <%= suggestion.content.truncate(20) %>
           </div>
           <div>
-            <%= link_to fa_icon(:eye) ,"#", "data-action": "click->toggle-display#reveal", class: 'px-1 txt-success' %>
-            <%= link_to fa_icon(:check), update_processed_item_suggestion_path(item_id: @item.id, id: suggestion.id), method: :post, class: ['px-1', ('text-success' if suggestion.processed_at?)] %>
-            <%= link_to(fa_icon(:trash), item_suggestion_path(item_id: @item.id, id: suggestion.id), method: :delete, class: 'px-1 text-danger') %>
+            <%= link_to fa_icon(:eye) ,"javavascript:void(0)", "data-action": "click->toggle-display#reveal", class: 'px-1 txt-success' %>
+            <%= link_to fa_icon(:check), update_processed_catalog_admin_suggestion_path(item_id: @item.id, id: suggestion.id), method: :post, "data-confirm": t(".confirm_validate"), class: ['px-1', ('text-success' if suggestion.processed_at?)] %>
+            <%= link_to(fa_icon(:trash), catalog_admin_suggestion_path(item_id: @item.id, id: suggestion.id), method: :delete, "data-confirm": t(".confirm_destroy"), class: 'px-1 text-danger') %>
           </div>
         </div>
         <div data-toggle-display-target="revealable" class="pl-4 ">
