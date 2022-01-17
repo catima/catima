@@ -6,6 +6,8 @@ class Suggestion < ApplicationRecord
 
   scope :ordered, -> { order(processed_at: :desc, created_at: :desc) }
 
+  validates_presence_of :content, allow_blank: false
+
   def process
     touch(:processed_at)
   end

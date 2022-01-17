@@ -940,4 +940,4 @@ fr:
   suggestions:
     create:
       success: "Merci pour votre suggestion."
-      error: "Merci pour votre suggestion."
+      error: "Impossible de soumettre votre suggestion : %{errors}."
