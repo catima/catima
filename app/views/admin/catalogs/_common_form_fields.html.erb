@@ -26,6 +26,13 @@
   <%= f.check_box(:advertize) %>
 <% end %>
 
+<%= f.form_group(
+  :data_only,
+  :help => "If checked, this catalog will only be available through the api."
+) do %>
+  <%= f.check_box(:data_only) %>
+<% end %>
+
 <%= f.hidden_field(:visible) %>
 <%= f.hidden_field(:restricted) %>
 

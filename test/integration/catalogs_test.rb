@@ -35,6 +35,15 @@ class CatalogsTest < ActionDispatch::IntegrationTest
     assert(page.has_content?(/is not accessible/i))
   end
 
+  test "redirects if catalog is data_only" do
+    log_in_as("data-only@example.com", "password")
+    save_and_open_page
+    visit("/data-only")
+    save_and_open_page
+    assert_equal("/", current_path)
+    assert(page.has_content?(/is not accessible \(data only\)/i))
+  end
+
   test "check catalog visibility as user" do
     log_in_as("one@example.com", "password")
     visit("/not-visible")

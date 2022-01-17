@@ -26,11 +26,16 @@ class CatalogsController < ApplicationController
   end
 
   include ControlsCatalog
+  before_action :redirect_if_data_only
 
   def show
   end
 
   protected
+
+  def redirect_if_data_only
+    redirect_to  root_path, alert: t("catalogs.data_only", catalog_name: @catalog.name) if @catalog.data_only
+  end
 
   def track
     track_event("catalog_front")
