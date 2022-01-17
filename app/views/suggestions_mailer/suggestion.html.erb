@@ -22,5 +22,5 @@
 </div>
 <br>
 <div>
-  <%= t("suggestions_mailer.content", content: @suggestion.content) %>
+  <%= t("suggestions_mailer.body_html", content: html_escape(@suggestion.content).gsub(/\n/, '<br/>').html_safe) %>
 </div>
