@@ -28,8 +28,8 @@ fr:
         template: "Template"
       item:
         suggestions_activated: "Activer les suggestions"
-        allow_anonymous_suggestions: "Activer les suggestions anonymes"
-        suggestion_email: "Email a notifier"
+        allow_anonymous_suggestions: "Autoriser les suggestions anonymes"
+        suggestion_email: "Adresse e-mail de notification"
       catalog:
         name: "Nom"
         advertize: "Promouvoir"
@@ -754,6 +754,7 @@ fr:
       common_form_fields:
         display-options: "Options d'affichage"
         show-empty-fields: "Afficher les champs vides pour ce type de fiche"
+        suggestion-email-help: "Adresse e-mail à notifier lorsqu'une nouvelle suggestion est faite."
         display-empty-fields: "Afficher les champs vides"
         suggestions: "Suggestions"
     items:
@@ -935,3 +936,8 @@ fr:
       super-editor: Super-éditeur de catalogue
       reviewer: Superviseur de catalogue
       admin: Administrateur de catalogue
+
+  suggestions:
+    create:
+      success: "Merci pour votre suggestion."
+      error: "Merci pour votre suggestion."
