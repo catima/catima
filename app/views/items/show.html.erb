@@ -2,7 +2,7 @@
   <div data-controller="toggle-display">
     <div>
       <%= item_display_name(@item) %>
-      <% if (@item_type.suggestions_activated? && current_user.authenticated?) || (@item_type.suggestions_activated? && @item_type.allow_anonymous_suggestions?) %>
+      <% if @item_type.suggestions_activated? && (current_user.authenticated? || @item_type.allow_anonymous_suggestions?) %>
         <%= link_to(fa_icon(:"comment"), '#', class: 'btn btn-primary float-right', "data-action": "click->toggle-display#reveal", "data-toggle": "tooltip", "data-placement": "top", "title": t(".add_suggestion")) %>
       <% end %>
     </div>
