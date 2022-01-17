@@ -3,28 +3,20 @@ class SuggestionsController < ApplicationController
   include ControlsItemList
 
   before_action :find_item_type
+  before_action :ensure_valid_captcha, only: [:create]
+  before_action :allow_anonymous_suggestion, only: [:create]
   before_action :find_item, only: [:create, :destroy, :update_processed]
   before_action :find_suggestion, only: [:destroy, :update_processed]
 
   def create
-    return if suggestion_params[:content].blank?
-
-    unless verify_recaptcha
-      return redirect_back fallback_location: root_path, :alert => t('containers.contact.invalid_captcha')
+    suggestion = @item.suggestions.new(suggestion_params.merge(item_type_id: @item.item_type_id, catalog_id: @item.catalog_id, user_id: current_user&.id))
+    if suggestion.save
+      SuggestionsMailer.send_request(@item_type.suggestion_email, suggestion).deliver_now
+      flash[:notice] = t(".success")
+    else
+      flash[:alert] = t(".error", errors: suggestion.errors.full_messages.to_sentence)
     end
-
-    return if @item_type.allow_anonymous_suggestions? && !current_user
-
-
-    if (suggestion = @item.suggestions.create(suggestion_params.merge(item_type_id: @item.item_type_id, catalog_id: @item.catalog_id, user_id: current_user.authenticated? ? current_user.id : nil)))
-      receiver = @item_type.suggestion_email
-
-      SuggestionsMailer.send_request(
-        receiver,
-        suggestion
-      ).deliver_now
-    end
-    redirect_to item_path(id: @item.id)
+    redirect_back fallback_location: item_path(id: @item.id)
   end
 
   def destroy
@@ -43,7 +35,6 @@ class SuggestionsController < ApplicationController
     params.require(:suggestion).permit(:content)
   end
 
-
   def find_item_type
     @item_type =
       catalog.item_types.where(:slug => params[:item_type_slug]).first!
@@ -55,5 +46,15 @@ class SuggestionsController < ApplicationController
 
   def find_suggestion
     @suggestion = @item.suggestions.find(params[:id])
+  end
+
+  def ensure_valid_captcha
+    return if verify_recaptcha
+    redirect_back fallback_location: root_path, flash: {alert: t('containers.contact.invalid_captcha')}
+  end
+
+  def allow_anonymous_suggestion
+    return if current_user || @item_type.allow_anonymous_suggestions?
+    head :unauthorized
   end
 end

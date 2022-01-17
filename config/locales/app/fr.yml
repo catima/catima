@@ -280,12 +280,11 @@ fr:
   suggestions_mailer:
     subject: Nouvelle suggestion
     intro: Un utilisateur vous a envoyé une suggestion %{suggestion_link}.
-    content: "Contenu : %{content}"
     catalog: "Catalogue : %{catalog}"
     item_type: "Item Type : %{item_type}"
     item: "Item : %{item}"
     user: "Utilisateur : %{user}"
-    body: "Suggestion : %{suggestion_content}"
+    body_html: "Suggestion : <div style='font-style: italic'>%{content}</div>"
   favorites:
     index:
       title: "Mes favoris"
@@ -940,4 +939,4 @@ fr:
   suggestions:
     create:
       success: "Merci pour votre suggestion."
-      error: "Merci pour votre suggestion."
+      error: "Impossible de soumettre votre suggestion : %{errors}."

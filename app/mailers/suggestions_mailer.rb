@@ -9,7 +9,5 @@ class SuggestionsMailer < ApplicationMailer
       :from => ENV['MAIL_SENDER'],
       :template_name => "suggestion"
     )
-  ensure
-    I18n.locale = I18n.default_locale
   end
 end
