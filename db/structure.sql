@@ -523,7 +523,7 @@ CREATE TABLE public.containers (
     locale character varying,
     filterable_field_id integer,
     field_format character varying,
-    sort_direction character varying
+    sort character varying
 );
 
 
@@ -907,29 +907,8 @@ CREATE TABLE public.menu_items (
     rank integer,
     created_at timestamp without time zone NOT NULL,
     updated_at timestamp without time zone NOT NULL,
-    locale_bckp character varying(10),
     title jsonb,
     url jsonb
-);
-
-
---
--- Name: menu_items_bckp1; Type: TABLE; Schema: public; Owner: -
---
-
-CREATE TABLE public.menu_items_bckp1 (
-    id integer,
-    catalog_id integer,
-    slug character varying,
-    title character varying,
-    item_type_id integer,
-    page_id integer,
-    url text,
-    parent_id integer,
-    rank integer,
-    created_at timestamp without time zone,
-    updated_at timestamp without time zone,
-    locale character varying
 );
 
 
@@ -968,25 +947,6 @@ CREATE TABLE public.pages (
     created_at timestamp without time zone NOT NULL,
     updated_at timestamp without time zone NOT NULL,
     title jsonb
-);
-
-
---
--- Name: pages_bckp1; Type: TABLE; Schema: public; Owner: -
---
-
-CREATE TABLE public.pages_bckp1 (
-    id integer,
-    catalog_id integer,
-    creator_id integer,
-    reviewer_id integer,
-    slug character varying,
-    title text,
-    content text,
-    locale character varying,
-    status character varying,
-    created_at timestamp without time zone,
-    updated_at timestamp without time zone
 );
 
 
@@ -2633,7 +2593,6 @@ INSERT INTO "schema_migrations" (version) VALUES
 ('20210823103708'),
 ('20210906124258'),
 ('20211101151726'),
-('20211209083903'),
 ('20220112092308'),
 ('20220112102223');
 
