@@ -47,6 +47,16 @@ class CatalogAdmin::PagesController < CatalogAdmin::BaseController
     end
   end
 
+  def filterable_field_select_options
+    @item_type = catalog.item_types.find(params[:item_type_id])
+    render 'catalog_admin/containers/item_list/filterable_field_select_options', layout: false
+  end
+
+  def field_format_select_options
+    @field = Field.find(params[:field_id])
+    render json: { isDateTime: @field.is_a?(Field::DateTime) }
+  end
+
   private
 
   def build_page
