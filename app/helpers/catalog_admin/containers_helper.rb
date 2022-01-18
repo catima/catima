@@ -37,8 +37,8 @@ module CatalogAdmin::ContainersHelper
     )
   end
 
-  def sort_direction_select(form, options={}, html_options={})
-    form.select(:sort_direction, %w(ASC DESC), options, html_options)
+  def sort_select(form, options={}, html_options={})
+    form.select(:sort, %w(ASC DESC), options, html_options)
   end
 
   def filterable_field_select(form, options={})

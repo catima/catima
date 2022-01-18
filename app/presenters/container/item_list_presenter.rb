@@ -9,7 +9,7 @@ class Container::ItemListPresenter < ContainerPresenter
       @list = ::ItemList::Filter.new(
         :item_type => @item_type,
         :page => @view.params[:page],
-        sort_direction: @container&.sort_direction || 'ASC'
+        sort: @container&.sort || 'ASC'
       )
       @view.params[:style] = container.content["style"] if container.content["style"].present?
       @view.render("containers/item_list", :item_list => @list, container: @container)

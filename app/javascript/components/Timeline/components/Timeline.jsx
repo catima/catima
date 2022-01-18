@@ -6,7 +6,7 @@ import ReactSelect from 'react-select';
 
 const Timeline = (props) => {
   const {
-    sort_direction,
+    sort,
     url,
     links,
     icons,
@@ -118,7 +118,7 @@ const Timeline = (props) => {
           value={[{value: 'ASC', label: 'Ascending'}, {
             value: 'DESC',
             label: 'Descending'
-          }].filter(o => o.value === sort_direction)}
+          }].filter(o => o.value === sort)}
 
         />
       </div>

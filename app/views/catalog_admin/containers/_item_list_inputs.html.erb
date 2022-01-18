@@ -5,7 +5,7 @@
   <% if catalog.item_types.any? %>
     <%= item_type_select(f, {}, {"data-action": "input->item-list-inputs#updateFilterableFieldSelect", "data-item-list-inputs-target": "itemTypeSelect"}) %>
     <%= style_select(f, {:help => t('.display_style')}, {"data-action": "input->item-list-inputs#toggleDisplayFilterableFieldSelect", "data-item-list-inputs-target": "styleSelect"}) %>
-    <%= sort_direction_select(f, {}) %>
+    <%= sort_select(f, {}) %>
     <div data-item-list-inputs-target="filterableFieldSelectWrapper" class="<%= (f.object.item_type.present? && f.object.style == 'timeline' ? 'qsdf' : 'd-none') %>">
       <%= filterable_field_select(f, {"data-item-list-inputs-target": "filterableFieldSelect", "data-action": "input->item-list-inputs#updateFieldFormatSelect"}) %>
     </div>

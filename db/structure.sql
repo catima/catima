@@ -523,7 +523,7 @@ CREATE TABLE public.containers (
     locale character varying,
     filterable_field_id integer,
     field_format character varying,
-    sort_direction character varying
+    sort character varying
 );
 
 
@@ -753,10 +753,7 @@ CREATE TABLE public.item_types (
     name_translations json,
     name_plural_translations json,
     deleted_at timestamp without time zone,
-    display_emtpy_fields boolean DEFAULT true NOT NULL,
-    suggestions_activated boolean DEFAULT false,
-    suggestion_email character varying,
-    allow_anonymous_suggestions boolean DEFAULT false
+    display_emtpy_fields boolean DEFAULT true NOT NULL
 );
 
 
@@ -1048,42 +1045,6 @@ ALTER SEQUENCE public.simple_searches_id_seq OWNED BY public.simple_searches.id;
 
 
 --
--- Name: suggestions; Type: TABLE; Schema: public; Owner: -
---
-
-CREATE TABLE public.suggestions (
-    id bigint NOT NULL,
-    content text,
-    catalog_id bigint NOT NULL,
-    item_id bigint NOT NULL,
-    item_type_id bigint NOT NULL,
-    user_id bigint,
-    processed_at timestamp without time zone,
-    created_at timestamp(6) without time zone NOT NULL,
-    updated_at timestamp(6) without time zone NOT NULL
-);
-
-
---
--- Name: suggestions_id_seq; Type: SEQUENCE; Schema: public; Owner: -
---
-
-CREATE SEQUENCE public.suggestions_id_seq
-    START WITH 1
-    INCREMENT BY 1
-    NO MINVALUE
-    NO MAXVALUE
-    CACHE 1;
-
-
---
--- Name: suggestions_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
---
-
-ALTER SEQUENCE public.suggestions_id_seq OWNED BY public.suggestions.id;
-
-
---
 -- Name: template_storages; Type: TABLE; Schema: public; Owner: -
 --
 
@@ -1348,13 +1309,6 @@ ALTER TABLE ONLY public.simple_searches ALTER COLUMN id SET DEFAULT nextval('pub
 
 
 --
--- Name: suggestions id; Type: DEFAULT; Schema: public; Owner: -
---
-
-ALTER TABLE ONLY public.suggestions ALTER COLUMN id SET DEFAULT nextval('public.suggestions_id_seq'::regclass);
-
-
---
 -- Name: template_storages id; Type: DEFAULT; Schema: public; Owner: -
 --
 
@@ -1582,14 +1536,6 @@ ALTER TABLE ONLY public.searches
 
 ALTER TABLE ONLY public.simple_searches
     ADD CONSTRAINT simple_searches_pkey PRIMARY KEY (id);
-
-
---
--- Name: suggestions suggestions_pkey; Type: CONSTRAINT; Schema: public; Owner: -
---
-
-ALTER TABLE ONLY public.suggestions
-    ADD CONSTRAINT suggestions_pkey PRIMARY KEY (id);
 
 
 --
@@ -2057,34 +2003,6 @@ CREATE INDEX index_simple_searches_on_catalog_id ON public.simple_searches USING
 
 
 --
--- Name: index_suggestions_on_catalog_id; Type: INDEX; Schema: public; Owner: -
---
-
-CREATE INDEX index_suggestions_on_catalog_id ON public.suggestions USING btree (catalog_id);
-
-
---
--- Name: index_suggestions_on_item_id; Type: INDEX; Schema: public; Owner: -
---
-
-CREATE INDEX index_suggestions_on_item_id ON public.suggestions USING btree (item_id);
-
-
---
--- Name: index_suggestions_on_item_type_id; Type: INDEX; Schema: public; Owner: -
---
-
-CREATE INDEX index_suggestions_on_item_type_id ON public.suggestions USING btree (item_type_id);
-
-
---
--- Name: index_suggestions_on_user_id; Type: INDEX; Schema: public; Owner: -
---
-
-CREATE INDEX index_suggestions_on_user_id ON public.suggestions USING btree (user_id);
-
-
---
 -- Name: index_users_on_email; Type: INDEX; Schema: public; Owner: -
 --
 
@@ -2222,14 +2140,6 @@ ALTER TABLE ONLY public.groups
 
 ALTER TABLE ONLY public.menu_items
     ADD CONSTRAINT fk_rails_55a0ee63e5 FOREIGN KEY (parent_id) REFERENCES public.menu_items(id);
-
-
---
--- Name: suggestions fk_rails_565b5500a0; Type: FK CONSTRAINT; Schema: public; Owner: -
---
-
-ALTER TABLE ONLY public.suggestions
-    ADD CONSTRAINT fk_rails_565b5500a0 FOREIGN KEY (catalog_id) REFERENCES public.catalogs(id);
 
 
 --
@@ -2401,14 +2311,6 @@ ALTER TABLE ONLY public.choices
 
 
 --
--- Name: suggestions fk_rails_bd6ab43066; Type: FK CONSTRAINT; Schema: public; Owner: -
---
-
-ALTER TABLE ONLY public.suggestions
-    ADD CONSTRAINT fk_rails_bd6ab43066 FOREIGN KEY (item_id) REFERENCES public.items(id);
-
-
---
 -- Name: menu_items fk_rails_d05e957707; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
@@ -2454,22 +2356,6 @@ ALTER TABLE ONLY public.categories
 
 ALTER TABLE ONLY public.searches
     ADD CONSTRAINT fk_rails_e192b86393 FOREIGN KEY (user_id) REFERENCES public.users(id);
-
-
---
--- Name: suggestions fk_rails_e40b042562; Type: FK CONSTRAINT; Schema: public; Owner: -
---
-
-ALTER TABLE ONLY public.suggestions
-    ADD CONSTRAINT fk_rails_e40b042562 FOREIGN KEY (user_id) REFERENCES public.users(id);
-
-
---
--- Name: suggestions fk_rails_fa35566808; Type: FK CONSTRAINT; Schema: public; Owner: -
---
-
-ALTER TABLE ONLY public.suggestions
-    ADD CONSTRAINT fk_rails_fa35566808 FOREIGN KEY (item_type_id) REFERENCES public.item_types(id);
 
 
 --
