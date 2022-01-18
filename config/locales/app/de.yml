@@ -367,6 +367,13 @@ de:
       invalid_captcha: Bitte überprüfen Sie, ob Sie ein Mensch sind.
     map:
       view_item: Element anschauen
+    item_list:
+      more: Mehr
+      open_all: Alle öffnen
+      close_all: Alle schließen
+      select_sort: Sortierung auswählen
+      asc: Aufsteigend
+      desc: Absteigend
 
   catalog_admin:
 

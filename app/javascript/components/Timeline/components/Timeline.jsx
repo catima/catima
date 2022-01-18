@@ -1,4 +1,5 @@
-import React, {useState, useEffect, useRef} from 'react';
+import React, {useEffect, useRef, useState} from 'react';
+import Translations from '../../Translations/components/Translations';
 import PropTypes from "prop-types";
 import axios from 'axios';
 import "../css/timeline.scss";
@@ -28,8 +29,7 @@ const Timeline = (props) => {
   }, [currentPageProps])
 
   useEffect(() => {
-    const csrfToken = (document.querySelector("meta[name=csrf-token]") || {}).content;
-    axios.defaults.headers.common["X-CSRF-Token"] = csrfToken;
+    axios.defaults.headers.common["X-CSRF-Token"] = (document.querySelector("meta[name=csrf-token]") || {}).content;
     axios.defaults.headers.common["X-Requested-With"] = 'XMLHttpRequest';
     fetchItems(currentPage)
   }, [])
@@ -71,9 +71,9 @@ const Timeline = (props) => {
     return (
       <div className="timeline__group" key={`group-${key}`}>
         <div className="timeline__group__title">
-          <div dangerouslySetInnerHTML={{__html: items[0].group_title}}></div>
+          <div dangerouslySetInnerHTML={{__html: items[0].group_title}}/>
           <span className="px-2"  style={{cursor: "pointer"}} onClick={() => toggleGroupIsOpen(groupIndex)}
-                dangerouslySetInnerHTML={{__html: groupIsOpen[groupIndex] ? icons.up : icons.down}}></span>
+    dangerouslySetInnerHTML={{__html: groupIsOpen[groupIndex] ? icons.up : icons.down}}/>
         </div>
 
         {groupIsOpen[groupIndex] && (
@@ -83,8 +83,8 @@ const Timeline = (props) => {
                   className={(((i += 1) % 2) == 0) ? 'timeline__group__item__wrapper  odd' : 'timeline__group__item__wrapper  even'}
                   key={`${item.id}-${idx}`}>
                   <div className="timeline__group__item text-component">
-                    <div dangerouslySetInnerHTML={{__html: item.title}}></div>
-                    <p className="color-contrast-medium" dangerouslySetInnerHTML={{__html: item.summary}}></p>
+                    <div dangerouslySetInnerHTML={{__html: item.title}}/>
+                    <p className="color-contrast-medium" dangerouslySetInnerHTML={{__html: item.summary}}/>
                   </div>
                 </div>
               )
@@ -103,7 +103,7 @@ const Timeline = (props) => {
       window.location.assign(links.desc)
     }
   }
-  const loader = <div className="d-flex justify-content-center align-items-center"><div className="loader"></div></div>
+  const loader = <div className="d-flex justify-content-center align-items-center"><div className="loader"/></div>
   if (!Object.keys(groupedItems).length) return  loader
 
   return (
@@ -112,9 +112,12 @@ const Timeline = (props) => {
         <ReactSelect
           id='asc-desc'
           name='asc-desc'
-          options={[{value: 'ASC', label: 'Ascending'}, {value: 'DESC', label: 'Descending'}]}
+          options={[
+            {value: 'ASC', label: Translations.messages['containers.item_list.asc']},
+            {value: 'DESC', label: Translations.messages['containers.item_list.desc']}
+          ]}
           onChange={sortAscDesc}
-          placeholder='Select Sort Order'
+          placeholder={Translations.messages['containers.item_list.select_sort']}
           value={[{value: 'ASC', label: 'Ascending'}, {
             value: 'DESC',
             label: 'Descending'
@@ -124,8 +127,14 @@ const Timeline = (props) => {
       </div>
       <div className='d-flex justify-content-center'>
         {allOpen && (
-          <a className="m-2" href="#" onClick={() => toggleAllGroupAreOpen(false)}>Close All</a>
-        ) || (<a className="m-4" href="#" onClick={() => toggleAllGroupAreOpen(true)}>Open All</a>)}
+          <a className="m-2" href="#" onClick={() => toggleAllGroupAreOpen(false)}>
+            {Translations.messages['containers.item_list.close_all']}
+          </a>
+        ) || (
+          <a className="m-2" href="#" onClick={() => toggleAllGroupAreOpen(true)}>
+            {Translations.messages['containers.item_list.open_all']}
+          </a>
+        )}
       </div>
 
       <section className="timeline">
@@ -138,7 +147,9 @@ const Timeline = (props) => {
           {isFetching && (
             loader
           ) || (
-            <button className="btn btn-lg btn-primary" onClick={() => fetchItems(currentPage + 1)}>More</button>
+            <button className="btn btn-lg btn-primary" onClick={() => fetchItems(currentPage + 1)}>
+              {Translations.messages['containers.item_list.more']}
+            </button>
           )}
         </div>
       )}
