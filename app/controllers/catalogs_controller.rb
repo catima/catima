@@ -34,7 +34,7 @@ class CatalogsController < ApplicationController
   protected
 
   def redirect_if_data_only
-    redirect_to  root_path, alert: t("catalogs.data_only", catalog_name: @catalog.name) if @catalog.data_only
+    redirect_to root_path, alert: t("catalogs.data_only", catalog_name: @catalog.name) if @catalog.data_only?
   end
 
   def track
