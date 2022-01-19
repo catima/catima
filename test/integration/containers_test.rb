@@ -26,16 +26,15 @@ class ContainersTest < ActionDispatch::IntegrationTest
     timeline_page = pages(:timeline_one)
     visit("/one/en/#{timeline_page.to_param}")
     sleep(4)
-    within first('.timeline__group__title') do
-      assert(page.has_content?("No"))
-      assert(page.has_content?("Very Young"))
-      refute(page.has_content?("Very Old"))
+    within all('.timeline__group').first do
+      assert(has_content?("No"))
+      assert(has_content?("Very Young"))
     end
 
-    within last('.timeline__group__title') do
-      assert(page.has_content?("Yes"))
-      assert(page.has_content?("Very Old"))
-      refute(page.has_content?("Very Young"))
+    within all('.timeline__group').last do
+      assert(has_content?("Yes"))
+      assert(has_content?("Very Old"))
+      refute(has_content?("Stephen King"))
     end
   end
 end
