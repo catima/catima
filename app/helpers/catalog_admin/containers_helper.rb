@@ -41,10 +41,10 @@ module CatalogAdmin::ContainersHelper
     form.select(:sort, %w(ASC DESC), options, html_options)
   end
 
-  def filterable_field_select(form, options={})
+  def sort_field_select(form, options={})
     item_type = form.object.item_type.nil? ? nil : ItemType.find(form.object.item_type)
     form.select(
-      :filterable_field_id,
+      :sort_field_id,
       form.object.item_type.present? && form.object.style == 'timeline' && item_type ? item_type.fields.map { |f| [f.name, f.id] } : [],
       { include_blank: true },
       options.reverse_merge(required: true)

@@ -235,7 +235,7 @@ Rails.application.routes.draw do
     end
 
     resources :pages, :path => "_pages", :param => :slug do
-      post :filterable_field_select_options, on: :collection
+      post :sort_field_select_options, on: :collection
       post :field_format_select_options, on: :collection
       resources :containers,
                 :path => "_containers",

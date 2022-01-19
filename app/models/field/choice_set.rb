@@ -42,7 +42,7 @@ class Field::ChoiceSet < ::Field
                          :in => :choice_set_choices,
                          :allow_nil => true
 
-  delegate :choice_prefixed_label, :flat_ordered_choices, to: :choice_set
+  delegate :choices, :choice_prefixed_label, :flat_ordered_choices, to: :choice_set
 
   def type_name
     "Choice set" + (choice_set ? " (#{choice_set.name})" : "")

@@ -77,7 +77,7 @@ class Container < ApplicationRecord
     update(d)
   end
 
-  def filterable_field
-    filterable_field_id? ? Field.find(filterable_field_id) : nil
+  def sort_field
+    sort_field_id? ? Field.find_by(id: sort_field_id) : nil
   end
 end

@@ -1,5 +1,6 @@
 class CatalogAdmin::PagesController < CatalogAdmin::BaseController
   layout "catalog_admin/setup"
+  include ControlsItemSorting
 
   def index
     authorize(Page)
@@ -47,9 +48,10 @@ class CatalogAdmin::PagesController < CatalogAdmin::BaseController
     end
   end
 
-  def filterable_field_select_options
+  def sort_field_select_options
     @item_type = catalog.item_types.find(params[:item_type_id])
-    render 'catalog_admin/containers/item_list/filterable_field_select_options', layout: false
+    @fields = sort_field_choices(all_human_readable: false)
+    render 'catalog_admin/containers/item_list/sort_field_select_options', layout: false
   end
 
   def field_format_select_options
@@ -58,6 +60,10 @@ class CatalogAdmin::PagesController < CatalogAdmin::BaseController
   end
 
   private
+
+  def item_type
+    @item_type
+  end
 
   def build_page
     @page = catalog.pages.new do |model|

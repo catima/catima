@@ -1,6 +1,8 @@
 require "test_helper"
 
 class ContainersTest < ActionDispatch::IntegrationTest
+  setup { use_javascript_capybara_driver }
+
   test "sends a contact request" do
     visit("/one/en/one")
 
@@ -18,5 +20,22 @@ class ContainersTest < ActionDispatch::IntegrationTest
 
     assert(true, find_field('email')[:required])
     assert(true, find_field('body')[:required])
+  end
+
+  test "view timeline container" do
+    timeline_page = pages(:timeline_one)
+    visit("/one/en/#{timeline_page.to_param}")
+    sleep(4)
+    within first('.timeline__group__title') do
+      assert(page.has_content?("No"))
+      assert(page.has_content?("Very Young"))
+      refute(page.has_content?("Very Old"))
+    end
+
+    within last('.timeline__group__title') do
+      assert(page.has_content?("Yes"))
+      assert(page.has_content?("Very Old"))
+      refute(page.has_content?("Very Young"))
+    end
   end
 end

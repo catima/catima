@@ -19,7 +19,7 @@ class Container::ItemList < ::Container
   include ItemListsHelper
 
   def custom_container_permitted_attributes
-    %i(item_type style filterable_field_id field_format sort)
+    %i(item_type style sort_field_id field_format sort)
   end
 
   def render_view(options={})

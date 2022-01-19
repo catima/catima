@@ -2,22 +2,22 @@ class ItemList::Filter < ItemList
   # This is the inverse of the to_param method, below.
   def self.parse_param(param)
     field_slug, value = param.to_s.split("_", 2)
-    field_slug.present? ? { :field_slug => field_slug, :value => value } : {}
+    field_slug.present? ? {:field_slug => field_slug, :value => value} : {}
   end
 
   include ::Search::Strategies
 
-  attr_reader :item_type, :field, :value, :filter_field, :sort
+  attr_reader :item_type, :field, :value, :sort_field, :sort
 
   delegate :fields, :to => :item_type
   delegate :locale, :to => I18n
 
-  def initialize(item_type:, field: nil, value: nil, page: nil, per: nil, filter_field: false, sort: 'ASC')
+  def initialize(item_type:, field: nil, value: nil, page: nil, per: nil, sort_field: false, sort: 'ASC')
     super(item_type.catalog, page, per)
     @item_type = item_type
     @field = field
     @value = value
-    @filter_field = filter_field
+    @sort_field = sort_field
     @sort = sort
   end
 
@@ -29,12 +29,11 @@ class ItemList::Filter < ItemList
   end
 
   def items
-    return unpaginated_list_items.reorder(Arel.sql("items.data->>'#{filter_field.uuid}' #{sort || 'ASC'}")) if filter_field
-
     super
 
-    if item_type.primary_human_readable_field
-      unpaginated_list_items.reorder(Arel.sql("items.data->>'#{item_type.primary_human_readable_field.uuid}' #{sort || 'ASC'}"))
+    field_to_sort_by = sort_field || item_type.primary_human_readable_field
+    if field_to_sort_by
+      return sort_unpaginated_items(field_to_sort_by)
     else
       unpaginated_list_items
     end
@@ -47,6 +46,28 @@ class ItemList::Filter < ItemList
   end
 
   private
+
+  def sort_unpaginated_items(field)
+    direction = sort || 'ASC'
+    if field.is_a?(Field::Reference)
+      return unpaginated_list_items.joins("LEFT JOIN items ref_items ON ref_items.id::text = items.data->>'#{field.uuid}'")
+                                   .reorder(Arel.sql("(ref_items.data->>'#{field.related_item_type.field_for_select.uuid}') #{direction}")) unless field.related_item_type.field_for_select.nil?
+    elsif field.is_a?(Field::ChoiceSet)
+      return unpaginated_list_items.joins("LEFT JOIN choices ON choices.id::text = items.data->>'#{sort_field.uuid}'")
+                                   .reorder(Arel.sql "(choices.short_name_translations->>'short_name_#{I18n.locale}') #{direction}") unless field.choices.nil?
+    elsif field.is_a?(Field::DateTime)
+      return unpaginated_list_items.reorder(Arel.sql(
+        "NULLIF(items.data->'#{field.uuid}'->>'Y', '')::int #{direction},
+           NULLIF(items.data->'#{field.uuid}'->>'M', '')::int #{direction},
+           NULLIF(items.data->'#{field.uuid}'->>'D', '')::int #{direction},
+           NULLIF(items.data->'#{field.uuid}'->>'h', '')::int #{direction},
+           NULLIF(items.data->'#{field.uuid}'->>'m', '')::int #{direction},
+           NULLIF(items.data->'#{field.uuid}'->>'s', '')::int #{direction}"
+      ))
+    else
+      return unpaginated_list_items.reorder(Arel.sql("items.data->>'#{field.uuid}' #{direction}"))
+    end
+  end
 
   def strategy
     strategies.find { |s| s.field == field }
