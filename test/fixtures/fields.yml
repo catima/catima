@@ -321,9 +321,7 @@ one_author_compound:
   field_set: one_author (ItemType)
   uuid: one_author_compound_uuid
   required: false
-  options: {
-    "template" : "{\"en\":\"<p><i>{{name}}<\/i><\/p>\"}"
-  }
+  options: { "template" : "{\"en\":\"<p><i>{{name}}<\/i><\/p>\"}" }
 
 one_author_media:
   type: "Field::Embed"
@@ -333,10 +331,7 @@ one_author_media:
   field_set: one_author (ItemType)
   uuid: one_author_media_uuid
   required: false
-  options: {
-    "format":"iframe",
-    "domains":"[{\"label\":\"Youtube.com (www.youtube.com)\",\"value\":\"www.youtube.com\"}]"
-  }
+  options: { "format":"iframe", "domains":"[{\"label\":\"Youtube.com (www.youtube.com)\",\"value\":\"www.youtube.com\"}]" }
 
 one_book_title:
   type: "Field::Text"
