@@ -6,7 +6,7 @@ json.data do
       json.criteria do
         fields = @authenticated_catalog ? @fields : displayable_fields(@fields)
         fields.each_with_index do |field, i|
-          unless field.is_a?(Field::File) || field.is_a?(Field::Geometry)
+          unless field.is_a?(Field::File) || field.is_a?(Field::Geometry) || field.is_a?(Field::Embed) || field.is_a?(Field::Compound)
             json.set! field.uuid do
               json.field_infos do
                 json.id field.id
