@@ -70,4 +70,14 @@ class CatalogAdmin::ContainersTest < ActionDispatch::IntegrationTest
       assert(page.has_content?("Stephen"))
     end
   end
+
+  test "edit a timeline container" do
+    log_in_as("one-admin@example.com", "password")
+    visit("/one/en/admin/_pages/timeline_one/edit")
+    find(".container-action-edit").click
+    select("Age", :from => "Sort field")
+    click_on("Save container")
+    find(".container-action-edit").click
+    assert(find('option[selected="selected"][value="128780868"]'))
+  end
 end
