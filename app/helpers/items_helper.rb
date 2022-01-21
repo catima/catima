@@ -85,6 +85,32 @@ module ItemsHelper
     strip_tags(field_value(item, field, :style => :compact)) || ''.html_safe
   end
 
+  def formatted_item_for_timeline(item, list:, container:, filter_field:)
+    title = if item_has_thumbnail?(item)
+              tag.div(item_list_link(list, item, 0) { item_thumbnail(item, :class => "media-object") }, class: "pull-left mr-3")
+            else
+              tag.h4(item_list_link(list, item, 0, item_display_name(item)), class: "mt-0 mb-1")
+            end
+
+    item.attributes.merge(
+      title: title,
+      summary: item_summary(item),
+      primary_field_value: field_value(item, item.primary_field),
+      filter_field_value: filter_field.is_a?(Field::DateTime) ? filter_field.value_as_array(item, format: container&.field_format) : field_value(item, filter_field),
+      group_title: filter_field.is_a?(Field::DateTime) ? Field::DateTimePresenter.new(nil, item, filter_field).value(format: container&.field_format) : field_value(item, filter_field)
+    )
+  end
+
+  def group_items_for_timeline(items, container:, filter_field:)
+    if filter_field.is_a?(Field::DateTime)
+      items.group_by do |item|
+        container&.field_format && item[:filter_field_value].is_a?(Array) ? item[:filter_field_value].join : item[:filter_field_value]
+      end
+    else
+      items.group_by { |item| item[:filter_field_value] }
+    end
+  end
+
   # Check that the referer is the item type list (Data mode)
   # of the same item type
   def referer_with_same_item_type?(item)

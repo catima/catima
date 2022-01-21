@@ -1,4 +1,4 @@
 <% if item_list %>
-  <%= render_item_list(item_list, params) %>
-  <%= paginate(item_list.items) %>
+  <%= render_item_list(item_list, params, container) %>
+  <%= paginate(item_list.items) unless params[:style] == "timeline" %>
 <% end %>

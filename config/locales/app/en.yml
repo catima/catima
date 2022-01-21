@@ -461,6 +461,13 @@ en:
       invalid_captcha: Please, verify you are a human
     map:
       view_item: View item
+    item_list:
+      more: More
+      open_all: Open all
+      close_all: Close all
+      select_sort: Select sort
+      asc: Ascending
+      desc: Descending
 
   catalog_admin:
     approvals:
