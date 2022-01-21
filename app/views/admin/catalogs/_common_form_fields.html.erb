@@ -43,6 +43,7 @@
 
 <hr>
 
+<% unless @catalog.data_only %>
 <%= f.select(
       :custom_root_page_id,
       options_from_collection_for_select(
@@ -50,8 +51,9 @@
       ),
       {include_blank: true}
     ) %>
-
 <hr>
+<% end %>
+
 
 <%= f.form_group(
   :api_enabled,
