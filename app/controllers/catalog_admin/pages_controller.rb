@@ -2,6 +2,8 @@ class CatalogAdmin::PagesController < CatalogAdmin::BaseController
   layout "catalog_admin/setup"
   include ControlsItemSorting
 
+  attr_reader :item_type
+
   def index
     authorize(Page)
     @pages = catalog.pages.sorted
@@ -60,10 +62,6 @@ class CatalogAdmin::PagesController < CatalogAdmin::BaseController
   end
 
   private
-
-  def item_type
-    @item_type
-  end
 
   def build_page
     @page = catalog.pages.new do |model|

@@ -96,7 +96,7 @@ module ItemsHelper
       title: title,
       summary: item_summary(item),
       primary_field_value: field_value(item, item.primary_field),
-      sort_field_value: sort_field.is_a?(Field::DateTime) ? sort_field.value_as_array(item, format: container&.field_format)&.map{ |v| v.to_s.gsub('', '0')} : field_value(item, sort_field),
+      sort_field_value: sort_field.is_a?(Field::DateTime) ? sort_field.value_as_array(item, format: container&.field_format)&.map { |v| v.to_s.gsub('', '0') } : field_value(item, sort_field),
       group_title: sort_field.is_a?(Field::DateTime) ? Field::DateTimePresenter.new(nil, item, sort_field).value(format: container&.field_format) : field_value(item, sort_field)
     )
   end
