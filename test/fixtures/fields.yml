@@ -283,7 +283,7 @@ one_author_picture:
   field_set: one_author (ItemType)
   uuid: one_author_picture_uuid
   required: false
-  options: {"types":"jpg","legend":"1"}
+  options: { "types": "jpg","legend": "1" }
 
 one_author_picture_inactive_legend:
   type: "Field::Image"
@@ -293,7 +293,7 @@ one_author_picture_inactive_legend:
   field_set: one_author (ItemType)
   uuid: one_author_picture_inactive_legend_uuid
   required: false
-  options: {"types":"jpg","legend":"0"}
+  options: { "types": "jpg","legend": "0" }
 
 one_author_deceased:
   type: "Field::Boolean"
@@ -339,7 +339,7 @@ one_book_notes:
   primary: false
   field_set: one_book (ItemType)
   uuid: one_book_notes_uuid
-  options: {"maximum":"","minimum":"","formatted_text":"1"}
+  options: { "maximum": "","minimum": "","formatted_text": "1" }
 
 one_required_choice_set:
   type: "Field::ChoiceSet"
@@ -399,7 +399,7 @@ multilingual_book_required_i18n_notes:
   i18n: true
   required: true
   uuid: multilingual_book_notes_uuid
-  options: {"maximum":"","minimum":"","formatted_text":"1"}
+  options: { "maximum": "","minimum": "","formatted_text": "1" }
   name_translations: { "name_en": "Notes", "name_fr": "Notes" }
   name_plural_translations: { "name_plural_en": "Notes", "name_plural_fr": "Notes" }
 
