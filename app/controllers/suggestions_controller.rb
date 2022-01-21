@@ -25,8 +25,7 @@ class SuggestionsController < ApplicationController
   end
 
   def find_item_type
-    @item_type =
-      catalog.item_types.where(:slug => params[:item_type_slug]).first!
+    @item_type = catalog.item_types.find_by!(slug: params[:item_type_slug])
   end
 
   def find_item
