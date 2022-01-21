@@ -59,7 +59,7 @@ Rails.application.routes.draw do
 
       scope module: 'catalog' do
         scope ':catalog_id' do
-          resources :suggestions, only: %(index)
+          resources :suggestions, only: %i(index)
           resources :users, only: %i(index)
           resources :groups, only: %i(index)
           resources :categories, only: %i(index)

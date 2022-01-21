@@ -11,8 +11,6 @@ class CatalogAdmin::ItemsTest < ActionDispatch::IntegrationTest
     click_on("Data")
     click_on("Authors")
     first("a.item-action-edit").click
-    save_and_open_page
-
     assert_not(page.has_content?(/existing_suggestion/i))
   end
 end

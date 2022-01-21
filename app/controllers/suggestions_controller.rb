@@ -34,11 +34,13 @@ class SuggestionsController < ApplicationController
 
   def ensure_valid_captcha
     return if verify_recaptcha
-    redirect_back fallback_location: root_path, flash: {alert: t('containers.contact.invalid_captcha')}
+
+    redirect_back fallback_location: root_path, flash: { alert: t('containers.contact.invalid_captcha') }
   end
 
   def allow_anonymous_suggestion
     return if current_user || @item_type.allow_anonymous_suggestions?
+
     head :unauthorized
   end
 end
