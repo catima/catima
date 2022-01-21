@@ -359,6 +359,13 @@ it:
       invalid_captcha: Per favore, verifica di essere un umano
     map:
       view_item: Consultare l'oggetto
+    item_list:
+      more: Più
+      open_all: Aprire tutto
+      close_all: Chiudere tutto
+      select_sort: Seleziona l'ordinamento
+      asc: Ascendente
+      desc: Discendente
 
   catalog_admin:
 

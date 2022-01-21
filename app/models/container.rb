@@ -76,4 +76,8 @@ class Container < ApplicationRecord
   def update_from_json(d)
     update(d)
   end
+
+  def filterable_field
+    filterable_field_id? ? Field.find(filterable_field_id) : nil
+  end
 end

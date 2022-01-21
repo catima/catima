@@ -523,7 +523,8 @@ CREATE TABLE public.containers (
     updated_at timestamp without time zone NOT NULL,
     locale character varying,
     filterable_field_id integer,
-    field_format character varying
+    field_format character varying,
+    sort character varying
 );
 
 
@@ -2591,6 +2592,5 @@ INSERT INTO "schema_migrations" (version) VALUES
 ('20210823103708'),
 ('20210906124258'),
 ('20211101151726'),
+('20211209083903'),
 ('20220117081728');
-
-

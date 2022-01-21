@@ -443,6 +443,13 @@ fr:
       invalid_captcha: Veuillez vérifiez que vous êtes un humain
     map:
       view_item: Consulter la fiche
+    item_list:
+      more: Plus
+      open_all: Ouvrir tout
+      close_all: Fermez tout
+      select_sort: Sélectionner le tri
+      asc: Ascendant
+      desc: Descendant
 
   catalog_admin:
     approvals:
