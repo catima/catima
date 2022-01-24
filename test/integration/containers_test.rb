@@ -25,7 +25,7 @@ class ContainersTest < ActionDispatch::IntegrationTest
   test "view timeline container" do
     timeline_page = pages(:timeline_one)
     visit("/one/en/#{timeline_page.to_param}")
-    sleep(2)
+    sleep(4)
     within all('.timeline__group').first do
       assert(has_content?("No"))
       assert(has_content?("Very Young"))
