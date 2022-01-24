@@ -75,6 +75,7 @@ class CatalogAdmin::ContainersTest < ActionDispatch::IntegrationTest
     log_in_as("one-admin@example.com", "password")
     visit("/one/en/admin/_pages/timeline_one/edit")
     find(".container-action-edit").click
+    sleep(2)
     select("Age", :from => "Sort field")
     click_on("Save container")
     find(".container-action-edit").click
