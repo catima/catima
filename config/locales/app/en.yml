@@ -671,8 +671,8 @@ en:
         width_default: "The default value is %{width}"
         height: "Iframe height (in pixel)"
         height_default: "The default value is %{height}"
-        domains: Additional domains
-        domains_help: You can add additional domains to your list
+        domains: Authorized domains
+        domains_help: You can add authorized domains to your list
         domains_component_no_options: No more domains to add
         domains_component_placeholder: Add some domains
       compound_option_inputs:

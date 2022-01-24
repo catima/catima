@@ -667,8 +667,8 @@ fr:
         width_default: "La valeur par défaut est de %{width}"
         height: "Hauteur de l'iframe (en pixel)"
         height_default: "La valeur par défaut est de %{height}"
-        domains: Domaines supplémentaires
-        domains_help: Vous pouvez ajouter des domaines supplémentaires à votre liste
+        domains: Domaines autorisés
+        domains_help: Vous pouvez ajouter des domaines autorisés à votre liste
         domains_component_no_options: Plus de domaines à ajouter
         domains_component_placeholder: Ajouter des domaines
       compound_option_inputs:
