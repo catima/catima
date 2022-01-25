@@ -28,6 +28,7 @@ en:
         name: "Name"
         advertize: "Advertize"
         visible: "Visible"
+        data_only: Data only
         custom_root_page_id: "Custom root page"
         api_enabled: "Activate the API (v3)"
         throttle_time_window: "Throttle time window in seconds"
@@ -162,6 +163,7 @@ en:
     greeting: "Hello"
     minimum_characters: "%{length} characters minimum"
   catalogs:
+    data_only: "“%{catalog_name}” is not accessible (data only)"
     not_visible: "“%{catalog_name}” is not accessible"
     show:
       welcome: "Welcome to %{catalog}!"

@@ -342,7 +342,8 @@ CREATE TABLE public.catalogs (
     restricted boolean DEFAULT false NOT NULL,
     api_enabled boolean DEFAULT false,
     throttle_time_window integer DEFAULT 1,
-    throttle_max_requests integer DEFAULT 5
+    throttle_max_requests integer DEFAULT 5,
+    data_only boolean DEFAULT false
 );
 
 
@@ -1042,6 +1043,7 @@ CREATE SEQUENCE public.simple_searches_id_seq
 --
 
 ALTER SEQUENCE public.simple_searches_id_seq OWNED BY public.simple_searches.id;
+
 
 
 --
@@ -2477,6 +2479,5 @@ INSERT INTO "schema_migrations" (version) VALUES
 ('20210823103708'),
 ('20210906124258'),
 ('20211101151726'),
-('20211209083903');
-
-
+('20211209083903'),
+('20220117081728');

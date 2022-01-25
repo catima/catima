@@ -114,6 +114,15 @@ not_visible:
   throttle_max_requests: 1000
   api_enabled: true
 
+data_only:
+  name: Data only Catalog
+  slug: data-only
+  primary_language: en
+  data_only: true
+  throttle_time_window: 1 * 3600
+  throttle_max_requests: 1000
+  api_enabled: true
+
 to_be_deleted:
   name: Catalog to be destroyed
   slug: to-be-deleted

@@ -87,6 +87,7 @@ class Admin::CatalogsController < Admin::BaseController
       :throttle_time_window,
       :throttle_max_requests,
       :visible,
+      :data_only,
       :restricted,
       :custom_root_page_id,
       :deactivated_at,

@@ -30,6 +30,7 @@ fr:
         name: "Nom"
         advertize: "Promouvoir"
         visible: "Visible"
+        data_only: "Données seules"
         custom_root_page_id: "Page d'accueil personnalisée"
         api_enabled: "Activer l'API (v3)"
         throttle_time_window: "Fenêtre temporelle de limitation api en secondes"
@@ -158,6 +159,7 @@ fr:
     greeting: "Bonjour"
     minimum_characters: "%{length} caractères au minimum"
   catalogs:
+    data_only: "“%{catalog_name}” n'est pas accessible (data only)"
     not_visible: "“%{catalog_name}” n'est pas accessible"
     show:
       welcome: "Bienvenue chez %{catalog}!"
