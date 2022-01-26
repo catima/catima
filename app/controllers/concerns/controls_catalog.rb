@@ -10,6 +10,7 @@ module ControlsCatalog
     before_action :remember_current_page_for_login_logout
     before_action :visibility
     before_action :prepend_catalog_view_path
+    before_action :redirect_if_data_only
     helper_method :catalog
   end
 
@@ -85,5 +86,9 @@ module ControlsCatalog
   # "viatimages", overrides could be placed in `catalogs/viatimages/views`.
   def prepend_catalog_view_path
     prepend_view_path(catalog.customization_root.join("views"))
+  end
+
+  def redirect_if_data_only
+    redirect_to root_path, alert: t("catalogs.data_only", catalog_name: catalog.name) if catalog.data_only?
   end
 end

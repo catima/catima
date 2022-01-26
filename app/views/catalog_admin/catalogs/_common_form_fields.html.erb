@@ -1,6 +1,6 @@
 <%= f.text_field(:name, :autofocus => true) %>
 
-<% unless @catalog.data_only %>
+<% unless @catalog.data_only? %>
   <%= f.form_group(
     :advertize,
     :help => t('.advertize_help')
@@ -9,9 +9,7 @@
   <% end %>
 <% end %>
 
-<hr>
-
-<% unless @catalog.data_only %>
+<% unless @catalog.data_only? %>
   <%= f.select(
         :custom_root_page_id,
         options_from_collection_for_select(
@@ -19,8 +17,9 @@
         ),
         {include_blank: true}
       ) %>
-  <hr>
 <% end %>
+
+<hr>
 
 <h4><%= t('.display_options') %></h4>
 

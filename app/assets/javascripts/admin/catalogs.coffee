@@ -13,4 +13,13 @@ init = ->
     primary_lang.on "change", update_boxes
     update_boxes()
 
+  $('#catalog_data_only').on 'change', (e) ->
+    if $('#catalog_data_only')[0].checked
+      $('#catalog_custom_root_page_id').attr 'disabled', 'disabled'
+      $('#catalog_advertize').attr 'disabled', 'disabled'
+    else
+      $('#catalog_custom_root_page_id').attr 'disabled', null
+      $('#catalog_advertize').attr 'disabled', null
+    return
+
 $(document).ready(init)

@@ -9,6 +9,11 @@
 
 <hr>
 
+<%= f.form_group(:catalog_access) do %>
+  <label for="catalog_access"><%= t('catalog_admin.catalogs.common_form_fields.catalog_access') %></label>
+  <%= catalog_access_select(@catalog) %>
+<% end %>
+
 <%= f.form_group(
   :requires_review,
   :help => "If checked, editors of this catalog will not be able to "\
@@ -19,41 +24,36 @@
 <% end %>
 
 <%= f.form_group(
-  :advertize,
-  :help => "If checked, this catalog will be publicly listed "\
-               "on the welcome page."
-) do %>
-  <%= f.check_box(:advertize) %>
-<% end %>
-
-<%= f.form_group(
   :data_only,
   :help => "If checked, this catalog will only be available through the api."
 ) do %>
   <%= f.check_box(:data_only) %>
 <% end %>
 
+<% unless @catalog.data_only? %>
+  <%= f.form_group(
+    :advertize,
+    :help => "If checked, this catalog will be publicly listed "\
+                 "on the welcome page."
+  ) do %>
+    <%= f.check_box(:advertize) %>
+  <% end %>
+<% end %>
+
 <%= f.hidden_field(:visible) %>
 <%= f.hidden_field(:restricted) %>
 
-<%= f.form_group(:catalog_access) do %>
-  <label for="catalog_access"><%= t('catalog_admin.catalogs.common_form_fields.catalog_access') %></label>
-  <%= catalog_access_select(@catalog) %>
+<% unless @catalog.data_only? %>
+  <%= f.select(
+        :custom_root_page_id,
+        options_from_collection_for_select(
+          @catalog.pages, "id", "title", @catalog.custom_root_page_id
+        ),
+        {include_blank: true}
+      ) %>
 <% end %>
 
 <hr>
-
-<% unless @catalog.data_only %>
-<%= f.select(
-      :custom_root_page_id,
-      options_from_collection_for_select(
-        @catalog.pages, "id", "title", @catalog.custom_root_page_id
-      ),
-      {include_blank: true}
-    ) %>
-<hr>
-<% end %>
-
 
 <%= f.form_group(
   :api_enabled,
