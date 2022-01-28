@@ -17,15 +17,17 @@ Rails.application.config.assets.paths << Rails.root.join('node_modules')
 # This is not granted in every case, so we recover from an ActiveRecord::NoDatabaseError
 # by simply ignoring catalog specific assets
 begin
-  # Add catalog specific assets to the load path
-  Catalog.overrides.each do |slug|
-    base_path = Rails.root.join('catalogs', slug, 'assets')
-    Rails.application.config.assets.paths += %w(images stylesheets javascripts).map { |asset| base_path.join(asset) }
-  end
+  Rails.application.reloader.to_prepare do
+    # Add catalog specific assets to the load path
+    Catalog.overrides.each do |slug|
+      base_path = Rails.root.join('catalogs', slug, 'assets')
+      Rails.application.config.assets.paths += %w(images stylesheets javascripts).map { |asset| base_path.join(asset) }
+    end
 
-  # Add catalog-specific assets
-  Catalog.overrides.each do |slug|
-    Rails.application.config.assets.precompile += ["#{slug}.css", "#{slug}.js"]
+    # Add catalog-specific assets
+    Catalog.overrides.each do |slug|
+      Rails.application.config.assets.precompile += ["#{slug}.css", "#{slug}.js"]
+    end
   end
 rescue ActiveRecord::NoDatabaseError, ActiveRecord::StatementInvalid, ActiveRecord::PendingMigrationError
   false
