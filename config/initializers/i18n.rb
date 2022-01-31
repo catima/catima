@@ -5,10 +5,8 @@ Rails.application.config.i18n.load_path += Dir[Rails.root.join('config', 'locale
 # This requires the database to exist. If it does not exist, we recover without
 # adding catalog specific translations.
 begin
-  Rails.application.reloader.to_prepare do
-    Catalog.overrides.each do |slug|
-      Rails.application.config.i18n.load_path += Dir[Rails.root.join('catalogs', slug, 'locales', '*.yml').to_s]
-    end
+  Catalog.overrides.each do |slug|
+    Rails.application.config.i18n.load_path += Dir[Rails.root.join('catalogs', slug, 'locales', '*.yml').to_s]
   end
 rescue ActiveRecord::NoDatabaseError, ActiveRecord::StatementInvalid, ActiveRecord::PendingMigrationError
   false
