@@ -24,6 +24,10 @@ en:
       item_view:
         name: "Name"
         template: "Template"
+      item:
+        suggestions_activated: "Enable suggestion"
+        allow_anonymous_suggestions: "Enable anonymous suggestions"
+        suggestion_email: "Email to notify"
       catalog:
         name: "Name"
         advertize: "Advertize"
@@ -228,10 +232,13 @@ en:
       favorites_remove: "Remove from favorites"
     show:
       view_more: "View more"
+      add_suggestion: "Add a suggestion"
     editor:
       created_by: Created by %{editor}
       updated_by: Updated by %{updater}
       at: on %{date}
+    suggestions:
+      create_suggestion: Send
   invitations_mailer:
     account_information:
       email: "Email"
@@ -276,6 +283,15 @@ en:
     name: "Name:"
     email: "Email:"
     body: "Message:"
+  suggestions_mailer:
+    subject: New suggestion
+    intro:  A user sent you a suggestion %{suggestion_link}.
+    content: "Content: %{content}"
+    catalog: "Catalog: %{catalog}"
+    item_type: "Item Type: %{item_type}"
+    item: "Item: %{item}"
+    user: "User: %{user}"
+    body: "Suggestion: %{suggestion_content}"
   favorites:
     index:
       title: "My favorites"
@@ -752,7 +768,7 @@ en:
         display-options: "Display options"
         show-empty-fields: "Display empty fields for this item type"
         display-empty-fields: "Display empty fields"
-
+        suggestions: "Suggestions"
     items:
       approval:
         item_waiting_for_review: This %{item_type} is awaiting your review.
@@ -861,6 +877,9 @@ en:
         help_display_name_content: "The display name is used to show a simple name of the item, for example as the title of the item. By default, the primary field is used."
 
     shared:
+      suggestions:
+        confirm_validate: "Do you want to validate this suggestion ?"
+        confirm_destroy: "Do you want to delete this suggestion ?"
       setup_categories_nav:
         categories: 'Categories'
         new_category: 'New category'

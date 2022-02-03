@@ -26,6 +26,10 @@ fr:
       item_view:
         name: "Nom"
         template: "Template"
+      item:
+        suggestions_activated: "Activer les suggestions"
+        allow_anonymous_suggestions: "Autoriser les suggestions anonymes"
+        suggestion_email: "Adresse e-mail de notification"
       catalog:
         name: "Nom"
         advertize: "Promouvoir"
@@ -224,10 +228,13 @@ fr:
       favorites_remove: "Supprimer des favoris"
     show:
       view_more: "Voir plus"
+      add_suggestion: "Faire une suggestion"
     editor:
       created_by: Créé par %{editor}
       updated_by: Édité par %{updater}
       at: le %{date}
+    suggestions:
+      create_suggestion: Envoyer
   invitations_mailer:
     account_information:
       email: "E-mail"
@@ -272,6 +279,14 @@ fr:
     name: "Nom :"
     email: "Email :"
     body: "Message :"
+  suggestions_mailer:
+    subject: Nouvelle suggestion
+    intro: Un utilisateur vous a envoyé une suggestion %{suggestion_link}.
+    catalog: "Catalogue : %{catalog}"
+    item_type: "Item Type : %{item_type}"
+    item: "Item : %{item}"
+    user: "Utilisateur : %{user}"
+    body_html: "Suggestion : <div style='font-style: italic'>%{content}</div>"
   favorites:
     index:
       title: "Mes favoris"
@@ -747,8 +762,9 @@ fr:
       common_form_fields:
         display-options: "Options d'affichage"
         show-empty-fields: "Afficher les champs vides pour ce type de fiche"
+        suggestion-email-help: "Adresse e-mail à notifier lorsqu'une nouvelle suggestion est faite."
         display-empty-fields: "Afficher les champs vides"
-
+        suggestions: "Suggestions"
     items:
       approval:
         item_waiting_for_review: Cette fiche de type %{item_type} attend votre validation.
@@ -858,6 +874,9 @@ fr:
 
 
     shared:
+      suggestions:
+        confirm_validate: "Vous voulez vraiment valider cette suggestion ?"
+        confirm_destroy: "Vous voulez vraiment supprimer cette suggestion ?"
       setup_categories_nav:
         categories: 'Sous-fiches'
         new_category: 'Nouvelle sous-fiche'
@@ -928,3 +947,8 @@ fr:
       super-editor: Super-éditeur de catalogue
       reviewer: Superviseur de catalogue
       admin: Administrateur de catalogue
+
+  suggestions:
+    create:
+      success: "Merci pour votre suggestion."
+      error: "Impossible de soumettre votre suggestion : %{errors}."

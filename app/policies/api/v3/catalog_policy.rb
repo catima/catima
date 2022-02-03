@@ -30,6 +30,7 @@ class API::V3::CatalogPolicy < CatalogPolicy
   alias_method :groups_index?, :user_is_catalog_admin?
   alias_method :users_index?, :user_is_catalog_admin?
   alias_method :item_types_index?, :user_is_at_least_an_editor?
+  alias_method :suggestions_index?, :user_is_at_least_an_editor?
 
   # Category
   alias_method :category_fields_index?, :user_is_catalog_admin?
@@ -44,6 +45,7 @@ class API::V3::CatalogPolicy < CatalogPolicy
   alias_method :item_type_show?, :user_is_at_least_an_editor?
   alias_method :item_type_field_show?, :user_is_catalog_admin?
   alias_method :item_type_item_show?, :user_requirements_according_to_visibility?
+  alias_method :item_type_item_suggestions?, :user_is_at_least_an_editor?
 
   # SimpleSearch
   alias_method :simple_search_create?, :user_requirements_according_to_visibility?

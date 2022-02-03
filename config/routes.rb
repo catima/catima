@@ -59,6 +59,7 @@ Rails.application.routes.draw do
 
       scope module: 'catalog' do
         scope ':catalog_id' do
+          resources :suggestions, only: %i(index)
           resources :users, only: %i(index)
           resources :groups, only: %i(index)
           resources :categories, only: %i(index)
@@ -73,6 +74,7 @@ Rails.application.routes.draw do
               get '/field/:field_id' => 'fields#show'
               resources :items, only: %i(index)
               get '/item/:item_id' => 'items#show'
+              get '/item/:item_id/suggestions' => 'items#suggestions'
             end
           end
 
@@ -253,6 +255,9 @@ Rails.application.routes.draw do
         post "approval" => "approvals#create"
         delete "approval" => "approvals#destroy"
         get "duplicate"
+        resources :suggestions, :only => [:destroy] do
+          post :update_processed, on: :member, as: :update_processed
+        end
       end
     end
     post ":item_type_slug/upload" => "items#upload", :as => 'item_file_upload'
@@ -375,7 +380,9 @@ Rails.application.routes.draw do
     resources :items,
               :path => ":item_type_slug",
               :only => [:index, :show],
-              :constraints => ItemsController::Constraint
+              :constraints => ItemsController::Constraint do
+      resources :suggestions, :only => [:create]
+    end
 
     get ":slug" => "custom#show", :constraints => CustomController::Constraint
 

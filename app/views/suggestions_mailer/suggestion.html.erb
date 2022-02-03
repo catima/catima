@@ -1,0 +1,26 @@
+<div>
+  <%= raw t('suggestions_mailer.intro',
+            suggestion_link: link_to('link', Rails.application.routes.url_helpers.edit_catalog_admin_item_url(
+              :catalog_slug => @suggestion.catalog,
+              :item_type_slug => @suggestion.item_type,
+              :locale => I18n.locale,
+              :id => @suggestion.item
+            ))) %>
+</div>
+<br>
+<div>
+  <%= t("suggestions_mailer.catalog", catalog: @suggestion.catalog.name) %>
+</div>
+<div>
+  <%= t("suggestions_mailer.item_type", item_type: @suggestion.item_type.name) %>
+</div>
+<div>
+  <%= t("suggestions_mailer.item", item: field_value(@suggestion.item, @suggestion.item.primary_field)) %>
+</div>
+<div>
+  <%= t("suggestions_mailer.user", user: @suggestion.user&.email) %>
+</div>
+<br>
+<div>
+  <%= t("suggestions_mailer.body_html", content: html_escape(@suggestion.content).gsub(/\n/, '<br/>').html_safe) %>
+</div>
