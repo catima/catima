@@ -313,6 +313,26 @@ one_author_category_genre:
   required: false
   uuid: one_author_genre_uuid
 
+one_author_compound:
+  type: "Field::Compound"
+  name_translations: { "name_en": "Compound" }
+  name_plural_translations: { "name_plural_en": "Compounds" }
+  slug: compound
+  field_set: one_author (ItemType)
+  uuid: one_author_compound_uuid
+  required: false
+  options: { "template" : '{"en":"<p>{{name}}: <i>{{born}}</i></p>"}' }
+
+one_author_media:
+  type: "Field::Embed"
+  name_translations: { "name_en": "Media" }
+  name_plural_translations: { "name_plural_en": "Medias" }
+  slug: media
+  field_set: one_author (ItemType)
+  uuid: one_author_media_uuid
+  required: false
+  options: { "format":"iframe", "domains":'[{"label":"Youtube.com (www.youtube.com)","value":"www.youtube.com"}]' }
+
 one_book_title:
   type: "Field::Text"
   name_translations: { "name_en": "Title" }

@@ -107,6 +107,7 @@ it:
     greeting: "Buongiorno"
     minimum_characters: "%{length} caratteri minima"
   catalogs:
+    data_only: "“%{catalog_name}” non è accessibile (solo dati)"
     not_visible: "“%{catalog_name}” non è accessibile"
     show:
       welcome: "Benvenuti a %{catalog}!"

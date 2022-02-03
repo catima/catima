@@ -164,3 +164,7 @@ search:
   encrypted_password: <%= BCrypt::Password.create("password") %>
   jti: 141a8936-1e2c-4edf-9a0c-36414a4e6be4
 
+data_only_editor:
+  email: data-only@example.com
+  encrypted_password: <%= BCrypt::Password.create("password") %>
+  jti: e7edc0b0-d40b-45d3-b965-ff62c9e6b488

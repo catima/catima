@@ -32,6 +32,7 @@ en:
         name: "Name"
         advertize: "Advertize"
         visible: "Visible"
+        data_only: "Data only"
         custom_root_page_id: "Custom root page"
         api_enabled: "Activate the API (v3)"
         throttle_time_window: "Throttle time window in seconds"
@@ -166,6 +167,7 @@ en:
     greeting: "Hello"
     minimum_characters: "%{length} characters minimum"
   catalogs:
+    data_only: "“%{catalog_name}” is not accessible (data only)"
     not_visible: "“%{catalog_name}” is not accessible"
     show:
       welcome: "Welcome to %{catalog}!"
@@ -687,8 +689,8 @@ en:
         width_default: "The default value is %{width}"
         height: "Iframe height (in pixel)"
         height_default: "The default value is %{height}"
-        domains: Additional domains
-        domains_help: You can add additional domains to your list
+        domains: Authorized domains
+        domains_help: You can add authorized domains to your list
         domains_component_no_options: No more domains to add
         domains_component_placeholder: Add some domains
       compound_option_inputs:

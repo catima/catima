@@ -107,6 +107,7 @@ de:
     greeting: "Hallo"
     minimum_characters: "mindestens %{length} Zeichen"
   catalogs:
+    data_only: "“%{catalog_name}” ist nicht zugänglich (nur Daten)"
     not_visible: "“%{catalog_name}” ist nicht zugänglich"
     show:
       welcome: "Willkommen bei %{catalog}!"
