@@ -1,4 +1,3 @@
-# rubocop:disable Metrics/BlockLength
 require 'swagger_helper'
 
 RSpec.describe 'api/v3/{catalog_id}/suggestion(s)', type: :request do
@@ -16,7 +15,7 @@ RSpec.describe 'api/v3/{catalog_id}/suggestion(s)', type: :request do
     parameter name: 'per', in: :query, type: :integer, description: 'records number per page', default: 25, required: false
     parameter name: 'catalog_id', in: :path, type: :integer, description: 'catalog_id'
 
-    get("List Catalog's ItemTypes") do
+    get("List Catalog's Suggestions") do
       tags 'Catalog'
       consumes 'application/json'
       security [BearerAuth: []]
@@ -42,4 +41,3 @@ RSpec.describe 'api/v3/{catalog_id}/suggestion(s)', type: :request do
     end
   end
 end
-# rubocop:enable Metrics/BlockLength

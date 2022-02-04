@@ -54,7 +54,7 @@ RSpec.describe 'api/v3/{catalog_id}/item_type/{item_type_id}/item(s)', type: :re
     parameter name: 'item_type_id', in: :path, type: :integer, description: 'item_type_id'
     parameter name: 'item_id', in: :path, type: :integer, description: 'item_id'
 
-    get("Return an ItemType's Item") do
+    get("Return an Item") do
       tags 'Item'
       consumes 'application/json'
       security [BearerAuth: []]
@@ -112,13 +112,3 @@ RSpec.describe 'api/v3/{catalog_id}/item_type/{item_type_id}/item(s)', type: :re
   end
 end
 # rubocop:enable Metrics/BlockLength
-
-# 39
-# 170
-#
-# {
-#   "api_v3_user": {
-#     "email": "christian.kaiser@unil.ch",
-#     "password": "pwddwpok"
-#   }
-# }

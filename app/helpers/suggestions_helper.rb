@@ -14,4 +14,16 @@ module SuggestionsHelper
 
     true
   end
+
+  def item_suggestion_badge?(item, item_type)
+    item_type.suggestions_activated? && item_has_suggestions?(item)
+  end
+
+  def item_has_suggestions?(item)
+    item.suggestions.where(:processed_at => nil).any?
+  end
+
+  def item_suggestions_count(item)
+    item.suggestions.where(:processed_at => nil).count
+  end
 end
