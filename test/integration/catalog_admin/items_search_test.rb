@@ -23,7 +23,7 @@ class CatalogAdmin::ItemsSearchTest < ActionDispatch::IntegrationTest
     assert(page.has_content?("Very Old"))
     assert(page.has_content?("Very Young"))
 
-    assert_equal("Stephen King", find(:xpath, "//table/tbody/tr[1]/td[1]").text)
+    assert_match("Stephen King", find(:xpath, "//table/tbody/tr[1]/td[1]").text)
     assert_equal("Very Old", find(:xpath, "//table/tbody/tr[2]/td[1]").text)
     assert_equal("Very Young", find(:xpath, "//table/tbody/tr[3]/td[1]").text)
   end

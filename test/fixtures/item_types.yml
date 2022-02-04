@@ -38,7 +38,7 @@ one_author:
   display_emtpy_fields: false
   suggestions_activated: true
   suggestion_email: "one-admin@example.com"
-  allow_anonymous_suggestions: true
+  allow_anonymous_suggestions: false
 
 one_book:
   catalog: one
