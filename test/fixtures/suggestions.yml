@@ -1,5 +1,20 @@
-one:
+one_comment1:
   catalog: one
   item_type: one
   item: one_author_stephen_king
-  content: existing_suggestion
+  user: one_member
+  content: existing_suggestion1
+
+two_comment1:
+  catalog: two
+  item_type: two_author
+  item: two
+  user: two_user
+  content: existing_suggestion1
+
+two_comment2:
+  catalog: two
+  item_type: two_author
+  item: two
+  user: two
+  content: existing_suggestion2

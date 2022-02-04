@@ -26,6 +26,9 @@ one:
   name_translations: { "name_en": "One" }
   name_plural_translations: { "name_plural_en": "Ones" }
   slug: one
+  suggestions_activated: true
+  suggestion_email: "one-admin@example.com"
+  allow_anonymous_suggestions: false
 
 one_author:
   catalog: one
@@ -33,6 +36,9 @@ one_author:
   name_plural_translations: { "name_plural_en": "Authors" }
   slug: authors
   display_emtpy_fields: false
+  suggestions_activated: true
+  suggestion_email: "one-admin@example.com"
+  allow_anonymous_suggestions: true
 
 one_book:
   catalog: one
@@ -75,6 +81,9 @@ two_author:
   name_translations: { "name_en": "Author" }
   name_plural_translations: { "name_plural_en": "Authors" }
   slug: authors
+  suggestions_activated: true
+  suggestion_email: "two-admin@example.com"
+  allow_anonymous_suggestions: false
 
 custom_with_dash_author:
   catalog: custom_with_dash

@@ -18,20 +18,25 @@ class API::V3::Catalog::ItemType::ItemsController < API::V3::Catalog::ItemType::
 
   def show
     authorize(@catalog, :item_type_item_show?) unless authenticated_catalog?
+
     @fields = @item_type.fields
     @fields = @fields.where(restricted: false) unless authenticated_catalog? || @current_user.catalog_role_at_least?(@catalog, "editor")
   end
 
   def suggestions
     authorize(@catalog, :item_type_item_suggestions?) unless authenticated_catalog?
+
+    raise ActiveRecord::RecordNotFound unless @item_type.suggestions_activated?
+
     @suggestions = @item.suggestions.ordered.page(params[:page]).per(params[:per])
+
     render 'api/v3/catalog/shared/suggestions'
   end
 
   private
 
   def find_items
-    @items = (authenticated_catalog? || @current_user.catalog_role_at_least?(@catalog, "editor")) ? @item_type.items : @catalog.public_items.where(item_type_id: @item_type.id)
+    @items = authenticated_catalog? || @current_user.catalog_role_at_least?(@catalog, "editor") ? @item_type.items : @catalog.public_items.where(item_type_id: @item_type.id)
   end
 
   def find_item
