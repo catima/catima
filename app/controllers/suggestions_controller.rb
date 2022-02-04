@@ -8,13 +8,20 @@ class SuggestionsController < ApplicationController
   before_action :find_item
 
   def create
-    suggestion = @item.suggestions.new(suggestion_params.merge(item_type_id: @item.item_type_id, catalog_id: @item.catalog_id, user_id: current_user&.id))
+    suggestion = @item.suggestions.new(
+      item_type_id: @item.item_type_id,
+      catalog_id: @item.catalog_id,
+      user_id: if current_user.authenticated? then current_user&.id end,
+      content: helpers.strip_tags(suggestion_params[:content])
+    )
+
     if suggestion.save
       SuggestionsMailer.send_request(@item_type.suggestion_email, suggestion).deliver_now
       flash[:notice] = t(".success")
     else
       flash[:alert] = t(".error", errors: suggestion.errors.full_messages.to_sentence)
     end
+
     redirect_back fallback_location: item_path(id: @item.id)
   end
 
@@ -39,7 +46,7 @@ class SuggestionsController < ApplicationController
   end
 
   def allow_anonymous_suggestion
-    return if current_user || @item_type.allow_anonymous_suggestions?
+    return if current_user.authenticated? || @item_type.allow_anonymous_suggestions?
 
     head :unauthorized
   end

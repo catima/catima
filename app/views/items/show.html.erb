@@ -2,17 +2,27 @@
   <div data-controller="toggle-display">
     <div>
       <%= item_display_name(@item) %>
-      <% if @item_type.suggestions_activated? && (current_user.authenticated? || @item_type.allow_anonymous_suggestions?) %>
-        <%= link_to(fa_icon(:"comment"), '#', class: 'btn btn-primary float-right', "data-action": "click->toggle-display#reveal", "data-toggle": "tooltip", "data-placement": "top", "title": t(".add_suggestion")) %>
+
+      <% if display_suggestion_form?(@item_type) %>
+        <%= link_to(
+              fa_icon(:"comment"),
+              '#', class: 'btn btn-primary float-right',
+              "data-action": "click->toggle-display#reveal",
+              "data-toggle": "tooltip",
+              "data-placement": "top",
+              "title": t(".make_suggestion")
+            )
+        %>
       <% end %>
     </div>
-    <% if @item_type.suggestions_activated? %>
+
+    <% if display_suggestion_form?(@item_type) %>
       <%= render 'suggestions' %>
     <% end %>
   </div>
 <% end %>
 
-<div class="item-admin" style="margin-bottom: 20px;">
+<div class="item-admin">
   <%= render "items/buttons", :item => @item %>
   <%= render_item_list_nav(item_list, @item) if item_list %>
 </div>
@@ -23,7 +33,7 @@
     <% item_applicable_fields(@item).each do |field| %>
       <% if field_check_display(@item, field) %>
         <tr>
-          <th style="width: 25%;"><%= field.label %></th>
+          <th class="field-label"><%= field.label %></th>
           <td class="<%= field.type %>"><%= field_value(@item, field) %></td>
         </tr>
       <% end %>

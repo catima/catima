@@ -167,10 +167,14 @@ it:
       favorites_remove: "Rimuovi dai preferiti"
     show:
       view_more: "Vedi di più"
+      make_suggestion: "Fare un suggerimento"
     editor:
       created_by: Creato da %{editor}
       updated_by: Aggiornato da %{updater}
       at: il %{date}
+    suggestions:
+      send_suggestion: Inviare il suggerimento
+      describe_suggestion: Descrivete qui il vostro suggerimento...
     edit:
       back: "Back"
   reference_editor:
@@ -220,6 +224,14 @@ it:
     name: "Nome :"
     email: "Email :"
     body: "Messaggio :"
+  suggestions_mailer:
+    subject: "Nuovo suggerimento"
+    intro: "Un utente ti ha inviato un suggerimento (%{suggestion_link})."
+    catalog: "<b>Catalogo:</b> %{catalog}"
+    item_type: "<b>Tipo di record:</b> %{item_type}"
+    item: "<b>Oggetto:</b> %{item}"
+    user: "<b>Utente:</b> %{user}"
+    body_html: "<b>Messaggio:</b> <div>%{content}</div>"
   favorites:
     index:
       title: "I miei preferiti"
@@ -343,6 +355,7 @@ it:
   deactivate: Deactivate
   reactivate: Reactivate
   loading: Caricamento
+  item_link: Link all'oggetto
 
   layouts:
     catalog_admin:
@@ -620,3 +633,8 @@ it:
       super-editor: Super-editore del catalogo
       reviewer: Supervisore del catalogo
       admin: Amministratore del catalogo
+
+  suggestions:
+    create:
+      success: "Il tuo suggerimento è stato inviato"
+      error: "Impossibile inviare il tuo suggerimento: %{errors}"

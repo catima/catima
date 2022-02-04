@@ -5,12 +5,13 @@
 <div class="row">
   <div class="col-sm-3">
     <%= render("catalog_admin/shared/entry_item_types_nav") %>
-    <% if controller_name === 'items' && @item.present? && @item.suggestions.any? %>
+
+    <% if display_suggestions?(@item, @item_type) %>
       <%= render("catalog_admin/shared/suggestions") %>
     <% end %>
   </div>
-  <div class="<%= content_for(:catalog_admin_width) || 'col-sm-9' %>">
 
+  <div class="<%= content_for(:catalog_admin_width) || 'col-sm-9' %>">
     <%= yield(:extra_nav) %>
 
     <div class="card panel-default">
@@ -22,6 +23,7 @@
       </div>
       <%= yield %>
     </div>
+
     <%= content_for(:pager) %>
   </div>
 </div>

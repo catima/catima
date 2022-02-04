@@ -2,11 +2,8 @@
 
 <%= bootstrap_form_for(@item_type,
                        :url => catalog_admin_item_type_path) do |f| %>
-
   <%= render("common_form_fields", :f => f) %>
-
   <hr>
-
   <%= link_to(
         fa_icon(:trash, :text => t('.delete')),
         { :action => "destroy" },
@@ -21,5 +18,4 @@
         t("cancel"),
         catalog_admin_item_type_fields_path(catalog, I18n.locale, @item_type),
         :class => "btn btn-link") %>
-
 <% end %>

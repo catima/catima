@@ -232,13 +232,14 @@ en:
       favorites_remove: "Remove from favorites"
     show:
       view_more: "View more"
-      add_suggestion: "Add a suggestion"
+      make_suggestion: "Make a suggestion"
     editor:
       created_by: Created by %{editor}
       updated_by: Updated by %{updater}
       at: on %{date}
     suggestions:
-      create_suggestion: Send
+      send_suggestion: Send suggestion
+      describe_suggestion: Please describe your suggestion here...
   invitations_mailer:
     account_information:
       email: "Email"
@@ -284,14 +285,13 @@ en:
     email: "Email:"
     body: "Message:"
   suggestions_mailer:
-    subject: New suggestion
-    intro:  A user sent you a suggestion %{suggestion_link}.
-    content: "Content: %{content}"
-    catalog: "Catalog: %{catalog}"
-    item_type: "Item Type: %{item_type}"
-    item: "Item: %{item}"
-    user: "User: %{user}"
-    body: "Suggestion: %{suggestion_content}"
+    subject: "New suggestion"
+    intro: "A user sent you a suggestion (%{suggestion_link})."
+    catalog: "<b>Catalog:</b> %{catalog}"
+    item_type: "<b>Item Type:</b> %{item_type}"
+    item: "<b>Item:</b> %{item}"
+    user: "<b>User:</b> %{user}"
+    body_html: "<b>Message:</b> <div>%{content}</div>"
   favorites:
     index:
       title: "My favorites"
@@ -769,6 +769,7 @@ en:
         show-empty-fields: "Display empty fields for this item type"
         display-empty-fields: "Display empty fields"
         suggestions: "Suggestions"
+        suggestion-email-help: "Email address to notify when a new suggestion is made"
     items:
       approval:
         item_waiting_for_review: This %{item_type} is awaiting your review.
@@ -950,3 +951,8 @@ en:
       super-editor: Catalog super-editor
       reviewer: Catalog reviewer
       admin: Catalog administrator
+
+  suggestions:
+    create:
+      success: "Your suggestion has been sent"
+      error: "Unable to submit your suggestion: %{errors}"
