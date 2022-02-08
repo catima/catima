@@ -6,7 +6,7 @@ class API::V3::Catalog::SuggestionsController < API::V3::Catalog::BaseController
   def index
     authorize(@catalog, :suggestions_index?) unless authenticated_catalog?
 
-    @suggestions = catalog_suggestions(@catalog).page(params[:page]).per(params[:per])
+    @suggestions = @catalog.suggestions.page(params[:page]).per(params[:per])
 
     render 'api/v3/catalog/shared/suggestions'
   end

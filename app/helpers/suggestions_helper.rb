@@ -26,12 +26,4 @@ module SuggestionsHelper
   def item_suggestions_count(item)
     item.suggestions.where(:processed_at => nil).count
   end
-
-  def catalog_suggestions(catalog)
-    catalog.suggestions.where(
-      :item_type => ItemType.where(
-        suggestions_activated: true
-      )
-    ).ordered
-  end
 end

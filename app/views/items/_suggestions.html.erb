@@ -4,7 +4,7 @@
     <div class="pt-3 pb-2">
       <%= recaptcha_tags %>
     </div>
-    <%= f.primary(t('.send_suggestion')) %>
+    <%= f.primary(t('.send_suggestion'), :id => 'send-suggestion-button') %>
     <%= link_to t("cancel"), '#', :class => "btn btn-link", "data-action": "click->toggle-display#reveal" %>
   <% end %>
 </div>
