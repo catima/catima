@@ -52,7 +52,7 @@ RSpec.describe 'api/v3/{catalog_id}/choice_set/{choice_set_id}/choice(s)', type:
     parameter name: 'choice_set_id', in: :path, type: :integer, description: 'choice_set_id'
     parameter name: 'choice_id', in: :path, type: :integer, description: 'choice_id'
 
-    get("Return an ChoiceSet's Choice") do
+    get("Return a Choice") do
       tags 'Choice'
       consumes 'application/json'
       security [BearerAuth: []]

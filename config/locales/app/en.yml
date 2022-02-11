@@ -24,10 +24,15 @@ en:
       item_view:
         name: "Name"
         template: "Template"
+      item:
+        suggestions_activated: "Enable suggestion"
+        allow_anonymous_suggestions: "Enable anonymous suggestions"
+        suggestion_email: "Email to notify"
       catalog:
         name: "Name"
         advertize: "Advertize"
         visible: "Visible"
+        data_only: "Data only"
         custom_root_page_id: "Custom root page"
         api_enabled: "Activate the API (v3)"
         throttle_time_window: "Throttle time window in seconds"
@@ -162,6 +167,7 @@ en:
     greeting: "Hello"
     minimum_characters: "%{length} characters minimum"
   catalogs:
+    data_only: "“%{catalog_name}” is not accessible (data only)"
     not_visible: "“%{catalog_name}” is not accessible"
     show:
       welcome: "Welcome to %{catalog}!"
@@ -226,10 +232,14 @@ en:
       favorites_remove: "Remove from favorites"
     show:
       view_more: "View more"
+      make_suggestion: "Make a suggestion"
     editor:
       created_by: Created by %{editor}
       updated_by: Updated by %{updater}
       at: on %{date}
+    suggestions:
+      send_suggestion: Send suggestion
+      describe_suggestion: Please describe your suggestion here...
   invitations_mailer:
     account_information:
       email: "Email"
@@ -274,6 +284,14 @@ en:
     name: "Name:"
     email: "Email:"
     body: "Message:"
+  suggestions_mailer:
+    subject: "New suggestion"
+    intro: "A user sent you a suggestion (%{suggestion_link})."
+    catalog: "<b>Catalog:</b> %{catalog}"
+    item_type: "<b>Item Type:</b> %{item_type}"
+    item: "<b>Item:</b> %{item}"
+    user: "<b>User:</b> %{user}"
+    body_html: "<b>Message:</b> <div>%{content}</div>"
   favorites:
     index:
       title: "My favorites"
@@ -671,8 +689,8 @@ en:
         width_default: "The default value is %{width}"
         height: "Iframe height (in pixel)"
         height_default: "The default value is %{height}"
-        domains: Additional domains
-        domains_help: You can add additional domains to your list
+        domains: Authorized domains
+        domains_help: You can add authorized domains to your list
         domains_component_no_options: No more domains to add
         domains_component_placeholder: Add some domains
       compound_option_inputs:
@@ -750,7 +768,8 @@ en:
         display-options: "Display options"
         show-empty-fields: "Display empty fields for this item type"
         display-empty-fields: "Display empty fields"
-
+        suggestions: "Suggestions"
+        suggestion-email-help: "Email address to notify when a new suggestion is made"
     items:
       approval:
         item_waiting_for_review: This %{item_type} is awaiting your review.
@@ -859,6 +878,9 @@ en:
         help_display_name_content: "The display name is used to show a simple name of the item, for example as the title of the item. By default, the primary field is used."
 
     shared:
+      suggestions:
+        confirm_validate: "Do you want to validate this suggestion ?"
+        confirm_destroy: "Do you want to delete this suggestion ?"
       setup_categories_nav:
         categories: 'Categories'
         new_category: 'New category'
@@ -929,3 +951,8 @@ en:
       super-editor: Catalog super-editor
       reviewer: Catalog reviewer
       admin: Catalog administrator
+
+  suggestions:
+    create:
+      success: "Your suggestion has been sent"
+      error: "Unable to submit your suggestion: %{errors}"

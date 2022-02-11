@@ -58,6 +58,7 @@ class Catalog < ApplicationRecord
   has_many :exports, :dependent => :destroy
   has_many :groups, dependent: :destroy
   has_many :advanced_search_configurations, dependent: :destroy
+  has_many :suggestions, dependent: :destroy
 
   attachment :logo, type: :image
   attachment :navlogo, type: :image
@@ -106,6 +107,16 @@ class Catalog < ApplicationRecord
 
   def valid_locale(locale=I18n.locale)
     valid_locale?(locale) ? locale.to_s : primary_language
+  end
+
+  # Override suggestions relationship getter
+  # to return only active and ordered suggestions
+  def suggestions
+    super.where(
+      :item_type => ItemType.where(
+        suggestions_activated: true
+      )
+    ).ordered
   end
 
   def items_of_type(item_type)

@@ -107,6 +107,7 @@ de:
     greeting: "Hallo"
     minimum_characters: "mindestens %{length} Zeichen"
   catalogs:
+    data_only: "“%{catalog_name}” ist nicht zugänglich (nur Daten)"
     not_visible: "“%{catalog_name}” ist nicht zugänglich"
     show:
       welcome: "Willkommen bei %{catalog}!"
@@ -170,10 +171,14 @@ de:
       favorites_remove: "Von Favoriten entfernen"
     show:
       view_more: "Mehr sehen"
+      make_suggestion: "Einen Vorschlag machen"
     editor:
       created_by: Erstellt von %{editor}
       updated_by: Aktualisiert von %{updater}
       at: am %{date}
+    suggestions:
+      send_suggestion: Vorschlag senden
+      describe_suggestion: Bitte beschreiben Sie hier Ihren Vorschlag...
   invitations_mailer:
     account_information:
       email: "E-mail"
@@ -218,6 +223,14 @@ de:
     name: "Name :"
     email: "Email :"
     body: "Nachricht :"
+  suggestions_mailer:
+    subject: "Neuer Vorschlag"
+    intro: "Ein Benutzer hat Ihnen einen Vorschlag geschickt (%{suggestion_link})."
+    catalog: "<b>Katalog:</b> %{catalog}"
+    item_type: "<b>Satzart:</b> %{item_type}"
+    item: "<b>Element:</b> %{item}"
+    user: "<b>Benutzer:</b> %{user}"
+    body_html: "<b>Nachricht:</b> <div>%{content}</div>"
   favorites:
     index:
       title: "Meine Favoriten"
@@ -350,6 +363,7 @@ de:
   deactivate: Deactivate
   reactivate: Reactivate
   loading: Laden
+  item_link: Link zum Element
 
   layouts:
     catalog_admin:
@@ -802,3 +816,8 @@ de:
       super-editor: Katalog Super-Editor
       reviewer: Katalog-Reviewer
       admin: Katalogverwalter
+
+  suggestions:
+    create:
+      success: "Ihr Vorschlag wurde abgeschickt"
+      error: "Kann Ihren Vorschlag nicht einreichen: %{errors}"

@@ -31,14 +31,16 @@
         <% end %>
       </ul>
       <ul class="nav navbar-nav">
-        <li class="nav-item">
-          <%= link_to(catalog_home_path(
-                        catalog,
-                        :locale => current_user.primary_language), class: "nav-link") do %>
-            <%= fa_icon(:"sign-out") %>
-            Return to site
-          <% end %>
-        </li>
+        <% unless catalog.data_only %>
+          <li class="nav-item">
+            <%= link_to(catalog_home_path(
+                          catalog,
+                          :locale => current_user.primary_language), class: "nav-link") do %>
+              <%= fa_icon(:"sign-out") %>
+              Return to site
+            <% end %>
+          </li>
+        <% end %>
         <% if policy(Configuration).update? %>
           <li class="nav-item">
             <%= link_to(admin_dashboard_path, class: "nav-link") do %>

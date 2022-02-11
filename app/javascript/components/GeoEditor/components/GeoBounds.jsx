@@ -92,7 +92,7 @@ const GeoBounds = (props) => {
   }, [map])
 
   return (
-    <div id={mapId} style={{height: state.mapHeight}}></div>
+    <div id={mapId} style={{height: state.mapHeight}}/>
   );
 };
 

@@ -5,3 +5,10 @@
 .data-search {
   margin-bottom: 20px;
 }
+
+.disable_link {
+  pointer-events: none;
+  cursor: default;
+  text-decoration: none;
+  color: black;
+}

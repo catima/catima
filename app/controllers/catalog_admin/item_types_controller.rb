@@ -59,7 +59,10 @@ class CatalogAdmin::ItemTypesController < CatalogAdmin::BaseController
       :name_fr, :name_plural_fr,
       :name_it, :name_plural_it,
       :slug,
-      :display_emtpy_fields)
+      :display_emtpy_fields,
+      :suggestions_activated,
+      :allow_anonymous_suggestions,
+      :suggestion_email)
   end
 
   def after_create_path

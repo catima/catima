@@ -1,0 +1,47 @@
+<div class="card panel-default">
+  <ul class="list-group list-group-flush mb-3">
+    <li class="list-group-item"><b><%= t("catalog_admin.item_types.common_form_fields.suggestions") %></b></li>
+    <% @item.suggestions.ordered.each do |suggestion| %>
+      <li data-controller="toggle-display" class="list-group-item pb-0 suggestion-content">
+        <div class="d-flex justify-content-between mb-1">
+          <div>
+            <%= suggestion.content.truncate(20) %>
+          </div>
+          <div>
+            <%= link_to(
+                  fa_icon(:eye),
+                  "javavascript:void(0)",
+                  "data-action": "click->toggle-display#reveal",
+                  class: 'px-1 txt-success'
+                ) %>
+            <%= link_to(
+                  fa_icon(:check),
+                  update_processed_catalog_admin_suggestion_path(item_id: @item.id, id: suggestion.id),
+                  method: :post,
+                  "data-confirm": t(".confirm_validate"),
+                  class: ['px-1', ('text-success disable_link' if suggestion.processed_at?)]
+                ) %>
+            <%= link_to(
+                  fa_icon(:trash),
+                  catalog_admin_suggestion_path(item_id: @item.id, id: suggestion.id),
+                  method: :delete,
+                  "data-confirm": t(".confirm_destroy"),
+                  class: 'px-1 text-danger'
+                ) %>
+          </div>
+        </div>
+        <div data-toggle-display-target="revealable" class="border p-1">
+          <div class="text-muted suggestion-date">
+            <%= l(suggestion.created_at, format: :YMDhm) %>
+          </div>
+          <div class="text-muted suggestion-email">
+            <%= suggestion.user&.email %>
+          </div>
+          <div class="mt-1 suggestion-message">
+            <%= suggestion.content %>
+          </div>
+        </div>
+      </li>
+    <% end %>
+  </ul>
+</div>

@@ -1,0 +1,10 @@
+<div data-toggle-display-target="revealable">
+  <%= bootstrap_form_for(@item.suggestions.new, url: item_suggestions_path(item_id: @item.id)) do |f| %>
+    <%= f.text_area :content, rows: 7, hide_label: true, placeholder: t("items.suggestions.describe_suggestion") %>
+    <div class="pt-3 pb-2">
+      <%= recaptcha_tags %>
+    </div>
+    <%= f.primary(t('.send_suggestion'), :id => 'send-suggestion-button') %>
+    <%= link_to t("cancel"), '#', :class => "btn btn-link", "data-action": "click->toggle-display#reveal" %>
+  <% end %>
+</div>

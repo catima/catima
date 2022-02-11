@@ -56,7 +56,15 @@
     <% @items.each do |item| %>
       <tr>
         <% @fields.each do |field| %>
-          <td><%= field_value(item, field, :style => :compact) %></td>
+          <td>
+            <%= field_value(item, field, :style => :compact) %>
+
+            <% if item_suggestion_badge?(item, @item_type) %>
+              <span class="badge badge-secondary">
+                <%= item_suggestions_count(item) %>
+              </span>
+            <% end %>
+          </td>
         <% end %>
         <% if catalog.requires_review? %>
           <td><%= review_status_label(item) %></td>

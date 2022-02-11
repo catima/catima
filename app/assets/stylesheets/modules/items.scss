@@ -1,4 +1,11 @@
+.item-admin {
+  margin-bottom: 20px;
+}
+
 table.item-table {
+  .field-label {
+    width: 25%;
+  }
   i.toggle-hierarchy {
     cursor: pointer;
   }

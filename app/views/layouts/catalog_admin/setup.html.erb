@@ -11,11 +11,11 @@
     <div class="card panel-default mb-4">
       <ul class="list-group list-group-flush">
         <%= setup_catalog_choices_nav_link %>
-        <%= setup_catalog_pages_nav_link %>
-        <%= setup_catalog_menu_tiems_nav_link %>
+        <%= setup_catalog_pages_nav_link unless catalog.data_only? %>
+        <%= setup_catalog_menu_items_nav_link unless catalog.data_only? %>
         <%= setup_catalog_users_nav_link %>
         <%= setup_catalog_exports_nav_link %>
-        <%= setup_catalog_advanced_searches_nav_link %>
+        <%= setup_catalog_advanced_searches_nav_link unless catalog.data_only? %>
       </ul>
     </div>
 
@@ -24,7 +24,7 @@
       <div class="card-header"><%= t('.catalog_settings') %></div>
       <ul class="list-group list-group list-group-flush">
         <%= setup_catalog_settings_nav_link %>
-        <%= setup_catalog_style_nav_link %>
+        <%= setup_catalog_style_nav_link unless catalog.data_only? %>
         <% if @catalog.api_enabled? %>
           <%= setup_catalog_api_nav_link %>
         <% end %>

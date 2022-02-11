@@ -2,13 +2,14 @@ source "https://rubygems.org"
 
 gem "active_model_serializers", "~> 0.10"
 gem "active_type", "~> 1.5"
-gem "ahoy_matey", "~> 3.1"
+gem 'device_detector', '1.0.5'
+gem "ahoy_matey", "~> 4.0.3"
 gem "autoprefixer-rails", "~> 10.1"
 gem "bcrypt", "~> 3.1"
 gem "bootstrap", "~> 4.5"
 gem "bootstrap_form", "~> 4.3"
 gem "bugsnag", "~> 6.18"
-gem "chartkick", "~> 3.4"
+gem "chartkick", "~> 4.1.3"
 gem "cocoon", "~> 1.2"
 gem "coffee-rails", "~> 5.0"
 gem "devise", "~> 4.7"
@@ -47,7 +48,7 @@ gem "refile-mini_magick", github: "refile/refile-mini_magick"
 gem 'sassc-rails', "~> 2.1"
 gem "secure_headers", "~> 6.3"
 gem "select2-rails", "~> 4.0"
-gem "sidekiq", "~> 6.2"
+gem "sidekiq", "~> 6.4"
 gem "sinatra", "~> 2.1"
 gem "sprockets", "~> 4.0"
 gem "sprockets-rails", "~> 3.2"
@@ -67,7 +68,7 @@ end
 
 group :production, :staging, :development do
   platforms :ruby do
-    gem "unicorn", "~> 5.7"
+    gem "unicorn", "~> 6.1"
   end
 end
 
