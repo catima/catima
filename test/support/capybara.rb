@@ -22,7 +22,7 @@ class ActionDispatch::IntegrationTest
     Capybara.current_driver = Capybara.javascript_driver
     browser = Capybara.current_session.driver.browser
     browser.manage.window.resize_to(1200, 800)
-    Capybara.default_max_wait_time = 12
+    Capybara.default_max_wait_time = 30
     browser.manage.delete_all_cookies
   end
 end
