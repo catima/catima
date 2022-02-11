@@ -45,7 +45,7 @@ module CatalogAdmin::ContainersHelper
     item_type = form.object.item_type.nil? ? nil : ItemType.find(form.object.item_type)
     form.select(
       :sort_field_id,
-      form.object.item_type.present? && form.object.style == 'line' && item_type ? item_type.fields.select{|f| f.groupable?}.map { |f| [f.name, f.id] } : [],
+      form.object.item_type.present? && form.object.style == 'line' && item_type ? item_type.fields.select(&:groupable?).map { |f| [f.name, f.id] } : [],
       { include_blank: true },
       options.reverse_merge(required: true)
     )

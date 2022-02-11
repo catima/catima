@@ -34,7 +34,6 @@ class CatalogAdmin::ItemsSortTest < ActionDispatch::IntegrationTest
     click_on('Sorted by Name')
     click_on('Born')
 
-    save_and_open_page
     assert_equal("Stephen King", find(:xpath, "//table/tbody/tr[2]/td[1]").text)
     assert_equal("Very Old", find(:xpath, "//table/tbody/tr[3]/td[1]").text)
   end

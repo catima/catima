@@ -50,7 +50,7 @@ class PagesController < ApplicationController
       sort: params[:sort] || container&.sort || 'ASC'
     )
 
-    formatted_sorted_items = @list.items.map.with_index { |item, index| helpers.formatted_item_for_line(item, index: index, list: @list, container: container, sort_field: sort_field) }
+    formatted_sorted_items = @list.items.map.with_index { |item, index| helpers.formatted_item_for_line(item, index: index, list: @list, sort_field: sort_field) }
     render json: helpers.group_items_for_line(formatted_sorted_items, sort_field: sort_field)
   end
 

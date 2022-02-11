@@ -33,14 +33,14 @@ module ItemsHelper
     item.image?
   end
 
-  def item_thumbnail(item, options = {})
+  def item_thumbnail(item, options={})
     field = item.fields.find { |f| f.is_a?(Field::Image) && f.display_in_public_list }
     return if field.nil?
 
     field_value(item, field, options.reverse_merge(:style => :compact))
   end
 
-  def item_list_view(item, options = {})
+  def item_list_view(item, options={})
     item_view = item.item_type.default_list_view
     return item_display_name(item) if item_view.nil?
 
@@ -85,7 +85,7 @@ module ItemsHelper
     strip_tags(field_value(item, field, :style => :compact)) || ''.html_safe
   end
 
-  def formatted_item_for_line(item, index:,  list:, container:, sort_field:)
+  def formatted_item_for_line(item, index:, list:, sort_field:)
     title = if item_has_thumbnail?(item)
               tag.div(item_list_link(list, item, 0) { item_thumbnail(item, :class => "media-object") }, class: "pull-left mr-3")
             else
@@ -118,13 +118,13 @@ module ItemsHelper
   def group_item_by_date_time_field(items, field)
     criteria = field.format.chars.first(4)
 
-    recursive_group_by_criteria({items: items}, criteria)
+    recursive_group_by_criteria({ items: items }, criteria)
   end
 
   def recursive_group_by_criteria(items_object, criteria)
-    return items_object if criteria.size == 0
+    return items_object if criteria.empty?
 
-    return items_object.transform_values do |v|
+    items_object.transform_values do |v|
       recursive_group_by_criteria(group_by_criteria(v, criteria), criteria.drop(1))
     end
   end
