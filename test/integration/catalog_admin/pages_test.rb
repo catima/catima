@@ -59,8 +59,6 @@ class CatalogAdmin::PagesTest < ActionDispatch::IntegrationTest
     assert_no_difference("Page.count") do
       click_on("Update page")
     end
-    save_and_open_page
-    byebug
     model = pages(:one)
     assert_equal("Changed by test", model.title)
   end
