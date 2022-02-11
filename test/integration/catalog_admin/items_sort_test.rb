@@ -33,8 +33,7 @@ class CatalogAdmin::ItemsSortTest < ActionDispatch::IntegrationTest
     visit("/one/en/admin/authors")
     click_on('Sorted by Name')
     click_on('Born')
-
-    assert_equal("Stephen King", find(:xpath, "//table/tbody/tr[1]/td[1]").text)
+    assert_equal("Stephen King 1", find(:xpath, "//table/tbody/tr[1]/td[1]").text)
     assert_equal("Very Old", find(:xpath, "//table/tbody/tr[2]/td[1]").text)
   end
 end
