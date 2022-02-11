@@ -48,6 +48,10 @@ class Field::URL < ::Field
     "VARCHAR(512)"
   end
 
+  def groupable?
+    false
+  end
+
   private
 
   def build_validators

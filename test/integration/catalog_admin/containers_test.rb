@@ -71,9 +71,9 @@ class CatalogAdmin::ContainersTest < ActionDispatch::IntegrationTest
     end
   end
 
-  test "edit a timeline container" do
+  test "edit a line container" do
     log_in_as("one-admin@example.com", "password")
-    visit("/one/en/admin/_pages/timeline_one/edit")
+    visit("/one/en/admin/_pages/line_one/edit")
     find(".container-action-edit").click
     sleep(4)
     select("Age", :from => "Sort field")

@@ -23,10 +23,10 @@ one:
   slug: one
   creator: one_admin
 
-timeline_one:
-  title: {"en": "Timeline Page for Catalog One"}
+line_one:
+  title: {"en": "Line Page for Catalog One"}
   catalog: one
-  slug: timeline_one
+  slug: line_one
   creator: one_admin
 
 two:

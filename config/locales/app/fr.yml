@@ -444,7 +444,7 @@ fr:
     item_list:
       more: Plus
       open_all: Ouvrir tout
-      close_all: Fermez tout
+      close_all: Fermer tout
       select_sort: Sélectionner le tri
       asc: Ascendant
       desc: Descendant
@@ -711,6 +711,19 @@ fr:
         url: "URL Xref"
         url_help: "URL complète du service externe"
       date_time_option_inputs:
+        numerical_months:
+          0: Janvier
+          1: Février
+          2: Mars
+          3: Avril
+          4: Mai
+          5: Juin
+          6: Juillet
+          7: Août
+          8: Septembre
+          9: Octobre
+          10: Novembre
+          11: Décembre
         months:
           january: Janvier
           fabruary: Février

@@ -18,7 +18,7 @@ export default class extends Controller {
       this.filterableFieldSelectWrapperTarget.selectedIndex = -1
       this.filterableFieldSelectWrapperTarget.classList.add('d-none')
     } else {
-      if (this.styleSelectTarget.value == 'timeline') {
+      if (this.styleSelectTarget.value == 'line') {
         this.filterableFieldSelectWrapperTarget.classList.remove('d-none')
       }
       axios.post(this.urls.filterableFieldSelectOptionsUrl,
@@ -50,7 +50,7 @@ export default class extends Controller {
   }
 
   toggleDisplayFilterableFieldSelect(e) {
-    if (this.styleSelectTarget.value == 'timeline' && this.itemTypeSelectTarget.value != '') {
+    if (this.styleSelectTarget.value == 'line' && this.itemTypeSelectTarget.value != '') {
       this.filterableFieldSelectWrapperTarget.classList.remove('d-none')
       this.updateFilterableFieldSelect({})
       this.fieldFormatSelectWrapperTarget.selectedIndex = -1

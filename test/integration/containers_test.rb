@@ -22,16 +22,16 @@ class ContainersTest < ActionDispatch::IntegrationTest
     assert(true, find_field('body')[:required])
   end
 
-  test "view timeline container" do
-    timeline_page = pages(:timeline_one)
-    visit("/one/en/#{timeline_page.to_param}")
+  test "view line container" do
+    line_page = pages(:line_one)
+    visit("/one/en/#{line_page.to_param}")
     sleep(4)
-    within all('.timeline__group').first do
+    within all('.line__group').first do
       assert(has_content?("No"))
       assert(has_content?("Very Young"))
     end
 
-    within all('.timeline__group').last do
+    within all('.line__group').last do
       assert(has_content?("Yes"))
       assert(has_content?("Very Old"))
       refute(has_content?("Stephen King"))

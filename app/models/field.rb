@@ -164,6 +164,10 @@ class Field < ApplicationRecord
     display_component.blank?
   end
 
+  def groupable?
+    human_readable?
+  end
+
   # Whether or not this field is filterable. Can be used in addition to the human_readable?
   # method.
   #

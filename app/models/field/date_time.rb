@@ -125,12 +125,12 @@ class Field::DateTime < ::Field
   end
 
   def order_items_by(direction: 'ASC')
-    "NULLIF(items.data->'#{uuid}'->>'Y', '')::int #{direction},
-    NULLIF(items.data->'#{uuid}'->>'M', '')::int #{direction},
-    NULLIF(items.data->'#{uuid}'->>'D', '')::int #{direction},
-    NULLIF(items.data->'#{uuid}'->>'h', '')::int #{direction},
-    NULLIF(items.data->'#{uuid}'->>'m', '')::int #{direction},
-    NULLIF(items.data->'#{uuid}'->>'s', '')::int #{direction}"
+    "(COALESCE(NULLIF(items.data->'#{uuid}'->>'Y', '')::bigint, 0) * 60 * 60 * 24 * (365 / 12) * 12 ) +
+     (COALESCE(NULLIF(items.data->'#{uuid}'->>'M', '')::bigint, 0) * 60 * 60 * 24 * (365 / 12) ) +
+     (COALESCE(NULLIF(items.data->'#{uuid}'->>'D', '')::bigint, 0) * 60 * 60 * 24 ) +
+     (COALESCE(NULLIF(items.data->'#{uuid}'->>'h', '')::bigint, 0) * 60 * 60 ) +
+     (COALESCE(NULLIF(items.data->'#{uuid}'->>'m', '')::bigint, 0) * 60 ) +
+     (COALESCE(NULLIF(items.data->'#{uuid}'->>'s', '')::bigint, 0) ) #{direction}"
   end
 
   def search_conditions_as_hash(locale)

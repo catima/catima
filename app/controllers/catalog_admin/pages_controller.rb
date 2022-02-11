@@ -56,11 +56,6 @@ class CatalogAdmin::PagesController < CatalogAdmin::BaseController
     render 'catalog_admin/containers/item_list/sort_field_select_options', layout: false
   end
 
-  def field_format_select_options
-    @field = Field.find(params[:field_id])
-    render json: { isDateTime: @field.is_a?(Field::DateTime) }
-  end
-
   private
 
   def build_page

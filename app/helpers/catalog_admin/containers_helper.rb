@@ -45,18 +45,9 @@ module CatalogAdmin::ContainersHelper
     item_type = form.object.item_type.nil? ? nil : ItemType.find(form.object.item_type)
     form.select(
       :sort_field_id,
-      form.object.item_type.present? && form.object.style == 'timeline' && item_type ? item_type.fields.map { |f| [f.name, f.id] } : [],
+      form.object.item_type.present? && form.object.style == 'line' && item_type ? item_type.fields.select{|f| f.groupable?}.map { |f| [f.name, f.id] } : [],
       { include_blank: true },
       options.reverse_merge(required: true)
-    )
-  end
-
-  def field_format_select(form, options={})
-    form.select(
-      :field_format,
-      Field::DateTime::FORMATS.map(&:to_s),
-      { include_blank: true },
-      options
     )
   end
 

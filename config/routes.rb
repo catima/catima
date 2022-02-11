@@ -236,7 +236,6 @@ Rails.application.routes.draw do
 
     resources :pages, :path => "_pages", :param => :slug do
       post :sort_field_select_options, on: :collection
-      post :field_format_select_options, on: :collection
       resources :containers,
                 :path => "_containers",
                 :shallow => true,

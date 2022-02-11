@@ -2,7 +2,7 @@ class ItemList::Filter < ItemList
   # This is the inverse of the to_param method, below.
   def self.parse_param(param)
     field_slug, value = param.to_s.split("_", 2)
-    field_slug.present? ? { field_slug: field_slug, :value => value } : {}
+    field_slug.present? ? {field_slug: field_slug, :value => value} : {}
   end
 
   include ::Search::Strategies
@@ -56,12 +56,20 @@ class ItemList::Filter < ItemList
                             .reorder(Arel.sql("(choices.short_name_translations->>'short_name_#{I18n.locale}') #{direction}")) unless field.choices.nil?
     when Field::DateTime
       unpaginated_list_items.reorder(Arel.sql(
-        "NULLIF(items.data->'#{field.uuid}'->>'Y', '')::int #{direction},
-           NULLIF(items.data->'#{field.uuid}'->>'M', '')::int #{direction},
-           NULLIF(items.data->'#{field.uuid}'->>'D', '')::int #{direction},
-           NULLIF(items.data->'#{field.uuid}'->>'h', '')::int #{direction},
-           NULLIF(items.data->'#{field.uuid}'->>'m', '')::int #{direction},
-           NULLIF(items.data->'#{field.uuid}'->>'s', '')::int #{direction}"
+        "COALESCE( NULLIF(items.data->'#{field.uuid}'->>'Y', ''),
+                          NULLIF(items.data->'#{field.uuid}'->>'M', ''),
+                          NULLIF(items.data->'#{field.uuid}'->>'D', ''),
+                          NULLIF(items.data->'#{field.uuid}'->>'h', ''),
+                          NULLIF(items.data->'#{field.uuid}'->>'m', ''),
+                          NULLIF(items.data->'#{field.uuid}'->>'s', '')
+                ) #{direction},
+                NULLIF(items.data->'#{field.uuid}'->>'#{field.format[0]}', '')::bigint #{direction},
+                (COALESCE(NULLIF(items.data->'#{field.uuid}'->>'Y', '')::bigint, 0) * 60 * 60 * 24 * (365 / 12) * 12 ) +
+                (COALESCE(NULLIF(items.data->'#{field.uuid}'->>'M', '')::bigint, 0) * 60 * 60 * 24 * (365 / 12) ) +
+                (COALESCE(NULLIF(items.data->'#{field.uuid}'->>'D', '')::bigint, 0) * 60 * 60 * 24 ) +
+                (COALESCE(NULLIF(items.data->'#{field.uuid}'->>'h', '')::bigint, 0) * 60 * 60 ) +
+                (COALESCE(NULLIF(items.data->'#{field.uuid}'->>'m', '')::bigint, 0) * 60 ) +
+                (COALESCE(NULLIF(items.data->'#{field.uuid}'->>'s', '')::bigint, 0) ) #{direction}"
       ))
     else
       unpaginated_list_items.reorder(Arel.sql("items.data->>'#{field.uuid}' #{direction}"))

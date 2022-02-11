@@ -33,14 +33,14 @@ module ItemsHelper
     item.image?
   end
 
-  def item_thumbnail(item, options={})
+  def item_thumbnail(item, options = {})
     field = item.fields.find { |f| f.is_a?(Field::Image) && f.display_in_public_list }
     return if field.nil?
 
     field_value(item, field, options.reverse_merge(:style => :compact))
   end
 
-  def item_list_view(item, options={})
+  def item_list_view(item, options = {})
     item_view = item.item_type.default_list_view
     return item_display_name(item) if item_view.nil?
 
@@ -85,7 +85,7 @@ module ItemsHelper
     strip_tags(field_value(item, field, :style => :compact)) || ''.html_safe
   end
 
-  def formatted_item_for_timeline(item, list:, container:, sort_field:)
+  def formatted_item_for_line(item, index:,  list:, container:, sort_field:)
     title = if item_has_thumbnail?(item)
               tag.div(item_list_link(list, item, 0) { item_thumbnail(item, :class => "media-object") }, class: "pull-left mr-3")
             else
@@ -96,19 +96,46 @@ module ItemsHelper
       title: title,
       summary: item_summary(item),
       primary_field_value: field_value(item, item.primary_field),
-      sort_field_value: sort_field.is_a?(Field::DateTime) ? sort_field.value_as_array(item, format: container&.field_format)&.map { |v| v.to_s.gsub('', '0') } : field_value(item, sort_field),
-      group_title: sort_field.is_a?(Field::DateTime) ? Field::DateTimePresenter.new(nil, item, sort_field).value(format: container&.field_format) : field_value(item, sort_field)
+      sort_field_value: sort_field.is_a?(Field::DateTime) ? sort_field.raw_value(item) || {} : field_value(item, sort_field),
+      group_title: sort_field.is_a?(Field::DateTime) ? Field::DateTimePresenter.new(nil, item, sort_field).value(format: sort_field.format) : field_value(item, sort_field),
+      index: index
     )
   end
 
-  def group_items_for_timeline(items, container:, sort_field:)
-    if sort_field.is_a?(Field::DateTime)
-      items.group_by do |item|
-        container&.field_format && item[:sort_field_value].is_a?(Array) ? item[:sort_field_value].join : item[:sort_field_value]
-      end
-    else
-      items.group_by { |item| item[:sort_field_value] }
+  def group_items_for_line(items, sort_field:)
+    return group_item_by_date_time_field(items, sort_field) if sort_field.is_a?(Field::DateTime)
+    return { items: [items] } if sort_field.is_a?(Field::Int) || sort_field.is_a?(Field::Decimal)
+
+    { items: group_item_alphabetically(items) }
+  end
+
+  def group_item_alphabetically(items)
+    items.group_by { |item| strip_tags(item[:sort_field_value])&.strip&.first&.upcase }.transform_values do |v|
+      v.group_by { |i| strip_tags(i[:sort_field_value])&.strip }
     end
+  end
+
+  def group_item_by_date_time_field(items, field)
+    criteria = field.format.chars.first(4)
+
+    recursive_group_by_criteria({items: items}, criteria)
+  end
+
+  def recursive_group_by_criteria(items_object, criteria)
+    return items_object if criteria.size == 0
+
+    return items_object.transform_values do |v|
+      recursive_group_by_criteria(group_by_criteria(v, criteria), criteria.drop(1))
+    end
+  end
+
+  def group_by_criteria(items, criteria)
+    hash = items.group_by do |item|
+      item[:sort_field_value][criteria.first]
+    end
+    hash[' '] = hash.delete('') if hash.key?('')
+    hash[' '] = hash.delete(nil) if hash.key?(nil)
+    hash
   end
 
   # Check that the referer is the item type list (Data mode)

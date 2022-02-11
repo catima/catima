@@ -31,15 +31,14 @@ two:
   content: { markdown: "#hello world" }
   locale: en
 
-one_timeline_container:
+one_line_container:
   type: Container::ItemList
-  slug: timeline
+  slug: line
   row_order: 2
-  page: timeline_one
-  content: { style: 'timeline', item_type: <%=  ItemType.find_by(slug: 'authors' )&.id %> }
+  page: line_one
+  content: { style: 'line', item_type: <%=  ItemType.find_by(slug: 'authors' )&.id %> }
   sort: 'ASC'
   sort_field_id: <%= Field.find_by(slug: 'deceased' )&.id  %>
-  field_format: 'YMD'
   locale: en
 
 contact_container:
