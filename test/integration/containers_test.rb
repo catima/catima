@@ -25,7 +25,7 @@ class ContainersTest < ActionDispatch::IntegrationTest
   test "view line container" do
     line_page = pages(:line_one)
     visit("/one/en/#{line_page.to_param}")
-    sleep(10)
+    sleep(2)
     within all('.line__group').first do
       assert(has_content?("No"))
       assert(has_content?("Very Young"))
