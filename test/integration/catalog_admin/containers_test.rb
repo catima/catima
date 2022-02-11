@@ -72,8 +72,9 @@ class CatalogAdmin::ContainersTest < ActionDispatch::IntegrationTest
   end
 
   test "edit a line container" do
+    line_page = pages(:line_one)
     log_in_as("one-admin@example.com", "password")
-    visit("/one/en/admin/_pages/line_one/edit")
+    visit("/one/en/admin/_pages/#{line_page.slug}/edit")
     find(".container-action-edit").click
     sleep(2)
     select("Age", :from => "Sort field")
