@@ -12,7 +12,7 @@
           catalog_admin_menu_item_path(model.catalog, I18n.locale, model),
           :method => :delete,
           :data => {
-              :confirm => t("delete_confirm", {model: model.title})
+              :confirm => t("delete_confirm", model: model.title)
           },
           class: "btn btn-xs btn-outline-secondary menu-action-delete",
           "data-toggle" => "tooltip", "data-placement" => "top", "title" => t("delete")

@@ -19,7 +19,7 @@
         catalog_admin_choice_set_path(model.catalog, I18n.locale, model),
         method: :delete,
         :data => {
-          :confirm => t("delete_confirm", {model: model.name})
+          :confirm => t("delete_confirm", model: model.name)
         },
         class: "btn btn-xs btn-outline-secondary choiceset-action-delete",
         "data-toggle": "tooltip", "data-placement": "top", "title": t("delete")
