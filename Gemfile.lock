@@ -593,7 +593,7 @@ DEPENDENCIES
   rainbow (~> 3.0)
   ranked-model (~> 0.4)
   rb-fsevent (~> 0.10)
-  react-rails
+  react-rails (~> 2.6)
   recaptcha (~> 5.6)
   redcarpet (~> 3.5)
   redis (~> 4.2.5)
