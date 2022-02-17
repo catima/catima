@@ -70,16 +70,4 @@ class CatalogAdmin::ContainersTest < ActionDispatch::IntegrationTest
       assert(page.has_content?("Stephen"))
     end
   end
-
-  test "edit a line container" do
-    line_page = pages(:line_one)
-    log_in_as("one-admin@example.com", "password")
-    visit("/one/en/admin/_pages/#{line_page.slug}/edit")
-    find(".container-action-edit").click
-    sleep(2)
-    select("Age", :from => "Sort field")
-    click_on("Save container")
-    find(".container-action-edit").click
-    assert(find('option[selected="selected"][value="128780868"]'))
-  end
 end

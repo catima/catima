@@ -9,6 +9,6 @@
     desc: page_url(style: "line", sort: "DESC")
   },
   pageCount: (item_list.total_count / 24) + 1,
-  monthNames: t('catalog_admin.fields.date_time_option_inputs.numerical_months').values,
+  monthNames: I18n.t('catalog_admin.fields.date_time_option_inputs.numerical_months').values,
   type: container.sort_field.is_a?(Field::DateTime) ? 'date' : container.sort_field.is_a?(Field::Int) || container.sort_field.is_a?(Field::Decimal) ? 'num' : ''
 }) %>

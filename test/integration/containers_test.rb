@@ -21,20 +21,4 @@ class ContainersTest < ActionDispatch::IntegrationTest
     assert(true, find_field('email')[:required])
     assert(true, find_field('body')[:required])
   end
-
-  test "view line container" do
-    line_page = pages(:line_one)
-    visit("/one/en/#{line_page.to_param}")
-    sleep(2)
-    within all('.line__group').first do
-      assert(has_content?("No"))
-      assert(has_content?("Very Young"))
-    end
-
-    within all('.line__group').last do
-      assert(has_content?("Yes"))
-      assert(has_content?("Very Old"))
-      refute(has_content?("Stephen King"))
-    end
-  end
 end
