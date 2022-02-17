@@ -5,13 +5,8 @@ import axios from 'axios';
 import "../css/line.scss";
 import ReactSelect from 'react-select';
 
-
-const translateMonthNames = (i, monthNames) => {
-  return monthNames[i - 1]
-}
-
-const computeGroupTitle = (level, title, monthNames, type) => {
-  return (level === 1 && type == 'date') ? translateMonthNames(parseInt(title), monthNames) : title
+const computeGroupTitle = (level, title, type) => {
+  return (level === 1 && type == 'date') ? Translations.messages[`catalog_admin.fields.date_time_option_inputs.numerical_months.${parseInt(title)-1}`] : title
 }
 
 const Items = (props) => {
@@ -44,7 +39,7 @@ const Items = (props) => {
 }
 
 const ItemGroup = (props) => {
-  const {allOpen, items, icons, k, title, level, monthNames, type, withoutGroup} = props
+  const {allOpen, items, icons, k, title, level, type, withoutGroup} = props
   const [groupIsOpen, setGroupIsOpen] = useState(true)
 
   useEffect(() => {
@@ -64,7 +59,7 @@ const ItemGroup = (props) => {
         <div className="line__group" key={`${key}`}>
           {type != 'num' && !withoutGroup && (
             <div className={`line__group__title level-${level}`}>
-              <div dangerouslySetInnerHTML={{__html: computeGroupTitle(level, title, monthNames, type)}}/>
+              <div dangerouslySetInnerHTML={{__html: computeGroupTitle(level, title, type)}}/>
               <span className="px-2" style={{cursor: "pointer"}} onClick={() => toggleGroupIsOpen()}
                     dangerouslySetInnerHTML={{__html: groupIsOpen ? icons.up : icons.down}}/>
             </div>
@@ -72,14 +67,14 @@ const ItemGroup = (props) => {
           {(groupIsOpen) && (
             <div className="line__group__items">
               {(it.hasOwnProperty(' ') && (<ItemGroup icons={icons} key={`no`} k={`no`} title={'no'} items={it[' ']}
-                                                      allOpen={allOpen} level={level + 1} monthNames={monthNames}
+                                                      allOpen={allOpen} level={level + 1}
                                                       type={type} withoutGroup={true}/>))}
               {(it.hasOwnProperty(' ') && (
                   (() => {
                     delete it[' ']
                     Object.entries(it).map(([k, item], idx) => {
                       return <ItemGroup icons={icons} key={`${key}-${idx}`} k={`${key}-${idx}`} title={k} items={item}
-                                        allOpen={allOpen} level={level + 1} monthNames={monthNames} type={type}
+                                        allOpen={allOpen} level={level + 1} type={type}
                                         withoutGroup={false}/>
                     })
                   })()
@@ -87,7 +82,7 @@ const ItemGroup = (props) => {
                 || (
                   Object.entries(it).map(([k, item], idx) => {
                     return <ItemGroup icons={icons} key={`${key}-${idx}`} k={`${key}-${idx}`} title={k} items={item}
-                                      allOpen={allOpen} level={level + 1} monthNames={monthNames} type={type}/>
+                                      allOpen={allOpen} level={level + 1} type={type}/>
                   })
                 ))}
             < /div>
@@ -99,7 +94,7 @@ const ItemGroup = (props) => {
         <div className="line__group" key={`${key}`}>
           {type != 'num' && !withoutGroup && (
             <div className={`line__group__title level-${level}`}>
-              <div dangerouslySetInnerHTML={{__html: computeGroupTitle(level, title, monthNames, type)}}/>
+              <div dangerouslySetInnerHTML={{__html: computeGroupTitle(level, title, type)}}/>
               <span className="px-2" style={{cursor: "pointer"}} onClick={() => toggleGroupIsOpen()}
                     dangerouslySetInnerHTML={{__html: groupIsOpen ? icons.up : icons.down}}/>
             </div>)}
@@ -124,7 +119,6 @@ const Line = (props) => {
     icons,
     currentPage: currentPageProps,
     pageCount,
-    monthNames,
     type
   } = props
 
@@ -221,7 +215,7 @@ const Line = (props) => {
         <div className="container max-width-lg line__container">
           {Object.entries(groupedItems).map(([k, v], index) => <ItemGroup key={k} k={k} title={k}
                                                                           icons={icons} items={v} allOpen={allOpen}
-                                                                          level={0} monthNames={monthNames}
+                                                                          level={0}
                                                                           type={type} withoutGroup={false}/>)}
         </div>
       </section>
