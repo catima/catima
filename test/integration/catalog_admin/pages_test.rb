@@ -54,13 +54,13 @@ class CatalogAdmin::PagesTest < ActionDispatch::IntegrationTest
     click_on("Pages")
     all("a.page-action-edit").last.click
 
-    find('div.translatedTextField input[data-locale=en]').base.send_keys([:backspace] * 22, 'Changed by test')
+    find('div.translatedTextField input[data-locale=en]').base.send_keys(' Edited')
 
     assert_no_difference("Page.count") do
       click_on("Update page")
     end
     model = pages(:one)
-    assert_equal("Changed by test", model.title)
+    assert_equal("Page for Catalog One Edited", model.title)
   end
 
   test "delete a page" do

@@ -109,7 +109,7 @@ group :test do
   gem "launchy", "~> 2.5"
   gem "minitest-reporters", "~> 1.4"
   gem "mocha", "~> 1.11"
-  gem "puma", "~> 5.5"
+  gem "puma", "~> 5.6"
   gem "pry", "~> 0.13"
   gem "selenium-webdriver", "~> 3.142"
   gem "shoulda-context", "~> 2.0"
