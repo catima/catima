@@ -12,7 +12,6 @@ const computeGroupTitle = (level, title, type) => {
 const Items = (props) => {
   const {items} = props
 
-
   const renderItem = (item, index) => (
     <div
       className={((item.index % 2) == 0) ? 'line__group__item__wrapper  odd' : 'line__group__item__wrapper  even'}
