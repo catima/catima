@@ -117,7 +117,6 @@ module ItemsHelper
 
   def group_item_by_date_time_field(items, field)
     criteria = field.format.chars.first(4)
-
     recursive_group_by_criteria({ items: items }, criteria)
   end
 
