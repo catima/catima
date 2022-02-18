@@ -6,7 +6,7 @@ import "../css/line.scss";
 import ReactSelect from 'react-select';
 
 const computeGroupTitle = (level, title, type) => {
-  return (level === 1 && type == 'date') ? Translations.messages[`catalog_admin.fields.date_time_option_inputs.numerical_months.${parseInt(title)-1}`] : title
+  return (level === 1 && type == 'date') ? Translations.messages['date.month_names'][parseInt(title)] : title
 }
 
 const Items = (props) => {

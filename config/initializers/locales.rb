@@ -7,7 +7,7 @@ Locales.configure do |config|
   config.i18n_dir = Rails.root.join("app", "assets", "i18n")
 
   # Path to the rails locale files.
-  config.i18n_yml_dir = Rails.root.join("config", "locales", "app")
+  config.i18n_yml_dir = Rails.root.join("config", "locales")
 
   # i18n format
   config.i18n_output_format = 'js'
