@@ -13,5 +13,9 @@
   type: container.sort_field.is_a?(Field::DateTime) ? 'date' : container.sort_field.is_a?(Field::Int) || container.sort_field.is_a?(Field::Decimal) ? 'num' : '',
 }) %>
 <% else %>
-  <div class="d-flex justify-content-center align-items-center m-5"><%= t('containers.item_list.missing_sort_field') %></div>
+  <div class="alert alert-danger">
+    <div class="d-flex justify-content-center align-items-center">
+      <%= t('containers.item_list.missing_sort_field', container_slug: container&.slug) %>
+    </div>
+  </div>
 <% end %>
