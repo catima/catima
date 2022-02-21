@@ -466,7 +466,7 @@ fr:
       select_sort: Sélectionner le tri
       asc: Ascendant
       desc: Descendant
-      missing_sort_field: "Impossible d'afficher %{container_slug} car le champs de tri est absent"
+      missing_sort_field: "Impossible d'afficher le container %{container_slug} car le champs de tri est absent"
 
   catalog_admin:
     approvals:
