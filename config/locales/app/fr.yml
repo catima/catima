@@ -466,6 +466,7 @@ fr:
       select_sort: Sélectionner le tri
       asc: Ascendant
       desc: Descendant
+      missing_sort_field: "Impossible d'afficher ce conteneur car le champs de tri est absent"
 
   catalog_admin:
     approvals:
@@ -729,19 +730,6 @@ fr:
         url: "URL Xref"
         url_help: "URL complète du service externe"
       date_time_option_inputs:
-        numerical_months:
-          0: Janvier
-          1: Février
-          2: Mars
-          3: Avril
-          4: Mai
-          5: Juin
-          6: Juillet
-          7: Août
-          8: Septembre
-          9: Octobre
-          10: Novembre
-          11: Décembre
         months:
           january: Janvier
           fabruary: Février

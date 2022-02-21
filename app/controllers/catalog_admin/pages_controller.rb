@@ -52,7 +52,7 @@ class CatalogAdmin::PagesController < CatalogAdmin::BaseController
 
   def sort_field_select_options
     @item_type = catalog.item_types.find(params[:item_type_id])
-    @fields = sort_field_choices(all_human_readable: false)
+    @fields = @item_type.fields.select(&:groupable?)
     render 'catalog_admin/containers/item_list/sort_field_select_options', layout: false
   end
 

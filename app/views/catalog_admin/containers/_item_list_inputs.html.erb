@@ -4,7 +4,7 @@
     <%= sort_select(f, {}) %>
     <%= style_select(f, {:help => t('.display_style')}, {"data-action": "input->item-list-inputs#toggleDisplayFilterableFieldSelect", "data-item-list-inputs-target": "styleSelect"}) %>
     <div data-item-list-inputs-target="filterableFieldSelectWrapper" class="<%= (f.object.item_type.present? && f.object.style == 'line' ? '' : 'd-none') %>">
-      <%= sort_field_select(f, {"data-item-list-inputs-target": "filterableFieldSelect", "data-action": "input->item-list-inputs#updateFieldFormatSelect"}) %>
+      <%= sort_field_select(f, {"data-item-list-inputs-target": "filterableFieldSelect"}) %>
     </div>
   <% else %>
     <div class="alert alert-warning">
