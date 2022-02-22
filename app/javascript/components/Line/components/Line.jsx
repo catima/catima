@@ -191,10 +191,10 @@ const Line = (props) => {
           ]}
           onChange={sortAscDesc}
           placeholder={Translations.messages['containers.item_list.select_sort']}
-          value={[{value: 'ASC', label: 'Ascending'}, {
-            value: 'DESC',
-            label: 'Descending'
-          }].filter(o => o.value === sort)}
+          value={[
+            {value: 'ASC', label: Translations.messages['containers.item_list.asc']},
+            {value: 'DESC', label: Translations.messages['containers.item_list.desc']}
+          ].filter(o => o.value === sort)}
         />
       </div>
       <div className='d-flex justify-content-center'>
