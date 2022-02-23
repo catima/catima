@@ -165,6 +165,8 @@ class Field < ApplicationRecord
   end
 
   def groupable?
+    return false if multiple?
+
     human_readable?
   end
 
