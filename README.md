@@ -27,9 +27,9 @@ This README describes the purpose of this repository and how to set up a develop
 
 This project requires:
 
-* Ruby 2.7.5, preferably managed using [rbenv][]
+* Ruby 2.7.5, preferably managed using [rbenv](http://rbenv.org/)
 * PostgreSQL 12 must be installed and accepting connections
-* [Redis][] must be installed and running on localhost with the default port
+* [Redis](https://redis.io/) must be installed and running on localhost with the default port
 * Imagemagick must be installed (`brew install imagemagick`, `sudo apt install imagemagick`, ...)
 * Sodium must be installed (`brew install libsodium`, ...)
 * Chrome (for testing with Selenium)
@@ -50,9 +50,6 @@ Run the `bin/setup` script. This script will:
 1. Install NPM packages using `yarn install`
 2. Install [foreman](https://github.com/ddollar/foreman) with `gem install foreman`
 3. Run `foreman start -f Procfile.dev` to start the Rails app.
-
-[rbenv]:https://github.com/sstephenson/rbenv
-[redis]:http://redis.io
 
 ## Tests & API specs
 
