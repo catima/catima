@@ -522,7 +522,7 @@ CREATE TABLE public.containers (
     created_at timestamp without time zone NOT NULL,
     updated_at timestamp without time zone NOT NULL,
     locale character varying,
-    filterable_field_id integer,
+    sort_field_id integer,
     field_format character varying,
     sort character varying
 );

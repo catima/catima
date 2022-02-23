@@ -4,7 +4,7 @@ class ItemList
     "thumb" => "items/thumbnails",
     "list" => "items/list",
     "grid" => "items/grid",
-    "timeline" => "items/timeline"
+    "line" => "items/line"
   }.freeze
 
   # Default number of items per page

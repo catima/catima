@@ -81,7 +81,7 @@ RSpec.describe 'api/v3/{catalog_id}/advanced_search', type: :request do
                 #       field_condition
                 #       all_words / default
                 #       condition
-                #       filter_field_uuid
+                #       sort_field_uuid
                 #     }
                 #   }
                 # }

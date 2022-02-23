@@ -80,6 +80,10 @@ class Field::Xref < ::Field
     return '' if raw_value(item).blank? || external_type.nil?
   end
 
+  def groupable?
+    false
+  end
+
   private
 
   def xref_must_point_to_valid_service

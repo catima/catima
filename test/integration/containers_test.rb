@@ -1,6 +1,8 @@
 require "test_helper"
 
 class ContainersTest < ActionDispatch::IntegrationTest
+  setup { use_javascript_capybara_driver }
+
   test "sends a contact request" do
     visit("/one/en/one")
 

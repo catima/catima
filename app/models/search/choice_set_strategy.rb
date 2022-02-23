@@ -2,7 +2,7 @@ class Search::ChoiceSetStrategy < Search::BaseStrategy
   include Search::MultivaluedSearch
 
   permit_criteria :exact, :all_words, :one_word, :less_than, :less_than_or_equal_to, :greater_than,
-                  :greater_than_or_equal_to, :field_condition, :filter_field_slug, :category_field,
+                  :greater_than_or_equal_to, :field_condition, :sort_field_slug, :category_field,
                   :after, :before, :between, :outside, :condition, :default, :child_choices_activated, :category_criteria => {}
 
   def keywords_for_index(item)

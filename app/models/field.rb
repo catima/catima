@@ -164,6 +164,10 @@ class Field < ApplicationRecord
     display_component.blank?
   end
 
+  def groupable?
+    human_readable?
+  end
+
   # Whether or not this field is filterable. Can be used in addition to the human_readable?
   # method.
   #
@@ -337,7 +341,7 @@ class Field < ApplicationRecord
   def search_options_as_hash
   end
 
-  def filterable_field?
+  def sort_field?
     !is_a?(Field::ChoiceSet) && !is_a?(Field::Reference) && human_readable?
   end
 

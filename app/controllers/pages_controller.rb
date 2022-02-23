@@ -42,16 +42,16 @@ class PagesController < ApplicationController
     container = page.containers.find(request[:container_id])
     catalog = page.catalog
     item_type = catalog.item_types.where(:id => container.item_type).first!
-    filter_field = container.filterable_field_id.present? ? Field.find(container.filterable_field_id) : item_type.items.first.primary_field
+    sort_field = container.sort_field_id.present? ? Field.find(container.sort_field_id) : item_type.items.first.primary_field
     @list = ::ItemList::Filter.new(
       :item_type => item_type,
       :page => params[:page],
-      filter_field: filter_field,
+      sort_field: sort_field,
       sort: params[:sort] || container&.sort || 'ASC'
     )
 
-    formatted_sorted_items = @list.items.map { |item| helpers.formatted_item_for_timeline(item, list: @list, container: container, filter_field: filter_field) }
-    render json: { items: helpers.group_items_for_timeline(formatted_sorted_items, container: container, filter_field: filter_field) }
+    formatted_sorted_items = @list.items.map.with_index { |item, index| helpers.formatted_item_for_line(item, index: index, list: @list, sort_field: sort_field) }
+    render json: helpers.group_items_for_line(formatted_sorted_items, sort_field: sort_field)
   end
 
   protected

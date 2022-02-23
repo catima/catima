@@ -31,6 +31,16 @@ two:
   content: { markdown: "#hello world" }
   locale: en
 
+one_line_container:
+  type: Container::ItemList
+  slug: line
+  row_order: 2
+  page: line_one
+  content: { style: 'line', item_type: <%=  ItemType.find_by(slug: 'authors' )&.id %> }
+  sort: 'ASC'
+  sort_field_id: <%= Field.find_by(slug: 'deceased' )&.id  %>
+  locale: en
+
 contact_container:
   type: Container::Contact
   slug: contact-container
@@ -42,5 +52,5 @@ contact_container:
     "email": "{ \"row_order\": 2, \"enabled\": true, \"required\": true, \"input_type\": \"email_field\" }",
     "subject": "{ \"row_order\": 3, \"enabled\": true, \"required\": false, \"input_type\": \"text_field\" }",
     "receiving_email": "admin@email.ch"
-    }
+  }
   locale: en

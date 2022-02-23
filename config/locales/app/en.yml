@@ -470,6 +470,7 @@ en:
       select_sort: Select sort
       asc: Ascending
       desc: Descending
+      missing_sort_field: Impossible to display the %{container_slug} container because the sort field is missing
 
   catalog_admin:
     approvals:

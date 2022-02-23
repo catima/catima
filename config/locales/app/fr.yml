@@ -462,10 +462,11 @@ fr:
     item_list:
       more: Plus
       open_all: Ouvrir tout
-      close_all: Fermez tout
+      close_all: Fermer tout
       select_sort: Sélectionner le tri
       asc: Ascendant
       desc: Descendant
+      missing_sort_field: "Impossible d'afficher le container %{container_slug} car le champs de tri est absent"
 
   catalog_admin:
     approvals:

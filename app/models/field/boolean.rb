@@ -41,6 +41,10 @@ class Field::Boolean < ::Field
     false
   end
 
+  def groupable?
+    false
+  end
+
   def search_data_as_hash
     [
       { :value => I18n.t("yes"), :key => 1 },

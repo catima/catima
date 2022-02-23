@@ -1,0 +1,21 @@
+<% if container.sort_field.present? %>
+<%= react_component('Line/components/Line', {
+  sort: params[:sort] || container.sort || 'ASC',
+  url: [page_path(@page), "/#{container.id}/items/?style=line", params[:sort] ? "&sort=#{params[:sort]}" : ""].join,
+  currentPage: params[:page] || 1,
+  icons: {up: fa_icon("chevron-up"),
+          down: fa_icon("chevron-down")},
+  links: {
+    asc: page_url(style: "line", sort: "ASC"),
+    desc: page_url(style: "line", sort: "DESC")
+  },
+  pageCount: (item_list.total_count / 24) + 1,
+  type: container.sort_field.is_a?(Field::DateTime) ? 'date' : container.sort_field.is_a?(Field::Int) || container.sort_field.is_a?(Field::Decimal) ? 'num' : '',
+}) %>
+<% else %>
+  <div class="alert alert-danger">
+    <div class="d-flex justify-content-center align-items-center">
+      <%= t('containers.item_list.missing_sort_field', container_slug: container&.slug) %>
+    </div>
+  </div>
+<% end %>

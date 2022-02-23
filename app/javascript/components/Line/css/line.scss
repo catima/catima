@@ -1,14 +1,14 @@
-.timeline {
+.line {
   overflow: hidden;
   padding: 3rem 0;
 }
 
-.timeline__container {
+.line__container {
   overflow: hidden;
   padding: 2em 0;
   position: relative;
 
-  &::before { // this is the timeline vertical line
+  &::before { // this is the line vertical line
     content: '';
     position: absolute;
     top: 0;
@@ -22,41 +22,53 @@
   }
 }
 
-.timeline__group {
+.line__group {
   display: flex;
   position: relative;
   z-index: 1;
   min-height: 4rem;
   margin-bottom: 1em;
-  .timeline__group__title {
-    padding: 0.5rem 1rem;
+  .line__group__title {
     display: flex;
     justify-content: center;
     align-items: center;
     flex-shrink: 0;
-    order: 1; // flex order -> place the image after timeline__content
+    order: 1; // flex order -> place the image after line__content
     position: absolute;
     left: 50%;
     transform: translate(-50%, 0);
     background: white;
     border: 1px solid #8080801f;
+    &.level-0 {
+      border-color: black;
+      padding: .5rem 1rem;
+    }
+    &.level-1 {
+      padding: .4rem .8rem;
+    }
+    &.level-2 {
+      padding: 0.3rem .6rem;
+    }
+    &.level-3 {
+      padding: 0.2rem .4rem;
+    }
 
   }
-  .timeline__group__items{
+  .line__group__items{
     width: 100%;
     display: flex;
     position: relative;
     flex-flow: column;
     margin-top: 3.5rem
   }
-  .timeline__group__item__wrapper {
+  .line__group__item__wrapper {
     display: flex;
 
     &.odd {
       flex-direction: row-reverse; // for even blocks -> lay out content from right to left
     }
   }
-  .timeline__group__item {
+  .line__group__item {
     padding: 1rem;
     width: 35%;
     flex-grow: 0; // prevent element from growing inside its parent
