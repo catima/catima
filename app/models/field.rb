@@ -164,6 +164,12 @@ class Field < ApplicationRecord
     display_component.blank?
   end
 
+  # Whether or not this field is groupable.
+  #
+  # Default depends on the human_readable method result, cannot be multiple, and subclasses can
+  # override.
+  #
+  # Mainly used for the sort field of the "line" style in an ItemType container.
   def groupable?
     return false if multiple?
 
@@ -173,8 +179,7 @@ class Field < ApplicationRecord
   # Whether or not this field is filterable. Can be used in addition to the human_readable?
   # method.
   #
-  # Default depends on the presence of the human_readable method result, and subclasses can
-  # override.
+  # Default depends on the human_readable method result, and subclasses can override.
   #
   # Mainly used in advanced search configuration and ui.
   def filterable?
