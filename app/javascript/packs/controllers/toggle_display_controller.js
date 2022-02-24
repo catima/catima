@@ -39,15 +39,20 @@ export default class extends Controller {
     }
 
     if (this.show) {
+      if (this.hasRevealableTarget) {
       this.showElement(this.revealableTarget)
+      }
     } else {
+      if (this.hasRevealableTarget) {
       this.hideElement(this.revealableTarget)
+      }
     }
   }
 
   showElement(el) {
     this.show = !this.show
-    el.classList.add('is-visible') // Make the element visible
+    el.classList.add('is-visible')
+    el.classList.remove('d-none')
   }
 
   hideElement(el) {

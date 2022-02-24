@@ -9,7 +9,7 @@
         <%= link_to(fa_icon(:trash), catalog_admin_api_key_path(id: key.id), method: :delete, class: 'px-1 text-danger delete-api-key') %>
       </div>
     </div>
-    <div data-toggle-display-target="revealable">
+    <div data-toggle-display-target="revealable" class="d-none">
       <%= key.api_key %>
     </div>
     <%= fa_icon(:eye, "data-action": "click->toggle-display#reveal") %>
