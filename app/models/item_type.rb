@@ -101,11 +101,6 @@ class ItemType < ApplicationRecord
     candidate_fields.reject(&:restricted?).find { |f| f.is_a?(Field::Text) }
   end
 
-  def primary_human_readable_field
-    candidate_fields = [primary_field, list_view_fields, fields].flatten.compact
-    candidate_fields.reject(&:restricted?).find(&:human_readable?)
-  end
-
   def public_items
     items.merge(catalog.public_items)
   end

@@ -310,7 +310,7 @@ class Field < ApplicationRecord
   end
 
   def order_items_by_primary_field
-    "items.data->>'#{item_type.primary_human_readable_field.uuid}'"
+    "items.data->>'#{item_type.field_for_select.uuid}'"
   end
 
   # Useful for the advanced search
