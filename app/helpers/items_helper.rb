@@ -95,7 +95,7 @@ module ItemsHelper
     item.attributes.merge(
       title: title,
       summary: item_summary(item),
-      primary_field_value: field_value(item, item.item_type.primary_human_readable_field),
+      primary_field_value: field_value(item, item.item_type.field_for_select),
       sort_field_value:  sort_field_value(sort_field, item),
       group_title: sort_field.is_a?(Field::DateTime) ? Field::DateTimePresenter.new(nil, item, sort_field).value(format: sort_field.format) : field_value(item, sort_field),
       index: index
