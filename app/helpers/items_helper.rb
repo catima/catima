@@ -115,7 +115,6 @@ module ItemsHelper
 
   def group_items_for_line(items, sort_field:)
     return group_item_by_date_time_field(items, sort_field) if sort_field.is_a?(Field::DateTime)
-    return { items: [items] } if sort_field.is_a?(Field::Int) || sort_field.is_a?(Field::Decimal)
 
     { items: group_item_alphabetically(items) }
   end

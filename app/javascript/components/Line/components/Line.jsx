@@ -6,19 +6,19 @@ import "../css/line.scss";
 import ReactSelect from 'react-select';
 
 const sortAlphabeticaly = (direction) => {
-  return (a,b) => {
-      if (a > b) {
-        return direction == 'ASC' ? 1 : -1
-      }
-      if (a < b) {
-        return direction == 'ASC' ? -1 : 1
-      }
-      return 0
+  return (a, b) => {
+    if (a > b) {
+      return direction == 'ASC' ? 1 : -1
     }
+    if (a < b) {
+      return direction == 'ASC' ? -1 : 1
+    }
+    return 0
+  }
 }
 
 const computeGroupTitle = (level, title, type) => {
-  return (level === 1 && type == 'date') ? Translations.messages[`catalog_admin.fields.date_time_option_inputs.months.${['january','february', 'march', 'april', 'may', 'june', 'july', 'august', 'september', 'october', 'november', 'december'][parseInt(title-1)]}`] : title
+  return (level === 1 && type == 'date') ? Translations.messages[`catalog_admin.fields.date_time_option_inputs.months.${['january', 'february', 'march', 'april', 'may', 'june', 'july', 'august', 'september', 'october', 'november', 'december'][parseInt(title - 1)]}`] : title
 }
 
 const Items = (props) => {
@@ -103,7 +103,7 @@ const ItemGroup = (props) => {
     } else {
       return (
         <div className="line__group" key={`${key}`}>
-          {type != 'num' && !withoutGroup && (
+          {!withoutGroup && (
             <div className={`line__group__title level-${level}`}>
               <div dangerouslySetInnerHTML={{__html: computeGroupTitle(level, title, type)}}/>
               <span className="px-2" style={{cursor: "pointer"}} onClick={() => toggleGroupIsOpen()}
@@ -210,7 +210,7 @@ const Line = (props) => {
         />
       </div>
       <div className='d-flex justify-content-center'>
-        {type != 'num' && (
+        {
           allOpen && (
             <a className="m-2" href="#" onClick={() => toggleAllGroupAreOpen(false)}>
               {Translations.messages['containers.item_list.close_all']}
@@ -220,15 +220,18 @@ const Line = (props) => {
               {Translations.messages['containers.item_list.open_all']}
             </a>
           )
-        )}
+        }
       </div>
       <section className="line">
         <div className="container max-width-lg line__container">
           {Object.keys(groupedItems).sort(sortAlphabeticaly(sort)).map((k, index) => <ItemGroup key={k} k={k} title={k}
-                                                                          icons={icons} items={groupedItems[k]} allOpen={allOpen}
-                                                                          level={0}
-                                                                          sort={sort}
-                                                                          type={type} withoutGroup={false}/>)}
+                                                                                                icons={icons}
+                                                                                                items={groupedItems[k]}
+                                                                                                allOpen={allOpen}
+                                                                                                level={0}
+                                                                                                sort={sort}
+                                                                                                type={type}
+                                                                                                withoutGroup={false}/>)}
         </div>
       </section>
       {currentPage !== pageCount && (
