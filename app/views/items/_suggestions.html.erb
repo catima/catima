@@ -1,4 +1,4 @@
-<div data-toggle-display-target="revealable">
+<div data-toggle-display-target="revealable" class="d-none">
   <%= bootstrap_form_for(@item.suggestions.new, url: item_suggestions_path(item_id: @item.id)) do |f| %>
     <%= f.text_area :content, rows: 7, hide_label: true, placeholder: t("items.suggestions.describe_suggestion") %>
     <div class="pt-3 pb-2">

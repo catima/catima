@@ -17,8 +17,8 @@
           <td><%= api_log.endpoint %></td>
           <td><%= l(api_log.created_at) %></td>
           <td>
-            <%= fa_icon(:eye, "data-action": "click->toggle-display#reveal") %>
-            <div data-toggle-display-target="revealable">
+            <%= fa_icon(:eye, "style": "cursor:pointer;", "data-action": "click->toggle-display#reveal") %>
+            <div data-toggle-display-target="revealable" class="d-none">
               <pre>
                 <%= JSON.pretty_generate(api_log.payload) %>
               </pre>

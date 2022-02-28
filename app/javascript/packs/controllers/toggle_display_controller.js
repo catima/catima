@@ -40,11 +40,11 @@ export default class extends Controller {
 
     if (this.show) {
       if (this.hasRevealableTarget) {
-      this.showElement(this.revealableTarget)
+        this.showElement(this.revealableTarget)
       }
     } else {
       if (this.hasRevealableTarget) {
-      this.hideElement(this.revealableTarget)
+        this.hideElement(this.revealableTarget)
       }
     }
   }

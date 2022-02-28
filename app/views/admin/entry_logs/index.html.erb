@@ -26,9 +26,9 @@
           <td><%= l(entry_log.created_at) %></td>
           <td>
             <% if entry_log.action != 'DELETE' %>
-              <%= fa_icon(:eye, "data-action": "click->toggle-display#reveal") %>
+              <%= fa_icon(:eye, "style": "cursor:pointer;", "data-action": "click->toggle-display#reveal") %>
             <% end %>
-            <div data-toggle-display-target="revealable">
+            <div data-toggle-display-target="revealable" class="d-none pe-auto">
               <pre>
                 <% changes = entry_log.record_changes  %>
                 <% changes.delete("search_data_de")  %>
