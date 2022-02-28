@@ -18,7 +18,7 @@
           "data-action": "click->toggle-display#reveal"
         )
     %>
-    <div data-toggle-display-target="revealable">
+    <div data-toggle-display-target="revealable" class="d-none">
       <%= f.check_box(
             :allow_anonymous_suggestions,
             label: Item.human_attribute_name(:allow_anonymous_suggestions))
