@@ -95,16 +95,26 @@ module ItemsHelper
     item.attributes.merge(
       title: title,
       summary: item_summary(item),
-      primary_field_value: field_value(item, item.primary_field),
-      sort_field_value: sort_field.is_a?(Field::DateTime) ? sort_field.raw_value(item) || {} : field_value(item, sort_field),
+      primary_field_value: field_value(item, item.item_type.field_for_select),
+      sort_field_value:  sort_field_value(sort_field, item),
       group_title: sort_field.is_a?(Field::DateTime) ? Field::DateTimePresenter.new(nil, item, sort_field).value(format: sort_field.format) : field_value(item, sort_field),
       index: index
     )
   end
 
+  def sort_field_value(sort_field, item)
+    case sort_field
+    when Field::DateTime
+      sort_field.raw_value(item) || {}
+    when Field::ChoiceSet
+      sort_field.selected_choices(item).map{|c| c.short_name }.join(" ")
+    else
+      field_value(item, sort_field)
+    end
+  end
+
   def group_items_for_line(items, sort_field:)
     return group_item_by_date_time_field(items, sort_field) if sort_field.is_a?(Field::DateTime)
-    return { items: [items] } if sort_field.is_a?(Field::Int) || sort_field.is_a?(Field::Decimal)
 
     { items: group_item_alphabetically(items) }
   end

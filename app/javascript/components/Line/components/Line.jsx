@@ -5,8 +5,20 @@ import axios from 'axios';
 import "../css/line.scss";
 import ReactSelect from 'react-select';
 
+const sortAlphabeticaly = (direction) => {
+  return (a, b) => {
+    if (a > b) {
+      return direction == 'ASC' ? 1 : -1
+    }
+    if (a < b) {
+      return direction == 'ASC' ? -1 : 1
+    }
+    return 0
+  }
+}
+
 const computeGroupTitle = (level, title, type) => {
-  return (level === 1 && type == 'date') ? Translations.messages[`catalog_admin.fields.date_time_option_inputs.months.${['january','february', 'march', 'april', 'may', 'june', 'july', 'august', 'september', 'october', 'november', 'december'][parseInt(title-1)]}`] : title
+  return (level === 1 && type == 'date') ? Translations.messages[`catalog_admin.fields.date_time_option_inputs.months.${['january', 'february', 'march', 'april', 'may', 'june', 'july', 'august', 'september', 'october', 'november', 'december'][parseInt(title - 1)]}`] : title
 }
 
 const Items = (props) => {
@@ -38,7 +50,7 @@ const Items = (props) => {
 }
 
 const ItemGroup = (props) => {
-  const {allOpen, items, icons, k, title, level, type, withoutGroup} = props
+  const {allOpen, items, icons, k, title, level, type, withoutGroup, sort} = props
   const [groupIsOpen, setGroupIsOpen] = useState(true)
 
   useEffect(() => {
@@ -66,22 +78,22 @@ const ItemGroup = (props) => {
           {(groupIsOpen) && (
             <div className="line__group__items">
               {(it.hasOwnProperty(' ') && (<ItemGroup icons={icons} key={`no`} k={`no`} title={'no'} items={it[' ']}
-                                                      allOpen={allOpen} level={level + 1}
+                                                      allOpen={allOpen} level={level + 1} sort={sort}
                                                       type={type} withoutGroup={true}/>))}
               {(it.hasOwnProperty(' ') && (
                   (() => {
                     delete it[' ']
-                    Object.entries(it).map(([k, item], idx) => {
-                      return <ItemGroup icons={icons} key={`${key}-${idx}`} k={`${key}-${idx}`} title={k} items={item}
-                                        allOpen={allOpen} level={level + 1} type={type}
+                    Object.keys(it).sort(sortAlphabeticaly(sort)).map((k, idx) => {
+                      return <ItemGroup icons={icons} key={`${key}-${idx}`} k={`${key}-${idx}`} title={k} items={it[k]}
+                                        allOpen={allOpen} level={level + 1} type={type} sort={sort}
                                         withoutGroup={false}/>
                     })
                   })()
                 )
                 || (
-                  Object.entries(it).map(([k, item], idx) => {
-                    return <ItemGroup icons={icons} key={`${key}-${idx}`} k={`${key}-${idx}`} title={k} items={item}
-                                      allOpen={allOpen} level={level + 1} type={type}/>
+                  Object.keys(it).sort(sortAlphabeticaly(sort)).map((k, idx) => {
+                    return <ItemGroup icons={icons} key={`${key}-${idx}`} k={`${key}-${idx}`} title={k} items={it[k]}
+                                      allOpen={allOpen} level={level + 1} type={type} sort={sort}/>
                   })
                 ))}
             < /div>
@@ -91,7 +103,7 @@ const ItemGroup = (props) => {
     } else {
       return (
         <div className="line__group" key={`${key}`}>
-          {type != 'num' && !withoutGroup && (
+          {!withoutGroup && (
             <div className={`line__group__title level-${level}`}>
               <div dangerouslySetInnerHTML={{__html: computeGroupTitle(level, title, type)}}/>
               <span className="px-2" style={{cursor: "pointer"}} onClick={() => toggleGroupIsOpen()}
@@ -198,7 +210,7 @@ const Line = (props) => {
         />
       </div>
       <div className='d-flex justify-content-center'>
-        {type != 'num' && (
+        {
           allOpen && (
             <a className="m-2" href="#" onClick={() => toggleAllGroupAreOpen(false)}>
               {Translations.messages['containers.item_list.close_all']}
@@ -208,14 +220,18 @@ const Line = (props) => {
               {Translations.messages['containers.item_list.open_all']}
             </a>
           )
-        )}
+        }
       </div>
       <section className="line">
         <div className="container max-width-lg line__container">
-          {Object.entries(groupedItems).map(([k, v], index) => <ItemGroup key={k} k={k} title={k}
-                                                                          icons={icons} items={v} allOpen={allOpen}
-                                                                          level={0}
-                                                                          type={type} withoutGroup={false}/>)}
+          {Object.keys(groupedItems).sort(sortAlphabeticaly(sort)).map((k, index) => <ItemGroup key={k} k={k} title={k}
+                                                                                                icons={icons}
+                                                                                                items={groupedItems[k]}
+                                                                                                allOpen={allOpen}
+                                                                                                level={0}
+                                                                                                sort={sort}
+                                                                                                type={type}
+                                                                                                withoutGroup={false}/>)}
         </div>
       </section>
       {currentPage !== pageCount && (
