@@ -87,9 +87,9 @@ module ItemsHelper
 
   def formatted_item_for_line(item, index:, list:, sort_field:)
     title = if item_has_thumbnail?(item)
-              tag.div(item_list_link(list, item, 0) { item_thumbnail(item, :class => "media-object") }, class: "pull-left mr-3")
+              tag.div(item_list_link(list, item, nil) { item_thumbnail(item, :class => "media-object") }, class: "pull-left mr-3")
             else
-              tag.h4(item_list_link(list, item, 0, item_display_name(item)), class: "mt-0 mb-1")
+              tag.h4(item_list_link(list, item, nil, item_display_name(item)), class: "mt-0 mb-1")
             end
 
     item.attributes.merge(
@@ -115,8 +115,15 @@ module ItemsHelper
 
   def group_items_for_line(items, sort_field:)
     return group_item_by_date_time_field(items, sort_field) if sort_field.is_a?(Field::DateTime)
+    return { items: group_item_numerically(items) } if sort_field.is_a?(Field::Int)
 
     { items: group_item_alphabetically(items) }
+  end
+
+  def group_item_numerically(items)
+    items.group_by { |item| item[:sort_field_value] }.transform_values do |v|
+      v.group_by { |i| i[:sort_field_value] }
+    end
   end
 
   def group_item_alphabetically(items)

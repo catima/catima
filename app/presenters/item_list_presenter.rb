@@ -12,7 +12,7 @@ class ItemListPresenter
   def initialize(view, item, offset, list)
     @view = view
     @item = item
-    @offset = offset.to_i
+    @offset = offset ? offset.to_i : offset
     @list = list
   end
 
@@ -21,7 +21,7 @@ class ItemListPresenter
   def item_link(*args, &block)
     options = args.extract_options!
     context = context_params
-    context[:offset] = list.offset + offset if context.present?
+    context[:offset] = list.offset + offset if offset && context.present?
 
     link_to(
       block ? capture(&block) : args.first,

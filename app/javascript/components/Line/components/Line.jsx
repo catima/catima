@@ -5,8 +5,16 @@ import axios from 'axios';
 import "../css/line.scss";
 import ReactSelect from 'react-select';
 
-const sortAlphabeticaly = (direction) => {
+const sortAlphabeticaly = (direction, isNum) => {
   return (a, b) => {
+    if(a == ' ' || a == '') {
+      return 1
+    }
+    if (b == ' ' || b == '') {
+      return -1
+    }
+    a = isNum ? parseInt(a) : a
+    b = isNum ? parseInt(b) : b
     if (a > b) {
       return direction == 'ASC' ? 1 : -1
     }
@@ -65,10 +73,11 @@ const ItemGroup = (props) => {
 
   const recursiveRenderItems = (items, key, title, level) => {
     let it = {...items}
+    console.log(!(type == 'num' && level == 1))
     if (typeof items === 'object' && !Array.isArray(items)) {
       return (
         <div className="line__group" key={`${key}`}>
-          {type != 'num' && !withoutGroup && (
+          {!(type == 'num' && level == 1)  && !withoutGroup && (
             <div className={`line__group__title level-${level}`}>
               <div dangerouslySetInnerHTML={{__html: computeGroupTitle(level, title, type)}}/>
               <span className="px-2" style={{cursor: "pointer"}} onClick={() => toggleGroupIsOpen()}
@@ -83,7 +92,7 @@ const ItemGroup = (props) => {
               {(it.hasOwnProperty(' ') && (
                   (() => {
                     delete it[' ']
-                    Object.keys(it).sort(sortAlphabeticaly(sort)).map((k, idx) => {
+                    Object.keys(it).sort(sortAlphabeticaly(sort, type == 'num')).map((k, idx) => {
                       return <ItemGroup icons={icons} key={`${key}-${idx}`} k={`${key}-${idx}`} title={k} items={it[k]}
                                         allOpen={allOpen} level={level + 1} type={type} sort={sort}
                                         withoutGroup={false}/>
@@ -91,7 +100,7 @@ const ItemGroup = (props) => {
                   })()
                 )
                 || (
-                  Object.keys(it).sort(sortAlphabeticaly(sort)).map((k, idx) => {
+                  Object.keys(it).sort(sortAlphabeticaly(sort, type == 'num')).map((k, idx) => {
                     return <ItemGroup icons={icons} key={`${key}-${idx}`} k={`${key}-${idx}`} title={k} items={it[k]}
                                       allOpen={allOpen} level={level + 1} type={type} sort={sort}/>
                   })
@@ -103,7 +112,7 @@ const ItemGroup = (props) => {
     } else {
       return (
         <div className="line__group" key={`${key}`}>
-          {!withoutGroup && (
+          {!(type == 'num' && level == 1)  && !withoutGroup && (
             <div className={`line__group__title level-${level}`}>
               <div dangerouslySetInnerHTML={{__html: computeGroupTitle(level, title, type)}}/>
               <span className="px-2" style={{cursor: "pointer"}} onClick={() => toggleGroupIsOpen()}
@@ -224,7 +233,7 @@ const Line = (props) => {
       </div>
       <section className="line">
         <div className="container max-width-lg line__container">
-          {Object.keys(groupedItems).sort(sortAlphabeticaly(sort)).map((k, index) => <ItemGroup key={k} k={k} title={k}
+          {Object.keys(groupedItems).sort(sortAlphabeticaly(sort, type == 'num')).map((k, index) => <ItemGroup key={k} k={k} title={k}
                                                                                                 icons={icons}
                                                                                                 items={groupedItems[k]}
                                                                                                 allOpen={allOpen}
