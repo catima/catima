@@ -84,6 +84,10 @@ class Field::Decimal < ::Field
     ]
   end
 
+  def groupable?
+    false
+  end
+
   def sql_type
     "DOUBLE"
   end
