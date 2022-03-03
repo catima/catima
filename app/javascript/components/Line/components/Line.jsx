@@ -26,7 +26,11 @@ const sortAlphabeticaly = (direction, isNum) => {
 }
 
 const computeGroupTitle = (level, title, type) => {
-  return (level === 1 && type == 'date') ? Translations.messages[`catalog_admin.fields.date_time_option_inputs.months.${['january', 'february', 'march', 'april', 'may', 'june', 'july', 'august', 'september', 'october', 'november', 'december'][parseInt(title - 1)]}`] : title
+  if (level === 1 && type == 'date') {
+    return Translations.messages[`catalog_admin.fields.date_time_option_inputs.months.${['january', 'february', 'march', 'april', 'may', 'june', 'july', 'august', 'september', 'october', 'november', 'december'][parseInt(title - 1)]}`]
+  }
+
+  return title
 }
 
 const Items = forwardRef((props,ref) => {
@@ -206,7 +210,7 @@ const Line = (props) => {
 
   return (
     <div>
-      <div className='w-25' style={{marginLeft: '50%', transform: 'translate(-50%, 0)'}}>
+      <div className='w-25' style={{marginLeft: '50%', transform: 'translate(-50%, 0)', position: "relative", zIndex: "2"}}>
         <ReactSelect
           id='asc-desc'
           name='asc-desc'

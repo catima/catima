@@ -380,6 +380,7 @@ it:
       select_sort: Seleziona l'ordinamento
       asc: Ascendente
       desc: Discendente
+      missing_sort_field: "Impossibile visualizzare il contenitore %{container_slug} perché manca il campo di ordinamento"
 
   catalog_admin:
 

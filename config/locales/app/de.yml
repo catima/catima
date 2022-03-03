@@ -388,6 +388,7 @@ de:
       select_sort: Sortierung auswählen
       asc: Aufsteigend
       desc: Absteigend
+      missing_sort_field: "Der Container %{container_slug} kann nicht angezeigt werden, weil das Sortierfeld fehlt"
 
   catalog_admin:
 

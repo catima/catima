@@ -1,6 +1,8 @@
 .line {
   overflow: hidden;
-  padding: 3rem 0;
+  padding: 1rem 0;
+  position: relative;
+  z-index: 1;
 }
 
 .line__container {
