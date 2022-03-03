@@ -608,18 +608,18 @@ de:
         url_help: "Full URL of the external service"
       date_time_option_inputs:
         months:
-          january: January
-          fabruary: February
-          march: March
+          january: Januar
+          february: Februar
+          march: März
           april: April
-          may: May
-          june: June
-          july: July
+          may: Mai
+          june: Juni
+          july: Juli
           august: August
           september: September
-          october: October
+          october: Oktober
           november: November
-          december: December
+          december: Dezember
         define_thumbnail: Define Thumbnail
       edit:
         edit_field: "Edit %{field_set} “%{field}” field"

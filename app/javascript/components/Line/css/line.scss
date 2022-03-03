@@ -28,6 +28,7 @@
   z-index: 1;
   min-height: 4rem;
   margin-bottom: 1em;
+
   .line__group__title {
     display: flex;
     justify-content: center;
@@ -39,6 +40,7 @@
     transform: translate(-50%, 0);
     background: white;
     border: 1px solid #8080801f;
+
     &.level-0 {
       border-color: black;
       padding: .5rem 1rem;
@@ -52,15 +54,24 @@
     &.level-3 {
       padding: 0.2rem .4rem;
     }
-
   }
-  .line__group__items{
+
+  .line__group__items {
     width: 100%;
     display: flex;
     position: relative;
     flex-flow: column;
-    margin-top: 3.5rem
+    margin-top: 3rem;
   }
+
+  .line__group__items__wrapper {
+    width: 100%;
+    display: flex;
+    position: relative;
+    flex-flow: column;
+    margin-top: 2rem;
+  }
+
   .line__group__item__wrapper {
     display: flex;
 
@@ -68,6 +79,7 @@
       flex-direction: row-reverse; // for even blocks -> lay out content from right to left
     }
   }
+
   .line__group__item {
     padding: 1rem;
     width: 35%;

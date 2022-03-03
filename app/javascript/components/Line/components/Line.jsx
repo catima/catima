@@ -45,7 +45,7 @@ const Items = (props) => {
 
   const renderItems = (items) => {
     return (
-      <div className="line__group__items">
+      <div className="line__group__items__wrapper">
         {items.map((it, idx) => {
             return renderItem(it, idx)
           }
@@ -73,18 +73,18 @@ const ItemGroup = (props) => {
 
   const recursiveRenderItems = (items, key, title, level) => {
     let it = {...items}
-    console.log(!(type == 'num' && level == 1))
+
     if (typeof items === 'object' && !Array.isArray(items)) {
       return (
         <div className="line__group" key={`${key}`}>
           {!(type == 'num' && level == 1)  && !withoutGroup && (
-            <div className={`line__group__title level-${level}`}>
+            <div className={`line__group__title level-${level}`} style={{cursor: "pointer"}} onClick={() => toggleGroupIsOpen()}>
               <div dangerouslySetInnerHTML={{__html: computeGroupTitle(level, title, type)}}/>
-              <span className="px-2" style={{cursor: "pointer"}} onClick={() => toggleGroupIsOpen()}
+              <span className="px-2"
                     dangerouslySetInnerHTML={{__html: groupIsOpen ? icons.up : icons.down}}/>
             </div>
           )}
-          {(groupIsOpen) && (
+          {(groupIsOpen || !!(type == 'num' && level == 1)) && (
             <div className="line__group__items">
               {(it.hasOwnProperty(' ') && (<ItemGroup icons={icons} key={`no`} k={`no`} title={'no'} items={it[' ']}
                                                       allOpen={allOpen} level={level + 1} sort={sort}
@@ -113,12 +113,12 @@ const ItemGroup = (props) => {
       return (
         <div className="line__group" key={`${key}`}>
           {!(type == 'num' && level == 1)  && !withoutGroup && (
-            <div className={`line__group__title level-${level}`}>
+            <div className={`line__group__title level-${level}`} style={{cursor: "pointer"}} onClick={() => toggleGroupIsOpen()}>
               <div dangerouslySetInnerHTML={{__html: computeGroupTitle(level, title, type)}}/>
-              <span className="px-2" style={{cursor: "pointer"}} onClick={() => toggleGroupIsOpen()}
+              <span className="px-2"
                     dangerouslySetInnerHTML={{__html: groupIsOpen ? icons.up : icons.down}}/>
             </div>)}
-          {(groupIsOpen) && (
+          {(groupIsOpen || !!(type == 'num' && level == 1)) && (
             <Items items={items}/>
           )}
         </div>
@@ -222,25 +222,33 @@ const Line = (props) => {
         {
           allOpen && (
             <a className="m-2" href="#" onClick={() => toggleAllGroupAreOpen(false)}>
-              {Translations.messages['containers.item_list.close_all']}
+              { Translations.messages['containers.item_list.close_all'] }
             </a>
           ) || (
             <a className="m-2" href="#" onClick={() => toggleAllGroupAreOpen(true)}>
-              {Translations.messages['containers.item_list.open_all']}
+              { Translations.messages['containers.item_list.open_all'] }
             </a>
           )
         }
       </div>
       <section className="line">
         <div className="container max-width-lg line__container">
-          {Object.keys(groupedItems).sort(sortAlphabeticaly(sort, type == 'num')).map((k, index) => <ItemGroup key={k} k={k} title={k}
-                                                                                                icons={icons}
-                                                                                                items={groupedItems[k]}
-                                                                                                allOpen={allOpen}
-                                                                                                level={0}
-                                                                                                sort={sort}
-                                                                                                type={type}
-                                                                                                withoutGroup={false}/>)}
+          {
+            Object.keys(groupedItems)
+                .sort(sortAlphabeticaly(sort, type == 'num'))
+                .map(
+                    (k, index) =>
+                        <ItemGroup key={k} k={k} title={k}
+                          icons={icons}
+                          items={groupedItems[k]}
+                          allOpen={allOpen}
+                          level={0}
+                          sort={sort}
+                          type={type}
+                          withoutGroup={false}
+                        />
+                )
+          }
         </div>
       </section>
       {currentPage !== pageCount && (
@@ -249,7 +257,7 @@ const Line = (props) => {
             loader
           ) || (
             <button className="btn btn-lg btn-primary" onClick={() => fetchItems(currentPage + 1)}>
-              {Translations.messages['containers.item_list.more']}
+              { Translations.messages['containers.item_list.more'] }
             </button>
           )}
         </div>

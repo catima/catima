@@ -41,8 +41,9 @@ This project requires:
 Run the `bin/setup` script. This script will:
 
 * Check you have the required Ruby version
-* Install gems using Bundler
-* Create local copies of `.env`, `database.yml`  `domains.yml` and `geo_layers.yml`
+* Install ruby gems using Bundler
+* Install js dependencies using Yarn
+* Create local copies of `.env`, `database.yml`, `domains.yml` and `geo_layers.yml`
 * Create, migrate, and seed the database
 
 ### Run it!

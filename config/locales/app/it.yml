@@ -506,18 +506,18 @@ it:
         import_error: Error while importing Word file.
       date_time_option_inputs:
         months:
-          january: January
-          fabruary: February
-          march: March
-          april: April
-          may: May
-          june: June
-          july: July
-          august: August
-          september: September
-          october: October
-          november: November
-          december: December
+          january: Gennaio
+          february: Febbraio
+          march: Marzo
+          april: Aprile
+          may: Maggio
+          june: Giugno
+          july: Luglio
+          august: Agosto
+          september: Settembre
+          october: Ottobre
+          november: Novembre
+          december: Dicembre
         define_thumbnail: Define Thumbnail
       index:
         add_field: "Add…"
