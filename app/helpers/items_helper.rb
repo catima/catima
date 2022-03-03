@@ -85,7 +85,7 @@ module ItemsHelper
     strip_tags(field_value(item, field, :style => :compact)) || ''.html_safe
   end
 
-  def formatted_item_for_line(item, index:, list:, sort_field:)
+  def formatted_item_for_line(item, list:, sort_field:)
     title = if item_has_thumbnail?(item)
               tag.div(item_list_link(list, item, nil) { item_thumbnail(item, :class => "media-object") }, class: "pull-left mr-3")
             else
@@ -98,7 +98,6 @@ module ItemsHelper
       primary_field_value: field_value(item, item.item_type.field_for_select),
       sort_field_value:  sort_field_value(sort_field, item),
       group_title: sort_field.is_a?(Field::DateTime) ? Field::DateTimePresenter.new(nil, item, sort_field).value(format: sort_field.format) : field_value(item, sort_field),
-      index: index
     )
   end
 

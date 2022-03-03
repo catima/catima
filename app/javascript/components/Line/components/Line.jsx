@@ -1,4 +1,4 @@
-import React, {useEffect, useRef, useState} from 'react';
+import React, {useEffect, useRef, useState, forwardRef} from 'react';
 import Translations from '../../Translations/components/Translations';
 import PropTypes from "prop-types";
 import axios from 'axios';
@@ -29,25 +29,28 @@ const computeGroupTitle = (level, title, type) => {
   return (level === 1 && type == 'date') ? Translations.messages[`catalog_admin.fields.date_time_option_inputs.months.${['january', 'february', 'march', 'april', 'may', 'june', 'july', 'august', 'september', 'october', 'november', 'december'][parseInt(title - 1)]}`] : title
 }
 
-const Items = (props) => {
+const Items = forwardRef((props,ref) => {
   const {items} = props
 
-  const renderItem = (item, index) => (
-    <div
-      className={((item.index % 2) == 0) ? 'line__group__item__wrapper  odd' : 'line__group__item__wrapper  even'}
-      key={`${item.id}-${index}`}>
-      <div className="line__group__item text-component">
-        <div dangerouslySetInnerHTML={{__html: item.title}}/>
-        <p className="color-contrast-medium" dangerouslySetInnerHTML={{__html: item.summary}}/>
+  const renderItem = (item, index) => {
+    return (
+      <div
+        className={((ref.current % 2) == 0) ? 'line__group__item__wrapper  odd' : 'line__group__item__wrapper  even'}
+        key={`${item.id}-${index}`}>
+        <div className="line__group__item text-component">
+          <div dangerouslySetInnerHTML={{__html: item.title}}/>
+          <p className="color-contrast-medium" dangerouslySetInnerHTML={{__html: item.summary}}/>
+        </div>
       </div>
-    </div>
-  )
+    )
+  }
 
   const renderItems = (items) => {
     return (
       <div className="line__group__items__wrapper">
         {items.map((it, idx) => {
-            return renderItem(it, idx)
+          ref.current += 1
+          return renderItem(it, idx)
           }
         )}
       </div>
@@ -55,11 +58,11 @@ const Items = (props) => {
   }
 
   return renderItems(items)
-}
+})
 
-const ItemGroup = (props) => {
+const ItemGroup = forwardRef((props,ref) => {
   const {allOpen, items, icons, k, title, level, type, withoutGroup, sort} = props
-  const [groupIsOpen, setGroupIsOpen] = useState(true)
+  const [groupIsOpen, setGroupIsOpen] = useState(false)
 
   useEffect(() => {
     setGroupIsOpen(allOpen)
@@ -88,21 +91,21 @@ const ItemGroup = (props) => {
             <div className="line__group__items">
               {(it.hasOwnProperty(' ') && (<ItemGroup icons={icons} key={`no`} k={`no`} title={'no'} items={it[' ']}
                                                       allOpen={allOpen} level={level + 1} sort={sort}
-                                                      type={type} withoutGroup={true}/>))}
+                                                      type={type} withoutGroup={true} ref={ref}/>))}
               {(it.hasOwnProperty(' ') && (
                   (() => {
                     delete it[' ']
                     Object.keys(it).sort(sortAlphabeticaly(sort, type == 'num')).map((k, idx) => {
                       return <ItemGroup icons={icons} key={`${key}-${idx}`} k={`${key}-${idx}`} title={k} items={it[k]}
                                         allOpen={allOpen} level={level + 1} type={type} sort={sort}
-                                        withoutGroup={false}/>
+                                        withoutGroup={false} ref={ref}/>
                     })
                   })()
                 )
                 || (
                   Object.keys(it).sort(sortAlphabeticaly(sort, type == 'num')).map((k, idx) => {
                     return <ItemGroup icons={icons} key={`${key}-${idx}`} k={`${key}-${idx}`} title={k} items={it[k]}
-                                      allOpen={allOpen} level={level + 1} type={type} sort={sort}/>
+                                      allOpen={allOpen} level={level + 1} type={type} sort={sort} ref={ref}/>
                   })
                 ))}
             < /div>
@@ -119,7 +122,7 @@ const ItemGroup = (props) => {
                     dangerouslySetInnerHTML={{__html: groupIsOpen ? icons.up : icons.down}}/>
             </div>)}
           {(groupIsOpen || !!(type == 'num' && level == 1)) && (
-            <Items items={items}/>
+            <Items items={items} ref={ref}/>
           )}
         </div>
       )
@@ -129,7 +132,7 @@ const ItemGroup = (props) => {
   return (
     recursiveRenderItems(items, k, title, level)
   )
-}
+})
 
 const Line = (props) => {
   const {
@@ -146,6 +149,7 @@ const Line = (props) => {
   const [groupedItems, setGroupedItems] = useState({})
   const [allOpen, setAllOpen] = useState(true)
   const [currentPage, setCurrentPage] = useState(parseInt(currentPageProps))
+  const currentCount = useRef(0)
 
   useEffect(() => {
     setCurrentPage(parseInt(currentPageProps))
@@ -246,6 +250,7 @@ const Line = (props) => {
                           sort={sort}
                           type={type}
                           withoutGroup={false}
+                          ref={currentCount}
                         />
                 )
           }
