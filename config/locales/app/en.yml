@@ -470,7 +470,7 @@ en:
       select_sort: Select sort
       asc: Ascending
       desc: Descending
-      missing_sort_field: Impossible to display the %{container_slug} container because the sort field is missing
+      missing_sort_field: "Impossible to display the %{container_slug} container because the sort field is missing"
 
   catalog_admin:
     approvals:
@@ -585,6 +585,10 @@ en:
         create_choice_set: Create choice set
 
     containers:
+      sorts:
+        ca: Created At
+        asc: Primary field ascending
+        desc: Primary field descending
       item_type_warning: "You need to create at least one item type to use this type of container"
       common_form_fields:
         save_container: Save container

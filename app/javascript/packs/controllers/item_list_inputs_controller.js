@@ -1,45 +1,70 @@
 import axios from 'axios'
 import {Controller} from "stimulus"
 
+const CREATED_AT = 'ca';
+const ASCENDING = 'asc';
+
 export default class extends Controller {
-  static targets = ['itemTypeSelect', 'styleSelect', 'filterableFieldSelect', 'filterableFieldSelectWrapper']
+  static targets = ['itemTypeSelect', 'sortSelect', 'styleSelect', 'sortFieldSelect', 'sortFieldSelectWrapper']
 
   connect() {
     const csrfToken = (document.querySelector("meta[name=csrf-token]") || {}).content;
     axios.defaults.headers.common["X-CSRF-Token"] = csrfToken;
     axios.defaults.headers.common["X-Requested-With"] = 'XMLHttpRequest';
     this.urls = JSON.parse(this.data.get('urls'))
+
     if (this.styleSelectTarget.value == 'line') {
-      this.filterableFieldSelectTarget.setAttribute('required', 'true')
+      this.sortFieldSelectTarget.setAttribute('required', 'true')
+      this.getOptionByValue(this.sortSelectTarget, CREATED_AT)
+          .setAttribute('disabled', '')
     }
   }
 
-  updateFilterableFieldSelect(e) {
+  updateSortFieldSelect(e) {
     if (this.itemTypeSelectTarget.value == '') {
-      this.filterableFieldSelectWrapperTarget.selectedIndex = -1
-      this.filterableFieldSelectWrapperTarget.classList.add('d-none')
-      this.filterableFieldSelectTarget.removeAttribute('required')
+      this.sortFieldSelectWrapperTarget.selectedIndex = 0
+      this.sortFieldSelectWrapperTarget.classList.add('d-none')
+      this.sortFieldSelectTarget.removeAttribute('required')
     } else {
       if (this.styleSelectTarget.value == 'line') {
-        this.filterableFieldSelectWrapperTarget.classList.remove('d-none')
-        this.filterableFieldSelectTarget.setAttribute('required', 'true')
+        this.sortFieldSelectWrapperTarget.classList.remove('d-none')
+        this.sortFieldSelectTarget.setAttribute('required', 'true')
       }
-      axios.post(this.urls.filterableFieldSelectOptionsUrl,
+      axios.post(this.urls.sortFieldSelectOptionsUrl,
         {item_type_id: this.itemTypeSelectTarget.value})
         .then((response) => {
-          this.filterableFieldSelectTarget.options.length = 0;
-          this.filterableFieldSelectTarget.innerHTML = "<option value=''></option>" + response.data;
+          this.sortFieldSelectTarget.options.length = 0;
+          this.sortFieldSelectTarget.innerHTML = "<option value=''></option>" + response.data;
         });
     }
   }
 
-  toggleDisplayFilterableFieldSelect(e) {
+  toggleDisplaySortFieldSelect(e) {
     if (this.styleSelectTarget.value == 'line' && this.itemTypeSelectTarget.value != '') {
-      this.filterableFieldSelectWrapperTarget.classList.remove('d-none')
-      this.updateFilterableFieldSelect({})
+      this.sortFieldSelectWrapperTarget.classList.remove('d-none')
+      this.updateSortFieldSelect({})
+
+      this.getOptionByValue(this.sortSelectTarget, CREATED_AT)
+          .setAttribute('disabled', '')
+      this.getOptionByValue(this.sortSelectTarget, CREATED_AT)
+          .removeAttribute('selected')
+      this.getOptionByValue(this.sortSelectTarget, ASCENDING)
+          .setAttribute('selected', '')
     } else {
-      this.filterableFieldSelectWrapperTarget.selectedIndex = -1
-      this.filterableFieldSelectWrapperTarget.classList.add('d-none')
+      this.sortFieldSelectWrapperTarget.selectedIndex = 0
+      this.sortFieldSelectWrapperTarget.classList.add('d-none')
+
+      this.getOptionByValue(this.sortSelectTarget, CREATED_AT)
+          .removeAttribute('disabled')
+      this.getOptionByValue(this.sortSelectTarget, ASCENDING)
+          .removeAttribute('selected')
+      this.getOptionByValue(this.sortSelectTarget, CREATED_AT)
+          .setAttribute('selected', '')
     }
+  }
+
+  getOptionByValue(selectElement, value) {
+    return Array.from(selectElement.options)
+        .find((option => option.value === value))
   }
 }

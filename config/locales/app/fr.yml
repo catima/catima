@@ -466,7 +466,7 @@ fr:
       select_sort: Sélectionner le tri
       asc: Ascendant
       desc: Descendant
-      missing_sort_field: "Impossible d'afficher le container %{container_slug} car le champs de tri est absent"
+      missing_sort_field: "Impossible d'afficher le container %{container_slug} car le champ de tri est absent"
 
   catalog_admin:
     approvals:
@@ -580,6 +580,10 @@ fr:
         create_choice_set: Créer ensemble de choix
 
     containers:
+      sorts:
+        ca: Date de création
+        asc: Champ primaire ascendant
+        desc: Champ primaire descendant
       item_type_warning: "Vous devez créer au moins un type de fiche pour utiliser ce type de conteneur"
       common_form_fields:
         save_container: Enregistrer conteneur
