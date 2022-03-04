@@ -23,7 +23,7 @@ class Container < ApplicationRecord
     "search" => 'Container::Search'
   }.freeze
 
-  # include HasSlug
+  include Container::Sort
   include RankedModel
   ranks :row_order, :class_name => "Container", :with_same => %i(page_id locale)
 
@@ -32,7 +32,6 @@ class Container < ApplicationRecord
   validates_presence_of :page_id
   validates_presence_of :content
   validates_presence_of :locale
-  # validates_slug :scope => :page_id
 
   def self.sorted
     rank(:row_order)
