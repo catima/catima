@@ -5,6 +5,8 @@ import axios from 'axios';
 import "../css/line.scss";
 import ReactSelect from 'react-select';
 
+const ASCENDING = 'asc';
+const DESCENDING = 'desc';
 const sortAlphabeticaly = (direction, isNum) => {
   return (a, b) => {
     if(a == ' ' || a == '') {
@@ -16,10 +18,10 @@ const sortAlphabeticaly = (direction, isNum) => {
     a = isNum ? parseInt(a) : a
     b = isNum ? parseInt(b) : b
     if (a > b) {
-      return direction == 'ASC' ? 1 : -1
+      return direction == ASCENDING ? 1 : -1
     }
     if (a < b) {
-      return direction == 'ASC' ? -1 : 1
+      return direction == ASCENDING ? -1 : 1
     }
     return 0
   }
@@ -196,9 +198,9 @@ const Line = (props) => {
   }
 
   const sortAscDesc = (e) => {
-    if (e.value == 'ASC') {
+    if (e.value == ASCENDING) {
       window.location.assign(links.asc)
-    } else if (e.value == 'DESC') {
+    } else if (e.value == DESCENDING) {
       window.location.assign(links.desc)
     }
   }
@@ -215,14 +217,14 @@ const Line = (props) => {
           id='asc-desc'
           name='asc-desc'
           options={[
-            {value: 'ASC', label: Translations.messages['containers.item_list.asc']},
-            {value: 'DESC', label: Translations.messages['containers.item_list.desc']}
+            {value: ASCENDING, label: Translations.messages['containers.item_list.asc']},
+            {value: DESCENDING, label: Translations.messages['containers.item_list.desc']}
           ]}
           onChange={sortAscDesc}
           placeholder={Translations.messages['containers.item_list.select_sort']}
           value={[
-            {value: 'ASC', label: Translations.messages['containers.item_list.asc']},
-            {value: 'DESC', label: Translations.messages['containers.item_list.desc']}
+            {value: ASCENDING, label: Translations.messages['containers.item_list.asc']},
+            {value: DESCENDING, label: Translations.messages['containers.item_list.desc']}
           ].filter(o => o.value === sort)}
         />
       </div>
