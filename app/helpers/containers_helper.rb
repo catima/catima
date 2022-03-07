@@ -22,4 +22,17 @@ module ContainersHelper
 
     "Container::#{container.type_name}Presenter".constantize.new(self, container, options)
   end
+
+  def container_sort_field_type(container)
+    return nil unless container.sort_field
+
+    case container.sort_field
+    when Field::DateTime
+      'date'
+    when Field::Int || Field::Decimal
+      'num'
+    else
+      ''
+    end
+  end
 end

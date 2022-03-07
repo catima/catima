@@ -581,9 +581,10 @@ fr:
 
     containers:
       sorts:
-        ca: Date de création
-        asc: Champ primaire ascendant
-        desc: Champ primaire descendant
+        f-asc: Champ ascendant
+        f-desc: Champ descendant
+        ca-asc: Date de création ascendant
+        ca-desc: Date de création descendant
       item_type_warning: "Vous devez créer au moins un type de fiche pour utiliser ce type de conteneur"
       common_form_fields:
         save_container: Enregistrer conteneur

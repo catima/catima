@@ -5,30 +5,30 @@ import axios from 'axios';
 import "../css/line.scss";
 import ReactSelect from 'react-select';
 
-const ASCENDING = 'asc';
-const DESCENDING = 'desc';
+const ASCENDING = 'ASC';
+const DESCENDING = 'DESC';
 const sortAlphabeticaly = (direction, isNum) => {
   return (a, b) => {
-    if(a == ' ' || a == '') {
+    if(a === ' ' || a === '') {
       return 1
     }
-    if (b == ' ' || b == '') {
+    if (b === ' ' || b === '') {
       return -1
     }
     a = isNum ? parseInt(a) : a
     b = isNum ? parseInt(b) : b
     if (a > b) {
-      return direction == ASCENDING ? 1 : -1
+      return direction === ASCENDING ? 1 : -1
     }
     if (a < b) {
-      return direction == ASCENDING ? -1 : 1
+      return direction === ASCENDING ? -1 : 1
     }
     return 0
   }
 }
 
 const computeGroupTitle = (level, title, type) => {
-  if (level === 1 && type == 'date') {
+  if (level === 1 && type === 'date') {
     return Translations.messages[`catalog_admin.fields.date_time_option_inputs.months.${['january', 'february', 'march', 'april', 'may', 'june', 'july', 'august', 'september', 'october', 'november', 'december'][parseInt(title - 1)]}`]
   }
 
@@ -41,7 +41,7 @@ const Items = forwardRef((props,ref) => {
   const renderItem = (item, index) => {
     return (
       <div
-        className={((ref.current % 2) == 0) ? 'line__group__item__wrapper  odd' : 'line__group__item__wrapper  even'}
+        className={((ref.current % 2) === 0) ? 'line__group__item__wrapper  odd' : 'line__group__item__wrapper  even'}
         key={`${item.id}-${index}`}>
         <div className="line__group__item text-component">
           <div dangerouslySetInnerHTML={{__html: item.title}}/>
@@ -86,14 +86,14 @@ const ItemGroup = forwardRef((props,ref) => {
     if (typeof items === 'object' && !Array.isArray(items)) {
       return (
         <div className="line__group" key={`${key}`}>
-          {!(type == 'num' && level == 1)  && !withoutGroup && (
+          {!(type === 'num' && level === 1)  && !withoutGroup && (
             <div className={`line__group__title level-${level}`} style={{cursor: "pointer"}} onClick={() => toggleGroupIsOpen()}>
               <div dangerouslySetInnerHTML={{__html: computeGroupTitle(level, title, type)}}/>
               <span className="px-2"
                     dangerouslySetInnerHTML={{__html: groupIsOpen ? icons.up : icons.down}}/>
             </div>
           )}
-          {(groupIsOpen || !!(type == 'num' && level == 1)) && (
+          {(groupIsOpen || !!(type === 'num' && level === 1)) && (
             <div className="line__group__items">
               {(it.hasOwnProperty(' ') && (<ItemGroup icons={icons} key={`no`} k={`no`} title={'no'} items={it[' ']}
                                                       allOpen={allOpen} level={level + 1} sort={sort}
@@ -101,7 +101,7 @@ const ItemGroup = forwardRef((props,ref) => {
               {(it.hasOwnProperty(' ') && (
                   (() => {
                     delete it[' ']
-                    Object.keys(it).sort(sortAlphabeticaly(sort, type == 'num')).map((k, idx) => {
+                    Object.keys(it).sort(sortAlphabeticaly(sort, type === 'num')).map((k, idx) => {
                       return <ItemGroup icons={icons} key={`${key}-${idx}`} k={`${key}-${idx}`} title={k} items={it[k]}
                                         allOpen={allOpen} level={level + 1} type={type} sort={sort}
                                         withoutGroup={false} ref={ref}/>
@@ -109,7 +109,7 @@ const ItemGroup = forwardRef((props,ref) => {
                   })()
                 )
                 || (
-                  Object.keys(it).sort(sortAlphabeticaly(sort, type == 'num')).map((k, idx) => {
+                  Object.keys(it).sort(sortAlphabeticaly(sort, type === 'num')).map((k, idx) => {
                     return <ItemGroup icons={icons} key={`${key}-${idx}`} k={`${key}-${idx}`} title={k} items={it[k]}
                                       allOpen={allOpen} level={level + 1} type={type} sort={sort} ref={ref}/>
                   })
@@ -121,13 +121,13 @@ const ItemGroup = forwardRef((props,ref) => {
     } else {
       return (
         <div className="line__group" key={`${key}`}>
-          {!(type == 'num' && level == 1)  && !withoutGroup && (
+          {!(type === 'num' && level === 1)  && !withoutGroup && (
             <div className={`line__group__title level-${level}`} style={{cursor: "pointer"}} onClick={() => toggleGroupIsOpen()}>
               <div dangerouslySetInnerHTML={{__html: computeGroupTitle(level, title, type)}}/>
               <span className="px-2"
                     dangerouslySetInnerHTML={{__html: groupIsOpen ? icons.up : icons.down}}/>
             </div>)}
-          {(groupIsOpen || !!(type == 'num' && level == 1)) && (
+          {(groupIsOpen || !!(type === 'num' && level === 1)) && (
             <Items items={items} ref={ref}/>
           )}
         </div>

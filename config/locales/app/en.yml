@@ -586,9 +586,10 @@ en:
 
     containers:
       sorts:
-        ca: Created At
-        asc: Primary field ascending
-        desc: Primary field descending
+        f-asc: Field ascending
+        f-desc: Field descending
+        ca-asc: Created at ascending
+        ca-desc: Created at descending
       item_type_warning: "You need to create at least one item type to use this type of container"
       common_form_fields:
         save_container: Save container
