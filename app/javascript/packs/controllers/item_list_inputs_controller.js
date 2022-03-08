@@ -3,7 +3,8 @@ import {Controller} from "stimulus"
 
 const CREATED_AT_ASCENDING = 'ca-asc';
 const CREATED_AT_DESCENDING = 'ca-desc';
-const PRIMARY_ASCENDING = 'p-asc';
+const PRIMARY_ASCENDING = 'f-asc';
+const PRIMARY_DESCENDING = 'f-desc';
 const LINE_STYLE = 'line';
 
 export default class extends Controller {
@@ -44,12 +45,14 @@ export default class extends Controller {
           .removeAttribute('selected')
       this.getOptionByValue(this.sortSelectTarget, CREATED_AT_DESCENDING)
           .removeAttribute('selected')
+
+      this.getOptionByValue(this.sortSelectTarget, PRIMARY_ASCENDING)
+          .setAttribute('selected', '')
+
       this.getOptionByValue(this.sortSelectTarget, CREATED_AT_ASCENDING)
           .setAttribute('disabled', '')
       this.getOptionByValue(this.sortSelectTarget, CREATED_AT_DESCENDING)
           .setAttribute('disabled', '')
-      this.getOptionByValue(this.sortSelectTarget, PRIMARY_ASCENDING)
-          .setAttribute('selected', '')
     } else {
       this.sortFieldSelectWrapperTarget.classList.add('d-none')
       this.sortFieldSelectTarget.removeAttribute('required')
@@ -58,6 +61,11 @@ export default class extends Controller {
           .removeAttribute('disabled')
       this.getOptionByValue(this.sortSelectTarget, CREATED_AT_DESCENDING)
           .removeAttribute('disabled')
+
+      this.getOptionByValue(this.sortSelectTarget, PRIMARY_ASCENDING)
+          .removeAttribute('selected')
+      this.getOptionByValue(this.sortSelectTarget, PRIMARY_DESCENDING)
+          .removeAttribute('selected')
     }
   }
 

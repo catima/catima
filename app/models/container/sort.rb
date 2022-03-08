@@ -24,7 +24,7 @@ module Container::Sort
     CHOICES[sort].end_with?("/Ascendant") ? ASCENDING : DESCENDING
   end
 
-  # Return the type of a sort, default to PRIMARY
+  # Return the type of a sort, default to FIELD
   def self.type(sort)
     return FIELD unless CHOICES.key?(sort)
 
