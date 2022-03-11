@@ -18,6 +18,9 @@ class Container::ItemList < ::Container
 
   include ItemListsHelper
 
+  validate :style_validation
+  validate :sort_validation
+
   def custom_container_permitted_attributes
     %i(item_type style sort_field_id sort)
   end
@@ -42,5 +45,25 @@ class Container::ItemList < ::Container
       d[:content]['item_type'] = it.id.to_s
     end
     super(d)
+  end
+
+  private
+
+  def style_validation
+    unless style.empty? || ::ItemList::STYLES.key?(style)
+      errors.add :style, "Style not allowed"
+    end
+
+    if style.eql?("line")
+      return if Container::Sort.line_choices.key?(sort)
+
+      errors.add :sort, "Option not allowed for this style"
+    end
+  end
+
+  def sort_validation
+    return if Container::Sort::CHOICES.key?(sort)
+
+    errors.add :sort, "Sort not allowed"
   end
 end

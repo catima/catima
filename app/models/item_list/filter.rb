@@ -2,7 +2,7 @@ class ItemList::Filter < ItemList
   # This is the inverse of the to_param method, below.
   def self.parse_param(param)
     field_slug, value = param.to_s.split("_", 2)
-    field_slug.present? ? {field_slug: field_slug, :value => value} : {}
+    field_slug.present? ? { field_slug: field_slug, :value => value } : {}
   end
 
   include ::Search::Strategies
@@ -40,13 +40,25 @@ class ItemList::Filter < ItemList
   def to_param
     return nil if strategy.nil?
 
-    [field.slug, value].join("_")
+    [field&.slug, value].join("_")
   end
 
   private
 
   def sort_unpaginated_items(field)
-    direction = sort || 'ASC'
+    direction = Container::Sort.direction(sort)
+
+    case Container::Sort.type(sort)
+    when Container::Sort::FIELD
+      sort_by_field(field, direction)
+    when Container::Sort::CREATED_AT
+      sort_by_created_at(direction)
+    else
+      sort_by_field(field, direction)
+    end
+  end
+
+  def sort_by_field(field, direction)
     case field
     when Field::Reference
       unpaginated_list_items.joins("LEFT JOIN items sort_ref_items ON sort_ref_items.id::text = items.data->>'#{field.uuid}'")
@@ -80,6 +92,13 @@ class ItemList::Filter < ItemList
         Arel.sql("NULLIF(items.data->>'#{field.uuid}', '') #{direction} NULLS LAST, items.data->>'#{field.uuid}' #{direction}")
       )
     end
+  end
+
+  def sort_by_created_at(direction)
+    unpaginated_list_items
+      .reorder(
+        Arel.sql("created_at #{direction}")
+      )
   end
 
   def strategy

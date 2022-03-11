@@ -23,22 +23,22 @@ one:
   content: { html: "<h1>hello world</h1>" }
   locale: en
 
+one_line_container:
+  type: Container::ItemList
+  slug: line
+  row_order: 2
+  page: line_one
+  content: { style: 'line', item_type: one_author.id }
+  sort: 'f-asc'
+  sort_field_id: one_author_deceased.id
+  locale: en
+
 two:
   type: Container::Markdown
   slug: content2
   row_order: 0
   page_id: 1
   content: { markdown: "#hello world" }
-  locale: en
-
-one_line_container:
-  type: Container::ItemList
-  slug: line
-  row_order: 2
-  page: line_one
-  content: { style: 'line', item_type: <%=  ItemType.find_by(slug: 'authors' )&.id %> }
-  sort: 'ASC'
-  sort_field_id: <%= Field.find_by(slug: 'deceased' )&.id  %>
   locale: en
 
 contact_container:

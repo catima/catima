@@ -49,7 +49,7 @@ class Field::Int < ::Field
   end
 
   def order_items_by(direction: 'ASC')
-    "(items.data->>'#{uuid}')::int #{direction}"
+    "NULLIF((items.data ->> '#{uuid}'), '')::int #{direction}"
   end
 
   def auto_increment?
