@@ -45,7 +45,7 @@ class Field::Decimal < ::Field
   end
 
   def order_items_by(direction: 'ASC')
-    "(items.data->>'#{uuid}')::float #{direction}"
+    "NULLIF((items.data ->> '#{uuid}'), '')::float #{direction}"
   end
 
   # Useful for the advanced search
