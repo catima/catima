@@ -35,7 +35,7 @@ const computeGroupTitle = (level, title, type) => {
   return title
 }
 
-const Items = forwardRef((props,ref) => {
+const Items = forwardRef((props, ref) => {
   const {items} = props
 
   const renderItem = (item, index) => {
@@ -93,7 +93,7 @@ const ItemGroup = forwardRef((props,ref) => {
                     dangerouslySetInnerHTML={{__html: groupIsOpen ? icons.up : icons.down}}/>
             </div>
           )}
-          {(groupIsOpen || !!(type === 'num' && level === 1)) && (
+          {(withoutGroup || groupIsOpen || !!(type == 'num' && level == 1)) && (
             <div className="line__group__items">
               {(it.hasOwnProperty(' ') && (<ItemGroup icons={icons} key={`no`} k={`no`} title={'no'} items={it[' ']}
                                                       allOpen={allOpen} level={level + 1} sort={sort}
@@ -127,7 +127,7 @@ const ItemGroup = forwardRef((props,ref) => {
               <span className="px-2"
                     dangerouslySetInnerHTML={{__html: groupIsOpen ? icons.up : icons.down}}/>
             </div>)}
-          {(groupIsOpen || !!(type === 'num' && level === 1)) && (
+          {(withoutGroup || groupIsOpen || !!(type == 'num' && level == 1)) && (
             <Items items={items} ref={ref}/>
           )}
         </div>
@@ -232,11 +232,11 @@ const Line = (props) => {
         {
           allOpen && (
             <a className="m-2" href="#" onClick={() => toggleAllGroupAreOpen(false)}>
-              { Translations.messages['containers.item_list.close_all'] }
+              {Translations.messages['containers.item_list.close_all']}
             </a>
           ) || (
             <a className="m-2" href="#" onClick={() => toggleAllGroupAreOpen(true)}>
-              { Translations.messages['containers.item_list.open_all'] }
+              {Translations.messages['containers.item_list.open_all']}
             </a>
           )
         }
@@ -268,7 +268,7 @@ const Line = (props) => {
             loader
           ) || (
             <button className="btn btn-lg btn-primary" onClick={() => fetchItems(currentPage + 1)}>
-              { Translations.messages['containers.item_list.more'] }
+              {Translations.messages['containers.item_list.more']}
             </button>
           )}
         </div>

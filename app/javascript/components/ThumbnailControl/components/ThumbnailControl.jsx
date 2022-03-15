@@ -26,6 +26,12 @@ const ThumbnailControl = (props) => {
     setSrc(_loadSrc())
   }, [])
 
+  useEffect(() => {
+    setControlClass((!src || src.length === 0) ? 'hide' : 'show')
+    setCrop((!src || src.length === 0) ? {x: 0, y: 0} : $.extend(src[0].crop || {x: 0, y: 0}, {aspect: 1}))
+    setImg((!src || src.length === 0) ? '' : '/' + src[0].path)
+  }, [src])
+
   function _loadSrc() {
     const d = document.getElementById(srcRef).innerText;
     try {
