@@ -17,16 +17,16 @@ module Container::Sort
     CHOICES.reject { |key, _name| key.start_with?("ca-") }
   end
 
-  # Return the direction of a sort, default to ASC
+  # Return the direction of a sort, nil if not a container sort choice
   def self.direction(sort)
-    return ASCENDING unless CHOICES.key?(sort)
+    return nil unless CHOICES.key?(sort)
 
     CHOICES[sort].end_with?("/Ascendant") ? ASCENDING : DESCENDING
   end
 
-  # Return the type of a sort, default to FIELD
+  # Return the type of a sort, nil if not a container sort choice
   def self.type(sort)
-    return FIELD unless CHOICES.key?(sort)
+    return nil unless CHOICES.key?(sort)
 
     CHOICES[sort].start_with?("Field/") ? FIELD : CREATED_AT
   end

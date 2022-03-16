@@ -131,8 +131,8 @@ class Field::DateTime < ::Field
               NULLIF(items.data->'#{uuid}'->>'h', ''),
               NULLIF(items.data->'#{uuid}'->>'m', ''),
               NULLIF(items.data->'#{uuid}'->>'s', '')
-              ) ASC,
-    NULLIF(items.data->'#{uuid}'->>'#{format[0]}', '')::bigint #{direction},
+              ) #{direction} NULLS #{nulls_order},
+    NULLIF(items.data->'#{uuid}'->>'#{format[0]}', '')::bigint #{direction} NULLS #{nulls_order},
     (COALESCE(NULLIF(items.data->'#{uuid}'->>'Y', '')::bigint, 0) * 60 * 60 * 24 * (365 / 12) * 12 ) +
     (COALESCE(NULLIF(items.data->'#{uuid}'->>'M', '')::bigint, 0) * 60 * 60 * 24 * (365 / 12) ) +
     (COALESCE(NULLIF(items.data->'#{uuid}'->>'D', '')::bigint, 0) * 60 * 60 * 24 ) +

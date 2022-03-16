@@ -46,7 +46,7 @@ class ItemList::Filter < ItemList
   private
 
   def sort_unpaginated_items(field)
-    direction = Container::Sort.direction(sort)
+    direction = Container::Sort.direction(sort) || sort
 
     case Container::Sort.type(sort)
     when Container::Sort::FIELD

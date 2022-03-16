@@ -47,7 +47,7 @@ class PagesController < ApplicationController
       :item_type => item_type,
       :page => params[:page],
       sort_field: sort_field,
-      sort: params[:sort] || container&.sort || 'ASC'
+      sort: params[:sort] || container&.sort
     )
 
     formatted_sorted_items = @list.items.map { |item| helpers.formatted_item_for_line(item, list: @list, sort_field: sort_field) }

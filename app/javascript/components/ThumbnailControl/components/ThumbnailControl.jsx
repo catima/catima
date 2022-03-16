@@ -66,7 +66,7 @@ const ThumbnailControl = (props) => {
   return (
     <div id={_id} className={controlClass}>
       <span
-        className="btn btn-sm btn-default"
+        className="btn btn-outline-secondary mb-1"
         onClick={_toggleModal}>
         {Translations.messages['catalog_admin.fields.date_time_option_inputs.define_thumbnail']}
       </span>

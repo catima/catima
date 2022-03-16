@@ -6450,12 +6450,10 @@ react-fontawesome@^1.6.1:
   dependencies:
     prop-types "^15.5.6"
 
-react-image-crop@^9.0.4:
-  version "9.0.5"
-  resolved "https://registry.yarnpkg.com/react-image-crop/-/react-image-crop-9.0.5.tgz#a6dfe5411156f1dd1e435b128424ccf175a86948"
-  integrity sha512-J5lbsBMI36GsbkRHXNEo95OjwpxfkUBrEl9Oxb7z5mDC7iamySXYKhkv9QoidkfmI9e8Vj7q3SgNCVfuZHQMQw==
-  dependencies:
-    clsx "^1.1.1"
+react-image-crop@^3.0.7:
+  version "3.0.11"
+  resolved "https://registry.yarnpkg.com/react-image-crop/-/react-image-crop-3.0.11.tgz#c1588805d8d220b7b70332f04161aa1e04e13efc"
+  integrity sha512-n4t9P7pc8NMHpAavyN2ZeYyG9qjgCsn4UPwNZk4MTolBgIRYsHllpwA9aMLtdqHBtL/U0N34T48DWL/i4eMNcw==
 
 react-image-lightbox@^5.1.4:
   version "5.1.4"

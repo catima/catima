@@ -93,7 +93,7 @@ const ItemGroup = forwardRef((props,ref) => {
                     dangerouslySetInnerHTML={{__html: groupIsOpen ? icons.up : icons.down}}/>
             </div>
           )}
-          {(withoutGroup || groupIsOpen || !!(type == 'num' && level == 1)) && (
+          {(withoutGroup || groupIsOpen || !!(type === 'num' && level === 1)) && (
             <div className="line__group__items">
               {(it.hasOwnProperty(' ') && (<ItemGroup icons={icons} key={`no`} k={`no`} title={'no'} items={it[' ']}
                                                       allOpen={allOpen} level={level + 1} sort={sort}
@@ -127,7 +127,7 @@ const ItemGroup = forwardRef((props,ref) => {
               <span className="px-2"
                     dangerouslySetInnerHTML={{__html: groupIsOpen ? icons.up : icons.down}}/>
             </div>)}
-          {(withoutGroup || groupIsOpen || !!(type == 'num' && level == 1)) && (
+          {(withoutGroup || groupIsOpen || !!(type === 'num' && level === 1)) && (
             <Items items={items} ref={ref}/>
           )}
         </div>
@@ -198,9 +198,9 @@ const Line = (props) => {
   }
 
   const sortAscDesc = (e) => {
-    if (e.value == ASCENDING) {
+    if (e.value === ASCENDING) {
       window.location.assign(links.asc)
-    } else if (e.value == DESCENDING) {
+    } else if (e.value === DESCENDING) {
       window.location.assign(links.desc)
     }
   }
@@ -245,7 +245,7 @@ const Line = (props) => {
         <div className="container max-width-lg line__container">
           {
             Object.keys(groupedItems)
-                .sort(sortAlphabeticaly(sort, type == 'num'))
+                .sort(sortAlphabeticaly(sort, type === 'num'))
                 .map(
                     (k, index) =>
                         <ItemGroup key={k} k={k} title={k}

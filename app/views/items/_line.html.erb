@@ -1,17 +1,17 @@
 <% if container.sort_field.present? %>
-<%= react_component('Line/components/Line', {
-  sort: params[:sort] || Container::Sort.direction(container.sort),
-  url: [page_path(@page), "/#{container.id}/items/?style=line", params[:sort] ? "&sort=#{params[:sort]}" : ""].join,
-  currentPage: params[:page] || 1,
-  icons: {up: fa_icon("chevron-up"),
-          down: fa_icon("chevron-down")},
-  links: {
-    asc: page_url(style: "line", sort: Container::Sort::ASCENDING),
-    desc: page_url(style: "line", sort: Container::Sort::DESCENDING)
-  },
-  pageCount: (item_list.total_count / 24) + 1,
-  type: container_sort_field_type(container),
-}) %>
+  <%= react_component('Line/components/Line', {
+    sort: params[:sort] || Container::Sort.direction(container.sort) || Container::Sort::ASCENDING,
+    url: [page_path(@page), "/#{container.id}/items/?style=line", params[:sort] ? "&sort=#{params[:sort]}" : ""].join,
+    currentPage: params[:page] || 1,
+    icons: {up: fa_icon("chevron-up"),
+            down: fa_icon("chevron-down")},
+    links: {
+      asc: page_url(style: "line", sort: Container::Sort::ASCENDING),
+      desc: page_url(style: "line", sort: Container::Sort::DESCENDING)
+    },
+    pageCount: (item_list.total_count / 24) + 1,
+    type: container_sort_field_type(container),
+  }) %>
 <% else %>
   <div class="alert alert-danger">
     <div class="d-flex justify-content-center align-items-center">
