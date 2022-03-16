@@ -128,8 +128,8 @@ class Field::ChoiceSet < ::Field
     end
   end
 
-  def order_items_by(direction: 'ASC')
-    "(choices.long_name_translations->>'long_name_#{I18n.locale}') #{direction}" unless choices.nil?
+  def order_items_by(direction: 'ASC', nulls_order: 'LAST')
+    "(choices.short_name_translations->>'short_name_#{I18n.locale}') #{direction} NULLS #{nulls_order}" unless choices.nil?
   end
 
   def allows_unique?

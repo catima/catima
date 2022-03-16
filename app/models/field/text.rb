@@ -139,6 +139,10 @@ class Field::Text < ::Field
     value.to_s.gsub("'") { "\\'" }
   end
 
+  def order_items_by(direction: 'ASC', nulls_order: 'LAST')
+    "LOWER(NULLIF(items.data->>'#{uuid}', '')) #{direction} NULLS #{nulls_order}"
+  end
+
   def sql_type
     return "JSON" if i18n?
 

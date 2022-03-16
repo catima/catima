@@ -124,13 +124,21 @@ class Field::DateTime < ::Field
     field_value(it, self)
   end
 
-  def order_items_by(direction: 'ASC')
-    "NULLIF(items.data->'#{uuid}'->>'Y', '')::bigint #{direction},
-     NULLIF(items.data->'#{uuid}'->>'M', '')::bigint #{direction},
-     NULLIF(items.data->'#{uuid}'->>'D', '')::bigint #{direction},
-     NULLIF(items.data->'#{uuid}'->>'h', '')::bigint #{direction},
-     NULLIF(items.data->'#{uuid}'->>'m', '')::bigint #{direction},
-     NULLIF(items.data->'#{uuid}'->>'s', '')::bigint #{direction}"
+  def order_items_by(direction: 'ASC', nulls_order: 'LAST')
+    "COALESCE(NULLIF(items.data->'#{uuid}'->>'Y', ''),
+              NULLIF(items.data->'#{uuid}'->>'M', ''),
+              NULLIF(items.data->'#{uuid}'->>'D', ''),
+              NULLIF(items.data->'#{uuid}'->>'h', ''),
+              NULLIF(items.data->'#{uuid}'->>'m', ''),
+              NULLIF(items.data->'#{uuid}'->>'s', '')
+              ) ASC,
+    NULLIF(items.data->'#{uuid}'->>'#{format[0]}', '')::bigint #{direction},
+    (COALESCE(NULLIF(items.data->'#{uuid}'->>'Y', '')::bigint, 0) * 60 * 60 * 24 * (365 / 12) * 12 ) +
+    (COALESCE(NULLIF(items.data->'#{uuid}'->>'M', '')::bigint, 0) * 60 * 60 * 24 * (365 / 12) ) +
+    (COALESCE(NULLIF(items.data->'#{uuid}'->>'D', '')::bigint, 0) * 60 * 60 * 24 ) +
+    (COALESCE(NULLIF(items.data->'#{uuid}'->>'h', '')::bigint, 0) * 60 * 60 ) +
+    (COALESCE(NULLIF(items.data->'#{uuid}'->>'m', '')::bigint, 0) * 60 ) +
+    (COALESCE(NULLIF(items.data->'#{uuid}'->>'s', '')::bigint, 0) ) #{direction}"
   end
 
   def search_conditions_as_hash(locale)

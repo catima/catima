@@ -58,9 +58,9 @@ class Item < ApplicationRecord
   # TODO: uncomment when item cache worker is fixed
   # after_commit :update_views_cache, if: proc { |record| record.saved_changes.key?(:data) }
 
-  def self.sorted_by_field(field, direction: "ASC")
+  def self.sorted_by_field(field, direction: "ASC", nulls_order: 'LAST')
     sql = []
-    sql << field.order_items_by(direction: direction) unless field.nil?
+    sql << field.order_items_by(direction: direction, nulls_order: nulls_order) unless field.nil?
 
     if field.nil? ||
        (field.type != Field::TYPES['reference'] && field.type != Field::TYPES['choice'])
@@ -80,6 +80,14 @@ class Item < ApplicationRecord
 
     joins("LEFT JOIN choices ON choices.id::text = items.data->>'#{field.uuid}'")
       .reorder(Arel.sql(sql.join(", ")))
+  end
+
+  def self.sorted_by_created_at(direction: "ASC")
+    reorder(
+      Arel.sql(
+        "created_at #{direction}"
+      )
+    )
   end
 
   def self.with_type(type)

@@ -304,8 +304,8 @@ class Field < ApplicationRecord
   end
 
   # Returns the order by for items with a sort by a field
-  def order_items_by(direction: 'ASC')
-    "items.data->>'#{uuid}' #{direction}"
+  def order_items_by(direction: 'ASC', nulls_order: 'LAST')
+    "NULLIF(items.data->>'#{uuid}', '') #{direction} NULLS #{nulls_order}"
   end
 
   def order_items_by_primary_field

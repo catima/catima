@@ -48,8 +48,8 @@ class Field::Int < ::Field
     %i(maximum minimum auto_increment)
   end
 
-  def order_items_by(direction: 'ASC')
-    "NULLIF((items.data ->> '#{uuid}'), '')::int #{direction}"
+  def order_items_by(direction: 'ASC', nulls_order: 'LAST')
+    "NULLIF(items.data->>'#{uuid}', '')::int #{direction} NULLS #{nulls_order}"
   end
 
   def auto_increment?
