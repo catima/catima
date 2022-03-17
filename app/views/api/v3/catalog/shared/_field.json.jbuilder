@@ -28,6 +28,13 @@ json.field_specific_keys do
     end
   end
 
+  if field.is_a?(Field::ComplexDatation)
+    json.format field.format
+    json.allow_bc field.allow_bc
+    json.allowed_formats field.allowed_formats.reject(&:blank?)
+    json.choice_set_ids field.choice_set_ids.reject(&:blank?)
+  end
+
   if field.is_a?(Field::ChoiceSet)
     json.choice_set_id field.choice_set_id
   end

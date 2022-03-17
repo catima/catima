@@ -413,7 +413,9 @@ CREATE TABLE public.choice_sets (
     updated_at timestamp without time zone NOT NULL,
     slug character varying,
     uuid character varying,
-    deleted_at timestamp without time zone
+    deleted_at timestamp without time zone,
+    choice_set_type integer,
+    format character varying
 );
 
 
@@ -453,7 +455,9 @@ CREATE TABLE public.choices (
     category_id integer,
     uuid character varying,
     parent_id bigint,
-    "position" integer
+    "position" integer,
+    from_date character varying,
+    to_date character varying
 );
 
 
@@ -2595,4 +2599,8 @@ INSERT INTO "schema_migrations" (version) VALUES
 ('20211209083903'),
 ('20220112092308'),
 ('20220112102223'),
-('20220117081728');
+('20220117081728'),
+('20220211153502'),
+('20220214085848');
+
+

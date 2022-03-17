@@ -19,6 +19,10 @@
     "display_components": [],
     "editor_components": ["DateTimeInput"]
   },
+  "ComplexDatation": {
+    "display_components": [],
+    "editor_components": ["ComplexDatationInput"]
+  },
   "Geometry": {
     "display_components": [],
     "editor_components": ["GeoEditor"]

@@ -1,6 +1,8 @@
 <% provide(:title, t(".edit_choice_set")) %>
 
 <% provide(:actions) do %>
+  <%= link_to(t(".export"), export_catalog_admin_choice_set_path(@choice_set.catalog, I18n.locale, @choice_set), method: :post, class: 'mr-4') %>
+
   <%= link_to(new_catalog_admin_choice_set_choice_path(@choice_set.catalog, I18n.locale, @choice_set)) do %>
     <%= fa_icon(:"plus-square", :text => t('.new_choice')) %>
   <% end %>
@@ -10,20 +12,24 @@
         @choice_set,
         :url => catalog_admin_choice_set_path) do |f| %>
     <%= f.text_field(:name) %>
-
-  <div class="mt-2">
-    <%= f.primary(t(".update_choice_set")) %>
-    <%= link_to(
-          t("cancel"),
-          catalog_admin_choice_sets_path,
-          :class => "btn btn-link") %>
-  </div>
-  <hr>
-  <%= label_tag :choices, t(".choices") %>
-  <ul class="w-100 pl-0" data-sortable-choices-target="sortableList">
-    <% @choice_set.choices.where(parent_id: nil).ordered.each do |choice| %>
-      <%= render 'choice', choice: choice, level: 0 %>
+    <%= f.collection_select(:choice_set_type, ChoiceSet.choice_set_types, :first, :first, {include_blank: true}, {required: true, disabled: true}) %>
+    <% if f.object.choice_set_type == 'datation' %>
+      <%= f.collection_select(:format, ChoiceSet::FORMATS, :to_s, :to_s, {include_blank: true}, {required: true, disabled: true}) %>
     <% end %>
-  </ul>
+
+    <div class="mt-2">
+      <%= f.primary(t(".update_choice_set")) %>
+      <%= link_to(
+            t("cancel"),
+            catalog_admin_choice_sets_path,
+            :class => "btn btn-link") %>
+    </div>
+    <hr>
+    <%= label_tag :choices, t(".choices") %>
+    <ul class="w-100 pl-0" data-sortable-choices-target="sortableList">
+      <% @choice_set.choices.where(parent_id: nil).ordered.each do |choice| %>
+        <%= render 'choice', choice: choice, level: 0 %>
+      <% end %>
+    </ul>
   <% end %>
 </div>

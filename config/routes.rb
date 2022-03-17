@@ -44,6 +44,7 @@ Rails.application.routes.draw do
         get 'items' => 'items#geo_viewer_index'
         get 'items/:id' => 'items#geo_viewer_show'
         get ':item_type_slug/:field_uuid' => 'fields#index', as: 'fields'
+        get ':item_type_slug/:field_uuid/complex_datation_choices' => 'fields#complex_datation_choices', as: 'field_complex_datation_choices'
         get '/categories/:category_id/:field_uuid' => 'fields#index', as: 'category_fields'
       end
     end
@@ -231,10 +232,13 @@ Rails.application.routes.draw do
               :only => [:new, :create]
 
     resources :choice_sets, :path => "_choice_sets", :except => :show do
+      get :new_import, on: :collection
+      post :export, on: :member
       resources :choices, :path => "_choices", :except => :show, on: :member do
         post 'update_positions' => "choices#update_positions", on: :collection
       end
     end
+    post :import_choice_set, controller: 'choice_sets'
 
     resources :pages, :path => "_pages", :param => :slug do
       post :sort_field_select_options, on: :collection

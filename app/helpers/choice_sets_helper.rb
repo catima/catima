@@ -30,6 +30,6 @@ module ChoiceSetsHelper
   #
   # Also removes the restricted fields if the current user is not a catalog staff.
   def displayable_category_fields(fields)
-    fields.select { |f| f.filterable? && f.displayable_to_user?(current_user) }
+    fields&.select { |f| f.filterable? && f.displayable_to_user?(current_user) }
   end
 end

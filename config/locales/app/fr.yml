@@ -12,6 +12,8 @@ fr:
     attributes:
       choice_set:
         name: "Nom"
+        choice_set_type: "Type de l'ensemble de choix"
+        format: Format
       choice:
         parent_id: "Parent"
       page:
@@ -84,6 +86,7 @@ fr:
   xref_field: Champ Xref
   compound_field: Champ composé
   embed_field: Champ d’intégration (embed)
+  complexdatation_field: Champ de datation complexe
   slug_help_text: "Minuscules, chiffres et traits d'union seulement. Pas de caractères accentués."
   add_another: "Créer et ajouter un autre"
   maintenance:
@@ -551,6 +554,8 @@ fr:
         long_name_optional: 'Nom long (optionnel)'
         category_optional: 'Sous-fiche (optionnel)'
         add_choice: 'Ajouter choix'
+        from_date: Date de début
+        to_date: Date de fin
     choice_sets:
       choice:
         remove: "Supprimer"
@@ -562,6 +567,7 @@ fr:
           first: premier
           last: dernier
       edit:
+        export: "Exporter l' ensemble de choix"
         choices: 'Choix'
         edit_choice_set: "Modifier l' ensemble de choix"
         update_choice_set: "Mettre à jour l' ensemble de choix"
@@ -570,6 +576,7 @@ fr:
         category_optional: 'Sous-fiche (optionnel)'
         new_choice: "Nouveaux choix"
       index:
+        import: "Importer l' ensemble de choix"
         choice_sets: Ensembles de choix
         new_choice_set: "Nouvel ensemble de choix"
         name: Nom
@@ -578,6 +585,9 @@ fr:
       new:
         new_choice_set: "Nouvel ensemble de choix"
         create_choice_set: Créer ensemble de choix
+      new_import:
+        import_choice_set: "Importer un ensemble de choix"
+        import: Importer
 
     containers:
       sorts:
@@ -655,6 +665,15 @@ fr:
       choice_set_option_inputs:
         choice_set: Ensemble de choix
         new_choice_set: Nouvel ensemble de choix
+      complex_datation_option_inputs:
+        allow_bc: 'Authoriser les dates négatives'
+        allowed_formats: Formats authorisé
+        choice_set_ids: Ensembles de choix
+        date_time: Date
+        datation_choice: Choix Datation
+        format: Format
+        BC: "av. J.-C."
+        tolerance: Tolérance
       common_form_fields:
         name: Nom
         name_plural: Nom (pluriel)
@@ -750,6 +769,11 @@ fr:
           november: Novembre
           december: Décembre
         define_thumbnail: Définir la vignette
+      complex_datation:
+        bc: '%{date} av. J.-C.'
+        between: 'entre %{from} et %{to}'
+        after: 'après %{date}'
+        before: 'avant %{date}'
       edit:
         edit_field: "Éditer champ %{field_set} “%{field}”"
       index:
