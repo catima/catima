@@ -7,8 +7,6 @@ module Container::Sort
     "ca-desc" => "CreatedAt/Descendant"
   }.freeze
 
-  ASCENDING = "ASC".freeze
-  DESCENDING = "DESC".freeze
   FIELD = "FIELD".freeze
   CREATED_AT = "CREATED_AT".freeze
 
@@ -21,7 +19,7 @@ module Container::Sort
   def self.direction(sort)
     return nil unless CHOICES.key?(sort)
 
-    CHOICES[sort].end_with?("/Ascendant") ? ASCENDING : DESCENDING
+    CHOICES[sort].end_with?("/Ascendant") ? ItemList::Sort.ascending : ItemList::Sort.descending
   end
 
   # Return the type of a sort, nil if not a container sort choice

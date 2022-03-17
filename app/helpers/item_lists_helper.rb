@@ -39,4 +39,14 @@ module ItemListsHelper
 
     true
   end
+
+  def define_sort_direction(sort)
+    # Define direction
+    direction = Container::Sort.direction(sort) || sort
+
+    # Check if direction is valid (ASC|DESC), otherwise default to ASC
+    return ItemList::Sort.ascending unless ItemList::Sort.included?(direction)
+
+    direction
+  end
 end
