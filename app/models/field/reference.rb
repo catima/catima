@@ -105,7 +105,9 @@ class Field::Reference < ::Field
   end
 
   def order_items_by(direction: 'ASC', nulls_order: 'LAST')
-    "(ref_items.data->>'#{related_item_type.field_for_select.uuid}') #{direction} NULLS #{nulls_order}" unless related_item_type.field_for_select.nil?
+    return if related_item_type.field_for_select.nil? || related_item_type.field_for_select.is_a?(Field::Reference)
+
+    "(ref_items.data->>'#{related_item_type.field_for_select.uuid}') #{direction} NULLS #{nulls_order}"
   end
 
   def allows_unique?
