@@ -1335,6 +1335,13 @@
   resolved "https://registry.yarnpkg.com/@types/range-parser/-/range-parser-1.2.4.tgz#cd667bcfdd025213aafb7ca5915a932590acdcdc"
   integrity sha512-EEhsLsD6UsDM1yFhAvy0Cjr6VwmpMWqFBCb9w07wVugF7w9nfajxLuVmngTIpgS6svCnm6Vaw+MZhoDCKnOfsw==
 
+"@types/react-image-crop@^6.0.1":
+  version "6.0.2"
+  resolved "https://registry.yarnpkg.com/@types/react-image-crop/-/react-image-crop-6.0.2.tgz#3cac5d61ef4826ae10cc7c989176341cc9bf531b"
+  integrity sha512-jsLqP2jKRFiyCSHHI3xSJ+KYX8ieQXID0P+ZJLgoE9kzkZ6IUIIjMm1p6z4P0vJds3YuHvi1fMzDUUXSA9bCTg==
+  dependencies:
+    "@types/react" "*"
+
 "@types/react@*", "@types/react@16 || 17":
   version "17.0.38"
   resolved "https://registry.yarnpkg.com/@types/react/-/react-17.0.38.tgz#f24249fefd89357d5fa71f739a686b8d7c7202bd"
@@ -6247,7 +6254,7 @@ promise-inflight@^1.0.1:
   resolved "https://registry.yarnpkg.com/promise-inflight/-/promise-inflight-1.0.1.tgz#98472870bf228132fcbdd868129bad12c3c029e3"
   integrity sha1-mEcocL8igTL8vdhoEputEsPAKeM=
 
-prop-types@^15.5.10, prop-types@^15.5.6, prop-types@^15.5.8, prop-types@^15.6.0, prop-types@^15.6.2, prop-types@^15.7.2:
+prop-types@>=15.5.8, prop-types@^15.5.10, prop-types@^15.5.6, prop-types@^15.5.8, prop-types@^15.6.0, prop-types@^15.6.2, prop-types@^15.7.2:
   version "15.8.1"
   resolved "https://registry.yarnpkg.com/prop-types/-/prop-types-15.8.1.tgz#67d87bf1a694f48435cf332c24af10214a3140b5"
   integrity sha512-oj87CgZICdulUohogVAR7AjlC0327U4el4L6eAvOqCeudMDVU0NThNaV+b9Df4dXgSP1gXMTnPdhfe/2qDH5cg==
@@ -6450,10 +6457,13 @@ react-fontawesome@^1.6.1:
   dependencies:
     prop-types "^15.5.6"
 
-react-image-crop@^3.0.7:
-  version "3.0.11"
-  resolved "https://registry.yarnpkg.com/react-image-crop/-/react-image-crop-3.0.11.tgz#c1588805d8d220b7b70332f04161aa1e04e13efc"
-  integrity sha512-n4t9P7pc8NMHpAavyN2ZeYyG9qjgCsn4UPwNZk4MTolBgIRYsHllpwA9aMLtdqHBtL/U0N34T48DWL/i4eMNcw==
+react-image-crop@^6.0.18:
+  version "6.0.18"
+  resolved "https://registry.yarnpkg.com/react-image-crop/-/react-image-crop-6.0.18.tgz#9c025233d22da18ffdd9504faa51556fb48de59d"
+  integrity sha512-YHmN0uYb6ifpW+naXnGZmcRLkg6bBIy0DyYFRA7onnxy2baM/U2xajConCNBIWdLePETQz55vfQK8Cfi1nqqPQ==
+  dependencies:
+    "@types/react-image-crop" "^6.0.1"
+    prop-types ">=15.5.8"
 
 react-image-lightbox@^5.1.4:
   version "5.1.4"
