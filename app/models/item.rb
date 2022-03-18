@@ -91,6 +91,14 @@ class Item < ApplicationRecord
     )
   end
 
+  def self.sorted_by_updated_at(direction: "ASC")
+    reorder(
+      Arel.sql(
+        "updated_at #{direction}"
+      )
+    )
+  end
+
   def self.with_type(type)
     return all if type.nil?
 

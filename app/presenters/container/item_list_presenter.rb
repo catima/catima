@@ -8,7 +8,7 @@ class Container::ItemListPresenter < ContainerPresenter
       @list = ::ItemList::Filter.new(
         :item_type => @item_type,
         :page => @view.params[:page],
-        sort_type: Container::Sort.type(@container&.sort),
+        sort_type: @container&.sort,
         sort_field: @container.sort_field,
         sort: Container::Sort.direction(@container&.sort)
       )

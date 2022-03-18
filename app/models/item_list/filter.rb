@@ -62,13 +62,16 @@ class ItemList::Filter < ItemList
   end
 
   def container_sort(field)
-    case sort_type
+    case Container::Sort.type(sort_type)
     when Container::Sort::FIELD
       unpaginated_list_items
         .sorted_by_field(field, direction: sort)
     when Container::Sort::CREATED_AT
       unpaginated_list_items
         .sorted_by_created_at(direction: sort)
+    when Container::Sort::UPDATED_AT
+      unpaginated_list_items
+        .sorted_by_updated_at(direction: sort)
     else
       unpaginated_list_items
         .sorted_by_field(field, direction: sort)

@@ -586,11 +586,13 @@ en:
 
     containers:
       sorts:
-        f-asc: Field ascending
-        f-desc: Field descending
-        ca-asc: Created at ascending
-        ca-desc: Created at descending
-        help: "Selection of the sorting style of the items. It is possible to sort by field or by creation date. If you choose to sort by field, for the \"line\" style, the sorting field will be selectable, for the other styles it will default to the primary field"
+        f-asc: Field (ascending)
+        f-desc: Field (descending)
+        ca-asc: Created at (ascending)
+        ca-desc: Created at (descending)
+        ua-asc: Updated at (ascending)
+        ua-desc: Updated at (descending)
+        help: "Selection of the sorting style of the items. It is possible to sort by field, by creation date or by the update date. If you choose to sort by field, for the \"line\" style, the sorting field will be selectable, for the other styles it will default to the primary field"
       item_type_warning: "You need to create at least one item type to use this type of container"
       common_form_fields:
         save_container: Save container

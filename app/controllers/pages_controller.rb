@@ -46,7 +46,7 @@ class PagesController < ApplicationController
     @list = ::ItemList::Filter.new(
       :item_type => item_type,
       :page => params[:page],
-      sort_type: Container::Sort.type(container.sort),
+      sort_type: container.sort,
       sort_field: sort_field,
       sort: params[:sort] || Container::Sort.direction(container.sort)
     )
