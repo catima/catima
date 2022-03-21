@@ -8,6 +8,7 @@ class CatalogAdmin::ChoiceSetsTest < ActionDispatch::IntegrationTest
     visit("/one/en/admin/_choice_sets")
     click_on("New choice set")
     fill_in("Name", :with => "Test Set")
+    select("default", :from => "choice_set[choice_set_type]")
     assert_difference("catalogs(:one).choice_sets.count") do
       click_on("Create choice set")
     end
@@ -31,6 +32,7 @@ class CatalogAdmin::ChoiceSetsTest < ActionDispatch::IntegrationTest
     visit("/multilingual/en/admin/_choice_sets")
     click_on("New choice set")
     fill_in("Name", :with => "Test Set")
+    select("default", :from => "choice_set[choice_set_type]")
     assert_difference("catalogs(:multilingual).choice_sets.count") do
       click_on("Create choice set")
     end

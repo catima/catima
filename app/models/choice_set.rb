@@ -35,6 +35,7 @@ class ChoiceSet < ApplicationRecord
 
   validates_presence_of :catalog
   validates_presence_of :name
+  validate :format_present_if_datation
 
   before_create :assign_uuid
 
@@ -82,5 +83,15 @@ class ChoiceSet < ApplicationRecord
 
   def find_parent(choice)
     choices.detect { |item| item.id == choice.parent_id } if choice.parent_id?
+  end
+
+  def format_present_if_datation
+    return if choice_set_type != 'datation'
+    return if format.length != 0
+
+    errors.add(
+      :format,
+      I18n.t("errors.messages.blank")
+    )
   end
 end
