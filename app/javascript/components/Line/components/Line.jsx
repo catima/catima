@@ -9,7 +9,7 @@ const ASCENDING = 'ASC';
 const DESCENDING = 'DESC';
 const sortAlphabeticaly = (direction, isNum) => {
   return (a, b) => {
-    if(a === ' ' || a === '') {
+    if (a === ' ' || a === '') {
       return 1
     }
     if (b === ' ' || b === '') {
@@ -55,8 +55,8 @@ const Items = forwardRef((props, ref) => {
     return (
       <div className="line__group__items__wrapper">
         {items.map((it, idx) => {
-          ref.current += 1
-          return renderItem(it, idx)
+            ref.current += 1
+            return renderItem(it, idx)
           }
         )}
       </div>
@@ -66,70 +66,64 @@ const Items = forwardRef((props, ref) => {
   return renderItems(items)
 })
 
-const ItemGroup = forwardRef((props,ref) => {
-  const {allOpen, items, icons, k, title, level, type, withoutGroup, sort} = props
-  const [groupIsOpen, setGroupIsOpen] = useState(false)
-
-  useEffect(() => {
-    setGroupIsOpen(allOpen)
-  }, [allOpen])
-
-  const toggleGroupIsOpen = () => {
-    let g = groupIsOpen
-    g = !g
-    setGroupIsOpen(g)
-  }
+const ItemGroup = forwardRef((props, ref) => {
+  const {items, icons, k, title, level, type, withoutGroup, sort} = props
 
   const recursiveRenderItems = (items, key, title, level) => {
     let it = {...items}
 
     if (typeof items === 'object' && !Array.isArray(items)) {
       return (
-        <div className="line__group" key={`${key}`}>
-          {!(type === 'num' && level === 1)  && !withoutGroup && (
-            <div className={`line__group__title level-${level}`} style={{cursor: "pointer"}} onClick={() => toggleGroupIsOpen()}>
+        <div className="line__group" key={`${key}`} data-controller="toggle-display-line"
+             data-action="click->toggle-display-line#reveal">
+          {!(type === 'num' && level === 1) && !withoutGroup && (
+            <div className={`line__group__title level-${level}`} style={{cursor: "pointer"}}>
               <div dangerouslySetInnerHTML={{__html: computeGroupTitle(level, title, type)}}/>
-              <span className="px-2"
-                    dangerouslySetInnerHTML={{__html: groupIsOpen ? icons.up : icons.down}}/>
+              <span className="px-2" data-toggle-display-line-target="upArrow"
+                    dangerouslySetInnerHTML={{__html: icons.up}}/>
+              <span className="px-2 d-none" data-toggle-display-line-target="downArrow"
+                    dangerouslySetInnerHTML={{__html: icons.down}}/>
             </div>
           )}
-          {(withoutGroup || groupIsOpen || !!(type === 'num' && level === 1)) && (
-            <div className="line__group__items">
-              {(it.hasOwnProperty(' ') && (<ItemGroup icons={icons} key={`no`} k={`no`} title={'no'} items={it[' ']}
-                                                      allOpen={allOpen} level={level + 1} sort={sort}
-                                                      type={type} withoutGroup={true} ref={ref}/>))}
-              {(it.hasOwnProperty(' ') && (
-                  (() => {
-                    delete it[' ']
-                    Object.keys(it).sort(sortAlphabeticaly(sort, type === 'num')).map((k, idx) => {
-                      return <ItemGroup icons={icons} key={`${key}-${idx}`} k={`${key}-${idx}`} title={k} items={it[k]}
-                                        allOpen={allOpen} level={level + 1} type={type} sort={sort}
-                                        withoutGroup={false} ref={ref}/>
-                    })
-                  })()
-                )
-                || (
+          <div className={`line__group__items ${(withoutGroup || !!(type === 'num' && level === 1)) ? '' : 'd-none'}`}
+               data-toggle-display-line-target="revealable">
+            {(it.hasOwnProperty(' ') && (<ItemGroup icons={icons} key={`no`} k={`no`} title={'no'} items={it[' ']}
+                                                    level={level + 1} sort={sort}
+                                                    type={type} withoutGroup={true} ref={ref}/>))}
+            {(it.hasOwnProperty(' ') && (
+                (() => {
+                  delete it[' ']
                   Object.keys(it).sort(sortAlphabeticaly(sort, type === 'num')).map((k, idx) => {
                     return <ItemGroup icons={icons} key={`${key}-${idx}`} k={`${key}-${idx}`} title={k} items={it[k]}
-                                      allOpen={allOpen} level={level + 1} type={type} sort={sort} ref={ref}/>
+                                      level={level + 1} type={type} sort={sort}
+                                      withoutGroup={false} ref={ref}/>
                   })
-                ))}
-            < /div>
-          )}
+                })()
+              )
+              || (
+                Object.keys(it).sort(sortAlphabeticaly(sort, type === 'num')).map((k, idx) => {
+                  return <ItemGroup icons={icons} key={`${key}-${idx}`} k={`${key}-${idx}`} title={k} items={it[k]}
+                                    level={level + 1} type={type} sort={sort} ref={ref}/>
+                })
+              ))}
+          < /div>
         </div>
       )
     } else {
       return (
-        <div className="line__group" key={`${key}`}>
-          {!(type === 'num' && level === 1)  && !withoutGroup && (
-            <div className={`line__group__title level-${level}`} style={{cursor: "pointer"}} onClick={() => toggleGroupIsOpen()}>
+        <div className="line__group" key={`${key}`} data-controller="toggle-display-line"
+             data-action="click->toggle-display-line#reveal">
+          {!(type === 'num' && level === 1) && !withoutGroup && (
+            <div className={`line__group__title level-${level}`} style={{cursor: "pointer"}}>
               <div dangerouslySetInnerHTML={{__html: computeGroupTitle(level, title, type)}}/>
-              <span className="px-2"
-                    dangerouslySetInnerHTML={{__html: groupIsOpen ? icons.up : icons.down}}/>
+              <span className="px-2" data-toggle-display-line-target="upArrow"
+                    dangerouslySetInnerHTML={{__html: icons.up}}/>
+              <span className="px-2 d-none" data-toggle-display-line-target="downArrow"
+                    dangerouslySetInnerHTML={{__html: icons.down}}/>
             </div>)}
-          {(withoutGroup || groupIsOpen || !!(type === 'num' && level === 1)) && (
+          <div className={`${(withoutGroup || !!(type === 'num' && level === 1)) ? '' : 'd-none'}`} style={{width: '100%'}} data-toggle-display-line-target="revealable">
             <Items items={items} ref={ref}/>
-          )}
+          </div>
         </div>
       )
     }
@@ -153,7 +147,6 @@ const Line = (props) => {
 
   const [isFetching, setIsFetching] = useState(false)
   const [groupedItems, setGroupedItems] = useState({})
-  const [allOpen, setAllOpen] = useState(true)
   const [currentPage, setCurrentPage] = useState(parseInt(currentPageProps))
   const currentCount = useRef(0)
 
@@ -166,10 +159,6 @@ const Line = (props) => {
     axios.defaults.headers.common["X-Requested-With"] = 'XMLHttpRequest';
     fetchItems(currentPage)
   }, [])
-
-  const toggleAllGroupAreOpen = (state) => {
-    setAllOpen(state)
-  }
 
   function recursiveDeepMerge(newGroupedItems, newItems) {
     Object.entries(newItems).forEach(([key, val]) => {
@@ -211,8 +200,9 @@ const Line = (props) => {
   if (!Object.keys(groupedItems).length) return loader
 
   return (
-    <div>
-      <div className='w-25' style={{marginLeft: '50%', transform: 'translate(-50%, 0)', position: "relative", zIndex: "2"}}>
+    <div data-controller="toggle-display-line">
+      <div className='w-25'
+           style={{marginLeft: '50%', transform: 'translate(-50%, 0)', position: "relative", zIndex: "2"}}>
         <ReactSelect
           id='asc-desc'
           name='asc-desc'
@@ -229,36 +219,30 @@ const Line = (props) => {
         />
       </div>
       <div className='d-flex justify-content-center'>
-        {
-          allOpen && (
-            <a className="m-2" href="#" onClick={() => toggleAllGroupAreOpen(false)}>
-              {Translations.messages['containers.item_list.close_all']}
-            </a>
-          ) || (
-            <a className="m-2" href="#" onClick={() => toggleAllGroupAreOpen(true)}>
-              {Translations.messages['containers.item_list.open_all']}
-            </a>
-          )
-        }
+        <a className="m-2" href="#" data-action="click->toggle-display-line#hideAllElements">
+          {Translations.messages['containers.item_list.close_all']}
+        </a>
+        <a className="m-2" href="#" data-action="click->toggle-display-line#showAllElements">
+          {Translations.messages['containers.item_list.open_all']}
+        </a>
       </div>
       <section className="line">
         <div className="container max-width-lg line__container">
           {
             Object.keys(groupedItems)
-                .sort(sortAlphabeticaly(sort, type === 'num'))
-                .map(
-                    (k, index) =>
-                        <ItemGroup key={k} k={k} title={k}
-                          icons={icons}
-                          items={groupedItems[k]}
-                          allOpen={allOpen}
-                          level={0}
-                          sort={sort}
-                          type={type}
-                          withoutGroup={false}
-                          ref={currentCount}
-                        />
-                )
+              .sort(sortAlphabeticaly(sort, type === 'num'))
+              .map(
+                (k, index) =>
+                  <ItemGroup key={k} k={k} title={k}
+                             icons={icons}
+                             items={groupedItems[k]}
+                             level={0}
+                             sort={sort}
+                             type={type}
+                             withoutGroup={false}
+                             ref={currentCount}
+                  />
+              )
           }
         </div>
       </section>

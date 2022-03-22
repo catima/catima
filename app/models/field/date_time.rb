@@ -125,14 +125,7 @@ class Field::DateTime < ::Field
   end
 
   def order_items_by(direction: 'ASC', nulls_order: 'LAST')
-    "COALESCE(NULLIF(items.data->'#{uuid}'->>'Y', ''),
-              NULLIF(items.data->'#{uuid}'->>'M', ''),
-              NULLIF(items.data->'#{uuid}'->>'D', ''),
-              NULLIF(items.data->'#{uuid}'->>'h', ''),
-              NULLIF(items.data->'#{uuid}'->>'m', ''),
-              NULLIF(items.data->'#{uuid}'->>'s', '')
-              ) #{direction} NULLS #{nulls_order},
-    NULLIF(items.data->'#{uuid}'->>'#{format[0]}', '')::bigint #{direction} NULLS #{nulls_order},
+    "NULLIF(items.data->'#{uuid}'->>'#{format[0]}', '')::bigint #{direction} NULLS #{nulls_order},
     (COALESCE(NULLIF(items.data->'#{uuid}'->>'Y', '')::bigint, 0) * 60 * 60 * 24 * (365 / 12) * 12 ) +
     (COALESCE(NULLIF(items.data->'#{uuid}'->>'M', '')::bigint, 0) * 60 * 60 * 24 * (365 / 12) ) +
     (COALESCE(NULLIF(items.data->'#{uuid}'->>'D', '')::bigint, 0) * 60 * 60 * 24 ) +
