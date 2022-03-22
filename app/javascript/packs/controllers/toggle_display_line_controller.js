@@ -49,15 +49,23 @@ export default class extends Controller {
     this.show = !this.show
     el.classList.add('is-visible')
     el.classList.remove('d-none')
-    this.upArrowTarget.classList.add('d-none')
-    this.downArrowTarget.classList.remove('d-none')
+    if (this.hasUpArrowTarget) {
+      this.upArrowTarget.classList.add('d-none')
+    }
+    if (this.hasDownArrowTarget) {
+      this.downArrowTarget.classList.remove('d-none')
+    }
   }
 
   hideElement(el) {
     this.show = !this.show
     el.classList.remove('is-visible')
-    this.upArrowTarget.classList.remove('d-none')
-    this.downArrowTarget.classList.add('d-none')
+    if (this.hasUpArrowTarget) {
+      this.upArrowTarget.classList.remove('d-none')
+    }
+    if (this.hasDownArrowTarget) {
+      this.downArrowTarget.classList.add('d-none')
+    }
   }
 
   showAllElements(e) {
