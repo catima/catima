@@ -20,6 +20,7 @@ class Container::ItemList < ::Container
 
   validate :style_validation
   validate :sort_validation
+  validate :uniqueness_validation
 
   def custom_container_permitted_attributes
     %i(item_type style sort_field_id sort)
@@ -54,16 +55,31 @@ class Container::ItemList < ::Container
       errors.add :style, "Style not allowed"
     end
 
+    return if sort.empty?
+
     if style.eql?("line")
       return if Container::Sort.line_choices.key?(sort)
 
       errors.add :sort, "Option not allowed for this style"
+    else
+      return unless Container::Sort.field_choices.key?(sort)
+
+      it = ItemType.find(item_type)
+      return if it&.field_for_select&.sortable?
+
+      errors.add :sort, "Sort not allowed with current primary field (#{it&.field_for_select&.slug})"
     end
   end
 
   def sort_validation
-    return if Container::Sort::CHOICES.key?(sort)
+    return if sort.empty? || Container::Sort::CHOICES.key?(sort)
 
     errors.add :sort, "Sort not allowed"
+  end
+
+  def uniqueness_validation
+    return unless page.containers.where.not(id: id).exists?(type: 'Container::ItemList')
+
+    errors.add :slug, "Multiple ItemList containers in the same page not allowed."
   end
 end

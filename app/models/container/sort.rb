@@ -13,9 +13,14 @@ module Container::Sort
   CREATED_AT = "CREATED_AT".freeze
   UPDATED_AT = "UPDATED_AT".freeze
 
-  # Return the sort choices for the line style
+  # Return the sort choices for the "line" style
   def self.line_choices
     CHOICES.reject { |key, _name| key.start_with?("ca-") || key.start_with?("ua-") }
+  end
+
+  # Return the "field" sort choices
+  def self.field_choices
+    CHOICES.select { |key, _name| key.start_with?("f-") }
   end
 
   # Return the direction of a sort, nil if not a container sort choice
