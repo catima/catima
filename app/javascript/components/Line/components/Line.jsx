@@ -74,10 +74,9 @@ const ItemGroup = forwardRef((props, ref) => {
 
     if (typeof items === 'object' && !Array.isArray(items)) {
       return (
-        <div className="line__group" key={`${key}`} data-controller="toggle-display-line"
-             data-action="click->toggle-display-line#reveal">
+        <div className="line__group" key={`${key}`} data-controller="toggle-display-line">
           {!(type === 'num' && level === 1) && !withoutGroup && (
-            <div className={`line__group__title level-${level}`} style={{cursor: "pointer"}}>
+            <div className={`line__group__title level-${level}`} style={{cursor: "pointer"}} data-action="click->toggle-display-line#reveal">
               <div dangerouslySetInnerHTML={{__html: computeGroupTitle(level, title, type)}}/>
               <span className="px-2" data-toggle-display-line-target="upArrow"
                     dangerouslySetInnerHTML={{__html: icons.up}}/>
@@ -111,10 +110,9 @@ const ItemGroup = forwardRef((props, ref) => {
       )
     } else {
       return (
-        <div className="line__group" key={`${key}`} data-controller="toggle-display-line"
-             data-action="click->toggle-display-line#reveal">
+        <div className="line__group" key={`${key}`} data-controller="toggle-display-line">
           {!(type === 'num' && level === 1) && !withoutGroup && (
-            <div className={`line__group__title level-${level}`} style={{cursor: "pointer"}}>
+            <div className={`line__group__title level-${level}`} style={{cursor: "pointer"}} data-action="click->toggle-display-line#reveal">
               <div dangerouslySetInnerHTML={{__html: computeGroupTitle(level, title, type)}}/>
               <span className="px-2" data-toggle-display-line-target="upArrow"
                     dangerouslySetInnerHTML={{__html: icons.up}}/>
