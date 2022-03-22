@@ -4,11 +4,7 @@ export default class extends Controller {
   static targets = ["revealable", "source", "upArrow", "downArrow"]
 
   connect() {
-    if (this.data.get("value") && this.hasSourceTarget) {
-      this.show = !(this.sourceTarget.value === this.data.get("value"))
-    } else {
-      this.show = false
-    }
+    this.show = true
     this.reveal()
     this.revealableTargets.forEach(function (el, _) {
       el.classList.add("toggle-display")
