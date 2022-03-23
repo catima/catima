@@ -85,7 +85,7 @@ const ItemGroup = forwardRef((props, ref) => {
             </div>
           )}
           <div className={`line__group__items ${(withoutGroup || !!(type === 'num' && level === 1)) ? '' : 'd-none'}`}
-               data-toggle-display-line-target="revealable">
+               data-toggle-display-line-target={`${!(type === 'num' && level === 1) && !withoutGroup ? "revealable" : ""}`}>
             {(it.hasOwnProperty(' ') && (<ItemGroup icons={icons} key={`no`} k={`no`} title={'no'} items={it[' ']}
                                                     level={level + 1} sort={sort}
                                                     type={type} withoutGroup={true} ref={ref}/>))}
@@ -119,7 +119,7 @@ const ItemGroup = forwardRef((props, ref) => {
               <span className="px-2 d-none" data-toggle-display-line-target="downArrow"
                     dangerouslySetInnerHTML={{__html: icons.down}}/>
             </div>)}
-          <div className={`${(withoutGroup || !!(type === 'num' && level === 1)) ? '' : 'd-none'}`} style={{width: '100%'}} data-toggle-display-line-target="revealable">
+          <div className={`${(withoutGroup || !!(type === 'num' && level === 1)) ? '' : 'd-none'}`} style={{width: '100%'}} data-toggle-display-line-target={`${!(type === 'num' && level === 1) && !withoutGroup ? "revealable" : ""}`}>
             <Items items={items} ref={ref}/>
           </div>
         </div>
