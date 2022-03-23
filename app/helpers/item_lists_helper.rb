@@ -55,7 +55,7 @@ module ItemListsHelper
 
     return true if container.style.eql?("line")
 
-    return true if container.sort.empty?
+    return true unless container.sort
 
     return true unless Container::Sort.field_choices.key?(container.sort)
 
