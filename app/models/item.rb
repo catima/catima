@@ -86,7 +86,7 @@ class Item < ApplicationRecord
   def self.sorted_by_created_at(direction: "ASC")
     reorder(
       Arel.sql(
-        "created_at #{direction}"
+        "items.created_at #{direction}"
       )
     )
   end
@@ -94,7 +94,7 @@ class Item < ApplicationRecord
   def self.sorted_by_updated_at(direction: "ASC")
     reorder(
       Arel.sql(
-        "updated_at #{direction}"
+        "items.updated_at #{direction}"
       )
     )
   end

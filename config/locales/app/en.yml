@@ -471,6 +471,7 @@ en:
       asc: Ascending
       desc: Descending
       missing_sort_field: "Impossible to display the %{container_slug} container because the sort field is missing"
+      invalid_configuration: "Invalid container configuration"
 
   catalog_admin:
     approvals:

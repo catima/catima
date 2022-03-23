@@ -467,6 +467,7 @@ fr:
       asc: Ascendant
       desc: Descendant
       missing_sort_field: "Impossible d'afficher le container %{container_slug} car le champ de tri est absent"
+      invalid_configuration: "Configuration du container non valide"
 
   catalog_admin:
     approvals:
