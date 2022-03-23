@@ -17,7 +17,6 @@ class Container::ItemList < ::Container
   store_accessor :content, :item_type, :style
 
   include ItemListsHelper
-  include CatalogAdmin::ContainersHelper
 
   validate :style_validation
   validate :sort_validation
@@ -93,10 +92,10 @@ class Container::ItemList < ::Container
     errors.add :slug, "Multiple ItemList containers in the same page not allowed."
   end
 
-  def find_item_type_by_id(item_type)
-    return unless item_type
+  def find_item_type_by_id(item_type_id)
+    return unless item_type_id
 
-    ItemType.find(item_type)
+    ItemType.find(item_type_id)
   end
 
   def find_groupable_fields(item_type)
