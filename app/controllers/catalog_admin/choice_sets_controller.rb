@@ -69,7 +69,7 @@ class CatalogAdmin::ChoiceSetsController < CatalogAdmin::BaseController
     choice_params["choices"].each do |choice_params|
       @choice_set.choices.new(choice_params)
     end
-    @choice_set.save
+    @choice_set.save!
   end
 
   private

@@ -20,7 +20,6 @@ class ChoiceSet < ApplicationRecord
   enum choice_set_type: { default: 0, datation: 1 }
   FORMATS = %w(Y M h YM MD hm YMD hms MDh YMDh MDhm YMDhm MDhms YMDhms).freeze
 
-
   def self.datation
     where(choice_set_type: :datation)
   end

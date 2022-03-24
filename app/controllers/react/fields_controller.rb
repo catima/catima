@@ -50,7 +50,7 @@ class React::FieldsController < React::BaseController
     choices = Choice.where(choice_set_id: field.choice_set_ids).order(:choice_set_id)
 
     if params[:search]
-      choices = choices.where("LOWER(short_name_translations) LIKE ?", "%#{params[:search].downcase}% OR LOWER(long_name_translations) LIKE ?", "%#{params[:search].downcase}%")
+      choices = choices.where("LOWER(short_name_translations) LIKE :q OR LOWER(long_name_translations) LIKE :q", q: "%#{params[:search].downcase}%")
     end
     choices = params[:page].blank? ? choices : choices.page(params[:page])
 
