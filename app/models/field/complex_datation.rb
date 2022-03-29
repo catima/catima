@@ -113,7 +113,7 @@ class Field::ComplexDatation < ::Field
   private
 
   def presence_of_allowed_formats
-    errors.add(:allowed_formats, :empty) if !allowed_formats.include?("date_time") && !allowed_formats.include?("datation_choice")
+    errors.add(:allowed_formats, :empty) if !allowed_formats || !allowed_formats.include?("date_time") && !allowed_formats.include?("datation_choice")
   end
 
   def transform_value(v)
