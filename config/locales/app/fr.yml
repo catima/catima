@@ -666,7 +666,7 @@ fr:
         choice_set: Ensemble de choix
         new_choice_set: Nouvel ensemble de choix
       complex_datation_option_inputs:
-        allow_bc: 'Authoriser les dates négatives'
+        allow_bc: 'Autoriser les dates avec Jesus Christ'
         allowed_formats: Formats authorisé
         choice_set_ids: Ensembles de choix
         date_time: Date
