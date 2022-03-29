@@ -204,7 +204,6 @@ const ComplexDatationInput = (props) => {
   }
 
   function _handleSelectedChoicesChangeBC(e) {
-    console.log(e.target.checked)
     setSelectedChoices({...selectedChoices, BC: e.target.checked})
     setData({...getData(), 'selected_choices': {...getData().selected_choices, BC: e.target.checked}})
   }
