@@ -42,6 +42,6 @@ class Container::Search < ::Container
   def uniqueness_validation
     return unless page.containers.where.not(id: id).exists?(type: 'Container::Search')
 
-    errors.add :slug, "Multiple Search containers in the same page not allowed."
+    errors.add :base, "Multiple Search containers in the same page is not allowed."
   end
 end

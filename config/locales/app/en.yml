@@ -25,7 +25,7 @@ en:
         name: "Name"
         template: "Template"
       item:
-        suggestions_activated: "Enable suggestion"
+        suggestions_activated: "Enable suggestions"
         allow_anonymous_suggestions: "Enable anonymous suggestions"
         suggestion_email: "Email to notify"
       catalog:

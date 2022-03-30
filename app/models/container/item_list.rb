@@ -89,7 +89,7 @@ class Container::ItemList < ::Container
   def uniqueness_validation
     return unless page.containers.where.not(id: id).exists?(type: 'Container::ItemList')
 
-    errors.add :slug, "Multiple ItemList containers in the same page not allowed."
+    errors.add :base, "Multiple ItemList containers in the same page is not allowed."
   end
 
   def find_item_type_by_id(item_type_id)
