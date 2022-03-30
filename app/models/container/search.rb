@@ -40,8 +40,11 @@ class Container::Search < ::Container
   end
 
   def uniqueness_validation
-    return unless page.containers.where.not(id: id).exists?(type: 'Container::Search')
+    return unless page.containers
+                      .where.not(id: id)
+                      .where(locale: locale)
+                      .exists?(type: 'Container::Search')
 
-    errors.add :base, "Multiple Search containers in the same page is not allowed."
+    errors.add :base, I18n.t("activerecord.models.container.search.unique")
   end
 end

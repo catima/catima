@@ -9,6 +9,11 @@ en:
       api_log:
         one: API Log
         other: API Logs
+      container:
+        item_list:
+          unique: "Multiple \"ItemList\" containers in the same page is not allowed"
+        search:
+          unique: "Multiple \"Search\" containers in the same page is not allowed"
     attributes:
       choice_set:
         name: "Name"
