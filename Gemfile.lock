@@ -24,8 +24,13 @@ GIT
       sinatra (>= 2.0.0, <= 3.0.0)
 
 GEM
-  remote: https://rubygems.org/
   remote: https://rails-assets.org/
+  specs:
+    rails-assets-autosize (4.0.2)
+    rails-assets-mousetrap (1.6.2)
+
+GEM
+  remote: https://rubygems.org/
   specs:
     actioncable (6.1.4.6)
       actionpack (= 6.1.4.6)
@@ -325,7 +330,7 @@ GEM
       coderay (~> 1.1)
       method_source (~> 1.0)
     public_suffix (4.0.6)
-    puma (5.6.2)
+    puma (5.6.4)
       nio4r (~> 2.0)
     pundit (2.1.0)
       activesupport (>= 3.0.0)
@@ -352,8 +357,6 @@ GEM
       bundler (>= 1.15.0)
       railties (= 6.1.4.6)
       sprockets-rails (>= 2.0.0)
-    rails-assets-autosize (4.0.2)
-    rails-assets-mousetrap (1.6.2)
     rails-dom-testing (2.0.3)
       activesupport (>= 4.2.0)
       nokogiri (>= 1.6)
