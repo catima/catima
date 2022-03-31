@@ -4685,11 +4685,6 @@ lodash.uniq@^4.5.0:
   resolved "https://registry.yarnpkg.com/lodash.uniq/-/lodash.uniq-4.5.0.tgz#d0225373aeb652adc1bc82e4945339a842754773"
   integrity sha1-0CJTc662Uq3BvILklFM5qEJ1R3M=
 
-lodash@^3.5.0:
-  version "3.10.1"
-  resolved "https://registry.yarnpkg.com/lodash/-/lodash-3.10.1.tgz#5bf45e8e49ba4189e17d482789dfd15bd140b7b6"
-  integrity sha1-W/Rejkm6QYnhfUgnid/RW9FAt7Y=
-
 lodash@^4.0.1, lodash@^4.17.11, lodash@^4.17.14, lodash@^4.17.15, lodash@^4.17.5:
   version "4.17.21"
   resolved "https://registry.yarnpkg.com/lodash/-/lodash-4.17.21.tgz#679591c564c3bffaae8454cf0b3df370c3d6911c"
@@ -4740,9 +4735,9 @@ make-dir@^3.0.2, make-dir@^3.1.0:
   dependencies:
     semver "^6.0.0"
 
-"mammoth@https://github.com/catima/mammoth.js.git#b789554":
+"mammoth@https://github.com/catima/mammoth.js.git#3f64c02":
   version "1.4.3"
-  resolved "https://github.com/catima/mammoth.js.git#b789554fa793686b506b9028bad61a5ac3da9801"
+  resolved "https://github.com/catima/mammoth.js.git#3f64c02c8725ae6e97a8628936f11f509e7207d2"
   dependencies:
     argparse "~1.0.3"
     bluebird "~3.4.0"
@@ -4751,7 +4746,7 @@ make-dir@^3.0.2, make-dir@^3.1.0:
     path-is-absolute "^1.0.0"
     sax "~1.1.1"
     underscore "~1.8.3"
-    xmlbuilder "~2.6.4"
+    xmlbuilder "~8.2.2"
 
 map-cache@^0.2.2:
   version "0.2.2"
@@ -8051,12 +8046,10 @@ ws@^8.1.0:
   resolved "https://registry.yarnpkg.com/ws/-/ws-8.4.2.tgz#18e749868d8439f2268368829042894b6907aa0b"
   integrity sha512-Kbk4Nxyq7/ZWqr/tarI9yIt/+iNNFOjBXEWgTb4ydaNHBNGgvf2QHbS9fdfsndfjFlFwEd4Al+mw83YkaD10ZA==
 
-xmlbuilder@~2.6.4:
-  version "2.6.5"
-  resolved "https://registry.yarnpkg.com/xmlbuilder/-/xmlbuilder-2.6.5.tgz#6ff7ad60fb72d22764f007a164b77f2bf1400526"
-  integrity sha1-b/etYPty0idk8AehZLd/K/FABSY=
-  dependencies:
-    lodash "^3.5.0"
+xmlbuilder@~8.2.2:
+  version "8.2.2"
+  resolved "https://registry.yarnpkg.com/xmlbuilder/-/xmlbuilder-8.2.2.tgz#69248673410b4ba42e1a6136551d2922335aa773"
+  integrity sha1-aSSGc0ELS6QuGmE2VR0pIjNap3M=
 
 xtend@^4.0.0, xtend@~4.0.1:
   version "4.0.2"
