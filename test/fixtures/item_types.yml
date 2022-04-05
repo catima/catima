@@ -114,3 +114,9 @@ not_visible_book:
   name_translations: { "name_en": "Not visible book" }
   name_plural_translations: { "name_plural_en": "Not visible books" }
   slug: not-visible-books
+
+complex_datation:
+  catalog: complex_datation
+  name_translations: { "name_en": "Complex Datation" }
+  name_plural_translations: { "name_plural_en": "Complex Datation" }
+  slug: complex-datation

@@ -130,3 +130,13 @@ to_be_deleted:
   throttle_time_window: 1 * 3600
   throttle_max_requests: 1000
   api_enabled: true
+
+complex_datation:
+  name: complex_datation
+  slug: complex-datation
+  primary_language: en
+  requires_review: false
+  style: null
+  throttle_time_window: 1 * 3600
+  throttle_max_requests: 1000
+  api_enabled: true

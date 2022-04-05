@@ -27,6 +27,14 @@ module Search::MultivaluedSearch
     where_scope.call("#{data_field_jsonb_expr} ?| array[:v]", :v => exact_values)
   end
 
+  def search_data_matching_more_complex_datation_choice(scope, exact_values, negate = false)
+    exact_values = Array.wrap(exact_values).select(&:present?)
+    return scope if exact_values.empty?
+
+    where_scope = ->(*where_query) { negate ? scope.where.not(where_query) : scope.where(where_query) }
+    where_scope.call("choice_id = ANY (?)", exact_values)
+  end
+
   def search_data_matching_all(scope, exact_values, negate = false)
     exact_values = Array.wrap(exact_values).select(&:present?)
     return scope if exact_values.empty?

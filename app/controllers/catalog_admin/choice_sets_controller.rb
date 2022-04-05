@@ -37,7 +37,7 @@ class CatalogAdmin::ChoiceSetsController < CatalogAdmin::BaseController
   def update
     find_choice_set
     authorize(@choice_set)
-    if @choice_set.update(choice_set_params)
+    if @choice_set.update(choice_set_params.except(:choice_set_type, :format))
       redirect_to(catalog_admin_choice_sets_path, :notice => updated_message)
     else
       render("edit")
@@ -49,6 +49,27 @@ class CatalogAdmin::ChoiceSetsController < CatalogAdmin::BaseController
     authorize(@choice_set)
     @choice_set.touch(:deleted_at)
     redirect_to(catalog_admin_choice_sets_path, notice: deleted_message)
+  end
+
+  def export
+    find_choice_set
+    export = @choice_set.attributes.slice('name', 'deactivated_at', 'slug', 'deleted_at', 'choice_set_type', 'format')
+    export["choices"] = @choice_set.choices.map { |c| c.attributes.slice('short_name_translations', 'long_name_translations', 'category_id', 'parent_id', 'position', 'from_date', 'to_date') }
+    export.to_json
+    send_data export.to_json, type: :json, disposition: "attachment"
+  end
+
+  def new_import
+  end
+
+  def import_choice_set
+    choice_params = JSON.parse(params[:import_string])
+
+    @choice_set = @catalog.choice_sets.new(choice_params.reject { |k, v| k == 'choices' })
+    choice_params["choices"].each do |choice_params|
+      @choice_set.choices.new(choice_params)
+    end
+    @choice_set.save!
   end
 
   private
@@ -64,12 +85,15 @@ class CatalogAdmin::ChoiceSetsController < CatalogAdmin::BaseController
   def choice_set_params
     params.require(:choice_set).permit(
       :name,
+      :choice_set_type,
+      :format,
       :deactivated_at,
       :choices_attributes => [
         :id, :_destroy,
         :category_id,
         :short_name_de, :short_name_en, :short_name_fr, :short_name_it,
-        :long_name_de, :long_name_en, :long_name_fr, :long_name_it
+        :long_name_de, :long_name_en, :long_name_fr, :long_name_it,
+        :from_date, :to_date
       ])
   end
 

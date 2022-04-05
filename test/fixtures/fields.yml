@@ -514,3 +514,22 @@ editor_field_with_updater_and_timestamps:
   field_set: another_book (ItemType)
   uuid: another_book_with_editor_title_uuid
   options: { "updater": "1", "timestamps": "1" }
+
+complex_datation:
+  type: "Field::ComplexDatation"
+  name_translations: { "name_en": "Complex Datation" }
+  name_plural_translations: { "name_plural_en": "Complex Datations" }
+  slug: complex-datation
+  field_set: complex_datation (ItemType)
+  uuid: complex_datation_uuid
+  options: { "format": "YMD", "allow_bc": "1", "allowed_formats": [ "date_time", "datation_choice" ], "choice_set_ids": [ "", "1000" ] }
+
+complex_datation_name:
+  type: "Field::Text"
+  name_translations: { "name_en": "Name" }
+  name_plural_translations: { "name_plural_en": "Names" }
+  slug: name
+  field_set: complex_datation (ItemType)
+  primary: true
+  uuid: complex_datation_name
+

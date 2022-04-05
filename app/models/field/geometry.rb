@@ -43,7 +43,7 @@ class Field::Geometry < ::Field
     false
   end
 
-  def edit_props
+  def edit_props(item)
     { "bounds" => default_bounds, "layers" => geo_layers }
   end
 

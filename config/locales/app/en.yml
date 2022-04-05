@@ -12,6 +12,8 @@ en:
     attributes:
       choice_set:
         name: "Name"
+        choice_set_type: Choiceset type
+        format: Format
       page:
         slug: "Slug"
         title: "Title"
@@ -83,6 +85,7 @@ en:
   xref_field: Xref field
   compound_field: Compound field
   embed_field: Embed field
+  complexdatation_field: Complex Datation Field
   slug_help_text: "Lower case letters, numbers, and hyphens only. No accented characters."
   add_another: "Create and add another"
   maintenance:
@@ -555,7 +558,8 @@ en:
         short_name: 'Short name'
         long_name_optional: 'Long name (optional)'
         category_optional: 'Category (optional)'
-
+        from_date: Start date
+        to_date: End date
     choice_sets:
       choice:
         remove: "Remove"
@@ -661,6 +665,15 @@ en:
       choice_set_option_inputs:
         choice_set: "Choice set"
         new_choice_set: New choice set
+      complex_datation_option_inputs:
+        allow_bc: 'Allow negative dates'
+        allowed_formats: Allowed formats
+        choice_set_ids: Choicesets
+        date_time: Date
+        datation_choice: Datation choice
+        format: Format
+        BC: BC
+        tolerance: Tolerance
       common_form_fields:
         name: Name
         name_plural: Name (plural)
@@ -756,6 +769,11 @@ en:
           november: November
           december: December
         define_thumbnail: Define Thumbnail
+      complex_datation:
+        bc: '%{date} BC'
+        between: 'between %{from} and %{to}'
+        after: 'after %{date}'
+        before: 'before %{date}'
       edit:
         edit_field: "Edit %{field_set} “%{field}” field"
       index:

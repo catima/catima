@@ -50,7 +50,8 @@ class Field < ApplicationRecord
     "url" => "Field::URL",
     # "xref" => "Field::Xref", disabled, uncomment to enable it
     "compound" => "Field::Compound",
-    "embed" => "Field::Embed"
+    "embed" => "Field::Embed",
+    "complex_datation" => "Field::ComplexDatation"
   }.freeze
 
   include ActionView::Helpers::SanitizeHelper
@@ -235,7 +236,7 @@ class Field < ApplicationRecord
   end
 
   # Returns additional properties for React for editing component
-  def edit_props
+  def edit_props(item)
     {}
   end
 

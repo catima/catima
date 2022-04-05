@@ -17,6 +17,13 @@ class ChoiceSet < ApplicationRecord
   include HasDeletion
   include Clone
 
+  enum choice_set_type: { default: 0, datation: 1 }
+  FORMATS = %w(Y M h YM MD hm YMD hms MDh YMDh MDhm YMDhm MDhms YMDhms).freeze
+
+  def self.datation
+    where(choice_set_type: :datation)
+  end
+
   belongs_to :catalog
   has_many :choices, ->(set) { where(:catalog_id => set.catalog_id).order(:position) }, :dependent => :delete_all
   has_many :fields, :dependent => :destroy
@@ -27,6 +34,7 @@ class ChoiceSet < ApplicationRecord
 
   validates_presence_of :catalog
   validates_presence_of :name
+  validate :format_present_if_datation
 
   before_create :assign_uuid
 
@@ -50,6 +58,11 @@ class ChoiceSet < ApplicationRecord
     @flat_ordered_choices ||= recursive_ordered_choices(choices.ordered.reject(&:parent_id?)).flatten
   end
 
+
+  def find_sub_choices(parent)
+    choices.select { |choice| choice.parent_id == parent.id }
+  end
+
   private
 
   def parent_choices(choice, choices = [])
@@ -66,11 +79,18 @@ class ChoiceSet < ApplicationRecord
     end
   end
 
-  def find_sub_choices(parent)
-    choices.select { |choice| choice.parent_id == parent.id }
-  end
 
   def find_parent(choice)
     choices.detect { |item| item.id == choice.parent_id } if choice.parent_id?
+  end
+
+  def format_present_if_datation
+    return if choice_set_type != 'datation'
+    return if format.length != 0
+
+    errors.add(
+      :format,
+      I18n.t("errors.messages.blank")
+    )
   end
 end

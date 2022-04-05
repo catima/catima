@@ -10,6 +10,10 @@ class JsonConfigTest < ActiveSupport::TestCase
         "display_components" => [],
         "editor_components" => ["DateTimeInput"]
       },
+      "ComplexDatation" => {
+        "display_components" => [],
+        "editor_components" => ["ComplexDatationInput"]
+      },
       "Geometry" => {
         "display_components" => [],
         "editor_components" => ["GeoEditor"]
@@ -25,6 +29,10 @@ class JsonConfigTest < ActiveSupport::TestCase
       "DateTime" => {
         "display_components" => [],
         "editor_components" => ["DateTimeInput"]
+      },
+      "ComplexDatation" => {
+        "display_components" => [],
+        "editor_components" => ["ComplexDatationInput"]
       },
       "Geometry" => {
         "display_components" => [],
