@@ -177,6 +177,18 @@ class Field < ApplicationRecord
     human_readable?
   end
 
+  # Whether or not this field is sortable.
+  #
+  # Default depends on the human_readable method result, cannot be multiple, and subclasses can
+  # override.
+  #
+  # Mainly used for the sort field of the ItemType container.
+  def sortable?
+    return false if multiple?
+
+    human_readable?
+  end
+
   # Whether or not this field is filterable. Can be used in addition to the human_readable?
   # method.
   #

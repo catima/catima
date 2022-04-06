@@ -43,7 +43,7 @@ module CatalogAdmin::ContainersHelper
       Container::Sort::CHOICES.keys,
       :itself,
       ->(key) { I18n.t(".catalog_admin.containers.sorts.#{key}") },
-      options.reverse_merge(:include_blank => false),
+      options.reverse_merge(:include_blank => true),
       html_options
     )
   end

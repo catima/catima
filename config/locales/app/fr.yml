@@ -9,6 +9,11 @@ fr:
       api_log:
         one: API Log
         other: API Logs
+      container:
+        item_list:
+          unique: "L'ajout de plusieurs conteneurs \"ItemList\" dans la même page n'est pas autorisé"
+        search:
+          unique: "L'ajout de plusieurs conteneurs \"Search\" dans la même page n'est pas autorisé"
     attributes:
       choice_set:
         name: "Nom"
@@ -470,6 +475,7 @@ fr:
       asc: Ascendant
       desc: Descendant
       missing_sort_field: "Impossible d'afficher le container %{container_slug} car le champ de tri est absent"
+      invalid_configuration: "Configuration du container non valide"
 
   catalog_admin:
     approvals:
@@ -591,11 +597,13 @@ fr:
 
     containers:
       sorts:
-        f-asc: Champ ascendant
-        f-desc: Champ descendant
-        ca-asc: Date de création ascendant
-        ca-desc: Date de création descendant
-        help: "Sélection du style de tri des fiches. Il est possible de trier par champ ou par date de création. Si vous choisissez le tri par champ, pour le style \"line\" le champ de tri sera sélectionnable, pour les autres styles le champ primaire sera sélectionné par défaut"
+        f-asc: Champ (ascendant)
+        f-desc: Champ (descendant)
+        ca-asc: Date de création (ascendant)
+        ca-desc: Date de création (descendant)
+        ua-asc: Date de mise à jour (ascendant)
+        ua-desc: Date de mise à jour (descendant)
+        help: "Vous pouvez choisir le style de tri des fiches. Il est possible de trier par champ, par date de création ou par date de mise à jour. Si vous choisissez le tri par champ, pour le style \"line\" le champ de tri sera sélectionnable, pour les autres styles le champ primaire sera sélectionné par défaut."
       item_type_warning: "Vous devez créer au moins un type de fiche pour utiliser ce type de conteneur"
       common_form_fields:
         save_container: Enregistrer conteneur

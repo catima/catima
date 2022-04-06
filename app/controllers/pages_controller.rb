@@ -46,8 +46,9 @@ class PagesController < ApplicationController
     @list = ::ItemList::Filter.new(
       :item_type => item_type,
       :page => params[:page],
+      sort_type: container.sort,
       sort_field: sort_field,
-      sort: params[:sort] || container&.sort
+      sort: params[:sort] || Container::Sort.direction(container.sort)
     )
 
     formatted_sorted_items = @list.items.map { |item| helpers.formatted_item_for_line(item, list: @list, sort_field: sort_field) }

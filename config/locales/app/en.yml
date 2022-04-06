@@ -9,6 +9,11 @@ en:
       api_log:
         one: API Log
         other: API Logs
+      container:
+        item_list:
+          unique: "Multiple \"ItemList\" containers in the same page is not allowed"
+        search:
+          unique: "Multiple \"Search\" containers in the same page is not allowed"
     attributes:
       choice_set:
         name: "Name"
@@ -27,7 +32,7 @@ en:
         name: "Name"
         template: "Template"
       item:
-        suggestions_activated: "Enable suggestion"
+        suggestions_activated: "Enable suggestions"
         allow_anonymous_suggestions: "Enable anonymous suggestions"
         suggestion_email: "Email to notify"
       catalog:
@@ -474,6 +479,7 @@ en:
       asc: Ascending
       desc: Descending
       missing_sort_field: "Impossible to display the %{container_slug} container because the sort field is missing"
+      invalid_configuration: "Invalid container configuration"
 
   catalog_admin:
     approvals:
@@ -590,11 +596,13 @@ en:
 
     containers:
       sorts:
-        f-asc: Field ascending
-        f-desc: Field descending
-        ca-asc: Created at ascending
-        ca-desc: Created at descending
-        help: "Selection of the sorting style of the items. It is possible to sort by field or by creation date. If you choose to sort by field, for the \"line\" style, the sorting field will be selectable, for the other styles it will default to the primary field"
+        f-asc: Field (ascending)
+        f-desc: Field (descending)
+        ca-asc: Created at (ascending)
+        ca-desc: Created at (descending)
+        ua-asc: Updated at (ascending)
+        ua-desc: Updated at (descending)
+        help: "You can select the sorting style of the items. It is possible to sort by field, by creation date or by the update date. If you choose to sort by field, for the \"line\" style, the sorting field will be selectable, for the other styles it will default to the primary field."
       item_type_warning: "You need to create at least one item type to use this type of container"
       common_form_fields:
         save_container: Save container

@@ -59,8 +59,8 @@
   }
 
   .line__group__items {
+    user-select: none;
     width: 100%;
-    display: flex;
     position: relative;
     flex-flow: column;
     margin-top: 3rem;

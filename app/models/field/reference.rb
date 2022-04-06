@@ -70,6 +70,19 @@ class Field::Reference < ::Field
     false
   end
 
+  def sortable?
+    return false if multiple?
+
+    return false if related_item_type.field_for_select.nil?
+
+    # Avoid multiple levels of reference
+    return false if related_item_type.field_for_select.is_a?(Field::Reference)
+
+    return false unless related_item_type&.field_for_select.sortable?
+
+    true
+  end
+
   def describe
     super.merge(related_item_type: related_item_type.slug)
   end
@@ -105,7 +118,9 @@ class Field::Reference < ::Field
   end
 
   def order_items_by(direction: 'ASC', nulls_order: 'LAST')
-    "(ref_items.data->>'#{related_item_type.field_for_select.uuid}') #{direction} NULLS #{nulls_order}" unless related_item_type.field_for_select.nil?
+    return unless related_item_type.field_for_select.sortable?
+
+    "(ref_items.data->>'#{related_item_type.field_for_select.uuid}') #{direction} NULLS #{nulls_order}"
   end
 
   def allows_unique?
