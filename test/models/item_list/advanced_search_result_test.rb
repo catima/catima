@@ -43,7 +43,7 @@ class ItemList::AdvancedSearchResultTest < ActiveSupport::TestCase
 
   def test_search_date_time_exact
     model = advanced_searches(:exact_1_1_300)
-    response_array = %w[choice_1_1_300 "date_1_1_300", "choice_1_1_300_400_500"]
+    response_array = %w[choice_1_1_300 date_1_1_300 choice_1_1_300_400_500]
 
     search = ItemList::AdvancedSearchResult.new(model: model)
     assert_same_elements(
@@ -54,7 +54,7 @@ class ItemList::AdvancedSearchResultTest < ActiveSupport::TestCase
 
   def test_search_date_time_exact_bc
     model = advanced_searches(:exact_1_1_300_bc)
-    response_array = %w[choice_1_1_300_bc "date_1_1_300_bc"]
+    response_array = %w[choice_1_1_300_bc date_1_1_300_bc]
 
     search = ItemList::AdvancedSearchResult.new(model: model)
     assert_same_elements(

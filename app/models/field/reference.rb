@@ -78,7 +78,7 @@ class Field::Reference < ::Field
     # Avoid multiple levels of reference
     return false if related_item_type.field_for_select.is_a?(Field::Reference)
 
-    return false unless related_item_type&.field_for_select.sortable?
+    return false unless related_item_type&.field_for_select&.sortable?
 
     true
   end

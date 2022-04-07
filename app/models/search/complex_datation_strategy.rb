@@ -21,7 +21,7 @@ class Search::ComplexDatationStrategy < Search::BaseStrategy
     if criteria[:default]
       if criteria[:child_choices_activated] == "true"
         choice = Choice.find(criteria[:default])
-        str ="{#{(choice.childrens.pluck(:id) + [(criteria[:default] || criteria[:exact]).to_i]).flatten.map { |id| id }.join(', ')}}"
+        str = "{#{(choice.childrens.pluck(:id) + [(criteria[:default] || criteria[:exact]).to_i]).flatten.map { |id| id }.join(', ')}}"
         scope = search_data_matching_more_complex_datation_choice(scope, str, negate)
       else
         scope = search_data_matching_one(scope, criteria[:default], negate)
