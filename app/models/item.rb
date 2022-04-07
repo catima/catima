@@ -59,6 +59,7 @@ class Item < ApplicationRecord
   # after_commit :update_views_cache, if: proc { |record| record.saved_changes.key?(:data) }
 
   def self.sorted_by_field(field, direction: "ASC", nulls_order: 'LAST')
+    direction = ItemList::Sort.included?(direction) ? direction : ItemList::Sort.ascending
     sql = []
     sql << field.order_items_by(direction: direction, nulls_order: nulls_order) unless field.nil?
 
@@ -73,19 +74,31 @@ class Item < ApplicationRecord
   def self.sorted_by_ref_or_choice(sql, field)
     if field.type == Field::TYPES['reference']
       return joins("LEFT JOIN items ref_items ON ref_items.id::text = items.data->>'#{field.uuid}'")
-             .reorder(Arel.sql(sql.join(", ")))
+             .reorder(
+               Arel.sql(sql.join(", "))
+             )
     end
 
     return unless field.type == Field::TYPES['choice']
 
-    joins("LEFT JOIN choices ON choices.id::text = items.data->>'#{field.uuid}'")
-      .reorder(Arel.sql(sql.join(", ")))
+    joins("LEFT JOIN choices choices_#{field.uuid} ON choices_#{field.uuid}.id::text = items.data->>'#{field.uuid}' ")
+      .reorder(
+        Arel.sql(sql.map { |s| s.gsub('choices', "choices_#{field.uuid}") }.join(", "))
+      )
   end
 
   def self.sorted_by_created_at(direction: "ASC")
     reorder(
       Arel.sql(
-        "created_at #{direction}"
+        "items.created_at #{direction}"
+      )
+    )
+  end
+
+  def self.sorted_by_updated_at(direction: "ASC")
+    reorder(
+      Arel.sql(
+        "items.updated_at #{direction}"
       )
     )
   end

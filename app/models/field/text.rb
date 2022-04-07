@@ -140,7 +140,9 @@ class Field::Text < ::Field
   end
 
   def order_items_by(direction: 'ASC', nulls_order: 'LAST')
-    "LOWER(NULLIF(items.data->>'#{uuid}', '')) #{direction} NULLS #{nulls_order}"
+    json_request = i18n? ? "items.data->'#{uuid}'->'_translations'->>'#{I18n.locale}'" : "items.data->>'#{uuid}'"
+
+    "LOWER(NULLIF(#{json_request}, '')) #{direction} NULLS #{nulls_order}"
   end
 
   def sql_type

@@ -8,7 +8,7 @@ class Field::ComplexDatation < ::Field
   validate :presence_of_allowed_formats
 
   def custom_field_permitted_attributes
-    [:format, :allow_bc, allowed_formats: [], choice_set_ids: []]
+    [:format, :allow_bc, { allowed_formats: [], choice_set_ids: [] }]
   end
 
   def custom_item_permitted_attributes
@@ -37,16 +37,18 @@ class Field::ComplexDatation < ::Field
   end
 
   def allowed_formats
-    super ? super : super&.compact_blank
+    super || super&.compact_blank
   end
 
-  def csv_value(item, _user = nil)
+  def csv_value(item, _user=nil)
     value = raw_value(item)
     case value["selected_format"]
     when 'date_time'
       Field::ComplexDatationPresenter.new(nil, item, self).value
     when 'datation_choice'
-      selected_choices.map { |c| "#{c.short_name} (#{Field::ComplexDatationPresenter.new(nil, item, self).choice_dates(c.from_date, c.to_date, c.choice_set.format, value['selected_choices']['BC'])})" }.join('; ')
+      selected_choices.map do |c|
+        "#{c.short_name} (#{Field::ComplexDatationPresenter.new(nil, item, self).choice_dates(c.from_date, c.to_date, c.choice_set.format, value['selected_choices']['BC'])})"
+      end.join('; ')
     else
       ''
     end
@@ -65,13 +67,13 @@ class Field::ComplexDatation < ::Field
   end
 
   def edit_props(item)
-    {"fetchUrl" => Rails.application.routes.url_helpers.react_field_complex_datation_choices_url(catalog.slug, I18n.locale, item_type.slug, field_uuid: self.uuid),
-     "selectedChoicesValue" => selected_choices(item[:item]).map { |choice| {label: choice.short_name, value: choice.id} }, selectedFormat: allowed_formats }
+    { "fetchUrl" => Rails.application.routes.url_helpers.react_field_complex_datation_choices_url(catalog.slug, I18n.locale, item_type.slug, field_uuid: uuid),
+      "selectedChoicesValue" => selected_choices(item[:item]).map { |choice| { label: choice.short_name, value: choice.id } }, selectedFormat: allowed_formats }
   end
 
   # Translates YMD.. hash into an array [Y, M, D, h, m, s] (or nil).
   def value_as_array(item, format: "YMDhms", date_name: false, value: false)
-    v = value ? value : raw_value(item)
+    v = value || raw_value(item)
     return nil if v.nil?
 
     defaults = {}
@@ -86,7 +88,9 @@ class Field::ComplexDatation < ::Field
     components = value_as_array(item)
     return nil if components.nil?
 
-    (0..(components.length - 1)).collect { |i| components[i].to_s.present? ? components[i] * 10 ** (10 - 2 * i) : 0 }.sum
+    (0..(components.length - 1)).collect do |i|
+      components[i].to_s.present? ? components[i] * 10**(10 - 2 * i) : 0
+    end.sum
   end
 
   def field_value_for_item(it)
@@ -95,32 +99,44 @@ class Field::ComplexDatation < ::Field
 
   def search_conditions_as_hash(locale)
     [
-      {:value => I18n.t("advanced_searches.fields.date_time_search_field.exact", locale: locale), :key => "exact"},
-      {:value => I18n.t("advanced_searches.fields.date_time_search_field.after", locale: locale), :key => "after"},
-      {:value => I18n.t("advanced_searches.fields.date_time_search_field.before", locale: locale), :key => "before"},
-      {:value => I18n.t("advanced_searches.fields.date_time_search_field.between", locale: locale), :key => "between"},
-      {:value => I18n.t("advanced_searches.fields.date_time_search_field.outside", locale: locale), :key => "outside"}
+      { :value => I18n.t("advanced_searches.fields.date_time_search_field.exact", locale: locale), :key => "exact" },
+      { :value => I18n.t("advanced_searches.fields.date_time_search_field.after", locale: locale), :key => "after" },
+      { :value => I18n.t("advanced_searches.fields.date_time_search_field.before", locale: locale), :key => "before" },
+      { :value => I18n.t("advanced_searches.fields.date_time_search_field.between", locale: locale), :key => "between" },
+      { :value => I18n.t("advanced_searches.fields.date_time_search_field.outside", locale: locale), :key => "outside" }
     ]
   end
 
   def search_options_as_hash
     [
-      {:format => self.format},
-      {:localizedDateTimeData => I18n.t('date')}
+      { :format => self.format },
+      { :localizedDateTimeData => I18n.t('date') }
     ]
+  end
+
+  def allows_unique?
+    false
+  end
+
+  def groupable?
+    false
+  end
+
+  def sortable?
+    false
   end
 
   private
 
   def presence_of_allowed_formats
-    errors.add(:allowed_formats, :empty) if !allowed_formats || !allowed_formats.include?("date_time") && !allowed_formats.include?("datation_choice")
+    errors.add(:allowed_formats, :empty) if !allowed_formats || allowed_formats.exclude?("date_time") && allowed_formats.exclude?("datation_choice")
   end
 
   def transform_value(v)
     return nil if v.nil?
     return v if v.is_a?(Hash) && !v.key?("raw_value")
 
-    v = {"raw_value" => v} if v.is_a?(Integer)
+    v = { "raw_value" => v } if v.is_a?(Integer)
     v["raw_value"].nil? ? nil : v
   end
 

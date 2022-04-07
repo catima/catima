@@ -25,7 +25,7 @@ module SearchesHelper
   def item_list_display_types(form)
     form.select(
       :display_type,
-      ItemList::STYLES.map { |style, _| [style, style] },
+      Container::Search.display_type_choices.map { |style, _| [style, style] },
       :label => t(".display_type.label"),
       :help => t(".display_type.help"),
       :include_blank => true

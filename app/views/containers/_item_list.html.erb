@@ -1,4 +1,10 @@
 <% if item_list %>
-  <%= render_item_list(item_list, params, container) %>
-  <%= paginate(item_list.items) unless params[:style] == "line" %>
+  <% if item_list_is_valid?(container) %>
+    <%= render_item_list(item_list, params, container) %>
+    <%= paginate(item_list.items) unless params[:style] == "line" %>
+  <% else %>
+    <div class="alert alert-danger">
+      <%= t(".invalid_configuration") %>
+    </div>
+  <% end %>
 <% end %>

@@ -53,21 +53,35 @@ class CatalogAdmin::ChoiceSetsController < CatalogAdmin::BaseController
 
   def export
     find_choice_set
+    authorize(@choice_set)
     export = @choice_set.attributes.slice('name', 'deactivated_at', 'slug', 'deleted_at', 'choice_set_type', 'format')
-    export["choices"] = @choice_set.choices.map { |c| c.attributes.slice('short_name_translations', 'long_name_translations', 'category_id', 'parent_id', 'position', 'from_date', 'to_date') }
+    export["choices"] = @choice_set.choices.map do |c|
+      c.attributes
+       .slice(
+         'short_name_translations',
+         'long_name_translations',
+         'category_id',
+         'parent_id',
+         'position',
+         'from_date',
+         'to_date'
+       )
+    end
     export.to_json
     send_data export.to_json, type: :json, disposition: "attachment"
   end
 
   def new_import
+    authorize(ChoiceSet)
   end
 
   def import_choice_set
     choice_params = JSON.parse(params[:import_string])
 
-    @choice_set = @catalog.choice_sets.new(choice_params.reject { |k, v| k == 'choices' })
-    choice_params["choices"].each do |choice_params|
-      @choice_set.choices.new(choice_params)
+    @choice_set = @catalog.choice_sets.new(choice_params.reject { |k, _| k == 'choices' })
+    authorize(@choice_set)
+    choice_params["choices"].each do |choice|
+      @choice_set.choices.new(choice)
     end
     @choice_set.save!
   end
@@ -88,12 +102,12 @@ class CatalogAdmin::ChoiceSetsController < CatalogAdmin::BaseController
       :choice_set_type,
       :format,
       :deactivated_at,
-      :choices_attributes => [
-        :id, :_destroy,
-        :category_id,
-        :short_name_de, :short_name_en, :short_name_fr, :short_name_it,
-        :long_name_de, :long_name_en, :long_name_fr, :long_name_it,
-        :from_date, :to_date
+      :choices_attributes => %i[
+        id _destroy
+        category_id
+        short_name_de short_name_en short_name_fr short_name_it
+        long_name_de long_name_en long_name_fr long_name_it
+        from_date to_date
       ])
   end
 

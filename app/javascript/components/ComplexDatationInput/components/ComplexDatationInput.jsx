@@ -350,7 +350,7 @@ const ComplexDatationInput = (props) => {
               {Translations.messages['catalog_admin.fields.date_time_option_inputs.months.january']}
             </option>
             <option value="2">
-              {Translations.messages['catalog_admin.fields.date_time_option_inputs.months.fabruary']}
+              {Translations.messages['catalog_admin.fields.date_time_option_inputs.months.february']}
             </option>
             <option value="3">
               {Translations.messages['catalog_admin.fields.date_time_option_inputs.months.march']}
