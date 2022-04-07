@@ -1,3 +1,5 @@
+# rubocop:disable Layout/LineLength
+
 require "test_helper"
 
 class ItemList::AdvancedSearchResultTest < ActiveSupport::TestCase
@@ -250,3 +252,4 @@ class ItemList::AdvancedSearchResultTest < ActiveSupport::TestCase
     )
   end
 end
+# rubocop:enable Layout/LineLength
