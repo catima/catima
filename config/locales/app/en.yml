@@ -90,7 +90,7 @@ en:
   xref_field: Xref field
   compound_field: Compound field
   embed_field: Embed field
-  complexdatation_field: Complex Datation Field
+  complexdatation_field: Datation Field
   slug_help_text: "Lower case letters, numbers, and hyphens only. No accented characters."
   add_another: "Create and add another"
   maintenance:
@@ -577,6 +577,7 @@ en:
           first: first
           last: last
       edit:
+        export: "Export choice set"
         choices: 'Choices'
         edit_choice_set: "Edit choice set "
         update_choice_set: Update choice set
@@ -585,6 +586,7 @@ en:
         category_optional: 'Category (optional)'
         new_choice: "New choice"
       index:
+        import: "Import choice set"
         choice_sets: Choice sets
         new_choice_set: "New choice set"
         name: Name
@@ -593,6 +595,9 @@ en:
       new:
         new_choice_set: "New choice set"
         create_choice_set: Create choice set
+      new_import:
+        import_choice_set: "Import a choice set"
+        import: Import
 
     containers:
       sorts:

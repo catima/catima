@@ -91,7 +91,7 @@ fr:
   xref_field: Champ Xref
   compound_field: Champ composé
   embed_field: Champ d’intégration (embed)
-  complexdatation_field: Champ de datation complexe
+  complexdatation_field: Champ de datation
   slug_help_text: "Minuscules, chiffres et traits d'union seulement. Pas de caractères accentués."
   add_another: "Créer et ajouter un autre"
   maintenance:
