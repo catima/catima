@@ -43,7 +43,7 @@ class Search::ComplexDatationStrategy < Search::BaseStrategy
     scope = append_joins_on_choices(scope)
 
     search_interval_dates(
-      scope, criteria, {start: start_date_time, end: end_date_time}, negate, field_condition
+      scope, criteria, { start: start_date_time, end: end_date_time }, negate, field_condition
     )
   end
 
@@ -81,7 +81,7 @@ class Search::ComplexDatationStrategy < Search::BaseStrategy
           "#{sql_select_table_name}.data->'#{field.uuid}'->>'selected_format' = 'date_time' AND
              #{date_time_to_interval(date_time, 'from')} #{sql_operator} #{make_interval(date_time)} AND
              #{date_time_to_interval(date_time, 'to')}  #{sql_operator} #{make_interval(date_time)}")
-                    .or(
+             .or(
                       scope.where(
                         "#{sql_select_table_name}.data->'#{field.uuid}'->>'selected_format' = 'datation_choice' AND
                #{choice_to_interval(date_time, 'from_date')} #{sql_operator} #{make_interval(date_time)} AND
@@ -89,7 +89,7 @@ class Search::ComplexDatationStrategy < Search::BaseStrategy
                     )
       else
         scope.where(
-          "#{sql_select_table_name}.data->'#{field.uuid}'->>'selected_format' = 'date_time' AND
+                "#{sql_select_table_name}.data->'#{field.uuid}'->>'selected_format' = 'date_time' AND
                 ((#{date_time_to_interval(date_time, 'from')} <= #{make_interval(date_time, '+', tolerance)} AND
                 #{date_time_to_interval(date_time, 'from')} >= #{make_interval(date_time, '-', tolerance)}) OR
                 (#{date_time_to_interval(date_time, 'to')}  <= #{make_interval(date_time, '+', tolerance)} AND
@@ -98,7 +98,7 @@ class Search::ComplexDatationStrategy < Search::BaseStrategy
                 #{date_time_to_interval(date_time, 'to')}  >= #{make_interval(date_time, '+', tolerance)}) OR
                 (#{date_time_to_interval(date_time, 'from')}  <= #{make_interval(date_time, '+', tolerance)} AND #{where_date_is_not_set('to')}) OR
                 (#{date_time_to_interval(date_time, 'to')}  >= #{make_interval(date_time, '-', tolerance)} AND #{where_date_is_not_set('from')}))")
-                    .or(
+             .or(
                       scope.where(
                         "#{sql_select_table_name}.data->'#{field.uuid}'->>'selected_format' = 'datation_choice' AND
                ((#{choice_to_interval(date_time, 'from_date')} <= #{make_interval(date_time, '+', tolerance)} AND

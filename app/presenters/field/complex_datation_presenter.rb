@@ -50,7 +50,7 @@ class Field::ComplexDatationPresenter < FieldPresenter
 
     links_and_prefixed_names = choices.map do |choice|
       value_slug = [I18n.locale, choice.short_name].join("-")
-      html_options = {'data-toggle': "tooltip", title: choice_dates(choice.from_date, choice.to_date, choice.choice_set.format, raw_val['selected_choices']['BC'])}
+      html_options = { 'data-toggle': "tooltip", title: choice_dates(choice.from_date, choice.to_date, choice.choice_set.format, raw_val['selected_choices']['BC']) }
       [
         browse_similar_items_link(
           choice.long_display_name, item, field, value_slug, html_options: html_options
