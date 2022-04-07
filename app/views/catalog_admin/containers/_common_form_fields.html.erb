@@ -1,3 +1,5 @@
+<div class="base-errors"><%= @container.errors.where(:base).first&.full_message %></div>
+
 <%= hidden_field_tag(:type, params[:type]) if params[:type] %>
 <%= hidden_field_tag(:l, params[:l]) if params[:l] %>
 

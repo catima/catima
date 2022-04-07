@@ -74,19 +74,23 @@ class Item < ApplicationRecord
   def self.sorted_by_ref_or_choice(sql, field)
     if field.type == Field::TYPES['reference']
       return joins("LEFT JOIN items ref_items ON ref_items.id::text = items.data->>'#{field.uuid}'")
-             .reorder(Arel.sql(sql.join(", ")))
+             .reorder(
+               Arel.sql(sql.join(", "))
+             )
     end
 
     return unless field.type == Field::TYPES['choice']
 
-    joins("LEFT JOIN choices ON choices.id::text = items.data->>'#{field.uuid}'")
-      .reorder(Arel.sql(sql.join(", ")))
+    joins("LEFT JOIN choices choices_#{field.uuid} ON choices_#{field.uuid}.id::text = items.data->>'#{field.uuid}' ")
+      .reorder(
+        Arel.sql(sql.map { |s| s.gsub('choices', "choices_#{field.uuid}") }.join(", "))
+      )
   end
 
   def self.sorted_by_created_at(direction: "ASC")
     reorder(
       Arel.sql(
-        "created_at #{direction}"
+        "items.created_at #{direction}"
       )
     )
   end
@@ -94,7 +98,7 @@ class Item < ApplicationRecord
   def self.sorted_by_updated_at(direction: "ASC")
     reorder(
       Arel.sql(
-        "updated_at #{direction}"
+        "items.updated_at #{direction}"
       )
     )
   end

@@ -20,7 +20,7 @@ module ItemListsHelper
   end
 
   def item_list_title(item, item_type)
-    return item_type.name_plural + " (" + item.default_display_name + ")" if item.present?
+    return item_type.name_plural + " (#{item.default_display_name})" if item.present?
 
     item_type.name_plural
   end
@@ -48,5 +48,20 @@ module ItemListsHelper
     return ItemList::Sort.ascending unless ItemList::Sort.included?(direction)
 
     direction
+  end
+
+  def item_list_is_valid?(container)
+    return false unless container.is_a?(Container::ItemList)
+
+    return true if container.style.eql?("line")
+
+    return true unless container.sort
+
+    return true unless Container::Sort.field_choices.key?(container.sort)
+
+    it = ItemType.find(container.item_type)
+    return true if it&.field_for_select&.sortable?
+
+    false
   end
 end

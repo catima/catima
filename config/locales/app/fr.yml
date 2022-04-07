@@ -9,6 +9,11 @@ fr:
       api_log:
         one: API Log
         other: API Logs
+      container:
+        item_list:
+          unique: "L'ajout de plusieurs conteneurs \"ItemList\" dans la même page n'est pas autorisé"
+        search:
+          unique: "L'ajout de plusieurs conteneurs \"Search\" dans la même page n'est pas autorisé"
     attributes:
       choice_set:
         name: "Nom"
@@ -470,6 +475,7 @@ fr:
       asc: Ascendant
       desc: Descendant
       missing_sort_field: "Impossible d'afficher le container %{container_slug} car le champ de tri est absent"
+      invalid_configuration: "Configuration du container non valide"
 
   catalog_admin:
     approvals:

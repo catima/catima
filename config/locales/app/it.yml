@@ -381,6 +381,7 @@ it:
       asc: Ascendente
       desc: Discendente
       missing_sort_field: "Impossibile visualizzare il contenitore %{container_slug} perché manca il campo di ordinamento"
+      invalid_configuration: "Configurazione del contenitore non valida"
 
   catalog_admin:
 

@@ -389,6 +389,7 @@ de:
       asc: Aufsteigend
       desc: Absteigend
       missing_sort_field: "Der Container %{container_slug} kann nicht angezeigt werden, weil das Sortierfeld fehlt"
+      invalid_configuration: "Ungültige Container-Konfiguration"
 
   catalog_admin:
 

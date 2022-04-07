@@ -9,6 +9,11 @@ en:
       api_log:
         one: API Log
         other: API Logs
+      container:
+        item_list:
+          unique: "Multiple \"ItemList\" containers in the same page is not allowed"
+        search:
+          unique: "Multiple \"Search\" containers in the same page is not allowed"
     attributes:
       choice_set:
         name: "Name"
@@ -27,7 +32,7 @@ en:
         name: "Name"
         template: "Template"
       item:
-        suggestions_activated: "Enable suggestion"
+        suggestions_activated: "Enable suggestions"
         allow_anonymous_suggestions: "Enable anonymous suggestions"
         suggestion_email: "Email to notify"
       catalog:
@@ -474,6 +479,7 @@ en:
       asc: Ascending
       desc: Descending
       missing_sort_field: "Impossible to display the %{container_slug} container because the sort field is missing"
+      invalid_configuration: "Invalid container configuration"
 
   catalog_admin:
     approvals:

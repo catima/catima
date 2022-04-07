@@ -20,6 +20,7 @@ class Container::ItemList < ::Container
 
   validate :style_validation
   validate :sort_validation
+  validate :sort_field_validation
   validate :uniqueness_validation
 
   def custom_container_permitted_attributes
@@ -37,7 +38,7 @@ class Container::ItemList < ::Container
   end
 
   def describe
-    super.merge('content' => { 'item_type' => item_type.nil? ? nil : ItemType.find(item_type).slug })
+    super.merge('content' => { 'item_type' => item_type.nil? ? nil : find_item_type_by_id(item_type).slug })
   end
 
   def update_from_json(d)
@@ -64,7 +65,7 @@ class Container::ItemList < ::Container
     else
       return unless Container::Sort.field_choices.key?(sort)
 
-      it = ItemType.find(item_type)
+      it = find_item_type_by_id(item_type)
       return if it&.field_for_select&.sortable?
 
       errors.add :sort, "Sort not allowed with current primary field (#{it&.field_for_select&.slug})"
@@ -77,9 +78,32 @@ class Container::ItemList < ::Container
     errors.add :sort, "Sort not allowed"
   end
 
-  def uniqueness_validation
-    return unless page.containers.where.not(id: id).exists?(type: 'Container::ItemList')
+  def sort_field_validation
+    return unless sort_field && style.eql?("line")
 
-    errors.add :slug, "Multiple ItemList containers in the same page not allowed."
+    errors.add :sort_field_id, "Sort field needed for this style" if !sort_field && style.eql?("line")
+
+    errors.add :sort_field_id, "Sort field not allowed" unless find_groupable_fields(item_type).include?(sort_field)
+  end
+
+  def uniqueness_validation
+    return unless page.containers
+                      .where.not(id: id)
+                      .where(locale: locale)
+                      .exists?(type: 'Container::ItemList')
+
+    errors.add :base, I18n.t("activerecord.models.container.item_list.unique")
+  end
+
+  def find_item_type_by_id(item_type_id)
+    return unless item_type_id
+
+    ItemType.find(item_type_id)
+  end
+
+  def find_groupable_fields(item_type)
+    find_item_type_by_id(item_type)
+      &.fields
+      &.select(&:groupable?)
   end
 end
