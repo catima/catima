@@ -12,15 +12,15 @@ class Field::ComplexDatationPresenter < FieldPresenter
     case dt['selected_format']
     when 'date_time'
 
-      if dt['to'] == dt['from']
-        style = 'exact'
-      elsif dt['to'].values.all?(&:blank?)
-        style = "from"
-      elsif dt['from'].values.all?(&:blank?)
-        style = 'to'
-      else
-        style = 'between'
-      end
+      style = if dt['to'] == dt['from']
+                'exact'
+              elsif dt['to'].values.all?(&:blank?)
+                "from"
+              elsif dt['from'].values.all?(&:blank?)
+                'to'
+              else
+                'between'
+              end
 
       from = value_text_repr(dt['from'], format, date_name: 'from')
       to = value_text_repr(dt['to'], format, date_name: 'to')
@@ -58,7 +58,7 @@ class Field::ComplexDatationPresenter < FieldPresenter
         browse_similar_items_link(
           choice.choice_set.choice_prefixed_label(choice, format: :long), item, field, value_slug, html_options: html_options
         ),
-        choice.choice_set.choice_prefixed_label(choice, format: :long),
+        choice.choice_set.choice_prefixed_label(choice, format: :long)
       ]
     end
     if links_and_prefixed_names.size >= 1 && options[:style] != :compact
@@ -72,23 +72,23 @@ class Field::ComplexDatationPresenter < FieldPresenter
     end
   end
 
-  def choice_dates(from, to, format, bc)
+  def choice_dates(from, to, format, is_bc)
     from = value_text_repr(from, format)
     to = value_text_repr(to, format)
-    from = bc ? I18n.t('catalog_admin.fields.complex_datation.bc', date: from) : from
-    to = bc ? I18n.t('catalog_admin.fields.complex_datation.bc', date: to) : to
+    from = is_bc ? I18n.t('catalog_admin.fields.complex_datation.bc', date: from) : from
+    to = is_bc ? I18n.t('catalog_admin.fields.complex_datation.bc', date: to) : to
     I18n.t('catalog_admin.fields.complex_datation.between', from: from, to: to)
   end
 
-  def value_text_repr(dt, format, date_name: false)
-    format_str = (format || field.format).chars.reject { |v| dt[v].blank? }.join
+  def value_text_repr(date, format, date_name: false)
+    format_str = (format || field.format).chars.reject { |v| date[v].blank? }.join
     validate_datetime_format_string(format_str)
     return nil if format_str.empty?
 
     begin
-      dt_value = DateTime.civil_from_format(:local, *prepare_datetime_array(date_name: date_name, value: date_name ? false : dt))
+      dt_value = DateTime.civil_from_format(:local, *prepare_datetime_array(date_name: date_name, value: date_name ? false : date))
       text_repr = I18n.l(dt_value, format: format_str.to_sym)
-      text_repr.sub('8888', dt[0].to_s) if dt["raw_value"].nil?
+      text_repr.sub('8888', date[0].to_s) if date["raw_value"].nil?
     rescue StandardError
       nil
     end

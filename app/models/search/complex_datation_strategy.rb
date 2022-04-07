@@ -21,7 +21,7 @@ class Search::ComplexDatationStrategy < Search::BaseStrategy
     if criteria[:default]
       if criteria[:child_choices_activated] == "true"
         choice = Choice.find(criteria[:default])
-        str = '{' + (choice.childrens.pluck(:id) + [(criteria[:default] || criteria[:exact]).to_i]).flatten.map { |id| id }.join(', ') + '}'
+        str ="{#{(choice.childrens.pluck(:id) + [(criteria[:default] || criteria[:exact]).to_i]).flatten.map { |id| id }.join(', ')}}"
         scope = search_data_matching_more_complex_datation_choice(scope, str, negate)
       else
         scope = search_data_matching_one(scope, criteria[:default], negate)
@@ -77,21 +77,19 @@ class Search::ComplexDatationStrategy < Search::BaseStrategy
     when "exact"
       sql_operator = "="
       if tolerance == 0
-        return scope
-                 .where(
-                   "#{sql_select_table_name}.data->'#{field.uuid}'->>'selected_format' = 'date_time' AND
+        scope.where(
+          "#{sql_select_table_name}.data->'#{field.uuid}'->>'selected_format' = 'date_time' AND
              #{date_time_to_interval(date_time, 'from')} #{sql_operator} #{make_interval(date_time)} AND
              #{date_time_to_interval(date_time, 'to')}  #{sql_operator} #{make_interval(date_time)}")
-                 .or(
-                   scope.where(
-                     "#{sql_select_table_name}.data->'#{field.uuid}'->>'selected_format' = 'datation_choice' AND
+                    .or(
+                      scope.where(
+                        "#{sql_select_table_name}.data->'#{field.uuid}'->>'selected_format' = 'datation_choice' AND
                #{choice_to_interval(date_time, 'from_date')} #{sql_operator} #{make_interval(date_time)} AND
                #{choice_to_interval(date_time, 'to_date')}  #{sql_operator} #{make_interval(date_time)}")
-                 )
+                    )
       else
-        return scope
-                 .where(
-                   "#{sql_select_table_name}.data->'#{field.uuid}'->>'selected_format' = 'date_time' AND
+        scope.where(
+          "#{sql_select_table_name}.data->'#{field.uuid}'->>'selected_format' = 'date_time' AND
                 ((#{date_time_to_interval(date_time, 'from')} <= #{make_interval(date_time, '+', tolerance)} AND
                 #{date_time_to_interval(date_time, 'from')} >= #{make_interval(date_time, '-', tolerance)}) OR
                 (#{date_time_to_interval(date_time, 'to')}  <= #{make_interval(date_time, '+', tolerance)} AND
@@ -100,62 +98,59 @@ class Search::ComplexDatationStrategy < Search::BaseStrategy
                 #{date_time_to_interval(date_time, 'to')}  >= #{make_interval(date_time, '+', tolerance)}) OR
                 (#{date_time_to_interval(date_time, 'from')}  <= #{make_interval(date_time, '+', tolerance)} AND #{where_date_is_not_set('to')}) OR
                 (#{date_time_to_interval(date_time, 'to')}  >= #{make_interval(date_time, '-', tolerance)} AND #{where_date_is_not_set('from')}))")
-                 .or(
-                   scope.where(
-                     "#{sql_select_table_name}.data->'#{field.uuid}'->>'selected_format' = 'datation_choice' AND
+                    .or(
+                      scope.where(
+                        "#{sql_select_table_name}.data->'#{field.uuid}'->>'selected_format' = 'datation_choice' AND
                ((#{choice_to_interval(date_time, 'from_date')} <= #{make_interval(date_time, '+', tolerance)} AND
                #{choice_to_interval(date_time, 'from_date')} >= #{make_interval(date_time, '-', tolerance)}) OR
                (#{choice_to_interval(date_time, 'to_date')}  <= #{make_interval(date_time, '+', tolerance)} AND
                #{choice_to_interval(date_time, 'to_date')}  >= #{make_interval(date_time, '-', tolerance)}) OR
                (#{choice_to_interval(date_time, 'from_date', true)}  <= #{make_interval(date_time, '-', tolerance)} AND
                #{choice_to_interval(date_time, 'to_date', true)}  >= #{make_interval(date_time, '+', tolerance)}))"
-                   )
-                 )
+                      )
+                    )
       end
     when "before"
       sql_operator = negate ? ">=" : "<="
       tolerance_operator = negate ? '-' : '+'
-      scope
-        .where(
-          "#{sql_select_table_name}.data->'#{field.uuid}'->>'selected_format' = 'date_time' AND
+      scope.where(
+        "#{sql_select_table_name}.data->'#{field.uuid}'->>'selected_format' = 'date_time' AND
            ((#{date_time_to_interval(date_time, 'from')} #{sql_operator} #{make_interval(date_time, tolerance_operator, tolerance)}) OR
            (#{date_time_to_interval(date_time, 'to')} #{sql_operator} #{make_interval(date_time, tolerance_operator, tolerance)}) OR
            (#{where_date_is_not_set('from')}))"
-        )
-        .or(
-          scope.where(
-            "#{sql_select_table_name}.data->'#{field.uuid}'->>'selected_format' = 'datation_choice' AND
+      )
+           .or(
+             scope.where(
+               "#{sql_select_table_name}.data->'#{field.uuid}'->>'selected_format' = 'datation_choice' AND
              ((#{choice_to_interval(date_time, 'from_date')} #{sql_operator} #{make_interval(date_time, tolerance_operator, tolerance)}) OR
              (#{choice_to_interval(date_time, 'to_date')}  #{sql_operator} #{make_interval(date_time, tolerance_operator, tolerance)}))")
-        )
+           )
     when "after"
       sql_operator = negate ? "<=" : ">="
       tolerance_operator = negate ? '+' : '-'
-      scope
-        .where(
-          "#{sql_select_table_name}.data->'#{field.uuid}'->>'selected_format' = 'date_time' AND
+      scope.where(
+        "#{sql_select_table_name}.data->'#{field.uuid}'->>'selected_format' = 'date_time' AND
            ((#{date_time_to_interval(date_time, 'from')} #{sql_operator} #{make_interval(date_time, tolerance_operator, tolerance)}) OR
            (#{date_time_to_interval(date_time, 'to')} #{sql_operator} #{make_interval(date_time, tolerance_operator, tolerance)}) OR
            (#{where_date_is_not_set('to')}))"
-        )
-        .or(
-          scope.where(
-            "#{sql_select_table_name}.data->'#{field.uuid}'->>'selected_format' = 'datation_choice' AND
+      )
+           .or(
+             scope.where(
+               "#{sql_select_table_name}.data->'#{field.uuid}'->>'selected_format' = 'datation_choice' AND
              ((#{choice_to_interval(date_time, 'from_date')} #{sql_operator} #{make_interval(date_time, tolerance_operator, tolerance)}) OR
              (#{choice_to_interval(date_time, 'to_date')}  #{sql_operator} #{make_interval(date_time, tolerance_operator, tolerance)}))")
-        )
+           )
     end
-
   end
 
   def interval_search(scope, start_date_time, end_date_time, field_condition, negate, tolerance)
     tolerance = !tolerance ? 0 : tolerance.to_i
 
-    return inexact_search(scope, start_date_time, field_condition, field_condition == "outside", tolerance) if (field_condition != 'outside' && field_condition != 'between')
+    return inexact_search(scope, start_date_time, field_condition, field_condition == "outside", tolerance) if field_condition != 'outside' && field_condition != 'between'
 
     field_condition = field_condition == "between" ? "outside" : "between" if negate
     where_scope = ->(*q) { field_condition == "outside" ? scope.where.not(q) : scope.where(q) }
-    # fix 400 to 450 appearing
+
     where_scope.call(
       "
             (#{sql_select_table_name}.data->'#{field.uuid}'->>'selected_format' = 'date_time' AND
@@ -234,7 +229,12 @@ class Search::ComplexDatationStrategy < Search::BaseStrategy
     ))"
   end
 
-  def choice_to_interval(date_time, date_name, can_invert = false)
+  def choice_to_interval(date_time, date_name, can_invert=false)
+    name = if can_invert
+             date_name == 'from_date' ? 'to_date' : 'from_date'
+           else
+             date_name
+           end
     "
     ((CASE WHEN #{sql_select_table_name}.data->'#{field.uuid}'->'selected_choices'->>'BC' = 'true'
     THEN -1
@@ -243,29 +243,29 @@ class Search::ComplexDatationStrategy < Search::BaseStrategy
     (CASE WHEN #{sql_select_table_name}.data->'#{field.uuid}'->'selected_choices'->>'BC' = 'true'
     THEN
       make_interval(
-        years := (CASE WHEN choices.#{can_invert ? date_name == 'from_date' ? 'to_date' : 'from_date' : date_name}::jsonb->>'Y' IS NULL
+        years := (CASE WHEN choices.#{name}::jsonb->>'Y' IS NULL
            THEN '#{date_time_component(date_time, 'Y')}'
-           ELSE LPAD(choices.#{can_invert ? date_name == 'from_date' ? 'to_date' : 'from_date' : date_name}::jsonb->>'Y', 4, '0')
+           ELSE LPAD(choices.#{name}::jsonb->>'Y', 4, '0')
            END)::int ,
-        months := (CASE WHEN choices.#{can_invert ? date_name == 'from_date' ? 'to_date' : 'from_date' : date_name}::jsonb->>'M' IS NULL
+        months := (CASE WHEN choices.#{name}::jsonb->>'M' IS NULL
            THEN '#{date_time_component(date_time, 'M')}'
-           ELSE LPAD(choices.#{can_invert ? date_name == 'from_date' ? 'to_date' : 'from_date' : date_name}::jsonb->>'M', 2, '0')
+           ELSE LPAD(choices.#{name}::jsonb->>'M', 2, '0')
            END)::int ,
-        days := (CASE WHEN choices.#{can_invert ? date_name == 'from_date' ? 'to_date' : 'from_date' : date_name}::jsonb->>'D' IS NULL
+        days := (CASE WHEN choices.#{name}::jsonb->>'D' IS NULL
            THEN '#{date_time_component(date_time, 'D')}'
-           ELSE LPAD(choices.#{can_invert ? date_name == 'from_date' ? 'to_date' : 'from_date' : date_name}::jsonb->>'D', 2, '0')
+           ELSE LPAD(choices.#{name}::jsonb->>'D', 2, '0')
            END)::int ,
-        hours := (CASE WHEN choices.#{can_invert ? date_name == 'from_date' ? 'to_date' : 'from_date' : date_name}::jsonb->>'h' IS NULL
+        hours := (CASE WHEN choices.#{name}::jsonb->>'h' IS NULL
            THEN '#{date_time_component(date_time, 'h')}'
-           ELSE LPAD(choices.#{can_invert ? date_name == 'from_date' ? 'to_date' : 'from_date' : date_name}::jsonb->>'h', 2, '0')
+           ELSE LPAD(choices.#{name}::jsonb->>'h', 2, '0')
            END)::int ,
-        mins := (CASE WHEN choices.#{can_invert ? date_name == 'from_date' ? 'to_date' : 'from_date' : date_name}::jsonb->>'m' IS NULL
+        mins := (CASE WHEN choices.#{name}::jsonb->>'m' IS NULL
            THEN '#{date_time_component(date_time, 'm')}'
-           ELSE LPAD(choices.#{can_invert ? date_name == 'from_date' ? 'to_date' : 'from_date' : date_name}::jsonb->>'m', 2, '0')
+           ELSE LPAD(choices.#{name}::jsonb->>'m', 2, '0')
            END)::int ,
-        secs := (CASE WHEN choices.#{can_invert ? date_name == 'from_date' ? 'to_date' : 'from_date' : date_name}::jsonb->>'s' IS NULL
+        secs := (CASE WHEN choices.#{name}::jsonb->>'s' IS NULL
            THEN '#{date_time_component(date_time, 's')}'
-           ELSE LPAD(choices.#{can_invert ? date_name == 'from_date' ? 'to_date' : 'from_date' : date_name}::jsonb->>'s', 2, '0')
+           ELSE LPAD(choices.#{name}::jsonb->>'s', 2, '0')
            END)::int
       )
     ELSE
@@ -299,9 +299,11 @@ class Search::ComplexDatationStrategy < Search::BaseStrategy
     )"
   end
 
-  def make_interval(date_time, operator = false, tolerance = 0)
+  def make_interval(date_time, operator=false, tolerance=0)
+    inverted_operator = operator == '+' ? '-' : '+'
+    tolerance_query_string = date_time['BC'] ? "#{inverted_operator} #{tolerance}" : "#{operator} #{tolerance}"
     "(#{date_time['BC'] ? -1 : 1} * make_interval(
-        years := ('#{date_time_component(date_time, 'Y')}')::int  #{tolerance != 0 ?  date_time['BC'] ? "#{operator == '+' ? '-' : '+'} #{tolerance}" : "#{operator} #{tolerance}" : ''},
+        years := ('#{date_time_component(date_time, 'Y')}')::int  #{tolerance == 0 ? '' : tolerance_query_string},
         months := ('#{date_time_component(date_time, 'M')}')::int ,
         days := ('#{date_time_component(date_time, 'D')}')::int ,
         hours := ('#{date_time_component(date_time, 'h')}')::int ,

@@ -89,12 +89,12 @@ class Field::ComplexDatation < ::Field
     return nil if components.nil?
 
     (0..(components.length - 1)).collect do |i|
-      components[i].to_s.present? ? components[i] * 10**(10 - 2 * i) : 0
+      components[i].to_s.present? ? components[i] * (10**(10 - (2 * i))) : 0
     end.sum
   end
 
-  def field_value_for_item(it)
-    field_value(it, self)
+  def field_value_for_item(item)
+    field_value(item, self)
   end
 
   def search_conditions_as_hash(locale)
@@ -129,15 +129,15 @@ class Field::ComplexDatation < ::Field
   private
 
   def presence_of_allowed_formats
-    errors.add(:allowed_formats, :empty) if !allowed_formats || allowed_formats.exclude?("date_time") && allowed_formats.exclude?("datation_choice")
+    errors.add(:allowed_formats, :empty) if !allowed_formats || (allowed_formats.exclude?("date_time") && allowed_formats.exclude?("datation_choice"))
   end
 
-  def transform_value(v)
-    return nil if v.nil?
-    return v if v.is_a?(Hash) && !v.key?("raw_value")
+  def transform_value(value)
+    return nil if value.nil?
+    return value if value.is_a?(Hash) && !value.key?("raw_value")
 
-    v = { "raw_value" => v } if v.is_a?(Integer)
-    v["raw_value"].nil? ? nil : v
+    value = { "raw_value" => value } if value.is_a?(Integer)
+    value["raw_value"].nil? ? nil : value
   end
 
   def set_default_format
