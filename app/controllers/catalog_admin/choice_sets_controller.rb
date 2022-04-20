@@ -16,13 +16,13 @@ class CatalogAdmin::ChoiceSetsController < CatalogAdmin::BaseController
     authorize(@choice_set)
     if @choice_set.update(choice_set_params)
       if request.xhr?
-        render json: { choice_set: @choice_set }
+        render json: {choice_set: @choice_set}
       else
         redirect_to(after_create_path, :notice => created_message)
       end
     else
       if request.xhr?
-        render json: { errors: @choice_set.errors.full_messages.join(', ') }, status: :unprocessable_entity
+        render json: {errors: @choice_set.errors.full_messages.join(', ')}, status: :unprocessable_entity
       else
         render("new")
       end
@@ -76,14 +76,24 @@ class CatalogAdmin::ChoiceSetsController < CatalogAdmin::BaseController
   end
 
   def import_choice_set
-    choice_params = JSON.parse(params[:import_string])
+    if params[:file]
+      begin
+        choice_params = JSON.parse(params[:file].read)
 
-    @choice_set = @catalog.choice_sets.new(choice_params.reject { |k, _| k == 'choices' })
-    authorize(@choice_set)
-    choice_params["choices"].each do |choice|
-      @choice_set.choices.new(choice)
+        @choice_set = @catalog.choice_sets.new(choice_params.reject { |k, _| k == 'choices' })
+        authorize(@choice_set)
+        choice_params["choices"].each do |choice|
+          @choice_set.choices.new(choice)
+        end
+        @choice_set.save!
+      rescue JSON::ParserError
+        flash[:alert] = "malformed file"
+        render :new_import
+      end
+    else
+      flash[:alert] = "no file provided"
+      render :new_import
     end
-    @choice_set.save!
   end
 
   private

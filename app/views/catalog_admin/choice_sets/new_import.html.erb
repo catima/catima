@@ -2,8 +2,8 @@
 
 <div class="card-body">
   <%= bootstrap_form_tag(url: catalog_admin_import_choice_set_path(@catalog, I18n.locale)) do |f| %>
-    <%= f.form_group :import_string do %>
-      <%= f.text_area :import_string %>
+    <%= f.form_group :file do %>
+      <%= f.file_field :file %>
     <% end %>
 
     <%= f.primary t('.import') %>
