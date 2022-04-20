@@ -49,9 +49,7 @@ class React::FieldsController < React::BaseController
 
     choices = Choice.where(choice_set_id: field.choice_set_ids).order(:choice_set_id)
 
-    if params[:search]
-      choices = choices.where("LOWER(short_name_translations) LIKE :q OR LOWER(long_name_translations) LIKE :q", q: "%#{params[:search].downcase}%")
-    end
+    choices = choices.where("LOWER(short_name_translations) LIKE :q OR LOWER(long_name_translations) LIKE :q", q: "%#{params[:search].downcase}%") if params[:search]
     choices = params[:page].blank? ? choices : choices.page(params[:page])
 
     render(json:
@@ -68,7 +66,6 @@ class React::FieldsController < React::BaseController
 
   private
 
-
   def choice_json_attributes(choice)
     {
       id: choice.id,
@@ -76,7 +73,7 @@ class React::FieldsController < React::BaseController
       short_name: choice.short_name,
       long_name: choice.long_name,
       from_date: choice.from_date,
-      to_date: choice.to_date,
+      to_date: choice.to_date
     }
   end
 

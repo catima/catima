@@ -58,7 +58,6 @@ class ChoiceSet < ApplicationRecord
     @flat_ordered_choices ||= recursive_ordered_choices(choices.ordered.reject(&:parent_id?)).flatten
   end
 
-
   def find_sub_choices(parent)
     choices.select { |choice| choice.parent_id == parent.id }
   end
@@ -79,14 +78,13 @@ class ChoiceSet < ApplicationRecord
     end
   end
 
-
   def find_parent(choice)
     choices.detect { |item| item.id == choice.parent_id } if choice.parent_id?
   end
 
   def format_present_if_datation
     return if choice_set_type != 'datation'
-    return if format.length != 0
+    return unless format.empty?
 
     errors.add(
       :format,

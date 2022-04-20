@@ -1,3 +1,5 @@
+# rubocop:disable Layout/LineLength
+
 require "test_helper"
 
 class ItemList::AdvancedSearchResultTest < ActiveSupport::TestCase
@@ -43,7 +45,7 @@ class ItemList::AdvancedSearchResultTest < ActiveSupport::TestCase
 
   def test_search_date_time_exact
     model = advanced_searches(:exact_1_1_300)
-    response_array = ["choice_1_1_300", "date_1_1_300", "choice_1_1_300_400_500"]
+    response_array = %w[choice_1_1_300 date_1_1_300 choice_1_1_300_400_500]
 
     search = ItemList::AdvancedSearchResult.new(model: model)
     assert_same_elements(
@@ -54,7 +56,7 @@ class ItemList::AdvancedSearchResultTest < ActiveSupport::TestCase
 
   def test_search_date_time_exact_bc
     model = advanced_searches(:exact_1_1_300_bc)
-    response_array = ["choice_1_1_300_bc", "date_1_1_300_bc"]
+    response_array = %w[choice_1_1_300_bc date_1_1_300_bc]
 
     search = ItemList::AdvancedSearchResult.new(model: model)
     assert_same_elements(
@@ -65,7 +67,7 @@ class ItemList::AdvancedSearchResultTest < ActiveSupport::TestCase
 
   def test_search_date_time_exact_with_tolerance_100
     model = advanced_searches(:exact_1_1_300_tolerance_100)
-    response_array = ["choice_1_1_300", "choice_100_500", "choice_300_400", "choice_400_500", "choice_1_1_300_400_500", "date_1_1_300", "date_1_1_400", "date_after_1_1_300", "date_after_1_1_300_bc", "date_before_1_1_300", "date_between_1_1_300_31_1_300", "date_between_1_1_100_31_1_500", "date_between_1_1_300_bc_31_1_300"]
+    response_array = %w[choice_1_1_300 choice_100_500 choice_300_400 choice_400_500 choice_1_1_300_400_500 date_1_1_300 date_1_1_400 date_after_1_1_300 date_after_1_1_300_bc date_before_1_1_300 date_between_1_1_300_31_1_300 date_between_1_1_100_31_1_500 date_between_1_1_300_bc_31_1_300]
 
     search = ItemList::AdvancedSearchResult.new(model: model)
     assert_same_elements(
@@ -76,7 +78,7 @@ class ItemList::AdvancedSearchResultTest < ActiveSupport::TestCase
 
   def test_search_date_time_exact_bc_with_tolerance_100
     model = advanced_searches(:exact_1_1_300_bc_tolerance_100)
-    response_array = ["choice_1_1_300_bc", "choice_100_500_bc", "choice_300_400_bc", "choice_400_500_bc", "date_1_1_300_bc", "date_1_1_400_bc", "date_after_1_1_300_bc", "date_before_1_1_300", "date_before_1_1_300_bc", "date_between_1_1_300_bc_31_1_300_bc", "date_between_1_1_300_bc_31_1_300"]
+    response_array = %w[choice_1_1_300_bc choice_100_500_bc choice_300_400_bc choice_400_500_bc date_1_1_300_bc date_1_1_400_bc date_after_1_1_300_bc date_before_1_1_300 date_before_1_1_300_bc date_between_1_1_300_bc_31_1_300_bc date_between_1_1_300_bc_31_1_300]
 
     search = ItemList::AdvancedSearchResult.new(model: model)
     assert_same_elements(
@@ -87,7 +89,7 @@ class ItemList::AdvancedSearchResultTest < ActiveSupport::TestCase
 
   def test_search_date_time_before
     model = advanced_searches(:before_1_1_300)
-    response_array = ["choice_1_1_300", "choice_1_1_300_bc", "choice_100_500", "choice_100_500_bc", "choice_300_400", "choice_300_400_bc", "choice_400_500_bc", "choice_1_1_300_400_500", "date_1_1_300", "date_1_1_300_bc", "date_1_1_400_bc", "date_after_1_1_300", "date_after_1_1_300_bc", "date_before_1_1_300", "date_before_1_1_300_bc", "date_between_1_1_300_31_1_300", "date_between_1_1_100_31_1_500", "date_between_1_1_300_bc_31_1_300_bc", "date_between_1_1_300_bc_31_1_300"]
+    response_array = %w[choice_1_1_300 choice_1_1_300_bc choice_100_500 choice_100_500_bc choice_300_400 choice_300_400_bc choice_400_500_bc choice_1_1_300_400_500 date_1_1_300 date_1_1_300_bc date_1_1_400_bc date_after_1_1_300 date_after_1_1_300_bc date_before_1_1_300 date_before_1_1_300_bc date_between_1_1_300_31_1_300 date_between_1_1_100_31_1_500 date_between_1_1_300_bc_31_1_300_bc date_between_1_1_300_bc_31_1_300]
 
     search = ItemList::AdvancedSearchResult.new(model: model)
     assert_same_elements(
@@ -98,7 +100,7 @@ class ItemList::AdvancedSearchResultTest < ActiveSupport::TestCase
 
   def test_search_date_time_before_bc
     model = advanced_searches(:before_1_1_300_bc)
-    response_array = ["choice_1_1_300_bc", "choice_100_500_bc", "choice_300_400_bc", "choice_400_500_bc", "date_1_1_300_bc", "date_1_1_400_bc", "date_after_1_1_300_bc", "date_before_1_1_300", "date_before_1_1_300_bc", "date_between_1_1_300_bc_31_1_300_bc", "date_between_1_1_300_bc_31_1_300"]
+    response_array = %w[choice_1_1_300_bc choice_100_500_bc choice_300_400_bc choice_400_500_bc date_1_1_300_bc date_1_1_400_bc date_after_1_1_300_bc date_before_1_1_300 date_before_1_1_300_bc date_between_1_1_300_bc_31_1_300_bc date_between_1_1_300_bc_31_1_300]
 
     search = ItemList::AdvancedSearchResult.new(model: model)
     assert_same_elements(
@@ -109,7 +111,7 @@ class ItemList::AdvancedSearchResultTest < ActiveSupport::TestCase
 
   def test_search_date_time_before_with_tolerance_100
     model = advanced_searches(:before_1_1_300_tolerance_100)
-    response_array = ["choice_1_1_300", "choice_1_1_300_bc", "choice_100_500", "choice_100_500_bc", "choice_300_400", "choice_300_400_bc", "choice_400_500", "choice_400_500_bc", "choice_1_1_300_400_500", "date_1_1_300", "date_1_1_300_bc", "date_1_1_400", "date_1_1_400_bc", "date_after_1_1_300", "date_after_1_1_300_bc", "date_before_1_1_300", "date_before_1_1_300_bc", "date_between_1_1_300_31_1_300", "date_between_1_1_100_31_1_500", "date_between_1_1_300_bc_31_1_300_bc", "date_between_1_1_300_bc_31_1_300"]
+    response_array = %w[choice_1_1_300 choice_1_1_300_bc choice_100_500 choice_100_500_bc choice_300_400 choice_300_400_bc choice_400_500 choice_400_500_bc choice_1_1_300_400_500 date_1_1_300 date_1_1_300_bc date_1_1_400 date_1_1_400_bc date_after_1_1_300 date_after_1_1_300_bc date_before_1_1_300 date_before_1_1_300_bc date_between_1_1_300_31_1_300 date_between_1_1_100_31_1_500 date_between_1_1_300_bc_31_1_300_bc date_between_1_1_300_bc_31_1_300]
 
     search = ItemList::AdvancedSearchResult.new(model: model)
     assert_same_elements(
@@ -120,7 +122,7 @@ class ItemList::AdvancedSearchResultTest < ActiveSupport::TestCase
 
   def test_search_date_time_before_bc_with_tolerance_100
     model = advanced_searches(:before_1_1_300_bc_tolerance_100)
-    response_array = ["choice_1_1_300_bc", "choice_100_500_bc", "choice_300_400_bc", "choice_400_500_bc", "date_1_1_300_bc", "date_1_1_400_bc", "date_after_1_1_300_bc", "date_before_1_1_300", "date_before_1_1_300_bc", "date_between_1_1_300_bc_31_1_300_bc", "date_between_1_1_300_bc_31_1_300"]
+    response_array = %w[choice_1_1_300_bc choice_100_500_bc choice_300_400_bc choice_400_500_bc date_1_1_300_bc date_1_1_400_bc date_after_1_1_300_bc date_before_1_1_300 date_before_1_1_300_bc date_between_1_1_300_bc_31_1_300_bc date_between_1_1_300_bc_31_1_300]
 
     search = ItemList::AdvancedSearchResult.new(model: model)
     assert_same_elements(
@@ -131,7 +133,7 @@ class ItemList::AdvancedSearchResultTest < ActiveSupport::TestCase
 
   def test_search_date_time_after
     model = advanced_searches(:after_1_1_300)
-    response_array = ["choice_1_1_300", "choice_100_500", "choice_300_400", "choice_400_500", "choice_1_1_300_400_500", "date_1_1_300", "date_1_1_400", "date_after_1_1_300", "date_after_1_1_300_bc", "date_before_1_1_300", "date_between_1_1_300_31_1_300", "date_between_1_1_100_31_1_500", "date_between_1_1_300_bc_31_1_300"]
+    response_array = %w[choice_1_1_300 choice_100_500 choice_300_400 choice_400_500 choice_1_1_300_400_500 date_1_1_300 date_1_1_400 date_after_1_1_300 date_after_1_1_300_bc date_before_1_1_300 date_between_1_1_300_31_1_300 date_between_1_1_100_31_1_500 date_between_1_1_300_bc_31_1_300]
 
     search = ItemList::AdvancedSearchResult.new(model: model)
     assert_same_elements(
@@ -142,7 +144,7 @@ class ItemList::AdvancedSearchResultTest < ActiveSupport::TestCase
 
   def test_search_date_time_after_bc
     model = advanced_searches(:after_1_1_300_bc)
-    response_array = ["choice_1_1_300", "choice_1_1_300_bc", "choice_100_500", "choice_100_500_bc", "choice_300_400", "choice_300_400_bc", "choice_400_500", "choice_1_1_300_400_500", "date_1_1_300", "date_1_1_300_bc", "date_1_1_400", "date_after_1_1_300", "date_after_1_1_300_bc", "date_before_1_1_300", "date_before_1_1_300_bc", "date_between_1_1_300_31_1_300", "date_between_1_1_100_31_1_500", "date_between_1_1_300_bc_31_1_300_bc", "date_between_1_1_300_bc_31_1_300"]
+    response_array = %w[choice_1_1_300 choice_1_1_300_bc choice_100_500 choice_100_500_bc choice_300_400 choice_300_400_bc choice_400_500 choice_1_1_300_400_500 date_1_1_300 date_1_1_300_bc date_1_1_400 date_after_1_1_300 date_after_1_1_300_bc date_before_1_1_300 date_before_1_1_300_bc date_between_1_1_300_31_1_300 date_between_1_1_100_31_1_500 date_between_1_1_300_bc_31_1_300_bc date_between_1_1_300_bc_31_1_300]
 
     search = ItemList::AdvancedSearchResult.new(model: model)
     assert_same_elements(
@@ -153,7 +155,7 @@ class ItemList::AdvancedSearchResultTest < ActiveSupport::TestCase
 
   def test_search_date_time_after_with_tolerance_100
     model = advanced_searches(:after_1_1_300_tolerance_100)
-    response_array = ["choice_1_1_300", "choice_100_500", "choice_300_400", "choice_400_500", "choice_1_1_300_400_500", "date_1_1_300", "date_1_1_400", "date_after_1_1_300", "date_after_1_1_300_bc", "date_before_1_1_300", "date_between_1_1_300_31_1_300", "date_between_1_1_100_31_1_500", "date_between_1_1_300_bc_31_1_300"]
+    response_array = %w[choice_1_1_300 choice_100_500 choice_300_400 choice_400_500 choice_1_1_300_400_500 date_1_1_300 date_1_1_400 date_after_1_1_300 date_after_1_1_300_bc date_before_1_1_300 date_between_1_1_300_31_1_300 date_between_1_1_100_31_1_500 date_between_1_1_300_bc_31_1_300]
 
     search = ItemList::AdvancedSearchResult.new(model: model)
     assert_same_elements(
@@ -164,7 +166,7 @@ class ItemList::AdvancedSearchResultTest < ActiveSupport::TestCase
 
   def test_search_date_time_after_bc_with_tolerance_100
     model = advanced_searches(:after_1_1_300_bc_tolerance_100)
-    response_array = ["choice_1_1_300", "choice_1_1_300_bc", "choice_100_500", "choice_100_500_bc", "choice_300_400", "choice_300_400_bc", "choice_400_500", "choice_400_500_bc", "choice_1_1_300_400_500", "date_1_1_300", "date_1_1_300_bc", "date_1_1_400", "date_1_1_400_bc", "date_after_1_1_300", "date_after_1_1_300_bc", "date_before_1_1_300", "date_before_1_1_300_bc", "date_between_1_1_300_31_1_300", "date_between_1_1_100_31_1_500", "date_between_1_1_300_bc_31_1_300_bc", "date_between_1_1_300_bc_31_1_300"]
+    response_array = %w[choice_1_1_300 choice_1_1_300_bc choice_100_500 choice_100_500_bc choice_300_400 choice_300_400_bc choice_400_500 choice_400_500_bc choice_1_1_300_400_500 date_1_1_300 date_1_1_300_bc date_1_1_400 date_1_1_400_bc date_after_1_1_300 date_after_1_1_300_bc date_before_1_1_300 date_before_1_1_300_bc date_between_1_1_300_31_1_300 date_between_1_1_100_31_1_500 date_between_1_1_300_bc_31_1_300_bc date_between_1_1_300_bc_31_1_300]
 
     search = ItemList::AdvancedSearchResult.new(model: model)
     assert_same_elements(
@@ -175,7 +177,7 @@ class ItemList::AdvancedSearchResultTest < ActiveSupport::TestCase
 
   def test_search_date_time_between_1_1_300_31_1_300
     model = advanced_searches(:between_1_1_300_31_1_300)
-    response_array = ["choice_1_1_300", "choice_1_1_300_400_500", "date_1_1_300", "date_between_1_1_300_31_1_300"]
+    response_array = %w[choice_1_1_300 choice_1_1_300_400_500 date_1_1_300 date_between_1_1_300_31_1_300]
 
     search = ItemList::AdvancedSearchResult.new(model: model)
     assert_same_elements(
@@ -186,7 +188,7 @@ class ItemList::AdvancedSearchResultTest < ActiveSupport::TestCase
 
   def test_search_date_time_between_1_1_300_bc_31_1_300_bc
     model = advanced_searches(:between_1_1_300_bc_31_1_300_bc)
-    response_array = ["choice_1_1_300_bc", "date_1_1_300_bc", "date_between_1_1_300_bc_31_1_300_bc"]
+    response_array = %w[choice_1_1_300_bc date_1_1_300_bc date_between_1_1_300_bc_31_1_300_bc]
 
     search = ItemList::AdvancedSearchResult.new(model: model)
     assert_same_elements(
@@ -197,7 +199,7 @@ class ItemList::AdvancedSearchResultTest < ActiveSupport::TestCase
 
   def test_search_date_time_between_1_1_300_bc_31_1_300
     model = advanced_searches(:between_1_1_300_bc_31_1_300)
-    response_array = ["choice_1_1_300", "choice_1_1_300_bc", "choice_1_1_300_400_500", "date_1_1_300", "date_1_1_300_bc", "date_between_1_1_300_31_1_300", "date_between_1_1_300_bc_31_1_300"]
+    response_array = %w[choice_1_1_300 choice_1_1_300_bc choice_1_1_300_400_500 date_1_1_300 date_1_1_300_bc date_between_1_1_300_31_1_300 date_between_1_1_300_bc_31_1_300]
 
     search = ItemList::AdvancedSearchResult.new(model: model)
     assert_same_elements(
@@ -208,7 +210,7 @@ class ItemList::AdvancedSearchResultTest < ActiveSupport::TestCase
 
   def test_search_date_time_between_1_1_300_31_1_300_with_tolerance_300
     model = advanced_searches(:between_1_1_300_31_1_300_tolerance_300)
-    response_array = ["choice_1_1_300", "choice_1_1_300_400_500", "choice_100_500", "choice_300_400", "choice_400_500", "date_1_1_400", "date_between_1_1_100_31_1_500", "date_1_1_300", "date_between_1_1_300_31_1_300"]
+    response_array = %w[choice_1_1_300 choice_1_1_300_400_500 choice_100_500 choice_300_400 choice_400_500 date_1_1_400 date_between_1_1_100_31_1_500 date_1_1_300 date_between_1_1_300_31_1_300]
 
     search = ItemList::AdvancedSearchResult.new(model: model)
     assert_same_elements(
@@ -219,7 +221,7 @@ class ItemList::AdvancedSearchResultTest < ActiveSupport::TestCase
 
   def test_search_date_time_between_1_1_300_bc_31_1_300_bc_with_tolerance_300
     model = advanced_searches(:between_1_1_300_bc_31_1_300_bc_tolerance_300)
-    response_array = ["choice_1_1_300_bc", "choice_100_500_bc", "choice_300_400_bc", "choice_400_500_bc", "date_1_1_300_bc", "date_1_1_400_bc", "date_between_1_1_300_bc_31_1_300_bc"]
+    response_array = %w[choice_1_1_300_bc choice_100_500_bc choice_300_400_bc choice_400_500_bc date_1_1_300_bc date_1_1_400_bc date_between_1_1_300_bc_31_1_300_bc]
 
     search = ItemList::AdvancedSearchResult.new(model: model)
     assert_same_elements(
@@ -230,7 +232,7 @@ class ItemList::AdvancedSearchResultTest < ActiveSupport::TestCase
 
   def test_search_whith_a_choice
     model = advanced_searches(:with_a_choice)
-    response_array = ["choice_1_1_300", "choice_1_1_300_bc", "choice_1_1_300_400_500"]
+    response_array = %w[choice_1_1_300 choice_1_1_300_bc choice_1_1_300_400_500]
 
     search = ItemList::AdvancedSearchResult.new(model: model)
     assert_same_elements(
@@ -241,7 +243,7 @@ class ItemList::AdvancedSearchResultTest < ActiveSupport::TestCase
 
   def test_search_whith_a_choice_with_childrens
     model = advanced_searches(:with_a_choice_with_childrens)
-    response_array = ["choice_100_500", "choice_100_500_bc", "choice_300_400", "choice_300_400_bc", "choice_400_500", "choice_400_500_bc", "choice_1_1_300_400_500"]
+    response_array = %w[choice_100_500 choice_100_500_bc choice_300_400 choice_300_400_bc choice_400_500 choice_400_500_bc choice_1_1_300_400_500]
 
     search = ItemList::AdvancedSearchResult.new(model: model)
     assert_same_elements(
@@ -250,3 +252,4 @@ class ItemList::AdvancedSearchResultTest < ActiveSupport::TestCase
     )
   end
 end
+# rubocop:enable Layout/LineLength

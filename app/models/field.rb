@@ -236,7 +236,7 @@ class Field < ApplicationRecord
   end
 
   # Returns additional properties for React for editing component
-  def edit_props(item)
+  def edit_props(_item)
     {}
   end
 
