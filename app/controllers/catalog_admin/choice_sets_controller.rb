@@ -86,6 +86,8 @@ class CatalogAdmin::ChoiceSetsController < CatalogAdmin::BaseController
           @choice_set.choices.new(choice)
         end
         @choice_set.save!
+        flash[:notice] = t(".success")
+        redirect_to catalog_admin_choice_sets_path
       rescue JSON::ParserError
         flash[:alert] = "malformed file"
         render :new_import

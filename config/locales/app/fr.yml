@@ -563,6 +563,8 @@ fr:
         from_date: Date de début
         to_date: Date de fin
     choice_sets:
+      import_choice_set:
+        success: "L'ensemble de choix a été importé"
       choice:
         remove: "Supprimer"
         show_hierarchy: "Afficher la hiérarchie"
