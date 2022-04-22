@@ -40,7 +40,6 @@ class Field::ComplexDatationPresenter < FieldPresenter
       end
     when 'datation_choice'
       choices_value(dt)
-    else
     end
   end
 
