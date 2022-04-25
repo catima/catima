@@ -23,6 +23,18 @@ one:
   slug: one
   creator: one_admin
 
+one_sorted_fasc:
+  title: {"en": "ItemList page (sorted by field ascending)"}
+  catalog: one
+  slug: one_fasc
+  creator: one_admin
+
+one_sorted_fdesc:
+  title: { "en": "ItemList page (sorted by field descending)" }
+  catalog: one
+  slug: one_fdesc
+  creator: one_admin
+
 line_one:
   title: {"en": "Line Page for Catalog One"}
   catalog: one
