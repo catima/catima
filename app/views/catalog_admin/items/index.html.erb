@@ -55,11 +55,11 @@
     <tbody>
     <% @items.each do |item| %>
       <tr>
-        <% @fields.each do |field| %>
+        <% @fields.each_with_index do |field, index| %>
           <td>
             <%= field_value(item, field, :style => :compact) %>
 
-            <% if item_suggestion_badge?(item, @item_type) %>
+            <% if item_suggestion_badge?(item, @item_type) && index === 0 %>
               <span class="badge badge-secondary">
                 <%= item_suggestions_count(item) %>
               </span>
