@@ -150,7 +150,7 @@ class AdvancedSearch::SimpleFieldsTest < ActionDispatch::IntegrationTest
     )
     click_on("Search")
 
-    refute(page.has_content?("Stephen King"))
+    refute(page.has_content?("sk@stephenking.com"))
   end
 
   test "search for authors by url field" do

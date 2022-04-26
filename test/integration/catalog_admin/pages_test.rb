@@ -49,18 +49,15 @@ class CatalogAdmin::PagesTest < ActionDispatch::IntegrationTest
 
   test "edit a page" do
     log_in_as("one-admin@example.com", "password")
-    visit("/one/en/admin")
-    click_on("Setup")
-    click_on("Pages")
-    all("a.page-action-edit").last.click
+    visit("/one/en/admin/_pages/one/edit")
 
     find('div.translatedTextField input[data-locale=en]').base.send_keys(' Edited')
 
     assert_no_difference("Page.count") do
       click_on("Update page")
     end
-    model = pages(:one)
-    assert_equal("Page for Catalog One Edited", model.title)
+
+    assert(page.has_content?("Page for Catalog One Edited"))
   end
 
   test "delete a page" do

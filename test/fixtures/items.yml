@@ -196,7 +196,8 @@ one_author_very_first:
   item_type: one_author
   data: {
     "one_author_name_uuid": "AAA / Very first author",
-    "one_author_email_uuid": "very@first.com"
+    "one_author_email_uuid": "very@first.com",
+    "one_author_rank_uuid": "0.425"
   }
 
 one_author_very_last:
@@ -206,7 +207,8 @@ one_author_very_last:
   item_type: one_author
   data: {
     "one_author_name_uuid": "ZZZ / Very last author",
-    "one_author_email_uuid": "very@last.com"
+    "one_author_email_uuid": "very@last.com",
+    "one_author_rank_uuid": "100.552"
   }
 
 multilingual_author_example:
