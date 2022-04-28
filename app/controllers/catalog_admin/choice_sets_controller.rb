@@ -16,13 +16,13 @@ class CatalogAdmin::ChoiceSetsController < CatalogAdmin::BaseController
     authorize(@choice_set)
     if @choice_set.update(choice_set_params)
       if request.xhr?
-        render json: { choice_set: @choice_set }
+        render json: {choice_set: @choice_set}
       else
         redirect_to(after_create_path, :notice => created_message)
       end
     else
       if request.xhr?
-        render json: { errors: @choice_set.errors.full_messages.join(', ') }, status: :unprocessable_entity
+        render json: {errors: @choice_set.errors.full_messages.join(', ')}, status: :unprocessable_entity
       else
         render("new")
       end
@@ -82,8 +82,15 @@ class CatalogAdmin::ChoiceSetsController < CatalogAdmin::BaseController
 
         @choice_set = @catalog.choice_sets.new(choice_params.reject { |k, _| k == 'choices' })
         authorize(@choice_set)
-        choice_params["choices"].each do |choice|
+
+        choice_params["choices"].select { |choice_params| choice_params['parent_id'] == nil }.each do |choice|
           @choice_set.choices.new(choice)
+        end
+        @choice_set.save!
+        choice_params["choices"].select { |choice_params| choice_params['parent_id'] != nil }.each do |choice|
+          c = @choice_set.choices.new(choice)
+          c.parent_id = nil
+          c.parent_id = @choice_set.choices.where(`"choices"."short_name_translations"::TEXT = ?`, Choice.find(choice["parent_id"]).short_name_translations)&.first&.id
         end
         @choice_set.save!
         flash[:notice] = t(".success")
