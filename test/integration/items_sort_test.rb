@@ -1,7 +1,7 @@
 require "test_helper"
 
 class ItemsSortTest < ActionDispatch::IntegrationTest
-  test "default sort should be primary field ascending" do
+  test "default sort should be by primary field ascending" do
     log_in_as("one-admin@example.com", "password")
 
     visit("/one/en/authors?sort=list")
