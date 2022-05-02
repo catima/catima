@@ -78,22 +78,26 @@ class CatalogAdmin::ChoiceSetsController < CatalogAdmin::BaseController
   def import_choice_set
     if params[:file]
       begin
-        choice_params = JSON.parse(params[:file].read)
+        ChoiceSet.transaction do
+          choice_params = JSON.parse(params[:file].read)
 
-        @choice_set = @catalog.choice_sets.new(choice_params.reject { |k, _| k == 'choices' })
-        authorize(@choice_set)
+          @choice_set = @catalog.choice_sets.new(choice_params.reject { |k, _| k == 'choices' })
+          authorize(@choice_set)
 
-        choice_params["choices"].select { |choice_params| choice_params['parent_id'] == nil }.each do |choice|
-          @choice_set.choices.new(choice)
+          choice_params["choices"].each do |choice|
+            c = @choice_set.choices.new(choice)
+            c.parent_id = nil
+          end
+          @choice_set.save!
+
+          choice_params["choices"].select { |choice_params| choice_params['parent_id'] != nil }.each do |choice|
+            c = @choice_set.choices.where("short_name_translations::jsonb @> (?::jsonb)", choice["short_name_translations"].to_json).first
+            c.parent_id = @choice_set.choices.where("short_name_translations::jsonb @> (?::jsonb)", Choice.find(choice["parent_id"]).short_name_translations.to_json)&.first&.id
+            c.save
+          end
+          flash[:notice] = t(".success")
         end
-        @choice_set.save!
-        choice_params["choices"].select { |choice_params| choice_params['parent_id'] != nil }.each do |choice|
-          c = @choice_set.choices.new(choice)
-          c.parent_id = nil
-          c.parent_id = @choice_set.choices.where(`"choices"."short_name_translations"::TEXT = ?`, Choice.find(choice["parent_id"]).short_name_translations)&.first&.id
-        end
-        @choice_set.save!
-        flash[:notice] = t(".success")
+
         redirect_to catalog_admin_choice_sets_path
       rescue JSON::ParserError
         flash[:alert] = "malformed file"
