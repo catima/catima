@@ -29,7 +29,7 @@ const ComplexDatationInput = (props) => {
 
   const [choices, setChoices] = useState([])
   const [isLoading, setIsLoading] = useState(false)
-  const [loadingMessage, setLoadingMessage] = useState("")
+  const [loadingMessage, setLoadingMessage] = useState(Translations.messages['active_record.loading'])
   const [isInitialized, setIsInitialized] = useState(false)
   const [optionsList, setOptionsList] = useState([])
   const [selectedChoices, setSelectedChoices] = useState({BC: false, value: selectedChoicesValueProps})
@@ -321,7 +321,11 @@ const ComplexDatationInput = (props) => {
 
   function selectChoice(value) {
     setSelectedChoices({...selectedChoices, value: value});
-    updateChoiceData(value.map(v => v.value))
+    if (value?.length) {
+      updateChoiceData(value.map(v => v.value))
+    } else {
+      updateChoiceData([])
+    }
   }
 
   const renderDateTimeInput = (input) => {
@@ -451,7 +455,7 @@ const ComplexDatationInput = (props) => {
               name="choices"
               value={selectedChoices.value}
               onChange={selectChoice}
-              options={_getFilterOptions(selectedChoices.value)}
+              options={_getFilterOptions()}
             />
           </div>
         </div>

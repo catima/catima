@@ -49,7 +49,7 @@ class Field::ComplexDatationPresenter < FieldPresenter
 
     links_and_prefixed_names = choices.map do |choice|
       value_slug = [I18n.locale, choice.short_name].join("-")
-      html_options = { 'data-toggle': "tooltip", title: choice_dates(choice.from_date, choice.to_date, choice.choice_set.format, raw_val['selected_choices']['BC']) }
+      html_options = {'data-toggle': "tooltip", title: choice_dates(choice.from_date, choice.to_date, choice.choice_set.format, raw_val['selected_choices']['BC'])}
       [
         browse_similar_items_link(
           choice.long_display_name, item, field, value_slug, html_options: html_options
@@ -72,28 +72,48 @@ class Field::ComplexDatationPresenter < FieldPresenter
   end
 
   def choice_dates(from, to, format, is_bc)
-    from = value_text_repr(from, format)
-    to = value_text_repr(to, format)
-    from = is_bc ? I18n.t('catalog_admin.fields.complex_datation.bc', date: from) : from
-    to = is_bc ? I18n.t('catalog_admin.fields.complex_datation.bc', date: to) : to
-    I18n.t('catalog_admin.fields.complex_datation.between', from: from, to: to)
+    from_repr = value_text_repr(from, format)
+    to_repr = value_text_repr(to, format)
+    from_repr = is_bc ? I18n.t('catalog_admin.fields.complex_datation.bc', date: from_repr) : from_repr
+    to_repr = is_bc ? I18n.t('catalog_admin.fields.complex_datation.bc', date: to_repr) : to_repr
+
+    style = if from == to
+              'exact'
+            elsif JSON.parse(to).values.all?(&:blank?)
+              "from"
+            elsif JSON.parse(from).values.all?(&:blank?)
+              'to'
+            else
+              'between'
+            end
+
+    case style
+    when 'exact'
+      from_repr
+    when 'from'
+      I18n.t('catalog_admin.fields.complex_datation.after', date: from_repr)
+    when 'to'
+      I18n.t('catalog_admin.fields.complex_datation.before', date: to_repr)
+    when 'between'
+      I18n.t('catalog_admin.fields.complex_datation.between', from: from_repr, to: to_repr)
+    end
   end
 
   def value_text_repr(date, format, date_name: false)
-    format_str = (format || field.format).chars.reject { |v| date[v].blank? }.join
+    format_str = (format || field.format).chars.reject { |v| JSON.parse(date)[v].blank? }.join
     validate_datetime_format_string(format_str)
     return nil if format_str.empty?
 
     begin
       dt_value = DateTime.civil_from_format(:local, *prepare_datetime_array(date_name: date_name, value: date_name ? false : date))
       text_repr = I18n.l(dt_value, format: format_str.to_sym)
-      text_repr.sub('8888', date[0].to_s) if date["raw_value"].nil?
+      text_repr.sub('8888', JSON.parse(date)[0].to_s) if date["raw_value"].nil?
     rescue StandardError
       nil
     end
   end
 
-  def input(form, method, options={})
+  def input(form, method, options = {})
     form.text_field(method, input_defaults(options))
   end
 
