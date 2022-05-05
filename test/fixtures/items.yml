@@ -172,22 +172,22 @@ one_author_with_images:
   updater: one_admin
   item_type: one_author
   data: {
-      "one_author_name_uuid": "Author with images",
-      "one_author_picture_uuid": {
-        "name": "one_author_picture.jpg",
-        "path": "upload/one/authors/picture.jpg",
-        "size": 198137,
-        "type": "image/jpeg",
-        "legend": "One author picture"
-      },
-      "one_author_picture_inactive_legend_uuid": {
-        "name": "one_author_new_picture.jpg",
-        "path": "upload/one/authors/new_picture.jpg",
-        "size": 148177,
-        "type": "image/jpeg",
-        "legend": "One author new picture"
-      }
+    "one_author_name_uuid": "Author with images",
+    "one_author_picture_uuid": {
+      "name": "one_author_picture.jpg",
+      "path": "upload/one/authors/picture.jpg",
+      "size": 198137,
+      "type": "image/jpeg",
+      "legend": "One author picture"
+    },
+    "one_author_picture_inactive_legend_uuid": {
+      "name": "one_author_new_picture.jpg",
+      "path": "upload/one/authors/new_picture.jpg",
+      "size": 148177,
+      "type": "image/jpeg",
+      "legend": "One author new picture"
     }
+  }
 
 one_author_very_first:
   catalog: one
