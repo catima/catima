@@ -23,8 +23,8 @@ class CatalogAdmin::ItemsSortTest < ActionDispatch::IntegrationTest
     click_on('Sorted by Name')
     click_on('Rank')
 
-    assert_match("Stephen King", find(:xpath, "//table/tbody/tr[1]/td[1]").text)
-    assert_equal("Very Old", find(:xpath, "//table/tbody/tr[2]/td[1]").text)
+    assert_match("Very first author", find(:xpath, "//table/tbody/tr[1]/td[1]").text)
+    assert_match("Stephen King", find(:xpath, "//table/tbody/tr[2]/td[1]").text)
   end
 
   test "the authors are sort by born" do

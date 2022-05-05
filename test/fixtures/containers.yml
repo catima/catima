@@ -28,9 +28,25 @@ one_line_container:
   slug: line
   row_order: 2
   page: line_one
-  content: { style: 'line', item_type: one_author.id }
+  content: { style: 'line', item_type: "<%= ActiveRecord::FixtureSet.identify(:one_author) %>" }
   sort: 'f-asc'
-  sort_field_id: one_author_deceased.id
+  sort_field_id: <%= ActiveRecord::FixtureSet.identify(:one_author_name) %>
+  locale: en
+
+one_sorted_by_fasc:
+  type: Container::ItemList
+  slug: list
+  page: one_sorted_fasc
+  content: { style: 'list', item_type: "<%= ActiveRecord::FixtureSet.identify(:one_author) %>" }
+  sort: 'f-asc'
+  locale: en
+
+one_sorted_by_fdesc:
+  type: Container::ItemList
+  slug: list
+  page: one_sorted_fdesc
+  content: { style: 'list', item_type: "<%= ActiveRecord::FixtureSet.identify(:one_author) %>" }
+  sort: 'f-desc'
   locale: en
 
 two:

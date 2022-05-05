@@ -113,7 +113,7 @@ class CatalogAdmin::ItemReferenceSelectionTest < ActionDispatch::IntegrationTest
     find("#item_one_author_collaborator_uuid_json-editor", :wait => 30).click
     sleep(2)
 
-    assert(find('.css-4ljt47-MenuList').has_css?('div', count: 6))
+    assert(find('.css-4ljt47-MenuList').has_css?('div', count: 8))
   end
 
   test "displays the items after a filter has been selected and deselected" do

@@ -832,6 +832,7 @@ fr:
         new_item_type: "Nouvelle fiche «%{item_type}»"
         import_csv: "Importer depuis un fichier CSV"
         status: Statut
+        pending_suggestions: Vous avez des suggestions en attente pour cette fiche
       new:
         new_item: Nouvelle fiche de type %{item_type}
         create_item: Créer fiche de type %{item_type}

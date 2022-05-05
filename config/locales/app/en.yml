@@ -833,6 +833,7 @@ en:
         new_item_type: "New %{item_type}"
         import_csv: "Import from CSV"
         status: Status
+        pending_suggestions: You have pending suggestions for this item
       new:
         new_item: New %{item_type}
         create_item: Create %{item_type}

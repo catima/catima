@@ -21,4 +21,45 @@ class ContainersTest < ActionDispatch::IntegrationTest
     assert(true, find_field('email')[:required])
     assert(true, find_field('body')[:required])
   end
+
+  test "has an itemlist sorted by field ascending" do
+    visit("/one/en/one_fasc")
+
+    first_item = first(".media")
+    last_item = all(".media").last
+
+    assert(first_item.has_content?("Very first author"))
+    assert(first_item.has_content?("very@first.com"))
+    refute(first_item.has_content?("very@last.com"))
+
+    # Items without primary field should be at the end of the sorted list
+    assert(last_item.has_content?("Empty Author"))
+  end
+
+  test "has an itemlist sorted by field descending" do
+    visit("/one/en/one_fdesc")
+
+    first_item = first(".media")
+    last_item = all(".media").last
+
+    assert(first_item.has_content?("Very last author"))
+    assert(first_item.has_content?("very@last.com"))
+    refute(first_item.has_content?("very@first.com"))
+
+    # Items without primary field should be at the end of the sorted list
+    assert(last_item.has_content?("Empty Author"))
+  end
+
+  test "has an itemlist with a line style sorted by name field ascending" do
+    visit("/one/en/line_one")
+
+    select_sort = first("#asc-desc")
+    first_level0_group = first(".level-0")
+    first_level1_group = first(".level-1")
+
+    assert(select_sort.has_content?("Ascending"))
+
+    assert(first_level0_group.has_content?("A"))
+    assert(first_level1_group.has_content?("Very first author"))
+  end
 end
