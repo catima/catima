@@ -413,7 +413,7 @@ const ComplexDatationInput = (props) => {
         ) : null
         }
         <span class="text-muted">
-          {Translations.messages[`catalog_admin.choices.choice_fields.${input === 'from' ? 'from_date' : 'to_date'}`]}
+          {Translations.messages[`catalog_admin.fields.complex_datation_option_inputs.${input === 'from' ? 'from_date' : 'to_date'}`]}
         </span>
       </div>
     )

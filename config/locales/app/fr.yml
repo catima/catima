@@ -684,6 +684,8 @@ fr:
         format: Veuillez sélectionner le format
         BC: av. J.-C.
         tolerance: Tolérance (années)
+        from_date: Start date
+        to_date: End date
       common_form_fields:
         name: Nom
         name_plural: Nom (pluriel)
