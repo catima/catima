@@ -23,9 +23,9 @@ const ComplexDatationInput = (props) => {
   const [granularity, setGranularity] = useState(getFieldOptions().format)
   const [isRequired, setIsRequired] = useState(false)
 
-  const [allowedFormats, setAllowedFormats] = useState(getFieldOptions().allowed_formats.filter(f => f != ''))
+  const [allowedFormats, setAllowedFormats] = useState(getFieldOptions().allowed_formats.filter(f => f !== ''))
   const [selectedFormat, setSelectedFormat] = useState(selectedFormatProps[0])
-  const [allowBC, setAllowBC] = useState(getFieldOptions().allow_bc == '1' ? true : false)
+  const [allowBC, setAllowBC] = useState(getFieldOptions().allow_bc === '1')
 
   const [choices, setChoices] = useState([])
   const [isLoading, setIsLoading] = useState(false)
@@ -40,7 +40,7 @@ const ComplexDatationInput = (props) => {
 
   const setSelectedFormatAndUpdateData = (format) => {
     setSelectedFormat(format);
-    if (format == 'date_time') {
+    if (format === 'date_time') {
       setData({...getData(), 'selected_format': format, selected_choices: {}, from: fromState, to: toState})
     } else {
       setData({...getData(), 'selected_format': format, selected_choices: selectedChoices, from: {}, to: {}})
@@ -48,7 +48,7 @@ const ComplexDatationInput = (props) => {
   }
 
   const renderAllowedFormatsSelector = () => {
-    if (allowedFormats.length == 2) {
+    if (allowedFormats.length === 2) {
       return (
         allowedFormats.map((allowedFormat, idx) => (
           <div className="form-check" key={`allowedFormat-${idx}`}>
@@ -177,10 +177,10 @@ const ComplexDatationInput = (props) => {
 
   function updateDateData(input, h) {
     let newState
-    if (input == 'from') {
+    if (input === 'from') {
       setFromState(fromState ? {...fromState, ...h} : h);
       newState = {from: fromState ? {...fromState, ...h} : h}
-    } else if (input == 'to') {
+    } else if (input === 'to') {
       setToState(toState ? {...toState, ...h} : h);
       newState = {to: toState ? {...toState, ...h} : h}
     }
@@ -188,7 +188,7 @@ const ComplexDatationInput = (props) => {
     setState(state ? {...state, ...newState} : newState);
     const d = getData();
 
-    if (input == 'from') {
+    if (input === 'from') {
       for (let k in h) d['from'][k] = h[k];
     } else {
       for (let k in h) d['to'][k] = h[k];
@@ -252,7 +252,7 @@ const ComplexDatationInput = (props) => {
 
   function isCurrentFormatValid() {
     let current = getCurrentFormat();
-    if (current == '' && !isRequired) return true;   // allow empty value if field is not required
+    if (current === '' && !isRequired) return true;   // allow empty value if field is not required
     let allowed = getAllowedFormats();
     return allowed.indexOf(current) > -1;
   }
@@ -336,18 +336,18 @@ const ComplexDatationInput = (props) => {
             <label className="form-check-label"
                    htmlFor={`bcCheck-${input}`}>{Translations.messages['catalog_admin.fields.complex_datation_option_inputs.BC']}</label>
             <input type="checkbox" value={true} className="form-check-input" id={`bcCheck-${input}`}
-                   checked={input == 'from' ? fromState.BC : toState.BC}
+                   checked={input === 'from' ? fromState.BC : toState.BC}
                    onChange={_handleChangeBC(input)}/>
           </div>
         ) : null}
         {fmt.includes('D') ? (
           <input style={errorStl} type="number" min="0" max="31" className="input-2 form-control"
-                 value={input == 'from' ? fromState.D : toState.D}
+                 value={input === 'from' ? fromState.D : toState.D}
                  onChange={_handleChangeDay(input)}/>
         ) : null
         }
         {fmt.includes('M') ? (
-          <select style={errorStl} className="form-control" value={input == 'from' ? fromState.M : toState.M}
+          <select style={errorStl} className="form-control" value={input === 'from' ? fromState.M : toState.M}
                   onChange={_handleChangeMonth(input)}>
             <option value=""></option>
             <option value="1">
@@ -390,28 +390,31 @@ const ComplexDatationInput = (props) => {
         }
         {fmt.includes('Y') ? (
           <input style={errorStl} className="input-4 margin-right form-control"
-                 value={input == 'from' ? fromState.Y : toState.Y}
+                 value={input === 'from' ? fromState.Y : toState.Y}
                  onChange={_handleChangeYear(input)}/>
         ) : null
         }
         {fmt.includes('h') ? (
           <input style={errorStl} min="0" max="23" type="number" className="input-2 form-control"
-                 value={input == 'from' ? fromState.h : toState.h}
+                 value={input === 'from' ? fromState.h : toState.h}
                  onChange={_handleChangeHours(input)}/>
         ) : null
         }
         {fmt.includes('m') ? (
           <input style={errorStl} min="0" max="59" type="number" className="input-2 form-control"
-                 value={input == 'from' ? fromState.m : toState.m}
+                 value={input === 'from' ? fromState.m : toState.m}
                  onChange={_handleChangeMinutes(input)}/>
         ) : null
         }
         {fmt.includes('s') ? (
           <input style={errorStl} min="0" max="59" type="number" className="input-2 form-control"
-                 value={input == 'from' ? fromState.s : toState.s}
+                 value={input === 'from' ? fromState.s : toState.s}
                  onChange={_handleChangeSeconds(input)}/>
         ) : null
         }
+        <span class="text-muted">
+          {Translations.messages[`catalog_admin.choices.choice_fields.${input === 'from' ? 'from_date' : 'to_date'}`]}
+        </span>
       </div>
     )
   }

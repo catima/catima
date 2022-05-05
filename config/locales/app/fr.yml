@@ -560,8 +560,8 @@ fr:
         long_name_optional: 'Nom long (optionnel)'
         category_optional: 'Sous-fiche (optionnel)'
         add_choice: 'Ajouter choix'
-        from_date: Date de début
-        to_date: Date de fin
+        from_date: Date de début (optionnel)
+        to_date: Date de fin (optionnel)
     choice_sets:
       import_choice_set:
         success: "L'ensemble de choix a été importé"
@@ -676,14 +676,14 @@ fr:
         choice_set: Ensemble de choix
         new_choice_set: Nouvel ensemble de choix
       complex_datation_option_inputs:
-        allow_bc: 'Autoriser les dates avec Jesus Christ'
-        allowed_formats: Formats authorisé
-        choice_set_ids: Ensembles de choix
-        date_time: Date
-        datation_choice: Choix Datation
-        format: Format
-        BC: "av. J.-C."
-        tolerance: Tolérance
+        allow_bc: Autoriser les dates avant Jesus Christ
+        allowed_formats: Veuillez sélectionner le(s) format(s) de saisie à utiliser
+        choice_set_ids: Veuillez sélectionner le(s) ensemble(s) de choix
+        date_time: Par date/heure
+        datation_choice: Par ensemble de choix
+        format: Veuillez sélectionner le format
+        BC: av. J.-C.
+        tolerance: Tolérance (années)
       common_form_fields:
         name: Nom
         name_plural: Nom (pluriel)

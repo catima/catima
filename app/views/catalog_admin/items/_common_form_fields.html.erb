@@ -1,17 +1,19 @@
-<% @item.all_fields.each_with_index do |field, i| %>
-  <%= field_input(
-    f,
-    field,
-    :autofocus => (i == 0),
-    :style => :compact,
-    :item_type => @item.item_type.slug,
-    :current_user => @current_user,
-    :catalog => @catalog
-  ) %>
-<% end %>
+<div class="pb-4">
+  <% @item.all_fields.each_with_index do |field, i| %>
+    <%= field_input(
+      f,
+      field,
+      :autofocus => (i == 0),
+      :style => :compact,
+      :item_type => @item.item_type.slug,
+      :current_user => @current_user,
+      :catalog => @catalog
+    ) %>
+  <% end %>
 
-<hr>
+  <hr>
 
-<div id="item_review">
-  <%= render_items_review(@item, f) %>
+  <div id="item_review">
+    <%= render_items_review(@item, f) %>
+  </div>
 </div>

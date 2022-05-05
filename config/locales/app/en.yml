@@ -564,8 +564,8 @@ en:
         short_name: 'Short name'
         long_name_optional: 'Long name (optional)'
         category_optional: 'Category (optional)'
-        from_date: Start date
-        to_date: End date
+        from_date: Start date (optional)
+        to_date: End date (optional)
     choice_sets:
       choice:
         remove: "Remove"
@@ -677,14 +677,14 @@ en:
         choice_set: "Choice set"
         new_choice_set: New choice set
       complex_datation_option_inputs:
-        allow_bc: 'Allow negative dates'
-        allowed_formats: Allowed formats
-        choice_set_ids: Choicesets
-        date_time: Date
-        datation_choice: Datation choice
-        format: Format
+        allow_bc: Allow dates before Jesus Christ
+        allowed_formats: Please select the input format(s) to be used
+        choice_set_ids: Please select the choice set(s)
+        date_time: By date/time
+        datation_choice: By choice set
+        format: Please select the format
         BC: BC
-        tolerance: Tolerance
+        tolerance: Tolerance (year)
       common_form_fields:
         name: Name
         name_plural: Name (plural)
