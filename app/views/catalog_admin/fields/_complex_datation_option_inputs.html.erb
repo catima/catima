@@ -17,8 +17,11 @@
           <%= select2_select(
                 f,
                 :choice_set_ids,
-                f.object.catalog.choice_sets.datation.not_deactivated.not_deleted.map { |c| [c.name, c.id] },
-                {multiple: true, label: t(".choice_set_ids")}
+                f.object.choice_set_choices.map { |c| [c.name, c.id] },
+                {
+                  multiple: true,
+                  label: t(".choice_set_ids")
+                }
               ) %>
         </div>
       </div>

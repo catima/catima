@@ -54,8 +54,16 @@ class Field::ComplexDatation < ::Field
     end
   end
 
+  def choice_set_choices
+    catalog.choice_sets.datation.not_deactivated.not_deleted.sorted
+  end
+
   def selected_choices(item)
-    raw_value(item)&.[]('selected_choices')&.[]('value') ? Choice.where(id: raw_value(item)['selected_choices']['value']) : []
+    return [] if raw_value(item)&.[]('selected_choices')&.[]('value').nil?
+
+    Choice.where(id: raw_value(item)['selected_choices']['value']).reject do |choice|
+      !choice.choice_set.not_deleted? || !choice.choice_set.not_deactivated?
+    end
   end
 
   def selected_format(item)
@@ -129,7 +137,9 @@ class Field::ComplexDatation < ::Field
   private
 
   def presence_of_allowed_formats
-    errors.add(:allowed_formats, :empty) if !allowed_formats || (allowed_formats.exclude?("date_time") && allowed_formats.exclude?("datation_choice"))
+    return unless !allowed_formats || (allowed_formats.exclude?("date_time") && allowed_formats.exclude?("datation_choice"))
+
+    errors.add(:allowed_formats, :empty)
   end
 
   def transform_value(value)

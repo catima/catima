@@ -128,7 +128,8 @@ const SingleReferenceEditor = (props) => {
   }
 
   async function _loadOptions(search, loadedOptions, {page}) {
-    // Avoir useless API calls if there are less than 25 loaded items and the user searches by filtering options with JS
+    // Avoid useless API calls if there are less than 25 loaded items and
+    // the user searches by filtering options with JS
     if (itemsProps.length < 25) {
       let regexExp = new RegExp(search, 'i')
       let optionsListVar = _getItemOptions();

@@ -55,7 +55,7 @@ class Field::ChoiceSet < ::Field
   end
 
   def choice_set_choices
-    catalog.choice_sets.not_deactivated.not_deleted.sorted
+    catalog.choice_sets.default.not_deactivated.not_deleted.sorted
   end
 
   def custom_field_permitted_attributes
