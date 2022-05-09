@@ -24,6 +24,10 @@ class ChoiceSet < ApplicationRecord
     where(choice_set_type: :datation)
   end
 
+  def self.default
+    where(choice_set_type: :default)
+  end
+
   belongs_to :catalog
   has_many :choices, ->(set) { where(:catalog_id => set.catalog_id).order(:position) }, :dependent => :delete_all
   has_many :fields, :dependent => :destroy
