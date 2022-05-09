@@ -100,7 +100,7 @@ class Field::ComplexDatationPresenter < FieldPresenter
   end
 
   def value_text_repr(date, format, date_name: false)
-    format_str = (format || field.format).chars.reject { |v| JSON.parse(date)[v].blank? }.join
+    format_str = (format || field.format).chars.reject { |v| date.is_a?(Hash) ? date[v].blank? : JSON.parse(date)[v].blank? }.join
     validate_datetime_format_string(format_str)
     return nil if format_str.empty?
 
