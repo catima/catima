@@ -112,7 +112,7 @@ datation_300_400:
   short_name_translations: { "short_name_en": "Datation 300 - 400" }
   from_date: "{\"Y\":300,\"M\":1,\"D\":1,\"h\":null,\"m\":null,\"s\":null}"
   to_date: "{\"Y\":400,\"M\":12,\"D\":31,\"h\":null,\"m\":null,\"s\":null}"
-  parent_id: 1001
+  parent_id: <%= ActiveRecord::FixtureSet.identify(:datation_100_500) %>
 
 datation_400_500:
   catalog: complex_datation
@@ -121,4 +121,4 @@ datation_400_500:
   short_name_translations: { "short_name_en": "Datation 400 - 500" }
   from_date: "{\"Y\":400,\"M\":1,\"D\":1,\"h\":null,\"m\":null,\"s\":null}"
   to_date: "{\"Y\":500,\"M\":12,\"D\":31,\"h\":null,\"m\":null,\"s\":null}"
-  parent_id: 1001
+  parent_id: <%= ActiveRecord::FixtureSet.identify(:datation_100_500) %>
