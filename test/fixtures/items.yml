@@ -335,55 +335,55 @@ complex_datation_choice_1_1_300:
   catalog: complex_datation
   item_type: complex_datation
   data: { "complex_datation_name": "choice_1_1_300",
-          "complex_datation_uuid": { "to": { }, "from": { }, "selected_format": "datation_choice", "selected_choices": { "BC": false, "value": [ 1000 ] } } }
+          "complex_datation_uuid": { "to": { }, "from": { }, "selected_format": "datation_choice", "selected_choices": { "BC": false, "value": [ <%= ActiveRecord::FixtureSet.identify(:datation_1_january_300) %> ] } } }
 
 complex_datation_choice_1_1_300_bc:
   catalog: complex_datation
   item_type: complex_datation
   data: { "complex_datation_name": "choice_1_1_300_bc",
-          "complex_datation_uuid": { "to": { }, "from": { }, "selected_format": "datation_choice", "selected_choices": { "BC": true, "value": [ 1000 ] } } }
+          "complex_datation_uuid": { "to": { }, "from": { }, "selected_format": "datation_choice", "selected_choices": { "BC": true, "value": [ <%= ActiveRecord::FixtureSet.identify(:datation_1_january_300) %> ] } } }
 
 complex_datation_choice_100_500:
   catalog: complex_datation
   item_type: complex_datation
   data: { "complex_datation_name": "choice_100_500",
-          "complex_datation_uuid": { "to": { }, "from": { }, "selected_format": "datation_choice", "selected_choices": { "BC": false, "value": [ 1001 ] } } }
+          "complex_datation_uuid": { "to": { }, "from": { }, "selected_format": "datation_choice", "selected_choices": { "BC": false, "value": [ <%= ActiveRecord::FixtureSet.identify(:datation_100_500) %> ] } } }
 
 complex_datation_choice_100_500_bc:
   catalog: complex_datation
   item_type: complex_datation
   data: { "complex_datation_name": "choice_100_500_bc",
-          "complex_datation_uuid": { "to": { }, "from": { }, "selected_format": "datation_choice", "selected_choices": { "BC": true, "value": [ 1001 ] } } }
+          "complex_datation_uuid": { "to": { }, "from": { }, "selected_format": "datation_choice", "selected_choices": { "BC": true, "value": [ <%= ActiveRecord::FixtureSet.identify(:datation_100_500) %> ] } } }
 
 complex_datation_choice_300_400:
   catalog: complex_datation
   item_type: complex_datation
   data: { "complex_datation_name": "choice_300_400",
-          "complex_datation_uuid": { "to": { }, "from": { }, "selected_format": "datation_choice", "selected_choices": { "BC": false, "value": [ 1002 ] } } }
+          "complex_datation_uuid": { "to": { }, "from": { }, "selected_format": "datation_choice", "selected_choices": { "BC": false, "value": [ <%= ActiveRecord::FixtureSet.identify(:datation_300_400) %> ] } } }
 
 complex_datation_choice_300_400_bc:
   catalog: complex_datation
   item_type: complex_datation
   data: { "complex_datation_name": "choice_300_400_bc",
-          "complex_datation_uuid": { "to": { }, "from": { }, "selected_format": "datation_choice", "selected_choices": { "BC": true, "value": [ 1002 ] } } }
+          "complex_datation_uuid": { "to": { }, "from": { }, "selected_format": "datation_choice", "selected_choices": { "BC": true, "value": [ <%= ActiveRecord::FixtureSet.identify(:datation_300_400) %> ] } } }
 
 complex_datation_choice_400_500:
   catalog: complex_datation
   item_type: complex_datation
   data: { "complex_datation_name": "choice_400_500",
-          "complex_datation_uuid": { "to": { }, "from": { }, "selected_format": "datation_choice", "selected_choices": { "BC": false, "value": [ 1003 ] } } }
+          "complex_datation_uuid": { "to": { }, "from": { }, "selected_format": "datation_choice", "selected_choices": { "BC": false, "value": [ <%= ActiveRecord::FixtureSet.identify(:datation_400_500) %> ] } } }
 
 complex_datation_choice_400_500_bc:
   catalog: complex_datation
   item_type: complex_datation
   data: { "complex_datation_name": "choice_400_500_bc",
-          "complex_datation_uuid": { "to": { }, "from": { }, "selected_format": "datation_choice", "selected_choices": { "BC": true, "value": [ 1003 ] } } }
+          "complex_datation_uuid": { "to": { }, "from": { }, "selected_format": "datation_choice", "selected_choices": { "BC": true, "value": [ <%= ActiveRecord::FixtureSet.identify(:datation_400_500) %> ] } } }
 
 complex_datation_choice_1_1_300_400_500:
   catalog: complex_datation
   item_type: complex_datation
   data: { "complex_datation_name": "choice_1_1_300_400_500",
-          "complex_datation_uuid": { "to": { }, "from": { }, "selected_format": "datation_choice", "selected_choices": { "BC": false, "value": [ 1000, 1003 ] } } }
+          "complex_datation_uuid": { "to": { }, "from": { }, "selected_format": "datation_choice", "selected_choices": { "BC": false, "value": [ <%= ActiveRecord::FixtureSet.identify(:datation_1_january_300) %>, <%= ActiveRecord::FixtureSet.identify(:datation_400_500) %> ] } } }
 
 
 complex_datation_date_1_1_300:

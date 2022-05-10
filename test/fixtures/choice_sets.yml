@@ -17,25 +17,29 @@
 nested_vehicle_types:
   catalog: nested
   name: Vehicle Types
+  choice_set_type: "default"
 
 one_languages:
   catalog: one
   name: Languages
+  choice_set_type: "default"
 
 two_languages:
   catalog: two
   name: Languages
+  choice_set_type: "default"
 
 multilingual_languages:
   catalog: multilingual
   name: Languages
+  choice_set_type: "default"
 
 search_car_styles:
   catalog: search
   name: Car Styles
+  choice_set_type: "default"
 
 datation:
-  id: 1000
   catalog: complex_datation
   name: Datation ChoiceSet
   choice_set_type: "datation"

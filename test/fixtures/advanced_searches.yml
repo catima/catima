@@ -314,7 +314,7 @@ with_a_choice:
               "field_condition": "and",
               "start": { "exact": { "D": "", "M": "", "Y": "" } },
               "end": { "exact": { "D": "", "M": "", "Y": "" } } },
-          "999": { "field_condition": "and", "default": "1000" } }
+          "999": { "field_condition": "and", "default": "<%= ActiveRecord::FixtureSet.identify(:datation_1_january_300) %>" } }
     }
 
 with_a_choice_with_childrens:
@@ -330,5 +330,5 @@ with_a_choice_with_childrens:
               "field_condition": "and",
               "start": { "exact": { "D": "", "M": "", "Y": "" } },
               "end": { "exact": { "D": "", "M": "", "Y": "" } } },
-          "999": { "field_condition": "and", "default": "1001", child_choices_activated: "true" } }
+          "999": { "field_condition": "and", "default": "<%= ActiveRecord::FixtureSet.identify(:datation_100_500) %>", child_choices_activated: "true" } }
     }
