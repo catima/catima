@@ -40,7 +40,6 @@ class ChoiceSet < ApplicationRecord
   validates_presence_of :name
   validate :format_present_if_datation
 
-  after_initialize :set_default_choice_set_type
   before_create :assign_uuid
 
   def self.sorted
@@ -95,9 +94,5 @@ class ChoiceSet < ApplicationRecord
       :format,
       I18n.t("errors.messages.blank")
     )
-  end
-
-  def set_default_choice_set_type
-    self.choice_set_type ||= 0
   end
 end

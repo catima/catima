@@ -414,7 +414,7 @@ CREATE TABLE public.choice_sets (
     slug character varying,
     uuid character varying,
     deleted_at timestamp without time zone,
-    choice_set_type integer,
+    choice_set_type integer DEFAULT 0,
     format character varying
 );
 
@@ -2601,6 +2601,7 @@ INSERT INTO "schema_migrations" (version) VALUES
 ('20220112102223'),
 ('20220117081728'),
 ('20220211153502'),
-('20220214085848');
+('20220214085848'),
+('20220510091724');
 
 
