@@ -7,11 +7,9 @@ const AdvancedComplexDatationSearch = (props) => {
     locale,
     srcId,
     srcRef,
-
     startDateInputName,
     endDateInputName,
     disableInputByCondition,
-
     selectCondition,
     selectConditionName,
     inputStart,
@@ -21,7 +19,6 @@ const AdvancedComplexDatationSearch = (props) => {
     fieldConditionData,
     inputEnd,
     allowBC,
-    allowedFormats,
     inputName,
     choiceSelectConditionName,
     choiceFieldConditionName,
@@ -40,55 +37,50 @@ const AdvancedComplexDatationSearch = (props) => {
     choiceSelectCondition,
     multiple,
     choiceFieldConditionData
-
   } = props
 
   return (
     <div>
-      {allowedFormats.includes("date_time") && (
-        <DateTimeSearch
-          startDateInputName={startDateInputName}
-          endDateInputName={endDateInputName}
-          disableInputByCondition={disableInputByCondition}
-          srcId={srcId}
-          srcRef={srcRef}
-          selectCondition={selectCondition}
-          selectConditionName={selectConditionName}
-          inputStart={inputStart}
-          localizedDateTimeData={localizedDateTimeData}
-          locale={locale}
-          format={format}
-          fieldConditionName={fieldConditionName}
-          fieldConditionData={fieldConditionData}
-          inputEnd={inputEnd}
-          allowBC={allowBC}
-        />
-      )}
-      {allowedFormats.includes("datation_choice") && (
-        <ChoiceSetSearchContainer
-          inputName={inputName}
-          srcId={srcId}
-          srcRef={srcRef}
-          selectConditionName={choiceSelectConditionName}
-          fieldConditionName={choiceFieldConditionName}
-          categoryInputName={categoryInputName}
-          childChoicesActivatedInputName={childChoicesActivatedInputName}
-          linkedCategoryInputName={linkedCategoryInputName}
-          catalog={catalog}
-          itemType={itemType}
-          label={label}
-          items={items}
-          childChoicesActivatedPlaceholder={childChoicesActivatedPlaceholder}
-          childChoicesActivatedYesLabel={childChoicesActivatedYesLabel}
-          childChoicesActivatedNoLabel={childChoicesActivatedNoLabel}
-          locale={locale}
-          searchPlaceholder={searchPlaceholder}
-          filterPlaceholder={filterPlaceholder}
-          selectCondition={choiceSelectCondition}
-          multiple={multiple}
-          fieldConditionData={choiceFieldConditionData}
-        />
-      )}
+      <DateTimeSearch
+        startDateInputName={startDateInputName}
+        endDateInputName={endDateInputName}
+        disableInputByCondition={disableInputByCondition}
+        srcId={srcId}
+        srcRef={srcRef}
+        selectCondition={selectCondition}
+        selectConditionName={selectConditionName}
+        inputStart={inputStart}
+        localizedDateTimeData={localizedDateTimeData}
+        locale={locale}
+        format={format}
+        fieldConditionName={fieldConditionName}
+        fieldConditionData={fieldConditionData}
+        inputEnd={inputEnd}
+        allowBC={allowBC}
+      />
+      <ChoiceSetSearchContainer
+        inputName={inputName}
+        srcId={srcId}
+        srcRef={srcRef}
+        selectConditionName={choiceSelectConditionName}
+        fieldConditionName={choiceFieldConditionName}
+        categoryInputName={categoryInputName}
+        childChoicesActivatedInputName={childChoicesActivatedInputName}
+        linkedCategoryInputName={linkedCategoryInputName}
+        catalog={catalog}
+        itemType={itemType}
+        label={label}
+        items={items}
+        childChoicesActivatedPlaceholder={childChoicesActivatedPlaceholder}
+        childChoicesActivatedYesLabel={childChoicesActivatedYesLabel}
+        childChoicesActivatedNoLabel={childChoicesActivatedNoLabel}
+        locale={locale}
+        searchPlaceholder={searchPlaceholder}
+        filterPlaceholder={filterPlaceholder}
+        selectCondition={choiceSelectCondition}
+        multiple={multiple}
+        fieldConditionData={choiceFieldConditionData}
+      />
     </div>
   )
 }

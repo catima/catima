@@ -20,7 +20,6 @@
                         fieldConditionName: "advanced_search[criteria][#{field.uuid}][field_condition]",
                         fieldConditionData: field.search_field_conditions_as_hash,
                         allowBC: field.allow_bc,
-                        allowedFormats: field.allowed_formats,
                         label: t(".any"),
                         items: (!choice_sets.first&.not_deleted? || !choice_sets.first&.not_deactivated?) ? [] : filter_category_fields(field.search_data_as_hash),
                         categoryInputName: "advanced_search[criteria][#{field.uuid}][0][category_field]",
