@@ -3,7 +3,7 @@ json.uuid simple_search.uuid
 json.query simple_search.query
 if params[:item_type_slug].present?
   json.item_type do
-    json.array! simple_search_results.items.joins(:item_type).group_by(&:item_type) do |item_type, items|
+    json.array! simple_search_results.items.includes(:item_type).group_by(&:item_type) do |item_type, items|
       json.id item_type.id
       json.slug item_type.slug
       json.name item_type.name_translations
