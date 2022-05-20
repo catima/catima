@@ -642,8 +642,14 @@ en:
         user: "User"
         request: "Request"
         format: "Format"
+        with_files: "With files"
         status: "Status"
         validity: "Validity"
+      new:
+        new_export: "New %{category} export"
+        with_files: "Add files"
+        with_files_help: "Do you want to add the files (images, documents) from all the items in your export ? If you have a lot of them, the export could take longer to become available."
+        create: "Create export"
 
     advanced_search_configurations:
       index:

@@ -46,6 +46,9 @@ class Export < ApplicationRecord
   end
 
   def export_catalog(locale)
-    ExportWorker.perform_async(id, category, locale)
+    ExportWorker.perform_async(
+      id,
+      locale
+    )
   end
 end

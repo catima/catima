@@ -594,7 +594,8 @@ CREATE TABLE public.exports (
     category character varying,
     status character varying,
     created_at timestamp without time zone NOT NULL,
-    updated_at timestamp without time zone NOT NULL
+    updated_at timestamp without time zone NOT NULL,
+    with_files boolean DEFAULT true NOT NULL
 );
 
 
@@ -2595,4 +2596,7 @@ INSERT INTO "schema_migrations" (version) VALUES
 ('20211209083903'),
 ('20220112092308'),
 ('20220112102223'),
-('20220117081728');
+('20220117081728'),
+('20220519124303');
+
+

@@ -3,7 +3,7 @@ require 'test_helper'
 class ExportTest < ActiveSupport::TestCase
   should validate_presence_of(:user)
   should validate_presence_of(:catalog)
-  should validate_inclusion_of(:category).in_array(%w(catima))
+  should validate_inclusion_of(:category).in_array(%w(catima sql csv))
   should validate_inclusion_of(:status).in_array(%w(error processing ready))
 
   test "export ready" do
