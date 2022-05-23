@@ -82,14 +82,14 @@ class Search::ComplexDatationStrategy < Search::BaseStrategy
              #{date_time_to_interval(date_time, 'from')} #{sql_operator} #{make_interval(date_time)} AND
              #{date_time_to_interval(date_time, 'to')}  #{sql_operator} #{make_interval(date_time)}")
              .or(
-                      scope.where(
-                        "#{sql_select_table_name}.data->'#{field.uuid}'->>'selected_format' = 'datation_choice' AND
+               scope.where(
+                 "#{sql_select_table_name}.data->'#{field.uuid}'->>'selected_format' = 'datation_choice' AND
                #{choice_to_interval(date_time, 'from_date')} #{sql_operator} #{make_interval(date_time)} AND
                #{choice_to_interval(date_time, 'to_date')}  #{sql_operator} #{make_interval(date_time)}")
-                    )
+             )
       else
         scope.where(
-                "#{sql_select_table_name}.data->'#{field.uuid}'->>'selected_format' = 'date_time' AND
+          "#{sql_select_table_name}.data->'#{field.uuid}'->>'selected_format' = 'date_time' AND
                 ((#{date_time_to_interval(date_time, 'from')} <= #{make_interval(date_time, '+', tolerance)} AND
                 #{date_time_to_interval(date_time, 'from')} >= #{make_interval(date_time, '-', tolerance)}) OR
                 (#{date_time_to_interval(date_time, 'to')}  <= #{make_interval(date_time, '+', tolerance)} AND
@@ -99,16 +99,16 @@ class Search::ComplexDatationStrategy < Search::BaseStrategy
                 (#{date_time_to_interval(date_time, 'from')}  <= #{make_interval(date_time, '+', tolerance)} AND #{where_date_is_not_set('to')}) OR
                 (#{date_time_to_interval(date_time, 'to')}  >= #{make_interval(date_time, '-', tolerance)} AND #{where_date_is_not_set('from')}))")
              .or(
-                      scope.where(
-                        "#{sql_select_table_name}.data->'#{field.uuid}'->>'selected_format' = 'datation_choice' AND
+               scope.where(
+                 "#{sql_select_table_name}.data->'#{field.uuid}'->>'selected_format' = 'datation_choice' AND
                ((#{choice_to_interval(date_time, 'from_date')} <= #{make_interval(date_time, '+', tolerance)} AND
                #{choice_to_interval(date_time, 'from_date')} >= #{make_interval(date_time, '-', tolerance)}) OR
                (#{choice_to_interval(date_time, 'to_date')}  <= #{make_interval(date_time, '+', tolerance)} AND
                #{choice_to_interval(date_time, 'to_date')}  >= #{make_interval(date_time, '-', tolerance)}) OR
                (#{choice_to_interval(date_time, 'from_date', true)}  <= #{make_interval(date_time, '-', tolerance)} AND
                #{choice_to_interval(date_time, 'to_date', true)}  >= #{make_interval(date_time, '+', tolerance)}))"
-                      )
-                    )
+               )
+             )
       end
     when "before"
       sql_operator = negate ? ">=" : "<="
@@ -144,7 +144,7 @@ class Search::ComplexDatationStrategy < Search::BaseStrategy
   end
 
   def interval_search(scope, start_date_time, end_date_time, field_condition, negate, tolerance)
-    tolerance = !tolerance ? 0 : tolerance.to_i
+    tolerance = tolerance ? tolerance.to_i : 0
 
     return inexact_search(scope, start_date_time, field_condition, field_condition == "outside", tolerance) if field_condition != 'outside' && field_condition != 'between'
 
