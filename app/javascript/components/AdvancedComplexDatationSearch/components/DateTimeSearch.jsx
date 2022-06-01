@@ -241,20 +241,6 @@ const DateTimeSearchComponent = (props) => {
             </div>
           }
         </div>
-        <div className="component-search-row row">
-          <div className="col-lg-2">
-
-          </div>
-          <div className="col-lg-10">
-            <div className="d-flex align-items-center">
-              <div className="mr-2">
-                {Translations.messages['catalog_admin.fields.complex_datation_option_inputs.tolerance']} :
-              </div>
-              <input id='tolerance' name={startDateInputName.split('[start]')[0] + '[tolerance]'} min="0"
-                     type="number" className="input-4 form-control"/>
-            </div>
-          </div>
-        </div>
       </div>
     )
   }

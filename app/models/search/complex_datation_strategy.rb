@@ -1,6 +1,6 @@
 # Beware, timestamps returned by the Datepicker React component are given in milliseconds!
 class Search::ComplexDatationStrategy < Search::BaseStrategy
-  permit_criteria :tolerance, :exact, :condition, :field_condition, :default, :child_choices_activated, :start => {}, :end => {}
+  permit_criteria :exact, :condition, :field_condition, :default, :child_choices_activated, :start => {}, :end => {}
   include Search::MultivaluedSearch
 
   def keywords_for_index(item)
@@ -69,84 +69,57 @@ class Search::ComplexDatationStrategy < Search::BaseStrategy
   end
 
   def search_interval_dates(scope, criteria, dates, negate, field_condition)
-    interval_search(scope, dates[:start], dates[:end], field_condition, negate, criteria[:tolerance])
+    interval_search(scope, dates[:start], dates[:end], field_condition, negate)
   end
 
-  def inexact_search(scope, date_time, field_condition, negate, tolerance)
+  def inexact_search(scope, date_time, field_condition, negate)
     case field_condition
     when "exact"
-      sql_operator = "="
-      if tolerance == 0
-        scope.where(
-          "#{sql_select_table_name}.data->'#{field.uuid}'->>'selected_format' = 'date_time' AND
-             #{date_time_to_interval(date_time, 'from')} #{sql_operator} #{make_interval(date_time)} AND
-             #{date_time_to_interval(date_time, 'to')}  #{sql_operator} #{make_interval(date_time)}")
-             .or(
-               scope.where(
-                 "#{sql_select_table_name}.data->'#{field.uuid}'->>'selected_format' = 'datation_choice' AND
-               #{choice_to_interval(date_time, 'from_date')} #{sql_operator} #{make_interval(date_time)} AND
-               #{choice_to_interval(date_time, 'to_date')}  #{sql_operator} #{make_interval(date_time)}")
-             )
-      else
-        scope.where(
-          "#{sql_select_table_name}.data->'#{field.uuid}'->>'selected_format' = 'date_time' AND
-                ((#{date_time_to_interval(date_time, 'from')} <= #{make_interval(date_time, '+', tolerance)} AND
-                #{date_time_to_interval(date_time, 'from')} >= #{make_interval(date_time, '-', tolerance)}) OR
-                (#{date_time_to_interval(date_time, 'to')}  <= #{make_interval(date_time, '+', tolerance)} AND
-                #{date_time_to_interval(date_time, 'to')}  >= #{make_interval(date_time, '-', tolerance)}) OR
-                (#{date_time_to_interval(date_time, 'from')}  <= #{make_interval(date_time, '-', tolerance)} AND
-                #{date_time_to_interval(date_time, 'to')}  >= #{make_interval(date_time, '+', tolerance)}) OR
-                (#{date_time_to_interval(date_time, 'from')}  <= #{make_interval(date_time, '+', tolerance)} AND #{where_date_is_not_set('to')}) OR
-                (#{date_time_to_interval(date_time, 'to')}  >= #{make_interval(date_time, '-', tolerance)} AND #{where_date_is_not_set('from')}))")
-             .or(
-               scope.where(
-                 "#{sql_select_table_name}.data->'#{field.uuid}'->>'selected_format' = 'datation_choice' AND
-               ((#{choice_to_interval(date_time, 'from_date')} <= #{make_interval(date_time, '+', tolerance)} AND
-               #{choice_to_interval(date_time, 'from_date')} >= #{make_interval(date_time, '-', tolerance)}) OR
-               (#{choice_to_interval(date_time, 'to_date')}  <= #{make_interval(date_time, '+', tolerance)} AND
-               #{choice_to_interval(date_time, 'to_date')}  >= #{make_interval(date_time, '-', tolerance)}) OR
-               (#{choice_to_interval(date_time, 'from_date', true)}  <= #{make_interval(date_time, '-', tolerance)} AND
-               #{choice_to_interval(date_time, 'to_date', true)}  >= #{make_interval(date_time, '+', tolerance)}))"
-               )
-             )
-      end
-    when "before"
-      sql_operator = negate ? ">=" : "<="
-      tolerance_operator = negate ? '-' : '+'
+    sql_operator = "="
       scope.where(
         "#{sql_select_table_name}.data->'#{field.uuid}'->>'selected_format' = 'date_time' AND
-           ((#{date_time_to_interval(date_time, 'from')} #{sql_operator} #{make_interval(date_time, tolerance_operator, tolerance)}) OR
-           (#{date_time_to_interval(date_time, 'to')} #{sql_operator} #{make_interval(date_time, tolerance_operator, tolerance)}) OR
+           #{date_time_to_interval(date_time, 'from')} #{sql_operator} #{make_interval(date_time)} AND
+           #{date_time_to_interval(date_time, 'to')}  #{sql_operator} #{make_interval(date_time)}")
+           .or(
+             scope.where(
+               "#{sql_select_table_name}.data->'#{field.uuid}'->>'selected_format' = 'datation_choice' AND
+             #{choice_to_interval(date_time, 'from_date')} #{sql_operator} #{make_interval(date_time)} AND
+             #{choice_to_interval(date_time, 'to_date')}  #{sql_operator} #{make_interval(date_time)}")
+           )
+    when "before"
+      sql_operator = negate ? ">=" : "<="
+      scope.where(
+        "#{sql_select_table_name}.data->'#{field.uuid}'->>'selected_format' = 'date_time' AND
+           ((#{date_time_to_interval(date_time, 'from')} #{sql_operator} #{make_interval(date_time)}) OR
+           (#{date_time_to_interval(date_time, 'to')} #{sql_operator} #{make_interval(date_time)}) OR
            (#{where_date_is_not_set('from')}))"
       )
            .or(
              scope.where(
                "#{sql_select_table_name}.data->'#{field.uuid}'->>'selected_format' = 'datation_choice' AND
-             ((#{choice_to_interval(date_time, 'from_date')} #{sql_operator} #{make_interval(date_time, tolerance_operator, tolerance)}) OR
-             (#{choice_to_interval(date_time, 'to_date')}  #{sql_operator} #{make_interval(date_time, tolerance_operator, tolerance)}))")
+             ((#{choice_to_interval(date_time, 'from_date')} #{sql_operator} #{make_interval(date_time)}) OR
+             (#{choice_to_interval(date_time, 'to_date')}  #{sql_operator} #{make_interval(date_time)}))")
            )
     when "after"
       sql_operator = negate ? "<=" : ">="
-      tolerance_operator = negate ? '+' : '-'
       scope.where(
         "#{sql_select_table_name}.data->'#{field.uuid}'->>'selected_format' = 'date_time' AND
-           ((#{date_time_to_interval(date_time, 'from')} #{sql_operator} #{make_interval(date_time, tolerance_operator, tolerance)}) OR
-           (#{date_time_to_interval(date_time, 'to')} #{sql_operator} #{make_interval(date_time, tolerance_operator, tolerance)}) OR
+           ((#{date_time_to_interval(date_time, 'from')} #{sql_operator} #{make_interval(date_time)}) OR
+           (#{date_time_to_interval(date_time, 'to')} #{sql_operator} #{make_interval(date_time)}) OR
            (#{where_date_is_not_set('to')}))"
       )
            .or(
              scope.where(
                "#{sql_select_table_name}.data->'#{field.uuid}'->>'selected_format' = 'datation_choice' AND
-             ((#{choice_to_interval(date_time, 'from_date')} #{sql_operator} #{make_interval(date_time, tolerance_operator, tolerance)}) OR
-             (#{choice_to_interval(date_time, 'to_date')}  #{sql_operator} #{make_interval(date_time, tolerance_operator, tolerance)}))")
+             ((#{choice_to_interval(date_time, 'from_date')} #{sql_operator} #{make_interval(date_time)}) OR
+             (#{choice_to_interval(date_time, 'to_date')}  #{sql_operator} #{make_interval(date_time)}))")
            )
     end
   end
 
-  def interval_search(scope, start_date_time, end_date_time, field_condition, negate, tolerance)
-    tolerance = tolerance ? tolerance.to_i : 0
+  def interval_search(scope, start_date_time, end_date_time, field_condition, negate)
 
-    return inexact_search(scope, start_date_time, field_condition, field_condition == "outside", tolerance) if field_condition != 'outside' && field_condition != 'between'
+    return inexact_search(scope, start_date_time, field_condition, field_condition == "outside") if field_condition != 'outside' && field_condition != 'between'
 
     field_condition = field_condition == "between" ? "outside" : "between" if negate
     where_scope = ->(*q) { field_condition == "outside" ? scope.where.not(q) : scope.where(q) }
@@ -158,39 +131,39 @@ class Search::ComplexDatationStrategy < Search::BaseStrategy
             (CASE WHEN #{make_interval(start_date_time)} <= #{make_interval(end_date_time)}
              THEN
                 (#{date_time_to_interval(start_date_time, 'from')}
-                BETWEEN #{make_interval(start_date_time, negate ? '+' : '-', tolerance)}
-                AND #{make_interval(end_date_time, negate ? '-' : '+', tolerance)})
+                BETWEEN #{make_interval(start_date_time)}
+                AND #{make_interval(end_date_time)})
                 AND
                 (#{date_time_to_interval(start_date_time, 'to')}
-                BETWEEN #{make_interval(start_date_time, negate ? '+' : '-', tolerance)}
-                AND #{make_interval(end_date_time, negate ? '-' : '+', tolerance)})
+                BETWEEN #{make_interval(start_date_time)}
+                AND #{make_interval(end_date_time)})
              ELSE
                 (#{date_time_to_interval(start_date_time, 'from')}
-                BETWEEN #{make_interval(end_date_time, negate ? '+' : '-', tolerance)}
-                AND #{make_interval(start_date_time, negate ? '-' : '+', tolerance)})
+                BETWEEN #{make_interval(end_date_time)}
+                AND #{make_interval(start_date_time)})
                 AND
                 (#{date_time_to_interval(start_date_time, 'to')}
-                BETWEEN #{make_interval(end_date_time, negate ? '+' : '-', tolerance)}
-                AND #{make_interval(start_date_time, negate ? '-' : '+', tolerance)})
+                BETWEEN #{make_interval(end_date_time)}
+                AND #{make_interval(start_date_time)})
              END)) OR
              (#{sql_select_table_name}.data->'#{field.uuid}'->>'selected_format' = 'datation_choice' AND
              (CASE WHEN #{make_interval(start_date_time)} <= #{make_interval(end_date_time)}
              THEN
                 (#{choice_to_interval(start_date_time, 'from_date')}
-                BETWEEN #{make_interval(start_date_time, negate ? '+' : '-', tolerance)}
-                AND #{make_interval(end_date_time, negate ? '-' : '+', tolerance)})
+                BETWEEN #{make_interval(start_date_time)}
+                AND #{make_interval(end_date_time)})
                 AND
                 (#{choice_to_interval(start_date_time, 'to_date')}
-                BETWEEN #{make_interval(start_date_time, negate ? '+' : '-', tolerance)}
-                AND #{make_interval(end_date_time, negate ? '-' : '+', tolerance)})
+                BETWEEN #{make_interval(start_date_time)}
+                AND #{make_interval(end_date_time)})
              ELSE
                 (#{choice_to_interval(start_date_time, 'from_date')}
-                BETWEEN #{make_interval(end_date_time, negate ? '+' : '-', tolerance)}
-                AND #{make_interval(start_date_time, negate ? '-' : '+', tolerance)})
+                BETWEEN #{make_interval(end_date_time)}
+                AND #{make_interval(start_date_time)})
                 AND
                 (#{choice_to_interval(start_date_time, 'to_date')}
-                BETWEEN #{make_interval(end_date_time, negate ? '+' : '-', tolerance)}
-                AND #{make_interval(start_date_time, negate ? '-' : '+', tolerance)})
+                BETWEEN #{make_interval(end_date_time)}
+                AND #{make_interval(start_date_time)})
              END))"
     )
   end
@@ -299,11 +272,9 @@ class Search::ComplexDatationStrategy < Search::BaseStrategy
     )"
   end
 
-  def make_interval(date_time, operator=false, tolerance=0)
-    inverted_operator = operator == '+' ? '-' : '+'
-    tolerance_query_string = date_time['BC'] ? "#{inverted_operator} #{tolerance}" : "#{operator} #{tolerance}"
+  def make_interval(date_time)
     "(#{date_time['BC'] ? -1 : 1} * make_interval(
-        years := ('#{date_time_component(date_time, 'Y')}')::int  #{tolerance == 0 ? '' : tolerance_query_string},
+        years := ('#{date_time_component(date_time, 'Y')}')::int,
         months := ('#{date_time_component(date_time, 'M')}')::int ,
         days := ('#{date_time_component(date_time, 'D')}')::int ,
         hours := ('#{date_time_component(date_time, 'h')}')::int ,

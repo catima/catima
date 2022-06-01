@@ -684,7 +684,6 @@ en:
         datation_choice: By choice set
         format: Please select the format
         BC: BC
-        tolerance: Tolerance (year)
         from_date: Start date
         to_date: End date
       common_form_fields:

@@ -37,8 +37,7 @@ exact_1_1_300:
   criteria:
     { "complex_datation_uuid":
         { "0":
-            { "tolerance": "",
-              "condition": "exact",
+            { "condition": "exact",
               "field_condition": "and",
               "start": { "exact": { "D": "1", "M": "1", "Y": "300" } },
               "end": { "exact": { "D": "", "M": "", "Y": "" } } },
@@ -53,43 +52,10 @@ exact_1_1_300_bc:
   criteria:
     { "complex_datation_uuid":
         { "0":
-            { "tolerance": "",
-              "condition": "exact",
+            { "condition": "exact",
               "field_condition": "and",
               "start": { "exact": { "BC": "true","D": "1", "M": "1", "Y": "300" } },
               "end": { "exact": { "BC": "true","D": "", "M": "", "Y": "" } } },
-          "999": { "field_condition": "and", "default": "" } }
-    }
-
-exact_1_1_300_tolerance_100:
-  uuid: exact_1_1_300_tolerance_100_uuid
-  item_type: complex_datation
-  catalog: complex_datation
-  creator_id: 1
-  criteria:
-    { "complex_datation_uuid":
-        { "0":
-            { "tolerance": "100",
-              "condition": "exact",
-              "field_condition": "and",
-              "start": { "exact": { "D": "1", "M": "1", "Y": "300" } },
-              "end": { "exact": { "D": "", "M": "", "Y": "" } } },
-          "999": { "field_condition": "and", "default": "" } }
-    }
-
-exact_1_1_300_bc_tolerance_100:
-  uuid: exact_1_1_300_bc_tolerance_100_uuid
-  item_type: complex_datation
-  catalog: complex_datation
-  creator_id: 1
-  criteria:
-    { "complex_datation_uuid":
-        { "0":
-            { "tolerance": "100",
-              "condition": "exact",
-              "field_condition": "and",
-              "start": { "exact": { "BC": "true", "D": "1", "M": "1", "Y": "300" } },
-              "end": { "exact": { "D": "", "M": "", "Y": "" } } },
           "999": { "field_condition": "and", "default": "" } }
     }
 
@@ -101,8 +67,7 @@ before_1_1_300:
   criteria:
     { "complex_datation_uuid":
         { "0":
-            { "tolerance": "",
-              "condition": "before",
+            { "condition": "before",
               "field_condition": "and",
               "start": { "before": { "D": "1", "M": "1", "Y": "300" } },
               "end": { "before": { "D": "", "M": "", "Y": "" } } },
@@ -117,43 +82,10 @@ before_1_1_300_bc:
   criteria:
     { "complex_datation_uuid":
         { "0":
-            { "tolerance": "",
-              "condition": "before",
+            { "condition": "before",
               "field_condition": "and",
               "start": { "before": { "BC": "true","D": "1", "M": "1", "Y": "300" } },
               "end": { "before": { "BC": "true","D": "", "M": "", "Y": "" } } },
-          "999": { "field_condition": "and", "default": "" } }
-    }
-
-before_1_1_300_tolerance_100:
-  uuid: before_1_1_300_tolerance_100_uuid
-  item_type: complex_datation
-  catalog: complex_datation
-  creator_id: 1
-  criteria:
-    { "complex_datation_uuid":
-        { "0":
-            { "tolerance": "100",
-              "condition": "before",
-              "field_condition": "and",
-              "start": { "before": { "D": "1", "M": "1", "Y": "300" } },
-              "end": { "before": { "D": "", "M": "", "Y": "" } } },
-          "999": { "field_condition": "and", "default": "" } }
-    }
-
-before_1_1_300_bc_tolerance_100:
-  uuid: before_1_1_300_bc_tolerance_100_uuid
-  item_type: complex_datation
-  catalog: complex_datation
-  creator_id: 1
-  criteria:
-    { "complex_datation_uuid":
-        { "0":
-            { "tolerance": "100",
-              "condition": "before",
-              "field_condition": "and",
-              "start": { "before": { "BC": "true", "D": "1", "M": "1", "Y": "300" } },
-              "end": { "before": { "D": "", "M": "", "Y": "" } } },
           "999": { "field_condition": "and", "default": "" } }
     }
 
@@ -165,8 +97,7 @@ after_1_1_300:
   criteria:
     { "complex_datation_uuid":
         { "0":
-            { "tolerance": "",
-              "condition": "after",
+            { "condition": "after",
               "field_condition": "and",
               "start": { "after": { "D": "1", "M": "1", "Y": "300" } },
               "end": { "after": { "D": "", "M": "", "Y": "" } } },
@@ -181,43 +112,10 @@ after_1_1_300_bc:
   criteria:
     { "complex_datation_uuid":
         { "0":
-            { "tolerance": "",
-              "condition": "after",
+            { "condition": "after",
               "field_condition": "and",
               "start": { "after": { "BC": "true","D": "1", "M": "1", "Y": "300" } },
               "end": { "after": { "BC": "true","D": "", "M": "", "Y": "" } } },
-          "999": { "field_condition": "and", "default": "" } }
-    }
-
-after_1_1_300_tolerance_100:
-  uuid: after_1_1_300_tolerance_100_uuid
-  item_type: complex_datation
-  catalog: complex_datation
-  creator_id: 1
-  criteria:
-    { "complex_datation_uuid":
-        { "0":
-            { "tolerance": "100",
-              "condition": "after",
-              "field_condition": "and",
-              "start": { "after": { "D": "1", "M": "1", "Y": "300" } },
-              "end": { "after": { "D": "", "M": "", "Y": "" } } },
-          "999": { "field_condition": "and", "default": "" } }
-    }
-
-after_1_1_300_bc_tolerance_100:
-  uuid: after_1_1_300_bc_tolerance_100_uuid
-  item_type: complex_datation
-  catalog: complex_datation
-  creator_id: 1
-  criteria:
-    { "complex_datation_uuid":
-        { "0":
-            { "tolerance": "100",
-              "condition": "after",
-              "field_condition": "and",
-              "start": { "after": { "BC": "true", "D": "1", "M": "1", "Y": "300" } },
-              "end": { "after": { "D": "", "M": "", "Y": "" } } },
           "999": { "field_condition": "and", "default": "" } }
     }
 
@@ -229,8 +127,7 @@ between_1_1_300_31_1_300:
   criteria:
     { "complex_datation_uuid":
         { "0":
-            { "tolerance": "",
-              "condition": "between",
+            { "condition": "between",
               "field_condition": "and",
               "start": { "between": { "D": "1", "M": "1", "Y": "300" } },
               "end": { "between": { "D": "31", "M": "1", "Y": "300" } } },
@@ -245,8 +142,7 @@ between_1_1_300_bc_31_1_300_bc:
   criteria:
     { "complex_datation_uuid":
         { "0":
-            { "tolerance": "",
-              "condition": "between",
+            { "condition": "between",
               "field_condition": "and",
               "start": { "between": { "BC": "true", "D": "1", "M": "1", "Y": "300" } },
               "end": { "between": { "BC": "true", "D": "31", "M": "1", "Y": "300" } } },
@@ -261,43 +157,10 @@ between_1_1_300_bc_31_1_300:
   criteria:
     { "complex_datation_uuid":
         { "0":
-            { "tolerance": "",
-              "condition": "between",
+            { "condition": "between",
               "field_condition": "and",
               "start": { "between": { "BC": "true", "D": "1", "M": "1", "Y": "300" } },
               "end": { "between": { "D": "31", "M": "1", "Y": "300" } } },
-          "999": { "field_condition": "and", "default": "" } }
-    }
-
-between_1_1_300_31_1_300_tolerance_300:
-  uuid: between_1_1_300_31_1_300_tolerance_300_uuid
-  item_type: complex_datation
-  catalog: complex_datation
-  creator_id: 1
-  criteria:
-    { "complex_datation_uuid":
-        { "0":
-            { "tolerance": "300",
-              "condition": "between",
-              "field_condition": "and",
-              "start": { "between": { "D": "1", "M": "1", "Y": "300" } },
-              "end": { "between": { "D": "31", "M": "1", "Y": "300" } } },
-          "999": { "field_condition": "and", "default": "" } }
-    }
-
-between_1_1_300_bc_31_1_300_bc_tolerance_300:
-  uuid: between_1_1_300_bc_31_1_300_bc_tolerance_300_uuid
-  item_type: complex_datation
-  catalog: complex_datation
-  creator_id: 1
-  criteria:
-    { "complex_datation_uuid":
-        { "0":
-            { "tolerance": "300",
-              "condition": "between",
-              "field_condition": "and",
-              "start": { "between": { "BC": "true", "D": "1", "M": "1", "Y": "300" } },
-              "end": { "between": { "BC": "true", "D": "31", "M": "1", "Y": "300" } } },
           "999": { "field_condition": "and", "default": "" } }
     }
 
@@ -309,8 +172,7 @@ with_a_choice:
   criteria:
     { "complex_datation_uuid":
         { "0":
-            { "tolerance": "",
-              "condition": "exact",
+            { "condition": "exact",
               "field_condition": "and",
               "start": { "exact": { "D": "", "M": "", "Y": "" } },
               "end": { "exact": { "D": "", "M": "", "Y": "" } } },
@@ -325,8 +187,7 @@ with_a_choice_with_childrens:
   criteria:
     { "complex_datation_uuid":
         { "0":
-            { "tolerance": "",
-              "condition": "exact",
+            { "condition": "exact",
               "field_condition": "and",
               "start": { "exact": { "D": "", "M": "", "Y": "" } },
               "end": { "exact": { "D": "", "M": "", "Y": "" } } },
