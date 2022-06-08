@@ -201,7 +201,7 @@ Rails.application.routes.draw do
     end
 
     # Exports
-    resources :exports, :path => "_exports", :except => [:edit, :show, :new, :destroy, :update] do
+    resources :exports, :path => "_exports", :except => [:edit, :show, :destroy, :update] do
       member do
         get 'download'
       end

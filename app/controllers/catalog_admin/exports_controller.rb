@@ -1,23 +1,32 @@
 class CatalogAdmin::ExportsController < CatalogAdmin::BaseController
   def index
-    build_export(catalog)
+    build_export
     authorize(@export)
+
     @exports = catalog.exports.order(created_at: :desc)
+
     render("index", :layout => "catalog_admin/setup")
   end
 
-  def create
+  def new
     category = find_category
-    build_export(catalog, category)
+
+    build_export(category)
     authorize(@export)
-    export = Export.create(
-      user: current_user,
-      catalog: catalog,
-      category: category,
-      status: "processing"
-    )
-    export.export_catalog(params[:locale])
-    redirect_to(catalog_admin_exports_path)
+
+    render("new", :layout => "catalog_admin/setup")
+  end
+
+  def create
+    build_export
+    authorize(@export)
+
+    if @export.update(export_params)
+      @export.export_catalog(params[:locale])
+      redirect_to(catalog_admin_exports_path)
+    else
+      render("new", :layout => "catalog_admin/setup")
+    end
   end
 
   def download
@@ -28,9 +37,14 @@ class CatalogAdmin::ExportsController < CatalogAdmin::BaseController
 
   private
 
-  def build_export(catalog, category=nil)
-    @export = Export.new do |model|
-      model.catalog = catalog
+  def export_params
+    params.require(:export).permit(
+      :category, :status, :with_files
+    )
+  end
+
+  def build_export(category=nil)
+    @export = catalog.exports.new do |model|
       model.user = current_user
       model.category = category
     end

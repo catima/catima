@@ -15,12 +15,10 @@ class ExportPolicy
   def create?
     return false unless user.authenticated?
     return true if user.system_admin?
-    # Catalog admins are restricted to the catima format
-    # Only system admins can create sql & csv exports
-    return false unless @export.category.eql? "catima"
 
     user.catalog_role_at_least?(catalog, "admin")
   end
+  alias_method :new?, :create?
 
   def download?
     return false unless export.validity?

@@ -23,7 +23,7 @@ class Dump::SQLDump < ::Dump
     @holder = SQLExport::Holder.new
   end
 
-  def dump(catalog, directory)
+  def dump(catalog, directory, with_files)
     cat = Catalog.find_by(slug: catalog)
     raise "ERROR. Catalog '#{catalog}' not found." if cat.nil?
 
@@ -45,7 +45,7 @@ class Dump::SQLDump < ::Dump
     dump_references(cat, directory)
 
     # Dump files
-    dump_files(cat, directory)
+    dump_files(cat, directory) if with_files
   end
 
   # rubocop:disable Metrics/AbcSize, Metrics/MethodLength

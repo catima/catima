@@ -2,7 +2,7 @@ class Dump::CatalogDump < ::Dump
   def initialize
   end
 
-  def dump(catalog, directory)
+  def dump(catalog, directory, with_files)
     cat = Catalog.find_by(slug: catalog)
     raise "ERROR. Catalog '#{catalog}' not found." if cat.nil?
 
@@ -18,10 +18,15 @@ class Dump::CatalogDump < ::Dump
     Rails.logger.info "Dumping structure for catalog #{cat.id}..."
     dump_structure(cat, directory)
 
-    # Export data & files
-    Rails.logger.info "Dumping data & files for catalog #{cat.id}..."
+    # Export data
+    Rails.logger.info "Dumping data for catalog #{cat.id}..."
     dump_data(cat, directory)
-    dump_files(cat, directory)
+
+    # Export files
+    if with_files
+      Rails.logger.info "Dumping files for catalog #{cat.id}..."
+      dump_files(cat, directory)
+    end
 
     # Dump pages
     Rails.logger.info "Dumping pages for catalog #{cat.id}..."

@@ -1,0 +1,32 @@
+<% provide(:title, t('.new_export', category: @export.category)) %>
+
+<div class="card-body">
+  <%= bootstrap_form_for([:catalog_admin, @export]) do |f| %>
+    <div class="pb-2">
+      <div>
+        <%= t('.with_files_help') %>
+      </div>
+
+      <%= f.text_field(:category, :class => 'hide', :value => @export.category, :hide_label => true) %>
+      <%= f.text_field(:status, :class => 'hide', :value => "processing", :hide_label => true) %>
+
+      <%= f.form_group(
+        :with_files
+      ) do %>
+        <%= f.check_box(
+              :with_files,
+              :label => t('.with_files')
+            )
+        %>
+      <% end %>
+    </div>
+
+    <hr>
+
+    <%= f.primary(t('.create')) %>
+    <%= link_to(
+          t("cancel"),
+          catalog_admin_exports_path,
+          :class => "btn btn-link") %>
+  <% end %>
+</div>

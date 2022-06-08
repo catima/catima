@@ -3,11 +3,11 @@ require 'zip'
 class ExportWorker
   include Sidekiq::Worker
 
-  def perform(export_id, category, locale)
+  def perform(export_id, locale)
     dir = Rails.env.development? ? Rails.root.join('tmp', 'exports') : Dir.mktmpdir(SecureRandom.hex)
     export = find_export(export_id)
 
-    case category
+    case export.category
     when "catima"
       catima_export(export, dir)
     when "sql"
@@ -25,26 +25,38 @@ class ExportWorker
 
   def catima_export(export, dir)
     status = "ready"
+
     begin
-      Dump::CatalogDump.new.dump(export.catalog.slug, File.join(dir, 'catima'))
+      Dump::CatalogDump.new.dump(
+        export.catalog.slug,
+        File.join(dir, 'catima'),
+        export.with_files
+      )
       zip(dir, export.pathname)
     rescue StandardError => e
       status = "error"
       Rails.logger.error "[ERROR] Catalog dump: #{e.message}"
     end
+
     export.update(status: status)
     send_mail(export)
   end
 
   def sql_export(export, dir)
     status = "ready"
+
     begin
-      Dump::SQLDump.new.dump(export.catalog.slug, File.join(dir, 'sql'))
+      Dump::SQLDump.new.dump(
+        export.catalog.slug,
+        File.join(dir, 'sql'),
+        export.with_files
+      )
       zip(dir, export.pathname)
     rescue StandardError => e
       status = "error"
       Rails.logger.error "[ERROR] Catalog dump: #{e.message}"
     end
+
     export.update(status: status)
     send_mail(export)
   end
@@ -52,13 +64,20 @@ class ExportWorker
   # CSV dumps language is set according to the admin interface language
   def csv_export(export, dir, locale)
     status = "ready"
+
     begin
-      Dump::CSVDump.new.dump(export.catalog.slug, File.join(dir, 'csv'), locale)
+      Dump::CSVDump.new.dump(
+        export.catalog.slug,
+        File.join(dir, 'csv'),
+        locale,
+        export.with_files
+      )
       zip(dir, export.pathname)
     rescue StandardError => e
       status = "error"
       Rails.logger.error "[ERROR] Catalog dump: #{e.message}"
     end
+
     export.update(status: status)
     send_mail(export)
   end
