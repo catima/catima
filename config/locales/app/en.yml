@@ -17,7 +17,7 @@ en:
     attributes:
       choice_set:
         name: "Name"
-        choice_set_type: Choiceset type
+        choice_set_type: Type
         format: Format
       page:
         slug: "Slug"

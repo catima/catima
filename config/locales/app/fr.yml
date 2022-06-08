@@ -17,7 +17,7 @@ fr:
     attributes:
       choice_set:
         name: "Nom"
-        choice_set_type: "Type de l'ensemble de choix"
+        choice_set_type: "Type"
         format: Format
       choice:
         parent_id: "Parent"

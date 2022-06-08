@@ -7,14 +7,31 @@
     <%= fa_icon(:"plus-square", :text => t('.new_choice')) %>
   <% end %>
 <% end %>
-<div class="card-body" data-controller="sortable-choices  hover-list" data-sortable-choices-update-url="<%= update_positions_catalog_admin_choice_set_choices_path(@choice_set.catalog, I18n.locale, @choice_set) %>">
+<div class="card-body"
+     data-controller="sortable-choices hover-list"
+     data-sortable-choices-update-url="<%= update_positions_catalog_admin_choice_set_choices_path(@choice_set.catalog, I18n.locale, @choice_set) %>">
   <%= bootstrap_form_for(
         @choice_set,
         :url => catalog_admin_choice_set_path) do |f| %>
+
     <%= f.text_field(:name) %>
-    <%= f.collection_select(:choice_set_type, ChoiceSet.choice_set_types, :first, :first, {include_blank: true}, {required: true, disabled: true}) %>
-    <% if f.object.choice_set_type == 'datation' %>
-      <%= f.collection_select(:format, ChoiceSet::FORMATS, :to_s, :to_s, {include_blank: true}, {required: true, disabled: true}) %>
+    <%= f.collection_select(
+          :choice_set_type,
+          ChoiceSet.choice_set_types,
+          :first,
+          :first,
+          {prompt: ""},
+          {required: true, disabled: true}
+        ) %>
+    <% if f.object.choice_set_type === 'datation' %>
+      <%= f.collection_select(
+            :format,
+            ChoiceSet::FORMATS,
+            :to_s,
+            :to_s,
+            {include_blank: true},
+            {required: true, disabled: true}
+          ) %>
     <% end %>
 
     <div class="mt-2">
@@ -31,5 +48,6 @@
         <%= render 'choice', choice: choice, level: 0 %>
       <% end %>
     </ul>
+
   <% end %>
 </div>

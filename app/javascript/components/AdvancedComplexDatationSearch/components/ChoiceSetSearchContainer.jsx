@@ -213,7 +213,7 @@ const ChoiceSetSearchContainer = (props) => {
   }
 
   return (
-    <div id={srcIdProps + '_container'}>
+    <div id={srcIdProps + '_container'} class={'mt-1'}>
       {renderComponentList()}
     </div>
   );
