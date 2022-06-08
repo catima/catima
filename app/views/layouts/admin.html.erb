@@ -19,11 +19,13 @@
             Homepage
           <% end %>
         </li>
-        <li class="nav-item">
-          <%= link_to("/sidekiq", class: "nav-link") do %>
-            Sidekiq
+        <% if current_user.system_admin? %>
+          <li class="nav-item">
+            <%= link_to("/sidekiq", class: "nav-link") do %>
+              Sidekiq
+            <% end %>
+          </li>
         <% end %>
-        </li>
         <%= render("shared/navbar/user_menu") %>
       </ul>
     </div>

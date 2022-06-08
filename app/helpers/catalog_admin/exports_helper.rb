@@ -21,11 +21,7 @@ module CatalogAdmin::ExportsHelper
     tag.span(badge[:label], class: "badge badge-#{badge[:type]}")
   end
 
-  def available_categories
-    # Only system admins can create sql & csv exports
-    return Export::CATEGORY_OPTIONS if current_user.system_admin?
-
-    # Catalog admins are restricted to the catima format
-    Export::CATEGORY_OPTIONS.select { |cat| cat.eql? "catima" }
+  def with_files_check(export)
+    tag.i(nil, class: "fa fa-check") if export.with_files
   end
 end

@@ -6,38 +6,51 @@
       <%= fa_icon(:"plus-square", :text => t(".new_export")) %>
     </button>
     <div class="dropdown-menu dropdown-menu-right" aria-labelledby="add-field-dropdown">
-      <% available_categories.each do |format| %>
-        <%= link_to(format.capitalize, catalog_admin_exports_path(:category => format, :locale => params[:locale]), method: :post, class: "dropdown-item") %>
-      <% end %>
+      <% Export::CATEGORY_OPTIONS.each do |format| %>
+        <%= link_to(
+              format.capitalize,
+              new_catalog_admin_export_path(
+                :category => format,
+                :locale => params[:locale]
+              ),
+              method: :get,
+              class: "dropdown-item"
+            )
+        %>
+    <% end %>
     </div>
   </div>
 <% end %>
 
-<table class="table">
-  <thead>
-  <tr>
-    <th><%= t(".user") %></th>
-    <th><%= t(".request") %></th>
-    <th><%= t(".format") %></th>
-    <th><%= t(".status") %></th>
-    <th><%= t(".validity") %></th>
-    <th></th>
-  </tr>
-  </thead>
-  <tbody>
-  <% @exports.each do |export| %>
+<div class="table-index">
+  <table class="table">
+    <thead>
     <tr>
-      <td><%= export.user.email %></td>
-      <td><%= l(export.created_at, :format => :long) %></td>
-      <td><%= export.category %></td>
-      <td><%= status_badge(export) %></td>
-      <td><%= validity_badge(export) %></td>
-      <td align="right">
-        <% if policy(export).download? %>
-          <%= render "shared/actions/export", :model => export %>
-        <% end %>
-      </td>
+      <th><%= t(".user") %></th>
+      <th><%= t(".request") %></th>
+      <th><%= t(".format") %></th>
+      <th><%= t(".with_files") %></th>
+      <th><%= t(".status") %></th>
+      <th><%= t(".validity") %></th>
+      <th></th>
     </tr>
-  <% end %>
-  </tbody>
-</table>
+    </thead>
+    <tbody>
+    <% @exports.each do |export| %>
+      <tr>
+        <td><%= export.user.email %></td>
+        <td><%= l(export.created_at, :format => :long) %></td>
+        <td><%= export.category %></td>
+        <td><%= with_files_check(export) %></td>
+        <td><%= status_badge(export) %></td>
+        <td><%= validity_badge(export) %></td>
+        <td align="right">
+          <% if policy(export).download? %>
+            <%= render "shared/actions/export", :model => export %>
+          <% end %>
+        </td>
+      </tr>
+    <% end %>
+    </tbody>
+  </table>
+</div>

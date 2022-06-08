@@ -4,7 +4,7 @@ class Dump::CSVDump < ::Dump
   def initialize
   end
 
-  def dump(catalog, directory, locale)
+  def dump(catalog, directory, locale, with_files)
     I18n.with_locale(locale) do
       cat = Catalog.find_by(slug: catalog)
       raise "ERROR. Catalog '#{catalog}' not found." if cat.nil?
@@ -26,7 +26,7 @@ class Dump::CSVDump < ::Dump
 
       dump_data(cat, categories_fields, directory)
 
-      dump_files(cat, directory)
+      dump_files(cat, directory) if with_files
     end
   end
 
