@@ -643,7 +643,7 @@ fr:
       new:
         new_export: "Nouvel export %{category}"
         with_files: "Ajouter fichiers"
-        with_files_help: "Voulez-vous ajouter les fichiers (images, documents) de toutes les fiches dans votre export ? Si vous en avez beaucoup, l'export pourrait prendre plus de temps pour être disponible."
+        with_files_help: "Voulez-vous ajouter à votre export les fichiers liés aux fiches (images, documents) ? Si vous en avez beaucoup, l'export pourrait prendre plus de temps pour être disponible."
         create: "Créer l'export"
 
     advanced_search_configurations:
