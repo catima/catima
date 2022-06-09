@@ -80,7 +80,8 @@
         <%= render 'shared/search_form',
                    :controller => 'catalog_admin/users',
                    :action => 'index',
-                   :placeholder => t('.search')
+                   :placeholder => t('.search'),
+                   :anchor => nil
         %>
         <span class="pull-right">
           <%= link_to(new_catalog_admin_user_path) do %>

@@ -31,12 +31,13 @@
 </div>
 
 <% if @users %>
-  <div class="card panel-default users">
+  <div class="card panel-default users" id="users">
     <div class="card-header">
       <%= render 'shared/search_form',
                  :controller => 'admin/dashboard',
                  :action => 'index',
-                 :placeholder => 'Search for users'
+                 :placeholder => 'Search for users',
+                 :anchor => 'users'
       %>
       <span class="pull-right">
         <%= link_to(new_admin_user_path) do %>
