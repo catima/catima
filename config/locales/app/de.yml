@@ -108,7 +108,7 @@ de:
     minimum_characters: "mindestens %{length} Zeichen"
   catalogs:
     data_only: "“%{catalog_name}” ist nicht zugänglich (nur Daten)"
-    not_visible: "“%{catalog_name}” ist nicht zugänglich"
+    not_visible: "“%{catalog_name}” ist eingeschränkt, bitte anmelden"
     show:
       welcome: "Willkommen bei %{catalog}!"
   devise:

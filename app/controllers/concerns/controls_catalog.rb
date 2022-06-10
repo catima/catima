@@ -21,7 +21,10 @@ module ControlsCatalog
   def visibility
     return if catalog_visible_to_user && catalog_unrestricted_to_user
 
-    redirect_to(root_path, :alert => t("catalogs.not_visible", :catalog_name => catalog.name))
+    redirect_to(
+      new_user_session_path(:locale => I18n.locale),
+      :alert => t("catalogs.not_visible", :catalog_name => catalog.name)
+    )
   end
 
   def catalog_visible_to_user
