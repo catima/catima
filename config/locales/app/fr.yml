@@ -316,7 +316,7 @@ fr:
         log_in: "Login"
         log_out: "Logout"
         register: "Enregistrement"
-        my_profile: "Mon profile"
+        my_profile: "Mon profil"
         my_favorites: "Mes favoris"
         my_searches: Mes recherches
         my_groups: Mes groupes
