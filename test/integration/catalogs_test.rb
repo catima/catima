@@ -31,7 +31,7 @@ class CatalogsTest < ActionDispatch::IntegrationTest
 
   test "check catalog visibility as guest" do
     visit("/not-visible")
-    assert_equal("/", current_path)
+    assert_equal("/en/login", current_path)
     assert(page.has_content?(/is restricted, please login/i))
   end
 
@@ -46,14 +46,14 @@ class CatalogsTest < ActionDispatch::IntegrationTest
     log_in_as("one@example.com", "password")
     visit("/not-visible")
     assert_equal("/", current_path)
-    assert(page.has_content?(/is restricted, please login/i))
+    assert(page.has_content?(/You cannot access this catalog/i))
   end
 
   test "check catalog visibility as member" do
     log_in_as("one-member@example.com", "password")
     visit("/not-visible")
     assert_equal("/", current_path)
-    assert(page.has_content?(/is restricted, please login/i))
+    assert(page.has_content?(/You cannot access this catalog/i))
   end
 
   test "check catalog visibility as editor" do

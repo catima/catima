@@ -21,10 +21,14 @@ module ControlsCatalog
   def visibility
     return if catalog_visible_to_user && catalog_unrestricted_to_user
 
-    redirect_to(
-      new_user_session_path(:locale => I18n.locale),
-      :alert => t("catalogs.not_visible", :catalog_name => catalog.name)
-    )
+    if current_user.authenticated?
+      redirect_to(root_path, :alert => t("catalogs.not_accessible"))
+    else
+      redirect_to(
+        new_user_session_path(:locale => I18n.locale),
+        :alert => t("catalogs.not_visible", :catalog_name => catalog.name)
+      )
+    end
   end
 
   def catalog_visible_to_user
@@ -35,6 +39,7 @@ module ControlsCatalog
 
       return true if current_user.catalog_role_at_least?(catalog, "editor")
     end
+
     false
   end
 
@@ -46,6 +51,7 @@ module ControlsCatalog
 
       return true if current_user.catalog_role_at_least?(catalog, "member")
     end
+
     false
   end
 
@@ -77,6 +83,7 @@ module ControlsCatalog
     return if current_user.primary_language == params[:locale]
 
     current_user.update_column(:primary_language, params[:locale])
+
     true
   end
 

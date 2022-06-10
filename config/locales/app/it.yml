@@ -108,6 +108,7 @@ it:
     minimum_characters: "%{length} caratteri minima"
   catalogs:
     data_only: "“%{catalog_name}” non è accessibile (solo dati)"
+    not_accessible: "Non è possibile accedere a questo catalogo"
     not_visible: "“%{catalog_name}” è riservato, si prega di effettuare il login"
     show:
       welcome: "Benvenuti a %{catalog}!"
