@@ -46,7 +46,7 @@ class Field::ComplexDatation < ::Field
     when 'date_time'
       Field::ComplexDatationPresenter.new(nil, item, self).value
     when 'datation_choice'
-      selected_choices.map do |c|
+      selected_choices(item).map do |c|
         "#{c.short_name} (#{Field::ComplexDatationPresenter.new(nil, item, self).choice_dates(c.from_date, c.to_date, c.choice_set.format, value['selected_choices']['BC'])})"
       end.join('; ')
     else
