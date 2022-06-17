@@ -585,7 +585,7 @@ fr:
         category_optional: 'Sous-fiche (optionnel)'
         new_choice: "Nouveaux choix"
       index:
-        import: "Importer l' ensemble de choix"
+        import: "Importer l'ensemble de choix"
         choice_sets: Ensembles de choix
         new_choice_set: "Nouvel ensemble de choix"
         name: Nom

@@ -55,8 +55,9 @@ class Search::ComplexDatationStrategy < Search::BaseStrategy
     raw_value(item)
   end
 
-  def date_from_hash(hash)
-    hash.each_with_object([]) { |(_, v), array| array << v if v.present? }
+  def date_from_hash(hash, search_data=[])
+    search_data << hash["from"].each_with_object([]) { |(_, v), array| array << v if v.present? } if hash.key?("from")
+    search_data << hash["to"].each_with_object([]) { |(_, v), array| array << v if v.present? } if hash.key?("to")
   end
 
   def start_date?(criteria)
