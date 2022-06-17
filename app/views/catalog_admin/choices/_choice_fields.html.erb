@@ -1,3 +1,18 @@
 <%= locale_form_group(f, :short_name, :text_field, label: t('.short_name')) %>
 <%= locale_form_group(f, :long_name, :text_field, label: t('.long_name_optional')) %>
-<%= choice_category_select(f, label: t('.category_optional')) %>
+<% unless f.object.choice_set.choice_set_type == 'datation' %>
+  <%= choice_category_select(f, label: t('.category_optional')) %>
+<% end %>
+
+<% if f.object.choice_set.choice_set_type == 'datation' %>
+  <%= f.form_group do %>
+    <%= f.label :from_date, t('.from_date') %>
+    <%= f.hidden_field(:from_date, {id: "from_date", "data-field-options": {format: f.object.choice_set.format}.to_json, "data-field-required": "true"}) %>
+    <%= react_component('DateTimeInput/components/DateTimeInput', {input: '#from_date'}) %>
+  <% end %>
+  <%= f.form_group do %>
+    <%= f.label :to_date, t('.to_date') %>
+    <%= f.hidden_field(:to_date, {id: "to_date", "data-field-options": {format: f.object.choice_set.format}.to_json, "data-field-required": "true"}) %>
+    <%= react_component('DateTimeInput/components/DateTimeInput', {input: '#to_date'}) %>
+  <% end %>
+<% end %>

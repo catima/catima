@@ -17,11 +17,11 @@ const DateTimeInput = (props) => {
   const [isRequired, setIsRequired] = useState(false)
 
   useEffect(() => {
-    if (jQuery.isEmptyObject(getData())) return initData(defaultValues, getFieldOptions().format);
-
     if (document.querySelector(input) !== null) {
       setIsRequired(document.querySelector(input).getAttribute('data-field-required') == 'true')
     }
+
+    if (jQuery.isEmptyObject(getData())) return initData(defaultValues, getFieldOptions().format);
   }, [])
 
   useEffect(() => {

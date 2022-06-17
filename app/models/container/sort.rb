@@ -35,9 +35,7 @@ module Container::Sort
   def self.type(sort)
     return nil unless CHOICES.key?(sort)
 
-    if CHOICES[sort].start_with?("Field/")
-      FIELD
-    elsif CHOICES[sort].start_with?("CreatedAt/")
+    if CHOICES[sort].start_with?("CreatedAt/")
       CREATED_AT
     elsif CHOICES[sort].start_with?("UpdatedAt/")
       UPDATED_AT

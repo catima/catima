@@ -18,7 +18,7 @@
 #
 
 module ItemsHelper
-  def browse_similar_items_link(label, item, field, value)
+  def browse_similar_items_link(label, item, field, value, html_options: {})
     link_to(
       label,
       items_path(
@@ -26,7 +26,8 @@ module ItemsHelper
         :item_type_slug => item.item_type,
         :locale => I18n.locale,
         field.slug => value
-      ))
+      ),
+      html_options)
   end
 
   def item_has_thumbnail?(item)

@@ -51,35 +51,35 @@ one_author_stephen_king:
   updater: one_user
   item_type: one_author
   data: {
-      "one_author_name_uuid": "Stephen King",
-      "one_author_nickname_uuid": "Steve",
-      "one_author_age_uuid": 68,
-      "one_author_site_uuid": "http://stephenking.com/index.html",
-      "one_author_email_uuid": "sk@stephenking.com",
-      "one_author_rank_uuid": "1.88891",
-      "one_author_bio_uuid": {
-        "id": "dummy",
-        "name": "bio.doc",
-        "path": "public/upload/one/authors/Steve/bio.doc",
-        "filename": "bio.doc",
-        "size": 192000,
-        "type": "document/doc"
-      },
-      "one_author_language_uuid": "<%= ActiveRecord::FixtureSet.identify(:one_spanish) %>",
-      "one_author_other_languages_uuid": [
-        "<%= ActiveRecord::FixtureSet.identify(:one_spanish) %>",
-        "<%= ActiveRecord::FixtureSet.identify(:one_english) %>"
-      ],
-      "one_author_editor_uuid": "<%= ActiveRecord::FixtureSet.identify(:one_author_editor) %>",
-      "one_author_collaborator_uuid": "<%= ActiveRecord::FixtureSet.identify(:one_author_very_old) %>",
-      "one_author_other_collaborators_uuid": [
-        "<%= ActiveRecord::FixtureSet.identify(:one_author_apprentice) %>"
-        ],
-      "one_author_born_uuid": {"Y": 1947, "M": 9, "D": 21},
-      "one_author_birth_time_uuid": {"Y": 1947, "M": 9, "D": 21, "h": 10, "m": 10, "s": 10},
-      "one_author_most_active_month_uuid": {"M": 6},
-      "one_author_most_active_hour_uuid": {"h": 10}
-    }
+    "one_author_name_uuid": "Stephen King",
+    "one_author_nickname_uuid": "Steve",
+    "one_author_age_uuid": 68,
+    "one_author_site_uuid": "http://stephenking.com/index.html",
+    "one_author_email_uuid": "sk@stephenking.com",
+    "one_author_rank_uuid": "1.88891",
+    "one_author_bio_uuid": {
+      "id": "dummy",
+      "name": "bio.doc",
+      "path": "public/upload/one/authors/Steve/bio.doc",
+      "filename": "bio.doc",
+      "size": 192000,
+      "type": "document/doc"
+    },
+    "one_author_language_uuid": "<%= ActiveRecord::FixtureSet.identify(:one_spanish) %>",
+    "one_author_other_languages_uuid": [
+      "<%= ActiveRecord::FixtureSet.identify(:one_spanish) %>",
+      "<%= ActiveRecord::FixtureSet.identify(:one_english) %>"
+    ],
+    "one_author_editor_uuid": "<%= ActiveRecord::FixtureSet.identify(:one_author_editor) %>",
+    "one_author_collaborator_uuid": "<%= ActiveRecord::FixtureSet.identify(:one_author_very_old) %>",
+    "one_author_other_collaborators_uuid": [
+      "<%= ActiveRecord::FixtureSet.identify(:one_author_apprentice) %>"
+    ],
+    "one_author_born_uuid": { "Y": 1947, "M": 9, "D": 21 },
+    "one_author_birth_time_uuid": { "Y": 1947, "M": 9, "D": 21, "h": 10, "m": 10, "s": 10 },
+    "one_author_most_active_month_uuid": { "M": 6 },
+    "one_author_most_active_hour_uuid": { "h": 10 }
+  }
   "search_data_en": "Steve spanish 21 1.88891 one sk@stephenking.com 2456 Very Old Stephen index.html"
 
 one_author_very_old:
@@ -94,16 +94,16 @@ one_author_very_old:
     "one_author_email_uuid": "so@old.com",
     "one_author_rank_uuid": "2.12",
     "language_category_uuid": "Latin",
-    "one_author_language_earliest_recollection_uuid": {"Y": -500},
+    "one_author_language_earliest_recollection_uuid": { "Y": -500 },
     "one_author_other_languages_uuid": [
       "<%= ActiveRecord::FixtureSet.identify(:one_french) %>",
       "<%= ActiveRecord::FixtureSet.identify(:one_english) %>"
     ],
     "one_author_collaborator_uuid": "<%= ActiveRecord::FixtureSet.identify(:one_author_very_young) %>",
-    "one_author_born_uuid": {"Y": 1947, "M": 11, "D": 11},
-    "one_author_most_active_month_uuid": {"M": 1},
-    "one_author_most_active_hour_uuid": {"h": 1}
-    }
+    "one_author_born_uuid": { "Y": 1947, "M": 11, "D": 11 },
+    "one_author_most_active_month_uuid": { "M": 1 },
+    "one_author_most_active_hour_uuid": { "h": 1 }
+  }
   "search_data_en": "too old yes"
 
 one_author_very_young:
@@ -118,8 +118,8 @@ one_author_very_young:
     "one_author_other_collaborators_uuid": [
       "<%= ActiveRecord::FixtureSet.identify(:one_author_stephen_king) %>",
       "<%= ActiveRecord::FixtureSet.identify(:one_author_very_old) %>"
-      ]
-    }
+    ]
+  }
   "search_data_en": "too young to be old"
 
 one_author_apprentice:
@@ -134,12 +134,12 @@ one_author_apprentice:
     "one_author_deceased_uuid": "0",
     "one_author_email_uuid": "young@apprentice.com",
     "language_category_uuid": "Sino-Tibetan",
-    "one_author_language_earliest_recollection_uuid": {"Y": -2000},
+    "one_author_language_earliest_recollection_uuid": { "Y": -2000 },
     "one_author_other_collaborators_uuid": [
       "<%= ActiveRecord::FixtureSet.identify(:one_author_stephen_king) %>",
       "<%= ActiveRecord::FixtureSet.identify(:one_author_very_old) %>"
-      ]
-    }
+    ]
+  }
   "search_data_en": "young apprentice"
 
 one_book_theory_of_relativity:
@@ -157,7 +157,7 @@ one_book_end_of_watch:
   data: {
     "one_book_title_uuid": "End of Watch",
     "one_book_author_uuid": one_author_very_young
-    }
+  }
 
 one_book_finders_keepers:
   catalog: one
@@ -188,7 +188,7 @@ one_author_with_images:
       "legend": "One author new picture"
     }
   }
-
+  
 one_author_very_first:
   catalog: one
   creator: one_admin
@@ -215,19 +215,19 @@ multilingual_author_example:
   catalog: multilingual
   item_type: multilingual_author
   data: {
-      "multilingual_author_bio_uuid": {
-        "_translations": {
-          "en": "Biography in English",
-          "fr": "Biographie en français"
-        }
-      },
-      "multilingual_author_site_uuid": {
-        "_translations": {
-          "en": "https://www.google.com/",
-          "fr": "https://www.google.fr/"
-        }
+    "multilingual_author_bio_uuid": {
+      "_translations": {
+        "en": "Biography in English",
+        "fr": "Biographie en français"
+      }
+    },
+    "multilingual_author_site_uuid": {
+      "_translations": {
+        "en": "https://www.google.com/",
+        "fr": "https://www.google.fr/"
       }
     }
+  }
 
 not_visible_book_farewell_to_arms:
   catalog: not_visible
@@ -269,7 +269,7 @@ search_vehicle_honda_accord:
     "search_vehicle_model_uuid": "Accord",
     "search_vehicle_style_uuid": "<%= ActiveRecord::FixtureSet.identify(:search_sedan) %>",
     "search_vehicle_doors_uuid": 5
-    }
+  }
 
 search_vehicle_toyota_prius:
   creator: system_admin_invited_by_one
@@ -281,7 +281,7 @@ search_vehicle_toyota_prius:
     "search_vehicle_model_uuid": "Prius",
     "search_vehicle_style_uuid": "<%= ActiveRecord::FixtureSet.identify(:search_sedan) %>",
     "search_vehicle_doors_uuid": 3
-    }
+  }
 
 search_vehicle_toyota_highlander:
   creator: system_admin_invited_by_one
@@ -293,7 +293,7 @@ search_vehicle_toyota_highlander:
     "search_vehicle_model_uuid": "Highlander",
     "search_vehicle_style_uuid": "<%= ActiveRecord::FixtureSet.identify(:search_suv) %>",
     "search_vehicle_doors_uuid": 5
-    }
+  }
 
 search_vehicle_toyota_camry:
   creator: system_admin_invited_by_one
@@ -305,7 +305,7 @@ search_vehicle_toyota_camry:
     "search_vehicle_model_uuid": "Camry",
     "search_vehicle_style_uuid": "<%= ActiveRecord::FixtureSet.identify(:search_sedan) %>",
     "search_vehicle_doors_uuid": 5
-    }
+  }
 
 search_vehicle_toyota_camry_hybrid:
   creator: system_admin_invited_by_one
@@ -317,7 +317,7 @@ search_vehicle_toyota_camry_hybrid:
     "search_vehicle_model_uuid": "Camry Hybrid",
     "search_vehicle_style_uuid": "<%= ActiveRecord::FixtureSet.identify(:search_sedan) %>",
     "search_vehicle_doors_uuid": 3
-    }
+  }
 
 search_vehicle_motorcycle:
   creator: system_admin_invited_by_one
@@ -329,4 +329,179 @@ search_vehicle_motorcycle:
     "search_vehicle_model_uuid": "XJ6",
     "search_vehicle_style_uuid": "",
     "search_vehicle_doors_uuid": 0
-    }
+  }
+
+complex_datation_choice_1_1_300:
+  catalog: complex_datation
+  item_type: complex_datation
+  data: { "complex_datation_name": "choice_1_1_300",
+          "complex_datation_uuid": { "to": { }, "from": { }, "selected_format": "datation_choice", "selected_choices": { "BC": false, "value": [ <%= ActiveRecord::FixtureSet.identify(:datation_1_january_300) %> ] } } }
+
+complex_datation_choice_1_1_300_bc:
+  catalog: complex_datation
+  item_type: complex_datation
+  data: { "complex_datation_name": "choice_1_1_300_bc",
+          "complex_datation_uuid": { "to": { }, "from": { }, "selected_format": "datation_choice", "selected_choices": { "BC": true, "value": [ <%= ActiveRecord::FixtureSet.identify(:datation_1_january_300) %> ] } } }
+
+complex_datation_choice_100_500:
+  catalog: complex_datation
+  item_type: complex_datation
+  data: { "complex_datation_name": "choice_100_500",
+          "complex_datation_uuid": { "to": { }, "from": { }, "selected_format": "datation_choice", "selected_choices": { "BC": false, "value": [ <%= ActiveRecord::FixtureSet.identify(:datation_100_500) %> ] } } }
+
+complex_datation_choice_100_500_bc:
+  catalog: complex_datation
+  item_type: complex_datation
+  data: { "complex_datation_name": "choice_100_500_bc",
+          "complex_datation_uuid": { "to": { }, "from": { }, "selected_format": "datation_choice", "selected_choices": { "BC": true, "value": [ <%= ActiveRecord::FixtureSet.identify(:datation_100_500) %> ] } } }
+
+complex_datation_choice_300_400:
+  catalog: complex_datation
+  item_type: complex_datation
+  data: { "complex_datation_name": "choice_300_400",
+          "complex_datation_uuid": { "to": { }, "from": { }, "selected_format": "datation_choice", "selected_choices": { "BC": false, "value": [ <%= ActiveRecord::FixtureSet.identify(:datation_300_400) %> ] } } }
+
+complex_datation_choice_300_400_bc:
+  catalog: complex_datation
+  item_type: complex_datation
+  data: { "complex_datation_name": "choice_300_400_bc",
+          "complex_datation_uuid": { "to": { }, "from": { }, "selected_format": "datation_choice", "selected_choices": { "BC": true, "value": [ <%= ActiveRecord::FixtureSet.identify(:datation_300_400) %> ] } } }
+
+complex_datation_choice_400_500:
+  catalog: complex_datation
+  item_type: complex_datation
+  data: { "complex_datation_name": "choice_400_500",
+          "complex_datation_uuid": { "to": { }, "from": { }, "selected_format": "datation_choice", "selected_choices": { "BC": false, "value": [ <%= ActiveRecord::FixtureSet.identify(:datation_400_500) %> ] } } }
+
+complex_datation_choice_400_500_bc:
+  catalog: complex_datation
+  item_type: complex_datation
+  data: { "complex_datation_name": "choice_400_500_bc",
+          "complex_datation_uuid": { "to": { }, "from": { }, "selected_format": "datation_choice", "selected_choices": { "BC": true, "value": [ <%= ActiveRecord::FixtureSet.identify(:datation_400_500) %> ] } } }
+
+complex_datation_choice_1_1_300_400_500:
+  catalog: complex_datation
+  item_type: complex_datation
+  data: { "complex_datation_name": "choice_1_1_300_400_500",
+          "complex_datation_uuid": { "to": { }, "from": { }, "selected_format": "datation_choice", "selected_choices": { "BC": false, "value": [ <%= ActiveRecord::FixtureSet.identify(:datation_1_january_300) %>, <%= ActiveRecord::FixtureSet.identify(:datation_400_500) %> ] } } }
+
+
+complex_datation_date_1_1_300:
+  catalog: complex_datation
+  item_type: complex_datation
+  data: { "complex_datation_name": "date_1_1_300",
+          "complex_datation_uuid":
+            { "to": { "D": 1, "M": 1, "Y": 300, "h": , "m": , "s": , "BC": false },
+              "from": { "D": 1, "M": 1, "Y": 300, "h": , "m": , "s": , "BC": false },
+              "selected_format": "date_time" }
+  }
+
+complex_datation_date_1_1_300_bc:
+  catalog: complex_datation
+  item_type: complex_datation
+  data: { "complex_datation_name": "date_1_1_300_bc",
+          "complex_datation_uuid":
+            { "to": { "D": 1, "M": 1, "Y": 300, "h": , "m": , "s": , "BC": true },
+              "from": { "D": 1, "M": 1, "Y": 300, "h": , "m": , "s": , "BC": true },
+              "selected_format": "date_time" }
+  }
+
+complex_datation_date_1_1_400:
+  catalog: complex_datation
+  item_type: complex_datation
+  data: { "complex_datation_name": "date_1_1_400",
+          "complex_datation_uuid":
+            { "to": { "D": 1, "M": 1, "Y": 400, "h": , "m": , "s": , "BC": false },
+              "from": { "D": 1, "M": 1, "Y": 400, "h": , "m": , "s": , "BC": false },
+              "selected_format": "date_time" }
+  }
+
+complex_datation_date_1_1_400_bc:
+  catalog: complex_datation
+  item_type: complex_datation
+  data: { "complex_datation_name": "date_1_1_400_bc",
+          "complex_datation_uuid":
+            { "to": { "D": 1, "M": 1, "Y": 400, "h": , "m": , "s": , "BC": true },
+              "from": { "D": 1, "M": 1, "Y": 400, "h": , "m": , "s": , "BC": true },
+              "selected_format": "date_time" }
+  }
+
+complex_datation_date_before_1_1_300:
+  catalog: complex_datation
+  item_type: complex_datation
+  data: { "complex_datation_name": "date_before_1_1_300",
+          "complex_datation_uuid":
+            { "to": { "D": 1, "M": 1, "Y": 300, "h": , "m": , "s": , "BC": false },
+              "from": { "D": "", "M": "", "Y": "", "h": , "m": , "s": , "BC": false },
+              "selected_format": "date_time" }
+  }
+
+complex_datation_date_before_1_1_300_bc:
+  catalog: complex_datation
+  item_type: complex_datation
+  data: { "complex_datation_name": "date_before_1_1_300_bc",
+          "complex_datation_uuid":
+            { "to": { "D": 1, "M": 1, "Y": 300, "h": , "m": , "s": , "BC": true },
+              "from": { "D": "", "M": "", "Y": "", "h": , "m": , "s": , "BC": false },
+              "selected_format": "date_time" }
+  }
+
+complex_datation_date_after_1_1_300:
+  catalog: complex_datation
+  item_type: complex_datation
+  data: { "complex_datation_name": "date_after_1_1_300",
+          "complex_datation_uuid":
+            { "to": { "D": "", "M": "", "Y": "", "h": , "m": , "s": , "BC": false },
+              "from": { "D": 1, "M": 1, "Y": 300, "h": , "m": , "s": , "BC": false },
+              "selected_format": "date_time" }
+  }
+
+complex_datation_date_after_1_1_300_bc:
+  catalog: complex_datation
+  item_type: complex_datation
+  data: { "complex_datation_name": "date_after_1_1_300_bc",
+          "complex_datation_uuid":
+            { "to": { "D": "", "M": "", "Y": "", "h": , "m": , "s": , "BC": false },
+              "from": { "D": 1, "M": 1, "Y": 300, "h": , "m": , "s": , "BC": true },
+              "selected_format": "date_time" }
+  }
+
+complex_datation_date_between_1_1_300_31_1_300:
+  catalog: complex_datation
+  item_type: complex_datation
+  data: { "complex_datation_name": "date_between_1_1_300_31_1_300",
+          "complex_datation_uuid":
+            { "to": { "D": 31, "M": 1, "Y": 300, "h": , "m": , "s": , "BC": false },
+              "from": { "D": 1, "M": 1, "Y": 300, "h": , "m": , "s": , "BC": false },
+              "selected_format": "date_time" }
+  }
+
+complex_datation_date_between_1_1_100_31_1_500:
+  catalog: complex_datation
+  item_type: complex_datation
+  data: { "complex_datation_name": "date_between_1_1_100_31_1_500",
+          "complex_datation_uuid":
+            { "to": { "D": 31, "M": 1, "Y": 500, "h": , "m": , "s": , "BC": false },
+              "from": { "D": 1, "M": 1, "Y": 100, "h": , "m": , "s": , "BC": false },
+              "selected_format": "date_time" }
+  }
+
+complex_datation_date_between_1_1_300_bc_31_1_300_bc:
+  catalog: complex_datation
+  item_type: complex_datation
+  data: { "complex_datation_name": "date_between_1_1_300_bc_31_1_300_bc",
+          "complex_datation_uuid":
+            { "to": { "D": 31, "M": 1, "Y": 300, "h": , "m": , "s": , "BC": true },
+              "from": { "D": 1, "M": 1, "Y": 300, "h": , "m": , "s": , "BC": true },
+              "selected_format": "date_time" }
+  }
+
+complex_datation_date_between_1_1_300_bc_31_1_300:
+  catalog: complex_datation
+  item_type: complex_datation
+  data: { "complex_datation_name": "date_between_1_1_300_bc_31_1_300",
+          "complex_datation_uuid":
+            { "to": { "D": 31, "M": 1, "Y": 300, "h": , "m": , "s": , "BC": false },
+              "from": { "D": 1, "M": 1, "Y": 300, "h": , "m": , "s": , "BC": true },
+              "selected_format": "date_time" }
+  }

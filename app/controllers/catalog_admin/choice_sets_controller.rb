@@ -16,13 +16,13 @@ class CatalogAdmin::ChoiceSetsController < CatalogAdmin::BaseController
     authorize(@choice_set)
     if @choice_set.update(choice_set_params)
       if request.xhr?
-        render json: { choice_set: @choice_set }
+        render json: {choice_set: @choice_set}
       else
         redirect_to(after_create_path, :notice => created_message)
       end
     else
       if request.xhr?
-        render json: { errors: @choice_set.errors.full_messages.join(', ') }, status: :unprocessable_entity
+        render json: {errors: @choice_set.errors.full_messages.join(', ')}, status: :unprocessable_entity
       else
         render("new")
       end
@@ -37,7 +37,7 @@ class CatalogAdmin::ChoiceSetsController < CatalogAdmin::BaseController
   def update
     find_choice_set
     authorize(@choice_set)
-    if @choice_set.update(choice_set_params)
+    if @choice_set.update(choice_set_params.except(:choice_set_type, :format))
       redirect_to(catalog_admin_choice_sets_path, :notice => updated_message)
     else
       render("edit")
@@ -49,6 +49,64 @@ class CatalogAdmin::ChoiceSetsController < CatalogAdmin::BaseController
     authorize(@choice_set)
     @choice_set.touch(:deleted_at)
     redirect_to(catalog_admin_choice_sets_path, notice: deleted_message)
+  end
+
+  def export
+    find_choice_set
+    authorize(@choice_set)
+    export = @choice_set.attributes.slice('name', 'deactivated_at', 'slug', 'deleted_at', 'choice_set_type', 'format')
+    export["choices"] = @choice_set.choices.map do |c|
+      c.attributes
+       .slice(
+         'short_name_translations',
+         'long_name_translations',
+         'category_id',
+         'parent_id',
+         'position',
+         'from_date',
+         'to_date'
+       )
+    end
+    export.to_json
+    send_data export.to_json, type: :json, disposition: "attachment"
+  end
+
+  def new_import
+    authorize(ChoiceSet)
+  end
+
+  def import_choice_set
+    if params[:file]
+      begin
+        ChoiceSet.transaction do
+          choice_params = JSON.parse(params[:file].read)
+
+          @choice_set = @catalog.choice_sets.new(choice_params.reject { |k, _| k == 'choices' })
+          authorize(@choice_set)
+
+          choice_params["choices"].each do |choice|
+            c = @choice_set.choices.new(choice)
+            c.parent_id = nil
+          end
+          @choice_set.save!
+
+          choice_params["choices"].select { |choice_params| choice_params['parent_id'] != nil }.each do |choice|
+            c = @choice_set.choices.where("short_name_translations::jsonb @> (?::jsonb)", choice["short_name_translations"].to_json).first
+            c.parent_id = @choice_set.choices.where("short_name_translations::jsonb @> (?::jsonb)", Choice.find(choice["parent_id"]).short_name_translations.to_json)&.first&.id
+            c.save
+          end
+          flash[:notice] = t(".success")
+        end
+
+        redirect_to catalog_admin_choice_sets_path
+      rescue JSON::ParserError
+        flash[:alert] = "malformed file"
+        render :new_import
+      end
+    else
+      flash[:alert] = "no file provided"
+      render :new_import
+    end
   end
 
   private
@@ -64,12 +122,15 @@ class CatalogAdmin::ChoiceSetsController < CatalogAdmin::BaseController
   def choice_set_params
     params.require(:choice_set).permit(
       :name,
+      :choice_set_type,
+      :format,
       :deactivated_at,
-      :choices_attributes => [
-        :id, :_destroy,
-        :category_id,
-        :short_name_de, :short_name_en, :short_name_fr, :short_name_it,
-        :long_name_de, :long_name_en, :long_name_fr, :long_name_it
+      :choices_attributes => %i[
+        id _destroy
+        category_id
+        short_name_de short_name_en short_name_fr short_name_it
+        long_name_de long_name_en long_name_fr long_name_it
+        from_date to_date
       ])
   end
 

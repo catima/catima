@@ -42,7 +42,40 @@ class React::FieldsController < React::BaseController
              })
   end
 
+  def complex_datation_choices
+    raise InvalidItemType, 'no item type provided' if item_type.nil?
+
+    field = item_type.fields.find_by(:uuid => params[:field_uuid])
+
+    choices = Choice.where(choice_set_id: field.choice_set_ids).order(:choice_set_id)
+
+    choices = choices.where("LOWER(short_name_translations) LIKE :q OR LOWER(long_name_translations) LIKE :q", q: "%#{params[:search].downcase}%") if params[:search]
+    choices = params[:page].blank? ? choices : choices.page(params[:page])
+
+    render(json:
+             {
+               slug: item_type.slug, name: item_type.name,
+               select_placeholder: t("catalog_admin.items.reference_editor.reference_editor_select"),
+               search_placeholder: t("catalog_admin.items.reference_editor.reference_editor_search"),
+               filter_placeholder: t("catalog_admin.items.reference_editor.reference_editor_filter", locale: params[:locale]),
+               loading_message: t("loading", locale: params[:locale]),
+               choices: choices.map { |choice| choice_json_attributes(choice) },
+               hasMore: params[:page].present? && params[:page].to_i < items.total_pages
+             })
+  end
+
   private
+
+  def choice_json_attributes(choice)
+    {
+      id: choice.id,
+      uuid: choice.uuid,
+      short_name: choice.short_name,
+      long_name: choice.long_name,
+      from_date: choice.from_date,
+      to_date: choice.to_date
+    }
+  end
 
   def item_type
     return nil if params[:item_type_slug].blank?

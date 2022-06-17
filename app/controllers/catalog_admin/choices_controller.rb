@@ -76,7 +76,9 @@ class CatalogAdmin::ChoicesController < CatalogAdmin::BaseController
       :long_name_de, :long_name_en, :long_name_fr, :long_name_it,
       :category_id,
       :parent_id,
-      :position
+      :position,
+      :from_date,
+      :to_date
     )
   end
 

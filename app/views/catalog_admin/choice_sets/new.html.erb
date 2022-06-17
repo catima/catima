@@ -1,9 +1,30 @@
 <% provide(:title, t('.new_choice_set')) %>
 
-<div class="card-body">
+<div class="card-body"
+     data-controller="toggle-display"
+     data-toggle-display-value='datation'>
   <%= bootstrap_form_for([:catalog_admin, @choice_set]) do |f| %>
+
     <%= f.text_field(:name) %>
     <hr>
+    <%= f.collection_select(
+          :choice_set_type,
+          ChoiceSet.choice_set_types,
+          :first,
+          :first,
+          {prompt: ""},
+          {required: true, "data-action": "input->toggle-display#reveal", "data-toggle-display-target": "source",  class:"mb-4"}
+        ) %>
+    <div data-toggle-display-target="revealable">
+      <%= f.collection_select(
+            :format,
+            ChoiceSet::FORMATS,
+            :to_s,
+            :to_s,
+            {include_blank: true}
+          ) %>
+    </div>
+
     <%= f.primary(t(".create_choice_set")) %>
     <%= submit_and_add_another(f) %>
     <%= link_to(

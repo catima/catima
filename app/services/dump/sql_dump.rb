@@ -711,6 +711,8 @@ class Dump::SQLDump < ::Dump
       value == "0" ? "FALSE" : "TRUE"
     when "Field::DateTime"
       "'#{value.to_json}'"
+    when "Field::ComplexDatation"
+      "'#{value.to_json}'"
     when "Field::Geometry", "Field::File", "Field::Image", "Field::Text", "Field::URL", "Field::Compound"
       "'#{field.sql_value(item)}'"
     when "Field::Editor"
