@@ -41,6 +41,7 @@ class Field::ChoiceSet < ::Field
   validates_inclusion_of :choice_set,
                          :in => :choice_set_choices,
                          :allow_nil => true
+  validate :type_validation
 
   delegate :choices, :choice_prefixed_label, :flat_ordered_choices, to: :choice_set
 
@@ -80,6 +81,7 @@ class Field::ChoiceSet < ::Field
     k = 'short_name'
     l = catalog.primary_language
     v = value
+
     if value.is_a? Hash
       k = 'long_name' unless value['long_name'].nil?
       l = value[k].keys[0]
@@ -87,6 +89,7 @@ class Field::ChoiceSet < ::Field
     elsif value.is_a? String
       v = value.sub("'", "''")
     end
+
     c = choices.where("#{k}_translations->>'#{k}_#{l}'='#{v}'").first
     cid = c.id unless c.nil?
     {uuid => cid}
@@ -182,5 +185,14 @@ class Field::ChoiceSet < ::Field
     end
 
     false
+  end
+
+  def type_validation
+    return if choice_set_id.blank?
+
+    # Validate selected ChoiceSet has the "default" type
+    return if ::ChoiceSet.find(choice_set_id).default?
+
+    errors.add(:choice_set_id, "Only ChoiceSet with the \"default\" type is allowed")
   end
 end

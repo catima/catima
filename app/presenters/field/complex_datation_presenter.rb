@@ -11,7 +11,6 @@ class Field::ComplexDatationPresenter < FieldPresenter
 
     case dt['selected_format']
     when 'date_time'
-
       style = if dt['to'] == dt['from']
                 'exact'
               elsif dt['to'].values.all?(&:blank?)
@@ -49,7 +48,16 @@ class Field::ComplexDatationPresenter < FieldPresenter
 
     links_and_prefixed_names = choices.map do |choice|
       value_slug = [I18n.locale, choice.short_name].join("-")
-      html_options = {'data-toggle': "tooltip", title: choice_dates(choice.from_date, choice.to_date, choice.choice_set.format, raw_val['selected_choices']['BC'])}
+      html_options = {
+        'data-toggle': "tooltip",
+        title: choice_dates(
+          choice.from_date,
+          choice.to_date,
+          choice.choice_set.format,
+          raw_val['selected_choices']['BC']
+        )
+      }
+
       [
         browse_similar_items_link(
           choice.long_display_name, item, field, value_slug, html_options: html_options
@@ -113,7 +121,7 @@ class Field::ComplexDatationPresenter < FieldPresenter
     end
   end
 
-  def input(form, method, options = {})
+  def input(form, method, options={})
     form.text_field(method, input_defaults(options))
   end
 

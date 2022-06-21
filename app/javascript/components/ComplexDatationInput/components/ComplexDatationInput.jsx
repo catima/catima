@@ -316,7 +316,7 @@ const ComplexDatationInput = (props) => {
   }
 
   function _getJSONFilter(choice) {
-    return {value: choice.id, label: choice.short_name};
+    return {value: choice.id, label: choice.name};
   }
 
   function selectChoice(value) {

@@ -4,8 +4,10 @@ class Field::ComplexDatation < ::Field
 
   store_accessor :options, [:format, :allow_bc, :allowed_formats, :choice_set_ids]
   after_initialize :set_default_format
+
   validates_inclusion_of :format, :in => FORMATS
   validate :presence_of_allowed_formats
+  validate :choice_set_type_validation
 
   def custom_field_permitted_attributes
     [:format, :allow_bc, { allowed_formats: [], choice_set_ids: [] }]
@@ -75,8 +77,20 @@ class Field::ComplexDatation < ::Field
   end
 
   def edit_props(item)
-    { "fetchUrl" => Rails.application.routes.url_helpers.react_field_complex_datation_choices_url(catalog.slug, I18n.locale, item_type.slug, field_uuid: uuid),
-      "selectedChoicesValue" => selected_choices(item[:item]).map { |choice| { label: choice.short_name, value: choice.id } }, selectedFormat: allowed_formats }
+    {
+      "fetchUrl" => Rails.application.routes.url_helpers.react_field_complex_datation_choices_url(
+        catalog.slug,
+        I18n.locale,
+        item_type.slug,
+        field_uuid: uuid
+      ),
+      "selectedChoicesValue" => selected_choices(item[:item]).map do |choice| {
+        label: choice.choice_set.choice_prefixed_label(choice),
+        value: choice.id
+      }
+      end,
+      selectedFormat: allowed_formats
+    }
   end
 
   # Translates YMD.. hash into an array [Y, M, D, h, m, s] (or nil).
@@ -140,6 +154,15 @@ class Field::ComplexDatation < ::Field
     return unless !allowed_formats || (allowed_formats.exclude?("date_time") && allowed_formats.exclude?("datation_choice"))
 
     errors.add(:allowed_formats, :empty)
+  end
+
+  def choice_set_type_validation
+    return unless allowed_formats.include?("datation_choice")
+
+    # Validate that all selected ChoiceSet(s) have the "datation" type
+    errors.add(:choice_set_ids, "Only ChoiceSet(s) with the \"datation\" type are allowed") if choice_set_ids.select do |choice_set_id|
+      !::ChoiceSet.find(choice_set_id).datation? if choice_set_id.present?
+    end.present?
   end
 
   def transform_value(value)

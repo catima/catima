@@ -47,9 +47,15 @@ class React::FieldsController < React::BaseController
 
     field = item_type.fields.find_by(:uuid => params[:field_uuid])
 
-    choices = Choice.where(choice_set_id: field.choice_set_ids).order(:choice_set_id)
+    choices = Choice.where(choice_set_id: field.choice_set_ids).order(position: :asc)
 
-    choices = choices.where("LOWER(short_name_translations) LIKE :q OR LOWER(long_name_translations) LIKE :q", q: "%#{params[:search].downcase}%") if params[:search]
+    if params[:search]
+      choices = choices.where(
+        "LOWER(short_name_translations) LIKE :q OR LOWER(long_name_translations) LIKE :q ORDER BY position ASC",
+        q: "%#{params[:search].downcase}%"
+      )
+    end
+
     choices = params[:page].blank? ? choices : choices.page(params[:page])
 
     render(json:
@@ -70,6 +76,7 @@ class React::FieldsController < React::BaseController
     {
       id: choice.id,
       uuid: choice.uuid,
+      name: choice.choice_set.choice_prefixed_label(choice),
       short_name: choice.short_name,
       long_name: choice.long_name,
       from_date: choice.from_date,
