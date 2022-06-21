@@ -443,7 +443,7 @@ const ComplexDatationInput = (props) => {
           )}
           <div style={{width: '100%'}}>
             <AsyncPaginate
-              className="single-reference-filter"
+              className="datation-filter"
               delimiter=","
               loadOptions={_loadOptions}
               debounceTimeout={800}
