@@ -2,7 +2,7 @@ source "https://rubygems.org"
 
 gem "active_model_serializers", "~> 0.10"
 gem "active_type", "~> 1.5"
-gem 'device_detector', '1.0.5'
+gem 'device_detector', '~> 1.0.7'
 gem "ahoy_matey", "~> 4.1.0"
 gem "autoprefixer-rails", "~> 10.1"
 gem "bcrypt", "~> 3.1"
@@ -18,7 +18,7 @@ gem "dotenv-rails", "~> 2.7"
 gem "faraday", "~> 1.1"
 gem "faraday_middleware", "~> 1.0"
 gem "font-awesome-rails", "~> 4.7.0"
-gem 'groupdate', "~> 5.2"
+gem 'groupdate', "~> 6.1.0"
 gem "jquery-fileupload-rails", "~> 1.0"
 gem "jquery-minicolors-rails", "~> 2.2"
 gem "jquery-rails", "~> 4.4"
@@ -59,7 +59,7 @@ gem "zaru", "~> 0.3"
 gem "jbuilder", "~> 2.11.5"
 gem "rswag", "~> 2.5.1"
 gem 'redis', "~> 4.2.5"
-gem "rspec-rails", "~> 5.0.1"
+gem "rspec-rails", "~> 5.1.2"
 
 source "https://rails-assets.org" do
   gem "rails-assets-autosize", "~> 4.0"
@@ -113,7 +113,7 @@ group :test do
   gem "pry", "~> 0.13"
   gem "selenium-webdriver", "~> 3.142"
   gem "shoulda-context", "~> 2.0"
-  gem "shoulda-matchers", "~> 4.4"
+  gem "shoulda-matchers", "~> 5.1"
   gem "vcr", "~> 6.0"
   gem "webmock", "~> 3.10"
 end
