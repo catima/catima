@@ -1,5 +1,5 @@
 class API::V3::BaseController < ApplicationController
-  include Pundit
+  include Pundit::Authorization
 
   respond_to :json
 
