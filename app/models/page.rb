@@ -28,12 +28,11 @@ class Page < ApplicationRecord
   has_many :menu_items, :dependent => :destroy
 
   validates_presence_of :catalog
-
   validates_presence_of :title
-  serialize :title, HashSerializer
-
   validates_slug :scope => [:catalog_id]
+  validate :item_types_slug_validation
 
+  serialize :title, HashSerializer
   locales :title
 
   def self.sorted
@@ -49,5 +48,16 @@ class Page < ApplicationRecord
       title: title_json,
       containers: containers.map(&:describe)
     )
+  end
+
+  private
+
+  # A page & an item type should not have the same slug
+  # because they have the same path structure. It could
+  # lead to unpredictable behavior
+  def item_types_slug_validation
+    return unless catalog.item_types.exists?(slug: slug)
+
+    errors.add :slug, I18n.t("validations.page.item_types_slug")
   end
 end

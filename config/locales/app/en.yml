@@ -9,11 +9,6 @@ en:
       api_log:
         one: API Log
         other: API Logs
-      container:
-        item_list:
-          unique: "Multiple \"ItemList\" containers in the same page is not allowed"
-        search:
-          unique: "Multiple \"Search\" containers in the same page is not allowed"
     attributes:
       choice_set:
         name: "Name"
@@ -72,6 +67,16 @@ en:
         add_files: Add files
         size_constraint: "Max size: %{max_size}MB"
         types_constraint: "Allowed file(s): %{types}"
+  validations:
+    container:
+      item_list:
+        unique: "Multiple \"ItemList\" containers in the same page is not allowed"
+      search:
+        unique: "Multiple \"Search\" containers in the same page is not allowed"
+    page:
+      item_types_slug: "as already been taken by an item type"
+    item_type:
+      pages_slug: "as already been taken by a page"
   "yes": "Yes"
   "no": "No"
   boolean_field: Boolean field (Yes/No)
@@ -568,6 +573,8 @@ en:
         from_date: Start date (optional)
         to_date: End date (optional)
     choice_sets:
+      import_choice_set:
+        success: "The choice set has been imported"
       choice:
         remove: "Remove"
         show_hierarchy: "Show hierarchy"

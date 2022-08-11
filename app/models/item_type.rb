@@ -31,7 +31,9 @@ class ItemType < ApplicationRecord
   has_many :suggestions, dependent: :destroy
 
   store_translations :name, :name_plural
+
   validates_slug :scope => [:catalog_id, :deleted_at]
+  validate :pages_slug_validation
   validates_presence_of :suggestion_email, if: :suggestions_activated?
 
   alias_method :log_name, :name
@@ -136,5 +138,16 @@ class ItemType < ApplicationRecord
     end
 
     false
+  end
+
+  private
+
+  # A page & an item type should not have the same slug
+  # because they have the same path structure. It could
+  # lead to unpredictable behavior
+  def pages_slug_validation
+    return unless catalog.pages.exists?(slug: slug)
+
+    errors.add :slug, I18n.t("validations.item_type.pages_slug")
   end
 end
