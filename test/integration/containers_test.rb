@@ -4,7 +4,7 @@ class ContainersTest < ActionDispatch::IntegrationTest
   setup { use_javascript_capybara_driver }
 
   test "sends a contact request" do
-    visit("/one/en/one")
+    visit("/one/en/one-page")
 
     fill_in("Name", :with => "fake name")
     fill_in("Email", :with => "fake@email.ch")
@@ -16,14 +16,14 @@ class ContainersTest < ActionDispatch::IntegrationTest
   end
 
   test "has the required attribute for required fields" do
-    visit("/one/en/one")
+    visit("/one/en/one-page")
 
     assert(true, find_field('email')[:required])
     assert(true, find_field('body')[:required])
   end
 
   test "has an itemlist sorted by field ascending" do
-    visit("/one/en/one_fasc")
+    visit("/one/en/one-fasc")
 
     first_item = first(".media")
     last_item = all(".media").last
@@ -37,7 +37,7 @@ class ContainersTest < ActionDispatch::IntegrationTest
   end
 
   test "has an itemlist sorted by field descending" do
-    visit("/one/en/one_fdesc")
+    visit("/one/en/one-fdesc")
 
     first_item = first(".media")
     last_item = all(".media").last
@@ -51,7 +51,7 @@ class ContainersTest < ActionDispatch::IntegrationTest
   end
 
   test "has an itemlist with a line style sorted by name field ascending" do
-    visit("/one/en/line_one")
+    visit("/one/en/line-one")
 
     select_sort = first("#asc-desc")
     first_level0_group = first(".level-0")
