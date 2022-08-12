@@ -92,7 +92,7 @@ class Container::ItemList < ::Container
                       .where(locale: locale)
                       .exists?(type: 'Container::ItemList')
 
-    errors.add :base, I18n.t("activerecord.models.container.item_list.unique")
+    errors.add :base, I18n.t("validations.container.item_list.unique")
   end
 
   def find_item_type_by_id(item_type_id)

@@ -45,6 +45,6 @@ class Container::Search < ::Container
                       .where(locale: locale)
                       .exists?(type: 'Container::Search')
 
-    errors.add :base, I18n.t("activerecord.models.container.search.unique")
+    errors.add :base, I18n.t("validations.container.search.unique")
   end
 end
