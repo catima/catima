@@ -146,6 +146,8 @@ class ItemType < ApplicationRecord
   # because they have the same path structure. It could
   # lead to unpredictable behavior
   def pages_slug_validation
+    return unless catalog
+
     return unless catalog.pages.exists?(slug: slug)
 
     errors.add :slug, I18n.t("validations.item_type.pages_slug")

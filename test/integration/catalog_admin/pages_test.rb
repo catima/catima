@@ -49,7 +49,7 @@ class CatalogAdmin::PagesTest < ActionDispatch::IntegrationTest
 
   test "edit a page" do
     log_in_as("one-admin@example.com", "password")
-    visit("/one/en/admin/_pages/one/edit")
+    visit("/one/en/admin/_pages/one-page/edit")
 
     find('div.translatedTextField input[data-locale=en]').base.send_keys(' Edited')
 

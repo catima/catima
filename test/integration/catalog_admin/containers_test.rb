@@ -55,7 +55,7 @@ class CatalogAdmin::ContainersTest < ActionDispatch::IntegrationTest
 
   test "creates a search container" do
     log_in_as("one-admin@example.com", "password")
-    visit("/one/en/admin/_pages/one/edit")
+    visit("/one/en/admin/_pages/one-page/edit")
 
     find("#add-field-dropdown").click
     click_on("Search")
@@ -73,7 +73,7 @@ class CatalogAdmin::ContainersTest < ActionDispatch::IntegrationTest
 
   test "cannot create two itemlist containers in the same page" do
     log_in_as("one-admin@example.com", "password")
-    visit("/one/en/admin/_pages/one_fdesc/edit")
+    visit("/one/en/admin/_pages/one-fdesc/edit")
 
     find("#add-field-dropdown").click
     click_on("ItemList")
