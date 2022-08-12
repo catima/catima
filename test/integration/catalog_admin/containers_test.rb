@@ -34,7 +34,7 @@ class CatalogAdmin::ContainersTest < ActionDispatch::IntegrationTest
 
   test "creates a contact container" do
     log_in_as("one-admin@example.com", "password")
-    visit('/one/en/one')
+    visit('/one/en/one-page')
 
     click_on('Edit this page')
     find("#add-field-dropdown").click

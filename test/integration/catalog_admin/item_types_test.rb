@@ -18,6 +18,22 @@ class CatalogAdmin::ItemTypesTest < ActionDispatch::IntegrationTest
     assert_equal("Books", type.name_plural)
   end
 
+  test "cannot create an item type with existing page slug" do
+    log_in_as("two-admin@example.com", "password")
+    visit("/two/en/admin")
+    click_on("New item type")
+
+    fill_in("item_type[name_en]", :with => "Existing slug...")
+    fill_in("item_type[name_plural_en]", :with => "Existing slugs...")
+    fill_in("Slug (plural)", :with => "two-page")
+
+    assert_no_difference("catalogs(:two).item_types.count") do
+      click_on("Create item type")
+    end
+
+    assert(page.has_content?("already been taken by a page"))
+  end
+
   test "edit an item type" do
     log_in_as("two-admin@example.com", "password")
     visit("/two/en/admin")
