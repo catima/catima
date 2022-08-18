@@ -34,12 +34,12 @@ jobs:
 
     steps:
       - name: Checkout Repository
-        uses: actions/checkout@v2
+        uses: actions/checkout@v3
 
       - name: Setup Node
-        uses: actions/setup-node@v2
+        uses: actions/setup-node@v3
         with:
-          node-version: '14'
+          node-version: '16'
 
       - name: Setup Ruby
         uses: ruby/setup-ruby@v1
@@ -47,7 +47,7 @@ jobs:
           ruby-version: '2.7.5'
 
       - name: Cache Gems
-        uses: actions/cache@v2
+        uses: actions/cache@v3
         with:
           path: vendor/bundle
           key: ${{ runner.os }}-gems-${{ hashFiles('**/Gemfile.lock') }}
@@ -55,7 +55,7 @@ jobs:
             ${{ runner.os }}-gems-
 
       - name: Cache Yarn
-        uses: actions/cache@v2
+        uses: actions/cache@v3
         with:
           path: ~/.cache/yarn
           key: ${{ runner.os }}-yarn-${{ hashFiles('**/yarn.lock') }}
@@ -76,7 +76,7 @@ jobs:
 
       - name: Upload artifact
         id: upload-artifact
-        uses: actions/upload-artifact@v2
+        uses: actions/upload-artifact@v3
         with:
           name: swagger-documentation
           path: /home/runner/work/catima/catima/swagger/v3/swagger.yaml
