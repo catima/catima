@@ -116,6 +116,7 @@ class Field::ComplexDatationPresenter < FieldPresenter
       dt_value = DateTime.civil_from_format(:local, *prepare_datetime_array(date_name: date_name, value: date_name ? false : date))
       text_repr = I18n.l(dt_value, format: format_str.to_sym)
       text_repr.sub('8888', date.is_a?(Hash) ? date[0].to_s : JSON.parse(date)[0].to_s) if date["raw_value"].nil?
+      text_repr.split().map{|el| el.sub(/^[0]+/,'')}.join()
     rescue StandardError
       nil
     end
