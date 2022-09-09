@@ -53,7 +53,7 @@ class ItemList::AdvancedSearchResult < ItemList
     or_relations = or_relations(items_strategies["or"], original_scope)
     exclude_relations = merge_relations(items_strategies["exclude"], original_scope)
 
-    and_relations = and_relations.merge(exclude_relations) if items_strategies["exclude"].present?
+    and_relations = and_relations.where.not(id: exclude_relations) if items_strategies["exclude"].present?
 
     if items_strategies["or"].present?
       return items_in("#{and_relations.unscope(:order).to_sql} UNION #{or_relations}") if items_strategies["and"].present?
