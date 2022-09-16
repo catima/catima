@@ -742,7 +742,7 @@ en:
         domains_component_no_options: No more domains to add
         domains_component_placeholder: Add some domains
       compound_option_inputs:
-        help: Please define the composition of the fields in the editor. The available fields can be selected with the "Add field" button. Please do not change the integration structure of the fields {{my_field}}.
+        help: "You can define the composition of the fields in the editor. The available fields can be selected with the \"Add field\" button. Please do not change the integration structure of the fields -> {{my_field}}. If you want to change the formatting of a field (bold, italic, ...), please also include the integration structure."
       file_option_inputs:
         types: 'Types'
         types_help: "A comma-separated list of allowed file extensions: e.g. “doc, pdf”"

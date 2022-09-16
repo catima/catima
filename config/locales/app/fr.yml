@@ -581,7 +581,7 @@ fr:
           first: premier
           last: dernier
       edit:
-        export: "Exporter l' ensemble de choix"
+        export: "Exporter l'ensemble de choix"
         choices: 'Choix'
         edit_choice_set: "Modifier l' ensemble de choix"
         update_choice_set: "Mettre à jour l' ensemble de choix"
@@ -740,7 +740,7 @@ fr:
         domains_component_no_options: Plus de domaines à ajouter
         domains_component_placeholder: Ajouter des domaines
       compound_option_inputs:
-        help: "Veuillez définir la composition des champs dans l'éditeur. Les champs disponibles sont sélectionables grâce au bouton \"Ajouter un champ\". Veuillez ne pas modifier la structure d'intégration des champs {{mon_champ}}."
+        help: "Vous pouvez définir la composition des champs dans l'éditeur. Les champs disponibles sont sélectionables grâce au bouton \"Ajouter un champ\". Veuillez ne pas modifier la structure d'intégration des champs -> {{mon_champ}}. Si vous souhaitez modifier la mise en forme d'un champ (gras, italique, ...), veuillez inclure également la structure d'intégration."
       file_option_inputs:
         types: 'Types'
         types_help: "Une liste d'extension de fichiers permis (avec séparateur virgule): p.ex. «doc, pdf»"
