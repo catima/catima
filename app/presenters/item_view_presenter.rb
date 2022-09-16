@@ -19,7 +19,11 @@ class ItemViewPresenter
     local_template = local_template.sub('http://{{_itemLink}}', '{{_itemLink}}')
     local_template = local_template.sub('https://{{_itemLink}}', '{{_itemLink}}')
     local_template = local_template.sub('{{_itemLink}}', item_link)
-    @item.fields.each do |field|
+
+    # We want only human readable fields for the display_name type of item_view
+    fields = @item_view.default_for_display_name ? @item.fields.select(&:human_readable?) : @item.fields
+
+    fields.each do |field|
       presenter = "#{field.class.name}Presenter".constantize.new(@view, @item, field, {})
       local_template = local_template.sub("{{#{field.slug}}}", presenter.value || '')
     end
