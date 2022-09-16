@@ -2,10 +2,11 @@
 
 <% provide(:actions) do %>
   <%= link_to(
-        t(".export"),
         export_catalog_admin_choice_set_path(@choice_set.catalog, I18n.locale, @choice_set),
         method: :post,
-        class: 'mr-4') %>
+        class: 'mr-4') do %>
+    <%= fa_icon(:"download", :text => t(".export")) %>
+  <% end %>
 
   <%= link_to(new_catalog_admin_choice_set_choice_path(@choice_set.catalog, I18n.locale, @choice_set)) do %>
     <%= fa_icon(:"plus-square", :text => t('.new_choice')) %>
