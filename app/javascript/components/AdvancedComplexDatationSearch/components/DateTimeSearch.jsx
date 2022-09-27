@@ -3,7 +3,6 @@ import DateTimeInput from './DateTimeInput';
 import $ from 'jquery';
 import 'moment';
 import 'bootstrap4-datetimepicker';
-import Translations from "../../Translations/components/Translations";
 
 const DateTimeSearchComponent = (props) => {
   const {
@@ -26,7 +25,8 @@ const DateTimeSearchComponent = (props) => {
     fieldConditionName,
     fieldConditionData,
     inputEnd,
-    allowBC
+    allowBC,
+    keyForAccess
   } = props
 
   const [selectedCondition, setSelectedCondition] = useState('')
@@ -41,8 +41,9 @@ const DateTimeSearchComponent = (props) => {
   const [disabled, setDisabled] = useState(false)
   const [isRange, setIsRange] = useState(false)
 
-  const dateTimeSearchId = `${srcId}-datetime`;
-  const dateTimeCollapseId = `${srcId}-collapse`;
+
+  const [dateTimeSearchId, setDateTimeSearchId] = useState(`${srcId}-datetime-${keyForAccess}`)
+  const [dateTimeCollapseId, setDateTimeCollapseId] = useState(`${srcId}-collapse-${keyForAccess}`)
 
   const dateTimeSearchRef1 = createRef()
   const dateTimeSearchRef2 = createRef()
@@ -325,6 +326,7 @@ const DateTimeSearch = (props) => {
       fieldConditionData={fieldConditionData}
       inputEnd={inputEnd}
       allowBC={allowBC}
+      keyForAccess={index}
     />);
   }
 
