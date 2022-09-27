@@ -74,10 +74,26 @@ jobs:
         id: app-test
         run: NO_COVERAGE=1 rails test
 
-      - name: Notify Slack
-        uses: act10ns/slack@v1
+      - name: Notify Teams (success)
+        if: ${{ success() }}
+        continue-on-error: true
+        uses: mikesprague/teams-incoming-webhook-action@v1
         with:
-          status: ${{ job.status }}
-          steps: ${{ toJson(steps) }}
-          channel: '#-bot-ci'
-        if: always()
+          github-token: ${{ github.token }}
+          webhook-url: ${{ secrets.TEAMS_CI_WEBHOOK_URL }}
+          deploy-card: true
+          timezone: "Europe/Zurich"
+          title: "Success"
+          color: "success"
+
+      - name: Notify Teams (failure)
+        if: ${{ failure() }}
+        continue-on-error: true
+        uses: mikesprague/teams-incoming-webhook-action@v1
+        with:
+          github-token: ${{ github.token }}
+          webhook-url: ${{ secrets.TEAMS_CI_WEBHOOK_URL }}
+          deploy-card: true
+          timezone: "Europe/Zurich"
+          title: "Failure"
+          color: "failure"
