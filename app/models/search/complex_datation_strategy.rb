@@ -76,7 +76,7 @@ class Search::ComplexDatationStrategy < Search::BaseStrategy
   def inexact_search(scope, date_time, field_condition, negate)
     case field_condition
     when "exact"
-    sql_operator = "="
+      sql_operator = negate ? "!=" : "="
       scope.where(
         "#{sql_select_table_name}.data->'#{field.uuid}'->>'selected_format' = 'date_time' AND
            #{date_time_to_interval(date_time, 'from')} #{sql_operator} #{make_interval(date_time)} AND
