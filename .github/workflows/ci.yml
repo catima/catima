@@ -92,5 +92,5 @@ jobs:
           webhook-url: ${{ secrets.TEAMS_CI_WEBHOOK_URL }}
           deploy-card: true
           timezone: "Europe/Zurich"
-          title: ${{ env.WORKFLOW_CONCLUSION }} (CI)
+          title: ${{ env.WORKFLOW_CONCLUSION }} (ci)
           color: ${{ env.WORKFLOW_CONCLUSION }}
