@@ -187,7 +187,7 @@ fr:
         change_my_password: "Changer mon mot de passe"
         please_ignore: "Si vous n'avez pas demandé ce changement de mot de passe, veuillez s.v.p. ignorer ce message."
         requested_a_link: "Quelqu'un a demandé un lien pour changer votre mot de passe. Vous pouvez le faire à l'aide du lien ci-dessous."
-        wont_change: "Votre mot de passe ne sera pas changé jusqu'à ce que vous accéder au lien ci-dessus et que vous créez un nouveau mot de passe."
+        wont_change: "Votre mot de passe ne sera pas changé jusqu'à ce que vous accédiez au lien ci-dessus et que vous créiez un nouveau mot de passe."
     sessions:
       new:
         log_in: "Login"
