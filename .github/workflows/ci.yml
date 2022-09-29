@@ -2,10 +2,13 @@ name: ci
 on: [push, pull_request]
 jobs:
   build:
+    name: RUBY${{ matrix.ruby-versions }}
     runs-on: ubuntu-20.04
+    strategy:
+      matrix:
+        ruby-versions: [ '2.7.5' ]
 
     env:
-      SLACK_WEBHOOK_URL: ${{ secrets.SLACK_CI_WEBHOOK_URL }}
       CI: gha
       PG_DATABASE: postgres
       PG_USER: postgres
@@ -44,7 +47,7 @@ jobs:
       - name: Setup Ruby
         uses: ruby/setup-ruby@v1
         with:
-          ruby-version: '2.7.5'
+          ruby-version: ${{ matrix.ruby-versions }}
 
       - name: Cache Gems
         uses: actions/cache@v3
@@ -74,26 +77,20 @@ jobs:
         id: app-test
         run: NO_COVERAGE=1 rails test
 
-      - name: Notify Teams (success)
-        if: ${{ success() }}
-        continue-on-error: true
-        uses: mikesprague/teams-incoming-webhook-action@v1
-        with:
-          github-token: ${{ github.token }}
-          webhook-url: ${{ secrets.TEAMS_CI_WEBHOOK_URL }}
-          deploy-card: true
-          timezone: "Europe/Zurich"
-          title: "Success"
-          color: "success"
+  notification:
+    name: Notify
+    runs-on: ubuntu-latest
+    needs: build
+    if: always()
+    continue-on-error: true
 
-      - name: Notify Teams (failure)
-        if: ${{ failure() }}
-        continue-on-error: true
-        uses: mikesprague/teams-incoming-webhook-action@v1
+    steps:
+      - uses: technote-space/workflow-conclusion-action@v3
+      - uses: mikesprague/teams-incoming-webhook-action@v1
         with:
           github-token: ${{ github.token }}
           webhook-url: ${{ secrets.TEAMS_CI_WEBHOOK_URL }}
           deploy-card: true
           timezone: "Europe/Zurich"
-          title: "Failure"
-          color: "failure"
+          title: ${{ env.WORKFLOW_CONCLUSION }}
+          color: ${{ env.WORKFLOW_CONCLUSION }}
