@@ -62,6 +62,7 @@ class Field < ApplicationRecord
   include RankedModel
   include FieldsHelper
   include JsonHelper
+  include Loggable
 
   ranks :row_order, :class_name => "Field", :with_same => :field_set_id
 
@@ -87,6 +88,10 @@ class Field < ApplicationRecord
   # Recreate cache only if the primary attribute has changed
   # after_update :recreate_cache if saved_changes.include?(:primary)
   after_save :remove_primary, :if => :primary?
+
+  def log_name
+    slug
+  end
 
   def self.sorted
     rank(:row_order)

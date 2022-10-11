@@ -15,7 +15,7 @@ class CatalogAdmin::FieldsController < CatalogAdmin::BaseController
   def create
     build_field
     authorize(@field)
-    if @field.update(field_params)
+    if @field.update_and_log(field_params, author: current_user, catalog: @catalog)
       redirect_to({ :action => "index" }, :notice => created_message)
     else
       render("new")
@@ -30,7 +30,7 @@ class CatalogAdmin::FieldsController < CatalogAdmin::BaseController
   def update
     find_field
     authorize(@field)
-    if @field.update(field_params)
+    if @field.update_and_log(field_params, author: current_user, catalog: @catalog)
       respond_to do |f|
         f.js
         f.html do
@@ -45,7 +45,7 @@ class CatalogAdmin::FieldsController < CatalogAdmin::BaseController
   def destroy
     find_field
     authorize(@field)
-    @field.destroy
+    @field.destroy_and_log(author: current_user, catalog: @catalog)
     redirect_to({ :action => "index" }, :notice => destroyed_message)
   end
 
