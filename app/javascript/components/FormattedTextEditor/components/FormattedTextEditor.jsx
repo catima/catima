@@ -89,8 +89,7 @@ const FormattedTextEditor = (props) => {
           toolbar: toolbarOptions,
           table: true
         },
-        theme: 'snow',
-        readOnly: true
+        theme: 'snow'
       }))
     }
   }, [])
@@ -163,12 +162,10 @@ const FormattedTextEditor = (props) => {
     if (c.format === 'html' && typeof (c.doc) !== 'undefined') {
       editor.setContents(c.doc);
     } else {
-      editor.clipboard.dangerouslyPasteHTML(c.content);
+      // We are not using the dangerouslyPasteHTML function
+      // here to avoid the autofocus issue with quill.
+      editor.setContents(editor.clipboard.convert(c.content));
     }
-
-    // The editor is created with the read-only option activated and should be only enabled after content is set.
-    // This is to avoid the autofocus issue with quill.
-    editor.enable(true);
 
     editor.on('text-change', function (delta, oldDelta, source) {
       _updateContent();
