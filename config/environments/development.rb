@@ -33,8 +33,11 @@ Rails.application.configure do
   # Ensure mailer works in development.
   config.action_mailer.delivery_method = :letter_opener
   config.action_mailer.raise_delivery_errors = true
-  config.action_mailer.default_url_options = { :host => "localhost:3000" }
-  config.action_mailer.asset_host = "http://localhost:3000"
+  config.action_mailer.default_url_options = {
+    host: ENV.fetch('DOMAIN', 'localhost:3000'),
+    protocol: ENV.fetch('PROTOCOL', 'http')
+  }
+  config.action_mailer.asset_host = ENV.fetch('ASSET_HOST', 'http://localhost:3000')
 
   config.action_mailer.perform_caching = false
 
@@ -73,4 +76,7 @@ Rails.application.configure do
 end
 
 # For building URLs in API resource links
-Rails.application.routes.default_url_options = { :host => "localhost:3000" }
+Rails.application.routes.default_url_options = {
+  :host => ENV.fetch('DOMAIN', 'localhost:3000'),
+  :protocol => ENV.fetch('PROTOCOL', 'http')
+}

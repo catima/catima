@@ -1,0 +1,37 @@
+FROM ruby:2.7.5 AS base
+
+# Update repositories
+RUN apt-get update
+
+# Add needed packages
+RUN apt-get install -y --no-install-recommends \
+    curl \
+    imagemagick \
+    git \
+    yarn \
+    zip \
+    supervisor
+
+# Install Node
+RUN curl -sL https://deb.nodesource.com/setup_16.x | bash - &&\
+    apt-get update &&\
+    apt-get install -y --no-install-recommends nodejs
+
+FROM base as app
+
+# Replace default crontab
+ADD ./config/crontab /etc/crontab
+
+# Copy supervisor configuration file
+# docker exec <container-id> supervisorctl status
+COPY ./config/supervisord-app.conf /etc/supervisor/conf.d/supervisord.conf
+
+CMD ["/usr/bin/supervisord", "-c", "/etc/supervisor/conf.d/supervisord.conf"]
+
+FROM base as worker
+
+# Copy supervisor configuration file
+# docker exec <container-id> supervisorctl status
+COPY ./config/supervisord-worker.conf /etc/supervisor/conf.d/supervisord.conf
+
+CMD ["/usr/bin/supervisord", "-c", "/etc/supervisor/conf.d/supervisord.conf"]

@@ -1,0 +1,86 @@
+version: "2.4"
+
+networks:
+  catima-net:
+    driver: bridge
+
+services:
+  catima-web:
+    image: nginx:1.17
+    env_file:
+      - ./docker/.env
+    depends_on:
+      - catima-app
+    working_dir: /var/www/catima
+    volumes:
+      - ./docker/config/nginx-dev.conf:/etc/nginx/conf.d/nginx.conf
+    volumes_from:
+      - catima-app
+    ports:
+      - "9595:80"
+    networks:
+      - catima-net
+    container_name: catima-web
+  catima-app:
+    image: unillett/catima-app:latest
+    build:
+      context: ./docker
+      dockerfile: ./docker/dockerfile
+      target: app
+    env_file:
+      - ./docker/.env
+    expose:
+      - "8080"
+    depends_on:
+      - catima-postgres
+    working_dir: /var/www/catima
+    volumes:
+      - ./:/var/www/catima
+      - ./docker/config/unicorn.rb:/var/www/unicorn.rb
+    networks:
+      - catima-net
+    container_name: catima-app
+  catima-worker:
+    image: unillett/catima-worker:latest
+    build:
+      context: ./docker
+      dockerfile: ./docker/dockerfile
+      target: worker
+    env_file:
+      - ./docker/.env
+    depends_on:
+      - catima-postgres
+      - catima-redis
+    working_dir: /var/www/catima
+    volumes_from:
+      - catima-app
+    networks:
+      - catima-net
+    container_name: catima-worker
+  catima-postgres:
+    image: postgres:12
+    env_file:
+      - ./docker/.env
+    expose:
+      - "5432"
+    volumes:
+      - postgres-data:/var/lib/postgresql/data
+    networks:
+      - catima-net
+    container_name: catima-postgres
+  catima-redis:
+    image: "redis:5"
+    env_file:
+      - ./docker/.env
+    expose:
+      - "6379"
+    command: redis-server
+    volumes:
+      - redis-data:/data
+    networks:
+      - catima-net
+    container_name: catima-redis
+
+volumes:
+  redis-data:
+  postgres-data:

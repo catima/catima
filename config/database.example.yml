@@ -17,7 +17,11 @@
 development:
   adapter: postgresql
   encoding: unicode
-  database: viim-core_development
+  database: <%= ENV.fetch('POSTGRES_DB', 'catima_development') %>
+  host: <%= ENV.fetch('POSTGRES_HOST',  'localhost') %>
+  username: <%= ENV.fetch('POSTGRES_USER', nil) %>
+  password: <%= ENV.fetch('POSTGRES_PASSWORD', nil) %>
+  port: <%= ENV.fetch('POSTGRES_PORT', 5432) %>
   min_messages: WARNING
   pool: 5
 
@@ -42,10 +46,10 @@ development:
 test:
   adapter: postgresql
   encoding: unicode
-  database: <%= ENV.fetch('PG_DATABASE', 'viim-core_test') %>
-  host:     <%= ENV.fetch('PG_HOST',  'localhost') %>
-  username: <%= ENV.fetch('PG_USER', nil) %>
-  password: <%= ENV.fetch('PG_PASSWORD', nil) %>
-  port:     <%= ENV.fetch('PG_PORT', 5432) %>
+  database: <%= ENV.fetch('POSTGRES_DB', 'catima_test') %>
+  host: <%= ENV.fetch('POSTGRES_HOST',  'localhost') %>
+  username: <%= ENV.fetch('POSTGRES_USER', nil) %>
+  password: <%= ENV.fetch('POSTGRES_PASSWORD', nil) %>
+  port: <%= ENV.fetch('POSTGRES_PORT', 5432) %>
   min_messages: WARNING
   pool: 5
