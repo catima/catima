@@ -8,9 +8,15 @@ RUN apt-get install -y --no-install-recommends \
     curl \
     imagemagick \
     git \
-    yarn \
     zip \
-    supervisor
+    supervisor \
+    cron
+
+# Install Yarn
+RUN curl -sS https://dl.yarnpkg.com/debian/pubkey.gpg | apt-key add - &&\
+    echo "deb https://dl.yarnpkg.com/debian/ stable main" | tee /etc/apt/sources.list.d/yarn.list &&\
+    apt-get update &&\
+    apt-get install -y --no-install-recommends yarn
 
 # Install Node
 RUN curl -sL https://deb.nodesource.com/setup_16.x | bash - &&\
