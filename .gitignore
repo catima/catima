@@ -1,6 +1,7 @@
 # Docker
 docker/.env
-supervisord*
+supervisord.log
+supervisord.pid
 
 # Ignore bundler config.
 /.bundle
