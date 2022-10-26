@@ -16,11 +16,7 @@ def setup(ci)
     copy "config/domains.example.yml"
     test_local_env_contains_required_keys
     run  "bundle exec rake locales:generate"
-    # During CI we only need to create the database
-    # for the defined RAILS_ENV
-    run  "bundle exec rake db:create#{':all' unless ci}"
-    run  "bundle exec rake db:migrate"
-    run  "bundle exec rake db:seed"
+    run  "bundle exec rake db:prepare"
   end
 end
 

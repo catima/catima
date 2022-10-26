@@ -5,45 +5,27 @@ networks:
     driver: bridge
 
 services:
-  catima-web:
-    image: nginx:1.17
-    env_file:
-      - ./docker/.env
-    depends_on:
-      - catima-app
-    working_dir: /var/www/catima
-    volumes:
-      - ./docker/config/nginx-dev.conf:/etc/nginx/conf.d/default.conf
-    volumes_from:
-      - catima-app
-    ports:
-      - "9595:80"
-    networks:
-      - catima-net
-    container_name: catima-web
   catima-app:
     image: unillett/catima-app:latest
     build:
-      context: ./docker
+      context: ./
       dockerfile: ./docker/dockerfile
-      target: app
+      target: app-dev
     env_file:
       - ./docker/.env
-    expose:
-      - "8080"
+    ports:
+      - "3000:3000"
     depends_on:
       - catima-postgres
-    working_dir: /var/www/catima
     volumes:
       - ./:/var/www/catima
-      - ./docker/config/unicorn.rb:/var/www/unicorn.rb
     networks:
       - catima-net
     container_name: catima-app
   catima-worker:
     image: unillett/catima-worker:latest
     build:
-      context: ./docker
+      context: ./
       dockerfile: ./docker/dockerfile
       target: worker
     env_file:
@@ -51,7 +33,6 @@ services:
     depends_on:
       - catima-postgres
       - catima-redis
-    working_dir: /var/www/catima
     volumes_from:
       - catima-app
     networks:
