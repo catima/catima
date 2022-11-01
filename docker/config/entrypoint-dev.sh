@@ -5,9 +5,11 @@ set -e
 # prevent "server is already running" errors
 rm -f /var/www/catima/tmp/pids/server.pid
 
-# run the rails setup script to make sure no dependencies are missing and
-# the server has been restarted
+# run the catima setup script
 bin/setup
 
+# generate API doc
+rails swag:run
+
 # run passed commands using `bundle exec`
-${@}
+"${@}"
