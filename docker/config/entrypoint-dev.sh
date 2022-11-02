@@ -11,5 +11,5 @@ bin/setup
 # generate API doc
 rails swag:run
 
-# run passed commands using `bundle exec`
+# run commands from dockerfile
 "${@}"
