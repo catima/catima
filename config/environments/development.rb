@@ -34,7 +34,7 @@ Rails.application.configure do
   config.action_mailer.delivery_method = :letter_opener
 
   # Ensure mailer works in docker development
-  if ENV.fetch('DOCKER_RUNNING').present?
+  if ENV['DOCKER_RUNNING'].present?
     config.action_mailer.delivery_method = :smtp
     config.action_mailer.perform_deliveries = true
     config.action_mailer.smtp_settings = {
