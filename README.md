@@ -81,7 +81,7 @@ Build & run all the containers for this project.
 
 Now you just have to wait for all containers to be created and ready to accept connections (Puma should be started and listening). The setup script will configure the application automatically.
 
-### Frontends
+### Frontend
 
 To access the main application please use the following link.
 
