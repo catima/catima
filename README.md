@@ -23,7 +23,9 @@ This README describes the purpose of this repository and how to set up a develop
 * End-user documentation is in [catima/userdoc](https://github.com/catima/userdoc)
 * Development documentation is in [catima/devdoc](https://github.com/catima/devdoc)
 
-## Prerequisites
+## Getting started locally
+
+### Prerequisites
 
 This project requires:
 
@@ -34,8 +36,6 @@ This project requires:
 * Imagemagick must be installed (`brew install imagemagick`, `sudo apt install imagemagick`, ...)
 * Sodium must be installed (`brew install libsodium`, ...)
 * Chrome (for testing with Selenium)
-
-## Getting started
 
 ### bin/setup
 
@@ -52,6 +52,52 @@ Run the `bin/setup` script. This script will:
 1. Install NPM packages using `yarn install`
 2. Install [foreman](https://github.com/ddollar/foreman) with `gem install foreman`
 3. Run `foreman start -f Procfile.dev` to start the Rails app.
+
+## Getting started with docker
+
+### Prerequisites
+
+A working [Docker](https://docs.docker.com/engine/install/) installation is mandatory.
+
+### Docker environment file
+
+Please make sure to copy & rename the **example.env** file to **.env**.
+
+``cp docker/example.env docker/.env``
+
+You can replace the values if needed, but the default ones should work.
+
+### Edit hosts file
+
+Edit hosts file to point **catima.lan** to your docker host.
+
+### Environment installation & configuration
+
+Run the following docker command from the project root directory.
+
+Build & run all the containers for this project.
+
+``docker-compose up``
+
+Now you just have to wait for all containers to be created and ready to accept connections (Puma should be started and listening). The setup script will configure the application automatically.
+
+### Frontends
+
+To access the main application please use the following link.
+
+[http://catima.lan:3000](http://catima.lan:3000)
+
++ admin@example.com / admin123
+
+### MailHog
+
+To access mails please use the following link.
+
+[http://catima.lan:8028](http://catima.lan:8028)
+
+Or to get the messages in JSON format.
+
+[http://catima.lan:8028/api/v2/messages](http://catima.lan:8028/api/v2/messages)
 
 ## Tests & API specs
 

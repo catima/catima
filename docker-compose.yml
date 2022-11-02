@@ -34,6 +34,7 @@ services:
     depends_on:
       - catima-postgres
       - catima-redis
+      - catima-app
     volumes_from:
       - catima-app
     networks:
@@ -62,6 +63,15 @@ services:
     networks:
       - catima-net
     container_name: catima-redis
+  catima-mailhog:
+    image: mailhog/mailhog:latest
+    expose:
+      - "1025"
+    ports:
+      - "8028:8025"
+    networks:
+      - catima-net
+    container_name: catima-mailhog
 
 volumes:
   redis-data:

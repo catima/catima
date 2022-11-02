@@ -1,5 +1,7 @@
 FROM ruby:2.7.5 AS base
 
+ENV DOCKER_RUNNING=true
+
 # Update repositories
 RUN apt-get update
 

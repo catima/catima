@@ -30,9 +30,21 @@ Rails.application.configure do
   # Store uploaded files on the local file system (see config/storage.yml for options)
   config.active_storage.service = :local
 
-  # Ensure mailer works in development.
+  # Ensure mailer works in local development
   config.action_mailer.delivery_method = :letter_opener
+
+  # Ensure mailer works in docker development
+  if ENV.fetch('DOCKER_RUNNING').present?
+    config.action_mailer.delivery_method = :smtp
+    config.action_mailer.perform_deliveries = true
+    config.action_mailer.smtp_settings = {
+      address: ENV.fetch('MAIL_SMTP_ADDRESS', 'catima-mailhog'),
+      port: ENV.fetch('MAIL_SMTP_PORT', '1025')
+    }
+  end
+
   config.action_mailer.raise_delivery_errors = true
+
   config.action_mailer.default_url_options = {
     host: ENV.fetch('DOMAIN', 'localhost:3000'),
     protocol: ENV.fetch('PROTOCOL', 'http')
@@ -73,6 +85,13 @@ Rails.application.configure do
   # Use an evented file watcher to asynchronously detect changes in source code,
   # routes, locales, etc. This feature depends on the listen gem.
   config.file_watcher = ActiveSupport::EventedFileUpdateChecker
+
+  config.hosts = [
+    IPAddr.new("0.0.0.0/0"), # All IPv4 addresses.
+    IPAddr.new("::/0"), # All IPv6 addresses.
+    "localhost", # The localhost reserved domain.
+    "catima.lan"
+  ]
 end
 
 # For building URLs in API resource links
