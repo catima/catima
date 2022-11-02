@@ -17,6 +17,7 @@ services:
       - "3000:3000"
     depends_on:
       - catima-postgres
+      - catima-redis
     volumes:
       - ./:/var/www/catima
     networks:
@@ -27,7 +28,7 @@ services:
     build:
       context: ./
       dockerfile: ./docker/dockerfile
-      target: worker
+      target: worker-dev
     env_file:
       - ./docker/.env
     depends_on:

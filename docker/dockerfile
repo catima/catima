@@ -56,9 +56,9 @@ RUN chmod +x /usr/local/bin/entrypoint-dev.sh
 ENTRYPOINT [ "entrypoint-dev.sh" ]
 CMD ["/usr/bin/supervisord", "-c", "/etc/supervisor/conf.d/supervisord.conf"]
 
-FROM base as worker
+FROM base as worker-dev
 
 # Copy supervisor configuration file
-COPY ./docker/config/supervisord-worker.conf /etc/supervisor/conf.d/supervisord.conf
+COPY ./docker/config/supervisord-worker-dev.conf /etc/supervisor/conf.d/supervisord.conf
 
 CMD ["/usr/bin/supervisord", "-c", "/etc/supervisor/conf.d/supervisord.conf"]
