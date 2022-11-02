@@ -77,9 +77,17 @@ Run the following docker command from the project root directory.
 
 Build & run all the containers for this project.
 
-``docker-compose up``
+``docker-compose up`` (add -d if you want to run in the background and silence the logs)
 
 Now you just have to wait for all containers to be created and ready to accept connections (Puma should be started and listening). The setup script will configure the application automatically.
+
+Data for the redis, and postgres services are persisted using docker named volumes. You can see what volumes are currently present with:
+
+``docker volume ls``
+
+If you want to remove a volume (e.g. to start with a fresh database), you can do:
+
+``docker volume rm volume_name``
 
 ### Frontend
 
