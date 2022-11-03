@@ -2,9 +2,11 @@
 
 def setup(ci)
   within_project_root do
+    # During CI we do not check the ruby version to allows
+    # testing against multiple versions
     test "ruby -v" => ruby_version unless ci
     run  "gem install bundler:2.1.4 --no-document --conservative"
-    run  "bundle install"
+    run  "bundle install"  if File.exist?("Gemfile.lock")
     run  "bin/yarn install" if File.exist?("yarn.lock")
     run  "bundle exec overcommit --sign"
     run  "bundle exec overcommit --install"
@@ -14,9 +16,7 @@ def setup(ci)
     copy "config/domains.example.yml"
     test_local_env_contains_required_keys
     run  "bundle exec rake locales:generate"
-    run  "bundle exec rake db:create#{':all' unless ci}"
-    run  "bundle exec rake db:migrate"
-    run  "bundle exec rake db:seed"
+    run  "bundle exec rake db:prepare"
   end
 end
 

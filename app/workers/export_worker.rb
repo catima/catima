@@ -4,7 +4,7 @@ class ExportWorker
   include Sidekiq::Worker
 
   def perform(export_id, locale)
-    dir = Rails.env.development? ? Rails.root.join('tmp', 'exports') : Dir.mktmpdir(SecureRandom.hex)
+    dir = Rails.env.development? ? Rails.root.join('tmp', 'exports', Dir.mktmpdir(SecureRandom.hex)) : Dir.mktmpdir(SecureRandom.hex)
     export = find_export(export_id)
 
     case export.category
@@ -123,7 +123,7 @@ class ExportWorker
 
   def put_into_archive(disk_file_path, zipfile, zipfile_path)
     zipfile.get_output_stream(zipfile_path) do |f|
-      f.write(File.open(disk_file_path, 'rb').read)
+      f.write(File.binread(disk_file_path))
     end
   end
 end

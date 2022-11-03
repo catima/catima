@@ -1,0 +1,78 @@
+version: "2.4"
+
+networks:
+  catima-net:
+    driver: bridge
+
+services:
+  catima-app:
+    image: unillett/catima:latest-app
+    build:
+      context: ./
+      dockerfile: ./docker/app.dockerfile
+      target: dev
+    env_file:
+      - ./docker/.env
+    ports:
+      - "3000:3000"
+    depends_on:
+      - catima-postgres
+      - catima-redis
+    volumes:
+      - ./:/var/www/catima
+    networks:
+      - catima-net
+    container_name: catima-app
+  catima-worker:
+    image: unillett/catima:latest-worker
+    build:
+      context: ./
+      dockerfile: ./docker/worker.dockerfile
+      target: dev
+    env_file:
+      - ./docker/.env
+    depends_on:
+      - catima-postgres
+      - catima-redis
+      - catima-app
+    volumes_from:
+      - catima-app
+    networks:
+      - catima-net
+    container_name: catima-worker
+  catima-postgres:
+    image: postgis/postgis:12-3.3
+    env_file:
+      - ./docker/.env
+    ports:
+      - "5401:5432"
+    volumes:
+      - postgres-data:/var/lib/postgresql/data
+    networks:
+      - catima-net
+    container_name: catima-postgres
+  catima-redis:
+    image: "redis:5"
+    env_file:
+      - ./docker/.env
+    expose:
+      - "6379"
+    command: redis-server
+    volumes:
+      - redis-data:/data
+    networks:
+      - catima-net
+    container_name: catima-redis
+  catima-mailhog:
+    image: mailhog/mailhog:latest
+    expose:
+      - "1025"
+    ports:
+      - "8028:8025"
+    networks:
+      - catima-net
+    container_name: catima-mailhog
+
+volumes:
+  redis-data:
+  postgres-data:

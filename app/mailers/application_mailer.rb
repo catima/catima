@@ -4,7 +4,7 @@ class ApplicationMailer < ActionMailer::Base
 
   private
 
-  helper_method\
+  helper_method \
   def app_host
     URI(root_url).host
   end

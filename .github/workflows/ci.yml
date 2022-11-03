@@ -10,9 +10,9 @@ jobs:
 
     env:
       CI: gha
-      PG_DATABASE: postgres
-      PG_USER: postgres
-      PG_PASSWORD: postgres
+      POSTGRES_DB: postgres
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: postgres
       RAILS_ENV: test
 
     services:
