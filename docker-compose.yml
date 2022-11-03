@@ -6,11 +6,11 @@ networks:
 
 services:
   catima-app:
-    image: unillett/catima-app:latest
+    image: unillett/catima:latest-app
     build:
       context: ./
-      dockerfile: ./docker/dockerfile
-      target: app-dev
+      dockerfile: ./docker/app.dockerfile
+      target: dev
     env_file:
       - ./docker/.env
     ports:
@@ -24,11 +24,11 @@ services:
       - catima-net
     container_name: catima-app
   catima-worker:
-    image: unillett/catima-worker:latest
+    image: unillett/catima:latest-worker
     build:
       context: ./
-      dockerfile: ./docker/dockerfile
-      target: worker-dev
+      dockerfile: ./docker/worker.dockerfile
+      target: dev
     env_file:
       - ./docker/.env
     depends_on:
