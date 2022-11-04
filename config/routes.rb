@@ -5,6 +5,9 @@ Rails.application.routes.draw do
   mount Rswag::Ui::Engine => '/api-docs'
   mount Rswag::Api::Engine => '/api-docs'
 
+  # Healthcheck
+  get '/health', to: proc { [200, { 'Content-Type' => 'text/plain' }, ['success']] }
+
   authenticate :user, ->(u) { u.system_admin? } do
     mount Sidekiq::Web => '/sidekiq' # monitoring console
   end

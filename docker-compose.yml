@@ -24,6 +24,12 @@ services:
       - ./:/var/www/catima
     networks:
       - catima-net
+    healthcheck:
+      test: curl --fail http://127.0.0.1:3000/health || exit 1
+      interval: 10s
+      timeout: 5s
+      retries: 5
+      start_period: 10m
     container_name: catima-app
   catima-worker:
     image: unillett/catima:latest-worker
@@ -37,6 +43,8 @@ services:
       catima-postgres:
         condition: service_healthy
       catima-redis:
+        condition: service_healthy
+      catima-app:
         condition: service_healthy
     volumes_from:
       - catima-app
@@ -56,7 +64,10 @@ services:
       - catima-net
     healthcheck:
       test: pg_isready -U docker -h 127.0.0.1
-      interval: 2s
+      interval: 5s
+      timeout: 5s
+      retries: 5
+      start_period: 30s
     container_name: catima-postgres
   catima-redis:
     image: "redis:5"
@@ -71,9 +82,10 @@ services:
       - catima-net
     healthcheck:
       test: redis-cli ping
-      interval: 2s
-      timeout: 3s
-      retries: 30
+      interval: 5s
+      timeout: 5s
+      retries: 5
+      start_period: 30s
     container_name: catima-redis
   catima-mailhog:
     image: mailhog/mailhog:latest
