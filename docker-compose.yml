@@ -14,10 +14,12 @@ services:
     env_file:
       - ./docker/.env
     ports:
-      - "3000:3000"
+      - "8383:3000"
     depends_on:
-      - catima-postgres
-      - catima-redis
+      catima-postgres:
+        condition: service_healthy
+      catima-redis:
+        condition: service_healthy
     volumes:
       - ./:/var/www/catima
     networks:
@@ -32,9 +34,10 @@ services:
     env_file:
       - ./docker/.env
     depends_on:
-      - catima-postgres
-      - catima-redis
-      - catima-app
+      catima-postgres:
+        condition: service_healthy
+      catima-redis:
+        condition: service_healthy
     volumes_from:
       - catima-app
     networks:
@@ -45,11 +48,15 @@ services:
     env_file:
       - ./docker/.env
     ports:
-      - "5401:5432"
+      - "127.0.0.1:5410:5432"
     volumes:
       - postgres-data:/var/lib/postgresql/data
+      - ./docker/config/init.sql:/docker-entrypoint-initdb.d/init.sql
     networks:
       - catima-net
+    healthcheck:
+      test: pg_isready -U docker -h 127.0.0.1
+      interval: 2s
     container_name: catima-postgres
   catima-redis:
     image: "redis:5"
@@ -62,6 +69,11 @@ services:
       - redis-data:/data
     networks:
       - catima-net
+    healthcheck:
+      test: redis-cli ping
+      interval: 2s
+      timeout: 3s
+      retries: 30
     container_name: catima-redis
   catima-mailhog:
     image: mailhog/mailhog:latest

@@ -85,7 +85,7 @@ Data for the redis, and postgres services are persisted using docker named volum
 
 ``docker volume ls``
 
-If you want to remove a volume (e.g. to start with a fresh database), you can do:
+If you want to remove a volume (e.g. to start with a fresh database), you can use the following command.
 
 ``docker volume rm volume_name``
 
@@ -93,7 +93,7 @@ If you want to remove a volume (e.g. to start with a fresh database), you can do
 
 To access the main application please use the following link.
 
-[http://catima.lan:3000](http://catima.lan:3000)
+[http://catima.lan:8383](http://catima.lan:8383)
 
 + admin@example.com / admin123
 
