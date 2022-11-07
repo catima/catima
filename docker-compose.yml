@@ -4,6 +4,8 @@ networks:
   catima-net:
     driver: bridge
 
+name: catima
+
 services:
   catima-app:
     image: unillett/catima:latest-app
