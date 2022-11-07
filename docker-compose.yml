@@ -92,7 +92,7 @@ services:
     expose:
       - "1025"
     ports:
-      - "8028:8025"
+      - "127.0.0.1:8028:8025"
     networks:
       - catima-net
     container_name: catima-mailhog
