@@ -47,6 +47,10 @@ RUN bundle install
 FROM base as dev
 
 # Copy supervisor configuration file
+#
+# docker exec <container-id> supervisorctl status
+# docker exec <container-id> supervisorctl tail -f <service>
+# docker exec <container-id> supervisorctl restart <service>
 COPY ./docker/config/supervisord-worker-dev.conf /etc/supervisor/conf.d/supervisord.conf
 
 CMD ["/usr/bin/supervisord", "-c", "/etc/supervisor/conf.d/supervisord.conf"]

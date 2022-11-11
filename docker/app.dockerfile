@@ -50,6 +50,10 @@ FROM base as dev
 ADD ./docker/config/crontab /etc/crontab
 
 # Copy supervisor configuration file
+#
+# docker exec <container-id> supervisorctl status
+# docker exec <container-id> supervisorctl tail -f <service>
+# docker exec <container-id> supervisorctl restart <service>
 COPY ./docker/config/supervisord-app-dev.conf /etc/supervisor/conf.d/supervisord.conf
 
 # Add the entrypoint script used in development
