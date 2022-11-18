@@ -56,7 +56,7 @@ const FormattedTextEditor = (props) => {
     container: [
       [{'header': [false, 1, 2, 3, 4]}],
       ['bold', 'italic', 'underline', 'strike'],
-      [{'color': []}, {'background': []}],
+      [{'color': []}, {'background': []}, {'align': []}],
       [{'script': 'sub'}, {'script': 'super'}],
       ['link'],
       [{'list': 'ordered'}, {'list': 'bullet'}],

@@ -1,14 +1,21 @@
-button.ql-import_docx, button.ql-footnote, button.ql-endnote {
+button.ql-import_docx,
+button.ql-footnote,
+button.ql-endnote {
   border: 1px solid #ddd !important;
   font-size: 85%;
   width: 125px !important;
   margin-right: 5px;
+  margin-top: 10px;
 }
-button.ql-import_docx:hover, button.ql-footnote:hover, button.ql-endnote:hover {
+
+button.ql-import_docx:hover,
+button.ql-footnote:hover,
+button.ql-endnote:hover {
   background-color: #f0f0f0;
 }
 
-span.footnote, span.endnote {
+span.footnote,
+span.endnote {
   cursor: pointer;
 }
 
@@ -17,6 +24,7 @@ span.footnote, span.endnote {
   padding: 10px;
   background-color: #fff;
 }
+
 .noteEditor textarea {
   width: 100%;
 }
