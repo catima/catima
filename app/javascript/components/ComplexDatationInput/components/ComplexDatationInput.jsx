@@ -4,6 +4,7 @@ import React, {useState, useEffect} from 'react';
 import Translations from '../../Translations/components/Translations';
 import AsyncPaginate from 'react-select-async-paginate';
 import axios from "axios";
+import DateTimeInput from '../../DateTimeInput/components/DateTimeInput';
 
 const ComplexDatationInput = (props) => {
   const defaultValues = {Y: "", M: "", D: "", h: "", m: "", s: ""};
@@ -11,10 +12,13 @@ const ComplexDatationInput = (props) => {
 
   const {
     input,
-    fetchUrl,
-    selectedChoicesValue: selectedChoicesValueProps,
-    selectedFormat: selectedFormatProps
+    choiceSets: choiceSetsProps,
+    selectedFormat: selectedFormatProps,
+    fieldUuid
   } = props
+
+  const [choiceSets, setChoiceSets] = useState(choiceSetsProps)
+  const [choiceData, _setChoiceData] = useState(choiceSetsProps.map(c => c.selectedChoicesValue.map(s=> s.value.toString())))
 
   const [state, setState] = useState(false)
   const [fromState, setFromState] = useState(false)
@@ -25,14 +29,14 @@ const ComplexDatationInput = (props) => {
 
   const [allowedFormats, setAllowedFormats] = useState(getFieldOptions().allowed_formats.filter(f => f !== ''))
   const [selectedFormat, setSelectedFormat] = useState(selectedFormatProps[0])
-  const [allowBC, setAllowBC] = useState(getFieldOptions().allow_bc === '1')
+  const [allowBC, setAllowBC] = useState(getFieldOptions().allow_date_time_bc === '1')
 
-  const [choices, setChoices] = useState([])
-  const [isLoading, setIsLoading] = useState(false)
-  const [loadingMessage, setLoadingMessage] = useState(Translations.messages['active_record.loading'])
-  const [isInitialized, setIsInitialized] = useState(false)
-  const [optionsList, setOptionsList] = useState([])
-  const [selectedChoices, setSelectedChoices] = useState({BC: false, value: selectedChoicesValueProps})
+  const setChoiceData = (index, value) => {
+    let data = choiceData
+    data[index] = value
+    _setChoiceData(data)
+    setData({...getData(), 'selected_choices': {value: data.flat()}})
+  }
 
   useEffect(() => {
     setSelectedFormat(selectedFormatProps[0])
@@ -43,7 +47,7 @@ const ComplexDatationInput = (props) => {
     if (format === 'date_time') {
       setData({...getData(), 'selected_format': format, selected_choices: {}, from: fromState, to: toState})
     } else {
-      setData({...getData(), 'selected_format': format, selected_choices: selectedChoices, from: {}, to: {}})
+      setData({...getData(), 'selected_format': format, selected_choices: {value: choiceData.flat()}, from: {}, to: {}})
     }
   }
 
@@ -90,10 +94,6 @@ const ComplexDatationInput = (props) => {
       setSelectedFormat(selectedFormatProps[0])
       setData({...getData(), 'selected_format': selectedFormatProps[0]})
     }
-    setSelectedChoices(date['selected_choices'] ? {
-      ...date['selected_choices'],
-      value: selectedChoicesValueProps
-    } : {BC: false, value: []})
 
     let from = dateFromGranularityAndDate('from')
     setFromState(from);
@@ -197,17 +197,6 @@ const ComplexDatationInput = (props) => {
     setData(d);
   }
 
-  function updateChoiceData(arr) {
-    const d = getData();
-    d['selected_choices'] = arr;
-    setData({...getData(), 'selected_choices': {BC: selectedChoices.BC, value: arr}})
-  }
-
-  function _handleSelectedChoicesChangeBC(e) {
-    setSelectedChoices({...selectedChoices, BC: e.target.checked})
-    setData({...getData(), 'selected_choices': {...getData().selected_choices, BC: e.target.checked}})
-  }
-
   function getData() {
     const value = getInput().val();
     if (!value) return {'from': {}, 'to': {}};
@@ -261,72 +250,6 @@ const ComplexDatationInput = (props) => {
     return getInput().data("field-options") || {format: 'YMD'};
   }
 
-
-  async function _loadOptions(search, loadedOptions, {page}) {
-    if (optionsList.length < 25 && isInitialized) {
-      if (search.length > 0) {
-        let regexExp = new RegExp(search, 'i')
-
-        let choices = optionsList.filter(function (choice) {
-          return choice.label !== null && choice.label.match(regexExp) !== null && choice.label.match(regexExp).length > 0
-        });
-        return {
-          options: choices,
-          hasMore: false,
-          additional: {
-            page: page,
-          },
-        };
-      }
-      return {
-        options: _getFilterOptions(),
-        hasMore: choices.length === 25,
-        additional: {
-          page: page,
-        },
-      };
-    }
-
-
-    const res = await axios.get(fetchUrl)
-    if (!isInitialized) {
-      setChoices(res.data.choices)
-      setIsLoading(false)
-      setLoadingMessage(res.data.loading_message)
-      setIsInitialized(search.length === 0)
-      setOptionsList(res.data.choices.map(choice => _getJSONFilter(choice)))
-
-      return {
-        options: _getFilterOptions(res.data.choices),
-        hasMore: false,
-        additional: {
-          page: page + 1,
-        },
-      };
-    }
-  }
-
-  function _getFilterOptions(providedChoices = false) {
-    let computedChoices = providedChoices ? providedChoices : choices
-    computedChoices = computedChoices.map(choice =>
-      _getJSONFilter(choice)
-    );
-
-    return computedChoices;
-  }
-
-  function _getJSONFilter(choice) {
-    return {value: choice.id, label: choice.name};
-  }
-
-  function selectChoice(value) {
-    setSelectedChoices({...selectedChoices, value: value});
-    if (value?.length) {
-      updateChoiceData(value.map(v => v.value))
-    } else {
-      updateChoiceData([])
-    }
-  }
 
   const renderDateTimeInput = (input) => {
     return (
@@ -390,6 +313,7 @@ const ComplexDatationInput = (props) => {
         }
         {fmt.includes('Y') ? (
           <input style={errorStl} className="input-4 margin-right form-control"
+                 type="number" min="0"
                  value={input === 'from' ? fromState.Y : toState.Y}
                  onChange={_handleChangeYear(input)}/>
         ) : null
@@ -412,7 +336,7 @@ const ComplexDatationInput = (props) => {
                  onChange={_handleChangeSeconds(input)}/>
         ) : null
         }
-        <span class="text-muted">
+        <span className="text-muted">
           {Translations.messages[`catalog_admin.fields.complex_datation_option_inputs.${input === 'from' ? 'from_date' : 'to_date'}`]}
         </span>
       </div>
@@ -431,16 +355,159 @@ const ComplexDatationInput = (props) => {
         </div>
       )}
       {selectedFormat == 'datation_choice' && (
-        <div className="dateTimeInput rails-bootstrap-forms-datetime-select" style={{display: 'flex'}}>
-          {allowBC && (
-            <div className="form-check" style={{display: 'inline-block', marginRight: '3rem', paddingLeft: '0'}}>
-              <label className="form-check-label"
-                     htmlFor={`bcCheck-selected-choices`}>{Translations.messages['catalog_admin.fields.complex_datation_option_inputs.BC']}</label>
-              <input type="checkbox" value={true} className="form-check-input" id={`bcCheck-selected-choices`}
-                     checked={selectedChoices.BC}
-                     onChange={_handleSelectedChoicesChangeBC}/>
-            </div>
-          )}
+        <RenderChoiceSetList
+          choiceSets={choiceSets}
+          getData={getData}
+          setData={setData}
+          setChoiceData={setChoiceData}
+          fieldUuid={fieldUuid}
+        />
+      )}
+    </div>
+  )
+}
+
+ComplexDatationInput.propTypes = {
+  input: PropTypes.string.isRequired,
+}
+
+export default ComplexDatationInput;
+
+
+const RenderChoiceSetList = (props) => {
+  const {
+    choiceSets,
+    getData,
+    setData,
+    setChoiceData,
+    fieldUuid
+  } = props
+
+
+  function renderChoiceSet(choiceSet, index, list) {
+    if (Object.keys(choiceSet).length > 0) {
+      return (<div key={choiceSet.fetchUrl} className="mt-2">
+        <RenderChoiceSetInput
+          name={choiceSet.name}
+          fetchUrl={choiceSet.fetchUrl}
+          selectedChoicesValue={choiceSet.selectedChoicesValue}
+          getData={getData}
+          setData={setData}
+          setChoiceData={setChoiceData}
+          index={index}
+          choiceSet={choiceSet}
+          fieldUuid={fieldUuid}
+        />
+      </div>);
+    }
+  }
+
+  return (
+    <div>
+      {choiceSets.map((choiceSet, index, list) => renderChoiceSet(choiceSet, index, list))}
+    </div>
+  );
+}
+
+const RenderChoiceSetInput = (props) => {
+  const {
+    name,
+    fetchUrl,
+    selectedChoicesValue: selectedChoicesValueProps,
+    setChoiceData,
+    index,
+    choiceSet,
+    fieldUuid
+  } = props
+
+  const [selectedChoices, setSelectedChoices] = useState({BC: false, value: selectedChoicesValueProps})
+
+  const [choices, setChoices] = useState([])
+  const [loadingMessage, setLoadingMessage] = useState(Translations.messages['active_record.loading'])
+  const [isInitialized, setIsInitialized] = useState(false)
+  const [optionsList, setOptionsList] = useState([])
+  const [modalIndex, setModalIndex] = useState(1)
+  const [modalOpen, setModalOpen] = useState(false)
+
+  useEffect(() => {
+    setModalIndex(modalIndex + 1)
+  }, [selectedChoices])
+
+  function updateChoiceData(arr) {
+    setChoiceData(index, arr.map(i => i.toString()));
+  }
+
+  function _getJSONFilter(choice) {
+    return {value: choice.id, label: choice.name};
+  }
+
+  function selectChoice(value) {
+    setSelectedChoices({...selectedChoices, value: value});
+    if (value?.length) {
+      updateChoiceData(value.map(v => v.value))
+    } else {
+      updateChoiceData([])
+    }
+  }
+
+  function _getFilterOptions(providedChoices = false) {
+    let computedChoices = providedChoices ? providedChoices : choices
+    computedChoices = computedChoices.map(choice =>
+      _getJSONFilter(choice)
+    );
+
+    return computedChoices;
+  }
+
+  async function _loadOptions(search, loadedOptions, {page}) {
+    if (optionsList.length < 25 && isInitialized) {
+      if (search.length > 0) {
+        let regexExp = new RegExp(search, 'i')
+
+        let choices = optionsList.filter(function (choice) {
+          return choice.label !== null && choice.label.match(regexExp) !== null && choice.label.match(regexExp).length > 0
+        });
+        return {
+          options: choices,
+          hasMore: false,
+          additional: {
+            page: page + 1,
+          },
+        };
+      }
+      return {
+        options: _getFilterOptions(),
+        hasMore: choices.length === 25,
+        additional: {
+          page: page + 1,
+        },
+      };
+    }
+
+
+    const res = await axios.get(`${fetchUrl}&search=${search}&page=${page}`)
+
+    if (!isInitialized) {
+      setChoices(res.data.choices)
+      setLoadingMessage(res.data.loading_message)
+      setOptionsList(res.data.choices.map(choice => _getJSONFilter(choice)))
+      // setIsInitialized(search.length === 0)
+
+      return {
+        options: _getFilterOptions(res.data.choices),
+        hasMore: res.data.hasMore,
+        additional: {
+          page: page + 1,
+        },
+      };
+    }
+  }
+
+  return (
+    <div>
+      <small className="text-sm-center">{name}</small>
+      <div className="dateTimeInput  row rails-bootstrap-forms-datetime-select" style={{display: 'flex'}}>
+        <div className="col-sm-8">
           <div style={{width: '100%'}}>
             <AsyncPaginate
               className="datation-filter"
@@ -458,18 +525,173 @@ const ComplexDatationInput = (props) => {
               name="choices"
               value={selectedChoices.value}
               onChange={selectChoice}
-              options={_getFilterOptions()}
+              options={optionsList}
             />
           </div>
         </div>
-
-      )}
-    </div>
+        <div className="col-sm-4">
+          <a onClick={() => setModalOpen(true)} className="btn btn-sm btn-outline-secondary" data-toggle="modal"
+             data-target={"#choice-modal-" + fieldUuid +  choiceSet.uuid} href="#">
+            <i className="fa fa-plus"></i>
+          </a>
+        </div>
+      </div>
+      <ModalForm name={name}
+                 key={modalIndex}
+                 modalOpen={modalOpen}
+                 choiceSet={choiceSet}
+                 fieldUuid={fieldUuid}
+                 _getJSONFilter={_getJSONFilter}
+                 selectedChoices={selectedChoices}
+                 selectChoice={selectChoice} />
+  </div>
   )
 }
 
-ComplexDatationInput.propTypes = {
-  input: PropTypes.string.isRequired,
-}
+const ModalForm = (props) => {
+    const {
+      name,
+      choiceSet,
+      fieldUuid,
+      _getJSONFilter,
+      selectedChoices,
+      selectChoice,
+      modalOpen
+    } = props
 
-export default ComplexDatationInput;
+  const [modalChoices, setModalChoices ] = useState([])
+
+    useEffect(() => {
+      if (modalOpen == true) {
+        async function fetchData() {
+          const response = await axios.get(choiceSet.newChoiceModalUrl)
+          setModalChoices(response.data.choices)
+        }
+        fetchData()
+      }
+    }, [modalOpen])
+
+
+    const [errorMsg, setErrorMsg] = useState('')
+
+    const handleSubmit = async (event) => {
+      event.preventDefault();
+
+      let form = event.target
+      let params = '';
+      for(let i=0; i<form.elements.length; i++ )
+      {
+        let fieldName = form.elements[i].name;
+        let fieldValue = form.elements[i].value;
+
+        params += fieldName + '=' + fieldValue + '&';
+      }
+      params += 'react' + '=' + 'true' + '&';
+
+      try{
+        axios.defaults.headers.common["X-CSRF-Token"] = (document.querySelector("meta[name=csrf-token]") || {}).content;
+        axios.defaults.headers.common["X-Requested-With"] = 'XMLHttpRequest';
+
+        const response = await axios.post(choiceSet.createChoiceUrl, params)
+
+        if (response && response.data && response.data.choice_json_attributes) {
+          selectChoice([...selectedChoices.value, _getJSONFilter(response.data.choice_json_attributes)])
+          $(event.target).closest('div.modal').modal('hide')
+        }
+      } catch (error) {
+        setErrorMsg(error.response.data.errors)
+      }
+
+    }
+
+    return (
+    <div className="modal fade" id={"choice-modal-" + fieldUuid +  choiceSet.uuid} tabIndex="-1" role="dialog" data-field-uuid={fieldUuid +  choiceSet.uuid} data-lang="fr" aria-labelledby="myModalLabel">
+      <div className="modal-dialog">
+        <div className="modal-content">
+            <form onSubmit={handleSubmit} id={`new_choice_${choiceSet.id}`}>
+            <div className="modal-header">
+              <h4 className="modal-title">Créer nouvelle entrée dans «{name}»</h4>
+              <button type="button" className="close" data-dismiss="modal" aria-label="Close">
+                <span aria-hidden="true">×</span>
+              </button>
+            </div>
+            <div className="modal-body">
+              <div className="card-body">
+                <div className="mb-4">
+                  <div className="form-group">
+                    <label htmlFor="choice_parent_id">Parent</label>
+                      <select className="form-control" name="choice[parent_id]" id="choice_parent_id">
+                        <option value=""></option>
+                          {modalChoices.map(o => {
+                              return (
+                                  <option key={o.id} value={o.id}>{o.name}</option>
+                              )
+                          })}
+                  </select>
+                  </div>
+                </div>
+                <div className="mb-4">
+                  <div className="form-group"><
+                    label htmlFor="choice_position">Position</label>
+                    <select className="form-control" name="choice[position]" id="choice_position">
+                      <option value="first">premier</option>
+                      <option value="last">dernier</option>
+                    </select>
+                  </div>
+                </div>
+
+                <div className="form-group">
+                    <label htmlFor="choice_short_name">Nom court</label>
+                    <div className="form-group">
+                        <label className="sr-only required" htmlFor="choice_short_name_fr">Nom court</label>
+                        <input className="form-control" type="text" name="choice[short_name_fr]" id="choice_short_name_fr"/>
+                    </div>
+                </div>
+                <div className="form-group">
+                    <label htmlFor="choice_long_name">Nom long (optionnel)</label>
+                    <div className="form-group">
+                        <label className="sr-only" htmlFor="choice_long_name_fr">Nom long (optionnel)</label>
+                        <input className="form-control" type="text" name="choice[long_name_fr]" id="choice_long_name_fr"/>
+                    </div>
+                </div>
+
+                <div className="form-group">
+                  <label htmlFor="choice_from_date">Date de début (optionnel)</label>
+                  <input
+                      id={`from_date_${choiceSet.id}`} data-field-options={JSON.stringify({format: choiceSet.format})}
+                         data-field-required="true" autoComplete="off" type="hidden" name="choice[from_date]"
+                         value="{&quot;Y&quot;:&quot;&quot;,&quot;M&quot;:null,&quot;D&quot;:null,&quot;h&quot;:null,&quot;m&quot;:null,&quot;s&quot;:null}"/>
+                        <DateTimeInput
+                            input={`#from_date_${choiceSet.id}`}
+                            allowBC={choiceSet.allowBC}
+                            preventNegativeInput={true}
+                        />
+                </div>
+                <div className="form-group">
+                  <label htmlFor="choice_to_date">Date de fin (optionnel)</label>
+                  <input
+                      id={`to_date_${choiceSet.id}`} data-field-options={JSON.stringify({format: choiceSet.format})}
+                         data-field-required="true" autoComplete="off" type="hidden" name="choice[to_date]"
+                         value="{&quot;Y&quot;:&quot;&quot;,&quot;M&quot;:null,&quot;D&quot;:null,&quot;h&quot;:null,&quot;m&quot;:null,&quot;s&quot;:null}"/>
+                      <DateTimeInput
+                          input={`#to_date_${choiceSet.id}`}
+                          allowBC={choiceSet.allowBC}
+                          preventNegativeInput={true}
+                      />
+                </div>
+                <div className="base-errors">
+                  {errorMsg}
+                </div>
+
+              </div>
+            </div>
+            <div className="modal-footer">
+              <button type="button" className="btn btn-outline-secondary" data-dismiss="modal">Annuler</button>
+              <input type="submit" name="commit" value="Créer" className="btn btn-success" data-disable-with="Créer"/>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  )
+}

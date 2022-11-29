@@ -8,7 +8,9 @@ const DateTimeInput = (props) => {
   const types = ["Y", "M", "h", "YM", "MD", "hm", "YMD", "hms", "MDh", "YMDh", "MDhm", "YMDhm", "MDhms", "YMDhms"];
 
   const {
-    input
+    input,
+    allowBC,
+    preventNegativeInput
   } = props
 
   const [state, setState] = useState(false)
@@ -30,6 +32,7 @@ const DateTimeInput = (props) => {
       let k = granularity[i];
       s[k] = date[k] || (defaultValues)[k];
     }
+    s['BC'] = date['BC'] || false
     setState(s);
 
   }, [granularity])
@@ -147,10 +150,26 @@ const DateTimeInput = (props) => {
   function getFieldOptions() {
     return getInput().data("field-options") || {format: 'YMD'};
   }
+
+  function _handleChangeBC() {
+    return function (e) {
+      updateData({BC: e.target.checked});
+    }
+  }
+
   if (!state) return ""
   return (
     <div>
       <div className="dateTimeInput rails-bootstrap-forms-datetime-select">
+        {allowBC ? (
+          <div className="form-check" style={{display: 'inline-block', marginRight: '3rem', paddingLeft: '0'}}>
+            <label className="form-check-label"
+                   htmlFor={`bcCheck`}>{Translations.messages['catalog_admin.fields.complex_datation_option_inputs.BC']}</label>
+            <input type="checkbox" value={true} className="form-check-input" id={`bcCheck`}
+                   checked={state.BC}
+                   onChange={_handleChangeBC()}/>
+          </div>
+        ) : null}
         {fmt.includes('D') ? (
           <input style={errorStl} type="number" min="0" max="31" className="input-2 form-control" value={state.D}
                  onChange={_handleChangeDay}/>
@@ -198,7 +217,7 @@ const DateTimeInput = (props) => {
           </select>) : null
         }
         {fmt.includes('Y') ? (
-          <input style={errorStl} className="input-4 margin-right form-control" value={state.Y}
+          <input style={errorStl} type="number" min={preventNegativeInput ? "0" : "" } className="input-4 margin-right form-control" value={state.Y}
                  onChange={_handleChangeYear}/>
         ) : null
         }

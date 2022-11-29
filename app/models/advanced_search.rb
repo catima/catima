@@ -34,6 +34,7 @@ class AdvancedSearch < ApplicationRecord
   before_create :assign_uuid
 
   attr_accessor :field_condition
+  attr_accessor :exclude_condition
 
   def to_param
     uuid

@@ -115,6 +115,20 @@ class CatalogAdmin::ChoiceSetsController < CatalogAdmin::BaseController
     end
   end
 
+  def new_choice_modal
+    find_choice_set
+    render json: {
+      catalog: @choice_set.catalog_id, 
+      choice_set: @choice_set.id,
+      choices: @choice_set.choices.map { |choice|
+        {
+          id: choice.id,
+          name: choice.choice_set.choice_prefixed_label(choice, with_dates: @choice_set.datation?)
+        }
+      }
+    }
+  end
+
   private
 
   def build_choice_set
@@ -131,6 +145,7 @@ class CatalogAdmin::ChoiceSetsController < CatalogAdmin::BaseController
       :choice_set_type,
       :format,
       :deactivated_at,
+      :allow_bc,
       :choices_attributes => %i[
         id _destroy
         category_id

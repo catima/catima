@@ -22,7 +22,8 @@ const ChoiceSetSearch = (props) => {
     childChoicesActivatedInputName,
     childChoicesActivatedPlaceholder,
     componentList,
-    selectCondition: selectConditionProps
+    selectCondition: selectConditionProps,
+    excludeCondition
   } = props
 
   const [selectedCondition, setSelectedCondition] = useState('')
@@ -34,6 +35,8 @@ const ChoiceSetSearch = (props) => {
   const [hiddenInputValue, setHiddenInputValue] = useState([])
   const [inputName, setInputName] = useState(inputNameProps.split("[exact]"))
   const [choiceSetId, setChoiceSetId] = useState(`${srcId}`)
+
+  const [excludeConditionInputName, setExcludeConditionInputName] = useState( inputNameProps.split("[exact]")[0] + '[exclude_condition]')
 
   useEffect(() => {
     if (typeof selectConditionProps !== 'undefined' && selectConditionProps.length !== 0) {
@@ -63,6 +66,9 @@ const ChoiceSetSearch = (props) => {
 
   function _selectItem(item, event) {
     if (typeof event === 'undefined' || event.action !== "pop-value" || !req) {
+      if (event.action == 'clear') {
+        return setSelectedItem([])
+      }
       if (typeof item !== 'undefined') {
         if (item.data.length === 0) {
           setSelectedCondition('');
@@ -210,7 +216,7 @@ const ChoiceSetSearch = (props) => {
       <div>
         <ReactSelect id={choiceSetId} name={_buildInputNameCondition(selectedCondition)}
                      options={_getItemOptions()} className="basic-multi-select" onChange={_selectItem}
-                     classNamePrefix="select" placeholder={searchPlaceholder}/>
+                     classNamePrefix="select" placeholder={searchPlaceholder} isClearable={true}/>
       </div>
     );
   }
@@ -285,6 +291,7 @@ const ChoiceSetSearch = (props) => {
         }
 
       </div>
+      <input type="hidden" name={excludeConditionInputName} value={excludeCondition}/>
     </div>
   );
 }

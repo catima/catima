@@ -31,7 +31,16 @@ class CatalogAdmin::ChoicesController < CatalogAdmin::BaseController
       if request.xhr?
         render json: {
           catalog: @choice_set.catalog.id, choice_set: @choice_set.id,
-          choice: @choice
+          choice: @choice,
+          choice_json_attributes: {
+            id: @choice.id,
+            uuid: @choice.uuid,
+            name: @choice.choice_set.choice_prefixed_label(@choice, with_dates: @choice_set&.datation?),
+            short_name: @choice.short_name,
+            long_name: @choice.long_name,
+            from_date: @choice.from_date,
+            to_date: @choice.to_date
+          }
         }
       else
         redirect_to(edit_catalog_admin_choice_set_path(@choice_set.catalog, I18n.locale, @choice_set), :notice => created_message)

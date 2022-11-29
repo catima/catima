@@ -30,6 +30,7 @@
           {required: true, disabled: true}
         ) %>
     <% if f.object.choice_set_type === 'datation' %>
+      <%= f.check_box :allow_bc %>
       <%= f.collection_select(
             :format,
             ChoiceSet::FORMATS,

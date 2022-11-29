@@ -23,7 +23,8 @@ const ChoiceSetSearchContainer = (props) => {
     filterPlaceholder,
     selectCondition,
     multiple,
-    fieldConditionData
+    fieldConditionData,
+    excludeCondition
   } = props
 
   const [componentsList, setComponentsList] = useState([])
@@ -204,6 +205,7 @@ const ChoiceSetSearchContainer = (props) => {
         multiple={item.multiple}
         addComponent={item.addComponent}
         deleteComponent={item.deleteComponent}
+        excludeCondition={excludeCondition}
       /></div>);
     }
   }
@@ -213,7 +215,7 @@ const ChoiceSetSearchContainer = (props) => {
   }
 
   return (
-    <div id={srcIdProps + '_container'} class={'mt-1'}>
+    <div id={srcIdProps + '_container'} className={'mt-1'}>
       {renderComponentList()}
     </div>
   );

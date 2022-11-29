@@ -283,7 +283,6 @@ const DateTimeInput = forwardRef((props, ref) => {
   }
 
   function _handleChangeBC(e) {
-    console.log(e)
     updateData({BC: e.target.checked});
   }
 
@@ -302,13 +301,13 @@ const DateTimeInput = forwardRef((props, ref) => {
             {fmt.includes('D') ? (
               <input id={inputId + '_' + inputSuffixId + '_day'} name={inputName + '[D]'} style={errorStl} type="number"
                      min="0" max="31" className="input-2 form-control" value={state.D}
-                     onChange={_handleChangeDay} readOnly={disabled || isRangeProps}/>
+                     onChange={_handleChangeDay}/>
             ) : null
             }
             {fmt.includes('M') ? (
               <select id={inputId + '_' + inputSuffixId + '_month'} style={errorStl} name={inputName + '[M]'}
                       className={_getSelectClassNames()} value={state.M} onChange={_handleChangeMonth}
-                      ref={selectRef} readOnly={disabled || isRangeProps}>
+                      ref={selectRef}>
                 {localizedDateTimeData.month_names.map((month, index) => {
                     if (month !== null) {
                       month = month.charAt(0).toUpperCase() + month.slice(1);
@@ -324,28 +323,28 @@ const DateTimeInput = forwardRef((props, ref) => {
             ) : null
             }
             {fmt.includes('Y') ? (
-              <input id={inputId + '_' + inputSuffixId + '_year'} name={inputName + '[Y]'} style={errorStl}
+              <input id={inputId + '_' + inputSuffixId + '_year'} name={inputName + '[Y]'} style={errorStl} type="number" min="0"
                      type="number"
                      className={'input-4 form-control' + styleMarginRight} value={state.Y}
-                     onChange={_handleChangeYear} readOnly={disabled || isRangeProps}/>
+                     onChange={_handleChangeYear}/>
             ) : null
             }
             {fmt.includes('h') ? (
               <input id={inputId + '_' + inputSuffixId + '_hour'} name={inputName + '[h]'} style={errorStl} min="0"
                      max="23" type="number" className="input-2 form-control" value={state.h}
-                     onChange={_handleChangeHours} readOnly={disabled || isRangeProps}/>
+                     onChange={_handleChangeHours}/>
             ) : null
             }
             {fmt.includes('m') ? (
               <input id={inputId + '_' + inputSuffixId + '_minute'} name={inputName + '[m]'} style={errorStl} min="0"
                      max="59" type="number" className="input-2 form-control" value={state.m}
-                     onChange={_handleChangeMinutes} readOnly={disabled || isRangeProps}/>
+                     onChange={_handleChangeMinutes}/>
             ) : null
             }
             {fmt.includes('s') ? (
               <input id={inputId + '_' + inputSuffixId + '_second'} name={inputName + '[s]'} style={errorStl} min="0"
                      max="59" type="number" className="input-2 form-control" value={state.s}
-                     onChange={_handleChangeSeconds} readOnly={disabled || isRangeProps}/>
+                     onChange={_handleChangeSeconds}/>
             ) : null
             }
             <div className="hidden-datepicker">

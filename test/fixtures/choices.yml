@@ -122,3 +122,46 @@ datation_400_500:
   from_date: "{\"Y\":400,\"M\":1,\"D\":1,\"h\":null,\"m\":null,\"s\":null}"
   to_date: "{\"Y\":500,\"M\":12,\"D\":31,\"h\":null,\"m\":null,\"s\":null}"
   parent_id: <%= ActiveRecord::FixtureSet.identify(:datation_100_500) %>
+
+
+datation_1_january_300_BC:
+  catalog: complex_datation
+  choice_set: datation
+  long_name_translations: { "long_name_en": "Datation 1 Janvier 300" }
+  short_name_translations: { "short_name_en": "Datation 1 Janvier 300" }
+  from_date: "{\"Y\":300,\"M\":1,\"D\":1,\"h\":null,\"m\":null,\"s\":null,\"BC\": true}"
+  to_date: "{\"Y\":300,\"M\":1,\"D\":1,\"h\":null,\"m\":null,\"s\":null,\"BC\": true}"
+
+datation_100_500_BC:
+  catalog: complex_datation
+  choice_set: datation
+  long_name_translations: { "long_name_en": "Datation 100 - 500" }
+  short_name_translations: { "short_name_en": "Datation 100 - 500" }
+  from_date: "{\"Y\":500,\"M\":1,\"D\":1,\"h\":null,\"m\":null,\"s\":null,\"BC\": true}"
+  to_date: "{\"Y\":100,\"M\":12,\"D\":31,\"h\":null,\"m\":null,\"s\":null,\"BC\": true}"
+
+datation_300_400_BC:
+  catalog: complex_datation
+  choice_set: datation
+  long_name_translations: { "long_name_en": "Datation 300 - 400" }
+  short_name_translations: { "short_name_en": "Datation 300 - 400" }
+  from_date: "{\"Y\":400,\"M\":1,\"D\":1,\"h\":null,\"m\":null,\"s\":null,\"BC\": true}"
+  to_date: "{\"Y\":300,\"M\":12,\"D\":31,\"h\":null,\"m\":null,\"s\":null,\"BC\": true}"
+  parent_id: <%= ActiveRecord::FixtureSet.identify(:datation_100_500_BC) %>
+
+datation_400_500_BC:
+  catalog: complex_datation
+  choice_set: datation
+  long_name_translations: { "long_name_en": "Datation 400 - 500" }
+  short_name_translations: { "short_name_en": "Datation 400 - 500" }
+  from_date: "{\"Y\":500,\"M\":1,\"D\":1,\"h\":null,\"m\":null,\"s\":null,\"BC\": true}"
+  to_date: "{\"Y\":400,\"M\":12,\"D\":31,\"h\":null,\"m\":null,\"s\":null,\"BC\": true}"
+  parent_id: <%= ActiveRecord::FixtureSet.identify(:datation_100_500_BC) %>
+
+datation_100_BC_500:
+  catalog: complex_datation
+  choice_set: datation
+  long_name_translations: { "long_name_en": "Datation 100 - 500" }
+  short_name_translations: { "short_name_en": "Datation 100 - 500" }
+  from_date: "{\"Y\":100,\"M\":1,\"D\":1,\"h\":null,\"m\":null,\"s\":null,\"BC\": true}"
+  to_date: "{\"Y\":500,\"M\":12,\"D\":31,\"h\":null,\"m\":null,\"s\":null,\"BC\": false}"
