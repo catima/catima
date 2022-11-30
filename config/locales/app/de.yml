@@ -453,7 +453,7 @@ de:
       choice_fields:
         remove: "Remove"
       choice_modal:
-        create_new_field: Create new «%{field}»
+        create_new_field: Create new
       common_form_fields:
         choices: 'Choices'
         short_name: 'Short name'

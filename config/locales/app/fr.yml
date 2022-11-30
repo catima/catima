@@ -591,7 +591,7 @@ fr:
         show_hierarchy: "Afficher la hiérarchie"
         hide_hierarchy: "Cacher la hiérarchie"
       choice_modal:
-        create_new_field: Créer nouvelle entrée dans «%{field}»
+        create_new_field: Créer nouvelle entrée dans
         position:
           first: premier
           last: dernier

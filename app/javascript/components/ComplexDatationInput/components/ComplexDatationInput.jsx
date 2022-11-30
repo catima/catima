@@ -610,7 +610,7 @@ const ModalForm = (props) => {
         <div className="modal-content">
             <form onSubmit={handleSubmit} id={`new_choice_${choiceSet.id}`}>
             <div className="modal-header">
-              <h4 className="modal-title">Créer nouvelle entrée dans «{name}»</h4>
+              <h4 className="modal-title">{Translations.messages['catalog_admin.choice_sets.choice_modal.create_new_field']}  «{name}» </h4>
               <button type="button" className="close" data-dismiss="modal" aria-label="Close">
                 <span aria-hidden="true">×</span>
               </button>
@@ -634,29 +634,37 @@ const ModalForm = (props) => {
                   <div className="form-group"><
                     label htmlFor="choice_position">Position</label>
                     <select className="form-control" name="choice[position]" id="choice_position">
-                      <option value="first">premier</option>
-                      <option value="last">dernier</option>
+                      <option
+                          value="first">{Translations.messages['catalog_admin.choice_sets.choice_modal.position.first']}</option>
+                      <option
+                          value="last">{Translations.messages['catalog_admin.choice_sets.choice_modal.position.last']}</option>
                     </select>
                   </div>
                 </div>
 
                 <div className="form-group">
-                    <label htmlFor="choice_short_name">Nom court</label>
-                    <div className="form-group">
-                        <label className="sr-only required" htmlFor="choice_short_name_fr">Nom court</label>
-                        <input className="form-control" type="text" name="choice[short_name_fr]" id="choice_short_name_fr"/>
-                    </div>
+                  <label
+                      htmlFor="choice_short_name">{Translations.messages['catalog_admin.choices.choice_fields.short_name']}</label>
+                  <div className="form-group">
+                    <label className="sr-only required"
+                           htmlFor="choice_short_name_fr">{Translations.messages['catalog_admin.choices.choice_fields.short_name']}</label>
+                    <input className="form-control" type="text" name="choice[short_name_fr]"
+                           id="choice_short_name_fr"/>
+                  </div>
                 </div>
                 <div className="form-group">
-                    <label htmlFor="choice_long_name">Nom long (optionnel)</label>
-                    <div className="form-group">
-                        <label className="sr-only" htmlFor="choice_long_name_fr">Nom long (optionnel)</label>
-                        <input className="form-control" type="text" name="choice[long_name_fr]" id="choice_long_name_fr"/>
-                    </div>
+                  <label
+                      htmlFor="choice_long_name">{Translations.messages['catalog_admin.choices.choice_fields.long_name_optional']}</label>
+                  <div className="form-group">
+                    <label className="sr-only"
+                           htmlFor="choice_long_name_fr">{Translations.messages['catalog_admin.choices.choice_fields.long_name_optional']}</label>
+                    <input className="form-control" type="text" name="choice[long_name_fr]"
+                           id="choice_long_name_fr"/>
+                  </div>
                 </div>
 
                 <div className="form-group">
-                  <label htmlFor="choice_from_date">Date de début (optionnel)</label>
+                  <label htmlFor="choice_from_date">{Translations.messages['catalog_admin.choices.choice_fields.from_date']}</label>
                   <input
                       id={`from_date_${choiceSet.id}`} data-field-options={JSON.stringify({format: choiceSet.format})}
                          data-field-required="true" autoComplete="off" type="hidden" name="choice[from_date]"
@@ -668,7 +676,7 @@ const ModalForm = (props) => {
                         />
                 </div>
                 <div className="form-group">
-                  <label htmlFor="choice_to_date">Date de fin (optionnel)</label>
+                  <label htmlFor="choice_to_date">{Translations.messages['catalog_admin.choices.choice_fields.to_date']}</label>
                   <input
                       id={`to_date_${choiceSet.id}`} data-field-options={JSON.stringify({format: choiceSet.format})}
                          data-field-required="true" autoComplete="off" type="hidden" name="choice[to_date]"
@@ -686,8 +694,8 @@ const ModalForm = (props) => {
               </div>
             </div>
             <div className="modal-footer">
-              <button type="button" className="btn btn-outline-secondary" data-dismiss="modal">Annuler</button>
-              <input type="submit" name="commit" value="Créer" className="btn btn-success" data-disable-with="Créer"/>
+              <button type="button" className="btn btn-outline-secondary" data-dismiss="modal">{Translations.messages['cancel']}</button>
+              <input type="submit" name="commit" value={Translations.messages['.create']} className="btn btn-success" data-disable-with={Translations.messages['create']}/>
             </div>
           </form>
         </div>
