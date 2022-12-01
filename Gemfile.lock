@@ -24,8 +24,13 @@ GIT
       sinatra (>= 2.0.0, <= 3.0.0)
 
 GEM
-  remote: https://rubygems.org/
   remote: https://rails-assets.org/
+  specs:
+    rails-assets-autosize (4.0.2)
+    rails-assets-mousetrap (1.6.2)
+
+GEM
+  remote: https://rubygems.org/
   specs:
     actioncable (6.1.7)
       actionpack (= 6.1.7)
@@ -355,7 +360,7 @@ GEM
       activesupport (>= 3.0.0)
     racc (1.6.0)
     rack (2.2.4)
-    rack-protection (2.2.2)
+    rack-protection (2.2.3)
       rack
     rack-proxy (0.7.2)
       rack
@@ -376,8 +381,6 @@ GEM
       bundler (>= 1.15.0)
       railties (= 6.1.7)
       sprockets-rails (>= 2.0.0)
-    rails-assets-autosize (4.0.2)
-    rails-assets-mousetrap (1.6.2)
     rails-dom-testing (2.0.3)
       activesupport (>= 4.2.0)
       nokogiri (>= 1.6)
@@ -494,10 +497,10 @@ GEM
       simplecov_json_formatter (~> 0.1)
     simplecov-html (0.12.3)
     simplecov_json_formatter (0.1.4)
-    sinatra (2.2.2)
+    sinatra (2.2.3)
       mustermann (~> 2.0)
       rack (~> 2.2)
-      rack-protection (= 2.2.2)
+      rack-protection (= 2.2.3)
       tilt (~> 2.0)
     spring (2.1.1)
     sprockets (4.1.1)
