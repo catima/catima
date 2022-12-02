@@ -580,7 +580,7 @@ en:
         show_hierarchy: "Show hierarchy"
         hide_hierarchy: "Hide hierarchy"
       choice_modal:
-        create_new_field: Create new «%{field}»
+        create_new_field: Create new
         position:
           first: first
           last: last

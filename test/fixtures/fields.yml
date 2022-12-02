@@ -522,7 +522,7 @@ complex_datation:
   slug: complex-datation
   field_set: complex_datation (ItemType)
   uuid: complex_datation_uuid
-  options: { "format": "YMD", "allow_bc": "1", "allowed_formats": [ "date_time", "datation_choice" ], "choice_set_ids": [ "", "<%= ActiveRecord::FixtureSet.identify(:datation) %>" ] }
+  options: { "format": "YMD", "allow_date_time_bc": "1", "allowed_formats": [ "date_time", "datation_choice" ], "choice_set_ids": [ "", "<%= ActiveRecord::FixtureSet.identify(:datation) %>" ] }
 
 complex_datation_name:
   type: "Field::Text"

@@ -11,7 +11,14 @@ class Field::ComplexDatationPresenter < FieldPresenter
 
     case dt['selected_format']
     when 'date_time'
-      style = if dt['to'] == dt['from']
+
+      from = value_text_repr(dt['from'], format, date_name: 'from')
+      to = value_text_repr(dt['to'], format, date_name: 'to')
+
+      from =  field.allow_date_time_bc? && dt['from']['BC'] ? I18n.t('catalog_admin.fields.complex_datation.bc', date: from) : from
+      to =  field.allow_date_time_bc? && dt['to']['BC'] ? I18n.t('catalog_admin.fields.complex_datation.bc', date: to) : to
+
+      style = if dt['to'] == dt['from'] || from == to
                 'exact'
               elsif dt['to'].values.all?(&:blank?)
                 "from"
@@ -21,11 +28,6 @@ class Field::ComplexDatationPresenter < FieldPresenter
                 'between'
               end
 
-      from = value_text_repr(dt['from'], format, date_name: 'from')
-      to = value_text_repr(dt['to'], format, date_name: 'to')
-
-      from = dt['from']['BC'] ? I18n.t('catalog_admin.fields.complex_datation.bc', date: from) : from
-      to = dt['to']['BC'] ? I18n.t('catalog_admin.fields.complex_datation.bc', date: to) : to
 
       case style
       when 'exact'
@@ -47,14 +49,15 @@ class Field::ComplexDatationPresenter < FieldPresenter
     return if choices.empty?
 
     links_and_prefixed_names = choices.map do |choice|
-      value_slug = [I18n.locale, choice.short_name].join("-")
+      value_slug = [choice.id, choice.short_name].join("-")
+
       html_options = {
         'data-toggle': "tooltip",
         title: choice_dates(
           choice.from_date,
           choice.to_date,
           choice.choice_set.format,
-          raw_val['selected_choices']['BC']
+          choice.choice_set.allow_bc,
         )
       }
 
@@ -79,30 +82,19 @@ class Field::ComplexDatationPresenter < FieldPresenter
     end
   end
 
-  def choice_dates(from, to, format, is_bc)
+  def choice_dates(from, to, format, allow_bc)
     from_repr = value_text_repr(from, format)
     to_repr = value_text_repr(to, format)
-    from_repr = is_bc ? I18n.t('catalog_admin.fields.complex_datation.bc', date: from_repr) : from_repr
-    to_repr = is_bc ? I18n.t('catalog_admin.fields.complex_datation.bc', date: to_repr) : to_repr
+    from_repr = allow_bc && JSON.parse(from)['BC'] ? I18n.t('catalog_admin.fields.complex_datation.bc', date: from_repr) : from_repr
+    to_repr = allow_bc && JSON.parse(to)['BC'] ? I18n.t('catalog_admin.fields.complex_datation.bc', date: to_repr) : to_repr
 
-    style = if from == to
-              'exact'
-            elsif JSON.parse(to).values.all?(&:blank?)
-              "from"
-            elsif JSON.parse(from).values.all?(&:blank?)
-              'to'
-            else
-              'between'
-            end
-
-    case style
-    when 'exact'
+    if from == to || from_repr == to_repr
       from_repr
-    when 'from'
+    elsif JSON.parse(to).values.all?(&:blank?)
       I18n.t('catalog_admin.fields.complex_datation.after', date: from_repr)
-    when 'to'
+    elsif JSON.parse(from).values.all?(&:blank?)
       I18n.t('catalog_admin.fields.complex_datation.before', date: to_repr)
-    when 'between'
+    else
       I18n.t('catalog_admin.fields.complex_datation.between', from: from_repr, to: to_repr)
     end
   end
@@ -116,7 +108,7 @@ class Field::ComplexDatationPresenter < FieldPresenter
       dt_value = DateTime.civil_from_format(:local, *prepare_datetime_array(date_name: date_name, value: date_name ? false : date))
       text_repr = I18n.l(dt_value, format: format_str.to_sym)
       text_repr.sub('8888', date.is_a?(Hash) ? date[0].to_s : JSON.parse(date)[0].to_s) if date["raw_value"].nil?
-      text_repr.split().map{|el| el.sub(/^[0]+/,'')}.join()
+      text_repr.split().map{|el| el.sub(/^[0]+/,'')}.join(" ")
     rescue StandardError
       nil
     end

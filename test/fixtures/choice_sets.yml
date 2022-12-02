@@ -44,3 +44,4 @@ datation:
   name: Datation ChoiceSet
   choice_set_type: "datation"
   format: "YMD"
+  allow_bc: '1'

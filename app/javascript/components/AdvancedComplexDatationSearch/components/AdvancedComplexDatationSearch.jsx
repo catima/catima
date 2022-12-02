@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {useState} from 'react';
 import DateTimeSearch from './DateTimeSearch';
 import ChoiceSetSearchContainer from './ChoiceSetSearchContainer'
 
@@ -12,13 +12,15 @@ const AdvancedComplexDatationSearch = (props) => {
     disableInputByCondition,
     selectCondition,
     selectConditionName,
+    selectExcludeConditions,
+    selectExcludeConditionName,
     inputStart,
     localizedDateTimeData,
     format,
     fieldConditionName,
     fieldConditionData,
     inputEnd,
-    allowBC,
+    allowDateTimeBC,
     inputName,
     choiceSelectConditionName,
     choiceFieldConditionName,
@@ -39,6 +41,28 @@ const AdvancedComplexDatationSearch = (props) => {
     choiceFieldConditionData
   } = props
 
+  const [selectedExcludeCondition, setSelectedExcludeCondition]= useState('')
+
+  function _selectExcludeCondition(event) {
+    if (typeof event === 'undefined' || event.action !== "pop-value" || !req) {
+      if (typeof event !== 'undefined') {
+        setSelectedExcludeCondition(event.target.value);
+      } else {
+        setSelectedExcludeCondition('');
+      }
+    }
+  }
+  function renderSelectExcludeConditionElement() {
+    return (
+        <select className="form-control filter-condition" name={selectExcludeConditionName}
+                value={selectedExcludeCondition} onChange={_selectExcludeCondition}>
+          {selectExcludeConditions.map((item) => {
+            return <option key={item.key} value={item.key}>{item.value}</option>
+          })}
+        </select>
+    );
+  }
+
   return (
     <div>
       <DateTimeSearch
@@ -56,7 +80,8 @@ const AdvancedComplexDatationSearch = (props) => {
         fieldConditionName={fieldConditionName}
         fieldConditionData={fieldConditionData}
         inputEnd={inputEnd}
-        allowBC={allowBC}
+        allowDateTimeBC={allowDateTimeBC}
+        excludeCondition={selectedExcludeCondition}
       />
       <ChoiceSetSearchContainer
         inputName={inputName}
@@ -80,7 +105,18 @@ const AdvancedComplexDatationSearch = (props) => {
         selectCondition={choiceSelectCondition}
         multiple={multiple}
         fieldConditionData={choiceFieldConditionData}
+        excludeCondition={selectedExcludeCondition}
       />
+      <div className="row">
+        <div className="col-lg-2">
+          <div>Exlure</div>
+        </div>
+        <div className="col-lg-6">
+          <div>
+            {renderSelectExcludeConditionElement()}
+          </div>
+        </div>
+      </div>
     </div>
   )
 }

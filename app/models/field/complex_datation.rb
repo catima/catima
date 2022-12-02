@@ -2,7 +2,7 @@ class Field::ComplexDatation < ::Field
   FORMATS = %w(Y M h YM MD hm YMD hms MDh YMDh MDhm YMDhm MDhms YMDhms).freeze
   ALLOWED_FORMATS = %w(date_time datation_choice).freeze
 
-  store_accessor :options, [:format, :allow_bc, :allowed_formats, :choice_set_ids]
+  store_accessor :options, [:format, :allow_date_time_bc, :allowed_formats, :choice_set_ids]
   after_initialize :set_default_format
 
   validates_inclusion_of :format, :in => FORMATS
@@ -10,7 +10,7 @@ class Field::ComplexDatation < ::Field
   validate :choice_set_type_validation
 
   def custom_field_permitted_attributes
-    [:format, :allow_bc, { allowed_formats: [], choice_set_ids: [] }]
+    [:format, :allow_date_time_bc, { allowed_formats: [], choice_set_ids: [] }]
   end
 
   def custom_item_permitted_attributes
@@ -21,7 +21,7 @@ class Field::ComplexDatation < ::Field
     choices_as_options = []
 
     flat_ordered_choices.each do |choice|
-      option = { :value => choice.short_name, :key => choice.id, label: choice.choice_set.choice_prefixed_label(choice), has_childrens: choice.childrens.any? }
+      option = { :value => choice.short_name, :key => choice.id, label: choice.choice_set.choice_prefixed_label(choice, with_dates: true), has_childrens: choice.childrens.any? }
 
       choices_as_options << option
     end
@@ -42,6 +42,10 @@ class Field::ComplexDatation < ::Field
     super || super&.compact_blank
   end
 
+  def allow_date_time_bc?
+    allow_date_time_bc == '1'
+  end
+
   def csv_value(item, _user=nil)
     value = raw_value(item)
     case value["selected_format"]
@@ -49,7 +53,7 @@ class Field::ComplexDatation < ::Field
       Field::ComplexDatationPresenter.new(nil, item, self).value
     when 'datation_choice'
       selected_choices(item).map do |c|
-        "#{c.short_name} (#{Field::ComplexDatationPresenter.new(nil, item, self).choice_dates(c.from_date, c.to_date, c.choice_set.format, value['selected_choices']['BC'])})"
+        "#{c.short_name} (#{Field::ComplexDatationPresenter.new(nil, item, self).choice_dates(c.from_date, c.to_date, c.choice_set.format, c.choice_set.allow_bc)})"
       end.join('; ')
     else
       ''
@@ -68,6 +72,14 @@ class Field::ComplexDatation < ::Field
     end
   end
 
+  def selected_choices_for_choice_set(item, choice_set)
+    return [] if raw_value(item)&.[]('selected_choices')&.[]('value').nil?
+
+    Choice.where(id: raw_value(item)['selected_choices']['value']).where(choice_set: choice_set).select do |choice|
+      choice.choice_set.not_deleted? && choice.choice_set.not_deactivated?
+    end
+  end
+
   def selected_format(item)
     raw_value(item)["selected_format"]
   end
@@ -77,19 +89,41 @@ class Field::ComplexDatation < ::Field
   end
 
   def edit_props(item)
+    choice_sets = catalog.choice_sets.where(id: choice_set_ids)
+
+    choice_sets_data = choice_sets.map do |choice_set|
+      {
+        name: choice_set.name,
+        uuid: choice_set.uuid,
+        id: choice_set.id,
+        format: choice_set.format.to_json,
+        allowBC: choice_set.allow_bc,
+        newChoiceModalUrl: Rails.application.routes.url_helpers.new_choice_modal_catalog_admin_choice_set_url(catalog, I18n.locale, choice_set),
+        createChoiceUrl: Rails.application.routes.url_helpers.catalog_admin_choice_set_choices_path(catalog, I18n.locale, choice_set),
+        fetchUrl: Rails.application.routes.url_helpers.react_choices_for_choice_set_url(
+          catalog.slug,
+          I18n.locale,
+          item_type.slug,
+          field_uuid: uuid,
+          choice_set_id: choice_set.id
+        ),
+        selectedChoicesValue: selected_choices_for_choice_set(item[:item], choice_set).map do |choice|
+          {
+            label: choice.choice_set.choice_prefixed_label(choice, with_dates: true),
+            value: choice.id
+          }
+        end
+      }
+    end
     {
-      "fetchUrl" => Rails.application.routes.url_helpers.react_field_complex_datation_choices_url(
-        catalog.slug,
-        I18n.locale,
-        item_type.slug,
-        field_uuid: uuid
-      ),
-      "selectedChoicesValue" => selected_choices(item[:item]).map do |choice| {
-        label: choice.choice_set.choice_prefixed_label(choice),
+      choiceSets: choice_sets_data,
+      selectedChoicesValue: selected_choices(item[:item]).map do |choice| {
+        label: choice.choice_set.choice_prefixed_label(choice, with_dates: true),
         value: choice.id
       }
       end,
-      selectedFormat: allowed_formats
+      selectedFormat: allowed_formats,
+      fieldUuid: uuid
     }
   end
 
@@ -126,6 +160,14 @@ class Field::ComplexDatation < ::Field
       { :value => I18n.t("advanced_searches.fields.date_time_search_field.before", locale: locale), :key => "before" },
       { :value => I18n.t("advanced_searches.fields.date_time_search_field.between", locale: locale), :key => "between" },
       { :value => I18n.t("advanced_searches.fields.date_time_search_field.outside", locale: locale), :key => "outside" }
+    ]
+  end
+
+  def search_exclude_conditions_as_hash(locale)
+    [
+      { :value => "", :key => "" },
+      { :value => I18n.t("advanced_searches.fields.complex_datation_search_field.datation", locale: locale), :key => "datation" },
+      { :value => I18n.t("advanced_searches.fields.complex_datation_search_field.datation_choice", locale: locale), :key => "datation_choice" }
     ]
   end
 
@@ -175,5 +217,28 @@ class Field::ComplexDatation < ::Field
 
   def set_default_format
     self.format ||= "YMD"
+  end
+
+  def build_validators
+    [ComplexDatationValidator]
+  end
+
+  class ComplexDatationValidator < ActiveModel::Validator
+    def validate(record)
+      attrib = Array.wrap(options[:attributes]).first
+      value = record.public_send(attrib)
+
+      return if value.blank?
+
+      return if value['selected_format'] != "date_time"
+
+      from_date_is_positive = value['from'].compact.reject{ |k,v| k == "BC" }.all? { |_key, value| value.to_i >= 0 }
+
+      to_date_is_positive = value['to'].compact.reject{ |k,v| k == "BC" }.all? { |_key, value| value.to_i >= 0 }
+
+      return if to_date_is_positive && from_date_is_positive
+
+      record.errors.add(:base, :negative_dates)
+    end
   end
 end
