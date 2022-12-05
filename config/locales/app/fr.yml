@@ -610,7 +610,10 @@ fr:
         new_choice_set: "Nouvel ensemble de choix"
         name: Nom
         status: Statut
+        type: Type
         choices: Choix
+        default: Standard
+        datation: Datation
       new:
         new_choice_set: "Nouvel ensemble de choix"
         create_choice_set: Créer ensemble de choix

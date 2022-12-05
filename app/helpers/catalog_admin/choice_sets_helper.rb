@@ -23,4 +23,8 @@ module CatalogAdmin::ChoiceSetsHelper
       options.reverse_merge(:include_blank => true)
       )
   end
+
+  def choice_set_type_label(set)
+    tag.span(t("catalog_admin.choice_sets.index.#{set.choice_set_type}"))
+  end
 end

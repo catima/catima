@@ -468,7 +468,10 @@ de:
         new_choice_set: "New choice set"
         name: Name
         status: Status
+        type: Typ
         choices: Choices
+        default: Standard
+        datation: Datierung
       new:
         new_choice_set: "New choice set"
         create_choice_set: Create choice set

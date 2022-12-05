@@ -599,7 +599,10 @@ en:
         new_choice_set: "New choice set"
         name: Name
         status: Status
+        type: Type
         choices: Choices
+        default: Default
+        datation: Datation
       new:
         new_choice_set: "New choice set"
         create_choice_set: Create choice set
