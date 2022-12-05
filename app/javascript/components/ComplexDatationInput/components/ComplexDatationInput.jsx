@@ -12,6 +12,7 @@ const ComplexDatationInput = (props) => {
 
   const {
     input,
+    locales,
     choiceSets: choiceSetsProps,
     selectedFormat: selectedFormatProps,
     fieldUuid
@@ -357,6 +358,7 @@ const ComplexDatationInput = (props) => {
       {selectedFormat == 'datation_choice' && (
         <RenderChoiceSetList
           choiceSets={choiceSets}
+          locales={locales}
           getData={getData}
           setData={setData}
           setChoiceData={setChoiceData}
@@ -376,6 +378,7 @@ export default ComplexDatationInput;
 
 const RenderChoiceSetList = (props) => {
   const {
+    locales,
     choiceSets,
     getData,
     setData,
@@ -389,6 +392,7 @@ const RenderChoiceSetList = (props) => {
       return (<div key={choiceSet.fetchUrl} className="mt-2">
         <RenderChoiceSetInput
           name={choiceSet.name}
+          locales={locales}
           fetchUrl={choiceSet.fetchUrl}
           selectedChoicesValue={choiceSet.selectedChoicesValue}
           getData={getData}
@@ -412,6 +416,7 @@ const RenderChoiceSetList = (props) => {
 const RenderChoiceSetInput = (props) => {
   const {
     name,
+    locales,
     fetchUrl,
     selectedChoicesValue: selectedChoicesValueProps,
     setChoiceData,
@@ -537,6 +542,7 @@ const RenderChoiceSetInput = (props) => {
         </div>
       </div>
       <ModalForm name={name}
+                 locales={locales}
                  key={modalIndex}
                  modalOpen={modalOpen}
                  choiceSet={choiceSet}
@@ -550,6 +556,7 @@ const RenderChoiceSetInput = (props) => {
 
 const ModalForm = (props) => {
     const {
+      locales,
       name,
       choiceSet,
       fieldUuid,
@@ -642,26 +649,34 @@ const ModalForm = (props) => {
                   </div>
                 </div>
 
-                <div className="form-group">
-                  <label
-                      htmlFor="choice_short_name">{Translations.messages['catalog_admin.choices.choice_fields.short_name']}</label>
-                  <div className="form-group">
-                    <label className="sr-only required"
-                           htmlFor="choice_short_name_fr">{Translations.messages['catalog_admin.choices.choice_fields.short_name']}</label>
-                    <input className="form-control" type="text" name="choice[short_name_fr]"
-                           id="choice_short_name_fr"/>
-                  </div>
-                </div>
-                <div className="form-group">
-                  <label
-                      htmlFor="choice_long_name">{Translations.messages['catalog_admin.choices.choice_fields.long_name_optional']}</label>
-                  <div className="form-group">
-                    <label className="sr-only"
-                           htmlFor="choice_long_name_fr">{Translations.messages['catalog_admin.choices.choice_fields.long_name_optional']}</label>
-                    <input className="form-control" type="text" name="choice[long_name_fr]"
-                           id="choice_long_name_fr"/>
-                  </div>
-                </div>
+                {locales.map((locale, idx) => (
+                    <div key={idx}>
+
+                      <div className="form-group">
+                        <label
+                            htmlFor={`choice_short_name_${locale}`}>{Translations.messages['catalog_admin.choices.choice_fields.short_name']}</label>
+                        <div className="form-group">
+                          <label className="sr-only required"
+                                 htmlFor={`choice_short_name_${locale}`}>{Translations.messages['catalog_admin.choices.choice_fields.short_name']}</label>
+                          <input className="form-control" type="text"
+                                 name={`choice[short_name_${locale}]`}
+                                 id={`choice_short_name_${locale}`}/>
+                        </div>
+                      </div>
+                      <div className="form-group">
+                        <label
+                            htmlFor={`choice_long_name_${locale}`}>{Translations.messages['catalog_admin.choices.choice_fields.long_name_optional']}</label>
+                        <div className="form-group">
+                          <label className="sr-only"
+                                 htmlFor={`choice_long_name_${locale}`}>{Translations.messages['catalog_admin.choices.choice_fields.long_name_optional']}</label>
+                          <input className="form-control" type="text"
+                                 name={`choice[long_name_${locale}]`}
+                                 id={`choice_long_name_${locale}`}/>
+                        </div>
+                      </div>
+                    </div>
+                ))
+                }
 
                 <div className="form-group">
                   <label htmlFor="choice_from_date">{Translations.messages['catalog_admin.choices.choice_fields.from_date']}</label>
