@@ -1,10 +1,10 @@
 <% item.fields.where(type: 'Field::ChoiceSet').each_with_index do |field, i| %>
-  <%= render("catalog_admin/choice_sets/choice_modal", :field => field, uuid: field.uuid, choice: field.choice_set.choices.new) %>
+  <%= render("catalog_admin/choice_sets/choice_modal", :field => field, uuid: field.uuid, choice: field.choice_set.choices.new(catalog_id: field.choice_set.catalog_id)) %>
   <% field.choices.each do |choice| %>
     <% if (category = choice.category) && category.not_deleted? %>
       <% category.fields.each do |cat_field| %>
         <% if cat_field.is_a?(Field::ChoiceSet) %>
-          <%= render("catalog_admin/choice_sets/choice_modal", :field => cat_field, uuid: field.uuid, choice: field.choice_set.choices.new) %>
+          <%= render("catalog_admin/choice_sets/choice_modal", :field => cat_field, uuid: field.uuid, choice: field.choice_set.choices.new(catalog_id: field.choice_set.catalog_id)) %>
         <% end %>
       <% end %>
     <% end %>

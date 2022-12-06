@@ -90,7 +90,7 @@ class CatalogAdmin::ChoiceSetsController < CatalogAdmin::BaseController
           authorize(@choice_set)
 
           choice_params["choices"].each do |choice|
-            c = @choice_set.choices.new(choice)
+            c = @choice_set.choices.new(choice.merge(catalog_id: @choice_set.catalog_id))
             c.parent_id = nil
           end
           @choice_set.save!
