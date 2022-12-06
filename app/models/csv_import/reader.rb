@@ -31,7 +31,10 @@ class CSVImport::Reader
     found = encodings.find do |enc|
       contents.force_encoding(enc)
       begin
-        %w(“ ” ‘ ’ … – —).any? { |c| contents.include?(c.encode(enc)) }
+        %w(“ ” ‘ ’ … – —).all? do |c|
+          c.encode(enc) if contents.include?(c.clone.force_encoding(enc))
+          true
+        end
       rescue Encoding::UndefinedConversionError
         false
       end
