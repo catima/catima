@@ -27,7 +27,7 @@ class ChoicePresenter
     validate_datetime_format_string(format_str)
     return nil if format_str.empty?
     begin
-      dt_value = DateTime.civil_from_format(:local, *prepare_datetime_array(date).compact)
+      dt_value = DateTime.civil_from_format(:local, *prepare_datetime_array(date).compact.reject { |c| c.to_s.empty? })
 
       text_repr = I18n.l(dt_value, format: format_str.to_sym)
       text_repr.sub('8888', date.is_a?(Hash) ? date[0].to_s : JSON.parse(date)[0].to_s) if date["raw_value"].nil?
