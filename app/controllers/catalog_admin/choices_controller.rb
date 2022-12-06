@@ -47,6 +47,7 @@ class CatalogAdmin::ChoicesController < CatalogAdmin::BaseController
       end
     elsif request.xhr?
       render json: {
+        choice: @choice,
         errors: @choice.errors.full_messages.join(', '),
         catalog: @choice_set.catalog.id, choice_set: @choice_set.id
       }, status: :unprocessable_entity
