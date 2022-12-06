@@ -136,6 +136,7 @@ fr:
       complex_datation_search_field:
         datation: Les fiches avec datation précise
         datation_choice: Les fiches avec datation par périodes
+        exclude: Exclure
       reference_search_field:
         field_placeholder: Par champ...
         item_type_placeholder: Par fiche...

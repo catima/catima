@@ -120,6 +120,10 @@ en:
         before: "before"
         between: between the date
         outside: outside the dates
+      complex_datation_search_field:
+        datation: Items with precise datation
+        datation_choice: Items with datation by periods
+        exclude: Exclude
       reference_search_field:
         field_placeholder: By field...
         item_type_placeholder: By item...

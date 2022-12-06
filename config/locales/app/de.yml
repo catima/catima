@@ -59,6 +59,10 @@ de:
         before: "vor"
         between: zwischen den Daten
         outside: außerhalb der Termine
+      complex_datation_search_field:
+        datation: Elements mit genauer Datierung
+        datation_choice: Elements mit Datierung nach Zeiträumen
+        exclude: Ausschließen
       reference_search_field:
         field_placeholder: Nach Feld...
         item_type_placeholder: Mit der Karte...

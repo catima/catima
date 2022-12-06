@@ -59,6 +59,10 @@ it:
         before: "dopo"
         between: tra date
         outside: fuori dalle date
+      complex_datation_search_field:
+        datation: Oggetti con datazione per periodi
+        datation_choice: Oggetti con datazione per periodi
+        exclude: Escludere
       reference_search_field:
         field_placeholder: Per campo...
         item_type_placeholder: Con carta...
