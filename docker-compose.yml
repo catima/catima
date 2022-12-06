@@ -17,6 +17,7 @@ services:
       - ./docker/.env
     ports:
       - "8383:3000"
+      - "1234:1234"
     depends_on:
       catima-postgres:
         condition: service_healthy
