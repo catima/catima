@@ -31,7 +31,7 @@ class CSVImport::Reader
     found = encodings.find do |enc|
       contents.force_encoding(enc)
       begin
-        %w(“ ” ‘ ’ … – —).all? do |c|
+        %w(“ ” ‘ ’ … – — Ω).all? do |c|
           c.encode(enc) if contents.include?(c.clone.force_encoding(enc))
           true
         end
