@@ -4,6 +4,8 @@
   <%= choice_category_select(f, label: t('.category_optional')) %>
 <% end %>
 
+<%= f.hidden_field(:catalog_id, value: f.object.choice_set.catalog_id) %>
+
 <% if f.object.choice_set.choice_set_type == 'datation' %>
   <%= f.form_group do %>
     <%= f.label :from_date, t('.from_date') %>

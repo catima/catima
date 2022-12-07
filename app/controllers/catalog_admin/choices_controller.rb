@@ -27,6 +27,7 @@ class CatalogAdmin::ChoicesController < CatalogAdmin::BaseController
 
   def create
     @choice = @choice_set.choices.build(choice_params)
+    @choice.catalog_id = @choice_set.catalog_id
     if @choice.save_with_position(params[:choice][:position])
       if request.xhr?
         render json: {
@@ -68,7 +69,7 @@ class CatalogAdmin::ChoicesController < CatalogAdmin::BaseController
   private
 
   def build_choice
-    @choice = @choice_set.choices.new
+    @choice = @choice_set.choices.new(catalog_id: @choice_set.catalog_id)
   end
 
   def find_choice_set
@@ -84,6 +85,7 @@ class CatalogAdmin::ChoicesController < CatalogAdmin::BaseController
     params.require(:choice).permit(
       :short_name_de, :short_name_en, :short_name_fr, :short_name_it,
       :long_name_de, :long_name_en, :long_name_fr, :long_name_it,
+      :catalog_id,
       :category_id,
       :parent_id,
       :position,
