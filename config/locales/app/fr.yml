@@ -661,6 +661,8 @@ fr:
         import_from_csv: "Importer %{item_types} d'un fichier CSV"
         import: Importer
         file: Fichier
+      create:
+        error: Le contenu du fichier ne peut pas être parsé.
 
     dashboard:
       data:
