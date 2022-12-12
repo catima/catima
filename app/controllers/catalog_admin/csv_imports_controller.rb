@@ -23,11 +23,9 @@ class CatalogAdmin::CSVImportsController < CatalogAdmin::BaseController
   helper_method :item_type
 
   def build_csv_import
-    @csv_import = begin
-      CSVImport.new do |import|
-        import.creator = current_user
-        import.item_type = item_type
-      end
+    @csv_import = CSVImport.new do |import|
+      import.creator = current_user
+      import.item_type = item_type
     end
   end
 
@@ -52,8 +50,8 @@ class CatalogAdmin::CSVImportsController < CatalogAdmin::BaseController
   end
 
   def item_type
-    @item_type ||= begin
-      catalog.item_types.where(:slug => params[:item_type_slug]).first!
-    end
+    @item_type ||= catalog.item_types.where(
+      :slug => params[:item_type_slug]
+    ).first!
   end
 end
