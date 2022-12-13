@@ -654,7 +654,7 @@ en:
         import: Import
         file: File
       create:
-        error: The content of the file can't be parsed
+        error: The content of the file can't be parsed.
 
     dashboard:
       data:
