@@ -11,14 +11,14 @@ class CatalogAdmin::CSVImportsController < CatalogAdmin::BaseController
     authorize(@csv_import)
     @csv_import.file = params.require(:csv_import)[:file]
 
-    sucess = begin
+    success = begin
       @csv_import.save
     rescue StandardError => e
       flash.now[:alert] = "#{I18n.t('catalog_admin.csv_imports.create.error')}: #{e.message}"
       false
     end
 
-    if sucess
+    if success
       redirect_to(catalog_admin_items_path, :notice => import_created_message)
     else
       render("new")
