@@ -662,7 +662,7 @@ fr:
         import: Importer
         file: Fichier
       create:
-        error: Le contenu du fichier ne peut pas être parsé.
+        error: Le contenu du fichier ne peut pas être parsé
 
     dashboard:
       data:

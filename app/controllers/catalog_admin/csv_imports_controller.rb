@@ -13,8 +13,8 @@ class CatalogAdmin::CSVImportsController < CatalogAdmin::BaseController
 
     sucess = begin
       @csv_import.save
-    rescue JSON::GeneratorError
-      flash.now[:alert] = I18n.t("catalog_admin.csv_imports.create.error")
+    rescue StandardError => e
+      flash.now[:alert] = "#{I18n.t('catalog_admin.csv_imports.create.error')}: #{e.message}"
       false
     end
 
