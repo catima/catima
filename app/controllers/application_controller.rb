@@ -3,6 +3,8 @@ class ApplicationController < ActionController::Base
   include FriendlyForwarding
   include MaintenanceMode
 
+  add_flash_types :details
+
   protect_from_forgery with: :exception
 
   before_action :set_locale
