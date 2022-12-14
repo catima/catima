@@ -653,6 +653,8 @@ en:
         import_from_csv: "Import %{item_types} from CSV"
         import: Import
         file: File
+      create:
+        error: The content of the file can't be parsed
 
     dashboard:
       data:

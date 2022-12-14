@@ -11,11 +11,18 @@ class CatalogAdmin::CSVImportsController < CatalogAdmin::BaseController
     authorize(@csv_import)
     @csv_import.file = params.require(:csv_import)[:file]
 
-    if @csv_import.save
-      redirect_to(catalog_admin_items_path, :notice => import_created_message)
-    else
-      render("new")
+    begin
+      @csv_import.save!
+    rescue ActiveRecord::RecordInvalid
+      return render "new"
+    rescue StandardError => e
+      return redirect_to(
+        new_catalog_admin_csv_import_path,
+        :alert => "#{I18n.t('catalog_admin.csv_imports.create.error')}: #{e.message}"
+      )
     end
+
+    redirect_to(catalog_admin_items_path, :notice => import_created_message)
   end
 
   private
@@ -23,11 +30,9 @@ class CatalogAdmin::CSVImportsController < CatalogAdmin::BaseController
   helper_method :item_type
 
   def build_csv_import
-    @csv_import = begin
-      CSVImport.new do |import|
-        import.creator = current_user
-        import.item_type = item_type
-      end
+    @csv_import = CSVImport.new do |import|
+      import.creator = current_user
+      import.item_type = item_type
     end
   end
 
@@ -52,8 +57,8 @@ class CatalogAdmin::CSVImportsController < CatalogAdmin::BaseController
   end
 
   def item_type
-    @item_type ||= begin
-      catalog.item_types.where(:slug => params[:item_type_slug]).first!
-    end
+    @item_type ||= catalog.item_types.where(
+      :slug => params[:item_type_slug]
+    ).first!
   end
 end
