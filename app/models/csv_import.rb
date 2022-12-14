@@ -31,9 +31,12 @@
 class CSVImport < ActiveType::Object
   attr_accessor :creator, :item_type
 
+  OPTION_DETECT_ENCODING = "detect".freeze
+
   attribute :file_id
   attribute :file_filename
   attribute :file_size, :integer
+  attribute :file_encoding, :text
 
   attr_reader :failures, :success_count
 
@@ -48,11 +51,25 @@ class CSVImport < ActiveType::Object
   validates_presence_of :creator
   validates_presence_of :item_type
   validates_presence_of :file
+  validates_presence_of :file_encoding
+  validate :encoding_is_supported
   validate :file_must_not_be_malformed
   validate :file_must_have_at_least_one_row, :if => :file_is_csv?
   validate :at_least_one_column_must_be_mapped, :if => :file_is_csv?
 
   before_save :process_import
+
+  def self.encodings_options
+    # Return a list of encodings supported for the file_encoding field.
+    %w(UTF-8 macRoman Windows-1252 UTF-16LE).map do |enc|
+      [enc, enc]
+    end.prepend(
+      [
+        I18n.t("catalog_admin.csv_imports.new.detect_option"),
+        OPTION_DETECT_ENCODING
+      ]
+    )
+  end
 
   def initialize(*)
     super
@@ -81,6 +98,15 @@ class CSVImport < ActiveType::Object
     return if file.nil? || file_is_csv?
 
     errors.add(:file, I18n.t("catalog_admin.csv_imports.create.file_not_csv"))
+  end
+
+  def encoding_is_supported
+    return if self.class.encodings_options.map(&:last).include? file_encoding
+
+    errors.add(
+      :file_encoding,
+      I18n.t("catalog_admin.csv_imports.create.encoding_not_supported")
+    )
   end
 
   def file_must_have_at_least_one_row
@@ -138,6 +164,7 @@ class CSVImport < ActiveType::Object
   end
 
   def reader
-    @reader ||= CSVImport::Reader.new(file)
+    encoding_to_use = file_encoding if file_encoding != OPTION_DETECT_ENCODING
+    @reader ||= CSVImport::Reader.new(file, encoding_to_use)
   end
 end

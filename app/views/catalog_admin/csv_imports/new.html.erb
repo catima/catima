@@ -9,6 +9,11 @@
     ) %>
     <%= f.errors_on(:file, hide_attribute_name: true) %>
   <% end %>
+  <%= f.select(
+    :file_encoding,
+    f.object.class.encodings_options,
+    :label => { :text => t(".file_encoding")}
+  ) %>
   <hr>
   <%= f.primary(t(".import")) %>
   <%= link_to(t("cancel"), catalog_admin_items_path, :class => "btn btn-link") %>
