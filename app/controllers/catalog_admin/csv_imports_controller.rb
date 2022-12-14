@@ -14,12 +14,12 @@ class CatalogAdmin::CSVImportsController < CatalogAdmin::BaseController
     begin
       @csv_import.save!
     rescue ActiveRecord::RecordInvalid
-      render "new" and return
+      return render "new"
     rescue StandardError => e
-      redirect_to(
+      return redirect_to(
         new_catalog_admin_csv_import_path,
         :alert => "#{I18n.t('catalog_admin.csv_imports.create.error')}: #{e.message}"
-      ) and return
+      )
     end
 
     redirect_to(catalog_admin_items_path, :notice => import_created_message)
