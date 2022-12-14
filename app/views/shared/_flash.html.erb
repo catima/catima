@@ -7,3 +7,12 @@
 <% if flash[:alert] %>
   <div class="alert alert-danger"><%= flash[:alert] %></div>
 <% end %>
+
+<%# Details %>
+<% if flash[:details]&.any? %>
+  <div class="alert alert-info">
+    <% flash[:details].each do |detail| %>
+      <%= detail %><br>
+    <% end %>
+  </div>
+<% end %>

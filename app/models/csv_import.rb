@@ -80,15 +80,25 @@ class CSVImport < ActiveType::Object
   def file_must_not_be_malformed
     return if file.nil? || file_is_csv?
 
-    errors.add(:file, "does not appear to be in CSV format")
+    errors.add(:file, I18n.t("catalog_admin.csv_imports.create.file_not_csv"))
   end
 
   def file_must_have_at_least_one_row
-    errors.add(:file, "must have at least one row of data") if rows.empty?
+    return if rows.any?
+
+    errors.add(
+      :file,
+      I18n.t("catalog_admin.csv_imports.create.file_must_have_at_least_one_row")
+    )
   end
 
   def at_least_one_column_must_be_mapped
-    errors.add(:file, "no column names were recognized") if mapped_fields.empty?
+    return if mapped_fields.any?
+
+    errors.add(
+      :file,
+      I18n.t("catalog_admin.csv_imports.create.file_no_column_names_recognized")
+    )
   end
 
   def process_import
