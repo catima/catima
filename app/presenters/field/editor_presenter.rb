@@ -4,7 +4,18 @@ class Field::EditorPresenter < FieldPresenter
 
   def input(form, method, options={})
     editor = field.original_editor(item.creator_id)
-    form.text_field(method, input_defaults(options).reverse_merge(:help => help, :value => editor.email, :readonly => true))
+
+    return "" unless editor
+
+    form.text_field(
+      method,
+      input_defaults(options)
+        .reverse_merge(
+          :help => help,
+          :value => editor.email,
+          :readonly => true
+        )
+    )
   end
 
   def value
@@ -28,6 +39,9 @@ class Field::EditorPresenter < FieldPresenter
 
   def field_value_for_item(item)
     editor = field.original_editor(item.creator_id)
+
+    return "" unless editor
+
     editor.email
   end
 
