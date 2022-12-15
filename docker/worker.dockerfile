@@ -53,4 +53,8 @@ FROM base as dev
 # docker exec <container-id> supervisorctl restart <service>
 COPY ./docker/config/supervisord-worker-dev.conf /etc/supervisor/conf.d/supervisord.conf
 
+# Add the entrypoint script used in development
+COPY ./docker/config/entrypoint-worker-dev.sh /usr/local/bin/entrypoint.sh
+RUN chmod +x /usr/local/bin/entrypoint.sh
+ENTRYPOINT [ "entrypoint.sh" ]
 CMD ["/usr/bin/supervisord", "-c", "/etc/supervisor/conf.d/supervisord.conf"]
