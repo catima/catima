@@ -1,6 +1,8 @@
 class CatalogAdmin::CSVImportsController < CatalogAdmin::BaseController
   layout "catalog_admin/data/form"
 
+  MAX_VALIDATION_ERRORS_DISPLAYED = 10
+
   def new
     build_csv_import
     authorize(@csv_import)
@@ -22,7 +24,11 @@ class CatalogAdmin::CSVImportsController < CatalogAdmin::BaseController
       )
     end
 
-    redirect_to(catalog_admin_items_path, :notice => import_created_message)
+    redirect_to(
+      catalog_admin_items_path,
+      :notice => import_created_message,
+      :details => import_created_message_details
+    )
   end
 
   private
@@ -40,6 +46,29 @@ class CatalogAdmin::CSVImportsController < CatalogAdmin::BaseController
     message = "#{success_count} imported successfully."
     message << " #{failure_count} skipped." if @csv_import.failures.any?
     message
+  end
+
+  def import_created_message_details
+    messages = []
+    nb_messages_not_displayed = 0
+
+    @csv_import.failures.each do |failure|
+      failure.column_errors.each do |column_name, errors|
+        next if errors.empty?
+
+        # Keep only the n first errors to avoid overflowing cookie size.
+        if messages.length == MAX_VALIDATION_ERRORS_DISPLAYED
+          nb_messages_not_displayed += 1
+          next
+        end
+
+        # Displayed like this: <Column>: <Row value> => <Errors list>
+        messages << "#{column_name}: #{failure.row[column_name]} => #{errors.join(', ')}"
+      end
+    end
+
+    messages << "... and #{nb_messages_not_displayed} more" if nb_messages_not_displayed > 0
+    messages
   end
 
   def success_count
