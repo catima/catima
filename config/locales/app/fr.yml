@@ -665,11 +665,14 @@ fr:
         import_from_csv: "Importer %{item_types} d'un fichier CSV"
         import: Importer
         file: Fichier
+        file_encoding: Encodage du fichier
+        detect_option: "Détecter automatiquement"
       create:
         error: Le contenu du fichier ne peut pas être parsé
         file_not_csv: ne semble pas être au format CSV
         file_must_have_at_least_one_row: doit avoir au moins une ligne de données
         file_no_column_names_recognized: aucune colonne n'est identifiable
+        encoding_not_supported: encodage non supporté
 
     dashboard:
       data:

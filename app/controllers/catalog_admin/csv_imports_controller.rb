@@ -9,9 +9,8 @@ class CatalogAdmin::CSVImportsController < CatalogAdmin::BaseController
   end
 
   def create
-    build_csv_import
+    build_csv_import(csv_import_params)
     authorize(@csv_import)
-    @csv_import.file = params.require(:csv_import)[:file]
 
     begin
       @csv_import.save!
@@ -35,8 +34,8 @@ class CatalogAdmin::CSVImportsController < CatalogAdmin::BaseController
 
   helper_method :item_type
 
-  def build_csv_import
-    @csv_import = CSVImport.new do |import|
+  def build_csv_import(params=nil)
+    @csv_import = CSVImport.new(params) do |import|
       import.creator = current_user
       import.item_type = item_type
     end
@@ -89,5 +88,9 @@ class CatalogAdmin::CSVImportsController < CatalogAdmin::BaseController
     @item_type ||= catalog.item_types.where(
       :slug => params[:item_type_slug]
     ).first!
+  end
+
+  def csv_import_params
+    params.require(:csv_import).permit(:file, :file_encoding)
   end
 end
