@@ -21,10 +21,16 @@ class Field::ComplexDatation < ::Field
     choices_as_options = []
 
     flat_ordered_choices.each do |choice|
-      option = { :value => choice.short_name, :key => choice.id, label: choice.choice_set.choice_prefixed_label(choice, with_dates: true), has_childrens: choice.childrens.any? }
+      option = {
+        :value => choice.short_name,
+        :key => choice.id,
+        label: choice.choice_set.choice_prefixed_label(choice, with_dates: true),
+        has_childrens: choice.childrens.any?
+      }
 
       choices_as_options << option
     end
+
     choices_as_options
   end
 
@@ -200,7 +206,7 @@ class Field::ComplexDatation < ::Field
   end
 
   def choice_set_type_validation
-    return unless allowed_formats.include?("datation_choice")
+    return unless !allowed_formats || allowed_formats.include?("datation_choice")
 
     # Validate that all selected ChoiceSet(s) have the "datation" type
     errors.add(:choice_set_ids, "Only ChoiceSet(s) with the \"datation\" type are allowed") if choice_set_ids.select do |choice_set_id|
@@ -233,9 +239,9 @@ class Field::ComplexDatation < ::Field
 
       return if value['selected_format'] != "date_time"
 
-      from_date_is_positive = value['from'].compact.reject{ |k,v| k == "BC" }.all? { |_key, value| value.to_i >= 0 }
+      from_date_is_positive = value['from'].compact.reject { |k, _| k == "BC" }.all? { |_, v| v.to_i >= 0 }
 
-      to_date_is_positive = value['to'].compact.reject{ |k,v| k == "BC" }.all? { |_key, value| value.to_i >= 0 }
+      to_date_is_positive = value['to'].compact.reject { |k, _| k == "BC" }.all? { |_, v| v.to_i >= 0 }
 
       return if to_date_is_positive && from_date_is_positive
 
