@@ -32,6 +32,7 @@ class CSVImport < ActiveType::Object
   attr_accessor :creator, :item_type
 
   OPTION_DETECT_ENCODING = "detect".freeze
+  ENCODINGS = %w(UTF-8 macRoman Windows-1252 UTF-16LE).freeze
 
   attribute :file_id
   attribute :file_filename
@@ -61,9 +62,7 @@ class CSVImport < ActiveType::Object
 
   def self.encodings_options
     # Return a list of encodings supported for the file_encoding field.
-    %w(UTF-8 macRoman Windows-1252 UTF-16LE).map do |enc|
-      [enc, enc]
-    end.prepend(
+    ENCODINGS.map { |enc| [enc, enc] }.prepend(
       [
         I18n.t("catalog_admin.csv_imports.new.detect_option"),
         OPTION_DETECT_ENCODING

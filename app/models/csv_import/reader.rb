@@ -46,7 +46,7 @@ class CSVImport::Reader
   end
 
   def possible_encodings
-    %w(UTF-8 MacRoman Windows-1252 UTF-16LE).map do |enc|
+    CSVImport::ENCODINGS.map do |enc|
       Encoding.find(enc)
     end
   end
