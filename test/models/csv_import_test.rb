@@ -29,7 +29,10 @@ class CSVImportTest < ActiveSupport::TestCase
   end
 
   test "save!" do
-    import = build_csv_import(:file => sample_csv_file)
+    import = build_csv_import(
+      :file => sample_csv_file,
+      :file_encoding => CSVImport::OPTION_DETECT_ENCODING
+    )
 
     import.save!
 
