@@ -19,6 +19,8 @@ class CatalogAdmin::ItemsTest < ActionDispatch::IntegrationTest
     # - Name missing for Jeff
     # - Decimal fields (rank) cannot contain commas or brackets for Albert
     assert(page.has_content?("2 skipped"))
+    assert(page.has_content?("name: => can't be blank"))
+    assert(page.has_content?("rank: 15,7 => is not a number"))
   end
 
   def sample_csv_file

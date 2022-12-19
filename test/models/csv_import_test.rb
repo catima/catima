@@ -6,14 +6,17 @@ class CSVImportTest < ActiveSupport::TestCase
   should validate_presence_of(:creator)
   should validate_presence_of(:item_type)
 
-  test "validates presence of file" do
+  test "validates presence of file and encoding" do
     import = build_csv_import
     refute(import.valid?)
     refute_empty(import.errors[:file])
+    refute_empty(import.errors[:file_encoding])
 
     import.file = sample_csv_file
+    import.file_encoding = CSVImport::OPTION_DETECT_ENCODING
     import.validate
     assert_empty(import.errors[:file])
+    assert_empty(import.errors[:file_encoding])
   end
 
   test "validates file has rows" do
@@ -26,6 +29,26 @@ class CSVImportTest < ActiveSupport::TestCase
     import = build_csv_import(:file => csv_file_with_bad_columns)
     refute(import.valid?)
     refute_empty(import.errors[:file])
+  end
+
+  test "validates good encoding chosen" do
+    import = build_csv_import(
+      :file => csv_file_windows1252,
+      :file_encoding => "Windows-1252"
+    )
+    assert_equal(
+      Encoding.find("Windows-1252"), import.rows.first["name"].encoding
+    )
+    assert_equal("Màtthew".encode("Windows-1252"), import.rows.first["name"])
+  end
+
+  test "validates bad encoding chosen" do
+    import = build_csv_import(
+      :file => csv_file_windows1252,
+      :file_encoding => "macRoman"
+    )
+    assert_equal(Encoding.find("macRoman"), import.rows.first["name"].encoding)
+    assert_not_equal("Màtthew".encode("macRoman"), import.rows.first["name"])
   end
 
   test "save!" do
@@ -65,6 +88,17 @@ class CSVImportTest < ActiveSupport::TestCase
       Jenny,Jen,6
       ,No name,10
     CSV
+  end
+
+  def csv_file_windows1252
+    content = <<~CSV
+      name,nickname,ignore
+      Màtthew,Màtt,3
+    CSV
+    csv_file_with_data(
+      content.encode("Windows-1252"),
+      :encoding => "Windows-1252"
+    )
   end
 
   def csv_file_with_no_data
