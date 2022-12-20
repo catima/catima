@@ -41,7 +41,7 @@ class ItemsController < ApplicationController
       :value => browse_value,
       :page => params[:page]
     )
-    @item = find_item
+    @item = find_item unless params[:datation]
   end
 
   def show

@@ -59,6 +59,10 @@ de:
         before: "vor"
         between: zwischen den Daten
         outside: außerhalb der Termine
+      complex_datation_search_field:
+        datation: Elements mit genauer Datierung
+        datation_choice: Elements mit Datierung nach Zeiträumen
+        exclude: Ausschließen
       reference_search_field:
         field_placeholder: Nach Feld...
         item_type_placeholder: Mit der Karte...
@@ -453,7 +457,7 @@ de:
       choice_fields:
         remove: "Remove"
       choice_modal:
-        create_new_field: Create new «%{field}»
+        create_new_field: Create new
       common_form_fields:
         choices: 'Choices'
         short_name: 'Short name'
@@ -468,7 +472,10 @@ de:
         new_choice_set: "New choice set"
         name: Name
         status: Status
+        type: Typ
         choices: Choices
+        default: Standard
+        datation: Datierung
       new:
         new_choice_set: "New choice set"
         create_choice_set: Create choice set

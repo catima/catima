@@ -25,7 +25,8 @@ const DateTimeSearchComponent = (props) => {
     fieldConditionName,
     fieldConditionData,
     inputEnd,
-    allowBC,
+    allowDateTimeBC,
+    excludeCondition,
     keyForAccess
   } = props
 
@@ -35,6 +36,8 @@ const DateTimeSearchComponent = (props) => {
   const [endDateInputName, setEndDateInputName] = useState(endDateInputNameProps.split(`[end]`)[0] + `[${item}]` + endDateInputNameProps.split(`[end]`)[1])
   const [selectConditionInputName, setSelectConditionDateInputName] = useState(selectConditionName.split(`[condition]`)[0] + `[${item}]` + '[condition]')
   const [fieldConditionInputName, setFieldConditionInputName] = useState(fieldConditionName.split(`[field_condition]`)[0] + `[${item}]` + '[field_condition]')
+
+  const [excludeConditionInputName, setExcludeConditionInputName] = useState( fieldConditionName.split(`[field_condition]`)[0] + `[${item}]` + '[exclude_condition]')
 
   const [startDateInputNameArray, setStartDateInputNameArray] = useState(startDateInputNameProps.split("[exact]"))
   const [endDateInputNameArray, setEndDateInputNameArray] = useState(endDateInputNameProps.split("[exact]"))
@@ -94,7 +97,6 @@ const DateTimeSearchComponent = (props) => {
 
 
   function _buildInputNameCondition(inputName, condition, index, name) {
-    console.log(inputName)
     if (inputName.length === 2) {
       if (condition !== '') return inputName[0].split(`[${name}]`)[0] + `[${index}]` + `[${name}]` + '[' + condition + ']' + inputName[1];
       else return inputName[0].split(`[${name}]`)[0] + `[${index}]` + `[${name}]` + '[default]' + inputName[1];
@@ -129,17 +131,14 @@ const DateTimeSearchComponent = (props) => {
   function _updateDisableState(value) {
     if (typeof value !== 'undefined') {
       if (value === 'between' || value === 'outside') {
-        setDisabled(true);
         setIsRange(true);
         $('#' + dateTimeCollapseId).slideDown();
         _linkRangeDatepickers(hiddenInputRef1.current, hiddenInputRef2.current, false);
       } else if (value === 'after' || value === 'before') {
-        setDisabled(true);
         setIsRange(false);
         $('#' + dateTimeCollapseId).slideUp();
         _linkRangeDatepickers(hiddenInputRef1.current, hiddenInputRef2.current, true);
       } else {
-        setDisabled(false);
         setIsRange(false);
         $('#' + dateTimeCollapseId).slideUp();
         _linkRangeDatepickers(hiddenInputRef1.current, hiddenInputRef2.current, true);
@@ -194,7 +193,7 @@ const DateTimeSearchComponent = (props) => {
           topRef: dateTimeSearchRef1,
           hiddenInputRef: hiddenInputRef1
         }} localizedDateTimeData={localizedDateTimeData} disabled={disabled} isRange={isRange} datepicker={true}
-                       locale={locale} format={format} allowBC={allowBC} list={list} item={item}
+                       locale={locale} format={format} allowBC={allowDateTimeBC} list={list} item={item}
                        addComponent={addComponent} deleteComponent={deleteComponent}/>
         {isRange &&
           <i className="fa fa-chevron-down"></i>
@@ -232,7 +231,7 @@ const DateTimeSearchComponent = (props) => {
                                disabled={disabled} isRange={isRange} ref={{
                   topRef: dateTimeSearchRef2,
                   hiddenInputRef: hiddenInputRef2
-                }} datepicker={true} locale={locale} format={format} allowBC={allowBC}/>
+                }} datepicker={true} locale={locale} format={format} allowBC={allowDateTimeBC}/>
               </div>
             </div>
           </div>
@@ -242,6 +241,7 @@ const DateTimeSearchComponent = (props) => {
             </div>
           }
         </div>
+        <input type="hidden" name={excludeConditionInputName} value={excludeCondition}/>
       </div>
     )
   }
@@ -270,7 +270,8 @@ const DateTimeSearch = (props) => {
     fieldConditionName,
     fieldConditionData,
     inputEnd,
-    allowBC,
+    allowDateTimeBC,
+    excludeCondition
   } = props
 
 
@@ -325,7 +326,8 @@ const DateTimeSearch = (props) => {
       fieldConditionName={fieldConditionName}
       fieldConditionData={fieldConditionData}
       inputEnd={inputEnd}
-      allowBC={allowBC}
+      allowDateTimeBC={allowDateTimeBC}
+      excludeCondition={excludeCondition}
       keyForAccess={index}
     />);
   }

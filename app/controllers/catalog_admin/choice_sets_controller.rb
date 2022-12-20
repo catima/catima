@@ -55,7 +55,17 @@ class CatalogAdmin::ChoiceSetsController < CatalogAdmin::BaseController
     find_choice_set
     authorize(@choice_set)
 
-    export = @choice_set.attributes.slice('name', 'deactivated_at', 'slug', 'deleted_at', 'choice_set_type', 'format')
+    export = @choice_set.attributes
+                        .slice(
+                          'name',
+                          'deactivated_at',
+                          'slug',
+                          'deleted_at',
+                          'choice_set_type',
+                          'format',
+                          'allow_bc'
+                        )
+
     export["choices"] = @choice_set.choices.map do |c|
       c.attributes
        .slice(
@@ -90,14 +100,25 @@ class CatalogAdmin::ChoiceSetsController < CatalogAdmin::BaseController
           authorize(@choice_set)
 
           choice_params["choices"].each do |choice|
-            c = @choice_set.choices.new(choice)
+            c = @choice_set.choices.new(choice.merge(catalog_id: @choice_set.catalog_id))
             c.parent_id = nil
           end
           @choice_set.save!
 
-          choice_params["choices"].select { |params| !params['parent_id'].nil? }.each do |choice|
-            c = @choice_set.choices.where("short_name_translations::jsonb @> (?::jsonb)", choice["short_name_translations"].to_json).first
-            c.parent_id = @choice_set.choices.where("short_name_translations::jsonb @> (?::jsonb)", Choice.find(choice["parent_id"]).short_name_translations.to_json)&.first&.id
+          choice_params["choices"].reject { |params| params['parent_id'].nil? }.each do |choice|
+            c = @choice_set
+                .choices
+                .where(
+                  "short_name_translations::jsonb @> (?::jsonb)",
+                  choice["short_name_translations"].to_json
+                ).first
+
+            c.parent_id = @choice_set
+                          .choices
+                          .where(
+                            "short_name_translations::jsonb @> (?::jsonb)",
+                            Choice.find(choice["parent_id"]).short_name_translations.to_json
+                          )&.first&.id
             c.save
           end
 
@@ -105,14 +126,29 @@ class CatalogAdmin::ChoiceSetsController < CatalogAdmin::BaseController
         end
 
         redirect_to catalog_admin_choice_sets_path
-      rescue JSON::ParserError
-        flash[:alert] = "malformed file"
+      rescue StandardError => e
+        flash[:alert] = e.message
         render :new_import
       end
     else
       flash[:alert] = "no file provided"
       render :new_import
     end
+  end
+
+  def new_choice_modal
+    find_choice_set
+    render json: {
+      catalog: @choice_set.catalog_id,
+      choice_set: @choice_set.id,
+      choices: @choice_set.choices.map { |choice|
+        {
+          id: choice.id,
+          name: choice.choice_set.choice_prefixed_label(choice, with_dates: @choice_set.datation?)
+        }
+      },
+      categories: @choice_set.catalog.categories.sorted.pluck(:id, :name)
+    }
   end
 
   private
@@ -131,6 +167,7 @@ class CatalogAdmin::ChoiceSetsController < CatalogAdmin::BaseController
       :choice_set_type,
       :format,
       :deactivated_at,
+      :allow_bc,
       :choices_attributes => %i[
         id _destroy
         category_id

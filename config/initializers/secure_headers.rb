@@ -21,7 +21,7 @@
     img_src: %w('self' https: data:),
     font_src: %w('self' https: data:),
     object_src: %w('none'),
-    connect_src: Rails.env.development? ? %w('self' https: http://localhost:3035 ws://localhost:3035) : %w('self' https:)
+    connect_src: (Rails.env.development? || Rails.env.test?) ? %w('self' https: http: http://localhost:3000 http://localhost:3035 ws://localhost:3035) : %w('self' https:)
   }
 end
 

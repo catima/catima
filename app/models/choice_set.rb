@@ -54,8 +54,10 @@ class ChoiceSet < ApplicationRecord
     self.uuid ||= SecureRandom.uuid
   end
 
-  def choice_prefixed_label(choice, format: :short)
-    (parent_choices(choice) + [choice]).map { |d| (format == :long) ? d.long_display_name : d.short_name }.join(" / ")
+  def choice_prefixed_label(choice, format: :short, with_dates: false)
+    [(parent_choices(choice) + [choice]).map { |d| (format == :long) ? d.long_display_name : d.short_name }.join(" / "),
+      with_dates ? " (#{ChoicePresenter.new(nil, choice).dates})" : ""
+    ].join(' ')
   end
 
   def flat_ordered_choices

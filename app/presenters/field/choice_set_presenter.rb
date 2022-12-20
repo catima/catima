@@ -5,39 +5,6 @@ class Field::ChoiceSetPresenter < FieldPresenter
   include ItemsHelper
   include Select2Helper
 
-  # rubocop:disable Style/StringConcatenation
-  def input(form, method, options={})
-    # rubocop:disable Layout/LineLength
-    category = field.belongs_to_category? ? "data-field-category=\"#{field.category_id}\" data-field-category-choice-id=\"#{field.category_choice.id}\" data-field-category-choice-set-id=\"#{field.category_choice_set.id}\"" : ""
-    # rubocop:enable Layout/LineLength
-
-    choice_modal = [
-      '<div class="col-sm-4" style="padding-top: 30px; margin-left: -15px;">',
-        '<a class="btn btn-sm btn-outline-secondary" style="color: #aaa;" data-toggle="modal" data-target="#choice-modal-' + method + '" href="#">',
-          '<i class="fa fa-plus"></i>',
-        '</a>',
-      '</div>'
-    ]
-
-    [
-      '<div class="form-component">',
-        "<div class=\"row\" #{category} data-choice-set=\"#{field.choice_set.id}\" data-field=\"#{field.id}\">",
-          '<div class="col-sm-8">',
-            select2_select(
-              form,
-              method,
-              nil,
-              input_defaults(options).merge(:multiple => field.multiple?, data: { choice_set_id: field.choice_set.id }),
-              &method(:options_for_select)
-            ),
-          '</div>',
-          (choice_modal if options[:current_user].catalog_role_at_least?(options[:catalog], "super-editor")),
-        '</div>',
-      '</div>'
-    ].join.html_safe
-  end
-  # rubocop:enable Style/StringConcatenation
-
   def value
     choices = selected_choices(item)
     return if choices.empty?
@@ -70,36 +37,5 @@ class Field::ChoiceSetPresenter < FieldPresenter
     else
       links_and_prefixed_names.map(&:first).join(", ").html_safe
     end
-  end
-
-  private
-
-  # Add a data attribute to each option of the select to indicate which
-  # category the choice is linked to, if any. This allows us to show and hide
-  # appropriate fields in JavaScript based on the category.
-  def options_for_select
-    choices = !field.choice_set.not_deleted? || !field.choice_set.not_deactivated? ? [] : flat_ordered_choices
-    choices.map do |choice|
-      data = {}
-      data["choice-category"] = choice.category_id if choice.category_id
-      data["choice-id"] = choice.id if choice.category_id
-      data["choice-set-id"] = choice.choice_set.id if choice.category_id
-
-      tag.option(
-        choice_prefixed_label(choice),
-        :value => choice.id,
-        :selected => selected_choice?(item, choice),
-        has_childrens: choice.childrens.any?,
-        :data => data
-      )
-    end.join.html_safe
-  end
-
-  def choice_modal(method)
-    field = Field.where(:uuid => method).first!
-    ActionController::Base.new.render_to_string(
-      :partial => 'catalog_admin/choice_sets/choice_modal',
-      :locals => { field: field }
-    )
   end
 end

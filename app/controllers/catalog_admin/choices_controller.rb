@@ -27,17 +27,28 @@ class CatalogAdmin::ChoicesController < CatalogAdmin::BaseController
 
   def create
     @choice = @choice_set.choices.build(choice_params)
+    @choice.catalog_id = @choice_set.catalog_id
     if @choice.save_with_position(params[:choice][:position])
       if request.xhr?
         render json: {
           catalog: @choice_set.catalog.id, choice_set: @choice_set.id,
-          choice: @choice
+          choice: @choice,
+          choice_json_attributes: {
+            id: @choice.id,
+            uuid: @choice.uuid,
+            name: @choice.choice_set.choice_prefixed_label(@choice, with_dates: @choice_set&.datation?),
+            short_name: @choice.short_name,
+            long_name: @choice.long_name,
+            from_date: @choice.from_date,
+            to_date: @choice.to_date
+          }
         }
       else
         redirect_to(edit_catalog_admin_choice_set_path(@choice_set.catalog, I18n.locale, @choice_set), :notice => created_message)
       end
     elsif request.xhr?
       render json: {
+        choice: @choice,
         errors: @choice.errors.full_messages.join(', '),
         catalog: @choice_set.catalog.id, choice_set: @choice_set.id
       }, status: :unprocessable_entity
@@ -58,7 +69,7 @@ class CatalogAdmin::ChoicesController < CatalogAdmin::BaseController
   private
 
   def build_choice
-    @choice = @choice_set.choices.new
+    @choice = @choice_set.choices.new(catalog_id: @choice_set.catalog_id)
   end
 
   def find_choice_set
@@ -74,6 +85,7 @@ class CatalogAdmin::ChoicesController < CatalogAdmin::BaseController
     params.require(:choice).permit(
       :short_name_de, :short_name_en, :short_name_fr, :short_name_it,
       :long_name_de, :long_name_en, :long_name_fr, :long_name_it,
+      :catalog_id,
       :category_id,
       :parent_id,
       :position,

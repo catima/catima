@@ -1,6 +1,7 @@
 # Capybara + Selenium Chrome allow JS testing via headless webkit
 require "capybara/rails"
 Capybara.javascript_driver = :chrome
+Capybara.server_port = 3000
 
 Capybara.register_driver :chrome do |app|
   arguments = %w[disable-gpu]

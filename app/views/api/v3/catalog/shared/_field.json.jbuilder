@@ -30,7 +30,7 @@ json.field_specific_keys do
 
   if field.is_a?(Field::ComplexDatation)
     json.format field.format
-    json.allow_bc field.allow_bc
+    json.allow_date_time_bc field.allow_date_time_bc
     json.allowed_formats field.allowed_formats.reject(&:blank?)
     json.choice_set_ids field.choice_set_ids.reject(&:blank?)
   end

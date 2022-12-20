@@ -1,14 +1,18 @@
 <div class="pb-4">
+  <% @item.errors.where(:base).each do |error| %>
+    <div class="base-errors"><%= error.full_message %></div>
+  <% end %>
+
   <% @item.all_fields.each_with_index do |field, i| %>
     <%= field_input(
-      f,
-      field,
-      :autofocus => (i == 0),
-      :style => :compact,
-      :item_type => @item.item_type.slug,
-      :current_user => @current_user,
-      :catalog => @catalog
-    ) %>
+          f,
+          field,
+          :autofocus => (i == 0),
+          :style => :compact,
+          :item_type => @item.item_type.slug,
+          :current_user => @current_user,
+          :catalog => @catalog
+        ) %>
   <% end %>
 
   <hr>

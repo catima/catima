@@ -19,6 +19,10 @@
     "display_components": [],
     "editor_components": ["DateTimeInput"]
   },
+  "ChoiceSet": {
+    "display_components": [],
+    "editor_components": ["ChoiceSetInput"]
+  },
   "ComplexDatation": {
     "display_components": [],
     "editor_components": ["ComplexDatationInput"]

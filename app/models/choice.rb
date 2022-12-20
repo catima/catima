@@ -32,6 +32,8 @@ class Choice < ApplicationRecord
   scope :ordered, -> { order(:position) }
 
   validates_presence_of :catalog
+  validate :validates_at_least_one_date_if_datation
+  validate :validate_dates_are_positives
 
   before_create :assign_uuid
   after_destroy :reorder_on_destroy
@@ -128,5 +130,27 @@ class Choice < ApplicationRecord
         end
       end
     end
+  end
+
+  def validate_dates_are_positives
+    return unless choice_set&.datation?
+
+    from_date_is_positive = JSON.parse(from_date).compact.select { |key, _value| key != 'BC' }.all? { |_key, value| value.to_i >= 0 }
+    to_date_is_positive = JSON.parse(to_date).compact.select { |key, _value| key != 'BC' }.all? { |_key, value| value.to_i >= 0 }
+
+    return if to_date_is_positive && from_date_is_positive
+
+    errors.add(:base, :negative_dates)
+  end
+
+  def validates_at_least_one_date_if_datation
+    return unless choice_set&.datation?
+
+    from_date_components_presents = JSON.parse(from_date).compact.select { |key, value| key != 'BC' && value.to_i != 0 }.any?
+    to_date_components_presents = JSON.parse(to_date).compact.select { |key, value| key != 'BC' && value.to_i != 0 }.any?
+
+    return if from_date_components_presents || to_date_components_presents
+
+    errors.add(:base, :dates_must_be_present)
   end
 end

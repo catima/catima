@@ -15,32 +15,39 @@
 # Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
 
 nested_vehicle_types:
+  uuid: nested_vehicle_types_uuid
   catalog: nested
   name: Vehicle Types
   choice_set_type: "default"
 
 one_languages:
+  uuid: one_languages_uuid
   catalog: one
   name: Languages
   choice_set_type: "default"
 
 two_languages:
+  uuid: two_languages_uuid
   catalog: two
   name: Languages
   choice_set_type: "default"
 
 multilingual_languages:
+  uuid: multilingual_languages_uuid
   catalog: multilingual
   name: Languages
   choice_set_type: "default"
 
 search_car_styles:
+  uuid: search_car_styles_uuid
   catalog: search
   name: Car Styles
   choice_set_type: "default"
 
 datation:
+  uuid: datation_uuid
   catalog: complex_datation
   name: Datation ChoiceSet
   choice_set_type: "datation"
   format: "YMD"
+  allow_bc: '1'

@@ -14,7 +14,7 @@ const ChoiceSetSearchContainer = (props) => {
     catalog,
     itemType,
     label,
-    items,
+    choiceSet,
     childChoicesActivatedPlaceholder,
     childChoicesActivatedYesLabel,
     childChoicesActivatedNoLabel,
@@ -44,7 +44,7 @@ const ChoiceSetSearchContainer = (props) => {
       catalog: catalog,
       itemType: itemType,
       label: label,
-      items: items,
+      choiceSet: choiceSet,
       categoryInputName: _buildCategoryInputName(id),
       childChoicesActivatedInputName: _buildChildChoicesActivatedInputName(id),
       childChoicesActivatedPlaceholder: childChoicesActivatedPlaceholder,
@@ -77,7 +77,7 @@ const ChoiceSetSearchContainer = (props) => {
       catalog: catalog,
       itemType: itemType,
       label: label,
-      items: items,
+      choiceSet: choiceSet,
       categoryInputName: _buildCategoryInputName(id),
       childChoicesActivatedInputName: _buildChildChoicesActivatedInputName(id),
       childChoicesActivatedPlaceholder: childChoicesActivatedPlaceholder,
@@ -184,7 +184,7 @@ const ChoiceSetSearchContainer = (props) => {
         catalog={item.catalog}
         itemType={item.itemType}
         label={item.label}
-        items={item.items}
+        choiceSet={choiceSet}
         categoryInputName={item.categoryInputName}
         childChoicesActivatedInputName={item.childChoicesActivatedInputName}
         childChoicesActivatedPlaceholder={item.childChoicesActivatedPlaceholder}

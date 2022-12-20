@@ -120,7 +120,7 @@ class Catalog < ApplicationRecord
   end
 
   def items_of_type(item_type)
-    items.merge(item_type.items)
+    items.includes(:item_type).merge(item_type.items)
   end
 
   def customization_root

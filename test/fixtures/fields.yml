@@ -45,6 +45,7 @@ nested_vehicle_name:
 
 nested_vehicle_type:
   type: "Field::ChoiceSet"
+  editor_component: ChoiceSetInput
   name_translations: { "name_en": "Type" }
   name_plural_translations: { "name_plural_en": "Types" }
   slug: type
@@ -180,6 +181,7 @@ one_author_editor:
 
 one_author_language:
   type: "Field::ChoiceSet"
+  editor_component: ChoiceSetInput
   name_translations: { "name_en": "Language" }
   name_plural_translations: { "name_plural_en": "Languages" }
   slug: language
@@ -189,6 +191,7 @@ one_author_language:
 
 one_author_other_languages:
   type: "Field::ChoiceSet"
+  editor_component: ChoiceSetInput
   name_translations: { "name_en": "Other Language" }
   name_plural_translations: { "name_plural_en": "Other Languages" }
   slug: other-language
@@ -363,6 +366,7 @@ one_book_notes:
 
 one_required_choice_set:
   type: "Field::ChoiceSet"
+  editor_component: ChoiceSetInput
   name_translations: { "name_en": "Choice" }
   name_plural_translations: { "name_plural_en": "Choices" }
   field_set: one_with_required_choice_set (ItemType)
@@ -451,6 +455,7 @@ search_vehicle_model:
 
 search_vehicle_style:
   type: "Field::ChoiceSet"
+  editor_component: ChoiceSetInput
   slug: style
   field_set: search_vehicle (ItemType)
   choice_set: search_car_styles
@@ -522,7 +527,7 @@ complex_datation:
   slug: complex-datation
   field_set: complex_datation (ItemType)
   uuid: complex_datation_uuid
-  options: { "format": "YMD", "allow_bc": "1", "allowed_formats": [ "date_time", "datation_choice" ], "choice_set_ids": [ "", "<%= ActiveRecord::FixtureSet.identify(:datation) %>" ] }
+  options: { "format": "YMD", "allow_date_time_bc": "1", "allowed_formats": [ "date_time", "datation_choice" ], "choice_set_ids": [ "", "<%= ActiveRecord::FixtureSet.identify(:datation) %>" ] }
 
 complex_datation_name:
   type: "Field::Text"

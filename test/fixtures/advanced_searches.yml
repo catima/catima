@@ -74,6 +74,38 @@ before_1_1_300:
           "999": { "field_condition": "and", "default": "" } }
     }
 
+before_1_1_300_choices_excluded:
+  uuid: before_1_1_300_choices_excluded_uuid
+  item_type: complex_datation
+  catalog: complex_datation
+  creator_id: 1
+  criteria:
+    { "complex_datation_uuid":
+        { "0":
+            { "condition": "before",
+              "field_condition": "and",
+              "start": { "before": { "D": "1", "M": "1", "Y": "300" } },
+              "end": { "before": { "D": "", "M": "", "Y": "" } },
+              "exclude_condition": "datation_choice"},
+          "999": { "field_condition": "and", "default": "" } }
+    }
+
+before_1_1_300_datation_excluded:
+  uuid: before_1_1_300_datation_excluded_uuid
+  item_type: complex_datation
+  catalog: complex_datation
+  creator_id: 1
+  criteria:
+    { "complex_datation_uuid":
+        { "0":
+            { "condition": "before",
+              "field_condition": "and",
+              "start": { "before": { "D": "1", "M": "1", "Y": "300" } },
+              "end": { "before": { "D": "", "M": "", "Y": "" } },
+              "exclude_condition": "datation"},
+          "999": { "field_condition": "and", "default": "" } }
+    }
+
 before_1_1_300_bc:
   uuid: before_1_1_300_bc_uuid
   item_type: complex_datation
@@ -101,6 +133,38 @@ after_1_1_300:
               "field_condition": "and",
               "start": { "after": { "D": "1", "M": "1", "Y": "300" } },
               "end": { "after": { "D": "", "M": "", "Y": "" } } },
+          "999": { "field_condition": "and", "default": "" } }
+    }
+
+after_1_1_300_choices_excluded:
+  uuid: after_1_1_300_choices_excluded_uuid
+  item_type: complex_datation
+  catalog: complex_datation
+  creator_id: 1
+  criteria:
+    { "complex_datation_uuid":
+        { "0":
+            { "condition": "after",
+              "field_condition": "and",
+              "start": { "after": { "D": "1", "M": "1", "Y": "300" } },
+              "end": { "after": { "D": "", "M": "", "Y": "" } },
+              "exclude_condition": "datation_choice"},
+          "999": { "field_condition": "and", "default": "" } }
+    }
+
+after_1_1_300_datation_excluded:
+  uuid: after_1_1_300_datation_excluded_uuid
+  item_type: complex_datation
+  catalog: complex_datation
+  creator_id: 1
+  criteria:
+    { "complex_datation_uuid":
+        { "0":
+            { "condition": "after",
+              "field_condition": "and",
+              "start": { "after": { "D": "1", "M": "1", "Y": "300" } },
+              "end": { "after": { "D": "", "M": "", "Y": "" } },
+              "exclude_condition": "datation"},
           "999": { "field_condition": "and", "default": "" } }
     }
 
@@ -192,4 +256,34 @@ with_a_choice_with_childrens:
               "start": { "exact": { "D": "", "M": "", "Y": "" } },
               "end": { "exact": { "D": "", "M": "", "Y": "" } } },
           "999": { "field_condition": "and", "default": "<%= ActiveRecord::FixtureSet.identify(:datation_100_500) %>", child_choices_activated: "true" } }
+    }
+
+with_a_choice_with_childrens_choices_excluded:
+  uuid: with_a_choice_with_childrens_choices_excluded_uuid
+  item_type: complex_datation
+  catalog: complex_datation
+  creator_id: 1
+  criteria:
+    { "complex_datation_uuid":
+        { "0":
+            { "condition": "exact",
+              "field_condition": "and",
+              "start": { "exact": { "D": "", "M": "", "Y": "" } },
+              "end": { "exact": { "D": "", "M": "", "Y": "" } } },
+          "999": { "field_condition": "and", "default": "<%= ActiveRecord::FixtureSet.identify(:datation_100_500) %>", child_choices_activated: "true", "exclude_condition": "datation_choice" } }
+    }
+
+with_a_choice_with_childrens_datation_excluded:
+  uuid: with_a_choice_with_childrens_datation_excluded_uuid
+  item_type: complex_datation
+  catalog: complex_datation
+  creator_id: 1
+  criteria:
+    { "complex_datation_uuid":
+        { "0":
+            { "condition": "exact",
+              "field_condition": "and",
+              "start": { "exact": { "D": "", "M": "", "Y": "" } },
+              "end": { "exact": { "D": "", "M": "", "Y": "" } } },
+          "999": { "field_condition": "and", "default": "<%= ActiveRecord::FixtureSet.identify(:datation_100_500) %>", child_choices_activated: "true", "exclude_condition": "datation" } }
     }
