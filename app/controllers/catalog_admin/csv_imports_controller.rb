@@ -1,33 +1,43 @@
 class CatalogAdmin::CSVImportsController < CatalogAdmin::BaseController
   layout "catalog_admin/data/form"
 
+  MAX_VALIDATION_ERRORS_DISPLAYED = 10
+
   def new
     build_csv_import
     authorize(@csv_import)
   end
 
   def create
-    build_csv_import
+    build_csv_import(csv_import_params)
     authorize(@csv_import)
-    @csv_import.file = params.require(:csv_import)[:file]
 
-    if @csv_import.save
-      redirect_to(catalog_admin_items_path, :notice => import_created_message)
-    else
-      render("new")
+    begin
+      @csv_import.save!
+    rescue ActiveRecord::RecordInvalid
+      return render "new"
+    rescue StandardError => e
+      return redirect_to(
+        new_catalog_admin_csv_import_path,
+        :alert => "#{I18n.t('catalog_admin.csv_imports.create.error')}: #{e.message}"
+      )
     end
+
+    redirect_to(
+      catalog_admin_items_path,
+      :notice => import_created_message,
+      :details => import_created_message_details
+    )
   end
 
   private
 
   helper_method :item_type
 
-  def build_csv_import
-    @csv_import = begin
-      CSVImport.new do |import|
-        import.creator = current_user
-        import.item_type = item_type
-      end
+  def build_csv_import(params=nil)
+    @csv_import = CSVImport.new(params) do |import|
+      import.creator = current_user
+      import.item_type = item_type
     end
   end
 
@@ -35,6 +45,29 @@ class CatalogAdmin::CSVImportsController < CatalogAdmin::BaseController
     message = "#{success_count} imported successfully."
     message << " #{failure_count} skipped." if @csv_import.failures.any?
     message
+  end
+
+  def import_created_message_details
+    messages = []
+    nb_messages_not_displayed = 0
+
+    @csv_import.failures.each do |failure|
+      failure.column_errors.each do |column_name, errors|
+        next if errors.empty?
+
+        # Keep only the n first errors to avoid overflowing cookie size.
+        if messages.length == MAX_VALIDATION_ERRORS_DISPLAYED
+          nb_messages_not_displayed += 1
+          next
+        end
+
+        # Displayed like this: <Column>: <Row value> => <Errors list>
+        messages << "#{column_name}: #{failure.row[column_name]} => #{errors.join(', ')}"
+      end
+    end
+
+    messages << "... and #{nb_messages_not_displayed} more" if nb_messages_not_displayed > 0
+    messages
   end
 
   def success_count
@@ -52,8 +85,12 @@ class CatalogAdmin::CSVImportsController < CatalogAdmin::BaseController
   end
 
   def item_type
-    @item_type ||= begin
-      catalog.item_types.where(:slug => params[:item_type_slug]).first!
-    end
+    @item_type ||= catalog.item_types.where(
+      :slug => params[:item_type_slug]
+    ).first!
+  end
+
+  def csv_import_params
+    params.require(:csv_import).permit(:file, :file_encoding)
   end
 end

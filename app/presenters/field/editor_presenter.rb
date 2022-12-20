@@ -4,26 +4,44 @@ class Field::EditorPresenter < FieldPresenter
 
   def input(form, method, options={})
     editor = field.original_editor(item.creator_id)
-    form.text_field(method, input_defaults(options).reverse_merge(:help => help, :value => editor.email, :readonly => true))
+
+    return "" unless editor
+
+    form.text_field(
+      method,
+      input_defaults(options)
+        .reverse_merge(
+          :help => help,
+          :value => editor.email,
+          :readonly => true
+        )
+    )
   end
 
   def value
     editor = field.original_editor(item.creator_id)
 
+    return "" unless editor
+
+    # Return compact version of the editor informations
     return editor.email if options.key?(:style) && options[:style] == :compact
 
+    # Return full version of the editor informations
     updater = field.original_editor(item.updater_id)
     [
       I18n.t('items.editor.created_by', editor: editor.email),
-      (I18n.t('items.editor.at', date: I18n.l(item.created_at, format: 'YMDhm'.to_sym)) if timestamps_active?),
+      (I18n.t('items.editor.at', date: I18n.l(item.created_at, format: :YMDhm)) if timestamps_active?),
       ('<br>' if updater_active? && updater&.email.present?),
       (I18n.t('items.editor.updated_by', updater: updater&.email) if updater_active? && updater&.email.present?),
-      (I18n.t('items.editor.at', date: I18n.l(item.updated_at, format: 'YMDhm'.to_sym)) if updater_active? && updater&.email.present? && timestamps_active?)
+      (I18n.t('items.editor.at', date: I18n.l(item.updated_at, format: :YMDhm)) if updater_active? && updater&.email.present? && timestamps_active?)
     ].join(' ').html_safe
   end
 
   def field_value_for_item(item)
     editor = field.original_editor(item.creator_id)
+
+    return "" unless editor
+
     editor.email
   end
 

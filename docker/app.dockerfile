@@ -57,7 +57,7 @@ ADD ./docker/config/crontab /etc/crontab
 COPY ./docker/config/supervisord-app-dev.conf /etc/supervisor/conf.d/supervisord.conf
 
 # Add the entrypoint script used in development
-COPY ./docker/config/entrypoint-dev.sh /usr/local/bin/entrypoint-dev.sh
-RUN chmod +x /usr/local/bin/entrypoint-dev.sh
-ENTRYPOINT [ "entrypoint-dev.sh" ]
+COPY ./docker/config/entrypoint-app-dev.sh /usr/local/bin/entrypoint.sh
+RUN chmod +x /usr/local/bin/entrypoint.sh
+ENTRYPOINT [ "entrypoint.sh" ]
 CMD ["/usr/bin/supervisord", "-c", "/etc/supervisor/conf.d/supervisord.conf"]

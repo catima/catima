@@ -60,6 +60,12 @@ en:
         created_at: Creation date
       api_keys:
         api_key: "Authentication tokens"
+    errors:
+      models:
+        csv_import:
+          attributes:
+            file:
+              zero_byte_detected: is empty
   presenters:
     field:
       file:
@@ -653,6 +659,14 @@ en:
         import_from_csv: "Import %{item_types} from CSV"
         import: Import
         file: File
+        file_encoding: File encoding
+        detect_option: "Automatically detect"
+      create:
+        error: The content of the file can't be parsed
+        file_not_csv: does not appear to be in CSV format
+        file_must_have_at_least_one_row: must have at least one row of data
+        file_no_column_names_recognized: no column names were recognized
+        encoding_not_supported: encoding not supported
 
     dashboard:
       data:

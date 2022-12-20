@@ -58,6 +58,7 @@ const DateTimeInput = (props) => {
 
   function _handleChangeYear(e) {
     let v = parseInt(e.target.value);
+    if (preventNegativeInput && v < 0) return;
     if (isNaN(v)) v = "";
     updateData({Y: v});
   }

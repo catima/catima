@@ -11,10 +11,15 @@ class CSVImport::Reader
 
   delegate :encoding, :to => :contents
 
-  def initialize(file)
+  def initialize(file, specified_encoding=nil)
     @file = file
     @contents = file.read
-    guess_and_force_encoding
+
+    if specified_encoding
+      contents.force_encoding(specified_encoding)
+    else
+      guess_and_force_encoding
+    end
   end
 
   # Parses the CSV file into an Array of rows. Each row is a Hash-like object
@@ -41,7 +46,7 @@ class CSVImport::Reader
   end
 
   def possible_encodings
-    %w(UTF-8 MacRoman Windows-1252 UTF-16LE).map do |enc|
+    CSVImport::ENCODINGS.map do |enc|
       Encoding.find(enc)
     end
   end
