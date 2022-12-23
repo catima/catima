@@ -9,6 +9,10 @@ module CatalogAdmin::FieldsOptionHelper
     true
   end
 
+  def display_in_public_list_option?(field)
+    field.human_readable?
+  end
+
   def formatted_option?(field)
     return false unless field.respond_to?(:formatted?)
 
