@@ -63,4 +63,16 @@ class FieldTest < ActiveSupport::TestCase
     field.name_plural_it = "Persone"
     assert(field.valid?)
   end
+
+  test "fields can't be primary or in public list if not human readable" do
+    text_field = fields(:one_title)
+    text_field.formatted_text = "1"
+    text_field.primary = true
+    text_field.display_in_public_list = true
+
+    assert(text_field.save!)
+
+    refute(text_field.primary)
+    refute(text_field.display_in_public_list)
+  end
 end
