@@ -1,51 +1,43 @@
+is_checked = (field_id) ->
+  $field = $("##{field_id}")
+  $field.length && $field[0].checked
+
+manage_states = ->
+  # Enable or disable fields according to their "policies" (see fields_disabled_policies).
+  for field_id, func_should_be_disabled of fields_disabled_policies
+    $field = $("##{field_id}")
+    if $field.length
+      if func_should_be_disabled()
+        $field.attr 'disabled', 'disabled'
+        $(".checkbox:has(##{field_id})").addClass("disabled")
+      else
+        $field.attr 'disabled', null
+        $(".checkbox:has(##{field_id})").removeClass("disabled")
+
+# An object with field_id as key and a lambda returning if the associated field
+# must be enabled or disabled as value.
+fields_disabled_policies = {
+  field_formatted_text: ->
+    is_checked('field_primary') || is_checked('field_display_in_public_list')
+  ,
+  field_primary: ->
+    is_checked('field_formatted_text') || is_checked('field_restricted')
+  ,
+  field_restricted: -> is_checked('field_primary'),
+  field_display_in_public_list: -> is_checked('field_formatted_text'),
+  field_default_value: -> is_checked('field_auto_increment')
+}
+
 init = ->
-  $('#field_formatted_text').on 'change', (e) ->
-    if $('#field_primary').length
-      if $('#field_formatted_text')[0].checked
-        $('#field_primary').attr 'disabled', 'disabled'
-        $('.checkbox:has(#field_primary)').addClass("disabled")
-      else
-        $('#field_primary').attr 'disabled', null
-        $('.checkbox:has(#field_primary)').removeClass("disabled")
-      return
 
-  $('#field_restricted').on 'change', (e) ->
-    if $('#field_primary').length
-      if $('#field_restricted')[0].checked
-        $('#field_primary').attr 'disabled', 'disabled'
-        $('.checkbox:has(#field_primary)').addClass("disabled")
-      else
-        $('#field_primary').attr 'disabled', null
-        $('.checkbox:has(#field_primary)').removeClass("disabled")
-      return
+  manage_states()
 
-  $('#field_primary').on 'change', (e) ->
-    if $('#field_formatted_text').length
-      if $('#field_primary')[0].checked
-        $('#field_formatted_text').attr 'disabled', 'disabled'
-        $('.checkbox:has(#field_formatted_text)').addClass("disabled")
-      else
-        $('#field_formatted_text').attr 'disabled', null
-        $('.checkbox:has(#field_formatted_text)').removeClass("disabled")
-    if $('#field_restricted').length
-      if $('#field_primary')[0].checked
-        $('#field_restricted').attr 'disabled', 'disabled'
-        $('.checkbox:has(#field_restricted)').addClass("disabled")
-      else
-        $('#field_restricted').attr 'disabled', null
-        $('.checkbox:has(#field_restricted)').removeClass("disabled")
-
-  $('#field_auto_increment').on 'change', (e) ->
-    if $('#field_default_value').length
-      if $('#field_auto_increment')[0].checked
-        $('#field_default_value').attr 'value', ''
-        $('#field_default_value').attr 'disabled', 'disabled'
-      else
-        $('#field_default_value').attr 'disabled', null
-      return
-
-  if $('#field_auto_increment').length && $('#field_default_value').length
-    if $('#field_auto_increment')[0].checked
-      $('#field_default_value').attr 'disabled', 'disabled'
+  $('
+    #field_formatted_text,
+    #field_restricted,
+    #field_primary,
+    #field_display_in_public_list,
+    #field_auto_increment
+  ').on 'change', manage_states
 
 $(document).ready(init)
