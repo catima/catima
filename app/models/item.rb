@@ -198,7 +198,7 @@ class Item < ApplicationRecord
 
     self.data = {} if data.nil?
     fields.each do |f|
-      self.data[f.uuid] = f.default_value if f.default_value.present?
+      self.data[f.uuid] = f.default_value if f.default_value.present? && !data.key?(f.uuid)
     end
   end
 
