@@ -18,6 +18,11 @@
       <!-- General pane -->
       <div role="tabpanel" class="tab-pane active" id="general">
         <div class="form-group">
+          <label class="control-label"><%= t('.titles') %></label>
+          <%= react_component 'StyleControl/components/StyleControl', { input: '#catalog_style', element: 'main-title' } %>
+        </div>
+
+        <div class="form-group">
           <label class="control-label"><%= t('.base_font') %></label>
           <%= react_component 'StyleControl/components/StyleControl', { input: '#catalog_style', element: 'base-font' } %>
         </div>
@@ -93,22 +98,6 @@
 
       <!-- Headings pane -->
       <div role="tabpanel" class="tab-pane" id="itemlist">
-
-        <h4><%= t('.headings') %></h4>
-
-        <div class="form-group">
-          <label class="control-label"><%= t('.headings_main_title') %></label>
-          <%= react_component 'StyleControl/components/StyleControl', { input: '#catalog_style', element: 'main-title' } %>
-        </div>
-
-        <div class="form-group">
-          <label class="control-label"><%= t('.headings_sub_title') %></label>
-          <%= react_component 'StyleControl/components/StyleControl', { input: '#catalog_style', element: 'sub-title' } %>
-        </div>
-
-        <hr/>
-
-        <h4><%= t('.items') %></h4>
 
         <div class="form-group">
           <label class="control-label"><%= t('.item_labels') %></label>
