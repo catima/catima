@@ -198,7 +198,10 @@ class Item < ApplicationRecord
 
     self.data = {} if data.nil?
     fields.each do |f|
-      next unless f.default_value.present?
+      next if f.default_value.blank?
+
+      # In some cases, data are already setted when this assignation occurs.
+      # In these cases, we do not override already setted data.
       next if data.key?(f.uuid)
 
       self.data[f.uuid] = f.default_value
