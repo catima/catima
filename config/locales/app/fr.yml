@@ -560,7 +560,7 @@ fr:
         headings_main_title: "Titre principal"
         headings_sub_title: "Sous-titre"
         item_labels: "Étiquettes des fiches"
-        item_text: "Texte des fiches"
+        item_texts: "Textes des fiches"
 
     categories:
       edit:

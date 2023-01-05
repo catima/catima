@@ -434,7 +434,7 @@ it:
         headings_main_title: "Main title"
         headings_sub_title: "Sub title"
         item_labels: "Item labels"
-        item_text: "Item text"
+        item_texts: "Item texts"
 
     choice_sets:
       choice:
