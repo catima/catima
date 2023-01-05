@@ -18,6 +18,11 @@ module CatalogAdmin::FieldsOptionHelper
   private
 
   def could_be_human_readable(field)
-    field.is_a?(Field::Text) || field.human_readable?
+    # Text fields can be human readable or not depending on whether it
+    # represents a formatted value. To be consistent when displaying fields
+    # options, we always treat it as human readable.
+    return true if field.is_a?(Field::Text)
+
+    field.human_readable?
   end
 end
