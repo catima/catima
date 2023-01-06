@@ -114,6 +114,7 @@ one_author_age:
   uuid: one_author_age_uuid
   display_in_public_list: false
   row_order: 2
+  default_value: "50"
 
 one_author_site:
   type: "Field::URL"
@@ -332,6 +333,16 @@ one_author_media:
   uuid: one_author_media_uuid
   required: false
   options: { "format":"iframe", "domains":'[{"label":"Youtube.com (www.youtube.com)","value":"www.youtube.com"}]' }
+
+one_author_favorite_color:
+  type: "Field::Text"
+  name_translations: { "name_en": "Favorite Color"}
+  name_plural_translations: { "name_plural_en": "Favorite Colors" }
+  slug: favorite_color
+  field_set: one_author (ItemType)
+  uuid: one_author_favorite_color_uuid
+  required: false
+  default_value: "Vert"
 
 one_book_title:
   type: "Field::Text"

@@ -42,6 +42,7 @@ class CatalogAdmin::ItemsTest < ActionDispatch::IntegrationTest
     assert_equal("25", author.public_send(:one_author_age_uuid).to_s)
     assert_equal("https://google.com/", author.public_send(:one_author_site_uuid))
     assert_equal("1.25", author.public_send(:one_author_rank_uuid))
+    assert_equal("Vert", author.public_send(:one_author_favorite_color_uuid))
     assert_equal(choices(:one_english).id.to_s, author.public_send(:one_author_language_uuid).to_s)
     assert_equal(
       [choices(:one_english).id.to_s, choices(:one_spanish).id.to_s],
