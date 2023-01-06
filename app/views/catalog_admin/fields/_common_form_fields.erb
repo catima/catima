@@ -31,19 +31,19 @@
         :label => t('.include_in_list_view')
       ) %>
 <% end %>
-<%= f.form_group(:display_in_public_list) do %>
-  <%= f.check_box(
-          :display_in_public_list,
-          :label => t('.include_in_public_list_view')
-      ) %>
-<% end %>
-<% if restricted_option?(f.object) %>
-  <%= f.form_group(:restricted) do %>
+<% if display_in_public_list_option?(f.object) %>
+  <%= f.form_group(:display_in_public_list) do %>
     <%= f.check_box(
-          :restricted,
-          :label => t('.restrict_field_to_staff')
+            :display_in_public_list,
+            :label => t('.include_in_public_list_view')
         ) %>
   <% end %>
+<% end %>
+<%= f.form_group(:restricted) do %>
+  <%= f.check_box(
+        :restricted,
+        :label => t('.restrict_field_to_staff')
+      ) %>
 <% end %>
 
 <hr>

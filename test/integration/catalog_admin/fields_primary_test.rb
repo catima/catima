@@ -39,6 +39,14 @@ class CatalogAdmin::FieldsPrimaryTest < ActionDispatch::IntegrationTest
     # Text
     visit("/one/en/admin/authors/fields/nickname/edit")
     assert(page.has_content?("Use this as the primary field"))
+
+    # Formatted text
+    visit("/one/en/admin/books/fields/notes/edit")
+    assert(page.has_content?("Use this as the primary field"))
+
+    # Editor (Restricted field)
+    visit("/one/en/admin/authors/fields/editor/edit")
+    assert(page.has_content?("Use this as the primary field"))
   end
 
   test "cannot select field as primary" do
@@ -56,20 +64,12 @@ class CatalogAdmin::FieldsPrimaryTest < ActionDispatch::IntegrationTest
     visit("/one/en/admin/authors/fields/picture/edit")
     refute(page.has_content?("Use this as the primary field"))
 
-    # Formatted text
-    visit("/one/en/admin/books/fields/notes/edit")
-    refute(page.has_content?("Use this as the primary field"))
-
     # Compound
     visit("/one/en/admin/authors/fields/compound/edit")
     refute(page.has_content?("Use this as the primary field"))
 
     # Embed
     visit("/one/en/admin/authors/fields/media/edit")
-    refute(page.has_content?("Use this as the primary field"))
-
-    # Editor (Restricted field)
-    visit("/one/en/admin/authors/fields/editor/edit")
     refute(page.has_content?("Use this as the primary field"))
   end
 end
