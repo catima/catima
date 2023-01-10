@@ -37,6 +37,13 @@ one_english:
   long_name_translations: { "long_name_en": "English" }
   short_name_translations: { "short_name_en": "Eng" }
 
+one_english_uk:
+  catalog: one
+  choice_set: one_languages
+  parent: one_english
+  long_name_translations: { "long_name_en": "English (UK)" }
+  short_name_translations: { "short_name_en": "Eng (UK)" }
+
 one_spanish:
   catalog: one
   choice_set: one_languages
@@ -50,12 +57,6 @@ one_french:
   short_name_translations: { "short_name_en": "French" }
   category: language
 
-one_french_schweiz:
-  catalog: one
-  choice_set: one_languages
-  parent: one_french
-  long_name_translations: { "long_name_en": "French (Schweiz)" }
-  short_name_translations: { "short_name_en": "French (Schweiz)" }
 
 two_english:
   catalog: two
