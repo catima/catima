@@ -24,6 +24,39 @@ class Field::ChoiceSetPresenterTest < ActionView::TestCase
     )
   end
 
+  test "#value with hierarchy" do
+    author = items(:one_author_stephen_king)
+    french_schweiz = choices(:one_french_schweiz)
+    language_field = Field.find ActiveRecord::FixtureSet.identify('one_author_language')
+    # Have to set this manually because fixture doesn't know ID ahead of time
+    author.data["one_author_language_uuid"] = french_schweiz.id
+
+    expected_html = <<~HTML
+      <div>
+        <div data-controller=\"hierarchy-revealable\">
+          <div data-hierarchy-revealable-target=\"choice\">
+            <a href=\"/one/en/authors?language=en-French+%28Schweiz%29\">French (Schweiz)</a>
+            <span class=\"pl-2\" data-toggle=\"tooltip\" title=\"Show hierarchy\" data-action=\"click-&gt;hierarchy-revealable#toggle\">
+              <i class=\"fa fa-caret-right toggle-hierarchy\"></i>
+            </span>
+          </div>
+          <div data-hierarchy-revealable-target=\"choice\" style=\"display: none\">
+            <a href=\"/one/en/authors?language=en-French+%28Schweiz%29\">French / French (Schweiz)</a>
+            <span class=\"pl-2\" data-toggle=\"tooltip\" title=\"Hide hierarchy\" data-action=\"click-&gt;hierarchy-revealable#toggle\">
+              <i class=\"fa fa-caret-left toggle-hierarchy\"></i>
+            </span>
+          </div>
+        </div>
+      </div>
+    HTML
+
+    presenter = Field::ChoiceSetPresenter.new(self, author, language_field)
+    assert_equal(
+      expected_html.gsub(/(\n\s*)+/, ''), # Remove LF and indentation.
+      presenter.value
+    )
+  end
+
   test "#value for multiple" do
     author = items(:one_author_stephen_king)
     choices = [choices(:one_english), choices(:one_spanish)]

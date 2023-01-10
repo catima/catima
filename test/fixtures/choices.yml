@@ -50,6 +50,13 @@ one_french:
   short_name_translations: { "short_name_en": "French" }
   category: language
 
+one_french_schweiz:
+  catalog: one
+  choice_set: one_languages
+  parent: one_french
+  long_name_translations: { "long_name_en": "French (Schweiz)" }
+  short_name_translations: { "short_name_en": "French (Schweiz)" }
+
 two_english:
   catalog: two
   choice_set: two_languages
