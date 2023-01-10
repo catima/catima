@@ -15,8 +15,8 @@ class Field::ChoiceSetPresenterTest < ActionView::TestCase
       "<div>"\
           "<div data-controller=\"hierarchy-revealable\">"\
           "<div data-hierarchy-revealable-target=\"choice\">"\
-          "<a href=\"/one/en/authors?language=en-Eng\">English</a><span class=\"pl-2\" data-toggle=\"tooltip\" title=\"Show hierarchy\" data-action=\"click-&gt;hierarchy-revealable#toggle\"><i class=\"fa fa-caret-right toggle-hierarchy\"></i></span></div><div data-hierarchy-revealable-target=\"choice\" style=\"display: none\">"\
-          "<a href=\"/one/en/authors?language=en-Eng\">English </a><span class=\"pl-2\" data-toggle=\"tooltip\" title=\"Hide hierarchy\" data-action=\"click-&gt;hierarchy-revealable#toggle\"><i class=\"fa fa-caret-left toggle-hierarchy\"></i></span>"\
+          "<a href=\"/one/en/authors?language=en-Eng\">English</a></div><div data-hierarchy-revealable-target=\"choice\" style=\"display: none\">"\
+          "<a href=\"/one/en/authors?language=en-Eng\">English</a><span class=\"pl-2\" data-toggle=\"tooltip\" title=\"Hide hierarchy\" data-action=\"click-&gt;hierarchy-revealable#toggle\"><i class=\"fa fa-caret-left toggle-hierarchy\"></i></span>"\
           "</div>"\
           "</div>"\
           "</div>",
@@ -35,12 +35,12 @@ class Field::ChoiceSetPresenterTest < ActionView::TestCase
     assert_equal(
       "<div>"\
           "<div data-controller=\"hierarchy-revealable\">"\
-          "<div data-hierarchy-revealable-target=\"choice\"><a href=\"/one/en/authors?other-language=en-Eng\">English</a><span class=\"pl-2\" data-toggle=\"tooltip\" title=\"Show hierarchy\" data-action=\"click-&gt;hierarchy-revealable#toggle\"><i class=\"fa fa-caret-right toggle-hierarchy\"></i></span></div>"\
-          "<div data-hierarchy-revealable-target=\"choice\" style=\"display: none\"><a href=\"/one/en/authors?other-language=en-Eng\">English </a><span class=\"pl-2\" data-toggle=\"tooltip\" title=\"Hide hierarchy\" data-action=\"click-&gt;hierarchy-revealable#toggle\"><i class=\"fa fa-caret-left toggle-hierarchy\"></i></span></div>"\
+          "<div data-hierarchy-revealable-target=\"choice\"><a href=\"/one/en/authors?other-language=en-Eng\">English</a></div>"\
+          "<div data-hierarchy-revealable-target=\"choice\" style=\"display: none\"><a href=\"/one/en/authors?other-language=en-Eng\">English</a><span class=\"pl-2\" data-toggle=\"tooltip\" title=\"Hide hierarchy\" data-action=\"click-&gt;hierarchy-revealable#toggle\"><i class=\"fa fa-caret-left toggle-hierarchy\"></i></span></div>"\
           "</div> "\
           "<div data-controller=\"hierarchy-revealable\">"\
-          "<div data-hierarchy-revealable-target=\"choice\"><a href=\"/one/en/authors?other-language=en-Spanish\">Spanish</a><span class=\"pl-2\" data-toggle=\"tooltip\" title=\"Show hierarchy\" data-action=\"click-&gt;hierarchy-revealable#toggle\"><i class=\"fa fa-caret-right toggle-hierarchy\"></i></span></div>"\
-          "<div data-hierarchy-revealable-target=\"choice\" style=\"display: none\"><a href=\"/one/en/authors?other-language=en-Spanish\">Spanish </a><span class=\"pl-2\" data-toggle=\"tooltip\" title=\"Hide hierarchy\" data-action=\"click-&gt;hierarchy-revealable#toggle\"><i class=\"fa fa-caret-left toggle-hierarchy\"></i></span></div>"\
+          "<div data-hierarchy-revealable-target=\"choice\"><a href=\"/one/en/authors?other-language=en-Spanish\">Spanish</a></div>"\
+          "<div data-hierarchy-revealable-target=\"choice\" style=\"display: none\"><a href=\"/one/en/authors?other-language=en-Spanish\">Spanish</a><span class=\"pl-2\" data-toggle=\"tooltip\" title=\"Hide hierarchy\" data-action=\"click-&gt;hierarchy-revealable#toggle\"><i class=\"fa fa-caret-left toggle-hierarchy\"></i></span></div>"\
           "</div>"\
           "</div>",
       presenter.value
