@@ -60,6 +60,7 @@ class ChoiceSet < ApplicationRecord
     end.join(" / ")
 
     label << " (#{ChoicePresenter.new(nil, choice).dates})" if with_dates
+
     label
   end
 
