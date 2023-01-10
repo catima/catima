@@ -49,7 +49,7 @@ two:
   primary_language: en
   other_languages:
   requires_review: false
-  style: { "base-font": { "font": "Arial, Helvetica, sans-serif" } }
+  style: { "main-title": { "fontFamily": "Arial, Helvetica, sans-serif" } }
   throttle_time_window: 1 * 3600
   throttle_max_requests: 1000
   api_enabled: true

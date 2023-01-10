@@ -541,6 +541,7 @@ en:
         general: "General"
         logo: "Logo"
         items: "Items"
+        titles: "Titles"
         base_font: "Base font"
         link_color: "Link color"
         navbar: "Navbar"
@@ -550,11 +551,8 @@ en:
         navbar_logo: "Logo navigation bar"
         remove_navbar_logo: "Remove current navigation bar logo"
         navbar_logo_help: "Logo located at the top left, maximum height: 50 pixels"
-        headings: "Headings"
-        headings_main_title: "Main title"
-        headings_sub_title: "Sub title"
         item_labels: "Item labels"
-        item_text: "Item text"
+        item_texts: "Item texts"
 
     categories:
       edit:

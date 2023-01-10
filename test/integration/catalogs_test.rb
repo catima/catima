@@ -27,6 +27,12 @@ class CatalogsTest < ActionDispatch::IntegrationTest
   test "renders correctly with custom style" do
     visit("/two")
     assert(page.has_content?(/two/i))
+    assert(page.has_css?('.custom-style-title'))
+    assert(
+      page.html.include?(
+        "font-family: Arial, Helvetica, sans-serif !important;"
+      )
+    )
   end
 
   test "check catalog visibility as guest" do

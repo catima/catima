@@ -547,6 +547,7 @@ fr:
         general: "Général"
         logo: "Logo"
         items: "Fiches"
+        titles: "Titres"
         base_font: "Police de base"
         link_color: "Couleur lien"
         navbar: "Barre de navigation"
@@ -556,11 +557,8 @@ fr:
         navbar_logo: "Logo de la barre de navigation"
         remove_navbar_logo: "Supprimer le logo de la barre de navigation"
         navbar_logo_help: "Logo situé en haut à gauche, hauteur maximale: 50 pixels"
-        headings: "Rubriques"
-        headings_main_title: "Titre principal"
-        headings_sub_title: "Sous-titre"
         item_labels: "Étiquettes des fiches"
-        item_text: "Texte des fiches"
+        item_texts: "Textes des fiches"
 
     categories:
       edit:

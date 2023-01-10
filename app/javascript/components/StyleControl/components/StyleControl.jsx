@@ -72,8 +72,7 @@ const StyleControl = (props) => {
   }
 
   function _handleChange(d) {
-    let filteredD = Object.fromEntries(Object.entries(d).filter(([_, v]) => (v != null && v != '')));
-    setState({...state, ...filteredD});
+    setState({...state, ...d});
     setData(d);
   }
 
