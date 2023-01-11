@@ -63,7 +63,7 @@ const ComplexDatationInput = (props) => {
             return (
                 allowedFormats.map((allowedFormat, idx) => (
                     <div className="form-check" key={`allowedFormat-${idx}`}>
-                        <input className="form-check-input" type="radio" name="allowedFormat"
+                        <input className="form-check-input" type="radio" name={`allowedFormat${fieldUuid}`}
                                id={`allowedFormat-${idx}`}
                                checked={selectedFormat === allowedFormat}
                                onChange={() => setSelectedFormatAndUpdateData(allowedFormat)}/>
