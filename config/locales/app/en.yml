@@ -617,6 +617,7 @@ en:
       new_import:
         import_choice_set: "Import a choice set"
         import: Import
+        file: File
 
     containers:
       sorts:

@@ -623,6 +623,7 @@ fr:
       new_import:
         import_choice_set: "Importer un ensemble de choix"
         import: Importer
+        file: Fichier
 
     containers:
       sorts:
