@@ -164,9 +164,7 @@ class Field::ComplexDatation < ::Field
     [
       { :value => I18n.t("advanced_searches.fields.date_time_search_field.exact", locale: locale), :key => "exact" },
       { :value => I18n.t("advanced_searches.fields.date_time_search_field.after", locale: locale), :key => "after" },
-      { :value => I18n.t("advanced_searches.fields.date_time_search_field.before", locale: locale), :key => "before" },
-      { :value => I18n.t("advanced_searches.fields.date_time_search_field.between", locale: locale), :key => "between" },
-      { :value => I18n.t("advanced_searches.fields.date_time_search_field.outside", locale: locale), :key => "outside" }
+      { :value => I18n.t("advanced_searches.fields.date_time_search_field.before", locale: locale), :key => "before" }
     ]
   end
 
