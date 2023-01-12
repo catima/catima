@@ -7,7 +7,10 @@ if choice.category
 end
 json.long_name_translations choice.long_name_translations
 json.short_name_translations choice.short_name_translations
-
+if choice.choice_set.choice_set_type === 'datation'
+  json.from JSON(choice.from_date)
+  json.to JSON(choice.to_date)
+end
 if choice.childrens.any? && !no_childrens
   json.childrens do
     json.partial! partial: 'choice', collection: choice.childrens, as: :choice, locals: {no_childrens: false, no_parent: true}
