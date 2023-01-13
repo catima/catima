@@ -83,7 +83,9 @@ module ItemsHelper
     field = item.field_for_select
     return item.id.to_s if field.nil?
 
-    strip_tags(field_value(item, field, :style => :compact)) || ''.html_safe
+    Loofah.fragment(
+      field_value(item, field, :style => :compact)
+    ).text(encode_special_chars: false) || ''.html_safe
   end
 
   def formatted_item_for_line(item, list:, sort_field:)
@@ -97,8 +99,8 @@ module ItemsHelper
       title: title,
       summary: item_summary(item),
       primary_field_value: field_value(item, item.item_type.field_for_select),
-      sort_field_value:  sort_field_value(sort_field, item),
-      group_title: sort_field.is_a?(Field::DateTime) ? Field::DateTimePresenter.new(nil, item, sort_field).value(format: sort_field.format) : field_value(item, sort_field),
+      sort_field_value: sort_field_value(sort_field, item),
+      group_title: sort_field.is_a?(Field::DateTime) ? Field::DateTimePresenter.new(nil, item, sort_field).value(format: sort_field.format) : field_value(item, sort_field)
     )
   end
 
@@ -107,7 +109,9 @@ module ItemsHelper
     when Field::DateTime
       sort_field.raw_value(item) || {}
     when Field::ChoiceSet
-      sort_field.selected_choices(item).map{|c| c.short_name }.join(" ")
+      sort_field.selected_choices(item)
+                .map(&:short_name)
+                .join(" ")
     else
       field_value(item, sort_field)
     end
