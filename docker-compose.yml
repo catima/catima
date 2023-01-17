@@ -1,10 +1,10 @@
 version: "2.4"
 
 networks:
-  catima-pr483-net:
+  catima-net:
     driver: bridge
 
-name: catima-pr483
+name: catima
 
 services:
   catima-app:
@@ -26,7 +26,7 @@ services:
     volumes:
       - ./:/var/www/catima
     networks:
-      - catima-pr483-net
+      - catima-net
     healthcheck:
       test: curl --fail http://127.0.0.1:3000/health || exit 1
       interval: 10s
@@ -52,7 +52,7 @@ services:
     volumes_from:
       - catima-app
     networks:
-      - catima-pr483-net
+      - catima-net
     container_name: catima-worker
   catima-postgres:
     image: postgis/postgis:12-3.3
@@ -61,10 +61,10 @@ services:
     ports:
       - "127.0.0.1:5410:5432"
     volumes:
-      - postgres-data-pr483:/var/lib/postgresql/data
+      - postgres-data:/var/lib/postgresql/data
       - ./docker/config/init.sql:/docker-entrypoint-initdb.d/init.sql
     networks:
-      - catima-pr483-net
+      - catima-net
     healthcheck:
       test: pg_isready -U docker -h 127.0.0.1
       interval: 5s
@@ -80,9 +80,9 @@ services:
       - "6379"
     command: redis-server
     volumes:
-      - redis-data-pr483:/data
+      - redis-data:/data
     networks:
-      - catima-pr483-net
+      - catima-net
     healthcheck:
       test: redis-cli ping
       interval: 5s
@@ -97,9 +97,9 @@ services:
     ports:
       - "127.0.0.1:8028:8025"
     networks:
-      - catima-pr483-net
+      - catima-net
     container_name: catima-mailhog
 
 volumes:
-  redis-data-pr483:
-  postgres-data-pr483:
+  redis-data:
+  postgres-data:
