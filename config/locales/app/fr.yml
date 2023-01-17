@@ -574,7 +574,7 @@ fr:
     choices:
       new:
         new_choice: "Nouveaux choix"
-        create_choice: Créer  choix
+        create_choice: Créer choix
         position:
           first: premier
           last: dernier
