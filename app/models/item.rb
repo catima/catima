@@ -148,7 +148,7 @@ class Item < ApplicationRecord
   # and an identifier for complex fields.
   # rubocop:disable Style/OptionalBooleanParameter
   def describe(includes=[], excludes=[], for_api=false)
-    d = applicable_fields.collect { |f| [f.slug, get_value_or_id(f, for_api)] }.to_h \
+    d = applicable_fields.to_h { |f| [f.slug, get_value_or_id(f, for_api)] } \
                          .merge(id: id) \
                          .merge(review_status: review_status) \
                          .merge(uuid: uuid)
