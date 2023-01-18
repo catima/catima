@@ -63,4 +63,14 @@ class UserTest < ActiveSupport::TestCase
     refute(users(:one).member_of_any_catalog?)
     assert(users(:one_member).member_of_any_catalog?)
   end
+
+  test "#active_for_authentication?" do
+    assert(users(:one_user).active_for_authentication?)
+    refute(users(:one_user_deleted).active_for_authentication?)
+  end
+
+  test "#inactive_message" do
+    assert_equal(:inactive, users(:one_user).inactive_message)
+    assert_equal(:invalid, users(:one_user_deleted).inactive_message)
+  end
 end

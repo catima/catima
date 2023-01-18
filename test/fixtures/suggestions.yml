@@ -2,7 +2,7 @@ one_comment1:
   catalog: one
   item_type: one
   item: one_author_stephen_king
-  user: one_member
+  user: :one_user_deleted
   content: existing_suggestion1
 
 two_comment1:

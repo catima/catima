@@ -16,7 +16,7 @@ class Ahoy::Event < ApplicationRecord
   self.table_name = "ahoy_events"
 
   belongs_to :visit
-  belongs_to :user, optional: true
+  belongs_to :user, -> { unscope(where: :deleted_at) }, optional: true
 
   def self.top(limit=5, from=3.months, scope=nil, catalog_slug=nil)
     tops = select(:name).where("time > ?", from.ago)

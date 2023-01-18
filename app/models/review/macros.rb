@@ -7,7 +7,12 @@ module Review::Macros
   included do
     attr_accessor :submit_for_review
 
-    belongs_to :reviewer, :class_name => "User", optional: true
+    belongs_to(
+      :reviewer,
+      -> { unscope(where: :deleted_at) },
+      :class_name => "User",
+      optional: true
+    )
     validates_inclusion_of :review_status,
                            :in => %w(not-ready ready rejected approved)
     before_save :handle_submit_for_review

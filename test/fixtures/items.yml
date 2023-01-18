@@ -149,6 +149,13 @@ one_book_theory_of_relativity:
   item_type: another_book
   data: { "another_book_title_uuid": "Theory of Relativity" }
 
+one_book_mister_nobody:
+  catalog: one
+  creator: one_user_deleted
+  updater: one_user_deleted
+  item_type: another_book
+  data: { "another_book_title_uuid": "Mr. Nobody" }
+
 one_book_end_of_watch:
   catalog: one
   creator: one_admin

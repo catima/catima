@@ -53,4 +53,12 @@ class CatalogAdmin::UsersTest < ActionDispatch::IntegrationTest
     assert_selector('.user-panel tbody tr', :count => 1)
     assert(page.has_content?("test-search@example.com"))
   end
+
+  test "deleted user are not displayed" do
+    log_in_as("one-admin@example.com", "password")
+    visit("/one/en/admin/_users")
+    within("body>.container") do
+      refute(page.has_content?("one-user-deleted@example.com"))
+    end
+  end
 end

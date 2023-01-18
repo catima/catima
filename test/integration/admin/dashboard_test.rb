@@ -18,4 +18,15 @@ class Admin::DashboardTest < ActionDispatch::IntegrationTest
     assert_not(page.has_content?("New admin user"))
     assert_not(page.has_content?("Custom templates"))
   end
+
+  test "admin dashboard shows users" do
+    log_in_as("system-admin@example.com", "password")
+    visit("/admin")
+
+    within("body>.container") do
+      assert(page.has_content?("system-admin@example.com"))
+      assert(page.has_content?("one@example.com"))
+      refute(page.has_content?("one-user-deleted@example.com"))
+    end
+  end
 end

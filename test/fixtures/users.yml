@@ -74,6 +74,12 @@ one_admin:
   encrypted_password: <%= BCrypt::Password.create("password") %>
   jti: 523bece0-b233-49fc-8540-e1ff9b57e03e
 
+one_user_deleted:
+  email: one-user-deleted@example.com
+  encrypted_password: <%= BCrypt::Password.create("password") %>
+  jti: df8dcc92-4060-4c74-b99e-768de81836a7
+  deleted_at: 2023-01-13 16:37:17.712912
+
 two:
   email: two@example.com
   encrypted_password: <%= BCrypt::Password.create("password") %>

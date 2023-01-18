@@ -38,8 +38,14 @@ class User < ApplicationRecord
 
   include User::Roles
   include AvailableLocales
+  include HasDeletion
 
-  belongs_to :invited_by, :class_name => "User", optional: true
+  belongs_to(
+    :invited_by,
+    -> { unscope(where: :deleted_at) },
+    :class_name => "User",
+    optional: true
+  )
 
   has_many :catalog_permissions, :dependent => :destroy
   has_many :favorites, :dependent => :destroy
@@ -52,6 +58,10 @@ class User < ApplicationRecord
 
   validates_presence_of :primary_language
   validates_inclusion_of :primary_language, :in => :available_locales
+  validates_uniqueness_of :email, scope: [:deleted_at]
+
+  default_scope { not_deleted }
+  scope :with_deleted, -> { unscope(where: :deleted_at) }
 
   before_create :set_jti_uuid
 
@@ -120,6 +130,41 @@ class User < ApplicationRecord
               .flatten.select { |p| p.role_at_least?("editor") }
               .pluck(:catalog_id)).pluck(:id) # staff
     Catalog.where(id: catalog_ids)
+  end
+
+  def destroy
+    # User are only soft deleted.
+    # We reset the provider uid and name to avoid conflicts if the user
+    # creates a new account in the futur with this provider.
+    update(
+      deleted_at: current_time_from_proper_timezone, uid: nil, provider: nil
+    )
+  end
+
+  def active_for_authentication?
+    # Overrided from Devise :authenticatable module.
+    # This allow to check each requests if the user is still autorized to be
+    # authenticated (not blocked, still active, etc).
+    # We add not_deleted to the list of checks.
+    # Note: This isn't mandatory because the default scope will already filter
+    # who can log-in and who can't. It's there only for Devise to be in line with
+    # the deleted_at philosophy (and 2 two checks is better than one).
+    super && not_deleted?
+  end
+
+  def inactive_message
+    # Overrided from Devise :authenticatable module.
+    # This message is used when :active_for_authentication? return false.
+    # If the user is deleted, we display an invalid credentials message instead
+    # of a not active account message.
+    not_deleted? ? super : :invalid
+  end
+
+  def will_save_change_to_email?
+    # Overrided from :validatable module to remove the validation of the
+    # uniqueness of the email. It is used when we want to create a new user
+    # with the same email as a deleted user.
+    false
   end
 
   private

@@ -34,7 +34,7 @@ class Ahoy::Visit < ApplicationRecord
   self.table_name = "ahoy_visits"
 
   has_many :events, class_name: "Ahoy::Event", dependent: :nullify
-  belongs_to :user, optional: true
+  belongs_to :user, -> { unscope(where: :deleted_at) }, optional: true
 
   def self.validity
     ENV["AHOY_VISITS_VALIDITY"].present? ? Integer(ENV["AHOY_VISITS_VALIDITY"]).months : 6.months

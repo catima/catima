@@ -61,3 +61,10 @@ one_sql:
   catalog: one
   category: "sql"
   status: "ready"
+
+one_deleted:
+  id: 8
+  user: one_user_deleted
+  catalog: one
+  category: "catima"
+  status: "ready"

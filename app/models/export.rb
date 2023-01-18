@@ -15,7 +15,7 @@ class Export < ApplicationRecord
   CATEGORY_OPTIONS = %w(catima sql csv).freeze
   STATUS_OPTIONS = %w(error processing ready).freeze
 
-  belongs_to :user
+  belongs_to :user, -> { unscope(where: :deleted_at) }
   belongs_to :catalog
 
   validates_presence_of :user
