@@ -6,8 +6,16 @@
     icons: {up: fa_icon("chevron-up"),
             down: fa_icon("chevron-down")},
     links: {
-      asc: page_url(style: "line", sort: ItemList::Sort.ascending),
-      desc: page_url(style: "line", sort: ItemList::Sort.descending)
+      asc: page_url(
+        slug: @page.slug,
+        style: "line",
+        sort: ItemList::Sort.ascending
+      ),
+      desc: page_url(
+        slug: @page.slug,
+        style: "line",
+        sort: ItemList::Sort.descending
+      )
     },
     pageCount: (item_list.total_count / 24) + 1,
     type: container_sort_field_type(container),
