@@ -13,5 +13,6 @@
   </p>
 
 <% else %>
-  <%= render partial:'pages/content', locals: {page: @catalog.custom_root_page} %>
+  <% @page = @catalog.custom_root_page %>
+  <%= render partial:'pages/content' %>
 <% end %>
