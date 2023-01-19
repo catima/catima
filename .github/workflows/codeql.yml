@@ -1,8 +1,8 @@
-name: 'CodeQL'
+name: 'codeql'
 
 on:
   push:
-    branches: [development, master]
+    branches: [development]
   pull_request:
     branches: [development]
   schedule:
