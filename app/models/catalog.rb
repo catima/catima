@@ -143,15 +143,15 @@ class Catalog < ApplicationRecord
 
   # Return a list of users with a specific role in the current catalog
   def users_with_role(role)
-    return nil unless CatalogPermission::ROLE_OPTIONS.include? role
-
-    CatalogPermission.where(catalog_id: id, role: role).map(&:user)
+    users_with_role_in([role])
   end
 
-  def user_with_role_in(roles)
-    return nil unless (roles - CatalogPermission::ROLE_OPTIONS).empty?
+  def users_with_role_in(roles)
+    # Check that at least one given role exists (inexistant role won't be taken
+    # into consideration).
+    return nil if (roles & CatalogPermission::ROLE_OPTIONS).empty?
 
-    User.where(id: CatalogPermission.where(catalog_id: id, role: roles).map(&:user_id)).uniq
+    CatalogPermission.where(catalog_id: id, role: roles).map(&:user).compact.uniq
   end
 
   private
