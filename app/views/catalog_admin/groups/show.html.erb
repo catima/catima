@@ -16,7 +16,7 @@
 <% if @group.users.count > 0 %>
   <table class="table">
     <tbody>
-      <% @group.memberships.each do |membership| %>
+      <% @group.memberships.select{|m| !m.user.nil?}.each do |membership| %>
         <tr>
           <td><%= membership.user.email %></td>
           <td style="text-align: right;">
