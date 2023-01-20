@@ -30,7 +30,7 @@
     "leaflet-editable": "^1.2.0",
     "leaflet.markercluster": "^1.4.1",
     "leaflet.path.drag": "^0.0.6",
-    "mammoth": "https://github.com/catima/mammoth.js.git#3f64c02",
+    "mammoth": "https://github.com/catima/mammoth.js.git#0ce949b",
     "mini-css-extract-plugin": "^2.3.0",
     "moment": "^2.29.4",
     "moment-timezone": "^0.5.35",
