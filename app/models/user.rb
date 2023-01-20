@@ -134,11 +134,16 @@ class User < ApplicationRecord
 
   def destroy
     # User are only soft deleted.
-    # We reset the provider uid and name to avoid conflicts if the user
-    # creates a new account in the futur with this provider.
-    update(
-      deleted_at: current_time_from_proper_timezone, uid: nil, provider: nil
-    )
+
+    User.transaction do
+      # rubocop:disable Rails/SkipsModelValidations
+      touch(:deleted_at)
+      # rubocop:enable Rails/SkipsModelValidations
+
+      # We reset the provider uid and name to avoid conflicts if the user
+      # creates a new account in the futur with this provider.
+      update(uid: nil, provider: nil)
+    end
   end
 
   def active_for_authentication?
