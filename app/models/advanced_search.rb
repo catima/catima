@@ -26,6 +26,7 @@ class AdvancedSearch < ApplicationRecord
     :creator,
     -> { unscope(where: :deleted_at) },
     :class_name => "User",
+    inverse_of: :advanced_searches,
     optional: true
   )
   belongs_to :item_type, -> { not_deleted }

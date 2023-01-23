@@ -18,6 +18,7 @@ class SimpleSearch < ApplicationRecord
     :creator,
     -> { unscope(where: :deleted_at) },
     :class_name => "User",
+    inverse_of: :simple_searches,
     optional: true
   )
 

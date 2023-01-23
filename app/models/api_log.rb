@@ -1,5 +1,5 @@
 class APILog < ApplicationRecord
-  belongs_to :user, -> { unscope(where: :deleted_at) }
+  belongs_to :user, -> { unscope(where: :deleted_at) }, inverse_of: :api_logs
   belongs_to :catalog, optional: true
 
   scope :ordered, -> { order(created_at: :desc) }

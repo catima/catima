@@ -11,6 +11,7 @@ module Review::Macros
       :reviewer,
       -> { unscope(where: :deleted_at) },
       :class_name => "User",
+      inverse_of: :reviews,
       optional: true
     )
     validates_inclusion_of :review_status,

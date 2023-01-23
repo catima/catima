@@ -36,11 +36,17 @@ class Item < ApplicationRecord
 
   belongs_to :catalog
   belongs_to :item_type
-  belongs_to :creator, -> { unscope(where: :deleted_at) }, :class_name => "User"
+  belongs_to(
+    :creator,
+    -> { unscope(where: :deleted_at) },
+    :class_name => "User",
+    :inverse_of => :items_as_creator
+  )
   belongs_to(
     :updater,
     -> { unscope(where: :deleted_at) },
     :class_name => "User",
+    :inverse_of => :items_as_updater,
     optional: true
   )
   has_many :favorites, :dependent => :destroy

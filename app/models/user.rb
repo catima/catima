@@ -30,6 +30,7 @@ def auth_providers
   providers
 end
 
+# rubocop:disable Metrics/ClassLength
 class User < ApplicationRecord
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :trackable, :validatable
@@ -44,6 +45,7 @@ class User < ApplicationRecord
     :invited_by,
     -> { unscope(where: :deleted_at) },
     :class_name => "User",
+    inverse_of: :users_invited,
     optional: true
   )
 
@@ -53,6 +55,100 @@ class User < ApplicationRecord
   has_many :my_groups, class_name: 'Group', foreign_key: 'owner_id', dependent: :destroy, inverse_of: :owner
   has_many :memberships, dependent: :destroy
   has_many :groups, through: :memberships
+  has_many(
+    :items_as_creator,
+    class_name: 'Item',
+    foreign_key: 'creator_id',
+    dependent: :nullify,
+    inverse_of: :creator
+  )
+  has_many(
+    :items_as_updater,
+    class_name: 'Item',
+    foreign_key: 'updater_id',
+    dependent: :nullify,
+    inverse_of: :updater
+  )
+  has_many(
+    :users_invited,
+    class_name: 'User',
+    foreign_key: 'invited_by_id',
+    dependent: :nullify,
+    inverse_of: :invited_by
+  )
+  has_many(
+    :advanced_search_configurations,
+    foreign_key: 'creator_id',
+    dependent: :nullify,
+    inverse_of: :creator
+  )
+  has_many(
+    :advanced_searches,
+    foreign_key: 'creator_id',
+    dependent: :destroy,
+    inverse_of: :creator
+  )
+  has_many(
+    :simple_searches,
+    foreign_key: 'creator_id',
+    dependent: :destroy,
+    inverse_of: :creator
+  )
+  has_many(
+    :pages_as_creator,
+    class_name: 'Page',
+    foreign_key: 'creator_id',
+    dependent: :nullify,
+    inverse_of: :creator
+  )
+  has_many(
+    :pages_as_reviewer,
+    class_name: 'Page',
+    foreign_key: 'reviewer_id',
+    dependent: :nullify,
+    inverse_of: :reviewer
+  )
+  has_many(
+    :exports,
+    dependent: :nullify,
+    inverse_of: :user
+  )
+  has_many(
+    :reviews,
+    class_name: 'Item',
+    foreign_key: 'reviewer_id',
+    dependent: :nullify,
+    inverse_of: :reviewer
+  )
+  has_many(
+    :entry_logs,
+    foreign_key: :author_id,
+    # Can't be nullify (database constraint).
+    dependent: :restrict_with_exception,
+    inverse_of: :author
+  )
+  has_many(
+    :ahoy_events,
+    class_name: 'Ahoy::Event',
+    dependent: :nullify,
+    inverse_of: :user
+  )
+  has_many(
+    :ahoy_visits,
+    class_name: 'Ahoy::Visit',
+    dependent: :nullify,
+    inverse_of: :user
+  )
+  has_many(
+    :suggestions,
+    dependent: :nullify,
+    inverse_of: :user
+  )
+  has_many(
+    :api_logs,
+    dependent: :nullify,
+    inverse_of: :user
+  )
 
   accepts_nested_attributes_for :catalog_permissions
 
@@ -178,3 +274,4 @@ class User < ApplicationRecord
     self.jti ||= SecureRandom.uuid
   end
 end
+# rubocop:enable Metrics/ClassLength

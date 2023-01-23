@@ -35,6 +35,7 @@ class AdvancedSearchConfiguration < ApplicationRecord
   belongs_to(
     :creator,
     -> { unscope(where: :deleted_at) },
+    inverse_of: :advanced_search_configurations,
     :class_name => "User",
     optional: true
   )

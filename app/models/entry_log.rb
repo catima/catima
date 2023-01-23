@@ -5,6 +5,7 @@ class EntryLog < ApplicationRecord
     :author,
     -> { unscope(where: :deleted_at) },
     class_name: 'User',
+    inverse_of: :entry_logs,
     optional: true
   )
   belongs_to :related_to, polymorphic: true, optional: true
