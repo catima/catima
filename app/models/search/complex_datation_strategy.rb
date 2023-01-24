@@ -76,9 +76,9 @@ class Search::ComplexDatationStrategy < Search::BaseStrategy
 
     if is_choice
       field_condition = if components_empty?(start_date_time)
-                         "after"
-                        elsif components_empty?(end_date_time)
                           "before"
+                        elsif components_empty?(end_date_time)
+                          "after"
                         elsif end_date_time == start_date_time
                           "exact"
                         else

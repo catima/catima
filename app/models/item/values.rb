@@ -23,7 +23,11 @@ module Item::Values
     field = item_type.find_field(field) unless field.is_a? Field
 
     if for_api
-      field.field_value_for_item(self)
+      if field.is_a?(Field::ComplexDatation)
+        field.field_value_for_item(self, style: :compact, no_links: true)
+      else
+        field.field_value_for_item(self)
+      end
     else
       field.value_or_id_for_item(self)
     end

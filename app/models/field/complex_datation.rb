@@ -158,8 +158,8 @@ class Field::ComplexDatation < ::Field
     end.sum
   end
 
-  def field_value_for_item(item)
-    field_value(item, self)
+  def field_value_for_item(item, options={})
+    field_value(item, self, options)
   end
 
   def search_conditions_as_hash(locale)
