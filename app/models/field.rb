@@ -88,7 +88,11 @@ class Field < ApplicationRecord
   # Recreate cache only if the primary attribute has changed
   # after_update :recreate_cache if saved_changes.include?(:primary)
   after_save :remove_primary, :if => :primary?
-  after_save :remove_display_in_public_list, :if => :display_in_public_list?
+  after_save(
+    :remove_display_in_public_list,
+    :if => :display_in_public_list?,
+    :unless => :display_in_public_list_allowed?
+  )
 
   def log_name
     slug
@@ -441,8 +445,12 @@ class Field < ApplicationRecord
     field_set.fields.where.not(fields: { id: id }).update_all(:primary => false)
   end
 
+  def display_in_public_list_allowed?
+    human_readable?
+  end
+
   def remove_display_in_public_list
-    update(:display_in_public_list => false) unless human_readable?
+    update(:display_in_public_list => false)
   end
 
   def recreate_cache

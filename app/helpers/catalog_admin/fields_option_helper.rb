@@ -8,7 +8,13 @@ module CatalogAdmin::FieldsOptionHelper
   end
 
   def display_in_public_list_option?(field)
-    could_be_human_readable(field)
+    return true if could_be_human_readable(field)
+
+    # Image fields can always be listed in public field, although they're
+    # not human readable.
+    return true if field.is_a?(Field::Image)
+
+    false
   end
 
   def formatted_option?(field)
