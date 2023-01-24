@@ -95,7 +95,7 @@ const MultiReferenceEditor = (props) => {
 
   const _fetchItems = async (search, pageArg) => {
     if (!isFetching && loadMore) {
-      // Avoir useless API calls if there are less than 25 loaded items and the user searches
+      // Avoid useless API calls if there are less than 25 loaded items and the user searches
       if (items.length < 25 && search.length > 0) {
         let regexExp = new RegExp(search, 'i')
         setItems(
@@ -123,7 +123,7 @@ const MultiReferenceEditor = (props) => {
       if (filterAvailableInputValue === null) {
         setFilterAvailableInputValue('')
       }
-      // http://localhost:3000/react/atlastopvaud/fr/toponymes?search=qsdf&page=1
+
       let currentPage = page + 1;
       let currentItems = items;
       let itemsUrlVar = `${itemsUrl}?search=${filterAvailableInputValue}&page=${currentPage}`
@@ -158,7 +158,6 @@ const MultiReferenceEditor = (props) => {
   }
 
   function _availableRefsItemName(item) {
-    // if(typeof this.state === 'undefined') return striptags(item.default_display_name);
     if ((availableRefsSelectedFilter === null
       || item[availableRefsSelectedFilter.value] === null
       || typeof item[availableRefsSelectedFilter.value] === 'undefined'
@@ -170,7 +169,6 @@ const MultiReferenceEditor = (props) => {
   }
 
   function _selectedRefsItemName(item) {
-    // if(typeof this.state === 'undefined') return striptags(item.default_display_name);
     if ((selectedRefsSelectedFilter === null
       || item[selectedRefsSelectedFilter.value] === null
       || typeof item[selectedRefsSelectedFilter.value] === 'undefined'
@@ -209,12 +207,14 @@ const MultiReferenceEditor = (props) => {
 
   const _filterAvailableReferences = async (e) => {
     clearTimeout(timer.current);
+
     let searchTerm = e.target.value;
     if (searchTerm !== filterAvailableInputValue) {
       setLoadMore(true);
     }
     setFilterAvailableInputValue(searchTerm)
     setIsSearching(true)
+
     timer.current = setTimeout(() => {
       if (!isFetching) {
         let config = {
@@ -282,24 +282,10 @@ const MultiReferenceEditor = (props) => {
     if (item.default_display_name === null) {
       return null;
     }
+
     const itemDivId = `${srcId}-${item.id}`;
-    if (selectedItemsArg == false && selectedItems.indexOf(item.id) > -1) return null;
-    if (selectedItemsArg == true && selectedItems.indexOf(item.id) == -1) return null;
-    // Filtering the unselected items ItemList
-    if (selectedItemsArg == false && filterAvailableInputValue !== '') {
-      let isInString = -1;
-      if (availableRefsSelectedFilter !== null) {
-        if (item[availableRefsSelectedFilter.value] !== null && item[availableRefsSelectedFilter.value].length !== 0) {
-          let searchString = item.default_display_name.toLowerCase() + ' - ' + JSON.stringify(item[availableRefsSelectedFilter.value]).toLowerCase();
-          isInString = searchString.indexOf(filterAvailableInputValue.toLowerCase());
-        } else {
-          isInString = item.default_display_name.toLowerCase().indexOf(filterAvailableInputValue.toLowerCase());
-        }
-      } else {
-        isInString = item.default_display_name.toLowerCase().indexOf(filterAvailableInputValue.toLowerCase());
-      }
-      if (isInString === -1) return null;
-    }
+    if (selectedItemsArg === false && selectedItems.indexOf(item.id) > -1) return null;
+    if (selectedItemsArg === true && selectedItems.indexOf(item.id) === -1) return null;
 
     return (
       <div id={itemDivId} key={itemDivId} className="item" onClick={_highlightItem}>
@@ -310,20 +296,6 @@ const MultiReferenceEditor = (props) => {
 
   function renderSelectedItemDiv(item) {
     const itemDivId = `${srcId}-${item.id}`;
-    // Filtering the selected items ItemList
-    if (filterSelectedInputValue !== '') {
-      let isInString = -1;
-      if (selectedRefsSelectedFilter !== null &&
-        item[selectedRefsSelectedFilter.value] !== null &&
-        item[selectedRefsSelectedFilter.value].length !== 0
-      ) {
-        let searchString = item.default_display_name.toLowerCase() + ' - ' + JSON.stringify(item[selectedRefsSelectedFilter.value]).toLowerCase();
-        isInString = searchString.indexOf(filterSelectedInputValue.toLowerCase());
-      } else {
-        isInString = item.default_display_name.toLowerCase().indexOf(filterSelectedInputValue.toLowerCase());
-      }
-      if (isInString === -1) return null;
-    }
 
     return (
       <div id={itemDivId} key={itemDivId} className="item" onClick={_highlightItem}>
