@@ -54,6 +54,8 @@ class Field::ComplexDatation < ::Field
 
   def csv_value(item, _user=nil)
     value = raw_value(item)
+    return '' unless value && value["selected_format"]
+
     case value["selected_format"]
     when 'date_time'
       Field::ComplexDatationPresenter.new(nil, item, self).value

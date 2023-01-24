@@ -518,7 +518,6 @@ const RenderChoiceSetInput = (props) => {
 
     return (
         <div>
-            <small className="text-sm-center">{name}</small>
             <div className="dateTimeInput  row rails-bootstrap-forms-datetime-select" style={{display: 'flex'}}>
                 <div className="col-sm-8">
                     <div style={{width: '100%'}}>

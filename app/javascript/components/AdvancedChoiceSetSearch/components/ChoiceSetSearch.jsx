@@ -286,6 +286,9 @@ const ChoiceSetSearch = (props) => {
             isClearable={true}
             isMulti={false}
             loadingMessage={() => searchPlaceholder}
+            searchingMessage={() => searchPlaceholder}
+            placeholder={ Translations.messages['select_placeholder'] }
+            noOptionsMessage={() => Translations.messages['no_options']}
             additional={{
               page: 1,
             }}

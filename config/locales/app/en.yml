@@ -468,6 +468,8 @@ en:
   deactivate: Deactivate
   reactivate: Reactivate
   loading: Loading
+  no_options: "No Options"
+  select_placeholder: "Select a value"
   add_field: Add field
   item_link: Item link
 

@@ -18,10 +18,9 @@ class Field::ChoiceSetPresenter < FieldPresenter
         browse_similar_items_link(
           choice_prefixed_label(choice, format: :long), item, field, value_slug
         ),
-        choice_prefixed_label(choice, format: :long)
+        choice.parent_id? ? choice_prefixed_label(choice, format: :long) : choice.long_display_name
       ]
     end
-
     if links_and_prefixed_names.size >= 1 && options[:style] != :compact
       tag.div(
         links_and_prefixed_names.map do |link, prefixed_link|
@@ -35,7 +34,11 @@ class Field::ChoiceSetPresenter < FieldPresenter
         end.join(" ").html_safe
       )
     else
-      links_and_prefixed_names.map(&:first).join(", ").html_safe
+      if options[:no_links] == true
+        choices.map{|choice| choice.short_name}.join(',')
+      else
+        links_and_prefixed_names.map(&:first).join(", ").html_safe
+      end
     end
   end
 end

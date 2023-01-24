@@ -84,7 +84,9 @@ const RenderChoiceSetInput = (props) => {
     const [selectedChoices, setSelectedChoices] = useState({value: selectedChoicesValueProps})
 
     const [choices, setChoices] = useState([])
-    const [loadingMessage, setLoadingMessage] = useState(Translations.messages['active_record.loading'])
+    const [loadingMessage, setLoadingMessage] = useState(Translations.messages['loading'])
+    const [noOptionsMessage, setNoOptionsMessage] = useState(Translations.messages['no_options'])
+    const [placeHolderMessage, setPlaceHolderMessage] = useState(Translations.messages['select_placeholder'])
     const [isInitialized, _setIsInitialized] = useState(false)
     const [optionsList, setOptionsList] = useState([])
     const [modalIndex, setModalIndex] = useState(1)
@@ -190,10 +192,8 @@ const RenderChoiceSetInput = (props) => {
             };
         }
     }
-
     return (
         <div>
-            <small className="text-sm-center">{name}</small>
             <div className="row" style={{display: 'flex'}}>
                 <div className="col-sm-8">
                     <div style={{width: '100%'}}>
@@ -206,6 +206,9 @@ const RenderChoiceSetInput = (props) => {
                             isClearable={true}
                             isMulti={choiceSet.multiple}
                             loadingMessage={() => loadingMessage}
+                            searchingMessage={() => loadingMessage}
+                            placeholder={ placeHolderMessage }
+                            noOptionsMessage={() => noOptionsMessage}
                             additional={{
                                 page: 1,
                             }}

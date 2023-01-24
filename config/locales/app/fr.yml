@@ -474,6 +474,8 @@ fr:
   and: et
   exclude: sauf
   loading: Chargement
+  no_options: "Pas d'options"
+  select_placeholder: "Selectionnez une valeur"
   add_field: Ajouter un champ
   item_link: Lien de la fiche
 

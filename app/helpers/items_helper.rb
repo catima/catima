@@ -62,7 +62,7 @@ module ItemsHelper
       next unless fld.human_readable? || fld.filterable?
 
       # Remove all html tags
-      value = strip_tags(field_value(item, fld, :style => :compact))
+      value = strip_tags(field_value(item, fld, :style => :compact, :no_links => true))
 
       # Remove field if value is blank
       next if value.blank?
