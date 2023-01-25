@@ -6,7 +6,7 @@ import LoadingDots from '../../StyleControl/components/LoadingDots';
 import Validation from "../modules/validation";
 import {loadingDotsStyle, filterDropdownStyle} from '../modules/styles';
 
-const WAIT_INTERVAL = 800;
+const WAIT_INTERVAL = 1000;
 
 const MultiReferenceEditor = (props) => {
   const {
@@ -121,7 +121,7 @@ const MultiReferenceEditor = (props) => {
       setIsFetching(true)
 
       if (filterAvailableInputValue === null) {
-        setFilterAvailableInputValue('')
+        setFilterAvailableInputValue('');
       }
 
       let currentPage = page + 1;
@@ -214,6 +214,8 @@ const MultiReferenceEditor = (props) => {
     }
     setFilterAvailableInputValue(searchTerm)
     setIsSearching(true)
+    // Reset pagination on value change
+    setPage(1);
 
     timer.current = setTimeout(() => {
       if (!isFetching) {
@@ -222,11 +224,11 @@ const MultiReferenceEditor = (props) => {
           retryDelay: 1000,
         };
 
-        let currentPage = 1
         if (filterAvailableInputValue === null) {
           setFilterAvailableInputValue('');
         }
-        let itemsUrlVar = `${itemsUrl}?search=${searchTerm}&page=${currentPage}`
+
+        let itemsUrlVar = `${itemsUrl}?search=${searchTerm}&page=${page}`
         selectedItems.forEach((itemId) => {
           itemsUrlVar = itemsUrlVar + `&except[]=${itemId}`
         });
