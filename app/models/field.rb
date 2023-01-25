@@ -91,7 +91,7 @@ class Field < ApplicationRecord
   after_save(
     :remove_display_in_public_list,
     :if => :display_in_public_list?,
-    :unless => :display_in_public_list_allowed?
+    :unless => :displayable_in_public_list?
   )
 
   def log_name
@@ -224,6 +224,13 @@ class Field < ApplicationRecord
   # Whether or not this field supports the `unique` option. Subclasses may override.
   def allows_unique?
     true
+  end
+
+  # Whether or not this field can be displayed in the public list view.
+  # Override for allowing a field to be displayed in the public list view
+  # although it's not human readable.
+  def displayable_in_public_list?
+    human_readable?
   end
 
   def raw_value(item, locale=I18n.locale, suffix="")
@@ -443,10 +450,6 @@ class Field < ApplicationRecord
 
     # Remove primary from other fields if current field is human readable
     field_set.fields.where.not(fields: { id: id }).update_all(:primary => false)
-  end
-
-  def display_in_public_list_allowed?
-    human_readable?
   end
 
   def remove_display_in_public_list

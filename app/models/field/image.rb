@@ -78,7 +78,7 @@ class Field::Image < ::Field::File
     "JSON"
   end
 
-  def display_in_public_list_allowed?
+  def displayable_in_public_list?
     true
   end
 
