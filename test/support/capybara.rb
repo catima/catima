@@ -1,12 +1,34 @@
 # Capybara + Selenium Chrome allow JS testing via headless webkit
 require "capybara/rails"
-Capybara.javascript_driver = :chrome
 
-Capybara.register_driver :chrome do |app|
+if ENV['DOCKER_RUNNING'].present?
+  Capybara.javascript_driver = :remote_chrome
+  Capybara.configure do |config|
+    config.server = :puma, { Silent: true }
+    config.server_host = "catima-app"
+    config.server_port = 4000
+  end
+else
+  Capybara.javascript_driver = :chrome
+end
+
+def driver_params
   arguments = %w[disable-gpu]
   arguments.push("headless") unless ENV['HEADLESS'] == "0"
-  opts = Selenium::WebDriver::Chrome::Options.new(args: arguments)
-  Capybara::Selenium::Driver.new(app, browser: :chrome, options: opts)
+  {
+    browser: :chrome,
+    options: Selenium::WebDriver::Chrome::Options.new(args: arguments)
+  }
+end
+
+Capybara.register_driver :chrome do |app|
+  Capybara::Selenium::Driver.new(app, **driver_params)
+end
+
+Capybara.register_driver :remote_chrome do |app|
+  Capybara::Selenium::Driver.new(
+    app, url: "http://catima-selenium:4444/wd/hub", **driver_params
+  )
 end
 
 class ActionDispatch::IntegrationTest

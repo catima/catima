@@ -76,6 +76,8 @@ end
 group :development, :test do
   gem "simplecov", "~> 0.20", :require => false
   gem "byebug", "~> 11.1.3"
+  gem "webdrivers", "~> 4.4"
+  gem "selenium-webdriver", "~> 3.142"
 end
 
 group :development do
@@ -106,7 +108,6 @@ end
 
 group :test do
   gem "capybara", "~> 3.34"
-  gem "webdrivers", "~> 4.4"
   gem "connection_pool", "~> 2.2"
   gem "json_schema", "~> 0.20"
   gem "launchy", "~> 2.5"
@@ -114,7 +115,6 @@ group :test do
   gem "mocha", "~> 1.11"
   gem "puma", "~> 5.6"
   gem "pry", "~> 0.13"
-  gem "selenium-webdriver", "~> 3.142"
   gem "shoulda-context", "~> 2.0"
   gem "shoulda-matchers", "~> 5.1"
   gem "vcr", "~> 6.0"
