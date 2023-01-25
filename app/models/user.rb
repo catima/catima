@@ -51,7 +51,7 @@ class User < ApplicationRecord
 
   has_many :catalog_permissions, :dependent => :destroy
   has_many :favorites, :dependent => :destroy
-  has_many :searches, :dependent => :destroy
+  has_many :searches, dependent: :nullify, inverse_of: :user
   has_many :my_groups, class_name: 'Group', foreign_key: 'owner_id', dependent: :destroy, inverse_of: :owner
   has_many :memberships, dependent: :destroy
   has_many :groups, through: :memberships
@@ -85,13 +85,13 @@ class User < ApplicationRecord
   has_many(
     :advanced_searches,
     foreign_key: 'creator_id',
-    dependent: :destroy,
+    dependent: :nullify,
     inverse_of: :creator
   )
   has_many(
     :simple_searches,
     foreign_key: 'creator_id',
-    dependent: :destroy,
+    dependent: :nullify,
     inverse_of: :creator
   )
   has_many(
