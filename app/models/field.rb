@@ -88,7 +88,11 @@ class Field < ApplicationRecord
   # Recreate cache only if the primary attribute has changed
   # after_update :recreate_cache if saved_changes.include?(:primary)
   after_save :remove_primary, :if => :primary?
-  after_save :remove_display_in_public_list, :if => :display_in_public_list?
+  after_save(
+    :remove_display_in_public_list,
+    :if => :display_in_public_list?,
+    :unless => :displayable_in_public_list?
+  )
 
   def log_name
     slug
@@ -220,6 +224,13 @@ class Field < ApplicationRecord
   # Whether or not this field supports the `unique` option. Subclasses may override.
   def allows_unique?
     true
+  end
+
+  # Whether or not this field can be displayed in the public list view.
+  # Override for allowing a field to be displayed in the public list view
+  # although it's not human readable.
+  def displayable_in_public_list?
+    human_readable?
   end
 
   def raw_value(item, locale=I18n.locale, suffix="")
@@ -442,7 +453,7 @@ class Field < ApplicationRecord
   end
 
   def remove_display_in_public_list
-    update(:display_in_public_list => false) unless human_readable?
+    update(:display_in_public_list => false)
   end
 
   def recreate_cache

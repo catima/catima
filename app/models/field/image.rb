@@ -78,6 +78,10 @@ class Field::Image < ::Field::File
     "JSON"
   end
 
+  def displayable_in_public_list?
+    true
+  end
+
   private
 
   def set_default_types
