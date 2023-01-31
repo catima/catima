@@ -77,7 +77,7 @@ group :development, :test do
   gem "simplecov", "~> 0.20", :require => false
   gem "byebug", "~> 11.1.3"
   gem "webdrivers", "~> 4.4"
-  gem "selenium-webdriver", "~> 3.142"
+  gem "selenium-webdriver", "~> 4.7.1"
 end
 
 group :development do
