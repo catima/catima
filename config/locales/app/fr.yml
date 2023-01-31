@@ -783,6 +783,8 @@ fr:
         auto_increment: "Numéro de série automatique"
       reference_option_inputs:
         reference: Référence
+      reference_editor:
+        load_more: Afficher plus...
       editor_option_inputs:
         warning: <strong>Attention!</strong> Veuillez noter que ce champ va automatiquement afficher l'adresse mail des éditeurs.
       table:

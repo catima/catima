@@ -8,7 +8,10 @@ const BounceAnimation = keyframes`
 const DotWrapper = styled.div`
   display: flex;
   align-items: flex-end;
+  justify-content: center;
   height: 20px;
+  padding-top: 20px;
+  padding-bottom: 20px;
 `;
 
 const Dot = styled.span`

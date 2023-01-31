@@ -13,8 +13,17 @@ class CatalogAdmin::ItemMultipleReferenceTest < ActionDispatch::IntegrationTest
       find("input", :wait => 30).set("king")
     end
 
-    assert(find("#item_one_author_other_collaborators_uuid_json-editor").has_text?("King", :count => 1))
-    refute(find("#item_one_author_other_collaborators_uuid_json-editor").has_text?("Old"))
+    within(".availableReferences") do
+      # Available reference which correspond to the current fulltext search
+      assert(page.has_text?("King"))
+      # Available reference which doesn't correspond to the current fulltext search
+      assert(page.has_no_text?("Old"))
+    end
+
+    within(".selectedReferences") do
+      # Already selected reference which shouldn't be impacted by the current fulltext search
+      assert(page.has_text?("Young"))
+    end
   end
 
   test "paginates without filter" do
@@ -53,7 +62,10 @@ class CatalogAdmin::ItemMultipleReferenceTest < ActionDispatch::IntegrationTest
     visit("/one/en/admin/authors/#{author.to_param}/edit")
 
     assert(page.has_css?(".availableReferences", :wait => 30))
-    page.execute_script("document.getElementsByClassName('availableReferences')[0].scrollTop = 10000;")
+
+    within(".availableReferences", :wait => 30) do
+      find(".load-more").click
+    end
 
     find("div.item", text: "Stephen King").click
     find("#item_one_author_other_collaborators_uuid_json-editor-select").click
