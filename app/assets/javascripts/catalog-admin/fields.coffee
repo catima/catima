@@ -2,6 +2,9 @@ is_checked = (field_id) ->
   $field = $("##{field_id}")
   $field.length && $field[0].checked
 
+not_filterable = ->
+  !JSON.parse($("#field_filterable").val())
+
 manage_states = ->
   # Enable or disable fields according to their "policies" (see fields_disabled_policies).
   for field_id, func_should_be_disabled of fields_disabled_policies
@@ -18,13 +21,12 @@ manage_states = ->
 # must be enabled or disabled as value.
 fields_disabled_policies = {
   field_formatted_text: ->
-    is_checked('field_primary') || is_checked('field_display_in_public_list')
+    is_checked('field_primary')
   ,
   field_primary: ->
     is_checked('field_formatted_text') || is_checked('field_restricted')
   ,
   field_restricted: -> is_checked('field_primary'),
-  field_display_in_public_list: -> is_checked('field_formatted_text'),
   field_default_value: -> is_checked('field_auto_increment')
 }
 

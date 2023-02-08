@@ -6,6 +6,7 @@
       :url => { :action => :update }
       ) do |f| %>
   <%= render("common_form_fields", :f => f) %>
+  <%= f.hidden_field(:filterable?) %>
 <% end %>
 
 <%= render_catalog_admin_fields_modals(@field) %>

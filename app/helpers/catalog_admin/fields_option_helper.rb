@@ -14,6 +14,8 @@ module CatalogAdmin::FieldsOptionHelper
     # not human readable.
     return true if field.is_a?(Field::Image)
 
+    return true if field.filterable?
+
     false
   end
 
