@@ -4,6 +4,10 @@ class DisableFieldPublicListViewIfFormattedText < ActiveRecord::Migration[6.1]
   # The first version was not correct because it set "display_in_public_list" to
   # false to all image fields and should not have.
   #
+  # The second version was also incorrect. The filterable fields are still
+  # displayed in summary although they're not human readable.
+  # The formatting is removed when the field is displayed.
+  #
   # We must be careful that in-between the creation and the correction of this
   # migration, doing migrations will lead to incorrect data.
   #
@@ -14,6 +18,8 @@ class DisableFieldPublicListViewIfFormattedText < ActiveRecord::Migration[6.1]
     # must be human readable. Set this option to false if it's not the case.
     Field.where(display_in_public_list: true).find_each do |field|
       next if field.human_readable?
+
+      next if field.filterable?
 
       next if field.is_a?(Field::Image)
 

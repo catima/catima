@@ -228,9 +228,11 @@ class Field < ApplicationRecord
 
   # Whether or not this field can be displayed in the public list view.
   # Override for allowing a field to be displayed in the public list view
-  # although it's not human readable.
+  # although it's not human readable nor filterable.
   def displayable_in_public_list?
-    human_readable?
+    return true if human_readable?
+
+    return true if filterable?
   end
 
   def raw_value(item, locale=I18n.locale, suffix="")
