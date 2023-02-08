@@ -808,7 +808,7 @@ fr:
         import_error_not_supported: Erreur lors de l'importation du fichier Word. Seuls les fichiers DOCX sont supportés.
         import_error: Erreur lors de l'importation du fichier Word.
         help_formatted_text_title: Restrictions du texte formaté
-        help_formatterd_text_content: Uniquement disponible si les options "champ primaire" et "inclure dans la liste des fiches en mode consultation" sont désactivées
+        help_formatterd_text_content: Uniquement disponible si l'option "champ primaire" est désactivée
       xref_option_inputs:
         url: "URL Xref"
         url_help: "URL complète du service externe"
