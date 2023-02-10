@@ -12,7 +12,7 @@ class CatalogAdmin::FieldsComponentsTest < ActionDispatch::IntegrationTest
     sleep 2
 
     assert(page.has_selector?('div.ql-editor'))
-    find('div.ql-editor').base.send_keys('Hello world')
+    find('div.ql-editor').base.send_keys(' and interesting')
     within('#item_one_book_author_uuid_json-editor') do
       find(".css-g1d714-ValueContainer").click # Click on the filter input
       sleep(2)
@@ -26,7 +26,7 @@ class CatalogAdmin::FieldsComponentsTest < ActionDispatch::IntegrationTest
 
     b = book.reload
     c = JSON.parse(b.data['one_book_notes_uuid'])
-    assert_equal(c["content"], "<p style=\"display:none;\"></p><p>Hello world</p><p style=\"display:none;\"></p>")
+    assert_equal(c["content"], "<p style=\"display:none;\"></p><p>Very good book and interesting</p><p style=\"display:none;\"></p>")
   end
 
   test "multilingual required formatted text component shows error message" do
