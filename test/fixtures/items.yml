@@ -156,7 +156,8 @@ one_book_end_of_watch:
   item_type: one_book
   data: {
     "one_book_title_uuid": "End of Watch",
-    "one_book_author_uuid": one_author_very_young
+    "one_book_author_uuid": one_author_very_young,
+    "one_book_notes_uuid": "Very good book"
   }
 
 one_book_finders_keepers:

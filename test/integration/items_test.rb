@@ -153,6 +153,53 @@ class ItemsTest < ActionDispatch::IntegrationTest
     assert(page.has_content?("Accord"))
   end
 
+  test "checks various tests cases for summary view" do
+    # These tests aim to prevent logic modifications of what should be displayed
+    # or not in summary view. You should always be able to display Text, Image,
+    # and Choice fields in the public list view.
+
+    # Test that formatted text fields is displayed in summary view while
+    # filterable but not human readable.
+    book_note = fields(:one_book_notes)
+    refute(book_note.human_readable?)
+    assert(book_note.filterable?)
+    visit("/one/en/books")
+    assert(page.has_content?("Very good book"))
+
+    # The following case can't happens with the current model validation.
+    # Even with display_in_public_list to true, fields that are neither human
+    # readable nor filterable should not be displayed in summary view.
+    one_author_compound = fields(:one_author_compound)
+
+    # rubocop:disable Rails/SkipsModelValidations
+    # Skip after_save callback that overwrite display_in_public_list to be false.
+    one_author_compound.update_columns(display_in_public_list: true)
+    # rubocop:enable Rails/SkipsModelValidations
+
+    visit("/one/en/authors")
+    refute(page.has_content?("Compound:"))
+
+    # Test that choices linked to a category are displayed in public list while
+    # human readable but not filterable.
+    author_language = fields(:one_author_language)
+    assert(author_language.human_readable?)
+    refute(author_language.filterable?)
+    assert(page.has_content?("Language: Spanish;"))
+
+    # Test that not displayed in public list will not shown on summary view
+    # altough filterable and human readable.
+    author_age = fields(:one_author_age)
+    assert(author_age.human_readable?)
+    assert(author_age.filterable?)
+    refute(page.has_content?("Age:"))
+
+    # Images can be displayed in public list while neither human readable nor
+    # filterable.
+    author_picture = fields(:one_author_picture)
+    assert(author_picture.display_in_public_list)
+    assert(page.body.include?("authors/picture.jpg"))
+  end
+
   private
 
   def apply_vehicle_styles
