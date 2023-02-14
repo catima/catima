@@ -15,7 +15,12 @@
 #
 
 class Group < ApplicationRecord
-  belongs_to :owner, class_name: 'User'
+  belongs_to(
+    :owner,
+    -> { unscope(where: :deleted_at) },
+    class_name: 'User',
+    :inverse_of => :my_groups
+  )
   belongs_to :catalog
 
   has_many :memberships, dependent: :destroy

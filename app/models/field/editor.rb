@@ -42,17 +42,17 @@ class Field::Editor < ::Field
   def original_editor(user_id)
     return nil if user_id.blank?
 
-    ::User.find_by(id: user_id)
+    ::User.with_deleted.find_by(id: user_id)
   end
 
   def last_editor(user_id)
     return nil if user_id.blank?
 
-    ::User.find_by(id: user_id)
+    ::User.with_deleted.find_by(id: user_id)
   end
 
   def field_value_for_item(item)
-    user = ::User.find_by(id: item.updater_id)
+    user = ::User.with_deleted.find_by(id: item.updater_id)
 
     user.email if user.present?
   end

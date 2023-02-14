@@ -14,7 +14,13 @@
 
 class SimpleSearch < ApplicationRecord
   belongs_to :catalog
-  belongs_to :creator, :class_name => "User", optional: true
+  belongs_to(
+    :creator,
+    -> { unscope(where: :deleted_at) },
+    :class_name => "User",
+    inverse_of: :simple_searches,
+    optional: true
+  )
 
   has_one :search, :as => :related_search, dependent: :destroy
 

@@ -16,7 +16,11 @@ class Search < ApplicationRecord
   delegate :locale, :to => :related_search
   delegate :uuid, :to => :related_search
 
-  belongs_to :user
+  belongs_to(
+    :user,
+    -> { unscope(where: :deleted_at) },
+    inverse_of: :searches
+  )
   belongs_to :related_search, polymorphic: true
 
   validates_presence_of :user

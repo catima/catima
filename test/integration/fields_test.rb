@@ -90,4 +90,12 @@ class FieldsTest < ActionDispatch::IntegrationTest
       assert(page.has_content?(Time.current.year.to_s))
     end
   end
+
+  test "view item with deleted editor" do
+    visit("/one/en/other-books/#{items(:one_book_mister_nobody).to_param}")
+
+    within("body>.container") do
+      assert(page.has_content?(users(:one_user_deleted).email))
+    end
+  end
 end

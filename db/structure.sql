@@ -1149,7 +1149,8 @@ CREATE TABLE public.users (
     invited_by_id integer,
     provider character varying,
     uid character varying,
-    jti character varying NOT NULL
+    jti character varying NOT NULL,
+    deleted_at timestamp without time zone
 );
 
 
@@ -2095,7 +2096,7 @@ CREATE INDEX index_suggestions_on_user_id ON public.suggestions USING btree (use
 -- Name: index_users_on_email; Type: INDEX; Schema: public; Owner: -
 --
 
-CREATE UNIQUE INDEX index_users_on_email ON public.users USING btree (email);
+CREATE UNIQUE INDEX index_users_on_email ON public.users USING btree (email) WHERE (deleted_at IS NULL);
 
 
 --
@@ -2609,6 +2610,8 @@ INSERT INTO "schema_migrations" (version) VALUES
 ('20221019095247'),
 ('20221020104722'),
 ('20221206144023'),
-('20221221153045');
+('20221221153045'),
+('20230109140802'),
+('20230113103454');
 
 

@@ -30,6 +30,7 @@ def auth_providers
   providers
 end
 
+# rubocop:disable Metrics/ClassLength
 class User < ApplicationRecord
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :trackable, :validatable
@@ -38,20 +39,125 @@ class User < ApplicationRecord
 
   include User::Roles
   include AvailableLocales
+  include HasDeletion
 
-  belongs_to :invited_by, :class_name => "User", optional: true
+  belongs_to(
+    :invited_by,
+    -> { unscope(where: :deleted_at) },
+    :class_name => "User",
+    inverse_of: :users_invited,
+    optional: true
+  )
 
   has_many :catalog_permissions, :dependent => :destroy
   has_many :favorites, :dependent => :destroy
-  has_many :searches, :dependent => :destroy
+  has_many :searches, dependent: :nullify, inverse_of: :user
   has_many :my_groups, class_name: 'Group', foreign_key: 'owner_id', dependent: :destroy, inverse_of: :owner
   has_many :memberships, dependent: :destroy
   has_many :groups, through: :memberships
+  has_many(
+    :items_as_creator,
+    class_name: 'Item',
+    foreign_key: 'creator_id',
+    dependent: :nullify,
+    inverse_of: :creator
+  )
+  has_many(
+    :items_as_updater,
+    class_name: 'Item',
+    foreign_key: 'updater_id',
+    dependent: :nullify,
+    inverse_of: :updater
+  )
+  has_many(
+    :users_invited,
+    class_name: 'User',
+    foreign_key: 'invited_by_id',
+    dependent: :nullify,
+    inverse_of: :invited_by
+  )
+  has_many(
+    :advanced_search_configurations,
+    foreign_key: 'creator_id',
+    dependent: :nullify,
+    inverse_of: :creator
+  )
+  has_many(
+    :advanced_searches,
+    foreign_key: 'creator_id',
+    dependent: :nullify,
+    inverse_of: :creator
+  )
+  has_many(
+    :simple_searches,
+    foreign_key: 'creator_id',
+    dependent: :nullify,
+    inverse_of: :creator
+  )
+  has_many(
+    :pages_as_creator,
+    class_name: 'Page',
+    foreign_key: 'creator_id',
+    dependent: :nullify,
+    inverse_of: :creator
+  )
+  has_many(
+    :pages_as_reviewer,
+    class_name: 'Page',
+    foreign_key: 'reviewer_id',
+    dependent: :nullify,
+    inverse_of: :reviewer
+  )
+  has_many(
+    :exports,
+    dependent: :nullify,
+    inverse_of: :user
+  )
+  has_many(
+    :reviews,
+    class_name: 'Item',
+    foreign_key: 'reviewer_id',
+    dependent: :nullify,
+    inverse_of: :reviewer
+  )
+  has_many(
+    :entry_logs,
+    foreign_key: :author_id,
+    # Can't be nullify (database constraint).
+    dependent: :restrict_with_exception,
+    inverse_of: :author
+  )
+  has_many(
+    :ahoy_events,
+    class_name: 'Ahoy::Event',
+    dependent: :nullify,
+    inverse_of: :user
+  )
+  has_many(
+    :ahoy_visits,
+    class_name: 'Ahoy::Visit',
+    dependent: :nullify,
+    inverse_of: :user
+  )
+  has_many(
+    :suggestions,
+    dependent: :nullify,
+    inverse_of: :user
+  )
+  has_many(
+    :api_logs,
+    dependent: :nullify,
+    inverse_of: :user
+  )
 
   accepts_nested_attributes_for :catalog_permissions
 
   validates_presence_of :primary_language
   validates_inclusion_of :primary_language, :in => :available_locales
+  validates_uniqueness_of :email, scope: [:deleted_at]
+
+  default_scope { not_deleted }
+  scope :with_deleted, -> { unscope(where: :deleted_at) }
 
   before_create :set_jti_uuid
 
@@ -122,9 +228,50 @@ class User < ApplicationRecord
     Catalog.where(id: catalog_ids)
   end
 
+  def destroy
+    # User are only soft deleted.
+
+    User.transaction do
+      # rubocop:disable Rails/SkipsModelValidations
+      touch(:deleted_at)
+      # rubocop:enable Rails/SkipsModelValidations
+
+      # We reset the provider uid and name to avoid conflicts if the user
+      # creates a new account in the futur with this provider.
+      update(uid: nil, provider: nil)
+    end
+  end
+
+  def active_for_authentication?
+    # Overrided from Devise :authenticatable module.
+    # This allow to check each requests if the user is still autorized to be
+    # authenticated (not blocked, still active, etc).
+    # We add not_deleted to the list of checks.
+    # Note: This isn't mandatory because the default scope will already filter
+    # who can log-in and who can't. It's there only for Devise to be in line with
+    # the deleted_at philosophy (and 2 two checks is better than one).
+    super && not_deleted?
+  end
+
+  def inactive_message
+    # Overrided from Devise :authenticatable module.
+    # This message is used when :active_for_authentication? return false.
+    # If the user is deleted, we display an invalid credentials message instead
+    # of a not active account message.
+    not_deleted? ? super : :invalid
+  end
+
+  def will_save_change_to_email?
+    # Overrided from :validatable module to remove the validation of the
+    # uniqueness of the email. It is used when we want to create a new user
+    # with the same email as a deleted user.
+    false
+  end
+
   private
 
   def set_jti_uuid
     self.jti ||= SecureRandom.uuid
   end
 end
+# rubocop:enable Metrics/ClassLength

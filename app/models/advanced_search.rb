@@ -22,7 +22,13 @@ class AdvancedSearch < ApplicationRecord
   delegate :item_types, :to => :catalog
 
   belongs_to :catalog
-  belongs_to :creator, :class_name => "User", optional: true
+  belongs_to(
+    :creator,
+    -> { unscope(where: :deleted_at) },
+    :class_name => "User",
+    inverse_of: :advanced_searches,
+    optional: true
+  )
   belongs_to :item_type, -> { not_deleted }
 
   has_one :search, :as => :related_search, dependent: :destroy
@@ -33,8 +39,7 @@ class AdvancedSearch < ApplicationRecord
   before_create :assign_locale
   before_create :assign_uuid
 
-  attr_accessor :field_condition
-  attr_accessor :exclude_condition
+  attr_accessor :field_condition, :exclude_condition
 
   def to_param
     uuid

@@ -21,8 +21,19 @@ class Page < ApplicationRecord
   include Clone
 
   belongs_to :catalog
-  belongs_to :creator, :class_name => "User"
-  belongs_to :reviewer, :class_name => "User", optional: true
+  belongs_to(
+    :creator,
+    -> { unscope(where: :deleted_at) },
+    :class_name => "User",
+    :inverse_of => :pages_as_creator
+  )
+  belongs_to(
+    :reviewer,
+    -> { unscope(where: :deleted_at) },
+    :class_name => "User",
+    :inverse_of => :pages_as_reviewer,
+    optional: true
+  )
 
   has_many :containers, :dependent => :destroy
   has_many :menu_items, :dependent => :destroy

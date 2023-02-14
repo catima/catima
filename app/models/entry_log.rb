@@ -1,7 +1,13 @@
 class EntryLog < ApplicationRecord
   belongs_to :catalog
   belongs_to :subject, polymorphic: true
-  belongs_to :author, class_name: 'User', optional: true
+  belongs_to(
+    :author,
+    -> { unscope(where: :deleted_at) },
+    class_name: 'User',
+    inverse_of: :entry_logs,
+    optional: true
+  )
   belongs_to :related_to, polymorphic: true, optional: true
 
   scope :ordered, -> { order(created_at: :desc) }
