@@ -135,7 +135,7 @@ const RenderChoiceSetInput = (props) => {
         setSelectedChoices({...selectedChoices, value: value});
         if (value?.length || value) {
             updateChoiceData(Array.isArray(value) ? value.map(v => v.value) : value.value)
-            updateInputCategoryDataAttributes(value)
+            updateInputCategoryDataAttributes(Array.isArray(value) ? value : [value])
         } else {
             updateChoiceData([])
             updateInputCategoryDataAttributes()
