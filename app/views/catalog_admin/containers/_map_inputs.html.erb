@@ -1,35 +1,34 @@
-<% if catalog.item_types.any? %>
-  <%= f.collection_select(
-      :item_type,
-      catalog.item_types.select { |it| it.fields.where(:type => 'Field::Geometry').count > 0 },
-      :id,
-      :name,
-      {:include_blank => false}
-    ) %>
-
-  <%= f.form_group(
-      :layers,
-      :help => t("catalog_admin.fields.geometry_option_inputs.layers_help")
-  ) do %>
-    <label class="control-label" for="container_layers"><%= t("catalog_admin.fields.geometry_option_inputs.layers") %></label>
-    <%= f.hidden_field(:layers) %>
-    <%= react_component('GeoEditor/components/GeoLayers',
-      {
-        layers: f.object.geo_layers,
-        options: load_geo_layers,
-        inputId: "container_layers",
-        placeholder: t("catalog_admin.fields.geometry_option_inputs.layers_component_placeholder"),
-        noOptionsMessage: t("catalog_admin.fields.geometry_option_inputs.layers_component_no_options")
-      }) %>
-  <% end %>
-
-  <%= f.number_field(
-        :height,
-        :label => t('.height_label'),
-        :help => t('.height_default', height: Container::Map::DEFAULT_MAP_HEIGHT)
-      ) %>
-<% else %>
-  <div class="alert alert-warning">
+<%= f.collection_select(
+    :item_type,
+    catalog.item_types.select { |it| it.fields.where(:type => 'Field::Geometry').count > 0 },
+    :id,
+    :name,
+    {:include_blank => false}
+  ) %>
+<% unless catalog.item_types.any? %>
+  <div class="alert alert-warning mt-3">
     <%= t('catalog_admin.containers.item_type_warning') %>
   </div>
 <% end %>
+
+<%= f.form_group(
+    :layers,
+    :help => t("catalog_admin.fields.geometry_option_inputs.layers_help")
+) do %>
+  <label class="control-label" for="container_layers"><%= t("catalog_admin.fields.geometry_option_inputs.layers") %></label>
+  <%= f.hidden_field(:layers) %>
+  <%= react_component('GeoEditor/components/GeoLayers',
+    {
+      layers: f.object.geo_layers,
+      options: load_geo_layers,
+      inputId: "container_layers",
+      placeholder: t("catalog_admin.fields.geometry_option_inputs.layers_component_placeholder"),
+      noOptionsMessage: t("catalog_admin.fields.geometry_option_inputs.layers_component_no_options")
+    }) %>
+<% end %>
+
+<%= f.number_field(
+      :height,
+      :label => t('.height_label'),
+      :help => t('.height_default', height: Container::Map::DEFAULT_MAP_HEIGHT)
+    ) %>

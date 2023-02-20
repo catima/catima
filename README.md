@@ -121,10 +121,11 @@ Or to get the messages in JSON format.
 * To run the full suite, run `rails test`
 * To run a single test, specify the line with `rails test path/to/file:line_number`
 * To view the integration tests running in the browser prepend `HEADLESS=0` to the commands above
-* To run API requests specs and generate API doc `rails swag:run`. The API doc is not versioned and should be added to the project during deployment.
+* To run API requests specs and generate API doc `rails swag:run`. The API doc is not versioned and should be added to the project during deployment
 
 ### Docker
 * To run the full suite, run `docker exec -it -e NO_COVERAGE=1 catima-app bin/rails test`
 * To run a single test, specify the line with `docker exec -it -e NO_COVERAGE=1 catima-app bin/rails test path/to/file:line_number`
 * To run without coverage (improve performances), add `-e NO_COVERAGE=1` to `docker exec` args
 * To view the integration tests running in the browser, add `-e HEADLESS=0` to `docker exec` args, then connect to the VNC server [vnc://catima.lan:5900](vnc://catima.lan:5900) with "secret" as password. Or go to [http://catima.lan:4444](http://catima.lan:4444), click on Sessions, you should see a line corresponding to the running tests and a camera icon next to it, click on it to open a VNC viewer
+* To run API requests specs and generate API doc `docker exec -it catima-app rails swag:run`. The API doc is not versioned and should be added to the project during deployment

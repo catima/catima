@@ -18,6 +18,8 @@ class Container::Map < ::Container
 
   store_accessor :content, :item_type, :layers, :height
 
+  validate :item_type_validation
+
   def custom_container_permitted_attributes
     %i(item_type geom_field layers height)
   end
@@ -28,12 +30,12 @@ class Container::Map < ::Container
 
     # Execute the SQL query for retrieving all geometries of all items of this type
     # as a GeoJSON.
-    sql = "SELECT jsonb_build_object('features', CASE WHEN (array_agg(feat) IS NOT NULL) THEN array_to_json(array_agg(feat)) ELSE '[]' END, 'type', 'FeatureCollection') AS geojson FROM "\
-        "(SELECT jsonb_build_object('geometry', jsonb_array_elements(feats)->'geometry', 'properties', jsonb_build_object('id', id), 'type', 'Feature') AS feat "\
-        "FROM "\
-        "(SELECT id, data->'#{@geom_field.uuid}'->'features' AS feats FROM items "\
-        "WHERE item_type_id = #{@item_type.id} "\
-        "AND data->'#{@geom_field.uuid}'->'features' IS NOT NULL) A) B"
+    sql = "SELECT jsonb_build_object('features', CASE WHEN (array_agg(feat) IS NOT NULL) THEN array_to_json(array_agg(feat)) ELSE '[]' END, 'type', 'FeatureCollection') AS geojson FROM " \
+          "(SELECT jsonb_build_object('geometry', jsonb_array_elements(feats)->'geometry', 'properties', jsonb_build_object('id', id), 'type', 'Feature') AS feat " \
+          "FROM " \
+          "(SELECT id, data->'#{@geom_field.uuid}'->'features' AS feats FROM items " \
+          "WHERE item_type_id = #{@item_type.id} " \
+          "AND data->'#{@geom_field.uuid}'->'features' IS NOT NULL) A) B"
     res = ActiveRecord::Base.connection.execute(sql)
     res[0]['geojson']
   rescue ActiveRecord::RecordNotFound => e
@@ -58,5 +60,13 @@ class Container::Map < ::Container
       data[:content]['item_type'] = it.id.to_s
     end
     super(data)
+  end
+
+  private
+
+  def item_type_validation
+    return if item_type.present?
+
+    errors.add :item_type, I18n.t('catalog_admin.containers.item_type_warning')
   end
 end

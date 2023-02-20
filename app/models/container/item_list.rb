@@ -18,6 +18,7 @@ class Container::ItemList < ::Container
 
   include ItemListsHelper
 
+  validate :item_type_validation
   validate :style_validation
   validate :sort_validation
   validate :sort_field_validation
@@ -51,12 +52,18 @@ class Container::ItemList < ::Container
 
   private
 
+  def item_type_validation
+    return if item_type.present?
+
+    errors.add :item_type, I18n.t('catalog_admin.containers.item_type_warning')
+  end
+
   def style_validation
-    unless style.empty? || ::ItemList::STYLES.key?(style)
+    unless style.blank? || ::ItemList::STYLES.key?(style)
       errors.add :style, "Style not allowed"
     end
 
-    return if sort.empty?
+    return if sort.blank?
 
     if style.eql?("line")
       return if Container::Sort.line_choices.key?(sort)
@@ -73,7 +80,7 @@ class Container::ItemList < ::Container
   end
 
   def sort_validation
-    return if sort.empty? || Container::Sort::CHOICES.key?(sort)
+    return if sort.blank? || Container::Sort::CHOICES.key?(sort)
 
     errors.add :sort, "Sort not allowed"
   end

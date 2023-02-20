@@ -23,6 +23,20 @@ one:
   content: { html: "<h1>hello world</h1>" }
   locale: en
 
+one_list_empty_item_type:
+  type: Container::ItemList
+  slug: list_empty_item_type
+  page: one
+  content: { style: 'list', item_type: "" }
+  locale: en
+
+one_map_empty_item_type:
+  type: Container::Map
+  slug: map_empty_item_type
+  page: one
+  content: { style: 'list', item_type: "" }
+  locale: en
+
 one_line_container:
   type: Container::ItemList
   slug: line
