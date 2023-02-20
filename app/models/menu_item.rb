@@ -30,6 +30,7 @@ class MenuItem < ApplicationRecord
 
   validates_presence_of :catalog
   validates_presence_of :title
+  validate :parent_validation
 
   serialize :title, HashSerializer
   serialize :url, HashSerializer
@@ -74,5 +75,15 @@ class MenuItem < ApplicationRecord
     d['page'] = catalog.pages.find_by(slug: d['page']) unless d['page'].nil?
     d['parent_id'] = catalog.pages.find_by(slug: d['parent'])&.id unless d['parent'].nil?
     update(d.except('item-type', 'parent'))
+  end
+
+  private
+
+  def parent_validation
+    return if parent_id.blank?
+
+    return if parent_id != id
+
+    errors.add :parent_id, "Cannot choose itself as parent"
   end
 end

@@ -9,9 +9,13 @@
 <%= f.select(
   :parent_id,
   options_from_collection_for_select(
-    @catalog.menu_items, "id", "title", @menu_item.parent_id
-  ),
-  {
+    @catalog.menu_items.filter { |menu_item|
+      menu_item.id != @menu_item.id
+    },
+    "id",
+    "title",
+    @menu_item.parent_id
+  ), {
     include_blank: true,
     help: t('.parent_help')
   }
