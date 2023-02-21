@@ -49,7 +49,7 @@ class Search::ChoiceSetStrategy < Search::BaseStrategy
       scope = search_data_matching_one_or_more(scope, criteria[:default] || criteria[:exact], negate)
     end
 
-    scope = search_data_matching_one_or_more(scope, criteria[:any], false) if criteria[:any].present?
+    scope = search_data_matching_more(scope, criteria[:any], false) if criteria[:any].present?
 
     scope
   end

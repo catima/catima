@@ -54,7 +54,7 @@ class Field::ComplexDatation < ::Field
 
   def csv_value(item, _user=nil)
     value = raw_value(item)
-    return '' if value.nil?
+    return '' unless value && value["selected_format"]
 
     case value["selected_format"]
     when 'date_time'
@@ -96,6 +96,27 @@ class Field::ComplexDatation < ::Field
     "JSON"
   end
 
+  def formated_choice(choice)
+    option = {
+      value: choice.short_name,
+      id: choice.id,
+      key: choice.id,
+      label: choice.choice_set.choice_prefixed_label(choice, with_dates: choice.choice_set&.datation?),
+      has_childrens: choice&.childrens&.any?,
+      uuid: choice.uuid,
+      name: choice.choice_set.choice_prefixed_label(choice, with_dates: choice.choice_set&.datation?),
+      category_id: choice.category_id,
+      choice_set_id: choice.choice_set.id,
+      short_name: choice.short_name,
+      long_name: choice.long_name,
+      from_date: choice.from_date,
+      to_date: choice.to_date
+    }
+
+    option[:category_data] = choice.category.present? && choice.category.not_deleted? ? choice.category.fields : []
+    option
+  end
+
   def edit_props(item)
     choice_sets = catalog.choice_sets.where(id: choice_set_ids)
 
@@ -106,9 +127,9 @@ class Field::ComplexDatation < ::Field
         id: choice_set.id,
         format: choice_set.format.to_json,
         allowBC: choice_set.allow_bc,
-        newChoiceModalUrl: Rails.application.routes.url_helpers.new_choice_modal_catalog_admin_choice_set_url(catalog, I18n.locale, choice_set),
+        newChoiceModalUrl: Rails.application.routes.url_helpers.new_choice_modal_catalog_admin_choice_set_path(catalog, I18n.locale, choice_set),
         createChoiceUrl: Rails.application.routes.url_helpers.catalog_admin_choice_set_choices_path(catalog, I18n.locale, choice_set),
-        fetchUrl: Rails.application.routes.url_helpers.react_choices_for_choice_set_url(
+        fetchUrl: Rails.application.routes.url_helpers.react_choices_for_choice_set_path(
           catalog.slug,
           I18n.locale,
           item_type.slug,

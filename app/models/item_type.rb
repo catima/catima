@@ -38,7 +38,7 @@ class ItemType < ApplicationRecord
 
   alias_method :log_name, :name
 
-  def self.sorted(locale=I18n.locale)
+  def self.sorted(locale = I18n.locale)
     order(Arel.sql("LOWER(item_types.name_translations->>'name_#{locale}') ASC"))
   end
 
@@ -46,15 +46,17 @@ class ItemType < ApplicationRecord
   # by way of categories. Note that this only descends one level: it does not
   # recurse.
   def all_fields
-    fields.each_with_object([]) do |field, all|
+    return @all_fields if defined? @all_fields
+
+    @all_fields ||= fields.includes(field_set: [:catalog]).each_with_object([]) do |field, all|
       all << field
       next unless field.is_a?(Field::ChoiceSet)
 
-      field.choices.each do |choice|
+      field.choices.includes(:category).each do |choice|
         category = choice.category
         next unless category&.not_deleted?
 
-        additional_fields = category.fields.map do |f|
+        additional_fields = category.fields.includes(field_set: [:catalog]).map do |f|
           f.category_choice = choice
           f.category_choice_set = field.choice_set
           f
@@ -66,20 +68,28 @@ class ItemType < ApplicationRecord
 
   # Same as all_fields, but limited to display_in_list=>true.
   def all_list_view_fields
-    all_fields.select(&:display_in_list)
+    return @all_list_view_fields if defined? @all_list_view_fields
+
+    @all_list_view_fields ||= all_fields.select(&:display_in_list)
   end
 
   # Same as all_fields, but limited to display_in_public_list=>true.
   def all_public_list_view_fields
-    all_fields.select(&:display_in_public_list)
+    return @all_public_list_view_fields if defined? @all_public_list_view_fields
+
+    @all_public_list_view_fields ||= all_fields.select(&:display_in_public_list)
   end
 
   # Same as all_list_view_fields, but limited human_readable?.
   def sortable_list_view_fields
-    all_list_view_fields.select(&:human_readable?)
+    return @sortable_list_view_fields if defined? @sortable_list_view_fields
+
+    @sortable_list_view_fields ||= all_list_view_fields.select(&:human_readable?)
   end
 
   def primary_field
+    return @primary_field if defined? @primary_field
+
     @primary_field ||= fields.to_a.find(&:primary?)
   end
 
@@ -99,8 +109,12 @@ class ItemType < ApplicationRecord
 
   # The primary or first text field. Used to generate Item slugs.
   def primary_text_field
-    candidate_fields = [primary_field, list_view_fields, fields].flatten.compact
-    candidate_fields.reject(&:restricted?).find { |f| f.is_a?(Field::Text) }
+    return @primary_text_field if defined? @primary_text_field
+
+    @primary_text_field = begin
+                            candidate_fields = [primary_field, list_view_fields, fields].flatten.compact
+                            candidate_fields.reject(&:restricted?).find { |f| f.is_a?(Field::Text) }
+                          end
   end
 
   def public_items

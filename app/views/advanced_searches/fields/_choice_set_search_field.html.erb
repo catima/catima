@@ -4,7 +4,17 @@
                         catalog: field.catalog.slug,
                         itemType: field.item_type.slug,
                         label: t(".any"),
-                        items: (!field.choice_set.not_deleted? || !field.choice_set.not_deactivated?) ? [] : filter_category_fields(field.search_data_as_hash),
+                        choiceSet: field.choice_set.attributes.merge({
+
+                                                                        multiple: field.multiple?,
+                                                                        fetchUrl: react_choices_for_choice_set_url(
+                                                                          field.catalog.slug,
+                                                                          locale: I18n.locale,
+                                                                          item_type_slug: field.item_type.slug,
+                                                                          field_uuid: field.uuid,
+                                                                          choice_set_id: field.choice_set_id
+                                                                        ),
+                                                                      }),
                         categoryInputName: "advanced_search[criteria][#{field.uuid}][0][category_field]",
                         linkedCategoryInputName: "advanced_search[criteria][#{field.uuid}][0][category_criteria]",
                         childChoicesActivatedInputName: "advanced_search[criteria][#{field.uuid}][0][child_choices_activated]",

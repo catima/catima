@@ -20,7 +20,16 @@ module ChoiceSetsHelper
         :key => choice[:key],
         label: choice[:label],
         has_childrens: choice[:has_childrens],
-        :category_data => displayable_category_fields(choice[:category_data])
+        id: choice[:id],
+        :category_data => displayable_category_fields(choice[:category_data]),
+        uuid: choice[:uuid],
+        name: choice[:name],
+        category_id: choice[:category_id],
+        choice_set_id: choice[:choice_set_id],
+        short_name: choice[:short_name],
+        long_name: choice[:long_name],
+        from_date: choice[:from_date],
+        to_date: choice[:to_date]
       }
     end
   end

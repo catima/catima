@@ -518,7 +518,6 @@ const RenderChoiceSetInput = (props) => {
 
     return (
         <div>
-            <small className="text-sm-center">{name}</small>
             <div className="dateTimeInput  row rails-bootstrap-forms-datetime-select" style={{display: 'flex'}}>
                 <div className="col-sm-8">
                     <div style={{width: '100%'}}>
@@ -612,6 +611,7 @@ const ModalForm = (props) => {
         try {
             axios.defaults.headers.common["X-CSRF-Token"] = (document.querySelector("meta[name=csrf-token]") || {}).content;
             axios.defaults.headers.common["X-Requested-With"] = 'XMLHttpRequest';
+            axios.defaults.headers.common["content-type"] = 'application/x-www-form-urlencoded;charset=utf-8'
 
             const response = await axios.post(choiceSet.createChoiceUrl, params)
 
@@ -652,7 +652,7 @@ const ModalForm = (props) => {
                                             <select className="form-control" name="choice[parent_id]"
                                                     id="choice_parent_id">
                                                 <option value=""></option>
-                                                {modalChoices.map(o => {
+                                                {modalChoices && modalChoices.map(o => {
                                                     return (
                                                         <option key={o.id} value={o.id}>{o.name}</option>
                                                     )

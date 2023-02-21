@@ -70,18 +70,20 @@ class CatalogAdmin::ChoiceSetsTest < ActionDispatch::IntegrationTest
 
     author = items(:one_author_stephen_king)
     field = fields(:one_author_other_languages)
+
     visit("/one/en/admin/authors/#{author.to_param}/edit")
 
-    select("Eng", :from => "Other Languages")
-    select("Spanish", :from => "Other Languages")
-
-    find("div[data-field='#{field.id}'] a", :visible => :all).click
+    within(find('#item_one_author_other_languages_uuid_json', visible: false).find(:xpath,".//..")) do
+      find("a[data-target='#choice-modal-#{field.uuid}']", :visible => :all).click
+    end
+    sleep(2) # Wait for the ReactModal to fetch its data
 
     within("#choice-modal-#{field.uuid}") do
       fill_in("Short name", :with => "Fre")
       fill_in("Long name", :with => "French")
       click_on("Create")
     end
+    sleep(2) # Wait for the ReactModal to close and update selected values
 
     assert(page.has_text?("Fre"))
     assert(page.has_text?("Eng"))

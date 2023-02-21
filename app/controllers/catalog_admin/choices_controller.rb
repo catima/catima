@@ -26,7 +26,7 @@ class CatalogAdmin::ChoicesController < CatalogAdmin::BaseController
   end
 
   def create
-    @choice = @choice_set.choices.build(choice_params)
+    @choice = Choice.new(choice_params.merge(choice_set_id: @choice_set.id))
     @choice.catalog_id = @choice_set.catalog_id
     if @choice.save_with_position(params[:choice][:position])
       if request.xhr?

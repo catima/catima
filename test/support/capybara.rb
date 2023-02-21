@@ -1,6 +1,8 @@
 # Capybara + Selenium Chrome allow JS testing via headless webkit
 require "capybara/rails"
 
+Capybara.server_port = 3000
+
 if ENV['DOCKER_RUNNING'].present?
   Capybara.javascript_driver = :remote_chrome
   Capybara.configure do |config|
