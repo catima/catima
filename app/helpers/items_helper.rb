@@ -31,14 +31,26 @@ module ItemsHelper
   end
 
   def item_has_thumbnail?(item)
-    item.image?
+    return false unless item_displayable_image_field(item)
+
+    true
   end
 
   def item_thumbnail(item, options={})
-    field = item.fields.find { |f| f.is_a?(Field::Image) && f.display_in_public_list }
+    field = item_displayable_image_field(item)
+
     return if field.nil?
 
     field_value(item, field, options.reverse_merge(:style => :compact))
+  end
+
+  # Returns the first displayable image field or nil
+  def item_displayable_image_field(item)
+    item.fields.find do |f|
+      f.is_a?(Field::Image) &&
+        f.display_in_public_list &&
+        f.displayable_to_user?(current_user)
+    end
   end
 
   def item_list_view(item, options={})
