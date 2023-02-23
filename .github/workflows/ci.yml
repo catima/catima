@@ -75,12 +75,31 @@ jobs:
 
       - name: Test app
         id: app-test
-        run: NO_COVERAGE=1 rails test
+        run: rails test
+
+  coverage:
+    name: Coverage
+    runs-on: ubuntu-latest
+    needs: build
+    if: always()
+    continue-on-error: false
+
+    steps:
+      - name: Upload artifact
+        id: upload-artifact
+        uses: actions/upload-artifact@v3
+        with:
+          name: coverage
+          path: /home/runner/work/catima/catima/coverage
+      - uses: joshmfrankel/simplecov-check-action@main
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          minimum_suite_coverage: 40
 
   notification:
     name: Notify
     runs-on: ubuntu-latest
-    needs: build
+    needs: [build, coverage]
     if: always()
     continue-on-error: true
 
