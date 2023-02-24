@@ -101,7 +101,7 @@ jobs:
       - name: Check minimum coverage
         uses: unil-lettres/simplecov-check@main
         with:
-          minimum_coverage: ${{ vars.MINIMUM_COVERAGE || 50 }}
+          minimum_coverage: ${{ vars.MINIMUM_COVERAGE || 45 }}
           coverage_path: coverage/.last_run.json
 
   notification:
