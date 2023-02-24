@@ -1,7 +1,7 @@
 name: ci
 on: [push, pull_request]
 jobs:
-  build:
+  test:
     name: RUBY${{ matrix.ruby-versions }}
     runs-on: ubuntu-20.04
     strategy:
