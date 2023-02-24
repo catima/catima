@@ -77,6 +77,13 @@ jobs:
         id: app-test
         run: rails test
 
+      - name: Upload coverage artifact
+        id: upload-coverage-artifact
+        uses: actions/upload-artifact@v3
+        with:
+          name: coverage-report
+          path: /home/runner/work/catima/catima/coverage
+
   coverage:
     name: Coverage
     runs-on: ubuntu-latest
@@ -85,16 +92,16 @@ jobs:
     continue-on-error: false
 
     steps:
-      - name: Upload artifact
-        id: upload-artifact
-        uses: actions/upload-artifact@v3
+      - name: Download artifact
+        uses: actions/download-artifact@v3
         with:
-          name: coverage
-          path: /home/runner/work/catima/catima/coverage
-      - uses: joshmfrankel/simplecov-check-action@main
+          name: coverage-report
+          path: coverage
+
+      - uses: vigetlabs/simplecov-check@v1.0
         with:
-          github_token: ${{ secrets.GITHUB_TOKEN }}
-          minimum_suite_coverage: 40
+          minimum_coverage: 40
+          coverage_path: coverage/.last_run.json
 
   notification:
     name: Notify
