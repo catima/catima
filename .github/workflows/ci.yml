@@ -87,7 +87,7 @@ jobs:
   coverage:
     name: Coverage
     runs-on: ubuntu-latest
-    needs: build
+    needs: test
     if: always()
     continue-on-error: false
 
@@ -107,7 +107,7 @@ jobs:
   notification:
     name: Notify
     runs-on: ubuntu-latest
-    needs: [build, coverage]
+    needs: [test, coverage]
     if: always()
     continue-on-error: true
 
