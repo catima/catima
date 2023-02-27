@@ -1,7 +1,7 @@
 name: ci
 on: [push, pull_request]
 jobs:
-  build:
+  test:
     name: RUBY${{ matrix.ruby-versions }}
     runs-on: ubuntu-20.04
     strategy:
@@ -75,12 +75,39 @@ jobs:
 
       - name: Test app
         id: app-test
-        run: NO_COVERAGE=1 rails test
+        run: rails test
+
+      - name: Upload coverage artifact
+        id: upload-coverage-artifact
+        uses: actions/upload-artifact@v3
+        with:
+          name: coverage-report
+          path: /home/runner/work/catima/catima/coverage
+
+  coverage:
+    name: Coverage
+    runs-on: ubuntu-latest
+    needs: test
+    if: success()
+    continue-on-error: false
+
+    steps:
+      - name: Download artifact
+        uses: actions/download-artifact@v3
+        with:
+          name: coverage-report
+          path: coverage
+
+      - name: Check minimum coverage
+        uses: unil-lettres/simplecov-check@main
+        with:
+          minimum_coverage: ${{ vars.MINIMUM_COVERAGE || 45 }}
+          coverage_path: coverage/.last_run.json
 
   notification:
     name: Notify
     runs-on: ubuntu-latest
-    needs: build
+    needs: [test, coverage]
     if: always()
     continue-on-error: true
 
