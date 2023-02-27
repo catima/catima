@@ -21,7 +21,7 @@ class UsersTest < ActionDispatch::IntegrationTest
 
   test "create a user with the same email as a not deleted user" do
     visit("/en/register")
-    fill_in("Email", :with => "one-user@example.com")
+    fill_in("Email", :with => "one-user@example.com.bad")
     fill_in("Password", :with => "password")
     fill_in("Password confirmation", :with => "password")
 
