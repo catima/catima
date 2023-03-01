@@ -46,10 +46,10 @@ class Search::ChoiceSetStrategy < Search::BaseStrategy
       choice = Choice.find(criteria[:default] || criteria[:exact])
       scope = search_data_matching_more(scope, (choice.childrens.pluck(:id) + [criteria[:default] || criteria[:exact]]).flatten.map {|id| id.to_s}, negate)
     else
-      scope = search_data_matching_one_or_more(scope, criteria[:default] || criteria[:exact], negate)
+      scope = search_data_matching_more(scope, [criteria[:default]] || criteria[:exact], negate) if criteria[:default].present? || criteria[:exact].present?
     end
 
-    scope = search_data_matching_more(scope, criteria[:any], false) if criteria[:any].present?
+    scope = search_data_matching_more(scope, criteria[:any] , false) if criteria[:any].present?
 
     scope
   end

@@ -206,14 +206,14 @@ class ItemsTest < ActionDispatch::IntegrationTest
     sedan = choices(:search_sedan)
     %w(honda_accord toyota_prius toyota_camry).each do |name|
       item = items(:"search_vehicle_#{name}")
-      item.data["search_vehicle_style_uuid"] = sedan.id
+      item.data["search_vehicle_style_uuid"] = [sedan.id.to_s]
       item.save!
     end
 
     suv = choices(:search_suv)
     %w(toyota_highlander).each do |name|
       item = items(:"search_vehicle_#{name}")
-      item.data["search_vehicle_style_uuid"] = suv.id
+      item.data["search_vehicle_style_uuid"] = [suv.id.to_s]
       item.save!
     end
   end
