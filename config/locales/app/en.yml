@@ -266,17 +266,17 @@ en:
       describe_suggestion: Please describe your suggestion here...
   invitations_mailer:
     account_information:
-      email: "Email"
-      info_you_will_need: "Here is the account information you’ll need to log in:"
-      password: "Password"
-      set_your_password: "Click here to set your password"
-      url: "URL"
+      account_email: "Your current email will be used as login for your account."
+      info_you_will_need: "You can find below the informations you’ll need to log in:"
+      set_your_password: "Click here to set your account's password"
+      link_to_catalog: "Then click here to access the «%{catalog}» catalog"
+      link_to_admin: "Then click here to list the catalogs you can administer"
     catalog_admin:
       catalog_admin_role: "As a catalog administrator, you will be able to add and edit records in the catalog, change the design of the catalog, and invite other users to collaborate as editors."
       invited_to_access_html:
         one: "%{invited_by} has invited you to be an administrator of the %{catalogs} catalog."
         other: "%{invited_by} has invited you to be an administrator of the %{catalogs} catalogs."
-      subject: "Your administrator invitation for %{catalog}"
+      subject: "Your administrator invitation for %{catalogs}"
     system_admin:
       invited_to_access_html: "%{invited_by} has invited you to be a system administrator at %{catalog}."
       subject: "Your system administrator invitation for %{host}"
@@ -293,7 +293,7 @@ en:
       invited_to_access_html: "%{invited_by} has invited you to become a member in group «%{group}» on %{baseurl}."
     membership:
       subject: "You have been added to group %{group}"
-      invited_to_msg: "%{invited_by} has added you to the group «%{group}» of catalog «%{catalog}»."
+      invited_to_msg_html: "%{invited_by} has added you to the group «%{group}» of catalog «%{catalog}»."
       view_my_groups: "You can view your group memberships here:"
   export_mailer:
     export:

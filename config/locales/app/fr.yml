@@ -272,17 +272,17 @@ fr:
       describe_suggestion: Veuillez décrire votre suggestion ici...
   invitations_mailer:
     account_information:
-      email: "E-mail"
-      info_you_will_need: "Voici les informations sur votre compte pour procéder au login:"
-      password: "Mot de passe"
-      set_your_password: "Cliquez ici pour définir votre mot de passe"
-      url: "URL"
+      account_email: "Votre adresse électronique actuelle sera utilisée comme identifiant pour votre compte."
+      info_you_will_need: "Vous trouverez ci-dessous les informations dont vous aurez besoin pour vous connecter:"
+      set_your_password: "Cliquez ici pour définir le mot de passe de votre compte"
+      link_to_catalog: "Puis cliquez ici pour accéder au catalogue «%{catalog}»"
+      link_to_admin: "Cliquez ensuite ici pour obtenir la liste des catalogues que vous pouvez administrer"
     catalog_admin:
       catalog_admin_role: "Comme administrateur de catalogue, vous allez être en mesure d'ajouter et d'éditer des entrées dans le catalogue, en modifier la mise en page, et inviter d'autres utilisateurs à collaborer comme éditeurs."
       invited_to_access_html:
         one: "%{invited_by} vous a invité d'être un administrateur du catalogue %{catalogs}."
         other: "%{invited_by} vous a invité d'être un administrateur des catalogues %{catalogs}."
-      subject: "Votre invitation d'administrateur pour %{catalog}"
+      subject: "Votre invitation d'administrateur pour %{catalogs}"
     system_admin:
       invited_to_access_html: "%{invited_by} vous a invité d'être un administrateur système pour %{catalog}."
       subject: "Votre invitation d'administrateur système pour %{host}"
@@ -299,7 +299,7 @@ fr:
       invited_to_access_html: "%{invited_by} vous invite à devenir membre du groupe «%{group}» sur %{baseurl}."
     membership:
       subject: "Vous avez été ajouté au groupe %{group}"
-      invited_to_msg: "%{invited_by} vous a ajouté au groupe «%{group}» du catalogue «%{catalog}»."
+      invited_to_msg_html: "%{invited_by} vous a ajouté au groupe «%{group}» du catalogue «%{catalog}»."
       view_my_groups: "Vous pouvez voir vos adhésions de groupe ici:"
   export_mailer:
     export:

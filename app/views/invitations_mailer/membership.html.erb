@@ -1,10 +1,14 @@
 <p><%= t('common.greeting') %>,</p>
 
 <p>
-  <%= t('.invited_to_msg',
+  <%= t('.invited_to_msg_html',
         invited_by: @invited_by.email,
         group: @group.name,
-        catalog: @group.catalog.name) %>
+        catalog: link_to(
+          @catalog.name,
+          catalog_home_url(catalog_slug: @catalog.slug)
+        )
+      ) %>
 </p>
 
 <p>

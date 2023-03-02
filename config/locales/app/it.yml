@@ -187,17 +187,17 @@ it:
     reference_editor_search: "Ricerca..."
   invitations_mailer:
     account_information:
-      email: "E-mail"
-      info_you_will_need: "Ecco le informatzioni sul tuo account per procedere alla login:"
-      password: "Password"
-      set_your_password: "Clicca qui per impostare la password"
-      url: "URL"
+      account_email: "Il vostro attuale indirizzo e-mail sarà utilizzato come login per il vostro account."
+      info_you_will_need: "Qui di seguito sono riportate le informazioni necessarie per effettuare il login:"
+      set_your_password: "Fare clic qui per impostare la password del proprio account"
+      link_to_catalog: "Cliccare qui per accedere al catalogo «%{catalog}»"
+      link_to_admin: "Cliccare qui per elencare i cataloghi che è possibile amministrare"
     catalog_admin:
       catalog_admin_role: "Come amministratore di catalogo, sarete in grado di aggingere e modificatre le registrazione nel catalogo, cambiare il layout, e invitare gli altri utenti di collaborare come redattori."
       invited_to_access_html:
         one: "%{invited_by} ti ha invitato a essere un amministratore del catalogo %{catalogs}."
         other: "%{invited_by} ti ha invitato a essere un amministratore dei cataloghi %{catalogs}."
-      subject: "Il suo invito amministratore per %{catalog}"
+      subject: "Il suo invito amministratore per %{catalogs}"
     system_admin:
       invited_to_access_html: "%{invited_by} ti ha invitato a essere un amministratore di sistema per %{catalog}."
       subject: "Il suo invito amministratore di sistema per %{host}"
@@ -214,7 +214,7 @@ it:
       invited_to_access_html: "%{invited_by} ti ha invitato a diventare membro del gruppo «%{group}» su %{baseurl}."
     membership:
       subject: "Sei stato aggiunto al gruppo %{group}"
-      invited_to_msg: "%{invited_by} ti ha aggiunto al gruppo «%{group}» del catalogo «%{catalog}»."
+      invited_to_msg_html: "%{invited_by} ti ha aggiunto al gruppo «%{group}» del catalogo «%{catalog}»."
       view_my_groups: "Potete vedere le appartenenze del vostro gruppo qui"
   export_mailer:
     export:

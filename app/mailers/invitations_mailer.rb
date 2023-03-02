@@ -10,7 +10,8 @@ class InvitationsMailer < ApplicationMailer
     subject = t(
       "invitations_mailer.#{type}.subject",
       :host => app_host,
-      :catalog => @catalogs.first.try(:name))
+      :catalogs => @catalogs.map(&:name).to_sentence
+    )
 
     mail(
       :subject => subject,
@@ -23,7 +24,7 @@ class InvitationsMailer < ApplicationMailer
   end
 
   def user(invited_user, catalog, token)
-    I18n.locale = invited_user.primary_language.to_sym
+    I18n.locale = catalog.primary_language.to_sym
     @token = token
     @user = invited_user
     @invited_by = invited_user.invited_by
@@ -44,7 +45,8 @@ class InvitationsMailer < ApplicationMailer
   end
 
   def group(invited_user, group, token)
-    I18n.locale = invited_user.primary_language.to_sym
+    @catalog = group.catalog
+    I18n.locale = @catalog.primary_language.to_sym
     @token = token
     @user = invited_user
     @invited_by = invited_user.invited_by
@@ -63,9 +65,10 @@ class InvitationsMailer < ApplicationMailer
   end
 
   def membership(invited_by, membership)
-    I18n.locale = membership.user.primary_language.to_sym
-    @invited_by = invited_by
     @group = membership.group
+    @catalog = @group.catalog
+    I18n.locale = @catalog.primary_language.to_sym
+    @invited_by = invited_by
     @user = membership.user
     subject = t(
       'invitations_mailer.membership.subject',

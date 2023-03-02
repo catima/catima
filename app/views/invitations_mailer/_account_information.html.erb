@@ -3,17 +3,29 @@
 </p>
 
 <p>
-  <b><%= t(".url") %>:</b>
-  <%= link_to(
-        new_user_session_url(:locale => @user.primary_language),
-        new_user_session_url(:locale => @user.primary_language)) %>
-  <br>
-  <b><%= t(".email") %>:</b> <%= @user.email %><br>
-  <b><%= t(".password") %>:</b>
+  <b>1.</b>
   <%= link_to(
         t(".set_your_password"),
         edit_user_password_url(
           :locale => @user.primary_language,
           :reset_password_token => @token
         )) %>
+  <br>
+  <b>2.</b>
+  <% if @catalog.present? %>
+    <%= link_to(
+          t(".link_to_catalog", catalog: @catalog.name),
+          catalog_home_url(
+            catalog_slug: @catalog.slug
+          )) %>
+  <% else %>
+    <%= link_to(
+          t(".link_to_admin"),
+          admin_dashboard_url
+        ) %>
+  <% end %>
+</p>
+
+<p>
+  <%= t(".account_email") %>
 </p>
