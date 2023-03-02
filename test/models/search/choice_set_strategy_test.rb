@@ -55,7 +55,7 @@ class Search::ChoiceSetStrategyTest < ActiveSupport::TestCase
     author = items(:one_author_stephen_king)
     english = choices(:one_english)
     # Have to set this manually because fixture doesn't know ID ahead of time
-    author.data["one_author_language_uuid"] = english.id
+    author.data["one_author_language_uuid"] = [english.id.to_s]
     author
   end
 

@@ -25,9 +25,30 @@ class CatalogAdmin::ItemsTest < ActionDispatch::IntegrationTest
 
     first('#item_one_author_other_collaborators_uuid_json-editor-select').click
 
-    select("Eng", :from => "Language")
-    select("Eng", :from => "Other Languages")
-    select("Spanish", :from => "Other Languages")
+
+    within(find('#item_one_author_language_uuid_json', visible: false).find(:xpath, '..')) do
+      find(".css-g1d714-ValueContainer").click # Click on the filter input
+      sleep(2) # Wait for the AsyncPaginate to populate
+      within(".css-4ljt47-MenuList") do # Within the filter list
+        find('div', text: 'Eng', match: :first, visible: false).click
+      end
+    end
+
+    within(find('#item_one_author_other_languages_uuid_json', visible: false).find(:xpath, '..')) do
+      find(".css-g1d714-ValueContainer").click # Click on the filter input
+      sleep(2) # Wait for the AsyncPaginate to populate
+      within(".css-4ljt47-MenuList") do # Within the filter list
+        find('div', text: 'Eng', match: :first, visible: false).click
+      end
+    end
+    within(find('#item_one_author_other_languages_uuid_json', visible: false).find(:xpath, '..')) do
+      find(".css-g1d714-ValueContainer").click # Click on the filter input
+      sleep(2) # Wait for the AsyncPaginate to populate
+      within(".css-4ljt47-MenuList") do # Within the filter list
+        find('div', text: 'Spanish', match: :first, visible: false).click
+      end
+    end
+
     page.execute_script(
       "document.getElementById('item_one_author_birth_time_uuid_json').value = " \
       "'{\"Y\":2015, \"M\":12, \"D\":31, \"h\":14, \"m\":30, \"s\":17}';"
@@ -96,7 +117,13 @@ class CatalogAdmin::ItemsTest < ActionDispatch::IntegrationTest
 
     add_single_reference('#item_one_author_collaborator_uuid_json-editor', 'Very Old')
 
-    select("Eng", :from => "Language")
+    within(find('#item_one_author_language_uuid_json', visible: false).find(:xpath, '..')) do
+      find(".css-g1d714-ValueContainer").click # Click on the filter input
+      sleep(2)
+      within(".css-4ljt47-MenuList") do # Within the filter list
+        find('div', text: 'Eng', match: :first, visible: false).click
+      end
+    end
 
     assert_no_difference("Item.count") do
       click_on("Save Author")

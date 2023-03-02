@@ -141,12 +141,13 @@ class CatalogAdmin::ChoiceSetsController < CatalogAdmin::BaseController
     render json: {
       catalog: @choice_set.catalog_id,
       choice_set: @choice_set.id,
-      choices: @choice_set.choices.map do |choice|
+      choices: @choice_set.choices.map { |choice|
         {
           id: choice.id,
           name: choice.choice_set.choice_prefixed_label(choice, with_dates: @choice_set.datation?)
         }
-      end
+      },
+      categories: @choice_set.catalog.categories.sorted.pluck(:id, :name)
     }
   end
 

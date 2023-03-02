@@ -42,9 +42,19 @@ class React::FieldsController < React::BaseController
              })
   end
 
+  def category_choices_for_choice_set
+    item_type = find_category
+    choices_for_item_type(item_type)
+  end
+
   def choices_for_choice_set
     raise InvalidItemType, 'no item type provided' if item_type.nil?
+    choices_for_item_type(item_type)
+  end
 
+  private
+
+  def choices_for_item_type(item_type)
     field = item_type.fields.find_by(:uuid => params[:field_uuid])
     choice_set = field.is_a?(Field::ComplexDatation) ? ChoiceSet.where(id: field.choice_set_ids).find(params[:choice_set_id]) : field
     choices = choice_set.choices.order(position: :asc)
@@ -60,23 +70,23 @@ class React::FieldsController < React::BaseController
 
     render(json:
              {
-               slug: item_type.slug, name: item_type.name,
+               slug: item_type.id, name: item_type.name,
                select_placeholder: t("catalog_admin.items.reference_editor.reference_editor_select"),
                search_placeholder: t("catalog_admin.items.reference_editor.reference_editor_search"),
                filter_placeholder: t("catalog_admin.items.reference_editor.reference_editor_filter", locale: params[:locale]),
                loading_message: t("loading", locale: params[:locale]),
-               choices: choices.map { |choice| choice_json_attributes(choice) },
+               choices: filter_category_fields(choices.map { |choice| field.formated_choice(choice) }),
                hasMore: params[:page].present? && params[:page].to_i < choices.total_pages
              })
   end
-
-  private
 
   def choice_json_attributes(choice)
     {
       id: choice.id,
       uuid: choice.uuid,
       name: choice.choice_set.choice_prefixed_label(choice, with_dates: choice.choice_set&.datation?),
+      category_id: choice.category_id,
+      choice_set_id: choice.choice_set.id,
       short_name: choice.short_name,
       long_name: choice.long_name,
       from_date: choice.from_date,

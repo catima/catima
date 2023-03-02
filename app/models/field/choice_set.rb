@@ -143,14 +143,34 @@ class Field::ChoiceSet < ::Field
     choices_as_options = []
 
     flat_ordered_choices.each do |choice|
-      option = {:value => choice.short_name, :key => choice.id, label: choice_prefixed_label(choice), has_childrens: choice.childrens.any?}
-      option[:category_data] = choice.category.present? && choice.category.not_deleted? ? choice.category.fields : []
-
-      choices_as_options << option
+      choices_as_options << formated_choice(choice)
     end
 
     choices_as_options
   end
+
+
+  def formated_choice(choice)
+    option = {
+      value: choice.short_name,
+      id: choice.id,
+      key: choice.id,
+      label: choice_prefixed_label(choice),
+      has_childrens: choice&.childrens&.any?,
+      uuid: choice.uuid,
+      name: choice.choice_set.choice_prefixed_label(choice, with_dates: choice.choice_set&.datation?),
+      category_id: choice.category_id,
+      choice_set_id: choice.choice_set.id,
+      short_name: choice.short_name,
+      long_name: choice.long_name,
+      from_date: choice.from_date,
+      to_date: choice.to_date
+    }
+
+    option[:category_data] = choice.category.present? && choice.category.not_deleted? ? choice.category.fields : []
+    option
+  end
+
 
   def search_conditions_as_hash(locale)
     [
@@ -175,7 +195,56 @@ class Field::ChoiceSet < ::Field
     "INT"
   end
 
+  def edit_props(item)
+    {
+      choiceSet: {
+        name: choice_set.name,
+        uuid: choice_set.uuid,
+        id: choice_set.id,
+        format: choice_set.format.to_json,
+        multiple: multiple?,
+        allowBC: choice_set.allow_bc,
+        newChoiceModalUrl: Rails.application.routes.url_helpers.new_choice_modal_catalog_admin_choice_set_path(catalog, I18n.locale, choice_set),
+        createChoiceUrl: Rails.application.routes.url_helpers.catalog_admin_choice_set_choices_path(catalog, I18n.locale, choice_set),
+        fetchUrl: fetch_url,
+        selectedChoicesValue: selected_choices(item[:item]).map do |choice|
+          {
+            label: choice.choice_set.choice_prefixed_label(choice, with_dates: false),
+            value: choice.id,
+            category_id: choice.category_id,
+            id: choice.id,
+            choice_set_id: choice.choice_set_id
+          }
+        end
+      },
+      locales: choice_set.catalog.valid_locales,
+      fieldUuid: uuid
+    }
+  end
+
   private
+
+  def fetch_url
+    if item_type.is_a?(ItemType)
+      Rails.application.routes.url_helpers.react_choices_for_choice_set_path(
+        catalog.slug,
+        I18n.locale,
+        item_type.slug,
+        field_uuid: uuid,
+        choice_set_id: choice_set.id
+      )
+    elsif item_type.is_a?(Category)
+      Rails.application.routes.url_helpers.react_category_choices_for_choice_set_path(
+        catalog.slug,
+        I18n.locale,
+        item_type.id,
+        field_uuid: uuid,
+        choice_set_id: choice_set.id
+      )
+    else
+      ""
+    end
+  end
 
   # Should return true if the choice set holds a choice linked to
   # a category, false otherwise.

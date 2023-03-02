@@ -368,6 +368,8 @@ de:
   deactivate: Deactivate
   reactivate: Reactivate
   loading: Laden
+  no_options: "Keine Optionen"
+  select_placeholder: "Wählen Sie einen Wert"
   item_link: Link zum Element
 
   layouts:

@@ -360,6 +360,8 @@ it:
   deactivate: Deactivate
   reactivate: Reactivate
   loading: Caricamento
+  no_options: "Nessuna opzione"
+  select_placeholder: "Selezionare un valore"
   item_link: Link all'oggetto
 
   layouts:

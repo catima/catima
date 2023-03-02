@@ -12,13 +12,15 @@ class AdvancedSearch::ChoiceSetFieldTest < ActionDispatch::IntegrationTest
       click_on("Vehicle")
     end
 
-    within("#advanced_search_criteria_search_vehicle_style_uuid_0_id") do
-      find(".css-1wa3eu0-placeholder").click # Click on the filter input
+    within('#advanced_search_criteria_search_vehicle_style_uuid_0_id') do
+      find(".css-g1d714-ValueContainer").click # Click on the filter input
       sleep(2)
-      within(".select__menu-list") do # Within the filter list
-        find('.select__option', text: "Sedan", match: :first, visible: false).click
+
+      within(".css-4ljt47-MenuList") do # Within the filter list
+        find('div', text: 'Sedan', match: :first, visible: false).click
       end
     end
+
 
     click_on("Search")
 
@@ -74,19 +76,21 @@ class AdvancedSearch::ChoiceSetFieldTest < ActionDispatch::IntegrationTest
       click_on("Author")
     end
 
-    within("#advanced_search_criteria_one_author_language_uuid_0_id") do
-      find(".css-1wa3eu0-placeholder").click # Click on the filter input
+    within('#advanced_search_criteria_one_author_language_uuid_0_id') do
+      find(".css-g1d714-ValueContainer").click # Click on the filter input
       sleep(2)
-      within(".select__menu-list") do # Within the filter list
-        find('.select__option', text: "French", match: :first, visible: false).click
+
+      within(".css-4ljt47-MenuList") do # Within the filter list
+        find('div', text: 'French', match: :first, visible: false).click
       end
     end
 
-    within("#advanced_search_criteria_one_author_language_uuid_0_id_condition") do
-      find(".css-1wa3eu0-placeholder").click # Click on the filter input
+    within('#advanced_search_criteria_one_author_language_uuid_0_id_condition') do
+      find(".css-g1d714-ValueContainer").click # Click on the filter input
       sleep(2)
-      within(".select__menu-list") do # Within the filter list
-        find('.select__option', text: "Language origin", match: :first, visible: false).click
+
+      within(".css-4ljt47-MenuList") do # Within the filter list
+        find('div', text: 'Language origin', match: :first, visible: false).click
       end
     end
 

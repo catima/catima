@@ -48,6 +48,7 @@ Rails.application.routes.draw do
         get 'items/:id' => 'items#geo_viewer_show'
         get ':item_type_slug/:field_uuid' => 'fields#index', as: 'fields'
         get ':item_type_slug/:field_uuid/choices_for_choice_set' => 'fields#choices_for_choice_set', as: 'choices_for_choice_set'
+        get ':category_id/:field_uuid/category_choices_for_choice_set' => 'fields#category_choices_for_choice_set', as: 'category_choices_for_choice_set'
         get '/categories/:category_id/:field_uuid' => 'fields#index', as: 'category_fields'
       end
     end
