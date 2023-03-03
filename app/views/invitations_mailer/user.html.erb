@@ -1,7 +1,6 @@
 <p><%= t("common.greeting") %>,</p>
 
 <p>
-  <%# TODO: make catalog a hyperlink %>
   <%= t(".invited_to_access_html",
         :invited_by => @invited_by.email,
         :catalog => @catalog.name) %>

@@ -291,7 +291,7 @@ fr:
       member_role: Comme membre vous allez pouvoir voir les zones publiques d'un catalogue restreint.
       editor_role: Comme éditeur de catalogue vous allez pouvoir ajouter et éditer vos propres entrées.
       super_editor_role: Comme super-éditeur de catalogue vous allez pouvoir ajouter et éditer toutes les entrées. Vous pouvez également créer de nouveaux choix.
-      invited_to_access_html: "%{invited_by} vous a invité d'accéder %{catalog}."
+      invited_to_access_html: "%{invited_by} vous a invité à joindre «%{catalog}»."
       reviewer_role: Comme validateur de catalogue, vous allez pouvoir ajouter des entrées, éditer toutes les entrées, créer de nouveaux choix, mais également valider des entrées en vue de leur publication.
       subject: "Vous êtes invité(e) à joindre %{catalog}"
     group:
