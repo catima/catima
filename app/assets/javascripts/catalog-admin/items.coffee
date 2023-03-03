@@ -1,11 +1,3 @@
-init_category_triggers = ->
-  $form = $("form.edit_item, form.new_item")
-  hide_all_category_fields($form)
-
-hide_all_category_fields = ($form)->
-  $form.find("[data-field-category]").parent(".form-group").hide()
-  $form.find("[data-field-category]").closest(".form-component").hide()
-
 init_multivalued_selects = ->
   $("select[data-select2-tagging]").select2(theme: "bootstrap")
 
@@ -303,5 +295,4 @@ check_filerequired = ($field)->
 
 
 $(document).ready(init_multivalued_selects)
-$(document).ready(init_category_triggers)
 $(document).ready(init_file_upload_controls)
