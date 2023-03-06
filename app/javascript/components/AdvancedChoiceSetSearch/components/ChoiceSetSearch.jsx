@@ -249,6 +249,8 @@ const ChoiceSetSearch = (props) => {
 
 
   function renderSelectConditionElement() {
+    console.log(selectedItem)
+    console.log(Object.keys(selectedCategory))
     return (
       <select className="form-control filter-condition" name={selectConditionName}
               value={selectedCondition} onChange={_selectCondition}
@@ -371,19 +373,19 @@ const ChoiceSetSearch = (props) => {
           </div>
         </div>
         }
-        {!(((selectedItem.length !== 0 && selectedItem.has_childrens == true)) && ((selectedItem.length !== 0 && selectedItem.data.length !== 0))) &&
+        {!(((selectedItem?.length !== 0 && selectedItem.has_childrens == true)) && ((selectedItem?.length !== 0 && selectedItem?.data?.length !== 0))) &&
         <div className="col-lg-3">
           {renderSelectConditionElement()}
         </div>
         }
       </div>
       <div className="row">
-        {(((selectedItem.length !== 0 && selectedItem.has_childrens == true)) && ((selectedItem.length !== 0 && selectedItem.data.length !== 0))) &&
+        {(((selectedItem?.length !== 0 && selectedItem.has_childrens == true)) && ((selectedItem?.length !== 0 && selectedItem?.data?.length !== 0))) &&
         <div className="col-lg-3" style={{marginTop: '10px'}}>
           {renderSelectConditionElement()}
         </div>
         }
-        {(Object.keys(selectedCategory).length !== 0 && selectedItem.data.length !== 0) &&
+        {(Object.keys(selectedCategory).length !== 0 && selectedItem?.data?.length !== 0) &&
         <div className="col-lg-offset-2 col-lg-6">{renderLinkedCategoryElement()}</div>
         }
       </div>
