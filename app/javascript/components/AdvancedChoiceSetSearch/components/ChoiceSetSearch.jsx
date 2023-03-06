@@ -249,8 +249,6 @@ const ChoiceSetSearch = (props) => {
 
 
   function renderSelectConditionElement() {
-    console.log(selectedItem)
-    console.log(Object.keys(selectedCategory))
     return (
       <select className="form-control filter-condition" name={selectConditionName}
               value={selectedCondition} onChange={_selectCondition}
