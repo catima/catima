@@ -4,10 +4,13 @@ import React, {useState, useEffect} from 'react';
 import Translations from '../../Translations/components/Translations';
 import AsyncPaginate from 'react-select-async-paginate';
 import axios from "axios";
+import Validation from "../module/validation"
 
 const ChoiceSetInput = (props) => {
     const {
         input,
+        req,
+        errorMsg: errorMsgProps,
         choiceSet: choiceSetProps,
         locales,
         fieldUuid
@@ -15,6 +18,13 @@ const ChoiceSetInput = (props) => {
 
     const [choiceSet, _setChoiceSets] = useState(choiceSetProps)
     const [choiceData, _setChoiceData] = useState(choiceSetProps.selectedChoicesValue.map(s => s.value))
+    const [isValid, setIsValid] = useState(Validation.isValid(
+      req,
+      input,
+      choiceSet.multiple? 'Multiple' : 'Single'
+    ))
+
+    let errorMsg = isValid ? "" : errorMsgProps;
 
     const setChoiceData = (index, value) => {
         let data = choiceData
@@ -31,6 +41,12 @@ const ChoiceSetInput = (props) => {
 
     function setData(d) {
         getInput().val(JSON.stringify(d));
+        setIsValid(Validation.isValid(
+            req,
+            input,
+          choiceSet.multiple? 'Multiple' : 'Single'
+          )
+        )
     }
 
     function getInput() {
@@ -56,6 +72,7 @@ const ChoiceSetInput = (props) => {
                     choiceSet={choiceSet}
                     fieldUuid={fieldUuid}
                     getInput={getInput}
+                    errorMsg={errorMsg}
                 />
             </div>
         </div>
@@ -78,7 +95,8 @@ const RenderChoiceSetInput = (props) => {
         index,
         choiceSet,
         fieldUuid,
-        getInput
+        getInput,
+        errorMsg
     } = props
 
     const [selectedChoices, setSelectedChoices] = useState({value: selectedChoicesValueProps})
@@ -218,6 +236,7 @@ const RenderChoiceSetInput = (props) => {
                             onChange={selectChoice}
                             options={optionsList}
                         />
+                        <span className="error helptext">{errorMsg}</span>
                     </div>
                 </div>
                 <div className="col-sm-4">

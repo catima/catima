@@ -218,7 +218,9 @@ class Field::ChoiceSet < ::Field
         end
       },
       locales: choice_set.catalog.valid_locales,
-      fieldUuid: uuid
+      fieldUuid: uuid,
+      req: required,
+      errorMsg: I18n.t("errors.messages.blank")
     }
   end
 
