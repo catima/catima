@@ -146,10 +146,11 @@ class Field::ComplexDatation < ::Field
     end
     {
       choiceSets: choice_sets_data,
-      selectedChoicesValue: selected_choices(item[:item]).map do |choice| {
-        label: choice.choice_set.choice_prefixed_label(choice, with_dates: true),
-        value: choice.id
-      }
+      selectedChoicesValue: selected_choices(item[:item]).map do |choice|
+        {
+          label: choice.choice_set.choice_prefixed_label(choice, with_dates: true),
+          value: choice.id
+        }
       end,
       selectedFormat: allowed_formats,
       locales: catalog.valid_locales,
@@ -215,6 +216,10 @@ class Field::ComplexDatation < ::Field
   end
 
   def sortable?
+    false
+  end
+
+  def filterable?
     false
   end
 

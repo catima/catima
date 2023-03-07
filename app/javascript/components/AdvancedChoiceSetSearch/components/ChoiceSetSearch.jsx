@@ -87,6 +87,9 @@ const ChoiceSetSearch = (props) => {
         setSelectedItem(item)
       } else {
         setSelectedItem([])
+        setSelectedCategory({});
+        setSelectedCondition('');
+        setSelectCondition([]);
       }
     }
   }
@@ -341,7 +344,7 @@ const ChoiceSetSearch = (props) => {
         <div className={_getChoiceSetClassname()}>
           {renderChoiceSetElement()}
         </div>
-        {(selectedItem.length !== 0 && selectedItem.has_childrens == true) &&
+        {(selectedItem.length !== 0 && selectedItem.has_childrens === true) &&
         <div className="col-lg-3">
           {renderChildChoicesActivated()}
         </div>
@@ -371,14 +374,14 @@ const ChoiceSetSearch = (props) => {
           </div>
         </div>
         }
-        {!(((selectedItem?.length !== 0 && selectedItem.has_childrens == true)) && ((selectedItem?.length !== 0 && selectedItem?.data?.length !== 0))) &&
+        {!(((selectedItem?.length !== 0 && selectedItem.has_childrens === true)) && ((selectedItem?.length !== 0 && selectedItem?.data?.length !== 0))) &&
         <div className="col-lg-3">
           {renderSelectConditionElement()}
         </div>
         }
       </div>
       <div className="row">
-        {(((selectedItem?.length !== 0 && selectedItem.has_childrens == true)) && ((selectedItem?.length !== 0 && selectedItem?.data?.length !== 0))) &&
+        {(((selectedItem?.length !== 0 && selectedItem.has_childrens === true)) && ((selectedItem?.length !== 0 && selectedItem?.data?.length !== 0))) &&
         <div className="col-lg-3" style={{marginTop: '10px'}}>
           {renderSelectConditionElement()}
         </div>
