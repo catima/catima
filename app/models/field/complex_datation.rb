@@ -36,6 +36,9 @@ class Field::ComplexDatation < ::Field
 
   def flat_ordered_choices
     @flat_ordered_choices ||= recursive_ordered_choices(catalog.choice_sets.where(id: choice_set_ids).map { |choice_set| choice_set.choices.ordered.reject(&:parent_id?) }.flatten).flatten
+    ids = @flat_ordered_choices.map(&:id)
+    cases = ids.map.with_index { |id, index| "WHEN id='#{id}' THEN #{index + 1}" }.join(" ")
+    @flat_ordered_choices = Choice.where(id: ids).order(Arel.sql("CASE #{cases} ELSE #{ids.size + 1} END"))
   end
 
   def recursive_ordered_choices(choices, deep: 0)

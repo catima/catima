@@ -65,7 +65,10 @@ class ChoiceSet < ApplicationRecord
   end
 
   def flat_ordered_choices
-    @flat_ordered_choices ||= recursive_ordered_choices(choices.ordered.reject(&:parent_id?)).flatten
+    @flat_ordered_choices = recursive_ordered_choices(choices.ordered.reject(&:parent_id?)).flatten
+    ids = @flat_ordered_choices.map(&:id)
+    cases = ids.map.with_index { |id, index| "WHEN id='#{id}' THEN #{index + 1}" }.join(" ")
+    @flat_ordered_choices = Choice.where(id: ids).order(Arel.sql("CASE #{cases} ELSE #{ids.size + 1} END"))
   end
 
   def find_sub_choices(parent)

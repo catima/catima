@@ -57,7 +57,7 @@ class React::FieldsController < React::BaseController
   def choices_for_item_type(item_type)
     field = item_type.fields.find_by(:uuid => params[:field_uuid])
     choice_set = field.is_a?(Field::ComplexDatation) ? ChoiceSet.where(id: field.choice_set_ids).find(params[:choice_set_id]) : field
-    choices = choice_set.choices.order(position: :asc)
+    choices = choice_set.flat_ordered_choices
 
     if params[:search]
       choices = choices.where(
