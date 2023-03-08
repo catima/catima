@@ -336,7 +336,7 @@ const ChoiceSetSearch = (props) => {
   }
 
   return (
-    <div className="col-lg-12 choiceset-search-container">
+    <div className="col-lg-12 choiceset-search-container choiceSetInput">
       <div className="row">
         <div className="col-lg-2">
           {renderFieldConditionElement()}

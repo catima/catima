@@ -212,7 +212,7 @@ const RenderChoiceSetInput = (props) => {
     }
     return (
         <div>
-            <div className="row" style={{display: 'flex'}}>
+            <div className="choiceSetInput row" style={{display: 'flex'}}>
                 <div className="col-sm-8">
                     <div style={{width: '100%'}}>
                         <AsyncPaginate
