@@ -10,23 +10,23 @@
           <div>
             <%= link_to(
                   fa_icon(:eye),
-                  "javavascript:void(0)",
+                  "javascript:;",
                   "data-action": "click->toggle-display#reveal",
-                  class: 'px-1 txt-success'
+                  class: 'px-1 txt-success toggle-suggestion'
                 ) %>
             <%= link_to(
                   fa_icon(:check),
                   update_processed_catalog_admin_suggestion_path(item_id: @item.id, id: suggestion.id),
                   method: :post,
                   "data-confirm": t(".confirm_validate"),
-                  class: ['px-1', ('text-success disable_link' if suggestion.processed_at?)]
+                  class: ['px-1', 'validate-suggestion', ('text-success disable-link' if suggestion.processed_at?)]
                 ) %>
             <%= link_to(
                   fa_icon(:trash),
                   catalog_admin_suggestion_path(item_id: @item.id, id: suggestion.id),
                   method: :delete,
                   "data-confirm": t(".confirm_destroy"),
-                  class: 'px-1 text-danger'
+                  class: 'px-1 text-danger delete-suggestion'
                 ) %>
           </div>
         </div>
