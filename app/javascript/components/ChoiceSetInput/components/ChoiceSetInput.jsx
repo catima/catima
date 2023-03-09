@@ -374,33 +374,33 @@ const ModalForm = (props) => {
                                         </div>
                                     </div>
 
-                                    {locales.map((locale, idx) => (
-                                        <div key={idx}>
-
-                                            <div className="form-group">
-                                                <label
-                                                    htmlFor={`choice_short_name_${locale}`}>{Translations.messages['catalog_admin.choices.choice_fields.short_name']}</label>
+                                    {
+                                        locales.map((locale, idx) => (
+                                            <div key={idx}>
                                                 <div className="form-group">
-                                                    <label className="sr-only required"
-                                                           htmlFor={`choice_short_name_${locale}`}>{Translations.messages['catalog_admin.choices.choice_fields.short_name']}</label>
-                                                    <input className="form-control" type="text"
-                                                           name={`choice[short_name_${locale}]`}
-                                                           id={`choice_short_name_${locale}`}/>
+                                                    <label
+                                                        htmlFor={`choice_short_name_${locale}`}>{Translations.messages['catalog_admin.choices.choice_fields.short_name']}</label>
+                                                    <div className="form-group">
+                                                        <label className="sr-only required"
+                                                               htmlFor={`choice_short_name_${locale}`}>{Translations.messages['catalog_admin.choices.choice_fields.short_name']}</label>
+                                                        <input className="form-control" type="text"
+                                                               name={`choice[short_name_${locale}]`}
+                                                               id={`choice_short_name_${locale}`}/>
+                                                    </div>
+                                                </div>
+                                                <div className="form-group">
+                                                    <label
+                                                        htmlFor={`choice_long_name_${locale}`}>{Translations.messages['catalog_admin.choices.choice_fields.long_name_optional']}</label>
+                                                    <div className="form-group">
+                                                        <label className="sr-only"
+                                                               htmlFor={`choice_long_name_${locale}`}>{Translations.messages['catalog_admin.choices.choice_fields.long_name_optional']}</label>
+                                                        <input className="form-control" type="text"
+                                                               name={`choice[long_name_${locale}]`}
+                                                               id={`choice_long_name_${locale}`}/>
+                                                    </div>
                                                 </div>
                                             </div>
-                                            <div className="form-group">
-                                                <label
-                                                    htmlFor={`choice_long_name_${locale}`}>{Translations.messages['catalog_admin.choices.choice_fields.long_name_optional']}</label>
-                                                <div className="form-group">
-                                                    <label className="sr-only"
-                                                           htmlFor={`choice_long_name_${locale}`}>{Translations.messages['catalog_admin.choices.choice_fields.long_name_optional']}</label>
-                                                    <input className="form-control" type="text"
-                                                           name={`choice[long_name_${locale}]`}
-                                                           id={`choice_long_name_${locale}`}/>
-                                                </div>
-                                            </div>
-                                        </div>
-                                    ))
+                                        ))
                                     }
 
                                     <div className="form-group">
@@ -409,9 +409,8 @@ const ModalForm = (props) => {
                                         <select className="form-control" name="choice[category_id]"
                                                 id="choice_category_id">
                                             <option value="" label=" "></option>
-                                            {modalCategories && modalCategories.map((category) => (
-                                                <option value={category[0]}>{category[1]}</option>
-
+                                            {modalCategories && modalCategories.map((category, idx) => (
+                                                <option key={idx} value={category[0]}>{category[1]}</option>
                                             ))}
                                         </select>
                                     </div>
