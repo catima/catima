@@ -62,6 +62,15 @@ en:
         api_key: "Authentication tokens"
     errors:
       models:
+        item:
+          attributes:
+            base:
+              negative_dates: "Negative dates must be entered with the option before Jesus Christ (if activated)"
+        choice:
+          attributes:
+            base:
+              dates_must_be_present: "One of the two dates must be completed"
+              negative_dates: "Negative dates must be entered with the option before Jesus Christ (if activated)"
         csv_import:
           attributes:
             file:
@@ -590,7 +599,7 @@ en:
         show_hierarchy: "Show hierarchy"
         hide_hierarchy: "Hide hierarchy"
       choice_modal:
-        create_new_field: Create new
+        create_new_field: Create a new choice
         position:
           first: first
           last: last

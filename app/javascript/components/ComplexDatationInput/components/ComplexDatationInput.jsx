@@ -356,14 +356,14 @@ const ComplexDatationInput = (props) => {
     return (
         <div>
             <div>{renderAllowedFormatsSelector()}</div>
-            {selectedFormat == 'date_time' && (
+            {selectedFormat === 'date_time' && (
                 <div>
                     <div>{renderDateTimeInput('from')}</div>
                     <div>{renderDateTimeInput('to')}</div>
                     <span className="error helptext">{errorMsg}</span>
                 </div>
             )}
-            {selectedFormat == 'datation_choice' && (
+            {selectedFormat === 'datation_choice' && (
                 <RenderChoiceSetList
                     choiceSets={choiceSets}
                     locales={locales}
@@ -399,7 +399,6 @@ const RenderChoiceSetList = (props) => {
         if (Object.keys(choiceSet).length > 0) {
             return (<div key={choiceSet.fetchUrl} className="mt-2">
                 <RenderChoiceSetInput
-                    name={choiceSet.name}
                     locales={locales}
                     fetchUrl={choiceSet.fetchUrl}
                     selectedChoicesValue={choiceSet.selectedChoicesValue}
@@ -423,7 +422,6 @@ const RenderChoiceSetList = (props) => {
 
 const RenderChoiceSetInput = (props) => {
     const {
-        name,
         locales,
         fetchUrl,
         selectedChoicesValue: selectedChoicesValueProps,
@@ -504,7 +502,6 @@ const RenderChoiceSetInput = (props) => {
             setChoices(res.data.choices)
             setLoadingMessage(res.data.loading_message)
             setOptionsList(res.data.choices.map(choice => _getJSONFilter(choice)))
-            // setIsInitialized(search.length === 0)
 
             return {
                 options: _getFilterOptions(res.data.choices),
@@ -550,17 +547,17 @@ const RenderChoiceSetInput = (props) => {
                 </div>
             </div>
             {modalOpen && (
-                <ModalForm name={name}
-                           locales={locales}
-                           key={modalIndex}
-                           modalIndex={modalIndex}
-                           modalOpen={modalOpen}
-                           setModalOpen={setModalOpen}
-                           choiceSet={choiceSet}
-                           fieldUuid={fieldUuid}
-                           _getJSONFilter={_getJSONFilter}
-                           selectedChoices={selectedChoices}
-                           selectChoice={selectChoice}/>
+                <ModalForm
+                    locales={locales}
+                    key={modalIndex}
+                    modalIndex={modalIndex}
+                    modalOpen={modalOpen}
+                    setModalOpen={setModalOpen}
+                    choiceSet={choiceSet}
+                    fieldUuid={fieldUuid}
+                    _getJSONFilter={_getJSONFilter}
+                    selectedChoices={selectedChoices}
+                    selectChoice={selectChoice}/>
             )}
         </div>
     )
@@ -570,7 +567,6 @@ const ModalForm = (props) => {
     const {
         locales,
         modalIndex,
-        name,
         choiceSet,
         fieldUuid,
         _getJSONFilter,
@@ -631,7 +627,6 @@ const ModalForm = (props) => {
     if (!modalOpen) {
         return ''
     } else {
-
         return (
             <div className="modal fade" id={"choice-modal-" + fieldUuid + choiceSet.uuid} tabIndex="-1" role="dialog"
                  data-field-uuid={fieldUuid + choiceSet.uuid} data-lang="fr" aria-labelledby="myModalLabel">
@@ -639,7 +634,7 @@ const ModalForm = (props) => {
                     <div className="modal-content">
                         <form onSubmit={handleSubmit} id={`new_choice_${choiceSet.id}`}>
                             <div className="modal-header">
-                                <h4 className="modal-title">{Translations.messages['catalog_admin.choice_sets.choice_modal.create_new_field']} «{name}» </h4>
+                                <h4 className="modal-title">{Translations.messages['catalog_admin.choice_sets.choice_modal.create_new_field']}</h4>
                                 <button type="button" className="close" data-dismiss="modal" aria-label="Close">
                                     <span aria-hidden="true">×</span>
                                 </button>
@@ -673,30 +668,30 @@ const ModalForm = (props) => {
                                         </div>
                                     </div>
 
+                                    <label htmlFor={`choice_short_name`}>{Translations.messages['catalog_admin.choices.choice_fields.short_name']}</label>
                                     {
                                         locales.map((locale, idx) => (
                                             <div key={idx}>
-
                                                 <div className="form-group">
-                                                    <label
-                                                        htmlFor={`choice_short_name_${locale}`}>{Translations.messages['catalog_admin.choices.choice_fields.short_name']}</label>
-                                                    <div className="form-group">
-                                                        <label className="sr-only required"
-                                                               htmlFor={`choice_short_name_${locale}`}>{Translations.messages['catalog_admin.choices.choice_fields.short_name']}</label>
-                                                        <input className="form-control" type="text"
-                                                               name={`choice[short_name_${locale}]`}
-                                                               id={`choice_short_name_${locale}`}/>
+                                                    <label className="sr-only" htmlFor={`choice_short_name_${locale}`}>{Translations.messages['catalog_admin.choices.choice_fields.short_name']}</label>
+                                                    <div className="input-group">
+                                                        {locales.length > 1 && <div className="input-group-prepend"><span className="input-group-text">{locale}</span></div>}
+                                                        <input className="form-control" type="text" name={`choice[short_name_${locale}]`} id={`choice_short_name_${locale}`}/>
                                                     </div>
                                                 </div>
+                                            </div>
+                                        ))
+                                    }
+
+                                    <label htmlFor={`choice_long_name`}>{Translations.messages['catalog_admin.choices.choice_fields.long_name_optional']}</label>
+                                    {
+                                        locales.map((locale, idx) => (
+                                            <div key={idx}>
                                                 <div className="form-group">
-                                                    <label
-                                                        htmlFor={`choice_long_name_${locale}`}>{Translations.messages['catalog_admin.choices.choice_fields.long_name_optional']}</label>
-                                                    <div className="form-group">
-                                                        <label className="sr-only"
-                                                               htmlFor={`choice_long_name_${locale}`}>{Translations.messages['catalog_admin.choices.choice_fields.long_name_optional']}</label>
-                                                        <input className="form-control" type="text"
-                                                               name={`choice[long_name_${locale}]`}
-                                                               id={`choice_long_name_${locale}`}/>
+                                                    <label className="sr-only" htmlFor={`choice_long_name_${locale}`}>{Translations.messages['catalog_admin.choices.choice_fields.long_name_optional']}</label>
+                                                    <div className="input-group">
+                                                        {locales.length > 1 && <div className="input-group-prepend"><span className="input-group-text">{locale}</span></div>}
+                                                        <input className="form-control" type="text" name={`choice[long_name_${locale}]`} id={`choice_long_name_${locale}`}/>
                                                     </div>
                                                 </div>
                                             </div>

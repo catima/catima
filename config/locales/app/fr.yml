@@ -67,12 +67,12 @@ fr:
         item:
           attributes:
             base:
-              negative_dates: "Les dates négatives doivent etre saisies avec l'option avant Jesus Christ (si activée)"
+              negative_dates: "Les dates négatives doivent être saisies avec l'option avant Jesus Christ (si activée)"
         choice:
           attributes:
             base:
-              dates_must_be_present: "Une des deux dates doit etre remplie"
-              negative_dates: "Les dates négatives doivent etre saisies avec l'option avant Jesus Christ (si activée)"
+              dates_must_be_present: "Une des deux dates doit être remplie"
+              negative_dates: "Les dates négatives doivent être saisies avec l'option avant Jesus Christ (si activée)"
         csv_import:
           attributes:
             file:
@@ -596,7 +596,7 @@ fr:
         show_hierarchy: "Afficher la hiérarchie"
         hide_hierarchy: "Cacher la hiérarchie"
       choice_modal:
-        create_new_field: Créer nouvelle entrée dans
+        create_new_field: Créer un nouveau choix
         position:
           first: premier
           last: dernier
