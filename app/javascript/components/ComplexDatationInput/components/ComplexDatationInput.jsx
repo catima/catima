@@ -579,14 +579,21 @@ const ModalForm = (props) => {
     const [modalChoices, setModalChoices] = useState([])
 
     useEffect(() => {
-        async function fetchData() {
-            const response = await axios.get(choiceSet.newChoiceModalUrl)
-            setModalChoices(response.data.choices)
+        if (modalOpen === true) {
+            async function fetchData() {
+                const response = await axios.get(choiceSet.newChoiceModalUrl)
+                setModalChoices(response.data.choices)
+            }
+
+            fetchData()
         }
 
-        fetchData()
-    }, [])
+        // Cleanup
+        return () => {
+            setModalChoices([]);
+        };
 
+    }, [modalOpen])
 
     const [errorMsg, setErrorMsg] = useState('')
     const [errorChoice, setErrorChoice] = useState('')
@@ -611,7 +618,7 @@ const ModalForm = (props) => {
 
             const response = await axios.post(choiceSet.createChoiceUrl, params)
 
-            if (response && response.data && response.data.choice_json_attributes) {
+            if (response?.data?.choice_json_attributes) {
                 selectChoice([...selectedChoices.value, _getJSONFilter(response.data.choice_json_attributes)])
                 $(event.target).closest('div.modal').modal('hide')
                 setErrorMsg('')
@@ -619,8 +626,8 @@ const ModalForm = (props) => {
                 setModalOpen(false)
             }
         } catch (error) {
-            setErrorMsg(error.response.data.errors)
-            setErrorChoice(error.response.data.choice)
+            setErrorMsg(error.response?.data?.errors)
+            setErrorChoice(error.response?.data?.choice)
         }
     }
 

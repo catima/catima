@@ -274,7 +274,7 @@ const ModalForm = (props) => {
     const [errorChoice, setErrorChoice] = useState('')
 
     useEffect(() => {
-        if (modalOpen == true) {
+        if (modalOpen === true) {
             async function fetchData() {
                 const response = await axios.get(choiceSet.newChoiceModalUrl)
                 setModalChoices(response.data.choices)
@@ -283,6 +283,12 @@ const ModalForm = (props) => {
 
             fetchData()
         }
+
+        // Cleanup
+        return () => {
+            setModalChoices([]);
+            setModalCategories([]);
+        };
     }, [modalOpen])
 
 
@@ -307,7 +313,7 @@ const ModalForm = (props) => {
             axios.defaults.headers.common["content-type"] = 'application/x-www-form-urlencoded;charset=utf-8'
             const response = await axios.post(choiceSet.createChoiceUrl, params)
 
-            if (response && response.data && response.data.choice_json_attributes) {
+            if (response?.data?.choice_json_attributes) {
                 if (choiceSet.multiple) {
                     selectChoice([...selectedChoices.value, _getJSONFilter(response.data.choice_json_attributes)])
                 } else {
@@ -319,8 +325,8 @@ const ModalForm = (props) => {
                 setModalOpen(false)
             }
         } catch (error) {
-            setErrorMsg(error.response.data.errors)
-            setErrorChoice(error.response.data.choice)
+            setErrorMsg(error.response?.data?.errors)
+            setErrorChoice(error.response?.data?.choice)
         }
     }
 
