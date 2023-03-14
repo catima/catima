@@ -44,7 +44,11 @@ class Field::Geometry < ::Field
   end
 
   def edit_props(_item)
-    { "bounds" => default_bounds, "layers" => geo_layers }
+    {
+      "bounds" => default_bounds,
+      "layers" => geo_layers,
+      "required" => required?
+    }
   end
 
   def custom_field_permitted_attributes
@@ -96,6 +100,7 @@ class Field::Geometry < ::Field
       value = record.public_send(attrib)
 
       return if value.blank?
+
       return if postgis_valid_json?(value)
 
       record.errors.add(
@@ -108,7 +113,7 @@ class Field::Geometry < ::Field
 
     def postgis_valid_json?(value)
       value_sql = ::Field::Geometry.send(:sanitize_sql, ["'%s'", value])
-      result = ::Field::Geometry.connection.select_value(<<-SQL)
+      result = ::Field::Geometry.connection.select_value(<<-SQL.squish)
         SELECT validate_geojson(#{value_sql})
       SQL
       result == "t"

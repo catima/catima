@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import React, {useState, useEffect, useRef} from 'react';
 import L from 'leaflet';
 import {v4 as uuidv4} from 'uuid';
+import Validation from "../../GeoEditor/module/validation";
 
 const subs = ['a', 'b', 'c'];
 
@@ -10,7 +11,8 @@ const GeoEditor = (props) => {
   const {
     input,
     layers: layersProps,
-    bounds: boundsProps
+    bounds: boundsProps,
+    required: requiredProps
   } = props
 
   const editorId = uuidv4();
@@ -32,6 +34,10 @@ const GeoEditor = (props) => {
   })
   const [mapId, setMapId] = useState()
   const [editMarkerPaneId, setEditMarkerPaneId] = useState()
+  const [isValid, setIsValid] = useState(Validation.isValid(
+      requiredProps,
+      input
+  ))
 
   const markersRef = useRef([])
   markersRef.current = markers
@@ -150,6 +156,11 @@ const GeoEditor = (props) => {
 
   function _save(fc) {
     $(input).val(JSON.stringify(fc));
+    setIsValid(Validation.isValid(
+            requiredProps,
+            input
+        )
+    )
   }
 
   // Returns the coordinates of the feature.
@@ -332,7 +343,8 @@ const GeoEditor = (props) => {
   }
 
   return (
-    <div className="geoEditor">
+    <div className="geoEditor"
+         style={Validation.getStyle(requiredProps, input)}>
       <div id={mapId} style={{height: state.mapHeight}}></div>
       <div id={editMarkerPaneId} className="geo-edit-pane" style={{display: "none"}}>
         <label>Latitude: <input onKeyUp={_handleChangeLatitude} onChange={_handleChangeLatitude}
