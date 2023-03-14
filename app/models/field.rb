@@ -431,7 +431,12 @@ class Field < ApplicationRecord
     build_validators.each do |val|
       val = Array.wrap(val)
       options = val.extract_options!
-      validates_with(val.first, options.merge(:attributes => :default_value))
+      validates_with(
+        val.first,
+        options.merge(
+          :attributes => :default_value
+        )
+      )
     end
   end
 

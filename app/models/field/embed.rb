@@ -67,6 +67,7 @@ class Field::Embed < ::Field
       value = record.public_send(attrib)
 
       return if value.blank?
+
       return if record.fields.find_by(uuid: attrib).parsed_domains.none?
 
       field = record.fields.find_by(uuid: attrib)
@@ -122,7 +123,7 @@ class Field::Embed < ::Field
       end
       record.data[attrib] = iframe_nodes.map(&:to_s).join
       iframe_nodes
-        .map { |node| node.attr('src') }.reject(&:nil?)
+        .map { |node| node.attr('src') }.compact
         .each { |url| validate_url(url, record, attrib, domain) }
     end
 

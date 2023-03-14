@@ -44,7 +44,7 @@ class Field::Email < ::Field
   end
 
   # Validates email fields. This is a modified version of the Regex used by Devise (Devise.email_regexp);
-  # it additionnally verifies if there is a dot in the domain which is required for non-local emails.
+  # it additionally verifies if there is a dot in the domain which is required for non-local emails.
   def email_validator
     [
       ActiveModel::Validations::FormatValidator,

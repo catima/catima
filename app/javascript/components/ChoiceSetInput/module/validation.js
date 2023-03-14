@@ -6,7 +6,7 @@ class Validation {
       if (!value) return false;
 
       if (Array.isArray(JSON.parse(value))) {
-        return Array.isArray(JSON.parse(value)) && JSON.parse(value).length
+        return JSON.parse(value).length
       }
 
       return !!value;
