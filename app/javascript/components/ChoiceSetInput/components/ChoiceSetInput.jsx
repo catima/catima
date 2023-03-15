@@ -315,7 +315,7 @@ const ModalForm = (props) => {
 
             if (response?.data?.choice_json_attributes) {
                 if (choiceSet.multiple) {
-                    selectChoice([...selectedChoices.value, _getJSONFilter(response.data.choice_json_attributes)])
+                    selectChoice([...selectedChoices.value || [], _getJSONFilter(response.data.choice_json_attributes)])
                 } else {
                     selectChoice([_getJSONFilter(response.data.choice_json_attributes)])
                 }
