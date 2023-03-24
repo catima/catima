@@ -668,6 +668,7 @@ fr:
         file: Fichier
         file_encoding: Encodage du fichier
         detect_option: "Détecter automatiquement"
+        help: "Le nom de la colonne CSV doit correspondre exactement au slug du champ souhaité. Actuellement, seuls les champs de type \"Texte\", \"Nombre entier\", \"Décimal\", \"Email\" et \"URL\" sont éligibles. Les autres types de champs (référence, ensemble de choix, etc.) seront ignorés."
       create:
         error: Le contenu du fichier ne peut pas être parsé
         file_not_csv: ne semble pas être au format CSV

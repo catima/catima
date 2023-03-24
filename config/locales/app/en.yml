@@ -671,6 +671,7 @@ en:
         file: File
         file_encoding: File encoding
         detect_option: "Automatically detect"
+        help: "The CSV column name should exactly match the slug of the desired field. Currently only \"Text\", \"Integer\", \"Decimal\", \"Email\" and \"URL\" fields are eligible. Other Field types (reference, choice set, etc.) will be ignored."
       create:
         error: The content of the file can't be parsed
         file_not_csv: does not appear to be in CSV format

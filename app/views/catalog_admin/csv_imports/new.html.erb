@@ -14,7 +14,13 @@
     f.object.class.encodings_options,
     :label => { :text => t(".file_encoding")}
   ) %>
+
+  <div class="alert alert-info mt-3" role="alert">
+    <%= t(".help") %>
+  </div>
+
   <hr>
+
   <%= f.primary(t(".import")) %>
   <%= link_to(t("cancel"), catalog_admin_items_path, :class => "btn btn-link") %>
 <% end %>
