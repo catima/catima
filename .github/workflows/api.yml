@@ -1,7 +1,7 @@
 name: api
 on: [push, pull_request]
 jobs:
-  build:
+  test:
     name: RUBY${{ matrix.ruby-versions }}
     runs-on: ubuntu-20.04
     strategy:
@@ -83,21 +83,3 @@ jobs:
         with:
           name: swagger-documentation
           path: /home/runner/work/catima/catima/swagger/v3/swagger.yaml
-
-  notification:
-    name: Notify
-    runs-on: ubuntu-latest
-    needs: build
-    if: always()
-    continue-on-error: true
-
-    steps:
-      - uses: technote-space/workflow-conclusion-action@v3
-      - uses: mikesprague/teams-incoming-webhook-action@v1
-        with:
-          github-token: ${{ github.token }}
-          webhook-url: ${{ secrets.TEAMS_CI_WEBHOOK_URL }}
-          deploy-card: true
-          timezone: "Europe/Zurich"
-          title: ${{ env.WORKFLOW_CONCLUSION }} (api)
-          color: ${{ env.WORKFLOW_CONCLUSION }}

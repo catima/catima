@@ -103,21 +103,3 @@ jobs:
         with:
           minimum_coverage: ${{ vars.MINIMUM_COVERAGE || 45 }}
           coverage_path: coverage/.last_run.json
-
-  notification:
-    name: Notify
-    runs-on: ubuntu-latest
-    needs: [test, coverage]
-    if: always()
-    continue-on-error: true
-
-    steps:
-      - uses: technote-space/workflow-conclusion-action@v3
-      - uses: mikesprague/teams-incoming-webhook-action@v1
-        with:
-          github-token: ${{ github.token }}
-          webhook-url: ${{ secrets.TEAMS_CI_WEBHOOK_URL }}
-          deploy-card: true
-          timezone: "Europe/Zurich"
-          title: ${{ env.WORKFLOW_CONCLUSION }} (ci)
-          color: ${{ env.WORKFLOW_CONCLUSION }}
