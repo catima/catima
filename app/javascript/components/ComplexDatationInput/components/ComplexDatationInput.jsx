@@ -15,7 +15,8 @@ const ComplexDatationInput = (props) => {
         locales,
         choiceSets: choiceSetsProps,
         selectedFormat: selectedFormatProps,
-        fieldUuid
+        fieldUuid,
+        componentPolicies
     } = props
 
     const [choiceSets, setChoiceSets] = useState(choiceSetsProps)
@@ -371,6 +372,7 @@ const ComplexDatationInput = (props) => {
                     setData={setData}
                     setChoiceData={setChoiceData}
                     fieldUuid={fieldUuid}
+                    componentPolicies={componentPolicies}
                 />
             )}
         </div>
@@ -391,7 +393,8 @@ const RenderChoiceSetList = (props) => {
         getData,
         setData,
         setChoiceData,
-        fieldUuid
+        fieldUuid,
+        componentPolicies
     } = props
 
 
@@ -408,6 +411,7 @@ const RenderChoiceSetList = (props) => {
                     index={index}
                     choiceSet={choiceSet}
                     fieldUuid={fieldUuid}
+                    componentPolicies={componentPolicies}
                 />
             </div>);
         }
@@ -428,7 +432,8 @@ const RenderChoiceSetInput = (props) => {
         setChoiceData,
         index,
         choiceSet,
-        fieldUuid
+        fieldUuid,
+        componentPolicies
     } = props
 
     const [selectedChoices, setSelectedChoices] = useState({BC: false, value: selectedChoicesValueProps})
@@ -538,13 +543,15 @@ const RenderChoiceSetInput = (props) => {
                         />
                     </div>
                 </div>
-                <div className="col-sm-4">
-                    <a onClick={() => setModalOpen(true)} className="btn btn-sm btn-outline-secondary"
-                       data-toggle="modal"
-                       data-target={"#choice-modal-" + fieldUuid + choiceSet.uuid} href="#">
-                        <i className="fa fa-plus"></i>
-                    </a>
-                </div>
+                {componentPolicies.modal && (
+                    <div className="col-sm-4">
+                        <a onClick={() => setModalOpen(true)} className="btn btn-sm btn-outline-secondary"
+                           data-toggle="modal"
+                           data-target={"#choice-modal-" + fieldUuid + choiceSet.uuid} href="#">
+                            <i className="fa fa-plus"></i>
+                        </a>
+                    </div>
+                )}
             </div>
             {modalOpen && (
                 <ModalForm

@@ -62,16 +62,23 @@ module CatalogAdmin::FieldsHelper
   end
 
   def field_input(form, field, options={})
-    return field_json_input(form, field, field.edit_props(item: @item)) if field.editor_component.present?
+    if field.editor_component.present?
+      return field_json_input(
+        form,
+        field,
+        field.edit_props(item: @item),
+        options
+      )
+    end
 
     field_presenter(form.object, field, options)
       .input(form, field.uuid, options)
   end
 
-  def field_json_input(form, field, props={})
+  def field_json_input(form, field, props={}, options={})
     label = field_presenter(form.object, field).field_label
     form.form_group(field.uuid, :label => { :text => label }) do
-      json_react_input_component(form, field, props)
+      json_react_input_component(form, field, props, options)
     end
   end
 

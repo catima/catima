@@ -12,7 +12,8 @@ const ChoiceSetInput = (props) => {
         req,
         choiceSet: choiceSetProps,
         locales,
-        fieldUuid
+        fieldUuid,
+        componentPolicies
     } = props
 
     const [choiceSet, _setChoiceSets] = useState(choiceSetProps)
@@ -68,6 +69,7 @@ const ChoiceSetInput = (props) => {
                     getInput={getInput}
                     req={req}
                     input={input}
+                    componentPolicies={componentPolicies}
                 />
             </div>
         </div>
@@ -91,7 +93,8 @@ const RenderChoiceSetInput = (props) => {
         fieldUuid,
         getInput,
         req,
-        input
+        input,
+        componentPolicies
     } = props
 
     const [selectedChoices, setSelectedChoices] = useState({value: selectedChoicesValueProps})
@@ -233,13 +236,15 @@ const RenderChoiceSetInput = (props) => {
                         />
                     </div>
                 </div>
-                <div className="col-sm-4">
-                    <a onClick={() => setModalOpen(true)} className="btn btn-sm btn-outline-secondary"
-                       data-toggle="modal"
-                       data-target={"#choice-modal-" + fieldUuid} href="#">
-                        <i className="fa fa-plus"></i>
-                    </a>
-                </div>
+                {componentPolicies.modal && (
+                    <div className="col-sm-4">
+                        <a onClick={() => setModalOpen(true)} className="btn btn-sm btn-outline-secondary"
+                           data-toggle="modal"
+                           data-target={"#choice-modal-" + fieldUuid} href="#">
+                            <i className="fa fa-plus"></i>
+                        </a>
+                    </div>
+                )}
             </div>
             {modalOpen && (
                 <ModalForm

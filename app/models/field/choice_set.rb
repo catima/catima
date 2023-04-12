@@ -149,7 +149,6 @@ class Field::ChoiceSet < ::Field
     choices_as_options
   end
 
-
   def formated_choice(choice)
     option = {
       value: choice.short_name,
@@ -170,7 +169,6 @@ class Field::ChoiceSet < ::Field
     option[:category_data] = choice.category.present? && choice.category.not_deleted? ? choice.category.fields : []
     option
   end
-
 
   def search_conditions_as_hash(locale)
     [
@@ -220,7 +218,11 @@ class Field::ChoiceSet < ::Field
       locales: choice_set.catalog.valid_locales,
       fieldUuid: uuid,
       req: required,
-      errorMsg: I18n.t("errors.messages.blank")
+      errorMsg: I18n.t("errors.messages.blank"),
+      componentPolicies:
+        {
+          modal: "super-editor"
+        }
     }
   end
 

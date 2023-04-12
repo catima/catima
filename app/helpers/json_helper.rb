@@ -4,8 +4,19 @@ module JsonHelper
     react_component("#{field.display_component}/components/#{field.display_component}", props)
   end
 
-  def json_react_input_component(form, field, props={})
-    props = props.merge(:input => "##{json_hidden_field_id(form, field)}")
+  def json_react_input_component(form, field, props={}, options={})
+    # Add the field id & options to the component props
+    props = props.merge(
+      :input => "##{json_hidden_field_id(form, field)}",
+      :options => options
+    )
+    # Compute the component policies from the component props if available for the field
+    if props[:componentPolicies].present?
+      props[:componentPolicies] = props[:componentPolicies].transform_values do |v|
+        options[:current_user].catalog_role_at_least?(options[:catalog], v)
+      end
+    end
+
     html = [
       json_hidden_field(form, field),
       react_component("#{field.editor_component}/components/#{field.editor_component}", props)

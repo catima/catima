@@ -157,7 +157,11 @@ class Field::ComplexDatation < ::Field
       end,
       selectedFormat: allowed_formats,
       locales: catalog.valid_locales,
-      fieldUuid: uuid
+      fieldUuid: uuid,
+      componentPolicies:
+        {
+          modal: "super-editor"
+        }
     }
   end
 
