@@ -10,10 +10,10 @@ module JsonHelper
       :input => "##{json_hidden_field_id(form, field)}",
       :options => options
     )
-    # Compute the component policies from the component props if available for the field
+    # Compute the component policies from the model props if available for the field
     if props[:componentPolicies].present?
-      props[:componentPolicies] = props[:componentPolicies].transform_values do |v|
-        options[:current_user].catalog_role_at_least?(options[:catalog], v)
+      props[:componentPolicies] = props[:componentPolicies].transform_values do |role|
+        options[:current_user].catalog_role_at_least?(options[:catalog], role)
       end
     end
 

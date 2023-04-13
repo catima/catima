@@ -614,7 +614,7 @@ const ModalForm = (props) => {
             let fieldName = form.elements[i].name;
             let fieldValue = form.elements[i].value;
 
-            params += fieldName + '=' + fieldValue + '&';
+            params += fieldName + '=' + encodeURIComponent(fieldValue) + '&';
         }
         params += 'react' + '=' + 'true' + '&';
 
