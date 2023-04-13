@@ -1,5 +1,14 @@
 name: api
 on: [push, pull_request]
+env:
+  CI: gha
+  POSTGRES_DB: postgres
+  POSTGRES_USER: postgres
+  POSTGRES_PASSWORD: postgres
+  RAILS_ENV: test
+  PSQL_VERSION: 15
+  NODE_VERSION: 16
+
 jobs:
   test:
     name: RUBY${{ matrix.ruby-versions }}
@@ -7,15 +16,6 @@ jobs:
     strategy:
       matrix:
         ruby-versions: [ '2.7.5' ]
-
-    env:
-      CI: gha
-      POSTGRES_DB: postgres
-      POSTGRES_USER: postgres
-      POSTGRES_PASSWORD: postgres
-      RAILS_ENV: test
-      PSQL_VERSION: 15
-      NODE_VERSION: 16
 
     services:
       postgres:
@@ -65,6 +65,13 @@ jobs:
           path: ~/.cache/yarn
           key: ${{ runner.os }}-yarn-${{ hashFiles('**/yarn.lock') }}
           restore-keys: ${{ runner.os }}-yarn-
+
+      - name: Install PSQL client
+        run: |
+          sudo sh -c 'echo "deb http://apt.postgresql.org/pub/repos/apt $(lsb_release -cs)-pgdg main" > /etc/apt/sources.list.d/pgdg.list'
+          wget --quiet -O - https://www.postgresql.org/media/keys/ACCC4CF8.asc | sudo apt-key add -
+          sudo apt-get update
+          sudo apt-get -y --no-install-recommends install "postgresql-client-${{ env.PSQL_VERSION }}"
 
       - name: Install needed packages
         run: |

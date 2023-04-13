@@ -1,5 +1,4 @@
 name: 'codeql'
-
 on:
   push:
     branches: [development]
