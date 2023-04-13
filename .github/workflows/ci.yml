@@ -3,7 +3,7 @@ on: [push, pull_request]
 jobs:
   test:
     name: RUBY${{ matrix.ruby-versions }}
-    runs-on: ubuntu-20.04
+    runs-on: ubuntu-22.04
     strategy:
       matrix:
         ruby-versions: [ '2.7.5' ]
@@ -14,10 +14,12 @@ jobs:
       POSTGRES_USER: postgres
       POSTGRES_PASSWORD: postgres
       RAILS_ENV: test
+      PSQL_VERSION: 15
+      NODE_VERSION: 16
 
     services:
       postgres:
-        image: postgres:12
+        image: postgres:${{ env.PSQL_VERSION }}
         env:
           POSTGRES_USER: postgres
           POSTGRES_PASSWORD: postgres
@@ -42,7 +44,7 @@ jobs:
       - name: Setup Node
         uses: actions/setup-node@v3
         with:
-          node-version: '16'
+          node-version: ${{ env.NODE_VERSION }}
 
       - name: Setup Ruby
         uses: ruby/setup-ruby@v1
