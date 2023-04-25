@@ -31,7 +31,7 @@ RUN curl -sS https://dl.yarnpkg.com/debian/pubkey.gpg | apt-key add - &&\
     apt-get update &&\
     apt-get install -y --no-install-recommends yarn
 
-# Install specific version of Node 16
+# Install specific version of Node
 RUN curl -sL https://deb.nodesource.com/setup_$NODE_VERSION.x | bash - &&\
     apt-get update &&\
     apt-get install -y --no-install-recommends nodejs
