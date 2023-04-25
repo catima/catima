@@ -24,8 +24,13 @@ GIT
       sinatra (>= 2.0.0, <= 3.0.0)
 
 GEM
-  remote: https://rubygems.org/
   remote: https://rails-assets.org/
+  specs:
+    rails-assets-autosize (4.0.2)
+    rails-assets-mousetrap (1.6.2)
+
+GEM
+  remote: https://rubygems.org/
   specs:
     actioncable (6.1.7.3)
       actionpack (= 6.1.7.3)
@@ -154,7 +159,7 @@ GEM
       execjs
     coffee-script-source (1.12.2)
     concurrent-ruby (1.2.2)
-    connection_pool (2.2.5)
+    connection_pool (2.4.0)
     crack (0.4.5)
       rexml
     crass (1.0.6)
@@ -394,8 +399,6 @@ GEM
       bundler (>= 1.15.0)
       railties (= 6.1.7.3)
       sprockets-rails (>= 2.0.0)
-    rails-assets-autosize (4.0.2)
-    rails-assets-mousetrap (1.6.2)
     rails-dom-testing (2.0.3)
       activesupport (>= 4.2.0)
       nokogiri (>= 1.6)
@@ -427,6 +430,8 @@ GEM
       json
     redcarpet (3.5.1)
     redis (4.2.5)
+    redis-client (0.14.1)
+      connection_pool
     regexp_parser (2.5.0)
     responders (3.0.1)
       actionpack (>= 5.0)
@@ -505,10 +510,11 @@ GEM
     shoulda-context (2.0.0)
     shoulda-matchers (5.1.0)
       activesupport (>= 5.2.0)
-    sidekiq (6.5.1)
-      connection_pool (>= 2.2.2)
-      rack (~> 2.0)
-      redis (>= 4.2.0)
+    sidekiq (7.0.8)
+      concurrent-ruby (< 2)
+      connection_pool (>= 2.3.0)
+      rack (>= 2.2.4)
+      redis-client (>= 0.11.0)
     simplecov (0.21.2)
       docile (~> 1.1)
       simplecov-html (~> 0.11)
@@ -665,7 +671,7 @@ DEPENDENCIES
   selenium-webdriver (~> 4.7.1)
   shoulda-context (~> 2.0)
   shoulda-matchers (~> 5.1)
-  sidekiq (~> 6.4)
+  sidekiq (~> 7.0)
   simplecov (~> 0.20)
   sinatra (~> 2.2)
   spring (~> 2.1)
