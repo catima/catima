@@ -16,6 +16,7 @@ jobs:
         ruby-versions: [ '2.7.5' ]
         psql-version: [ '15' ]
         node-version: [ '16' ]
+        redis-version: [ '7' ]
 
     services:
       postgres:
@@ -33,7 +34,7 @@ jobs:
           - 5432:5432
 
       redis:
-        image: redis
+        image: redis:${{ matrix.redis-version }}
         ports: ['6379:6379']
         options: --entrypoint redis-server
 
