@@ -4706,9 +4706,9 @@ make-dir@^3.0.2, make-dir@^3.1.0:
   dependencies:
     semver "^6.0.0"
 
-"mammoth@https://github.com/catima/mammoth.js.git#0ce949b":
+"mammoth@https://github.com/catima/mammoth.js.git#90d5016":
   version "1.4.3"
-  resolved "https://github.com/catima/mammoth.js.git#0ce949bcdf3dd3497d83e9e6974a0360b66a8a79"
+  resolved "https://github.com/catima/mammoth.js.git#90d5016506b5416ee14ff361757ce8471f7424d8"
   dependencies:
     argparse "~1.0.3"
     bluebird "~3.4.0"
