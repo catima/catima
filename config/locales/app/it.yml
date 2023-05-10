@@ -171,7 +171,7 @@ it:
       favorites_add: "Aggiungi ai preferiti"
       favorites_remove: "Rimuovi dai preferiti"
     show:
-      view_more: "Vedi di più"
+      view_more: "Vedi di più..."
       make_suggestion: "Fare un suggerimento"
     editor:
       created_by: Creato da %{editor}

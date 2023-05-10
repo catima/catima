@@ -261,7 +261,7 @@ fr:
       favorites_add: "Ajouter aux favoris"
       favorites_remove: "Supprimer des favoris"
     show:
-      view_more: "Voir plus"
+      view_more: "Voir plus..."
       make_suggestion: "Faire une suggestion"
     editor:
       created_by: Créé par %{editor}

@@ -264,7 +264,7 @@ en:
       favorites_add: "Add to favorites"
       favorites_remove: "Remove from favorites"
     show:
-      view_more: "View more"
+      view_more: "View more..."
       make_suggestion: "Make a suggestion"
     editor:
       created_by: Created by %{editor}
