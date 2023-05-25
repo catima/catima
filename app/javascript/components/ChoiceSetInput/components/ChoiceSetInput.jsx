@@ -137,12 +137,28 @@ const RenderChoiceSetInput = (props) => {
 
     function updateInputCategoryDataAttributes(choices) {
         let form = getInput().parents('form:first')
-        form.find(`[data-field-category][data-field-category-choice-set-id=${choiceSet.id}]`).parent(".form-group").hide()
-        form.find(`[data-field-category][data-field-category-choice-set-id=${choiceSet.id}]`).closest(".form-component").hide()
+
+        // Hide standard fields if they belong to a category
+        form.find(`[data-field-category][data-field-category-choice-set-id=${choiceSet.id}]`)
+            .parent(".form-group").hide()
+        // Hide multilingual fields if they belong to a category
+        form.find(`[data-field-category][data-field-category-choice-set-id=${choiceSet.id}]`)
+            .parent(".input-group").parent(".form-group").parent(".form-group").hide()
+        // Hide components if they belong to a category
+        form.find(`[data-field-category][data-field-category-choice-set-id=${choiceSet.id}]`)
+            .closest(".form-component").hide()
+
         if (choices && Array.isArray(choices)) {
             choices.forEach(choice => {
-                form.find(`[data-field-category=${choice.category_id}][data-field-category-choice-id=${choice.id}][data-field-category-choice-set-id=${choice.choice_set_id}]`).parent(".form-group").show()
-                form.find(`[data-field-category=${choice.category_id}][data-field-category-choice-id=${choice.id}][data-field-category-choice-set-id=${choice.choice_set_id}]`).closest(".form-component").show()
+                // Show standard fields of the triggered category
+                form.find(`[data-field-category=${choice.category_id}][data-field-category-choice-id=${choice.id}][data-field-category-choice-set-id=${choice.choice_set_id}]`)
+                    .parent(".form-group").show()
+                // Show multilingual fields of the triggered category
+                form.find(`[data-field-category=${choice.category_id}][data-field-category-choice-id=${choice.id}][data-field-category-choice-set-id=${choice.choice_set_id}]`)
+                    .parent(".input-group").parent(".form-group").parent(".form-group").show()
+                // Show components of the triggered category
+                form.find(`[data-field-category=${choice.category_id}][data-field-category-choice-id=${choice.id}][data-field-category-choice-set-id=${choice.choice_set_id}]`)
+                    .closest(".form-component").show()
             })
         }
     }
