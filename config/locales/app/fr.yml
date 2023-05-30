@@ -68,11 +68,17 @@ fr:
           attributes:
             base:
               negative_dates: "Les dates négatives doivent être saisies avec l'option avant Jesus Christ (si activée)"
+        field/choice_set:
+          attributes:
+            choice_set_id:
+              category_already_used: "Vous ne pouvez pas choisir un ensemble de choix avec des sous-fiches déjà utilisées dans ce type de fiche"
         choice:
           attributes:
             base:
               dates_must_be_present: "Une des deux dates doit être remplie"
               negative_dates: "Les dates négatives doivent être saisies avec l'option avant Jesus Christ (si activée)"
+              category_deleted: "La sous-fiche sélectionnée a été supprimée"
+              category_already_used: "Une sous-fiche ne peut pas être utilisée deux fois dans le même ensemble de choix ou le même type de fiche"
         csv_import:
           attributes:
             file:

@@ -34,6 +34,8 @@ class Choice < ApplicationRecord
   validates_presence_of :catalog
   validate :validates_at_least_one_date_if_datation
   validate :validate_dates_are_positives
+  validate :validate_category
+  validate :validate_category_used
 
   before_create :assign_uuid
   after_destroy :reorder_on_destroy
@@ -46,15 +48,15 @@ class Choice < ApplicationRecord
     end
   end
 
-  def long_display_name(locale = I18n.locale)
+  def long_display_name(locale=I18n.locale)
     public_send("long_display_name_#{locale}")
   end
 
-  def self.sorted(locale = I18n.locale)
+  def self.sorted(locale=I18n.locale)
     order(Arel.sql("LOWER(choices.short_name_translations->>'short_name_#{locale}') ASC"))
   end
 
-  def self.short_named(name, locale = I18n.locale)
+  def self.short_named(name, locale=I18n.locale)
     where("choices.short_name_translations->>'short_name_#{locale}' = ?", name)
   end
 
@@ -152,5 +154,38 @@ class Choice < ApplicationRecord
     return if from_date_components_presents || to_date_components_presents
 
     errors.add(:base, :dates_must_be_present)
+  end
+
+  def validate_category
+    return if category.blank?
+
+    return if category.not_deleted?
+
+    errors.add :base, :category_deleted
+  end
+
+  def validate_category_used
+    return if category.blank?
+
+    # Get all the choices with the same category as the one we are trying to save
+    choices = Choice.where(category_id: category, catalog_id: catalog)
+                    .where.not(id: id)
+                    .all
+
+    return unless choices.any?
+
+    # Check if choices with the same category are present in the same choice set
+    same_choice_set = choices.any? do |choice|
+      choice.choice_set == choice_set
+    end
+
+    # Check if choices with the same category are present in the same item type (field_set_id)
+    same_item_types = (choices.flat_map { |choice|
+      choice.choice_set.fields.map(&:field_set_id)
+    }.uniq & choice_set.fields.map(&:field_set_id)).any?
+
+    return unless same_item_types || same_choice_set
+
+    errors.add :base, :category_already_used
   end
 end

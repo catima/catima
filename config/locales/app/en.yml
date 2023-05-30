@@ -66,11 +66,17 @@ en:
           attributes:
             base:
               negative_dates: "Negative dates must be entered with the option before Jesus Christ (if activated)"
+        field/choice_set:
+          attributes:
+            choice_set_id:
+              category_already_used: "You cannot chose a choice set with categories already used in this item type"
         choice:
           attributes:
             base:
               dates_must_be_present: "One of the two dates must be completed"
               negative_dates: "Negative dates must be entered with the option before Jesus Christ (if activated)"
+              category_deleted: "The selected category has been deleted"
+              category_already_used: "A category cannot be used twice in the same choice set or item type"
         csv_import:
           attributes:
             file:

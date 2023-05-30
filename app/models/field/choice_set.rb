@@ -42,6 +42,7 @@ class Field::ChoiceSet < ::Field
                          :in => :choice_set_choices,
                          :allow_nil => true
   validate :type_validation
+  validate :validate_choices_category_used
 
   delegate :choices, :choice_prefixed_label, :flat_ordered_choices, to: :choice_set
 
@@ -267,5 +268,27 @@ class Field::ChoiceSet < ::Field
     return if ::ChoiceSet.find(choice_set_id).default?
 
     errors.add(:choice_set_id, "Only ChoiceSet with the \"default\" type is allowed")
+  end
+
+  def validate_choices_category_used
+    return if choice_set_id.blank?
+
+    # Get all the categories from he selected ChoiceSet
+    choice_set_categories = Choice.where(choice_set_id: choice_set_id)
+                                  .where.not(category_id: nil)
+                                  .pluck(:category_id)
+
+    return unless choice_set_categories.any?
+
+    # Get all the categories from the item type (field_set_id)
+    field_set_categories = Choice.where(category_id: Field.where(field_set_id: field_set_id)
+                                                          .where.not(id: id)
+                                                          .pluck(:choice_set_id))
+                                 .where.not(category_id: nil)
+                                 .pluck(:category_id)
+
+    return unless (choice_set_categories & field_set_categories).any?
+
+    errors.add(:choice_set_id, :category_already_used)
   end
 end
