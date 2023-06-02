@@ -3,7 +3,7 @@
     <div class="flex-grow-1">
       <i class="fa fa-arrows-alt " style="transform: rotate(45deg);"></i>
       <span class="pl-2"><%= choice.short_name %></span>
-      <% if choice.category.present? %>
+      <% if choice.category.present? && choice.category.not_deleted? %>
         <span class="badge badge-info"><%= choice.category.name %></span>
       <% end %>
     </div>

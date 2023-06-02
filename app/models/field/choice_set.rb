@@ -273,20 +273,22 @@ class Field::ChoiceSet < ::Field
   def validate_choices_category_used
     return if choice_set_id.blank?
 
-    # Get all the categories from he selected ChoiceSet
+    # Get all the categories linked to the selected ChoiceSet
     choice_set_categories = Choice.where(choice_set_id: choice_set_id)
                                   .where.not(category_id: nil)
                                   .pluck(:category_id)
 
     return unless choice_set_categories.any?
 
-    # Get all the categories from the item type (field_set_id)
-    field_set_categories = Choice.where(category_id: Field.where(field_set_id: field_set_id)
-                                                          .where.not(id: id)
-                                                          .pluck(:choice_set_id))
-                                 .where.not(category_id: nil)
-                                 .pluck(:category_id)
+    # Get all the categories linked to the item type (field_set_id)
+    field_set_categories = Field.where(field_set_id: field_set_id)
+                                .where.not(id: id)
+                                .where.not(choice_set_id: nil)
+                                .select { |choice_set| choice_set.choice_set.not_deleted? }
+                                .map { |choice_set| choice_set.choices.where.not(category_id: nil).pluck(:category_id) }
+                                .flatten
 
+    # Check if there is a category linked to the selected ChoiceSet already used in the item type
     return unless (choice_set_categories & field_set_categories).any?
 
     errors.add(:choice_set_id, :category_already_used)

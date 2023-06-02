@@ -170,7 +170,7 @@ class Choice < ApplicationRecord
     # Get all the choices with the same category as the one we are trying to save
     choices = Choice.where(category_id: category, catalog_id: catalog)
                     .where.not(id: id)
-                    .all
+                    .select { |choice| choice.choice_set.not_deleted? }
 
     return unless choices.any?
 
