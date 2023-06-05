@@ -181,13 +181,13 @@ class ItemsTest < ActionDispatch::IntegrationTest
 
     # Test that choices linked to a category are displayed in public list while
     # human readable but not filterable.
-    author_language = fields(:one_author_language)
-    assert(author_language.human_readable?)
-    refute(author_language.filterable?)
-    assert(page.has_content?("Language: Spanish;"))
+    one_author_category = fields(:one_author_category)
+    assert(one_author_category.human_readable?)
+    refute(one_author_category.filterable?)
+    assert(page.has_content?("Category: With category;"))
 
     # Test that not displayed in public list will not shown on summary view
-    # altough filterable and human readable.
+    # although filterable and human readable.
     author_age = fields(:one_author_age)
     assert(author_age.human_readable?)
     assert(author_age.filterable?)

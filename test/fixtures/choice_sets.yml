@@ -26,6 +26,12 @@ one_languages:
   name: Languages
   choice_set_type: "default"
 
+one_category:
+  uuid: one_category_uuid
+  catalog: one
+  name: Category
+  choice_set_type: "default"
+
 two_languages:
   uuid: two_languages_uuid
   catalog: two

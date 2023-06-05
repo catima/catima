@@ -142,6 +142,16 @@ one_author_rank:
   required: true
   uuid: one_author_rank_uuid
 
+one_author_category:
+  type: "Field::ChoiceSet"
+  editor_component: ChoiceSetInput
+  name_translations: { "name_en": "Category" }
+  name_plural_translations: { "name_plural_en": "Categories" }
+  slug: category
+  field_set: one_author (ItemType)
+  uuid: one_author_category_uuid
+  choice_set: one_category
+
 one_author_collaborator:
   type: "Field::Reference"
   name_translations: { "name_en": "Collaborator" }

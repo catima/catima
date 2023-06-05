@@ -44,4 +44,30 @@ class Field::ChoiceSetTest < ActiveSupport::TestCase
 
     assert_equal(choice_ids, item.reload.data["required_choice_set"])
   end
+
+  test "a category cannot be used twice in a field belonging the same item type" do
+    set = choice_sets(:one_category)
+
+    it = item_types(:one)
+    field_valid = Field::ChoiceSet.new(
+      :field_set => it,
+      :slug => "without-existing-category",
+      :name_en => "Without existing category",
+      :name_plural_en => "Without existing categories",
+      :choice_set => set
+    )
+
+    assert(field_valid.valid?)
+
+    it = item_types(:one_author)
+    field_invalid = Field::ChoiceSet.new(
+      :field_set => it,
+      :slug => "with-existing-category",
+      :name_en => "With existing category",
+      :name_plural_en => "With existing categories",
+      :choice_set => set
+    )
+
+    refute(field_invalid.valid?)
+  end
 end

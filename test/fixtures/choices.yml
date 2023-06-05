@@ -55,6 +55,18 @@ one_french:
   choice_set: one_languages
   long_name_translations: { "long_name_en": "French" }
   short_name_translations: { "short_name_en": "French" }
+
+one_without_category:
+  catalog: one
+  choice_set: one_category
+  long_name_translations: { "long_name_en": "Without category" }
+  short_name_translations: { "short_name_en": "Without category" }
+
+one_with_category:
+  catalog: one
+  choice_set: one_category
+  long_name_translations: { "long_name_en": "With category" }
+  short_name_translations: { "short_name_en": "With category" }
   category: language
 
 two_english:

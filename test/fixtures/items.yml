@@ -66,6 +66,7 @@ one_author_stephen_king:
       "type": "document/doc"
     },
     "one_author_language_uuid": ["<%= ActiveRecord::FixtureSet.identify(:one_spanish).to_s %>"],
+    "one_author_category_uuid": ["<%= ActiveRecord::FixtureSet.identify(:one_with_category).to_s %>"],
     "one_author_other_languages_uuid": [
       "<%= ActiveRecord::FixtureSet.identify(:one_spanish) %>",
       "<%= ActiveRecord::FixtureSet.identify(:one_english) %>"
