@@ -21,7 +21,6 @@ class AdvancedSearch::ChoiceSetFieldTest < ActionDispatch::IntegrationTest
       end
     end
 
-
     click_on("Search")
 
     assert(page.has_selector?('h4', text: 'Camry'))
@@ -76,16 +75,16 @@ class AdvancedSearch::ChoiceSetFieldTest < ActionDispatch::IntegrationTest
       click_on("Author")
     end
 
-    within('#advanced_search_criteria_one_author_language_uuid_0_id') do
+    within('#advanced_search_criteria_one_author_category_uuid_0_id') do
       find(".css-g1d714-ValueContainer").click # Click on the filter input
       sleep(2)
 
       within(".css-4ljt47-MenuList") do # Within the filter list
-        find('div', text: 'French', match: :first, visible: false).click
+        find('div', text: 'With category', match: :first, visible: false).click
       end
     end
 
-    within('#advanced_search_criteria_one_author_language_uuid_0_id_condition') do
+    within('#advanced_search_criteria_one_author_category_uuid_0_id_condition') do
       find(".css-g1d714-ValueContainer").click # Click on the filter input
       sleep(2)
 
@@ -95,7 +94,7 @@ class AdvancedSearch::ChoiceSetFieldTest < ActionDispatch::IntegrationTest
     end
 
     fill_in(
-      "advanced_search[criteria][one_author_language_uuid][0][category_criteria][exact]",
+      "advanced_search[criteria][one_author_category_uuid][0][category_criteria][exact]",
       :with => 'latin'
     )
 

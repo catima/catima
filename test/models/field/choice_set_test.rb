@@ -45,7 +45,7 @@ class Field::ChoiceSetTest < ActiveSupport::TestCase
     assert_equal(choice_ids, item.reload.data["required_choice_set"])
   end
 
-  test "a category cannot be used twice in a field belonging the same item type" do
+  test "a category cannot be used twice in fields belonging to the same item type" do
     set = choice_sets(:one_category)
 
     it = item_types(:one)
