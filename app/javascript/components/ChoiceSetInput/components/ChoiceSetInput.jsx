@@ -293,6 +293,11 @@ const ModalForm = (props) => {
     const [modalChoices, setModalChoices] = useState([])
     const [modalCategories, setModalCategories] = useState([])
     const [errorChoice, setErrorChoice] = useState('')
+    const [selectedOption, setSelectedOption] = useState('');
+
+    const handleOptionChange = (event) => {
+        setSelectedOption(event.target.value);
+    };
 
     useEffect(() => {
         if (modalOpen === true) {
@@ -427,16 +432,21 @@ const ModalForm = (props) => {
                                     }
 
                                     <div className="form-group">
-                                        <label
-                                            htmlFor="choice_category_id">{Translations.messages['catalog_admin.choices.choice_fields.category_optional']}</label>
-                                        <select className="form-control" name="choice[category_id]"
-                                                id="choice_category_id">
-                                            <option value="" label=" "></option>
+                                        <label htmlFor="choice_category_id">
+                                            {Translations.messages['catalog_admin.choices.choice_fields.category_optional']}
+                                        </label>
+                                        <select className="form-control"
+                                                name="choice[category_id]"
+                                                id="choice_category_id"
+                                                onChange={handleOptionChange}>
+                                            <option value="" label=""></option>
                                             {modalCategories && modalCategories.map((category, idx) => (
                                                 <option key={idx} value={category[0]}>{category[1]}</option>
                                             ))}
                                         </select>
                                     </div>
+
+                                    {selectedOption !== '' && <div className="alert alert-danger">{Translations.messages['catalog_admin.choices.choice_fields.modal_category_alert']}</div>}
 
                                     <div className="base-errors">
                                         {errorMsg}

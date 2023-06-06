@@ -597,6 +597,7 @@ en:
         category_optional: 'Category (optional)'
         from_date: Start date (optional)
         to_date: End date (optional)
+        modal_category_alert: The fields belonging to the category will not be displayed until the item is saved
     choice_sets:
       import_choice_set:
         success: "The choice set has been imported"

@@ -594,6 +594,7 @@ fr:
         add_choice: 'Ajouter choix'
         from_date: Date de début (optionnel)
         to_date: Date de fin (optionnel)
+        modal_category_alert: Les champs appartenant à la sous-fiche ne seront pas affichés tant que la fiche n'aura pas été sauvegardée
     choice_sets:
       import_choice_set:
         success: "L'ensemble de choix a été importé"
