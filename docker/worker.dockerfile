@@ -1,4 +1,4 @@
-FROM ruby:2.7.5 AS base
+FROM ruby:2.7.5-bullseye AS base
 
 ENV DOCKER_RUNNING=true
 ENV PSQL_CLIENT_VERSION=15
