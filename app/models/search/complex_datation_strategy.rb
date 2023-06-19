@@ -88,7 +88,8 @@ class Search::ComplexDatationStrategy < Search::BaseStrategy
 
     scope = append_where_data_is_set(scope) unless negate
     scope = append_joins_on_choices_and_choice_sets(scope)
-    interval_search(scope, start_date_time, end_date_time, field_condition, negate, is_choice)
+
+    inexact_search(scope, start_date_time, field_condition, negate, is_choice)
   end
 
   def exclude_from_scope(scope, exclude_condition)
@@ -170,65 +171,6 @@ class Search::ComplexDatationStrategy < Search::BaseStrategy
       )
     end
     scope
-  end
-
-  def interval_search(scope, start_date_time, end_date_time, field_condition, negate, is_choice)
-    return inexact_search(scope, start_date_time, field_condition, field_condition == "outside", is_choice) if field_condition != 'outside' && field_condition != 'between'
-
-    field_condition = field_condition == "between" ? "outside" : "between" unless negate
-
-    where_scope = ->(*q, name) { field_condition == "outside" ? scope.where("#{sql_select_table_name}.data->'#{field.uuid}'->>'selected_format' = '#{name}'").where('items.id NOT IN (?)', scope.where(q).any? ? scope.where(q).pluck(:id) : ['0']) : scope.where(q) }
-
-    date_time_query_string = "
-            (#{sql_select_table_name}.data->'#{field.uuid}'->>'selected_format' = 'date_time' AND
-            ((NOT #{where_date_is_not_set('from')}) OR (NOT #{where_date_is_not_set('to')}) ) AND
-            (
-              (
-                 ((#{where_date_is_not_set('to')})) AND (#{date_time_to_interval(start_date_time, 'from')} > #{make_interval(start_date_time)} AND #{date_time_to_interval(start_date_time, 'from')} > #{make_interval(end_date_time)})
-              ) OR (
-                 ((#{where_date_is_not_set('from')})) AND (#{date_time_to_interval(start_date_time, 'to')} < #{make_interval(start_date_time)} AND #{date_time_to_interval(start_date_time, 'to')} < #{make_interval(end_date_time)})
-              ) OR (
-                ((NOT #{where_date_is_not_set('from')}) AND (NOT #{where_date_is_not_set('to')}) ) AND
-                  (
-                      (
-                        (#{date_time_to_interval(start_date_time, 'from')} > #{make_interval(start_date_time)} AND #{date_time_to_interval(start_date_time, 'from')} > #{make_interval(end_date_time)})
-                        AND
-                        (#{date_time_to_interval(start_date_time, 'to')} > #{make_interval(start_date_time)} AND #{date_time_to_interval(start_date_time, 'to')} > #{make_interval(end_date_time)})
-                      ) OR (
-                        (#{date_time_to_interval(start_date_time, 'from')} < #{make_interval(start_date_time)} AND #{date_time_to_interval(start_date_time, 'from')} < #{make_interval(end_date_time)})
-                        AND
-                        (#{date_time_to_interval(start_date_time, 'to')} < #{make_interval(start_date_time)} AND #{date_time_to_interval(start_date_time, 'to')} < #{make_interval(end_date_time)})
-                      )
-                  )
-              )
-            ))"
-
-    datation_query_string = "
-           (#{sql_select_table_name}.data->'#{field.uuid}'->>'selected_format' = 'datation_choice' AND
-           (
-              (
-                ((#{where_choice_date_is_not_set('to_date')})) AND (#{choice_to_interval(start_date_time, 'from_date')} > #{make_interval(start_date_time)} AND #{choice_to_interval(start_date_time, 'from_date')} > #{make_interval(end_date_time)})
-              ) OR (
-                ((#{where_choice_date_is_not_set('from_date')})) AND (#{choice_to_interval(start_date_time, 'from_date')} < #{make_interval(start_date_time)} AND #{choice_to_interval(start_date_time, 'from_date')} < #{make_interval(end_date_time)})
-              ) OR (
-                ((NOT #{where_choice_date_is_not_set('from_date')}) AND (NOT #{where_choice_date_is_not_set('to_date')}) ) AND
-                  (
-                        (
-                          (#{choice_to_interval(start_date_time, 'from_date')} < #{make_interval(start_date_time)} AND #{choice_to_interval(start_date_time, 'from_date')} < #{make_interval(end_date_time)})
-                          AND
-                          (#{choice_to_interval(start_date_time, 'to_date')} < #{make_interval(start_date_time)} AND #{choice_to_interval(start_date_time, 'to_date')} < #{make_interval(end_date_time)})
-                        ) OR (
-                          (#{choice_to_interval(start_date_time, 'from_date')} > #{make_interval(start_date_time)} AND #{choice_to_interval(start_date_time, 'from_date')} > #{make_interval(end_date_time)})
-                          AND
-                          (#{choice_to_interval(start_date_time, 'to_date')} > #{make_interval(start_date_time)} AND #{choice_to_interval(start_date_time, 'to_date')} > #{make_interval(end_date_time)})
-                        )
-                  )
-              )
-           ))"
-
-    date_time_scope = where_scope.call(date_time_query_string, 'date_time')
-    datation_choice_scope = where_scope.call(datation_query_string, 'datation_choice')
-    is_choice ? date_time_scope : date_time_scope.or(datation_choice_scope)
   end
 
   def date_time_to_interval(date_time, date_name)
