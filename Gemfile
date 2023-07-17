@@ -57,7 +57,7 @@ gem "rubyzip", "~> 2.3"
 gem "webpacker", "~> 5.4"
 gem "zaru", "~> 0.3"
 gem "jbuilder", "~> 2.11.5"
-gem "rswag", "~> 2.5.1"
+gem "rswag", "~> 2.10.1"
 gem 'redis', "~> 4.2.5"
 gem "rspec-rails", "~> 5.1.2"
 gem "net-http", "~> 0.3.2" # Avoid already initialized constant Net::ProtocRetryError
