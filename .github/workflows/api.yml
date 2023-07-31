@@ -6,6 +6,7 @@ env:
   POSTGRES_PASSWORD: postgres
   POSTGRES_DB: postgres
   RAILS_ENV: test
+  NODE_OPTIONS: --openssl-legacy-provider
 
 jobs:
   test:
