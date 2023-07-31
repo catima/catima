@@ -48,13 +48,6 @@ jobs:
         with:
           ruby-version: ${{ matrix.ruby-versions }}
 
-      - name: Setup Node
-        uses: actions/setup-node@v3
-        with:
-          node-version: ${{ matrix.node-version }}
-      # Avoid Node 17+ issue with Webpack 4 (hash)
-      - run: echo 'NODE_OPTIONS="--openssl-legacy-provider"' >> $GITHUB_ENV
-
       - name: Install RubyGems
         run: gem update --system ${{ matrix.rubygems-version }}
 
@@ -65,6 +58,13 @@ jobs:
           key: ${{ runner.os }}-gems-${{ hashFiles('**/Gemfile.lock') }}
           restore-keys: |
             ${{ runner.os }}-gems-
+
+      - name: Setup Node
+        uses: actions/setup-node@v3
+        with:
+          node-version: ${{ matrix.node-version }}
+      # Avoid Node 17+ issue with Webpack 4 (hash)
+      - run: echo 'NODE_OPTIONS="--openssl-legacy-provider"' >> $GITHUB_ENV
 
       - name: Cache Yarn
         uses: actions/cache@v3
