@@ -16,7 +16,7 @@ jobs:
         ruby-versions: [ '2.7.5' ]
         rubygems-version: [ '3.4.5' ]
         psql-version: [ '15' ]
-        node-version: [ '18' ]
+        node-version: [ '16' ]
         redis-version: [ '7' ]
 
     services:
@@ -43,6 +43,11 @@ jobs:
       - name: Checkout Repository
         uses: actions/checkout@v3
 
+      - name: Setup Node
+        uses: actions/setup-node@v3
+        with:
+          node-version: ${{ matrix.node-version }}
+
       - name: Setup Ruby
         uses: ruby/setup-ruby@v1
         with:
@@ -59,12 +64,12 @@ jobs:
           restore-keys: |
             ${{ runner.os }}-gems-
 
-      - name: Setup Node
-        uses: actions/setup-node@v3
+      - name: Cache Yarn
+        uses: actions/cache@v3
         with:
-          node-version: ${{ matrix.node-version }}
-      # Avoid Node 17+ issue with Webpack 4 (hash)
-      - run: echo 'NODE_OPTIONS="--openssl-legacy-provider"' >> $GITHUB_ENV
+          path: ~/.cache/yarn
+          key: ${{ runner.os }}-yarn-${{ hashFiles('**/yarn.lock') }}
+          restore-keys: ${{ runner.os }}-yarn-
 
       - name: Install PSQL client
         run: |
