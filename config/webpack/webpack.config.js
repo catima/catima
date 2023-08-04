@@ -1,5 +1,5 @@
 // name this file config/webpack/webpack.config.js
-const { env, webpackConfig } = require('shakapacker')
+const { env} = require('shakapacker')
 const { existsSync } = require('fs')
 const { resolve } = require('path')
 
