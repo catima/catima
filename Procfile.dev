@@ -4,7 +4,7 @@ web: rails s -p 3000
 # - Generate js locales
 # - Generate api doc
 # - Watch process with webpack to compile the changed files
-client: bundle exec rake locales:generate && rails swag:run && sh -c 'rm -rf public/packs/* || true && bin/webpack -w'
+client: bundle exec rake locales:generate && rails swag:run && sh -c 'rm -rf public/packs/* || true && bin/webpacker -w'
 
 # Start the Sidekiq background job processor
 worker: bundle exec sidekiq
