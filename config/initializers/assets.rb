@@ -25,7 +25,7 @@ begin
 
   # Add catalog-specific assets
   Catalog.overrides.each do |slug|
-    Rails.application.config.assets.precompile += ["#{slug}.css", "#{slug}.js"]
+    Rails.application.config.assets.precompile += %W[#{slug}.css #{slug}.js]
   end
 rescue ActiveRecord::NoDatabaseError, ActiveRecord::StatementInvalid, ActiveRecord::PendingMigrationError
   false

@@ -48,13 +48,13 @@ gem "refile-mini_magick", github: "refile/refile-mini_magick"
 gem 'sassc-rails', "~> 2.1"
 gem "secure_headers", "~> 6.3"
 gem "select2-rails", "~> 4.0"
+gem "shakapacker", "7.0.2"
 gem "sidekiq", "~> 7.0"
 gem "sinatra", "~> 2.2"
 gem "sprockets", "~> 4.0"
 gem "sprockets-rails", "~> 3.2"
 gem "summernote-rails", "~> 0.8"
 gem "rubyzip", "~> 2.3"
-gem "webpacker", "~> 5.4"
 gem "zaru", "~> 0.3"
 gem "jbuilder", "~> 2.11.5"
 gem "rswag", "~> 2.10.1"
@@ -76,7 +76,6 @@ end
 group :development, :test do
   gem "simplecov", "~> 0.20", :require => false
   gem "byebug", "~> 11.1.3"
-  gem "webdrivers", "~> 4.4"
   gem "selenium-webdriver", "~> 4.7.1"
 end
 

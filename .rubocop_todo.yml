@@ -52,13 +52,6 @@ Layout/LeadingEmptyLines:
     - 'app/controllers/images_controller.rb'
     - 'test/support/vcr.rb'
 
-# Offense count: 2
-# Cop supports --auto-correct.
-Layout/LeadingCommentSpace:
-  Exclude:
-    - 'node_modules/@rails/webpacker/node_modules/node-sass/src/libsass/extconf.rb'
-    - 'node_modules/node-sass/src/libsass/extconf.rb'
-
 # Offense count: 32
 # Cop supports --auto-correct.
 # Configuration parameters: EnforcedStyle.
@@ -447,13 +440,6 @@ Style/ExpandPathArguments:
     - 'test/support/vcr.rb'
     - 'test/test_helper.rb'
 
-# Offense count: 4
-# Configuration parameters: AllowedVariables.
-Style/GlobalVars:
-  Exclude:
-    - 'node_modules/@rails/webpacker/node_modules/node-sass/src/libsass/extconf.rb'
-    - 'node_modules/node-sass/src/libsass/extconf.rb'
-
 # Offense count: 1238
 # Cop supports --auto-correct.
 # Configuration parameters: EnforcedStyle, UseHashRocketsWithSymbolValues, PreferHashRocketsForNonAlnumEndingSymbols.
@@ -565,15 +551,6 @@ Style/SignalException:
 # SupportedStyles: single_quotes, double_quotes
 Style/StringLiterals:
   Enabled: false
-
-# Offense count: 4
-# Cop supports --auto-correct.
-# Configuration parameters: EnforcedStyle.
-# SupportedStyles: single_quotes, double_quotes
-Style/StringLiteralsInInterpolation:
-  Exclude:
-    - 'node_modules/@rails/webpacker/node_modules/node-sass/src/libsass/extconf.rb'
-    - 'node_modules/node-sass/src/libsass/extconf.rb'
 
 # Offense count: 30
 # Cop supports --auto-correct.
