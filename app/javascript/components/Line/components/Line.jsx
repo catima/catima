@@ -2,7 +2,6 @@ import React, {useEffect, useRef, useState, forwardRef} from 'react';
 import Translations from '../../Translations/components/Translations';
 import PropTypes from "prop-types";
 import axios from 'axios';
-import "../css/line.scss";
 import ReactSelect from 'react-select';
 
 const ASCENDING = 'ASC';

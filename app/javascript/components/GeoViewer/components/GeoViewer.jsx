@@ -4,7 +4,6 @@ import React, {useState, useEffect} from 'react';
 import axios from 'axios';
 import { MapContainer, TileLayer, LayersControl, GeoJSON } from 'react-leaflet';
 import MarkerClusterGroup from 'react-leaflet-markercluster';
-import 'react-leaflet-markercluster/dist/styles.min.css';
 
 const subs = ['a', 'b', 'c'];
 const { BaseLayer } = LayersControl;

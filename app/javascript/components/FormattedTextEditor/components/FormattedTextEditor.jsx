@@ -4,8 +4,6 @@ import Translations from '../../Translations/components/Translations';
 import {v4 as uuidv4} from 'uuid';
 
 import Quill from 'quill';
-import "quill/dist/quill.core.css";
-import "quill/dist/quill.snow.css";
 
 let icons = Quill.import('ui/icons');
 icons['footnote'] = Translations.messages['catalog_admin.fields.text_option_inputs.add_footnote'];
@@ -21,7 +19,6 @@ import "../modules/table";
 
 // Ajax library for uploading DOCX files
 import axios from 'axios';
-import "../css/formatted-text-editor.css";
 
 // Function to return closest element based on a selector.
 // If self attribute is true, search is also applied to the element itself
