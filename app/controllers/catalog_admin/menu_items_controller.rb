@@ -30,7 +30,7 @@ class CatalogAdmin::MenuItemsController < CatalogAdmin::BaseController
   def update
     find_menu_item
     authorize(@menu_item)
-    if @menu_item.update(menu_item_params)
+    if @menu_item.update(update_menu_item_params)
       redirect_to(catalog_admin_menu_items_path, :notice => updated_message)
     else
       render("edit")
@@ -58,6 +58,19 @@ class CatalogAdmin::MenuItemsController < CatalogAdmin::BaseController
     params.require(:menu_item).permit(
       :id, :item_type_id, :locale, :page_id, :parent_id, :rank, :slug, :title, :url
     )
+  end
+
+  # When updating a menu item, we need to make sure that page_id, item_type_id, and url
+  # are set to nil if they are not present in the request params. If one of these params
+  # is set in the database, the others should be nil.
+  def update_menu_item_params
+    menu_item_params_updated = menu_item_params
+
+    menu_item_params_updated.merge!(:page_id => nil) if menu_item_params[:page_id].nil?
+    menu_item_params_updated.merge!(:item_type_id => nil) if menu_item_params[:item_type_id].nil?
+    menu_item_params_updated.merge!(:url => nil) if menu_item_params[:url].nil?
+
+    menu_item_params_updated
   end
 
   def created_message
