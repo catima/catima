@@ -23,7 +23,7 @@ begin
     Rails.application.config.assets.paths += %w(images stylesheets javascripts).map { |asset| base_path.join(asset) }
 
     # Add catalog-specific assets
-    Rails.application.config.assets.precompile += %W[#{slug}.css #{slug}.scss #{slug}.js]
+    Rails.application.config.assets.precompile += %W[#{slug}.css #{slug}.js]
   end
 rescue ActiveRecord::NoDatabaseError, ActiveRecord::StatementInvalid, ActiveRecord::PendingMigrationError
   false
