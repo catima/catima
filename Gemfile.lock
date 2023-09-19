@@ -300,7 +300,8 @@ GEM
       builder
       minitest (>= 5.0)
       ruby-progressbar
-    mocha (1.14.0)
+    mocha (2.1.0)
+      ruby2_keywords (>= 0.0.5)
     multi_xml (0.6.0)
     multipart-post (2.2.3)
     mustermann (2.0.2)
@@ -627,7 +628,7 @@ DEPENDENCIES
   marco-polo (~> 2.0)
   mini_magick (~> 4.11)
   minitest-reporters (~> 1.4)
-  mocha (~> 1.11)
+  mocha (~> 2.1)
   net-http (~> 0.3.2)
   nokogiri (~> 1.14)
   omniauth-facebook (~> 8.0)
