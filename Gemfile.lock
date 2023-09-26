@@ -7,6 +7,15 @@ GIT
       rails (>= 4.2.0)
 
 GIT
+  remote: https://github.com/catima/refile
+  revision: 798ee0f2bdf007b4934c34c8c47db01513bdfabc
+  tag: 0.6.9
+  specs:
+    refile (0.6.9)
+      mime-types
+      sinatra (>= 2.0.0, <= 4.0.0)
+
+GIT
   remote: https://github.com/refile/refile-mini_magick.git
   revision: 5c7c30d57a94c4104d84eb4eb9e74ca757c1a773
   specs:
@@ -14,14 +23,6 @@ GIT
       image_processing (~> 1.1)
       mini_magick (~> 4.0)
       refile (~> 0.6)
-
-GIT
-  remote: https://github.com/refile/refile.git
-  revision: c4ac577c6fdad92bc079a62a0e82888319daedc8
-  specs:
-    refile (0.7.0)
-      mime-types
-      sinatra (>= 2.0.0, <= 3.0.0)
 
 GEM
   remote: https://rubygems.org/
@@ -288,9 +289,9 @@ GEM
       railties (>= 6)
     matrix (0.4.2)
     method_source (1.0.0)
-    mime-types (3.4.1)
+    mime-types (3.5.1)
       mime-types-data (~> 3.2015)
-    mime-types-data (3.2022.0105)
+    mime-types-data (3.2023.0808)
     mini_magick (4.11.0)
     mini_mime (1.1.5)
     mini_portile2 (2.8.4)

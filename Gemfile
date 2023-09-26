@@ -43,7 +43,9 @@ gem "ranked-model", "~> 0.4"
 gem 'react-rails', "~> 2.6"
 gem "recaptcha", "~> 5.6"
 gem "redcarpet", "~> 3.5"
-gem "refile", github: "refile/refile", require: "refile/rails"
+# Use a forked version of refile because main repository is not actively
+# maintained anymore and is not compatible with ruby 3
+gem "refile", git: "https://github.com/catima/refile", tag: "0.6.9", require: "refile/rails"
 gem "refile-mini_magick", github: "refile/refile-mini_magick"
 gem 'sassc-rails', "~> 2.1"
 gem "secure_headers", "~> 6.3"

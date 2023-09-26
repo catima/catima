@@ -13,7 +13,7 @@ jobs:
     runs-on: ubuntu-22.04
     strategy:
       matrix:
-        ruby-versions: [ '2.7.5' ]
+        ruby-versions: [ '2.7.5', '3.0.3' ]
         rubygems-version: [ '3.4.5' ]
         psql-version: [ '15' ]
         node-version: [ '18' ]
