@@ -86,7 +86,7 @@ group :development do
   gem "awesome_print", "~> 1.8"
   gem "bcrypt_pbkdf", "~> 1.0", :require => false
   gem "better_errors", "~> 2.9"
-  gem "binding_of_caller", "~> 0.8"
+  gem "binding_of_caller", "~> 1.0"
   gem "brakeman", "~> 4.10", :require => false
   gem "faker", "~> 2.15", :require => false
   gem "letter_opener", "~> 1.7"

@@ -29,7 +29,7 @@ This README describes the purpose of this repository and how to set up a develop
 
 This project requires:
 
-* Ruby 2.7.5, preferably managed using [rbenv](http://rbenv.org/)
+* Ruby 3.0.6, preferably managed using [rbenv](http://rbenv.org/)
 * PostgreSQL 15 must be installed and accepting connections
 * Node 18.x (`brew install nvm`, ...)
 * [Redis](https://redis.io/) must be installed and running on localhost with the default port
