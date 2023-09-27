@@ -76,7 +76,7 @@ group :production, :staging, :development do
 end
 
 group :development, :test do
-  gem "simplecov", "~> 0.20", :require => false
+  gem "simplecov", "~> 0.22", :require => false
   gem "byebug", "~> 11.1.3"
   gem "selenium-webdriver", "~> 4.7.1"
 end
