@@ -17,7 +17,6 @@ services:
       - ./docker/.env
     ports:
       - "8383:3000"
-      - "1234:1234"
     expose:
       - "4000"
     depends_on:

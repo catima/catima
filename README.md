@@ -89,14 +89,6 @@ If you want to remove a volume (e.g. to start with a fresh database), you can us
 
 ``docker volume rm volume_name``
 
-If you want to launch the server with **ruby-debug-ide** to establish communication between the debugger engine (debase) and your IDE, run the following commands:
-
-``
-docker exec catima-app supervisorctl stop server && docker exec catima-app supervisorctl start debug
-``
-
-You can now connect your IDE on host 127.0.0.1 on port 1234 to start a debugging session.
-
 ### Frontend
 
 To access the main application please use the following link.
