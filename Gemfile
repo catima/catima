@@ -100,7 +100,7 @@ group :development do
   gem "sshkit", "~> 1.21", :require => false
   gem "terminal-notifier", "~> 2.0", :require => false
   gem "terminal-notifier-guard", "~> 1.7", :require => false
-  gem "debase", "~> 0.2.4"
+  gem 'debase', '~> 0.2.5.beta2'
   gem "ruby-debug-ide", "~> 0.7.3"
   platforms :mswin, :mingw, :x64_mingw do
     gem "tzinfo-data"
