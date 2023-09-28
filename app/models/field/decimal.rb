@@ -32,7 +32,7 @@
 #  uuid                     :string
 #
 
-class Field::Decimal < ::Field
+class Field::Decimal < Field
   store_accessor :options, :maximum
   store_accessor :options, :minimum
 

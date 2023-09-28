@@ -11,7 +11,7 @@ class SuggestionsController < ApplicationController
     suggestion = @item.suggestions.new(
       item_type_id: @item.item_type_id,
       catalog_id: @item.catalog_id,
-      user_id: if current_user.authenticated? then current_user&.id end,
+      user_id: (current_user&.id if current_user.authenticated?),
       content: helpers.strip_tags(suggestion_params[:content])
     )
 

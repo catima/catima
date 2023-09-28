@@ -292,7 +292,7 @@ Rails.application.routes.draw do
 
   custom_catalogs.each do |catalog_slug|
     catalog_snake_slug = catalog_slug.tr('-', '_')
-    next unless File.exist?(Rails.root.join('catalogs', catalog_slug, 'controllers', "#{catalog_snake_slug}_catalogs_controller.rb"))
+    next unless Rails.root.join('catalogs', catalog_slug, 'controllers', "#{catalog_snake_slug}_catalogs_controller.rb").exist?
 
     get "#{catalog_slug}/(:locale)",
         :controller => "#{catalog_snake_slug}_catalogs",
@@ -312,7 +312,7 @@ Rails.application.routes.draw do
 
     scope :path => "#{catalog_slug}/:locale",
           :constraints => CatalogsController::Constraint do
-      if File.exist?(Rails.root.join('catalogs', catalog_slug, 'controllers', "#{catalog_snake_slug}_simple_searches_controller.rb"))
+      if Rails.root.join('catalogs', catalog_slug, 'controllers', "#{catalog_snake_slug}_simple_searches_controller.rb").exist?
         get "search/simple/:uuid",
             :controller => "#{catalog_snake_slug}_simple_searches",
             :action => :show,
@@ -320,7 +320,7 @@ Rails.application.routes.draw do
             :catalog_slug => catalog_slug
       end
 
-      if File.exist?(Rails.root.join('catalogs', catalog_slug, 'controllers', "#{catalog_snake_slug}_advanced_searches_controller.rb"))
+      if Rails.root.join('catalogs', catalog_slug, 'controllers', "#{catalog_snake_slug}_advanced_searches_controller.rb").exist?
         get 'search/advanced/new',
             :controller => "#{catalog_snake_slug}_advanced_searches",
             :action => :new,
@@ -334,7 +334,7 @@ Rails.application.routes.draw do
             :catalog_slug => catalog_slug
       end
 
-      if File.exist?(Rails.root.join('catalogs', catalog_slug, 'controllers', "#{catalog_snake_slug}_pages_controller.rb"))
+      if Rails.root.join('catalogs', catalog_slug, 'controllers', "#{catalog_snake_slug}_pages_controller.rb").exist?
         get ":slug",
             :controller => "#{catalog_snake_slug}_pages",
             :action => :show,
@@ -343,7 +343,7 @@ Rails.application.routes.draw do
             :constraints => PagesController::Constraint
       end
 
-      if File.exist?(Rails.root.join('catalogs', catalog_slug, 'controllers', "#{catalog_snake_slug}_items_controller.rb"))
+      if Rails.root.join('catalogs', catalog_slug, 'controllers', "#{catalog_snake_slug}_items_controller.rb").exist?
         get ":item_type_slug",
             :controller => "#{catalog_snake_slug}_items",
             :action => :index,

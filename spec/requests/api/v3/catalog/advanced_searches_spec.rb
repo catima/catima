@@ -37,12 +37,12 @@ RSpec.describe 'api/v3/{catalog_id}/advanced_search', type: :request do
       consumes 'application/json'
       security [BearerAuth: []]
       description <<-HTML.squish
-        <p><b>Authorization: User+/Member+/Editor+ (according to catalog\'s visibility)</b></p>
+        <p><b>Authorization: User+/Member+/Editor+ (according to catalog's visibility)</b></p>
       HTML
 
       response(200, 'successful') do
         run_test! do
-          body = JSON.parse(response.body)
+          body = response.parsed_body
           expect(body).to have_key("data")
         end
       end
@@ -62,7 +62,7 @@ RSpec.describe 'api/v3/{catalog_id}/advanced_search', type: :request do
       consumes 'application/json'
       security [BearerAuth: []]
       description <<-HTML.squish
-        <p><b>Authorization: User+/Member+/Editor+ (according to catalog\'s visibility)</b></p>
+        <p><b>Authorization: User+/Member+/Editor+ (according to catalog's visibility)</b></p>
       HTML
 
       parameter name: :advanced_search, in: :body, schema: {
@@ -94,7 +94,7 @@ RSpec.describe 'api/v3/{catalog_id}/advanced_search', type: :request do
 
       response(200, 'successful') do
         run_test! do
-          body = JSON.parse(response.body)
+          body = response.parsed_body
           expect(body).to have_key("data")
         end
       end
@@ -114,12 +114,12 @@ RSpec.describe 'api/v3/{catalog_id}/advanced_search', type: :request do
       consumes 'application/json'
       security [BearerAuth: []]
       description <<-HTML.squish
-        <p><b>Authorization: User+/Member+/Editor+ (according to catalog\'s visibility)</b></p>
+        <p><b>Authorization: User+/Member+/Editor+ (according to catalog's visibility)</b></p>
       HTML
 
       response(200, 'successful') do
         run_test! do
-          body = JSON.parse(response.body)
+          body = response.parsed_body
           expect(body).to have_key("data")
         end
       end

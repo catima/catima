@@ -74,9 +74,9 @@ class CSVImport::ItemBuilder
   private
 
   def collect_column_errors
-    Hash[column_fields.map do |column, field|
+    column_fields.to_h do |column, field|
       errors = field ? item.errors[field.attribute_name] : []
       [column, errors]
-    end]
+    end
   end
 end

@@ -28,7 +28,7 @@ RSpec.describe 'api/v3/{catalog_id}/item_type(s)', type: :request do
 
       response(200, 'successful') do
         run_test! do
-          body = JSON.parse(response.body)
+          body = response.parsed_body
           expect(body).to have_key("data")
         end
       end
@@ -58,7 +58,7 @@ RSpec.describe 'api/v3/{catalog_id}/item_type(s)', type: :request do
 
       response(200, 'successful') do
         run_test! do
-          body = JSON.parse(response.body)
+          body = response.parsed_body
           expect(body).to have_key("data")
         end
       end

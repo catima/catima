@@ -1,7 +1,4 @@
-class Dump::CatalogDump < ::Dump
-  def initialize
-  end
-
+class Dump::CatalogDump < Dump
   def dump(catalog, directory, with_files)
     cat = Catalog.find_by(slug: catalog)
     raise "ERROR. Catalog '#{catalog}' not found." if cat.nil?

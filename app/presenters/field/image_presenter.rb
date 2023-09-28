@@ -84,7 +84,7 @@ class Field::ImagePresenter < Field::FilePresenter
     thumbs = files_as_array.map do |image|
       file_url(image, size, :resize)
     end
-    legends = legend_active? ? files_as_array.map { |image| image['legend'] } : ''
+    legends = legend_active? ? files_as_array.pluck('legend') : ''
     images = files_as_array.map { |img| "/#{img['path']}" }
     @view.render('fields/images', thumbnails: thumbs, images: images, legends: legends)
   end

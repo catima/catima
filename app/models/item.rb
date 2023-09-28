@@ -70,7 +70,7 @@ class Item < ApplicationRecord
   # after_commit :update_views_cache, if: proc { |record| record.saved_changes.key?(:data) }
 
   def self.sorted_by_field(field, direction: "ASC", nulls_order: 'LAST')
-    direction = ItemList::Sort.included?(direction) ? direction : ItemList::Sort.ascending
+    direction = ItemList::Sort.ascending unless ItemList::Sort.included?(direction)
     sql = []
     sql << field.order_items_by(direction: direction, nulls_order: nulls_order) unless field.nil?
 

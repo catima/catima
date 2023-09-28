@@ -48,16 +48,16 @@ class Search::TextStrategyTest < ActiveSupport::TestCase
       :field_condition => "and",
       :start => {
         :exact => {
-          "Y": "1900",
-          "M": "1",
-          "D": "1"
+          Y: "1900",
+          M: "1",
+          D: "1"
         }
       },
       :end => {
         :exact => {
-          "Y": "2015",
-          "M": "12",
-          "D": "31"
+          Y: "2015",
+          M: "12",
+          D: "31"
         }
       }
     }.with_indifferent_access
@@ -77,16 +77,16 @@ class Search::TextStrategyTest < ActiveSupport::TestCase
       :field_condition => "and",
       :start => {
         :exact => {
-          "Y": "2015",
-          "M": "12",
-          "D": "31"
+          Y: "2015",
+          M: "12",
+          D: "31"
         }
       },
       :end => {
         :exact => {
-          "Y": "2000",
-          "M": "1",
-          "D": "1"
+          Y: "2000",
+          M: "1",
+          D: "1"
         }
       }
     }.with_indifferent_access

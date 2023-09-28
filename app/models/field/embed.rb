@@ -1,6 +1,6 @@
 require 'uri'
 
-class Field::Embed < ::Field
+class Field::Embed < Field
   store_accessor :options, :format
   store_accessor :options, :width
   store_accessor :options, :height
@@ -71,7 +71,7 @@ class Field::Embed < ::Field
       return if record.fields.find_by(uuid: attrib).parsed_domains.none?
 
       field = record.fields.find_by(uuid: attrib)
-      domains = field.parsed_domains.map { |d| d["value"] }
+      domains = field.parsed_domains.pluck("value")
       if field.iframe?
         validate_iframe(value, record, attrib, domains)
       else

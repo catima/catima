@@ -13,7 +13,7 @@
 #  updated_at :datetime         not null
 #
 
-class Container::Map < ::Container
+class Container::Map < Container
   DEFAULT_MAP_HEIGHT = 400
 
   store_accessor :content, :item_type, :layers, :height

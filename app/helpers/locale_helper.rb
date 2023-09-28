@@ -88,7 +88,7 @@ module LocaleHelper
     options = options.reverse_merge(:hide_label => true)
     if locales.many?
       options.reverse_merge!(
-        #:placeholder => locale_language(locale),
+        # :placeholder => locale_language(locale),
         :prepend => locale
       )
     end

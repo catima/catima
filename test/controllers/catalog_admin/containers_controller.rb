@@ -1,6 +1,6 @@
 require 'test_helper'
 
-class CatalogAdmin::ContainersControllerTest < ActionController::TestCase
+class CatalogAdmin::ContainersControllerTest < ActionDispatch::IntegrationTest
   include Devise::Test::ControllerHelpers
 
   def setup

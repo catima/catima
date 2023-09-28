@@ -38,14 +38,11 @@ module Locales
   class Configuration
     attr_accessor :i18n_dir, :i18n_yml_dir, :i18n_output_format
 
-    # rubocop:disable Metrics/AbcSize
     def initialize(i18n_dir: nil, i18n_yml_dir: nil, i18n_output_format: nil)
       self.i18n_dir = i18n_dir
       self.i18n_yml_dir = i18n_yml_dir
       self.i18n_output_format = i18n_output_format
-    end
-
-    # rubocop:enable Metrics/AbcSize
+end
 
     # on ReactOnRails
     def setup_config_values
@@ -59,7 +56,7 @@ module Locales
       return if i18n_dir.nil?
       return if Dir.exist?(i18n_dir)
 
-      msg = <<-MSG.strip_heredoc
+      msg = <<~MSG
       Error configuring /config/initializers/react_on_rails.rb: invalid value for `config.i18n_dir`.
       Directory does not exist: #{i18n_dir}. Set to value to nil or comment it
       out if not using the React on Rails i18n feature.
@@ -71,7 +68,7 @@ module Locales
       return if i18n_yml_dir.nil?
       return if Dir.exist?(i18n_yml_dir)
 
-      msg = <<-MSG.strip_heredoc
+      msg = <<~MSG
       Error configuring /config/initializers/react_on_rails.rb: invalid value for `config.i18n_yml_dir`.
       Directory does not exist: #{i18n_yml_dir}. Set to value to nil or comment it
       out if not using this i18n with React on Rails, or if you want to use all translation files.
@@ -152,10 +149,8 @@ module Locales
     end
 
     def generate_file(template, path)
-      result = ERB.new(template).result()
-      File.open(path, "w") do |f|
-        f.write(result)
-      end
+      result = ERB.new(template).result
+      File.write(path, result)
     end
 
     def generate_translations
@@ -195,16 +190,16 @@ module Locales
     end
 
     def template_translations
-      <<-JS.strip_heredoc
+      <<~JS
           export const translations = #{@translations};
       JS
     end
 
     def template_default
-      <<-JS.strip_heredoc
+      <<~JS
           import { defineMessages } from 'react-intl';
 
-          const defaultLocale = \'#{default_locale}\';
+          const defaultLocale = '#{default_locale}';
 
           const defaultMessages = defineMessages(#{@defaults});
 

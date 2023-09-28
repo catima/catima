@@ -241,20 +241,20 @@ Devise.setup do |config|
     config.omniauth(
       :github,
       ENV['AUTH_GITHUB_APP_ID'],
-      ENV['AUTH_GITHUB_APP_SECRET'],
+      ENV.fetch('AUTH_GITHUB_APP_SECRET', nil),
       scope: 'user:email')
   end
   if ENV['AUTH_FACEBOOK_APP_ID']
     config.omniauth(
       :facebook,
-      ENV['AUTH_GITHUB_APP_ID'],
-      ENV['AUTH_GITHUB_APP_SECRET'],
+      ENV.fetch('AUTH_GITHUB_APP_ID', nil),
+      ENV.fetch('AUTH_GITHUB_APP_SECRET', nil),
       token_params: { parse: :json })
   end
   if ENV['AUTH_SHIB_APP_ID']
     config.omniauth(
       :shibboleth,
-      shib_session_id_field: ENV['AUTH_SHIB_SESSION_ID'],
+      shib_session_id_field: ENV.fetch('AUTH_SHIB_SESSION_ID', nil),
       shib_application_id_field: ENV['AUTH_SHIB_APP_ID'],
       uid_field: 'eppn',
       info_fields: { email: 'mail' }
@@ -285,7 +285,7 @@ Devise.setup do |config|
   # so you need to do it manually. For the users scope, it would be:
   # config.omniauth_path_prefix = '/my_engine/users/auth'
   config.jwt do |jwt|
-    jwt.secret = ENV['DEVISE_JWT_SECRET_KEY']
+    jwt.secret = ENV.fetch('DEVISE_JWT_SECRET_KEY', nil)
     jwt.dispatch_requests = [
       ['POST', %r{^/api/v3/login$}],
       ['POST', %r{^/api/v3/login.json$}]

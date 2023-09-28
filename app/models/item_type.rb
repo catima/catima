@@ -52,7 +52,7 @@ class ItemType < ApplicationRecord
       all << field
       next unless field.is_a?(Field::ChoiceSet)
 
-      field.choices.includes(:category).each do |choice|
+      field.choices.includes(:category).find_each do |choice|
         category = choice.category
         next unless category&.not_deleted?
 
@@ -112,9 +112,9 @@ class ItemType < ApplicationRecord
     return @primary_text_field if defined? @primary_text_field
 
     @primary_text_field = begin
-                            candidate_fields = [primary_field, list_view_fields, fields].flatten.compact
-                            candidate_fields.reject(&:restricted?).find { |f| f.is_a?(Field::Text) }
-                          end
+      candidate_fields = [primary_field, list_view_fields, fields].flatten.compact
+      candidate_fields.reject(&:restricted?).find { |f| f.is_a?(Field::Text) }
+    end
   end
 
   def public_items

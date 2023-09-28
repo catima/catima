@@ -49,6 +49,7 @@ class React::FieldsController < React::BaseController
 
   def choices_for_choice_set
     raise InvalidItemType, 'no item type provided' if item_type.nil?
+
     choices_for_item_type(item_type)
   end
 
@@ -63,10 +64,10 @@ class React::FieldsController < React::BaseController
       choices = choices.where(
         "LOWER(choices.short_name_translations->>'short_name_#{locale}') LIKE :q OR LOWER(choices.long_name_translations->>'short_name_#{locale}') LIKE :q",
         q: "%#{params[:search].downcase}%"
-      ).order((Arel.sql("LOWER(choices.short_name_translations->>'short_name_#{locale}') ASC")))
+      ).order(Arel.sql("LOWER(choices.short_name_translations->>'short_name_#{locale}') ASC"))
     end
 
-    choices = params[:page].blank? ? choices : choices.page(params[:page])
+    choices = choices.page(params[:page]) if params[:page].present?
 
     render(json:
              {

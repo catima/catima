@@ -58,7 +58,7 @@ task :notify_rollbar do
     end
 
     revision = fetch(:rollbar_sha)
-    local_user = ENV["USER"]
+    local_user = ENV.fetch("USER", nil)
     rollbar_token = fetch(:rollbar_token)
     rails_env = fetch(:rails_env)
     execute "curl https://api.rollbar.com/api/1/deploy/ -F access_token=#{rollbar_token} -F environment=#{rails_env} -F revision=#{revision} -F local_username=#{local_user} >/dev/null 2>&1"

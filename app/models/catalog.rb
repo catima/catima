@@ -86,7 +86,7 @@ class Catalog < ApplicationRecord
   end
 
   def self.overrides
-    Dir.exist?(Rails.root.join('catalogs')) ? Dir.entries(Rails.root.join('catalogs')).select { |f| Catalog.valid? f } : []
+    Rails.root.join('catalogs').exist? ? Rails.root.join('catalogs').entries.select { |f| Catalog.valid? f } : []
   end
 
   def public?
@@ -157,7 +157,7 @@ class Catalog < ApplicationRecord
   private
 
   def strip_empty_language
-    self.other_languages = (other_languages || []).reject(&:blank?)
+    self.other_languages = (other_languages || []).compact_blank
   end
 
   def check_activation_status

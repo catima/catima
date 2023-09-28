@@ -31,7 +31,7 @@ RSpec.describe 'api/v3/{catalog_id}/choice_set/{choice_set_id}/choice(s)', type:
 
       response(200, 'successful') do
         run_test! do
-          body = JSON.parse(response.body)
+          body = response.parsed_body
           expect(body).to have_key("data")
         end
       end
@@ -62,7 +62,7 @@ RSpec.describe 'api/v3/{catalog_id}/choice_set/{choice_set_id}/choice(s)', type:
 
       response(200, 'successful') do
         run_test! do
-          body = JSON.parse(response.body)
+          body = response.parsed_body
           expect(body).to have_key("data")
         end
       end

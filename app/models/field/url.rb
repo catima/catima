@@ -32,7 +32,7 @@
 #  uuid                     :string
 #
 
-class Field::URL < ::Field
+class Field::URL < Field
   def sql_value(item)
     value = value_for_item(item)
     return unless value

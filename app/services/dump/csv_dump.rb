@@ -1,8 +1,5 @@
-class Dump::CSVDump < ::Dump
+class Dump::CSVDump < Dump
   require "csv"
-
-  def initialize
-  end
 
   def dump(catalog, directory, locale, with_files)
     I18n.with_locale(locale) do

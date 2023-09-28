@@ -31,7 +31,7 @@ RSpec.describe 'api/v3/{catalog_id}/item_type/{item_type_id}/field(s)', type: :r
 
       response(200, 'successful') do
         run_test! do
-          body = JSON.parse(response.body)
+          body = response.parsed_body
           expect(body).to have_key("data")
         end
       end
@@ -62,7 +62,7 @@ RSpec.describe 'api/v3/{catalog_id}/item_type/{item_type_id}/field(s)', type: :r
 
       response(200, 'successful') do
         run_test! do
-          body = JSON.parse(response.body)
+          body = response.parsed_body
           expect(body).to have_key("data")
         end
       end

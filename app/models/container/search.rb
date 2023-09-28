@@ -13,7 +13,7 @@
 #  updated_at :datetime         not null
 #
 
-class Container::Search < ::Container
+class Container::Search < Container
   store_accessor :content, :search, :display_type
 
   validates_presence_of :search
@@ -26,7 +26,7 @@ class Container::Search < ::Container
 
   # Return the display_type choices for the Search container
   def self.display_type_choices
-    ::ItemList::STYLES.reject { |key, _name| key.eql?("line") }
+    ::ItemList::STYLES.except("line")
   end
 
   private

@@ -1,5 +1,5 @@
 # See https://github.com/twitter/secureheaders#configuration
-::SecureHeaders::Configuration.default do |config|
+SecureHeaders::Configuration.default do |config|
   config.cookies = {
     secure: true,
     httponly: true,

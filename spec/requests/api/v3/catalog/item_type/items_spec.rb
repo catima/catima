@@ -28,12 +28,12 @@ RSpec.describe 'api/v3/{catalog_id}/item_type/{item_type_id}/item(s)', type: :re
       consumes 'application/json'
       security [BearerAuth: []]
       description <<-HTML.squish
-        <p><b>Authorization: User+/Member+/Editor+ (according to catalog\'s visibility)</b></p>
+        <p><b>Authorization: User+/Member+/Editor+ (according to catalog's visibility)</b></p>
       HTML
 
       response(200, 'successful') do
         run_test! do
-          body = JSON.parse(response.body)
+          body = response.parsed_body
           expect(body).to have_key("data")
         end
       end
@@ -59,12 +59,12 @@ RSpec.describe 'api/v3/{catalog_id}/item_type/{item_type_id}/item(s)', type: :re
       consumes 'application/json'
       security [BearerAuth: []]
       description <<-HTML.squish
-        <p><b>Authorization: User+/Member+/Editor+ (according to catalog\'s visibility)</b></p>
+        <p><b>Authorization: User+/Member+/Editor+ (according to catalog's visibility)</b></p>
       HTML
 
       response(200, 'successful') do
         run_test! do
-          body = JSON.parse(response.body)
+          body = response.parsed_body
           expect(body).to have_key("data")
         end
       end
@@ -95,7 +95,7 @@ RSpec.describe 'api/v3/{catalog_id}/item_type/{item_type_id}/item(s)', type: :re
 
       response(200, 'successful') do
         run_test! do
-          body = JSON.parse(response.body)
+          body = response.parsed_body
           expect(body).to have_key("data")
         end
       end

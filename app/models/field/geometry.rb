@@ -32,7 +32,7 @@
 #  uuid                     :string
 #
 
-class Field::Geometry < ::Field
+class Field::Geometry < Field
   store_accessor :options, :bounds, :layers
 
   def human_readable?

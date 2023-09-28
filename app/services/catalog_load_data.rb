@@ -48,7 +48,7 @@ class CatalogLoadData
     end.behaving_as_type
     begin
       item_type_fields = item_type.fields.map(&:slug)
-      item.update(Hash[item_json.except('id', 'uuid', 'review_status').collect { |k, v| [item_type.fields.where(slug: k).first!.uuid, v] }])
+      item.update(item_json.except('id', 'uuid', 'review_status').to_h { |k, v| [item_type.fields.where(slug: k).first!.uuid, v] })
     rescue ActiveRecord::RecordNotFound
       msg "Error. Not all fields can be found for item type '#{item_type.slug}'. Expected fields: \n#{item_type_fields.join(', ')}. \nFound fields: \n#{item_json.keys.join(', ')}."
     end
@@ -127,13 +127,13 @@ class CatalogLoadData
   end
 
   def convert_file_path(path, new_slug)
-    paths = path.class == Array ? path : [path]
+    paths = path.instance_of?(Array) ? path : [path]
     paths = paths.map do |p|
       path_elems = p['path'].split('/')
       path_elems[1] = new_slug
       p['path'] = path_elems.join('/')
       p
     end
-    path.class == Array ? paths : paths[0]
+    path.instance_of?(Array) ? paths : paths[0]
   end
 end

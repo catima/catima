@@ -26,7 +26,7 @@ RSpec.describe 'api/v3/{catalog_id}/users', type: :request do
 
       response(200, 'successful') do
         run_test! do
-          body = JSON.parse(response.body)
+          body = response.parsed_body
           expect(body).to have_key("data")
         end
       end
@@ -45,7 +45,7 @@ RSpec.describe 'api/v3/{catalog_id}/users', type: :request do
 
         it 'returns a 401 Unauthorized', skip_after: true do
           expect(response.code).to eq("401")
-          body = JSON.parse(response.body)
+          body = response.parsed_body
           expect(body).to have_key("code")
           expect(body["code"]).to eq("invalid_token")
         end
@@ -62,7 +62,7 @@ RSpec.describe 'api/v3/{catalog_id}/users', type: :request do
 
         it 'returns a 403 Forbidden', skip_after: true do
           expect(response.code).to eq("403")
-          body = JSON.parse(response.body)
+          body = response.parsed_body
           expect(body).to have_key("code")
           expect(body["code"]).to eq("not_allowed")
         end

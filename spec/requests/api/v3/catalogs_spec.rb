@@ -1,4 +1,3 @@
-# rubocop:disable Metrics/BlockLength
 require 'swagger_helper'
 
 RSpec.describe 'api/v3/catalogs', type: :request do
@@ -21,7 +20,7 @@ RSpec.describe 'api/v3/catalogs', type: :request do
 
       response(200, 'successful') do
         run_test! do
-          body = JSON.parse(response.body)
+          body = response.parsed_body
           expect(body).to have_key("data")
           expect(body["data"].length).to eq(3)
         end
@@ -33,7 +32,7 @@ RSpec.describe 'api/v3/catalogs', type: :request do
         let!(:Authorization) { "Bearer #{api_key}" }
 
         run_test! do
-          body = JSON.parse(response.body)
+          body = response.parsed_body
           expect(body).to have_key("data")
           expect(body["data"].length).to eq(1)
         end
@@ -48,7 +47,7 @@ RSpec.describe 'api/v3/catalogs', type: :request do
 
         it 'returns a 401 Unauthorized', skip_after: true do
           expect(response.code).to eq("401")
-          body = JSON.parse(response.body)
+          body = response.parsed_body
           expect(body).to have_key("code")
           expect(body["code"]).to eq("invalid_token")
         end
@@ -60,4 +59,3 @@ RSpec.describe 'api/v3/catalogs', type: :request do
     end
   end
 end
-# rubocop:enable Metrics/BlockLength

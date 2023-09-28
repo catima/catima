@@ -138,12 +138,16 @@ class Search::ComplexDatationStrategy < Search::BaseStrategy
         "#{sql_select_table_name}.data->'#{field.uuid}'->>'selected_format' = 'date_time' AND
            #{date_time_to_interval(date_time, 'from')} #{sql_operator} #{make_interval(date_time)} AND
            #{date_time_to_interval(date_time, 'to')}  #{sql_operator} #{make_interval(date_time)}")
-      scope = is_choice ? init_scope : init_scope.or(
-        scope.where(
-          "#{sql_select_table_name}.data->'#{field.uuid}'->>'selected_format' = 'datation_choice' AND
+      scope = if is_choice
+                init_scope
+              else
+                init_scope.or(
+                  scope.where(
+                    "#{sql_select_table_name}.data->'#{field.uuid}'->>'selected_format' = 'datation_choice' AND
              #{choice_to_interval(date_time, 'from_date')} #{sql_operator} #{make_interval(date_time)} AND
              #{choice_to_interval(date_time, 'to_date')}  #{sql_operator} #{make_interval(date_time)}")
-      )
+                )
+end
     when "before"
       sql_operator = negate ? ">=" : "<="
       init_scope = scope.where(
@@ -153,14 +157,18 @@ class Search::ComplexDatationStrategy < Search::BaseStrategy
            ((#{where_date_is_not_set('to')}) AND (#{date_time_to_interval(date_time, 'from')} #{sql_operator} #{make_interval(date_time)})) OR
            (#{where_date_is_not_set('from')}))"
       )
-      scope = is_choice ? init_scope : init_scope.or(
-        scope.where(
-          "#{sql_select_table_name}.data->'#{field.uuid}'->>'selected_format' = 'datation_choice' AND
+      scope = if is_choice
+                init_scope
+              else
+                init_scope.or(
+                  scope.where(
+                    "#{sql_select_table_name}.data->'#{field.uuid}'->>'selected_format' = 'datation_choice' AND
            (
            ( ((NOT (#{where_choice_date_is_not_set('to_date')})) AND (NOT (#{where_choice_date_is_not_set('from_date')}))) AND  ((#{choice_to_interval(date_time, 'from_date')} #{sql_operator} #{make_interval(date_time)}) OR (#{choice_to_interval(date_time, 'to_date')} #{sql_operator} #{make_interval(date_time)})) ) OR
            ((#{where_choice_date_is_not_set('to_date')}) AND (#{choice_to_interval(date_time, 'from_date')} #{sql_operator} #{make_interval(date_time)})) OR
            (#{where_choice_date_is_not_set('from_date')}))")
-      )
+                )
+end
     when "after"
       sql_operator = negate ? "<=" : ">="
       init_scope = scope.where(
@@ -169,14 +177,18 @@ class Search::ComplexDatationStrategy < Search::BaseStrategy
            ((#{where_date_is_not_set('from')}) AND (#{date_time_to_interval(date_time, 'to')} #{sql_operator} #{make_interval(date_time)})) OR
            (#{where_date_is_not_set('to')}))"
       )
-      scope = is_choice ? init_scope : init_scope.or(
-        scope.where(
-          "#{sql_select_table_name}.data->'#{field.uuid}'->>'selected_format' = 'datation_choice' AND
+      scope = if is_choice
+                init_scope
+              else
+                init_scope.or(
+                  scope.where(
+                    "#{sql_select_table_name}.data->'#{field.uuid}'->>'selected_format' = 'datation_choice' AND
            (
            ( ((NOT (#{where_choice_date_is_not_set('from_date')})) AND (NOT (#{where_choice_date_is_not_set('to_date')}))) AND  ((#{choice_to_interval(date_time, 'from_date')} #{sql_operator} #{make_interval(date_time)}) OR (#{choice_to_interval(date_time, 'to_date')} #{sql_operator} #{make_interval(date_time)})) ) OR
            ((#{where_choice_date_is_not_set('from_date')}) AND (#{choice_to_interval(date_time, 'to_date')} #{sql_operator} #{make_interval(date_time)})) OR
            (#{where_choice_date_is_not_set('to_date')}))")
-      )
+                )
+end
     end
     scope
   end
@@ -186,7 +198,13 @@ class Search::ComplexDatationStrategy < Search::BaseStrategy
 
     field_condition = field_condition == "between" ? "outside" : "between" unless negate
 
-    where_scope = ->(*q, name) { field_condition == "outside" ? scope.where("#{sql_select_table_name}.data->'#{field.uuid}'->>'selected_format' = '#{name}'").where('items.id NOT IN (?)', scope.where(q).any? ? scope.where(q).pluck(:id) : ['0']) : scope.where(q) }
+    where_scope = ->(*q, name) {
+      if field_condition == "outside"
+        scope.where("#{sql_select_table_name}.data->'#{field.uuid}'->>'selected_format' = '#{name}'").where.not(items: { id: scope.where(q).any? ? scope.where(q).pluck(:id) : ['0'] })
+      else
+        scope.where(q)
+    end
+    }
 
     date_time_query_string = "
             (#{sql_select_table_name}.data->'#{field.uuid}'->>'selected_format' = 'date_time' AND

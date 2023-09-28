@@ -1,4 +1,4 @@
-class Field::ComplexDatation < ::Field
+class Field::ComplexDatation < Field
   FORMATS = %w(Y M h YM MD hm YMD hms MDh YMDh MDhm YMDhm MDhms YMDhms).freeze
   ALLOWED_FORMATS = %w(date_time datation_choice).freeze
 
@@ -272,9 +272,9 @@ class Field::ComplexDatation < ::Field
 
       return if value['selected_format'] != "date_time"
 
-      from_date_is_positive = value['from'].compact.reject { |k, _| k == "BC" }.all? { |_, v| v.to_i >= 0 }
+      from_date_is_positive = value['from'].compact.except("BC").all? { |_, v| v.to_i >= 0 }
 
-      to_date_is_positive = value['to'].compact.reject { |k, _| k == "BC" }.all? { |_, v| v.to_i >= 0 }
+      to_date_is_positive = value['to'].compact.except("BC").all? { |_, v| v.to_i >= 0 }
 
       return if to_date_is_positive && from_date_is_positive
 

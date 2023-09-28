@@ -23,8 +23,8 @@ class Choice < ApplicationRecord
   belongs_to :category, optional: true
   belongs_to :choice_set, optional: true
 
-  has_many :childrens, :class_name => Choice.to_s, foreign_key: 'parent_id', dependent: :destroy
-  belongs_to :parent, :class_name => Choice.to_s, :optional => true
+  has_many :childrens, :class_name => "Choice", foreign_key: 'parent_id', dependent: :destroy
+  belongs_to :parent, :class_name => "Choice", :optional => true
 
   store_translations :short_name, :required => true
   store_translations :long_name, :required => false
@@ -137,8 +137,8 @@ class Choice < ApplicationRecord
   def validate_dates_are_positives
     return unless choice_set&.datation?
 
-    from_date_is_positive = JSON.parse(from_date).compact.select { |key, _value| key != 'BC' }.all? { |_key, value| value.to_i >= 0 }
-    to_date_is_positive = JSON.parse(to_date).compact.select { |key, _value| key != 'BC' }.all? { |_key, value| value.to_i >= 0 }
+    from_date_is_positive = JSON.parse(from_date).compact.except('BC').all? { |_key, value| value.to_i >= 0 }
+    to_date_is_positive = JSON.parse(to_date).compact.except('BC').all? { |_key, value| value.to_i >= 0 }
 
     return if to_date_is_positive && from_date_is_positive
 
@@ -148,8 +148,8 @@ class Choice < ApplicationRecord
   def validates_at_least_one_date_if_datation
     return unless choice_set&.datation?
 
-    from_date_components_presents = JSON.parse(from_date).compact.select { |key, value| key != 'BC' && value.to_i != 0 }.any?
-    to_date_components_presents = JSON.parse(to_date).compact.select { |key, value| key != 'BC' && value.to_i != 0 }.any?
+    from_date_components_presents = JSON.parse(from_date).compact.any? { |key, value| key != 'BC' && value.to_i != 0 }
+    to_date_components_presents = JSON.parse(to_date).compact.any? { |key, value| key != 'BC' && value.to_i != 0 }
 
     return if from_date_components_presents || to_date_components_presents
 

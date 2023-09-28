@@ -2,7 +2,7 @@ if Rails.env.development?
   Annotate.set_defaults("exclude_tests" => "true", "sort" => "true")
 
   # Annotate models
-  task :annotate do
+  task annotate: :environment do
     puts "Annotating models..."
     system "bundle exec annotate"
   end

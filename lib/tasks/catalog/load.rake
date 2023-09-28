@@ -11,8 +11,8 @@ end
 namespace :catalog do
   desc "Load catalog from dump directory"
   task :load => [:environment] do
-    directory = ENV['dir']
-    new_slug = ENV['slug']
+    directory = ENV.fetch('dir', nil)
+    new_slug = ENV.fetch('slug', nil)
     if directory.nil?
       CatalogLoadOutput.msg 'No dump directory specified.'
       CatalogLoadOutput.print_usage

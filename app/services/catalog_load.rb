@@ -66,7 +66,7 @@ class CatalogLoad
   end
 
   def copy_files
-    dest_dir = File.join(Rails.public_path, 'upload', @slug)
+    dest_dir = Rails.public_path.join('upload', @slug)
     FileUtils.mkdir_p dest_dir
     FileUtils.cp_r(
       Dir.glob(File.join(@load_dir, 'files', '*')),

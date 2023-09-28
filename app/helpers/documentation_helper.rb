@@ -28,7 +28,7 @@ module DocumentationHelper
   end
 
   def content_url(file_name, locale=I18n.locale)
-    URI("#{ENV['DOC_BASE_URL']}/#{locale}/#{file_name}")
+    URI("#{ENV.fetch('DOC_BASE_URL', nil)}/#{locale}/#{file_name}")
   end
 
   # Define current locale for the content url if the

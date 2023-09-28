@@ -54,7 +54,7 @@ class User::AdminInvitationForm < ActiveType::Record[User]
   end
 
   def translate_catalog_ids_to_i
-    self.catalog_ids = (catalog_ids || []).reject(&:blank?).map(&:to_i)
+    self.catalog_ids = (catalog_ids || []).compact_blank.map(&:to_i)
   end
 
   def assign_random_password

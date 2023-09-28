@@ -32,7 +32,7 @@
 #  uuid                     :string
 #
 
-class Field::Xref < ::Field
+class Field::Xref < Field
   include ::Field::AllowsMultipleValues
 
   # TODO: support :only and :exclude options
@@ -77,7 +77,7 @@ class Field::Xref < ::Field
   end
 
   def csv_value(item, _user=nil)
-    return '' if raw_value(item).blank? || external_type.nil?
+    '' if raw_value(item).blank? || external_type.nil?
   end
 
   def groupable?

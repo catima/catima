@@ -18,7 +18,7 @@ class ContactsMailerTest < ActionMailer::TestCase
     mail = ContactMailer.send_request(receiver, request_params, catalog)
 
     assert_match(request_params['subject'], mail.subject)
-    assert_equal([ENV['MAIL_SENDER']], mail.from)
+    assert_equal([ENV.fetch('MAIL_SENDER', nil)], mail.from)
     assert_equal([request_params['email']], mail.reply_to)
     assert_equal([receiver], mail.to)
     assert_match(/request body/i, mail.body.encoded.squish)

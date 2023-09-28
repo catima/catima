@@ -57,7 +57,7 @@ class CatalogLoadStructure
 
   def build_choice(cs, ch_info)
     cat = cs.catalog.categories.where(uuid: ch_info['category']).first
-    cs.choices.build(ch_info.merge('category': cat)).save
+    cs.choices.build(ch_info.merge(category: cat)).save
   end
 
   def load_item_types(catalog, item_types_directory)
@@ -76,10 +76,12 @@ class CatalogLoadStructure
     end
 
     # And now we can build the fields
-    items.each { |arr| load_item_type_fields(arr[0], arr[1]) }
+    items.each { |arr|
+      load_item_type_fields(arr[0], arr[1])
+      load_item_views(arr[0], arr[1])
+    }
 
     # Load the item views
-    items.each { |arr| load_item_views(arr[0], arr[1]) }
   end
 
   def load_item_type(catalog, it_info)
@@ -103,7 +105,7 @@ class CatalogLoadStructure
   def build_field(field_set, fld_info)
     cs = choice_set_id(field_set.catalog, fld_info['choice_set'])
     it = item_type_id(field_set.catalog, fld_info['related_item_type'])
-    fld_def = fld_info.except('choice_set', 'related_item_type').merge('choice_set_id': cs, 'related_item_type_id': it)
+    fld_def = fld_info.except('choice_set', 'related_item_type').merge(choice_set_id: cs, related_item_type_id: it)
     field_set.fields.build(fld_def).save
   end
 

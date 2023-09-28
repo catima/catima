@@ -1,6 +1,15 @@
 class SearchesController < ApplicationController
   before_action :authenticate_user!
 
+  def index
+    @selected_catalog = find_catalog(params[:catalog])
+    @list = ItemList::SavedSearch.new(
+      :user => current_user,
+      :selected_catalog => @selected_catalog
+    )
+    @catalogs = catalogs(@list)
+  end
+
   def show
     find_search(params[:id])
 
@@ -11,13 +20,9 @@ class SearchesController < ApplicationController
     end
   end
 
-  def index
-    @selected_catalog = find_catalog(params[:catalog])
-    @list = ItemList::SavedSearch.new(
-      :user => current_user,
-      :selected_catalog => @selected_catalog
-    )
-    @catalogs = catalogs(@list)
+  def edit
+    find_search(params[:id])
+    authorize(@search)
   end
 
   def create
@@ -26,11 +31,6 @@ class SearchesController < ApplicationController
     authorize(@search)
     Search.create(related_search: related_search, user: current_user)
     redirect_back fallback_location: searches_path
-  end
-
-  def edit
-    find_search(params[:id])
-    authorize(@search)
   end
 
   def update

@@ -32,7 +32,7 @@
 #  uuid                     :string
 #
 
-class Field::ChoiceSet < ::Field
+class Field::ChoiceSet < Field
   include ::Field::AllowsMultipleValues
 
   belongs_to :choice_set, :class_name => "::ChoiceSet"

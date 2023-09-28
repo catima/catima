@@ -52,7 +52,7 @@ class Container < ApplicationRecord
   end
 
   def type_name
-    type.gsub(/Container::/, '')
+    type.gsub("Container::", '')
   end
 
   def partial_name

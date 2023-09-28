@@ -35,7 +35,7 @@ require_dependency("field/file")
 
 # An image is indistinguishable on the back end from a generic file, but it is
 # a distinct field type so that we can display it differently in the UI.
-class Field::Image < ::Field::File
+class Field::Image < Field::File
   store_accessor :options, :legend
 
   after_initialize :set_default_types

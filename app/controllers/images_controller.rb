@@ -4,16 +4,10 @@ class ImagesController < ApplicationController
     size = params[:size].split('x').map { |s| s.to_i }
     filename = "#{params[:image]}.#{params[:ext]}"
 
-    src = Rails.root.join(
-      'public', 'upload', params[:catalog_slug],
-      params[:field_uuid], filename
-    )
+    src = Rails.public_path.join('upload', params[:catalog_slug], params[:field_uuid], filename)
     raise ActiveRecord::RecordNotFound unless File.exists? src
 
-    dest_dir = Rails.root.join(
-      'public', 'thumbs', params[:catalog_slug],
-      params[:size], 'resize', params[:field_uuid]
-    )
+    dest_dir = Rails.public_path.join('thumbs', params[:catalog_slug], params[:size], 'resize', params[:field_uuid])
     FileUtils.mkdir_p(dest_dir)
     dest = File.join(dest_dir, filename)
 
@@ -42,16 +36,10 @@ class ImagesController < ApplicationController
     crop = params[:crop].split(',').map { |s| s.to_i }
     crop_str = crop.map { |i| i.to_s }.join(',')
 
-    src = Rails.root.join(
-      'public', 'upload', params[:catalog_slug],
-      params[:field_uuid], filename
-    )
+    src = Rails.public_path.join('upload', params[:catalog_slug], params[:field_uuid], filename)
     raise ActiveRecord::RecordNotFound unless File.exists? src
 
-    dest_dir = Rails.root.join(
-      'public', 'thumbs', params[:catalog_slug],
-      params[:size], 'fill', crop_str, params[:field_uuid]
-    )
+    dest_dir = Rails.public_path.join('thumbs', params[:catalog_slug], params[:size], 'fill', crop_str, params[:field_uuid])
     FileUtils.mkdir_p(dest_dir)
     dest = File.join(dest_dir, filename)
 

@@ -29,7 +29,7 @@ class API::V3::SessionsController < Devise::SessionsController
         render json:
                  {
                    token: current_token,
-                   valid_until: Time.current + 23.hours,
+                   valid_until: 23.hours.from_now,
                    message: "Authentication successful",
                    code: "authentication_success"
                  }

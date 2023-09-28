@@ -25,7 +25,6 @@ class CatalogAdmin::ItemsTest < ActionDispatch::IntegrationTest
 
     first('#item_one_author_other_collaborators_uuid_json-editor-select').click
 
-
     within(find('#item_one_author_language_uuid_json', visible: false).find(:xpath, '..')) do
       find(".css-g1d714-ValueContainer").click # Click on the filter input
       sleep(2) # Wait for the AsyncPaginate to populate

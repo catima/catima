@@ -33,12 +33,10 @@ class Field::ChoiceSetPresenter < FieldPresenter
           )
         end.join(" ").html_safe
       )
+    elsif options[:no_links] == true
+      choices.map {|choice| choice.short_name}.join(',')
     else
-      if options[:no_links] == true
-        choices.map{|choice| choice.short_name}.join(',')
-      else
-        links_and_prefixed_names.map(&:first).join(", ").html_safe
-      end
+      links_and_prefixed_names.map(&:first).join(", ").html_safe
     end
   end
 end

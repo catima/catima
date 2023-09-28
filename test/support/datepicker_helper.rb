@@ -3,7 +3,7 @@ module DatepickerHelper
     find(:css, input_day_id).click
     page.execute_script(
       "Array.from(document.querySelectorAll(" \
-        "'#{id} td.day'" \
+      "'#{id} td.day'" \
       ")).find(el => el.textContent === '#{day}').click();"
     )
   end

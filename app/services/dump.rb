@@ -4,7 +4,7 @@ class Dump
   def create_output_dir(dir)
     ensure_no_file_overwrite(dir)
     ensure_empty_directory(dir)
-    FileUtils.mkdir_p(dir) unless File.exist?(dir)
+    FileUtils.mkdir_p(dir)
   end
 
   def write_meta(dir)
@@ -16,7 +16,7 @@ class Dump
     files_dir = File.join(dir, 'files')
     Dir.mkdir files_dir
     FileUtils.cp_r(
-      Dir.glob(File.join(Rails.public_path, 'upload', cat.slug, '*')),
+      Rails.public_path.glob("upload/#{cat.slug}/*"),
       files_dir
     )
   end

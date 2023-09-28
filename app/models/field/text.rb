@@ -32,7 +32,7 @@
 #  uuid                     :string
 #
 
-class Field::Text < ::Field
+class Field::Text < Field
   store_accessor :options, :maximum
   store_accessor :options, :minimum
   store_accessor :options, :formatted_text
@@ -49,7 +49,7 @@ class Field::Text < ::Field
   end
 
   def describe
-    super.merge("i18n": i18n)
+    super.merge(i18n: i18n)
   end
 
   def human_readable?
@@ -125,7 +125,7 @@ class Field::Text < ::Field
     if i18n?
       translations = if formatted?
                        JSON.generate(
-                         value['_translations'].map { |k, _| [k, raw_value(item, k)] }.to_h
+                         value['_translations'].to_h { |k, _| [k, raw_value(item, k)] }
                        )
                      else
                        value['_translations'].to_json

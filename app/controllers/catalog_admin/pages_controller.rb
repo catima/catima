@@ -14,6 +14,11 @@ class CatalogAdmin::PagesController < CatalogAdmin::BaseController
     authorize(@page)
   end
 
+  def edit
+    find_page
+    authorize(@page)
+  end
+
   def create
     build_page
     authorize(@page)
@@ -22,11 +27,6 @@ class CatalogAdmin::PagesController < CatalogAdmin::BaseController
     else
       render("new")
     end
-  end
-
-  def edit
-    find_page
-    authorize(@page)
   end
 
   def update

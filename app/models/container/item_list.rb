@@ -13,7 +13,7 @@
 #  updated_at :datetime         not null
 #
 
-class Container::ItemList < ::Container
+class Container::ItemList < Container
   store_accessor :content, :item_type, :style
 
   include ItemListsHelper
@@ -59,9 +59,7 @@ class Container::ItemList < ::Container
   end
 
   def style_validation
-    unless style.blank? || ::ItemList::STYLES.key?(style)
-      errors.add :style, "Style not allowed"
-    end
+    errors.add :style, "Style not allowed" unless style.blank? || ::ItemList::STYLES.key?(style)
 
     return if sort.blank?
 

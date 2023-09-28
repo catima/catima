@@ -15,6 +15,6 @@ module Field::AllowsMultipleValues
     values = raw_value(item)
     return unless values.is_a?(Array)
 
-    values.reject!(&:blank?)
+    values.compact_blank!
   end
 end

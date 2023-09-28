@@ -33,8 +33,8 @@ class CSVImport::FieldMapper
   # actually a FieldWithLocale that decorates the underlying Field.
   def column_fields
     @column_fields ||= begin
-      columns.each_with_object({}) do |column, hash|
-        hash[column] = field_for_column(column)
+      columns.index_with do |column|
+        field_for_column(column)
       end
     end
   end

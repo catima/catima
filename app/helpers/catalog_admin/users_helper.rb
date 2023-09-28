@@ -11,7 +11,7 @@ module CatalogAdmin::UsersHelper
   def user_role_symbol(user, catalog, including_groups=false)
     return "Admin" if user.system_admin?
 
-    catalog = catalog.nil? ? cat : catalog
+    catalog = cat if catalog.nil?
     options = CatalogPermission::ROLE_OPTIONS.reverse
     options.delete("reviewer") unless catalog.requires_review?
 

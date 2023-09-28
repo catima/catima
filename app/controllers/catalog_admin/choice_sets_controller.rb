@@ -11,6 +11,11 @@ class CatalogAdmin::ChoiceSetsController < CatalogAdmin::BaseController
     authorize(@choice_set)
   end
 
+  def edit
+    find_choice_set
+    authorize(@choice_set)
+  end
+
   def create
     build_choice_set
     authorize(@choice_set)
@@ -27,11 +32,6 @@ class CatalogAdmin::ChoiceSetsController < CatalogAdmin::BaseController
         render("new")
       end
     end
-  end
-
-  def edit
-    find_choice_set
-    authorize(@choice_set)
   end
 
   def update
@@ -96,7 +96,7 @@ class CatalogAdmin::ChoiceSetsController < CatalogAdmin::BaseController
         ChoiceSet.transaction do
           choice_params = JSON.parse(params[:file].read)
 
-          @choice_set = @catalog.choice_sets.new(choice_params.reject { |k, _| k == 'choices' })
+          @choice_set = @catalog.choice_sets.new(choice_params.except('choices'))
           authorize(@choice_set)
 
           choice_params["choices"].each do |choice|

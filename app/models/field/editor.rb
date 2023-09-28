@@ -32,7 +32,7 @@
 #  uuid                     :string
 #
 
-class Field::Editor < ::Field
+class Field::Editor < Field
   store_accessor :options, :updater, :timestamps
 
   def custom_field_permitted_attributes
