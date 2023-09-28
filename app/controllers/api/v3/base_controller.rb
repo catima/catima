@@ -119,7 +119,7 @@ class API::V3::BaseController < ApplicationController
   end
 
   def render_response(code, status, options: {})
-    message = t(code, options.merge({ scope: api_i18n_scope }))
+    message = t(code, default: options.merge({ scope: api_i18n_scope }))
     render json: { message: message, code: code }, status: status
   end
 

@@ -4,8 +4,8 @@ def setup(ci)
   within_project_root do
     # During CI we do not check the ruby version to allow for version matrix
     test "ruby -v" => ruby_version unless ci
-    run  "gem install bundler:2.1.4 --no-document --conservative"
-    run  "bundle install"  if File.exist?("Gemfile.lock")
+    run  "gem install bundler:2.4.5 --no-document --conservative"
+    run  "bundle install" if File.exist?("Gemfile.lock")
     run  "bin/yarn install" if File.exist?("yarn.lock")
     run  "bundle exec overcommit --sign"
     run  "bundle exec overcommit --install"

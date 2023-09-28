@@ -29,7 +29,7 @@ This README describes the purpose of this repository and how to set up a develop
 
 This project requires:
 
-* Ruby 2.7.5, preferably managed using [rbenv](http://rbenv.org/)
+* Ruby 3.2.2, preferably managed using [rbenv](http://rbenv.org/)
 * PostgreSQL 15 must be installed and accepting connections
 * Node 18.x (`brew install nvm`, ...)
 * [Redis](https://redis.io/) must be installed and running on localhost with the default port
@@ -88,14 +88,6 @@ Data for the redis, and postgres services are persisted using docker named volum
 If you want to remove a volume (e.g. to start with a fresh database), you can use the following command.
 
 ``docker volume rm volume_name``
-
-If you want to launch the server with **ruby-debug-ide** to establish communication between the debugger engine (debase) and your IDE, run the following commands:
-
-``
-docker exec catima-app supervisorctl stop server && docker exec catima-app supervisorctl start debug
-``
-
-You can now connect your IDE on host 127.0.0.1 on port 1234 to start a debugging session.
 
 ### Frontend
 

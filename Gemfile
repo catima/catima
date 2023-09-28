@@ -42,8 +42,10 @@ gem "rails", '~> 6.1'
 gem "ranked-model", "~> 0.4"
 gem 'react-rails', "~> 2.6"
 gem "recaptcha", "~> 5.6"
-gem "redcarpet", "~> 3.5"
-gem "refile", github: "refile/refile", require: "refile/rails"
+gem "redcarpet", "~> 3.6"
+# Use a forked version of refile because main repository is not actively
+# maintained anymore and is not compatible with ruby 3.x
+gem "refile", git: "https://github.com/catima/refile", tag: "0.6.9", require: "refile/rails"
 gem "refile-mini_magick", github: "refile/refile-mini_magick"
 gem 'sassc-rails', "~> 2.1"
 gem "secure_headers", "~> 6.3"
@@ -74,7 +76,7 @@ group :production, :staging, :development do
 end
 
 group :development, :test do
-  gem "simplecov", "~> 0.20", :require => false
+  gem "simplecov", "~> 0.22", :require => false
   gem "byebug", "~> 11.1.3"
   gem "selenium-webdriver", "~> 4.7.1"
 end
@@ -84,7 +86,7 @@ group :development do
   gem "awesome_print", "~> 1.8"
   gem "bcrypt_pbkdf", "~> 1.0", :require => false
   gem "better_errors", "~> 2.9"
-  gem "binding_of_caller", "~> 0.8"
+  gem "binding_of_caller", "~> 1.0"
   gem "brakeman", "~> 4.10", :require => false
   gem "faker", "~> 2.15", :require => false
   gem "letter_opener", "~> 1.7"
@@ -98,8 +100,6 @@ group :development do
   gem "sshkit", "~> 1.21", :require => false
   gem "terminal-notifier", "~> 2.0", :require => false
   gem "terminal-notifier-guard", "~> 1.7", :require => false
-  gem "debase", "~> 0.2.4"
-  gem "ruby-debug-ide", "~> 0.7.3"
   platforms :mswin, :mingw, :x64_mingw do
     gem "tzinfo-data"
   end

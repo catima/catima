@@ -1,10 +1,10 @@
-FROM ruby:2.7.5-bullseye AS base
+FROM ruby:3.2.2-bullseye AS base
 
 ENV DOCKER_RUNNING=true
 ENV PSQL_CLIENT_VERSION=15
 ENV NODE_VERSION=18
 ENV RUBYGEMS_VERSION=3.4.5
-ENV BUNDLER_VERSION=2.1.4
+ENV BUNDLER_VERSION=2.4.5
 
 # Update repositories
 RUN apt-get update

@@ -7,6 +7,15 @@ GIT
       rails (>= 4.2.0)
 
 GIT
+  remote: https://github.com/catima/refile
+  revision: 798ee0f2bdf007b4934c34c8c47db01513bdfabc
+  tag: 0.6.9
+  specs:
+    refile (0.6.9)
+      mime-types
+      sinatra (>= 2.0.0, <= 4.0.0)
+
+GIT
   remote: https://github.com/refile/refile-mini_magick.git
   revision: 5c7c30d57a94c4104d84eb4eb9e74ca757c1a773
   specs:
@@ -15,17 +24,14 @@ GIT
       mini_magick (~> 4.0)
       refile (~> 0.6)
 
-GIT
-  remote: https://github.com/refile/refile.git
-  revision: c4ac577c6fdad92bc079a62a0e82888319daedc8
+GEM
+  remote: https://rails-assets.org/
   specs:
-    refile (0.7.0)
-      mime-types
-      sinatra (>= 2.0.0, <= 3.0.0)
+    rails-assets-autosize (4.0.2)
+    rails-assets-mousetrap (1.6.2)
 
 GEM
   remote: https://rubygems.org/
-  remote: https://rails-assets.org/
   specs:
     actioncable (6.1.7.6)
       actionpack (= 6.1.7.6)
@@ -117,7 +123,7 @@ GEM
       coderay (>= 1.0.0)
       erubi (>= 1.0.0)
       rack (>= 0.9.0)
-    binding_of_caller (0.8.0)
+    binding_of_caller (1.0.0)
       debug_inspector (>= 0.0.1)
     bootstrap (4.6.1)
       autoprefixer-rails (>= 9.1.0)
@@ -159,9 +165,6 @@ GEM
       rexml
     crass (1.0.6)
     date (3.3.3)
-    debase (0.2.4.1)
-      debase-ruby_core_source (>= 0.10.2)
-    debase-ruby_core_source (0.10.18)
     debug_inspector (1.1.0)
     device_detector (1.0.7)
     devise (4.8.1)
@@ -288,9 +291,9 @@ GEM
       railties (>= 6)
     matrix (0.4.2)
     method_source (1.0.0)
-    mime-types (3.4.1)
+    mime-types (3.5.1)
       mime-types-data (~> 3.2015)
-    mime-types-data (3.2022.0105)
+    mime-types-data (3.2023.0808)
     mini_magick (4.11.0)
     mini_mime (1.1.5)
     mini_portile2 (2.8.4)
@@ -395,8 +398,6 @@ GEM
       bundler (>= 1.15.0)
       railties (= 6.1.7.6)
       sprockets-rails (>= 2.0.0)
-    rails-assets-autosize (4.0.2)
-    rails-assets-mousetrap (1.6.2)
     rails-dom-testing (2.2.0)
       activesupport (>= 5.0.0)
       minitest
@@ -428,7 +429,7 @@ GEM
       tilt
     recaptcha (5.10.0)
       json
-    redcarpet (3.5.1)
+    redcarpet (3.6.0)
     redis (4.2.5)
     redis-client (0.17.0)
       connection_pool
@@ -484,8 +485,6 @@ GEM
       activesupport (>= 4.2.0)
       rack (>= 1.1)
       rubocop (>= 1.7.0, < 2.0)
-    ruby-debug-ide (0.7.3)
-      rake (>= 0.8.1)
     ruby-progressbar (1.11.0)
     ruby-vips (2.1.4)
       ffi (~> 1.12)
@@ -521,7 +520,7 @@ GEM
       connection_pool (>= 2.3.0)
       rack (>= 2.2.4)
       redis-client (>= 0.14.0)
-    simplecov (0.21.2)
+    simplecov (0.22.0)
       docile (~> 1.1)
       simplecov-html (~> 0.11)
       simplecov_json_formatter (~> 0.1)
@@ -593,7 +592,7 @@ DEPENDENCIES
   bcrypt (~> 3.1)
   bcrypt_pbkdf (~> 1.0)
   better_errors (~> 2.9)
-  binding_of_caller (~> 0.8)
+  binding_of_caller (~> 1.0)
   bootstrap (~> 4.5)
   bootstrap_form (~> 4.3)
   brakeman (~> 4.10)
@@ -604,7 +603,6 @@ DEPENDENCIES
   cocoon (~> 1.2)
   coffee-rails (~> 5.0)
   connection_pool (~> 2.2)
-  debase (~> 0.2.4)
   device_detector (~> 1.0.7)
   devise (~> 4.7)
   devise-jwt (~> 0.9.0)
@@ -652,14 +650,13 @@ DEPENDENCIES
   rb-fsevent (~> 0.10)
   react-rails (~> 2.6)
   recaptcha (~> 5.6)
-  redcarpet (~> 3.5)
+  redcarpet (~> 3.6)
   redis (~> 4.2.5)
   refile!
   refile-mini_magick!
   rspec-rails (~> 5.1.2)
   rswag (~> 2.10.1)
   rubocop-rails (~> 2.9)
-  ruby-debug-ide (~> 0.7.3)
   ruby-progressbar (~> 1.10)
   rubyzip (~> 2.3)
   sassc-rails (~> 2.1)
@@ -670,7 +667,7 @@ DEPENDENCIES
   shoulda-context (~> 2.0)
   shoulda-matchers (~> 5.1)
   sidekiq (~> 7.1)
-  simplecov (~> 0.20)
+  simplecov (~> 0.22)
   sinatra (~> 2.2)
   spring (~> 2.1)
   sprockets (~> 4.0)
@@ -686,4 +683,4 @@ DEPENDENCIES
   zaru (~> 0.3)
 
 BUNDLED WITH
-   2.1.4
+   2.4.5
