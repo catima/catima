@@ -34,16 +34,21 @@ class Field::CompoundPresenter < FieldPresenter
   end
 
   def render_template(locale)
-    tpl = JSON.parse(field.template)
+    # Parse the template JSON and get the template for the specified locale
+    local_template = JSON.parse(field.template).fetch(locale.to_s, '')
 
-    local_template = tpl[locale.to_s] || ''
-    displayable_fields = @item.fields.where(slug: local_template.gsub('&nbsp', ' ').to_enum(:scan, /(\{\{.*?\}\})/i).map { |m, _| m.gsub('{', '').gsub('}', '') })
-    displayable_fields = displayable_fields.select { |fld| fld.displayable_to_user?(@user) } if @user
+    # Select displayable fields based on conditions and user permissions
+    displayable_fields = field.item_type.fields.select do |fld|
+      fld.human_readable? && (fld.displayable_to_user?(@user) if @user)
+    end
+
+    # Replace template placeholders with field values using presenters
     displayable_fields.each do |field|
       presenter = "#{field.class.name}Presenter".constantize.new(@view, @item, field, { :style => :compact }, @user)
       local_template = local_template.gsub("{{#{field.slug}}}", presenter.value || '')
     end
 
+    # Remove remaining placeholders and HTML tags, then make the result HTML safe
     strip_p(local_template.gsub(/(\{\{.*?\}\})/i, '')).html_safe
   end
 

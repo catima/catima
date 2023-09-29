@@ -13,8 +13,9 @@ class ItemViewPresenter
   end
 
   def render
-    tpl = JSON.parse(@item_view.template)
-    local_template = tpl[@locale.to_s] || ''
+    # Parse the template JSON and get the template for the specified locale
+    local_template = JSON.parse(@item_view.template).fetch(@locale.to_s, '')
+
     # Filter away http and https before item link
     local_template = local_template.sub('http://{{_itemLink}}', '{{_itemLink}}')
     local_template = local_template.sub('https://{{_itemLink}}', '{{_itemLink}}')
