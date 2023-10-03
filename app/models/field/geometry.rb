@@ -43,8 +43,8 @@ class Field::Geometry < ::Field
 
   validates_numericality_of :zoom,
                             :only_integer => true,
-                            :greater_than => 0,
-                            :less_than_or_equal_to => 15,
+                            :greater_than_or_equal_to => Field::Geometry::ZOOM_LEVEL['distant'],
+                            :less_than_or_equal_to => Field::Geometry::ZOOM_LEVEL['close'],
                             :allow_blank => false
 
   def human_readable?
