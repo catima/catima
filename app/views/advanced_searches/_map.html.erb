@@ -2,9 +2,7 @@
       {
         features: results.items_as_geojson.to_json,
         layers: @advanced_search_config.geo_layers,
-        noResultsMessage: t('advanced_searches.new.no_map_results'),
         mapHeight: 600,
-        maxBBZoom: 13,
         catalog: @catalog.slug,
         locale: I18n.locale
       },

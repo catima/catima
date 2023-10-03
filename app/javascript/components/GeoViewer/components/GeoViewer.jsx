@@ -4,6 +4,8 @@ import React, {useState, useEffect} from 'react';
 import axios from 'axios';
 import { MapContainer, TileLayer, LayersControl, GeoJSON } from 'react-leaflet';
 import MarkerClusterGroup from 'react-leaflet-markercluster';
+import Translations from "../../Translations/components/Translations";
+import BoundingBox from "../modules/boundingBox";
 
 const subs = ['a', 'b', 'c'];
 const { BaseLayer } = LayersControl;
@@ -11,12 +13,11 @@ const { BaseLayer } = LayersControl;
 const GeoViewer = (props) => {
   const {
     layers,
+    zoomLevel,
     features,
     catalog,
     locale,
-    mapHeight,
-    maxBBZoom,
-    noResultsMessage
+    mapHeight
   } = props
 
   const computedLayers = layers ? layers : []
@@ -30,21 +31,6 @@ const GeoViewer = (props) => {
     return el != null;
   });
 
-  const translations = {
-    "loading": {
-      fr: "Chargement...",
-      en: "Loading...",
-      de: "Laden...",
-      it: "Carico..."
-    },
-    "error": {
-      fr: "Erreur. Impossible de charger l'objet.",
-      en: "Error. Unable to load item data.",
-      de: "Fehler. Kann Element nicht laden.",
-      it: "Errore. Impossibile caricare l'oggetto."
-    }
-  };
-
   const plainBlueMarker = L.icon({
     iconUrl: '/icons/plain-blue-marker.png',
     iconSize: [25, 41],
@@ -54,10 +40,9 @@ const GeoViewer = (props) => {
 
   const [mapInitialized, setMapInitialized] = useState(false)
   const [computedMapHeight, setComputedMapHeight] = useState(mapHeight ? mapHeight : 300)
-  const [computedMapZoom, setComputedMapZoom] = useState( maxBBZoom ? maxBBZoom : 2)
   const [computedMapMinZoom, setComputedMapMinZoom] = useState( 1)
   const [computedMapMaxZoom, setComputedMapMaxZoom] = useState( 18)
-  const [computedMaxBBZoom, setComputedMaxBBZoom] = useState( 10)
+  const [computedMaxBBZoom, setComputedMaxBBZoom] = useState( zoomLevel ? zoomLevel : 10)
   const [map, setMap] = useState()
   const [mapElement, setMapElement] = useState()
 
@@ -80,7 +65,9 @@ const GeoViewer = (props) => {
 
   function mapBecomesVisible(){
     if (!mapElement || mapInitialized) return;
+
     const mapHideElement = isMapHidden();
+
     if (mapHideElement == null){
       // Map is visible. Fix the map viewport.
       setTimeout(resetMapView, 500);
@@ -99,15 +86,18 @@ const GeoViewer = (props) => {
    */
   function isMapHidden(){
     const mapDiv = mapElement._container;
-    if (mapDiv && getComputedStyle(mapDiv).display != 'none') {
+
+    if (mapDiv && getComputedStyle(mapDiv).display !== 'none') {
       return _isAnyParentHidden(mapDiv);
     }
+
     return mapDiv;
   }
 
   function _isAnyParentHidden(el){
-    if (el.tagName == 'BODY') return null;
-    if (getComputedStyle(el.parentElement).display == 'none') return el.parentElement;
+    if (el.tagName === 'BODY') return null;
+    if (getComputedStyle(el.parentElement).display === 'none') return el.parentElement;
+
     return _isAnyParentHidden(el.parentElement);
   }
 
@@ -125,46 +115,12 @@ const GeoViewer = (props) => {
 
   function center(){
     const minmax = bbox();
+
     return [ (minmax[0] + minmax[1]) / 2, (minmax[2] + minmax[3]) / 2 ];
   }
 
   function bbox(){
-    let coords = [];
-    computedFeatures.map(function(feat, i){
-      if(feat.geometry) {
-        coords.push(feat.geometry.coordinates);
-      } else {
-        feat.map(function(f, j) {
-          if (typeof f !== "undefined" && f !== null) {
-            coords.push(f.geometry.coordinates);
-          }
-        });
-      }
-    });
-
-    const minmax = _minmax(coords);
-    // Check if there are non valid numbers in the minmax. If so, we return a default bbox
-    if (minmax.map((a) => isNaN(a)).reduce((a, b) => a || b, false)) return [-60, 60, -120, 120];
-    return minmax;
-  }
-
-  function _minmax(coords){
-    if (typeof(coords) !== 'undefined' && typeof(coords[0]) === 'number') {
-      return [coords[0], coords[0], coords[1], coords[1]];
-    }
-    return _minmaxArray(coords);
-  }
-
-  function _minmaxArray(coords){
-    let xmin = null, xmax = null, ymin = null, ymax = null;
-    for (let i in coords){
-      let xyminmax = _minmax(coords[i]);
-      if (xmin == null || xyminmax[0] < xmin) xmin = xyminmax[0];
-      if (xmax == null || xyminmax[1] > xmax) xmax = xyminmax[1];
-      if (ymin == null || xyminmax[2] < ymin) ymin = xyminmax[2];
-      if (ymax == null || xyminmax[3] > ymax) ymax = xyminmax[3];
-    }
-    return [xmin, xmax, ymin, ymax];
+    return BoundingBox.bbox(computedFeatures);
   }
 
   function _pointToLayer(feature, latlng){
@@ -177,7 +133,7 @@ const GeoViewer = (props) => {
         click: (event) => {
           let marker = event.target;
           if (marker._popup == null) {
-            marker.bindPopup(translations.loading[locale]).openPopup();
+            marker.bindPopup(Translations.messages['containers.map.loading']).openPopup();
             loadPopupContent(marker, feature);
           }
         }
@@ -198,7 +154,7 @@ const GeoViewer = (props) => {
       })
       .catch(error => {
         marker._popup.setContent(
-          translations.error[locale]
+          Translations.messages['containers.map.loading_error']
         );
         console.log(error.message);
       });
@@ -265,11 +221,11 @@ const GeoViewer = (props) => {
 
   return (
     <div className="geoViewer" style={{height: computedMapHeight}}>
-      <MapContainer center={ center() } zoom={ computedMapZoom } zoomControl={ true } minZoom={ computedMapMinZoom } maxZoom={ computedMapMaxZoom }
+      <MapContainer center={ center() } zoom={ 10 } zoomControl={ true } minZoom={ computedMapMinZoom } maxZoom={ computedMapMaxZoom }
                     whenCreated={ mapInstance => { setMapElement(mapInstance) } }>
         { (computedFeatures.length === 0) &&
         <div className="messageBox">
-          <div className="message"><i className="fa fa-info-circle"></i> { noResultsMessage }</div>
+          <div className="message"><i className="fa fa-info-circle"></i> { Translations.messages['advanced_searches.new.no_map_results'] }</div>
         </div>
         }
         { renderLayer() }
@@ -284,6 +240,7 @@ const GeoViewer = (props) => {
 GeoViewer.propTypes = {
   features: PropTypes.string.isRequired,
   layers: PropTypes.array,
+  zoomLevel: PropTypes.number,
   mapHeight: PropTypes.number,
   catalog: PropTypes.string.isRequired,
   locale: PropTypes.string.isRequired

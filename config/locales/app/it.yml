@@ -380,6 +380,8 @@ it:
       invalid_captcha: Per favore, verifica di essere un umano
     map:
       view_item: Consultare l'oggetto
+      loading: Carico...
+      loading_error: Errore. Impossibile caricare l'oggetto.
     item_list:
       more: Più
       open_all: Aprire tutto
@@ -476,11 +478,16 @@ it:
     fields:
       geometry_option_inputs:
         bounds: Estensione spaziale predefinita
-        bounds_help: Se modificata, la mappa utilizzerà l'area selezionata come intervallo spaziale predefinito per la modifica del record.
+        bounds_help: If modified, the map will use the selected area as the default spacial extent when no location is set in edition mode.
         layers: Additional layers
         layers_help: You can add additional layers to your map (default is the standard tile layer from OpenStreetMap). If layers are added, the first one will be the default layer for your map.
         layers_component_no_options: No more layers to add
         layers_component_placeholder: Add layers
+        zoom_level: Default zoom level
+        zoom_distant: "Distant (level 5)"
+        zoom_medium: "Medium (level 10)"
+        zoom_close: "Close (level 15)"
+        zoom_help: "You can choose to initialize the map with a default zoom level. The higher the number, the more zoomed to the specified location(s) the map will be."
       common_form_fields:
         restrict_field_to_staff: Limitare il campo al personale del catalogo
         include_in_list_view: "Include this field in edition list view (Data)"

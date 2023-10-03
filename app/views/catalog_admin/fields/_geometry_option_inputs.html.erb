@@ -17,6 +17,25 @@
 <% end %>
 
 <%= f.form_group(
+  :zoom,
+  label: { text: t(".zoom_level") },
+) do %>
+  <%=
+    f.collection_select(
+      :zoom,
+      Field::Geometry::ZOOM_LEVEL,
+      ->(zoom_label) { zoom_label[1] },
+      ->(zoom_level) { t(".zoom_#{zoom_level[0]}") },
+      {
+        :hide_label => true,
+        :selected => f.object.zoom_level,
+        :help => t(".zoom_help")
+      }
+    )
+  %>
+<% end %>
+
+<%= f.form_group(
   :bounds,
   label: { text: t(".bounds") },
   :help => t(".bounds_help")

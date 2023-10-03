@@ -501,6 +501,8 @@ fr:
       invalid_captcha: Veuillez vérifiez que vous êtes un humain
     map:
       view_item: Consulter la fiche
+      loading: Chargement...
+      loading_error: Erreur. Impossible de charger l'objet.
     item_list:
       more: Plus
       open_all: Ouvrir tout
@@ -762,11 +764,16 @@ fr:
         multiple_required_choice: "Plusieurs valeurs – au moins une"
       geometry_option_inputs:
         bounds: Étendue spatiale par défaut
-        bounds_help: Si modifiée, la carte utilisera la zone sélectionnée comme étendue spatiale par défaut en mode édition.
+        bounds_help: Si modifiée, la carte utilisera la zone sélectionnée comme étendue spatiale par défaut lorsqu'aucun emplacement n'est défini en mode édition.
         layers: Calques supplémentaires
         layers_help: Vous pouvez ajouter des calques supplémentaires à votre carte (par défaut, la couche standard OpenStreetMap est utilisée). Si des calques sont ajoutées, le premier sera le claque par défaut de votre carte.
         layers_component_no_options: Plus de calques à ajouter
         layers_component_placeholder: Ajouter des calques
+        zoom_level: Niveau de zoom initial
+        zoom_distant: "Lointain (niveau 5)"
+        zoom_medium: "Moyen (niveau 10)"
+        zoom_close: "Proche (niveau 15)"
+        zoom_help: "Vous pouvez choisir d'initialiser la carte avec un niveau de zoom par défaut. Plus le chiffre est élevé, plus la carte sera zoomée sur le(s) lieu(x) spécifié(s)."
       decimal_option_inputs:
         min_value: "Valeur minimale (optionnel)"
         max_value: "Valeur maximale (optionnel)"

@@ -33,7 +33,19 @@
 #
 
 class Field::Geometry < ::Field
-  store_accessor :options, :bounds, :layers
+  ZOOM_LEVEL = {
+    "distant" => ENV.fetch('ZOOM_LEVEL_DISTANT', 5),
+    "medium" => ENV.fetch('ZOOM_LEVEL_MEDIUM', 10),
+    "close" => ENV.fetch('ZOOM_LEVEL_CLOSE', 15)
+  }.freeze
+
+  store_accessor :options, :bounds, :layers, :zoom
+
+  validates_numericality_of :zoom,
+                            :only_integer => true,
+                            :greater_than => 0,
+                            :less_than_or_equal_to => 15,
+                            :allow_blank => false
 
   def human_readable?
     false
@@ -47,12 +59,13 @@ class Field::Geometry < ::Field
     {
       "bounds" => default_bounds,
       "layers" => geo_layers,
+      "zoom" => zoom_level,
       "required" => required?
     }
   end
 
   def custom_field_permitted_attributes
-    %i(bounds layers)
+    %i(bounds layers zoom)
   end
 
   def default_bounds(xmin: -60, xmax: 60, ymin: -45, ymax: 65)
@@ -62,6 +75,10 @@ class Field::Geometry < ::Field
 
   def geo_layers
     layers.present? ? JSON.parse(layers) : []
+  end
+
+  def zoom_level
+    zoom.present? ? JSON.parse(zoom) : Field::Geometry::ZOOM_LEVEL['medium']
   end
 
   def csv_value(_item, _user=nil)

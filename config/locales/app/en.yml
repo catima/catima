@@ -504,6 +504,8 @@ en:
       invalid_captcha: Please, verify you are a human
     map:
       view_item: View item
+      loading: Loading...
+      loading_error: Error. Unable to load item data.
     item_list:
       more: More
       open_all: Open all
@@ -763,11 +765,16 @@ en:
         multiple_required_choice: "Multiple values – at least one"
       geometry_option_inputs:
         bounds: Default spatial extent
-        bounds_help: If modified, the map will use the selected area as the default spacial extent in data mode.
+        bounds_help: If modified, the map will use the selected area as the default spacial extent when no location is set in edition mode.
         layers: Additional layers
         layers_help: You can add additional layers to your map (default is the standard tile layer from OpenStreetMap). If layers are added, the first one will be the default layer for your map.
         layers_component_no_options: No more layers to add
         layers_component_placeholder: Add layers
+        zoom_level: Initial zoom level
+        zoom_distant: "Distant (level 5)"
+        zoom_medium: "Medium (level 10)"
+        zoom_close: "Close (level 15)"
+        zoom_help: "You can choose to initialize the map with a default zoom level. The higher the number, the more zoomed to the specified location(s) the map will be."
       decimal_option_inputs:
         min_value: "Minimum value (optional)"
         max_value: "Maximum value (optional)"

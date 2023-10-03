@@ -3,7 +3,8 @@ import PropTypes from 'prop-types';
 import React, {useState, useEffect, useRef} from 'react';
 import L from 'leaflet';
 import {v4 as uuidv4} from 'uuid';
-import Validation from "../../GeoEditor/module/validation";
+import Validation from "../../GeoEditor/modules/validation";
+import BoundingBox from "../../GeoViewer/modules/boundingBox";
 
 const subs = ['a', 'b', 'c'];
 
@@ -12,6 +13,7 @@ const GeoEditor = (props) => {
     input,
     layers: layersProps,
     bounds: boundsProps,
+    zoom: zoomProps,
     required: requiredProps
   } = props
 
@@ -19,6 +21,7 @@ const GeoEditor = (props) => {
 
   const [bounds, setBounds] = useState()
   const [layers, setLayers] = useState()
+  const [zoomLevel, setZoomLevel] = useState()
   const [fc, setFc] = useState()
   const [selectedMarker, setSelectedMarker] = useState(null)
   const [markers, setMarkers] = useState([])
@@ -45,7 +48,8 @@ const GeoEditor = (props) => {
   useEffect(() => {
     setBounds(boundsProps || {xmin: -60, xmax: 60, ymin: -45, ymax: 60})
     setLayers(layersProps ? layersProps : [])
-  }, [layersProps, boundsProps])
+    setZoomLevel(zoomProps ? zoomProps : 10)
+  }, [layersProps, boundsProps, zoomProps])
 
   useEffect(() => {
     const _mapId = 'map_' + editorId;
@@ -58,7 +62,9 @@ const GeoEditor = (props) => {
     if (input) {
       let o = $(input).val()
       if (o) {
-        setFc(JSON.parse((o == '' || o == null) ? '{"type": "FeatureCollection", "features": []}' : o))
+        setFc(
+          JSON.parse((o === '' || o == null) ? '{"type": "FeatureCollection", "features": []}' : o)
+        )
       }
     }
   }, [input])
@@ -68,7 +74,7 @@ const GeoEditor = (props) => {
       setMap(L.map(mapId, {
         minZoom: state.mapMinZoom,
         maxZoom: state.mapMaxZoom
-      }).setView([47, 7], 7))
+      }).setView(center(), 10))
     }
   }, [mapId])
 
@@ -83,7 +89,13 @@ const GeoEditor = (props) => {
       // Add the markers for existing features
       _addMarkersFromFeatureCollection();
       // Display all markers
-      map.fitBounds(_bbox());
+      const bboxVar = bbox();
+      const w = bboxVar[1] - bboxVar[0], h = bboxVar[3] - bboxVar[2];
+      map.fitBounds([
+          [bboxVar[2] - 0.2*h, bboxVar[0] - 0.2*w],
+          [bboxVar[3] + 0.2*h, bboxVar[1] + 0.2*w]
+        ], { maxZoom: fc ? zoomLevel : null }
+      );
     }
   }, [map])
 
@@ -114,31 +126,25 @@ const GeoEditor = (props) => {
     return fc?.features || [];
   }
 
-  function _bbox() {
+  function center(){
+    const minmax = bbox();
+
+    return [ (minmax[0] + minmax[1]) / 2, (minmax[2] + minmax[3]) / 2 ];
+  }
+
+  function bbox() {
     const features = _features();
-    if (features.length == 0) return [[bounds.ymin, bounds.xmin], [bounds.ymax, bounds.xmax]];
-    let bbox = {ymin: 90, xmin: 180, ymax: -90, xmax: -180};
-    for (let i = 0; i < features.length; i++) {
-      let c = features[i].geometry.coordinates;
-      if (c[0] < bbox.xmin) bbox.xmin = c[0];
-      if (c[1] < bbox.ymin) bbox.ymin = c[1];
-      if (c[0] > bbox.xmax) bbox.xmax = c[0];
-      if (c[1] > bbox.ymax) bbox.ymax = c[1];
-    }
-    let xext = (bbox.xmax - bbox.xmin) / 2;
-    let yext = (bbox.ymax - bbox.ymin) / 2;
-    if (xext < 0.0001) xext = 0.3;
-    if (yext < 0.0001) yext = 0.3;
-    bbox.xmin -= xext;
-    bbox.xmax += xext;
-    bbox.ymin -= yext;
-    bbox.ymax += xext;
-    return [[bbox.ymin, bbox.xmin], [bbox.ymax, bbox.xmax]];
+
+    // Check if there are coordinates available, if not we return the spatial extent defined for the field
+    if (features.length === 0) return [bounds.xmin, bounds.xmax, bounds.ymin, bounds.ymax];
+
+    return BoundingBox.bbox(features);
   }
 
   function _writeFeatures(m = false) {
     let newFeatures = [];
     let marks = m ? m : markers
+
     for (let i = 0; i < marks.length; i++) {
       let pos = marks[i].getLatLng();
       newFeatures.push({
@@ -150,6 +156,7 @@ const GeoEditor = (props) => {
         properties: {}
       })
     }
+
     setFc({...fc, features: newFeatures})
     _save({...fc, features: newFeatures});
   }
@@ -179,7 +186,7 @@ const GeoEditor = (props) => {
     setMarkers(ms);
   }
 
-  // Builds the create marker control
+  // Builds the marker control
   function _buildMarkerControl() {
     L.Control.CreateMarkerControl = L.Control.extend({
       onAdd: function (m) {
@@ -317,7 +324,7 @@ const GeoEditor = (props) => {
   }
 
   // Returns the position of the new marker to create.
-  // Currently this is a random position within the central part of the current view.
+  // Currently, this is a random position within the central part of the current view.
   // There is no overlay check implemented as it can be computationally quite expensive.
   function _newMarkerPostion(map) {
     let bbox = map.getBounds();
@@ -360,7 +367,8 @@ const GeoEditor = (props) => {
 GeoEditor.propTypes = {
   input: PropTypes.string.isRequired,
   bounds: PropTypes.object,
-  layers: PropTypes.array
+  layers: PropTypes.array,
+  zoom: PropTypes.number.isRequired,
 };
 
 export default GeoEditor;

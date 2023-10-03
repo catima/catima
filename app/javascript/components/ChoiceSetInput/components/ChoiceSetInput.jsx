@@ -4,7 +4,7 @@ import React, {useState, useEffect} from 'react';
 import Translations from '../../Translations/components/Translations';
 import AsyncPaginate from 'react-select-async-paginate';
 import axios from "axios";
-import Validation from "../module/validation"
+import Validation from "../modules/validation"
 
 const ChoiceSetInput = (props) => {
     const {
