@@ -66,10 +66,10 @@ const GeoBounds = (props) => {
   function drawBounds() {
     let boundsRect = L.rectangle(bounds, {weight: 2, draggable: true}).addTo(map);
     boundsRect.enableEdit();
-    boundsEvent(boundsRect);
+    boundsEvents(boundsRect);
   }
 
-  function boundsEvent(boundsRect) {
+  function boundsEvents(boundsRect) {
     // Event fired when the spacial extent polygon is released after being dragged.
     map.on('editable:dragend', function (_) {
       saveBounds(boundsRect.getBounds());
