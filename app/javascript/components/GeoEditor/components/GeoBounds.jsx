@@ -50,6 +50,7 @@ const GeoBounds = (props) => {
   function bbox() {
     let field_bounds = boundsProps;
     let b = [[], []];
+
     if (field_bounds.xmin) b[0][1] = field_bounds.xmin;
     if (field_bounds.ymin) b[0][0] = field_bounds.ymin;
     if (field_bounds.xmax) b[1][1] = field_bounds.xmax;
@@ -69,14 +70,24 @@ const GeoBounds = (props) => {
   }
 
   function boundsEvent(boundsRect) {
-    map.on('editable:editing', function (_) {
-      let bnds = boundsRect.getBounds();
-      let boundsValue = {
-        xmin: bnds.getWest(), xmax: bnds.getEast(),
-        ymin: bnds.getSouth(), ymax: bnds.getNorth()
-      };
-      document.getElementById('field_bounds').value = JSON.stringify(boundsValue);
+    // Event fired when the spacial extent polygon is released after being dragged.
+    map.on('editable:dragend', function (_) {
+      saveBounds(boundsRect.getBounds());
     });
+
+    // Event fired when a vertex of the spacial extent polygon is released after being dragged.
+    map.on('editable:vertex:dragend', function (_) {
+      saveBounds(boundsRect.getBounds());
+    });
+  }
+
+  function saveBounds(bounds) {
+    let boundsValue = {
+      xmin: bounds.getWest(), xmax: bounds.getEast(),
+      ymin: bounds.getSouth(), ymax: bounds.getNorth()
+    };
+
+    document.getElementById('field_bounds').value = JSON.stringify(boundsValue);
   }
 
   useEffect(() => {
@@ -95,7 +106,6 @@ const GeoBounds = (props) => {
     <div id={mapId} style={{height: state.mapHeight}}/>
   );
 };
-
 
 GeoBounds.propTypes = {
   bounds: PropTypes.object
