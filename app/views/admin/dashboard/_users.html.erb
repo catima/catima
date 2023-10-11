@@ -3,8 +3,9 @@
     <tr>
       <th>Email</th>
       <th>Admin?</th>
-      <th>Invited</th>
+      <th>Created at</th>
       <th>Last signed in</th>
+      <th>Invited by</th>
       <th></th>
     </tr>
   </thead>
@@ -15,6 +16,7 @@
         <td><%= admin_catalogs(user) %></td>
         <td><%= l(user.created_at, :format => :long) %></td>
         <td><%= last_signed_in(user) %></td>
+        <td><%= invited_by(user) %></td>
         <td align="right">
           <%= render "shared/actions/user", :model => user %>
         </td>

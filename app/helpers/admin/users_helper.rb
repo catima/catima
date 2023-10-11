@@ -12,6 +12,17 @@ module Admin::UsersHelper
     sentence_case(distance_of_time_in_words_to_now(at).to_s) unless at.nil?
   end
 
+  def invited_by(user)
+    return "-" if user.invited_by.nil?
+
+    return user.invited_by.email if user.invited_by.deleted_at
+
+    link_to(
+      user.invited_by.email,
+      edit_admin_user_path(user.invited_by)
+    ).html_safe
+  end
+
   def render_admin_users_nested_permissions(form)
     render(
       :partial => "admin/users/nested_permissions",
