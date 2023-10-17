@@ -25,7 +25,7 @@ const GeoEditor = (props) => {
   const [layers, setLayers] = useState()
   const [editing, setEditing] = useState(false)
   const [zoomLevel, setZoomLevel] = useState()
-  const [fc, setFc] = useState() // Keep ?
+  const [fc, setFc] = useState() // TODO: to be removed
   const [selectedMarker, setSelectedMarker] = useState(null)
   const [map, setMap] = useState()
   const [drawnItems, setDrawnItems] = useState(new L.FeatureGroup())
@@ -72,6 +72,8 @@ const GeoEditor = (props) => {
     if (input) {
       let data = $(input).val()
 
+      console.log('loadedFeatures', data);
+
       // TODO: remove fc, setFc() & _features() to use only drawnItems layers
       // TODO: update data init to also allow polylines & polygons
 
@@ -96,7 +98,9 @@ const GeoEditor = (props) => {
             allowIntersection: false,
             drawError: {
               color: '#e10000',
-              message: Translations.messages['catalog_admin.fields.geometry_option_inputs.cannot_intersects']
+              message: Translations.messages[
+                  'catalog_admin.fields.geometry_option_inputs.cannot_intersects'
+                  ]
             },
             shapeOptions: {
               color: '#9336af'
@@ -195,19 +199,24 @@ const GeoEditor = (props) => {
   }, [map])
 
   function saveFeatures() {
-    let features = [];
+    let featureCollection = {
+      "type": "FeatureCollection",
+      "features": []
+    };
 
+    // Format the layers into a valid GeoJSON FeatureCollection
+    // object (https://datatracker.ietf.org/doc/html/rfc7946#section-3.3).
     drawnItems.getLayers().forEach((layer) => {
-      features.push(
+      featureCollection.features.push(
           formatLayer(layer)
       );
     })
 
-    console.log('saveFeatures', features);
+    console.log('saveFeatures', featureCollection);
 
     $(input).val(
       JSON.stringify(
-          features
+          featureCollection
       )
     );
 
@@ -218,6 +227,8 @@ const GeoEditor = (props) => {
     )
   }
 
+  // Format a layer into a valid GeoJSON Feature
+  // object (https://datatracker.ietf.org/doc/html/rfc7946#section-3.2).
   function formatLayer(layer) {
     if (layer instanceof L.Marker) {
       return {
@@ -230,10 +241,19 @@ const GeoEditor = (props) => {
       }
     } else if (layer instanceof L.Polygon) {
       let coords = [];
+      let start = [];
 
-      layer._latlngs[0].forEach((latlng) => {
+      layer._latlngs[0].forEach((latlng, index) => {
         coords.push([latlng.lng, latlng.lat]);
+
+        if(index === 0) {
+          start = [latlng.lng, latlng.lat];
+        }
       })
+
+      // The first and last positions are equivalent, and
+      // they must contain identical values
+      coords.push(start);
 
       return {
         type: "Feature",
@@ -253,7 +273,7 @@ const GeoEditor = (props) => {
       return {
         type: "Feature",
         geometry: {
-          type: "Polyline",
+          type: "LineString",
           coordinates: coords
         },
         properties: {}
