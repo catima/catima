@@ -5,10 +5,19 @@ import L from 'leaflet';
 import 'leaflet-draw';
 import {v4 as uuidv4} from 'uuid';
 import Validation from "../../GeoEditor/modules/validation";
-import Translations from "../../Translations/components/Translations";
 import BoundingBox from "../../GeoViewer/modules/boundingBox";
+import {
+  GeoTools,
+  PolygonOptions,
+  PolylineOptions,
+  MarkerOptions
+} from "../../GeoViewer/modules/geoTools";
 
 const subs = ['a', 'b', 'c'];
+const featureCollectionObject = {
+  "type": "FeatureCollection",
+  "features": []
+};
 
 const GeoEditor = (props) => {
   const {
@@ -25,7 +34,7 @@ const GeoEditor = (props) => {
   const [layers, setLayers] = useState()
   const [editing, setEditing] = useState(false)
   const [zoomLevel, setZoomLevel] = useState()
-  const [fc, setFc] = useState() // TODO: to be removed
+  const [featureCollection, setFeatureCollection] = useState()
   const [selectedMarker, setSelectedMarker] = useState(null)
   const [map, setMap] = useState()
   const [drawnItems, setDrawnItems] = useState(new L.FeatureGroup())
@@ -42,15 +51,6 @@ const GeoEditor = (props) => {
       requiredProps,
       input
   ))
-
-  const CustomMarker = L.Icon.extend({
-    options: {
-      popupAnchor: new L.Point(-3, -3),
-      iconAnchor: new L.Point(12, 12),
-      iconSize: new L.Point(24, 24),
-      iconUrl: '/icons/circle-marker.png'
-    }
-  });
 
   const editingRef = useRef(false)
   editingRef.current = editing
@@ -72,16 +72,11 @@ const GeoEditor = (props) => {
     if (input) {
       let data = $(input).val()
 
-      console.log('loadedFeatures', data);
-
-      // TODO: remove fc, setFc() & _features() to use only drawnItems layers
-      // TODO: update data init to also allow polylines & polygons
-
       if (data) {
-        setFc(
+        setFeatureCollection(
           JSON.parse(
-              (data === '' || data == null) ?
-                  '{"type": "FeatureCollection", "features": []}' : data
+            (data === '' || data == null) ?
+                JSON.stringify(featureCollectionObject) : data
           )
         )
       }
@@ -94,27 +89,9 @@ const GeoEditor = (props) => {
 
       const drawControl = new L.Control.Draw({
         draw: {
-          polygon: {
-            allowIntersection: false,
-            drawError: {
-              color: '#e10000',
-              message: Translations.messages[
-                  'catalog_admin.fields.geometry_option_inputs.cannot_intersects'
-                  ]
-            },
-            shapeOptions: {
-              color: '#9336af'
-            }
-          },
-          marker: {
-            icon: new CustomMarker()
-          },
-          polyline: {
-            allowIntersection: true,
-            shapeOptions: {
-              color: '#000000'
-            }
-          },
+          polygon: PolygonOptions,
+          marker: MarkerOptions,
+          polyline: PolylineOptions,
           rectangle: false,
           circle: false,
           circlemarker: false
@@ -155,13 +132,13 @@ const GeoEditor = (props) => {
         addEvents(layer);
 
         // Format & save the layers into features
-        saveFeatures();
+        saveLayers();
       });
 
       // Leaflet Draw Events - Edited
       map.on(L.Draw.Event.EDITED, function (event) {
         // Format & save the layers into features
-        saveFeatures();
+        saveLayers();
       });
 
       // Leaflet Draw Events - Edit Start
@@ -181,11 +158,11 @@ const GeoEditor = (props) => {
       // Leaflet Draw Events - Deleted
       map.on(L.Draw.Event.DELETED, function (event) {
         // Format & save the layers into features
-        saveFeatures();
+        saveLayers();
       });
 
       // Add the markers for existing features
-      _addMarkersFromFeatureCollection();
+      _addLayersFromFeatureCollection();
 
       // Fit the map to the spacial extent of the markers
       const bboxVar = bbox();
@@ -193,30 +170,27 @@ const GeoEditor = (props) => {
       map.fitBounds([
           [bboxVar[2] - 0.2*h, bboxVar[0] - 0.2*w],
           [bboxVar[3] + 0.2*h, bboxVar[1] + 0.2*w]
-        ], { maxZoom: fc ? zoomLevel : null }
+        ], { maxZoom: featureCollection ? zoomLevel : null }
       );
     }
   }, [map])
 
-  function saveFeatures() {
-    let featureCollection = {
-      "type": "FeatureCollection",
-      "features": []
-    };
+  function saveLayers() {
+    let fc = JSON.parse(
+        JSON.stringify(featureCollectionObject)
+    ); // deep copy
 
-    // Format the layers into a valid GeoJSON FeatureCollection
-    // object (https://datatracker.ietf.org/doc/html/rfc7946#section-3.3).
+    // Format the layers into a GeoJSON FeatureCollection object as described
+    // in https://datatracker.ietf.org/doc/html/rfc7946#section-3.3.
     drawnItems.getLayers().forEach((layer) => {
-      featureCollection.features.push(
-          formatLayer(layer)
+      fc.features.push(
+        GeoTools.layerToFeature(layer)
       );
-    })
-
-    console.log('saveFeatures', featureCollection);
+    });
 
     $(input).val(
       JSON.stringify(
-          featureCollection
+        fc
       )
     );
 
@@ -225,60 +199,6 @@ const GeoEditor = (props) => {
         input
       )
     )
-  }
-
-  // Format a layer into a valid GeoJSON Feature
-  // object (https://datatracker.ietf.org/doc/html/rfc7946#section-3.2).
-  function formatLayer(layer) {
-    if (layer instanceof L.Marker) {
-      return {
-        type: "Feature",
-        geometry: {
-          type: "Point",
-          coordinates: [layer._latlng.lng, layer._latlng.lat]
-        },
-        properties: {}
-      }
-    } else if (layer instanceof L.Polygon) {
-      let coords = [];
-      let start = [];
-
-      layer._latlngs[0].forEach((latlng, index) => {
-        coords.push([latlng.lng, latlng.lat]);
-
-        if(index === 0) {
-          start = [latlng.lng, latlng.lat];
-        }
-      })
-
-      // The first and last positions are equivalent, and
-      // they must contain identical values
-      coords.push(start);
-
-      return {
-        type: "Feature",
-        geometry: {
-          type: "Polygon",
-          coordinates: coords
-        },
-        properties: {}
-      }
-    } else if (layer instanceof L.Polyline) {
-      let coords = [];
-
-      layer._latlngs.forEach((latlng) => {
-        coords.push([latlng.lng, latlng.lat]);
-      })
-
-      return {
-        type: "Feature",
-        geometry: {
-          type: "LineString",
-          coordinates: coords
-        },
-        properties: {}
-      }
-    }
   }
 
   function addEvents(layer) {
@@ -312,7 +232,7 @@ const GeoEditor = (props) => {
   }
 
   function _features() {
-    return fc?.features || [];
+    return featureCollection?.features || [];
   }
 
   function center(){
@@ -330,27 +250,16 @@ const GeoEditor = (props) => {
     return BoundingBox.bbox(features);
   }
 
-  // Returns the coordinates of the feature.
-  function _coords(feat) {
-    return [feat.geometry.coordinates[1], feat.geometry.coordinates[0]];
-  }
-
-  function _addMarkersFromFeatureCollection() {
-    const feats = _features();
-
-    let ms = []
-    for (let i = 0; i < feats.length; i++) {
-      let marker = L.marker(_coords(feats[i]), {
-          icon: new CustomMarker(),
-        }
-      );
+  function _addLayersFromFeatureCollection() {
+    _features().forEach((feature) => {
+      const layer = GeoTools.featureToLayer(feature);
 
       // Add existing markers to the map
-      drawnItems.addLayer(marker);
+      drawnItems.addLayer(layer);
 
       // Add events to the existing markers
-      addEvents(marker);
-    }
+      addEvents(layer);
+    });
   }
 
   function _initLayers(m) {
