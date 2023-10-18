@@ -102,16 +102,16 @@ const GeoEditor = (props) => {
       });
 
       setMap(
-          L.map(
-            mapId,
-            {
-              minZoom: state.mapMinZoom,
-              maxZoom: state.mapMaxZoom
-            }
-          )
-              .setView(center(), 10)
-              .addLayer(drawnItems)
-              .addControl(drawControl)
+        L.map(
+          mapId,
+          {
+            minZoom: state.mapMinZoom,
+            maxZoom: state.mapMaxZoom
+          }
+        )
+        .setView(center(), 10)
+        .addLayer(drawnItems)
+        .addControl(drawControl)
       )
     }
   }, [mapId])

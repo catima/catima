@@ -1,16 +1,18 @@
 class BoundingBox {
   static bbox(features){
-    let coords = [];
-
-    features.map(function(feat, i){
-      if(feat.geometry) {
-        coords.push(feat.geometry.coordinates);
+    const coords = features.flatMap((feature) => {
+      if (feature.geometry) {
+        if (feature.geometry.type === 'Point') {
+          // Used for Point features
+          return [feature.geometry.coordinates];
+        } else {
+          // Used for LineString and Polygon features
+          return feature.geometry.coordinates;
+        }
       } else {
-        feat.map(function(f, j) {
-          if (typeof f !== "undefined" && f !== null) {
-            coords.push(f.geometry.coordinates);
-          }
-        });
+        return feature.flatMap(
+          (f) => (f && f.geometry ? f.geometry.coordinates : [])
+        );
       }
     });
 
