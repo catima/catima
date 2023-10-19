@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import React, {useState, useEffect, useRef} from 'react';
 import L from 'leaflet';
 import 'leaflet-draw';
+import drawLocales from 'leaflet-draw-locales'
 import {v4 as uuidv4} from 'uuid';
 import Validation from "../../GeoEditor/modules/validation";
 import BoundingBox from "../../GeoViewer/modules/boundingBox";
@@ -52,6 +53,8 @@ const GeoEditor = (props) => {
       input
   ))
 
+  const lang = document.querySelector('html').getAttribute('lang') || 'en';
+
   const editingRef = useRef(false)
   editingRef.current = editing
 
@@ -85,8 +88,6 @@ const GeoEditor = (props) => {
 
   useEffect(() => {
     if (mapId && !map) {
-      // TODO: add translations for interface (L.drawLocal)
-
       const drawControl = new L.Control.Draw({
         draw: {
           polygon: PolygonOptions,
@@ -100,6 +101,10 @@ const GeoEditor = (props) => {
           featureGroup: drawnItems,
         }
       });
+
+      // Automatically configure Leaflet.draw to
+      // the specified language
+      drawLocales(lang);
 
       setMap(
         L.map(

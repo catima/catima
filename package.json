@@ -31,6 +31,7 @@
     "json-beautify": "^1.1.0",
     "leaflet": "^1.7.1",
     "leaflet-draw": "^1.0.4",
+    "leaflet-draw-locales": "^1.2.3",
     "leaflet-editable": "^1.2.0",
     "leaflet.markercluster": "^1.4.1",
     "leaflet.path.drag": "^0.0.6",

@@ -3737,6 +3737,11 @@ launch-editor@^2.6.0:
     picocolors "^1.0.0"
     shell-quote "^1.7.3"
 
+leaflet-draw-locales@^1.2.3:
+  version "1.2.3"
+  resolved "https://registry.yarnpkg.com/leaflet-draw-locales/-/leaflet-draw-locales-1.2.3.tgz#b916e40986d2b191cd058fe8674b39da6d96c50e"
+  integrity sha512-YsQtm01EAPvA77HR4NH8cNSIs31m22DgeS0ZahTHMmOv8x+rQIyvOWmqew0wF1qUZpeohhhYsUosFxn/n1fxrA==
+
 leaflet-draw@^1.0.4:
   version "1.0.4"
   resolved "https://registry.yarnpkg.com/leaflet-draw/-/leaflet-draw-1.0.4.tgz#45be92f378ed253e7202fdeda1fcc71885198d46"
