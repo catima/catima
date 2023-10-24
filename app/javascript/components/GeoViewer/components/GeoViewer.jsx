@@ -37,12 +37,15 @@ const GeoViewer = (props) => {
   if(computedFeatures.features) {
     computedFeatures = computedFeatures.features
   }
-  computedFeatures = computedFeatures
-      .flat().filter(el => el != null);
+  computedFeatures = computedFeatures.flat()
+      .filter(el => el != null);
 
-  let computedMarkers = computedFeatures.filter(el => el.geometry.type === 'Point');
-  let computedPolylines = computedFeatures.filter(el => el.geometry.type === 'LineString');
-  let computedPolygons = computedFeatures.filter(el => el.geometry.type === 'Polygon');
+  let computedMarkers = computedFeatures
+      .filter(el => el.geometry.type === 'Point');
+  let computedPolylines = computedFeatures
+      .filter(el => el.geometry.type === 'LineString');
+  let computedPolygons = computedFeatures
+      .filter(el => el.geometry.type === 'Polygon');
 
   const [mapInitialized, setMapInitialized] = useState(false)
   const [computedMapHeight, setComputedMapHeight] = useState(mapHeight ? mapHeight : 300)
@@ -254,11 +257,17 @@ const GeoViewer = (props) => {
 
   return (
     <div className="geoViewer" style={{height: computedMapHeight}}>
-      <MapContainer center={ center() } zoom={ 10 } zoomControl={ true } minZoom={ computedMapMinZoom } maxZoom={ computedMapMaxZoom }
+      <MapContainer center={ center() }
+                    zoom={ 10 }
+                    zoomControl={ true }
+                    minZoom={ computedMapMinZoom }
+                    maxZoom={ computedMapMaxZoom }
                     whenCreated={ mapInstance => { setMapElement(mapInstance) } }>
         { (computedFeatures.length === 0) &&
         <div className="messageBox">
-          <div className="message"><i className="fa fa-info-circle"></i> { Translations.messages['advanced_searches.new.no_map_results'] }</div>
+          <div className="message">
+            <i className="fa fa-info-circle"></i> { Translations.messages['advanced_searches.new.no_map_results'] }
+          </div>
         </div> }
         { renderLayer() }
         <FeatureGroup pathOptions={{color: PolylineColor}}>
