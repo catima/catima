@@ -1,7 +1,8 @@
 import L from "leaflet";
 import Translations from "../../Translations/components/Translations";
+import rewind from "@turf/rewind";
 
-export const CustomMarker = L.Icon.extend({
+export const CustomMarkerEdit = L.Icon.extend({
   options: {
     popupAnchor: new L.Point(-3, -3),
     iconAnchor: new L.Point(12, 12),
@@ -9,6 +10,15 @@ export const CustomMarker = L.Icon.extend({
     iconUrl: '/icons/circle-marker.png'
   }
 });
+export const CustomMarkerView = L.Icon.extend({
+  options: {
+    popupAnchor: new L.Point(0, -40),
+    iconAnchor: new L.Point(12, 40),
+    iconSize: new L.Point(25, 41),
+    iconUrl: '/icons/plain-blue-marker.png'
+  }
+});
+
 export const PolylineColor = '#000000';
 export const PolygonColor = '#9336af';
 export const PolygonOptions = {
@@ -29,13 +39,16 @@ export const PolylineOptions = {
     color: PolylineColor
   }
 }
-export const MarkerOptions = {
-  icon: new CustomMarker()
+export const MarkerOptionsEdit = {
+  icon: new CustomMarkerEdit()
+}
+export const MarkerOptionsView = {
+  icon: new CustomMarkerView()
 }
 
 export class GeoTools {
   // Format a GeoJSON Feature object into a Leaflet layer.
-  static featureToLayer(feature){
+  static featureToLayer(feature, type = 'viewer'){
     let layer = null;
 
     if(feature.geometry.type === 'Point') {
@@ -44,7 +57,7 @@ export class GeoTools {
             feature.geometry.coordinates[1],
             feature.geometry.coordinates[0]
           ],
-          MarkerOptions
+          type === 'viewer' ? MarkerOptionsView : MarkerOptionsEdit
       );
     } else if(feature.geometry.type === 'LineString') {
       layer = L.polyline(
@@ -59,7 +72,7 @@ export class GeoTools {
       });
     } else if(feature.geometry.type === 'Polygon') {
       layer = L.polygon(
-          feature.geometry.coordinates.map(
+          feature.geometry.coordinates[0].map(
               (coord) => { return [coord[1], coord[0]] }
           ),
           {}
@@ -107,10 +120,16 @@ export class GeoTools {
         type: "Feature",
         geometry: {
           type: "Polygon",
-          coordinates: coords
+          coordinates: [
+            coords
+          ]
         },
         properties: {}
       }
+
+      // Ensure the polygon follows the right-hand rule as described in
+      // https://datatracker.ietf.org/doc/html/rfc7946#section-3.1.6.
+      feature = rewind(feature);
     } else if (layer instanceof L.Polyline) {
       let coords = [];
 

@@ -11,7 +11,7 @@ import {
   GeoTools,
   PolygonOptions,
   PolylineOptions,
-  MarkerOptions
+  MarkerOptionsEdit
 } from "../../GeoViewer/modules/geoTools";
 
 const subs = ['a', 'b', 'c'];
@@ -91,7 +91,7 @@ const GeoEditor = (props) => {
       const drawControl = new L.Control.Draw({
         draw: {
           polygon: PolygonOptions,
-          marker: MarkerOptions,
+          marker: MarkerOptionsEdit,
           polyline: PolylineOptions,
           rectangle: false,
           circle: false,
@@ -257,7 +257,7 @@ const GeoEditor = (props) => {
 
   function _addLayersFromFeatureCollection() {
     _features().forEach((feature) => {
-      const layer = GeoTools.featureToLayer(feature);
+      const layer = GeoTools.featureToLayer(feature, 'editor');
 
       // Add existing markers to the map
       drawnItems.addLayer(layer);
