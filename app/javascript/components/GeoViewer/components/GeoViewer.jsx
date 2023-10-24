@@ -22,7 +22,7 @@ const subs = ['a', 'b', 'c'];
 const { BaseLayer } = LayersControl;
 
 const GeoViewer = (props) => {
-  // TODO: fix viewer in item & advanced search
+  // TODO: fix viewer for advanced search
 
   const {
     layers,
@@ -34,28 +34,16 @@ const GeoViewer = (props) => {
   } = props
 
   const computedLayers = layers ? layers : []
-  let computedFeatures = JSON.parse(features)
-  let computedMarkers = [];
-  let computedPolylines = [];
-  let computedPolygons = [];
 
+  let computedFeatures = features ? JSON.parse(features) : [];
   if(computedFeatures.features) {
-    computedFeatures = computedFeatures.features.filter(function (el) {
-      return el != null;
-    });
-
-    computedMarkers = computedFeatures.filter(function (el) {
-      return el.geometry.type === 'Point';
-    });
-
-    computedPolylines = computedFeatures.filter(function (el) {
-      return el.geometry.type === 'LineString';
-    });
-
-    computedPolygons = computedFeatures.filter(function (el) {
-      return el.geometry.type === 'Polygon';
-    });
+    computedFeatures = computedFeatures.features
   }
+  computedFeatures = computedFeatures.filter(el => el != null);
+
+  let computedMarkers = computedFeatures.filter(el => el.geometry.type === 'Point');
+  let computedPolylines = computedFeatures.filter(el => el.geometry.type === 'LineString');
+  let computedPolygons = computedFeatures.filter(el => el.geometry.type === 'Polygon');
 
   const [mapInitialized, setMapInitialized] = useState(false)
   const [computedMapHeight, setComputedMapHeight] = useState(mapHeight ? mapHeight : 300)
