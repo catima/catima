@@ -22,8 +22,6 @@ const subs = ['a', 'b', 'c'];
 const { BaseLayer } = LayersControl;
 
 const GeoViewer = (props) => {
-  // TODO: fix viewer for advanced search
-
   const {
     layers,
     zoomLevel,
@@ -39,7 +37,8 @@ const GeoViewer = (props) => {
   if(computedFeatures.features) {
     computedFeatures = computedFeatures.features
   }
-  computedFeatures = computedFeatures.filter(el => el != null);
+  computedFeatures = computedFeatures
+      .flat().filter(el => el != null);
 
   let computedMarkers = computedFeatures.filter(el => el.geometry.type === 'Point');
   let computedPolylines = computedFeatures.filter(el => el.geometry.type === 'LineString');
