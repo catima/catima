@@ -43,7 +43,7 @@ const GeoEditor = (props) => {
     mapHeight: 300,
     mapMinZoom: 1,
     mapMaxZoom: 18,
-    selectedMarkerLatitude: ' ',
+    selectedMarkerLatitude: '',
     selectedMarkerLongitude: '',
   })
   const [mapId, setMapId] = useState()

@@ -257,12 +257,13 @@ const GeoViewer = (props) => {
 
   return (
     <div className="geoViewer" style={{height: computedMapHeight}}>
-      <MapContainer center={ center() }
-                    zoom={ 10 }
-                    zoomControl={ true }
-                    minZoom={ computedMapMinZoom }
-                    maxZoom={ computedMapMaxZoom }
-                    whenCreated={ mapInstance => { setMapElement(mapInstance) } }>
+      <MapContainer
+          center={ center() }
+          zoom={ 10 }
+          zoomControl={ true }
+          minZoom={ computedMapMinZoom }
+          maxZoom={ computedMapMaxZoom }
+          whenCreated={ mapInstance => { setMapElement(mapInstance) } }>
         { (computedFeatures.length === 0) &&
         <div className="messageBox">
           <div className="message">
