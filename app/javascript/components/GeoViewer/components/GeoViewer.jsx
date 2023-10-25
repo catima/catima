@@ -2,10 +2,21 @@ import 'es6-shim';
 import PropTypes from "prop-types";
 import React, {useState, useEffect} from 'react';
 import axios from 'axios';
-import { MapContainer, TileLayer, LayersControl, GeoJSON } from 'react-leaflet';
+import {
+  MapContainer,
+  FeatureGroup,
+  TileLayer,
+  LayersControl,
+  GeoJSON
+} from 'react-leaflet';
 import MarkerClusterGroup from 'react-leaflet-markercluster';
 import Translations from "../../Translations/components/Translations";
 import BoundingBox from "../modules/boundingBox";
+import {
+  GeoTools,
+  PolylineColor,
+  PolygonColor
+} from "../modules/geoTools";
 
 const subs = ['a', 'b', 'c'];
 const { BaseLayer } = LayersControl;
@@ -21,22 +32,20 @@ const GeoViewer = (props) => {
   } = props
 
   const computedLayers = layers ? layers : []
-  let computedFeatures = JSON.parse(features)
 
+  let computedFeatures = features ? JSON.parse(features) : [];
   if(computedFeatures.features) {
     computedFeatures = computedFeatures.features
   }
+  computedFeatures = computedFeatures.flat()
+      .filter(el => el != null);
 
-  computedFeatures = computedFeatures.filter(function (el) {
-    return el != null;
-  });
-
-  const plainBlueMarker = L.icon({
-    iconUrl: '/icons/plain-blue-marker.png',
-    iconSize: [25, 41],
-    iconAnchor:   [12, 40],
-    popupAnchor:  [0, -40]
-  });
+  let computedMarkers = computedFeatures
+      .filter(el => el.geometry.type === 'Point');
+  let computedPolylines = computedFeatures
+      .filter(el => el.geometry.type === 'LineString');
+  let computedPolygons = computedFeatures
+      .filter(el => el.geometry.type === 'Polygon');
 
   const [mapInitialized, setMapInitialized] = useState(false)
   const [computedMapHeight, setComputedMapHeight] = useState(mapHeight ? mapHeight : 300)
@@ -124,7 +133,7 @@ const GeoViewer = (props) => {
   }
 
   function _pointToLayer(feature, latlng){
-    return L.marker(latlng, { icon: plainBlueMarker });
+    return GeoTools.featureToLayer(feature);
   }
 
   const _onEachFeature = (feature, layer) => {
@@ -132,8 +141,12 @@ const GeoViewer = (props) => {
       layer.on({
         click: (event) => {
           let marker = event.target;
+
           if (marker._popup == null) {
-            marker.bindPopup(Translations.messages['containers.map.loading']).openPopup();
+            marker.bindPopup(
+                Translations.messages['containers.map.loading']
+            ).openPopup();
+
             loadPopupContent(marker, feature);
           }
         }
@@ -214,21 +227,55 @@ const GeoViewer = (props) => {
 
   function renderMarkers() {
     // Create map markers
-    return computedFeatures.map((feat, i) =>
-      <GeoJSON key={ i } data={ feat } pointToLayer={ _pointToLayer } onEachFeature={ _onEachFeature } />
+    return computedMarkers.map((feat, i) =>
+      renderFeature(feat, 'marker-' + i)
     );
+  }
+
+  function renderPolylines() {
+    // Create map polylines
+    return computedPolylines.map((feat, i) =>
+      renderFeature(feat, 'polyline-' + i)
+    );
+  }
+
+  function renderPolygons() {
+    // Create map polygons
+    return computedPolygons.map((feat, i) =>
+      renderFeature(feat, 'polygon-' + i)
+    );
+  }
+
+  function renderFeature(feature, i) {
+    return <GeoJSON
+        key={ i }
+        data={ feature }
+        pointToLayer={ _pointToLayer }
+        onEachFeature={ _onEachFeature }
+    />
   }
 
   return (
     <div className="geoViewer" style={{height: computedMapHeight}}>
-      <MapContainer center={ center() } zoom={ 10 } zoomControl={ true } minZoom={ computedMapMinZoom } maxZoom={ computedMapMaxZoom }
+      <MapContainer center={ center() }
+                    zoom={ 10 }
+                    zoomControl={ true }
+                    minZoom={ computedMapMinZoom }
+                    maxZoom={ computedMapMaxZoom }
                     whenCreated={ mapInstance => { setMapElement(mapInstance) } }>
         { (computedFeatures.length === 0) &&
         <div className="messageBox">
-          <div className="message"><i className="fa fa-info-circle"></i> { Translations.messages['advanced_searches.new.no_map_results'] }</div>
-        </div>
-        }
+          <div className="message">
+            <i className="fa fa-info-circle"></i> { Translations.messages['advanced_searches.new.no_map_results'] }
+          </div>
+        </div> }
         { renderLayer() }
+        <FeatureGroup pathOptions={{color: PolylineColor}}>
+          { renderPolylines() }
+        </FeatureGroup>
+        <FeatureGroup pathOptions={{color: PolygonColor}}>
+          { renderPolygons() }
+        </FeatureGroup>
         <MarkerClusterGroup showCoverageOnHover={ true }>
           { renderMarkers() }
         </MarkerClusterGroup>

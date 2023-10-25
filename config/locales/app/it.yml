@@ -488,6 +488,7 @@ it:
         zoom_medium: "Medium (level 10)"
         zoom_close: "Close (level 15)"
         zoom_help: "You can choose to initialize the map with a default zoom level. The higher the number, the more zoomed to the specified location(s) the map will be."
+        cannot_intersects: "Cannot add a vector that intersects with another one"
       common_form_fields:
         restrict_field_to_staff: Limitare il campo al personale del catalogo
         include_in_list_view: "Include this field in edition list view (Data)"

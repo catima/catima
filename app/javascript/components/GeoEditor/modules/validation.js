@@ -1,18 +1,33 @@
+import booleanValid from "@turf/boolean-valid";
+
 class Validation {
   static isValid(isRequired, reference){
-    if(isRequired) {
-      const value = document.querySelector(reference).value;
+    const value = document.querySelector(reference).value;
 
-      if (!value) return false;
-
-      if (JSON.parse(value).features) {
-        return JSON.parse(value).features.length;
-      }
-
-      return !!value;
+    // If the field has features, we check whether they are valid
+    if (this.hasFeatures(value) && !this.featuresValidity(value)) {
+      return false;
     }
 
-    return true;
+    // If the field is required, we check whether it has features
+    return !(isRequired && !this.hasFeatures(value));
+  }
+
+  static hasFeatures(value) {
+    if (!value) return false;
+
+    return JSON.parse(value).features && JSON.parse(value).features.length > 0;
+  }
+
+  static featuresValidity(value) {
+    const features = JSON.parse(value).features;
+    const isValid = features.every(feature => booleanValid(feature));
+
+    if (!isValid) {
+      console.log('One or more features are not valid');
+    }
+
+    return isValid;
   }
 
   static getStyle(isRequired, reference) {
