@@ -85,19 +85,25 @@ class Field::Geometry < ::Field
     return if super.blank?
 
     super["features"].map do |f|
-      "#{f['geometry']['coordinates'][1]},#{f['geometry']['coordinates'][0]}"
+      next unless f['geometry']&.key?('coordinates')
+
+      case f['geometry']['type']
+      when 'Point'
+        "[#{f['geometry']['coordinates'][1]},#{f['geometry']['coordinates'][0]}]"
+      when 'Polygon'
+        f['geometry']['coordinates'][0].map do |coord|
+          "[#{coord[1]},#{coord[0]}]"
+        end.join(", ")
+      else # LineString & everything else
+        f['geometry']['coordinates'].map do |coord|
+          "[#{coord[1]},#{coord[0]}]"
+        end.join(", ")
+      end
     end.join("; ")
   end
 
   def sql_value(_item)
-    return if super.blank?
-
-    coordinates = []
-    super["features"].map do |f|
-      coordinates << { :lat => f['geometry']['coordinates'][1], :lon => f['geometry']['coordinates'][0] }
-    end
-
-    coordinates.to_json
+    super&.dig("features")&.to_json || "[]"
   end
 
   def sql_type
