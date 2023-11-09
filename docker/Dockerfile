@@ -50,7 +50,25 @@ COPY Gemfile /var/www/catima
 COPY Gemfile.lock /var/www/catima
 RUN bundle install
 
-FROM base as dev
+FROM base as app-dev
+
+# Replace default crontab
+ADD ./docker/config/crontab /etc/crontab
+
+# Copy supervisor configuration file
+#
+# docker exec <container-id> supervisorctl status
+# docker exec <container-id> supervisorctl tail -f <service>
+# docker exec <container-id> supervisorctl restart <service>
+COPY ./docker/config/supervisord-app-dev.conf /etc/supervisor/conf.d/supervisord.conf
+
+# Add the entrypoint script used in development
+COPY ./docker/config/entrypoint-app-dev.sh /usr/local/bin/entrypoint.sh
+RUN chmod +x /usr/local/bin/entrypoint.sh
+ENTRYPOINT [ "entrypoint.sh" ]
+CMD ["/usr/bin/supervisord", "-c", "/etc/supervisor/conf.d/supervisord.conf"]
+
+FROM base as worker-dev
 
 # Copy supervisor configuration file
 #

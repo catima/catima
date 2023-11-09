@@ -11,8 +11,8 @@ services:
     image: unillett/catima:latest-app
     build:
       context: ./
-      dockerfile: ./docker/app.dockerfile
-      target: dev
+      dockerfile: ./docker/Dockerfile
+      target: app-dev
     env_file:
       - ./docker/.env
     ports:
@@ -39,8 +39,8 @@ services:
     image: unillett/catima:latest-worker
     build:
       context: ./
-      dockerfile: ./docker/worker.dockerfile
-      target: dev
+      dockerfile: ./docker/Dockerfile
+      target: worker-dev
     env_file:
       - ./docker/.env
     depends_on:
