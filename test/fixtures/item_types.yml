@@ -40,6 +40,14 @@ one_author:
   suggestion_email: "one-admin@example.com"
   allow_anonymous_suggestions: false
 
+one_author_list_view:
+  catalog: one
+  name_translations: { "name_en": "Author list view" }
+  name_plural_translations: { "name_plural_en": "Authors list view" }
+  slug: author_list_view
+  display_emtpy_fields: false
+  suggestions_activated: false
+
 one_book:
   catalog: one
   name_translations: { "name_en": "Book" }
