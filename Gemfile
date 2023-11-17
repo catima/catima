@@ -109,7 +109,7 @@ group :test do
   gem "connection_pool", "~> 2.2"
   gem "json_schema", "~> 0.20"
   gem "launchy", "~> 2.5"
-  gem "minitest-reporters", "~> 1.4"
+  gem "minitest-reporters", "~> 1.6"
   gem "mocha", "~> 2.1"
   gem "puma", "~> 5.6"
   gem "pry", "~> 0.13"
