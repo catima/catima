@@ -406,15 +406,15 @@ one_required_reference:
   multiple: true
   required: true
 
-one_author_list_view_name:
+one_list_view_name:
   type: "Field::Text"
   name_translations: { "name_en": "Name" }
   name_plural_translations: { "name_plural_en": "Names" }
   slug: name
-  field_set: one_author_list_view (ItemType)
+  field_set: one_list_view (ItemType)
   primary: true
   required: true
-  uuid: one_author_list_view_name_uuid
+  uuid: one_list_view_name_uuid
   row_order: 1
 
 multilingual_author_name:
