@@ -13,7 +13,7 @@ Devise.setup do |config|
   # Configure the e-mail address which will be shown in Devise::Mailer,
   # note that it will be overwritten if you use your own mailer class
   # with default "from" parameter.
-  config.mailer_sender = ApplicationMailer.default[:from]
+  config.mailer_sender = ENV.fetch("MAIL_SENDER")
 
   # Configure the class responsible to send e-mails.
   config.mailer = "UserMailer"
@@ -237,25 +237,25 @@ Devise.setup do |config|
   # Add a new OmniAuth provider. Check the wiki for more information on setting
   # up on your models and hooks.
   # config.omniauth :github, 'APP_ID', 'APP_SECRET', scope: 'user,public_repo'
-  if ENV['AUTH_GITHUB_APP_ID']
+  if ENV.fetch('AUTH_GITHUB_APP_ID')
     config.omniauth(
       :github,
-      ENV['AUTH_GITHUB_APP_ID'],
-      ENV['AUTH_GITHUB_APP_SECRET'],
+      ENV.fetch('AUTH_GITHUB_APP_ID'),
+      ENV.fetch('AUTH_GITHUB_APP_SECRET'),
       scope: 'user:email')
   end
-  if ENV['AUTH_FACEBOOK_APP_ID']
+  if ENV.fetch('AUTH_FACEBOOK_APP_ID')
     config.omniauth(
       :facebook,
-      ENV['AUTH_GITHUB_APP_ID'],
-      ENV['AUTH_GITHUB_APP_SECRET'],
+      ENV.fetch('AUTH_GITHUB_APP_ID'),
+      ENV.fetch('AUTH_GITHUB_APP_SECRET'),
       token_params: { parse: :json })
   end
-  if ENV['AUTH_SHIB_APP_ID']
+  if ENV.fetch('AUTH_SHIB_APP_ID')
     config.omniauth(
       :shibboleth,
-      shib_session_id_field: ENV['AUTH_SHIB_SESSION_ID'],
-      shib_application_id_field: ENV['AUTH_SHIB_APP_ID'],
+      shib_session_id_field: ENV.fetch('AUTH_SHIB_SESSION_ID'),
+      shib_application_id_field: ENV.fetch('AUTH_SHIB_APP_ID'),
       uid_field: 'eppn',
       info_fields: { email: 'mail' }
     )
@@ -285,7 +285,7 @@ Devise.setup do |config|
   # so you need to do it manually. For the users scope, it would be:
   # config.omniauth_path_prefix = '/my_engine/users/auth'
   config.jwt do |jwt|
-    jwt.secret = ENV['DEVISE_JWT_SECRET_KEY']
+    jwt.secret = ENV.fetch('DEVISE_JWT_SECRET_KEY')
     jwt.dispatch_requests = [
       ['POST', %r{^/api/v3/login$}],
       ['POST', %r{^/api/v3/login.json$}]

@@ -3,7 +3,7 @@ source "https://rubygems.org"
 gem "active_model_serializers", "~> 0.10"
 gem "active_type", "~> 1.5"
 gem 'device_detector', '~> 1.0.7'
-gem "ahoy_matey", "~> 4.1.0"
+gem "ahoy_matey", "~> 5.0.2"
 gem "autoprefixer-rails", "~> 10.1"
 gem "bcrypt", "~> 3.1"
 gem "bootstrap", "~> 4.5"
@@ -12,7 +12,7 @@ gem "bugsnag", "~> 6.18"
 gem "chartkick", "~> 4.2.0"
 gem "cocoon", "~> 1.2"
 gem "coffee-rails", "~> 5.0"
-gem "devise", "~> 4.7"
+gem "devise", "~> 4.9"
 gem "devise-jwt", "~> 0.9.0"
 gem "dotenv-rails", "~> 2.7"
 gem "faraday", "~> 1.1"
@@ -38,7 +38,7 @@ gem "pg", "~> 1.2"
 gem "pg_search", "~> 2.3"
 gem "pgcli-rails", "~> 0.5"
 gem "pundit", "~> 2.1"
-gem "rails", '~> 6.1'
+gem "rails", '~> 7.0'
 gem "ranked-model", "~> 0.4"
 gem 'react-rails', "~> 2.6"
 gem "recaptcha", "~> 5.6"
@@ -54,14 +54,13 @@ gem "shakapacker", "7.0.2"
 gem "sidekiq", "~> 7.1"
 gem "sinatra", "~> 2.2"
 gem "sprockets", "~> 4.0"
-gem "sprockets-rails", "~> 3.2"
 gem "summernote-rails", "~> 0.8"
 gem "rubyzip", "~> 2.3"
 gem "zaru", "~> 0.3"
 gem "jbuilder", "~> 2.11.5"
-gem "rswag", "~> 2.10.1"
+gem "rswag", "~> 2.11.0"
 gem 'redis', "~> 4.2.5"
-gem "rspec-rails", "~> 5.1.2"
+gem "rspec-rails", "~> 6.0.3"
 gem "net-http", "~> 0.3.2" # Avoid already initialized constant Net::ProtocRetryError
 
 source "https://rails-assets.org" do
@@ -96,7 +95,7 @@ group :development do
   gem "rb-fsevent", "~> 0.10", :require => false
   gem "rubocop-rails", "~> 2.9", :require => false
   gem "ruby-progressbar", "~> 1.10", :require => false
-  gem "spring", "~> 2.1"
+  gem "spring", "~> 4.1.2"
   gem "sshkit", "~> 1.21", :require => false
   gem "terminal-notifier", "~> 2.0", :require => false
   gem "terminal-notifier-guard", "~> 1.7", :require => false

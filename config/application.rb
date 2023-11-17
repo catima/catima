@@ -1,6 +1,6 @@
-require_relative 'boot'
+require_relative "boot"
 
-require 'rails/all'
+require "rails/all"
 
 # Require the gems listed in Gemfile, including any gems
 # you've limited to :test, :development, or :production.
@@ -9,18 +9,17 @@ Bundler.require(*Rails.groups)
 module ViimCore
   class Application < Rails::Application
     # Initialize configuration defaults for originally generated Rails version.
-    config.load_defaults 6.0
+    config.load_defaults 7.0
 
-    # Settings in config/environments/* take precedence over those specified here.
-    # Application configuration can go into files in config/initializers
-    # -- all .rb files in that directory are automatically loaded after loading
-    # the framework and any gems in your application.
+    # Configuration for the application, engines, and railties goes here.
+    #
+    # These settings can be overridden in specific environments using the files
+    # in config/environments, which are processed later.
 
     # Use sidekiq to process Active Jobs (e.g. ActionMailer's deliver_later)
     config.active_job.queue_adapter = :sidekiq
 
     # Set Time.zone default to the specified zone and make Active Record auto-convert to this zone.
-    # Run "rake -D time" for a list of tasks for finding time zone names. Default is UTC.
     config.time_zone = "Bern"
 
     # We are defining custom procedures, so the default Ruby format won't work.
@@ -37,6 +36,13 @@ module ViimCore
         end
       end
     end
+
+    # Per-database Connection Switching. Disable legacy connection handling.
+    config.active_record.legacy_connection_handling = false
+
+    # Disables the deprecated #to_s override in some Ruby core classes
+    # See https://guides.rubyonrails.org/configuring.html#config-active-support-disable-to-s-conversion for more information.
+    config.active_support.disable_to_s_conversion = true
 
     # Custom error pages
     config.exceptions_app = routes

@@ -19,7 +19,7 @@ one:
   type: Container::HTML
   slug: content1
   row_order: 1
-  page_id: 1
+  page: one
   content: { html: "<h1>hello world</h1>" }
   locale: en
 
@@ -67,7 +67,7 @@ two:
   type: Container::Markdown
   slug: content2
   row_order: 0
-  page_id: 1
+  page: one
   content: { markdown: "#hello world" }
   locale: en
 

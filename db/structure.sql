@@ -1694,6 +1694,13 @@ CREATE UNIQUE INDEX index_ahoy_visits_on_visit_token ON public.ahoy_visits USING
 
 
 --
+-- Name: index_ahoy_visits_on_visitor_token_and_started_at; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX index_ahoy_visits_on_visitor_token_and_started_at ON public.ahoy_visits USING btree (visitor_token, started_at);
+
+
+--
 -- Name: index_api_keys_on_api_key; Type: INDEX; Schema: public; Owner: -
 --
 
@@ -2613,6 +2620,7 @@ INSERT INTO "schema_migrations" (version) VALUES
 ('20221206144023'),
 ('20221221153045'),
 ('20230109140802'),
-('20230113103454');
+('20230113103454'),
+('20231116161313');
 
 
