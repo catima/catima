@@ -59,7 +59,7 @@ gem "rubyzip", "~> 2.3"
 gem "zaru", "~> 0.3"
 gem "jbuilder", "~> 2.11.5"
 gem "rswag", "~> 2.11.0"
-gem 'redis', "~> 4.2.5"
+gem 'redis', "~> 5.0"
 gem "rspec-rails", "~> 6.0.3"
 gem "net-http", "~> 0.3.2" # Avoid already initialized constant Net::ProtocRetryError
 
@@ -77,7 +77,7 @@ end
 group :development, :test do
   gem "simplecov", "~> 0.22", :require => false
   gem "byebug", "~> 11.1.3"
-  gem "selenium-webdriver", "~> 4.7.1"
+  gem "selenium-webdriver", "~> 4.14.0"
 end
 
 group :development do
@@ -86,7 +86,7 @@ group :development do
   gem "bcrypt_pbkdf", "~> 1.0", :require => false
   gem "better_errors", "~> 2.9"
   gem "binding_of_caller", "~> 1.0"
-  gem "brakeman", "~> 4.10", :require => false
+  gem "brakeman", "~> 6.0", :require => false
   gem "faker", "~> 2.15", :require => false
   gem "letter_opener", "~> 1.7"
   gem "listen", "~> 3.3"
@@ -111,7 +111,7 @@ group :test do
   gem "launchy", "~> 2.5"
   gem "minitest-reporters", "~> 1.6"
   gem "mocha", "~> 2.1"
-  gem "puma", "~> 5.6"
+  gem "puma", "~> 6.4"
   gem "pry", "~> 0.13"
   gem "shoulda-context", "~> 2.0"
   gem "shoulda-matchers", "~> 5.1"
