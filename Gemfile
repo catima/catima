@@ -61,7 +61,7 @@ gem "jbuilder", "~> 2.11.5"
 gem "rswag", "~> 2.11.0"
 gem 'redis', "~> 5.0"
 gem "rspec-rails", "~> 6.0.3"
-gem "net-http", "~> 0.3.2" # Avoid already initialized constant Net::ProtocRetryError
+gem "net-http", "~> 0.4" # Avoid already initialized constant Net::ProtocRetryError
 
 source "https://rails-assets.org" do
   gem "rails-assets-autosize", "~> 4.0"

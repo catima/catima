@@ -316,7 +316,7 @@ GEM
     multipart-post (2.3.0)
     mustermann (2.0.2)
       ruby2_keywords (~> 0.0.1)
-    net-http (0.3.2)
+    net-http (0.4.0)
       uri
     net-imap (0.4.5)
       date
@@ -638,7 +638,7 @@ DEPENDENCIES
   mini_magick (~> 4.11)
   minitest-reporters (~> 1.6)
   mocha (~> 2.1)
-  net-http (~> 0.3.2)
+  net-http (~> 0.4)
   nokogiri (~> 1.14)
   omniauth-facebook (~> 8.0)
   omniauth-github (~> 1.4)
