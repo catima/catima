@@ -27,11 +27,11 @@ gem "mail", "~> 2.7"
 gem "marco-polo", "~> 2.0"
 gem "mini_magick", "~> 4.11"
 gem "nokogiri", "~> 1.14"
-gem 'omniauth-oauth2', "~> 1.8"
-gem 'omniauth-facebook', "~> 9.0"
-gem 'omniauth-github', "~> 2.0"
+gem 'omniauth-oauth2', "~> 1.7.3"
+gem 'omniauth-facebook', "~> 8.0"
+gem 'omniauth-github', "~> 1.4"
 gem 'omniauth-shibboleth', "~> 1.3"
-gem "omniauth-rails_csrf_protection", "~> 1.0" # Mitigation against CVE-2015-9284
+gem "omniauth-rails_csrf_protection", "~> 0.1" # Mitigation against CVE-2015-9284
 gem "panoramic", git: "https://github.com/andreapavoni/panoramic.git", branch: "master"
 gem "pg", "~> 1.2"
 gem "pg_search", "~> 2.3"
@@ -63,7 +63,7 @@ gem "rspec-rails", "~> 6.1"
 gem "net-http", "~> 0.4" # Avoid already initialized constant Net::ProtocRetryError
 
 source "https://rails-assets.org" do
-  gem "rails-assets-autosize", "~> 6.0"
+  gem "rails-assets-autosize", "~> 4.0"
   gem "rails-assets-mousetrap", "~> 1.6"
 end
 
