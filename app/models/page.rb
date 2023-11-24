@@ -43,7 +43,7 @@ class Page < ApplicationRecord
   validates_slug :scope => [:catalog_id]
   validate :item_types_slug_validation
 
-  serialize :title, HashSerializer
+  serialize :title, coder: HashSerializer
   locales :title
 
   def self.sorted

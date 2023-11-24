@@ -48,7 +48,7 @@ class AdvancedSearchConfiguration < ApplicationRecord
 
   scope :with_active_item_type, -> { joins(:item_type).where(item_types: { deleted_at: nil }) }
 
-  serialize :description, HashSerializer
+  serialize :description, coder: HashSerializer
   locales :description
 
   def custom_container_permitted_attributes

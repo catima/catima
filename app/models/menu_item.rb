@@ -32,8 +32,8 @@ class MenuItem < ApplicationRecord
   validates_presence_of :title
   validate :parent_validation
 
-  serialize :title, HashSerializer
-  serialize :url, HashSerializer
+  serialize :title, coder: HashSerializer
+  serialize :url, coder: HashSerializer
   locales :title, :url
 
   include Rails.application.routes.url_helpers

@@ -9,7 +9,7 @@ Bundler.require(*Rails.groups)
 module ViimCore
   class Application < Rails::Application
     # Initialize configuration defaults for originally generated Rails version.
-    config.load_defaults 7.0
+    config.load_defaults 7.1
 
     # Configuration for the application, engines, and railties goes here.
     #
@@ -25,6 +25,16 @@ module ViimCore
     # We are defining custom procedures, so the default Ruby format won't work.
     config.active_record.schema_format = :sql
 
+    # Change the format of the cache entry.
+    #
+    # Changing this default means that all new cache entries added to the cache
+    # will have a different format that is not supported by Rails 7.0
+    # applications.
+    #
+    # Only change this value after your application is fully deployed to Rails 7.1
+    # and you have no plans to rollback.
+    # config.active_support.cache_format_version = 7.1
+
     # Ensure non-standard paths are eager-loaded in production
     # (these paths are also autoloaded in development mode)
 
@@ -36,9 +46,6 @@ module ViimCore
         end
       end
     end
-
-    # Per-database Connection Switching. Disable legacy connection handling.
-    config.active_record.legacy_connection_handling = false
 
     # Disables the deprecated #to_s override in some Ruby core classes
     # See https://guides.rubyonrails.org/configuring.html#config-active-support-disable-to-s-conversion for more information.

@@ -39,7 +39,7 @@ class Catalog < ApplicationRecord
   validates_inclusion_of :primary_language, :in => :available_locales
   validate :other_languages_included_in_available_locales
 
-  serialize :style, HashSerializer
+  serialize :style, coder: HashSerializer
 
   has_many :api_keys, dependent: :destroy
   has_many :api_logs, dependent: :destroy
