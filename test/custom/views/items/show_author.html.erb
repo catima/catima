@@ -1,21 +1,74 @@
 <p>This is a custom template</p>
 
-<ul>
-  <li><%= field_value(@item, :name) %></li>
-  <li><%= field_value(@item, :nickname) %></li>
-  <li><%= field_value(@item, :age) %></li>
-  <li><%= field_value(@item, :site) %></li>
-  <li><%= field_value(@item, :email) %></li>
-  <li><%= field_value(@item, :rank) %></li>
-  <li><%= field_value(@item, :bio) %></li>
-</ul>
+<% provide(:title) do %>
+  <div data-controller="toggle-display">
+    <div>
+      <%= item_display_name(@item) %>
 
-<%# Example of how referenced items can be displayed %>
-<% field_item_references(:books, :author, @item) do |list| %>
-  <h3>Books (<%= number_with_delimiter(list.total_count) %></h3>
-  <ul>
-    <% list.items.each do |book| %>
-      <li><%= field_value(book, :title) %></li>
+      <% if display_suggestion_form?(@item_type) %>
+        <%= link_to(
+              fa_icon(:"comment"),
+              '#',
+              class: 'btn btn-primary float-right',
+              id: 'toggle-suggestion-button',
+              "data-action": "click->toggle-display#reveal",
+              "data-toggle": "tooltip",
+              "data-placement": "top",
+              "title": t(".make_suggestion")
+            )
+        %>
+      <% end %>
+    </div>
+
+    <% if display_suggestion_form?(@item_type) %>
+      <%= render 'suggestions' %>
     <% end %>
-  </ul>
+  </div>
+<% end %>
+
+<div class="item-admin">
+  <%= render "items/buttons", :item => @item %>
+  <%= render_item_list_nav(item_list, @item) if item_list %>
+</div>
+
+<% if @item.item_type.default_item_view.nil? == true %>
+  <table class="table item-table">
+    <tbody>
+    <% item_applicable_fields(@item).each do |field| %>
+      <% if field_check_display(@item, field) %>
+        <tr>
+          <th class="field-label"><%= field.label %></th>
+          <td class="<%= field.type %>"><%= field_value(@item, field) %></td>
+        </tr>
+      <% end %>
+    <% end %>
+    </tbody>
+  </table>
+<% else %>
+  <%= ItemViewPresenter.new(self, @item.item_type.default_item_view, @item, I18n.locale).render %>
+<% end %>
+
+<% fields_and_item_references(@item) do |field, browse| %>
+  <h3>
+    <%= link_to(
+          fa_icon(:"link"),
+          items_path(
+            :item_type_slug => browse.item_type,
+            browse.field.slug => browse.value
+          ))
+    %>
+    <%= field.item_type.name_plural %>
+  </h3>
+  <%= render_item_list(browse, params) %>
+  <div class="mt-2">
+    <% if browse.more? %>
+      <%= link_to(
+            items_path(
+              :item_type_slug => browse.item_type,
+              browse.field.slug => browse.value
+            )) do %>
+        <%= t(".view_more") %> (<%= browse.total_count %>)
+      <% end %>
+    <% end %>
+  </div>
 <% end %>

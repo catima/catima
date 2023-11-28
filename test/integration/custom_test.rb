@@ -43,4 +43,47 @@ class CustomTest < ActionDispatch::IntegrationTest
     visit('/custom-test-catalog/en')
     assert(page.has_content?("Customizable controllers test catalog"))
   end
+
+  test "allows custom view template" do
+    config = Configuration.first!
+    config.update!(:root_mode => "custom")
+
+    with_customized_file(
+      "test/custom/root.html.erb",
+      "catalogs/root.html.erb") do
+      visit("/")
+      assert(page.has_content?(/this has been customized/i))
+    end
+  end
+
+  test "allows override of fields.json per catalog" do
+    catalog = catalogs(:one)
+    with_customized_file("test/custom/config/fields.json",
+                         "catalogs/one/config/fields.json") do
+      config = JsonConfig.for_catalog(catalog).load("fields.json")
+      expected_config = {
+        "DateTime" => {
+          "display_components" => ["Foo"],
+          "editor_components" => []
+        }
+      }
+      assert_equal(expected_config, config)
+    end
+  end
+
+  test "view item details with template override" do
+    author = items(:one_author_stephen_king)
+    with_customized_file("test/custom/views/items/show_author.html.erb",
+                         "catalogs/one/views/items/show.html+authors.erb") do
+      visit("/one/en/authors/#{author.to_param}")
+    end
+    assert(page.has_content?("This is a custom template"))
+    assert(page.has_content?("Stephen King"))
+    assert(page.has_content?("Steve"))
+    assert(page.has_content?("68"))
+    assert(page.has_content?("stephenking.com/index.html"))
+    assert(page.has_content?("sk@stephenking.com"))
+    assert(page.has_content?("1.88891"))
+    assert(page.has_content?("bio.doc"))
+  end
 end

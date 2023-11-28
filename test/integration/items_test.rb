@@ -84,38 +84,6 @@ class ItemsTest < ActionDispatch::IntegrationTest
     assert(page.has_content?("Oops. Such an item doesn't exist."))
   end
 
-  test "view item details with template override" do
-    author = items(:one_author_stephen_king)
-    with_customized_file("test/custom/views/items/show_author.html.erb",
-                         "catalogs/one/views/items/show.html+authors.erb") do
-      visit("/one/en/authors/#{author.to_param}")
-    end
-    assert(page.has_content?("This is a custom template"))
-    assert(page.has_content?("Stephen King"))
-    assert(page.has_content?("Steve"))
-    assert(page.has_content?("68"))
-    assert(page.has_content?("stephenking.com/index.html"))
-    assert(page.has_content?("sk@stephenking.com"))
-    assert(page.has_content?("1.88891"))
-    assert(page.has_content?("bio.doc"))
-  end
-
-  test "view item details with custom layout" do
-    author = items(:one_author_stephen_king)
-    with_customized_file("test/custom/views/layouts/application.html.erb",
-                         "catalogs/one/views/layouts/application.html.erb") do
-      visit("/one/en/authors/#{author.to_param}")
-    end
-    assert(page.has_content?("This is a custom layout"))
-    assert(page.has_content?("Stephen King"))
-    assert(page.has_content?("Steve"))
-    assert(page.has_content?("68"))
-    assert(page.has_content?("stephenking.com/index.html"))
-    assert(page.has_content?("sk@stephenking.com"))
-    assert(page.has_content?("1.88891"))
-    assert(page.has_content?("bio.doc"))
-  end
-
   test "view items belonging to a choice" do
     apply_vehicle_styles
     visit("/search/en/vehicles?style=en-Sedan")

@@ -49,19 +49,4 @@ class JsonConfigTest < ActiveSupport::TestCase
     }
     assert_equal(expected_config, config)
   end
-
-  test "allows override of fields.json per catalog" do
-    catalog = catalogs(:one)
-    with_customized_file("test/custom/config/fields.json",
-                         "catalogs/one/config/fields.json") do
-      config = JsonConfig.for_catalog(catalog).load("fields.json")
-      expected_config = {
-        "DateTime" => {
-          "display_components" => ["Foo"],
-          "editor_components" => []
-        }
-      }
-      assert_equal(expected_config, config)
-    end
-  end
 end

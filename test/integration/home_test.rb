@@ -9,18 +9,6 @@ class HomeTest < ActionDispatch::IntegrationTest
     assert(page.has_content?(/customize this page/i))
   end
 
-  test "allows custom view template" do
-    config = Configuration.first!
-    config.update!(:root_mode => "custom")
-
-    with_customized_file(
-      "test/custom/root.html.erb",
-      "catalogs/root.html.erb") do
-      visit("/")
-      assert(page.has_content?(/this has been customized/i))
-    end
-  end
-
   test "shows catalog listing" do
     config = Configuration.first!
     config.update!(:root_mode => "listing")
