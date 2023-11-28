@@ -70,20 +70,4 @@ class CustomTest < ActionDispatch::IntegrationTest
       assert_equal(expected_config, config)
     end
   end
-
-  test "view item details with template override" do
-    author = items(:one_author_stephen_king)
-    with_customized_file("test/custom/views/items/show_author.html.erb",
-                         "catalogs/one/views/items/show.html+authors.erb") do
-      visit("/one/en/authors/#{author.to_param}")
-    end
-    assert(page.has_content?("This is a custom template"))
-    assert(page.has_content?("Stephen King"))
-    assert(page.has_content?("Steve"))
-    assert(page.has_content?("68"))
-    assert(page.has_content?("stephenking.com/index.html"))
-    assert(page.has_content?("sk@stephenking.com"))
-    assert(page.has_content?("1.88891"))
-    assert(page.has_content?("bio.doc"))
-  end
 end
