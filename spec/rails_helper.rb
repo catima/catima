@@ -41,7 +41,9 @@ RSpec.configure do |config|
   # config.include Warden::Test::Helpers
 
   # Remove this line if you're not using ActiveRecord or ActiveRecord fixtures
-  config.fixture_path = "#{::Rails.root}/test/fixtures"
+  config.fixture_paths = [
+    Rails.root.join('test/fixtures')
+  ]
 
   # If you're not using ActiveRecord, or you'd prefer not to run each of your
   # examples within a transaction, remove the following line or assign false
