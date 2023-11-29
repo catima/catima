@@ -44,4 +44,4 @@ Ahoy.mask_ips = true
 
 # GDPR Compliance
 # Switches from cookies to anonymity sets
-Ahoy.cookies = false
+Ahoy.cookies = :none

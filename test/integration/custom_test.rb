@@ -43,4 +43,31 @@ class CustomTest < ActionDispatch::IntegrationTest
     visit('/custom-test-catalog/en')
     assert(page.has_content?("Customizable controllers test catalog"))
   end
+
+  test "allows custom view template" do
+    config = Configuration.first!
+    config.update!(:root_mode => "custom")
+
+    with_customized_file(
+      "test/custom/root.html.erb",
+      "catalogs/root.html.erb") do
+      visit("/")
+      assert(page.has_content?(/this has been customized/i))
+    end
+  end
+
+  test "allows override of fields.json per catalog" do
+    catalog = catalogs(:one)
+    with_customized_file("test/custom/config/fields.json",
+                         "catalogs/one/config/fields.json") do
+      config = JsonConfig.for_catalog(catalog).load("fields.json")
+      expected_config = {
+        "DateTime" => {
+          "display_components" => ["Foo"],
+          "editor_components" => []
+        }
+      }
+      assert_equal(expected_config, config)
+    end
+  end
 end

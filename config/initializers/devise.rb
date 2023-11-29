@@ -7,13 +7,13 @@ Devise.setup do |config|
   # confirmation, reset password and unlock tokens in the database.
   # Devise will use the `secret_key_base` on Rails 4+ applications as its `secret_key`
   # by default. You can change it below and use your own secret key.
-  # config.secret_key = 'b1ee64b8dbfce6d53e9cee6b72ba88aaf41d07e48f7ac577169e3bef3fedddc3d19864aafa301cf2c754515cdcc6ddc6346e483663c090d0eb6bfbd30ac50999'
+  config.secret_key = Rails.application.secret_key_base
 
   # ==> Mailer Configuration
   # Configure the e-mail address which will be shown in Devise::Mailer,
   # note that it will be overwritten if you use your own mailer class
   # with default "from" parameter.
-  config.mailer_sender = ApplicationMailer.default[:from]
+  config.mailer_sender = ENV.fetch("MAIL_SENDER", "catima@example.com")
 
   # Configure the class responsible to send e-mails.
   config.mailer = "UserMailer"
@@ -237,25 +237,25 @@ Devise.setup do |config|
   # Add a new OmniAuth provider. Check the wiki for more information on setting
   # up on your models and hooks.
   # config.omniauth :github, 'APP_ID', 'APP_SECRET', scope: 'user,public_repo'
-  if ENV['AUTH_GITHUB_APP_ID']
+  if ENV.fetch('AUTH_GITHUB_APP_ID', nil)
     config.omniauth(
       :github,
-      ENV['AUTH_GITHUB_APP_ID'],
-      ENV['AUTH_GITHUB_APP_SECRET'],
+      ENV.fetch('AUTH_GITHUB_APP_ID', nil),
+      ENV.fetch('AUTH_GITHUB_APP_SECRET', nil),
       scope: 'user:email')
   end
-  if ENV['AUTH_FACEBOOK_APP_ID']
+  if ENV.fetch('AUTH_FACEBOOK_APP_ID', nil)
     config.omniauth(
       :facebook,
-      ENV['AUTH_GITHUB_APP_ID'],
-      ENV['AUTH_GITHUB_APP_SECRET'],
+      ENV.fetch('AUTH_GITHUB_APP_ID', nil),
+      ENV.fetch('AUTH_GITHUB_APP_SECRET', nil),
       token_params: { parse: :json })
   end
-  if ENV['AUTH_SHIB_APP_ID']
+  if ENV.fetch('AUTH_SHIB_APP_ID', nil)
     config.omniauth(
       :shibboleth,
-      shib_session_id_field: ENV['AUTH_SHIB_SESSION_ID'],
-      shib_application_id_field: ENV['AUTH_SHIB_APP_ID'],
+      shib_session_id_field: ENV.fetch('AUTH_SHIB_SESSION_ID', nil),
+      shib_application_id_field: ENV.fetch('AUTH_SHIB_APP_ID', nil),
       uid_field: 'eppn',
       info_fields: { email: 'mail' }
     )
@@ -285,7 +285,7 @@ Devise.setup do |config|
   # so you need to do it manually. For the users scope, it would be:
   # config.omniauth_path_prefix = '/my_engine/users/auth'
   config.jwt do |jwt|
-    jwt.secret = ENV['DEVISE_JWT_SECRET_KEY']
+    jwt.secret = ENV.fetch('DEVISE_JWT_SECRET_KEY', nil)
     jwt.dispatch_requests = [
       ['POST', %r{^/api/v3/login$}],
       ['POST', %r{^/api/v3/login.json$}]

@@ -20,7 +20,7 @@ class ItemView < ApplicationRecord
   validates_presence_of :item_type
   validates_presence_of :name
 
-  serialize :template, HashSerializer
+  serialize :template, coder: HashSerializer
 
   after_save :remove_default_list_view_from_other_views, if: :default_for_list_view?
   after_save :remove_default_item_view_from_other_views, if: :default_for_item_view?

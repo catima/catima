@@ -18,18 +18,26 @@ def driver_params
   arguments = %w[disable-gpu]
   arguments.push("headless") unless ENV['HEADLESS'] == "0"
   {
-    browser: :chrome,
-    options: Selenium::WebDriver::Chrome::Options.new(args: arguments)
+    options: Selenium::WebDriver::Chrome::Options.new(
+      args: arguments
+    )
   }
 end
 
 Capybara.register_driver :chrome do |app|
-  Capybara::Selenium::Driver.new(app, **driver_params)
+  Capybara::Selenium::Driver.new(
+    app,
+    browser: :chrome,
+    **driver_params
+  )
 end
 
 Capybara.register_driver :remote_chrome do |app|
   Capybara::Selenium::Driver.new(
-    app, url: "http://catima-selenium:4444/wd/hub", **driver_params
+    app,
+    url: "http://catima-selenium:4444/wd/hub",
+    browser: :remote,
+    **driver_params
   )
 end
 

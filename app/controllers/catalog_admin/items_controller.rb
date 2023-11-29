@@ -21,6 +21,11 @@ class CatalogAdmin::ItemsController < CatalogAdmin::BaseController
     authorize(@item)
   end
 
+  def edit
+    find_item
+    authorize(@item)
+  end
+
   def create
     build_item
     authorize(@item)
@@ -36,11 +41,6 @@ class CatalogAdmin::ItemsController < CatalogAdmin::BaseController
     authorize(@item)
     @item = @item.dup
     render("new")
-  end
-
-  def edit
-    find_item
-    authorize(@item)
   end
 
   def update
@@ -70,12 +70,10 @@ class CatalogAdmin::ItemsController < CatalogAdmin::BaseController
     upload_dir = File.join('upload', params[:catalog_slug], fld_id)
     upload_path = File.join('public', upload_dir)
     FileUtils.mkdir_p(upload_path)
-    timestamp = Time.current.to_formatted_s(:number)
+    timestamp = Time.current.to_fs(:number)
     local_fname = "#{timestamp}_" + format_filename(uploaded_file.original_filename)
     file_path = File.join(upload_dir, local_fname)
-    File.open(Rails.root.join('public', file_path), 'wb') do |fp|
-      fp.write(uploaded_file.read)
-    end
+    Rails.public_path.join(file_path).binwrite(uploaded_file.read)
     processed_file = {
       :name => uploaded_file.original_filename, :path => file_path,
       :type => uploaded_file.content_type, :size => uploaded_file.size
@@ -147,8 +145,7 @@ class CatalogAdmin::ItemsController < CatalogAdmin::BaseController
 
   %w(created updated deleted).each do |verb|
     define_method("#{verb}_message") do
-      "#{@item_type.name} “#{view_context.default_display_name(@item)}” " \
-        "has been #{verb}."
+      "The selected item has been #{verb}."
     end
   end
 
