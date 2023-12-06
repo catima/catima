@@ -584,6 +584,10 @@ de:
         zoom_close: "Close (level 15)"
         zoom_help: "You can choose to initialize the map with a default zoom level. The higher the number, the more zoomed to the specified location(s) the map will be."
         cannot_intersects: "Cannot add a vector that intersects with another one"
+        colors: Colors
+        polygons: Polygons
+        polylines: Polylines
+        colors_help: You can choose a display color for polygons and polylines. Polygons are closed and filled shapes, polylines are vectors.
       decimal_option_inputs:
         min_value: "Minimum value (optional)"
         max_value: "Maximum value (optional)"

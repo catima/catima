@@ -9,10 +9,9 @@ import Validation from "../../GeoEditor/modules/validation";
 import BoundingBox from "../../GeoViewer/modules/boundingBox";
 import {
   GeoTools,
-  PolygonOptions,
-  PolylineOptions,
   MarkerOptionsEdit
 } from "../../GeoViewer/modules/geoTools";
+import Translations from "../../Translations/components/Translations";
 
 const subs = ['a', 'b', 'c'];
 const featureCollectionObject = {
@@ -26,6 +25,8 @@ const GeoEditor = (props) => {
     layers: layersProps,
     bounds: boundsProps,
     zoom: zoomProps,
+    polygonColor: polygonColorProps,
+    polylineColor: polylineColorProps,
     required: requiredProps
   } = props
 
@@ -90,9 +91,25 @@ const GeoEditor = (props) => {
     if (mapId && !map) {
       const drawControl = new L.Control.Draw({
         draw: {
-          polygon: PolygonOptions,
+          polygon: {
+            allowIntersection: false,
+            drawError: {
+              color: '#e10000',
+              message: Translations.messages[
+                'catalog_admin.fields.geometry_option_inputs.cannot_intersects'
+              ]
+            },
+            shapeOptions: {
+              color: polygonColorProps
+            }
+          },
           marker: MarkerOptionsEdit,
-          polyline: PolylineOptions,
+          polyline: {
+            allowIntersection: true,
+            shapeOptions: {
+              color: polylineColorProps
+            }
+          },
           rectangle: false,
           circle: false,
           circlemarker: false
@@ -257,7 +274,12 @@ const GeoEditor = (props) => {
 
   function _addLayersFromFeatureCollection() {
     _features().forEach((feature) => {
-      const layer = GeoTools.featureToLayer(feature, 'editor');
+      const layer = GeoTools.featureToLayer(
+          feature,
+          'editor',
+          polygonColorProps,
+          polylineColorProps
+      );
 
       // Add existing markers to the map
       drawnItems.addLayer(layer);

@@ -775,6 +775,10 @@ fr:
         zoom_close: "Proche (niveau 15)"
         zoom_help: "Vous pouvez choisir d'initialiser la carte avec un niveau de zoom par défaut. Plus le chiffre est élevé, plus la carte sera zoomée sur le(s) lieu(x) spécifié(s)."
         cannot_intersects: "Impossible d'ajouter un vecteur qui en croise un autre"
+        colors: Couleurs
+        polygons: Polygones
+        polylines: Polylignes
+        colors_help: Vous pouvez choisir une couleur d'affichage pour les polygones et les polylignes. Les polygones sont des formes fermées et remplies, les polylignes sont des vecteurs.
       decimal_option_inputs:
         min_value: "Valeur minimale (optionnel)"
         max_value: "Valeur maximale (optionnel)"

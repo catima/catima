@@ -28,12 +28,16 @@
         </div>
 
         <div class="form-group">
-          <label class="control-label"><%= t('.link_color') %></label>
-          <input class="form-control" type="text" id="catalog_link_color" value="<%= @catalog.custom_style('link-color') || '#428bca' %>">
+          <label for="catalog_link_color"
+                 class="control-label">
+            <%= t('.link_color') %>
+          </label>
+          <input class="form-control minicolor-input"
+                 type="text"
+                 id="catalog_link_color"
+                 value="<%= @catalog.custom_style('link-color') || '#428bca' %>"
+          >
           <script>
-            $('#catalog_link_color').minicolors({
-              theme: 'bootstrap',
-            });
             $('#catalog_link_color').on('change', function(e){
               var stl = JSON.parse($('#catalog_style').val());
               stl['link-color'] = $('#catalog_link_color').val();

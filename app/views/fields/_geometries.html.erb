@@ -1,7 +1,7 @@
 <%= react_component('GeoViewer/components/GeoViewer', {
       features: features.to_json,
       layers: layers,
-      zoomLevel: zoom_level,
+      zoomLevel: zoom_level.to_i,
       catalog: @catalog.slug,
       locale: I18n.locale
     })

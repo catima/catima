@@ -26,18 +26,23 @@ class Container::Map < ::Container
 
   def geojson
     @item_type = catalog.item_types.where(:id => item_type).first!
-    @geom_field = @item_type.fields.where(:type => 'Field::Geometry').first!
+    features = { "type" => "FeatureCollection", "features" => [] }
 
-    # Execute the SQL query for retrieving all geometries of all items of this type
-    # as a GeoJSON.
-    sql = "SELECT jsonb_build_object('features', CASE WHEN (array_agg(feat) IS NOT NULL) THEN array_to_json(array_agg(feat)) ELSE '[]' END, 'type', 'FeatureCollection') AS geojson FROM " \
-          "(SELECT jsonb_build_object('geometry', jsonb_array_elements(feats)->'geometry', 'properties', jsonb_build_object('id', id), 'type', 'Feature') AS feat " \
-          "FROM " \
-          "(SELECT id, data->'#{@geom_field.uuid}'->'features' AS feats FROM items " \
-          "WHERE item_type_id = #{@item_type.id} " \
-          "AND data->'#{@geom_field.uuid}'->'features' IS NOT NULL) A) B"
-    res = ActiveRecord::Base.connection.execute(sql)
-    res[0]['geojson']
+    # Execute the SQL queries to retrieve all geometries of all items of this item type
+    @item_type.fields.where(:type => 'Field::Geometry').find_each do |field|
+      sql = "SELECT jsonb_build_object('features', CASE WHEN (array_agg(feat) IS NOT NULL) THEN array_to_json(array_agg(feat)) ELSE '[]' END) AS geojson FROM " \
+            "(SELECT jsonb_build_object('geometry', jsonb_array_elements(feats)->'geometry', 'properties', jsonb_build_object('id', id, 'polygon_color', '#{field.polygon_color}', 'polyline_color', '#{field.polyline_color}'), 'type', 'Feature') AS feat " \
+            "FROM " \
+            "(SELECT id, data->'#{field.uuid}'->'features' AS feats FROM items " \
+            "WHERE item_type_id = #{@item_type.id} " \
+            "AND data->'#{field.uuid}'->'features' IS NOT NULL) A) B"
+      res = ActiveRecord::Base.connection.execute(sql)
+      data = JSON.parse(res[0]['geojson'])
+
+      features['features'].concat(data['features']) if data['features'].present?
+    end
+
+    features
   rescue ActiveRecord::RecordNotFound => e
     Rails.logger.error "#{e.class}: #{e.message}"
   end

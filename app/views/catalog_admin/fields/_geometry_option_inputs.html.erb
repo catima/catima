@@ -35,6 +35,40 @@
   %>
 <% end %>
 
+<div class="form-group">
+  <label class="control-label">
+    <%= t(".colors") %>
+  </label>
+
+  <div>
+    <div class="geo-colors-wrapper">
+      <span><%= t(".polygons") %>:</span>
+      <div class="geo-colors-button">
+        <input class="form-control minicolor-input"
+               type="hidden"
+               name="field[polygon]"
+               id="field_polygon"
+               value="<%= f.object.polygon_color %>"
+        >
+      </div>
+    </div>
+    <div class="geo-colors-wrapper">
+      <span><%= t(".polylines") %>:</span>
+      <div class="geo-colors-button">
+        <input class="form-control minicolor-input"
+               type="hidden"
+               name="field[polyline]"
+               id="field_polyline"
+               value="<%= f.object.polyline_color %>"
+        >
+      </div>
+    </div>
+    <small class="form-text text-muted">
+      <%= t(".colors_help") %>
+    </small>
+  </div>
+</div>
+
 <%= f.form_group(
   :bounds,
   label: { text: t(".bounds") },

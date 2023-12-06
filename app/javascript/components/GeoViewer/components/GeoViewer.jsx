@@ -13,9 +13,7 @@ import MarkerClusterGroup from 'react-leaflet-markercluster';
 import Translations from "../../Translations/components/Translations";
 import BoundingBox from "../modules/boundingBox";
 import {
-  GeoTools,
-  PolylineColor,
-  PolygonColor
+  GeoTools
 } from "../modules/geoTools";
 
 const subs = ['a', 'b', 'c'];
@@ -228,31 +226,42 @@ const GeoViewer = (props) => {
   function renderMarkers() {
     // Create map markers
     return computedMarkers.map((feat, i) =>
-      renderFeature(feat, 'marker-' + i)
+      renderFeature(feat, {}, 'marker-' + i)
     );
   }
 
   function renderPolylines() {
     // Create map polylines
     return computedPolylines.map((feat, i) =>
-      renderFeature(feat, 'polyline-' + i)
+      renderFeature(feat, style(feat.properties.polyline_color), 'polyline-' + i)
     );
   }
 
   function renderPolygons() {
     // Create map polygons
     return computedPolygons.map((feat, i) =>
-      renderFeature(feat, 'polygon-' + i)
+      renderFeature(feat, style(feat.properties.polygon_color), 'polygon-' + i)
     );
   }
 
-  function renderFeature(feature, i) {
+  function renderFeature(feature, style, i) {
     return <GeoJSON
         key={ i }
         data={ feature }
         pointToLayer={ _pointToLayer }
         onEachFeature={ _onEachFeature }
+        style={ style }
     />
+  }
+
+  function style(color) {
+    return {
+      fillColor: color,
+      weight: 2.5,
+      opacity: 1,
+      color: color,
+      fillOpacity: 0.5
+    }
   }
 
   return (
@@ -271,10 +280,8 @@ const GeoViewer = (props) => {
           </div>
         </div> }
         { renderLayer() }
-        <FeatureGroup pathOptions={{color: PolylineColor}}>
+        <FeatureGroup>
           { renderPolylines() }
-        </FeatureGroup>
-        <FeatureGroup pathOptions={{color: PolygonColor}}>
           { renderPolygons() }
         </FeatureGroup>
         <MarkerClusterGroup showCoverageOnHover={ true }>

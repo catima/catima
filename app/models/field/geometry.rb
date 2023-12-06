@@ -38,14 +38,20 @@ class Field::Geometry < ::Field
     "medium" => ENV.fetch('ZOOM_LEVEL_MEDIUM', 10),
     "close" => ENV.fetch('ZOOM_LEVEL_CLOSE', 15)
   }.freeze
+  POLYGON_COLOR = ENV.fetch('POLYGON_COLOR', "#9336af").freeze
+  POLYLINE_COLOR = ENV.fetch('POLYLINE_COLOR', "#000000").freeze
 
-  store_accessor :options, :bounds, :layers, :zoom
+  store_accessor :options, :bounds, :layers, :zoom, :polygon, :polyline
 
   validates_numericality_of :zoom,
                             :only_integer => true,
                             :greater_than_or_equal_to => Field::Geometry::ZOOM_LEVEL['distant'],
                             :less_than_or_equal_to => Field::Geometry::ZOOM_LEVEL['close'],
                             :allow_blank => false
+
+  validates_format_of :polygon, :polyline,
+                      :with => /\A#(?:[A-F0-9]{3}){1,2}\z/i,
+                      :allow_blank => false
 
   def human_readable?
     false
@@ -59,13 +65,15 @@ class Field::Geometry < ::Field
     {
       "bounds" => default_bounds,
       "layers" => geo_layers,
-      "zoom" => zoom_level,
+      "zoom" => zoom_level.to_i,
+      "polygonColor" => polygon_color,
+      "polylineColor" => polyline_color,
       "required" => required?
     }
   end
 
   def custom_field_permitted_attributes
-    %i(bounds layers zoom)
+    %i(bounds layers zoom polygon polyline)
   end
 
   def default_bounds(xmin: -60, xmax: 60, ymin: -45, ymax: 65)
@@ -78,7 +86,15 @@ class Field::Geometry < ::Field
   end
 
   def zoom_level
-    zoom.present? ? JSON.parse(zoom) : Field::Geometry::ZOOM_LEVEL['medium']
+    (zoom.presence || Field::Geometry::ZOOM_LEVEL['medium'])
+  end
+
+  def polygon_color
+    (polygon.presence || Field::Geometry::POLYGON_COLOR)
+  end
+
+  def polyline_color
+    (polyline.presence || Field::Geometry::POLYLINE_COLOR)
   end
 
   def csv_value(_item, _user=nil)

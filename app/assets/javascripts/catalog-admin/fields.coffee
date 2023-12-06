@@ -28,7 +28,6 @@ fields_disabled_policies = {
 }
 
 init = ->
-
   manage_states()
 
   $('

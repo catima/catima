@@ -29,9 +29,16 @@ class Field::GeometryPresenter < FieldPresenter
   def geo_viewer
     @view.render(
       'fields/geometries',
-      features: raw_value['features'],
+      features: features_with_properties,
       layers: field.geo_layers,
       zoom_level: field.zoom_level
     )
+  end
+
+  def features_with_properties
+    raw_value['features'].each do |feature|
+      feature['properties']['polygon_color'] = field.polygon_color
+      feature['properties']['polyline_color'] = field.polyline_color
+    end || []
   end
 end

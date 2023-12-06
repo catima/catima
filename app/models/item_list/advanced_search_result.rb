@@ -22,22 +22,29 @@ class ItemList::AdvancedSearchResult < ItemList
     params.permit(:criteria => permitted)
   end
 
-  # Uses the first Geometry Field found among the advanced_search's fields
   def items_as_geojson
+    features = []
+
     @model.fields.each do |field|
       next unless field.is_a?(Field::Geometry)
 
       geometry_aware_items = unpaginaged_items.reject { |it| it.data[field.uuid].blank? }
 
-      return geometry_aware_items.map do |item|
-        next if item.data[field.uuid]["features"].blank?
+      features.concat(
+        geometry_aware_items.map do |item|
+          next if item.data[field.uuid]["features"].blank?
 
-        item.data[field.uuid]["features"].each_with_index do |_feat, i|
-          item.data[field.uuid]["features"][i]["properties"]["id"] = item.id
-          item.data[field.uuid]["features"]
+          item.data[field.uuid]["features"].each_with_index do |_feat, i|
+            item.data[field.uuid]["features"][i]["properties"]["id"] = item.id
+            item.data[field.uuid]["features"][i]["properties"]["polygon_color"] = field.polygon_color
+            item.data[field.uuid]["features"][i]["properties"]["polyline_color"] = field.polyline_color
+            item.data[field.uuid]["features"]
+          end
         end
-      end
+      )
     end
+
+    features
   end
 
   private

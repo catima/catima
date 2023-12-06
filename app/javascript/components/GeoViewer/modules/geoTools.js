@@ -18,27 +18,6 @@ export const CustomMarkerView = L.Icon.extend({
     iconUrl: '/icons/plain-blue-marker.png'
   }
 });
-
-export const PolylineColor = '#000000';
-export const PolygonColor = '#9336af';
-export const PolygonOptions = {
-  allowIntersection: false,
-  drawError: {
-    color: '#e10000',
-    message: Translations.messages[
-        'catalog_admin.fields.geometry_option_inputs.cannot_intersects'
-        ]
-  },
-  shapeOptions: {
-    color: PolygonColor
-  }
-};
-export const PolylineOptions = {
-  allowIntersection: true,
-  shapeOptions: {
-    color: PolylineColor
-  }
-}
 export const MarkerOptionsEdit = {
   icon: new CustomMarkerEdit()
 }
@@ -48,7 +27,12 @@ export const MarkerOptionsView = {
 
 export class GeoTools {
   // Format a GeoJSON Feature object into a Leaflet layer.
-  static featureToLayer(feature, type = 'viewer'){
+  static featureToLayer(
+      feature,
+      type = 'viewer',
+      polygonColor = null,
+      polylineColor = null)
+  {
     let layer = null;
 
     if(feature.geometry.type === 'Point') {
@@ -68,7 +52,7 @@ export class GeoTools {
       );
 
       layer.setStyle({
-        color: PolylineColor
+        color: polylineColor
       });
     } else if(feature.geometry.type === 'Polygon') {
       layer = L.polygon(
@@ -79,7 +63,7 @@ export class GeoTools {
       );
 
       layer.setStyle({
-        color: PolygonColor
+        color: polygonColor
       });
     }
 

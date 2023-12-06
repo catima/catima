@@ -103,7 +103,17 @@ button[data-active=true]:focus {
     height: 30px;
     margin-left: 5px;
 }
-
+.geo-colors-wrapper {
+  display: inline-block;
+  margin-bottom: 5px;
+  margin-right: 10px;
+}
+.geo-colors-button {
+  display: inline-block;
+  width: 50px;
+  height: 20px;
+  margin-left: 5px;
+}
 .clearable-input {
   display: inline-block;
 
