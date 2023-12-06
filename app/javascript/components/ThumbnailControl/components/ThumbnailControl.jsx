@@ -48,6 +48,7 @@ const ThumbnailControl = (props) => {
   }
 
   function _onChange(crop) {
+    crop.aspect = 1;
     setState({crop});
     const src = _loadSrc();
     src[0].crop = crop;
