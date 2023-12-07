@@ -4,8 +4,6 @@ on:
     branches:
       - "development"
       - "master"
-env:
-  DOCKERHUB_REPOSITORY: unillett/catima
 
 jobs:
   docker:
@@ -36,8 +34,8 @@ jobs:
           target: app-dev
           platforms: linux/amd64,linux/arm64
           push: true
-          tags: ${{ env.DOCKERHUB_REPOSITORY }}:latest-app
-          cache-from: type=registry,ref=${{ env.DOCKERHUB_REPOSITORY }}:latest-app
+          tags: ${{ vars.DOCKERHUB_REPOSITORY }}:latest-app
+          cache-from: type=registry,ref=${{ vars.DOCKERHUB_REPOSITORY }}:latest-app
           cache-to: type=inline
 
       - name: Build and push worker
@@ -48,8 +46,8 @@ jobs:
           target: worker-dev
           platforms: linux/amd64,linux/arm64
           push: true
-          tags: ${{ env.DOCKERHUB_REPOSITORY }}:latest-worker
-          cache-from: type=registry,ref=${{ env.DOCKERHUB_REPOSITORY }}:latest-worker
+          tags: ${{ vars.DOCKERHUB_REPOSITORY }}:latest-worker
+          cache-from: type=registry,ref=${{ vars.DOCKERHUB_REPOSITORY }}:latest-worker
           cache-to: type=inline
 
       - name: Update description
@@ -57,4 +55,4 @@ jobs:
         with:
           username: ${{ secrets.DOCKERHUB_USERNAME }}
           password: ${{ secrets.DOCKERHUB_TOKEN }}
-          repository: ${{ env.DOCKERHUB_REPOSITORY }}
+          repository: ${{ vars.DOCKERHUB_REPOSITORY }}
