@@ -25,22 +25,17 @@ class Container::Map < ::Container
   end
 
   def geojson
-    @item_type = catalog.item_types.where(:id => item_type).first!
+    @item_type = catalog.item_types.find_by(id: item_type)
+    return unless @item_type
+
     features = { "type" => "FeatureCollection", "features" => [] }
     # Retrieve the first geometry field in the item type, this limitation is artificial
     # and temporary until we have a better way to handle multiple geometry fields.
     # TODO: handle multiple geometry fields (field selection with multi-select)
-    fields = @item_type.fields.where(:type => 'Field::Geometry').limit(1)
+    fields = @item_type.fields.where(type: 'Field::Geometry').limit(1)
 
-    # Execute the SQL queries to retrieve all geometries of the specified fields
     fields.find_each do |field|
-      sql = "SELECT jsonb_build_object('features', CASE WHEN (array_agg(feat) IS NOT NULL) THEN array_to_json(array_agg(feat)) ELSE '[]' END) AS geojson FROM " \
-            "(SELECT jsonb_build_object('geometry', jsonb_array_elements(feats)->'geometry', 'properties', jsonb_build_object('id', id, 'polygon_color', '#{field.polygon_color}', 'polyline_color', '#{field.polyline_color}'), 'type', 'Feature') AS feat " \
-            "FROM " \
-            "(SELECT id, data->'#{field.uuid}'->'features' AS feats FROM items " \
-            "WHERE item_type_id = #{@item_type.id} " \
-            "AND data->'#{field.uuid}'->'features' IS NOT NULL) A) B"
-      res = ActiveRecord::Base.connection.execute(sql)
+      res = find_geometries_query(field)
       data = JSON.parse(res[0]['geojson'])
 
       features['features'].concat(data['features']) if data['features'].present?
@@ -77,5 +72,22 @@ class Container::Map < ::Container
     return if item_type.present?
 
     errors.add :item_type, I18n.t('catalog_admin.containers.item_type_warning')
+  end
+
+  def find_geometries_query(field)
+    sql =
+      <<-SQL.squish
+        SELECT jsonb_build_object('features', CASE WHEN (array_agg(feat) IS NOT NULL) THEN array_to_json(array_agg(feat)) ELSE '[]' END) AS geojson
+        FROM (
+          SELECT jsonb_build_object('geometry', jsonb_array_elements(feats)->'geometry', 'properties', jsonb_build_object('id', id, 'polygon_color', '#{field.polygon_color}', 'polyline_color', '#{field.polyline_color}'), 'type', 'Feature') AS feat
+          FROM (
+            SELECT id, data->'#{field.uuid}'->'features' AS feats
+            FROM items
+            WHERE item_type_id = #{@item_type.id} AND data->'#{field.uuid}'->'features' IS NOT NULL
+          ) A
+        ) B
+      SQL
+
+    ActiveRecord::Base.connection.execute(sql)
   end
 end
