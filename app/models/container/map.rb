@@ -27,9 +27,13 @@ class Container::Map < ::Container
   def geojson
     @item_type = catalog.item_types.where(:id => item_type).first!
     features = { "type" => "FeatureCollection", "features" => [] }
+    # Retrieve the first geometry field in the item type, this limitation is artificial
+    # and temporary until we have a better way to handle multiple geometry fields.
+    # TODO: handle multiple geometry fields (field selection with multi-select)
+    fields = @item_type.fields.where(:type => 'Field::Geometry').limit(1)
 
-    # Execute the SQL queries to retrieve all geometries of all items of this item type
-    @item_type.fields.where(:type => 'Field::Geometry').find_each do |field|
+    # Execute the SQL queries to retrieve all geometries of the specified fields
+    fields.find_each do |field|
       sql = "SELECT jsonb_build_object('features', CASE WHEN (array_agg(feat) IS NOT NULL) THEN array_to_json(array_agg(feat)) ELSE '[]' END) AS geojson FROM " \
             "(SELECT jsonb_build_object('geometry', jsonb_array_elements(feats)->'geometry', 'properties', jsonb_build_object('id', id, 'polygon_color', '#{field.polygon_color}', 'polyline_color', '#{field.polyline_color}'), 'type', 'Feature') AS feat " \
             "FROM " \

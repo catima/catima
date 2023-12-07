@@ -24,10 +24,12 @@ class ItemList::AdvancedSearchResult < ItemList
 
   def items_as_geojson
     features = []
+    # Retrieve the first geometry field in the item type, this limitation is artificial
+    # and temporary until we have a better way to handle multiple geometry fields.
+    # TODO: handle multiple geometry fields (field selection with multi-select)
+    fields = @model.fields.where(:type => 'Field::Geometry').limit(1)
 
-    @model.fields.each do |field|
-      next unless field.is_a?(Field::Geometry)
-
+    fields.find_each do |field|
       geometry_aware_items = unpaginaged_items.reject { |it| it.data[field.uuid].blank? }
 
       features.concat(
