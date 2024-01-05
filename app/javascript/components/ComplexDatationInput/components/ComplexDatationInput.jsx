@@ -97,7 +97,7 @@ const ComplexDatationInput = (props) => {
     }
 
     useEffect(() => {
-        if (date['selected_format']) {
+        if (date['selected_format'] && allowedFormats.includes(date['selected_format'])) {
             setSelectedFormat(date['selected_format'])
         } else {
             setSelectedFormat(selectedFormatProps[0])
@@ -412,6 +412,7 @@ const RenderChoiceSetList = (props) => {
                     choiceSet={choiceSet}
                     fieldUuid={fieldUuid}
                     componentPolicies={componentPolicies}
+                    isActive={choiceSet.active}
                 />
             </div>);
         }
@@ -419,7 +420,9 @@ const RenderChoiceSetList = (props) => {
 
     return (
         <div>
-            {choiceSets.map((choiceSet, index, list) => renderChoiceSet(choiceSet, index, list))}
+            {
+                choiceSets.map((choiceSet, index, list) => renderChoiceSet(choiceSet, index, list))
+            }
         </div>
     );
 }
@@ -433,7 +436,8 @@ const RenderChoiceSetInput = (props) => {
         index,
         choiceSet,
         fieldUuid,
-        componentPolicies
+        componentPolicies,
+        isActive
     } = props
 
     const [selectedChoices, setSelectedChoices] = useState({BC: false, value: selectedChoicesValueProps})
@@ -476,6 +480,18 @@ const RenderChoiceSetInput = (props) => {
     }
 
     async function _loadOptions(search, loadedOptions, {page}) {
+        // If the selected ChoiceSet is not active (deactivated
+        // or deleted), then return an empty list of options.
+        if (!isActive) {
+            return {
+                options: [],
+                hasMore: false,
+                additional: {
+                    page: page,
+                },
+            };
+        }
+
         if (optionsList.length < 25 && isInitialized) {
             if (search.length > 0) {
                 let regexExp = new RegExp(search, 'i')
@@ -520,7 +536,7 @@ const RenderChoiceSetInput = (props) => {
 
     return (
         <div>
-            <div className="dateTimeInput  row rails-bootstrap-forms-datetime-select" style={{display: 'flex'}}>
+            <div className="dateTimeInput row rails-bootstrap-forms-datetime-select" style={{display: 'flex'}}>
                 <div className="col-sm-8">
                     <div style={{width: '100%'}}>
                         <AsyncPaginate
@@ -543,7 +559,7 @@ const RenderChoiceSetInput = (props) => {
                         />
                     </div>
                 </div>
-                {componentPolicies.modal && (
+                {componentPolicies.modal && isActive && (
                     <div className="col-sm-4">
                         <a onClick={() => setModalOpen(true)} className="btn btn-sm btn-outline-secondary"
                            data-toggle="modal"

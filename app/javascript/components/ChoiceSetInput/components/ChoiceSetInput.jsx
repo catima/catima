@@ -22,6 +22,7 @@ const ChoiceSetInput = (props) => {
       req,
       input
     ))
+    const [isActive, setIsActive] = useState(choiceSetProps.active)
 
     const setChoiceData = (index, value) => {
         let data = choiceData
@@ -70,6 +71,7 @@ const ChoiceSetInput = (props) => {
                     req={req}
                     input={input}
                     componentPolicies={componentPolicies}
+                    isActive={isActive}
                 />
             </div>
         </div>
@@ -94,7 +96,8 @@ const RenderChoiceSetInput = (props) => {
         getInput,
         req,
         input,
-        componentPolicies
+        componentPolicies,
+        isActive
     } = props
 
     const [selectedChoices, setSelectedChoices] = useState({value: selectedChoicesValueProps})
@@ -184,6 +187,18 @@ const RenderChoiceSetInput = (props) => {
     }
 
     async function _loadOptions(search, loadedOptions, {page}) {
+        // If the selected ChoiceSet is not active (deactivated
+        // or deleted), then return an empty list of options.
+        if (!isActive) {
+            return {
+                options: [],
+                hasMore: false,
+                additional: {
+                    page: page,
+                },
+            };
+        }
+
         if (optionsList.length < 25 && isInitialized) {
             if (search.length > 0) {
                 let regexExp = new RegExp(search, 'i')
@@ -224,6 +239,7 @@ const RenderChoiceSetInput = (props) => {
             };
         }
     }
+
     return (
         <div>
             <div className="choiceSetInput row" style={{display: 'flex'}}>
@@ -252,7 +268,7 @@ const RenderChoiceSetInput = (props) => {
                         />
                     </div>
                 </div>
-                {componentPolicies.modal && (
+                {componentPolicies.modal && isActive && (
                     <div className="col-sm-4">
                         <a onClick={() => setModalOpen(true)} className="btn btn-sm btn-outline-secondary"
                            data-toggle="modal"

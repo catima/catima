@@ -35,9 +35,17 @@ class Field::ComplexDatation < ::Field
   end
 
   def flat_ordered_choices
-    @flat_ordered_choices ||= recursive_ordered_choices(catalog.choice_sets.where(id: choice_set_ids).map { |choice_set| choice_set.choices.ordered.reject(&:parent_id?) }.flatten).flatten
+    @flat_ordered_choices ||= recursive_ordered_choices(
+      catalog.choice_sets.where(
+        id: choice_set_ids,
+        deactivated_at: nil,
+        deleted_at: nil
+      ).map { |choice_set| choice_set.choices.ordered.reject(&:parent_id?) }.flatten
+    ).flatten
+
     ids = @flat_ordered_choices.map(&:id)
     cases = ids.map.with_index { |id, index| "WHEN id='#{id}' THEN #{index + 1}" }.join(" ")
+
     @flat_ordered_choices = Choice.where(id: ids).order(Arel.sql("CASE #{cases} ELSE #{ids.size + 1} END"))
   end
 
@@ -130,6 +138,7 @@ class Field::ComplexDatation < ::Field
         id: choice_set.id,
         format: choice_set.format.to_json,
         allowBC: choice_set.allow_bc,
+        active: choice_set.not_deactivated? && choice_set.not_deleted?,
         newChoiceModalUrl: Rails.application.routes.url_helpers.new_choice_modal_catalog_admin_choice_set_path(catalog, I18n.locale, choice_set),
         createChoiceUrl: Rails.application.routes.url_helpers.catalog_admin_choice_set_choices_path(catalog, I18n.locale, choice_set),
         fetchUrl: Rails.application.routes.url_helpers.react_choices_for_choice_set_path(
@@ -272,9 +281,9 @@ class Field::ComplexDatation < ::Field
 
       return if value['selected_format'] != "date_time"
 
-      from_date_is_positive = value['from'].compact.reject { |k, _| k == "BC" }.all? { |_, v| v.to_i >= 0 }
+      from_date_is_positive = value['from'].compact.except("BC").all? { |_, v| v.to_i >= 0 }
 
-      to_date_is_positive = value['to'].compact.reject { |k, _| k == "BC" }.all? { |_, v| v.to_i >= 0 }
+      to_date_is_positive = value['to'].compact.except("BC").all? { |_, v| v.to_i >= 0 }
 
       return if to_date_is_positive && from_date_is_positive
 

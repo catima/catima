@@ -119,7 +119,7 @@ class Field::ChoiceSet < ::Field
       selected_choices(it).map(&:uuid)
     else
       ch = selected_choice(it)
-      ch.nil? ? nil : ch.uuid
+      ch&.uuid
     end
   end
 
@@ -128,7 +128,7 @@ class Field::ChoiceSet < ::Field
       selected_choices(it).map(&:long_display_name).join(', ')
     else
       ch = selected_choice(it)
-      ch.nil? ? nil : ch.choice_set.choice_prefixed_label(ch, format: :long)
+      ch&.choice_set&.choice_prefixed_label(ch, format: :long)
     end
   end
 
@@ -203,6 +203,7 @@ class Field::ChoiceSet < ::Field
         format: choice_set.format.to_json,
         multiple: multiple?,
         allowBC: choice_set.allow_bc,
+        active: choice_set.not_deactivated? && choice_set.not_deleted?,
         newChoiceModalUrl: Rails.application.routes.url_helpers.new_choice_modal_catalog_admin_choice_set_path(catalog, I18n.locale, choice_set),
         createChoiceUrl: Rails.application.routes.url_helpers.catalog_admin_choice_set_choices_path(catalog, I18n.locale, choice_set),
         fetchUrl: fetch_url,

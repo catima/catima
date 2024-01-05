@@ -49,6 +49,7 @@ const ChoiceSetSearch = (props) => {
   const [isInitialized, _setIsInitialized] = useState(false)
   const [optionsList, setOptionsList] = useState([])
   const [choices, setChoices] = useState([])
+  const [isActive, setIsActive] = useState(!(choiceSet.deactivated_at || choiceSet.deleted_at))
 
   useEffect(() => {
     if (typeof selectConditionProps !== 'undefined' && selectConditionProps.length !== 0) {
@@ -208,6 +209,18 @@ const ChoiceSetSearch = (props) => {
 
 
   async function _loadOptions(search, loadedOptions, {page}) {
+    // If the selected ChoiceSet is not active (deactivated
+    // or deleted), then return an empty list of options.
+    if (!isActive) {
+      return {
+        options: [],
+        hasMore: false,
+        additional: {
+          page: page,
+        },
+      };
+    }
+
     if (optionsList.length < 25 && isInitialized) {
       if (search.length > 0) {
         let regexExp = new RegExp(search, 'i')

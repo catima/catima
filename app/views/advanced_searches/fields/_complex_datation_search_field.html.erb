@@ -23,7 +23,7 @@
                         fieldConditionData: field.search_field_conditions_as_hash,
                         allowDateTimeBC: (field.allowed_formats.include?('date_time') && field.allow_date_time_bc == '1') || (field.allowed_formats.include?('datation_choice') && ChoiceSet.where(id: field.choice_set_ids).any?(&:allow_bc)),
                         label: t(".any"),
-                        items: (!choice_sets.first&.not_deleted? || !choice_sets.first&.not_deactivated?) ? [] : filter_category_fields(field.search_data_as_hash),
+                        items: filter_category_fields(field.search_data_as_hash),
                         categoryInputName: "advanced_search[criteria][#{field.uuid}][0][category_field]",
                         linkedCategoryInputName: "advanced_search[criteria][#{field.uuid}][0][category_criteria]",
                         childChoicesActivatedInputName: "advanced_search[criteria][#{field.uuid}][0][child_choices_activated]",

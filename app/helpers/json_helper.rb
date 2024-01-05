@@ -10,6 +10,7 @@ module JsonHelper
       :input => "##{json_hidden_field_id(form, field)}",
       :options => options
     )
+
     # Compute the component policies from the model props if available for the field
     if props[:componentPolicies].present?
       props[:componentPolicies] = props[:componentPolicies].transform_values do |role|
