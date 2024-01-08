@@ -1054,12 +1054,20 @@ fr:
   documentation:
     index:
       title: Documentation
-      guest: Visiteur de catalogue
-      user: Utilisateur de catalogue
-      editor: Éditeur de catalogue
-      super-editor: Super-éditeur de catalogue
-      reviewer: Superviseur de catalogue
-      admin: Administrateur de catalogue
+      faq:
+        title: FAQ
+        add_data: Ajout et modification de données
+        view_data: Affichage des données
+        access: Collaboration et accès
+        workflow: Workflow et fonctionnalités
+      roles:
+        title: Documentation par rôle
+        guest: Visiteur de catalogue
+        user: Utilisateur de catalogue
+        editor: Éditeur de catalogue
+        super-editor: Super-éditeur de catalogue
+        reviewer: Superviseur de catalogue
+        admin: Administrateur de catalogue
 
   suggestions:
     create:

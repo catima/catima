@@ -832,12 +832,20 @@ de:
   documentation:
     index:
       title: Dokumentation
-      guest: Katalogbesucher
-      user: Katalog-Benutzer
-      editor: Katalog-Editor
-      super-editor: Katalog Super-Editor
-      reviewer: Katalog-Reviewer
-      admin: Katalogverwalter
+      faq:
+        title: FAQ
+        add_data: Hinzufügen und Bearbeiten von Daten
+        view_data: Daten anzeigen
+        access: Zusammenarbeit und Zugang
+        workflow: Workflow und Funktionen
+      roles:
+        title: Dokumentation nach Rolle
+        guest: Katalogbesucher
+        user: Katalog-Benutzer
+        editor: Katalog-Editor
+        super-editor: Katalog Super-Editor
+        reviewer: Katalog-Reviewer
+        admin: Katalogverwalter
 
   suggestions:
     create:

@@ -1,56 +1,109 @@
 <% provide(:title, t(".title")) %>
 
-<div id="doc-content">
+<div id="doc-content" class="mt-4 mb-4">
   <%= markdown_2_html("introduction.md").html_safe %>
 
   <br>
 
-  <div class="panel-group" id="doc-accordion">
-    <%= render("documentation/accordion_item",
-               title: t(".guest"),
-               file_name: "guest.md",
-               id: random_id)
+  <div>
+    <h2>
+      <%= t("documentation.index.faq.title") %>
+    </h2>
 
-    %>
+    <a href="<%= documentation_url("faq.html") %>#ajout-et-modification-de-données"
+       target="_blank"
+       class="btn btn-primary btn-lg mb-1"
+       role="button"
+       aria-pressed="true">
+      <%= t("documentation.index.faq.add_data") %>
+    </a>
+
+    <a href="<%= documentation_url("faq.html") %>#affichage-des-données"
+       target="_blank"
+       class="btn btn-primary btn-lg mb-1"
+       role="button"
+       aria-pressed="true">
+      <%= t("documentation.index.faq.view_data") %>
+    </a>
+
+    <a href="<%= documentation_url("faq.html") %>#collaboration-et-accès"
+       target="_blank"
+       class="btn btn-primary btn-lg mb-1"
+       role="button"
+       aria-pressed="true">
+      <%= t("documentation.index.faq.access") %>
+    </a>
+
+    <a href="<%= documentation_url("faq.html") %>#workflow-et-fonctionnalités"
+       target="_blank"
+       class="btn btn-primary btn-lg mb-1"
+       role="button"
+       aria-pressed="true">
+      <%= t("documentation.index.faq.workflow") %>
+    </a>
+  </div>
+
+  <div>
+    <h2>
+      <%= t("documentation.index.roles.title") %>
+    </h2>
+
+    <a href="<%= documentation_url("guest.html") %>"
+       target="_blank"
+       class="btn btn-primary btn-lg mb-1"
+       role="button"
+       aria-pressed="true">
+      <%= t("documentation.index.roles.guest") %>
+    </a>
 
     <% if current_user.catalog_role_at_least?(@catalog, 'user') %>
-      <%= render("documentation/accordion_item",
-                 title: t(".user"),
-                 file_name: "user.md",
-                 id: random_id)
-      %>
+      <a href="<%= documentation_url("user.html") %>"
+         target="_blank"
+         class="btn btn-primary btn-lg mb-1"
+         role="button"
+         aria-pressed="true">
+        <%= t("documentation.index.roles.user") %>
+      </a>
     <% end %>
 
     <% if current_user.catalog_role_at_least?(@catalog, 'editor') %>
-      <%= render("documentation/accordion_item",
-                 title: t(".editor"),
-                 file_name: "editors.md",
-                 id: random_id)
-      %>
+      <a href="<%= documentation_url("editors.html") %>"
+         target="_blank"
+         class="btn btn-primary btn-lg mb-1"
+         role="button"
+         aria-pressed="true">
+        <%= t("documentation.index.roles.editor") %>
+      </a>
     <% end %>
 
     <% if current_user.catalog_role_at_least?(@catalog, 'super-editor') %>
-      <%= render("documentation/accordion_item",
-                 title: t(".super-editor"),
-                 file_name: "supereditors.md",
-                 id: random_id)
-      %>
+      <a href="<%= documentation_url("supereditors.html") %>"
+         target="_blank"
+         class="btn btn-primary btn-lg mb-1"
+         role="button"
+         aria-pressed="true">
+        <%= t("documentation.index.roles.super-editor") %>
+      </a>
     <% end %>
 
     <% if current_user.catalog_role_at_least?(@catalog, 'reviewer') %>
-      <%= render("documentation/accordion_item",
-                 title: t(".reviewer"),
-                 file_name: "reviewer.md",
-                 id: random_id)
-      %>
+      <a href="<%= documentation_url("reviewer.html") %>"
+         target="_blank"
+         class="btn btn-primary btn-lg mb-1"
+         role="button"
+         aria-pressed="true">
+        <%= t("documentation.index.roles.reviewer") %>
+      </a>
     <% end %>
 
     <% if current_user.catalog_role_at_least?(@catalog, 'admin') %>
-      <%= render("documentation/accordion_item",
-                 title: t(".admin"),
-                 file_name: "admin.md",
-                 id: random_id)
-      %>
+      <a href="<%= documentation_url("admin.html") %>"
+         target="_blank"
+         class="btn btn-primary btn-lg mb-1"
+         role="button"
+         aria-pressed="true">
+        <%= t("documentation.index.roles.admin") %>
+      </a>
     <% end %>
   </div>
 </div>
