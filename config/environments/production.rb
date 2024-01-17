@@ -58,7 +58,9 @@ Rails.application.configure do
   config.assume_ssl = true
 
   # Force all access to the app over SSL, use Strict-Transport-Security, and use secure cookies.
-  config.force_ssl = true
+  # Mitigate the NoMethodError issue with unicorn (link below). SSL forced anyway by load balancer.
+  # https://yhbt.net/unicorn-public/new.html#e2eb46ca71e1a0691099a6ba843d5d8d5588c2224
+  config.force_ssl = false
 
   # Use default logging formatter so that PID and timestamp are not suppressed.
   config.log_formatter = Logger::Formatter.new
