@@ -142,7 +142,7 @@ class API::V3::BaseController < ApplicationController
       pagination_links << "<#{url_without_params}?#{new_request_hash.to_param}>; rel=\"#{k}\""
     end
     headers["Link"] = pagination_links.join(", ")
-    headers["Total"] = scope.total_count
+    headers["Total"] = scope.total_count.to_s
   end
   # rubocop:enable Metrics/PerceivedComplexity
 end
