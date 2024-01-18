@@ -93,7 +93,7 @@ jobs:
 
       - name: Upload coverage artifact
         id: upload-coverage-artifact
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
           name: coverage-report
           path: /home/runner/work/catima/catima/coverage

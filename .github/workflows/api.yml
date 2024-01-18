@@ -93,7 +93,7 @@ jobs:
 
       - name: Upload artifact
         id: upload-artifact
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
           name: swagger-documentation
           path: /home/runner/work/catima/catima/swagger/v3/swagger.yaml
