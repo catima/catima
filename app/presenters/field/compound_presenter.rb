@@ -37,23 +37,32 @@ class Field::CompoundPresenter < FieldPresenter
     # Parse the template JSON and get the template for the specified locale
     local_template = JSON.parse(field.template).fetch(locale.to_s, '')
 
-    # Select displayable fields based on conditions and user permissions
-    displayable_fields = field.item_type.fields.select do |fld|
-      fld.human_readable? && (fld.displayable_to_user?(@user) if @user)
+    # Select displayable fields for the item type based on conditions and user permissions
+    displayable_fields = field.item_type.fields.select(&:human_readable?)
+    if @user
+      displayable_fields = displayable_fields.select do |fld|
+        fld.displayable_to_user?(@user)
+      end
     end
 
     # Replace template placeholders with field values using presenters
     displayable_fields.each do |field|
-      presenter = "#{field.class.name}Presenter".constantize.new(@view, @item, field, { :style => :compact }, @user)
-      local_template = local_template.gsub("{{#{field.slug}}}", presenter.value || '')
+      local_template = replace_field_in_template(field, local_template)
     end
 
     # Remove remaining placeholders and HTML tags, then make the result HTML safe
     strip_p(local_template.gsub(/(\{\{.*?\}\})/i, '')).html_safe
   end
 
+  private
+
   def strip_p(html)
     allow_list_sanitizer = Rails::Html::WhiteListSanitizer.new
     allow_list_sanitizer.sanitize(html, tags: %w(b strong i emph u strike sup sub))
+  end
+
+  def replace_field_in_template(field, template)
+    presenter = "#{field.class.name}Presenter".constantize.new(@view, @item, field, { :style => :compact }, @user)
+    template.gsub("{{#{field.slug}}}", presenter.value || '')
   end
 end

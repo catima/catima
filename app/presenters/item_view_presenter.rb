@@ -31,6 +31,8 @@ class ItemViewPresenter
     (@options[:strip_p] == true ? strip_p(local_template) : local_template).html_safe
   end
 
+  private
+
   def strip_p(html)
     allow_list_sanitizer = Rails::Html::WhiteListSanitizer.new
     allow_list_sanitizer.sanitize(html, tags: %w(b strong i emph u strike sup sub a))
