@@ -831,21 +831,25 @@ de:
 
   documentation:
     index:
-      title: Dokumentation
+      title: Documentation
       faq:
         title: FAQ
-        add_data: Hinzufügen und Bearbeiten von Daten
-        view_data: Daten anzeigen
-        access: Zusammenarbeit und Zugang
-        workflow: Workflow und Funktionen
+        add_data: Ajout et modification de données
+        add_data_anchor: ajout-et-modification-de-données
+        view_data: Affichage des données
+        view_data_anchor: affichage-des-données
+        access: Collaboration et accès
+        access_anchor: collaboration-et-accès
+        workflow: Workflow et fonctionnalités
+        workflow_anchor: workflow-et-fonctionnalités
       roles:
-        title: Dokumentation nach Rolle
-        guest: Katalogbesucher
-        user: Katalog-Benutzer
-        editor: Katalog-Editor
-        super-editor: Katalog Super-Editor
-        reviewer: Katalog-Reviewer
-        admin: Katalogverwalter
+        title: Documentation par rôle
+        guest: Visiteur de catalogue
+        user: Utilisateur de catalogue
+        editor: Éditeur de catalogue
+        super-editor: Super-éditeur de catalogue
+        reviewer: Superviseur de catalogue
+        admin: Administrateur de catalogue
 
   suggestions:
     create:

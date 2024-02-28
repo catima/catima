@@ -645,21 +645,25 @@ it:
 
   documentation:
     index:
-      title: Documentazione
+      title: Documentation
       faq:
         title: FAQ
-        add_data: Aggiunta e modifica dei dati
-        view_data: Visualizzazione dei dati
-        access: Collaborazione e accesso
-        workflow: Flusso di lavoro e funzioni
+        add_data: Ajout et modification de données
+        add_data_anchor: ajout-et-modification-de-données
+        view_data: Affichage des données
+        view_data_anchor: affichage-des-données
+        access: Collaboration et accès
+        access_anchor: collaboration-et-accès
+        workflow: Workflow et fonctionnalités
+        workflow_anchor: workflow-et-fonctionnalités
       roles:
-        title: Documentazione per ruolo
-        guest: Visitatore del catalogo
-        user: Utente del catalogo
-        editor: Editore del catalogo
-        super-editor: Super-editore del catalogo
-        reviewer: Supervisore del catalogo
-        admin: Amministratore del catalogo
+        title: Documentation par rôle
+        guest: Visiteur de catalogue
+        user: Utilisateur de catalogue
+        editor: Éditeur de catalogue
+        super-editor: Super-éditeur de catalogue
+        reviewer: Superviseur de catalogue
+        admin: Administrateur de catalogue
 
   suggestions:
     create:

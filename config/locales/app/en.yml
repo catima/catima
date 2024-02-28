@@ -1056,10 +1056,14 @@ en:
       title: Documentation
       faq:
         title: FAQ
-        add_data: Adding and editing data
-        view_data: Displaying data
-        access: Collaboration and access
-        workflow: Workflow and features
+        add_data: Adding and Editing Data
+        add_data_anchor: adding-and-editing-data
+        view_data: Data Display
+        view_data_anchor: data-display
+        access: Collaboration and Access
+        access_anchor: collaboration-and-access
+        workflow: Workflow and Features
+        workflow_anchor: workflow-and-features
       roles:
         title: Documentation by role
         guest: Catalog visitor
