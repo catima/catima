@@ -646,12 +646,20 @@ it:
   documentation:
     index:
       title: Documentazione
-      guest: Visitatore del catalogo
-      user: Utente del catalogo
-      editor: Editore del catalogo
-      super-editor: Super-editore del catalogo
-      reviewer: Supervisore del catalogo
-      admin: Amministratore del catalogo
+      faq:
+        title: FAQ
+        add_data: Aggiunta e modifica dei dati
+        view_data: Visualizzazione dei dati
+        access: Collaborazione e accesso
+        workflow: Flusso di lavoro e funzioni
+      roles:
+        title: Documentazione per ruolo
+        guest: Visitatore del catalogo
+        user: Utente del catalogo
+        editor: Editore del catalogo
+        super-editor: Super-editore del catalogo
+        reviewer: Supervisore del catalogo
+        admin: Amministratore del catalogo
 
   suggestions:
     create:

@@ -1,4 +1,8 @@
 module DocumentationHelper
+  def documentation_url(file_name)
+    build_url(file_name, define_locale(file_name))
+  end
+
   def markdown_2_html(file_name)
     markdown = Redcarpet::Markdown.new(
       DocRender.new(
@@ -14,21 +18,16 @@ module DocumentationHelper
     markdown.render(raw_content(file_name))
   end
 
-  def random_id
-    range = [*'A'..'Z', *'a'..'z']
-    Array.new(10) { range.sample }.join
-  end
-
   private
 
   def raw_content(file_name)
     Net::HTTP.get(
-      content_url(file_name, define_locale(file_name))
+      build_url(file_name, define_locale(file_name))
     ).force_encoding("UTF-8")
   end
 
-  def content_url(file_name, locale=I18n.locale)
-    URI("#{ENV['DOC_BASE_URL']}/#{locale}/#{file_name}")
+  def build_url(file_name, locale=I18n.locale)
+    URI("#{ENV.fetch('DOC_BASE_URL', nil)}/#{locale}/#{file_name}")
   end
 
   # Define current locale for the content url if the
@@ -41,7 +40,7 @@ module DocumentationHelper
 
   def file_available?(file_name)
     Net::HTTP.get_response(
-      content_url(file_name)
+      build_url(file_name)
     ).is_a?(Net::HTTPSuccess)
   end
 end
