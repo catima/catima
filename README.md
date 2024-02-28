@@ -31,7 +31,7 @@ This project requires:
 
 * Ruby 3.2.2, preferably managed using [rbenv](http://rbenv.org/)
 * PostgreSQL 15 must be installed and accepting connections
-* Node 18.x (`brew install nvm`, ...)
+* Node 20.x (`brew install nvm`, ...)
 * [Redis](https://redis.io/) must be installed and running on localhost with the default port
 * Imagemagick must be installed (`brew install imagemagick`, `sudo apt install imagemagick`, ...)
 * Sodium must be installed (`brew install libsodium`, ...)
