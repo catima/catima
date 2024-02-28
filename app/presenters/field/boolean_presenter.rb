@@ -1,6 +1,6 @@
 class Field::BooleanPresenter < FieldPresenter
   def value
-    return nil unless raw_value
+    return nil if raw_value.blank?
 
     raw_value.to_i == 1 ? t('yes') : t('no')
   end
