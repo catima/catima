@@ -37,8 +37,6 @@ class Field::Int < ::Field
   store_accessor :options, :minimum
   store_accessor :options, :auto_increment
 
-  # TODO: validate minimum is less than maximum?
-
   validates_numericality_of :maximum, :minimum,
                             :only_integer => true,
                             :allow_blank => true
@@ -49,7 +47,7 @@ class Field::Int < ::Field
   end
 
   def order_items_by(direction: 'ASC', nulls_order: 'LAST')
-    "NULLIF(items.data->>'#{uuid}', '')::int #{direction} NULLS #{nulls_order}"
+    "NULLIF(items.data->>'#{uuid}', '')::BIGINT #{direction} NULLS #{nulls_order}"
   end
 
   def auto_increment?

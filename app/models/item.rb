@@ -230,7 +230,7 @@ class Item < ApplicationRecord
       next unless (f.type == 'Field::Int') && !f.options.nil? && f.auto_increment? && data[f.uuid].nil?
 
       st = conn.exec(
-        "SELECT MAX(CAST(NULLIF(data->>'#{f.uuid}', '') AS integer)) FROM items WHERE item_type_id = $1",
+        "SELECT MAX(CAST(NULLIF(data->>'#{f.uuid}', '') AS BIGINT)) FROM items WHERE item_type_id = $1",
         [item_type_id]
       )
       self.data[f.uuid] = st.getvalue(0, 0).to_i + 1
