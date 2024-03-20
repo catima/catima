@@ -33,11 +33,13 @@ class API::V3::Catalog::BaseController < API::V3::BaseController
     count = REDIS.get(key)
 
     unless count
-      throttle_time_window = @catalog.throttle_time_window || DEFAULT_THROTTLE_TIME_WINDOW
+      throttle_time_window = @catalog.throttle_time_window&.to_i
+      throttle_time_window = DEFAULT_THROTTLE_TIME_WINDOW if throttle_time_window == 0
       REDIS.set(key, '0', ex: throttle_time_window)
     end
 
-    throttle_max_requests = @catalog.throttle_max_requests || DEFAULT_THROTTLE_MAX_REQUESTS
+    throttle_max_requests = @catalog.throttle_max_requests&.to_i
+    throttle_max_requests = DEFAULT_THROTTLE_MAX_REQUESTS if throttle_max_requests == 0
     if count.to_i >= throttle_max_requests
       render :status => :too_many_requests, :json => { code: 'too_many_requests', message: t('api-v3.responses.too_many_requests') }
       return
@@ -49,7 +51,7 @@ class API::V3::Catalog::BaseController < API::V3::BaseController
     ids = if authenticated_catalog?
             [@authenticated_catalog.id]
           elsif @current_user.system_admin?
-            Catalog.all.pluck(:id)
+            Catalog.pluck(:id)
           else
             @current_user.public_and_accessible_catalogs.pluck(:id)
           end
@@ -60,6 +62,7 @@ class API::V3::Catalog::BaseController < API::V3::BaseController
   def find_catalog
     @catalog = @catalogs.find_by(id: params[:catalog_id])
     return render_forbidden("not_allowed") if authenticated_catalog? && @catalog.blank?
-    return render_not_found("not_found") if @catalog.blank?
+
+    render_not_found("not_found") if @catalog.blank?
   end
 end

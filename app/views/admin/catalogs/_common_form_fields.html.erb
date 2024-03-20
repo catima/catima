@@ -65,8 +65,8 @@
   <%= f.check_box(:api_enabled) %>
 <% end %>
 
-<%= f.number_field(:throttle_time_window, min: 0, step: 1) %>
-<%= f.number_field(:throttle_max_requests, min: 0, step: 1) %>
+<%= f.number_field(:throttle_time_window, min: 1, step: 1) %>
+<%= f.number_field(:throttle_max_requests, min: 1, step: 1) %>
 
 <% if @admins.present? %>
   <hr>
