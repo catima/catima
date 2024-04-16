@@ -187,9 +187,9 @@ de:
   invitations_mailer:
     account_information:
       account_email: "Ihre aktuelle E-Mail-Adresse wird als Login für Ihr Konto verwendet.."
-      info_you_will_need: "Nachstehend finden Sie die Informationen, die Sie zum Einloggen benötigen:"
-      set_your_password: "Klicken Sie hier, um das Passwort für Ihr Konto festzulegen"
-      link_to_catalog: "Dann klicken Sie hier, um den Katalog «%{catalog}» aufzurufen"
+      info_you_will_need: "Um die Erstellung Ihres Catima-Kontos abzuschließen, klicken Sie bitte auf Link 1, um das Passwort für Ihren Benutzer festzulegen. Sobald Sie dies getan haben, klicken Sie auf Link 2, um auf die Datenbank zuzugreifen."
+      set_your_password: "Link 1 (Passwort für Ihr Konto festlegen)"
+      link_to_catalog: "Link 2 (zum Katalog «%{catalog}»)"
       link_to_admin: "Dann klicken Sie hier, um die Kataloge aufzulisten, die Sie verwalten können"
     catalog_admin:
       catalog_admin_role: "Als Katalog-Administrator haben Sie das Recht Einträge im Katalog zu erstellen und zu editieren, das Design des Katalogs zu ändern, und andere Benutzer als Editoren einzuladen."
@@ -205,15 +205,16 @@ de:
       member_role: Als Mitglied können Sie die öffentlichen Bereiche eines eingeschränkten Katalogs sehen.
       editor_role: Als Katalog-Editor können Sie Einträge erstellen und editieren.
       super_editor_role: Als Katalog-Super-Editor können Sie alle Einträge erstellen und editieren. Sie können auch neue Auswahlen erstellen.
-      invited_to_access_html: "%{invited_by} hat Sie eingeladen %{catalog} zu konsultieren."
+      invited_to_access_html: "%{invited_by} hat Sie aufgefordert, den Katalog %{catalog} anzufügen."
       reviewer_role: Als Katalog-Validator können Sie Einträge erstellen und editieren, sowie auch Einträge zur Publikation annehmen. Sie können auch neue Auswahlen erstellen.
       subject: "Sie wurden eingeladen bei %{catalog} teilzunehmen"
     group:
       subject: "Du bist eingeladen, Mitglied in der Gruppe %{group} zu werden."
-      invited_to_access_html: "%{invited_by} hat dich eingeladen, Mitglied in der Gruppe «%{group}» auf %{baseurl} zu werden."
+      invited_to_access_html: "%{invited_by} lädt Sie ein, der Gruppe «%{group}» im Katalog %{catalog} beizutreten."
     membership:
       subject: "Du wurdest zur Gruppe %{group} hinzugefügt."
       invited_to_msg_html: "%{invited_by} hat dich zur Gruppe «%{group}» des Katalogs «%{catalog}» hinzugefügt."
+      no_account_yet: "Wenn Sie noch kein Catima-Konto haben, erstellen Sie bitte eines. Eine Anleitung wird Ihnen in einer separaten E-Mail zugesandt."
       view_my_groups: "Hier kannst du deine Gruppenmitgliedschaften einsehen."
   export_mailer:
     export:

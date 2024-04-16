@@ -4,7 +4,7 @@
   <%= t('.invited_to_access_html',
         invited_by: @invited_by.email,
         group: @group.name,
-        baseurl: ENV['DOMAIN'].present? ? ENV['DOMAIN'] : 'localhost:3000') %>
+        catalog: @catalog.name) %>
 </p>
 
 <%= render('account_information') %>

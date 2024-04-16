@@ -282,9 +282,9 @@ en:
   invitations_mailer:
     account_information:
       account_email: "Your current email will be used as login for your account."
-      info_you_will_need: "You can find below the informations you’ll need to log in:"
-      set_your_password: "Click here to set your account's password"
-      link_to_catalog: "Then click here to access the «%{catalog}» catalog"
+      info_you_will_need: "To finalize the creation of your Catima account, please click on link 1 to set your user's password. Once you have done this, click on link 2 to access the database."
+      set_your_password: "Link 1 (set your account password)"
+      link_to_catalog: "Link 2 (access the «%{catalog}» catalog)"
       link_to_admin: "Then click here to list the catalogs you can administer"
     catalog_admin:
       catalog_admin_role: "As a catalog administrator, you will be able to add and edit records in the catalog, change the design of the catalog, and invite other users to collaborate as editors."
@@ -300,15 +300,16 @@ en:
       member_role: As a member you will be able to see the public areas of a restricted catalog.
       editor_role: As a catalog editor, you will be able to add and edit your own records.
       super_editor_role: As a catalog super-editor, you will be able to add and edit all the records. You can also create new choices.
-      invited_to_access_html: "%{invited_by} has invited you to access %{catalog}."
+      invited_to_access_html: "%{invited_by} has invited you to access the «%{catalog}» catalog."
       reviewer_role: As a catalog reviewer, you will be able to add records, edit all the records, create new choices, as well as approve records to be published to the public.
       subject: "You are invited to join %{catalog}"
     group:
       subject: "You are invited to become a member in group %{group}"
-      invited_to_access_html: "%{invited_by} has invited you to become a member in group «%{group}» on %{baseurl}."
+      invited_to_access_html: "%{invited_by} invites you to join the «%{group}» group on the «%{catalog}» catalog."
     membership:
       subject: "You have been added to group %{group}"
-      invited_to_msg_html: "%{invited_by} has added you to the group «%{group}» of catalog «%{catalog}»."
+      invited_to_msg_html: "%{invited_by} has added you to the «%{group}» group of the «%{catalog}» catalog."
+      no_account_yet: "If you don't have a Catima account yet, please create one. Instructions will be sent to you in a separate email."
       view_my_groups: "You can view your group memberships here:"
   export_mailer:
     export:

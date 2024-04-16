@@ -11,6 +11,12 @@
       ) %>
 </p>
 
+<% unless @registered %>
+  <p>
+    <%= t('.no_account_yet') %>
+  </p>
+<% end %>
+
 <p>
   <%= t('.view_my_groups') %>
   <%= link_to(

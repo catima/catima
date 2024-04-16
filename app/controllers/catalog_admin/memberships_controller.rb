@@ -11,9 +11,9 @@ class CatalogAdmin::MembershipsController < CatalogAdmin::BaseController
     member_emails.each do |member_email|
       u = User.find_by email: member_email
       if u.nil?
-        invite_user_to_join member_email, @group
+        invite_user_to_join(member_email, @group)
       else
-        add_user_to_group u, @group
+        add_user_to_group(u, @group, true)
       end
     end
     redirect_to catalog_admin_group_path(id: @group.id)
@@ -48,7 +48,7 @@ class CatalogAdmin::MembershipsController < CatalogAdmin::BaseController
     add_user_to_group(user, group)
   end
 
-  def add_user_to_group(user, group)
+  def add_user_to_group(user, group, registered=false)
     return if user.groups.include? group
 
     membership = group.memberships.new do |m|
@@ -58,6 +58,6 @@ class CatalogAdmin::MembershipsController < CatalogAdmin::BaseController
     end
     authorize membership
     membership.save
-    InvitationsMailer.membership(current_user, membership).deliver_later
+    InvitationsMailer.membership(current_user, membership, registered).deliver_later
   end
 end

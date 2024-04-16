@@ -64,12 +64,13 @@ class InvitationsMailer < ApplicationMailer
     I18n.locale = I18n.default_locale
   end
 
-  def membership(invited_by, membership)
+  def membership(invited_by, membership, registered)
     @group = membership.group
     @catalog = @group.catalog
     I18n.locale = @catalog.primary_language.to_sym
     @invited_by = invited_by
     @user = membership.user
+    @registered = registered
     subject = t(
       'invitations_mailer.membership.subject',
       group: @group.name

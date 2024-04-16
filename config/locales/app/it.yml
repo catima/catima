@@ -188,9 +188,9 @@ it:
   invitations_mailer:
     account_information:
       account_email: "Il vostro attuale indirizzo e-mail sarà utilizzato come login per il vostro account."
-      info_you_will_need: "Qui di seguito sono riportate le informazioni necessarie per effettuare il login:"
-      set_your_password: "Fare clic qui per impostare la password del proprio account"
-      link_to_catalog: "Cliccare qui per accedere al catalogo «%{catalog}»"
+      info_you_will_need: "Per completare la creazione del vostro account Catima, cliccate sul link 1 per impostare la password del vostro utente. Una volta effettuata questa operazione, cliccare sul link 2 per accedere al catalog."
+      set_your_password: "Link 1 (impostare la password dell'account)"
+      link_to_catalog: "Link 2 (al catalogo «%{catalog}»)"
       link_to_admin: "Cliccare qui per elencare i cataloghi che è possibile amministrare"
     catalog_admin:
       catalog_admin_role: "Come amministratore di catalogo, sarete in grado di aggingere e modificatre le registrazione nel catalogo, cambiare il layout, e invitare gli altri utenti di collaborare come redattori."
@@ -211,10 +211,11 @@ it:
       subject: "Viene chiesto di unirsi %{catalog}"
     group:
       subject: "Sei invitato a diventare membro del gruppo %{group}"
-      invited_to_access_html: "%{invited_by} ti ha invitato a diventare membro del gruppo «%{group}» su %{baseurl}."
+      invited_to_access_html: "%{invited_by} ti ha invitato a unirvi al gruppo «%{group}» sul catalogo «%{catalog}»."
     membership:
       subject: "Sei stato aggiunto al gruppo %{group}"
       invited_to_msg_html: "%{invited_by} ti ha aggiunto al gruppo «%{group}» del catalogo «%{catalog}»."
+      no_account_yet: "Se non si dispone ancora di un account Catima, si prega di crearne uno. Le istruzioni vi saranno inviate in un'e-mail separata."
       view_my_groups: "Potete vedere le appartenenze del vostro gruppo qui"
   export_mailer:
     export:

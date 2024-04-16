@@ -279,9 +279,9 @@ fr:
   invitations_mailer:
     account_information:
       account_email: "Votre adresse électronique actuelle sera utilisée comme identifiant pour votre compte."
-      info_you_will_need: "Vous trouverez ci-dessous les informations dont vous aurez besoin pour vous connecter:"
-      set_your_password: "Cliquez ici pour définir le mot de passe de votre compte"
-      link_to_catalog: "Puis cliquez ici pour accéder au catalogue «%{catalog}»"
+      info_you_will_need: "Afin de finaliser la création de votre compte Catima, veuillez cliquer sur le lien 1 pour définir le mot de passe de votre utilisateur. Une fois cette opération effectuée, cliquez sur le lien 2 pour accéder à la base de données."
+      set_your_password: "Lien 1 (définir le mot de passe de votre compte)"
+      link_to_catalog: "Lien 2 (accéder au catalogue «%{catalog}»)"
       link_to_admin: "Cliquez ensuite ici pour obtenir la liste des catalogues que vous pouvez administrer"
     catalog_admin:
       catalog_admin_role: "Comme administrateur de catalogue, vous allez être en mesure d'ajouter et d'éditer des entrées dans le catalogue, en modifier la mise en page, et inviter d'autres utilisateurs à collaborer comme éditeurs."
@@ -297,15 +297,16 @@ fr:
       member_role: Comme membre vous allez pouvoir voir les zones publiques d'un catalogue restreint.
       editor_role: Comme éditeur de catalogue vous allez pouvoir ajouter et éditer vos propres entrées.
       super_editor_role: Comme super-éditeur de catalogue vous allez pouvoir ajouter et éditer toutes les entrées. Vous pouvez également créer de nouveaux choix.
-      invited_to_access_html: "%{invited_by} vous a invité à joindre «%{catalog}»."
+      invited_to_access_html: "%{invited_by} vous a invité à joindre le catalogue «%{catalog}»."
       reviewer_role: Comme validateur de catalogue, vous allez pouvoir ajouter des entrées, éditer toutes les entrées, créer de nouveaux choix, mais également valider des entrées en vue de leur publication.
       subject: "Vous êtes invité(e) à joindre %{catalog}"
     group:
       subject: "Vous êtes invité à devenir membre du groupe %{group}"
-      invited_to_access_html: "%{invited_by} vous invite à devenir membre du groupe «%{group}» sur %{baseurl}."
+      invited_to_access_html: "%{invited_by} vous invite à faire partie du groupe «%{group}» sur le catalogue «%{catalog}»."
     membership:
       subject: "Vous avez été ajouté au groupe %{group}"
       invited_to_msg_html: "%{invited_by} vous a ajouté au groupe «%{group}» du catalogue «%{catalog}»."
+      no_account_yet: "Si vous n'avez pas encore de compte Catima, veuillez en créer un. Les instructions vous seront envoyées dans un email séparé."
       view_my_groups: "Vous pouvez voir vos adhésions de groupe ici:"
   export_mailer:
     export:
