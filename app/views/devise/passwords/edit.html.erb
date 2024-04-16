@@ -20,7 +20,8 @@
   <%= f.password_field(
         :password_confirmation,
         :label => t(".new_password_confirmation"),
-        :autocomplete => "new-password") %>
+        :autocomplete => "new-password",
+        :class => "mb-3") %>
 
   <%= f.primary(t(".submit")) %>
 <% end %>
