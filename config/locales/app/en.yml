@@ -30,6 +30,16 @@ en:
         suggestions_activated: "Enable suggestions"
         allow_anonymous_suggestions: "Enable anonymous suggestions"
         suggestion_email: "Email to notify"
+      item_type:
+        name: "Name"
+        name_plural: "Name (plural)"
+        slug: "Slug (plural)"
+      user:
+        email: "Email"
+        password: "Password"
+        password_confirmation: "Password confirmation"
+        remember_me: "Remember me"
+        primary_language: "Preferred language"
       catalog:
         name: "Name"
         advertize: "Advertize"
@@ -39,6 +49,7 @@ en:
         api_enabled: "Activate the API (v3)"
         throttle_time_window: "Throttle time window in seconds"
         throttle_max_requests: "Throttle maximum requests"
+        other_languages: Other supported languages
       group:
         name: "Name"
         description: "Description"
@@ -389,19 +400,6 @@ en:
   helpers:
     help:
       field/url: A full URL, including the http part
-    label:
-      catalog:
-        other_languages: Other supported languages
-      item_type:
-        name: "Name"
-        name_plural: "Name (plural)"
-        slug: "Slug (plural)"
-      user:
-        email: "Email"
-        password: "Password"
-        password_confirmation: "Password confirmation"
-        remember_me: "Remember me"
-        primary_language: "Preferred language"
   time:
     formats:
       Y: "%Y"
