@@ -1,11 +1,20 @@
-<h4>
-  <%= link_to(
-    popup_display_name(@item),
-    item_path(
-      :catalog_slug => @item.catalog.slug,
-      :locale => I18n.locale,
-      :item_type_slug => @item.item_type.slug,
-      :id => @item
-    ),
-    :target => '_blank') %>
-</h4>
+<div class="map-popup-container">
+  <% if item_has_thumbnail?(@item, :public_only => true) %>
+    <div class="popup-thumbnail mr-3">
+      <%= item_thumbnail(@item, :public_only => true) %>
+    </div>
+  <% end %>
+  <div class="popup-title">
+    <h4>
+      <%= link_to(
+            popup_display_name(@item),
+            item_path(
+              :catalog_slug => @item.catalog.slug,
+              :locale => I18n.locale,
+              :item_type_slug => @item.item_type.slug,
+              :id => @item
+            ),
+            :target => '_blank') %>
+    </h4>
+  </div>
+</div>
