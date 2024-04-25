@@ -131,6 +131,7 @@ a:not([href]):not([class])[type='button'] {
 
 // remove double border on table inside card
 .card > .table,
+.card > .table-responsive > .table,
 .card > .table-index > .table {
   > tbody > tr:last-child > td {
     border-bottom: 0;
