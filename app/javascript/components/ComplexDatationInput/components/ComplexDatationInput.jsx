@@ -400,7 +400,7 @@ const RenderChoiceSetList = (props) => {
 
   function renderChoiceSet(choiceSet, index, list) {
     if (Object.keys(choiceSet).length > 0) {
-      return (<div key={choiceSet.fetchUrl} className="mt-2">
+      return (<div key={choiceSet.fetchUrl}>
         <RenderChoiceSetInput
             locales={locales}
             fetchUrl={choiceSet.fetchUrl}
@@ -714,15 +714,13 @@ const ModalForm = (props) => {
                     {
                       locales.map((locale, idx) => (
                           <div key={idx}>
-                            <div className="form-group">
-                              <label className="sr-only"
-                                     htmlFor={`choice_long_name_${locale}`}>{Translations.messages['catalog_admin.choices.choice_fields.long_name_optional']}</label>
-                              <div className="input-group">
-                                {locales.length > 1 && <div className="input-group-prepend"><span
-                                    className="input-group-text">{locale}</span></div>}
-                                <input className="form-control" type="text" name={`choice[long_name_${locale}]`}
-                                       id={`choice_long_name_${locale}`}/>
-                              </div>
+                            <label className="sr-only"
+                                   htmlFor={`choice_long_name_${locale}`}>{Translations.messages['catalog_admin.choices.choice_fields.long_name_optional']}</label>
+                            <div className="input-group">
+                              {locales.length > 1 && <div className="input-group-prepend"><span
+                                  className="input-group-text">{locale}</span></div>}
+                              <input className="form-control" type="text" name={`choice[long_name_${locale}]`}
+                                     id={`choice_long_name_${locale}`}/>
                             </div>
                           </div>
                       ))
