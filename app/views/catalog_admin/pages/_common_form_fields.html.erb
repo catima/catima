@@ -1,4 +1,6 @@
 <%= f.text_field(:slug, :help => slug_help_text) %>
-
-<%= f.text_field(:title, :class => 'hide', :value => @page.title_str) %>
-<%= react_component('TranslatedTextField/components/TranslatedTextField', { input: 'page_title', locales: catalog.valid_locales }) %>
+<%= f.form_group do %>
+  <%= f.label(:title, class: "form-label") %>
+  <%= f.hidden_field(:title, value: @page.title_str) %>
+  <%= react_component('TranslatedTextField/components/TranslatedTextField', { input: 'page_title', locales: catalog.valid_locales }) %>
+<% end %>
