@@ -14,64 +14,66 @@
 <% end %>
 
 <% if catalog.groups.count > 0 %>
-  <table class="table" id="group-permissions-table">
-  <thead>
-    <tr>
-      <th><%= t('.name') %></th>
-      <th><%= t('.roles') %></th>
-      <th><%= t('.is_active') %></th>
-      <th><%= t('.is_public') %></th>
-      <th></th>
-    </tr>
-  </thead>
-  <tbody>
-    <% catalog.groups.each do |grp| %>
+  <div class="table-responsive">
+    <table class="table" id="group-permissions-table">
+      <thead>
       <tr>
-        <td><%= grp.name %></td>
-        <td>
-          <%= form_for([catalog, grp], url: catalog_admin_group_path(id: grp.id), remote: true, authenticity_token: true) do |f| %>
-            <div class="btn-group" data-group="<%= grp.id %>">
-              <% group_roles(grp, catalog).each do |role, active| %>
-                <%= radio_button_tag(:role, role, checked: active, id: "grp-role-#{grp.id}-#{role}", autocomplete: "off", class: "btn-check") %>
-                <%= label_tag :role, role.capitalize, value: role, for: "grp-role-#{grp.id}-#{role}", class: ["lbl-#{role}", "btn btn-outline-secondary btn-xs px-3"] %>
-              <% end %>
-            </div>
-            <%= f.submit 'OK', class: 'd-none' %>
-          <% end %>
-        </td>
-        <td>
-          <%= fa_icon(:check) if grp.active? %>
-        </td>
-        <td>
-          <%= fa_icon(:check) if grp.public? %>
-        </td>
-        <td align="right">
-          <%= render "shared/actions/group", :model => grp %>
-        </td>
+        <th><%= t('.name') %></th>
+        <th><%= t('.roles') %></th>
+        <th><%= t('.is_active') %></th>
+        <th><%= t('.is_public') %></th>
+        <th></th>
       </tr>
-    <% end %>
-  </tbody>
-</table>
+      </thead>
+      <tbody>
+      <% catalog.groups.each do |grp| %>
+        <tr>
+          <td><%= grp.name %></td>
+          <td>
+            <%= form_for([catalog, grp], url: catalog_admin_group_path(id: grp.id), remote: true, authenticity_token: true) do |f| %>
+              <div class="btn-group" data-group="<%= grp.id %>">
+                <% group_roles(grp, catalog).each do |role, active| %>
+                  <%= radio_button_tag(:role, role, checked: active, id: "grp-role-#{grp.id}-#{role}", autocomplete: "off", class: "btn-check") %>
+                  <%= label_tag :role, role.capitalize, value: role, for: "grp-role-#{grp.id}-#{role}", class: ["lbl-#{role}", "btn btn-outline-secondary btn-xs px-3"] %>
+                <% end %>
+              </div>
+              <%= f.submit 'OK', class: 'd-none' %>
+            <% end %>
+          </td>
+          <td>
+            <%= fa_icon(:check) if grp.active? %>
+          </td>
+          <td>
+            <%= fa_icon(:check) if grp.public? %>
+          </td>
+          <td class="text-end">
+            <%= render "shared/actions/group", :model => grp %>
+          </td>
+        </tr>
+      <% end %>
+      </tbody>
+    </table>
+  </div>
 <% end %>
 
 <script>
-  var group_roles_handler = function(e){
+  var group_roles_handler = function (e) {
     var btn_group = e.target.parentElement;
     var group_id = btn_group.getAttribute('data-group');
     var submit_button = document.querySelector('#edit_group_' + group_id + ' input[type=submit]');
-    window.setTimeout(function(){
+    window.setTimeout(function () {
       submit_button.click();
     }, 100);
   };
 
   var group_permissions_buttons = document.querySelectorAll('#group-permissions-table .btn-group label');
-  for (var i=0; i < group_permissions_buttons.length; i++){
+  for (var i = 0; i < group_permissions_buttons.length; i++) {
     group_permissions_buttons[i].addEventListener('click', group_roles_handler, false);
   }
 </script>
 
 <% provide(:extra_setup) do %>
-<hr/>
+  <hr/>
   <% if @users %>
     <div class="card panel-default user-panel">
       <div class="card-header">
