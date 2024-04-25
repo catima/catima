@@ -1,5 +1,5 @@
 // Override Bootstrap remove trailing margin when group is in a table cell
-.table td .form-group:last-child {
+.table td .form-text:last-child {
     margin-bottom: 0;
 }
 
@@ -21,32 +21,33 @@ textarea[data-field-type="datetime"] {
     display: none;
 }
 
-form > .form-group,
+form > .form-text,
 form > .form-component{
     margin-top: 20px;
     margin-bottom: 0;
 }
 
-.form-inline > .form-group {
+.form-inline > .form-text {
     margin: 0;
 }
 
-.form-group small {
+.form-text small, small.form-text {
   font-size: 100%;
+  display: block;
 }
 
 .form-component .row {
     margin-top: 20px;
 }
 
-.form-group.file-upload {
+.form-text.file-upload {
     margin-top: 0;
 }
 
 .form-check {
   margin-top: 10px;
-  margin-bottom: 10px;
-}
+  margin-bottom: 10px !important; // because bs5 adding a mb-3 class on form-check
+ }
 
 .form-check .form-check-label {
   font-weight: normal;
