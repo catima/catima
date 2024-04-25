@@ -115,38 +115,6 @@ button[data-active=true]:focus {
   height: 20px;
   margin-left: 5px;
 }
-.clearable-input {
-  display: inline-block;
-
-  .input-group {
-    border: 1px solid #ccc;
-    border-radius: .25rem;
-    box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075);
-
-    &:focus-within {
-      border-color: #66afe9;
-      outline: 0;
-      box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075), 0 0 8px rgba(102, 175, 233, 0.6);
-    }
-
-    input[type="search"] {
-      border: none;
-
-      &:focus {
-        box-shadow: none;
-        border: none;
-      }
-    }
-
-    .input-group-append a{
-      background: none;
-      border: none;
-      &:hover {
-        color: #337ab7;
-      }
-    }
-  }
-}
 
 .search-form {
   display: inline-block;
