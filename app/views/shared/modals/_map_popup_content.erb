@@ -1,7 +1,15 @@
 <div class="map-popup-container">
   <% if item_has_thumbnail?(@item, :public_only => true) %>
     <div class="popup-thumbnail mr-3">
-      <%= item_thumbnail(@item, :public_only => true) %>
+      <%= link_to(
+            item_thumbnail(@item, :public_only => true),
+            item_path(
+              :catalog_slug => @item.catalog.slug,
+              :locale => I18n.locale,
+              :item_type_slug => @item.item_type.slug,
+              :id => @item
+            ),
+            :target => '_blank') %>
     </div>
   <% end %>
   <div class="popup-title">
