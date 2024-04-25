@@ -1,7 +1,7 @@
 module Admin::UsersHelper
   def admin_catalogs(user)
     if user.system_admin?
-      tag.span("System", :class => "badge badge-primary")
+      tag.span("System", :class => "badge text-bg-primary")
     else
       user.admin_catalogs.map(&:name).sort_by(&:downcase).to_sentence
     end

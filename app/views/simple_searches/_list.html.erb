@@ -7,7 +7,7 @@
         <%= link_to({type: type.slug, q: search_results.query}, class: ["nav-link", ("active" if search_results.active?(type))]) do %>
           <%= type.name_plural %>
           <% unless @catalog.requires_review %>
-            <span class="badge badge-pill badge-secondary ms-2">
+            <span class="badge rounded-pill text-bg-secondary ms-2">
               <%= number_with_delimiter(count) %>
             </span>
           <% end %>

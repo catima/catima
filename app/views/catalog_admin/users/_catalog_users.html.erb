@@ -15,7 +15,7 @@
         <td>
           <%= user_role(user, catalog, true) %>
           <% unless user_role(user, catalog) == user_role(user, catalog, true) %>
-            <span class="badge badge-info"><%= t('.group_role') %></span>
+            <span class="badge text-bg-info"><%= t('.group_role') %></span>
           <% end %>
         </td>
         <td><%= l(user.created_at, :format => :long) %></td>
