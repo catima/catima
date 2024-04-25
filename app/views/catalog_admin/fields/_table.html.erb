@@ -48,7 +48,7 @@
       <td><%= fa_icon(:check) if field.required? %></td>
       <td><%= fa_icon(:check) if field.display_in_list? %></td>
       <td><%= fa_icon(:check) if field.display_in_public_list? %></td>
-      <td class="text-right text-nowrap">
+      <td class="text-end text-nowrap">
         <%= render "shared/actions/field", :model => field %>
       </td>
     </tr>
