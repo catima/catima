@@ -665,7 +665,7 @@ const ModalForm = (props) => {
               <form onSubmit={handleSubmit} id={`new_choice_${choiceSet.id}`}>
                 <div className="modal-header">
                   <h4 className="modal-title">{Translations.messages['catalog_admin.choice_sets.choice_modal.create_new_field']}</h4>
-                  <button type="button" className="close" data-dismiss="modal" aria-label="Close">
+                  <button type="button" className="close" data-bs-dismiss="modal" aria-label="Close">
                     <span aria-hidden="true">×</span>
                   </button>
                 </div>
@@ -782,7 +782,7 @@ const ModalForm = (props) => {
                 </div>
                 <div className="modal-footer">
                   <button type="button" className="btn btn-outline-secondary"
-                          data-dismiss="modal">{Translations.messages['cancel']}</button>
+                          data-bs-dismiss="modal">{Translations.messages['cancel']}</button>
                   <input type="submit" name="commit" value={Translations.messages['.create']}
                          className="btn btn-success" data-disable-with={Translations.messages['create']}/>
                 </div>

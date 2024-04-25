@@ -271,8 +271,8 @@ const RenderChoiceSetInput = (props) => {
                 {componentPolicies.modal && isActive && (
                     <div className="col-sm-4">
                         <a onClick={() => setModalOpen(true)} className="btn btn-sm btn-outline-secondary"
-                           data-toggle="modal"
-                           data-target={"#choice-modal-" + fieldUuid} href="#">
+                           data-bs-toggle="modal"
+                           data-bs-target={"#choice-modal-" + fieldUuid} href="#">
                             <i className="fa fa-plus"></i>
                         </a>
                     </div>
@@ -380,17 +380,18 @@ const ModalForm = (props) => {
                  data-field-uuid={fieldUuid} data-lang="fr" aria-labelledby="myModalLabel">
                 <div className="modal-dialog">
                     <div className="modal-content">
+                      XXXXXXXXX
                         <form onSubmit={handleSubmit} id={`new_choice_${choiceSet.id}`}>
                             <div className="modal-header">
                                 <h4 className="modal-title">{Translations.messages['catalog_admin.choice_sets.choice_modal.create_new_field']}</h4>
-                                <button type="button" className="close" data-dismiss="modal" aria-label="Close">
+                                <button type="button" className="close" data-bs-dismiss="modal" aria-label="Close">
                                     <span aria-hidden="true">×</span>
                                 </button>
                             </div>
                             <div className="modal-body">
                                 <div className="card-body">
                                     <div className="mb-4">
-                                        <div className="form-group">
+                                        <div className="form-group mb-3">
                                             <label className="form-label" htmlFor="choice_parent_id">Parent</label>
                                             <select className="form-control" name="choice[parent_id]"
                                                     id="choice_parent_id">
@@ -405,7 +406,7 @@ const ModalForm = (props) => {
                                         </div>
                                     </div>
                                     <div className="mb-4">
-                                        <div className="form-group"><
+                                        <div className="form-group mb-3"><
                                             label  className="form-label" htmlFor="choice_position">Position</label>
                                             <select className="form-control" name="choice[position]"
                                                     id="choice_position">
@@ -421,7 +422,7 @@ const ModalForm = (props) => {
                                     {
                                         locales.map((locale, idx) => (
                                             <div key={idx}>
-                                                <div className="form-group">
+                                                <div className="form-group mb-3">
                                                     <label className="sr-only" htmlFor={`choice_short_name_${locale}`}>{Translations.messages['catalog_admin.choices.choice_fields.short_name']}</label>
                                                     <div className="input-group">
                                                         {locales.length > 1 && <div className="input-group-prepend"><span className="input-group-text">{locale}</span></div>}
@@ -436,7 +437,7 @@ const ModalForm = (props) => {
                                     {
                                         locales.map((locale, idx) => (
                                             <div key={idx}>
-                                                <div className="form-group">
+                                                <div className="form-group mb-3">
                                                     <label className="sr-only" htmlFor={`choice_long_name_${locale}`}>{Translations.messages['catalog_admin.choices.choice_fields.long_name_optional']}</label>
                                                     <div className="input-group">
                                                         {locales.length > 1 && <div className="input-group-prepend"><span className="input-group-text">{locale}</span></div>}
@@ -447,7 +448,7 @@ const ModalForm = (props) => {
                                         ))
                                     }
 
-                                    <div className="form-group">
+                                    <div className="form-group mb-3">
                                         <label htmlFor="choice_category_id">
                                             {Translations.messages['catalog_admin.choices.choice_fields.category_optional']}
                                         </label>
@@ -472,7 +473,7 @@ const ModalForm = (props) => {
                             </div>
                             <div className="modal-footer">
                                 <button type="button" className="btn btn-outline-secondary"
-                                        data-dismiss="modal">{Translations.messages["cancel"]}</button>
+                                        data-bs-dismiss="modal">{Translations.messages["cancel"]}</button>
                                 <input type="submit" name="commit" value={Translations.messages["create"]}
                                        className="btn btn-success"
                                        data-disable-with={Translations.messages["create"]}/>
