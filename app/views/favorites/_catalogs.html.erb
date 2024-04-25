@@ -1,6 +1,6 @@
 <% @catalogs.each do | catalog, count | %>
   <h4>
     <%= link_to catalog.name, favorites_path(:catalog => catalog.id) %>
-    <span class="rounded-pill text-bg-info float-right"><%= count.to_s %></span>
+    <span class="rounded-pill text-bg-info pull-right"><%= count.to_s %></span>
   </h4>
 <% end %>
