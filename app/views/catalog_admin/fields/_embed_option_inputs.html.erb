@@ -3,7 +3,7 @@
 <div data-controller="toggle-display" data-toggle-display-value='url'>
   <%= f.hidden_field(:domains) %>
   <div class="my-2">
-    <%= f.label(t('.domains')) %>
+    <%= f.label(t('.domains'), class: "form-label") %>
     <%= react_component('Domains/components/Domains',
                         {
                           domains: f.object.parsed_domains,
