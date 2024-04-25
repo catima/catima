@@ -1,5 +1,6 @@
-<table class="table">
-  <thead>
+<div class="table-responsive">
+  <table class="table">
+    <thead>
     <tr>
       <th><%= t('email') %></th>
       <th><%= t('role') %></th>
@@ -7,8 +8,8 @@
       <th><%= t('last_signed_in') %></th>
       <th></th>
     </tr>
-  </thead>
-  <tbody>
+    </thead>
+    <tbody>
     <% @users.each do |user| %>
       <tr>
         <td><%= fa_icon(:user, :text => user.email) %></td>
@@ -27,5 +28,6 @@
         </td>
       </tr>
     <% end %>
-  </tbody>
-</table>
+    </tbody>
+  </table>
+</div>
