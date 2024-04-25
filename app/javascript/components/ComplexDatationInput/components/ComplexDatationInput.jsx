@@ -673,7 +673,7 @@ const ModalForm = (props) => {
                                 <div className="card-body">
                                     <div className="mb-4">
                                         <div className="form-group">
-                                            <label htmlFor="choice_parent_id">Parent</label>
+                                            <label className="form-label" htmlFor="choice_parent_id">Parent</label>
                                             <select className="form-control" name="choice[parent_id]"
                                                     id="choice_parent_id">
                                                 <option value=""></option>
@@ -698,7 +698,7 @@ const ModalForm = (props) => {
                                         </div>
                                     </div>
 
-                                    <label htmlFor={`choice_short_name`}>{Translations.messages['catalog_admin.choices.choice_fields.short_name']}</label>
+                                    <label className="form-label" htmlFor={`choice_short_name`}>{Translations.messages['catalog_admin.choices.choice_fields.short_name']}</label>
                                     {
                                         locales.map((locale, idx) => (
                                             <div key={idx}>
@@ -713,7 +713,7 @@ const ModalForm = (props) => {
                                         ))
                                     }
 
-                                    <label htmlFor={`choice_long_name`}>{Translations.messages['catalog_admin.choices.choice_fields.long_name_optional']}</label>
+                                    <label className="form-label" htmlFor={`choice_long_name`}>{Translations.messages['catalog_admin.choices.choice_fields.long_name_optional']}</label>
                                     {
                                         locales.map((locale, idx) => (
                                             <div key={idx}>

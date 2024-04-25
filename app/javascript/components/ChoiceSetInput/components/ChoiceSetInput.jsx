@@ -391,7 +391,7 @@ const ModalForm = (props) => {
                                 <div className="card-body">
                                     <div className="mb-4">
                                         <div className="form-group">
-                                            <label htmlFor="choice_parent_id">Parent</label>
+                                            <label className="form-label" htmlFor="choice_parent_id">Parent</label>
                                             <select className="form-control" name="choice[parent_id]"
                                                     id="choice_parent_id">
                                                 <option value=""></option>
@@ -406,7 +406,7 @@ const ModalForm = (props) => {
                                     </div>
                                     <div className="mb-4">
                                         <div className="form-group"><
-                                            label htmlFor="choice_position">Position</label>
+                                            label  className="form-label" htmlFor="choice_position">Position</label>
                                             <select className="form-control" name="choice[position]"
                                                     id="choice_position">
                                                 <option

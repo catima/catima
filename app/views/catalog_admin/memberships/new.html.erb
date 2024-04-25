@@ -4,7 +4,7 @@
   <%= bootstrap_form_for(@membership, url:catalog_admin_group_memberships_path) do |f| %>
 
     <%= f.form_group do %>
-      <label class="control-label required" for="members_to_invite"><%= t('.members_emails') %></label>
+      <label class="form-label required" for="members_to_invite"><%= t('.members_emails') %></label>
       <p><%= t('.one_mail_per_line') %></p>
       <%= text_area('members_to_invite', '', style: 'width: 300px;', rows: 5) %>
     <% end %>

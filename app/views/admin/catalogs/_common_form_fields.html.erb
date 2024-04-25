@@ -10,7 +10,7 @@
 <hr>
 
 <%= f.form_group(:catalog_access) do %>
-  <label for="catalog_access"><%= t('catalog_admin.catalogs.common_form_fields.catalog_access') %></label>
+  <label class="form-label" for="catalog_access"><%= t('catalog_admin.catalogs.common_form_fields.catalog_access') %></label>
   <%= catalog_access_select(@catalog) %>
 <% end %>
 
@@ -70,7 +70,7 @@
 
 <% if @admins.present? %>
   <hr>
-  <label>
+  <label class="form-label">
     <% if @admins.count > 1 %>Administrators
     <% else %>Administrator
     <% end %>
