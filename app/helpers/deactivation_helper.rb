@@ -1,7 +1,7 @@
 module DeactivationHelper
   def deactivation_status_label(model)
     text, klass = model.not_deactivated? ? %w(Active success) : %w(Inactive secondary)
-    tag.span(text, :class => "badge badge-#{klass}")
+    tag.span(text, :class => "badge text-bg-#{klass}")
   end
 
   def deactivation_toggle(model, path_method, *args)

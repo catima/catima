@@ -49,12 +49,13 @@
             :class => "btn btn-link") %>
     </div>
     <hr>
-    <%= label_tag :choices, t(".choices") %>
-    <ul class="w-100 pl-0" data-sortable-choices-target="sortableList">
-      <% @choice_set.choices.where(parent_id: nil).ordered.each do |choice| %>
-        <%= render 'choice', choice: choice, level: 0 %>
-      <% end %>
-    </ul>
-
+    <%= f.form_group do %>
+      <%= f.label :choices, t(".choices"), class: "form-label" %>
+      <ul class="list-unstyled" data-sortable-choices-target="sortableList">
+        <% @choice_set.choices.where(parent_id: nil).ordered.each do |choice| %>
+          <%= render 'choice', choice: choice, level: 0 %>
+        <% end %>
+      </ul>
+    <% end %>
   <% end %>
 </div>

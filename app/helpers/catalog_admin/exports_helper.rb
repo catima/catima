@@ -13,12 +13,12 @@ module CatalogAdmin::ExportsHelper
            when "ready" then "success"
            else "default"
            end
-    tag.span(export.status, class: "badge badge-#{type}")
+    tag.span(export.status, class: "badge text-bg-#{type}")
   end
 
   def validity_badge(export)
     badge = export.validity? ? { :label => t("valid"), :type => "success" } : { :label => t("expired"), :type => "danger" }
-    tag.span(badge[:label], class: "badge badge-#{badge[:type]}")
+    tag.span(badge[:label], class: "badge text-bg-#{badge[:type]}")
   end
 
   def with_files_check(export)
