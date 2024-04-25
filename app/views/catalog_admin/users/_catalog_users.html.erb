@@ -20,7 +20,7 @@
         </td>
         <td><%= l(user.created_at, :format => :long) %></td>
         <td><%= last_signed_in(user) %></td>
-        <td align="right">
+        <td class="text-right">
           <% if policy(user).edit_in_catalog?(catalog) %>
             <%= render "shared/actions/user", :model => user %>
           <% end %>

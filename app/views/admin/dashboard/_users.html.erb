@@ -17,7 +17,7 @@
         <td><%= l(user.created_at, :format => :long) %></td>
         <td><%= last_signed_in(user) %></td>
         <td><%= invited_by(user) %></td>
-        <td align="right">
+        <td class="text-right">
           <%= render "shared/actions/user", :model => user %>
         </td>
       </tr>

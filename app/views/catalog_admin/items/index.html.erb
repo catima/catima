@@ -72,7 +72,7 @@
         <% if catalog.requires_review? %>
           <td><%= review_status_label(item) %></td>
         <% end %>
-        <td align="right">
+        <td class="text-right">
           <%= render "shared/actions/item", :model => item %>
         </td>
       </tr>

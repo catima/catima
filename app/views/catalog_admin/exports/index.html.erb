@@ -42,7 +42,7 @@
         <td><%= with_files_check(export) %></td>
         <td><%= status_badge(export) %></td>
         <td><%= validity_badge(export) %></td>
-        <td align="right">
+        <td class="text-right">
           <% if policy(export).download? %>
             <%= render "shared/actions/export", :model => export %>
           <% end %>
