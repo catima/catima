@@ -56,7 +56,7 @@ const ChoiceSetInput = (props) => {
 
   return (
       <div>
-        <div key={choiceSet.fetchUrl}>
+        <div key={choiceSet.fetchUrl} className="mb-1">
           <RenderChoiceSetInput
               locales={locales}
               fetchUrl={choiceSet.fetchUrl}
@@ -242,7 +242,7 @@ const RenderChoiceSetInput = (props) => {
 
   return (
       <div>
-        <div className="choiceSetInput row" style={{display: 'flex'}}>
+        <div className="choiceSetInput row d-flex">
           <div className="col-sm-8">
             <div className="choiceSetSelect"
                  style={Validation.getStyle(req, input)}>
@@ -278,7 +278,7 @@ const RenderChoiceSetInput = (props) => {
               </div>
           )}
         </div>
-        {modalOpen && (
+        {(
             <ModalForm
                 locales={locales}
                 key={modalIndex}
@@ -372,118 +372,114 @@ const ModalForm = (props) => {
     }
   }
 
-  if (!modalOpen) {
-    return ''
-  } else {
-    return (
-        <div className="modal fade" id={"choice-modal-" + fieldUuid} tabIndex="-1" role="dialog"
-             data-field-uuid={fieldUuid} data-lang="fr" aria-labelledby="myModalLabel">
-          <div className="modal-dialog">
-            <div className="modal-content">
-              <form onSubmit={handleSubmit} id={`new_choice_${choiceSet.id}`}>
-                <div className="modal-header">
-                  <h4 className="modal-title">{Translations.messages['catalog_admin.choice_sets.choice_modal.create_new_field']}</h4>
-                  <button type="button" className="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+  return (
+      <div className="modal fade" id={"choice-modal-" + fieldUuid} tabIndex="-1" role="dialog"
+           data-field-uuid={fieldUuid} data-lang="fr" aria-labelledby="myModalLabel">
+        <div className="modal-dialog">
+          <div className="modal-content">
+            <form onSubmit={handleSubmit} id={`new_choice_${choiceSet.id}`}>
+              <div className="modal-header">
+                <h4 className="modal-title">{Translations.messages['catalog_admin.choice_sets.choice_modal.create_new_field']}</h4>
+                <button type="button" className="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+              </div>
+              <div className="modal-body">
+                <div className="form-group mb-3">
+                  <label className="form-label" htmlFor="choice_parent_id">Parent</label>
+                  <select className="form-select" name="choice[parent_id]"
+                          id="choice_parent_id">
+                    <option value=""></option>
+                    {modalChoices && modalChoices.map(o => {
+                      return (
+                          <option key={o.id} value={o.id}>{o.name}</option>
+                      )
+                    })
+                    }
+                  </select>
                 </div>
-                <div className="modal-body">
-                  <div className="form-group mb-3">
-                    <label className="form-label" htmlFor="choice_parent_id">Parent</label>
-                    <select className="form-select" name="choice[parent_id]"
-                            id="choice_parent_id">
-                      <option value=""></option>
-                      {modalChoices && modalChoices.map(o => {
-                        return (
-                            <option key={o.id} value={o.id}>{o.name}</option>
-                        )
-                      })
-                      }
-                    </select>
-                  </div>
-                  <div className="form-group mb-3">
-                    <label className="form-label" htmlFor="choice_position">Position</label>
-                    <select className="form-select" name="choice[position]"
-                            id="choice_position">
-                      <option
-                          value="first">{Translations.messages['catalog_admin.choice_sets.choice_modal.position.first']}</option>
-                      <option
-                          value="last">{Translations.messages['catalog_admin.choice_sets.choice_modal.position.last']}</option>
-                    </select>
-                  </div>
+                <div className="form-group mb-3">
+                  <label className="form-label" htmlFor="choice_position">Position</label>
+                  <select className="form-select" name="choice[position]"
+                          id="choice_position">
+                    <option
+                        value="first">{Translations.messages['catalog_admin.choice_sets.choice_modal.position.first']}</option>
+                    <option
+                        value="last">{Translations.messages['catalog_admin.choice_sets.choice_modal.position.last']}</option>
+                  </select>
+                </div>
 
-                  <div className="mb-3 translatedTextField">
-                    <label className="form-label"
-                           htmlFor={`choice_short_name`}>{Translations.messages['catalog_admin.choices.choice_fields.short_name']}</label>
-                    {
-                      locales.map((locale, idx) => (
-                          <div key={idx}>
-                            <div className="form-group mb-3">
-                              <label className="sr-only"
-                                     htmlFor={`choice_short_name_${locale}`}>{Translations.messages['catalog_admin.choices.choice_fields.short_name']}</label>
-                              <div className="input-group">
-                                {locales.length > 1 && <span className="input-group-text">{locale}</span>}
-                                <input className="form-control" type="text" name={`choice[short_name_${locale}]`}
-                                       id={`choice_short_name_${locale}`}/>
-                              </div>
+                <div className="mb-3 translatedTextField">
+                  <label className="form-label"
+                         htmlFor={`choice_short_name`}>{Translations.messages['catalog_admin.choices.choice_fields.short_name']}</label>
+                  {
+                    locales.map((locale, idx) => (
+                        <div key={idx}>
+                          <div className="form-group mb-3">
+                            <label className="sr-only"
+                                   htmlFor={`choice_short_name_${locale}`}>{Translations.messages['catalog_admin.choices.choice_fields.short_name']}</label>
+                            <div className="input-group">
+                              {locales.length > 1 && <span className="input-group-text">{locale}</span>}
+                              <input className="form-control" type="text" name={`choice[short_name_${locale}]`}
+                                     id={`choice_short_name_${locale}`}/>
                             </div>
                           </div>
-                      ))
-                    }
-                  </div>
+                        </div>
+                    ))
+                  }
+                </div>
 
-                  <div className="mb-3 translatedTextField">
-                    <label className="form-label"
-                           htmlFor={`choice_long_name`}>{Translations.messages['catalog_admin.choices.choice_fields.long_name_optional']}</label>
-                    {
-                      locales.map((locale, idx) => (
-                          <div key={idx}>
-                            <div className="form-group mb-3">
-                              <label className="sr-only"
-                                     htmlFor={`choice_long_name_${locale}`}>{Translations.messages['catalog_admin.choices.choice_fields.long_name_optional']}</label>
-                              <div className="input-group">
-                                {locales.length > 1 && <span className="input-group-text">{locale}</span>}
-                                <input className="form-control" type="text" name={`choice[long_name_${locale}]`}
-                                       id={`choice_long_name_${locale}`}/>
-                              </div>
+                <div className="mb-3 translatedTextField">
+                  <label className="form-label"
+                         htmlFor={`choice_long_name`}>{Translations.messages['catalog_admin.choices.choice_fields.long_name_optional']}</label>
+                  {
+                    locales.map((locale, idx) => (
+                        <div key={idx}>
+                          <div className="form-group mb-3">
+                            <label className="sr-only"
+                                   htmlFor={`choice_long_name_${locale}`}>{Translations.messages['catalog_admin.choices.choice_fields.long_name_optional']}</label>
+                            <div className="input-group">
+                              {locales.length > 1 && <span className="input-group-text">{locale}</span>}
+                              <input className="form-control" type="text" name={`choice[long_name_${locale}]`}
+                                     id={`choice_long_name_${locale}`}/>
                             </div>
                           </div>
-                      ))
-                    }
-                  </div>
-
-                  <div className="form-group mb-3">
-                    <label className="form-label"
-                           htmlFor="choice_category_id">
-                      {Translations.messages['catalog_admin.choices.choice_fields.category_optional']}
-                    </label>
-                    <select className="form-select"
-                            name="choice[category_id]"
-                            id="choice_category_id"
-                            onChange={handleOptionChange}>
-                      <option value="" label=""></option>
-                      {modalCategories && modalCategories.map((category, idx) => (
-                          <option key={idx} value={category[0]}>{category[1]}</option>
-                      ))}
-                    </select>
-                  </div>
-
-                  {selectedOption !== '' && <div
-                      className="alert alert-danger">{Translations.messages['catalog_admin.choices.choice_fields.modal_category_alert']}</div>}
-
-                  <div className="base-errors">
-                    {errorMsg}
-                  </div>
+                        </div>
+                    ))
+                  }
                 </div>
-                <div className="modal-footer">
-                  <button type="button" className="btn btn-outline-secondary"
-                          data-bs-dismiss="modal">{Translations.messages["cancel"]}</button>
-                  <input type="submit" name="commit" value={Translations.messages["create"]}
-                         className="btn btn-success"
-                         data-disable-with={Translations.messages["create"]}/>
+
+                <div className="form-group mb-3">
+                  <label className="form-label"
+                         htmlFor="choice_category_id">
+                    {Translations.messages['catalog_admin.choices.choice_fields.category_optional']}
+                  </label>
+                  <select className="form-select"
+                          name="choice[category_id]"
+                          id="choice_category_id"
+                          onChange={handleOptionChange}>
+                    <option value="" label=""></option>
+                    {modalCategories && modalCategories.map((category, idx) => (
+                        <option key={idx} value={category[0]}>{category[1]}</option>
+                    ))}
+                  </select>
                 </div>
-              </form>
-            </div>
+
+                {selectedOption !== '' && <div
+                    className="alert alert-danger">{Translations.messages['catalog_admin.choices.choice_fields.modal_category_alert']}</div>}
+
+                <div className="base-errors">
+                  {errorMsg}
+                </div>
+              </div>
+              <div className="modal-footer">
+                <button type="button" className="btn btn-outline-secondary"
+                        data-bs-dismiss="modal">{Translations.messages["cancel"]}</button>
+                <input type="submit" name="commit" value={Translations.messages["create"]}
+                       className="btn btn-success"
+                       data-disable-with={Translations.messages["create"]}/>
+              </div>
+            </form>
           </div>
         </div>
-    )
-  }
+      </div>
+  )
 }

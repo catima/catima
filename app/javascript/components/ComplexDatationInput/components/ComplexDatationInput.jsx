@@ -68,7 +68,7 @@ const ComplexDatationInput = (props) => {
                        id={`allowedFormat-${idx}`}
                        checked={selectedFormat === allowedFormat}
                        onChange={() => setSelectedFormatAndUpdateData(allowedFormat)}/>
-                <label className=" form-check-label"
+                <label className="form-check-label"
                        htmlFor={`allowedFormat-${idx}`}>{Translations.messages[`catalog_admin.fields.complex_datation_option_inputs.${allowedFormat}`]}</label>
               </div>
           ))
@@ -399,7 +399,7 @@ const RenderChoiceSetList = (props) => {
 
   function renderChoiceSet(choiceSet, index, list) {
     if (Object.keys(choiceSet).length > 0) {
-      return (<div key={choiceSet.fetchUrl}>
+      return (<div key={choiceSet.fetchUrl} className="mb-1">
         <RenderChoiceSetInput
             locales={locales}
             fetchUrl={choiceSet.fetchUrl}
@@ -535,28 +535,26 @@ const RenderChoiceSetInput = (props) => {
 
   return (
       <div>
-        <div className="dateTimeInput row rails-bootstrap-forms-datetime-select" style={{display: 'flex'}}>
+        <div className="dateTimeInput row rails-bootstrap-forms-datetime-select d-flex">
           <div className="col-sm-8">
-            <div style={{width: '100%'}}>
-              <AsyncPaginate
-                  className="datation-filter"
-                  delimiter=","
-                  loadOptions={_loadOptions}
-                  debounceTimeout={800}
-                  isSearchable={true}
-                  isClearable={true}
-                  isMulti={true}
-                  loadingMessage={() => loadingMessage}
-                  additional={{
-                    page: 1,
-                  }}
-                  styles={{menuPortal: base => ({...base, zIndex: 9999})}}
-                  name="choices"
-                  value={selectedChoices.value}
-                  onChange={selectChoice}
-                  options={optionsList}
-              />
-            </div>
+            <AsyncPaginate
+                className="datation-filter"
+                delimiter=","
+                loadOptions={_loadOptions}
+                debounceTimeout={800}
+                isSearchable={true}
+                isClearable={true}
+                isMulti={true}
+                loadingMessage={() => loadingMessage}
+                additional={{
+                  page: 1,
+                }}
+                styles={{menuPortal: base => ({...base, zIndex: 9999})}}
+                name="choices"
+                value={selectedChoices.value}
+                onChange={selectChoice}
+                options={optionsList}
+            />
           </div>
           {componentPolicies.modal && isActive && (
               <div className="col-sm-4">
@@ -568,7 +566,7 @@ const RenderChoiceSetInput = (props) => {
               </div>
           )}
         </div>
-        {modalOpen && (
+        {(
             <ModalForm
                 locales={locales}
                 key={modalIndex}
@@ -653,136 +651,133 @@ const ModalForm = (props) => {
     }
   }
 
-  if (!modalOpen) {
-    return ''
-  } else {
-    return (
-        <div className="modal fade" id={"choice-modal-" + fieldUuid + choiceSet.uuid} tabIndex="-1" role="dialog"
-             data-field-uuid={fieldUuid + choiceSet.uuid}>
-          <div className="modal-dialog">
-            <div className="modal-content">
-              <form onSubmit={handleSubmit} id={`new_choice_${choiceSet.id}`}>
-                <div className="modal-header">
-                  <h4 className="modal-title">{Translations.messages['catalog_admin.choice_sets.choice_modal.create_new_field']}</h4>
-                  <button type="button" className="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+
+  return (
+      <div className="modal fade" id={"choice-modal-" + fieldUuid + choiceSet.uuid} tabIndex="-1" role="dialog"
+           data-field-uuid={fieldUuid + choiceSet.uuid}>
+        <div className="modal-dialog">
+          <div className="modal-content">
+            <form onSubmit={handleSubmit} id={`new_choice_${choiceSet.id}`}>
+              <div className="modal-header">
+                <h4 className="modal-title">{Translations.messages['catalog_admin.choice_sets.choice_modal.create_new_field']}</h4>
+                <button type="button" className="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+              </div>
+              <div className="modal-body">
+                <div className="mb-3">
+                  <label className="form-label" htmlFor="choice_parent_id">Parent</label>
+                  <select className="form-select" name="choice[parent_id]"
+                          id="choice_parent_id">
+                    <option value=""></option>
+                    {modalChoices && modalChoices.map(o => {
+                      return (
+                          <option key={o.id} value={o.id}>{o.name}</option>
+                      )
+                    })}
+                  </select>
                 </div>
-                <div className="modal-body">
-                  <div className="mb-3">
-                    <label className="form-label" htmlFor="choice_parent_id">Parent</label>
-                    <select className="form-select" name="choice[parent_id]"
-                            id="choice_parent_id">
-                      <option value=""></option>
-                      {modalChoices && modalChoices.map(o => {
-                        return (
-                            <option key={o.id} value={o.id}>{o.name}</option>
-                        )
-                      })}
-                    </select>
-                  </div>
-                  <div className="mb-3">
-                    <label htmlFor="choice_position">Position</label>
-                    <select className="form-select" name="choice[position]"
-                            id="choice_position">
-                      <option
-                          value="first">{Translations.messages['catalog_admin.choice_sets.choice_modal.position.first']}</option>
-                      <option
-                          value="last">{Translations.messages['catalog_admin.choice_sets.choice_modal.position.last']}</option>
-                    </select>
-                  </div>
-                  <div className="translatedTextField mb-3">
-                    <label className="form-label"
-                           htmlFor={`choice_short_name`}>{Translations.messages['catalog_admin.choices.choice_fields.short_name']}</label>
-                    {
-                      locales.map((locale, idx) => (
-                          <div key={idx}>
-                            <label className="sr-only"
-                                   htmlFor={`choice_short_name_${locale}`}>{Translations.messages['catalog_admin.choices.choice_fields.short_name']}</label>
-                            <div className="input-group">
-                              {locales.length > 1 && <span className="input-group-text">{locale}</span>}
-                              <input className="form-control" type="text" name={`choice[short_name_${locale}]`}
-                                     id={`choice_short_name_${locale}`}/>
-                            </div>
+                <div className="mb-3">
+                  <label htmlFor="choice_position">Position</label>
+                  <select className="form-select" name="choice[position]"
+                          id="choice_position">
+                    <option
+                        value="first">{Translations.messages['catalog_admin.choice_sets.choice_modal.position.first']}</option>
+                    <option
+                        value="last">{Translations.messages['catalog_admin.choice_sets.choice_modal.position.last']}</option>
+                  </select>
+                </div>
+                <div className="translatedTextField mb-3">
+                  <label className="form-label"
+                         htmlFor={`choice_short_name`}>{Translations.messages['catalog_admin.choices.choice_fields.short_name']}</label>
+                  {
+                    locales.map((locale, idx) => (
+                        <div key={idx}>
+                          <label className="sr-only"
+                                 htmlFor={`choice_short_name_${locale}`}>{Translations.messages['catalog_admin.choices.choice_fields.short_name']}</label>
+                          <div className="input-group">
+                            {locales.length > 1 && <span className="input-group-text">{locale}</span>}
+                            <input className="form-control" type="text" name={`choice[short_name_${locale}]`}
+                                   id={`choice_short_name_${locale}`}/>
                           </div>
-                      ))
-                    }
-                  </div>
-                  <div className="translatedTextField mb-3">
-                    <label className="form-label"
-                           htmlFor={`choice_long_name`}>{Translations.messages['catalog_admin.choices.choice_fields.long_name_optional']}</label>
-                    {
-                      locales.map((locale, idx) => (
-                          <div key={idx}>
-                            <label className="sr-only"
-                                   htmlFor={`choice_long_name_${locale}`}>{Translations.messages['catalog_admin.choices.choice_fields.long_name_optional']}</label>
-                            <div className="input-group">
-                              {locales.length > 1 && <span className="input-group-text">{locale}</span>}
-                              <input className="form-control" type="text" name={`choice[long_name_${locale}]`}
-                                     id={`choice_long_name_${locale}`}/>
-                            </div>
+                        </div>
+                    ))
+                  }
+                </div>
+                <div className="translatedTextField mb-3">
+                  <label className="form-label"
+                         htmlFor={`choice_long_name`}>{Translations.messages['catalog_admin.choices.choice_fields.long_name_optional']}</label>
+                  {
+                    locales.map((locale, idx) => (
+                        <div key={idx}>
+                          <label className="sr-only"
+                                 htmlFor={`choice_long_name_${locale}`}>{Translations.messages['catalog_admin.choices.choice_fields.long_name_optional']}</label>
+                          <div className="input-group">
+                            {locales.length > 1 && <span className="input-group-text">{locale}</span>}
+                            <input className="form-control" type="text" name={`choice[long_name_${locale}]`}
+                                   id={`choice_long_name_${locale}`}/>
                           </div>
-                      ))
-                    }
-                  </div>
-                  <div className="mb-3">
-                    <label className="form-label"
-                           htmlFor="choice_from_date">{Translations.messages['catalog_admin.choices.choice_fields.from_date']}</label>
-                    <input
-                        id={`from_date_${choiceSet.id}`}
-                        data-field-options={JSON.stringify({format: choiceSet.format})}
-                        data-field-required="true" autoComplete="off" type="hidden"
-                        name="choice[from_date]"
-                        value={errorChoice && errorChoice.from_date || JSON.stringify({
-                          Y: '',
-                          M: '',
-                          D: '',
-                          h: '',
-                          m: '',
-                          s: ''
-                        })}/>
-                    <DateTimeInput
-                        key={modalIndex}
-                        input={`#from_date_${choiceSet.id}`}
-                        allowBC={choiceSet.allowBC}
-                        preventNegativeInput={true}
-                    />
-                  </div>
-                  <div className="mb-3">
-                    <label className="form-label"
-                           htmlFor="choice_to_date">{Translations.messages['catalog_admin.choices.choice_fields.to_date']}</label>
-                    <input
-                        id={`to_date_${choiceSet.id}`}
-                        data-field-options={JSON.stringify({format: choiceSet.format})}
-                        data-field-required="true" autoComplete="off" type="hidden"
-                        name="choice[to_date]"
-                        value={errorChoice && errorChoice.to_date || JSON.stringify({
-                          Y: '',
-                          M: '',
-                          D: '',
-                          h: '',
-                          m: '',
-                          s: ''
-                        })}/>
-                    <DateTimeInput
-                        key={modalIndex}
-                        input={`#to_date_${choiceSet.id}`}
-                        allowBC={choiceSet.allowBC}
-                        preventNegativeInput={true}
-                    />
-                  </div>
-                  <div className="base-errors">
-                    {errorMsg}
-                  </div>
+                        </div>
+                    ))
+                  }
                 </div>
-                <div className="modal-footer">
-                  <button type="button" className="btn btn-outline-secondary"
-                          data-bs-dismiss="modal">{Translations.messages['cancel']}</button>
-                  <input type="submit" name="commit" value={Translations.messages['.create']}
-                         className="btn btn-success" data-disable-with={Translations.messages['create']}/>
+                <div className="mb-3">
+                  <label className="form-label"
+                         htmlFor="choice_from_date">{Translations.messages['catalog_admin.choices.choice_fields.from_date']}</label>
+                  <input
+                      id={`from_date_${choiceSet.id}`}
+                      data-field-options={JSON.stringify({format: choiceSet.format})}
+                      data-field-required="true" autoComplete="off" type="hidden"
+                      name="choice[from_date]"
+                      value={errorChoice && errorChoice.from_date || JSON.stringify({
+                        Y: '',
+                        M: '',
+                        D: '',
+                        h: '',
+                        m: '',
+                        s: ''
+                      })}/>
+                  <DateTimeInput
+                      key={modalIndex}
+                      input={`#from_date_${choiceSet.id}`}
+                      allowBC={choiceSet.allowBC}
+                      preventNegativeInput={true}
+                  />
                 </div>
-              </form>
-            </div>
+                <div className="mb-3">
+                  <label className="form-label"
+                         htmlFor="choice_to_date">{Translations.messages['catalog_admin.choices.choice_fields.to_date']}</label>
+                  <input
+                      id={`to_date_${choiceSet.id}`}
+                      data-field-options={JSON.stringify({format: choiceSet.format})}
+                      data-field-required="true" autoComplete="off" type="hidden"
+                      name="choice[to_date]"
+                      value={errorChoice && errorChoice.to_date || JSON.stringify({
+                        Y: '',
+                        M: '',
+                        D: '',
+                        h: '',
+                        m: '',
+                        s: ''
+                      })}/>
+                  <DateTimeInput
+                      key={modalIndex}
+                      input={`#to_date_${choiceSet.id}`}
+                      allowBC={choiceSet.allowBC}
+                      preventNegativeInput={true}
+                  />
+                </div>
+                <div className="base-errors">
+                  {errorMsg}
+                </div>
+              </div>
+              <div className="modal-footer">
+                <button type="button" className="btn btn-outline-secondary"
+                        data-bs-dismiss="modal">{Translations.messages['cancel']}</button>
+                <input type="submit" name="commit" value={Translations.messages['.create']}
+                       className="btn btn-success" data-disable-with={Translations.messages['create']}/>
+              </div>
+            </form>
           </div>
         </div>
-    )
-  }
+      </div>
+  )
 }
