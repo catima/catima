@@ -120,17 +120,19 @@ a:not([href]):not([class])[type='button'] {
   color: $link-color;
 }
 
-// bootstrap 5.2 add CSS variables
+//
+// bootstrap 5.2 update
+//
 
 :root {
+  // global edit border color
   --bs-border-color: #ced4da;
 }
 
+// remove double border on table inside card
 .card > .table,
 .card > .table-index > .table {
-  margin-bottom: 0;
-
   > tbody > tr:last-child > td {
-    border-bottom: 0; // remove double border on table inside card
+    border-bottom: 0;
   }
 }
