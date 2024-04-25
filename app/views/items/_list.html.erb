@@ -1,7 +1,7 @@
 <% item_list.items.each_with_index do |item, i| %>
   <div class="media">
     <% if item_has_thumbnail?(item) %>
-      <div class="pull-left mr-3">
+      <div class="pull-left me-3">
         <%= item_list_link(item_list, item, i) do %>
           <%= item_thumbnail(item, :class => "media-object") %>
         <% end %>

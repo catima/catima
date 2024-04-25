@@ -1,10 +1,10 @@
 <div class="card-body">
   <%= bootstrap_form_for([:admin, @configuration], :layout => :inline) do |f| %>
-    <label class="mr-sm-2">Home page:</label>
-    <div class="mr-sm-1">
+    <label class="me-sm-2">Home page:</label>
+    <div class="me-sm-1">
       <%= configuration_root_mode_choices(f) %>
     </div>
-    <div class="mr-sm-1">
+    <div class="me-sm-1">
       <%= configuration_redirect_choices(f) %>
     </div>
     <%= f.primary("Save") %>

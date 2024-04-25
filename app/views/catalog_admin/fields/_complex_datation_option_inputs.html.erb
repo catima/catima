@@ -7,10 +7,8 @@
   <%= f.form_group do %>
     <%= f.check_box :allowed_formats, {label: t(".#{Field::ComplexDatation::ALLOWED_FORMATS.first}"), multiple: true, "data-action": "click->toggle-display#reveal", "data-toggle-display-target": 'source'}, Field::ComplexDatation::ALLOWED_FORMATS.first, nil %>
   <% end %>
-  <div class="ml-4" data-toggle-display-target="revealable">
-    <%= f.form_group do %>
-      <%= f.collection_select(:format, Field::ComplexDatation::FORMATS, :to_s, :to_s, label: t(".format")) %>
-    <% end %>
+  <div class="ms-4" data-toggle-display-target="revealable">
+    <%= f.collection_select(:format, Field::ComplexDatation::FORMATS, :to_s, :to_s, label: t(".format")) %>
     <%= f.form_group do %>
       <%= f.check_box(:allow_date_time_bc, label: t(".allow_bc")) %>
     <% end %>
@@ -21,14 +19,12 @@
   <%= f.form_group do %>
     <%= f.check_box :allowed_formats, {label: t(".#{Field::ComplexDatation::ALLOWED_FORMATS.second}"), multiple: true, "data-action": "click->toggle-display#reveal", "data-toggle-display-target": 'source'}, Field::ComplexDatation::ALLOWED_FORMATS.second, nil %>
   <% end %>
-  <%= f.form_group do %>
-    <div class="ml-4" data-toggle-display-target="revealable">
-      <%= select2_select(f, :choice_set_ids, f.object.choice_set_choices.map { |c| [c.name, c.id] },
-                         {
-                           multiple: true,
-                           label: t(".choice_set_ids")
-                         }
-          ) %>
-    </div>
-  <% end %>
+  <div class="ms-4" data-toggle-display-target="revealable">
+    <%= select2_select(f, :choice_set_ids, f.object.choice_set_choices.map { |c| [c.name, c.id] },
+                       {
+                         multiple: true,
+                         label: t(".choice_set_ids")
+                       }
+        ) %>
+  </div>
 </div>
