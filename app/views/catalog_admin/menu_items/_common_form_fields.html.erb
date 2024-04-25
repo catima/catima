@@ -87,9 +87,11 @@
   }
 </script>
 
-<%= f.text_field(:url, :class => 'd-none', :value => @menu_item.url_str) %>
-<div id="url_component"></div>
-
+<%= f.form_group do %>
+  <%= f.label(:url, class: "form-label") %>
+  <%= f.hidden_field(:url, :value => @menu_item.url_str) %>
+  <div id="url_component"></div>
+<% end %>
 <script>
 
   $('#menu_item_item_type_id').on('change', updateFieldDisplay);
