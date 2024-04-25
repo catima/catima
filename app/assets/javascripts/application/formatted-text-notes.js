@@ -1,10 +1,9 @@
-$(document).on('ready', function(){
+$(document).ready(function(){
   var ftFields = $('div.formatted-text');
   for (var i=0; i < ftFields.length; i++){
     prepareFootnotesForTextField(ftFields[i]);
     prepareEndnotesForTextField(ftFields[i]);
   }
-  $('sup.footnote-ref').popover({ html: true });
 });
 
 function prepareFootnotesForTextField(fld){
@@ -13,10 +12,10 @@ function prepareFootnotesForTextField(fld){
     var fn = footnotes[i];
     var fnRef = document.createElement('sup');
     fnRef.className = 'footnote-ref';
-    fnRef.setAttribute('data-content', fn.getAttribute('data-note'));
-    fnRef.setAttribute('data-toggle', 'popover');
+    fnRef.setAttribute('data-bs-content', fn.getAttribute('data-note'));
+    fnRef.setAttribute('data-bs-toggle', 'popover');
     fnRef.setAttribute('data-trigger', 'focus');
-    fnRef.setAttribute('data-placement', "bottom");
+    fnRef.setAttribute('data-bs-placement', "bottom");
     fnRef.setAttribute('title', '');
     fnRef.setAttribute('role', 'button');
     fnRef.setAttribute('tabIndex', '0');

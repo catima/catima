@@ -5,9 +5,9 @@
     <%= f.check_box(:formatted_text, :label => t('.has_formatted_text')) %>
     <span
       class="ml-2 text-secondary"
-      data-toggle="popover"
+      data-bs-toggle="popover"
       title="<%= t('.help_formatted_text_title') %>"
-      data-content="<%= t('.help_formatterd_text_content') %>"
+      data-bs-content="<%= t('.help_formatterd_text_content') %>"
     >
       <i class="fa fa-question-circle-o"></i>
     </span>
@@ -18,7 +18,3 @@
 <%= f.number_field(:maximum, :label => t('.max_length')) %>
 <%= field_default_value_input(f) %>
 <%= field_i18n_check_box(f) %>
-
-<script>
-  $('[data-toggle="popover"]').popover();
-</script>
