@@ -665,9 +665,7 @@ const ModalForm = (props) => {
               <form onSubmit={handleSubmit} id={`new_choice_${choiceSet.id}`}>
                 <div className="modal-header">
                   <h4 className="modal-title">{Translations.messages['catalog_admin.choice_sets.choice_modal.create_new_field']}</h4>
-                  <button type="button" className="close" data-bs-dismiss="modal" aria-label="Close">
-                    <span aria-hidden="true">×</span>
-                  </button>
+                  <button type="button" className="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                 </div>
                 <div className="modal-body">
                   <div className="mb-3">

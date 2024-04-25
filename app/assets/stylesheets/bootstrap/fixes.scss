@@ -129,6 +129,10 @@ a:not([href]):not([class])[type='button'] {
   --bs-border-color: #ced4da;
 }
 
+.modal-title {
+    margin-top: 0;
+}
+
 // remove double border on table inside card
 .card > .table,
 .card > .table-index > .table {

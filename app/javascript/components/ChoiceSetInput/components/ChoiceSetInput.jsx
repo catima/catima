@@ -380,13 +380,10 @@ const ModalForm = (props) => {
                  data-field-uuid={fieldUuid} data-lang="fr" aria-labelledby="myModalLabel">
                 <div className="modal-dialog">
                     <div className="modal-content">
-                      XXXXXXXXX
                         <form onSubmit={handleSubmit} id={`new_choice_${choiceSet.id}`}>
                             <div className="modal-header">
                                 <h4 className="modal-title">{Translations.messages['catalog_admin.choice_sets.choice_modal.create_new_field']}</h4>
-                                <button type="button" className="close" data-bs-dismiss="modal" aria-label="Close">
-                                    <span aria-hidden="true">×</span>
-                                </button>
+                                <button type="button" className="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                             </div>
                             <div className="modal-body">
                                 <div className="card-body">
@@ -425,14 +422,13 @@ const ModalForm = (props) => {
                                                 <div className="form-group mb-3">
                                                     <label className="sr-only" htmlFor={`choice_short_name_${locale}`}>{Translations.messages['catalog_admin.choices.choice_fields.short_name']}</label>
                                                     <div className="input-group">
-                                                        {locales.length > 1 && <div className="input-group-prepend"><span className="input-group-text">{locale}</span></div>}
+                                                        {locales.length > 1 && <span className="input-group-text">{locale}</span>}
                                                         <input className="form-control" type="text" name={`choice[short_name_${locale}]`} id={`choice_short_name_${locale}`}/>
                                                     </div>
                                                 </div>
                                             </div>
                                         ))
                                     }
-
                                     <label htmlFor={`choice_long_name`}>{Translations.messages['catalog_admin.choices.choice_fields.long_name_optional']}</label>
                                     {
                                         locales.map((locale, idx) => (
