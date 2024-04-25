@@ -292,7 +292,7 @@ const DateTimeInput = forwardRef((props, ref) => {
         <div className="dateTimeInput rails-bootstrap-forms-datetime-select">
           <div className="row">
             {allowBC == '1' ? (
-              <div className="form-check" style={{display: 'inline-block', marginRight: '3rem', paddingLeft: '0'}}>
+              <div className="form-check d-inline-block me-4">
                 <label className="form-check-label" htmlFor={`bcCheck-${input}`}>{Translations.messages['catalog_admin.fields.complex_datation_option_inputs.BC']}</label>
                 <input type="checkbox" value={true} name={inputName + '[BC]'} className="form-check-input" id={`bcCheck-${input}`}
                        onChange={_handleChangeBC}/>

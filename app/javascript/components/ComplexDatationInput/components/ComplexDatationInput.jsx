@@ -264,8 +264,7 @@ const ComplexDatationInput = (props) => {
     return (
         <div className="dateTimeInput rails-bootstrap-forms-datetime-select">
           {allowBC ? (
-              <div className="form-check"
-                   style={{display: 'inline-block', marginRight: '3rem', paddingLeft: '0'}}>
+              <div className="form-check d-inline-block me-4">
                 <label className="form-check-label"
                        htmlFor={`bcCheck-${input}`}>{Translations.messages['catalog_admin.fields.complex_datation_option_inputs.BC']}</label>
                 <input type="checkbox" value={true} className="form-check-input" id={`bcCheck-${input}`}
