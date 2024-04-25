@@ -5,7 +5,7 @@
       <%= current_user.email %>
     </a>
 
-    <ul class="dropdown-menu dropdown-menu-right">
+    <ul class="dropdown-menu dropdown-menu-end">
         <%= link_to(
               t(".my_profile"),
               edit_user_registration_path(:locale => I18n.locale), class: "dropdown-item") %>
