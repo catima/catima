@@ -3,8 +3,8 @@
   margin-bottom: 0;
 }
 
-.panel-default {
-  overflow-y: auto;
+.panel-default .table-index {
+  overflow-y: auto; // only overflow table to prevent having dropdown scroll
 }
 
 .card-header {
