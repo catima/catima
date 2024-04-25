@@ -266,7 +266,7 @@ const ChoiceSetSearch = (props) => {
 
   function renderSelectConditionElement() {
     return (
-      <select className="form-control filter-condition" name={selectConditionName}
+      <select className="form-select filter-condition" name={selectConditionName}
               value={selectedCondition} onChange={_selectCondition}
               disabled={selectedItem.length === 0 || Object.keys(selectedCategory).length === 0}>
         {selectCondition.map((item) => {
@@ -278,7 +278,7 @@ const ChoiceSetSearch = (props) => {
 
   function renderFieldConditionElement() {
     return (
-      <select className="form-control filter-condition" name={fieldConditionName}
+      <select className="form-select filter-condition" name={fieldConditionName}
               value={selectedFieldCondition} onChange={_selectFieldCondition}>
         {fieldConditionData.map((item) => {
           return <option key={item.key} value={item.key}>{item.value}</option>

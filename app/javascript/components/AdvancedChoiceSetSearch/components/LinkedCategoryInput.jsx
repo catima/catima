@@ -231,7 +231,7 @@ const LinkedCategoryInput = (props) => {
     } else if (inputType === 'Field::Boolean') {
       return (
         <select name={_buildInputNameCondition(selectedCondition)} onChange={_selectItem}
-                className="form-control">
+                className="form-select">
           {inputData.map((item) => {
             return <option key={item.key}>{item.value}</option>
           })

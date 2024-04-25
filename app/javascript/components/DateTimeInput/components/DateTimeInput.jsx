@@ -177,7 +177,7 @@ const DateTimeInput = (props) => {
         ) : null
         }
         {fmt.includes('M') ? (
-          <select style={errorStl} className="form-control" value={state.M} onChange={_handleChangeMonth}>
+          <select style={errorStl} className="form-select" value={state.M} onChange={_handleChangeMonth}>
             <option value=""></option>
             <option value="1">
               {Translations.messages['catalog_admin.fields.date_time_option_inputs.months.january']}

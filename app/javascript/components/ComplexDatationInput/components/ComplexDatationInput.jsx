@@ -280,7 +280,7 @@ const ComplexDatationInput = (props) => {
           ) : null
           }
           {fmt.includes('M') ? (
-              <select style={errorStl} className="form-control" value={input === 'from' ? fromState.M : toState.M}
+              <select style={errorStl} className="form-select" value={input === 'from' ? fromState.M : toState.M}
                       onChange={_handleChangeMonth(input)}>
                 <option value=""></option>
                 <option value="1">
@@ -670,7 +670,7 @@ const ModalForm = (props) => {
                 <div className="modal-body">
                   <div className="mb-3">
                     <label className="form-label" htmlFor="choice_parent_id">Parent</label>
-                    <select className="form-control" name="choice[parent_id]"
+                    <select className="form-select" name="choice[parent_id]"
                             id="choice_parent_id">
                       <option value=""></option>
                       {modalChoices && modalChoices.map(o => {
@@ -682,7 +682,7 @@ const ModalForm = (props) => {
                   </div>
                   <div className="mb-3">
                     <label htmlFor="choice_position">Position</label>
-                    <select className="form-control" name="choice[position]"
+                    <select className="form-select" name="choice[position]"
                             id="choice_position">
                       <option
                           value="first">{Translations.messages['catalog_admin.choice_sets.choice_modal.position.first']}</option>

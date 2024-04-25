@@ -216,7 +216,7 @@ const ItemTypesReferenceSearch = (props) => {
     } else if (inputType === 'Field::Boolean') {
       return (
         <select id={referenceSearchId} ref={referenceSearchRef} name={inputName} onChange={_selectItem}
-                className="form-control">
+                className="form-select">
           {inputData.map((item) => {
             return <option key={item.key} value={item.key}>{item.value}</option>
           })

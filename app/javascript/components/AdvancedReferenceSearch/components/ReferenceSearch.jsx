@@ -278,7 +278,7 @@ const ReferenceSearch = (props) => {
 
   function renderFieldConditionElement() {
     return (
-      <select className="form-control filter-condition" name={fieldConditionName} value={selectedFieldCondition}
+      <select className="form-select filter-condition" name={fieldConditionName} value={selectedFieldCondition}
               onChange={_selectFieldCondition}>
         {fieldConditionData.map((item) => {
           return <option key={item.key} value={item.key}>{item.value}</option>
@@ -289,7 +289,7 @@ const ReferenceSearch = (props) => {
 
   function renderSelectConditionElement() {
     return (
-      <select className="form-control filter-condition" name={selectConditionName} value={selectedCondition}
+      <select className="form-select filter-condition" name={selectConditionName} value={selectedCondition}
               onChange={_selectCondition} disabled={_isConditionDisabled()}>
         {selectCondition.map((item) => {
           return <option key={item.key} value={item.key}>{item.value}</option>

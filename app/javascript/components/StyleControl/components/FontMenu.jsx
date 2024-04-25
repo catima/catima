@@ -12,7 +12,7 @@ const FontMenu = (props) => {
   }
 
   return (
-    <select className="form-control btn btn-sm btn-outline-secondary"
+    <select className="form-select btn btn-sm btn-outline-secondary"
             value={value}
             onChange={_handleChange}
             style={{height: '30px', width: '150px'}}>

@@ -16,7 +16,7 @@ changeInputName = (selectInput) ->
   filerFieldName = templateField.attr("name").replace(/__filter__/g, selectedFilter);
   filerFieldId = templateField.attr("id").replace(/__filter__/g, selectedFilter);
 
-  selectInput.parents('.row').find("input.form-control").first().attr("name", filerFieldName)
-  selectInput.parents('.row').find("input.form-control").first().attr("id", filerFieldId)
+  selectInput.parents('.row').find("input.form-select").first().attr("name", filerFieldName)
+  selectInput.parents('.row').find("input.form-select").first().attr("id", filerFieldId)
 
 $(document).ready(init)

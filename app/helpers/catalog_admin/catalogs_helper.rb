@@ -49,7 +49,7 @@ module CatalogAdmin::CatalogsHelper
         ],
         catalog_access(catalog)
       ),
-      class: 'form-control',
+      class: 'form-select',
       label: 'catalog_access'
     )
   end

@@ -176,7 +176,7 @@ const DateTimeSearchComponent = (props) => {
 
   function renderSelectConditionElement(idx) {
     return (
-      <select className="form-control filter-condition" name={selectConditionInputName} value={selectedCondition}
+      <select className="form-select filter-condition" name={selectConditionInputName} value={selectedCondition}
               onChange={_selectCondition(idx)}>
         {selectCondition.map((item) => {
           return <option key={item.key} value={item.key}>{item.value}</option>
@@ -204,7 +204,7 @@ const DateTimeSearchComponent = (props) => {
 
   function renderFieldConditionElement() {
     return (
-      <select className="form-control filter-condition" name={fieldConditionInputName} value={selectedFieldCondition}
+      <select className="form-select filter-condition" name={fieldConditionInputName} value={selectedFieldCondition}
               onChange={_selectFieldCondition}>
         {fieldConditionData.map((item) => {
           return <option key={item.key} value={item.key}>{item.value}</option>
