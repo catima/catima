@@ -410,7 +410,7 @@ const ModalForm = (props) => {
                     </select>
                   </div>
 
-                  <div className="mb-3">
+                  <div className="mb-3 translatedTextField">
                     <label className="form-label"
                            htmlFor={`choice_short_name`}>{Translations.messages['catalog_admin.choices.choice_fields.short_name']}</label>
                     {
@@ -430,7 +430,7 @@ const ModalForm = (props) => {
                     }
                   </div>
 
-                  <div className="mb-3">
+                  <div className="mb-3 translatedTextField">
                     <label className="form-label"
                            htmlFor={`choice_long_name`}>{Translations.messages['catalog_admin.choices.choice_fields.long_name_optional']}</label>
                     {
@@ -440,8 +440,7 @@ const ModalForm = (props) => {
                               <label className="sr-only"
                                      htmlFor={`choice_long_name_${locale}`}>{Translations.messages['catalog_admin.choices.choice_fields.long_name_optional']}</label>
                               <div className="input-group">
-                                {locales.length > 1 && <div className="input-group-prepend"><span
-                                    className="input-group-text">{locale}</span></div>}
+                                {locales.length > 1 && <span className="input-group-text">{locale}</span>}
                                 <input className="form-control" type="text" name={`choice[long_name_${locale}]`}
                                        id={`choice_long_name_${locale}`}/>
                               </div>
