@@ -12,10 +12,10 @@ const FontSize = (props) => {
   }
 
   return (
-    <select className="form-select btn btn-sm btn-outline-secondary"
+    <select className="form-select btn btn-sm btn-outline-secondary text-start"
             value={value}
             onChange={_handleChange}
-            style={{height: '30px', width: '70px'}}>
+            style={{height: '30px', width: '80px'}}>
       <option value="">Default</option>
       <option disabled>---</option>
       <option value="7pt">7 pt</option>

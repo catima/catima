@@ -3,6 +3,8 @@
 <div class="card-body">
   <%= bootstrap_form_for(@catalog, :url => catalog_admin_settings_path) do |f| %>
     <%= render("common_form_fields", :f => f) %>
+
+    <hr>
     <%= f.primary(t("catalog_admin.catalog.save_settings")) %>
   <% end %>
 </div>
