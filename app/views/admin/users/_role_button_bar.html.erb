@@ -1,8 +1,6 @@
-<div class="btn-group" data-toggle="buttons">
-  <% roles.each do |role, active| %>
-    <label class="btn btn-outline-secondary btn-xs <%= active %>" style="padding-left: 1.5em; padding-right: 1.5em;">
-      <%= f.radio_button_without_bootstrap(:role, role, :autocomplete => "off") %>
-      <%= role.capitalize %>
-    </label>
+<div class="btn-group">
+  <% roles.each do |role, _active| %>
+    <%= f.radio_button_without_bootstrap(:role, role, autocomplete: "off", class: "btn-check") %>
+    <%= f.label :role, role.capitalize, value: role, class: "btn btn-outline-secondary btn-xs px-3" %>
   <% end %>
 </div>
