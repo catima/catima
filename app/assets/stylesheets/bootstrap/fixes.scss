@@ -119,3 +119,9 @@ input[type="search"]::-webkit-search-results-decoration { display: none; }
 a:not([href]):not([class])[type='button'] {
   color: $link-color;
 }
+
+// bootstrap 5.2 add CSS variables
+
+:root {
+  --bs-border-color: #ced4da;
+}
