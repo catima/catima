@@ -3,6 +3,8 @@
 <div id="item-form">
   <%= bootstrap_form_for([:catalog_admin, @item]) do |f| %>
     <%= render("common_form_fields", :f => f) %>
+
+    <hr>
     <%= f.primary(t('.create_item', item_type: @item.item_type.name)) %>
     <%= submit_and_add_another(f) %>
     <%= link_to(
