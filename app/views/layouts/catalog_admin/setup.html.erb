@@ -36,6 +36,8 @@
 
   </div>
   <div class="<%= content_for(:catalog_admin_width) || 'col-sm-9' %>">
+    <%= yield(:extra_setup_top) %>
+
     <div class="card panel-default">
       <div class="card-header">
         <% if content_for?(:actions) %>
@@ -43,10 +45,11 @@
         <% end %>
         <%= content_for(:title) %>
       </div>
+
       <%= yield %>
     </div>
 
-    <%= yield(:extra_setup) %>
+    <%= yield(:extra_setup_bottom) %>
   </div>
 </div>
 
