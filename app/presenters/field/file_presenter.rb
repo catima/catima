@@ -57,7 +57,7 @@ class Field::FilePresenter < FieldPresenter
         input_defaults(options).reverse_merge(:rows => 1, 'data-field-type' => 'file')
       ),
       '<div class="form-component">',
-      "<div class=\"form-group file-upload\" #{field_category} " \
+      "<div class=\"mb-3 file-upload\" #{field_category} " \
       "id=\"fileupload_#{method}\" " \
       "data-field=\"#{method}\" " \
       "data-field-type=\"#{field.type}\" " \

@@ -35,7 +35,7 @@
   %>
 <% end %>
 
-<div class="form-group">
+<%= f.form_group do %>
   <label class="form-label">
     <%= t(".colors") %>
   </label>
@@ -67,7 +67,7 @@
       <%= t(".colors_help") %>
     </small>
   </div>
-</div>
+<% end %>
 
 <%= f.form_group(
   :bounds,

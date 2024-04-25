@@ -86,7 +86,7 @@ const TranslatedTextField = (props) => {
 
   if (!value) return ''
   return (
-    <div className="translatedTextField form-group">
+    <div className="translatedTextField mb-3">
       {locales.map((locale, i) =>
         (
           <div key={i} className="input-group">

@@ -1,8 +1,8 @@
 
-<div class="form-group">
-  <%= f.label(t('item_type')) %>
+<%= f.form_group do %>
+  <%= f.label(t('item_type'), class: "form-label") %>
   <div><%= @item_view.item_type.slug %></div>
-</div>
+<% end %>
 
 <%= f.text_field(:name) %>
 
