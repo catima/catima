@@ -10,15 +10,15 @@
       <%= f.select :position, [[t('.position.first'), :first], [t('.position.last'), :last]] %>
     </div>
     <%= render("catalog_admin/choices/choice_fields", :f => f) %>
-    <div class="mt-4">
-      <%= f.primary(t(".create_choice")) %>
-      <%= link_to(
-            t("cancel"),
-            edit_catalog_admin_choice_set_path(
-              @choice_set.catalog,
-              I18n.locale,
-              @choice_set),
-            :class => "btn btn-link") %>
-    </div>
+
+    <hr>
+    <%= f.primary(t(".create_choice")) %>
+    <%= link_to(
+          t("cancel"),
+          edit_catalog_admin_choice_set_path(
+            @choice_set.catalog,
+            I18n.locale,
+            @choice_set),
+          :class => "btn btn-link") %>
   <% end %>
 </div>

@@ -3,7 +3,7 @@
 <%= bootstrap_form_for(
       @advanced_search_conf,
       :url => catalog_admin_advanced_search_configurations_path(catalog, I18n.locale)
-      ) do |f| %>
+    ) do |f| %>
 
   <%= render("common_form_fields", :f => f) %>
 
@@ -14,12 +14,10 @@
         render_item_types_as_options(
           @advanced_search_conf.catalog.item_types,
           params[:item_type].presence || @advanced_search_conf.item_type&.slug
-        ),
-        :hide_label => false
-  ) %>
+        )
+      ) %>
 
-  <div class="mb-3">
-      <%= f.primary(t('.next')) %>
-      <%= link_to t('cancel'), catalog_admin_advanced_search_configurations_path, :class => "btn btn-link" %>
-  </div>
+  <hr>
+  <%= f.primary(t('.next')) %>
+  <%= link_to t('cancel'), catalog_admin_advanced_search_configurations_path, :class => "btn btn-link" %>
 <% end %>

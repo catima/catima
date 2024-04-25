@@ -5,12 +5,12 @@
 
     <%= render("common_form_fields", :f => f) %>
 
+    <hr>
     <%= f.primary(t('.create_page')) %>
     <%= submit_and_add_another(f) %>
     <%= link_to(
           t("cancel"),
           catalog_admin_pages_path,
           :class => "btn btn-link") %>
-
   <% end %>
 </div>
