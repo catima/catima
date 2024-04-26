@@ -23,7 +23,6 @@
     <%= render_items_approval(@item) %>
     <%= render("common_form_fields", :f => f) %>
 
-    <hr>
     <%= f.primary(t('.save_item', item: @item.item_type.name)) %>
     <%= link_to(
           t("cancel"),
