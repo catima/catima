@@ -8,7 +8,7 @@ module CatalogAdmin::MapHelper
   end
 
   def popup_display_name(item)
-    return item_display_name(item).truncate(100) if item_display_name(item).present?
+    return item_display_name(item).truncate(80) if item_display_name(item).present?
 
     t('containers.map.view_item')
   end

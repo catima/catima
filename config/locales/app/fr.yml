@@ -937,6 +937,7 @@ fr:
         new_group: Nouveau groupe
         no_groups_for_catalog_warning: Il n'y a pas de groupes pour ce catalogue.
         search: Rechercher des utilisateurs
+        documentation_url_html: "Une documentation détaillée sur le fonctionnement et la configuration des utilisateurs et groupes est disponible à l'url suivante: <a href=\"%{url}\" target=\"_blank\">%{url}</a>."
       catalog_users:
         group_role: Groupe
       edit:

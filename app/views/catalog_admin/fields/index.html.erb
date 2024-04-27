@@ -19,7 +19,7 @@
   </div>
 <% end %>
 
-<% provide(:extra_setup) do %>
+<% provide(:extra_setup_bottom) do %>
   <% if @field_set.class == ItemType && current_user.system_admin? %>
     <hr>
     <h3><%= t('item_views') %></h3>

@@ -1,3 +1,10 @@
+<% provide(:extra_setup_top) do %>
+  <div class="alert alert-primary" role="alert">
+    <%= t('.documentation_url_html', :url => documentation_url("faqinvitation.html")) %>
+  </div>
+  <hr>
+<% end %>
+
 <% provide(:title, t('.groups')) %>
 
 <% provide(:actions) do %>
@@ -72,7 +79,7 @@
   }
 </script>
 
-<% provide(:extra_setup) do %>
+<% provide(:extra_setup_bottom) do %>
   <hr/>
   <% if @users %>
     <div class="card panel-default user-panel">
