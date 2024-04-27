@@ -13,7 +13,7 @@ class NavbarHelperTest < ActionView::TestCase
       :active_when => { :controller => "users" })
 
     assert_equal(
-      '<li class="nav-item active"><a title="foo" class="nav-link" href="http://example.com">Test</a></li>',
+      '<li class="nav-item"><a title="foo" class="nav-link active" href="http://example.com">Test</a></li>',
       tag
       )
   end
@@ -27,7 +27,7 @@ class NavbarHelperTest < ActionView::TestCase
       :active_when => { :controller => /^user.*/ })
 
     assert_equal(
-      '<li class="nav-item active"><a class="nav-link" href="http://example.com">Test</a></li>',
+      '<li class="nav-item"><a class="nav-link active" href="http://example.com">Test</a></li>',
       tag
       )
   end
