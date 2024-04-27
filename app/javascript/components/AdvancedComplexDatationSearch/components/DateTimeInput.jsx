@@ -290,7 +290,7 @@ const DateTimeInput = forwardRef((props, ref) => {
     <div id={inputId + '_' + inputSuffixId} ref={topRef}>
       {state && localizedDateTimeData.month_names && (
         <div className="dateTimeInput rails-bootstrap-forms-datetime-select">
-          <div className="row">
+          <div className="d-flex">
             {allowBC == '1' ? (
               <div className="form-check d-inline-block me-4">
                 <label className="form-check-label" htmlFor={`bcCheck-${input}`}>{Translations.messages['catalog_admin.fields.complex_datation_option_inputs.BC']}</label>
