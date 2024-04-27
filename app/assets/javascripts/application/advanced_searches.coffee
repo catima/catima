@@ -11,12 +11,13 @@ init = ->
 
 changeInputName = (selectInput) ->
   selectedFilter = selectInput.val()
-  templateField = selectInput.parents(".row").find(".template")
+  templateField = selectInput.closest(".row").find(".template")
 
-  filerFieldName = templateField.attr("name").replace(/__filter__/g, selectedFilter);
-  filerFieldId = templateField.attr("id").replace(/__filter__/g, selectedFilter);
+  if templateField.length > 0
+    filerFieldName = templateField.attr("name").replace(/__filter__/g, selectedFilter);
+    filerFieldId = templateField.attr("id").replace(/__filter__/g, selectedFilter);
 
-  selectInput.closest('.row').find("input.form-control").first().attr("name", filerFieldName)
-  selectInput.closest('.row').find("input.form-control").first().attr("id", filerFieldId)
+    selectInput.closest('.row').find("input.form-control").first().attr("name", filerFieldName)
+    selectInput.closest('.row').find("input.form-control").first().attr("id", filerFieldId)
 
 $(document).ready(init)
