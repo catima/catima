@@ -62,13 +62,6 @@
   margin: 10px;
 }
 
-.referenceEditor {
-    display: block;
-    float: left;
-    width: 100%;
-    margin-bottom: 20px;
-}
-
 .referenceEditor .css1pahdxg-control, .reference-search-container .css1pahdxg-control,
 .referenceEditor .select__menu, .reference-search-container .select__menu,
 .single-reference-filter {

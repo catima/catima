@@ -6,16 +6,19 @@ class Field::ReferencePresenter < FieldPresenter
   delegate :references, :selected_references, :to => :field
 
   def input(form, method, options={})
-    [
+    label_and_input = [
       form.text_area(
         "#{method}_json",
         input_defaults(options).reverse_merge(
           'data-multiple': field.multiple?,
-          class: 'd-none'
+          class: 'd-none',
+          wrapper_class: ""
         )
       ),
       reference_control(method)
     ].join.html_safe
+
+    tag.div(label_and_input, class: "mb-3") # form.form_group
   end
 
   def reference_control(method)
@@ -23,12 +26,8 @@ class Field::ReferencePresenter < FieldPresenter
     category = field.belongs_to_category? ? "data-field-category=\"#{field.category_id}\" data-field-category-choice-id=\"#{field.category_choice.id}\" data-field-category-choice-set-id=\"#{field.category_choice_set.id}\"" : ""
     # rubocop:enable Layout/LineLength
     [
-      '<div class="form-component">',
-      "<div class=\"row\" #{category} data-field=\"#{field.id}\">",
-      '<div class="col-sm-12">',
+      "<div #{category} data-field=\"#{field.id}\">",
       component(method),
-      '</div>',
-      '</div>',
       '</div>'
     ].join.html_safe
   end
