@@ -74,7 +74,7 @@ class CatalogAdmin::ChoiceSetsTest < ActionDispatch::IntegrationTest
     visit("/one/en/admin/authors/#{author.to_param}/edit")
 
     within(find('#item_one_author_other_languages_uuid_json', visible: false).find(:xpath,".//..")) do
-      find("a[data-target='#choice-modal-#{field.uuid}']", :visible => :all).click
+      find("a[data-bs-target='#choice-modal-#{field.uuid}']", :visible => :all).click
     end
     sleep(2) # Wait for the ReactModal to fetch its data
 
