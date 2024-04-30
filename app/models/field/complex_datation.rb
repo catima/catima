@@ -276,18 +276,26 @@ class Field::ComplexDatation < ::Field
     def validate(record)
       attrib = Array.wrap(options[:attributes]).first
       value = record.public_send(attrib)
+      field = Field.find_by(uuid: attrib)
 
       return if value.blank?
-
       return if value['selected_format'] != "date_time"
+      return if value['to'].keys.all? { |key| value['to'][key].blank? || value['to'][key].nil? } && value['from'].keys.all? { |key| value['from'][key].blank? || value['from'][key].nil? } && !field.required
+
+      if value['to'].keys.all? { |key| value['to'][key].blank? || value['to'][key].nil? } && value['from'].keys.all? { |key| value['from'][key].blank? || value['from'][key].nil? } && field.required
+        record.errors.add(:base, I18n.t('activerecord.errors.models.item.attributes.base.complex_datation_cant_be_blank'))
+        return
+      end
 
       from_date_is_positive = value['from'].compact.except("BC").all? { |_, v| v.to_i >= 0 }
-
       to_date_is_positive = value['to'].compact.except("BC").all? { |_, v| v.to_i >= 0 }
 
-      return if to_date_is_positive && from_date_is_positive
+      invalid_format = field.format.chars.any? do |char|
+        value['to'][char].blank? || value['to'][char].nil? || value['from'][char].blank? || value['from'][char].nil?
+      end
 
-      record.errors.add(:base, :negative_dates)
+      record.errors.add(:base, I18n.t('activerecord.errors.models.item.attributes.base.wrong_complex_datation_format', field_format: field.format)) if invalid_format
+      record.errors.add(:base, :negative_dates) if !to_date_is_positive || !from_date_is_positive
     end
   end
 end

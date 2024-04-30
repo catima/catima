@@ -67,7 +67,11 @@ fr:
         item:
           attributes:
             base:
+              complex_datation_cant_be_blank: "Le champ complexe datation doit etre rempli"
+              date_time_cant_be_blank: "Le champ date time doit etre rempli"
               negative_dates: "Les dates négatives doivent être saisies avec l'option avant Jesus Christ (si activée)"
+              wrong_complex_datation_format: "Ne respecte pas le format %{field_format} du champ complex datation"
+              wrong_date_time_format: "Ne respecte pas le format %{field_format} du champ date time"
         field/choice_set:
           attributes:
             choice_set_id:
