@@ -2,7 +2,6 @@ import React, {useState, useEffect} from 'react';
 import ReactSelect from 'react-select';
 import axios from 'axios';
 import 'moment';
-import 'bootstrap4-datetimepicker';
 
 import DateTimeSearch from '../../AdvancedDateTimeSearch/components/DateTimeSearch';
 
