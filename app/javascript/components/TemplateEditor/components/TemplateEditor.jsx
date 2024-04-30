@@ -70,7 +70,6 @@ const TemplateEditor = (props) => {
       editor.summernote('code', html);
 
       $('.note-link-popover').css('display', 'none');
-      $('.dropdown-toggle').dropdown();
     }
   }, [editor, html])
 
@@ -87,7 +86,7 @@ const TemplateEditor = (props) => {
           className: 'dropdown-toggle',
           contents: Translations.messages['add_field'],
           data: {
-            toggle: 'dropdown'
+            "bs-toggle": 'dropdown'
           }
         }),
         ui.dropdown({
