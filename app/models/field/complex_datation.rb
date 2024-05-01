@@ -283,7 +283,7 @@ class Field::ComplexDatation < ::Field
       return if value['to'].keys.all? { |key| value['to'][key].blank? || value['to'][key].nil? } && value['from'].keys.all? { |key| value['from'][key].blank? || value['from'][key].nil? } && !field.required
 
       if value['to'].keys.all? { |key| value['to'][key].blank? || value['to'][key].nil? } && value['from'].keys.all? { |key| value['from'][key].blank? || value['from'][key].nil? } && field.required
-        record.errors.add(:base, I18n.t('activerecord.errors.models.item.attributes.base.complex_datation_cant_be_blank'))
+        record.errors.add(attrib, I18n.t('activerecord.errors.models.item.attributes.base.cant_be_blank'))
         return
       end
 
@@ -294,8 +294,8 @@ class Field::ComplexDatation < ::Field
         value['to'][char].blank? || value['to'][char].nil? || value['from'][char].blank? || value['from'][char].nil?
       end
 
-      record.errors.add(:base, I18n.t('activerecord.errors.models.item.attributes.base.wrong_complex_datation_format', field_format: field.format)) if invalid_format
-      record.errors.add(:base, :negative_dates) if !to_date_is_positive || !from_date_is_positive
+      record.errors.add(attrib, I18n.t('activerecord.errors.models.item.attributes.base.wrong_format', field_format: field.format)) if invalid_format
+      record.errors.add(attrib, :negative_dates) if !to_date_is_positive || !from_date_is_positive
     end
   end
 end

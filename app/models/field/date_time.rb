@@ -197,7 +197,7 @@ class Field::DateTime < ::Field
       return if value.keys.all? { |key| value[key].blank? || value[key].nil? } && !field.required
 
       if value.keys.all? { |key| value[key].blank? || value[key].nil? } && field.required
-        record.errors.add(:base, I18n.t('activerecord.errors.models.item.attributes.base.date_time_cant_be_blank'))
+        record.errors.add(attrib, I18n.t('activerecord.errors.models.item.attributes.base.cant_be_blank'))
         return
       end
 
@@ -205,7 +205,8 @@ class Field::DateTime < ::Field
         value[char].blank? || value[char].nil?
       end
 
-      record.errors.add(:base, I18n.t('activerecord.errors.models.item.attributes.base.wrong_date_time_format', field_format: field.format)) if invalid_format
+      record.errors.add(attrib, I18n.t('activerecord.errors.models.item.attributes.base.wrong_format', field_format: field.format)) if invalid_format
     end
   end
 end
+
