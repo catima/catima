@@ -53,19 +53,14 @@ const DateTimeInput = forwardRef((props, ref) => {
 
 
   useEffect(() => {
-    _initDatePicker();
-    setLocalizedDateTimeData(localizedDateTimeDataProps);
-    if (document.querySelector(input) !== null) {
-      setIsRequired(document.querySelector(input).getAttribute('data-field-required') == 'true')
-    }
-
-    return function cleanup() {
-      console.log("cleanup")
-      if (datepickerRef.current) {
-        datepickerRef.current.dispose();
+    if (!datepickerRef.current) {
+      _initDatePicker();
+      setLocalizedDateTimeData(localizedDateTimeDataProps);
+      if (document.querySelector(input) !== null) {
+        setIsRequired(document.querySelector(input).getAttribute('data-field-required') == 'true')
       }
     }
-  }, [datepickerRef])
+  }, [topRef])
 
   useEffect(() => {
     if (disabledProps !== disabled && JSON.stringify(initState) !== JSON.stringify(state)) {

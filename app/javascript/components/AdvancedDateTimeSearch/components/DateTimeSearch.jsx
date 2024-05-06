@@ -35,8 +35,8 @@ const DateTimeSearch = (props) => {
 
   const dateTimeSearchRef1 = createRef()
   const dateTimeSearchRef2 = createRef()
-  const datepickerRef1 = createRef()
-  const datepickerRef2 = createRef()
+  const datepickerRef1 = useRef()
+  const datepickerRef2 = useRef()
 
   useEffect(() => {
     if (typeof selectCondition !== 'undefined' && selectCondition.length !== 0) {
@@ -88,7 +88,6 @@ const DateTimeSearch = (props) => {
   function _linkRangeDatepickers(disabled) {
     if (datepickerRef1.current && datepickerRef2.current) {
       if (!disabled) {
-        console.log(datepickerRef1.current)
         datepickerRef1.current.subscribe(Namespace.events.change, _updateDatepicker2Restriction);
         datepickerRef2.current.subscribe(Namespace.events.change, _updateDatepicker1Restriction);
       } else {
@@ -98,10 +97,6 @@ const DateTimeSearch = (props) => {
   }
 
   function _updateDatepicker2Restriction(event) {
-    console.log("_updateDatepicker2Restriction")
-    console.log(event.date)
-    console.log(datepickerRef1.current)
-    console.log(datepickerRef2.current)
     datepickerRef2.current.updateOptions({
       restrictions: {
         minDate: event.date
@@ -110,9 +105,6 @@ const DateTimeSearch = (props) => {
   }
 
   function _updateDatepicker1Restriction(event) {
-    console.log("_updateDatepicker1Restriction")
-    console.log(event.date)
-    console.log(datepickerRef1.current)
     datepickerRef1.current.updateOptions({
       restrictions: {
         maxDate: event.date
