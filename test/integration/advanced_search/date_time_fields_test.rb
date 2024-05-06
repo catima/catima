@@ -68,11 +68,13 @@ class AdvancedSearch::DateTimeFieldTest < ActionDispatch::IntegrationTest
       "#advanced_search_criteria_one_author_birth_time_uuid_id-datetime_calendar_icon_start_date",
       3
     )
+    find(:css, "#advanced_search_criteria_one_author_birth_time_uuid_id-datetime_calendar_icon_start_date").click # close datepicker
 
     select_day(
       "#advanced_search_criteria_one_author_birth_time_uuid_id-datetime_calendar_icon_end_date",
       26
     )
+    find(:css, "#advanced_search_criteria_one_author_birth_time_uuid_id-datetime_calendar_icon_end_date").click # close datepicker
 
     click_on("Search")
 
