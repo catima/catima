@@ -1,8 +1,7 @@
 import React, {useState, useEffect, useRef, createRef} from 'react';
 import DateTimeInput from './DateTimeInput';
 import $ from 'jquery';
-import 'moment';
-import 'bootstrap4-datetimepicker';
+import { Namespace } from '@eonasdan/tempus-dominus';
 
 const DateTimeSearch = (props) => {
   const {
@@ -36,8 +35,8 @@ const DateTimeSearch = (props) => {
 
   const dateTimeSearchRef1 = createRef()
   const dateTimeSearchRef2 = createRef()
-  const hiddenInputRef1 = createRef()
-  const hiddenInputRef2 = createRef()
+  const datepickerRef1 = createRef()
+  const datepickerRef2 = createRef()
 
   useEffect(() => {
     if (typeof selectCondition !== 'undefined' && selectCondition.length !== 0) {
@@ -86,19 +85,39 @@ const DateTimeSearch = (props) => {
     }
   }
 
-  function _linkRangeDatepickers(ref1, ref2, disabled) {
-    if (ref1 && ref2) {
+  function _linkRangeDatepickers(disabled) {
+    if (datepickerRef1.current && datepickerRef2.current) {
       if (!disabled) {
-        $(ref1).datetimepicker().on("dp.change", (e) => {
-          $(ref2).data("DateTimePicker").minDate(e.date);
-        });
-        $(ref2).datetimepicker().on("dp.change", (e) => {
-          $(ref1).data("DateTimePicker").maxDate(e.date);
-        });
+        console.log(datepickerRef1.current)
+        datepickerRef1.current.subscribe(Namespace.events.change, _updateDatepicker2Restriction);
+        datepickerRef2.current.subscribe(Namespace.events.change, _updateDatepicker1Restriction);
       } else {
-        $(ref2).data("DateTimePicker").clear();
+        datepickerRef2.current.clear()
       }
     }
+  }
+
+  function _updateDatepicker2Restriction(event) {
+    console.log("_updateDatepicker2Restriction")
+    console.log(event.date)
+    console.log(datepickerRef1.current)
+    console.log(datepickerRef2.current)
+    datepickerRef2.current.updateOptions({
+      restrictions: {
+        minDate: event.date
+      }
+    });
+  }
+
+  function _updateDatepicker1Restriction(event) {
+    console.log("_updateDatepicker1Restriction")
+    console.log(event.date)
+    console.log(datepickerRef1.current)
+    datepickerRef1.current.updateOptions({
+      restrictions: {
+        maxDate: event.date
+      }
+    });
   }
 
   function _updateDisableState(value) {
@@ -107,17 +126,17 @@ const DateTimeSearch = (props) => {
         setDisabled(true);
         setIsRange(true);
         $('#' + dateTimeCollapseId).slideDown();
-        _linkRangeDatepickers(hiddenInputRef1.current, hiddenInputRef2.current, false);
+        _linkRangeDatepickers(false);
       } else if (value === 'after' || value === 'before') {
         setDisabled(true);
         setIsRange(false);
         $('#' + dateTimeCollapseId).slideUp();
-        _linkRangeDatepickers(hiddenInputRef1.current, hiddenInputRef2.current, true);
+        _linkRangeDatepickers(true);
       } else {
         setDisabled(false);
         setIsRange(false);
         $('#' + dateTimeCollapseId).slideUp();
-        _linkRangeDatepickers(hiddenInputRef1.current, hiddenInputRef2.current, true);
+        _linkRangeDatepickers(true);
       }
     }
   }
@@ -165,7 +184,7 @@ const DateTimeSearch = (props) => {
         <DateTimeInput input={inputStart} inputId={dateTimeSearchId} inputSuffixId="start_date"
                        inputName={startDateInputName} ref={{
           topRef: dateTimeSearchRef1,
-          hiddenInputRef: hiddenInputRef1
+          datepickerRef: datepickerRef1
         }} localizedDateTimeData={localizedDateTimeData} disabled={disabled} isRange={isRange} datepicker={true}
                        locale={locale} format={format}/>
         {isRange &&
@@ -201,7 +220,7 @@ const DateTimeSearch = (props) => {
                            inputName={endDateInputName} localizedDateTimeData={localizedDateTimeData}
                            disabled={disabled} isRange={isRange} ref={{
               topRef: dateTimeSearchRef2,
-              hiddenInputRef: hiddenInputRef2
+              datepickerRef: datepickerRef2
             }} datepicker={true} locale={locale} format={format}/>
           </div>
         </div>

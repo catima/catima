@@ -10,6 +10,7 @@
 @import 'select2-bootstrap';
 @import "bootstrap4-datetimepicker/build/css/bootstrap-datetimepicker";
 @import 'react-leaflet-markercluster/dist/styles.min.css';
+@import '@eonasdan/tempus-dominus/dist/css/tempus-dominus.css';
 
 @import './modules/*';
 @import './webpack/**/*';
