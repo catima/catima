@@ -159,6 +159,17 @@ class Field::DateTime < ::Field
     "JSON"
   end
 
+  def edit_props(item)
+    {
+      errors: item[:item].errors.map do |error|
+        {
+          message: error.message,
+          field: error.attribute
+        }
+      end
+    }
+  end
+
   private
 
   def transform_value(v)

@@ -170,7 +170,13 @@ class Field::ComplexDatation < ::Field
       componentPolicies:
         {
           modal: "super-editor"
+        },
+      errors: item[:item].errors.map do |error|
+        {
+          message: error.message,
+          field: error.attribute
         }
+      end
     }
   end
 

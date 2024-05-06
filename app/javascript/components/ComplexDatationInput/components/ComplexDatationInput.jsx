@@ -16,7 +16,8 @@ const ComplexDatationInput = (props) => {
         choiceSets: choiceSetsProps,
         selectedFormat: selectedFormatProps,
         fieldUuid,
-        componentPolicies
+        componentPolicies,
+        errors
     } = props
 
     const [choiceSets, setChoiceSets] = useState(choiceSetsProps)
@@ -353,21 +354,21 @@ const ComplexDatationInput = (props) => {
         )
     }
 
-    if (!fromState || !toState) return ""
+  if (!fromState || !toState) return ""
     return (
         <div>
             <div>{renderAllowedFormatsSelector()}</div>
             {selectedFormat === 'date_time' && (
-                <div>
-                    <div>{renderDateTimeInput('from')}</div>
-                    <div>{renderDateTimeInput('to')}</div>
-                    <span className="error helptext">{errorMsg}</span>
-                </div>
+              <div>
+                <div>{renderDateTimeInput('from', input)}</div>
+                <div>{renderDateTimeInput('to', input)}</div>
+                <div className="base-errors">{errors?.filter(e => e.field === input.split("#item_")[1].split("_json")[0])?.map(e => e.message)?.join(',')}</div>
+              </div>
             )}
-            {selectedFormat === 'datation_choice' && (
-                <RenderChoiceSetList
-                    choiceSets={choiceSets}
-                    locales={locales}
+          {selectedFormat === 'datation_choice' && (
+            <RenderChoiceSetList
+              choiceSets={choiceSets}
+              locales={locales}
                     getData={getData}
                     setData={setData}
                     setChoiceData={setChoiceData}
