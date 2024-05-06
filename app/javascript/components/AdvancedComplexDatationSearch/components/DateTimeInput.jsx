@@ -2,8 +2,7 @@ import 'es6-shim';
 import PropTypes from 'prop-types';
 import React, {useState, useEffect, useRef, forwardRef} from 'react';
 import $ from 'jquery';
-import 'moment';
-import 'bootstrap4-datetimepicker'
+import {Namespace, TempusDominus} from '@eonasdan/tempus-dominus';
 import Translations from "../../Translations/components/Translations";
 
 const DateTimeInput = forwardRef((props, ref) => {
@@ -26,8 +25,9 @@ const DateTimeInput = forwardRef((props, ref) => {
     deleteComponent
   } = props
 
-  const {topRef, hiddenInputRef} = ref
+  const {topRef, datepickerRef} = ref
   const selectRef = useRef()
+  const datepickerContainerRef = useRef()
 
   const defaultValues = {Y: '', M: '', D: '', h: '', m: '', s: ''};
   const types = ['Y', 'M', 'h', 'YM', 'MD', 'hm', 'YMD', 'hms', 'MDh', 'YMDh', 'MDhm', 'YMDhm', 'MDhms', 'YMDhms'];
@@ -35,7 +35,6 @@ const DateTimeInput = forwardRef((props, ref) => {
   const [disabled, setDisabled] = useState(disabledProps)
   const [isRange, setIsRange] = useState(isRangeProps)
   const [selectedDate, setSelectedDate] = useState('')
-  const [isDatepickerOpen, setIsDatepickerOpen] = useState(false)
   const [localizedDateTimeData, setLocalizedDateTimeData] = useState([])
   const [date, setDate] = useState(getData())
   const [granularity, setGranularity] = useState(getFieldOptions().format)
@@ -60,7 +59,7 @@ const DateTimeInput = forwardRef((props, ref) => {
 
 
   useEffect(() => {
-    if (topRef.current) {
+    if (!datepickerRef.current) {
       _initDatePicker();
       setLocalizedDateTimeData(localizedDateTimeDataProps);
       if (document.querySelector(input) !== null) {
@@ -96,40 +95,50 @@ const DateTimeInput = forwardRef((props, ref) => {
   }, [isRangeProps])
 
   function _initDatePicker() {
+    if (!datepickerContainerRef.current)
+      return
+
     if (typeof datepicker !== 'undefined' && datepicker) {
-      const node = topRef.current
-      const dateInputElements = node.querySelectorAll('.form-control');
 
-      if (dateInputElements.length > 3) {
-        setStyleMarginRight(' margin-right');
-      }
+      let displayDate = format.includes('D');
+      let displayMonth = format.includes('M');
+      let displayYear = format.includes('Y');
+      let displayHours = format.includes('h');
+      let displayMinutes = format.includes('m');
+      let displaySeconds = format.includes('s');
 
-      $(hiddenInputRef.current).datetimepicker({
-        format: format,
-        locale: locale,
-        debug: false, // pass to `true` to inspect widget
-        icons: {
-          time: 'fa fa-clock-o',
-          date: 'fa fa-calendar',
-          up: 'fa fa-chevron-up',
-          down: 'fa fa-chevron-down',
-          previous: 'fa fa-arrow-left',
-          next: 'fa fa-arrow-right',
-          close: 'fa fa-times'
+
+      let datepickerDT = new TempusDominus(datepickerContainerRef.current, {
+        localization: {
+          locale: locale
+        },
+        display: {
+          icons: {
+            type: 'icons',
+            time: 'fa fa-clock-o',
+            date: 'fa fa-calendar',
+            up: 'fa fa-chevron-up',
+            down: 'fa fa-chevron-down',
+            previous: 'fa fa-arrow-left',
+            next: 'fa fa-arrow-right',
+            today: 'fa fa-calendar-check',
+            clear: 'fa fa-trash',
+            close: 'fa fa-times'
+          },
+          components: {
+            calendar: displayDate || displayMonth || displayYear,
+            date: displayDate,
+            month: displayMonth,
+            year: displayYear,
+            clock: displayHours || displayMinutes || displaySeconds,
+            hours: displayHours,
+            minutes: displayMinutes,
+            seconds: displaySeconds,
+          },
         }
       });
-
-      $(hiddenInputRef.current).datetimepicker().on('dp.change', (event) => _onDatepickerChangerDate(event));
-    }
-  }
-
-  function _openCloseDatepicker() {
-    if (isDatepickerOpen) {
-      setIsDatepickerOpen(false);
-      $(hiddenInputRef.current).data("DateTimePicker").hide();
-    } else {
-      setIsDatepickerOpen(true);
-      $(hiddenInputRef.current).data("DateTimePicker").show();
+      datepickerRef.current = datepickerDT;
+      datepickerRef.current.subscribe(Namespace.events.change, _onDatepickerChangerDate);
     }
   }
 
@@ -142,20 +151,21 @@ const DateTimeInput = forwardRef((props, ref) => {
   }
 
   function _clearDatepicker() {
-    $(hiddenInputRef.current).data("DateTimePicker").clear();
+    datepickerRef.current.clear()
     updateData({Y: '', M: '', D: '', h: '', m: '', s: ''});
   }
 
-  function _onDatepickerChangerDate(data) {
-    if (data.date !== false) {
-      setSelectedDate(data.date);
+  function _onDatepickerChangerDate(event) {
+    const date = event.date;
+    if (date) {
+      setSelectedDate(date);
       updateData({
-        Y: data.date.year(),
-        M: (data.date.month() + 1),
-        D: data.date.date(),
-        h: data.date.hour(),
-        m: data.date.minute(),
-        s: data.date.second()
+        Y: date.year,
+        M: (date.month + 1),
+        D: date.date,
+        h: date.hours,
+        m: date.minutes,
+        s: date.seconds
       });
     } else {
       setSelectedDate('');
@@ -287,93 +297,109 @@ const DateTimeInput = forwardRef((props, ref) => {
   }
 
   return (
-    <div id={inputId + '_' + inputSuffixId} ref={topRef}>
-      {state && localizedDateTimeData.month_names && (
-        <div className="dateTimeInput rails-bootstrap-forms-datetime-select">
-          <div className="d-flex">
-            {allowBC == '1' ? (
-              <div className="form-check d-inline-block me-4">
-                <label className="form-check-label" htmlFor={`bcCheck-${input}`}>{Translations.messages['catalog_admin.fields.complex_datation_option_inputs.BC']}</label>
-                <input type="checkbox" value={true} name={inputName + '[BC]'} className="form-check-input" id={`bcCheck-${input}`}
-                       onChange={_handleChangeBC}/>
-              </div>
-            ) : null}
-            {fmt.includes('D') ? (
-              <input id={inputId + '_' + inputSuffixId + '_day'} name={inputName + '[D]'} style={errorStl} type="number"
-                     min="0" max="31" className="input-2 form-control" value={state.D}
-                     onChange={_handleChangeDay}/>
-            ) : null
-            }
-            {fmt.includes('M') ? (
-              <select id={inputId + '_' + inputSuffixId + '_month'} style={errorStl} name={inputName + '[M]'}
-                      className={_getSelectClassNames()} value={state.M} onChange={_handleChangeMonth}
-                      ref={selectRef}>
-                {localizedDateTimeData.month_names.map((month, index) => {
-                    if (month !== null) {
-                      month = month.charAt(0).toUpperCase() + month.slice(1);
-                    }
-                    if (index === 0) {
-                      index = ''
-                    }
+      <div id={inputId + '_' + inputSuffixId} ref={topRef}>
+        {state && localizedDateTimeData.month_names && (
+            <div className="dateTimeInput rails-bootstrap-forms-datetime-select">
+              <div className="d-flex">
+                {allowBC == '1' ? (
+                    <div className="form-check d-inline-block me-4">
+                      <label className="form-check-label"
+                             htmlFor={`bcCheck-${input}`}>{Translations.messages['catalog_admin.fields.complex_datation_option_inputs.BC']}</label>
+                      <input type="checkbox" value={true} name={inputName + '[BC]'} className="form-check-input"
+                             id={`bcCheck-${input}`}
+                             onChange={_handleChangeBC}/>
+                    </div>
+                ) : null}
+                {fmt.includes('D') ? (
+                    <input id={inputId + '_' + inputSuffixId + '_day'} name={inputName + '[D]'} style={errorStl}
+                           type="number"
+                           min="0" max="31" className="input-2 form-control" value={state.D}
+                           onChange={_handleChangeDay}/>
+                ) : null
+                }
+                {fmt.includes('M') ? (
+                    <select id={inputId + '_' + inputSuffixId + '_month'} style={errorStl} name={inputName + '[M]'}
+                            className={_getSelectClassNames()} value={state.M} onChange={_handleChangeMonth}
+                            ref={selectRef}>
+                      {localizedDateTimeData.month_names.map((month, index) => {
+                            if (month !== null) {
+                              month = month.charAt(0).toUpperCase() + month.slice(1);
+                            }
+                            if (index === 0) {
+                              index = ''
+                            }
 
-                    return <option key={index} value={index}>{month}</option>
-                  }
-                )}
-              </select>
-            ) : null
-            }
-            {fmt.includes('Y') ? (
-              <input id={inputId + '_' + inputSuffixId + '_year'} name={inputName + '[Y]'} style={errorStl} type="number" min="0"
-                     type="number"
-                     className={'input-4 form-control' + styleMarginRight} value={state.Y}
-                     onChange={_handleChangeYear}/>
-            ) : null
-            }
-            {fmt.includes('h') ? (
-              <input id={inputId + '_' + inputSuffixId + '_hour'} name={inputName + '[h]'} style={errorStl} min="0"
-                     max="23" type="number" className="input-2 form-control" value={state.h}
-                     onChange={_handleChangeHours}/>
-            ) : null
-            }
-            {fmt.includes('m') ? (
-              <input id={inputId + '_' + inputSuffixId + '_minute'} name={inputName + '[m]'} style={errorStl} min="0"
-                     max="59" type="number" className="input-2 form-control" value={state.m}
-                     onChange={_handleChangeMinutes}/>
-            ) : null
-            }
-            {fmt.includes('s') ? (
-              <input id={inputId + '_' + inputSuffixId + '_second'} name={inputName + '[s]'} style={errorStl} min="0"
-                     max="59" type="number" className="input-2 form-control" value={state.s}
-                     onChange={_handleChangeSeconds}/>
-            ) : null
-            }
-            <div className="hidden-datepicker">
-              <input type="text" ref={hiddenInputRef} value={selectedDate} onChange={_selectDate}/>
-            </div>
-            <div className="calendar-button-container">
-              <a id={inputId + '_calendar_icon' + '_' + inputSuffixId} onClick={_openCloseDatepicker} type="button">
-                <i className="fa fa-calendar"></i></a>
-              <a onClick={_clearDatepicker} type="button"><i className="fa fa-times"></i></a>
-            </div>
-            {(list && list.length >= 1) &&
-              <div className="col-lg-1 icon-container">
-                <a type="button" onClick={() => {
-                  addComponent(item)
-                }}><i className="fa fa-plus"></i></a>
+                            return <option key={index} value={index}>{month}</option>
+                          }
+                      )}
+                    </select>
+                ) : null
+                }
+                {fmt.includes('Y') ? (
+                    <input id={inputId + '_' + inputSuffixId + '_year'} name={inputName + '[Y]'} style={errorStl}
+                           type="number" min="0"
+                           type="number"
+                           className={'input-4 form-control' + styleMarginRight} value={state.Y}
+                           onChange={_handleChangeYear}/>
+                ) : null
+                }
+                {fmt.includes('h') ? (
+                    <input id={inputId + '_' + inputSuffixId + '_hour'} name={inputName + '[h]'} style={errorStl}
+                           min="0"
+                           max="23" type="number" className="input-2 form-control" value={state.h}
+                           onChange={_handleChangeHours}/>
+                ) : null
+                }
+                {fmt.includes('m') ? (
+                    <input id={inputId + '_' + inputSuffixId + '_minute'} name={inputName + '[m]'} style={errorStl}
+                           min="0"
+                           max="59" type="number" className="input-2 form-control" value={state.m}
+                           onChange={_handleChangeMinutes}/>
+                ) : null
+                }
+                {fmt.includes('s') ? (
+                    <input id={inputId + '_' + inputSuffixId + '_second'} name={inputName + '[s]'} style={errorStl}
+                           min="0"
+                           max="59" type="number" className="input-2 form-control" value={state.s}
+                           onChange={_handleChangeSeconds}/>
+                ) : null
+                }
+                <div className="calendar-button-container d-flex flex-wrap">
+                  <div id={"datetimepicker-" + inputId}
+                       ref={datepickerContainerRef}
+                       data-td-target-input="nearest"
+                       data-td-target-toggle="nearest">
+                    <input
+                        data-td-target={"#datetimepicker-" + inputId}
+                        className="d-none"
+                        value={selectedDate}
+                        onChange={_selectDate} type="text"/>
+                    <a id={inputId + '_calendar_icon' + '_' + inputSuffixId}
+                       data-td-target={"#datetimepicker-" + inputId}
+                       type="button"
+                       data-td-toggle="datetimepicker"><i className="fa fa-calendar"></i></a>
+                  </div>
+                  <a onClick={_clearDatepicker} type="button"><i className="fa fa-times"></i></a>
+                </div>
+                {(list && list.length >= 1) &&
+                    <div className="col-lg-1 icon-container">
+                      <a type="button" onClick={() => {
+                        addComponent(item)
+                      }}><i className="fa fa-plus"></i></a>
+                    </div>
+                }
+                {(list && (item !== list[0])) &&
+                    <div className="col-lg-1 icon-container">
+                      <a type="button" onClick={() => {
+                        deleteComponent(item)
+                      }}><i className="fa fa-trash"></i></a>
+                    </div>
+                }
               </div>
-            }
-            {(list && (item !== list[0])) &&
-              <div className="col-lg-1 icon-container">
-                <a type="button" onClick={() => {
-                  deleteComponent(item)
-                }}><i className="fa fa-trash"></i></a>
-              </div>
-            }
-          </div>
-        </div>
-      )}
-      <span className="error helptext">{errorMsg}</span>
-    </div>
+            </div>
+        )}
+        <span className="error helptext">{errorMsg}</span>
+      </div>
   );
 })
 
