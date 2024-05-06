@@ -35,7 +35,6 @@ class AdvancedSearch::DateTimeFieldTest < ActionDispatch::IntegrationTest
     end
 
     select_day(
-      "#advanced_search_criteria_one_author_birth_time_uuid_id-datetime_start_date",
       "#advanced_search_criteria_one_author_birth_time_uuid_id-datetime_calendar_icon_start_date",
       27
     )
@@ -66,13 +65,11 @@ class AdvancedSearch::DateTimeFieldTest < ActionDispatch::IntegrationTest
     )
 
     select_day(
-      "#advanced_search_criteria_one_author_birth_time_uuid_id-datetime_start_date",
       "#advanced_search_criteria_one_author_birth_time_uuid_id-datetime_calendar_icon_start_date",
       3
     )
 
     select_day(
-      "#advanced_search_criteria_one_author_birth_time_uuid_id-datetime_end_date",
       "#advanced_search_criteria_one_author_birth_time_uuid_id-datetime_calendar_icon_end_date",
       26
     )
