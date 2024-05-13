@@ -296,11 +296,12 @@ class Field::ComplexDatation < ::Field
       from_date_is_positive = value['from'].compact.except("BC").all? { |_, v| v.to_i >= 0 }
       to_date_is_positive = value['to'].compact.except("BC").all? { |_, v| v.to_i >= 0 }
 
-      invalid_format = field.format.chars.any? do |char|
-        value['to'][char].blank? || value['to'][char].nil? || value['from'][char].blank? || value['from'][char].nil?
-      end
+      allowed_formats = Field::ComplexDatation::FORMATS.select{|f| field.format.include?(f) || field.format == f}
 
-      record.errors.add(attrib, I18n.t('activerecord.errors.models.item.attributes.base.wrong_format', field_format: field.format)) if invalid_format
+      current_from_format = field.format.chars.map {|char| value['from'][char].blank? || value['from'][char].nil? ? nil : char}.compact.join
+      current_to_format = field.format.chars.map {|char| value['to'][char].blank? || value['to'][char].nil? ? nil : char}.compact.join
+
+      record.errors.add(attrib, I18n.t('activerecord.errors.models.item.attributes.base.wrong_format', field_format: allowed_formats)) unless allowed_formats.include?(current_from_format) || allowed_formats.include?(current_to_format)
       record.errors.add(attrib, :negative_dates) if !to_date_is_positive || !from_date_is_positive
     end
   end

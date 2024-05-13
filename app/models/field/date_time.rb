@@ -205,6 +205,7 @@ class Field::DateTime < ::Field
       field = Field.find_by(uuid: attrib)
 
       return if value.blank?
+      return if value.is_a?(Hash) && value.has_key?("raw_value")
       return if value.keys.all? { |key| value[key].blank? || value[key].nil? } && !field.required
 
       if value.keys.all? { |key| value[key].blank? || value[key].nil? } && field.required
@@ -212,11 +213,10 @@ class Field::DateTime < ::Field
         return
       end
 
-      invalid_format = field.format.chars.any? do |char|
-        value[char].blank? || value[char].nil?
-      end
+      allowed_formats = Field::DateTime::FORMATS.select{|f| field.format.include?(f) || field.format == f}
+      current_format = field.format.chars.map {|char| value[char].blank? || value[char].nil? ? nil : char}.compact.join
 
-      record.errors.add(attrib, I18n.t('activerecord.errors.models.item.attributes.base.wrong_format', field_format: field.format)) if invalid_format
+      record.errors.add(attrib, I18n.t('activerecord.errors.models.item.attributes.base.wrong_format', field_format: allowed_formats)) unless allowed_formats.include?(current_format)
     end
   end
 end

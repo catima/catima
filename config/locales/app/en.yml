@@ -67,7 +67,7 @@ en:
             base:
               cant_be_blank: "Must be present"
               negative_dates: "Negative dates must be entered with the option before Jesus Christ (if activated)"
-              wrong_format: "Do not respect the format %{field_format}"
+              wrong_format: "Do not respect the formats %{field_format}"
         field/choice_set:
           attributes:
             choice_set_id:
