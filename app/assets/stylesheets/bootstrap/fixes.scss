@@ -137,3 +137,7 @@ a:not([href]):not([class])[type='button'] {
     border-bottom: 0;
   }
 }
+
+.form-control[readonly] {
+  background-color: var(--bs-secondary-bg);
+}
