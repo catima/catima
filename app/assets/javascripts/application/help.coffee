@@ -3,4 +3,4 @@ $(document).ready ->
 
   popoverTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="popover"]'))
   popoverList = popoverTriggerList.map (popoverTriggerEl) =>
-    new bootstrap.Popover(popoverTriggerEl)
+    new bootstrap.Popover(popoverTriggerEl, {html: true})
