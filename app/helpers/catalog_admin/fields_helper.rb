@@ -77,7 +77,7 @@ module CatalogAdmin::FieldsHelper
 
   def field_json_input(form, field, props={}, options={})
     label = field_presenter(form.object, field).field_label
-    form.form_group(field.uuid, :label => { :text => label }) do
+    form.form_group(field.uuid, :label => { :text => label }, class: "mb-3 form-group") do
       json_react_input_component(form, field, props, options)
     end
   end
