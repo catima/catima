@@ -1,3 +1,4 @@
+<tbody>
 <tr>
   <th>Position</th>
   <th>Nom</th>
@@ -22,9 +23,10 @@
               :id => @advanced_search_conf.id,
               :field => field.uuid),
             method: :delete,
-            data: { confirm: t('delete_confirm', model: field.name) },
+            data: {confirm: t('delete_confirm', model: field.name)},
             class: 'btn btn-xs btn-outline-secondary'
           ) %>
     </td>
   </tr>
 <% end %>
+</tbody>
