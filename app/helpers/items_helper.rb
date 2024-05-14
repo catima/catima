@@ -30,26 +30,32 @@ module ItemsHelper
       html_options)
   end
 
-  def item_has_thumbnail?(item)
-    return false unless item_displayable_image_field(item)
-
-    true
+  def item_has_thumbnail?(item, options={})
+    options[:public_only] ? item_public_image_field(item) : item_displayable_image_field(item)
   end
 
   def item_thumbnail(item, options={})
-    field = item_displayable_image_field(item)
-
-    return if field.nil?
-
-    field_value(item, field, options.reverse_merge(:style => :compact))
+    field = options[:public_only] ? item_public_image_field(item) : item_displayable_image_field(item)
+    field_value(item, field, options.reverse_merge(:style => :compact)) if field
   end
 
-  # Returns the first displayable image field or nil
+  # Returns the first user displayable image field with files, or nil
   def item_displayable_image_field(item)
     item.fields.find do |f|
       f.is_a?(Field::Image) &&
         f.display_in_public_list &&
-        f.displayable_to_user?(current_user)
+        f.displayable_to_user?(current_user) &&
+        f.file_count(item) > 0
+    end
+  end
+
+  # Returns the first non-restricted & public image field with files, or nil
+  def item_public_image_field(item)
+    item.fields.find do |f|
+      f.is_a?(Field::Image) &&
+        f.display_in_public_list &&
+        !f.restricted? &&
+        f.file_count(item) > 0
     end
   end
 

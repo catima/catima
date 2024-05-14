@@ -1,7 +1,23 @@
 .leaflet-popup {
-  .leaflet-popup-content-wrapper {
-    .leaflet-popup-content {
-      overflow: hidden;
+  .map-popup-container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    .popup-thumbnail {
+      order: 1;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      min-width: 100px;
+      min-height: 100px;
+    }
+
+    .popup-title {
+      order: 2;
+      display: flex;
+      align-items: center;
+      justify-content: center;
     }
   }
 }
