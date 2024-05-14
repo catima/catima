@@ -24,9 +24,9 @@
     <%= render("sort_menu") if sort_field_choices.any? %>
     <div class="btn-group">
       <%= link_to(
-              fa_icon(:"plus-square", :text => t('.new_item_type', item_type: @item_type.name)),
-              new_catalog_admin_item_path(catalog, I18n.locale, @item_type),
-              :class => "btn btn-xs btn-outline-secondary") %>
+            fa_icon(:"plus-square", :text => t('.new_item_type', item_type: @item_type.name)),
+            new_catalog_admin_item_path(catalog, I18n.locale, @item_type),
+            :class => "btn btn-xs btn-outline-secondary") %>
       <button type="button"
               class="btn btn-xs btn-outline-secondary dropdown-toggle"
               data-bs-toggle="dropdown"
@@ -39,46 +39,47 @@
       </div>
     </div>
   <% end %>
-
-  <table class="table">
-    <thead>
-    <tr>
-      <% @fields.each do |field| %>
-        <th><%= field.label %></th>
-      <% end %>
-      <% if catalog.requires_review? %>
-        <th><%= t('.status') %></th>
-      <% end %>
-      <th></th>
-    </tr>
-    </thead>
-    <tbody>
-    <% @items.each do |item| %>
+  <div class="table-responsive">
+    <table class="table">
+      <thead>
       <tr>
-        <% @fields.each_with_index do |field, index| %>
-          <td>
-            <%= field_value(item, field, :style => :compact) %>
+        <% @fields.each do |field| %>
+          <th><%= field.label %></th>
+        <% end %>
+        <% if catalog.requires_review? %>
+          <th><%= t('.status') %></th>
+        <% end %>
+        <th></th>
+      </tr>
+      </thead>
+      <tbody>
+      <% @items.each do |item| %>
+        <tr>
+          <% @fields.each_with_index do |field, index| %>
+            <td>
+              <%= field_value(item, field, :style => :compact) %>
 
-            <% if index === 0 && item_suggestion_badge?(item, @item_type) %>
+              <% if index === 0 && item_suggestion_badge?(item, @item_type) %>
               <span class="badge text-bg-secondary"
                     data-toggle="tooltip"
                     data-placement="top"
                     title="<%= t('.pending_suggestions') %>">
                 <%= item_suggestions_count(item) %>
               </span>
-            <% end %>
+              <% end %>
+            </td>
+          <% end %>
+          <% if catalog.requires_review? %>
+            <td><%= review_status_label(item) %></td>
+          <% end %>
+          <td class="text-end">
+            <%= render "shared/actions/item", :model => item %>
           </td>
-        <% end %>
-        <% if catalog.requires_review? %>
-          <td><%= review_status_label(item) %></td>
-        <% end %>
-        <td class="text-end">
-          <%= render "shared/actions/item", :model => item %>
-        </td>
-      </tr>
-    <% end %>
-    </tbody>
-  </table>
+        </tr>
+      <% end %>
+      </tbody>
+    </table>
+  </div>
 
   <% content_for(:pager, paginate(@items)) %>
 
