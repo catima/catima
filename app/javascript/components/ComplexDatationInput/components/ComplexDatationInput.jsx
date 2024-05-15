@@ -255,6 +255,7 @@ const ComplexDatationInput = (props) => {
     function isCurrentFormatValid(input) {
         let current = getCurrentFormat(input);
         if (current === '' && !isRequired) return true;   // allow empty value if field is not required
+        if (current === '' && isRequired && getCurrentFormat(input === "from" ? "to" : "from") !== '') return true;
         let allowed = getAllowedFormats();
         return allowed.indexOf(current) > -1;
     }

@@ -286,7 +286,9 @@ class Field::ComplexDatation < ::Field
 
       return if value.blank?
       return if value['selected_format'] != "date_time"
-      return if (to_value_empty = value['to'].keys.all? { |key| value['to'][key].blank? || value['to'][key].nil? }) && (from_value_empty = value['from'].keys.all? { |key| value['from'][key].blank? || value['from'][key].nil? }) && !field.required
+      to_value_empty = value['to'].keys.reject{|k| k=="BC"}.all? { |key| value['to'][key].blank? || value['to'][key].nil? }
+      from_value_empty = value['from'].keys.reject{|k| k=="BC"}.all? { |key| value['from'][key].blank? || value['from'][key].nil? }
+      return if to_value_empty && from_value_empty && !field.required
 
       if to_value_empty && from_value_empty && field.required
         record.errors.add(attrib, I18n.t('activerecord.errors.models.item.attributes.base.cant_be_blank'))
