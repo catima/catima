@@ -111,9 +111,12 @@ const ComplexDatationInput = (props) => {
         setToState(to);
     }, [granularity])
 
-    let dateValid = isCurrentFormatValid();
-    let errorStl = dateValid ? {} : {border: "2px solid #f00"};
-    let errorMsg = dateValid ? "" : "Invalid value";
+    let fromDateValid = isCurrentFormatValid('from');
+    let toDateValid = isCurrentFormatValid('to');
+    let errorStl = {
+      "from": fromDateValid ? {} : {border: "2px solid #f00"},
+      "to": toDateValid ? {} : {border: "2px solid #f00"}
+    };
     let fmt = getFieldOptions().format;
 
     function _handleChangeBC(input) {
@@ -241,16 +244,16 @@ const ComplexDatationInput = (props) => {
         });
     }
 
-    function getCurrentFormat() {
+    function getCurrentFormat(input) {
         let d = getData();
         let f = getFieldOptions().format;
         return f.split('').map(function (k) {
-            return d['from'][k] ? k : d['to'][k] ? k : '';
+            return d[input][k] ? k : '';
         }).join('')
     }
 
-    function isCurrentFormatValid() {
-        let current = getCurrentFormat();
+    function isCurrentFormatValid(input) {
+        let current = getCurrentFormat(input);
         if (current === '' && !isRequired) return true;   // allow empty value if field is not required
         let allowed = getAllowedFormats();
         return allowed.indexOf(current) > -1;
@@ -275,13 +278,13 @@ const ComplexDatationInput = (props) => {
                     </div>
                 ) : null}
                 {fmt.includes('D') ? (
-                    <input style={errorStl} type="number" min="0" max="31" className="input-2 form-control"
+                    <input style={errorStl[input]} type="number" min="0" max="31" className="input-2 form-control"
                            value={input === 'from' ? fromState.D : toState.D}
                            onChange={_handleChangeDay(input)}/>
                 ) : null
                 }
                 {fmt.includes('M') ? (
-                    <select style={errorStl} className="form-control" value={input === 'from' ? fromState.M : toState.M}
+                    <select style={errorStl[input]} className="form-control" value={input === 'from' ? fromState.M : toState.M}
                             onChange={_handleChangeMonth(input)}>
                         <option value=""></option>
                         <option value="1">
@@ -323,26 +326,26 @@ const ComplexDatationInput = (props) => {
                     </select>) : null
                 }
                 {fmt.includes('Y') ? (
-                    <input style={errorStl} className="input-4 margin-right form-control"
+                    <input style={errorStl[input]} className="input-4 margin-right form-control"
                            type="number" min="0"
                            value={input === 'from' ? fromState.Y : toState.Y}
                            onChange={_handleChangeYear(input)}/>
                 ) : null
                 }
                 {fmt.includes('h') ? (
-                    <input style={errorStl} min="0" max="23" type="number" className="input-2 form-control"
+                    <input style={errorStl[input]} min="0" max="23" type="number" className="input-2 form-control"
                            value={input === 'from' ? fromState.h : toState.h}
                            onChange={_handleChangeHours(input)}/>
                 ) : null
                 }
                 {fmt.includes('m') ? (
-                    <input style={errorStl} min="0" max="59" type="number" className="input-2 form-control"
+                    <input style={errorStl[input]} min="0" max="59" type="number" className="input-2 form-control"
                            value={input === 'from' ? fromState.m : toState.m}
                            onChange={_handleChangeMinutes(input)}/>
                 ) : null
                 }
                 {fmt.includes('s') ? (
-                    <input style={errorStl} min="0" max="59" type="number" className="input-2 form-control"
+                    <input style={errorStl[input]} min="0" max="59" type="number" className="input-2 form-control"
                            value={input === 'from' ? fromState.s : toState.s}
                            onChange={_handleChangeSeconds(input)}/>
                 ) : null
@@ -778,7 +781,6 @@ const ModalForm = (props) => {
                                     <div className="base-errors">
                                         {errorMsg}
                                     </div>
-
                                 </div>
                             </div>
                             <div className="modal-footer">

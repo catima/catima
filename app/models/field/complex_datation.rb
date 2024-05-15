@@ -286,9 +286,9 @@ class Field::ComplexDatation < ::Field
 
       return if value.blank?
       return if value['selected_format'] != "date_time"
-      return if value['to'].keys.all? { |key| value['to'][key].blank? || value['to'][key].nil? } && value['from'].keys.all? { |key| value['from'][key].blank? || value['from'][key].nil? } && !field.required
+      return if (to_value_empty = value['to'].keys.all? { |key| value['to'][key].blank? || value['to'][key].nil? }) && (from_value_empty = value['from'].keys.all? { |key| value['from'][key].blank? || value['from'][key].nil? }) && !field.required
 
-      if value['to'].keys.all? { |key| value['to'][key].blank? || value['to'][key].nil? } && value['from'].keys.all? { |key| value['from'][key].blank? || value['from'][key].nil? } && field.required
+      if to_value_empty && from_value_empty && field.required
         record.errors.add(attrib, I18n.t('activerecord.errors.models.item.attributes.base.cant_be_blank'))
         return
       end
@@ -301,7 +301,7 @@ class Field::ComplexDatation < ::Field
       current_from_format = field.format.chars.map {|char| value['from'][char].blank? || value['from'][char].nil? ? nil : char}.compact.join
       current_to_format = field.format.chars.map {|char| value['to'][char].blank? || value['to'][char].nil? ? nil : char}.compact.join
 
-      record.errors.add(attrib, I18n.t('activerecord.errors.models.item.attributes.base.wrong_format', field_format: allowed_formats)) unless allowed_formats.include?(current_from_format) || allowed_formats.include?(current_to_format)
+      record.errors.add(attrib, I18n.t('activerecord.errors.models.item.attributes.base.wrong_format', field_format: allowed_formats)) unless (allowed_formats.include?(current_from_format) || from_value_empty) && (allowed_formats.include?(current_to_format)  || to_value_empty)
       record.errors.add(attrib, :negative_dates) if !to_date_is_positive || !from_date_is_positive
     end
   end
