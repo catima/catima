@@ -14,7 +14,7 @@ function prepareFootnotesForTextField(fld){
     fnRef.className = 'footnote-ref';
     fnRef.setAttribute('data-bs-content', fn.getAttribute('data-note'));
     fnRef.setAttribute('data-bs-toggle', 'popover');
-    fnRef.setAttribute('data-trigger', 'focus');
+    fnRef.setAttribute('data-bs-trigger', 'focus');
     fnRef.setAttribute('data-bs-placement', "bottom");
     fnRef.setAttribute('title', '');
     fnRef.setAttribute('role', 'button');
