@@ -1,4 +1,35 @@
-.note-btn-group .note-btn {
-  background: white;
-  border-color: #ccc;
+// remove the double arrow from the dropdown
+
+.note-editor .dropdown-toggle::after {
+  all: unset
+}
+
+.note-editor .note-dropdown-menu {
+  box-sizing: content-box
+}
+
+.note-editor .note-modal-footer {
+  box-sizing: content-box
+}
+
+// reduce btn size
+
+.note-editor .note-btn {
+  padding: 0.25rem 0.5rem;
+  font-size: $font-size-sm;
+  line-height: 1.5;
+  border-radius: 0.2rem;
+}
+
+// fix background when fullscreen
+
+.note-editor.fullscreen {
+  background-color: white;
+}
+
+// fix loading font
+
+@font-face {
+  font-family: "summernote";
+  src: url("summernote/src/font/summernote.eot?#iefix") format("embedded-opentype"), url("summernote/src/font/summernote.woff2") format("woff2"), url("summernote/src/font/summernote.woff") format("woff"), url("summernote/src/font/summernote.ttf") format("truetype");
 }

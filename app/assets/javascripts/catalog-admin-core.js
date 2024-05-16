@@ -1,6 +1,6 @@
 //= require jquery.minicolors
 //= require jquery-fileupload/basic
-//= require summernote/summernote-bs4.min
+//= require summernote/dist/summernote-lite
 //= require mousetrap/mousetrap
 //= require mousetrap/plugins/global-bind/mousetrap-global-bind
 //= require chartkick

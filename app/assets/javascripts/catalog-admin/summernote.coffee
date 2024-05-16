@@ -13,6 +13,5 @@ init = ->
       ['insert', ['link', 'picture', 'video']],
       ['view', ['fullscreen', 'codeview', 'help']],
     ]
-  $('.dropdown-toggle').dropdown();
 
 $(document).ready(init)

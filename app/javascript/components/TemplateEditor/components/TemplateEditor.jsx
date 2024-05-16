@@ -86,7 +86,7 @@ const TemplateEditor = (props) => {
           className: 'dropdown-toggle',
           contents: Translations.messages['add_field'],
           data: {
-            "bs-toggle": 'dropdown'
+            toggle: 'dropdown'
           }
         }),
         ui.dropdown({
