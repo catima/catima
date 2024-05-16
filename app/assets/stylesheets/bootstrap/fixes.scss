@@ -141,3 +141,10 @@ a:not([href]):not([class])[type='button'] {
 .form-control[readonly] {
   background-color: var(--bs-secondary-bg);
 }
+
+// hide popper if reference is hidden (on div with overflow scroll)
+
+[data-popper-reference-hidden] {
+  visibility: hidden;
+  pointer-events: none;
+}
