@@ -78,7 +78,9 @@ fr:
         item:
           attributes:
             base:
+              cant_be_blank: "Doit être rempli(e)"
               negative_dates: "Les dates négatives doivent être saisies avec l'option avant Jesus Christ (si activée)"
+              wrong_format: "Ne respecte pas les formats %{field_format}"
         field/choice_set:
           attributes:
             choice_set_id:

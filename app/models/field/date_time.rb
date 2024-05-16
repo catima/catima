@@ -159,6 +159,17 @@ class Field::DateTime < ::Field
     "JSON"
   end
 
+  def edit_props(item)
+    {
+      errors: item[:item].errors.map do |error|
+        {
+          message: error.message,
+          field: error.attribute
+        }
+      end
+    }
+  end
+
   private
 
   def transform_value(v)
@@ -182,4 +193,31 @@ class Field::DateTime < ::Field
       array << values[key]
     end.compact
   end
+
+  def build_validators
+    [DateTimeValidator]
+  end
+
+  class DateTimeValidator < ActiveModel::Validator
+    def validate(record)
+      attrib = Array.wrap(options[:attributes]).first
+      value = record.public_send(attrib)
+      field = Field.find_by(uuid: attrib)
+
+      return if value.blank?
+      return if value.is_a?(Hash) && value.has_key?("raw_value")
+      return if value.keys.all? { |key| value[key].blank? || value[key].nil? } && !field.required
+
+      if value.keys.all? { |key| value[key].blank? || value[key].nil? } && field.required
+        record.errors.add(attrib, I18n.t('activerecord.errors.models.item.attributes.base.cant_be_blank'))
+        return
+      end
+
+      allowed_formats = Field::DateTime::FORMATS.select{|f| field.format.include?(f) || field.format == f}
+      current_format = field.format.chars.map {|char| value[char].blank? || value[char].nil? ? nil : char}.compact.join
+
+      record.errors.add(attrib, I18n.t('activerecord.errors.models.item.attributes.base.wrong_format', field_format: allowed_formats)) unless allowed_formats.include?(current_format)
+    end
+  end
 end
+

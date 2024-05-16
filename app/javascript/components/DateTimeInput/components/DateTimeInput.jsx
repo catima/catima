@@ -10,7 +10,8 @@ const DateTimeInput = (props) => {
   const {
     input,
     allowBC,
-    preventNegativeInput
+    preventNegativeInput,
+    errors
   } = props
 
   const [state, setState] = useState(false)
@@ -39,7 +40,6 @@ const DateTimeInput = (props) => {
 
   let dateValid = isCurrentFormatValid();
   let errorStl = dateValid ? {} : {border: "2px solid #f00"};
-  let errorMsg = dateValid ? "" : "Invalid value";
   let fmt = getFieldOptions().format;
 
   function _handleChangeDay(e) {
@@ -218,7 +218,8 @@ const DateTimeInput = (props) => {
           </select>) : null
         }
         {fmt.includes('Y') ? (
-          <input style={errorStl} type="number" min={preventNegativeInput ? "0" : "" } className="input-4 margin-right form-control" value={state.Y}
+          <input style={errorStl} type="number" min={preventNegativeInput ? "0" : ""}
+                 className="input-4 margin-right form-control" value={state.Y}
                  onChange={_handleChangeYear}/>
         ) : null
         }
@@ -238,7 +239,7 @@ const DateTimeInput = (props) => {
         ) : null
         }
       </div>
-      <span className="error helptext">{errorMsg}</span>
+      <div className="base-errors">{errors?.filter(e => e.field === input.split("#item_")[1].split("_json")[0])?.map(e => e.message)?.join(',')}</div>
     </div>
   );
 };
