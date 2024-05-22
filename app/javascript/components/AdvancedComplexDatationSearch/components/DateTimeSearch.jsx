@@ -1,8 +1,7 @@
-import React, {useState, useEffect, createRef} from 'react';
+import React, {useState, useEffect, useRef, createRef} from 'react';
 import DateTimeInput from './DateTimeInput';
 import $ from 'jquery';
-import 'moment';
-import 'bootstrap4-datetimepicker';
+import {TempusDominus} from '@eonasdan/tempus-dominus';
 
 const DateTimeSearchComponent = (props) => {
   const {
@@ -37,7 +36,7 @@ const DateTimeSearchComponent = (props) => {
   const [selectConditionInputName, setSelectConditionDateInputName] = useState(selectConditionName.split(`[condition]`)[0] + `[${item}]` + '[condition]')
   const [fieldConditionInputName, setFieldConditionInputName] = useState(fieldConditionName.split(`[field_condition]`)[0] + `[${item}]` + '[field_condition]')
 
-  const [excludeConditionInputName, setExcludeConditionInputName] = useState( fieldConditionName.split(`[field_condition]`)[0] + `[${item}]` + '[exclude_condition]')
+  const [excludeConditionInputName, setExcludeConditionInputName] = useState(fieldConditionName.split(`[field_condition]`)[0] + `[${item}]` + '[exclude_condition]')
 
   const [startDateInputNameArray, setStartDateInputNameArray] = useState(startDateInputNameProps.split("[exact]"))
   const [endDateInputNameArray, setEndDateInputNameArray] = useState(endDateInputNameProps.split("[exact]"))
@@ -52,7 +51,8 @@ const DateTimeSearchComponent = (props) => {
   const dateTimeSearchRef2 = createRef()
   const hiddenInputRef1 = createRef()
   const hiddenInputRef2 = createRef()
-
+  const datepickerRef1 = useRef()
+  const datepickerRef2 = useRef()
 
   useEffect(() => {
     if (typeof selectCondition !== 'undefined' && selectCondition.length !== 0) {
@@ -113,19 +113,31 @@ const DateTimeSearchComponent = (props) => {
     }
   }
 
-  function _linkRangeDatepickers(ref1, ref2, disabled) {
-    if (ref1 && ref2) {
+  function _linkRangeDatepickers(disabled) {
+    if (datepickerRef1.current && datepickerRef2.current) {
       if (!disabled) {
-        $(ref1).datetimepicker().on("dp.change", (e) => {
-          $(ref2).data("DateTimePicker").minDate(e.date);
-        });
-        $(ref2).datetimepicker().on("dp.change", (e) => {
-          $(ref1).data("DateTimePicker").maxDate(e.date);
-        });
+        datepickerRef1.current.subscribe(Namespace.events.change, _updateDatepicker2Restriction);
+        datepickerRef2.current.subscribe(Namespace.events.change, _updateDatepicker1Restriction);
       } else {
-        $(ref2).data("DateTimePicker").clear();
+        datepickerRef2.current.clear()
       }
     }
+  }
+
+  function _updateDatepicker2Restriction(event) {
+    datepickerRef2.current.updateOptions({
+      restrictions: {
+        minDate: event.date
+      }
+    });
+  }
+
+  function _updateDatepicker1Restriction(event) {
+    datepickerRef1.current.updateOptions({
+      restrictions: {
+        maxDate: event.date
+      }
+    });
   }
 
   function _updateDisableState(value) {
@@ -133,15 +145,15 @@ const DateTimeSearchComponent = (props) => {
       if (value === 'between' || value === 'outside') {
         setIsRange(true);
         $('#' + dateTimeCollapseId).slideDown();
-        _linkRangeDatepickers(hiddenInputRef1.current, hiddenInputRef2.current, false);
+        _linkRangeDatepickers(false);
       } else if (value === 'after' || value === 'before') {
         setIsRange(false);
         $('#' + dateTimeCollapseId).slideUp();
-        _linkRangeDatepickers(hiddenInputRef1.current, hiddenInputRef2.current, true);
+        _linkRangeDatepickers(true);
       } else {
         setIsRange(false);
         $('#' + dateTimeCollapseId).slideUp();
-        _linkRangeDatepickers(hiddenInputRef1.current, hiddenInputRef2.current, true);
+        _linkRangeDatepickers(true);
       }
     }
   }
@@ -176,80 +188,80 @@ const DateTimeSearchComponent = (props) => {
 
   function renderSelectConditionElement(idx) {
     return (
-      <select className="form-control filter-condition" name={selectConditionInputName} value={selectedCondition}
-              onChange={_selectCondition(idx)}>
-        {selectCondition.map((item) => {
-          return <option key={item.key} value={item.key}>{item.value}</option>
-        })}
-      </select>
+        <select className="form-select filter-condition" name={selectConditionInputName} value={selectedCondition}
+                onChange={_selectCondition(idx)}>
+          {selectCondition.map((item) => {
+            return <option key={item.key} value={item.key}>{item.value}</option>
+          })}
+        </select>
     );
   }
 
   function renderDateTimeElement(list, item) {
     return (
-      <div className="col-lg-12">
-        <DateTimeInput input={inputStart} inputId={dateTimeSearchId} inputSuffixId="start_date"
-                       inputName={startDateInputName} ref={{
-          topRef: dateTimeSearchRef1,
-          hiddenInputRef: hiddenInputRef1
-        }} localizedDateTimeData={localizedDateTimeData} disabled={disabled} isRange={isRange} datepicker={true}
-                       locale={locale} format={format} allowBC={allowDateTimeBC} list={list} item={item}
-                       addComponent={addComponent} deleteComponent={deleteComponent}/>
-        {isRange &&
-          <i className="fa fa-chevron-down"></i>
-        }
-      </div>
+        <div className="col-lg-12">
+          <DateTimeInput input={inputStart} inputId={dateTimeSearchId} inputSuffixId="start_date"
+                         inputName={startDateInputName} ref={{
+            topRef: dateTimeSearchRef1,
+            datepickerRef: datepickerRef1
+          }} localizedDateTimeData={localizedDateTimeData} disabled={disabled} isRange={isRange} datepicker={true}
+                         locale={locale} format={format} allowBC={allowDateTimeBC} list={list} item={item}
+                         addComponent={addComponent} deleteComponent={deleteComponent}/>
+          {isRange &&
+              <i className="fa fa-chevron-down"></i>
+          }
+        </div>
     );
   }
 
   function renderFieldConditionElement() {
     return (
-      <select className="form-control filter-condition" name={fieldConditionInputName} value={selectedFieldCondition}
-              onChange={_selectFieldCondition}>
-        {fieldConditionData.map((item) => {
-          return <option key={item.key} value={item.key}>{item.value}</option>
-        })}
-      </select>
+        <select className="form-select filter-condition" name={fieldConditionInputName} value={selectedFieldCondition}
+                onChange={_selectFieldCondition}>
+          {fieldConditionData.map((item) => {
+            return <option key={item.key} value={item.key}>{item.value}</option>
+          })}
+        </select>
     );
   }
 
   function renderComponent(item, index, list) {
     return (
-      <div>
-        <div className="datetime-search-container row">
-          {selectCondition.length > 0 &&
-            <div className="col-lg-2">
-              {renderFieldConditionElement()}
-            </div>
-          }
-          <div className={_getDateTimeClassname()}>
-            {renderDateTimeElement(list, item)}
-            <div className="collapse" id={dateTimeCollapseId}>
-              <div className="col-lg-12">
-                <DateTimeInput input={inputEnd} inputId={dateTimeSearchId} inputSuffixId="end_date"
-                               inputName={endDateInputName} localizedDateTimeData={localizedDateTimeData}
-                               disabled={disabled} isRange={isRange} ref={{
-                  topRef: dateTimeSearchRef2,
-                  hiddenInputRef: hiddenInputRef2
-                }} datepicker={true} locale={locale} format={format} allowBC={allowDateTimeBC}/>
+        <div>
+          <div className="datetime-search-container row">
+            {selectCondition.length > 0 &&
+                <div className="col-lg-2">
+                  {renderFieldConditionElement()}
+                </div>
+            }
+            <div className={_getDateTimeClassname()}>
+              {renderDateTimeElement(list, item)}
+              <div className="collapse" id={dateTimeCollapseId}>
+                <div className="col-lg-12">
+                  <DateTimeInput input={inputEnd} inputId={dateTimeSearchId} inputSuffixId="end_date"
+                                 inputName={endDateInputName} localizedDateTimeData={localizedDateTimeData}
+                                 disabled={disabled} isRange={isRange} ref={{
+                    topRef: dateTimeSearchRef2,
+                    datepickerRef: datepickerRef2
+                  }} datepicker={true} locale={locale} format={format} allowBC={allowDateTimeBC}/>
+                </div>
               </div>
             </div>
+            {selectCondition.length > 0 &&
+                <div className="col-lg-3">
+                  {renderSelectConditionElement(item)}
+                </div>
+            }
           </div>
-          {selectCondition.length > 0 &&
-            <div className="col-lg-3">
-              {renderSelectConditionElement(item)}
-            </div>
-          }
+          <input type="hidden" name={excludeConditionInputName} value={excludeCondition}/>
         </div>
-        <input type="hidden" name={excludeConditionInputName} value={excludeCondition}/>
-      </div>
     )
   }
 
   return (
-    <div>
-      {renderComponent(item, index, list)}
-    </div>
+      <div>
+        {renderComponent(item, index, list)}
+      </div>
   )
 
 }
@@ -306,36 +318,36 @@ const DateTimeSearch = (props) => {
 
   function renderComponentList() {
     return componentsList.map((item, index, list) => <DateTimeSearchComponent
-      key={index}
-      item={item}
-      index={index}
-      list={list}
-      addComponent={_addComponent}
-      deleteComponent={_deleteComponent}
-      startDateInputNameProps={startDateInputNameProps}
-      endDateInputNameProps={endDateInputNameProps}
-      disableInputByConditionProps={disableInputByConditionProps}
-      srcId={srcId}
-      srcRef={srcRef}
-      selectCondition={selectCondition}
-      selectConditionName={selectConditionName}
-      inputStart={inputStart}
-      localizedDateTimeData={localizedDateTimeData}
-      locale={locale}
-      format={format}
-      fieldConditionName={fieldConditionName}
-      fieldConditionData={fieldConditionData}
-      inputEnd={inputEnd}
-      allowDateTimeBC={allowDateTimeBC}
-      excludeCondition={excludeCondition}
-      keyForAccess={index}
+        key={index}
+        item={item}
+        index={index}
+        list={list}
+        addComponent={_addComponent}
+        deleteComponent={_deleteComponent}
+        startDateInputNameProps={startDateInputNameProps}
+        endDateInputNameProps={endDateInputNameProps}
+        disableInputByConditionProps={disableInputByConditionProps}
+        srcId={srcId}
+        srcRef={srcRef}
+        selectCondition={selectCondition}
+        selectConditionName={selectConditionName}
+        inputStart={inputStart}
+        localizedDateTimeData={localizedDateTimeData}
+        locale={locale}
+        format={format}
+        fieldConditionName={fieldConditionName}
+        fieldConditionData={fieldConditionData}
+        inputEnd={inputEnd}
+        allowDateTimeBC={allowDateTimeBC}
+        excludeCondition={excludeCondition}
+        keyForAccess={index}
     />);
   }
 
   return (
-    <div>
-      {renderComponentList()}
-    </div>
+      <div>
+        {renderComponentList()}
+      </div>
   );
 }
 

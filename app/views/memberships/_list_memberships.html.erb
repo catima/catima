@@ -27,7 +27,7 @@
         <td>
           <%= current_user.catalog_role(membership.group.catalog).capitalize %>
           <% unless user_role(current_user, membership.group.catalog) == user_role(current_user, membership.group.catalog, true) %>
-            <span class="badge badge-info"><%= t('.group_role') %></span>
+            <span class="badge text-bg-info"><%= t('.group_role') %></span>
           <% end %>
         <td>
         <td style="text-align: right;">

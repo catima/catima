@@ -33,6 +33,16 @@ fr:
         suggestions_activated: "Activer les suggestions"
         allow_anonymous_suggestions: "Autoriser les suggestions anonymes"
         suggestion_email: "Adresse e-mail de notification"
+      item_type:
+        name: "Nom"
+        name_plural: "Nom (pluriel)"
+        slug: "Slug (pluriel)"
+      user:
+        email: "E-mail"
+        password: "Mot de passe"
+        password_confirmation: "Confirmation de mot de passe"
+        remember_me: "Rester connecté"
+        primary_language: "Langue préférée"
       catalog:
         name: "Nom"
         advertize: "Promouvoir"
@@ -42,6 +52,7 @@ fr:
         api_enabled: "Activer l'API (v3)"
         throttle_time_window: "Fenêtre temporelle de limitation api en secondes"
         throttle_max_requests: "Nombre maximum de requêtes"
+        other_languages: Autres langues supportées
       group:
         name: "Nom"
         description: "Description"
@@ -388,19 +399,6 @@ fr:
   helpers:
     help:
       field/url: Une URL complète, y compris la partie http
-    label:
-      catalog:
-        other_languages: Autres langues supportées
-      item_type:
-        name: "Nom"
-        name_plural: "Nom (pluriel)"
-        slug: "Slug (pluriel)"
-      user:
-        email: "E-mail"
-        password: "Mot de passe"
-        password_confirmation: "Confirmation de mot de passe"
-        remember_me: "Rester connecté"
-        primary_language: "Langue préférée"
   time:
     formats:
       Y: "%Y"

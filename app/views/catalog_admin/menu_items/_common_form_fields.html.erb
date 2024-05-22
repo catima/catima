@@ -1,25 +1,27 @@
 <%= f.text_field(:slug, :help => slug_help_text, :autofocus => true) %>
 
-<%= f.text_field(:title, :class => 'hide', :value => @menu_item.title_str) %>
-<%= react_component('TranslatedTextField/components/TranslatedTextField', {input: 'menu_item_title', locales: catalog.valid_locales}) %>
-
+<%= f.form_group do %>
+  <%= f.label(:title, class: "form-label") %>
+  <%= f.hidden_field(:title, value: @menu_item.title_str) %>
+  <%= react_component('TranslatedTextField/components/TranslatedTextField', {input: 'menu_item_title', locales: catalog.valid_locales}) %>
+<% end %>
 
 <%= f.number_field(:rank, help: t('.rank_help')) %>
 
 <%= f.select(
-  :parent_id,
-  options_from_collection_for_select(
-    @catalog.menu_items.filter { |menu_item|
-      menu_item.id != @menu_item.id
-    },
-    "id",
-    "title",
-    @menu_item.parent_id
-  ), {
-    include_blank: true,
-    help: t('.parent_help')
-  }
-) %>
+      :parent_id,
+      options_from_collection_for_select(
+        @catalog.menu_items.filter { |menu_item|
+          menu_item.id != @menu_item.id
+        },
+        "id",
+        "title",
+        @menu_item.parent_id
+      ), {
+        include_blank: true,
+        help: t('.parent_help')
+      }
+    ) %>
 
 <div class="card p-4 my-4 help-block">
   <p><%= t('.help_block_intro') %></p>
@@ -32,21 +34,21 @@
 </div>
 
 <%= f.select(
-  :item_type_id,
-  options_from_collection_for_select(
-    @catalog.item_types, "id", "name", @menu_item.item_type_id
-  ),
-  {include_blank: true, :label => t('item_type')}
-) %>
+      :item_type_id,
+      options_from_collection_for_select(
+        @catalog.item_types, "id", "name", @menu_item.item_type_id
+      ),
+      {include_blank: true, :label => t('item_type')}
+    ) %>
 
 <%= f.select(
-  :page_id,
-  options_for_select(
-    @catalog.pages.order('slug').collect { |p| ["#{p.slug} | #{p.title}", p.id] },
-    @menu_item.page_id
-  ),
-  {include_blank: true, :label => t('.page')}
-) %>
+      :page_id,
+      options_for_select(
+        @catalog.pages.order('slug').collect { |p| ["#{p.slug} | #{p.title}", p.id] },
+        @menu_item.page_id
+      ),
+      {include_blank: true, :label => t('.page')}
+    ) %>
 
 
 <script>
@@ -85,9 +87,11 @@
   }
 </script>
 
-<%= f.text_field(:url, :class => 'd-none', :value => @menu_item.url_str) %>
-<div id="url_component"></div>
-
+<%= f.form_group do %>
+  <%= f.label(:url, class: "form-label") %>
+  <%= f.hidden_field(:url, :value => @menu_item.url_str) %>
+  <div id="url_component"></div>
+<% end %>
 <script>
 
   $('#menu_item_item_type_id').on('change', updateFieldDisplay);

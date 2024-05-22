@@ -8,7 +8,7 @@ class CatalogAdmin::CatalogsTest < ActionDispatch::IntegrationTest
     visit("/one/en/admin/_style")
 
     # Select the "Titles" category.
-    within("#general > .form-group:not(.form-group ~ .form-group)") do
+    within("#general > .mb-3:not(.mb-3 ~ .mb-3)") do
       select("Impact")
       select("14 pt")
       click_on("B")

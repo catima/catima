@@ -1,8 +1,8 @@
 
-<div class="form-group">
-  <%= f.label(t('item_type')) %>
+<%= f.form_group do %>
+  <%= f.label(t('item_type'), class: "form-label") %>
   <div><%= @item_view.item_type.slug %></div>
-</div>
+<% end %>
 
 <%= f.text_field(:name) %>
 
@@ -14,7 +14,7 @@
         label: t('.use_item_view')
       ) %>
     </td>
-    <td><span class="text-secondary" data-toggle="popover" title="<%= t('.help_item_view_title') %>" data-content="<%= t('.help_item_view_content') %>"><i class="fa fa-question-circle-o"></i></span></td>
+    <td><span class="text-secondary" data-bs-toggle="popover" title="<%= t('.help_item_view_title') %>" data-bs-content="<%= t('.help_item_view_content') %>"><i class="fa fa-question-circle-o"></i></span></td>
   </tr>
   <tr>
     <td style="padding-right: 10px;">
@@ -23,7 +23,7 @@
         :label => t('.use_list_view')
       ) %>
     </td>
-    <td><span class="text-secondary" data-toggle="popover" title="<%= t('.help_list_view_title') %>" data-content="<%= t('.help_list_view_content') %>"><i class="fa fa-question-circle-o"></i></span></td>
+    <td><span class="text-secondary" data-bs-toggle="popover" title="<%= t('.help_list_view_title') %>" data-bs-content="<%= t('.help_list_view_content') %>"><i class="fa fa-question-circle-o"></i></span></td>
   </tr>
   <tr>
     <td style="padding-right: 10px;">
@@ -32,19 +32,19 @@
         :label => t('.use_display_name')
       ) %>
     </td>
-    <td><span class="text-secondary" data-toggle="popover" title="<%= t('.help_display_name_title') %>" data-content="<%= t('.help_display_name_content') %>"><i class="fa fa-question-circle-o"></i></span></td>
+    <td><span class="text-secondary" data-bs-toggle="popover" title="<%= t('.help_display_name_title') %>" data-bs-content="<%= t('.help_display_name_content') %>"><i class="fa fa-question-circle-o"></i></span></td>
   </tr>
 </table>
 
 <hr>
 <%= f.hidden_field(:template) %>
-<%= f.label(:template) %>
+<%= f.label(:template, class: "form-label") %>
 
 <div id="template-tabs">
   <ul class="nav nav-tabs" class="mb-0">
     <% @item_view.item_type.catalog.valid_locales.each_with_index do |l, i| %>
       <li role="presentation" class="nav-item">
-        <%= link_to l, "##{l}", class: ["nav-link", ('active' if i == 0)], "data-toggle": "tab" %>
+        <%= link_to l, "##{l}", class: ["nav-link", ('active' if i == 0)], "data-bs-toggle": "tab" %>
       </li>
     <% end %>
   </ul>
@@ -71,8 +71,6 @@
     e.preventDefault();
     $(this).tab('show');
   });
-  $('[data-toggle="popover"]').popover();
-  $('.dropdown-toggle').dropdown();
 </script>
 
 <hr>

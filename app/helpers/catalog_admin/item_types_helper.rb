@@ -25,7 +25,7 @@ module CatalogAdmin::ItemTypesHelper
     label = [h(item_type.name_plural)]
     label << tag.span(
       number_with_delimiter(item_type.items.count),
-      :class => "badge-pill badge-secondary float-right"
+      :class => "badge rounded-pill text-bg-secondary pull-right"
     )
 
     link_to(

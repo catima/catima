@@ -7,9 +7,14 @@
     <%= f.hidden_field(:style) %>
 
     <ul class="nav nav-tabs" role="tablist" style="margin-bottom: 20px;">
-      <li role="presentation" class="nav-item"><a href="#general" class="nav-link active" aria-controls="general" role="tab" data-toggle="tab"><%= t('.general') %></a></li>
-      <li role="presentation" class="nav-item"><a href="#logo" class="nav-link" aria-controls="logo" role="tab" data-toggle="tab"><%= t('.logo') %></a></li>
-      <li role="presentation" class="nav-item"><a href="#itemlist" class="nav-link" aria-controls="itemlist" role="tab" data-toggle="tab"><%= t('.items') %></a></li>
+      <li role="presentation" class="nav-item">
+        <a href="#general" class="nav-link active" aria-controls="general" role="tab" data-bs-toggle="tab"><%= t('.general') %></a>
+      </li>
+      <li role="presentation" class="nav-item">
+        <a href="#logo" class="nav-link" aria-controls="logo" role="tab" data-bs-toggle="tab"><%= t('.logo') %></a></li>
+      <li role="presentation" class="nav-item">
+        <a href="#itemlist" class="nav-link" aria-controls="itemlist" role="tab" data-bs-toggle="tab"><%= t('.items') %></a>
+      </li>
     </ul>
 
     <!-- Tab panes -->
@@ -17,19 +22,19 @@
 
       <!-- General pane -->
       <div role="tabpanel" class="tab-pane active" id="general">
-        <div class="form-group">
-          <label class="control-label"><%= t('.titles') %></label>
-          <%= react_component 'StyleControl/components/StyleControl', { input: '#catalog_style', element: 'main-title' } %>
-        </div>
+        <%= f.form_group do %>
+          <label class="form-label"><%= t('.titles') %></label>
+          <%= react_component 'StyleControl/components/StyleControl', {input: '#catalog_style', element: 'main-title'} %>
+        <% end %>
 
-        <div class="form-group">
-          <label class="control-label"><%= t('.base_font') %></label>
-          <%= react_component 'StyleControl/components/StyleControl', { input: '#catalog_style', element: 'base-font' } %>
-        </div>
+        <%= f.form_group do %>
+          <label class="form-label"><%= t('.base_font') %></label>
+          <%= react_component 'StyleControl/components/StyleControl', {input: '#catalog_style', element: 'base-font'} %>
+        <% end %>
 
-        <div class="form-group">
+        <%= f.form_group do %>
           <label for="catalog_link_color"
-                 class="control-label">
+                 class="form-label">
             <%= t('.link_color') %>
           </label>
           <input class="form-control minicolor-input"
@@ -38,80 +43,82 @@
                  value="<%= @catalog.custom_style('link-color') || '#428bca' %>"
           >
           <script>
-            $('#catalog_link_color').on('change', function(e){
+            $('#catalog_link_color').on('change', function (e) {
               var stl = JSON.parse($('#catalog_style').val());
               stl['link-color'] = $('#catalog_link_color').val();
               $('#catalog_style').val(JSON.stringify(stl));
             });
           </script>
-        </div>
+        <% end %>
 
-        <div class="form-group">
-          <label class="control-label"><%= t('.navbar') %></label>
-          <%= react_component 'StyleControl/components/StyleControl', { input: '#catalog_style', element: 'navbar' }%>
-        </div>
+        <%= f.form_group do %>
+          <label class="form-label"><%= t('.navbar') %></label>
+          <%= react_component 'StyleControl/components/StyleControl', {input: '#catalog_style', element: 'navbar'} %>
+        <% end %>
       </div>
 
       <!-- Catalog logo pane -->
       <div role="tabpanel" class="tab-pane" id="logo">
-          <div class="form-group">
-              <label class="control-label" for="catalog_logo"><%= t('.catalog_logo') %></label>
-              <table>
-                <tr>
-                  <td>
-                    <% if @catalog.logo %>
-                      <div style="min-width: 220px; padding: 10px;">
-                        <%= attachment_image_tag(@catalog, :logo, :limit, 200, 100) %>
-                      </div>
-                    <% end %>
-                  </td>
-                  <td>
-                    <%= f.attachment_field :logo %>
-                    <% if @catalog.logo %>
-                      <%= f.check_box :remove_logo, label: t('.remove_catalog_logo') %>
-                    <% end %>
-                  </td>
-                </tr><tr>
-                  <td colspan="3"><span class="help-block"><%= t('.catalog_logo_help') %></span></td>
-                </tr>
-              </table>
-          </div>
-          <div class="form-group">
-              <label class="control-label" for="catalog_nav_logo"><%= t('.navbar_logo') %></label>
-              <table>
-                <tr>
-                  <td>
-                    <% if @catalog.navlogo %>
-                      <div style="min-width: 220px; padding: 10px;">
-                        <%= attachment_image_tag(@catalog, :navlogo, :limit, 300, 50) %>
-                      </div>
-                    <% end %>
-                  </td>
-                  <td>
-                    <%= f.attachment_field :navlogo %>
-                    <% if @catalog.navlogo %>
-                      <%= f.check_box :remove_navlogo, label: t('.remove_navbar_logo') %>
-                    <% end %>
-                  </td>
-                </tr><tr>
-                  <td colspan="3"><span class="help-block"><%= t('.navbar_logo_help') %></span></td>
-                </tr>
-              </table>
-          </div>
+        <%= f.form_group do %>
+          <label class="form-label" for="catalog_logo"><%= t('.catalog_logo') %></label>
+          <table>
+            <tr>
+              <td>
+                <% if @catalog.logo %>
+                  <div style="min-width: 220px; padding: 10px;">
+                    <%= attachment_image_tag(@catalog, :logo, :limit, 200, 100) %>
+                  </div>
+                <% end %>
+              </td>
+              <td>
+                <%= f.attachment_field :logo %>
+                <% if @catalog.logo %>
+                  <%= f.check_box :remove_logo, label: t('.remove_catalog_logo') %>
+                <% end %>
+              </td>
+            </tr>
+            <tr>
+              <td colspan="3"><span class="help-block"><%= t('.catalog_logo_help') %></span></td>
+            </tr>
+          </table>
+        <% end %>
+        <%= f.form_group do %>
+          <label class="form-label" for="catalog_nav_logo"><%= t('.navbar_logo') %></label>
+          <table>
+            <tr>
+              <td>
+                <% if @catalog.navlogo %>
+                  <div style="min-width: 220px; padding: 10px;">
+                    <%= attachment_image_tag(@catalog, :navlogo, :limit, 300, 50) %>
+                  </div>
+                <% end %>
+              </td>
+              <td>
+                <%= f.attachment_field :navlogo %>
+                <% if @catalog.navlogo %>
+                  <%= f.check_box :remove_navlogo, label: t('.remove_navbar_logo') %>
+                <% end %>
+              </td>
+            </tr>
+            <tr>
+              <td colspan="3"><span class="help-block"><%= t('.navbar_logo_help') %></span></td>
+            </tr>
+          </table>
+        <% end %>
       </div>
 
       <!-- Headings pane -->
       <div role="tabpanel" class="tab-pane" id="itemlist">
 
-        <div class="form-group">
-          <label class="control-label"><%= t('.item_labels') %></label>
-          <%= react_component 'StyleControl/components/StyleControl', { input: '#catalog_style', element: 'item-labels' } %>
-        </div>
+        <%= f.form_group do %>
+          <label class="form-label"><%= t('.item_labels') %></label>
+          <%= react_component 'StyleControl/components/StyleControl', {input: '#catalog_style', element: 'item-labels'} %>
+        <% end %>
 
-        <div class="form-group">
-          <label class="control-label"><%= t('.item_texts') %></label>
-          <%= react_component 'StyleControl/components/StyleControl', { input: '#catalog_style', element: 'item-text' } %>
-        </div>
+        <%= f.form_group do %>
+          <label class="form-label"><%= t('.item_texts') %></label>
+          <%= react_component 'StyleControl/components/StyleControl', {input: '#catalog_style', element: 'item-text'} %>
+        <% end %>
       </div>
     </div>
 

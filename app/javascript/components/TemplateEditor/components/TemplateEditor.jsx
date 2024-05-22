@@ -70,7 +70,6 @@ const TemplateEditor = (props) => {
       editor.summernote('code', html);
 
       $('.note-link-popover').css('display', 'none');
-      $('.dropdown-toggle').dropdown();
     }
   }, [editor, html])
 

@@ -108,7 +108,7 @@ module ItemsHelper
 
   def formatted_item_for_line(item, list:, sort_field:)
     title = if item_has_thumbnail?(item)
-              tag.div(item_list_link(list, item, nil) { item_thumbnail(item, :class => "media-object") }, class: "pull-left mr-3")
+              tag.div(item_list_link(list, item, nil) { item_thumbnail(item, :class => "media-object") }, class: "pull-left me-3")
             else
               tag.h4(item_list_link(list, item, nil, item_display_name(item)), class: "mt-0 mb-1")
             end

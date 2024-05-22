@@ -7,7 +7,7 @@
 
   <%= f.email_field(:email, :autofocus => true, :autocomplete => "off") %>
   <%= render("common_form_fields", :f => f) %>
+
   <%= f.primary(t('send_invitation')) %>
   <%= link_to t('cancel'), catalog_admin_users_path, :class => "btn btn-link" %>
-
 <% end %>

@@ -1,11 +1,11 @@
 <% if current_user.authenticated? %>
   <li class="dropdown nav-item" id="user-menu">
-    <a href="#" class="dropdown-toggle  nav-link" data-toggle="dropdown">
+    <a href="#" class="dropdown-toggle  nav-link" data-bs-toggle="dropdown">
       <%= fa_icon(:user) %>
       <%= current_user.email %>
     </a>
 
-    <ul class="dropdown-menu dropdown-menu-right">
+    <ul class="dropdown-menu dropdown-menu-end">
         <%= link_to(
               t(".my_profile"),
               edit_user_registration_path(:locale => I18n.locale), class: "dropdown-item") %>

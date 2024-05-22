@@ -1,15 +1,10 @@
 <% provide(:title, "Edit item view") %>
 
-<div class="card-body">
-  <%= bootstrap_form_for(@item_view, url: catalog_admin_item_view_path) do |f| %>
-
-    <%= render("common_form_fields", :f => f) %>
-
-    <%= f.primary("Update item view") %>
-    <%= link_to(
-          "Cancel",
-          catalog_admin_item_type_fields_path,
-          :class => "btn btn-link") %>
-
-  <% end %>
-</div>
+<%= bootstrap_form_for(@item_view, url: catalog_admin_item_view_path) do |f| %>
+  <%= render("common_form_fields", :f => f) %>
+  <%= f.primary("Update item view") %>
+  <%= link_to(
+        t('cancel'),
+        catalog_admin_item_type_fields_path,
+        :class => "btn btn-link") %>
+<% end %>

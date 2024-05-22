@@ -10,14 +10,14 @@ module NavbarHelper
   #           root_path,
   #           :active_when => { :controller => "home" }) %>
   #
-  def navbar_link_to(label, path, options={})
+  def navbar_link_to(label, path, options = {})
     active_when = options.delete(:active_when) { Hash.new }
     active = active_when.all? do |key, value|
       value === params[key].to_s
     end
 
-    tag.li(:class => ["nav-item", ("active" if active)]) do
-      link_to(label, path, options.merge(class: "nav-link"))
+    tag.li(class: "nav-item") do
+      link_to(label, path, options.merge(class: ["nav-link", ("active" if active)]))
     end
   end
 

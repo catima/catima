@@ -7,7 +7,7 @@
         <%= link_to(
               fa_icon(:"comment"),
               '#',
-              class: 'btn btn-primary float-right',
+              class: 'btn btn-primary pull-right',
               id: 'toggle-suggestion-button',
               "data-action": "click->toggle-display#reveal",
               "data-toggle": "tooltip",
@@ -31,12 +31,12 @@
 
 <% if @item.item_type.default_item_view.nil? == true %>
   <table class="table item-table">
-    <tbody>
-    <% item_applicable_fields(@item).each do |field| %>
+    <tbody class="border-top">
+    <% (fields = item_applicable_fields(@item)).each do |field| %>
       <% if field_check_display(@item, field) %>
         <tr>
-          <th class="field-label"><%= field.label %></th>
-          <td class="<%= field.type %>"><%= field_value(@item, field) %></td>
+          <th class="field-label <%= "border-bottom-0" if fields.last == field %>"><%= field.label %></th>
+          <td class="<%= field.type %> <%= "border-bottom-0" if fields.last == field %>"><%= field_value(@item, field) %></td>
         </tr>
       <% end %>
     <% end %>

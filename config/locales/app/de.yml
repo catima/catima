@@ -4,11 +4,23 @@ de:
     models:
       category: "Sub-Stecker"
     attributes:
+      item_type:
+        name: "Name"
+        name_plural: "Name (Plural)"
+        slug: "Slug (Plural)"
+      user:
+        email: "E-mail"
+        password: "Passwort"
+        password_confirmation: "Passwort bestätigen"
+        remember_me: "Angemeldet bleiben"
+        primary_language: "Bevorzugte Sprache"
       choice_set:
         name: "Name"
       page:
         slug: "Slug"
         title: "Titel"
+      catalog:
+        other_languages: Andere unterstützte Sprachen
       group:
         name: "Name"
         description: "Description"
@@ -294,19 +306,6 @@ de:
   helpers:
     help:
       field/url: Eine komplette URL, inklusive den http-Teil
-    label:
-      catalog:
-        other_languages: Andere unterstützte Sprachen
-      item_type:
-        name: "Name"
-        name_plural: "Name (Plural)"
-        slug: "Slug (Plural)"
-      user:
-        email: "E-mail"
-        password: "Passwort"
-        password_confirmation: "Passwort bestätigen"
-        remember_me: "Angemeldet bleiben"
-        primary_language: "Bevorzugte Sprache"
   time:
     formats:
       Y: "%Y"

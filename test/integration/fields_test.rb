@@ -39,7 +39,7 @@ class FieldsTest < ActionDispatch::IntegrationTest
     click_on("Create Two")
     click_on("Return to site")
 
-    within('.nav.navbar-nav.mr-auto') do
+    within('.nav.navbar-nav.me-auto') do
       click_on("Twos")
     end
 

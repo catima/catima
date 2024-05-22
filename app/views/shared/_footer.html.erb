@@ -6,7 +6,7 @@
       <p style="font-size: 80%;">Powered by CATIMA<br>
       <% if ENV["APP_VERSION"] %>Version <%= ENV["APP_VERSION"] %> · <%= Time.zone.now.strftime("%Y") %><% end %></p>
     </div>
-    <div class="col-sm-6 text-right" style="margin-bottom: 20px;">
+    <div class="col-sm-6 text-end" style="margin-bottom: 20px;">
       <%= render("shared/logo") if catalog_scoped? %>
     </div>
   </div>

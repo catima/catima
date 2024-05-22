@@ -8,7 +8,7 @@ module CatalogAdmin::ReviewsHelper
 
   def review_status_label(item)
     text, klass = STATUSES[item.review_status]
-    tag.span(t(text), :class => "badge badge-#{klass}")
+    tag.span(t(text), :class => "badge text-bg-#{klass}")
   end
 
   def render_items_approval(item)

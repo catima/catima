@@ -15,7 +15,7 @@
     :layers,
     :help => t("catalog_admin.fields.geometry_option_inputs.layers_help")
 ) do %>
-  <label class="control-label" for="container_layers"><%= t("catalog_admin.fields.geometry_option_inputs.layers") %></label>
+  <label class="form-label" for="container_layers"><%= t("catalog_admin.fields.geometry_option_inputs.layers") %></label>
   <%= f.hidden_field(:layers) %>
   <%= react_component('GeoEditor/components/GeoLayers',
     {

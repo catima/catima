@@ -14,6 +14,6 @@ module VisibilityHelper
       klass = 'success'
     end
 
-    tag.span(text, :class => "badge badge-#{klass}")
+    tag.span(text, :class => "badge text-bg-#{klass}")
   end
 end

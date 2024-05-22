@@ -40,9 +40,7 @@
   <%= f.password_field(:password, :autocomplete => "current-password") %>
 
   <% if devise_mapping.rememberable? -%>
-    <%= f.check_box(
-          :remember_me,
-          :label => t("helpers.label.user.remember_me")) %>
+    <%= f.check_box(:remember_me) %>
   <% end -%>
 
   <%= f.primary(t(".submit")) %>

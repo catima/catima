@@ -9,6 +9,7 @@
 
     <%= render("common_form_fields", :f => f) %>
 
+    <hr>
     <%= f.primary(t('.update_page')) %>
     <%= link_to(
             t('cancel'),
@@ -28,7 +29,7 @@
     <div class="container-list" pid="containers-<%= locale %>">
       <div style="float: right;">
         <span class="dropdown">
-          <button class="btn btn-xs btn-outline-secondary dropdown-toggle" type="button" id="add-field-dropdown" data-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+          <button class="btn btn-xs btn-outline-secondary dropdown-toggle" type="button" id="add-field-dropdown" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
             <%= fa_icon(:"plus-square", :text => t('catalog_admin.fields.index.add_field')) %>
           </button>
           <div class="dropdown-menu" style="right: 0; left: auto;" aria-labelledby="add-field-dropdown">

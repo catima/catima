@@ -163,7 +163,7 @@ const DateTimeInput = (props) => {
     <div>
       <div className="dateTimeInput rails-bootstrap-forms-datetime-select">
         {allowBC ? (
-          <div className="form-check" style={{display: 'inline-block', marginRight: '3rem', paddingLeft: '0'}}>
+          <div className="form-check d-inline-block me-4">
             <label className="form-check-label"
                    htmlFor={`bcCheck`}>{Translations.messages['catalog_admin.fields.complex_datation_option_inputs.BC']}</label>
             <input type="checkbox" value={true} className="form-check-input" id={`bcCheck`}
@@ -177,7 +177,7 @@ const DateTimeInput = (props) => {
         ) : null
         }
         {fmt.includes('M') ? (
-          <select style={errorStl} className="form-control" value={state.M} onChange={_handleChangeMonth}>
+          <select style={errorStl} className="form-select" value={state.M} onChange={_handleChangeMonth}>
             <option value=""></option>
             <option value="1">
               {Translations.messages['catalog_admin.fields.date_time_option_inputs.months.january']}

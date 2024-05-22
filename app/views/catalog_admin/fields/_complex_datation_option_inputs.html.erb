@@ -1,32 +1,30 @@
 <hr>
-<div>
-  <%= f.form_group do %>
-    <div class="mt-4">
-      <h5><%= t(".allowed_formats") %></h5>
-      <div data-controller="toggle-display">
-        <%= f.hidden_field(:"allowed_formats[]", value: nil) %>
-        <div class="base-errors"><%= f.object.errors.where(:allowed_formats).first&.full_message %></div>
-        <%= f.check_box :allowed_formats, {label: t(".#{Field::ComplexDatation::ALLOWED_FORMATS.first}"), multiple: true, "data-action": "click->toggle-display#reveal", "data-toggle-display-target": 'source'}, Field::ComplexDatation::ALLOWED_FORMATS.first, nil %>
-        <div class="ml-4" data-toggle-display-target="revealable">
-          <%= f.collection_select(:format, Field::ComplexDatation::FORMATS, :to_s, :to_s, label: t(".format")) %>
-          <%= f.check_box(:allow_date_time_bc, label: t(".allow_bc")) %>
-        </div>
-      </div>
+<h4><%= t(".allowed_formats") %></h4>
 
-      <div data-controller="toggle-display">
-        <%= f.check_box :allowed_formats, {label: t(".#{Field::ComplexDatation::ALLOWED_FORMATS.second}"), multiple: true, "data-action": "click->toggle-display#reveal", "data-toggle-display-target": 'source'}, Field::ComplexDatation::ALLOWED_FORMATS.second, nil %>
-        <div class="ml-4" data-toggle-display-target="revealable">
-          <%= select2_select(
-                f,
-                :choice_set_ids,
-                f.object.choice_set_choices.map { |c| [c.name, c.id] },
-                {
-                  multiple: true,
-                  label: t(".choice_set_ids")
-                }
-              ) %>
-        </div>
-      </div>
-    </div>
+<div data-controller="toggle-display">
+  <%= f.hidden_field(:"allowed_formats[]", value: nil) %>
+  <div class="base-errors"><%= f.object.errors.where(:allowed_formats).first&.full_message %></div>
+  <%= f.form_group do %>
+    <%= f.check_box :allowed_formats, {label: t(".#{Field::ComplexDatation::ALLOWED_FORMATS.first}"), multiple: true, "data-action": "click->toggle-display#reveal", "data-toggle-display-target": 'source'}, Field::ComplexDatation::ALLOWED_FORMATS.first, nil %>
   <% end %>
+  <div class="ms-4" data-toggle-display-target="revealable">
+    <%= f.collection_select(:format, Field::ComplexDatation::FORMATS, :to_s, :to_s, label: t(".format")) %>
+    <%= f.form_group do %>
+      <%= f.check_box(:allow_date_time_bc, label: t(".allow_bc")) %>
+    <% end %>
+  </div>
+</div>
+
+<div data-controller="toggle-display">
+  <%= f.form_group do %>
+    <%= f.check_box :allowed_formats, {label: t(".#{Field::ComplexDatation::ALLOWED_FORMATS.second}"), multiple: true, "data-action": "click->toggle-display#reveal", "data-toggle-display-target": 'source'}, Field::ComplexDatation::ALLOWED_FORMATS.second, nil %>
+  <% end %>
+  <div class="ms-4" data-toggle-display-target="revealable">
+    <%= select2_select(f, :choice_set_ids, f.object.choice_set_choices.map { |c| [c.name, c.id] },
+                       {
+                         multiple: true,
+                         label: t(".choice_set_ids")
+                       }
+        ) %>
+  </div>
 </div>

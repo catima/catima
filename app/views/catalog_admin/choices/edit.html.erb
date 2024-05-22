@@ -7,15 +7,15 @@
       <%= select2_select(f, :parent_id, @choice_set.flat_ordered_choices.filter { |choice| choice.id != @choice.id }.map { |choice| [@choice_set.choice_prefixed_label(choice), choice.id] }, include_blank: ' ') %>
     </div>
     <%= render("catalog_admin/choices/choice_fields", :f => f) %>
-    <div class="mt-4">
-      <%= f.primary(t(".update_choice")) %>
-      <%= link_to(
-            t("cancel"),
-            edit_catalog_admin_choice_set_path(
-              @choice_set.catalog,
-              I18n.locale,
-              @choice_set),
-            :class => "btn btn-link") %>
-    </div>
+
+    <hr>
+    <%= f.primary(t(".update_choice")) %>
+    <%= link_to(
+          t("cancel"),
+          edit_catalog_admin_choice_set_path(
+            @choice_set.catalog,
+            I18n.locale,
+            @choice_set),
+          :class => "btn btn-link") %>
   <% end %>
 </div>

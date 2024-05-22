@@ -1,4 +1,6 @@
-activate_tooltips = ->
+$(document).ready ->
   $('[data-toggle="tooltip"]').tooltip()
 
-$(document).ready(activate_tooltips)
+  popoverTriggerList = [].slice.call(document.querySelectorAll('[data-bs-toggle="popover"]'))
+  popoverList = popoverTriggerList.map (popoverTriggerEl) =>
+    new bootstrap.Popover(popoverTriggerEl, {html: true})

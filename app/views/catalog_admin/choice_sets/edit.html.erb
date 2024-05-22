@@ -4,7 +4,7 @@
   <%= link_to(
         export_catalog_admin_choice_set_path(@choice_set.catalog, I18n.locale, @choice_set),
         method: :post,
-        class: 'mr-4') do %>
+        class: 'me-4') do %>
     <%= fa_icon(:"download", :text => t(".export")) %>
   <% end %>
 
@@ -41,6 +41,7 @@
           ) %>
     <% end %>
 
+    <hr>
     <div class="mt-2">
       <%= f.primary(t(".update_choice_set")) %>
       <%= link_to(
@@ -49,12 +50,13 @@
             :class => "btn btn-link") %>
     </div>
     <hr>
-    <%= label_tag :choices, t(".choices") %>
-    <ul class="w-100 pl-0" data-sortable-choices-target="sortableList">
-      <% @choice_set.choices.where(parent_id: nil).ordered.each do |choice| %>
-        <%= render 'choice', choice: choice, level: 0 %>
-      <% end %>
-    </ul>
-
+    <%= f.form_group do %>
+      <%= f.label :choices, t(".choices"), class: "form-label" %>
+      <ul class="list-unstyled" data-sortable-choices-target="sortableList">
+        <% @choice_set.choices.where(parent_id: nil).ordered.each do |choice| %>
+          <%= render 'choice', choice: choice, level: 0 %>
+        <% end %>
+      </ul>
+    <% end %>
   <% end %>
 </div>

@@ -2,7 +2,7 @@
   <ul class="nav nav-tabs" class="mb-0">
     <% @field.item_type.catalog.valid_locales.each_with_index do |l, i| %>
       <li role="presentation" class="nav-item">
-        <%= link_to l, "##{l}", class: ["nav-link", ('active' if i == 0)], "data-toggle": "tab" %>
+        <%= link_to l, "##{l}", class: ["nav-link", ('active' if i == 0)], "data-bs-toggle": "tab" %>
       </li>
     <% end %>
   </ul>

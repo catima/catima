@@ -37,23 +37,23 @@ class CatalogAdmin::GroupsTest < ActionDispatch::IntegrationTest
 
     # Reload the page
     visit('/two/en/admin/_users')
-    assert_equal(true, page.execute_script('return document.getElementById("role_user").checked'))
-    assert_equal(false, page.execute_script('return document.getElementById("role_member").checked'))
+    assert_equal(true, page.execute_script('return document.querySelector("[name=role][value=user]").checked'))
+    assert_equal(false, page.execute_script('return document.querySelector("[name=role][value=member]").checked'))
 
     page.execute_script('document.querySelector("label.lbl-editor").click()')
     sleep 2
     visit('/two/en/admin/_users')
-    assert_equal(false, page.execute_script('return document.getElementById("role_user").checked'))
-    assert_equal(false, page.execute_script('return document.getElementById("role_member").checked'))
-    assert_equal(true, page.execute_script('return document.getElementById("role_editor").checked'))
+    assert_equal(false, page.execute_script('return document.querySelector("[name=role][value=user]").checked'))
+    assert_equal(false, page.execute_script('return document.querySelector("[name=role][value=member]").checked'))
+    assert_equal(true, page.execute_script('return document.querySelector("[name=role][value=editor]").checked'))
 
     page.execute_script('document.querySelector("label.lbl-super-editor").click()')
     sleep 2
     visit('/two/en/admin/_users')
-    assert_equal(false, page.execute_script('return document.getElementById("role_user").checked'))
-    assert_equal(false, page.execute_script('return document.getElementById("role_member").checked'))
-    assert_equal(false, page.execute_script('return document.getElementById("role_editor").checked'))
-    assert_equal(true, page.execute_script('return document.getElementById("role_super-editor").checked'))
+    assert_equal(false, page.execute_script('return document.querySelector("[name=role][value=user]").checked'))
+    assert_equal(false, page.execute_script('return document.querySelector("[name=role][value=member]").checked'))
+    assert_equal(false, page.execute_script('return document.querySelector("[name=role][value=editor]").checked'))
+    assert_equal(true, page.execute_script('return document.querySelector("[name=role][value=super-editor]").checked'))
   end
 
   test 'add users to group' do

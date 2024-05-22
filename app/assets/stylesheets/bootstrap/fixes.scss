@@ -60,10 +60,6 @@ h4, .h4, h5, .h5, h6, .h6 {
   display: none !important;
 }
 
-[data-toggle="buttons"] > .btn input[type="radio"] {
-  display: none;
-}
-
 .btn-text {
   color: $primary;
 }
@@ -102,7 +98,7 @@ blockquote {
   margin-top: 0; // because this use h3 style which contain a top margin
 }
 
-.navbar-light .nav-item.active > a {
+.navbar-light .nav-item > .nav-link.active {
   text-decoration: underline;
 }
 
@@ -118,4 +114,37 @@ input[type="search"]::-webkit-search-results-decoration { display: none; }
 // by default bs4 link without href are not blue... in catima button link (with icons) should be colored
 a:not([href]):not([class])[type='button'] {
   color: $link-color;
+}
+
+//
+// bootstrap 5.2 update
+//
+
+:root {
+  // global edit border color
+  --bs-border-color: #ced4da;
+}
+
+.modal-title {
+    margin-top: 0;
+}
+
+// remove double border on table inside card
+.card > .table,
+.card > .table-responsive > .table,
+.card > .table-index > .table {
+  > tbody > tr:last-child > td {
+    border-bottom: 0;
+  }
+}
+
+.form-control[readonly] {
+  background-color: var(--bs-secondary-bg);
+}
+
+// hide popper if reference is hidden (on div with overflow scroll)
+
+[data-popper-reference-hidden] {
+  visibility: hidden;
+  pointer-events: none;
 }

@@ -86,11 +86,11 @@ const TranslatedTextField = (props) => {
 
   if (!value) return ''
   return (
-    <div className="translatedTextField form-group">
+    <div className="translatedTextField">
       {locales.map((locale, i) =>
         (
           <div key={i} className="input-group">
-            <div className="input-group-prepend"><span className="input-group-text">{locale}</span></div>
+            <span className="input-group-text">{locale}</span>
             <input className="form-control" data-locale={locale} type="text" value={value[locale]}
                    onChange={_handleChange} disabled={state.disabled}/>
           </div>

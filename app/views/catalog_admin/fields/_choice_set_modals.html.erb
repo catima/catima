@@ -5,7 +5,7 @@
       <%= bootstrap_form_for([:catalog_admin, choice_set], remote: true) do |f| %>
         <div class="modal-header">
           <h4 class="modal-title"><%= t('.create_new_choice_set') %></h4>
-          <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
         </div>
         <div class="modal-body">
           <div class="card-body">
@@ -13,7 +13,7 @@
           </div>
         </div>
         <div class="modal-footer">
-          <button type="button" class="btn btn-outline-secondary" data-dismiss="modal"><%= t('cancel') %></button>
+          <button type="button" class="btn btn-outline-secondary" data-bs-dismiss="modal"><%= t('cancel') %></button>
           <%= f.submit t('create'), class: 'btn btn-success' %>
         </div>
       <% end %>

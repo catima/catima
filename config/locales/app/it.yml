@@ -4,8 +4,20 @@ it:
     models:
       category: "Sub-plug"
     attributes:
+      item_type:
+        name: "Nome"
+        name_plural: "Nome (plurale)"
+        slug: "Slug (plurale)"
+      user:
+        email: "E-mail"
+        password: "Password"
+        password_confirmation: "Conferma password"
+        remember_me: "Resta connesso"
+        primary_language: "Lingua preferita"
       choice_set:
         name: "Nome"
+      catalog:
+        other_languages: Altre lingue supportate
       page:
         slug: "Slug"
         title: "Titolo"
@@ -295,19 +307,6 @@ it:
   helpers:
     help:
       field/url: Un URL completo, compresa la parte http
-    label:
-      catalog:
-        other_languages: Altre lingue supportate
-      item_type:
-        name: "Nome"
-        name_plural: "Nome (plurale)"
-        slug: "Slug (plurale)"
-      user:
-        email: "E-mail"
-        password: "Password"
-        password_confirmation: "Conferma password"
-        remember_me: "Resta connesso"
-        primary_language: "Lingua preferita"
   time:
     formats:
       Y: "%Y"

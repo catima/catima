@@ -55,7 +55,7 @@ const AdvancedComplexDatationSearch = (props) => {
   }
   function renderSelectExcludeConditionElement() {
     return (
-        <select className="form-control filter-condition" name={selectExcludeConditionName}
+        <select className="form-select filter-condition" name={selectExcludeConditionName}
                 value={selectedExcludeCondition} onChange={_selectExcludeCondition}>
           {selectExcludeConditions.map((item) => {
             return <option key={item.key} value={item.key}>{item.value}</option>

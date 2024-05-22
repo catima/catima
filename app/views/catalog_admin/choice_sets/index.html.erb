@@ -3,7 +3,7 @@
 <% provide(:actions) do %>
   <%= link_to(
         new_import_catalog_admin_choice_sets_path(@catalog, I18n.locale),
-        class: 'mr-4') do %>
+        class: 'me-4') do %>
     <%= fa_icon(:"upload", :text => t(".import")) %>
   <% end %>
 
@@ -29,7 +29,7 @@
         <td><%= deactivation_status_label(set) %></td>
         <td><%= choice_set_type_label(set) %></td>
         <td><%= choice_set_abbreviated_choices(set) %></td>
-        <td align="right" class="whitespace-nowrap">
+        <td class="text-end whitespace-nowrap">
           <%= render "shared/actions/choiceset", :model => set %>
         </td>
       </tr>

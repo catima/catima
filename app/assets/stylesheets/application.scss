@@ -2,14 +2,14 @@
 
 @import './bootstrap/custom';
 @import "bootstrap";
-@import "summernote-bs4";
+@import 'summernote/dist/summernote-lite';
 @import 'rails_bootstrap_forms';
 @import 'leaflet';
 @import 'font-awesome';
 @import 'select2';
 @import 'select2-bootstrap';
-@import "bootstrap4-datetimepicker/build/css/bootstrap-datetimepicker";
 @import 'react-leaflet-markercluster/dist/styles.min.css';
+@import '@eonasdan/tempus-dominus/dist/css/tempus-dominus.css';
 
 @import './modules/*';
 @import './webpack/**/*';

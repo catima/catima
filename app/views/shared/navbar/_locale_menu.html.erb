@@ -1,6 +1,6 @@
 <% if locale_language_choices.many? %>
   <li class="dropdown nav-item">
-    <a href="#" class="dropdown-toggle nav-link" data-toggle="dropdown"><%= current_locale_language %></a>
+    <a href="#" class="dropdown-toggle nav-link" data-bs-toggle="dropdown"><%= current_locale_language %></a>
     <div class="dropdown-menu">
       <% locale_language_choices.each do |locale, language, current| %>
         <%= link_to(params.to_unsafe_h.merge(:locale => locale), :class => ["dropdown-item ", ("disabled" if current)]) do %>
