@@ -33,3 +33,9 @@
   font-family: "summernote";
   src: url("summernote/src/font/summernote.eot?#iefix") format("embedded-opentype"), url("summernote/src/font/summernote.woff2") format("woff2"), url("summernote/src/font/summernote.woff") format("woff"), url("summernote/src/font/summernote.ttf") format("truetype");
 }
+
+// Ensure having scrollable content when "code view" is active
+
+.note-editor .note-codable {
+  overflow: auto !important;
+}
