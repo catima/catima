@@ -97,6 +97,11 @@ const ItemGroup = forwardRef((props, ref) => {
       emptyCount.current = 0
     }
 
+    let maxTitleLenght = 35
+    let groupTitle = computeGroupTitle(level, title, type, format)
+
+    console.log(groupTitle)
+    console.log(groupTitle.length > maxTitleLenght)
     if (typeof items === 'object' && !Array.isArray(items)) {
       emptyCount.current = emptyCount.current + 1
       return (
@@ -104,7 +109,9 @@ const ItemGroup = forwardRef((props, ref) => {
           {!(type === 'num' && level === 1) && !withoutGroup && (
             <div className={`line__group__title level-${level}`} style={{cursor: "pointer", zIndex: 1000}}
                  data-action="click->toggle-display-line#reveal">
-              <div dangerouslySetInnerHTML={{__html: computeGroupTitle(level, title, type, format)}}/>
+              <div
+                data-toggle={groupTitle.length > maxTitleLenght ? "tooltip" : ""} data-placement="top" title={groupTitle.length > maxTitleLenght ? groupTitle : ""}
+                dangerouslySetInnerHTML={{__html: groupTitle.length > maxTitleLenght ? groupTitle.substring(0, maxTitleLenght) + "..." : groupTitle}}/>
               <span className="px-2" data-toggle-display-line-target="upArrow"
                     dangerouslySetInnerHTML={{__html: icons.up}}/>
               <span className="px-2 d-none" data-toggle-display-line-target="downArrow"
@@ -146,7 +153,9 @@ const ItemGroup = forwardRef((props, ref) => {
           {!(type === 'num' && level === 1) && !withoutGroup && (
             <div className={`line__group__title level-${level}`} style={{zIndex: 10, cursor: "pointer"}}
                  data-action="click->toggle-display-line#reveal">
-              <div dangerouslySetInnerHTML={{__html: computeGroupTitle(level, title, type, format)}}/>
+              <div
+                data-toggle={groupTitle.length > maxTitleLenght ? "tooltip" : ""} data-placement="top" title={groupTitle.length > maxTitleLenght ? groupTitle : ""}
+                dangerouslySetInnerHTML={{__html: groupTitle.length > maxTitleLenght ? groupTitle.substring(0, maxTitleLenght) + "..." : groupTitle}}/>
               <span className="px-2" data-toggle-display-line-target="upArrow"
                     dangerouslySetInnerHTML={{__html: icons.up}}/>
               <span className="px-2 d-none" data-toggle-display-line-target="downArrow"
