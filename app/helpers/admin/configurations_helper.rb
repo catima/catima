@@ -24,10 +24,8 @@ module Admin::ConfigurationsHelper
       Catalog.not_deactivated.sorted,
       :id,
       :name,
-      {
-        :hide_label => true,
-        :include_blank => true
-      }
+      { :hide_label => true, :include_blank => true },
+      { :class => 'ms-2' }
     )
   end
 end
