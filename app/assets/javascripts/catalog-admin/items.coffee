@@ -71,10 +71,11 @@ file_presenter_upload_finished = ($file_field, $file)->
     </tr>
     """
   if legend $file_field
+    t_legend = $('#localization').data('image-add-legend')
     $html += """
     <tr data-file="#{file_hash($file)}">
       <td colspan="4">
-        <input class="form-control image-legend-input" placeholder="Add legend here" type="text"/>
+        <input class="form-control image-legend-input" placeholder="#{t_legend}" type="text"/>
       </td>
     </tr>"""
   return $html
@@ -164,13 +165,21 @@ fileupload_add_for = ($field, $data)->
     insert_new_file(f, $field)
     display_upload_button($field)
   else
-    fileupload_error($field, "The file '#{$data.files[0].name}' is not valid for this field.")
+    t_not_valid = $('#localization').data('file-not-valid')
+    fileupload_error($field, "#{t_not_valid}: #{$data.files[0].name}")
   check_filerequired($field)
 
 file_valid_for = ($field, $file)->
   return false if !is_size_allowed($field, $file.size)
+
   ext = extension_for($file.name)
   return false if typeof(ext) == 'undefined'
+
+  for existing_file in files_for($field)
+    if file_hash(existing_file) == file_hash($file)
+      console.log('A file with the same name and size already exists: ', $file.name)
+      return false
+
   allowed_exts = allowed_extensions($field)
   return allowed_exts.length == 0 or allowed_exts.indexOf(ext.toLowerCase()) > -1 ? true : false
 
@@ -285,14 +294,15 @@ check_filerequired = ($field)->
   n = nfiles($field)
   req = required($field)
   if req and n == 0
-    msg_box = """
-      <div id="#{$field}_required_alert" class="alert alert-warning" role="alert">
-        A file is required for this field
-      </div>"""
-    $control.prepend(msg_box)
+    t_required = $('#localization').data('file-required')
+    if $('#'+$field+'_required_alert').length == 0
+      msg_box = """
+        <div id="#{$field}_required_alert" class="alert alert-danger" role="alert">
+          #{t_required}
+        </div>"""
+      $control.prepend(msg_box)
   else
     $('#'+$field+'_required_alert').remove()
-
 
 $(document).ready(init_multivalued_selects)
 $(document).ready(init_file_upload_controls)

@@ -103,6 +103,9 @@ fr:
         add_files: Ajouter des fichiers
         size_constraint: "Taille maximum: %{max_size}MB"
         types_constraint: "Fichier(s) autorisé(s): %{types}"
+        image_add_legend: "Ajouter une légende ici"
+        file_required: "Un fichier est requis pour ce champ"
+        file_not_valid: "Le fichier n'est pas valide pour ce champ"
   validations:
     container:
       item_list:

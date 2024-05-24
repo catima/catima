@@ -101,6 +101,9 @@ en:
         add_files: Add files
         size_constraint: "Max size: %{max_size}MB"
         types_constraint: "Allowed file(s): %{types}"
+        image_add_legend: "Add a legend here"
+        file_required: "A file is required for this field"
+        file_not_valid: "The file is not valid for this field"
   validations:
     container:
       item_list:

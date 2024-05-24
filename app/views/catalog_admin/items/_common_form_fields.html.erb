@@ -1,3 +1,5 @@
+<%= render 'shared/locals' %>
+
 <% @item.errors.where(:base).each do |error| %>
   <div class="base-errors"><%= error.full_message %></div>
 <% end %>
