@@ -100,8 +100,6 @@ const ItemGroup = forwardRef((props, ref) => {
     let maxTitleLenght = 35
     let groupTitle = computeGroupTitle(level, title, type, format)
 
-    console.log(groupTitle)
-    console.log(groupTitle.length > maxTitleLenght)
     if (typeof items === 'object' && !Array.isArray(items)) {
       emptyCount.current = emptyCount.current + 1
       return (
