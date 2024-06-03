@@ -71,10 +71,10 @@ const Items = forwardRef((props, ref) => {
   }
 
   const renderItems = (items) => {
+    currentCount.current += 1
     return (
       <div className={`line__group__items__wrapper move_up-${currentEmptyCount}`}>
         {items.map((it, idx) => {
-            currentCount.current += 1
             return renderItem(it, idx)
           }
         )}
