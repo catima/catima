@@ -29,6 +29,8 @@
   position: relative;
   z-index: 1;
   min-height: 2.5rem;
+  //min-height: 2rem;
+  //margin-bottom: 1em;
 
   .move_up-4 {
     margin-top: -12rem;
@@ -99,4 +101,8 @@
     flex-grow: 0; // prevent element from growing inside its parent
     border: 1px solid #8080801f;
   }
+}
+
+p.color-contrast-medium {
+  margin-bottom: 0;
 }
