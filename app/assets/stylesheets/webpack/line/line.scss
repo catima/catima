@@ -28,8 +28,22 @@
   display: flex;
   position: relative;
   z-index: 1;
-  min-height: 4rem;
-  margin-bottom: 1em;
+  min-height: 2.5rem;
+  //min-height: 2rem;
+  //margin-bottom: 1em;
+
+  .move_up-4 {
+    margin-top: -12rem;
+  }
+  .move_up-3 {
+    margin-top: -9rem;
+  }
+  .move_up-2 {
+    margin-top: -6rem;
+  }
+  .move_up-1 {
+    margin-top: -3rem;
+  }
 
   .line__group__title {
     display: flex;
@@ -71,7 +85,7 @@
     display: flex;
     position: relative;
     flex-flow: column;
-    margin-top: 2rem;
+    gap: 10px;
   }
 
   .line__group__item__wrapper {
@@ -88,4 +102,8 @@
     flex-grow: 0; // prevent element from growing inside its parent
     border: 1px solid #8080801f;
   }
+}
+
+p.color-contrast-medium {
+  margin-bottom: 0;
 }

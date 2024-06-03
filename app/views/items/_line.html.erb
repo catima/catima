@@ -19,6 +19,7 @@
     },
     pageCount: (item_list.total_count / 24) + 1,
     type: container_sort_field_type(container),
+    format: container.sort_field.is_a?(Field::DateTime) ? container.sort_field.format : false,
   }) %>
 <% else %>
   <div class="alert alert-danger">
