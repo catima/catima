@@ -33,18 +33,29 @@ class Search::ComplexDatationStrategy < Search::BaseStrategy
           negate
         )
 
-        scope = id_scope.or(search_dates(original_scope, start_date_time, end_date_time, field_condition, negate, true))
+        if negate
+          date_scope = scope.where("#{sql_select_table_name}.data->'#{field.uuid}'->>'selected_format' = 'date_time'")
+          date_scope = append_where_data_is_set(date_scope)
+          scope = id_scope.or(date_scope)
+        else
+          scope = id_scope.or(search_dates(original_scope, start_date_time, end_date_time, field_condition, negate, true))
 
-        choice.childrens.each do |c|
-          start_date_time = JSON.parse(c.from_date)
-          end_date_time = JSON.parse(c.to_date)
-          scope = scope.or(search_dates(original_scope, start_date_time, end_date_time, field_condition, negate, true))
+          choice.childrens.each do |c|
+            start_date_time = JSON.parse(c.from_date)
+            end_date_time = JSON.parse(c.to_date)
+            scope = scope.or(search_dates(original_scope, start_date_time, end_date_time, field_condition, negate, true))
+          end
         end
         scope
       else
         id_scope = search_data_matching_more_complex_datation_choice(scope, criteria[:default], negate)
 
-        date_scope = search_dates(scope, start_date_time, end_date_time, field_condition, negate, true)
+        if negate
+          date_scope = scope.where("#{sql_select_table_name}.data->'#{field.uuid}'->>'selected_format' = 'date_time'")
+          date_scope = append_where_data_is_set(date_scope)
+        else
+          date_scope = search_dates(scope, start_date_time, end_date_time, field_condition, negate, true)
+        end
         scope = id_scope.or(date_scope)
       end
       return scope
@@ -116,7 +127,7 @@ class Search::ComplexDatationStrategy < Search::BaseStrategy
     raw_value(item)
   end
 
-  def date_from_hash(hash, search_data=[])
+  def date_from_hash(hash, search_data = [])
     search_data << hash["from"].each_with_object([]) { |(_, v), array| array << v if v.present? } if hash.key?("from")
     search_data << hash["to"].each_with_object([]) { |(_, v), array| array << v if v.present? } if hash.key?("to")
   end
@@ -159,7 +170,7 @@ class Search::ComplexDatationStrategy < Search::BaseStrategy
            (
            ( ((NOT (#{where_date_is_not_set('to')})) AND (NOT (#{where_date_is_not_set('from')}))) AND  ((#{date_time_to_interval(date_time,
                                                                                                                                   'from')} #{sql_operator} #{make_interval(date_time)}) OR (#{date_time_to_interval(
-                                                                                                                                    date_time, 'to')} #{sql_operator} #{make_interval(date_time)})) ) OR
+          date_time, 'to')} #{sql_operator} #{make_interval(date_time)})) ) OR
            ((#{where_date_is_not_set('to')}) AND (#{date_time_to_interval(date_time, 'from')} #{sql_operator} #{make_interval(date_time)})) OR
            (#{where_date_is_not_set('from')}))"
       )
@@ -169,7 +180,7 @@ class Search::ComplexDatationStrategy < Search::BaseStrategy
            (
            ( ((NOT (#{where_choice_date_is_not_set('to_date')})) AND (NOT (#{where_choice_date_is_not_set('from_date')}))) AND  ((#{choice_to_interval(date_time,
                                                                                                                                                        'from_date')} #{sql_operator} #{make_interval(date_time)}) OR (#{choice_to_interval(
-                                                                                                                                                         date_time, 'to_date')} #{sql_operator} #{make_interval(date_time)})) ) OR
+            date_time, 'to_date')} #{sql_operator} #{make_interval(date_time)})) ) OR
            ((#{where_choice_date_is_not_set('to_date')}) AND (#{choice_to_interval(date_time, 'from_date')} #{sql_operator} #{make_interval(date_time)})) OR
            (#{where_choice_date_is_not_set('from_date')}))")
       )
@@ -179,7 +190,7 @@ class Search::ComplexDatationStrategy < Search::BaseStrategy
         "#{sql_select_table_name}.data->'#{field.uuid}'->>'selected_format' = 'date_time' AND
            ( ((NOT (#{where_date_is_not_set('to')})) AND (NOT (#{where_date_is_not_set('from')}))) AND ((#{date_time_to_interval(date_time,
                                                                                                                                  'from')} #{sql_operator} #{make_interval(date_time)}) OR (#{date_time_to_interval(
-                                                                                                                                   date_time, 'to')} #{sql_operator} #{make_interval(date_time)})) OR
+          date_time, 'to')} #{sql_operator} #{make_interval(date_time)})) OR
            ((#{where_date_is_not_set('from')}) AND (#{date_time_to_interval(date_time, 'to')} #{sql_operator} #{make_interval(date_time)})) OR
            (#{where_date_is_not_set('to')}))"
       )
@@ -189,7 +200,7 @@ class Search::ComplexDatationStrategy < Search::BaseStrategy
            (
            ( ((NOT (#{where_choice_date_is_not_set('from_date')})) AND (NOT (#{where_choice_date_is_not_set('to_date')}))) AND  ((#{choice_to_interval(date_time,
                                                                                                                                                        'from_date')} #{sql_operator} #{make_interval(date_time)}) OR (#{choice_to_interval(
-                                                                                                                                                         date_time, 'to_date')} #{sql_operator} #{make_interval(date_time)})) ) OR
+            date_time, 'to_date')} #{sql_operator} #{make_interval(date_time)})) ) OR
            ((#{where_choice_date_is_not_set('from_date')}) AND (#{choice_to_interval(date_time, 'to_date')} #{sql_operator} #{make_interval(date_time)})) OR
            (#{where_choice_date_is_not_set('to_date')}))")
       )
