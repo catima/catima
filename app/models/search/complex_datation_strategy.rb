@@ -209,7 +209,10 @@ class Search::ComplexDatationStrategy < Search::BaseStrategy
   end
 
   def interval_search(scope, start_date_time, end_date_time, field_condition, negate, is_choice)
-    return inexact_search(scope, start_date_time, field_condition, negate, is_choice) if field_condition != 'outside' && field_condition != 'between'
+    if field_condition != 'outside' && field_condition != 'between'
+      date_time = (is_choice && field_condition == 'before') ? end_date_time : start_date_time
+      return inexact_search(scope, date_time, field_condition, negate, is_choice)
+    end
 
     field_condition = field_condition == "between" ? "outside" : "between" unless negate
 
