@@ -35,6 +35,7 @@ class Search::ComplexDatationStrategy < Search::BaseStrategy
 
         if negate
           date_scope = scope.where("#{sql_select_table_name}.data->'#{field.uuid}'->>'selected_format' = 'date_time'")
+          date_scope = append_where_data_is_set(date_scope)
           scope = id_scope.or(date_scope)
         else
           scope = id_scope.or(search_dates(original_scope, start_date_time, end_date_time, field_condition, negate, true))
@@ -51,6 +52,7 @@ class Search::ComplexDatationStrategy < Search::BaseStrategy
 
         if negate
           date_scope = scope.where("#{sql_select_table_name}.data->'#{field.uuid}'->>'selected_format' = 'date_time'")
+          date_scope = append_where_data_is_set(date_scope)
         else
           date_scope = search_dates(scope, start_date_time, end_date_time, field_condition, negate, true)
         end
