@@ -6,7 +6,9 @@ class Search::ComplexDatationStrategy < Search::BaseStrategy
   def keywords_for_index(item)
     if field.selected_format(item) == 'datation_choice'
       choices = field.selected_choices(item)
-      choices.flat_map { |choice| [choice.short_name, choice.long_name] }
+      choices.flat_map do |choice|
+        [choice.send("short_name_#{locale}"), choice.send("long_name_#{locale}")]
+      end
     else
       date_for_keywords(item)
     end

@@ -7,7 +7,9 @@ class Search::ChoiceSetStrategy < Search::BaseStrategy
 
   def keywords_for_index(item)
     choices = field.selected_choices(item)
-    choices.flat_map { |choice| [choice.short_name, choice.long_name] }
+    choices.flat_map do |choice|
+      [choice.send("short_name_#{locale}"), choice.send("long_name_#{locale}")]
+    end
   end
 
   def browse(scope, choice_slug)
