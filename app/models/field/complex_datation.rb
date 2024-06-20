@@ -100,6 +100,8 @@ class Field::ComplexDatation < ::Field
   end
 
   def selected_format(item)
+    return [] if raw_value(item).blank?
+
     raw_value(item)["selected_format"]
   end
 
