@@ -55,7 +55,7 @@
             browse.field.slug => browse.value
           ))
     %>
-    <%= field.item_type.name_plural %>
+    <%= field.reference_label.present? ? field.reference_label : field.item_type.name_plural %>
   </h3>
   <%= render_item_list(browse, params) %>
   <div class="mt-2">

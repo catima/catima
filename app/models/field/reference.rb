@@ -33,6 +33,8 @@
 #
 
 class Field::Reference < ::Field
+  store_accessor :options, :reference_label
+
   include ::Field::AllowsMultipleValues
 
   belongs_to :related_item_type, :class_name => "ItemType"
@@ -51,7 +53,7 @@ class Field::Reference < ::Field
   end
 
   def custom_field_permitted_attributes
-    %i(related_item_type_id)
+    %i(related_item_type_id reference_label)
   end
 
   def references

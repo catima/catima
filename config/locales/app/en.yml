@@ -810,6 +810,7 @@ en:
         auto_increment: "Auto increment"
       reference_option_inputs:
         reference: Reference
+        reference_label: Reference label
       reference_editor:
         load_more: Load more...
       editor_option_inputs:

@@ -6,3 +6,18 @@
       :id,
       :name,
       :label => t('.reference')) %>
+
+<% if current_user.system_admin? %>
+  <hr>
+
+  <%= f.form_group(
+    :reference_label
+  ) do %>
+      <%= f.text_field(
+            :reference_label,
+            :label => t('.reference_label'),
+            :placeholder => @field.item_type.name_plural
+          )
+      %>
+  <% end %>
+<% end %>
