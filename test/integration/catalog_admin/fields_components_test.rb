@@ -35,6 +35,6 @@ class CatalogAdmin::FieldsComponentsTest < ActionDispatch::IntegrationTest
     visit("/multilingual/en/admin/books/new")
     click_on('Create Book')
 
-    page.has_content?("<td colspan=\"2\">can't be blank</td>")
+    assert(page.has_content?("<td colspan=\"2\">can't be blank</td>"))
   end
 end
