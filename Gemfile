@@ -1,7 +1,7 @@
 source "https://rubygems.org"
 
 gem "active_model_serializers", "~> 0.10"
-gem "active_type", "~> 2.3"
+gem "active_type", "~> 2.5.1"
 gem 'device_detector', '~> 1.1'
 gem "ahoy_matey", "~> 5.0.2"
 gem "autoprefixer-rails", "~> 10.1"
