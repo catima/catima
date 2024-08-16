@@ -123,7 +123,7 @@ class Field::Text < ::Field
     return unless value
 
     if i18n?
-      translations = value['_translations'].present? ? format_translations(value) : value.to_json
+      translations = value['_translations'].present? ? format_translations(value, item) : value.to_json
       return sql_escape_formatted(translations)
     end
 
@@ -162,7 +162,7 @@ class Field::Text < ::Field
     [ActiveModel::Validations::LengthValidator, opts] if opts.size > 1
   end
 
-  def format_translations(value)
+  def format_translations(value, item)
     if formatted?
       JSON.generate(value['_translations'].transform_values { |v| raw_value(item, v) })
     else
