@@ -13,7 +13,7 @@ class DataStore::JsonAttributeTest < ActiveSupport::TestCase
   end
 
   test "reader is defined" do
-    @item.respond_to?(:name_json)
+    assert(@item.respond_to?(:name_json))
   end
 
   test "reader does not transform existing non-array, non-hash values" do
@@ -22,7 +22,7 @@ class DataStore::JsonAttributeTest < ActiveSupport::TestCase
   end
 
   test "writer is defined" do
-    @item.respond_to?(:name_json=)
+    assert(@item.respond_to?(:name_json=))
   end
 
   test "writer stores value as parsed JSON" do

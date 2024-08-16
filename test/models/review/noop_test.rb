@@ -14,15 +14,21 @@ class Review::NoopTest < ActiveSupport::TestCase
   end
 
   test "#approved" do
-    review.approved(:by => nil)
+    assert_nothing_raised do
+      review.approved(:by => nil)
+    end
   end
 
   test "#rejected" do
-    review.rejected(:by => nil)
+    assert_nothing_raised do
+      review.rejected(:by => nil)
+    end
   end
 
   test "#submitted" do
-    review.submitted
+    assert_nothing_raised do
+      review.submitted
+    end
   end
 
   private

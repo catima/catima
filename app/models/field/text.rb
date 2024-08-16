@@ -123,20 +123,11 @@ class Field::Text < ::Field
     return unless value
 
     if i18n?
-      translations = if formatted?
-                       JSON.generate(
-                         value['_translations'].map { |k, _| [k, raw_value(item, k)] }.to_h
-                       )
-                     else
-                       value['_translations'].to_json
-                     end
-
+      translations = value['_translations'].present? ? format_translations(value, item) : value.to_json
       return sql_escape_formatted(translations)
     end
 
-    return sql_escape_formatted(raw_value(item)) if formatted?
-
-    value.to_s.gsub("'") { "\\'" }
+    formatted? ? sql_escape_formatted(raw_value(item)) : escape_single_quotes(value.to_s)
   end
 
   def order_items_by(direction: 'ASC', nulls_order: 'LAST')
@@ -169,5 +160,17 @@ class Field::Text < ::Field
     opts[:maximum] = maximum.to_i if maximum.to_i > 0
     opts[:minimum] = minimum.to_i if minimum.to_i > 0
     [ActiveModel::Validations::LengthValidator, opts] if opts.size > 1
+  end
+
+  def format_translations(value, item)
+    if formatted?
+      JSON.generate(value['_translations'].transform_values { |v| raw_value(item, v) })
+    else
+      value['_translations'].to_json
+    end
+  end
+
+  def escape_single_quotes(value)
+    value.gsub("'") { "\\'" }
   end
 end

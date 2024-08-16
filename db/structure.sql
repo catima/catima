@@ -2510,6 +2510,9 @@ ALTER TABLE ONLY public.choice_sets
 SET search_path TO "$user", public;
 
 INSERT INTO "schema_migrations" (version) VALUES
+('20240814090544'),
+('20240814090543'),
+('20240814090542'),
 ('20231116161313'),
 ('20230113103454'),
 ('20230109140802'),
