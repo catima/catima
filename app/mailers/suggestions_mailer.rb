@@ -7,7 +7,7 @@ class SuggestionsMailer < ApplicationMailer
     mail(
       :subject => "[Catima] - #{t('suggestions_mailer.subject')}",
       :to => receiver,
-      :from => ENV['MAIL_SENDER'],
+      :from => ENV.fetch('MAIL_SENDER', nil),
       :template_name => "suggestion"
     )
   ensure

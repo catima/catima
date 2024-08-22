@@ -28,17 +28,17 @@ class Field::ChoiceSetPresenter < FieldPresenter
             tag.div(link + (if link != prefixed_link
                               tag.span(tag.i(class: "fa fa-caret-right toggle-hierarchy"), class: 'ps-2', 'data-toggle': "tooltip", title: t('catalog_admin.choice_sets.choice.show_hierarchy'), 'data-action': "click->hierarchy-revealable#toggle")
                             end), 'data-hierarchy-revealable-target': 'choice') +
-              tag.div(prefixed_link + tag.span(tag.i(class: "fa fa-caret-left toggle-hierarchy"), class: 'ps-2', 'data-toggle': "tooltip", title: t('catalog_admin.choice_sets.choice.hide_hierarchy'), 'data-action': "click->hierarchy-revealable#toggle"), 'data-hierarchy-revealable-target': 'choice', style: 'display: none'),
+              tag.div(
+                prefixed_link + tag.span(tag.i(class: "fa fa-caret-left toggle-hierarchy"), class: 'ps-2', 'data-toggle': "tooltip", title: t('catalog_admin.choice_sets.choice.hide_hierarchy'),
+                                                                                            'data-action': "click->hierarchy-revealable#toggle"), 'data-hierarchy-revealable-target': 'choice', style: 'display: none'),
             'data-controller': "hierarchy-revealable"
           )
         end.join(" ").html_safe
       )
+    elsif options[:no_links] == true
+      choices.map { |choice| choice.short_name }.join(',')
     else
-      if options[:no_links] == true
-        choices.map{|choice| choice.short_name}.join(',')
-      else
-        links_and_prefixed_names.map(&:first).join(", ").html_safe
-      end
+      links_and_prefixed_names.map(&:first).join(", ").html_safe
     end
   end
 end

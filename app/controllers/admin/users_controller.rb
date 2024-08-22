@@ -6,6 +6,13 @@ class Admin::UsersController < Admin::BaseController
     authorize(@user)
   end
 
+  def edit
+    find_user
+    build_default_catalog_permissions
+    authorize(@user)
+    authorize(Catalog, :index?) # b/c we show all catalogs user is assigned to
+  end
+
   def create
     build_admin_form
     authorize(@user)
@@ -14,13 +21,6 @@ class Admin::UsersController < Admin::BaseController
     else
       render("new")
     end
-  end
-
-  def edit
-    find_user
-    build_default_catalog_permissions
-    authorize(@user)
-    authorize(Catalog, :index?) # b/c we show all catalogs user is assigned to
   end
 
   def update

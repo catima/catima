@@ -5,18 +5,18 @@ json.data do
     json.advanced_search do
       json.criteria do
         fields = @authenticated_catalog ? @fields : displayable_fields(@fields)
-        fields.each_with_index do |field, i|
+        fields.each_with_index do |field, _i|
           partial_path = "api/v3/catalog/advanced_searches/fields/#{field.partial_name}_search_field"
-          if partial_exists? partial_path
-            json.set! field.uuid do
-              json.field_infos do
-                json.id field.id
-                json.type field.short_type_name
-                json.set! "name_#{field.catalog.primary_language}", field.public_send("name_#{field.catalog.primary_language}")
-              end
-              json.criterion_content do
-                json.partial! partial: partial_path, locals: {field: field}
-              end
+          next unless partial_exists? partial_path
+
+          json.set! field.uuid do
+            json.field_infos do
+              json.id field.id
+              json.type field.short_type_name
+              json.set! "name_#{field.catalog.primary_language}", field.public_send("name_#{field.catalog.primary_language}")
+            end
+            json.criterion_content do
+              json.partial! partial: partial_path, locals: { field: field }
             end
           end
         end

@@ -7,7 +7,7 @@ class Field::BooleanPresenter < FieldPresenter
 
   def input(form, method, options={})
     # rubocop:disable Layout/LineLength
-    category = field.belongs_to_category? ? { "field-category": field.category_id, "field-category-choice-id": field.category_choice.id, "field-category-choice-set-id": field.category_choice_set.id } : {}
+    category = field.belongs_to_category? ? { 'field-category': field.category_id, 'field-category-choice-id': field.category_choice.id, 'field-category-choice-set-id': field.category_choice_set.id } : {}
     # rubocop:enable Layout/LineLength
     form.select(
       method,

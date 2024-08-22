@@ -1,6 +1,19 @@
 class SimpleSearchesController < ApplicationController
   include ControlsCatalog
 
+  def show
+    find_simple_search_or_redirect
+    return redirect_to(catalog_home_path) if @saved_search.nil?
+
+    @simple_search_results = ItemList::SimpleSearchResult.new(
+      :catalog => catalog,
+      :query => @saved_search.query,
+      :page => params[:page],
+      :item_type_slug => params[:type],
+      :search_uuid => @saved_search.uuid
+    )
+  end
+
   def new
     build_simple_search
 
@@ -22,19 +35,6 @@ class SimpleSearchesController < ApplicationController
     else
       render("new")
     end
-  end
-
-  def show
-    find_simple_search_or_redirect
-    return redirect_to(catalog_home_path) if @saved_search.nil?
-
-    @simple_search_results = ItemList::SimpleSearchResult.new(
-      :catalog => catalog,
-      :query => @saved_search.query,
-      :page => params[:page],
-      :item_type_slug => params[:type],
-      :search_uuid => @saved_search.uuid
-    )
   end
 
   protected

@@ -1,4 +1,4 @@
-class Dump::CatalogDump < ::Dump
+class Dump::CatalogDump < Dump
   def initialize
   end
 

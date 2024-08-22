@@ -129,7 +129,7 @@ class Search::ComplexDatationStrategy < Search::BaseStrategy
     raw_value(item)
   end
 
-  def date_from_hash(hash, search_data = [])
+  def date_from_hash(hash, search_data=[])
     search_data << hash["from"].each_with_object([]) { |(_, v), array| array << v if v.present? } if hash.key?("from")
     search_data << hash["to"].each_with_object([]) { |(_, v), array| array << v if v.present? } if hash.key?("to")
   end
@@ -159,12 +159,16 @@ class Search::ComplexDatationStrategy < Search::BaseStrategy
         "#{sql_select_table_name}.data->'#{field.uuid}'->>'selected_format' = 'date_time' AND
            #{date_time_to_interval(date_time, 'from')} #{sql_operator} #{make_interval(date_time)} AND
            #{date_time_to_interval(date_time, 'to')}  #{sql_operator} #{make_interval(date_time)}")
-      scope = is_choice ? init_scope : init_scope.or(
-        scope.where(
-          "#{sql_select_table_name}.data->'#{field.uuid}'->>'selected_format' = 'datation_choice' AND
+      scope = if is_choice
+                init_scope
+              else
+                init_scope.or(
+                  scope.where(
+                    "#{sql_select_table_name}.data->'#{field.uuid}'->>'selected_format' = 'datation_choice' AND
              #{choice_to_interval(date_time, 'from_date')} #{sql_operator} #{make_interval(date_time)} AND
              #{choice_to_interval(date_time, 'to_date')}  #{sql_operator} #{make_interval(date_time)}")
-      )
+                )
+              end
     when "before"
       sql_operator = negate ? ">=" : "<="
       init_scope = scope.where(
@@ -172,55 +176,66 @@ class Search::ComplexDatationStrategy < Search::BaseStrategy
            (
            ( ((NOT (#{where_date_is_not_set('to')})) AND (NOT (#{where_date_is_not_set('from')}))) AND  ((#{date_time_to_interval(date_time,
                                                                                                                                   'from')} #{sql_operator} #{make_interval(date_time)}) OR (#{date_time_to_interval(
-          date_time, 'to')} #{sql_operator} #{make_interval(date_time)})) ) OR
+                                                                                                                                    date_time, 'to')} #{sql_operator} #{make_interval(date_time)})) ) OR
            ((#{where_date_is_not_set('to')}) AND (#{date_time_to_interval(date_time, 'from')} #{sql_operator} #{make_interval(date_time)})) OR
            (#{where_date_is_not_set('from')}))"
       )
-      scope = is_choice ? init_scope : init_scope.or(
-        scope.where(
-          "#{sql_select_table_name}.data->'#{field.uuid}'->>'selected_format' = 'datation_choice' AND
+      scope = if is_choice
+                init_scope
+              else
+                init_scope.or(
+                  scope.where(
+                    "#{sql_select_table_name}.data->'#{field.uuid}'->>'selected_format' = 'datation_choice' AND
            (
            ( ((NOT (#{where_choice_date_is_not_set('to_date')})) AND (NOT (#{where_choice_date_is_not_set('from_date')}))) AND  ((#{choice_to_interval(date_time,
                                                                                                                                                        'from_date')} #{sql_operator} #{make_interval(date_time)}) OR (#{choice_to_interval(
-            date_time, 'to_date')} #{sql_operator} #{make_interval(date_time)})) ) OR
+                                                                                                                                                         date_time, 'to_date')} #{sql_operator} #{make_interval(date_time)})) ) OR
            ((#{where_choice_date_is_not_set('to_date')}) AND (#{choice_to_interval(date_time, 'from_date')} #{sql_operator} #{make_interval(date_time)})) OR
            (#{where_choice_date_is_not_set('from_date')}))")
-      )
+                )
+              end
     when "after"
       sql_operator = negate ? "<=" : ">="
       init_scope = scope.where(
         "#{sql_select_table_name}.data->'#{field.uuid}'->>'selected_format' = 'date_time' AND
            ( ((NOT (#{where_date_is_not_set('to')})) AND (NOT (#{where_date_is_not_set('from')}))) AND ((#{date_time_to_interval(date_time,
                                                                                                                                  'from')} #{sql_operator} #{make_interval(date_time)}) OR (#{date_time_to_interval(
-          date_time, 'to')} #{sql_operator} #{make_interval(date_time)})) OR
+                                                                                                                                   date_time, 'to')} #{sql_operator} #{make_interval(date_time)})) OR
            ((#{where_date_is_not_set('from')}) AND (#{date_time_to_interval(date_time, 'to')} #{sql_operator} #{make_interval(date_time)})) OR
            (#{where_date_is_not_set('to')}))"
       )
-      scope = is_choice ? init_scope : init_scope.or(
-        scope.where(
-          "#{sql_select_table_name}.data->'#{field.uuid}'->>'selected_format' = 'datation_choice' AND
+      scope = if is_choice
+                init_scope
+              else
+                init_scope.or(
+                  scope.where(
+                    "#{sql_select_table_name}.data->'#{field.uuid}'->>'selected_format' = 'datation_choice' AND
            (
            ( ((NOT (#{where_choice_date_is_not_set('from_date')})) AND (NOT (#{where_choice_date_is_not_set('to_date')}))) AND  ((#{choice_to_interval(date_time,
                                                                                                                                                        'from_date')} #{sql_operator} #{make_interval(date_time)}) OR (#{choice_to_interval(
-            date_time, 'to_date')} #{sql_operator} #{make_interval(date_time)})) ) OR
+                                                                                                                                                         date_time, 'to_date')} #{sql_operator} #{make_interval(date_time)})) ) OR
            ((#{where_choice_date_is_not_set('from_date')}) AND (#{choice_to_interval(date_time, 'to_date')} #{sql_operator} #{make_interval(date_time)})) OR
            (#{where_choice_date_is_not_set('to_date')}))")
-      )
+                )
+              end
     end
     scope
   end
 
   def interval_search(scope, start_date_time, end_date_time, field_condition, negate, is_choice)
     if field_condition != 'outside' && field_condition != 'between'
-      date_time = (is_choice && field_condition == 'before') ? end_date_time : start_date_time
+      date_time = is_choice && field_condition == 'before' ? end_date_time : start_date_time
       return inexact_search(scope, date_time, field_condition, negate, is_choice)
     end
 
     field_condition = field_condition == "between" ? "outside" : "between" unless negate
 
-    where_scope = ->(*q, name) {
-      field_condition == "outside" ? scope.where("#{sql_select_table_name}.data->'#{field.uuid}'->>'selected_format' = '#{name}'").where('items.id NOT IN (?)',
-                                                                                                                                         scope.where(q).any? ? scope.where(q).pluck(:id) : ['0']) : scope.where(q)
+    where_scope = lambda { |*q, name|
+      if field_condition == "outside"
+        scope.where("#{sql_select_table_name}.data->'#{field.uuid}'->>'selected_format' = '#{name}'").where.not(items: { id: scope.where(q).any? ? scope.where(q).pluck(:id) : ['0'] })
+      else
+        scope.where(q)
+      end
     }
 
     date_time_query_string = "

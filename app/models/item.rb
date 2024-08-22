@@ -70,7 +70,7 @@ class Item < ApplicationRecord
   # after_commit :update_views_cache, if: proc { |record| record.saved_changes.key?(:data) }
 
   def self.sorted_by_field(field, direction: "ASC", nulls_order: 'LAST')
-    direction = ItemList::Sort.included?(direction) ? direction : ItemList::Sort.ascending
+    direction = ItemList::Sort.ascending unless ItemList::Sort.included?(direction)
     sql = []
     sql << field.order_items_by(direction: direction, nulls_order: nulls_order) unless field.nil?
 
@@ -159,9 +159,9 @@ class Item < ApplicationRecord
   # and an identifier for complex fields.
   # rubocop:disable Style/OptionalBooleanParameter
   def describe(includes=[], excludes=[], for_api=false)
-    d = applicable_fields.to_h { |f| [f.slug, get_value_or_id(f, for_api)] } \
-                         .merge(id: id) \
-                         .merge(review_status: review_status) \
+    d = applicable_fields.to_h { |f| [f.slug, get_value_or_id(f, for_api)] }
+                         .merge(id: id)
+                         .merge(review_status: review_status)
                          .merge(uuid: uuid)
 
     includes.each { |i| d[i] = public_send(i) }
@@ -215,7 +215,7 @@ class Item < ApplicationRecord
       # In these cases, we do not override already setted data.
       next if data.key?(f.uuid)
 
-      self.data[f.uuid] = f.default_value
+      data[f.uuid] = f.default_value
     end
   end
 
@@ -233,7 +233,7 @@ class Item < ApplicationRecord
         "SELECT MAX(CAST(NULLIF(data->>'#{f.uuid}', '') AS BIGINT)) FROM items WHERE item_type_id = $1",
         [item_type_id]
       )
-      self.data[f.uuid] = st.getvalue(0, 0).to_i + 1
+      data[f.uuid] = st.getvalue(0, 0).to_i + 1
     end
   end
   # rubocop:enable Metrics/CyclomaticComplexity

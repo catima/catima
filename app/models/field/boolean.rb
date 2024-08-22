@@ -32,7 +32,7 @@
 #  uuid                     :string
 #
 
-class Field::Boolean < ::Field
+class Field::Boolean < Field
   def field_value_for_item(item)
     field_value(item, self)
   end

@@ -6,7 +6,7 @@ class ExportMailer < ApplicationMailer
     mail(
       :subject => t("export_mailer.export.subject"),
       :to => export.user.email,
-      :from => ENV['MAIL_SENDER'],
+      :from => ENV.fetch('MAIL_SENDER', nil),
       :template_name => "export"
     )
   ensure

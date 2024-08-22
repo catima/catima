@@ -10,6 +10,12 @@ class CatalogAdmin::AdvancedSearchConfigurationsController < CatalogAdmin::BaseC
     authorize(@advanced_search_conf)
   end
 
+  def edit
+    find_advanced_search_configuration
+    @available_fields = @advanced_search_conf.available_fields
+    authorize(@advanced_search_conf)
+  end
+
   def create
     build_advanced_search_configuration
     authorize(@advanced_search_conf)
@@ -24,12 +30,6 @@ class CatalogAdmin::AdvancedSearchConfigurationsController < CatalogAdmin::BaseC
     else
       render("new")
     end
-  end
-
-  def edit
-    find_advanced_search_configuration
-    @available_fields = @advanced_search_conf.available_fields
-    authorize(@advanced_search_conf)
   end
 
   def update
@@ -101,7 +101,7 @@ class CatalogAdmin::AdvancedSearchConfigurationsController < CatalogAdmin::BaseC
   def advanced_search_conf_params
     permitted_params = []
     catalog.valid_locales.each do |locale|
-      permitted_params << "title_#{locale}".to_sym
+      permitted_params << :"title_#{locale}"
     end
 
     custom_attributes = @advanced_search_conf.present? ? @advanced_search_conf.custom_container_permitted_attributes : nil

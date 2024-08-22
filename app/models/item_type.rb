@@ -38,7 +38,7 @@ class ItemType < ApplicationRecord
 
   alias_method :log_name, :name
 
-  def self.sorted(locale = I18n.locale)
+  def self.sorted(locale=I18n.locale)
     order(Arel.sql("LOWER(item_types.name_translations->>'name_#{locale}') ASC"))
   end
 
@@ -112,9 +112,9 @@ class ItemType < ApplicationRecord
     return @primary_text_field if defined? @primary_text_field
 
     @primary_text_field = begin
-                            candidate_fields = [primary_field, list_view_fields, fields].flatten.compact
-                            candidate_fields.reject(&:restricted?).find { |f| f.is_a?(Field::Text) }
-                          end
+      candidate_fields = [primary_field, list_view_fields, fields].flatten.compact
+      candidate_fields.reject(&:restricted?).find { |f| f.is_a?(Field::Text) }
+    end
   end
 
   def public_items

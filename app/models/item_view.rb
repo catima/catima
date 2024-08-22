@@ -26,11 +26,11 @@ class ItemView < ApplicationRecord
   after_save :remove_default_item_view_from_other_views, if: :default_for_item_view?
 
   def remove_default_item_view_from_other_views
-    item_type.item_views.where("item_views.id != ?", id).update_all(:default_for_item_view => false)
+    item_type.item_views.where.not(item_views: { id: id }).update_all(:default_for_item_view => false)
   end
 
   def remove_default_list_view_from_other_views
-    item_type.item_views.where("item_views.id != ?", id).update_all(:default_for_list_view => false)
+    item_type.item_views.where.not(item_views: { id: id }).update_all(:default_for_list_view => false)
   end
 
   def render(item, locale)
@@ -44,8 +44,8 @@ class ItemView < ApplicationRecord
 
   def describe
     as_json(only: %i(name default_for_display_name default_for_item_view default_for_list_view)).merge(
-      "item_type": item_type.slug,
-      "template": template_json
+      item_type: item_type.slug,
+      template: template_json
     )
   end
 end

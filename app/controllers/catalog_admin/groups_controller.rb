@@ -4,8 +4,18 @@ class CatalogAdmin::GroupsController < CatalogAdmin::BaseController
   def index
   end
 
+  def show
+    find_group
+    authorize @group
+  end
+
   def new
     build_group
+  end
+
+  def edit
+    find_group
+    authorize @group
   end
 
   def create
@@ -15,16 +25,6 @@ class CatalogAdmin::GroupsController < CatalogAdmin::BaseController
     else
       render 'new'
     end
-  end
-
-  def edit
-    find_group
-    authorize @group
-  end
-
-  def show
-    find_group
-    authorize @group
   end
 
   def update

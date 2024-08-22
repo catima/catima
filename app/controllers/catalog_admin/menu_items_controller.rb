@@ -12,6 +12,11 @@ class CatalogAdmin::MenuItemsController < CatalogAdmin::BaseController
     authorize(@menu_item)
   end
 
+  def edit
+    find_menu_item
+    authorize(@menu_item)
+  end
+
   def create
     build_menu_item
     authorize(@menu_item)
@@ -20,11 +25,6 @@ class CatalogAdmin::MenuItemsController < CatalogAdmin::BaseController
     else
       render("new")
     end
-  end
-
-  def edit
-    find_menu_item
-    authorize(@menu_item)
   end
 
   def update

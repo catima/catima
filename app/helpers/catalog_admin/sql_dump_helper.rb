@@ -23,7 +23,7 @@ module CatalogAdmin::SQLDumpHelper
   end
 
   def add_return_carriages!(statement)
-    statement.gsub!(/,/, ",\n")
+    statement.gsub!(",", ",\n")
   end
 
   def create_table(table_name, columns)

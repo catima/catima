@@ -6,7 +6,7 @@ class InvitationsMailerTest < ActionMailer::TestCase
     mail = InvitationsMailer.admin(user, "__test_token__")
 
     assert_match(/invitation for two/i, mail.subject)
-    assert_equal([ENV['MAIL_SENDER']], mail.from)
+    assert_equal([ENV.fetch('MAIL_SENDER', nil)], mail.from)
     assert_equal(["system-admin@example.com"], mail.reply_to)
     assert_equal(["two-admin@example.com"], mail.to)
     assert_match(/administrator of the two catalog/i, mail.body.encoded.squish)
@@ -18,7 +18,7 @@ class InvitationsMailerTest < ActionMailer::TestCase
     mail = InvitationsMailer.admin(user, "__test_token__")
 
     assert_match(/system administrator invitation/i, mail.subject)
-    assert_equal([ENV['MAIL_SENDER']], mail.from)
+    assert_equal([ENV.fetch('MAIL_SENDER', nil)], mail.from)
     assert_equal(["one@example.com"], mail.reply_to)
     assert_equal(["system-admin-invited-by-one@example.com"], mail.to)
     assert_match(/invited you to be a system administrator/, mail.body.encoded)

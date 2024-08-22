@@ -13,7 +13,7 @@
 #  updated_at :datetime         not null
 #
 
-class Container::Search < ::Container
+class Container::Search < Container
   store_accessor :content, :search, :display_type
 
   validates_presence_of :search

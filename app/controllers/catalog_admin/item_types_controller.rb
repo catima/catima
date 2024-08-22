@@ -6,6 +6,11 @@ class CatalogAdmin::ItemTypesController < CatalogAdmin::BaseController
     authorize(@item_type)
   end
 
+  def edit
+    find_item_type
+    authorize(@item_type)
+  end
+
   def create
     build_item_type
     authorize(@item_type)
@@ -14,11 +19,6 @@ class CatalogAdmin::ItemTypesController < CatalogAdmin::BaseController
     else
       render("new")
     end
-  end
-
-  def edit
-    find_item_type
-    authorize(@item_type)
   end
 
   def update

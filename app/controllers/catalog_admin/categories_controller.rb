@@ -15,6 +15,11 @@ class CatalogAdmin::CategoriesController < CatalogAdmin::BaseController
     authorize(@category)
   end
 
+  def edit
+    find_category
+    authorize(@category)
+  end
+
   def create
     build_category
     authorize(@category)
@@ -23,11 +28,6 @@ class CatalogAdmin::CategoriesController < CatalogAdmin::BaseController
     else
       render("new")
     end
-  end
-
-  def edit
-    find_category
-    authorize(@category)
   end
 
   def update

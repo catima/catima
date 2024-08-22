@@ -13,13 +13,11 @@ if choice.choice_set.choice_set_type === 'datation'
 end
 if choice.childrens.any? && !no_childrens
   json.childrens do
-    json.partial! partial: 'choice', collection: choice.childrens, as: :choice, locals: {no_childrens: false, no_parent: true}
+    json.partial! partial: 'choice', collection: choice.childrens, as: :choice, locals: { no_childrens: false, no_parent: true }
   end
 end
-unless no_parent
-  if choice.parent.present?
-    json.parent do
-      json.partial! partial: 'choice', locals: {choice: choice.parent, no_childrens: true, no_parent: false}
-    end
+if !no_parent && choice.parent.present?
+  json.parent do
+    json.partial! partial: 'choice', locals: { choice: choice.parent, no_childrens: true, no_parent: false }
   end
 end

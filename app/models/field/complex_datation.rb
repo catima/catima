@@ -1,4 +1,4 @@
-class Field::ComplexDatation < ::Field
+class Field::ComplexDatation < Field
   FORMATS = %w(Y M h YM MD hm YMD hms MDh YMDh MDhm YMDhm MDhms YMDhms).freeze
   ALLOWED_FORMATS = %w(date_time datation_choice).freeze
 
@@ -288,8 +288,9 @@ class Field::ComplexDatation < ::Field
 
       return if value.blank?
       return if value['selected_format'] != "date_time"
-      to_value_empty = value['to'].keys.reject{|k| k=="BC"}.all? { |key| value['to'][key].blank? || value['to'][key].nil? }
-      from_value_empty = value['from'].keys.reject{|k| k=="BC"}.all? { |key| value['from'][key].blank? || value['from'][key].nil? }
+
+      to_value_empty = value['to'].keys.reject { |k| k == "BC" }.all? { |key| value['to'][key].blank? || value['to'][key].nil? }
+      from_value_empty = value['from'].keys.reject { |k| k == "BC" }.all? { |key| value['from'][key].blank? || value['from'][key].nil? }
       return if to_value_empty && from_value_empty && !field.required
 
       if to_value_empty && from_value_empty && field.required
@@ -300,12 +301,16 @@ class Field::ComplexDatation < ::Field
       from_date_is_positive = value['from'].compact.except("BC").all? { |_, v| v.to_i >= 0 }
       to_date_is_positive = value['to'].compact.except("BC").all? { |_, v| v.to_i >= 0 }
 
-      allowed_formats = Field::ComplexDatation::FORMATS.select{|f| field.format.include?(f) || field.format == f}
+      allowed_formats = Field::ComplexDatation::FORMATS.select { |f| field.format.include?(f) || field.format == f }
 
-      current_from_format = field.format.chars.map {|char| value['from'][char].blank? || value['from'][char].nil? ? nil : char}.compact.join
-      current_to_format = field.format.chars.map {|char| value['to'][char].blank? || value['to'][char].nil? ? nil : char}.compact.join
+      current_from_format = field.format.chars.map { |char| value['from'][char].blank? || value['from'][char].nil? ? nil : char }.compact.join
+      current_to_format = field.format.chars.map { |char| value['to'][char].blank? || value['to'][char].nil? ? nil : char }.compact.join
 
-      record.errors.add(attrib, I18n.t('activerecord.errors.models.item.attributes.base.wrong_format', field_format: allowed_formats)) unless (allowed_formats.include?(current_from_format) || from_value_empty) && (allowed_formats.include?(current_to_format)  || to_value_empty)
+      unless (allowed_formats.include?(current_from_format) || from_value_empty) && (allowed_formats.include?(current_to_format) || to_value_empty)
+        record.errors.add(attrib,
+                          I18n.t('activerecord.errors.models.item.attributes.base.wrong_format',
+                                 field_format: allowed_formats))
+      end
       record.errors.add(attrib, :negative_dates) if !to_date_is_positive || !from_date_is_positive
     end
   end

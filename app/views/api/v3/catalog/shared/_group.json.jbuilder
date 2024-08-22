@@ -14,6 +14,4 @@ if with_users
 else
   json.role
 end
-if group.public
-  json.identifier group.identifier
-end
+json.identifier group.identifier if group.public

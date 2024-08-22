@@ -9,7 +9,7 @@ class ContactMailer < ApplicationMailer
       :subject => "[Catima] - #{subject}",
       :reply_to => content['email'],
       :to => receiver,
-      :from => ENV['MAIL_SENDER'],
+      :from => ENV.fetch('MAIL_SENDER', nil),
       :template_name => "contact"
     )
   ensure

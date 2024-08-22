@@ -12,19 +12,6 @@ class CatalogAdmin::ChoicesController < CatalogAdmin::BaseController
   def edit
   end
 
-  def destroy
-    @choice.destroy
-    redirect_to(edit_catalog_admin_choice_set_path(@choice_set.catalog, I18n.locale, @choice_set), :notice => destroyed_message)
-  end
-
-  def update
-    if @choice.update(choice_params)
-      redirect_to(edit_catalog_admin_choice_set_path(@choice_set.catalog, I18n.locale, @choice_set), :notice => updated_message)
-    else
-      render("edit")
-    end
-  end
-
   def create
     @choice = Choice.new(choice_params.merge(choice_set_id: @choice_set.id))
     @choice.catalog_id = @choice_set.catalog_id
@@ -55,6 +42,19 @@ class CatalogAdmin::ChoicesController < CatalogAdmin::BaseController
     else
       render("new")
     end
+  end
+
+  def update
+    if @choice.update(choice_params)
+      redirect_to(edit_catalog_admin_choice_set_path(@choice_set.catalog, I18n.locale, @choice_set), :notice => updated_message)
+    else
+      render("edit")
+    end
+  end
+
+  def destroy
+    @choice.destroy
+    redirect_to(edit_catalog_admin_choice_set_path(@choice_set.catalog, I18n.locale, @choice_set), :notice => destroyed_message)
   end
 
   def update_positions

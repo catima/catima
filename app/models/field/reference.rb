@@ -32,7 +32,7 @@
 #  uuid                     :string
 #
 
-class Field::Reference < ::Field
+class Field::Reference < Field
   store_accessor :options, :reference_label
 
   include ::Field::AllowsMultipleValues

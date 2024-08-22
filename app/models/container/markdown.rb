@@ -13,7 +13,7 @@
 #  updated_at :datetime         not null
 #
 
-class Container::Markdown < ::Container
+class Container::Markdown < Container
   store_accessor :content, :markdown
 
   def custom_container_permitted_attributes

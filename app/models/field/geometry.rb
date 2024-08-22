@@ -32,7 +32,7 @@
 #  uuid                     :string
 #
 
-class Field::Geometry < ::Field
+class Field::Geometry < Field
   ZOOM_LEVEL = {
     "distant" => ENV.fetch('ZOOM_LEVEL_DISTANT', 5),
     "medium" => ENV.fetch('ZOOM_LEVEL_MEDIUM', 10),
@@ -86,15 +86,15 @@ class Field::Geometry < ::Field
   end
 
   def zoom_level
-    (zoom.presence || Field::Geometry::ZOOM_LEVEL['medium'])
+    zoom.presence || Field::Geometry::ZOOM_LEVEL['medium']
   end
 
   def polygon_color
-    (polygon.presence || Field::Geometry::POLYGON_COLOR)
+    polygon.presence || Field::Geometry::POLYGON_COLOR
   end
 
   def polyline_color
-    (polyline.presence || Field::Geometry::POLYLINE_COLOR)
+    polyline.presence || Field::Geometry::POLYLINE_COLOR
   end
 
   def csv_value(_item, _user=nil)

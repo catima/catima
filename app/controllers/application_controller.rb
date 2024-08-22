@@ -66,7 +66,7 @@ class ApplicationController < ActionController::Base
   end
 
   def current_user
-    @current_user ||= (super || Guest.new)
+    @current_user ||= super || Guest.new
   end
 
   # If we've store an explicit redirect path, use it. This allows us to

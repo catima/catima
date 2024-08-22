@@ -1,6 +1,12 @@
 class MembershipsController < ApplicationController
   before_action :authenticate_user!
 
+  def index
+    @memberships = current_user.memberships.select do |m|
+      m.group.active?
+    end
+  end
+
   def create
     return redirect_to(memberships_path, :alert => t('errors.messages.membership.no_identifier')) if params[:identifier].blank?
 
@@ -14,12 +20,6 @@ class MembershipsController < ApplicationController
       redirect_to(memberships_path, :notice => t('notices.membership.created', :group => group.name))
     else
       redirect_to(memberships_path, :alert => t('errors.messages.membership.identifier_does_not_exist', :identifier => params[:identifier]))
-    end
-  end
-
-  def index
-    @memberships = current_user.memberships.select do |m|
-      m.group.active?
     end
   end
 

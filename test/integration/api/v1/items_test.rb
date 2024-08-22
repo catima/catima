@@ -10,7 +10,7 @@ class API::V1::ItemsTest < ActionDispatch::IntegrationTest
 
   test "GET items with bad item_type results in 400 error" do
     get("/api/v1/catalogs/#{catalogs(:one).slug}/items?item_type=bad-slug")
-    assert_response(400)
+    assert_response(:bad_request)
   end
 
   test "GET items with bad catalog results in 404 error" do

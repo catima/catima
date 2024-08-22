@@ -10,12 +10,10 @@ end
 module WithVCR
   private
 
-  def with_vcr_cassette
+  def with_vcr_cassette(&block)
     names = self.class.name.split("::")
     cassette_path = names.map { |s| s.gsub(/[^A-Z0-9]+/i, "_") }.join("/")
 
-    VCR.use_cassette(cassette_path) do |cassette|
-      yield(cassette)
-    end
+    VCR.use_cassette(cassette_path, &block)
   end
 end

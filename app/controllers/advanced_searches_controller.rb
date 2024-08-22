@@ -16,6 +16,16 @@
 class AdvancedSearchesController < ApplicationController
   include ControlsCatalog
 
+  def show
+    find_advanced_search
+    @advanced_search_results = ItemList::AdvancedSearchResult.new(
+      :model => @saved_search,
+      :page => params[:page]
+    )
+  rescue StandardError
+    redirect_to(:action => :new)
+  end
+
   def new
     @advance_search_confs = @catalog.advanced_search_configurations.with_active_item_type
     build_advanced_search
@@ -43,7 +53,7 @@ class AdvancedSearchesController < ApplicationController
 
       @fields = @advanced_search.fields
 
-      return redirect_to :action => :new, :item_type => @item_types.first if params[:item_type].blank?
+      redirect_to :action => :new, :item_type => @item_types.first if params[:item_type].blank?
     end
   end
 
@@ -66,16 +76,6 @@ class AdvancedSearchesController < ApplicationController
     else
       render("new")
     end
-  rescue StandardError
-    redirect_to(:action => :new)
-  end
-
-  def show
-    find_advanced_search
-    @advanced_search_results = ItemList::AdvancedSearchResult.new(
-      :model => @saved_search,
-      :page => params[:page]
-    )
   rescue StandardError
     redirect_to(:action => :new)
   end

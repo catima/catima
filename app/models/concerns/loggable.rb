@@ -19,11 +19,11 @@ module Loggable
 
   def save_and_log(author:, catalog:, additional_logs: nil)
     action = new_record? ? "CREATE" : "UPDATE"
-    if save
-      self.additional_logs = additional_logs
-      create_log(author, catalog, action) if relevant_changes.any?
-      self
-    end
+    return unless save
+
+    self.additional_logs = additional_logs
+    create_log(author, catalog, action) if relevant_changes.any?
+    self
   end
 
   def save_and_log!(author:, catalog:, additional_logs: nil)
@@ -40,11 +40,11 @@ module Loggable
   end
 
   def destroy_and_log(author:, catalog:, additional_logs: nil)
-    if destroy
-      self.additional_logs = additional_logs
-      create_log(author, catalog, "DELETE")
-      self
-    end
+    return unless destroy
+
+    self.additional_logs = additional_logs
+    create_log(author, catalog, "DELETE")
+    self
   end
 
   def destroy_and_log!(author:, catalog:, additional_logs: nil)

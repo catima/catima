@@ -7,6 +7,11 @@ class CatalogAdmin::ItemViewsController < CatalogAdmin::BaseController
     authorize(@item_view)
   end
 
+  def edit
+    find_item_view
+    authorize(@item_view)
+  end
+
   def create
     build_item_view
     authorize(@item_view)
@@ -17,11 +22,6 @@ class CatalogAdmin::ItemViewsController < CatalogAdmin::BaseController
     else
       render("new")
     end
-  end
-
-  def edit
-    find_item_view
-    authorize(@item_view)
   end
 
   def update

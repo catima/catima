@@ -2,13 +2,13 @@ class Ahoy::Store < Ahoy::DatabaseStore
   def track_visit(data)
     return unless enabled?
 
-    super(data)
+    super
   end
 
   def track_event(data)
     return unless enabled?
 
-    super(data)
+    super
   end
 
   def authenticate(data)

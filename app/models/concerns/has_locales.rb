@@ -13,7 +13,7 @@ module HasLocales
     def define_getter_locale(attr)
       define_method(attr) do |locale=I18n.locale|
         raw_value = self[attr] || {}
-        return (raw_value[locale.to_s] || '') if raw_value.instance_of?(Hash)
+        return raw_value[locale.to_s] || '' if raw_value.instance_of?(Hash)
 
         val = JSON.parse(raw_value || '{}')
 
@@ -28,7 +28,7 @@ module HasLocales
     def define_getter_json(attr)
       define_method(:"#{attr}_json") do
         raw_value = self[attr] || {}
-        return (raw_value || {}) if raw_value.instance_of?(Hash)
+        return raw_value || {} if raw_value.instance_of?(Hash)
 
         JSON.parse(raw_value || '{}')
       end

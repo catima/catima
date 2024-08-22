@@ -13,7 +13,7 @@
 #  updated_at :datetime         not null
 #
 
-class Container::Map < ::Container
+class Container::Map < Container
   DEFAULT_MAP_HEIGHT = 400
 
   store_accessor :content, :item_type, :layers, :height
@@ -63,7 +63,7 @@ class Container::Map < ::Container
       it = catalog.item_types.find_by(slug: data[:content]['item_type'])
       data[:content]['item_type'] = it.id.to_s
     end
-    super(data)
+    super
   end
 
   private

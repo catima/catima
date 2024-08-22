@@ -140,7 +140,7 @@ class Field < ApplicationRecord
   end
 
   def type_name
-    type.gsub(/Field::/, "")
+    type.gsub("Field::", "")
   end
 
   def short_type_name
@@ -232,7 +232,7 @@ class Field < ApplicationRecord
   def displayable_in_public_list?
     return true if human_readable?
 
-    return true if filterable?
+    true if filterable?
   end
 
   def raw_value(item, locale=I18n.locale, suffix="")

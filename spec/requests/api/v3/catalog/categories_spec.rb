@@ -1,4 +1,3 @@
-# rubocop:disable Metrics/BlockLength
 require 'swagger_helper'
 
 RSpec.describe 'api/v3/{catalog_id}/categories', type: :request do
@@ -42,4 +41,3 @@ RSpec.describe 'api/v3/{catalog_id}/categories', type: :request do
     end
   end
 end
-# rubocop:enable Metrics/BlockLength
