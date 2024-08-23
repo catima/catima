@@ -12,6 +12,11 @@ class CatalogAdmin::UsersController < CatalogAdmin::BaseController
     authorize(@user)
   end
 
+  def edit
+    find_user
+    authorize(@user)
+  end
+
   def create
     build_user
     authorize(@user)
@@ -20,11 +25,6 @@ class CatalogAdmin::UsersController < CatalogAdmin::BaseController
     else
       render("new")
     end
-  end
-
-  def edit
-    find_user
-    authorize(@user)
   end
 
   def update

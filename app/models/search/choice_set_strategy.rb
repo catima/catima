@@ -35,7 +35,7 @@ class Search::ChoiceSetStrategy < Search::BaseStrategy
         @field = cat_field
         if criteria[:child_choices_activated] == "true"
           choice = Choice.find(criteria[:default] || criteria[:exact])
-          scope = search_data_matching_more(scope, (choice.childrens.pluck(:id) + [criteria[:default] || criteria[:exact]]).flatten.map {|id| id.to_s}, negate)
+          scope = search_data_matching_more(scope, (choice.childrens.pluck(:id) + [criteria[:default] || criteria[:exact]]).flatten.map { |id| id.to_s }, negate)
         else
           scope = search_data_matching_one_or_more(scope, criteria[:default], negate)
         end
@@ -46,16 +46,14 @@ class Search::ChoiceSetStrategy < Search::BaseStrategy
       end
     elsif criteria[:child_choices_activated] == "true"
       choice = Choice.find(criteria[:default] || criteria[:exact])
-      scope = search_data_matching_more(scope, (choice.childrens.pluck(:id) + [criteria[:default] || criteria[:exact]]).flatten.map {|id| id.to_s}, negate)
-    else
-      if criteria[:default].present?
-        scope = search_data_matching_more(scope, [criteria[:default]], negate)
-      elsif criteria[:exact].present?
-        scope = search_data_matching_more(scope, criteria[:exact], negate)
-      end
+      scope = search_data_matching_more(scope, (choice.childrens.pluck(:id) + [criteria[:default] || criteria[:exact]]).flatten.map { |id| id.to_s }, negate)
+    elsif criteria[:default].present?
+      scope = search_data_matching_more(scope, [criteria[:default]], negate)
+    elsif criteria[:exact].present?
+      scope = search_data_matching_more(scope, criteria[:exact], negate)
     end
 
-    scope = search_data_matching_more(scope, criteria[:any] , false) if criteria[:any].present?
+    scope = search_data_matching_more(scope, criteria[:any], false) if criteria[:any].present?
 
     scope
   end

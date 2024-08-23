@@ -1,9 +1,9 @@
-class Field::Compound < ::Field
+class Field::Compound < Field
   store_accessor :options, :template
 
   def describe
     super.merge(
-      'template': template
+      template: template
     )
   end
 

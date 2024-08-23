@@ -32,7 +32,7 @@
 #  uuid                     :string
 #
 
-class Field::Int < ::Field
+class Field::Int < Field
   store_accessor :options, :maximum
   store_accessor :options, :minimum
   store_accessor :options, :auto_increment

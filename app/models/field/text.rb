@@ -32,7 +32,7 @@
 #  uuid                     :string
 #
 
-class Field::Text < ::Field
+class Field::Text < Field
   store_accessor :options, :maximum
   store_accessor :options, :minimum
   store_accessor :options, :formatted_text
@@ -49,7 +49,7 @@ class Field::Text < ::Field
   end
 
   def describe
-    super.merge("i18n": i18n)
+    super.merge(i18n: i18n)
   end
 
   def human_readable?

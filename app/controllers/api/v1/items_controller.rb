@@ -42,11 +42,9 @@ class API::V1::ItemsController < API::ApplicationController
 
   def items_scope
     @items_scope ||=
-      begin
-        catalog.public_items
-               .includes(:catalog)
-               .includes(:item_type)
-               .includes(:item_type => :fields)
-      end
+      catalog.public_items
+             .includes(:catalog)
+             .includes(:item_type)
+             .includes(:item_type => :fields)
   end
 end

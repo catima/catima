@@ -13,7 +13,7 @@
 #  updated_at :datetime         not null
 #
 
-class Container::Contact < ::Container
+class Container::Contact < Container
   store_accessor :content, :receiving_email, :name, :email, :subject, :body
 
   def custom_container_permitted_attributes

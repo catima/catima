@@ -1,6 +1,18 @@
 class API::V3::Catalog::AdvancedSearchesController < API::V3::Catalog::BaseController
   include AdvancedSearchesHelper
 
+  def show
+    authorize(@catalog, :advanced_search_show?) unless authenticated_catalog?
+
+    find_advanced_search
+    @advanced_search_results = ItemList::AdvancedSearchResult.new(
+      model: @saved_search,
+      page: params[:page]
+    )
+  rescue StandardError
+    redirect_to(action: :new)
+  end
+
   def new
     authorize(@catalog, :advanced_search_new?) unless authenticated_catalog?
 
@@ -30,7 +42,7 @@ class API::V3::Catalog::AdvancedSearchesController < API::V3::Catalog::BaseContr
 
       @fields = @advanced_search.fields
 
-      return redirect_to action: :new, item_type: @item_types.first if params[:item_type_id].blank?
+      redirect_to action: :new, item_type: @item_types.first if params[:item_type_id].blank?
     end
   end
 
@@ -46,18 +58,6 @@ class API::V3::Catalog::AdvancedSearchesController < API::V3::Catalog::BaseContr
       page: params[:page]
     )
     render("show")
-  end
-
-  def show
-    authorize(@catalog, :advanced_search_show?) unless authenticated_catalog?
-
-    find_advanced_search
-    @advanced_search_results = ItemList::AdvancedSearchResult.new(
-      model: @saved_search,
-      page: params[:page]
-    )
-  rescue StandardError
-    redirect_to(action: :new)
   end
 
   private

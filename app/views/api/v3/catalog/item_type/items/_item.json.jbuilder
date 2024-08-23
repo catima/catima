@@ -14,7 +14,7 @@ end
 if with_summary
   # bypass_displayable is used when no user is available, mainly with an api key
   json.item_summary strip_tags(item_summary(item, bypass_displayable: @authenticated_catalog.present?))
-  json.thumbnail item_thumbnail(item, {style: :medium, no_html: true}) if item.try(:image?)
+  json.thumbnail item_thumbnail(item, { style: :medium, no_html: true }) if item.try(:image?)
 end
 if with_field_values
   json.field_values do
@@ -23,7 +23,7 @@ if with_field_values
       when Field::Compound
         if field.i18n?
           json.value do
-            json.set! :"_translations", field.translation_values(item, @authenticated_catalog.present? ? false : @current_user)
+            json.set! :_translations, field.translation_values(item, @authenticated_catalog.present? ? false : @current_user)
           end
         else
           json.value field.csv_value(item, @authenticated_catalog.present? ? false : @current_user) unless field.i18n?

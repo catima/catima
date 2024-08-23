@@ -1,5 +1,3 @@
-# rubocop:disable Style/AsciiComments
-
 # Module mixed into Field that encapsulates all the style logic (single,
 # multiple, required, optional, etc.).
 module Field::Style

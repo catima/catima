@@ -55,7 +55,7 @@ module LocaleHelper
     options = args.extract_options! || {}
     options.merge!(wrapper_class: "mb-1")
     locales = form.object.catalog.valid_locales
-    group_label = options.delete(:hide_label) ? nil : {text: options[:label]} # to prevent hidden label pass nil options because bootstrap_form 4.x required options even if nil (https://github.com/bootstrap-ruby/bootstrap_form/blob/5ab399b93c5ee454ebdf1c1328e899ec636e9668/lib/bootstrap_form/components/labels.rb#L11)
+    group_label = options.delete(:hide_label) ? nil : { text: options[:label] } # to prevent hidden label pass nil options because bootstrap_form 4.x required options even if nil (https://github.com/bootstrap-ruby/bootstrap_form/blob/5ab399b93c5ee454ebdf1c1328e899ec636e9668/lib/bootstrap_form/components/labels.rb#L11)
     help = options.delete(:help)
 
     form.form_group(method, :label => group_label, :help => help) do
@@ -89,7 +89,7 @@ module LocaleHelper
     options = options.reverse_merge(:hide_label => true)
     if locales.many?
       options.reverse_merge!(
-        #:placeholder => locale_language(locale),
+        # :placeholder => locale_language(locale),
         :prepend => locale
       )
     end

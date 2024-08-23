@@ -13,7 +13,7 @@ class API::V3::Catalog::UsersController < API::V3::Catalog::BaseController
     # default role. The default role is not considered because it is assigned
     # to every user in each catalog.
     @users = User.where(id: @catalog.users_with_role_in(catalog_roles))
-                 .or(User.where(id: @catalog.groups.where(active: true).select { |g|
+                 .or(User.where(id: @catalog.groups.where(active: true).select do |g|
                    case catalog_access(@catalog)
                    when 1
                      true
@@ -22,7 +22,7 @@ class API::V3::Catalog::UsersController < API::V3::Catalog::BaseController
                    else
                      g.catalog_permissions.last.role_at_least?("editor")
                    end
-                 }.flat_map(&:user_ids)))
+                 end.flat_map(&:user_ids)))
                  .page(params[:page]).per(params[:per])
   end
 end

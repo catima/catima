@@ -6,6 +6,11 @@ class Admin::TemplateStoragesController < Admin::BaseController
     authorize(@template_storage)
   end
 
+  def edit
+    find_template_storage
+    authorize(@template_storage)
+  end
+
   def create
     build_template_storage
     authorize(@template_storage)
@@ -14,11 +19,6 @@ class Admin::TemplateStoragesController < Admin::BaseController
     else
       render("new")
     end
-  end
-
-  def edit
-    find_template_storage
-    authorize(@template_storage)
   end
 
   def update

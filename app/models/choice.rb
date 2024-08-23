@@ -61,7 +61,7 @@ class Choice < ApplicationRecord
   end
 
   def describe
-    as_json(only: %i(parent_id uuid short_name_translations long_name_translations)) \
+    as_json(only: %i(parent_id uuid short_name_translations long_name_translations))
       .merge(category: category.nil? ? nil : category.uuid)
   end
 
@@ -180,9 +180,9 @@ class Choice < ApplicationRecord
     end
 
     # Check if choices with the same category are present in the same item type (field_set_id)
-    same_item_types = (choices.flat_map { |choice|
+    same_item_types = (choices.flat_map do |choice|
       choice.choice_set.fields.map(&:field_set_id)
-    }.uniq & choice_set.fields.map(&:field_set_id)).any?
+    end.uniq & choice_set.fields.map(&:field_set_id)).any?
 
     return unless same_item_types || same_choice_set
 

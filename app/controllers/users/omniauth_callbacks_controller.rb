@@ -33,7 +33,7 @@ class Users::OmniauthCallbacksController < Devise::OmniauthCallbacksController
     set_flash_message(
       :alert,
       :failure,
-      kind: request.env['omniauth.auth'] && request.env['omniauth.auth'].provider.capitalize.to_s || 'unknown',
+      kind: (request.env['omniauth.auth'] && request.env['omniauth.auth'].provider.capitalize.to_s) || 'unknown',
       reason: 'wrong credentials'
     )
     redirect_to root_path

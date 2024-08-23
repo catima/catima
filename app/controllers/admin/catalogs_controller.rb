@@ -7,6 +7,12 @@ class Admin::CatalogsController < Admin::BaseController
     authorize(@catalog)
   end
 
+  def edit
+    find_catalog
+    authorize(@catalog)
+    @admins = @catalog.users_with_role("admin")
+  end
+
   def create
     build_catalog
     authorize(@catalog)
@@ -32,12 +38,6 @@ class Admin::CatalogsController < Admin::BaseController
     else
       render 'duplicate_new'
     end
-  end
-
-  def edit
-    find_catalog
-    authorize(@catalog)
-    @admins = @catalog.users_with_role("admin")
   end
 
   def update

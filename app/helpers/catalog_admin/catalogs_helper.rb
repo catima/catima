@@ -1,27 +1,27 @@
 module CatalogAdmin::CatalogsHelper
   def setup_catalog_settings_nav_link
-    active = (params[:controller] == "catalog_admin/catalogs" && params[:action] == "edit")
+    active = params[:controller] == "catalog_admin/catalogs" && params[:action] == "edit"
     klass = "list-group-item  list-group-item-action"
     klass << " active" if active
     link_to(I18n.t('general'), catalog_admin_settings_path, :class => klass)
   end
 
   def setup_catalog_style_nav_link
-    active = (params[:controller] == "catalog_admin/catalogs" && params[:action] == "edit_style")
+    active = params[:controller] == "catalog_admin/catalogs" && params[:action] == "edit_style"
     klass = "list-group-item  list-group-item-action"
     klass << " active" if active
     link_to(I18n.t('style'), catalog_admin_style_path, :class => klass)
   end
 
   def setup_catalog_api_nav_link
-    active = (params[:controller] == "catalog_admin/catalogs" && params[:action] == "api")
+    active = params[:controller] == "catalog_admin/catalogs" && params[:action] == "api"
     klass = "list-group-item  list-group-item-action"
     klass << " active" if active
     link_to(I18n.t('api'), catalog_admin_api_path, :class => klass)
   end
 
   def setup_catalog_stats_nav_link
-    active = (params[:controller] == "catalog_admin/catalogs" && params[:action] == "stats")
+    active = params[:controller] == "catalog_admin/catalogs" && params[:action] == "stats"
     klass = "list-group-item  list-group-item-action"
     klass << " active" if active
     link_to(I18n.t('stats'), catalog_admin_stats_path, :class => klass)

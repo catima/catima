@@ -32,7 +32,7 @@
 #  uuid                     :string
 #
 
-class Field::Email < ::Field
+class Field::Email < Field
   def sql_type
     "VARCHAR(512)"
   end

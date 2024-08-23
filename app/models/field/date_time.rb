@@ -32,7 +32,7 @@
 #  uuid                     :string
 #
 
-class Field::DateTime < ::Field
+class Field::DateTime < Field
   FORMATS = %w(Y M h YM MD hm YMD hms MDh YMDh MDhm YMDhm MDhms YMDhms).freeze
 
   store_accessor :options, :format
@@ -71,7 +71,7 @@ class Field::DateTime < ::Field
     components = value_as_array(item)
     return nil if components.nil?
 
-    (0..(components.length - 1)).collect { |i| components[i].to_s.present? ? components[i] * 10**(10 - 2 * i) : 0 }.sum
+    (0..(components.length - 1)).collect { |i| components[i].to_s.present? ? components[i] * (10**(10 - (2 * i))) : 0 }.sum
   end
 
   # The form provides the datetime values as hash like
@@ -213,11 +213,10 @@ class Field::DateTime < ::Field
         return
       end
 
-      allowed_formats = Field::DateTime::FORMATS.select{|f| field.format.include?(f) || field.format == f}
-      current_format = field.format.chars.map {|char| value[char].blank? || value[char].nil? ? nil : char}.compact.join
+      allowed_formats = Field::DateTime::FORMATS.select { |f| field.format.include?(f) || field.format == f }
+      current_format = field.format.chars.map { |char| value[char].blank? || value[char].nil? ? nil : char }.compact.join
 
       record.errors.add(attrib, I18n.t('activerecord.errors.models.item.attributes.base.wrong_format', field_format: allowed_formats)) unless allowed_formats.include?(current_format)
     end
   end
 end
-

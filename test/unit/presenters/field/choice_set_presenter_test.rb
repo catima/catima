@@ -12,14 +12,14 @@ class Field::ChoiceSetPresenterTest < ActionView::TestCase
 
     expected_html = <<~HTML
       <div>
-        <div data-controller=\"hierarchy-revealable\">
-          <div data-hierarchy-revealable-target=\"choice\">
-            <a href=\"/one/en/authors?language=en-Eng\">English</a>
+        <div data-controller="hierarchy-revealable">
+          <div data-hierarchy-revealable-target="choice">
+            <a href="/one/en/authors?language=en-Eng">English</a>
           </div>
-          <div data-hierarchy-revealable-target=\"choice\" style=\"display: none\">
-            <a href=\"/one/en/authors?language=en-Eng\">English</a>
-            <span class=\"ps-2\" data-toggle=\"tooltip\" title=\"Hide hierarchy\" data-action=\"click-&gt;hierarchy-revealable#toggle\">
-              <i class=\"fa fa-caret-left toggle-hierarchy\"></i>
+          <div data-hierarchy-revealable-target="choice" style="display: none">
+            <a href="/one/en/authors?language=en-Eng">English</a>
+            <span class="ps-2" data-toggle="tooltip" title="Hide hierarchy" data-action="click-&gt;hierarchy-revealable#toggle">
+              <i class="fa fa-caret-left toggle-hierarchy"></i>
             </span>
           </div>
         </div>
@@ -42,17 +42,17 @@ class Field::ChoiceSetPresenterTest < ActionView::TestCase
 
     expected_html = <<~HTML
       <div>
-        <div data-controller=\"hierarchy-revealable\">
-          <div data-hierarchy-revealable-target=\"choice\">
-            <a href=\"/one/en/authors?language=en-Eng+%28UK%29\">English (UK)</a>
-            <span class=\"ps-2\" data-toggle=\"tooltip\" title=\"Show hierarchy\" data-action=\"click-&gt;hierarchy-revealable#toggle\">
-              <i class=\"fa fa-caret-right toggle-hierarchy\"></i>
+        <div data-controller="hierarchy-revealable">
+          <div data-hierarchy-revealable-target="choice">
+            <a href="/one/en/authors?language=en-Eng+%28UK%29">English (UK)</a>
+            <span class="ps-2" data-toggle="tooltip" title="Show hierarchy" data-action="click-&gt;hierarchy-revealable#toggle">
+              <i class="fa fa-caret-right toggle-hierarchy"></i>
             </span>
           </div>
-          <div data-hierarchy-revealable-target=\"choice\" style=\"display: none\">
-            <a href=\"/one/en/authors?language=en-Eng+%28UK%29\">English / English (UK)</a>
-            <span class=\"ps-2\" data-toggle=\"tooltip\" title=\"Hide hierarchy\" data-action=\"click-&gt;hierarchy-revealable#toggle\">
-              <i class=\"fa fa-caret-left toggle-hierarchy\"></i>
+          <div data-hierarchy-revealable-target="choice" style="display: none">
+            <a href="/one/en/authors?language=en-Eng+%28UK%29">English / English (UK)</a>
+            <span class="ps-2" data-toggle="tooltip" title="Hide hierarchy" data-action="click-&gt;hierarchy-revealable#toggle">
+              <i class="fa fa-caret-left toggle-hierarchy"></i>
             </span>
           </div>
         </div>
@@ -76,25 +76,25 @@ class Field::ChoiceSetPresenterTest < ActionView::TestCase
     # rubocop:disable Layout/TrailingWhitespace -> trailing whitespaces present in html.
     expected_html = <<~HTML
       <div>
-        <div data-controller=\"hierarchy-revealable\">
-          <div data-hierarchy-revealable-target=\"choice\">
-            <a href=\"/one/en/authors?other-language=en-Eng\">English</a>
+        <div data-controller="hierarchy-revealable">
+          <div data-hierarchy-revealable-target="choice">
+            <a href="/one/en/authors?other-language=en-Eng">English</a>
           </div>
-          <div data-hierarchy-revealable-target=\"choice\" style=\"display: none\">
-            <a href=\"/one/en/authors?other-language=en-Eng\">English</a>
-            <span class=\"ps-2\" data-toggle=\"tooltip\" title=\"Hide hierarchy\" data-action=\"click-&gt;hierarchy-revealable#toggle\">
-              <i class=\"fa fa-caret-left toggle-hierarchy\"></i>
+          <div data-hierarchy-revealable-target="choice" style="display: none">
+            <a href="/one/en/authors?other-language=en-Eng">English</a>
+            <span class="ps-2" data-toggle="tooltip" title="Hide hierarchy" data-action="click-&gt;hierarchy-revealable#toggle">
+              <i class="fa fa-caret-left toggle-hierarchy"></i>
             </span>
           </div>
         </div> 
-        <div data-controller=\"hierarchy-revealable\">
-          <div data-hierarchy-revealable-target=\"choice\">
-            <a href=\"/one/en/authors?other-language=en-Spanish\">Spanish</a>
+        <div data-controller="hierarchy-revealable">
+          <div data-hierarchy-revealable-target="choice">
+            <a href="/one/en/authors?other-language=en-Spanish">Spanish</a>
           </div>
-          <div data-hierarchy-revealable-target=\"choice\" style=\"display: none\">
-            <a href=\"/one/en/authors?other-language=en-Spanish\">Spanish</a>
-            <span class=\"ps-2\" data-toggle=\"tooltip\" title=\"Hide hierarchy\" data-action=\"click-&gt;hierarchy-revealable#toggle\">
-              <i class=\"fa fa-caret-left toggle-hierarchy\"></i>
+          <div data-hierarchy-revealable-target="choice" style="display: none">
+            <a href="/one/en/authors?other-language=en-Spanish">Spanish</a>
+            <span class="ps-2" data-toggle="tooltip" title="Hide hierarchy" data-action="click-&gt;hierarchy-revealable#toggle">
+              <i class="fa fa-caret-left toggle-hierarchy"></i>
             </span>
           </div>
         </div>

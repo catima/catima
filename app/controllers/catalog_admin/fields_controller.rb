@@ -12,6 +12,11 @@ class CatalogAdmin::FieldsController < CatalogAdmin::BaseController
     authorize(@field)
   end
 
+  def edit
+    find_field
+    authorize(@field)
+  end
+
   def create
     build_field
     authorize(@field)
@@ -20,11 +25,6 @@ class CatalogAdmin::FieldsController < CatalogAdmin::BaseController
     else
       render("new")
     end
-  end
-
-  def edit
-    find_field
-    authorize(@field)
   end
 
   def update
@@ -90,7 +90,7 @@ class CatalogAdmin::FieldsController < CatalogAdmin::BaseController
   end
 
   def find_field_set
-    @field_set = \
+    @field_set =
       if params[:item_type_slug]
         catalog.item_types.where(:slug => params[:item_type_slug]).first!
       else

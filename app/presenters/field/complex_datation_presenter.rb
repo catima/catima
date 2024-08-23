@@ -15,8 +15,8 @@ class Field::ComplexDatationPresenter < FieldPresenter
       from = value_text_repr(dt['from'], format, date_name: 'from')
       to = value_text_repr(dt['to'], format, date_name: 'to')
 
-      from =  field.allow_date_time_bc? && dt['from']['BC'] ? I18n.t('catalog_admin.fields.complex_datation.bc', date: from) : from
-      to =  field.allow_date_time_bc? && dt['to']['BC'] ? I18n.t('catalog_admin.fields.complex_datation.bc', date: to) : to
+      from = I18n.t('catalog_admin.fields.complex_datation.bc', date: from) if field.allow_date_time_bc? && dt['from']['BC']
+      to =  I18n.t('catalog_admin.fields.complex_datation.bc', date: to) if field.allow_date_time_bc? && dt['to']['BC']
 
       style = if dt['to'] == dt['from'] || from == to
                 'exact'
@@ -27,7 +27,6 @@ class Field::ComplexDatationPresenter < FieldPresenter
               else
                 'between'
               end
-
 
       case style
       when 'exact'
@@ -44,7 +43,7 @@ class Field::ComplexDatationPresenter < FieldPresenter
     end
   end
 
-  def choices_value(raw_val)
+  def choices_value(_raw_val)
     choices = field.selected_choices(item)
     return if choices.empty?
 
@@ -57,7 +56,7 @@ class Field::ComplexDatationPresenter < FieldPresenter
           choice.from_date,
           choice.to_date,
           choice.choice_set.format,
-          choice.choice_set.allow_bc,
+          choice.choice_set.allow_bc
         )
       }
 
@@ -77,20 +76,18 @@ class Field::ComplexDatationPresenter < FieldPresenter
           tag.div(tag.div(prefixed_link))
         end.join(" ").html_safe
       )
+    elsif options[:no_links] == true
+      choices.map { |choice| choice.parent_id? ? choice.choice_set.choice_prefixed_label(choice, format: :long) : choice.long_display_name }.join(', ')
     else
-      if options[:no_links] == true
-        choices.map{ |choice| choice.parent_id? ? choice.choice_set.choice_prefixed_label(choice, format: :long) : choice.long_display_name}.join(', ')
-      else
-        links_and_prefixed_names.map(&:first).join(", ").html_safe
-      end
+      links_and_prefixed_names.map(&:first).join(", ").html_safe
     end
   end
 
   def choice_dates(from, to, format, allow_bc)
     from_repr = value_text_repr(from, format)
     to_repr = value_text_repr(to, format)
-    from_repr = allow_bc && JSON.parse(from)['BC'] ? I18n.t('catalog_admin.fields.complex_datation.bc', date: from_repr) : from_repr
-    to_repr = allow_bc && JSON.parse(to)['BC'] ? I18n.t('catalog_admin.fields.complex_datation.bc', date: to_repr) : to_repr
+    from_repr = I18n.t('catalog_admin.fields.complex_datation.bc', date: from_repr) if allow_bc && JSON.parse(from)['BC']
+    to_repr = I18n.t('catalog_admin.fields.complex_datation.bc', date: to_repr) if allow_bc && JSON.parse(to)['BC']
 
     if from == to || from_repr == to_repr
       from_repr
@@ -112,7 +109,7 @@ class Field::ComplexDatationPresenter < FieldPresenter
       dt_value = DateTime.civil_from_format(:local, *prepare_datetime_array(date_name: date_name, value: date_name ? false : date))
       text_repr = I18n.l(dt_value, format: format_str.to_sym)
       text_repr.sub('8888', date.is_a?(Hash) ? date[0].to_s : JSON.parse(date)[0].to_s) if date["raw_value"].nil?
-      text_repr.split().map{|el| el.sub(/^[0]+/,'')}.join(" ")
+      text_repr.split.map { |el| el.sub(/^[0]+/, '') }.join(" ")
     rescue StandardError
       nil
     end

@@ -16,7 +16,7 @@ class Field::ImagePresenter < Field::FilePresenter
   end
 
   def input(form, method, options={})
-    html = super(form, method, options)
+    html = super
     html = add_legend_attribute(html) if legend_active?
     (html + thumbnail_control(method)).html_safe
   end

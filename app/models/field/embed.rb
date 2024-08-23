@@ -1,6 +1,6 @@
 require 'uri'
 
-class Field::Embed < ::Field
+class Field::Embed < Field
   store_accessor :options, :format
   store_accessor :options, :width
   store_accessor :options, :height

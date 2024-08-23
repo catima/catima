@@ -6,6 +6,11 @@ class CatalogAdmin::ContainersController < CatalogAdmin::BaseController
     authorize(@container)
   end
 
+  def edit
+    find_container
+    authorize(@container)
+  end
+
   def create
     build_container
     authorize(@container)
@@ -17,11 +22,6 @@ class CatalogAdmin::ContainersController < CatalogAdmin::BaseController
     else
       render("new")
     end
-  end
-
-  def edit
-    find_container
-    authorize(@container)
   end
 
   def update

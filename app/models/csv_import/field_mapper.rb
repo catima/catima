@@ -32,10 +32,8 @@ class CSVImport::FieldMapper
   # A Hash of column names to the Field object that it maps to. The Field is
   # actually a FieldWithLocale that decorates the underlying Field.
   def column_fields
-    @column_fields ||= begin
-      columns.each_with_object({}) do |column, hash|
-        hash[column] = field_for_column(column)
-      end
+    @column_fields ||= columns.index_with do |column|
+      field_for_column(column)
     end
   end
 

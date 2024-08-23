@@ -113,7 +113,11 @@ class ItemList::AdvancedSearchResult < ItemList
     if strategy.field.is_a?(Field::ComplexDatation)
       criteria = criteria.select do |_k, v|
         start_or_end_date_present = (v[:start].present? && v[:start][v[:start].keys.first].present?) || (v[:end].present? && v[:end][v[:end].keys.first].present?)
-        (v[:default]&.length != 0) || (start_or_end_date_present && (v[:start][v[:start].keys.first].each { |_key, value| value.present? } && v[:end][v[:end].keys.first].each { |_key, value| value.present? }))
+        (v[:default]&.length != 0) || (start_or_end_date_present && (v[:start][v[:start].keys.first].each do |_key, value|
+                                                                       value.present?
+                                                                     end && v[:end][v[:end].keys.first].each do |_key, value|
+                                                                              value.present?
+                                                                            end))
       end
     end
 

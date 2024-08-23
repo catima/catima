@@ -32,6 +32,6 @@ class CatalogLoadPages
   def load_container(page, container_json)
     container_class = container_json['type'].constantize
     c = container_class.new(container_json.except('type', 'content').merge('page' => page))
-    c.update_from_json('content': container_json['content'])
+    c.update_from_json(content: container_json['content'])
   end
 end

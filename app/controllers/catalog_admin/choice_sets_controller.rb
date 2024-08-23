@@ -11,6 +11,11 @@ class CatalogAdmin::ChoiceSetsController < CatalogAdmin::BaseController
     authorize(@choice_set)
   end
 
+  def edit
+    find_choice_set
+    authorize(@choice_set)
+  end
+
   def create
     build_choice_set
     authorize(@choice_set)
@@ -27,11 +32,6 @@ class CatalogAdmin::ChoiceSetsController < CatalogAdmin::BaseController
         render("new")
       end
     end
-  end
-
-  def edit
-    find_choice_set
-    authorize(@choice_set)
   end
 
   def update
@@ -141,12 +141,12 @@ class CatalogAdmin::ChoiceSetsController < CatalogAdmin::BaseController
     render json: {
       catalog: @choice_set.catalog_id,
       choice_set: @choice_set.id,
-      choices: @choice_set.choices.map { |choice|
+      choices: @choice_set.choices.map do |choice|
         {
           id: choice.id,
           name: choice.choice_set.choice_prefixed_label(choice, with_dates: @choice_set.datation?)
         }
-      },
+      end,
       categories: @choice_set.catalog.categories.sorted.pluck(:id, :name)
     }
   end

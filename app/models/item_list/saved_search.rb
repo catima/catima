@@ -13,9 +13,7 @@ class ItemList::SavedSearch < ItemList
 
   def searches
     search_items(::Search).each_with_object([]) do |search, array|
-      if @selected_catalog
-        next unless search.catalog == @selected_catalog
-      end
+      next if @selected_catalog && !search.catalog == (@selected_catalog)
 
       array << search if @user.can_list_item?(search)
       array << search

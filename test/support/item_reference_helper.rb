@@ -5,8 +5,8 @@ module ItemReferenceHelper
       sleep(2)
 
       page.execute_script("Array.from(document.querySelectorAll(" \
-        "'#{id} .css-4ljt47-MenuList div'" \
-        ")).find(el => el.textContent === '#{name}').click();")
+                          "'#{id} .css-4ljt47-MenuList div'" \
+                          ")).find(el => el.textContent === '#{name}').click();")
     end
   end
 

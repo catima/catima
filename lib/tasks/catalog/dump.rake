@@ -11,8 +11,8 @@ end
 namespace :catalog do
   desc "Dump a catalog to a directory"
   task :dump => [:environment] do
-    catalog = ENV['catalog']
-    directory = ENV['dir']
+    catalog = ENV.fetch('catalog', nil)
+    directory = ENV.fetch('dir', nil)
     if catalog.nil? || directory.nil?
       CatalogDumpOutput.print_usage
     else

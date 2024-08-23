@@ -32,11 +32,11 @@ class ItemList::Navigation
   end
 
   def next_offset
-    self.next && offset_actual + 1
+    self.next && (offset_actual + 1)
   end
 
   def previous_offset
-    previous && offset_actual - 1
+    previous && (offset_actual - 1)
   end
 
   def offset_actual
@@ -56,12 +56,10 @@ class ItemList::Navigation
   end
 
   def current_index
-    @current_index ||= begin
-      if current.respond_to?(:id)
-        window.map(&:id).index(current.id)
-      else
-        window.index(current)
-      end
-    end
+    @current_index ||= if current.respond_to?(:id)
+                         window.map(&:id).index(current.id)
+                       else
+                         window.index(current)
+                       end
   end
 end

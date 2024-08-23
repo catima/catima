@@ -35,17 +35,11 @@ json.field_specific_keys do
     json.choice_set_ids field.choice_set_ids.reject(&:blank?)
   end
 
-  if field.is_a?(Field::ChoiceSet)
-    json.choice_set_id field.choice_set_id
-  end
+  json.choice_set_id field.choice_set_id if field.is_a?(Field::ChoiceSet)
 
-  if field.is_a?(Field::DateTime)
-    json.format field.format
-  end
+  json.format field.format if field.is_a?(Field::DateTime)
 
-  if field.is_a?(Field::Compound)
-    json.template field.template
-  end
+  json.template field.template if field.is_a?(Field::Compound)
 
   if field.is_a?(Field::Decimal)
     json.maximum field.maximum
@@ -57,18 +51,14 @@ json.field_specific_keys do
     json.timestamps field.timestamps
   end
 
-  if field.is_a?(Field::File)
-    json.types field.types
-  end
+  json.types field.types if field.is_a?(Field::File)
 
   if field.is_a?(Field::Geometry)
     json.bounds field.bounds
     json.layers field.layers
   end
 
-  if field.is_a?(Field::Image)
-    json.legend field.legend
-  end
+  json.legend field.legend if field.is_a?(Field::Image)
 
   if field.is_a?(Field::Int)
     json.maximum field.maximum
@@ -76,9 +66,7 @@ json.field_specific_keys do
     json.auto_increment field.auto_increment
   end
 
-  if field.is_a?(Field::Reference)
-    json.related_item_type_id field.related_item_type_id
-  end
+  json.related_item_type_id field.related_item_type_id if field.is_a?(Field::Reference)
 
   if field.is_a?(Field::Text)
     json.maximum field.maximum
@@ -86,9 +74,7 @@ json.field_specific_keys do
     json.formatted_text field.formatted_text
   end
 
-  if field.is_a?(Field::Xref)
-    json.xref field.xref
-  end
+  json.xref field.xref if field.is_a?(Field::Xref)
 end
 
 json.field_set_type field.field_set_type

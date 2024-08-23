@@ -11,9 +11,9 @@ end
 namespace :items do
   desc "Cache views for items"
   task :cache_views => [:environment] do
-    catalog = ENV['catalog']
-    itemtype = ENV['item_type']
-    item_id = ENV['item']
+    catalog = ENV.fetch('catalog', nil)
+    itemtype = ENV.fetch('item_type', nil)
+    item_id = ENV.fetch('item', nil)
     if catalog.nil?
       ItemsCacheViewsOutput.msg 'Caching views for all item types in all catalogs.'
       ItemsCacheViewsOutput.msg 'You can restrict the catalog and specify an item type with:'

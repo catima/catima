@@ -1,4 +1,20 @@
 class API::V3::Catalog::SimpleSearchesController < API::V3::Catalog::BaseController
+  def show
+    paginate
+    authorize(@catalog, :simple_search_show?) unless authenticated_catalog?
+
+    find_simple_search
+    return routing_error if @simple_search.nil?
+
+    @simple_search_results = ItemList::SimpleSearchResult.new(
+      :catalog => @catalog,
+      :query => @simple_search.query,
+      :page => params[:page],
+      :item_type_slug => params[:item_type_slug],
+      :search_uuid => @simple_search.uuid
+    )
+  end
+
   def create
     paginate
     authorize(@catalog, :simple_search_create?) unless authenticated_catalog?
@@ -16,22 +32,6 @@ class API::V3::Catalog::SimpleSearchesController < API::V3::Catalog::BaseControl
     else
       render_unprocessable_record(@simple_search)
     end
-  end
-
-  def show
-    paginate
-    authorize(@catalog, :simple_search_show?) unless authenticated_catalog?
-
-    find_simple_search
-    return routing_error if @simple_search.nil?
-
-    @simple_search_results = ItemList::SimpleSearchResult.new(
-      :catalog => @catalog,
-      :query => @simple_search.query,
-      :page => params[:page],
-      :item_type_slug => params[:item_type_slug],
-      :search_uuid => @simple_search.uuid
-    )
   end
 
   private

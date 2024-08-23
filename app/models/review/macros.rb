@@ -20,9 +20,7 @@ module Review::Macros
   end
 
   def review
-    @review ||= begin
-      catalog.requires_review? ? Review.new(self) : Review::Noop.new(self)
-    end
+    @review ||= catalog.requires_review? ? Review.new(self) : Review::Noop.new(self)
   end
 
   private

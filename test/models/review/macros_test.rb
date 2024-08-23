@@ -3,9 +3,9 @@ require "test_helper"
 class Review::MacrosTest < ActiveSupport::TestCase
   subject { Item.new }
 
-  should\
+  should \
     validate_inclusion_of(:review_status)
-    .in_array(%w(not-ready ready rejected approved))
+      .in_array(%w(not-ready ready rejected approved))
 
   should_not allow_value(nil).for(:review_status)
 

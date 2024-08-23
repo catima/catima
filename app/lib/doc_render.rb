@@ -2,7 +2,7 @@
 class DocRender < Redcarpet::Render::HTML
   def initialize(options={})
     @options = options
-    super(options)
+    super
   end
 
   # Image override to prepend a specific url.

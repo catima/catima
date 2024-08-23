@@ -63,10 +63,10 @@ class Field::TextPresenter < FieldPresenter
     type = @item.present? ? 'item' : 'field'
     if i18n
       field.catalog.valid_locales.map do |l|
-        errors = form.object.errors.messages["#{method}_#{l}".to_sym]
+        errors = form.object.errors.messages[:"#{method}_#{l}"]
         "<tr " + (errors.empty? ? '' : 'class="has-error"') + "><td>#{l}</td><td>" + \
           formatted_text_component("#{type}_#{method}_#{l}") + \
-          "</td></tr>" + \
+          "</td></tr>" +
           (errors.empty? ? '' : "<tr class=\"has-error msg\"><td colspan=\"2\">#{errors.compact.join(' / ')}</td></tr>")
       end.compact.join
     else

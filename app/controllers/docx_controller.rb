@@ -22,7 +22,7 @@ class DocxController < ApplicationController
       outfile = File.join(dir, 'out.html')
 
       # Write the DOCX into the temporary directory
-      File.open(infile, 'wb') { |fp| fp.write(uploaded_file.read) }
+      File.binwrite(infile, uploaded_file.read)
 
       # Run the conversion using mammoth
       bin = Rails.root.join('node_modules', 'mammoth', 'bin', 'mammoth')

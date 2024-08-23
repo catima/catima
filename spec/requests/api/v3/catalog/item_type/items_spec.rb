@@ -28,7 +28,7 @@ RSpec.describe 'api/v3/{catalog_id}/item_type/{item_type_id}/item(s)', type: :re
       consumes 'application/json'
       security [BearerAuth: []]
       description <<-HTML.squish
-        <p><b>Authorization: User+/Member+/Editor+ (according to catalog\'s visibility)</b></p>
+        <p><b>Authorization: User+/Member+/Editor+ (according to catalog's visibility)</b></p>
       HTML
 
       response(200, 'successful') do
@@ -59,7 +59,7 @@ RSpec.describe 'api/v3/{catalog_id}/item_type/{item_type_id}/item(s)', type: :re
       consumes 'application/json'
       security [BearerAuth: []]
       description <<-HTML.squish
-        <p><b>Authorization: User+/Member+/Editor+ (according to catalog\'s visibility)</b></p>
+        <p><b>Authorization: User+/Member+/Editor+ (according to catalog's visibility)</b></p>
       HTML
 
       response(200, 'successful') do
