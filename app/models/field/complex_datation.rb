@@ -287,8 +287,21 @@ class Field::ComplexDatation < Field
       field = Field.find_by(uuid: attrib)
 
       return if value.blank?
-      return if value['selected_format'] != "date_time"
 
+      validate_datation_choice(record, attrib, value, field) if value['selected_format'] == "datation_choice"
+      validate_date_time(record, attrib, value, field) if value['selected_format'] == "date_time"
+    end
+
+    private
+
+    def validate_datation_choice(record, attrib, value, field)
+      return unless field.required && (value['selected_choices'].nil? || value['selected_choices']['value'].blank?)
+
+      record.errors.add(attrib,
+                        I18n.t('activerecord.errors.models.item.attributes.base.cant_be_blank'))
+    end
+
+    def validate_date_time(record, attrib, value, field)
       to_value_empty = value['to'].keys.reject { |k| k == "BC" }.all? { |key| value['to'][key].blank? || value['to'][key].nil? }
       from_value_empty = value['from'].keys.reject { |k| k == "BC" }.all? { |key| value['from'][key].blank? || value['from'][key].nil? }
       return if to_value_empty && from_value_empty && !field.required

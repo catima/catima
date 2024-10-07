@@ -365,7 +365,6 @@ const ComplexDatationInput = (props) => {
             <div>
               <div>{renderDateTimeInput('from', input)}</div>
               <div>{renderDateTimeInput('to', input)}</div>
-              <div className="base-errors">{errors?.filter(e => e.field === input.split("#item_")[1].split("_json")[0])?.map(e => e.message)?.join(',')}</div>
             </div>
         )}
         {selectedFormat === 'datation_choice' && (
@@ -377,8 +376,15 @@ const ComplexDatationInput = (props) => {
                 setChoiceData={setChoiceData}
                 fieldUuid={fieldUuid}
                 componentPolicies={componentPolicies}
+                isRequired={isRequired}
             />
         )}
+        <div className="base-errors">
+            {errors
+                ?.filter(e => e.field === input.split("#item_")[1].split("_json")[0])
+                ?.map(e => e.message)
+                ?.join(', ')}
+            </div>
       </div>
   )
 }
@@ -398,7 +404,8 @@ const RenderChoiceSetList = (props) => {
     setData,
     setChoiceData,
     fieldUuid,
-    componentPolicies
+    componentPolicies,
+    isRequired,
   } = props
 
 
@@ -417,6 +424,7 @@ const RenderChoiceSetList = (props) => {
             fieldUuid={fieldUuid}
             componentPolicies={componentPolicies}
             isActive={choiceSet.active}
+            isRequired={isRequired}
         />
       </div>);
     }
@@ -441,7 +449,8 @@ const RenderChoiceSetInput = (props) => {
     choiceSet,
     fieldUuid,
     componentPolicies,
-    isActive
+    isActive,
+    isRequired,
   } = props
 
   const [selectedChoices, setSelectedChoices] = useState({BC: false, value: selectedChoicesValueProps})
@@ -554,7 +563,14 @@ const RenderChoiceSetInput = (props) => {
                 additional={{
                   page: 1,
                 }}
-                styles={{menuPortal: base => ({...base, zIndex: 9999})}}
+                styles={{
+                    menuPortal: base => ({...base, zIndex: 9999}),
+                    control: (baseStyles, state) => ({
+                        ...baseStyles,
+                        borderColor: !isRequired || state.hasValue ? baseStyles.borderColor : 'red',
+                        borderWidth: !isRequired || state.hasValue ? baseStyles.borderWidth : '2px',
+                      }),
+                }}
                 name="choices"
                 value={selectedChoices.value}
                 onChange={selectChoice}
