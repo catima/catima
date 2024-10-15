@@ -13,7 +13,7 @@ class ItemList::FavoriteResult < ItemList
 
   def favorites
     favorite_items(Item).each_with_object([]) do |item, array|
-      next if @selected_catalog && !item.catalog == (@selected_catalog)
+      next if @selected_catalog && item.catalog.id != @selected_catalog.id
 
       array << item if @current_user.can_list_item?(item)
     end
