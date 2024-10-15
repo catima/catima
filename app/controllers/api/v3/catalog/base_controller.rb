@@ -5,7 +5,7 @@ class API::V3::Catalog::BaseController < API::V3::BaseController
   before_action :find_catalogs
   before_action :find_catalog
   before_action :log_request
-  before_action :throttle
+  before_action :throttle, if: -> { Rails.env.staging? || Rails.env.production? }
 
   def policy_scope(scope)
     super([:'api/v3', scope])
