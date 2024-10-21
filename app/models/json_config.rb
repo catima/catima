@@ -41,7 +41,7 @@ class JsonConfig
   end
 
   def load(name)
-    JSON.parse(IO.read(find_file(name)))
+    JSON.parse(File.read(find_file(name)))
   end
 
   private
