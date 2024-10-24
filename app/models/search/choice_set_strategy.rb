@@ -37,7 +37,7 @@ class Search::ChoiceSetStrategy < Search::BaseStrategy
           choice = Choice.find(criteria[:default] || criteria[:exact])
           scope = search_data_matching_more(scope, (choice.childrens.pluck(:id) + [criteria[:default] || criteria[:exact]]).flatten.map { |id| id.to_s }, negate)
         else
-          scope = search_data_matching_one_or_more(scope, criteria[:default], negate)
+          scope = search_data_matching_more(scope, criteria[:default], negate)
         end
       else
         klass = "Search::#{cat_field.type.sub(/^Field::/, '')}Strategy"
