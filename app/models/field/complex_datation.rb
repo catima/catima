@@ -143,13 +143,7 @@ class Field::ComplexDatation < Field
         active: choice_set.not_deactivated? && choice_set.not_deleted?,
         newChoiceModalUrl: Rails.application.routes.url_helpers.new_choice_modal_catalog_admin_choice_set_path(catalog, I18n.locale, choice_set),
         createChoiceUrl: Rails.application.routes.url_helpers.catalog_admin_choice_set_choices_path(catalog, I18n.locale, choice_set),
-        fetchUrl: Rails.application.routes.url_helpers.react_choices_for_choice_set_path(
-          catalog.slug,
-          I18n.locale,
-          item_type.slug,
-          field_uuid: uuid,
-          choice_set_id: choice_set.id
-        ),
+        fetchUrl: choice_set_fetch_url(choice_set),
         selectedChoicesValue: selected_choices_for_choice_set(item[:item], choice_set).map do |choice|
           {
             label: choice.choice_set.choice_prefixed_label(choice, with_dates: true),
@@ -278,6 +272,18 @@ class Field::ComplexDatation < Field
 
   def build_validators
     [ComplexDatationValidator]
+  end
+
+  def choice_set_fetch_url(choice_set)
+    if item_type.is_a?(Category)
+      Rails.application.routes.url_helpers.react_category_choices_for_choice_set_path(
+        catalog.slug, I18n.locale, item_type.id, field_uuid: uuid, choice_set_id: choice_set.id
+      )
+    else
+      Rails.application.routes.url_helpers.react_choices_for_choice_set_path(
+        catalog.slug, I18n.locale, item_type.slug, field_uuid: uuid, choice_set_id: choice_set.id
+      )
+    end
   end
 
   class ComplexDatationValidator < ActiveModel::Validator
