@@ -54,6 +54,23 @@ class CatalogAdmin::ItemsTest < ActionDispatch::IntegrationTest
       "'{\"Y\":2015, \"M\":12, \"D\":31, \"h\":14, \"m\":30, \"s\":17}';"
     )
 
+    # Check that the category field is hidden when the option is not selected.
+    # Can't use :visible => false because it will return true even when
+    # the element is visible.
+    assert_not page.has_css?('#item_language_category_uuid', :visible => true)
+
+    # Select the category option.
+    within(find('#item_one_author_category_uuid_json', visible: false).find(:xpath, '..')) do
+      find(".css-g1d714-ValueContainer").click # Click on the filter input
+      sleep(2) # Wait for the AsyncPaginate to populate
+      within(".css-4ljt47-MenuList") do # Within the filter list
+        find('div', text: 'With category', match: :first, visible: false).click
+      end
+    end
+
+    # Check that category field is visible when the option is selected.
+    assert page.has_css?('#item_language_category_uuid', :visible => true)
+
     assert_difference("item_types(:one_author).items.count") do
       click_on("Create Author")
     end
