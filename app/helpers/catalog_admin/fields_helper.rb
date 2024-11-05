@@ -71,6 +71,7 @@ module CatalogAdmin::FieldsHelper
       )
     end
 
+    options[:wrapper] = { class: 'mb-3 form-group' }
     field_presenter(form.object, field, options)
       .input(form, field.uuid, options)
   end
