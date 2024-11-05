@@ -13,7 +13,7 @@
     <%= fa_icon(:"plus-square", :text => t('.add_field')) %>
   </button>
   <div class="dropdown-menu dropdown-menu-end" aria-labelledby="add-field-dropdown">
-    <% Field.type_choices.each do |key, label| %>
+    <% field_set_type_choices(@field_set).each do |key, label| %>
       <%= link_to(t("#{translation_type_name(label)}_field"), {:action => :new, :type => key}, class: "dropdown-item") %>
     <% end %>
   </div>
