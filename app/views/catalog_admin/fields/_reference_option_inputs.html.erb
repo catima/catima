@@ -7,7 +7,7 @@
       :name,
       :label => t('.reference')) %>
 
-<% if current_user.system_admin? %>
+<% if current_user.system_admin? && !@field.item_type.is_a?(Category) %>
   <hr>
 
   <%= f.form_group(
