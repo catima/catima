@@ -11,14 +11,13 @@ class Field::ReferencePresenter < FieldPresenter
         "#{method}_json",
         input_defaults(options).reverse_merge(
           'data-multiple': field.multiple?,
-          class: 'd-none',
-          wrapper_class: ""
-        )
+          class: 'd-none'
+        ).merge(wrapper: { class: '' })
       ),
       reference_control(method)
     ].join.html_safe
 
-    tag.div(label_and_input, class: "mb-3") # form.form_group
+    tag.div(label_and_input, class: "mb-3 form-group") # form.form_group
   end
 
   def reference_control(method)
