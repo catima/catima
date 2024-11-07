@@ -181,8 +181,8 @@ class Choice < ApplicationRecord
 
     # Check if choices with the same category are present in the same item type (field_set_id)
     same_item_types = (choices.flat_map do |choice|
-      choice.choice_set.fields.map(&:field_set_id)
-    end.uniq & choice_set.fields.map(&:field_set_id)).any?
+      choice.choice_set.fields.map { |field| [field.field_set_id, field.field_set_type] }
+    end.uniq & choice_set.fields.map { |field| [field.field_set_id, field.field_set_type] }).any?
 
     return unless same_item_types || same_choice_set
 

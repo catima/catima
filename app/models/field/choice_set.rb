@@ -283,6 +283,7 @@ class Field::ChoiceSet < Field
 
     # Get all the categories linked to the item type (field_set_id)
     field_set_categories = Field.where(field_set_id: field_set_id)
+                                .where(field_set_type: field_set_type)
                                 .where.not(id: id)
                                 .where.not(choice_set_id: nil)
                                 .select { |choice_set| choice_set.choice_set.not_deleted? }
