@@ -291,8 +291,7 @@ class Field::ChoiceSet < Field
                                 .flatten
 
     # Check if there is a category linked to the selected ChoiceSet already used in the item type
-    return unless (choice_set_categories & field_set_categories).any?
-
-    errors.add(:choice_set_id, :category_already_used)
+    errors.add(:choice_set_id, :category_already_used) if (choice_set_categories & field_set_categories).any?
+    errors.add(:choice_set_id, :choice_set_containing_category) if belongs_to_category? && choice_set_categories.include?(category_id)
   end
 end

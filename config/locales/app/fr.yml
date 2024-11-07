@@ -85,6 +85,7 @@ fr:
           attributes:
             choice_set_id:
               category_already_used: "Vous ne pouvez pas choisir un ensemble de choix avec des sous-fiches déjà utilisées dans ce type de fiche"
+              choice_set_containing_category: "Vous ne pouvez pas choisir un ensemble de choix contenant des choix liés à cette sous-fiche"
         choice:
           attributes:
             base:
@@ -92,6 +93,7 @@ fr:
               negative_dates: "Les dates négatives doivent être saisies avec l'option avant Jesus Christ (si activée)"
               category_deleted: "La sous-fiche sélectionnée a été supprimée"
               category_already_used: "Une sous-fiche ne peut pas être utilisée deux fois dans le même ensemble de choix ou le même type de fiche"
+              choise_set_present_in_category: "Cette catégorie contient cet ensemble de choix et ne peux donc pas être utilisée comme catégorie pour le choix"
         csv_import:
           attributes:
             file:
