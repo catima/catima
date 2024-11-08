@@ -83,6 +83,7 @@ en:
           attributes:
             choice_set_id:
               category_already_used: "You cannot chose a choice set with categories already used in this item type"
+              choice_set_containing_category: "You cannot chose a choice set containing choices linked to this category"
         choice:
           attributes:
             base:
@@ -90,6 +91,7 @@ en:
               negative_dates: "Negative dates must be entered with the option before Jesus Christ (if activated)"
               category_deleted: "The selected category has been deleted"
               category_already_used: "A category cannot be used twice in the same choice set or item type"
+              choise_set_present_in_category: "This category contains this choice set and thus cannot be added as a category for the choice"
         csv_import:
           attributes:
             file:

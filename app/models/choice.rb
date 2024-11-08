@@ -167,6 +167,9 @@ class Choice < ApplicationRecord
   def validate_category_used
     return if category.blank?
 
+    # Check if the choice set is a field in the category.
+    errors.add :base, :choise_set_present_in_category if category.fields.any? { |field| field.is_a?(Field::ChoiceSet) && field.choice_set_id == choice_set_id }
+
     # Get all the choices with the same category as the one we are trying to save
     choices = Choice.where(category_id: category, catalog_id: catalog)
                     .where.not(id: id)
@@ -181,8 +184,8 @@ class Choice < ApplicationRecord
 
     # Check if choices with the same category are present in the same item type (field_set_id)
     same_item_types = (choices.flat_map do |choice|
-      choice.choice_set.fields.map(&:field_set_id)
-    end.uniq & choice_set.fields.map(&:field_set_id)).any?
+      choice.choice_set.fields.map { |field| [field.field_set_id, field.field_set_type] }
+    end.uniq & choice_set.fields.map { |field| [field.field_set_id, field.field_set_type] }).any?
 
     return unless same_item_types || same_choice_set
 
