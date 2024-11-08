@@ -63,6 +63,7 @@ const Items = forwardRef((props, ref) => {
         className={((currentCount.current % 2) === 0) ? 'line__group__item__wrapper  odd' : 'line__group__item__wrapper  even'}
         key={`${item.id}-${index}`}>
         <div className="line__group__item text-component">
+          { item.thumbnail && <div dangerouslySetInnerHTML={{__html: item.thumbnail}}/> }
           <div dangerouslySetInnerHTML={{__html: item.title}}/>
           <p className="color-contrast-medium" dangerouslySetInnerHTML={{__html: item.summary}}/>
         </div>
