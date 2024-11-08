@@ -1,7 +1,7 @@
 <% if container.sort_field.present? %>
   <%= react_component('Line/components/Line', {
     sort: define_sort_direction(params[:sort] || container.sort),
-    url: [page_path(@page), "/#{container.id}/items/?style=line", params[:sort] ? "&sort=#{params[:sort]}" : ""].join,
+    url: [page_path(@page), "/#{container.id}/items_for_line/", params[:sort] ? "?sort=#{params[:sort]}" : ""].join,
     currentPage: params[:page] || 1,
     icons: {up: fa_icon("chevron-up"),
             down: fa_icon("chevron-down")},
