@@ -220,7 +220,8 @@ const Line = (props) => {
 
   async function fetchItems(page) {
     setIsFetching(true)
-    let {data: {items: newItems}} = await axios.get(url + `&page=${page}`)
+    const separator = url.includes('?') ? '&' : '?';
+    let {data: {items: newItems}} = await axios.get(url + separator + `page=${page}`);
     setCurrentPage(page)
 
     let newGroupedItems = {...groupedItems}
