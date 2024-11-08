@@ -62,4 +62,14 @@ class ContainersTest < ActionDispatch::IntegrationTest
     assert(first_level0_group.has_content?("A"))
     assert(first_level1_group.has_content?("Very first author"))
   end
+
+  test "item with image show both title and thumbnail" do
+    visit("/one/en/line-one")
+
+    # Select the item with the image.
+    within(".line__container > .level-0:first-child .level-1:nth-child(2) .line__group__item") do
+      assert(page.has_content?("Author with images"), "The item should display the title 'Author with images'")
+      assert(page.has_selector?("img"), "The item should display a thumbnail image")
+    end
+  end
 end
