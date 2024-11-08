@@ -36,7 +36,7 @@ class PagesController < ApplicationController
     render :show
   end
 
-  def items
+  def items_for_line
     slug = request[:slug]
     page = catalog.pages.where(:slug => slug).first!
     container = page.containers.find(request[:container_id])

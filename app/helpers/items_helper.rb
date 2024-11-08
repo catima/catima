@@ -107,14 +107,12 @@ module ItemsHelper
   end
 
   def formatted_item_for_line(item, list:, sort_field:)
-    title = if item_has_thumbnail?(item)
-              tag.div(item_list_link(list, item, nil) { item_thumbnail(item, :class => "media-object") }, class: "pull-left me-3")
-            else
-              tag.h4(item_list_link(list, item, nil, item_display_name(item)), class: "mt-0 mb-1")
-            end
+    html_title = tag.h4(item_list_link(list, item, nil, item_display_name(item)), class: "mt-0 mb-1")
+    html_thumbnail = tag.div(item_list_link(list, item, nil) { item_thumbnail(item, :class => "media-object") }, class: "pull-left me-3") if item_has_thumbnail?(item)
 
     item.attributes.merge(
-      title: title,
+      title: html_title,
+      thumbnail: html_thumbnail,
       summary: item_summary(item),
       primary_field_value: field_value(item, item.item_type.field_for_select),
       sort_field_value: sort_field_value(sort_field, item),

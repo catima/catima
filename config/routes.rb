@@ -381,9 +381,9 @@ Rails.application.routes.draw do
         :constraints => PagesController::Constraint,
         :as => :page
 
-    get ':slug/:container_id/items/' => "pages#items",
+    get ':slug/:container_id/items_for_line/' => "pages#items_for_line",
         :constraints => PagesController::Constraint,
-        :as => :page_items
+        :as => :page_items_for_line
 
     resources :items,
               :path => ":item_type_slug",
