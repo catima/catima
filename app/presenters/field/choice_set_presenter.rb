@@ -5,6 +5,12 @@ class Field::ChoiceSetPresenter < FieldPresenter
   include ItemsHelper
   include Select2Helper
 
+  def self.options_for_item_view(view_type)
+    return {} if view_type == :item_view
+
+    { :style => :compact }
+  end
+
   def value
     choices = selected_choices(item)
     return if choices.empty?

@@ -43,7 +43,7 @@
     </tbody>
   </table>
 <% else %>
-  <%= ItemViewPresenter.new(self, @item.item_type.default_item_view, @item, I18n.locale).render %>
+  <%= ItemViewPresenter.new(self, @item.item_type.default_item_view, @item, I18n.locale).render(:item_view) %>
 <% end %>
 
 <% fields_and_item_references(@item) do |field, browse| %>

@@ -64,7 +64,7 @@ module ItemsHelper
     return item_display_name(item) if item_view.nil?
 
     presenter = ItemViewPresenter.new(self, item_view, item, I18n.locale, options)
-    presenter.render
+    presenter.render(:list_view)
   end
 
   def item_summary(item, bypass_displayable: false)
@@ -94,7 +94,7 @@ module ItemsHelper
     return default_display_name(item) if item_view.nil?
 
     presenter = ItemViewPresenter.new(self, item_view, item, I18n.locale, strip_p: true)
-    presenter.render
+    presenter.render(:display_name)
   end
 
   def default_display_name(item)
