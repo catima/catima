@@ -6,6 +6,18 @@ class FieldPresenter
   delegate :label, to: :field, prefix: :field
   delegate :react_component, :to => :view
 
+  # Returns the options hash that will be given to the FieldPresenter
+  # constructor when rendering this item for an item view.
+  #
+  # If you need to give specific options to a presenter when rendering
+  # it from an item view, you can override this method in the subclass.
+  #
+  # @param _view_type The view type that is being rendered.
+  #                   See ItemViewPresenter.VIEW_TYPES.
+  def self.options_for_item_view(_view_type)
+    {}
+  end
+
   def initialize(view, item, field, options={}, user=nil)
     @view = view
     @item = item

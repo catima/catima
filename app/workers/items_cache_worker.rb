@@ -32,7 +32,7 @@ class ItemsCacheWorker
   def cache_item(item, item_view, primary_field)
     views = { display_name: {} }
     item.catalog.valid_locales.each do |locale|
-      views[:display_name][locale] = item_view.nil? ? primary_field.strip_extra_content(item, locale) : item_view.render(item, locale)
+      views[:display_name][locale] = item_view.nil? ? primary_field.strip_extra_content(item, locale) : item_view.render(item, locale, :display_name)
     end
     item.update!(views: views)
   end

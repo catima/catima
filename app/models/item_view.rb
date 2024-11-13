@@ -33,9 +33,9 @@ class ItemView < ApplicationRecord
     item_type.item_views.where.not(item_views: { id: id }).update_all(:default_for_list_view => false)
   end
 
-  def render(item, locale)
+  def render(item, locale, view_type=:display_name)
     presenter = ItemViewPresenter.new(self, self, item, locale, strip_p: true)
-    presenter.render
+    presenter.render(view_type)
   end
 
   def template_json
