@@ -289,6 +289,15 @@ one_author_birthplace:
   uuid: one_author_birthplace_uuid
   required: false
 
+one_author_home:
+  type: "Field::Geometry"
+  name_translations: { "name_en": "Home" }
+  name_plural_translations: { "name_plural_en": "Homes" }
+  slug: home
+  field_set: one_author (ItemType)
+  uuid: one_author_home_uuid
+  required: false
+
 one_author_picture:
   type: "Field::Image"
   name_translations: { "name_en": "Picture" }
@@ -384,6 +393,15 @@ one_book_notes:
   field_set: one_book (ItemType)
   uuid: one_book_notes_uuid
   options: { "maximum": "","minimum": "","formatted_text": "1" }
+
+one_book_location:
+  type: "Field::Geometry"
+  name_translations: { "name_en": "Location" }
+  name_plural_translations: { "name_plural_en": "Location" }
+  slug: location
+  field_set: one_book (ItemType)
+  uuid: one_book_location_uuid
+  required: false
 
 one_required_choice_set:
   type: "Field::ChoiceSet"

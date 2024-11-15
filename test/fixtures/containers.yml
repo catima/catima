@@ -37,6 +37,17 @@ one_map_empty_item_type:
   content: { style: 'list', item_type: "" }
   locale: en
 
+one_map_geofields:
+  type: Container::Map
+  slug: one_map_geofields
+  page: one
+  content: {
+    style: 'list',
+    item_type: "<%= ActiveRecord::FixtureSet.identify(:one_author) %>",
+    geofields: "[<%= ActiveRecord::FixtureSet.identify(:one_author_birthplace) %>, <%= ActiveRecord::FixtureSet.identify(:one_author_home) %>]"
+  }
+  locale: en
+
 one_line_container:
   type: Container::ItemList
   slug: line
