@@ -16,12 +16,12 @@
 class Container::Map < Container
   DEFAULT_MAP_HEIGHT = 400
 
-  store_accessor :content, :item_type, :layers, :height
+  store_accessor :content, :item_type, :layers, :height, :geofields
 
-  validate :item_type_validation
+  validate :item_type_validation, :geofields_validation
 
   def custom_container_permitted_attributes
-    %i(item_type geom_field layers height)
+    %i(item_type layers height geofields)
   end
 
   def geojson
@@ -29,12 +29,13 @@ class Container::Map < Container
     return unless @item_type
 
     features = { "type" => "FeatureCollection", "features" => [] }
-    # Retrieve the first geometry field in the item type, this limitation is artificial
-    # and temporary until we have a better way to handle multiple geometry fields.
-    # TODO: handle multiple geometry fields (field selection with multi-select)
-    fields = @item_type.fields.where(type: 'Field::Geometry').limit(1)
 
-    fields.find_each do |field|
+    fields = geo_fields_as_fields
+
+    # Get all geo fields if none are selected.
+    fields = @item_type.fields.where(type: 'Field::Geometry') if fields.empty?
+
+    fields.each do |field|
       res = find_geometries_query(field)
       data = JSON.parse(res[0]['geojson'])
 
@@ -58,6 +59,23 @@ class Container::Map < Container
     layers.present? ? JSON.parse(layers) : []
   end
 
+  def geo_fields
+    geofields.present? ? JSON.parse(geofields) : []
+  end
+
+  def geo_fields_as_fields
+    @item_type = catalog.item_types.find_by(id: item_type)
+
+    if @item_type.present?
+      return @item_type
+             .fields
+             .where(:type => 'Field::Geometry')
+             .filter { |f| geo_fields.include?(f.id) }
+    end
+
+    []
+  end
+
   def update_from_json(data)
     unless data[:content].nil?
       it = catalog.item_types.find_by(slug: data[:content]['item_type'])
@@ -72,6 +90,24 @@ class Container::Map < Container
     return if item_type.present?
 
     errors.add :item_type, I18n.t('catalog_admin.containers.item_type_warning')
+  end
+
+  def geofields_validation
+    return if geo_fields.empty?
+
+    @item_type = catalog.item_types.find_by(id: item_type)
+    if @item_type.present?
+      valid_geofield_ids = @item_type
+                           .fields
+                           .where(:type => 'Field::Geometry')
+                           .pluck(:id)
+    end
+
+    invalid_fields = geo_fields - (valid_geofield_ids || [])
+
+    return unless invalid_fields.any?
+
+    errors.add :geofields, I18n.t('catalog_admin.containers.geofields_invalid')
   end
 
   def find_geometries_query(field)

@@ -1,6 +1,6 @@
 <%= react_component("GeoViewer/components/GeoViewer",
       {
-        features: results.items_as_geojson.to_json,
+        features: results.items_as_geojson(@advanced_search_config).to_json,
         layers: @advanced_search_config.geo_layers,
         mapHeight: 600,
         catalog: @catalog.slug,
