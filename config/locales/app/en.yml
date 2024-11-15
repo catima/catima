@@ -655,6 +655,7 @@ en:
         ua-desc: Updated at (descending)
         help: "You can select the sorting style of the items. It is possible to sort by field, by creation date or by the update date. If you choose to sort by field, for the \"line\" style, the sorting field will be selectable, for the other styles it will default to the primary field."
       item_type_warning: "You need to create at least one item type to use this type of container"
+      geofields_invalid: "Invalid geographic fields"
       common_form_fields:
         save_container: Save container
         create_container: Create container
@@ -776,6 +777,10 @@ en:
         layers_help: You can add additional layers to your map (default is the standard tile layer from OpenStreetMap). If layers are added, the first one will be the default layer for your map.
         layers_component_no_options: No more layers to add
         layers_component_placeholder: Add layers
+        geofields: Geographic fields
+        geofields_help: You can chose which geographic fields will be displayed for the selected item type. If you chose none, all geographic fields will be displayed.
+        geofields_component_no_options: No more geographic field to add
+        geofields_component_placeholder: Add geographic field
         zoom_level: Initial zoom level
         zoom_distant: "Distant (level 5)"
         zoom_medium: "Medium (level 10)"
