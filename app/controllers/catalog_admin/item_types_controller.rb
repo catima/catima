@@ -42,6 +42,18 @@ class CatalogAdmin::ItemTypesController < CatalogAdmin::BaseController
     redirect_to(catalog_admin_setup_path(catalog, I18n.locale), :notice => deleted_message)
   end
 
+  def geofields
+    @item_type = catalog.item_types.where(:id => params[:item_types_id]).first!
+    authorize(@item_type)
+    geofields = @item_type.fields.where(:type => 'Field::Geometry').map do |field|
+      {
+        :id => field.id,
+        :name => field.name
+      }
+    end
+    render json: geofields
+  end
+
   private
 
   def build_item_type

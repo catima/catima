@@ -220,6 +220,11 @@ Rails.application.routes.draw do
               :path => "",
               :except => [:index, :show, :new, :create]
 
+    get "item_types/:item_types_id/geofields",
+        :controller => :item_types,
+        :action => :geofields,
+        :as => "item_type_geofields"
+
     resources :fields,
               :path => ":item_type_slug/fields",
               :param => :slug,
