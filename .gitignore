@@ -66,6 +66,7 @@ dump.rdb
 
 # Ignore IDE config
 .editorconfig
+/.devcontainer/
 
 # Ignore byebug history
 .byebug_history
