@@ -776,7 +776,7 @@ fr:
         layers_help: Vous pouvez ajouter des calques supplémentaires à votre carte (par défaut, la couche standard OpenStreetMap est utilisée). Si des calques sont ajoutées, le premier sera le claque par défaut de votre carte.
         layers_component_no_options: Plus de calques à ajouter
         layers_component_placeholder: Ajouter des calques
-        geofields: Champ géographique
+        geofields: Champs géographiques
         geofields_help: Vous pouvez choisir quels champs géographiques seront affichés pour le type d'élément sélectionné. Si vous en choisissez aucun, tous les champs géographiques seront affichés.
         geofields_component_no_options: Plus de champ géographique à ajouter
         geofields_component_placeholder: Ajouter champ géographique
