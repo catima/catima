@@ -31,7 +31,7 @@ const GeoViewer = (props) => {
 
   const computedLayers = layers ? layers : []
 
-  let computedFeatures = features ? JSON.parse(features) : [];
+  let computedFeatures = (features ? JSON.parse(features) : []) || [];
   if(computedFeatures.features) {
     computedFeatures = computedFeatures.features
   }

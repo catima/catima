@@ -22,4 +22,5 @@ class FieldSetPolicy
   alias_method :new?, :user_is_catalog_admin?
   alias_method :show?, :user_is_catalog_admin?
   alias_method :update?, :user_is_catalog_admin?
+  alias_method :geofields?, :user_is_catalog_admin?
 end

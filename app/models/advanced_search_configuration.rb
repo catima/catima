@@ -24,7 +24,7 @@ class AdvancedSearchConfiguration < ApplicationRecord
     "Map" => "map"
   }.freeze
 
-  store_accessor :options, :layers
+  store_accessor :options, :layers, :geofields
 
   include HasTranslations
   include HasLocales
@@ -45,6 +45,7 @@ class AdvancedSearchConfiguration < ApplicationRecord
 
   validates_presence_of :catalog
   validates_presence_of :item_type
+  validate :geofields_validation
 
   scope :with_active_item_type, -> { joins(:item_type).where(item_types: { deleted_at: nil }) }
 
@@ -52,7 +53,7 @@ class AdvancedSearchConfiguration < ApplicationRecord
   locales :description
 
   def custom_container_permitted_attributes
-    %i(layers)
+    %i(layers geofields)
   end
 
   def field_set
@@ -133,5 +134,28 @@ class AdvancedSearchConfiguration < ApplicationRecord
 
   def geo_layers
     layers.present? ? JSON.parse(layers) : []
+  end
+
+  def geo_fields
+    geofields.present? ? JSON.parse(geofields) : []
+  end
+
+  def geo_fields_as_fields
+    item_type
+      .fields
+      .where(:type => 'Field::Geometry')
+      .filter { |f| geo_fields.include?(f.id) }
+  end
+
+  private
+
+  def geofields_validation
+    return if geo_fields.empty?
+
+    valid_geofield_ids = item_type.fields.where(:type => 'Field::Geometry').pluck(:id)
+
+    invalid_fields = geo_fields - valid_geofield_ids
+
+    errors.add :geofields, I18n.t('catalog_admin.containers.geofields_invalid') if invalid_fields.any?
   end
 end

@@ -652,6 +652,7 @@ fr:
         ua-desc: Date de mise à jour (descendant)
         help: "Vous pouvez choisir le style de tri des fiches. Il est possible de trier par champ, par date de création ou par date de mise à jour. Si vous choisissez le tri par champ, pour le style \"line\" le champ de tri sera sélectionnable, pour les autres styles le champ primaire sera sélectionné par défaut."
       item_type_warning: "Vous devez créer au moins un type de fiche pour utiliser ce type de conteneur"
+      geofields_invalid: "Champ géographique non valide"
       common_form_fields:
         save_container: Enregistrer conteneur
         create_container: Créer conteneur
@@ -775,6 +776,10 @@ fr:
         layers_help: Vous pouvez ajouter des calques supplémentaires à votre carte (par défaut, la couche standard OpenStreetMap est utilisée). Si des calques sont ajoutées, le premier sera le claque par défaut de votre carte.
         layers_component_no_options: Plus de calques à ajouter
         layers_component_placeholder: Ajouter des calques
+        geofields: Champ géographique
+        geofields_help: Vous pouvez choisir quels champs géographiques seront affichés pour le type d'élément sélectionné. Si vous en choisissez aucun, tous les champs géographiques seront affichés.
+        geofields_component_no_options: Plus de champ géographique à ajouter
+        geofields_component_placeholder: Ajouter champ géographique
         zoom_level: Niveau de zoom initial
         zoom_distant: "Lointain (niveau 5)"
         zoom_medium: "Moyen (niveau 10)"

@@ -27,6 +27,28 @@
     }) %>
 <% end %>
 
+<%= f.form_group(
+    :geofields,
+    :help => t("catalog_admin.fields.geometry_option_inputs.geofields_help"),
+) do %>
+  <label class="form-label" for="container_geofields"><%= t("catalog_admin.fields.geometry_option_inputs.geofields") %></label>
+  <%= f.hidden_field(:geofields) %>
+  <%= react_component('GeoEditor/components/GeoFields',
+    {
+      defaults: f.object.geo_fields_as_fields.map { |f| { :label => f.name, :value => f.id } },
+      inputId: "container_geofields",
+      itemTypeId: "container_item_type",
+      placeholder: t("catalog_admin.fields.geometry_option_inputs.geofields_component_placeholder"),
+      noOptionsMessage: t("catalog_admin.fields.geometry_option_inputs.geofields_component_no_options"),
+      fetchUrl: catalog_admin_item_type_geofields_path(@catalog, item_types_id: "item_types_id")
+    }) %>
+    <% if f.object.errors[:geofields].any? %>
+      <div class="text-danger my-1">
+      <%= f.object.errors[:geofields].join(", ") %>
+      </div>
+  <% end %>
+<% end %>
+
 <%= f.number_field(
       :height,
       :label => t('.height_label'),

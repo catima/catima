@@ -22,14 +22,15 @@ class ItemList::AdvancedSearchResult < ItemList
     params.permit(:criteria => permitted)
   end
 
-  def items_as_geojson
+  def items_as_geojson(advanced_search_config)
     features = []
-    # Retrieve the first geometry field in the item type, this limitation is artificial
-    # and temporary until we have a better way to handle multiple geometry fields.
-    # TODO: handle multiple geometry fields (field selection with multi-select)
-    fields = @model.fields.where(:type => 'Field::Geometry').limit(1)
 
-    fields.find_each do |field|
+    fields = advanced_search_config.geo_fields_as_fields
+
+    # Get all geo fields if none are selected.
+    fields = @model.fields.where(type: 'Field::Geometry') if fields.empty?
+
+    fields.each do |field|
       geometry_aware_items = unpaginaged_items.reject { |it| it.data[field.uuid].blank? }
 
       features.concat(

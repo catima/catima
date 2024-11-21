@@ -82,4 +82,28 @@ class CatalogAdmin::ContainersTest < ActionDispatch::IntegrationTest
 
     assert(page.has_content?('Multiple "ItemList" containers in the same page is not allowed'))
   end
+
+  test "map containers display correct geofield options" do
+    log_in_as("one-admin@example.com", "password")
+    visit("one/en/admin/_pages/line-one/edit")
+
+    find("#add-field-dropdown").click
+    click_on("Map")
+
+    # We should see the geofields from book (the default one selected).
+    within(".mb-3:has(#container_geofields)") do
+      find(".basic-multi-select").click
+      assert(page.has_content?('Birthplace'))
+      assert(page.has_content?('Home'))
+    end
+
+    # # Select another item type.
+    select "Book", from: "Item type"
+
+    # Now we should see the geofields from author.
+    within(".mb-3:has(#container_geofields)") do
+      find(".basic-multi-select").click
+      assert(page.has_content?("Location"))
+    end
+  end
 end
