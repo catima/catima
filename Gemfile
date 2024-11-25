@@ -60,11 +60,6 @@ gem "rswag", "~> 2.14.0"
 gem 'redis', "~> 5.0"
 gem "rspec-rails", "~> 6.1"
 gem "net-http", "~> 0.4" # Avoid already initialized constant Net::ProtocRetryError
-# TODO: remove after next version of Puma is released
-# See https://github.com/puma/puma/pull/3532
-# `require: false` is needed because you can't actually `require "rackup"`
-# due to a different bug: https://github.com/rack/rackup/commit/d03e1789
-gem "rackup", "1.0.0", require: false
 
 source "https://rails-assets.org" do
   gem "rails-assets-autosize", "~> 4.0"
