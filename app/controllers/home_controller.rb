@@ -14,6 +14,33 @@ class HomeController < ApplicationController
     end
   end
 
+  def robots
+    # TODO: Improve where these are retrieved / informed.
+    commercial_bots = [
+      "psbot", "PetalBot", "Mail.RU_Bot", "MegaIndex", "Baiduspider",
+      "360Spider", "Yisouspider", "Bytespider", "Sogou web spider",
+      "Sogou inst spider", "proximic", "ADmantX", "Seekport Crawler", "BLEXBot",
+      "MJ12bot", "dotbot", "GPTBot", "ChatGPT-User", "CCBot"
+    ]
+
+    indexed_catalos = Catalog
+                      .not_deactivated
+                      .where(:seo_indexable => true)
+                      .pluck(:slug)
+
+    robots_txt = <<~ROBOTS
+      #{commercial_bots.map { |bot| "User-agent: #{bot}" }.join("\n")}
+      Disallow: /
+
+      User-agent: *
+      Crawl-Delay: 5
+      #{indexed_catalos.map { |slug| "Allow: /#{slug}/" }.join("\n")}
+      Disallow: /
+    ROBOTS
+
+    render plain: robots_txt
+  end
+
   private
 
   def redirect_to_catalog(catalog)

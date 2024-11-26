@@ -54,6 +54,7 @@ two:
   throttle_time_window: 1 * 3600
   throttle_max_requests: 1000
   api_enabled: true
+  seo_indexable: true
 
 with_dash:
   name: Catalog with a dash in the slug
@@ -105,6 +106,7 @@ search:
   throttle_time_window: 1 * 3600
   throttle_max_requests: 1000
   api_enabled: true
+  seo_indexable: true
 
 not_visible:
   name: Catalog without visibility
