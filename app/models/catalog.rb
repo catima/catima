@@ -14,6 +14,7 @@
 #  primary_language    :string           default("en"), not null
 #  requires_review     :boolean          default(FALSE), not null
 #  restricted          :boolean          default(FALSE), not null
+#  seo_indexable       :boolean          default(FALSE), not null
 #  slug                :string
 #  style               :jsonb
 #  updated_at          :datetime         not null
@@ -38,6 +39,7 @@ class Catalog < ApplicationRecord
 
   validates_inclusion_of :primary_language, :in => :available_locales
   validate :other_languages_included_in_available_locales
+  validate :seo_indexable_must_be_false_if_data_only_or_public
 
   serialize :style, coder: HashSerializer
 
@@ -194,5 +196,10 @@ class Catalog < ApplicationRecord
       :other_languages,
       "can only include #{available_locales.join(', ')}"
     )
+  end
+
+  def seo_indexable_must_be_false_if_data_only_or_public
+    errors.add(:seo_indexable, "must be false if data_only is true") if data_only && seo_indexable
+    errors.add(:seo_indexable, "must be false if not public") if !public? && seo_indexable
   end
 end

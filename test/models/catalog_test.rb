@@ -76,4 +76,19 @@ class CatalogTest < ActiveSupport::TestCase
     assert_equal(catalog.categories.pluck(:name), cloned.categories.pluck(:name))
     assert_equal(catalog.advanced_search_configurations.pluck(:slug), cloned.advanced_search_configurations.pluck(:slug))
   end
+
+  test "is valid when seo_indexable is enable" do
+    catalog = catalogs(:one)
+    catalog.update(restricted: false, visible: true, data_only: false, seo_indexable: true)
+    assert catalog.valid?
+
+    catalog.update(restricted: false, visible: false, data_only: false, seo_indexable: true)
+    assert catalog.invalid?
+
+    catalog.update(restricted: true, visible: true, data_only: false, seo_indexable: true)
+    assert catalog.invalid?
+
+    catalog.update(restricted: false, visible: true, data_only: true, seo_indexable: true)
+    assert catalog.invalid?
+  end
 end

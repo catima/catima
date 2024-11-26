@@ -50,6 +50,7 @@ en:
         throttle_time_window: "Throttle time window in seconds"
         throttle_max_requests: "Throttle maximum requests"
         other_languages: Other supported languages
+        seo_indexable: "Indexable (SEO)"
       group:
         name: "Name"
         description: "Description"

@@ -53,6 +53,7 @@ fr:
         throttle_time_window: "Fenêtre temporelle de limitation api en secondes"
         throttle_max_requests: "Nombre maximum de requêtes"
         other_languages: Autres langues supportées
+        seo_indexable: "Indexable (SEO)"
       group:
         name: "Nom"
         description: "Description"

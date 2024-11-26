@@ -57,7 +57,7 @@ class Dump::CatalogDump < Dump
 
   def dump_catalog_information(cat, struct_dir)
     cat_json = cat.as_json(only: [:slug, :name, :primary_language, :other_languages,
-                                  :advertize, :requires_review]
+                                  :advertize, :requires_review, :seo_indexable]
                           )
     File.write(File.join(struct_dir, 'catalog.json'), JSON.pretty_generate(cat_json))
   end
