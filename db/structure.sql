@@ -343,7 +343,8 @@ CREATE TABLE public.catalogs (
     api_enabled boolean DEFAULT false,
     throttle_time_window integer DEFAULT 1,
     throttle_max_requests integer DEFAULT 5,
-    data_only boolean DEFAULT false
+    data_only boolean DEFAULT false,
+    seo_indexable boolean DEFAULT false NOT NULL
 );
 
 
@@ -2510,6 +2511,7 @@ ALTER TABLE ONLY public.choice_sets
 SET search_path TO "$user", public;
 
 INSERT INTO "schema_migrations" (version) VALUES
+('20241126084628'),
 ('20240814090544'),
 ('20240814090543'),
 ('20240814090542'),
