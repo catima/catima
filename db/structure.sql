@@ -764,7 +764,8 @@ CREATE TABLE public.item_types (
     display_emtpy_fields boolean DEFAULT true NOT NULL,
     suggestions_activated boolean DEFAULT false,
     suggestion_email character varying,
-    allow_anonymous_suggestions boolean DEFAULT false
+    allow_anonymous_suggestions boolean DEFAULT false,
+    seo_indexable boolean DEFAULT true NOT NULL
 );
 
 
@@ -2511,6 +2512,7 @@ ALTER TABLE ONLY public.choice_sets
 SET search_path TO "$user", public;
 
 INSERT INTO "schema_migrations" (version) VALUES
+('20241127123939'),
 ('20241126084628'),
 ('20240814090544'),
 ('20240814090543'),
