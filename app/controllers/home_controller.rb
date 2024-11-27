@@ -23,10 +23,10 @@ class HomeController < ApplicationController
       "MJ12bot", "dotbot", "GPTBot", "ChatGPT-User", "CCBot"
     ]
 
-    indexed_catalos = Catalog
-                      .not_deactivated
-                      .where(:seo_indexable => true)
-                      .pluck(:slug)
+    indexed_catalogs = Catalog
+                       .not_deactivated
+                       .where(:seo_indexable => true)
+                       .pluck(:slug)
 
     robots_txt = <<~ROBOTS
       #{commercial_bots.map { |bot| "User-agent: #{bot}" }.join("\n")}
@@ -34,7 +34,7 @@ class HomeController < ApplicationController
 
       User-agent: *
       Crawl-Delay: 5
-      #{indexed_catalos.map { |slug| "Allow: /#{slug}/" }.join("\n")}
+      #{indexed_catalogs.map { |slug| "Allow: /#{slug}/" }.join("\n")}
       Disallow: /
     ROBOTS
 

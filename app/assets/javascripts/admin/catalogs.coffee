@@ -18,9 +18,20 @@ init = ->
       $('#catalog_custom_root_page_id').attr 'disabled', 'disabled'
       $('#catalog_advertize').prop 'checked', false
       $('#catalog_advertize').attr 'disabled', 'disabled'
+      $('#catalog_seo_indexable').prop 'checked', false
+      $('#catalog_seo_indexable').attr 'disabled', 'disabled'
     else
       $('#catalog_custom_root_page_id').attr 'disabled', null
       $('#catalog_advertize').attr 'disabled', null
+      $('#catalog_seo_indexable').attr 'disabled', null
+    return
+
+  $('#catalog_access').on 'change', (e) ->
+    if $('#catalog_access').val() == $('#catalog_seo_indexable').attr('data-access-open-id')
+      $('#catalog_seo_indexable').attr 'disabled', null
+    else
+      $('#catalog_seo_indexable').prop 'checked', false
+      $('#catalog_seo_indexable').attr 'disabled', 'disabled'
     return
 
 $(document).ready(init)

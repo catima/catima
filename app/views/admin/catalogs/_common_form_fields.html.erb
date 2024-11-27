@@ -38,6 +38,17 @@
   ) do %>
     <%= f.check_box(:advertize) %>
   <% end %>
+  <%= f.form_group(
+    :seo_indexable,
+    :help => "If checked, this catalog will be indexed for search engines (like Google)."
+  ) do %>
+    <%= f.check_box(:seo_indexable, data: { access_open_id: catalog_access_open_for_everyone_select_id }) %>
+    <% if f.object.errors[:seo_indexable].any? %>
+    <div class="text-danger mb-1">
+        <%= f.object.errors[:seo_indexable].join(", ") %>
+    </div>
+    <% end %>
+  <% end %>
 <% end %>
 
 <%= f.hidden_field(:visible) %>

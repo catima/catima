@@ -38,6 +38,10 @@ module CatalogAdmin::CatalogsHelper
     [:everyone, :members, :catalog_staff][catalog_access(catalog) - 1].to_s
   end
 
+  def catalog_access_open_for_everyone_select_id
+    1
+  end
+
   def catalog_access_select(catalog)
     select_tag(
       :catalog_access,
