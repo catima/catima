@@ -155,8 +155,10 @@ class ItemType < ApplicationRecord
     false
   end
 
-  def seo_indexable?
-    seo_indexable && catalog.seo_indexable
+  # Return if the field_set is disabled for SEO indexing.
+  # Return false if the catalog is not SEO indexable, even if the field_set is.
+  def seo_indexable_disabled?
+    catalog.seo_indexable && !seo_indexable
   end
 
   private

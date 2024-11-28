@@ -1,3 +1,9 @@
+<% if item_type.seo_indexable_disabled? %>
+  <% content_for :meta_tags do %>
+    <meta name="robots" content="noindex, nofollow">
+  <% end %>
+<% end %>
+
 <% provide(:title) do %>
   <div data-controller="toggle-display">
     <div>

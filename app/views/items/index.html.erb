@@ -1,3 +1,9 @@
+<% if item_type.seo_indexable_disabled? %>
+  <% content_for :meta_tags do %>
+    <meta name="robots" content="noindex, nofollow">
+  <% end %>
+<% end %>
+
 <% provide(:title, item_list_title(@item, item_type)) %>
 
 <%= render_item_list(@browse, params) %>
