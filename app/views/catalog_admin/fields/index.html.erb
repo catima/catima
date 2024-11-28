@@ -1,7 +1,7 @@
 <% provide(:title) do %>
   <b><%= @field_set.name %></b>
   <%= field_set_metadata(@field_set) %>
-  <% if @field_set.catalog.seo_indexable && !@field_set.seo_indexable %>
+  <% if seo_indexable_disabled?(@field_set) %>
     <%= tag.span(t(".seo_indexable_badge").downcase, :class => "badge text-bg-info") %>
   <% end %>
 <% end %>
