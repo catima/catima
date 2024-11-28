@@ -31,3 +31,11 @@
     </div>
   <% end %>
 </div>
+<% if @catalog.seo_indexable %>
+    <h4><%= t(".seo-indexable") %></h4>
+    <%= f.form_group(
+          :seo_indexable,
+          :help => t(".seo-indexable-help")) do %>
+    <%= f.check_box(:seo_indexable, :label => t(".seo-indexable-input")) %>
+    <% end %>
+<% end %>

@@ -40,7 +40,10 @@
   <% end %>
   <%= f.form_group(
     :seo_indexable,
-    :help => "If checked, this catalog will be indexed for search engines (like Google)."
+    :help => "If checked, this catalog will be indexed by search engines "\
+             "(such as Google). By default, all item types will be indexed, "\
+             "but you can restrict specific item types from being indexed "\
+             "through their individual configuration page."
   ) do %>
     <%= f.check_box(:seo_indexable, data: { access_open_id: catalog_access_open_for_everyone_select_id }) %>
     <% if f.object.errors[:seo_indexable].any? %>

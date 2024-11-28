@@ -9,6 +9,7 @@
 #  id                       :integer          not null, primary key
 #  name_plural_translations :json
 #  name_translations        :json
+#  seo_indexable            :boolean          default(TRUE), not null
 #  slug                     :string
 #  updated_at               :datetime         not null
 #
@@ -152,6 +153,10 @@ class ItemType < ApplicationRecord
     end
 
     false
+  end
+
+  def seo_indexable?
+    seo_indexable && catalog.seo_indexable
   end
 
   private

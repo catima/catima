@@ -872,6 +872,7 @@ fr:
       index:
         add_field: "Ajouter…"
         edit_field_set: "Éditer le type de fiche"
+        seo_indexable_badge: "Non indexable (SEO)"
       new:
         new_field: "Nouveau champ «%{field}»"
 
@@ -890,6 +891,9 @@ fr:
         display-empty-fields: "Afficher les champs vides"
         suggestions: "Suggestions"
         suggestion-email-help: "Adresse e-mail à notifier lorsqu'une nouvelle suggestion est faite"
+        seo-indexable: "Indexable (SEO)"
+        seo-indexable-help: "Si cette case est cochée, les moteurs de recherche pourront proposer des résultats contenant les fiches de ce type."
+        seo-indexable-input: "Active l'indexation par les moteurs de recherche"
     items:
       approval:
         item_waiting_for_review: Cette fiche de type %{item_type} attend votre validation.

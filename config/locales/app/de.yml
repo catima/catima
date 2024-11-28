@@ -681,6 +681,9 @@ de:
         display-options: "Anzeigeoptionen"
         show-empty-fields: "Zeigen Sie leere Felder für diesen Elementtyp an"
         display-empty-fields: "Zeigen Sie leere Felder an"
+        seo-indexable: "Indexierbar (SEO)"
+        seo-indexable-help: "Wenn dieses Feld angekreuzt ist, können Suchmaschinen Ergebnisse vorschlagen, die Einträge dieses Typs enthalten."
+        seo-indexable-input: "Aktiviert die Indexierung durch Suchmaschinen"
 
     items:
       approval:

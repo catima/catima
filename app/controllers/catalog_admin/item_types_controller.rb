@@ -74,7 +74,9 @@ class CatalogAdmin::ItemTypesController < CatalogAdmin::BaseController
       :display_emtpy_fields,
       :suggestions_activated,
       :allow_anonymous_suggestions,
-      :suggestion_email)
+      :suggestion_email,
+      :seo_indexable
+    )
   end
 
   def after_create_path
