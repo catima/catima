@@ -117,6 +117,7 @@ search_vehicle:
   slug: vehicles
   name_translations: { "name_en": "Vehicle" }
   name_plural_translations: { "name_plural_en": "Vehicles" }
+  seo_indexable: false
 
 not_visible_book:
   catalog: not_visible

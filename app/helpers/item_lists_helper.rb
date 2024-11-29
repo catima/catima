@@ -25,6 +25,15 @@ module ItemListsHelper
     item_type.name_plural
   end
 
+  def meta_tag_description_for_item_type(item, item_type)
+    return if item_list_title(item, item_type).blank?
+
+    tag.meta(
+      name: "description",
+      content: strip_tags("#{item_type.catalog.name} - #{item_list_title(item, item_type)}")
+    )
+  end
+
   private
 
   def item_list_presenter(list, item, offset)
