@@ -38,4 +38,12 @@ class ItemsControllerTest < ActionDispatch::IntegrationTest
     assert_response :success
     assert_not_includes @response.body, "<meta name=\"robots\" content=\"noindex, nofollow\">"
   end
+
+  def test_image_alt_presents
+    item = items(:one_author_with_images)
+
+    get "/#{item.catalog.slug}/en/#{item.item_type.slug}"
+    assert_response :success
+    assert_includes @response.body, "alt=\"One author picture\""
+  end
 end

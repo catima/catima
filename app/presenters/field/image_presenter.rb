@@ -39,7 +39,8 @@ class Field::ImagePresenter < Field::FilePresenter
         file_url(image, '600x600', :resize)
       else
         # Return the html needed to show the resized image
-        image_tag(file_url(image, '600x600', :resize), options.merge(self.options))
+        merged_options = append_option_alt(image, options.merge(self.options))
+        image_tag(file_url(image, '600x600', :resize), merged_options)
       end
     end
 
@@ -61,12 +62,15 @@ class Field::ImagePresenter < Field::FilePresenter
                 else
                   [:fill, '150x150']
                 end
-    images = files_as_array
+
+    image = files_as_array[0]
+
     # Return the relative url of the cropped image
-    return file_url(images[0], transform[1], transform[0], crop) if options[:no_html]
+    return file_url(image, transform[1], transform[0], crop) if options[:no_html]
 
     # Return the html needed to show the cropped image
-    image_tag(file_url(images[0], transform[1], transform[0], crop), options.merge(self.options)).html_safe
+    merged_options = append_option_alt(image, options.merge(self.options))
+    image_tag(file_url(image, transform[1], transform[0], crop), merged_options).html_safe
   end
 
   def file_url(file, size=nil, mode=:fill, crop=[0, 0, 100, 100])
@@ -84,12 +88,20 @@ class Field::ImagePresenter < Field::FilePresenter
     thumbs = files_as_array.map do |image|
       file_url(image, size, :resize)
     end
-    legends = legend_active? ? files_as_array.map { |image| image['legend'] } : ''
+    legends = legend_active? ? files_as_array.pluck('legend') : ''
     images = files_as_array.map { |img| "/#{img['path']}" }
     @view.render('fields/images', thumbnails: thumbs, images: images, legends: legends)
   end
 
   private
+
+  def append_option_alt(image, options)
+    return options unless legend_active?
+    return options if options.key?(:alt)
+
+    options[:alt] = image['legend'] if image['legend'].present?
+    options
+  end
 
   def add_legend_attribute(html)
     content = Nokogiri::HTML(html)
