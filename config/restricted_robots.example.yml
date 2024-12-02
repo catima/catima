@@ -1,52 +1,57 @@
-- psbot
-- PetalBot
-- Mail.RU_Bot
-- MegaIndex
-- Baiduspider
+# ai bots: https://github.com/ai-robots-txt/ai.robots.txt/blob/main/robots.txt
+
 - 360Spider
-- Yisouspider
-- Bytespider
-- Sogou web spider
-- Sogou inst spider
-- proximic
 - ADmantX
-- Seekport Crawler
+- AI2Bot
+- Ai2Bot-Dolma
+- Amazonbot
+- Applebot
+- Applebot-Extended
 - BLEXBot
-- MJ12bot
-- dotbot
-- GPTBot
-- ChatGPT-User
+- Baiduspider
+- Bytespider
 - CCBot
 - ChatGPT-User
 - Claude-Web
 - ClaudeBot
-- cohere-ai
 - Diffbot
 - DuckAssistBot
 - FacebookBot
 - FriendlyCrawler
+- GPTBot
 - Google-Extended
 - GoogleOther
 - GoogleOther-Image
 - GoogleOther-Video
-- GPTBot
-- iaskspider/2.0
 - ICC-Crawler
-- ImagesiftBot
-- img2dataset
 - ISSCyberRiskCrawler
+- ImagesiftBot
 - Kangaroo Bot
+- MJ12bot
+- Mail.RU_Bot
+- MegaIndex
 - Meta-ExternalAgent
 - Meta-ExternalFetcher
 - OAI-SearchBot
-- omgili
-- omgilibot
 - PanguBot
 - PerplexityBot
 - PetalBot
 - Scrapy
+- Seekport Crawler
 - Sidetrade indexer bot
+- Sogou inst spider
+- Sogou web spider
 - Timpibot
 - VelenPublicWebCrawler
 - Webzio-Extended
+- Yisouspider
 - YouBot
+- anthropic-ai
+- cohere-ai
+- dotbot
+- iaskspider/2.0
+- img2dataset
+- omgili
+- omgilibot
+- proximic
+- psbot
