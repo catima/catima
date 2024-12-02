@@ -35,6 +35,9 @@ supervisord.pid
 # Ignore the domains file
 /config/domains.yml
 
+# Ignore the restricted robots file
+/config/restricted_robots.yml
+
 # Ignore refile uploads
 /public/system/
 

@@ -15,23 +15,23 @@ class HomeController < ApplicationController
   end
 
   def robots
-    # TODO: Improve where these are retrieved / informed.
-    commercial_bots = [
-      "psbot", "PetalBot", "Mail.RU_Bot", "MegaIndex", "Baiduspider",
-      "360Spider", "Yisouspider", "Bytespider", "Sogou web spider",
-      "Sogou inst spider", "proximic", "ADmantX", "Seekport Crawler", "BLEXBot",
-      "MJ12bot", "dotbot", "GPTBot", "ChatGPT-User", "CCBot"
-    ]
+    begin
+      restricted_bots = YAML.load_file('config/restricted_robots.yml') || []
+    rescue StandardError
+      restricted_bots = []
+    end
 
     indexed_catalogs = Catalog
                        .not_deactivated
                        .where(:seo_indexable => true)
                        .pluck(:slug)
+    robots_txt = ""
+    if restricted_bots.any?
+      restricted_bots_list = restricted_bots.map { |bot| "User-agent: #{bot}" }.join("\n")
+      robots_txt << restricted_bots_list << "\nDisallow: /\n\n"
+    end
 
-    robots_txt = <<~ROBOTS
-      #{commercial_bots.map { |bot| "User-agent: #{bot}" }.join("\n")}
-      Disallow: /
-
+    robots_txt += <<~ROBOTS
       User-agent: *
       Crawl-Delay: 5
       #{indexed_catalogs.map { |slug| "Allow: /#{slug}/" }.join("\n")}
