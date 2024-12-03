@@ -16,6 +16,7 @@ const ImageViewer = (props) => {
             className="imageViewer"
             src={thumb}
             data-idx={index}
+            alt={legends[idx]}
             onClick={(e) => {
               setIdx(parseInt(e.target.getAttribute('data-idx')))
               setIsOpen(true)

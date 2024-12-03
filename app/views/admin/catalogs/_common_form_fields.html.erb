@@ -38,6 +38,20 @@
   ) do %>
     <%= f.check_box(:advertize) %>
   <% end %>
+  <%= f.form_group(
+    :seo_indexable,
+    :help => "If checked, this catalog will be indexed by search engines "\
+             "(such as Google). By default, all item types will be indexed, "\
+             "but you can restrict specific item types from being indexed "\
+             "through their individual configuration page."
+  ) do %>
+    <%= f.check_box(:seo_indexable, data: { access_open_id: CatalogAdmin::CatalogsHelper::CATALOG_ACCESS[:open_for_everyone] }) %>
+    <% if f.object.errors[:seo_indexable].any? %>
+    <div class="text-danger mb-1">
+        <%= f.object.errors[:seo_indexable].join(", ") %>
+    </div>
+    <% end %>
+  <% end %>
 <% end %>
 
 <%= f.hidden_field(:visible) %>

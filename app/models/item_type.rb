@@ -9,6 +9,7 @@
 #  id                       :integer          not null, primary key
 #  name_plural_translations :json
 #  name_translations        :json
+#  seo_indexable            :boolean          default(TRUE), not null
 #  slug                     :string
 #  updated_at               :datetime         not null
 #
@@ -152,6 +153,12 @@ class ItemType < ApplicationRecord
     end
 
     false
+  end
+
+  # Return if the field_set is disabled for SEO indexing.
+  # Return false if the catalog is not SEO indexable, even if the field_set is.
+  def seo_indexable_disabled?
+    catalog.seo_indexable && !seo_indexable
   end
 
   private

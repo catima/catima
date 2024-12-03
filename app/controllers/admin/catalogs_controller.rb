@@ -91,6 +91,7 @@ class Admin::CatalogsController < Admin::BaseController
       :restricted,
       :custom_root_page_id,
       :deactivated_at,
+      :seo_indexable,
       :other_languages => []
     )
   end

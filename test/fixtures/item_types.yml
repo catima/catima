@@ -9,6 +9,7 @@
 #  id                       :integer          not null, primary key
 #  name_plural_translations :json
 #  name_translations        :json
+#  seo_indexable            :boolean          default(TRUE), not null
 #  slug                     :string
 #  updated_at               :datetime         not null
 #
@@ -116,6 +117,7 @@ search_vehicle:
   slug: vehicles
   name_translations: { "name_en": "Vehicle" }
   name_plural_translations: { "name_plural_en": "Vehicles" }
+  seo_indexable: false
 
 not_visible_book:
   catalog: not_visible

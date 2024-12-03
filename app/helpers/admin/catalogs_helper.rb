@@ -16,4 +16,13 @@ module Admin::CatalogsHelper
 
     tag.span(t("activerecord.attributes.catalog.data_only").downcase, :class => "badge text-bg-info")
   end
+
+  def catalog_seo_indexable_badge(catalog)
+    return unless catalog.seo_indexable
+
+    tag.span(
+      t("activerecord.attributes.catalog.seo_indexable").downcase,
+      :class => "badge text-bg-info"
+    )
+  end
 end

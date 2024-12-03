@@ -50,6 +50,7 @@ en:
         throttle_time_window: "Throttle time window in seconds"
         throttle_max_requests: "Throttle maximum requests"
         other_languages: Other supported languages
+        seo_indexable: "Indexable (SEO)"
       group:
         name: "Name"
         description: "Description"
@@ -872,6 +873,7 @@ en:
       index:
         add_field: "Add…"
         edit_field_set: "Edit %{field_set}"
+        seo_indexable_badge: "Not indexable (SEO)"
       new:
         new_field: "New %{field} field"
 
@@ -890,6 +892,9 @@ en:
         display-empty-fields: "Display empty fields"
         suggestions: "Suggestions"
         suggestion-email-help: "Email address to notify when a new suggestion is made"
+        seo-indexable: "Indexable (SEO)"
+        seo-indexable-help: "If checked, search engines will display results for this item type."
+        seo-indexable-input: "Enable indexation for search engines"
     items:
       approval:
         item_waiting_for_review: This %{item_type} is awaiting your review.

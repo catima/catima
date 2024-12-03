@@ -188,4 +188,13 @@ module ItemsHelper
   rescue StandardError
     false
   end
+
+  def meta_tag_description(item)
+    return if item_display_name(item).blank?
+
+    tag.meta(
+      name: "description",
+      content: strip_tags("#{item.catalog.name} - #{item_display_name(item)}")
+    )
+  end
 end

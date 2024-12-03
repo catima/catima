@@ -10,13 +10,13 @@ class API::V3::CatalogPolicy < CatalogPolicy
     return true if user.system_admin?
 
     case catalog_access(catalog)
-    when 1
+    when CatalogAdmin::CatalogsHelper::CATALOG_ACCESS[:open_for_everyone]
       # Access to everyone
       true
-    when 2
+    when CatalogAdmin::CatalogsHelper::CATALOG_ACCESS[:open_to_members]
       # Access to members
       user_is_at_least_a_member?
-    when 3
+    when CatalogAdmin::CatalogsHelper::CATALOG_ACCESS[:open_to_catalog_staff]
     else
       # Access to catalog staff
       user_is_at_least_an_editor?

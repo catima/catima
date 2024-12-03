@@ -451,6 +451,9 @@ it:
         display-options: "Opzioni di visualizzazione"
         show-empty-fields: "Mostra campi vuoti per questo tipo di oggetto"
         display-empty-fields: "Mostra campi vuoti"
+        seo-indexable: "Indicizzabile (SEO)"
+        seo-indexable-help: "Se controllato, questo tipo di oggetto sarà indicizzato dai motori di ricerca."
+        seo-indexable-input: "Consente l'indicizzazione da parte dei motori di ricerca"
 
     exports:
       index:
