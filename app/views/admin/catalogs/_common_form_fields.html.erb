@@ -45,7 +45,7 @@
              "but you can restrict specific item types from being indexed "\
              "through their individual configuration page."
   ) do %>
-    <%= f.check_box(:seo_indexable, data: { access_open_id: catalog_access_open_for_everyone_select_id }) %>
+    <%= f.check_box(:seo_indexable, data: { access_open_id: CatalogAdmin::CatalogsHelper::CATALOG_ACCESS[:open_for_everyone] }) %>
     <% if f.object.errors[:seo_indexable].any? %>
     <div class="text-danger mb-1">
         <%= f.object.errors[:seo_indexable].join(", ") %>

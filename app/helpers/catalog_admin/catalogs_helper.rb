@@ -1,4 +1,10 @@
 module CatalogAdmin::CatalogsHelper
+  CATALOG_ACCESS = {
+    :open_for_everyone => 1,
+    :open_to_members => 2,
+    :open_to_catalog_staff => 3
+  }.freeze
+
   def setup_catalog_settings_nav_link
     active = params[:controller] == "catalog_admin/catalogs" && params[:action] == "edit"
     klass = "list-group-item  list-group-item-action"
@@ -28,18 +34,14 @@ module CatalogAdmin::CatalogsHelper
   end
 
   def catalog_access(catalog)
-    return 1 if catalog.visible && !catalog.restricted
-    return 2 if catalog.visible && catalog.restricted
+    return CATALOG_ACCESS[:open_for_everyone] if catalog.visible && !catalog.restricted
+    return CATALOG_ACCESS[:open_to_members] if catalog.visible && catalog.restricted
 
-    3
+    CATALOG_ACCESS[:open_to_catalog_staff]
   end
 
   def catalog_access_label(catalog)
     [:everyone, :members, :catalog_staff][catalog_access(catalog) - 1].to_s
-  end
-
-  def catalog_access_open_for_everyone_select_id
-    1
   end
 
   def catalog_access_select(catalog)
@@ -47,9 +49,18 @@ module CatalogAdmin::CatalogsHelper
       :catalog_access,
       options_for_select(
         [
-          [t('catalog_admin.catalogs.common_form_fields.open_for_everyone'), 1],
-          [t('catalog_admin.catalogs.common_form_fields.open_to_members'), 2],
-          [t('catalog_admin.catalogs.common_form_fields.open_to_catalog_staff'), 3]
+          [
+            t('catalog_admin.catalogs.common_form_fields.open_for_everyone'),
+            CATALOG_ACCESS[:open_for_everyone]
+          ],
+          [
+            t('catalog_admin.catalogs.common_form_fields.open_to_members'),
+            CATALOG_ACCESS[:open_to_members]
+          ],
+          [
+            t('catalog_admin.catalogs.common_form_fields.open_to_catalog_staff'),
+            CATALOG_ACCESS[:open_to_catalog_staff]
+          ]
         ],
         catalog_access(catalog)
       ),
