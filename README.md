@@ -44,7 +44,7 @@ Run the `bin/setup` script. This script will:
 * Check you have the required Ruby version
 * Install ruby gems using Bundler
 * Install js dependencies using Yarn
-* Create local copies of `.env`, `database.yml`, `domains.yml` and `geo_layers.yml`
+* Create local copies of `.env`, `database.yml`, `domains.yml`, `geo_layers.yml` and `restricted_robots.yml`
 * Create, migrate, and seed the database
 
 ### Run it!
