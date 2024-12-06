@@ -9,6 +9,8 @@ class HomeControllerTest < ActionDispatch::IntegrationTest
     assert_includes @response.content_type, "text/plain"
     assert_includes @response.body, "/search/"
     assert_includes @response.body, "/two/"
-    assert_not_includes @response.body, "/one/"
+    assert_includes @response.body, "/one/"
+    assert_not_includes @response.body, "/with_dash/"
+    assert_not_includes @response.body, "/multilingual/"
   end
 end
