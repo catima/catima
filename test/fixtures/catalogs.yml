@@ -43,6 +43,7 @@ one:
   throttle_time_window: 1 * 3600
   throttle_max_requests: 1000
   api_enabled: true
+  seo_indexable: true
 
 two:
   name: two
