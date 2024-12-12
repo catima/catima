@@ -5,5 +5,11 @@ class APIKey < ApplicationRecord
 
   validates :label, uniqueness: { scope: :catalog_id }
 
-  has_secure_token :api_key, length: 256
+  before_create :generate_api_key
+
+  private
+
+  def generate_api_key
+    self.api_key = SecureRandom.alphanumeric(256)
+  end
 end
