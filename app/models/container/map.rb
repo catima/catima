@@ -111,6 +111,9 @@ class Container::Map < Container
   end
 
   def find_geometries_query(field)
+    # If the catalog requires review, only show approved items
+    review_condition = catalog.requires_review ? "AND review_status = 'approved'" : ""
+
     sql =
       <<-SQL.squish
         SELECT jsonb_build_object('features', CASE WHEN (array_agg(feat) IS NOT NULL) THEN array_to_json(array_agg(feat)) ELSE '[]' END) AS geojson
@@ -119,7 +122,7 @@ class Container::Map < Container
           FROM (
             SELECT id, data->'#{field.uuid}'->'features' AS feats
             FROM items
-            WHERE item_type_id = #{@item_type.id} AND data->'#{field.uuid}'->'features' IS NOT NULL
+            WHERE item_type_id = #{@item_type.id} AND data->'#{field.uuid}'->'features' IS NOT NULL #{review_condition}
           ) A
         ) B
       SQL
