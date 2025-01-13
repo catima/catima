@@ -54,7 +54,7 @@ services:
       - catima-net
     container_name: catima-worker
   catima-postgres:
-    image: postgis/postgis:15-3.3
+    image: postgis/postgis:15-3.5
     env_file:
       - ./docker/.env
     ports:
