@@ -1,10 +1,10 @@
 # CATIMA
 
 Master:
-![ci](https://github.com/catima/catima/workflows/ci/badge.svg?branch=master)
+[![ci](https://github.com/catima/catima/actions/workflows/ci.yml/badge.svg?branch=master)](https://github.com/catima/catima/actions/workflows/ci.yml)
 
 Development:
-![ci](https://github.com/catima/catima/workflows/ci/badge.svg?branch=development)
+[![ci](https://github.com/catima/catima/actions/workflows/ci.yml/badge.svg?branch=development)](https://github.com/catima/catima/actions/workflows/ci.yml)
 
 ## Introduction
 
