@@ -32,6 +32,12 @@ class Field::TextPresenter < FieldPresenter
 
   def input(form, method, options={})
     i18n = options.fetch(:i18n) { field.i18n? }
+
+    if i18n && field.formatted?
+      options[:wrapper] ||= {}
+      options[:wrapper][:class] = [options[:wrapper][:class], "d-none"].compact.join(" ")
+    end
+
     inp = raw_input(form, method, options, i18n)
     return inp unless field.formatted?
 
