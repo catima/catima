@@ -14,7 +14,6 @@ import "../modules/footnote";
 import "../modules/endnote";
 import Noties from "../modules/noties";
 
-// Ajax library for uploading DOCX files
 import axios from 'axios';
 
 // Function to return closest element based on a selector.
