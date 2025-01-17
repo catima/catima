@@ -14,9 +14,6 @@ import "../modules/footnote";
 import "../modules/endnote";
 import Noties from "../modules/noties";
 
-// Table module for Quill
-import "../modules/table";
-
 // Ajax library for uploading DOCX files
 import axios from 'axios';
 
@@ -57,7 +54,6 @@ const FormattedTextEditor = (props) => {
       [{'script': 'sub'}, {'script': 'super'}],
       ['link'],
       [{'list': 'ordered'}, {'list': 'bullet'}],
-      [{table: tableOptions()}, {table: 'append-row'}, {table: 'append-col'}],
       ['footnote', 'endnote', 'import_docx'],
     ],
     handlers: {
@@ -84,7 +80,6 @@ const FormattedTextEditor = (props) => {
         modules: {
           clipboard: true,
           toolbar: toolbarOptions,
-          table: true
         },
         theme: 'snow'
       }))
@@ -199,16 +194,6 @@ const FormattedTextEditor = (props) => {
 
     renderNotes();
   }, [footnoteRenderer, endnoteRenderer])
-
-  function tableOptions(maxRows = 10, maxCols = 5) {
-    let tableOptions = [];
-    for (let r = 1; r <= maxRows; r++) {
-      for (let c = 1; c <= maxCols; c++) {
-        tableOptions.push('newtable_' + r + '_' + c);
-      }
-    }
-    return tableOptions;
-  }
 
   function _loadContent() {
     const v = document.getElementById(contentRef).value;
