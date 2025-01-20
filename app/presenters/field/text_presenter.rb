@@ -32,6 +32,12 @@ class Field::TextPresenter < FieldPresenter
 
   def input(form, method, options={})
     i18n = options.fetch(:i18n) { field.i18n? }
+
+    if i18n && field.formatted?
+      options[:wrapper] ||= {}
+      options[:wrapper][:class] = [options[:wrapper][:class], "d-none"].compact.join(" ")
+    end
+
     inp = raw_input(form, method, options, i18n)
     return inp unless field.formatted?
 
@@ -41,9 +47,7 @@ class Field::TextPresenter < FieldPresenter
       inp,
       '</div>',
       '<div class="formatted-text-input">',
-      i18n ? '<table class="formatted-text-table">' : '',
       formatted_text_input(form, method, options, i18n),
-      i18n ? '</table>' : '',
       '</div>',
       '</div>'
     ].compact.join.html_safe
@@ -62,12 +66,21 @@ class Field::TextPresenter < FieldPresenter
   def formatted_text_input(form, method, _options={}, i18n=false)
     type = @item.present? ? 'item' : 'field'
     if i18n
-      field.catalog.valid_locales.map do |l|
-        errors = form.object.errors.messages[:"#{method}_#{l}"]
-        "<tr " + (errors.empty? ? '' : 'class="has-error"') + "><td>#{l}</td><td>" + \
-          formatted_text_component("#{type}_#{method}_#{l}") + \
-          "</td></tr>" +
-          (errors.empty? ? '' : "<tr class=\"has-error msg\"><td colspan=\"2\">#{errors.compact.join(' / ')}</td></tr>")
+      field.catalog.valid_locales.map do |lang|
+        errors = form.object.errors.messages[:"#{method}_#{lang}"]
+        klass_error_lang = errors.empty? ? '' : 'text-danger'
+        klass_error_wrapper = errors.empty? ? 'bg-secondary-subtle' : 'border-danger bg-danger-subtle'
+        text = formatted_text_component("#{type}_#{method}_#{lang}")
+
+        <<-HTML
+        <div>
+          <div class="#{klass_error_wrapper} d-flex border p-1 ps-0">
+            <div class="#{klass_error_lang} text-center pt-2 flex-grow-0 flex-shrink-0" style="width: 3rem;">#{lang}</div>
+            <div class="bg-white flex-fill">#{text}</div>
+          </div>
+          <div class="msg text-danger mt-1 mb-3">#{errors.compact.join(' / ')}</div>
+        </div>
+        HTML
       end.compact.join
     else
       formatted_text_component("#{type}_#{method}")

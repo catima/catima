@@ -176,6 +176,13 @@ one_book_finders_keepers:
   item_type: one_book
   data: { "one_book_title_uuid": "Finders Keepers" }
 
+multilingual_book_formatted_i18n:
+  catalog: multilingual
+  creator: multilingual_admin
+  updater: multilingual_admin
+  item_type: multilingual_book
+  data: {"multilingual_book_notes_uuid": {"_translations": {"de": "{\"format\":\"html\",\"doc\":{\"ops\":[{\"insert\":\"livre en allemand\\n\"}]},\"content\":\"<p style=\\\"display:none;\\\"></p><p>livre en allemand</p><p style=\\\"display:none;\\\"></p>\"}", "en": "{\"format\":\"html\",\"doc\":{\"ops\":[{\"insert\":\"book in english\\n\"}]},\"content\":\"<p style=\\\"display:none;\\\"></p><p>book in english</p><p style=\\\"display:none;\\\"></p>\"}", "fr": "{\"format\":\"html\",\"doc\":{\"ops\":[{\"insert\":\"livre en francais\\n\"}]},\"content\":\"<p style=\\\"display:none;\\\"></p><p>livre en francais</p><p style=\\\"display:none;\\\"></p>\"}", "it": "{\"format\":\"html\",\"doc\":{\"ops\":[{\"insert\":\"libro in italiano\\n\"}]},\"content\":\"<p style=\\\"display:none;\\\"></p><p>libro in italiano</p><p style=\\\"display:none;\\\"></p>\"}"}}}
+
 one_author_with_images:
   catalog: one
   creator: one_admin

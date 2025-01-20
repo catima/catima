@@ -3,9 +3,6 @@
   min-width: 3em;
 }
 
-.hidden-children-inputs > .mb-3 > .mb-1 {
-  display: none;
-}
 .hidden-children-inputs textarea {
   display: none;
 }
@@ -13,38 +10,4 @@
 .formatted-text-input {
   margin-top: -15px;
   margin-bottom: 15px;
-}
-
-.formatted-text-table tr td:nth-of-type(1) {
-  background-color: #eee;
-  min-width: 40px;
-  text-align: center;
-  padding-top: 10px;
-}
-
-.formatted-text-table tr td:nth-of-type(2) {
-  width: 100%;
-}
-
-.formatted-text-table tr td {
-  border-bottom: 4px solid white;
-  vertical-align: top;
-}
-
-
-.formatted-text-table tr.has-error td {
-  border: 1px solid #a94442;
-}
-.formatted-text-table tr.has-error td:nth-of-type(1) {
-  background-color: #f2dede;
-  color: #a94442;
-}
-.formatted-text-table tr.has-error.msg td:nth-of-type(1) {
-  background-color: #fff;
-  text-align: left;
-  border-left: 0;
-  border-right: 0;
-  border-bottom: 0;
-  padding-top: 0;
-  padding-bottom: 10px;
 }
