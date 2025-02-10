@@ -1,11 +1,16 @@
-.formatted-text p.ql-align-right {
+.formatted-text .ql-align-right {
   text-align: right;
 }
 
-.formatted-text p.ql-align-center {
+.formatted-text .ql-align-center {
   text-align: center;
 }
 
-.formatted-text p.ql-align-justify {
+.formatted-text .ql-align-justify {
   text-align: justify;
+}
+
+/* Fix the alignment of the toolbar button for quill-table-up Quill module */
+.ql-toolbar .ql-picker:not(.ql-color-picker):not(.ql-icon-picker).ql-table-up .ql-picker-label {
+    padding: 0px 4px !important;
 }
