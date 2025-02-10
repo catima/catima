@@ -4,6 +4,7 @@ import Translations from '../../Translations/components/Translations';
 import {v4 as uuidv4} from 'uuid';
 
 import Quill from 'quill';
+import TableUp, { defaultCustomSelect, TableAlign, TableMenuContextmenu, TableMenuSelect, TableResizeBox, TableResizeLine, TableResizeScale, TableSelection, TableVirtualScrollbar } from 'quill-table-up';
 
 let icons = Quill.import('ui/icons');
 icons['footnote'] = Translations.messages['catalog_admin.fields.text_option_inputs.add_footnote'];
@@ -12,6 +13,7 @@ icons['import_docx'] = Translations.messages['catalog_admin.fields.text_option_i
 
 import "../modules/footnote";
 import "../modules/endnote";
+import "../modules/tableup";
 import Noties from "../modules/noties";
 
 import axios from 'axios';
@@ -53,6 +55,7 @@ const FormattedTextEditor = (props) => {
       [{'script': 'sub'}, {'script': 'super'}],
       ['link'],
       [{'list': 'ordered'}, {'list': 'bullet'}],
+      [{ [TableUp.toolName]: [] }],
       ['footnote', 'endnote', 'import_docx'],
     ],
     handlers: {
@@ -79,6 +82,18 @@ const FormattedTextEditor = (props) => {
         modules: {
           clipboard: true,
           toolbar: toolbarOptions,
+          ['table-up']: {
+            full: true,
+            scrollbar: TableVirtualScrollbar,
+            align: TableAlign,
+            resize: TableResizeLine,
+            resizeScale: TableResizeScale,
+            customSelect: defaultCustomSelect,
+            selection: TableSelection,
+            selectionOptions: {
+              tableMenu: TableMenuSelect,
+            },
+          },
         },
         theme: 'snow'
       }))

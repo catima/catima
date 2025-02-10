@@ -50,6 +50,7 @@
     "postcss-preset-env": "^9.1.0",
     "prop-types": "^15.7.2",
     "quill": "^2.0.3",
+    "quill-table-up": "^2.0.5",
     "react": "^17.0.2",
     "react-color": "^2.13.8",
     "react-dom": "^17.0.2",
