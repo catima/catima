@@ -168,9 +168,7 @@ const FormattedTextEditor = (props) => {
     if (c.format === 'html' && typeof (c.doc) !== 'undefined') {
       editor.setContents(c.doc);
     } else {
-      // We are not using the dangerouslyPasteHTML function
-      // here to avoid the autofocus issue with quill.
-      editor.setContents(editor.clipboard.convert(c.content));
+      editor.root.innerHTML = c.content;
     }
 
     editor.on('text-change', function (delta, oldDelta, source) {
