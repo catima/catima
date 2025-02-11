@@ -76,7 +76,7 @@ jobs:
         uses: actions/download-artifact@v4
         with:
           path: ${{ runner.temp }}/app/digests
-          pattern: digests-*
+          pattern: digests-app-*
           merge-multiple: true
 
       - name: Login to Docker Hub
@@ -177,7 +177,7 @@ jobs:
         uses: actions/download-artifact@v4
         with:
           path: ${{ runner.temp }}/worker/digests
-          pattern: digests-*
+          pattern: digests-worker-*
           merge-multiple: true
 
       - name: Login to Docker Hub
