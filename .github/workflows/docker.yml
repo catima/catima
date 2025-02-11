@@ -55,15 +55,15 @@ jobs:
 
       - name: Export digest
         run: |
-          mkdir -p ${{ runner.temp }}/digests
+          mkdir -p ${{ runner.temp }}/app/digests
           digest="${{ steps.build.outputs.digest }}"
-          touch "${{ runner.temp }}/digests/${digest#sha256:}"
+          touch "${{ runner.temp }}/app/digests/${digest#sha256:}"
 
       - name: Upload digest
         uses: actions/upload-artifact@v4
         with:
           name: digests-app-${{ env.PLATFORM_PAIR }}
-          path: ${{ runner.temp }}/digests/*
+          path: ${{ runner.temp }}/app/digests/*
           if-no-files-found: error
           retention-days: 1
 
@@ -75,7 +75,7 @@ jobs:
       - name: Download digests
         uses: actions/download-artifact@v4
         with:
-          path: ${{ runner.temp }}/digests
+          path: ${{ runner.temp }}/app/digests
           pattern: digests-*
           merge-multiple: true
 
@@ -98,7 +98,7 @@ jobs:
             type=raw,value=latest-app
 
       - name: Create manifest list and push
-        working-directory: ${{ runner.temp }}/digests
+        working-directory: ${{ runner.temp }}/app/digests
         run: |
           docker buildx imagetools create $(jq -cr '.tags | map("-t " + .) | join(" ")' <<< "$DOCKER_METADATA_OUTPUT_JSON") \
             $(printf '${{ vars.DOCKERHUB_REPOSITORY }}@sha256:%s ' *)
@@ -156,27 +156,27 @@ jobs:
 
       - name: Export digest
         run: |
-          mkdir -p ${{ runner.temp }}/digests
+          mkdir -p ${{ runner.temp }}/worker/digests
           digest="${{ steps.build.outputs.digest }}"
-          touch "${{ runner.temp }}/digests/${digest#sha256:}"
+          touch "${{ runner.temp }}/worker/digests/${digest#sha256:}"
 
       - name: Upload digest
         uses: actions/upload-artifact@v4
         with:
           name: digests-worker-${{ env.PLATFORM_PAIR }}
-          path: ${{ runner.temp }}/digests/*
+          path: ${{ runner.temp }}/worker/digests/*
           if-no-files-found: error
           retention-days: 1
 
   merge-worker:
-    name: Merge App
+    name: Merge Worker
     runs-on: ubuntu-latest
     needs: [build-worker]
     steps:
       - name: Download digests
         uses: actions/download-artifact@v4
         with:
-          path: ${{ runner.temp }}/digests
+          path: ${{ runner.temp }}/worker/digests
           pattern: digests-*
           merge-multiple: true
 
@@ -199,7 +199,7 @@ jobs:
             type=raw,value=latest-worker
 
       - name: Create manifest list and push
-        working-directory: ${{ runner.temp }}/digests
+        working-directory: ${{ runner.temp }}/worker/digests
         run: |
           docker buildx imagetools create $(jq -cr '.tags | map("-t " + .) | join(" ")' <<< "$DOCKER_METADATA_OUTPUT_JSON") \
             $(printf '${{ vars.DOCKERHUB_REPOSITORY }}@sha256:%s ' *)
