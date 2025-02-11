@@ -14,3 +14,12 @@
 .ql-toolbar .ql-picker:not(.ql-color-picker):not(.ql-icon-picker).ql-table-up .ql-picker-label {
     padding: 0px 4px !important;
 }
+
+/* Used for Quill to correctly display unordered and ordered lists. */
+li[data-list="bullet"] {
+  list-style-type: disc;
+}
+
+li[data-list="ordered"] {
+  list-style-type: decimal;
+}
