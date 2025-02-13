@@ -10,9 +10,12 @@
   text-align: justify;
 }
 
-/* Fix the alignment of the toolbar button for quill-table-up Quill module */
-.ql-toolbar .ql-picker:not(.ql-color-picker):not(.ql-icon-picker).ql-table-up .ql-picker-label {
-    padding: 0px 4px !important;
+/* Revert bootstrap styles for Quill. */
+.ql-toolbar.ql-snow {
+  line-height: normal;
+  svg {
+      vertical-align: initial;
+  }
 }
 
 /* Used for Quill to correctly display unordered and ordered lists. */
