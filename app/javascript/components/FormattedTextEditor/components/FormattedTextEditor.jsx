@@ -4,7 +4,7 @@ import Translations from '../../Translations/components/Translations';
 import {v4 as uuidv4} from 'uuid';
 
 import Quill from 'quill';
-import TableUp, { defaultCustomSelect, TableAlign, TableMenuContextmenu, TableMenuSelect, TableResizeBox, TableResizeLine, TableResizeScale, TableSelection, TableVirtualScrollbar } from 'quill-table-up';
+import TableUp, { defaultCustomSelect, TableAlign, TableMenuSelect, TableResizeLine, TableResizeScale, TableSelection, TableVirtualScrollbar } from 'quill-table-up';
 
 let icons = Quill.import('ui/icons');
 icons['footnote'] = Translations.messages['catalog_admin.fields.text_option_inputs.add_footnote'];
