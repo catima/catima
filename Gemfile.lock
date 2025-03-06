@@ -588,7 +588,7 @@ GEM
     unicorn (6.1.0)
       kgio (~> 2.6)
       raindrops (~> 0.7)
-    uri (0.13.0)
+    uri (0.13.2)
     useragent (0.16.11)
     vcr (6.2.0)
     version_gem (1.1.4)
