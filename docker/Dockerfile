@@ -1,4 +1,4 @@
-FROM ruby:3.2.2-bullseye AS base
+FROM ruby:3.2.2-slim-bookworm AS base
 
 ENV DOCKER_RUNNING=true
 
@@ -13,6 +13,9 @@ RUN apt-get update
 
 # Add needed packages
 RUN apt-get install -y --no-install-recommends \
+    build-essential \
+    libgmp-dev \
+    libpq-dev \
     curl \
     imagemagick \
     git \
@@ -21,11 +24,12 @@ RUN apt-get install -y --no-install-recommends \
     cron \
     lsb-release \
     ca-certificates \
-    gnupg
+    gnupg \
+    wget
 
 # Install specific version of Postgresql Client
-RUN wget --quiet -O - https://www.postgresql.org/media/keys/ACCC4CF8.asc | apt-key add - &&\
-    echo "deb http://apt.postgresql.org/pub/repos/apt/ `lsb_release -cs`-pgdg main" | tee  /etc/apt/sources.list.d/pgdg.list &&\
+RUN wget --quiet -O - https://www.postgresql.org/media/keys/ACCC4CF8.asc | gpg --dearmor -o /usr/share/keyrings/postgresql-archive-keyring.gpg &&\
+    echo "deb [signed-by=/usr/share/keyrings/postgresql-archive-keyring.gpg] http://apt.postgresql.org/pub/repos/apt/ `lsb_release -cs`-pgdg main" | tee /etc/apt/sources.list.d/pgdg.list &&\
     apt-get update &&\
     apt-get install -y --no-install-recommends postgresql-client-$PSQL_CLIENT_VERSION
 
