@@ -1,6 +1,7 @@
 FROM ruby:3.2.2-slim-bookworm AS base
 
 ENV DOCKER_RUNNING=true
+ENV COREPACK_ENABLE_AUTO_PIN=0
 
 ENV PSQL_CLIENT_VERSION=15
 ENV NODE_VERSION=20
@@ -26,27 +27,22 @@ RUN apt-get update && \
     wget
 
 # Install specific version of Postgresql Client
-RUN wget --quiet -O - https://www.postgresql.org/media/keys/ACCC4CF8.asc | gpg --dearmor -o /usr/share/keyrings/postgresql-archive-keyring.gpg &&\
-    echo "deb [signed-by=/usr/share/keyrings/postgresql-archive-keyring.gpg] http://apt.postgresql.org/pub/repos/apt/ `lsb_release -cs`-pgdg main" | tee /etc/apt/sources.list.d/pgdg.list &&\
-    apt-get update &&\
+RUN wget --quiet -O - https://www.postgresql.org/media/keys/ACCC4CF8.asc | gpg --dearmor -o /usr/share/keyrings/postgresql-archive-keyring.gpg && \
+    echo "deb [signed-by=/usr/share/keyrings/postgresql-archive-keyring.gpg] http://apt.postgresql.org/pub/repos/apt/ `lsb_release -cs`-pgdg main" | tee /etc/apt/sources.list.d/pgdg.list && \
+    apt-get update && \
     apt-get install -y --no-install-recommends postgresql-client-$PSQL_CLIENT_VERSION
 
-# Install specific version of Node
+# Install specific version of Node & Yarn
 RUN mkdir -p /etc/apt/keyrings; \
     curl -fsSL https://deb.nodesource.com/gpgkey/nodesource-repo.gpg.key \
     | gpg --dearmor -o /etc/apt/keyrings/nodesource.gpg; \
     echo "deb [signed-by=/etc/apt/keyrings/nodesource.gpg] https://deb.nodesource.com/node_$NODE_VERSION.x nodistro main" \
     | tee /etc/apt/sources.list.d/nodesource.list; \
     apt-get update; \
-    apt-get install -y --no-install-recommends nodejs
-
-# Install specific version of Yarn
-RUN mkdir -p /etc/apt/keyrings && \
-    curl -sS https://dl.yarnpkg.com/debian/pubkey.gpg | gpg --dearmor -o /etc/apt/keyrings/yarn.gpg && \
-    echo "deb [signed-by=/etc/apt/keyrings/yarn.gpg] https://dl.yarnpkg.com/debian/ stable main" | tee /etc/apt/sources.list.d/yarn.list && \
-    apt-get update && \
-    apt-get install -y --no-install-recommends yarn && \
-    yarn policies set-version $YARN_VERSION
+    apt-get install -y --no-install-recommends nodejs && \
+    corepack enable && \
+    corepack prepare yarn@$YARN_VERSION --activate && \
+    yarn --version
 
 # Create and set the working directory
 WORKDIR /var/www/catima
