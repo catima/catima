@@ -8,11 +8,9 @@ ENV YARN_VERSION=1.22
 ENV RUBYGEMS_VERSION=3.4.5
 ENV BUNDLER_VERSION=2.4.5
 
-# Update repositories
-RUN apt-get update
-
-# Add needed packages
-RUN apt-get install -y --no-install-recommends \
+# Update repositories & add needed packages
+RUN apt-get update && \
+    apt-get install -y --no-install-recommends \
     build-essential \
     libgmp-dev \
     libpq-dev \
@@ -43,24 +41,24 @@ RUN mkdir -p /etc/apt/keyrings; \
     apt-get install -y --no-install-recommends nodejs
 
 # Install specific version of Yarn
-RUN curl -sS https://dl.yarnpkg.com/debian/pubkey.gpg | apt-key add - &&\
-    echo "deb https://dl.yarnpkg.com/debian/ stable main" | tee /etc/apt/sources.list.d/yarn.list &&\
-    apt-get update &&\
-    apt-get install -y --no-install-recommends yarn &&\
-    yarn set version $YARN_VERSION
+RUN mkdir -p /etc/apt/keyrings && \
+    curl -sS https://dl.yarnpkg.com/debian/pubkey.gpg | gpg --dearmor -o /etc/apt/keyrings/yarn.gpg && \
+    echo "deb [signed-by=/etc/apt/keyrings/yarn.gpg] https://dl.yarnpkg.com/debian/ stable main" | tee /etc/apt/sources.list.d/yarn.list && \
+    apt-get update && \
+    apt-get install -y --no-install-recommends yarn && \
+    yarn policies set-version $YARN_VERSION
+
+# Create and set the working directory
+WORKDIR /var/www/catima
 
 # Install specific version of RubyGems
 RUN gem update --system $RUBYGEMS_VERSION
 
-# Create and set the working directory as /var/www/catima
-WORKDIR /var/www/catima
-
-# Install specific version of bundler
+# Install specific version of Bundler
 RUN gem install bundler:$BUNDLER_VERSION --no-document --conservative
 
-# Copy the Gemfile and Gemfile.lock, and run bundle install
-COPY Gemfile /var/www/catima
-COPY Gemfile.lock /var/www/catima
+# Copy the Gemfile and Gemfile.lock, and run Bundler
+COPY Gemfile Gemfile.lock /var/www/catima/
 RUN bundle install
 
 FROM base AS app-dev
