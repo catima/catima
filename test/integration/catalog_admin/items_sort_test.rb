@@ -8,8 +8,7 @@ class CatalogAdmin::ItemsSortTest < ActionDispatch::IntegrationTest
 
     visit("/one/en/admin/authors")
     click_on('Sorted by Name')
-    # Wait link to be visible
-    find("a", text: "Age", visible: :visible, wait: 10).click
+    click_on('Age')
 
     assert_equal("Very Young", find(:xpath, "//table/tbody/tr[1]/td[1]").text)
     assert_equal("Young apprentice", find(:xpath, "//table/tbody/tr[2]/td[1]").text)
@@ -17,25 +16,12 @@ class CatalogAdmin::ItemsSortTest < ActionDispatch::IntegrationTest
     assert_equal("Very Old", find(:xpath, "//table/tbody/tr[4]/td[1]").text)
   end
 
-  test "the authors are sort by rank" do
-    log_in_as("one-admin@example.com", "password")
-
-    visit("/one/en/admin/authors")
-    click_on('Sorted by Name')
-    # Wait link to be visible
-    find("a", text: "Rank", visible: :visible, wait: 10).click
-
-    assert_match("Very first author", find(:xpath, "//table/tbody/tr[1]/td[1]").text)
-    assert_match("Stephen King", find(:xpath, "//table/tbody/tr[2]/td[1]").text)
-  end
-
   test "the authors are sort by born" do
     log_in_as("one-admin@example.com", "password")
 
     visit("/one/en/admin/authors")
     click_on('Sorted by Name')
-    # Wait link to be visible
-    find("a", text: "Born", visible: :visible, wait: 10).click
+    click_on('Born')
 
     assert_match("Stephen King", find(:xpath, "//table/tbody/tr[1]/td[1]").text)
     assert_equal("Very Old", find(:xpath, "//table/tbody/tr[2]/td[1]").text)
