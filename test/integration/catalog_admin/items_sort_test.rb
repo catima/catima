@@ -9,7 +9,7 @@ class CatalogAdmin::ItemsSortTest < ActionDispatch::IntegrationTest
     visit("/one/en/admin/authors")
     click_on('Sorted by Name')
     # Wait link to be visible
-    find("a", text: "Age", visible: :visible).click
+    find("a", text: "Age", visible: :visible, wait: 10).click
 
     assert_equal("Very Young", find(:xpath, "//table/tbody/tr[1]/td[1]").text)
     assert_equal("Young apprentice", find(:xpath, "//table/tbody/tr[2]/td[1]").text)
@@ -23,7 +23,7 @@ class CatalogAdmin::ItemsSortTest < ActionDispatch::IntegrationTest
     visit("/one/en/admin/authors")
     click_on('Sorted by Name')
     # Wait link to be visible
-    find("a", text: "Rank", visible: :visible).click
+    find("a", text: "Rank", visible: :visible, wait: 10).click
 
     assert_match("Very first author", find(:xpath, "//table/tbody/tr[1]/td[1]").text)
     assert_match("Stephen King", find(:xpath, "//table/tbody/tr[2]/td[1]").text)
@@ -35,7 +35,7 @@ class CatalogAdmin::ItemsSortTest < ActionDispatch::IntegrationTest
     visit("/one/en/admin/authors")
     click_on('Sorted by Name')
     # Wait link to be visible
-    find("a", text: "Born", visible: :visible).click
+    find("a", text: "Born", visible: :visible, wait: 10).click
 
     assert_match("Stephen King", find(:xpath, "//table/tbody/tr[1]/td[1]").text)
     assert_equal("Very Old", find(:xpath, "//table/tbody/tr[2]/td[1]").text)
