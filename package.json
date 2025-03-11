@@ -14,7 +14,7 @@
     "@turf/rewind": "^6.5.0",
     "@types/react": "^16.9.56",
     "@types/react-dom": "^16.9.9",
-    "axios": "^1.7.4",
+    "axios": "^1.8.2",
     "babel-loader": "^8.2.3",
     "babel-plugin-macros": "^3.1.0",
     "babel-plugin-transform-react-remove-prop-types": "^0.4.24",
