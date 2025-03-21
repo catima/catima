@@ -15,7 +15,7 @@ else
 end
 
 def driver_params
-  arguments = %w[disable-gpu no-sandbox window-size=1280,1024]
+  arguments = %w[disable-gpu no-sandbox disable-background-timer-throttling disable-backgrounding-occluded-windows disable-renderer-backgrounding]
   arguments.push("headless") unless ENV['HEADLESS'] == "0"
   {
     options: Selenium::WebDriver::Chrome::Options.new(
