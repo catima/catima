@@ -99,7 +99,7 @@ services:
       - catima-net
     container_name: catima-mailhog
   catima-selenium:
-    image: selenium/standalone-chromium:latest
+    image: selenium/standalone-chromium:133.0
     shm_size: "2gb"
     ports:
       - "127.0.0.1:4444:4444"

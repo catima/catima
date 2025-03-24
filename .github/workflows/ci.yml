@@ -83,6 +83,13 @@ jobs:
           sudo apt-get update
           sudo apt-get install -y imagemagick libsodium-dev libpq-dev
 
+      - name: Install Chrome 133
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y wget
+          wget https://dl.google.com/linux/chrome/deb/pool/main/g/google-chrome-stable/google-chrome-stable_133.0.0-1_amd64.deb
+          sudo dpkg -i google-chrome-stable_133.0.0-1_amd64.deb || sudo apt-get -f install -y
+
       - name: Build app
         id: app-build
         run: ruby bin/setup
