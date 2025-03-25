@@ -90,7 +90,7 @@ jobs:
         run: sudo apt-get purge -y google-chrome-stable
       - name: Install stable Chrome and matching Chromedriver
         run: |
-          CHROME_VERSION=133.0.6850.0
+          CHROME_VERSION=133.0.6943.141
           wget https://dl.google.com/linux/chrome/deb/pool/main/g/google-chrome-stable/google-chrome-stable_${CHROME_VERSION}-1_amd64.deb
           sudo apt install -y ./google-chrome-stable_${CHROME_VERSION}-1_amd64.deb
           rm google-chrome-stable_${CHROME_VERSION}-1_amd64.deb
