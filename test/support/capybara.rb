@@ -18,7 +18,10 @@ def driver_params
   options = Selenium::WebDriver::Chrome::Options.new
   options.add_argument('disable-gpu')
   options.add_argument('headless') unless ENV['HEADLESS'] == '0'
-  options.add_option(:browser_version, '132.0.6834.159')
+  # options.add_option(:browser_version, '132.0.6834.159')
+  options.add_argument('disable-background-timer-throttling')
+  options.add_argument('disable-backgrounding-occluded-windows')
+  options.add_argument('disable-renderer-backgrounding')
   { options: options }
 end
 
