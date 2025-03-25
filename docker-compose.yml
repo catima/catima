@@ -99,7 +99,9 @@ services:
       - catima-net
     container_name: catima-mailhog
   catima-selenium:
-    image: selenium/standalone-chromium:latest
+    # TODO: use latest image tag as soon as the chrome issue is fixed
+    # https://github.com/teamcapybara/capybara/issues/2800#issuecomment-2731100953
+    image: selenium/standalone-chromium:133.0
     shm_size: "2gb"
     ports:
       - "127.0.0.1:4444:4444"
