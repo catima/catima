@@ -15,13 +15,11 @@ else
 end
 
 def driver_params
-  arguments = %w[disable-gpu]
-  arguments.push("headless") unless ENV['HEADLESS'] == "0"
-  {
-    options: Selenium::WebDriver::Chrome::Options.new(
-      args: arguments
-    )
-  }
+  options = Selenium::WebDriver::Chrome::Options.new
+  options.add_argument('disable-gpu')
+  options.add_argument('headless') unless ENV['HEADLESS'] == '0'
+  options.add_option(:browser_version, '132.0.6834.159')
+  { options: options }
 end
 
 Capybara.register_driver :chrome do |app|
