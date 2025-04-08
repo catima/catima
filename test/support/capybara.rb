@@ -16,15 +16,6 @@ end
 
 def driver_params
   options = Selenium::WebDriver::Chrome::Options.new
-
-  # Disable timers being throttled in background pages/tabs. Useful for parallel test runs.
-  options.add_argument '--disable-background-timer-throttling'
-  # Normally, Chrome will treat a 'foreground' tab instead as backgrounded if the surrounding window is occluded (aka
-  # visually covered) by another window. This flag disables that. Useful for parallel test runs.
-  options.add_argument '--disable-backgrounding-occluded-windows'
-  # This disables non-foreground tabs from getting a lower process priority. Useful for parallel test runs.
-  options.add_argument '--disable-renderer-backgrounding'
-
   options.add_argument('disable-gpu')
   options.add_argument('headless') unless ENV['HEADLESS'] == '0'
   { options: options }
