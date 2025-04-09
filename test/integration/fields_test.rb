@@ -1,13 +1,13 @@
 require "test_helper"
 
 class FieldsTest < ActionDispatch::IntegrationTest
+  setup { use_javascript_capybara_driver }
   include ItemReferenceHelper
 
   test "create and view item with a compound field" do
     log_in_as("one-admin@example.com", "password")
-    visit("/one/en/admin/authors/fields")
+    visit("/one/en/admin/authors/fields/new?type=compound")
 
-    click_on("Compound field")
     fill_in("field[name_en]", :with => "Test")
     fill_in("field[name_plural_en]", :with => "Tests")
     fill_in("Slug (singular)", :with => "test")
@@ -21,12 +21,17 @@ class FieldsTest < ActionDispatch::IntegrationTest
 
   test "create and view item with an embed field" do
     log_in_as("two-admin@example.com", "password")
-    visit("/two/en/admin/twos/fields")
+    visit("/two/en/admin/authors/fields/new?type=embed")
 
-    click_on("Embed field")
     fill_in("field[name_en]", :with => "Test")
     fill_in("field[name_plural_en]", :with => "Tests")
     fill_in("Slug (singular)", :with => "test")
+
+    find('div[data-react-class="Domains/components/Domains"]', :wait => 30).click
+    within(".css-4ljt47-MenuList", :wait => 30) do
+      find('div', text: "Youtube.com", match: :first, visible: false, :wait => 30).click
+    end
+
     select("url", :from => "Format")
     fill_in("Iframe width", :with => 360)
     fill_in("Iframe height", :with => 360)
