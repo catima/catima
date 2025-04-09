@@ -11,7 +11,7 @@ class FieldsTest < ActionDispatch::IntegrationTest
     fill_in("field[name_en]", :with => "Test")
     fill_in("field[name_plural_en]", :with => "Tests")
     fill_in("Slug (singular)", :with => "test")
-    first('input#field_template', visible: false).set('{"en":"{{name}}:{{age}}"}')
+    first('input#field_template', visible: false, :wait => 30).set('{"en":"{{name}}:{{age}}"}')
     click_on("Create field")
 
     visit("/one/en/authors")
@@ -21,7 +21,7 @@ class FieldsTest < ActionDispatch::IntegrationTest
 
   test "create and view item with an embed field" do
     log_in_as("two-admin@example.com", "password")
-    visit("/two/en/admin/authors/fields/new?type=embed")
+    visit("/two/en/admin/twos/fields/new?type=embed")
 
     fill_in("field[name_en]", :with => "Test")
     fill_in("field[name_plural_en]", :with => "Tests")
@@ -37,17 +37,11 @@ class FieldsTest < ActionDispatch::IntegrationTest
     fill_in("Iframe height", :with => 360)
     click_on("Create field")
 
-    click_on("Data")
-    click_on('Twos 2')
-    click_on("New Two")
+    visit("/two/en/admin/two/new")
     fill_in('Test', with: 'https://www.youtube.com/embed/C3-skAbrO2g')
     click_on("Create Two")
-    click_on("Return to site")
 
-    within('.nav.navbar-nav.me-auto') do
-      click_on("Twos")
-    end
-
+    visit("/two/en/two")
     within('.container') do
       all(:css, 'a').last.click
     end
