@@ -269,6 +269,7 @@ en:
     messages:
       invalid_email: is not a valid email address
       invalid_url: is an invalid or incomplete URL
+      no_domains: no domains have been authorized
       should_have_one_iframe: should have at least one iframe tag
       membership:
         no_identifier: Please enter a group identifier

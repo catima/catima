@@ -68,10 +68,13 @@ class Field::Embed < Field
 
       return if value.blank?
 
-      return if record.fields.find_by(uuid: attrib).parsed_domains.none?
+      if record.fields.find_by(uuid: attrib).parsed_domains.empty?
+        record.errors.add(attrib, I18n.t("errors.messages.no_domains"))
+        return false
+      end
 
       field = record.fields.find_by(uuid: attrib)
-      domains = field.parsed_domains.map { |d| d["value"] }
+      domains = field.parsed_domains.pluck("value")
       if field.iframe?
         validate_iframe(value, record, attrib, domains)
       else

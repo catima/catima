@@ -171,6 +171,7 @@ it:
     messages:
       invalid_email: non è un indirizzo e-mail valito
       invalid_url: è un URL invalido o incompleto
+      no_domains: nessun dominio è stato autorizzato
       membership:
         no_identifier: Inserire l'identificatore di un gruppo
         already_member: Sei già membro
