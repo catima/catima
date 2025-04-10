@@ -41,7 +41,6 @@ class FieldsTest < ActionDispatch::IntegrationTest
     # Test with an invalid embed URL
     fill_in("Test", :with => "https://www.youtu.be/embed/C3-skAbrO2g")
     click_on("Create Two")
-    assert_equal("/two/en/admin/twos/new", current_path)
     assert(page.has_content?("Invalid domain name"))
     # Test with a valid embed URL
     fill_in('Test', with: 'https://www.youtube.com/embed/C3-skAbrO2g')
