@@ -57,6 +57,25 @@ class FieldsTest < ActionDispatch::IntegrationTest
     assert_equal("https://www.youtube.com/embed/C3-skAbrO2g", page.find('iframe')['src'])
   end
 
+  test "create an embed field without authorized domain(s)" do
+    log_in_as("two-admin@example.com", "password")
+    visit("/two/en/admin/twos/fields/new?type=embed")
+
+    fill_in("field[name_en]", :with => "Test2")
+    fill_in("field[name_plural_en]", :with => "Tests2")
+    fill_in("Slug (singular)", :with => "test2")
+
+    select("url", :from => "Format")
+    fill_in("Iframe width", :with => 360)
+    fill_in("Iframe height", :with => 360)
+    click_on("Create field")
+
+    visit("/two/en/admin/twos/new")
+    fill_in('Test2', with: 'https://www.youtube.com/embed/C3-skAbrO2g')
+    click_on("Create Two")
+    assert(page.has_content?("no domains have been authorized"))
+  end
+
   test "view item with editor" do
     book = items(:one_book_theory_of_relativity)
     visit("/one/en/other-books/#{book.to_param}")
