@@ -11,7 +11,7 @@ class FieldsTest < ActionDispatch::IntegrationTest
     fill_in("field[name_en]", :with => "Test")
     fill_in("field[name_plural_en]", :with => "Tests")
     fill_in("Slug (singular)", :with => "test")
-    first('input#field_template', visible: false, :wait => 30).set('{"en":"{{name}}:{{age}}"}')
+    first('input#field_template', visible: false).set('{"en":"{{name}}:{{age}}"}')
     click_on("Create field")
 
     visit("/one/en/authors")
@@ -37,11 +37,11 @@ class FieldsTest < ActionDispatch::IntegrationTest
     fill_in("Iframe height", :with => 360)
     click_on("Create field")
 
-    visit("/two/en/admin/two/new")
+    visit("/two/en/admin/twos/new")
     fill_in('Test', with: 'https://www.youtube.com/embed/C3-skAbrO2g')
     click_on("Create Two")
 
-    visit("/two/en/two")
+    visit("/two/en/twos")
     within('.container') do
       all(:css, 'a').last.click
     end
