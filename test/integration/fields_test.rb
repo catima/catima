@@ -11,7 +11,7 @@ class FieldsTest < ActionDispatch::IntegrationTest
     fill_in("field[name_en]", :with => "Test")
     fill_in("field[name_plural_en]", :with => "Tests")
     fill_in("Slug (singular)", :with => "test")
-    first('.note-editable', visible: false).send_keys('{"en":"{{name}}:{{age}}"}')
+    first('.note-editable', visible: false).send_keys('{{name}}:{{age}}')
     click_on("Create field")
 
     visit("/one/en/authors")
