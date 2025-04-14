@@ -1,5 +1,6 @@
 name: ci
 on: [push, pull_request]
+permissions: read-all
 env:
   CI: gha
   POSTGRES_USER: postgres

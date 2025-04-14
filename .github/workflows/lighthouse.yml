@@ -1,5 +1,6 @@
 name: lighthouse
 on: [push, pull_request]
+permissions: read-all
 env:
   CI: gha_lighthouse
   POSTGRES_USER: postgres
