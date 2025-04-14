@@ -16,7 +16,7 @@ jobs:
       fail-fast: false
       matrix:
         # Override automatic language detection
-        language: ['ruby']
+        language: ['ruby', 'actions']
 
     steps:
       - name: Checkout repository
