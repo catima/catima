@@ -115,10 +115,6 @@ Rails.application.configure do
   # Allow all hosts
   config.hosts.clear
 
-  # Dynamically allow access to the application from the domain
-  # specified in the environment variable DOMAIN
-  config.hosts << ENV.fetch('DOMAIN', nil) if ENV.fetch('DOMAIN', nil).present?
-
   # Annotate rendered view with file names.
   # config.action_view.annotate_rendered_view_with_filenames = true
 
