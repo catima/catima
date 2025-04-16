@@ -14,6 +14,9 @@ Rails.application.configure do
   # Adds the ability to raise errors on missing callback actions
   config.action_controller.raise_on_missing_callback_actions = true
 
+  # Allow requests from localhost and the dynamically generated domain
+  config.action_controller.forgery_protection_origin_check = false
+
   # Do not eager load code on boot.
   config.eager_load = false
 
@@ -109,12 +112,8 @@ Rails.application.configure do
   # routes, locales, etc. This feature depends on the listen gem.
   config.file_watcher = ActiveSupport::EventedFileUpdateChecker
 
-  config.hosts = [
-    IPAddr.new("0.0.0.0/0"), # All IPv4 addresses.
-    IPAddr.new("::/0"), # All IPv6 addresses.
-    "localhost", # The localhost reserved domain.
-    "catima.lan"
-  ]
+  # Allow all hosts
+  config.hosts.clear
 
   # Dynamically allow access to the application from the domain
   # specified in the environment variable DOMAIN
