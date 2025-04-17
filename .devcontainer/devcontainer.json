@@ -3,7 +3,7 @@
 {
     "name": "Training devcontainer",
     "dockerComposeFile": [
-        "../docker-compose.yml",
+        "../docker-compose.yml"
     ],
     "service": "catima-app",
     "workspaceFolder": "/workspaces/catima",
@@ -15,7 +15,7 @@
     },
     // forward ports for the main application (8383), and mailhog (8028)
     "forwardPorts": [8383, 8028],
-    "initializeCommand": "cp docker/example.env docker/.env",
+    "initializeCommand": "/bin/bash .devcontainer/initialize.sh",
     "postCreateCommand": "/bin/bash .devcontainer/post-create.sh",
     "customizations": {
         "vscode": {
@@ -29,7 +29,8 @@
                 "ryu1kn.partial-diff",
                 "GitHub.copilot",
                 "GitHub.copilot-chat",
-                "Shopify.ruby-lsp"
+                "Shopify.ruby-lsp",
+                "ms-azuretools.vscode-docker"
             ]
         }
     }
