@@ -1,0 +1,37 @@
+// For format details, see https://aka.ms/devcontainer.json. For config options, see the
+// README at: https://github.com/devcontainers/templates/tree/main/src/docker-existing-docker-compose
+{
+    "name": "Catima devcontainer",
+    "dockerComposeFile": [
+        "../docker-compose.yml"
+    ],
+    "service": "catima-app",
+    "workspaceFolder": "/workspaces/catima",
+    "features": {
+        "ghcr.io/devcontainers/features/git:1": {
+            "version": "2.43.0"
+        },
+        "ghcr.io/guiyomh/features/vim": {}
+    },
+    // forward ports for the main application (8383), and mailhog (8028)
+    "forwardPorts": [8383, 8028],
+    "initializeCommand": "cp ./docker/example.env ./docker/.env && /bin/bash .devcontainer/env-setup.sh ./docker/.env",
+    "postCreateCommand": "/bin/bash .devcontainer/env-setup.sh ./.env",
+    "customizations": {
+        "vscode": {
+            "extensions": [
+                "dbaeumer.vscode-eslint",
+                "eamodio.gitlens",
+                "EditorConfig.EditorConfig",
+                "mikestead.dotenv",
+                "PKief.material-icon-theme",
+                "redhat.vscode-yaml",
+                "ryu1kn.partial-diff",
+                "GitHub.copilot",
+                "GitHub.copilot-chat",
+                "Shopify.ruby-lsp",
+                "ms-azuretools.vscode-docker"
+            ]
+        }
+    }
+}
