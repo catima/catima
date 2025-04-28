@@ -23,6 +23,7 @@ def driver_params
   options.add_argument('disable-dev-shm-usage')
   options.add_argument('unhandled-prompt-behavior=ignore')
   options.add_argument('disable-backgrounding-occluded-windows')
+  options.web_socket_url = false
   { options: options }
 end
 
