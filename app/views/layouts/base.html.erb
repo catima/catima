@@ -4,6 +4,7 @@
   <head>
     <!-- Catima <%= Rails.application.config.version %> (<%= l(Rails.application.config.version_time) %>) -->
 
+    <%= capybara_lockstep if defined?(Capybara::Lockstep) %>
     <%= stylesheet_link_tag('application', media: 'all') %>
     <%= javascript_include_tag('application-core', media: 'all') %>
 

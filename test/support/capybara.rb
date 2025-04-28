@@ -18,6 +18,7 @@ def driver_params
   options = Selenium::WebDriver::Chrome::Options.new
   options.add_argument('disable-gpu')
   options.add_argument('headless') unless ENV['HEADLESS'] == '0'
+  options.add_argument('unhandled_prompt_behaviour=ignore')
   { options: options }
 end
 

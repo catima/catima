@@ -86,23 +86,23 @@ jobs:
         # Lock Chrome version to fix the issue where chrome returns immediately after a page visit, as opposed to waiting
         # for the request to complete: https://github.com/teamcapybara/capybara/issues/2800#issuecomment-2731100953
         # TODO: remove as soon as this is fixed by a new version of chrome or capybara
-      - name: Remove image-bundled Chrome
-        run: sudo apt-get purge -y google-chrome-stable
-      - name: Install stable Chrome and matching Chromedriver
-        run: |
-          CHROME_VERSION=133.0.6943.141
-          wget https://dl.google.com/linux/chrome/deb/pool/main/g/google-chrome-stable/google-chrome-stable_${CHROME_VERSION}-1_amd64.deb
-          sudo apt install -y ./google-chrome-stable_${CHROME_VERSION}-1_amd64.deb
-          rm google-chrome-stable_${CHROME_VERSION}-1_amd64.deb
-          wget -N https://edgedl.me.gvt1.com/edgedl/chrome/chrome-for-testing/${CHROME_VERSION}/linux64/chromedriver-linux64.zip
-          unzip chromedriver-linux64.zip
-          sudo mv chromedriver-linux64/chromedriver /usr/local/bin/chromedriver
-          sudo chmod +x /usr/local/bin/chromedriver
-          rm -rf chromedriver-linux64 chromedriver-linux64.zip
-      - name: Check Google Chrome & Driver Versions
-        run: |
-          google-chrome --version
-          chromedriver --version
+      #- name: Remove image-bundled Chrome
+        #  run: sudo apt-get purge -y google-chrome-stable
+      #- name: Install stable Chrome and matching Chromedriver
+        #  run: |
+        #    CHROME_VERSION=133.0.6943.141
+        #    wget https://dl.google.com/linux/chrome/deb/pool/main/g/google-chrome-stable/google-chrome-stable_${CHROME_VERSION}-1_amd64.deb
+        #    sudo apt install -y ./google-chrome-stable_${CHROME_VERSION}-1_amd64.deb
+        #    rm google-chrome-stable_${CHROME_VERSION}-1_amd64.deb
+        #    wget -N https://edgedl.me.gvt1.com/edgedl/chrome/chrome-for-testing/${CHROME_VERSION}/linux64/chromedriver-linux64.zip
+        #    unzip chromedriver-linux64.zip
+        #    sudo mv chromedriver-linux64/chromedriver /usr/local/bin/chromedriver
+        #    sudo chmod +x /usr/local/bin/chromedriver
+        #    rm -rf chromedriver-linux64 chromedriver-linux64.zip
+      #- name: Check Google Chrome & Driver Versions
+        #  run: |
+          #    google-chrome --version
+      #    chromedriver --version
 
       - name: Build app
         id: app-build

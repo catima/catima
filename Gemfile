@@ -104,6 +104,9 @@ end
 
 group :test do
   gem "capybara", "~> 3.34"
+  # Improves stability of integration tests timing issues
+  # https://github.com/teamcapybara/capybara/issues/2800#issuecomment-2831977271
+  gem "capybara-lockstep", "~> 2.2.3"
   gem "connection_pool", "~> 2.2"
   gem "json_schema", "~> 0.20"
   gem "launchy", "~> 2.5"
