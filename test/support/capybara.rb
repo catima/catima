@@ -17,11 +17,11 @@ end
 def driver_params
   options = Selenium::WebDriver::Chrome::Options.new
   options.add_argument('--disable-infobars')
-  options.add_emulation(device_metrics: { width: 1280, height: 960, touch: false })
-  options.add_argument('disable-gpu')
-  options.add_argument('headless') unless ENV['HEADLESS'] == '0'
+  options.add_argument('--disable-gpu')
+  options.add_argument('--headless') unless ENV['HEADLESS'] == '0'
   options.add_argument('--no-sandbox')
   options.add_argument('--disable-dev-shm-usage')
+  options.add_argument('--unhandled-prompt-behavior=ignore')
   { options: options }
 end
 
