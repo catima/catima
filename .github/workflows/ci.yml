@@ -112,6 +112,13 @@ jobs:
         id: app-test
         run: rails test
 
+      - name: Logs of failed tests
+        if: failure()
+        uses: actions/upload-artifact@v4
+        with:
+          name: logs-failed-tests-${{ matrix.ruby-versions }}
+          path: log
+
       - name: Upload coverage artifact
         id: upload-coverage-artifact
         uses: actions/upload-artifact@v4

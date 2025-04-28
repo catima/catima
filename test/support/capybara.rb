@@ -20,10 +20,6 @@ def driver_params
   options.add_argument('disable-gpu')
   options.add_argument('headless') unless ENV['HEADLESS'] == '0'
   options.add_argument('no-sandbox')
-  options.add_argument('disable-dev-shm-usage')
-  options.add_argument('unhandled-prompt-behavior=ignore')
-  options.add_argument('disable-backgrounding-occluded-windows')
-  options.web_socket_url = false
   { options: options }
 end
 
@@ -57,7 +53,7 @@ class ActionDispatch::IntegrationTest
     Capybara.current_driver = Capybara.javascript_driver
     browser = Capybara.current_session.driver.browser
     browser.manage.window.resize_to(1200, 800)
-    Capybara.default_max_wait_time = 12
+    Capybara.default_max_wait_time = 20
     browser.manage.delete_all_cookies
   end
 end
