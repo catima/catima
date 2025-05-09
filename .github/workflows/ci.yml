@@ -18,7 +18,7 @@ jobs:
         rubygems-version: [ '3.4.5' ]
         psql-version: [ '15' ]
         node-version: [ '20' ]
-        redis-version: [ '7' ]
+        redis-version: [ '8' ]
 
     services:
       postgres:
