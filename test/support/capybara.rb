@@ -14,12 +14,8 @@ else
   Capybara.javascript_driver = :chrome
 end
 
-# Configure Capybara::Lockstep logger
-Capybara::Lockstep.debug = Rails.logger
-
 def driver_params
   options = Selenium::WebDriver::Chrome::Options.new
-  options.add_argument('disable-infobars')
   options.add_argument('disable-gpu')
   options.add_argument('headless') unless ENV['HEADLESS'] == '0'
   options.add_argument('no-sandbox')
