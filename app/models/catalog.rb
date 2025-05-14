@@ -24,6 +24,7 @@
 class Catalog < ApplicationRecord
   include AvailableLocales
   include HasDeactivation
+  include HasLocales
   include HasSlug
   include HasSQLSlug
   include Clone
@@ -42,6 +43,9 @@ class Catalog < ApplicationRecord
   validate :seo_indexable_must_be_false_if_data_only_or_public
 
   serialize :style, coder: HashSerializer
+  serialize :description, coder: HashSerializer
+
+  locales :description
 
   has_many :api_keys, dependent: :destroy
   has_many :api_logs, dependent: :destroy

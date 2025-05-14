@@ -344,7 +344,9 @@ CREATE TABLE public.catalogs (
     throttle_time_window integer DEFAULT 1,
     throttle_max_requests integer DEFAULT 5,
     data_only boolean DEFAULT false,
-    seo_indexable boolean DEFAULT false NOT NULL
+    seo_indexable boolean DEFAULT false NOT NULL,
+    description jsonb,
+    comments text
 );
 
 
@@ -2512,6 +2514,8 @@ ALTER TABLE ONLY public.choice_sets
 SET search_path TO "$user", public;
 
 INSERT INTO "schema_migrations" (version) VALUES
+('20250514073222'),
+('20250513123625'),
 ('20241127123939'),
 ('20241126084628'),
 ('20240814090544'),

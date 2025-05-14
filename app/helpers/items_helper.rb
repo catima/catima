@@ -189,7 +189,7 @@ module ItemsHelper
     false
   end
 
-  def meta_tag_description(item)
+  def meta_tag_description_for_items(item)
     return if item_display_name(item).blank?
 
     tag.meta(

@@ -1,5 +1,17 @@
 <%= f.text_field(:name, :autofocus => true) %>
 
+<div class="mb-3">
+  <%= f.label(:description, class: "form-label") %>
+  <%= f.hidden_field(:description, value: @catalog.description_str) %>
+  <%= react_component(
+    'TranslatedTextField/components/TranslatedTextField',
+    {
+      input: 'catalog_description',
+      locales: @catalog.valid_locales
+    })
+  %>
+</div>
+
 <% unless @catalog.id %>
   <%= f.text_field(:slug, :help => slug_help_text) %>
 <% end %>
@@ -82,8 +94,17 @@
 <%= f.number_field(:throttle_time_window, min: 1, step: 1) %>
 <%= f.number_field(:throttle_max_requests, min: 1, step: 1) %>
 
+<hr>
+
+<%= f.form_group(
+  :comments,
+  :help => "Can be used by sysadmins to add informations about "\
+    "the catalog. Use #my_keyword to display keywords in the catalog list."
+) do %>
+  <%= f.text_area(:comments) %>
+<% end %>
+
 <% if @admins.present? %>
-  <hr>
   <label class="form-label">
     <% if @admins.count > 1 %>Administrators
     <% else %>Administrator
