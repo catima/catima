@@ -5,6 +5,9 @@
       <th>Slug</th>
       <th>Status</th>
       <th>Visibility</th>
+      <% if system_admin? %>
+        <th>Keywords</th>
+      <% end %>
       <th></th>
     </tr>
   </thead>
@@ -26,6 +29,9 @@
         </td>
         <td><%= deactivation_status_label(catalog) %></td>
         <td><%= visibility_status_label(catalog) %></td>
+        <% if system_admin? %>
+          <td><%= catalog_keyword_badges(catalog) %></td>
+        <% end %>
         <td class="text-end">
           <%= render "shared/actions/catalog", :model => catalog %>
         </td>
