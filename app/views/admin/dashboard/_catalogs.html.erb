@@ -30,9 +30,11 @@
         <td><%= deactivation_status_label(catalog) %></td>
         <td><%= visibility_status_label(catalog) %></td>
         <% if system_admin? %>
-          <td><%= catalog_keyword_badges(catalog) %></td>
+          <td class="keywords">
+            <%= catalog_keyword_badges(catalog) %>
+          </td>
         <% end %>
-        <td class="text-end">
+        <td class="text-end actions">
           <%= render "shared/actions/catalog", :model => catalog %>
         </td>
       </tr>
