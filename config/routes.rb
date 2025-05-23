@@ -161,6 +161,7 @@ Rails.application.routes.draw do
   namespace "admin" do
     get "/" => "dashboard#index", :as => :dashboard
     get "/stats" => "dashboard#stats"
+    get "/stats/download" => 'dashboard#download_stats'
     resources :catalogs, :param => :slug, :except => [:index] do
       get "duplicate_new", on: :member
       post "duplicate", on: :member
