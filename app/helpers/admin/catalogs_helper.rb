@@ -25,4 +25,16 @@ module Admin::CatalogsHelper
       :class => "badge text-bg-info"
     )
   end
+
+  def catalog_keyword_badges(catalog)
+    return unless catalog.comments
+
+    # Find all keywords in the string (#my_keyword), and add a badge for each one
+    badges = catalog.comments.scan(/#(\w+)/).flatten.map do |badge|
+      tag.span(badge, class: "badge rounded-pill text-bg-secondary me-1")
+    end
+
+    # Return the badges as a safe HTML string
+    safe_join(badges)
+  end
 end

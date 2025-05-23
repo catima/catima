@@ -14,9 +14,9 @@ class CatalogPolicyTest < ActiveSupport::TestCase
     assert(policy(users(:system_admin), catalogs(:inactive)).destroy?)
   end
 
-  test "catalog admin can edit but not create or destroy" do
-    assert(policy(users(:one_admin)).edit?)
+  test "catalog admin can update but not edit, create or destroy" do
     assert(policy(users(:one_admin)).update?)
+    refute(policy(users(:one_admin)).edit?)
     refute(policy(users(:one_admin), nil).index?)
     refute(policy(users(:one_admin)).create?)
     refute(policy(users(:one_admin)).new?)

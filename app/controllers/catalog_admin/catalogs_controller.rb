@@ -40,6 +40,7 @@ class CatalogAdmin::CatalogsController < CatalogAdmin::BaseController
   def catalog_params
     params.require(:catalog).permit(
       :name,
+      :description,
       :requires_review,
       :advertize,
       :bounds,

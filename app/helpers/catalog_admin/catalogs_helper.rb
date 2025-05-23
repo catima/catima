@@ -33,6 +33,15 @@ module CatalogAdmin::CatalogsHelper
     link_to(I18n.t('stats'), catalog_admin_stats_path, :class => klass)
   end
 
+  def meta_tag_description_for_catalogs(catalog)
+    return if catalog.description.blank?
+
+    tag.meta(
+      name: "description",
+      content: strip_tags("#{catalog.name} - #{catalog.description}")
+    )
+  end
+
   def catalog_access(catalog)
     return CATALOG_ACCESS[:open_for_everyone] if catalog.visible && !catalog.restricted
     return CATALOG_ACCESS[:open_to_members] if catalog.visible && catalog.restricted

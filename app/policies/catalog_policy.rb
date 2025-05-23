@@ -33,7 +33,7 @@ class CatalogPolicy
   end
 
   alias_method :create?, :user_is_system_admin?
-  alias_method :edit?, :user_is_catalog_admin?
+  alias_method :edit?, :user_is_system_admin?
   alias_method :index?, :user_is_system_admin?
   alias_method :new?, :user_is_system_admin?
   alias_method :update?, :user_is_catalog_admin?

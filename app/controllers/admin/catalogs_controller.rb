@@ -79,6 +79,8 @@ class Admin::CatalogsController < Admin::BaseController
   def catalog_params
     params.require(:catalog).permit(
       :name,
+      :description,
+      :comments,
       :slug,
       :primary_language,
       :requires_review,
