@@ -6,7 +6,9 @@
       <th>Status</th>
       <th>Visibility</th>
       <% if system_admin? %>
-        <th>Keywords</th>
+        <th class="d-none d-md-table-cell">
+          Keywords
+        </th>
       <% end %>
       <th></th>
     </tr>
@@ -30,7 +32,7 @@
         <td><%= deactivation_status_label(catalog) %></td>
         <td><%= visibility_status_label(catalog) %></td>
         <% if system_admin? %>
-          <td class="keywords">
+          <td class="d-none d-md-table-cell keywords">
             <%= catalog_keyword_badges(catalog) %>
           </td>
         <% end %>

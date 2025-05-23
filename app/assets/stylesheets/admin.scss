@@ -22,3 +22,17 @@
     }
   }
 }
+
+.users {
+  table {
+    td.email {
+      width: 270px;
+    }
+
+    td.last-signed-in,
+    td.created-at,
+    td.actions {
+      width: 130px;
+    }
+  }
+}
