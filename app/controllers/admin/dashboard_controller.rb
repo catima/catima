@@ -39,13 +39,19 @@ class Admin::DashboardController < Admin::BaseController
     authorize(Catalog, :index?)
     authorize(User, :index?)
 
+    send_data build_stats_export, filename: "catima_stats_all.csv", type: "text/csv"
+  end
+
+  private
+
+  def build_stats_export(from=Ahoy::Event.validity.ago)
     require 'csv'
 
     # Retrieve visits for each catalog
     data = Catalog.all.map do |catalog|
       catalog_slug = catalog.slug
       monthly_counts = Ahoy::Event.where(name: catalog_slug)
-                                  .where("time > ?", Ahoy::Event.validity.ago)
+                                  .where("time > ?", from)
                                   .group_by_month(:time)
                                   .count
 
@@ -57,7 +63,7 @@ class Admin::DashboardController < Admin::BaseController
     # Create the CSV headers with "Catalog name" followed by the formatted month names
     headers = ["Catalog name"] + months.map { |d| d.strftime("%b %Y") }
 
-    csv_output = CSV.generate do |csv|
+    CSV.generate do |csv|
       csv << headers
 
       # Iterate over each item in the data to populate the CSV rows
@@ -69,11 +75,7 @@ class Admin::DashboardController < Admin::BaseController
         csv << ([item[:name]] + counts)
       end
     end
-
-    send_data csv_output, filename: "catima_stats_all.csv", type: "text/csv"
   end
-
-  private
 
   # Retrieve users for index with pagination & search params
   def index_users(search=nil, page=1)
