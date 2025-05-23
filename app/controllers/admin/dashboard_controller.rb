@@ -41,15 +41,15 @@ class Admin::DashboardController < Admin::BaseController
 
     require 'csv'
 
-    # Retrieve visits for each catalogs
-    events = Ahoy::Event.distinct.pluck(:name)
-    data = events.map do |(catalog_slug, _)|
+    # Retrieve visits for each catalog
+    data = Catalog.all.map do |catalog|
+      catalog_slug = catalog.slug
       monthly_counts = Ahoy::Event.where(name: catalog_slug)
                                   .where("time > ?", Ahoy::Event.validity.ago)
                                   .group_by_month(:time)
                                   .count
 
-      { name: catalog_slug, data: monthly_counts }
+      { name: catalog.name, data: monthly_counts }
     end
 
     # Extract unique months from the data, sort them, and store them in an array
