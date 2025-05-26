@@ -49,8 +49,7 @@ class Admin::DashboardController < Admin::BaseController
 
     # Retrieve visits for each catalog
     data = Catalog.all.map do |catalog|
-      catalog_slug = catalog.slug
-      monthly_counts = Ahoy::Event.where(name: catalog_slug)
+      monthly_counts = Ahoy::Event.where(name: catalog.slug)
                                   .where("time > ?", from)
                                   .group_by_month(:time)
                                   .count
