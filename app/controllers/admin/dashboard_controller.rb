@@ -39,7 +39,7 @@ class Admin::DashboardController < Admin::BaseController
     authorize(Catalog, :index?)
     authorize(User, :index?)
 
-    send_data build_stats_export, filename: "catima_stats_all.csv", type: "text/csv"
+    send_data build_stats_export, filename: "#{Time.zone.today}_catima_stats.csv", type: "text/csv"
   end
 
   private
