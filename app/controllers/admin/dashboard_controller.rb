@@ -33,7 +33,48 @@ class Admin::DashboardController < Admin::BaseController
     @top = 5
   end
 
+  def download_stats
+    raise Pundit::NotAuthorizedError unless current_user.system_admin?
+
+    authorize(Catalog, :index?)
+    authorize(User, :index?)
+
+    send_data build_stats_export, filename: "#{Time.zone.today}_catima_stats.csv", type: "text/csv"
+  end
+
   private
+
+  def build_stats_export(from=Ahoy::Event.validity.ago)
+    require 'csv'
+
+    # Retrieve visits for each catalog
+    data = Catalog.all.map do |catalog|
+      monthly_counts = Ahoy::Event.where(name: catalog.slug)
+                                  .where("time > ?", from)
+                                  .group_by_month(:time)
+                                  .count
+
+      { name: catalog.name, data: monthly_counts }
+    end
+
+    # Extract unique months from the data, sort them, and store them in an array
+    months = data.flat_map { |item| item[:data].keys }.uniq.sort
+    # Create the CSV headers with "Catalog name" followed by the formatted month names
+    headers = ["Catalog name"] + months.map { |d| d.strftime("%b %Y") }
+
+    CSV.generate do |csv|
+      csv << headers
+
+      # Iterate over each item in the data to populate the CSV rows
+      data.each do |item|
+        # For each month, fetch the count from the item's data or use 0 if the month is missing
+        counts = months.map { |month| item[:data].fetch(month, 0) }
+
+        # Add the item's name and the counts as a new row in the CSV
+        csv << ([item[:name]] + counts)
+      end
+    end
+  end
 
   # Retrieve users for index with pagination & search params
   def index_users(search=nil, page=1)
