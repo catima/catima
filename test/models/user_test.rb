@@ -73,4 +73,20 @@ class UserTest < ActiveSupport::TestCase
     assert_equal(:inactive, users(:one_user).inactive_message)
     assert_equal(:invalid, users(:one_user_deleted).inactive_message)
   end
+
+  test "#user_for_role" do
+    catalog = catalogs(:one)
+    role = "editor"
+
+    # Test with a valid role and active catalog
+    assert_includes(User.users_for_role(role, catalog), users(:one_editor))
+    refute_includes(User.users_for_role(role, catalog), users(:one_member))
+
+    # Test with an invalid role
+    assert_empty(User.users_for_role("invalid_role", catalog))
+
+    # Test with a deactivated catalog
+    inactive_catalog = catalogs(:inactive)
+    assert_empty(User.users_for_role(role, inactive_catalog))
+  end
 end
