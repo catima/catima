@@ -278,7 +278,7 @@ class User < ApplicationRecord
 
   def self.users_for_role(role, catalog)
     return User.none unless catalog.not_deactivated?
-    return User.all unless CatalogPermission::ROLE_OPTIONS.include?(role)
+    return User.none unless CatalogPermission::ROLE_OPTIONS.include?(role)
     return User.all if role == "user"
 
     # Users directly associated with the catalog
