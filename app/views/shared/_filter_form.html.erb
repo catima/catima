@@ -8,8 +8,9 @@
       <%= select_tag :filter,
         options_for_select(
           CatalogPermission::ROLE_OPTIONS.map { |role| [role.titleize, role] }, params[:filter]
-        ), prompt: placeholder, class: "form-select"
-      %>
+        ),
+        prompt: placeholder,
+        class: "form-select" %>
     </div>
   <% end %>
 </div>
