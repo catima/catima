@@ -201,6 +201,14 @@ class User < ApplicationRecord
     end
   end
 
+  def self.filters(filter, catalog)
+    if filter
+      users_for_role(filter, catalog)
+    else
+      all
+    end
+  end
+
   def describe
     as_json(only: %i[id email])
   end
@@ -266,6 +274,24 @@ class User < ApplicationRecord
     # uniqueness of the email. It is used when we want to create a new user
     # with the same email as a deleted user.
     false
+  end
+
+  def self.users_for_role(role, catalog)
+    return User.none unless catalog.not_deactivated?
+    return User.none unless CatalogPermission::ROLE_OPTIONS.include?(role)
+
+    # Users directly associated with the catalog
+    direct_users = User.joins(:catalog_permissions)
+                       .where(catalog_permissions: { catalog_id: catalog.id, role: role })
+
+    # Users indirectly associated via active groups
+    group_users = User.joins(memberships: :group)
+                      .joins("INNER JOIN catalog_permissions ON catalog_permissions.catalog_id = memberships.group_id")
+                      .where(catalog_permissions: { catalog_id: catalog.id, role: role })
+                      .where(groups: { active: true })
+
+    # Combine and ensure uniqueness
+    User.where(id: (direct_users.pluck(:id) + group_users.pluck(:id)).uniq)
   end
 
   private

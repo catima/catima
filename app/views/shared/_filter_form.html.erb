@@ -1,0 +1,25 @@
+<div class="filter-form">
+  <%= form_tag url_for(:controller => controller, :action => action), method: :get, id: "filter-form" do %>
+    <div class="form-group">
+      <select name="filter" id="filter" class="form-control">
+        <option value="">Select Permission</option>
+        <% CatalogPermission::ROLE_OPTIONS.each do |role| %>
+          <option value="<%= role %>"><%= role.titleize %></option>
+        <% end %>
+      </select>
+    </div>
+  <% end %>
+</div>
+
+<script>
+  document.addEventListener("DOMContentLoaded", function () {
+    const selectElement = document.getElementById("filter");
+    const formElement = document.getElementById("filter-form");
+
+    if (selectElement && formElement) {
+      selectElement.addEventListener("change", function () {
+        formElement.submit();
+      });
+    }
+  });
+</script>
