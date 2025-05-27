@@ -43,7 +43,7 @@ class CatalogAdmin::UsersController < CatalogAdmin::BaseController
   def index_users(search=nil, filter=nil, page=1)
     users = policy_scope(User).sorted
     users = users.search(search) if search
-    users = users.filters(filter, catalog) if filter
+    users = users.filter_by_role(filter, catalog) if filter
     users.page(page)
   end
 

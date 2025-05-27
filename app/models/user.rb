@@ -201,7 +201,7 @@ class User < ApplicationRecord
     end
   end
 
-  def self.filters(filter, catalog)
+  def self.filter_by_role(filter, catalog)
     if filter
       users_for_role(filter, catalog)
     else
@@ -278,7 +278,8 @@ class User < ApplicationRecord
 
   def self.users_for_role(role, catalog)
     return User.none unless catalog.not_deactivated?
-    return User.none unless CatalogPermission::ROLE_OPTIONS.include?(role)
+    return User.all unless CatalogPermission::ROLE_OPTIONS.include?(role)
+    return User.all if role == "user"
 
     # Users directly associated with the catalog
     direct_users = User.joins(:catalog_permissions)

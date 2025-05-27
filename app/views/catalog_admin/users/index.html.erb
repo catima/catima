@@ -93,7 +93,7 @@
         <%= render 'shared/filter_form',
                    :controller => 'catalog_admin/users',
                    :action => 'index',
-                   :anchor => nil
+                   :placeholder => t('.filter_by_role')
         %>
         <span class="pull-right">
           <%= link_to(new_catalog_admin_user_path) do %>
