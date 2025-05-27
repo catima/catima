@@ -285,8 +285,7 @@ class User < ApplicationRecord
                        .where(catalog_permissions: { catalog_id: catalog.id, role: role })
 
     # Users indirectly associated via active groups
-    group_users = User.joins(memberships: :group)
-                      .joins("INNER JOIN catalog_permissions ON catalog_permissions.catalog_id = memberships.group_id")
+    group_users = User.joins(memberships: { group: :catalog_permissions })
                       .where(catalog_permissions: { catalog_id: catalog.id, role: role })
                       .where(groups: { active: true })
 
