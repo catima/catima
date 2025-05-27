@@ -7,7 +7,8 @@
     <div class="input-group">
       <%= select_tag :filter,
         options_for_select(
-          CatalogPermission::ROLE_OPTIONS.map { |role| [role.titleize, role] }, params[:filter]
+          CatalogPermission::ROLE_OPTIONS.map { |role| [role.titleize, role] },
+          params[:filter]
         ),
         prompt: placeholder,
         class: "form-select" %>
