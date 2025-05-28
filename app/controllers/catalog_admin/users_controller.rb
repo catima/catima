@@ -3,7 +3,7 @@ class CatalogAdmin::UsersController < CatalogAdmin::BaseController
 
   def index
     authorize(User)
-    @users = index_users(params[:search], params[:page])
+    @users = index_users(params[:search], params[:filter], params[:page])
     render("index", :layout => "catalog_admin/setup")
   end
 
@@ -40,9 +40,10 @@ class CatalogAdmin::UsersController < CatalogAdmin::BaseController
   private
 
   # Retrieve users for index with pagination & search params
-  def index_users(search=nil, page=1)
+  def index_users(search=nil, filter=nil, page=1)
     users = policy_scope(User).sorted
     users = users.search(search) if search
+    users = users.filter_by_role(filter, catalog) if filter
     users.page(page)
   end
 

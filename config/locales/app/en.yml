@@ -957,6 +957,7 @@ en:
         new_group: Create group
         no_groups_for_catalog_warning: There are no groups for this catalog.
         search: Search for users
+        filter_by_role: Filter by role
         documentation_url_html: "A detailed documentation on the operation and configuration of users and groups is available at: <a href=\"%{url}\" target=\"_blank\">%{url}</a>."
       catalog_users:
         group_role: Group

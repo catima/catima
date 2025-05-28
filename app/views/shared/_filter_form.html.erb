@@ -1,0 +1,25 @@
+<div class="filter-form">
+  <%= form_with url: url_for(controller: controller, action: action), method: :get, class: "filter-form" do %>
+    <% if params[:search].present? %>
+      <%= hidden_field_tag :search, params[:search] %>
+    <% end %>
+
+    <div class="input-group">
+      <%= select_tag :filter,
+        options_for_select(
+          CatalogPermission::ROLE_OPTIONS.map { |role| [role.titleize, role] },
+          params[:filter]
+        ),
+        prompt: placeholder,
+        class: "form-select" %>
+    </div>
+  <% end %>
+</div>
+
+<script>
+  document.addEventListener("DOMContentLoaded", () => {
+    document.querySelector(".filter-form select").addEventListener("change", (event) => {
+      event.target.form.submit();
+    });
+  });
+</script>

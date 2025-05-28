@@ -121,6 +121,11 @@ button[data-active=true]:focus {
   width: 250px;
 }
 
+.filter-form {
+  display: inline-flex;
+  width: 150px;
+}
+
 .search-container {
   .component-search-row {
     margin-bottom: 10px;
