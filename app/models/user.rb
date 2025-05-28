@@ -195,7 +195,7 @@ class User < ApplicationRecord
 
   def self.search(search)
     if search
-      where("email ILIKE ?", "%#{search}%")
+      where("email ILIKE ?", "%#{sanitize_sql_like(search)}%")
     else
       all
     end
