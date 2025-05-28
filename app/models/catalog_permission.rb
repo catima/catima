@@ -31,6 +31,12 @@ class CatalogPermission < ApplicationRecord
     ROLE_OPTIONS.index(perm1.role) > ROLE_OPTIONS.index(perm2.role) ? perm1 : perm2
   end
 
+  # Since every Catima user account is a user in every catalog
+  # we remove this role from the filter options.
+  def self.filter_options
+    ROLE_OPTIONS.reject { |role| role == 'user' }
+  end
+
   def role_at_least?(role_requirement)
     requirement_index = ROLE_OPTIONS.index(role_requirement.to_s)
     return false if requirement_index.nil?
