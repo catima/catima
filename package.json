@@ -88,6 +88,6 @@
     "@pmmmwh/react-refresh-webpack-plugin": "^0.5.10",
     "@webpack-cli/serve": "^2.0.5",
     "react-refresh": "^0.14.0",
-    "webpack-dev-server": "^4.15.1"
+    "webpack-dev-server": "^5.2.1"
   }
 }
