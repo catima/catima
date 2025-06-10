@@ -332,7 +332,15 @@ class Field < ApplicationRecord
 
   # Remove html tags & base64 from field content
   def strip_extra_content(item, locale=I18n.locale)
-    strip_tags(exclude_base64(raw_value(item, locale)))
+    value = raw_value(item, locale)
+    # Remove base64 content
+    value = exclude_base64(value)
+    # Insert spaces after specific tags to preserve word boundaries
+    value = value.gsub(%r{</?(p|div|br|li|h[1-6]|tr|td|th)[^>]*>}i, ' ')
+    # Strip HTML tags
+    value = strip_tags(value)
+    # Remove extra spaces
+    value.strip.gsub(/\s+/, ' ')
   end
 
   # Returns the order by for items with a sort by a field
