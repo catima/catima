@@ -14,6 +14,8 @@ Each document is described by several data fields and represents a specific obje
 
 For some applications, CATIMA can be a replacement for databases such as FileMaker, but without offering many of the more advanced features. CATIMA is inteded to just work out of the box after defining the structure of the documents. CATIMA offers by purpose only relatively few personalization options. It still allows for creating custom content pages along with the catalog content.
 
+[![Open in GitHub Codespaces](https://github.com/codespaces/badge.svg)](https://codespaces.new/catima/catima)
+
 ## Documentation
 
 CATIMA is a Rails 7.2 app.
