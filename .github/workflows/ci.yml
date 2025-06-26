@@ -84,14 +84,14 @@ jobs:
           sudo apt-get update
           sudo apt-get install -y imagemagick libsodium-dev libpq-dev
 
-        # Lock Chrome version to fix the issue where chrome returns immediately after a page visit, as opposed to waiting
-        # for the request to complete: https://github.com/teamcapybara/capybara/issues/2800#issuecomment-2731100953
-        # TODO: remove as soon as this is fixed by a new version of chrome or capybara
+      # Lock Chrome version to fix the issue where chrome returns immediately after a page visit, as opposed to waiting
+      # for the request to complete: https://github.com/teamcapybara/capybara/issues/2800#issuecomment-2731100953
+      # TODO: remove as soon as this is fixed by a new version of chrome or capybara
       - name: Remove image-bundled Chrome
         run: sudo apt-get purge -y google-chrome-stable
       - name: Install stable Chrome and matching Chromedriver
         run: |
-          CHROME_VERSION=133.0.6943.141
+          CHROME_VERSION=135.0.7049.52
           wget https://dl.google.com/linux/chrome/deb/pool/main/g/google-chrome-stable/google-chrome-stable_${CHROME_VERSION}-1_amd64.deb
           sudo apt install -y ./google-chrome-stable_${CHROME_VERSION}-1_amd64.deb
           rm google-chrome-stable_${CHROME_VERSION}-1_amd64.deb
@@ -112,6 +112,13 @@ jobs:
       - name: Test app
         id: app-test
         run: rails test
+
+      - name: Logs of failed tests
+        if: failure()
+        uses: actions/upload-artifact@v4
+        with:
+          name: logs-failed-tests-${{ matrix.ruby-versions }}
+          path: log
 
       - name: Upload coverage artifact
         id: upload-coverage-artifact

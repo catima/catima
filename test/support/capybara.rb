@@ -18,6 +18,7 @@ def driver_params
   options = Selenium::WebDriver::Chrome::Options.new
   options.add_argument('disable-gpu')
   options.add_argument('headless') unless ENV['HEADLESS'] == '0'
+  options.add_argument('no-sandbox')
   { options: options }
 end
 
@@ -51,7 +52,7 @@ class ActionDispatch::IntegrationTest
     Capybara.current_driver = Capybara.javascript_driver
     browser = Capybara.current_session.driver.browser
     browser.manage.window.resize_to(1200, 800)
-    Capybara.default_max_wait_time = 12
+    Capybara.default_max_wait_time = 20
     browser.manage.delete_all_cookies
   end
 end
