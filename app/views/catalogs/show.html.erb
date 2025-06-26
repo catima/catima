@@ -1,3 +1,7 @@
+<% content_for :meta_tags do %>
+  <%= meta_tag_description_for_catalogs(@catalog) %>
+<% end %>
+
 <% provide(:extra_nav) do %>
   <%= render("simple_searches/form",
       :controller => "simple_searches",
@@ -6,10 +10,13 @@
 <% end %>
 
 <% if @catalog.custom_root_page.nil? %>
-
   <% provide(:title, @catalog.name) %>
   <p>
-    <%= t(".welcome", :catalog => @catalog.name) %>
+    <% if @catalog.description.present? %>
+      <%= @catalog.description %>
+    <% else %>
+      <%= t(".welcome", :catalog => @catalog.name) %>
+    <% end %>
   </p>
 
 <% else %>

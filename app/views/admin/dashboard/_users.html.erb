@@ -4,20 +4,32 @@
       <th>Email</th>
       <th>Admin?</th>
       <th>Created at</th>
-      <th>Last signed in</th>
-      <th>Invited by</th>
+      <th class="d-none d-md-table-cell">
+        Last signed in
+      </th>
+      <th class="d-none d-md-table-cell">
+        Invited by
+      </th>
       <th></th>
     </tr>
   </thead>
   <tbody>
     <% @users.each do |user| %>
       <tr>
-        <td><%= fa_icon(:user, :text => user.email) %></td>
+        <td class="email">
+          <%= fa_icon(:user, :text => user.email) %>
+        </td>
         <td><%= admin_catalogs(user) %></td>
-        <td><%= l(user.created_at, :format => :long) %></td>
-        <td><%= last_signed_in(user) %></td>
-        <td><%= invited_by(user) %></td>
-        <td class="text-end">
+        <td class="created-at">
+          <%= l(user.created_at, format: "%d %b %Y") %>
+        </td>
+        <td class="d-none d-md-table-cell last-signed-in">
+          <%= last_signed_in(user) %>
+        </td>
+        <td class="d-none d-md-table-cell">
+          <%= invited_by(user) %>
+        </td>
+        <td class="text-end actions">
           <%= render "shared/actions/user", :model => user %>
         </td>
       </tr>

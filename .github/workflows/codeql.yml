@@ -6,7 +6,8 @@ on:
     branches: [development]
   schedule:
     - cron: '0 15 * * 6'
-
+permissions:
+  security-events: write
 jobs:
   analyze:
     name: Analyze
@@ -16,7 +17,7 @@ jobs:
       fail-fast: false
       matrix:
         # Override automatic language detection
-        language: ['ruby']
+        language: ['ruby', 'actions']
 
     steps:
       - name: Checkout repository

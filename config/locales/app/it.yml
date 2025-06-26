@@ -171,6 +171,7 @@ it:
     messages:
       invalid_email: non è un indirizzo e-mail valito
       invalid_url: è un URL invalido o incompleto
+      no_domains: nessun dominio è stato autorizzato
       membership:
         no_identifier: Inserire l'identificatore di un gruppo
         already_member: Sei già membro
@@ -583,6 +584,7 @@ it:
         new_group: Nuovo gruppo
         no_groups_for_catalog_warning: Non ci sono gruppi per questo catalogo.
         search: Cerca utenti
+        filter_by_role: Filtrare per ruolo
         documentation_url_html: "A detailed documentation on the operation and configuration of users and groups is available at: <a href=\"%{url}\" target=\"_blank\">%{url}</a>."
       catalog_users:
         group_role: Gruppo

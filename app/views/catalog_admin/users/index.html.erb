@@ -90,6 +90,11 @@
                    :placeholder => t('.search'),
                    :anchor => nil
         %>
+        <%= render 'shared/filter_form',
+                   :controller => 'catalog_admin/users',
+                   :action => 'index',
+                   :placeholder => t('.filter_by_role')
+        %>
         <span class="pull-right">
           <%= link_to(new_catalog_admin_user_path) do %>
             <%= fa_icon(:"user-plus", :text => t('new_user')) %>

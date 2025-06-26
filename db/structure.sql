@@ -1,6 +1,7 @@
 SET statement_timeout = 0;
 SET lock_timeout = 0;
 SET idle_in_transaction_session_timeout = 0;
+SET transaction_timeout = 0;
 SET client_encoding = 'UTF8';
 SET standard_conforming_strings = on;
 SELECT pg_catalog.set_config('search_path', '', false);
@@ -29,15 +30,15 @@ CREATE FUNCTION public.bigdate_to_num(json) RETURNS numeric
 -- Name: validate_geojson(text); Type: FUNCTION; Schema: public; Owner: -
 --
 
-CREATE FUNCTION public.validate_geojson(json text) RETURNS boolean
+CREATE FUNCTION public.validate_geojson(geojson text) RETURNS boolean
     LANGUAGE plpgsql
     AS $$
-      BEGIN
-        RETURN ST_IsValid(ST_GeomFromGeoJSON(json));
-      EXCEPTION WHEN others THEN
-        RETURN 'f';
-      END;
-      $$;
+  BEGIN
+    RETURN ST_IsValid(ST_GeomFromGeoJSON(geojson));
+  EXCEPTION WHEN others THEN
+    RETURN 'f';
+  END;
+$$;
 
 
 SET default_tablespace = '';
@@ -344,7 +345,9 @@ CREATE TABLE public.catalogs (
     throttle_time_window integer DEFAULT 1,
     throttle_max_requests integer DEFAULT 5,
     data_only boolean DEFAULT false,
-    seo_indexable boolean DEFAULT false NOT NULL
+    seo_indexable boolean DEFAULT false NOT NULL,
+    description jsonb,
+    comments text
 );
 
 
@@ -2512,6 +2515,9 @@ ALTER TABLE ONLY public.choice_sets
 SET search_path TO "$user", public;
 
 INSERT INTO "schema_migrations" (version) VALUES
+('20250626134644'),
+('20250514073222'),
+('20250513123625'),
 ('20241127123939'),
 ('20241126084628'),
 ('20240814090544'),

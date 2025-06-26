@@ -266,6 +266,7 @@ fr:
     messages:
       invalid_email: n'est pas une adresse e-mail valide
       invalid_url: est une URL invalide ou incomplète
+      no_domains: aucun domaine n'a été autorisé
       should_have_one_iframe: doit comporter au moins une balise iframe
       membership:
         no_identifier: Veuillez entrer un identifiant de groupe
@@ -955,6 +956,7 @@ fr:
         new_group: Nouveau groupe
         no_groups_for_catalog_warning: Il n'y a pas de groupes pour ce catalogue.
         search: Rechercher des utilisateurs
+        filter_by_role: Filtrer par rôle
         documentation_url_html: "Une documentation détaillée sur le fonctionnement et la configuration des utilisateurs et groupes est disponible à l'url suivante: <a href=\"%{url}\" target=\"_blank\">%{url}</a>."
       catalog_users:
         group_role: Groupe

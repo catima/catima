@@ -1,5 +1,15 @@
 <%= f.text_field(:name, :autofocus => true) %>
 
+<%= f.label(:description, class: "form-label") %>
+<%= f.hidden_field(:description, value: @catalog.description_str) %>
+<%= react_component(
+  'TranslatedTextField/components/TranslatedTextField',
+  {
+    input: 'catalog_description',
+    locales: @catalog.valid_locales
+  })
+%>
+
 <% unless @catalog.data_only? %>
   <%= f.form_group(
     :advertize,

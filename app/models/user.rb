@@ -195,7 +195,15 @@ class User < ApplicationRecord
 
   def self.search(search)
     if search
-      where("email ILIKE ?", "%#{search}%")
+      where("email ILIKE ?", "%#{sanitize_sql_like(search)}%")
+    else
+      all
+    end
+  end
+
+  def self.filter_by_role(filter, catalog)
+    if filter
+      users_for_role(filter, catalog)
     else
       all
     end
@@ -266,6 +274,25 @@ class User < ApplicationRecord
     # uniqueness of the email. It is used when we want to create a new user
     # with the same email as a deleted user.
     false
+  end
+
+  def self.users_for_role(role, catalog)
+    return User.none unless catalog.not_deactivated?
+    return User.all if role.empty?
+    return User.all if role == "user"
+    return User.none unless CatalogPermission::ROLE_OPTIONS.include?(role)
+
+    # Users directly associated with the catalog
+    direct_users = User.joins(:catalog_permissions)
+                       .where(catalog_permissions: { catalog_id: catalog.id, role: role })
+
+    # Users indirectly associated via active groups
+    group_users = User.joins(memberships: { group: :catalog_permissions })
+                      .where(catalog_permissions: { catalog_id: catalog.id, role: role })
+                      .where(groups: { active: true })
+
+    # Combine and ensure uniqueness
+    User.where(id: (direct_users.pluck(:id) + group_users.pluck(:id)).uniq)
   end
 
   private

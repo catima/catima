@@ -10,6 +10,14 @@
     Stats | <%= @scope %>
   </div>
   <div class="stats-content">
-    <%= render("admin/dashboard/stats/" + @scope) %>
+    <span class="pull-right">
+      <%= link_to(admin_stats_download_path, :class => "btn btn-outline-secondary btn-xs mb-4") do %>
+        <%= fa_icon(:"download", :text => "Download all stats (CSV)") %>
+      <% end %>
+    </span>
+
+    <div class="mt-4">
+      <%= render("admin/dashboard/stats/" + @scope) %>
+    </div>
   </div>
 </div>

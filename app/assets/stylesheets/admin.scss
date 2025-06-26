@@ -10,3 +10,29 @@
     margin:10px;
   }
 }
+
+.catalogs {
+  table {
+    td.keywords {
+      width: 200px;
+    }
+
+    td.actions {
+      width: 150px;
+    }
+  }
+}
+
+.users {
+  table {
+    td.email {
+      width: 270px;
+    }
+
+    td.last-signed-in,
+    td.created-at,
+    td.actions {
+      width: 130px;
+    }
+  }
+}

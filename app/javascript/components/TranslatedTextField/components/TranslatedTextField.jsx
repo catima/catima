@@ -90,7 +90,7 @@ const TranslatedTextField = (props) => {
       {locales.map((locale, i) =>
         (
           <div key={i} className="input-group">
-            <span className="input-group-text">{locale}</span>
+            {locales.length > 1 && <span className="input-group-text">{locale}</span>}
             <input className="form-control" data-locale={locale} type="text" value={value[locale]}
                    onChange={_handleChange} disabled={state.disabled}/>
           </div>

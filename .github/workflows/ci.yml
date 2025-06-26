@@ -1,5 +1,6 @@
 name: ci
 on: [push, pull_request]
+permissions: read-all
 env:
   CI: gha
   POSTGRES_USER: postgres
@@ -15,9 +16,9 @@ jobs:
       matrix:
         ruby-versions: [ '3.2.2' ]
         rubygems-version: [ '3.4.5' ]
-        psql-version: [ '15' ]
-        node-version: [ '20' ]
-        redis-version: [ '7' ]
+        psql-version: [ '17' ]
+        node-version: [ '22' ]
+        redis-version: [ '8' ]
 
     services:
       postgres:
