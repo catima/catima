@@ -31,6 +31,7 @@ class AdvancedSearchesController < ApplicationController
     build_advanced_search
     find_advanced_search_configuration
 
+    @advanced_search_data = AdvancedSearch.find_by(:uuid => params[:uuid])
     if @advanced_search_config.present?
       @item_types = @advanced_search_config.item_types
       @fields = @advanced_search_config.field_set
