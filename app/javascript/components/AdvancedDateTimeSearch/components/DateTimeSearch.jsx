@@ -12,21 +12,24 @@ const DateTimeSearch = (props) => {
     srcRef,
     selectCondition,
     selectConditionName,
+    selectConditionDefault,
     inputStart,
     localizedDateTimeData,
     locale,
     format,
     fieldConditionName,
     fieldConditionData,
+    fieldConditionDefault,
     inputEnd,
+    defaultStart,
+    defaultEnd,
   } = props
-
   const [selectedCondition, setSelectedCondition] = useState('')
-  const [selectedFieldCondition, setSelectedFieldCondition] = useState('')
+  const [selectedFieldCondition, setSelectedFieldCondition] = useState(fieldConditionDefault || '')
   const [startDateInputName, setStartDateInputName] = useState(startDateInputNameProps)
   const [endDateInputName, setEndDateInputName] = useState(endDateInputNameProps)
-  const [startDateInputNameArray, setStartDateInputNameArray] = useState(startDateInputNameProps.split("[exact]"))
-  const [endDateInputNameArray, setEndDateInputNameArray] = useState(endDateInputNameProps.split("[exact]"))
+  const [startDateInputNameArray, setStartDateInputNameArray] = useState(startDateInputNameProps.split(`[${selectConditionDefault}]`))
+  const [endDateInputNameArray, setEndDateInputNameArray] = useState(endDateInputNameProps.split(`[${selectConditionDefault}]`))
   const [disabled, setDisabled] = useState(false)
   const [isRange, setIsRange] = useState(false)
 
@@ -40,10 +43,11 @@ const DateTimeSearch = (props) => {
 
   useEffect(() => {
     if (typeof selectCondition !== 'undefined' && selectCondition.length !== 0) {
-      setSelectedCondition(selectCondition[0].key);
-      setStartDateInputNameArray(startDateInputNameProps.split("[" + selectCondition[0].key + "]"))
-      setEndDateInputNameArray(endDateInputNameProps.split("[" + selectCondition[0].key + "]"))
-      _updateDisableState(selectCondition[0].key);
+      const selectConditionKey = selectConditionDefault || selectCondition[0].key;
+      setSelectedCondition(selectConditionKey);
+      setStartDateInputNameArray(startDateInputNameProps.split("[" + selectConditionKey + "]"))
+      setEndDateInputNameArray(endDateInputNameProps.split("[" + selectConditionKey + "]"))
+      _updateDisableState(selectConditionKey);
     }
   }, [])
 
@@ -178,7 +182,7 @@ const DateTimeSearch = (props) => {
           topRef: dateTimeSearchRef1,
           datepickerRef: datepickerRef1
         }} localizedDateTimeData={localizedDateTimeData} disabled={disabled} isRange={isRange} datepicker={true}
-                       locale={locale} format={format}/>
+                       locale={locale} format={format} defaultValue={defaultStart}/>
         {isRange &&
         <i className="fa fa-chevron-down"></i>
         }
@@ -213,7 +217,7 @@ const DateTimeSearch = (props) => {
                            disabled={disabled} isRange={isRange} ref={{
               topRef: dateTimeSearchRef2,
               datepickerRef: datepickerRef2
-            }} datepicker={true} locale={locale} format={format}/>
+            }} datepicker={true} locale={locale} format={format} defaultValue={defaultEnd} />
           </div>
         </div>
       </div>

@@ -16,14 +16,14 @@ const DateTimeInput = forwardRef((props, ref) => {
     req,
     inputId,
     inputSuffixId,
-    inputName
+    inputName,
+    defaultValue
   } = props
 
   const {topRef, datepickerRef} = ref
   const selectRef = useRef()
   const datepickerContainerRef = useRef()
-
-  const defaultValues = {Y: '', M: '', D: '', h: '', m: '', s: ''};
+  const defaultValues = defaultValue || {Y: '', M: '', D: '', h: '', m: '', s: ''};
   const types = ['Y', 'M', 'h', 'YM', 'MD', 'hm', 'YMD', 'hms', 'MDh', 'YMDh', 'MDhm', 'YMDhm', 'MDhms', 'YMDhms'];
 
   const [disabled, setDisabled] = useState(disabledProps)
