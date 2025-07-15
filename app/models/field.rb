@@ -361,6 +361,10 @@ class Field < ApplicationRecord
     ]
   end
 
+  def search_condition_key(value)
+    (value || {}).keys.find { |k| %w[exact all_words one_word].include?(k) }
+  end
+
   # Useful for the advanced search. Subclasses can
   # override.
   def search_conditions_as_hash(locale)

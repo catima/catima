@@ -52,7 +52,7 @@ module AdvancedSearchesHelper
     options
   end
 
-  def render_and_or_exclude_select(form)
+  def render_and_or_exclude_select(form, selected=nil)
     form.select(
       "field_condition",
       [
@@ -60,7 +60,7 @@ module AdvancedSearchesHelper
         [I18n.t(".or"), "or"],
         [I18n.t(".exclude"), "exclude"]
       ],
-      { :hide_label => true },
+      { :hide_label => true, :selected => selected },
       :class => "field-condition"
     )
   end

@@ -1,5 +1,5 @@
 <div class="col-lg-2">
-  <%= render_and_or_exclude_select(f) %>
+  <%= render_and_or_exclude_select(f, value&.dig("field_condition")) %>
 </div>
 <div class="col-lg-10">
   <%= f.collection_select(
@@ -7,7 +7,12 @@
           field_presenter(nil, field).select_values,
           :last,
           :first,
-          { :include_blank => true, :hide_label => true },
-          :multiple => false)
+          {
+            :include_blank => true,
+            :hide_label => true,
+            :selected => value&.dig("exact")
+          },
+          :multiple => false
+        )
   %>
 </div>
