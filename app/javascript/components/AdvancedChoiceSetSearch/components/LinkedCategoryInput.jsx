@@ -214,6 +214,7 @@ const LinkedCategoryInput = (props) => {
         format={dateFormat}
         locale={locale}
         onChange={_selectItem}
+        parentSelectedCondition={selectedCondition}
       />
     } else if (inputType === 'Field::Email') {
       return <input name={_buildInputNameCondition(selectedCondition)} onChange={_selectItem}

@@ -23,6 +23,7 @@ const DateTimeSearch = (props) => {
     inputEnd,
     defaultStart,
     defaultEnd,
+    parentSelectedCondition,
   } = props
   const [selectedCondition, setSelectedCondition] = useState('')
   const [selectedFieldCondition, setSelectedFieldCondition] = useState(fieldConditionDefault || '')
@@ -70,6 +71,12 @@ const DateTimeSearch = (props) => {
       setEndDateInputNameArray(endDateInputNameProps.split("[exact]"))
     }
   }, [endDateInputNameProps])
+
+  useEffect(() => {
+    if (parentSelectedCondition){
+        _selectCondition({target: {value: parentSelectedCondition}});
+    }
+  }, [parentSelectedCondition]);
 
 
   function _buildInputNameCondition(inputName, condition) {
