@@ -38,7 +38,7 @@ const LinkedCategoryInput = (props) => {
 
   useEffect(() => {
     _getDataFromServer();
-    _buildDateTimeInputNames(inputType, inputNameProps, selectedConditionProps);
+    _buildDateTimeInputNames(inputType, inputNameProps, selectedConditionProps, inputNameArray);
   }, [])
 
   useEffect(() => {
@@ -50,13 +50,13 @@ const LinkedCategoryInput = (props) => {
 
   useEffect(() => {
     if (inputNameProps !== inputName && selectedConditionProps === selectedCondition) {
-      _buildDateTimeInputNames(inputType, inputNameProps, selectedCondition);
+      _buildDateTimeInputNames(inputType, inputNameProps, selectedCondition, inputNameArray);
       setInputName(inputNameProps);
     } else if (inputNameProps === inputName && selectedConditionProps !== selectedCondition) {
-      _buildDateTimeInputNames(inputType, inputName, selectedConditionProps);
+      _buildDateTimeInputNames(inputType, inputName, selectedConditionProps, inputNameArray);
       setSelectedCondition(selectedConditionProps);
     } else {
-      _buildDateTimeInputNames(inputType, inputNameProps, selectedConditionProps);
+      _buildDateTimeInputNames(inputType, inputNameProps, selectedConditionProps, inputNameArray);
       setInputName(inputNameProps);
       setSelectedCondition(selectedConditionProps);
     }
@@ -66,7 +66,7 @@ const LinkedCategoryInput = (props) => {
     _save()
   }, [selectedItem])
 
-  function _buildDateTimeInputNames(type, inputName, condition) {
+  function _buildDateTimeInputNames(type, inputName, condition, inputNameArray) {
     if (type === 'Field::DateTime') {
       let endName = inputName.split(inputNameArray[0]);
       setStartDateInputName(inputNameArray[0] + '[start]' + endName[1] + '[' + condition + ']');
@@ -122,9 +122,11 @@ const LinkedCategoryInput = (props) => {
         if (res.data.inputData === null) setInputData([]);
         else setInputData(res.data.inputData);
 
+        const inputNameArray = inputName.split('[' + res.data.selectCondition[0].key + ']');
+
         _updateSelectCondition(res.data.selectCondition);
-        setInputNameArray(inputName.split('[' + res.data.selectCondition[0].key + ']'));
-        _buildDateTimeInputNames(res.data.inputType, inputName, selectedCondition);
+        setInputNameArray(inputNameArray);
+        _buildDateTimeInputNames(res.data.inputType, inputName, res.data.selectCondition[0].key, inputNameArray);
         setInputOptions(res.data.inputOptions);
         _updateDateTimeFormatOption(res.data.inputOptions);
         _updateLocalizedDateTimeData(res.data.inputOptions);
