@@ -193,7 +193,9 @@ const ChoiceSetSearch = (props) => {
   }
 
   function _updateSelectCondition(newVal) {
-    if (selectedCondition === '' && newVal.length !== selectCondition.length) {
+    const existsInNewVal = newVal.find(item => item.key === selectedCondition);
+
+    if (!existsInNewVal || selectedCondition === '' && newVal.length !== selectCondition.length) {
       setSelectedCondition(newVal[0].key);
     }
     setSelectCondition(newVal);
