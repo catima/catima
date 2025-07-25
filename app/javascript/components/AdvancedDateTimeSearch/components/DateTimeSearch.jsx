@@ -29,8 +29,11 @@ const DateTimeSearch = (props) => {
   const [selectedFieldCondition, setSelectedFieldCondition] = useState(fieldConditionDefault || '')
   const [startDateInputName, setStartDateInputName] = useState(startDateInputNameProps)
   const [endDateInputName, setEndDateInputName] = useState(endDateInputNameProps)
-  const [startDateInputNameArray, setStartDateInputNameArray] = useState(startDateInputNameProps.split(`[${selectConditionDefault}]`))
-  const [endDateInputNameArray, setEndDateInputNameArray] = useState(endDateInputNameProps.split(`[${selectConditionDefault}]`))
+  
+  // TODO HERE
+  const [startDateInputNameArray, setStartDateInputNameArray] = useState(startDateInputNameProps.split(`[${selectConditionDefault || 'exact'}]`))
+  const [endDateInputNameArray, setEndDateInputNameArray] = useState(endDateInputNameProps.split(`[${selectConditionDefault || 'exact'}]`))
+  
   const [disabled, setDisabled] = useState(false)
   const [isRange, setIsRange] = useState(false)
 

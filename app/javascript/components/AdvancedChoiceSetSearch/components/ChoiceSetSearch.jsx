@@ -17,10 +17,12 @@ const ChoiceSetSearch = (props) => {
     choiceSet,
     addComponent,
     itemId,
+    itemDefaultKey,
     deleteComponent,
     selectConditionName,
     fieldConditionName,
     fieldConditionData,
+    fieldConditionDefault,
     searchPlaceholder,
     categoryInputName,
     filterPlaceholder,
@@ -30,13 +32,17 @@ const ChoiceSetSearch = (props) => {
     itemType,
     linkedCategoryInputName,
     componentList,
-    selectCondition: selectConditionProps
+    selectCondition: selectConditionProps,
+    childChoicesActivatedDefault,
+    categoryOptionDefault,
+    conditionDefault,
+    categoryDefaultValue,
   } = props
 
   const [selectedCondition, setSelectedCondition] = useState('')
   const [selectCondition, setSelectCondition] = useState([])
-  const [selectedFieldCondition, setSelectedFieldCondition] = useState('')
-  const [selectedCategory, setSelectedCategory] = useState({})
+  const [selectedFieldCondition, setSelectedFieldCondition] = useState(fieldConditionDefault || '')
+  const [selectedCategory, setSelectedCategory] = useState(null)
   const [selectedItem, setSelectedItem] = useState([])
   const [selectedChildChoicesActivated, setSelectedChildChoicesActivated] = useState(false)
   const [disabled, setDisabled] = useState(false)
@@ -50,6 +56,8 @@ const ChoiceSetSearch = (props) => {
   const [optionsList, setOptionsList] = useState([])
   const [choices, setChoices] = useState([])
   const [isActive, setIsActive] = useState(!(choiceSet.deactivated_at || choiceSet.deleted_at))
+
+  let isFirstLoadOptions = true;
 
   useEffect(() => {
     if (typeof selectConditionProps !== 'undefined' && selectConditionProps.length !== 0) {
@@ -81,14 +89,14 @@ const ChoiceSetSearch = (props) => {
     if (typeof event === 'undefined' || event.action !== "pop-value" || !req) {
       if (typeof item !== 'undefined' && item !== null) {
         if (item.data.length === 0) {
-          setSelectedCategory({});
+          setSelectedCategory(null);
           setSelectedCondition('');
           setSelectCondition([]);
         }
         setSelectedItem(item)
       } else {
         setSelectedItem([])
-        setSelectedCategory({});
+        setSelectedCategory(null);
         setSelectedCondition('');
         setSelectCondition([]);
       }
@@ -121,13 +129,13 @@ const ChoiceSetSearch = (props) => {
         if (typeof event !== 'undefined') {
           setSelectedCategory(item);
         } else {
-          setSelectedCategory({});
+          setSelectedCategory(null);
           setSelectedCondition('');
           setSelectCondition([]);
         }
       }
     } else {
-      setSelectedCategory({});
+      setSelectedCategory(null);
       setSelectedCondition('');
       setSelectCondition([]);
     }
@@ -143,7 +151,7 @@ const ChoiceSetSearch = (props) => {
     }
   }
 
-  function _getCategoryOptions() {
+  function _getCategoryOptions(selectedItem) {
     let optionsList = [];
     optionsList = selectedItem.data.map(item =>
       _getJSONCategory(item)
@@ -254,8 +262,33 @@ const ChoiceSetSearch = (props) => {
       setLoadingMessage(res.data.loading_message)
       setOptionsList(res.data.choices.map(choice => _getJSONItem(choice)))
 
+      const options = _getItemOptions(res.data.choices);
+
+      // The first time we load the options, we want to select the default item
+      // if specified.
+      if (isFirstLoadOptions) {
+        
+        isFirstLoadOptions = false;
+
+        const _selectedItem = options.find(item => item.value == itemDefaultKey);
+        if (_selectedItem) {
+          _selectItem(_selectedItem);
+
+          setSelectCondition([]);
+          setSelectedCondition(conditionDefault || '');
+          
+          const defaultCategory = _getCategoryOptions(_selectedItem).find(
+            (item) => item.value === categoryOptionDefault,
+          );
+
+          if (defaultCategory) {
+            setSelectedCategory(defaultCategory);
+          }
+        }
+      }
+
       return {
-        options: _getItemOptions(res.data.choices),
+        options,
         hasMore: res.data.hasMore,
         additional: {
           page: page + 1,
@@ -270,7 +303,7 @@ const ChoiceSetSearch = (props) => {
     return (
       <select className="form-select filter-condition" name={selectConditionName}
               value={selectedCondition} onChange={_selectCondition}
-              disabled={selectedItem.length === 0 || Object.keys(selectedCategory).length === 0}>
+              disabled={selectedItem.length === 0 || selectedCategory === null || Object.keys(selectedCategory).length === 0}>
         {selectCondition.map((item) => {
           return <option key={item.key} value={item.key}>{item.value}</option>
         })}
@@ -293,6 +326,7 @@ const ChoiceSetSearch = (props) => {
     return (
       <div>
         <AsyncPaginate
+            defaultOptions={!!itemDefaultKey}
             id={choiceSetId}
             name={_buildInputNameCondition(selectedCondition)}
             options={optionsList}
@@ -312,6 +346,7 @@ const ChoiceSetSearch = (props) => {
             }}
             styles={{menuPortal: base => ({...base, zIndex: 9999})}}
             onChange={_selectItem}
+            value={selectedItem}
         />
       </div>
     );
@@ -320,16 +355,21 @@ const ChoiceSetSearch = (props) => {
   function renderChoiceSetItemCategory() {
     return (
       <ReactSelect id={choiceSetId + '_condition'} name={categoryInputName}
-                   options={_getCategoryOptions()} className="basic-multi-select" onChange={_selectCategory}
-                   classNamePrefix="select" placeholder={filterPlaceholder} isClearable={true}/>
+                   options={ _getCategoryOptions(selectedItem)} className="basic-multi-select" onChange={_selectCategory}
+                   classNamePrefix="select" placeholder={filterPlaceholder} isClearable={true}
+                   value={selectedCategory} />
     );
   }
 
   function renderChildChoicesActivated() {
+    const childChoices = _getChildChoicesActivatedOptions();
+    const defaultValue = childChoices.find((item) => item.value === childChoicesActivatedDefault);
+    
     return (
       <ReactSelect id={choiceSetId + '_condition'} name={childChoicesActivatedInputName}
-                   options={_getChildChoicesActivatedOptions()} onChange={_selectChildChoicesActivated}
-                   classNamePrefix="select" placeholder={childChoicesActivatedPlaceholder}/>
+                   options={childChoices} onChange={_selectChildChoicesActivated}
+                   classNamePrefix="select" placeholder={childChoicesActivatedPlaceholder}
+                   defaultValue={defaultValue} />
     );
   }
 
@@ -345,6 +385,7 @@ const ChoiceSetSearch = (props) => {
           selectedCondition={selectedCondition}
           updateSelectCondition={_updateSelectCondition}
           searchPlaceholder={searchPlaceholder}
+          defaultValue={categoryDefaultValue}
         />
       </div>
     );
@@ -401,10 +442,11 @@ const ChoiceSetSearch = (props) => {
           {renderSelectConditionElement()}
         </div>
         }
-        {(Object.keys(selectedCategory).length !== 0 && selectedItem?.data?.length !== 0) &&
+        {(selectedCategory !== null && Object.keys(selectedCategory).length !== 0 && selectedItem?.data?.length !== 0) &&
         <div className="col-lg-offset-2 col-lg-6">{renderLinkedCategoryElement()}</div>
         }
       </div>
+      {typeof selectedItem}
     </div>
   );
 }

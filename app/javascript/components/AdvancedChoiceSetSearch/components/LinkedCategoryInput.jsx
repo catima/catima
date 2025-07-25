@@ -1,7 +1,7 @@
 import React, {useState, useEffect} from 'react';
 import ReactSelect from 'react-select';
 import axios from 'axios';
-import $ from 'jquery';
+// import $ from 'jquery';
 import 'moment';
 
 import DateTimeSearch from '../../AdvancedDateTimeSearch/components/DateTimeSearch';
@@ -10,13 +10,14 @@ const LinkedCategoryInput = (props) => {
   const {
     inputName: inputNameProps,
     selectedCondition: selectedConditionProps,
-    req,
+    // req,
     catalog,
     locale,
     updateSelectCondition,
     itemType,
     searchPlaceholder,
-    selectedCategory: selectedCategoryProps
+    selectedCategory: selectedCategoryProps,
+    defaultValue,
   } = props
 
   const [isLoading, setIsLoading] = useState(true)
@@ -27,13 +28,13 @@ const LinkedCategoryInput = (props) => {
   const [dateFormat, setDateFormat] = useState('')
   const [inputType, setInputType] = useState('Field::Text')
   const [inputData, setInputData] = useState(null)
-  const [inputOptions, setInputOptions] = useState(null)
+  // const [inputOptions, setInputOptions] = useState(null)
   const [localizedDateTimeData, setLocalizedDateTimeData] = useState([])
-  const [selectedFilter, setSelectedFilter] = useState({})
-  const [selectedItem, setSelectedItem] = useState([])
-  const [selectCondition, setSelectCondition] = useState([])
+  // const [selectedFilter, setSelectedFilter] = useState({})
+//   const [selectedItem, setSelectedItem] = useState([])
+  // const [selectCondition, setSelectCondition] = useState([])
   const [selectedCondition, setSelectedCondition] = useState(selectedConditionProps)
-  const [hiddenInputValue, setHiddenInputValue] = useState([])
+  // const [hiddenInputValue, setHiddenInputValue] = useState([])
   const [selectedCategory, setSelectedCategory] = useState([])
 
   useEffect(() => {
@@ -42,7 +43,7 @@ const LinkedCategoryInput = (props) => {
   }, [])
 
   useEffect(() => {
-    if (selectedCategoryProps !== selectedCategory) {
+      if (selectedCategoryProps !== selectedCategory) {
       _getDataFromServer(selectedCategoryProps);
       setSelectedCategory(selectedCategoryProps);
     }
@@ -62,9 +63,9 @@ const LinkedCategoryInput = (props) => {
     }
   }, [inputNameProps, selectedConditionProps, selectedCondition])
 
-  useEffect(() => {
-    _save()
-  }, [selectedItem])
+//   useEffect(() => {
+//     _save()
+//   }, [selectedItem])
 
   function _buildDateTimeInputNames(type, inputName, condition, inputNameArray) {
     if (type === 'Field::DateTime') {
@@ -84,26 +85,31 @@ const LinkedCategoryInput = (props) => {
     }
   }
 
-  function _save() {
-    if (selectedItem !== null && selectedItem.length !== 0) {
-      let idArray = [];
-      selectedItem.forEach((item) => {
-        idArray.push(item.value);
-      });
-      setHiddenInputValue(idArray);
-      document.getElementsByName(inputNameProps)[0].value = hiddenInputValue;
-    }
-  }
+//   function _save() {
+//     console.log("save");
+//     console.log(selectedItem);
+//     if (selectedItem !== null && selectedItem.length !== 0) {
+//       let idArray = [];
+//       selectedItem.forEach((item) => {
+//         idArray.push(item.value);
+//       });
+//       setHiddenInputValue(idArray);
+//       console.log("idArray", idArray)
+//       document.getElementsByName(inputNameProps)[0].value = hiddenInputValue;
+//     }
+//   }
 
-  function _selectItem(event) {
-    if (typeof event === 'undefined' || event === null || event.action !== "pop-value" || !req) {
-      if (typeof item !== 'undefined' && item !== null) {
-        setSelectedItem(event.target.value)
-      } else {
-        setSelectedItem([])
-      }
-    }
-  }
+//   function _selectItem(event) {
+//         console.log("selecteditem", event.target.value);
+//     if (typeof event === 'undefined' || event === null || event.action !== "pop-value" || !req) {
+//       if (typeof item !== 'undefined' && item !== null) {
+//         console.log("item", item);
+//         setSelectedItem(event.target.value)
+//       } else {
+//         setSelectedItem([])
+//       }
+//     }
+//   }
 
   function _getDataFromServer(selectedCategoryArg) {
     let selectedCategoryVar = selectedCategoryProps
@@ -112,7 +118,9 @@ const LinkedCategoryInput = (props) => {
       retryDelay: 1000,
     };
 
-    if (typeof selectedCategoryArg !== 'undefined' && selectedItem !== null) {
+    if (typeof selectedCategoryArg !== 'undefined' 
+        // && selectedItem !== null
+    ) {
       selectedCategoryVar.value = selectedCategoryArg.value;
       selectedCategoryVar.label = selectedCategoryArg.label;
     }
@@ -124,10 +132,10 @@ const LinkedCategoryInput = (props) => {
 
         const inputNameArray = inputName.split('[' + res.data.selectCondition[0].key + ']');
 
-        _updateSelectCondition(res.data.selectCondition);
+        updateSelectCondition(res.data.selectCondition);
         setInputNameArray(inputNameArray);
         _buildDateTimeInputNames(res.data.inputType, inputName, res.data.selectCondition[0].key, inputNameArray);
-        setInputOptions(res.data.inputOptions);
+        // setInputOptions(res.data.inputOptions);
         _updateDateTimeFormatOption(res.data.inputOptions);
         _updateLocalizedDateTimeData(res.data.inputOptions);
         setInputType(res.data.inputType);
@@ -154,10 +162,10 @@ const LinkedCategoryInput = (props) => {
     });
   }
 
-  function _updateSelectCondition(array) {
-    updateSelectCondition(array);
-    setSelectCondition(array);
-  }
+  // function _updateSelectCondition(array) {
+  //   updateSelectCondition(array);
+  //   setSelectCondition(array);
+  // }
 
   function _updateDateTimeFormatOption(format) {
     let formatOption = _searchInArray(format, 'format');
@@ -204,6 +212,7 @@ const LinkedCategoryInput = (props) => {
     if (inputType === 'Field::DateTime') {
       return <DateTimeSearch
         selectCondition={[]}
+        // selectConditionDefault={selectedCondition}
         disableInputByCondition={selectedConditionProps}
         startDateInputName={startDateInputName}
         endDateInputName={endDateInputName}
@@ -215,25 +224,26 @@ const LinkedCategoryInput = (props) => {
         isRange={true}
         format={dateFormat}
         locale={locale}
-        onChange={_selectItem}
         parentSelectedCondition={selectedCondition}
+        defaultStart={defaultValue?.["start"]?.[selectedCondition]}
+        defaultEnd={defaultValue?.["end"]?.[selectedCondition]}
       />
     } else if (inputType === 'Field::Email') {
-      return <input name={_buildInputNameCondition(selectedCondition)} onChange={_selectItem}
-                    type="text" className="form-control"/>
+      return <input name={_buildInputNameCondition(selectedCondition)}
+                    type="text" className="form-control" defaultValue={defaultValue?.[selectedCondition]}/>
     } else if (inputType === 'Field::Int') {
-      return <input name={_buildInputNameCondition(selectedCondition)} onChange={_selectItem}
-                    type="number" className="form-control"/>
+      return <input name={_buildInputNameCondition(selectedCondition)}
+                    type="number" className="form-control" defaultValue={defaultValue?.[selectedCondition]}/>
     } else if (inputType === 'Field::Decimal') {
-      return <input name={_buildInputNameCondition(selectedCondition)} onChange={_selectItem}
-                    type="number" className="form-control" step="any"/>
+      return <input name={_buildInputNameCondition(selectedCondition)}
+                    type="number" className="form-control" step="any" defaultValue={defaultValue?.[selectedCondition]}/>
     } else if (inputType === 'Field::URL') {
-      return <input name={_buildInputNameCondition(selectedCondition)} onChange={_selectItem}
-                    type="url" className="form-control"/>
+      return <input name={_buildInputNameCondition(selectedCondition)}
+                    type="url" className="form-control" defaultValue={defaultValue?.[selectedCondition]}/>
     } else if (inputType === 'Field::Boolean') {
       return (
-        <select name={_buildInputNameCondition(selectedCondition)} onChange={_selectItem}
-                className="form-select">
+        <select name={_buildInputNameCondition(selectedCondition)}
+                className="form-select" defaultValue={defaultValue?.[selectedCondition]}>
           {inputData.map((item) => {
             return <option key={item.key}>{item.value}</option>
           })
@@ -241,21 +251,25 @@ const LinkedCategoryInput = (props) => {
         </select>
       );
     } else if (inputType === 'Field::ChoiceSet') {
+      
+      const options = _getMultipleChoiceSetOptions();
+      const defaultOption = options.find(option => option.value == defaultValue?.["default"]);
+
       return (
         <ReactSelect
           name={_buildInputNameCondition('default')}
           isSearchable={true}
           isClearable={true}
-          options={_getMultipleChoiceSetOptions()}
+          options={options}
           className="basic-select"
-          onChange={_selectItem}
           classNamePrefix="select"
           placeholder={searchPlaceholder}
+          defaultValue={defaultOption}
         />
       );
     } else {
-      return <input name={_buildInputNameCondition(selectedCondition)} onChange={_selectItem}
-                    type="text" className="form-control"/>
+      return <input name={_buildInputNameCondition(selectedCondition)} 
+                    type="text" className="form-control" defaultValue={defaultValue?.[selectedCondition]} />
     }
   }
 
@@ -263,6 +277,9 @@ const LinkedCategoryInput = (props) => {
     <div className="single-reference-container">
       {isLoading && <div className="loader"></div>}
       {renderInput()}
+      {selectedCondition}<br/>
+      {selectedConditionProps}<br/>
+      {startDateInputName}
     </div>
   );
 }

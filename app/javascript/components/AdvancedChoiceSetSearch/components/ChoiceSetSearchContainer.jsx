@@ -23,57 +23,44 @@ const ChoiceSetSearchContainer = (props) => {
     filterPlaceholder,
     selectCondition,
     multiple,
-    fieldConditionData
+    fieldConditionData,
+    defaultValues,
   } = props
 
+  const inputName = inputNameProps.split("[0]");
+  const srcId = srcIdProps.split("_0_");
+  const srcRef = srcRefProps.split("_0_");
+  const selectConditionName = selectConditionNameProps.split("[0]");
+  const fieldConditionName = useState(fieldConditionNameProps.split("[0]"))
+  const categoryInputName = categoryInputNameProps.split("[0]");
+  const childChoicesActivatedInputName = childChoicesActivatedInputNameProps.split("[0]");
+  const linkedCategoryInputName = linkedCategoryInputNameProps.split("[0]");
+  
+  // TODO 2 voir ou c'est utilisé, et ne pas mettre ca en globale si c'est pas utile.
   const [componentsList, setComponentsList] = useState([])
-  const [inputName, setInputName] = useState(inputNameProps.split("[0]"))
-  const [srcId, setSrcId] = useState(srcIdProps.split("_0_"))
-  const [srcRef, setSrcRef] = useState(srcRefProps.split("_0_"))
-  const [selectConditionName, setSelectConditionName] = useState(selectConditionNameProps.split("[0]"))
-  const [fieldConditionName, setFieldConditionName] = useState(fieldConditionNameProps.split("[0]"))
-  const [categoryInputName, setCategoryInputName] = useState(categoryInputNameProps.split("[0]"))
-  const [childChoicesActivatedInputName, setChildChoicesActivatedInputName] = useState(childChoicesActivatedInputNameProps.split("[0]"))
-  const [linkedCategoryInputName, setLinkedCategoryInputName] = useState(linkedCategoryInputNameProps.split("[0]"))
 
   useEffect(() => {
-    let computedComponentList = componentsList;
-    let id = 0;
-    let item = {
-      itemId: id,
-      catalog: catalog,
-      itemType: itemType,
-      label: label,
-      choiceSet: choiceSet,
-      categoryInputName: _buildCategoryInputName(id),
-      childChoicesActivatedInputName: _buildChildChoicesActivatedInputName(id),
-      childChoicesActivatedPlaceholder: childChoicesActivatedPlaceholder,
-      childChoicesActivatedYesLabel: childChoicesActivatedYesLabel,
-      childChoicesActivatedNoLabel: childChoicesActivatedNoLabel,
-      linkedCategoryInputName: _buildLinkedCategoryInputName(id),
-      locale: locale,
-      searchPlaceholder: searchPlaceholder,
-      filterPlaceholder: filterPlaceholder,
-      srcId: _buildSrcId(id),
-      srcRef: _buildSrcRef(id),
-      inputName: _buildInputName(id),
-      selectConditionName: _buildSelectConditionName(id),
-      selectCondition: selectCondition,
-      multiple: multiple,
-      fieldConditionName: _buildFieldConditionName(id),
-      fieldConditionData: fieldConditionData,
-      addComponent: _addComponent,
-      deleteComponent: _deleteComponent
-    };
-    computedComponentList.push(item);
-    setComponentsList([...computedComponentList]);
+
+    let itemId = 0;
+    if (Object.values(defaultValues || {}).length > 0) {
+      Object.values(defaultValues).forEach(defaultValue => {
+        console.log("itemId", itemId);
+        console.log("defaultValue", defaultValue);
+        _addComponent(itemId, defaultValue || {});
+        itemId++;
+      });
+    } else {
+      _addComponent(itemId);
+    }
+
   }, [])
 
-  function _addComponent(itemId) {
+  function _addComponent(itemId, defaultValues = {}) {
     let computedComponentList = componentsList;
     let id = itemId + 1;
     let item = {
       itemId: id,
+      itemDefaultKey: defaultValues[defaultValues.condition || "default"],
       catalog: catalog,
       itemType: itemType,
       label: label,
@@ -95,6 +82,11 @@ const ChoiceSetSearchContainer = (props) => {
       multiple: multiple,
       fieldConditionName: _buildFieldConditionName(id),
       fieldConditionData: fieldConditionData,
+      fieldConditionDefault: defaultValues.field_condition,
+      childChoicesActivatedDefault: defaultValues["child_choices_activated"] && defaultValues["child_choices_activated"] === "true",
+      categoryOptionDefault: defaultValues["category_field"],
+      conditionDefault: defaultValues["condition"],
+      categoryDefaultValue: defaultValues["category_criteria"],
       addComponent: _addComponent,
       deleteComponent: _deleteComponent
     };
@@ -180,6 +172,7 @@ const ChoiceSetSearchContainer = (props) => {
     if (Object.keys(item).length > 0) {
       return (<div key={item.itemId} className="component-search-row row"><ChoiceSetSearch
         itemId={item.itemId}
+        itemDefaultKey={item.itemDefaultKey}
         componentList={list}
         catalog={item.catalog}
         itemType={item.itemType}
@@ -201,9 +194,14 @@ const ChoiceSetSearchContainer = (props) => {
         selectCondition={item.selectCondition}
         fieldConditionName={item.fieldConditionName}
         fieldConditionData={item.fieldConditionData}
+        fieldConditionDefault={item.fieldConditionDefault}
         multiple={item.multiple}
         addComponent={item.addComponent}
         deleteComponent={item.deleteComponent}
+        childChoicesActivatedDefault={item.childChoicesActivatedDefault}
+        categoryOptionDefault={item.categoryOptionDefault}
+        conditionDefault={item.conditionDefault}
+        categoryDefaultValue={item.categoryDefaultValue}
       /></div>);
     }
   }

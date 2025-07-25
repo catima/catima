@@ -33,7 +33,8 @@
                       selectCondition: field.search_conditions_as_hash(I18n.locale),
                       multiple: true,
                       fieldConditionName: "advanced_search[criteria][#{field.uuid}][0][field_condition]",
-                      fieldConditionData: field.search_field_conditions_as_hash
+                      fieldConditionData: field.search_field_conditions_as_hash,
+                      defaultValues: value,
                     })
   %>
 </div>
