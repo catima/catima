@@ -1,7 +1,6 @@
 import React, {useState, useEffect} from 'react';
 import ReactSelect from 'react-select';
 import axios from 'axios';
-// import $ from 'jquery';
 import 'moment';
 
 import DateTimeSearch from '../../AdvancedDateTimeSearch/components/DateTimeSearch';
@@ -10,7 +9,6 @@ const LinkedCategoryInput = (props) => {
   const {
     inputName: inputNameProps,
     selectedCondition: selectedConditionProps,
-    // req,
     catalog,
     locale,
     updateSelectCondition,
@@ -28,13 +26,8 @@ const LinkedCategoryInput = (props) => {
   const [dateFormat, setDateFormat] = useState('')
   const [inputType, setInputType] = useState('Field::Text')
   const [inputData, setInputData] = useState(null)
-  // const [inputOptions, setInputOptions] = useState(null)
   const [localizedDateTimeData, setLocalizedDateTimeData] = useState([])
-  // const [selectedFilter, setSelectedFilter] = useState({})
-//   const [selectedItem, setSelectedItem] = useState([])
-  // const [selectCondition, setSelectCondition] = useState([])
   const [selectedCondition, setSelectedCondition] = useState(selectedConditionProps)
-  // const [hiddenInputValue, setHiddenInputValue] = useState([])
   const [selectedCategory, setSelectedCategory] = useState([])
 
   useEffect(() => {
@@ -63,10 +56,6 @@ const LinkedCategoryInput = (props) => {
     }
   }, [inputNameProps, selectedConditionProps, selectedCondition])
 
-//   useEffect(() => {
-//     _save()
-//   }, [selectedItem])
-
   function _buildDateTimeInputNames(type, inputName, condition, inputNameArray) {
     if (type === 'Field::DateTime') {
       let endName = inputName.split(inputNameArray[0]);
@@ -85,32 +74,6 @@ const LinkedCategoryInput = (props) => {
     }
   }
 
-//   function _save() {
-//     console.log("save");
-//     console.log(selectedItem);
-//     if (selectedItem !== null && selectedItem.length !== 0) {
-//       let idArray = [];
-//       selectedItem.forEach((item) => {
-//         idArray.push(item.value);
-//       });
-//       setHiddenInputValue(idArray);
-//       console.log("idArray", idArray)
-//       document.getElementsByName(inputNameProps)[0].value = hiddenInputValue;
-//     }
-//   }
-
-//   function _selectItem(event) {
-//         console.log("selecteditem", event.target.value);
-//     if (typeof event === 'undefined' || event === null || event.action !== "pop-value" || !req) {
-//       if (typeof item !== 'undefined' && item !== null) {
-//         console.log("item", item);
-//         setSelectedItem(event.target.value)
-//       } else {
-//         setSelectedItem([])
-//       }
-//     }
-//   }
-
   function _getDataFromServer(selectedCategoryArg) {
     let selectedCategoryVar = selectedCategoryProps
     let config = {
@@ -118,9 +81,7 @@ const LinkedCategoryInput = (props) => {
       retryDelay: 1000,
     };
 
-    if (typeof selectedCategoryArg !== 'undefined' 
-        // && selectedItem !== null
-    ) {
+    if (typeof selectedCategoryArg !== 'undefined') {
       selectedCategoryVar.value = selectedCategoryArg.value;
       selectedCategoryVar.label = selectedCategoryArg.label;
     }
@@ -135,7 +96,6 @@ const LinkedCategoryInput = (props) => {
         updateSelectCondition(res.data.selectCondition);
         setInputNameArray(inputNameArray);
         _buildDateTimeInputNames(res.data.inputType, inputName, res.data.selectCondition[0].key, inputNameArray);
-        // setInputOptions(res.data.inputOptions);
         _updateDateTimeFormatOption(res.data.inputOptions);
         _updateLocalizedDateTimeData(res.data.inputOptions);
         setInputType(res.data.inputType);
@@ -161,11 +121,6 @@ const LinkedCategoryInput = (props) => {
       });
     });
   }
-
-  // function _updateSelectCondition(array) {
-  //   updateSelectCondition(array);
-  //   setSelectCondition(array);
-  // }
 
   function _updateDateTimeFormatOption(format) {
     let formatOption = _searchInArray(format, 'format');
@@ -212,7 +167,6 @@ const LinkedCategoryInput = (props) => {
     if (inputType === 'Field::DateTime') {
       return <DateTimeSearch
         selectCondition={[]}
-        // selectConditionDefault={selectedCondition}
         disableInputByCondition={selectedConditionProps}
         startDateInputName={startDateInputName}
         endDateInputName={endDateInputName}
@@ -251,7 +205,7 @@ const LinkedCategoryInput = (props) => {
         </select>
       );
     } else if (inputType === 'Field::ChoiceSet') {
-      
+
       const options = _getMultipleChoiceSetOptions();
       const defaultOption = options.find(option => option.value == defaultValue?.["default"]);
 
@@ -268,7 +222,7 @@ const LinkedCategoryInput = (props) => {
         />
       );
     } else {
-      return <input name={_buildInputNameCondition(selectedCondition)} 
+      return <input name={_buildInputNameCondition(selectedCondition)}
                     type="text" className="form-control" defaultValue={defaultValue?.[selectedCondition]} />
     }
   }
