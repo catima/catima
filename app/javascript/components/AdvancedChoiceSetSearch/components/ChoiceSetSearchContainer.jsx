@@ -1,4 +1,4 @@
-import React, {useState, useEffect} from 'react';
+import React, { useState, useEffect, useMemo } from 'react';
 import ChoiceSetSearch from './ChoiceSetSearch';
 
 const ChoiceSetSearchContainer = (props) => {
@@ -25,196 +25,86 @@ const ChoiceSetSearchContainer = (props) => {
     multiple,
     fieldConditionData,
     defaultValues,
-  } = props
+  } = props;
 
-  const inputName = inputNameProps.split("[0]");
-  const srcId = srcIdProps.split("_0_");
-  const srcRef = srcRefProps.split("_0_");
-  const selectConditionName = selectConditionNameProps.split("[0]");
-  const fieldConditionName = useState(fieldConditionNameProps.split("[0]"))
-  const categoryInputName = categoryInputNameProps.split("[0]");
-  const childChoicesActivatedInputName = childChoicesActivatedInputNameProps.split("[0]");
-  const linkedCategoryInputName = linkedCategoryInputNameProps.split("[0]");
-  
-  // TODO 2 voir ou c'est utilisé, et ne pas mettre ca en globale si c'est pas utile.
-  const [componentsList, setComponentsList] = useState([])
+  const inputName = useMemo(() => inputNameProps.split("[0]"), [inputNameProps]);
+  const srcId = useMemo(() => srcIdProps.split("_0_"), [srcIdProps]);
+  const srcRef = useMemo(() => srcRefProps.split("_0_"), [srcRefProps]);
+  const selectConditionName = useMemo(() => selectConditionNameProps.split("[0]"), [selectConditionNameProps]);
+  const fieldConditionName = useMemo(() => fieldConditionNameProps.split("[0]"), [fieldConditionNameProps]);
+  const categoryInputName = useMemo(() => categoryInputNameProps.split("[0]"), [categoryInputNameProps]);
+  const childChoicesActivatedInputName = useMemo(() => childChoicesActivatedInputNameProps.split("[0]"), [childChoicesActivatedInputNameProps]);
+  const linkedCategoryInputName = useMemo(() => linkedCategoryInputNameProps.split("[0]"), [linkedCategoryInputNameProps]);
+
+  const [componentsList, setComponentsList] = useState([]);
 
   useEffect(() => {
-
-    let itemId = 0;
-    if (Object.values(defaultValues || {}).length > 0) {
-      Object.values(defaultValues).forEach(defaultValue => {
-        console.log("itemId", itemId);
-        console.log("defaultValue", defaultValue);
-        _addComponent(itemId, defaultValue || {});
-        itemId++;
+    if (defaultValues && Object.values(defaultValues).length > 0) {
+      Object.values(defaultValues).forEach((defaultValue, index) => {
+        _addComponent(index, defaultValue);
       });
     } else {
-      _addComponent(itemId);
+      _addComponent(0);
     }
+  }, []);
 
-  }, [])
-
-  function _addComponent(itemId, defaultValues = {}) {
-    let computedComponentList = componentsList;
-    let id = itemId + 1;
-    let item = {
+  const _addComponent = (itemId, defaultValues = {}) => {
+    const id = itemId + 1;
+    const newItem = {
       itemId: id,
       itemDefaultKey: defaultValues[defaultValues.condition || "default"],
-      catalog: catalog,
-      itemType: itemType,
-      label: label,
-      choiceSet: choiceSet,
-      categoryInputName: _buildCategoryInputName(id),
-      childChoicesActivatedInputName: _buildChildChoicesActivatedInputName(id),
-      childChoicesActivatedPlaceholder: childChoicesActivatedPlaceholder,
-      childChoicesActivatedYesLabel: childChoicesActivatedYesLabel,
-      childChoicesActivatedNoLabel: childChoicesActivatedNoLabel,
-      linkedCategoryInputName: _buildLinkedCategoryInputName(id),
-      locale: locale,
-      searchPlaceholder: searchPlaceholder,
-      filterPlaceholder: filterPlaceholder,
-      srcId: _buildSrcId(id),
-      srcRef: _buildSrcRef(id),
-      inputName: _buildInputName(id),
-      selectConditionName: _buildSelectConditionName(id),
-      selectCondition: selectCondition,
-      multiple: multiple,
-      fieldConditionName: _buildFieldConditionName(id),
-      fieldConditionData: fieldConditionData,
+      catalog,
+      itemType,
+      label,
+      choiceSet,
+      categoryInputName: _buildName(categoryInputName, categoryInputNameProps, id),
+      childChoicesActivatedInputName: _buildName(childChoicesActivatedInputName, childChoicesActivatedInputNameProps, id),
+      childChoicesActivatedPlaceholder,
+      childChoicesActivatedYesLabel,
+      childChoicesActivatedNoLabel,
+      linkedCategoryInputName: _buildName(linkedCategoryInputName, linkedCategoryInputNameProps, id),
+      locale,
+      searchPlaceholder,
+      filterPlaceholder,
+      srcId: _buildName(srcId, srcIdProps, id, "_"),
+      srcRef: _buildName(srcRef, srcRefProps, id, "_"),
+      inputName: _buildName(inputName, inputNameProps, id),
+      selectConditionName: _buildName(selectConditionName, selectConditionNameProps, id),
+      selectCondition,
+      multiple,
+      fieldConditionName: _buildName(fieldConditionName, fieldConditionNameProps, id),
+      fieldConditionData,
       fieldConditionDefault: defaultValues.field_condition,
       childChoicesActivatedDefault: defaultValues["child_choices_activated"] && defaultValues["child_choices_activated"] === "true",
       categoryOptionDefault: defaultValues["category_field"],
       conditionDefault: defaultValues["condition"],
       categoryDefaultValue: defaultValues["category_criteria"],
       addComponent: _addComponent,
-      deleteComponent: _deleteComponent
+      deleteComponent: _deleteComponent,
     };
-    computedComponentList.push(item);
-    setComponentsList([...computedComponentList]);
-  }
+    setComponentsList((prev) => [...prev, newItem]);
+  };
 
-  function _deleteComponent(itemId) {
-    let computedComponentList = componentsList;
-    computedComponentList.forEach((ref, index) => {
-      if (Object.keys(ref).length !== 0 && ref.itemId === itemId) {
-        computedComponentList.splice(index, 1);
-      }
-    });
-    setComponentsList([...computedComponentList]);
-  }
+  const _deleteComponent = (itemId) => {
+    setComponentsList((prev) => prev.filter((item) => item.itemId !== itemId));
+  };
 
-  function _buildInputName(id) {
-    if (inputName.length === 2) {
-      return inputName[0] + '[' + id + ']' + inputName[1];
-    } else {
-      return inputNameProps;
+  const _buildName = (split, raw, id, joiner = '[') => {
+    if (split.length === 2) {
+      return split[0] + joiner + id + (joiner === '[' ? ']' : joiner) + split[1];
     }
-  }
-
-  function _buildSrcRef(id) {
-    if (srcRef.length === 2) {
-      return srcRef[0] + '_' + id + '_' + srcRef[1];
-    } else {
-      return srcRefProps;
-    }
-  }
-
-  function _buildSrcId(id) {
-    if (srcRef.length === 2) {
-      return srcId[0] + '_' + id + '_' + srcId[1];
-    } else {
-      return srcIdProps;
-    }
-  }
-
-  function _buildSelectConditionName(id) {
-    if (selectConditionName.length === 2) {
-      return selectConditionName[0] + '[' + id + ']' + selectConditionName[1];
-    } else {
-      return selectConditionNameProps;
-    }
-  }
-
-  function _buildFieldConditionName(id) {
-    if (fieldConditionName.length === 2) {
-      return fieldConditionName[0] + '[' + id + ']' + fieldConditionName[1];
-    } else {
-      return fieldConditionNameProps;
-    }
-  }
-
-  function _buildCategoryInputName(id) {
-    if (categoryInputName.length === 2) {
-      return categoryInputName[0] + '[' + id + ']' + categoryInputName[1];
-    } else {
-      return categoryInputNameProps;
-    }
-  }
-
-  function _buildChildChoicesActivatedInputName(id) {
-    if (childChoicesActivatedInputName.length === 2) {
-      return childChoicesActivatedInputName[0] + '[' + id + ']' + childChoicesActivatedInputName[1];
-    } else {
-      return childChoicesActivatedInputNameProps;
-    }
-  }
-
-  function _buildLinkedCategoryInputName(id) {
-    if (linkedCategoryInputName.length === 2) {
-      return linkedCategoryInputName[0] + '[' + id + ']' + linkedCategoryInputName[1];
-    } else {
-      return linkedCategoryInputNameProps;
-    }
-  }
-
-  function renderComponent(item, index, list) {
-    if (Object.keys(item).length > 0) {
-      return (<div key={item.itemId} className="component-search-row row"><ChoiceSetSearch
-        itemId={item.itemId}
-        itemDefaultKey={item.itemDefaultKey}
-        componentList={list}
-        catalog={item.catalog}
-        itemType={item.itemType}
-        label={item.label}
-        choiceSet={choiceSet}
-        categoryInputName={item.categoryInputName}
-        childChoicesActivatedInputName={item.childChoicesActivatedInputName}
-        childChoicesActivatedPlaceholder={item.childChoicesActivatedPlaceholder}
-        childChoicesActivatedYesLabel={item.childChoicesActivatedYesLabel}
-        childChoicesActivatedNoLabel={item.childChoicesActivatedNoLabel}
-        linkedCategoryInputName={item.linkedCategoryInputName}
-        locale={item.locale}
-        inputName={item.inputName}
-        searchPlaceholder={item.searchPlaceholder}
-        filterPlaceholder={item.filterPlaceholder}
-        srcId={item.srcId}
-        srcRef={item.srcRef}
-        selectConditionName={item.selectConditionName}
-        selectCondition={item.selectCondition}
-        fieldConditionName={item.fieldConditionName}
-        fieldConditionData={item.fieldConditionData}
-        fieldConditionDefault={item.fieldConditionDefault}
-        multiple={item.multiple}
-        addComponent={item.addComponent}
-        deleteComponent={item.deleteComponent}
-        childChoicesActivatedDefault={item.childChoicesActivatedDefault}
-        categoryOptionDefault={item.categoryOptionDefault}
-        conditionDefault={item.conditionDefault}
-        categoryDefaultValue={item.categoryDefaultValue}
-      /></div>);
-    }
-  }
-
-  function renderComponentList() {
-    return componentsList.map((item, index, list) => renderComponent(item, index, list));
-  }
+    return raw;
+  };
 
   return (
     <div id={srcIdProps + '_container'}>
-      {renderComponentList()}
+      {componentsList.map((item) =>
+        <div key={item.itemId} className="component-search-row row">
+          <ChoiceSetSearch {...item} componentList={componentsList} />
+        </div>
+      )}
     </div>
   );
-}
+};
 
 export default ChoiceSetSearchContainer;
