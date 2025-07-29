@@ -267,7 +267,7 @@ const ChoiceSetSearch = (props) => {
       // The first time we load the options, we want to select the default item
       // if specified.
       if (isFirstLoadOptions) {
-        
+
         isFirstLoadOptions = false;
 
         const _selectedItem = options.find(item => item.value == itemDefaultKey);
@@ -276,7 +276,7 @@ const ChoiceSetSearch = (props) => {
 
           setSelectCondition([]);
           setSelectedCondition(conditionDefault || '');
-          
+
           const defaultCategory = _getCategoryOptions(_selectedItem).find(
             (item) => item.value === categoryOptionDefault,
           );
@@ -296,8 +296,6 @@ const ChoiceSetSearch = (props) => {
       };
     }
   }
-
-
 
   function renderSelectConditionElement() {
     return (
@@ -364,7 +362,7 @@ const ChoiceSetSearch = (props) => {
   function renderChildChoicesActivated() {
     const childChoices = _getChildChoicesActivatedOptions();
     const defaultValue = childChoices.find((item) => item.value === childChoicesActivatedDefault);
-    
+
     return (
       <ReactSelect id={choiceSetId + '_condition'} name={childChoicesActivatedInputName}
                    options={childChoices} onChange={_selectChildChoicesActivated}
@@ -430,14 +428,14 @@ const ChoiceSetSearch = (props) => {
           </div>
         </div>
         }
-        {!(((selectedItem?.length !== 0 && selectedItem.has_childrens === true)) && ((selectedItem?.length !== 0 && selectedItem?.data?.length !== 0))) &&
+        {!(selectedItem?.has_childrens && selectedItem?.data?.length > 0) &&
         <div className="col-lg-3">
           {renderSelectConditionElement()}
         </div>
         }
       </div>
       <div className="row">
-        {(((selectedItem?.length !== 0 && selectedItem.has_childrens === true)) && ((selectedItem?.length !== 0 && selectedItem?.data?.length !== 0))) &&
+        {(selectedItem?.has_childrens && selectedItem?.data?.length > 0) &&
         <div className="col-lg-3" style={{marginTop: '10px'}}>
           {renderSelectConditionElement()}
         </div>
