@@ -1,4 +1,8 @@
 class React::BaseController < ApplicationController
+  # Set current request context before any action to ensure URL helpers
+  # in React serializers have access to proper request information for URL generation
+  before_action :set_current_request
+
   def catalog_request_clearance
     return false unless Catalog.valid?(request[:catalog_slug])
 
@@ -6,6 +10,10 @@ class React::BaseController < ApplicationController
   end
 
   private
+
+  def set_current_request
+    Current.request = request
+  end
 
   def catalog_request_valid?
     catalog = Catalog.find_by(slug: request[:catalog_slug])

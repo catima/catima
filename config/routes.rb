@@ -17,10 +17,10 @@ Rails.application.routes.draw do
 
   namespace :api, :format => "json", :only => %w(index show) do
     namespace :v1 do
-      resources :catalogs, :param => :slug do
-        resources :items
+      resources :catalogs, :param => :slug, :only => [:index, :show] do
+        resources :items, :only => [:index, :show]
         scope :path => ':locale' do
-          resources :items
+          resources :items, :only => [:index, :show]
         end
       end
     end

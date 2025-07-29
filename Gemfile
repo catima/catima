@@ -1,9 +1,9 @@
 source "https://rubygems.org"
 
 gem "active_model_serializers", "~> 0.10"
-gem "active_type", "~> 2.5.1"
+gem "active_type", "~> 2.6.2"
 gem 'device_detector', '~> 1.1'
-gem "ahoy_matey", "~> 5.0.2"
+gem "ahoy_matey", "~> 5.4.0"
 gem "autoprefixer-rails", "~> 10.1"
 gem "bcrypt", "~> 3.1"
 gem "bootstrap", "~> 5.3"
@@ -37,7 +37,7 @@ gem "pg", "~> 1.2"
 gem "pg_search", "~> 2.3"
 gem "pgcli-rails", "~> 0.5"
 gem "pundit", "~> 2.1"
-gem "rails", '~> 7.2.0'
+gem "rails", '~> 8.0.0'
 gem "ranked-model", "~> 0.4"
 gem 'react-rails', "~> 2.7.1"
 gem "recaptcha", "~> 5.6"
@@ -56,7 +56,7 @@ gem "sprockets", "~> 4.0"
 gem "rubyzip", "~> 2.3"
 gem "zaru", "~> 1.0"
 gem "jbuilder", "~> 2.12.0"
-gem "rswag", "~> 2.14.0"
+gem "rswag", "~> 2.16.0"
 gem 'redis', "~> 5.0"
 gem "rspec-rails", "~> 6.1"
 gem "net-http", "~> 0.4" # Avoid already initialized constant Net::ProtocRetryError
@@ -79,7 +79,7 @@ group :development, :test do
 end
 
 group :development do
-  gem "annotate", "~> 3.1"
+  gem "annotaterb", "~> 4.17"
   gem "awesome_print", "~> 1.8"
   gem "bcrypt_pbkdf", "~> 1.0", :require => false
   gem "better_errors", "~> 2.9"
