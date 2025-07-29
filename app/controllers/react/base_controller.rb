@@ -4,7 +4,7 @@ class React::BaseController < ApplicationController
   before_action :set_current_request
 
   def catalog_request_clearance
-    return false unless Catalog.valid?(request[:catalog_slug])
+    return false unless Catalog.valid?(params[:catalog_slug])
 
     raise Pundit::NotAuthorizedError unless catalog_request_valid?
   end
@@ -16,7 +16,7 @@ class React::BaseController < ApplicationController
   end
 
   def catalog_request_valid?
-    catalog = Catalog.find_by(slug: request[:catalog_slug])
+    catalog = Catalog.find_by(slug: params[:catalog_slug])
     catalog.public? || current_user
   end
 end
