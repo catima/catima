@@ -1,5 +1,5 @@
 class API::ApplicationController < ApplicationController
-  # Set curent request context before any action to ensure URL helpers
+  # Set current request context before any action to ensure URL helpers
   # in serializers have access to proper request information for URL generation
   before_action :set_current_request
 
