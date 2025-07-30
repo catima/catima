@@ -238,27 +238,30 @@ Devise.setup do |config|
   # up on your models and hooks.
   # config.omniauth :github, 'APP_ID', 'APP_SECRET', scope: 'user,public_repo'
   if ENV.fetch('AUTH_GITHUB_APP_ID', nil)
-    config.omniauth(
-      :github,
-      ENV.fetch('AUTH_GITHUB_APP_ID', nil),
-      ENV.fetch('AUTH_GITHUB_APP_SECRET', nil),
-      scope: 'user:email')
+    Rails.application.config.middleware.use OmniAuth::Builder do
+      provider :github,
+               ENV.fetch('AUTH_GITHUB_APP_ID', nil),
+               ENV.fetch('AUTH_GITHUB_APP_SECRET', nil),
+               scope: "user:email"
+    end
   end
   if ENV.fetch('AUTH_FACEBOOK_APP_ID', nil)
-    config.omniauth(
-      :facebook,
-      ENV.fetch('AUTH_GITHUB_APP_ID', nil),
-      ENV.fetch('AUTH_GITHUB_APP_SECRET', nil),
-      token_params: { parse: :json })
+    Rails.application.config.middleware.use OmniAuth::Builder do
+      provider :facebook,
+               ENV.fetch('AUTH_FACEBOOK_APP_ID', nil),
+               ENV.fetch('AUTH_FACEBOOK_APP_SECRET', nil),
+               scope: "email",
+               info_fields: 'email'
+    end
   end
   if ENV.fetch('AUTH_SHIB_APP_ID', nil)
-    config.omniauth(
-      :shibboleth,
-      shib_session_id_field: ENV.fetch('AUTH_SHIB_SESSION_ID', nil),
-      shib_application_id_field: ENV.fetch('AUTH_SHIB_APP_ID', nil),
-      uid_field: 'eppn',
-      info_fields: { email: 'mail' }
-    )
+    Rails.application.config.middleware.use OmniAuth::Builder do
+      provider :shibboleth,
+               shib_session_id_field: ENV.fetch('AUTH_SHIB_SESSION_ID', nil),
+               shib_application_id_field: ENV.fetch('AUTH_SHIB_APP_ID', nil),
+               uid_field: 'eppn',
+               info_fields: { email: 'mail' }
+    end
   end
 
   # ==> Warden configuration

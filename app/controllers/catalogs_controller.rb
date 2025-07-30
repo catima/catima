@@ -21,7 +21,7 @@ class CatalogsController < ApplicationController
   # wildcard to valid catalog slugs.
   module Constraint
     def self.matches?(request)
-      catalog_slug = request[:catalog_slug]
+      catalog_slug = request.params[:catalog_slug]
       catalog_slug && Catalog.not_deactivated.exists?(:slug => catalog_slug)
     end
   end
