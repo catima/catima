@@ -260,7 +260,7 @@ Devise.setup do |config|
                shib_session_id_field: ENV.fetch('AUTH_SHIB_SESSION_ID', nil),
                shib_application_id_field: ENV.fetch('AUTH_SHIB_APP_ID', nil),
                uid_field: 'eppn',
-               info_fields: { email: 'email' }
+               info_fields: { email: 'mail' }
     end
   end
 
