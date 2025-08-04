@@ -52,6 +52,13 @@ const SingleReferenceEditor = (props) => {
     }
   }, [selectedReference]);
 
+  // Update selected item when filter changes
+  useEffect(() => {
+    if (selectedItem && selectedReference?.length === 1) {
+      setSelectedItem(getJSONItem(selectedReference[0]));
+    }
+  }, [selectedFilter]);
+
   // Save to DOM
   useEffect(() => {
     const domElement = document.getElementById(srcRef);
@@ -105,6 +112,7 @@ const SingleReferenceEditor = (props) => {
          style={Validation.getStyle(req, srcRef, 'SingleReferenceEditor')}
     >
       <AsyncPaginate
+        key={selectedFilter?.value || 'no-filter'} // Force re-render when filter changes
         id={editorId}
         className="single-reference flex-fill"
         debounceTimeout={800}
