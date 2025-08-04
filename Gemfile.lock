@@ -460,7 +460,7 @@ GEM
     rdoc (6.14.2)
       erb
       psych (>= 4.0.0)
-    react-rails (2.7.1)
+    react-rails (3.2.1)
       babel-transpiler (>= 0.7.0)
       connection_pool
       execjs
@@ -713,7 +713,7 @@ DEPENDENCIES
   rainbow (~> 3.0)
   ranked-model (~> 0.4)
   rb-fsevent (~> 0.10)
-  react-rails (~> 2.7.1)
+  react-rails (~> 3.2.1)
   recaptcha (~> 5.6)
   redcarpet (~> 3.6)
   redis (~> 5.0)

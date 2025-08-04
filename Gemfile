@@ -39,7 +39,7 @@ gem "pgcli-rails", "~> 0.5"
 gem "pundit", "~> 2.1"
 gem "rails", '~> 8.0.0'
 gem "ranked-model", "~> 0.4"
-gem 'react-rails', "~> 2.7.1"
+gem 'react-rails', "~> 3.2.1"
 gem "recaptcha", "~> 5.6"
 gem "redcarpet", "~> 3.6"
 # Use a forked version of refile because main repository is not actively
