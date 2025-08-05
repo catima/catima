@@ -23,7 +23,7 @@ class CatalogAdmin::ItemsTest < ActionDispatch::IntegrationTest
     add_multiple_reference('#item_one_author_other_collaborators_uuid_json-editor', 'Very Old')
     add_multiple_reference('#item_one_author_other_collaborators_uuid_json-editor', 'Very Young')
 
-    first('#item_one_author_other_collaborators_uuid_json-editor-select').click
+    find("#item_one_author_other_collaborators_uuid_json-editor .referenceControls .btn-success").click
 
     within(find('#item_one_author_language_uuid_json', visible: false).find(:xpath, '..')) do
       find(".css-g1d714-ValueContainer").click # Click on the filter input
