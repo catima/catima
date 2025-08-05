@@ -191,11 +191,9 @@ const MultiReferenceEditor = (props) => {
               onChange={handleAvailableSearch}
               placeholder={searchPlaceholder}
             />
-            {loading.searching && (
-              <div className="input-group-addon" style={loadingDotsStyle}>
-                <LoadingDots />
-              </div>
-            )}
+            <div style={{ paddingRight: 5 }}>
+              {loading.searching && <LoadingDots />}
+            </div>
             <div className="input-group-addon">
               <ReactSelect
                 className="multiple-reference-filter"
