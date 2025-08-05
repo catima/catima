@@ -191,7 +191,7 @@ const MultiReferenceEditor = (props) => {
               onChange={handleAvailableSearch}
               placeholder={searchPlaceholder}
             />
-            <div style={{ paddingRight: 5 }}>
+            <div style={loadingDotsStyle}>
               {loading.searching && <LoadingDots />}
             </div>
             <div className="input-group-addon">
