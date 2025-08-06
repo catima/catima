@@ -22,8 +22,8 @@ class PagesController < ApplicationController
   # wildcard to valid page slugs.
   module Constraint
     def self.matches?(request)
-      catalog = Catalog.not_deactivated.where(:slug => request[:catalog_slug]).first!
-      slug = request[:slug]
+      catalog = Catalog.not_deactivated.where(:slug => request.params[:catalog_slug]).first!
+      slug = request.params[:slug]
       catalog.pages.exists?(:slug => slug)
     end
   end
@@ -31,15 +31,15 @@ class PagesController < ApplicationController
   include ControlsCatalog
 
   def show
-    slug = request[:slug]
+    slug = params[:slug]
     @page = catalog.pages.where(:slug => slug).first!
     render :show
   end
 
   def items_for_line
-    slug = request[:slug]
+    slug = params[:slug]
     page = catalog.pages.where(:slug => slug).first!
-    container = page.containers.find(request[:container_id])
+    container = page.containers.find(params[:container_id])
     catalog = page.catalog
     item_type = catalog.item_types.where(:id => container.item_type).first!
     sort_field = container.sort_field_id.present? ? Field.find(container.sort_field_id) : item_type.items.first.primary_field

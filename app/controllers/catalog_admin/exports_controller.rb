@@ -63,7 +63,7 @@ class CatalogAdmin::ExportsController < CatalogAdmin::BaseController
     Export.find(export_id)
   end
 
-  def find_category(category=request[:category])
+  def find_category(category=params[:category])
     raise Pundit::NotAuthorizedError unless Export::CATEGORY_OPTIONS.include? category
 
     category

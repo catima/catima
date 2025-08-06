@@ -1,17 +1,15 @@
-// name this file config/webpack/webpack.config.js
-const { env } = require('shakapacker')
-const { existsSync } = require('fs')
-const { resolve } = require('path')
+const { existsSync } = require("fs");
+const { resolve } = require("path");
+const { env, generateWebpackConfig } = require("shakapacker");
 
 const envSpecificConfig = () => {
-  const path = resolve(__dirname, `${env.nodeEnv}.js`)
+  const path = resolve(__dirname, `${env.nodeEnv}.js`);
   if (existsSync(path)) {
-    console.log(`Loading ENV specific webpack configuration file ${path}`)
-    return require(path)
+    console.log(`Loading ENV specific webpack configuration file ${path}`);
+    return require(path);
   } else {
-    // Probably an error if the file for the NODE_ENV does not exist
-    throw new Error(`Got Error with NODE_ENV = ${env.nodeEnv}`);
+    return generateWebpackConfig();
   }
-}
+};
 
-module.exports = envSpecificConfig()
+module.exports = envSpecificConfig();

@@ -9,9 +9,9 @@ const DotWrapper = styled.div`
   display: flex;
   align-items: flex-end;
   justify-content: center;
-  height: 20px;
-  padding-top: 20px;
-  padding-bottom: 20px;
+  height: 19px;
+  padding-top: 19px;
+  padding-bottom: 19px;
 `;
 
 const Dot = styled.span`
