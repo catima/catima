@@ -28,7 +28,7 @@ class FieldsTest < ActionDispatch::IntegrationTest
     fill_in("Slug (singular)", :with => "test")
 
     find('div[data-react-class="Domains/components/Domains"]', :wait => 30).click
-    within(".css-4ljt47-MenuList", :wait => 30) do
+    within(".css-11unzgr", :wait => 30) do
       find('div', text: "Youtube.com", match: :first, visible: false, :wait => 30).click
     end
 

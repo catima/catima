@@ -26,25 +26,25 @@ class CatalogAdmin::ItemsTest < ActionDispatch::IntegrationTest
     find("#item_one_author_other_collaborators_uuid_json-editor .referenceControls .btn-success").click
 
     within(find('#item_one_author_language_uuid_json', visible: false).find(:xpath, '..')) do
-      find(".css-g1d714-ValueContainer").click # Click on the filter input
+      find(".css-1wa3eu0-placeholder").click # Click on the filter input
       sleep(2) # Wait for the AsyncPaginate to populate
-      within(".css-4ljt47-MenuList") do # Within the filter list
+      within(".css-11unzgr") do # Within the filter list
         find('div', text: 'Eng', match: :first, visible: false).click
       end
     end
 
     within(find('#item_one_author_other_languages_uuid_json', visible: false).find(:xpath, '..')) do
-      find(".css-g1d714-ValueContainer").click # Click on the filter input
+      find(".css-1wa3eu0-placeholder").click # Click on the filter input
       sleep(2) # Wait for the AsyncPaginate to populate
-      within(".css-4ljt47-MenuList") do # Within the filter list
+      within(".css-11unzgr") do # Within the filter list
         find('div', text: 'Eng', match: :first, visible: false).click
       end
     end
 
     within(find('#item_one_author_other_languages_uuid_json', visible: false).find(:xpath, '..')) do
-      find(".css-g1d714-ValueContainer").click # Click on the filter input
+      find(".css-1wa3eu0-placeholder").click # Click on the filter input
       sleep(2) # Wait for the AsyncPaginate to populate
-      within(".css-4ljt47-MenuList") do # Within the filter list
+      within(".css-11unzgr") do # Within the filter list
         find('div', text: 'Spanish', match: :first, visible: false).click
       end
     end
@@ -61,9 +61,9 @@ class CatalogAdmin::ItemsTest < ActionDispatch::IntegrationTest
 
     # Select the category option.
     within(find('#item_one_author_category_uuid_json', visible: false).find(:xpath, '..')) do
-      find(".css-g1d714-ValueContainer").click # Click on the filter input
+      find(".css-1wa3eu0-placeholder").click # Click on the filter input
       sleep(2) # Wait for the AsyncPaginate to populate
-      within(".css-4ljt47-MenuList") do # Within the filter list
+      within(".css-11unzgr") do # Within the filter list
         find('div', text: 'With category', match: :first, visible: false).click
       end
     end
@@ -135,9 +135,9 @@ class CatalogAdmin::ItemsTest < ActionDispatch::IntegrationTest
     add_single_reference('#item_one_author_collaborator_uuid_json-editor', 'Very Old')
 
     within(find('#item_one_author_language_uuid_json', visible: false).find(:xpath, '..')) do
-      find(".css-g1d714-ValueContainer").click # Click on the filter input
+      find(".css-1wa3eu0-placeholder").click # Click on the filter input
       sleep(2)
-      within(".css-4ljt47-MenuList") do # Within the filter list
+      within(".css-11unzgr") do # Within the filter list
         find('div', text: 'Eng', match: :first, visible: false).click
       end
     end

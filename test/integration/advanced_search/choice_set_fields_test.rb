@@ -16,7 +16,7 @@ class AdvancedSearch::ChoiceSetFieldTest < ActionDispatch::IntegrationTest
       find(".css-1wa3eu0-placeholder").click # Click on the filter input
       sleep(2)
 
-      within(".css-26l3qy-menu") do # Within the filter list
+      within(".css-11unzgr") do # Within the filter list
         find('div', text: 'Sedan', match: :first, visible: false).click
       end
     end
@@ -79,7 +79,7 @@ class AdvancedSearch::ChoiceSetFieldTest < ActionDispatch::IntegrationTest
       find(".css-1wa3eu0-placeholder").click # Click on the filter input
       sleep(2)
 
-      within(".css-26l3qy-menu") do # Within the filter list
+      within(".css-11unzgr") do # Within the filter list
         find('div', text: 'With category', match: :first, visible: false).click
       end
     end
@@ -88,7 +88,7 @@ class AdvancedSearch::ChoiceSetFieldTest < ActionDispatch::IntegrationTest
       find(".css-1wa3eu0-placeholder").click # Click on the filter input
       sleep(2)
 
-      within(".css-26l3qy-menu") do # Within the filter list
+      within(".css-11unzgr") do # Within the filter list
         find('div', text: 'Language origin', match: :first, visible: false).click
       end
     end
