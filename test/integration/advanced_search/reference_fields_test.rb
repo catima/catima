@@ -207,7 +207,7 @@ class AdvancedSearch::ReferenceFieldTest < ActionDispatch::IntegrationTest
       find(".css-1wa3eu0-placeholder").click # Click on the filter input
       sleep(2)
 
-      within(".css-4ljt47-MenuList") do # Within the filter list
+      within(".css-11unzgr") do # Within the filter list
         find('div', text: "Email", match: :first, visible: false).click
       end
     end
@@ -237,7 +237,7 @@ class AdvancedSearch::ReferenceFieldTest < ActionDispatch::IntegrationTest
       find(".css-1wa3eu0-placeholder").click # Click on the filter input
       sleep(2)
 
-      within(".css-4ljt47-MenuList") do # Within the filter list
+      within(".css-11unzgr") do # Within the filter list
         find('div', text: "Most Active Month", match: :first, visible: false).click
       end
     end
@@ -278,7 +278,7 @@ class AdvancedSearch::ReferenceFieldTest < ActionDispatch::IntegrationTest
       find(".single-reference-filter").click # Click on the filter input
       sleep(2)
 
-      within(".css-26l3qy-menu") do # Within the filter list
+      within(".css-11unzgr") do # Within the filter list
         find('.css-1n7v3ny-option', text: "Name", :match => :first, visible: false).click
       end
 

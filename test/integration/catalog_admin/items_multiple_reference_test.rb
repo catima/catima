@@ -68,7 +68,7 @@ class CatalogAdmin::ItemMultipleReferenceTest < ActionDispatch::IntegrationTest
     end
 
     find("div.item", text: "Stephen King").click
-    find("#item_one_author_other_collaborators_uuid_json-editor-select").click
+    find("#item_one_author_other_collaborators_uuid_json-editor .referenceControls .btn-success").click
     find("input[type='submit']").click
 
     visit("/one/en/admin/authors/#{author.to_param}/edit")
