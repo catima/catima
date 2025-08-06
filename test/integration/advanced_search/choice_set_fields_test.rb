@@ -85,10 +85,10 @@ class AdvancedSearch::ChoiceSetFieldTest < ActionDispatch::IntegrationTest
     end
 
     within('#advanced_search_criteria_one_author_category_uuid_0_id_condition') do
-      find(".css-g1d714-ValueContainer").click # Click on the filter input
+      find(".css-1wa3eu0-placeholder").click # Click on the filter input
       sleep(2)
 
-      within(".css-4ljt47-MenuList") do # Within the filter list
+      within(".css-26l3qy-menu") do # Within the filter list
         find('div', text: 'Language origin', match: :first, visible: false).click
       end
     end
