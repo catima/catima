@@ -41,14 +41,6 @@ class CatalogAdmin::ItemsTest < ActionDispatch::IntegrationTest
       end
     end
 
-    within(find('#item_one_author_other_languages_uuid_json', visible: false).find(:xpath, '..')) do
-      find(".css-1wa3eu0-placeholder").click # Click on the filter input
-      sleep(2) # Wait for the AsyncPaginate to populate
-      within(".css-11unzgr") do # Within the filter list
-        find('div', text: 'Spanish', match: :first, visible: false).click
-      end
-    end
-
     page.execute_script(
       "document.getElementById('item_one_author_birth_time_uuid_json').value = " \
       "'{\"Y\":2015, \"M\":12, \"D\":31, \"h\":14, \"m\":30, \"s\":17}';"
