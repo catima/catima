@@ -17,6 +17,8 @@ end
 def driver_params
   options = Selenium::WebDriver::Chrome::Options.new
   options.add_argument('disable-gpu')
+  options.add_argument('--disable-automation-controlled')
+  options.add_argument('--disable-blink-features=AutomationControlled')
   options.add_argument('headless') unless ENV['HEADLESS'] == '0'
   options.add_argument('no-sandbox')
   { options: options }
