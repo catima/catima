@@ -192,7 +192,7 @@ const ItemTypesReferenceSearch = (props) => {
       return <DateTimeSearch
         id={referenceSearchId}
         selectCondition={[]}
-        disableInputByCondition={selectedCondition}
+        parentSelectedCondition={selectedCondition}
         startDateInputName={startDateInputName}
         endDateInputName={endDateInputName}
         localizedDateTimeData={localizedDateTimeData}

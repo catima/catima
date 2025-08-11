@@ -16,9 +16,19 @@
                             choice_set_id: field.choice_set_id
                           ),
                         }),
+
+                      fieldUuid: field.uuid,
+
+                      #  retier tous ces truc inutiles
                       categoryInputName: "advanced_search[criteria][#{field.uuid}][0][category_field]",
-                      linkedCategoryInputName: "advanced_search[criteria][#{field.uuid}][0][category_criteria]",
                       childChoicesActivatedInputName: "advanced_search[criteria][#{field.uuid}][0][child_choices_activated]",
+                      inputName: "advanced_search[criteria][#{field.uuid}][0][exact]",
+                      selectConditionName: "advanced_search[criteria][#{field.uuid}][0][condition]",
+                      fieldConditionName: "advanced_search[criteria][#{field.uuid}][0][field_condition]",
+                      fieldConditionData: field.search_field_conditions_as_hash,
+                      defaultValues: value,
+
+                      # Localization.
                       locale: I18n.locale,
                       localizedDateTimeData: t('date'),
                       childChoicesActivatedPlaceholder: t('advanced_searches.fields.choice_set_search_field.child_choices_activated_placeholder'),
@@ -26,15 +36,6 @@
                       childChoicesActivatedNoLabel: t('advanced_searches.fields.choice_set_search_field.child_choices_activated_no'),
                       searchPlaceholder: t('advanced_searches.fields.choice_set_search_field.select_placeholder'),
                       filterPlaceholder: t('advanced_searches.fields.choice_set_search_field.filter_placeholder'),
-                      srcId: "advanced_search_criteria_#{field.uuid}_0_id",
-                      srcRef: "advanced_search_criteria_#{field.uuid}_0_exact",
-                      inputName: "advanced_search[criteria][#{field.uuid}][0][exact]",
-                      selectConditionName: "advanced_search[criteria][#{field.uuid}][0][condition]",
-                      selectCondition: field.search_conditions_as_hash(I18n.locale),
-                      multiple: true,
-                      fieldConditionName: "advanced_search[criteria][#{field.uuid}][0][field_condition]",
-                      fieldConditionData: field.search_field_conditions_as_hash,
-                      defaultValues: value,
                     })
   %>
 </div>

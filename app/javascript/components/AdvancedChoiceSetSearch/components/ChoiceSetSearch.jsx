@@ -1,227 +1,157 @@
-import React, {useState, useEffect} from 'react';
+import React, { useState, useMemo, useRef, useCallback } from 'react';
 import ReactSelect from 'react-select';
 import LinkedCategoryInput from './LinkedCategoryInput';
 import AsyncPaginate from 'react-select-async-paginate';
 import axios from "axios";
 import Translations from "../../Translations/components/Translations";
 
+// Default configuration for HTTP requests.
+const HTTP_CONFIG = {
+  retry: 3,
+  retryDelay: 1000,
+};
+
+const getCategoryOptions = (itemData, locale) => {
+  return itemData?.map(item => ({
+    value: item.uuid,
+    label: item.name_translations['name_' + locale],
+    key: item.id,
+    choiceSetId: item.field_set_id,
+  })) || [];
+};
+
 const ChoiceSetSearch = (props) => {
   const {
+    fieldUuid,
+    itemId,
     inputName: inputNameProps,
-    srcId,
-    srcRef,
-    req,
     childChoicesActivatedYesLabel,
     childChoicesActivatedNoLabel,
     locale,
     choiceSet,
     addComponent,
-    itemId,
     itemDefaultKey,
     deleteComponent,
     selectConditionName,
     fieldConditionName,
     fieldConditionData,
-    fieldConditionDefault,
     searchPlaceholder,
     categoryInputName,
     filterPlaceholder,
     childChoicesActivatedInputName,
     childChoicesActivatedPlaceholder,
     catalog,
-    itemType,
-    linkedCategoryInputName,
     componentList,
-    selectCondition: selectConditionProps,
-    childChoicesActivatedDefault,
-    categoryOptionDefault,
-    conditionDefault,
-    categoryDefaultValue,
+    defaultValues,
   } = props
 
+  // revoir les valeurs par defaut de ces states
   const [selectedCondition, setSelectedCondition] = useState('')
   const [selectCondition, setSelectCondition] = useState([])
-  const [selectedFieldCondition, setSelectedFieldCondition] = useState(fieldConditionDefault || '')
+  const [selectedFieldCondition, setSelectedFieldCondition] = useState(defaultValues?.field_condition || '')
   const [selectedCategory, setSelectedCategory] = useState(null)
   const [selectedItem, setSelectedItem] = useState([])
-  const [selectedChildChoicesActivated, setSelectedChildChoicesActivated] = useState(false)
-  const [disabled, setDisabled] = useState(false)
-  const [hiddenInputValue, setHiddenInputValue] = useState([])
-  const [inputName, setInputName] = useState(inputNameProps.split("[exact]"))
-  const [choiceSetId, setChoiceSetId] = useState(`${srcId}`)
-  const [choiceSetRef, setChoiceSetRef] = useState(`${srcRef}`)
+  const [linkedCategoryData, setLinkedCategoryData] = useState({
+    inputData: null,
+    inputType: 'Field::Text',
+    dateFormat: '',
+    localizedDateTimeData: [],
+    isLoading: false
+  })
 
-  const [loadingMessage, setLoadingMessage] = useState(Translations.messages['active_record.loading'])
-  const [isInitialized, _setIsInitialized] = useState(false)
-  const [optionsList, setOptionsList] = useState([])
-  const [choices, setChoices] = useState([])
-  const [isActive, setIsActive] = useState(!(choiceSet.deactivated_at || choiceSet.deleted_at))
+  const isFirstLoadOptionsRef = useRef(true);
 
-  let isFirstLoadOptions = true;
+  const inputName = useMemo(() => { return inputNameProps.split("[exact]") }, [inputNameProps]);
 
-  useEffect(() => {
-    if (typeof selectConditionProps !== 'undefined' && selectConditionProps.length !== 0) {
-      setSelectedCondition(selectConditionProps[0].key)
-    }
-  }, [selectConditionProps])
-
-  useEffect(() => {
-    _save()
-  }, [selectedItem])
-
-  function _save() {
-    if (selectedItem !== null) {
-      setHiddenInputValue(selectedItem);
-      document.getElementsByName(_buildInputNameCondition(selectedCondition))[0].value = hiddenInputValue;
-    }
-  }
-
-  function _buildInputNameCondition(condition) {
+  const buildInputNameWithCondition = useMemo(() => {
     if (inputName.length === 2) {
-      if (condition !== '') return inputName[0] + '[' + condition + ']' + inputName[1];
+      if (selectedCondition !== '') return inputName[0] + '[' + selectedCondition + ']' + inputName[1];
       else return inputName[0] + '[default]' + inputName[1];
     } else {
       return inputNameProps;
     }
-  }
+  }, [inputName, inputNameProps, selectedCondition]);
 
-  function _selectItem(item, event) {
-    if (typeof event === 'undefined' || event.action !== "pop-value" || !req) {
-      if (typeof item !== 'undefined' && item !== null) {
-        if (item.data.length === 0) {
-          setSelectedCategory(null);
-          setSelectedCondition('');
-          setSelectCondition([]);
-        }
-        setSelectedItem(item)
-      } else {
-        setSelectedItem([])
-        setSelectedCategory(null);
-        setSelectedCondition('');
-        setSelectCondition([]);
-      }
+  const categoryOptions = useMemo(() => {
+    return getCategoryOptions(selectedItem?.data, locale);
+  }, [selectedItem?.data, locale]);
+
+  const canAddComponent = useMemo(() => {
+    return componentList[componentList.length - 1].itemId === itemId;
+  }, [componentList, itemId]);
+
+  const canRemoveComponent = useMemo(() => {
+    return componentList.length > 1;
+  }, [componentList]);
+
+  const clearCategory = useCallback(() => {
+    setSelectedCategory(null);
+    setSelectedCondition('');
+    setSelectCondition([]);
+    setLinkedCategoryData({
+      inputData: null,
+      inputType: 'Field::Text',
+      dateFormat: '',
+      localizedDateTimeData: [],
+      isLoading: false
+    });
+  }, []);
+
+  const fetchLinkedCategoryData = useCallback(async (category, defaultCondition = '') => {
+    if (!category || !category.choiceSetId || !category.value) {
+      return;
     }
-  }
 
-  function _selectCondition(event) {
-    if (typeof event === 'undefined' || event.action !== "pop-value" || !req) {
-      if (typeof event !== 'undefined') {
-        setSelectedCondition(event.target.value);
-      } else {
-        setSelectedCondition('');
+    setLinkedCategoryData(prev => ({ ...prev, isLoading: true }));
+
+    try {
+      const url = `/react/${catalog}/${locale}/categories/${category.choiceSetId}/${category.value}`;
+      const response = await axios.get(url, HTTP_CONFIG);
+      const { data } = response;
+
+      const formatOption = data.inputOptions?.find(option => option && 'format' in option);
+      const localizedOption = data.inputOptions?.find(option => option && 'localizedDateTimeData' in option);
+
+      setLinkedCategoryData({
+        inputData: data.inputData || [],
+        inputType: data.inputType || 'Field::Text',
+        dateFormat: formatOption ? formatOption.format : '',
+        localizedDateTimeData: localizedOption ? localizedOption.localizedDateTimeData : [],
+        isLoading: false
+      });
+
+      if (data.selectCondition?.length > 0) {
+        const existsInNewVal = data.selectCondition.find(item => item.key === defaultCondition);
+        setSelectedCondition(existsInNewVal ? defaultCondition : data.selectCondition[0].key);
+        setSelectCondition(data.selectCondition);
       }
+
+    } catch (error) {
+      console.error('Erreur lors de la récupération des données:', error);
+      setLinkedCategoryData(prev => ({ ...prev, isLoading: false }));
     }
-  }
+  }, [catalog, locale]);
 
-  function _selectChildChoicesActivated(event) {
-    if (typeof event === 'undefined' || event.action !== "pop-value" || !req) {
-      if (typeof event !== 'undefined') {
-        setSelectedChildChoicesActivated(event.value);
-      } else {
-        setSelectedChildChoicesActivated(false);
-      }
+  function selectItem(item) {
+    if (!item || item.data.length === 0) {
+        clearCategory();
     }
+    setSelectedItem(item || []);
   }
 
-  function _selectCategory(item, event) {
-    if (item !== null) {
-      if (typeof event === 'undefined' || event.action !== "pop-value" || !req) {
-        if (typeof event !== 'undefined') {
-          setSelectedCategory(item);
-        } else {
-          setSelectedCategory(null);
-          setSelectedCondition('');
-          setSelectCondition([]);
-        }
-      }
+  function handleSelectCategoryChange(category) {
+    if (!category) {
+        clearCategory();
     } else {
-      setSelectedCategory(null);
-      setSelectedCondition('');
-      setSelectCondition([]);
+        setSelectedCategory(category);
+        fetchLinkedCategoryData(category);
     }
   }
 
-  function _selectFieldCondition(event) {
-    if (typeof event === 'undefined' || event.action !== "pop-value" || !req) {
-      if (typeof event !== 'undefined') {
-        setSelectedFieldCondition(event.target.value);
-      } else {
-        setSelectedFieldCondition('');
-      }
-    }
-  }
-
-  function _getCategoryOptions(selectedItem) {
-    let optionsList = [];
-    optionsList = selectedItem.data.map(item =>
-      _getJSONCategory(item)
-    );
-
-    return optionsList;
-  }
-
-  function _getChildChoicesActivatedOptions() {
-    return [
-      {value: true, label: childChoicesActivatedYesLabel},
-      {value: false, label: childChoicesActivatedNoLabel}
-    ]
-  }
-
-  function _getJSONCategory(item) {
-    return {
-      value: item.uuid,
-      label: item.name_translations['name_' + locale],
-      key: item.id,
-      choiceSetId: item.field_set_id
-    };
-  }
-
-  function _getItemOptions(providedChoices = false) {
-    let computedChoices = providedChoices ? providedChoices : choices
-    computedChoices = computedChoices.map(choice =>
-        _getJSONItem(choice)
-    );
-
-    return computedChoices;
-  }
-
-  function _getJSONItem(item) {
-    if (typeof item.category_data === 'undefined') {
-      item.category_data = [];
-    }
-    return {value: item.key, label: item.label, data: item.category_data, has_childrens: item.has_childrens};
-  }
-
-  function _addComponent() {
-    addComponent(itemId);
-  }
-
-  function _deleteComponent() {
-    deleteComponent(itemId);
-  }
-
-  function _updateSelectCondition(newVal) {
-    const existsInNewVal = newVal.find(item => item.key === selectedCondition);
-
-    if (!existsInNewVal || selectedCondition === '' && newVal.length !== selectCondition.length) {
-      setSelectedCondition(newVal[0].key);
-    }
-    setSelectCondition(newVal);
-  }
-
-  function _getChoiceSetClassname() {
-    if (selectedItem.length === 0 || selectedItem.data.length === 0 && !selectedItem.has_childrens) {
-      return 'col-lg-6';
-    } else {
-      return 'col-lg-3';
-    }
-  }
-
-
-  async function _loadOptions(search, loadedOptions, {page}) {
+  async function loadOptions(search, loadedOptions, { page }) {
     // If the selected ChoiceSet is not active (deactivated
     // or deleted), then return an empty list of options.
-    if (!isActive) {
+    if (choiceSet.deactivated_at || choiceSet.deleted_at) {
       return {
         options: [],
         hasMore: false,
@@ -231,88 +161,69 @@ const ChoiceSetSearch = (props) => {
       };
     }
 
-    if (optionsList.length < 25 && isInitialized) {
-      if (search.length > 0) {
-        let regexExp = new RegExp(search, 'i')
-
-        let choices = optionsList.filter(function (choice) {
-          return choice.label !== null && choice.label.match(regexExp) !== null && choice.label.match(regexExp).length > 0
-        });
-        return {
-          options: choices,
-          hasMore: false,
-          additional: {
-            page: page + 1,
-          },
-        };
-      }
-      return {
-        options: _getItemOptions(),
-        hasMore: choices.length === 25,
-        additional: {
-          page: page + 1,
-        },
-      };
-    }
-
     const res = await axios.get(`${choiceSet.fetchUrl}&search=${search}&page=${page}`)
+    const options = res.data.choices.map(choice => ({
+      value: choice.key,
+      label: choice.label,
+      data: choice.category_data || [],
+      has_childrens: choice.has_childrens,
+    }));
 
-    if (!isInitialized) {
-      setChoices(res.data.choices)
-      setLoadingMessage(res.data.loading_message)
-      setOptionsList(res.data.choices.map(choice => _getJSONItem(choice)))
+    // The first time we load the options, we want to select the default item
+    // if specified.
+    if (isFirstLoadOptionsRef.current) {
+      isFirstLoadOptionsRef.current = false;
 
-      const options = _getItemOptions(res.data.choices);
+      const _selectedItem = options.find(item => item.value == itemDefaultKey);
+      if (_selectedItem) {
+        selectItem(_selectedItem);
+        setSelectCondition([]);
+        setSelectedCondition(defaultValues?.condition || '');
 
-      // The first time we load the options, we want to select the default item
-      // if specified.
-      if (isFirstLoadOptions) {
+        const defaultCategory = getCategoryOptions(
+          _selectedItem?.data, locale,
+        ).find((item) => item.value === defaultValues?.category_field);
 
-        isFirstLoadOptions = false;
-
-        const _selectedItem = options.find(item => item.value == itemDefaultKey);
-        if (_selectedItem) {
-          _selectItem(_selectedItem);
-
-          setSelectCondition([]);
-          setSelectedCondition(conditionDefault || '');
-
-          const defaultCategory = _getCategoryOptions(_selectedItem).find(
-            (item) => item.value === categoryOptionDefault,
-          );
-
-          if (defaultCategory) {
-            setSelectedCategory(defaultCategory);
-          }
+        if (defaultCategory) {
+          setSelectedCategory(defaultCategory);
+          fetchLinkedCategoryData(defaultCategory, defaultValues?.condition || '');
         }
       }
-
-      return {
-        options,
-        hasMore: res.data.hasMore,
-        additional: {
-          page: page + 1,
-        },
-      };
     }
+
+    return {
+      options,
+      hasMore: res.data.hasMore,
+      additional: {
+        page: page + 1,
+      },
+    };
   }
 
-  function renderSelectConditionElement() {
+  function renderConditionElement() {
     return (
-      <select className="form-select filter-condition" name={selectConditionName}
-              value={selectedCondition} onChange={_selectCondition}
-              disabled={selectedItem.length === 0 || selectedCategory === null || Object.keys(selectedCategory).length === 0}>
-        {selectCondition.map((item) => {
-          return <option key={item.key} value={item.key}>{item.value}</option>
-        })}
+      <select
+        className="form-select filter-condition"
+        name={selectConditionName}
+        value={selectedCondition}
+        onChange={e => setSelectedCondition(e.target.value || '')}
+        disabled={!selectedCategory}
+      >
+      {selectCondition.map((item) => (
+        <option key={item.key} value={item.key}>{item.value}</option>
+      ))}
       </select>
     );
   }
 
   function renderFieldConditionElement() {
     return (
-      <select className="form-select filter-condition" name={fieldConditionName}
-              value={selectedFieldCondition} onChange={_selectFieldCondition}>
+      <select
+        className="form-select filter-condition"
+        name={fieldConditionName}
+        value={selectedFieldCondition}
+        onChange={e => setSelectedFieldCondition(e.target.value || '')}
+      >
         {fieldConditionData.map((item) => {
           return <option key={item.key} value={item.key}>{item.value}</option>
         })}
@@ -324,50 +235,64 @@ const ChoiceSetSearch = (props) => {
     return (
       <div>
         <AsyncPaginate
-            defaultOptions={!!itemDefaultKey}
-            id={choiceSetId}
-            name={_buildInputNameCondition(selectedCondition)}
-            options={optionsList}
-            className={"basic-multi-select"}
-            delimiter=","
-            loadOptions={_loadOptions}
-            debounceTimeout={800}
-            isSearchable={true}
-            isClearable={true}
-            isMulti={false}
-            loadingMessage={() => searchPlaceholder}
-            searchingMessage={() => searchPlaceholder}
-            placeholder={ Translations.messages['select_placeholder'] }
-            noOptionsMessage={() => Translations.messages['no_options']}
-            additional={{
-              page: 1,
-            }}
-            styles={{menuPortal: base => ({...base, zIndex: 9999})}}
-            onChange={_selectItem}
-            value={selectedItem}
+          defaultOptions={!!itemDefaultKey}
+          name={buildInputNameWithCondition}
+          className={"basic-multi-select"}
+          delimiter=","
+          loadOptions={loadOptions}
+          debounceTimeout={800}
+          isSearchable={true}
+          isClearable={true}
+          isMulti={false}
+          loadingMessage={() => searchPlaceholder}
+          searchingMessage={() => searchPlaceholder}
+          placeholder={Translations.messages['select_placeholder']}
+          noOptionsMessage={() => Translations.messages['no_options']}
+          additional={{
+            page: 1,
+          }}
+          styles={{ menuPortal: base => ({ ...base, zIndex: 9999 }) }}
+          onChange={selectItem}
+          value={selectedItem}
         />
       </div>
     );
   }
 
-  function renderChoiceSetItemCategory() {
+  function renderCategoryElement(categoryOptions) {
+
     return (
-      <ReactSelect id={choiceSetId + '_condition'} name={categoryInputName}
-                   options={ _getCategoryOptions(selectedItem)} className="basic-multi-select" onChange={_selectCategory}
-                   classNamePrefix="select" placeholder={filterPlaceholder} isClearable={true}
-                   value={selectedCategory} />
+      <ReactSelect
+        name={categoryInputName}
+        options={categoryOptions}
+        className="basic-multi-select"
+        onChange={handleSelectCategoryChange}
+        classNamePrefix="select"
+        placeholder={filterPlaceholder}
+        isClearable={true}
+        value={selectedCategory}
+      />
     );
   }
 
-  function renderChildChoicesActivated() {
-    const childChoices = _getChildChoicesActivatedOptions();
-    const defaultValue = childChoices.find((item) => item.value === childChoicesActivatedDefault);
+  function renderChildChoicesElement() {
+    const childChoices = [
+      { value: true, label: childChoicesActivatedYesLabel },
+      { value: false, label: childChoicesActivatedNoLabel },
+    ];
+    const isChildChoicesActivated = defaultValues["child_choices_activated"] && defaultValues["child_choices_activated"] === "true";
+
+    const defaultValue = childChoices.find(
+      (item) => item.value === isChildChoicesActivated,
+    );
 
     return (
-      <ReactSelect id={choiceSetId + '_condition'} name={childChoicesActivatedInputName}
-                   options={childChoices} onChange={_selectChildChoicesActivated}
-                   classNamePrefix="select" placeholder={childChoicesActivatedPlaceholder}
-                   defaultValue={defaultValue} />
+      <ReactSelect name={childChoicesActivatedInputName}
+        options={childChoices}
+        classNamePrefix="select"
+        placeholder={childChoicesActivatedPlaceholder}
+        defaultValue={defaultValue}
+      />
     );
   }
 
@@ -375,15 +300,13 @@ const ChoiceSetSearch = (props) => {
     return (
       <div>
         <LinkedCategoryInput
-          catalog={catalog}
+          fieldUuid={fieldUuid}
+          itemId={itemId}
           locale={locale}
-          itemType={itemType}
-          inputName={linkedCategoryInputName}
-          selectedCategory={selectedCategory}
           selectedCondition={selectedCondition}
-          updateSelectCondition={_updateSelectCondition}
           searchPlaceholder={searchPlaceholder}
-          defaultValue={categoryDefaultValue}
+          defaultValue={defaultValues}
+          linkedCategoryData={linkedCategoryData}
         />
       </div>
     );
@@ -395,56 +318,56 @@ const ChoiceSetSearch = (props) => {
         <div className="col-lg-2">
           {renderFieldConditionElement()}
         </div>
-        <div className={_getChoiceSetClassname()}>
+        <div className={categoryOptions.length > 0 || selectedItem?.has_childrens ? 'col-lg-3' : 'col-lg-6'}>
           {renderChoiceSetElement()}
         </div>
-        {(selectedItem.length !== 0 && selectedItem.has_childrens === true) &&
-        <div className="col-lg-3">
-          {renderChildChoicesActivated()}
-        </div>
+        {(selectedItem?.has_childrens) &&
+          <div className="col-lg-3">
+            {renderChildChoicesElement()}
+          </div>
         }
-        {(selectedItem.length !== 0 && selectedItem.data.length !== 0) &&
-        <div className="col-lg-3">
-          {renderChoiceSetItemCategory()}
-        </div>
+        {(categoryOptions.length > 0) &&
+          <div className="col-lg-3">
+            {renderCategoryElement(categoryOptions)}
+          </div>
         }
-        {(itemId === componentList[0].itemId && componentList.length === 1) &&
-        <div className="col-lg-1 icon-container">
-          <a type="button" onClick={_addComponent}><i className="fa fa-plus"></i></a>
-        </div>
-        }
-        {(((itemId !== componentList[0].itemId) && (itemId !== componentList[componentList.length - 1].itemId)) || (itemId === componentList[0].itemId && componentList.length > 1)) &&
-        <div className="col-lg-1 icon-container">
-          <a type="button" onClick={_deleteComponent}><i className="fa fa-trash"></i></a>
-        </div>
-        }
-        {((itemId === componentList[componentList.length - 1].itemId) && (itemId !== componentList[0].itemId)) &&
         <div className="col-lg-1">
           <div className="row">
-            <div className="col-lg-12"><a type="button" onClick={_addComponent}><i className="fa fa-plus"></i></a>
-            </div>
-            <div className="col-lg-12"><a type="button" onClick={_deleteComponent}><i className="fa fa-trash"></i></a>
-            </div>
+            {canAddComponent &&
+              <div className="col-lg-12">
+                <a type="button" onClick={addComponent}>
+                  <i className="fa fa-plus"></i>
+                </a>
+              </div>
+            }
+            {canRemoveComponent &&
+              <div className="col-lg-12">
+                <a type="button" onClick={deleteComponent}>
+                  <i className="fa fa-trash"></i>
+                </a>
+              </div>
+            }
           </div>
         </div>
-        }
-        {!(selectedItem?.has_childrens && selectedItem?.data?.length > 0) &&
-        <div className="col-lg-3">
-          {renderSelectConditionElement()}
-        </div>
+        {!(selectedItem?.has_childrens && categoryOptions.length > 0) &&
+          <div className="col-lg-3">
+            {renderConditionElement()}
+          </div>
         }
       </div>
       <div className="row">
-        {(selectedItem?.has_childrens && selectedItem?.data?.length > 0) &&
-        <div className="col-lg-3" style={{marginTop: '10px'}}>
-          {renderSelectConditionElement()}
-        </div>
+        {(selectedItem?.has_childrens && categoryOptions.length > 0) &&
+          <div className="col-lg-3" style={{ marginTop: '10px' }}>
+            {renderConditionElement()}
+          </div>
         }
-        {(selectedCategory !== null && Object.keys(selectedCategory).length !== 0 && selectedItem?.data?.length !== 0) &&
-        <div className="col-lg-offset-2 col-lg-6">{renderLinkedCategoryElement()}</div>
+        {selectedCategory &&
+          <div className="col-lg-offset-2 col-lg-6">
+            {renderLinkedCategoryElement()}
+          </div>
         }
       </div>
-      {typeof selectedItem}
+      tototot: {selectedCondition || "null"}
     </div>
   );
 }
