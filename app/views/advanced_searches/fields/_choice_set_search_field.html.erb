@@ -3,8 +3,6 @@
     react_component('AdvancedChoiceSetSearch/components/ChoiceSetSearchContainer',
                     {
                       catalog: field.catalog.slug,
-                      itemType: field.item_type.slug,
-                      label: t(".any"),
                       choiceSet: field.choice_set.attributes.merge(
                         {
                           multiple: field.multiple?,
@@ -18,13 +16,6 @@
                         }),
 
                       fieldUuid: field.uuid,
-
-                      #  retier tous ces truc inutiles
-                      categoryInputName: "advanced_search[criteria][#{field.uuid}][0][category_field]",
-                      childChoicesActivatedInputName: "advanced_search[criteria][#{field.uuid}][0][child_choices_activated]",
-                      inputName: "advanced_search[criteria][#{field.uuid}][0][exact]",
-                      selectConditionName: "advanced_search[criteria][#{field.uuid}][0][condition]",
-                      fieldConditionName: "advanced_search[criteria][#{field.uuid}][0][field_condition]",
                       fieldConditionData: field.search_field_conditions_as_hash,
                       defaultValues: value,
 

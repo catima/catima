@@ -24,25 +24,21 @@ const ChoiceSetSearch = (props) => {
   const {
     fieldUuid,
     itemId,
-    inputName: inputNameProps,
+    choiceSet,
+    itemDefaultKey,
+    catalog,
+    searchPlaceholder,
+    filterPlaceholder,
+    fieldConditionData,
+    defaultValues,
+    locale,
+    childChoicesActivatedPlaceholder,
     childChoicesActivatedYesLabel,
     childChoicesActivatedNoLabel,
-    locale,
-    choiceSet,
     addComponent,
-    itemDefaultKey,
     deleteComponent,
-    selectConditionName,
-    fieldConditionName,
-    fieldConditionData,
-    searchPlaceholder,
-    categoryInputName,
-    filterPlaceholder,
-    childChoicesActivatedInputName,
-    childChoicesActivatedPlaceholder,
-    catalog,
-    componentList,
-    defaultValues,
+    canAddComponent,
+    canRemoveComponent,
   } = props
 
   // revoir les valeurs par defaut de ces states
@@ -57,32 +53,18 @@ const ChoiceSetSearch = (props) => {
     dateFormat: '',
     localizedDateTimeData: [],
     isLoading: false
-  })
+  });
 
   const isFirstLoadOptionsRef = useRef(true);
 
-  const inputName = useMemo(() => { return inputNameProps.split("[exact]") }, [inputNameProps]);
-
   const buildInputNameWithCondition = useMemo(() => {
-    if (inputName.length === 2) {
-      if (selectedCondition !== '') return inputName[0] + '[' + selectedCondition + ']' + inputName[1];
-      else return inputName[0] + '[default]' + inputName[1];
-    } else {
-      return inputNameProps;
-    }
-  }, [inputName, inputNameProps, selectedCondition]);
+    const currentCondition = selectedCondition || 'default';
+    return `advanced_search[criteria][${fieldUuid}][${itemId}][${currentCondition}]`;
+  }, [fieldUuid, selectedCondition, itemId]);
 
   const categoryOptions = useMemo(() => {
     return getCategoryOptions(selectedItem?.data, locale);
   }, [selectedItem?.data, locale]);
-
-  const canAddComponent = useMemo(() => {
-    return componentList[componentList.length - 1].itemId === itemId;
-  }, [componentList, itemId]);
-
-  const canRemoveComponent = useMemo(() => {
-    return componentList.length > 1;
-  }, [componentList]);
 
   const clearCategory = useCallback(() => {
     setSelectedCategory(null);
@@ -204,7 +186,7 @@ const ChoiceSetSearch = (props) => {
     return (
       <select
         className="form-select filter-condition"
-        name={selectConditionName}
+        name={`advanced_search[criteria][${fieldUuid}][${itemId}][condition]`}
         value={selectedCondition}
         onChange={e => setSelectedCondition(e.target.value || '')}
         disabled={!selectedCategory}
@@ -220,7 +202,7 @@ const ChoiceSetSearch = (props) => {
     return (
       <select
         className="form-select filter-condition"
-        name={fieldConditionName}
+        name={`advanced_search[criteria][${fieldUuid}][${itemId}][field_condition]`}
         value={selectedFieldCondition}
         onChange={e => setSelectedFieldCondition(e.target.value || '')}
       >
@@ -263,7 +245,7 @@ const ChoiceSetSearch = (props) => {
 
     return (
       <ReactSelect
-        name={categoryInputName}
+        name={`advanced_search[criteria][${fieldUuid}][${itemId}][category_field]`}
         options={categoryOptions}
         className="basic-multi-select"
         onChange={handleSelectCategoryChange}
@@ -287,7 +269,7 @@ const ChoiceSetSearch = (props) => {
     );
 
     return (
-      <ReactSelect name={childChoicesActivatedInputName}
+      <ReactSelect name={`advanced_search[criteria][${fieldUuid}][${itemId}][child_choices_activated]`}
         options={childChoices}
         classNamePrefix="select"
         placeholder={childChoicesActivatedPlaceholder}
@@ -367,7 +349,6 @@ const ChoiceSetSearch = (props) => {
           </div>
         }
       </div>
-      tototot: {selectedCondition || "null"}
     </div>
   );
 }
