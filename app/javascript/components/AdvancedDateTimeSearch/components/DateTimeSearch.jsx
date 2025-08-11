@@ -1,243 +1,204 @@
-import React, {useState, useEffect, useRef, createRef} from 'react';
+import React, { useState, useEffect, useRef, useMemo, useCallback } from 'react';
 import DateTimeInput from './DateTimeInput';
 import $ from 'jquery';
 import { Namespace } from '@eonasdan/tempus-dominus';
 
+/**
+ * DateTimeSearch Component - Handles date/time range selection with conditions.
+ * Supports single dates, date ranges, and various filtering conditions.
+ */
 const DateTimeSearch = (props) => {
   const {
-    startDateInputName: startDateInputNameProps,
-    endDateInputName: endDateInputNameProps,
-    disableInputByCondition: disableInputByConditionProps,
-    srcId,
-    srcRef,
-    selectCondition,
-    selectConditionName,
-    selectConditionDefault,
-    inputStart,
-    localizedDateTimeData,
-    locale,
-    format,
-    fieldConditionName,
+    fieldUuid,
+    itemId = null,
+    selectCondition = [],
     fieldConditionData,
-    fieldConditionDefault,
-    inputEnd,
-    defaultStart,
-    defaultEnd,
     parentSelectedCondition,
-  } = props
-  const [selectedCondition, setSelectedCondition] = useState('')
-  const [selectedFieldCondition, setSelectedFieldCondition] = useState(fieldConditionDefault || '')
-  const [startDateInputName, setStartDateInputName] = useState(startDateInputNameProps)
-  const [endDateInputName, setEndDateInputName] = useState(endDateInputNameProps)
-  
-  // TODO HERE
-  const [startDateInputNameArray, setStartDateInputNameArray] = useState(startDateInputNameProps.split(`[${selectConditionDefault || 'exact'}]`))
-  const [endDateInputNameArray, setEndDateInputNameArray] = useState(endDateInputNameProps.split(`[${selectConditionDefault || 'exact'}]`))
-  
-  const [disabled, setDisabled] = useState(false)
-  const [isRange, setIsRange] = useState(false)
+    format,
+    defaultValues,
+    locale,
+    localizedDateTimeData,
+  } = props;
 
-  const dateTimeSearchId = `${srcId}-datetime`;
-  const dateTimeCollapseId = `${srcId}-collapse`;
+  // Extract default values from props
+  const selectConditionDefault = defaultValues?.condition;
+  const fieldConditionDefault = defaultValues?.field_condition;
 
-  const dateTimeSearchRef1 = createRef()
-  const dateTimeSearchRef2 = createRef()
-  const datepickerRef1 = useRef()
-  const datepickerRef2 = useRef()
+  const defaultDates = itemId !== null ? defaultValues?.['category_criteria'] : defaultValues;
+  const defaultStart = defaultDates?.['start']?.[defaultValues?.condition || 'exact'];
+  const defaultEnd = defaultDates?.['end']?.[defaultValues?.condition || 'exact'];
 
-  useEffect(() => {
-    if (typeof selectCondition !== 'undefined' && selectCondition.length !== 0) {
-      const selectConditionKey = selectConditionDefault || selectCondition[0].key;
-      setSelectedCondition(selectConditionKey);
-      setStartDateInputNameArray(startDateInputNameProps.split("[" + selectConditionKey + "]"))
-      setEndDateInputNameArray(endDateInputNameProps.split("[" + selectConditionKey + "]"))
-      _updateDisableState(selectConditionKey);
+  const [selectedCondition, setSelectedCondition] = useState('');
+  const [selectedFieldCondition, setSelectedFieldCondition] = useState(fieldConditionDefault || '');
+  const [disabled, setDisabled] = useState(false);
+
+  const _itemId = itemId !== null ? `-${itemId}` : '';
+  const dateTimeCollapseId = `advanced_search_criteria_${fieldUuid}_id-collapse${_itemId}`;
+
+  const startDateInputName = useMemo(() => {
+    const currentCondition = selectedCondition || 'exact';
+    const _itemId = itemId !== null ? `[${itemId}][category_criteria]` : '';
+
+    return `advanced_search[criteria][${fieldUuid}]${_itemId}[start][${currentCondition}]`;
+  }, [fieldUuid, selectedCondition]);
+
+  const endDateInputName = useMemo(() => {
+    const currentCondition = selectedCondition || 'exact';
+    const _itemId = itemId !== null ? `[${itemId}][category_criteria]` : '';
+
+    return `advanced_search[criteria][${fieldUuid}]${_itemId}[end][${currentCondition}]`;
+  }, [fieldUuid, selectedCondition]);
+
+  // Refs for datepicker components
+  const datepickerRefStart = useRef();
+  const datepickerRefEnd = useRef();
+
+  // Helper functions
+  const updateDatepickerEndRestriction = useCallback((event) => {
+    if (datepickerRefEnd.current) {
+      datepickerRefEnd.current.updateOptions({
+        restrictions: { minDate: event.date }
+      });
     }
-  }, [])
+  }, []);
 
-  useEffect(() => {
-    if (typeof disableInputByConditionProps !== 'undefined') {
-      _updateDisableState(disableInputByConditionProps);
+  const updateDatepickerStartRestriction = useCallback((event) => {
+    if (datepickerRefStart.current) {
+      datepickerRefStart.current.updateOptions({
+        restrictions: { maxDate: event.date }
+      });
     }
-  }, [])
+  }, []);
 
-  useEffect(() => {
-    if (startDateInputNameProps !== startDateInputName) {
-      setStartDateInputName(startDateInputNameProps);
-      setStartDateInputNameArray(startDateInputNameProps.split("[exact]"))
-    }
-  }, [startDateInputNameProps])
+  const handleSelectCondition = useCallback((newCondition) => {
+    setSelectedCondition(newCondition || '');
+    const condition = newCondition || 'exact';
 
-  useEffect(() => {
-    if (endDateInputNameProps !== endDateInputName) {
-      setEndDateInputName(endDateInputNameProps);
-      setEndDateInputNameArray(endDateInputNameProps.split("[exact]"))
-    }
-  }, [endDateInputNameProps])
+    // Check if the condition requires a date range.
+    if (condition === 'between' || condition === 'outside') {
+      setDisabled(true);
 
-  useEffect(() => {
-    if (parentSelectedCondition){
-        _selectCondition({target: {value: parentSelectedCondition}});
-    }
-  }, [parentSelectedCondition]);
+      $(`#${dateTimeCollapseId}`).slideDown();
 
-
-  function _buildInputNameCondition(inputName, condition) {
-    if (inputName.length === 2) {
-      if (condition !== '') return inputName[0] + '[' + condition + ']' + inputName[1];
-      else return inputName[0] + '[default]' + inputName[1];
+      datepickerRefStart?.current?.subscribe(
+        Namespace.events.change,
+        updateDatepickerEndRestriction,
+      );
+      datepickerRefEnd?.current?.subscribe(
+        Namespace.events.change,
+        updateDatepickerStartRestriction,
+      );
     } else {
-      return inputName;
+      setDisabled(false);
+
+      $(`#${dateTimeCollapseId}`).slideUp();
+
+      datepickerRefEnd?.current?.clear();
     }
-  }
+  }, [dateTimeCollapseId]);
 
-  function _getDateTimeClassname() {
-    if (selectCondition.length > 0) {
-      return 'col-lg-7';
-    } else {
-      return 'col-lg-12';
+  // Effects
+  useEffect(() => {
+    if (selectCondition?.length > 0) {
+      handleSelectCondition(selectConditionDefault || selectCondition[0].key);
     }
-  }
+  }, [selectCondition, selectConditionDefault, handleSelectCondition]);
 
-  function _linkRangeDatepickers(disabled) {
-    if (datepickerRef1.current && datepickerRef2.current) {
-      if (!disabled) {
-        datepickerRef1.current.subscribe(Namespace.events.change, _updateDatepicker2Restriction);
-        datepickerRef2.current.subscribe(Namespace.events.change, _updateDatepicker1Restriction);
-      } else {
-        datepickerRef2.current.clear()
-      }
+  useEffect(() => {
+    if (parentSelectedCondition) {
+      handleSelectCondition(parentSelectedCondition);
     }
-  }
+  }, [parentSelectedCondition, handleSelectCondition]);
 
-  function _updateDatepicker2Restriction(event) {
-    datepickerRef2.current.updateOptions({
-      restrictions: {
-        minDate: event.date
-      }
-    });
-  }
+  // Render functions
+  const renderDateTimeInput = useCallback((type) => {
+    const isStart = type === 'start';
+    const _itemId = itemId !== null ? `-${itemId}` : '';
 
-  function _updateDatepicker1Restriction(event) {
-    datepickerRef1.current.updateOptions({
-      restrictions: {
-        maxDate: event.date
-      }
-    });
-  }
-
-  function _updateDisableState(value) {
-    if (typeof value !== 'undefined') {
-      if (value === 'between' || value === 'outside') {
-        setDisabled(true);
-        setIsRange(true);
-        $('#' + dateTimeCollapseId).slideDown();
-        _linkRangeDatepickers(false);
-      } else if (value === 'after' || value === 'before') {
-        setDisabled(true);
-        setIsRange(false);
-        $('#' + dateTimeCollapseId).slideUp();
-        _linkRangeDatepickers(true);
-      } else {
-        setDisabled(false);
-        setIsRange(false);
-        $('#' + dateTimeCollapseId).slideUp();
-        _linkRangeDatepickers(true);
-      }
-    }
-  }
-
-  function _selectCondition(event) {
-    if (typeof event === 'undefined' || event.action !== "pop-value" || !req) {
-      if (typeof event !== 'undefined') {
-        setStartDateInputName(_buildInputNameCondition(startDateInputNameArray, event.target.value));
-        setEndDateInputName(_buildInputNameCondition(endDateInputNameArray, event.target.value));
-        setSelectedCondition(event.target.value);
-        _updateDisableState(event.target.value);
-      } else {
-        setStartDateInputName(_buildInputNameCondition(startDateInputNameArray, 'exact'));
-        setEndDateInputName(_buildInputNameCondition(endDateInputNameArray, 'exact'));
-        setSelectedCondition('');
-        _updateDisableState('');
-      }
-    }
-  }
-
-  function _selectFieldCondition(event) {
-    if (typeof event === 'undefined' || event.action !== "pop-value" || !req) {
-      if (typeof event !== 'undefined') {
-        setSelectedFieldCondition(event.target.value);
-      } else {
-        setSelectedFieldCondition('');
-      }
-    }
-  }
-
-  function renderSelectConditionElement() {
-    return (
-      <select className="form-select filter-condition" name={selectConditionName} value={selectedCondition}
-              onChange={_selectCondition}>
-        {selectCondition.map((item) => {
-          return <option key={item.key} value={item.key}>{item.value}</option>
-        })}
-      </select>
-    );
-  }
-
-  function renderDateTimeElement() {
     return (
       <div className="col-lg-12">
-        <DateTimeInput input={inputStart} inputId={dateTimeSearchId} inputSuffixId="start_date"
-                       inputName={startDateInputName} ref={{
-          topRef: dateTimeSearchRef1,
-          datepickerRef: datepickerRef1
-        }} localizedDateTimeData={localizedDateTimeData} disabled={disabled} isRange={isRange} datepicker={true}
-                       locale={locale} format={format} defaultValue={defaultStart}/>
-        {isRange &&
-        <i className="fa fa-chevron-down"></i>
-        }
+        <DateTimeInput
+          inputId={`advanced_search_criteria_${fieldUuid}_id-datetime${_itemId}`}
+          inputSuffixId={`${type}_date`}
+          inputName={isStart ? startDateInputName : endDateInputName}
+          defaultValue={isStart ? defaultStart : defaultEnd}
+          minDate={isStart ? undefined : defaultStart}
+          maxDate={isStart ? defaultEnd : undefined}
+          disabled={disabled}
+          localizedDateTimeData={localizedDateTimeData}
+          format={format}
+          locale={locale}
+          ref={isStart ? datepickerRefStart : datepickerRefEnd}
+        />
       </div>
     );
-  }
+  }, [
+    startDateInputName, endDateInputName, datepickerRefStart, datepickerRefEnd,
+    localizedDateTimeData, disabled, locale, format, defaultStart, defaultEnd
+  ]);
 
-  function renderFieldConditionElement() {
+  const renderFieldConditionElement = useCallback(() => {
+    if (!fieldConditionData) return null;
+
+    const _itemId = itemId !== null ? `[${itemId}]` : '';
+
     return (
-      <select className="form-select filter-condition" name={fieldConditionName} value={selectedFieldCondition}
-              onChange={_selectFieldCondition}>
-        {fieldConditionData.map((item) => {
-          return <option key={item.key} value={item.key}>{item.value}</option>
-        })}
-      </select>
+      <div className="col-lg-2">
+        <select
+          className="form-select filter-condition"
+          name={`advanced_search[criteria][${fieldUuid}]${_itemId}[field_condition]`}
+          value={selectedFieldCondition}
+          onChange={(e) => setSelectedFieldCondition(e.target.value)}
+        >
+          {fieldConditionData.map((item) => (
+            <option key={item.key} value={item.key}>
+              {item.value}
+            </option>
+          ))}
+        </select>
+      </div>
     );
-  }
+  }, [fieldConditionData, selectedFieldCondition]);
 
+  const renderSelectConditionElement = useCallback(() => {
+    if (!selectCondition?.length) return null;
+
+    const _itemId = itemId !== null ? `[${itemId}]` : '';
+
+    return (
+      <div className="col-lg-3">
+        <select
+          className="form-select filter-condition"
+          name={`advanced_search[criteria][${fieldUuid}]${_itemId}[condition]`}
+          value={selectedCondition}
+          onChange={(e) => handleSelectCondition(e.target.value)}
+        >
+          {selectCondition.map((item) => (
+            <option key={item.key} value={item.key}>
+              {item.value}
+            </option>
+          ))}
+        </select>
+      </div>
+    );
+  }, [selectCondition, selectedCondition, handleSelectCondition]);
+
+  // Main render
   return (
     <div className="datetime-search-container row">
-      {selectCondition.length > 0 &&
-      <div className="col-lg-2">
-        {renderFieldConditionElement()}
-      </div>
-      }
-      <div className={_getDateTimeClassname()}>
-        {renderDateTimeElement()}
+      {renderFieldConditionElement()}
+
+      <div className={selectCondition.length > 0 ? 'col-lg-7' : 'col-lg-12'}>
+        {renderDateTimeInput('start')}
+
         <div className="collapse" id={dateTimeCollapseId}>
-          <div className="col-lg-12">
-            <DateTimeInput input={inputEnd} inputId={dateTimeSearchId} inputSuffixId="end_date"
-                           inputName={endDateInputName} localizedDateTimeData={localizedDateTimeData}
-                           disabled={disabled} isRange={isRange} ref={{
-              topRef: dateTimeSearchRef2,
-              datepickerRef: datepickerRef2
-            }} datepicker={true} locale={locale} format={format} defaultValue={defaultEnd} />
-          </div>
+          {renderDateTimeInput('end')}
         </div>
       </div>
-      {selectCondition.length > 0 &&
-      <div className="col-lg-3">
-        {renderSelectConditionElement()}
-      </div>
-      }
+
+      {renderSelectConditionElement()}
     </div>
   );
-}
+};
 
 export default DateTimeSearch;
