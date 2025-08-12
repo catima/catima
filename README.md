@@ -18,7 +18,7 @@ For some applications, CATIMA can be a replacement for databases such as FileMak
 
 ## Documentation
 
-CATIMA is a Rails 7.2 app.
+CATIMA is a Rails 8 app.
 
 This README describes the purpose of this repository and how to set up a development environment. Other sources of documentation are as follows:
 
@@ -32,8 +32,8 @@ This README describes the purpose of this repository and how to set up a develop
 This project requires:
 
 * Ruby 3.2.2, preferably managed using [rbenv](http://rbenv.org/)
-* PostgreSQL 15 must be installed and accepting connections
-* Node 20.x (`brew install nvm`, ...)
+* PostgreSQL 17 must be installed and accepting connections
+* Node 22.x (`brew install nvm`, ...)
 * [Redis](https://redis.io/) must be installed and running on localhost with the default port
 * Imagemagick must be installed (`brew install imagemagick`, `sudo apt install imagemagick`, ...)
 * Sodium must be installed (`brew install libsodium`, ...)

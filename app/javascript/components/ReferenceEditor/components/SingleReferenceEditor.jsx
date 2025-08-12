@@ -1,4 +1,4 @@
-import React, {useState, useEffect} from 'react';
+import React, {useState, useEffect, useMemo} from 'react';
 import AsyncPaginate from 'react-select-async-paginate';
 import striptags from 'striptags';
 import ReactSelect from 'react-select';
@@ -19,173 +19,100 @@ const SingleReferenceEditor = (props) => {
     filterPlaceholder
   } = props
 
-  const [items, setItems] = useState(itemsProps)
-  const [selectedItem, setSelectedItem] = useState(_load(document.getElementById(srcRef).value))
+  const [selectedItem, setSelectedItem] = useState(null)
   const [selectedFilter, setSelectedFilter] = useState(null)
-  const [optionsList, setOptionsList] = useState([])
-  const [isValid, setIsValid] = useState(Validation.isValid(
-    req,
-    srcRef,
-    'SingleReferenceEditor'
-  ))
+  const [isValid, setIsValid] = useState(Validation.isValid(req, srcRef, 'SingleReferenceEditor'))
 
   const editorId = `${srcRef}-editor`;
   const filterId = `${srcRef}-filters`;
 
-  useEffect(() => {
-    // If reference value is empty but field is required, insert the default value.
-    if (document.getElementById(srcRef).value == '' && req) {
-      _selectItem(optionsList[0]);
-    }
-  }, [])
-
-  useEffect(() => {
-    _save()
-  }, [selectedItem])
-
-  function _selectItem(item, event) {
-    if (typeof event === 'undefined' || event.action !== "pop-value" || !req) {
-      if (typeof item !== 'undefined' && item !== null) {
-        setSelectedItem(item)
-      } else {
-        setSelectedItem([])
-      }
-    }
-  }
-
-  function _load(v) {
-    if (v !== null && v !== '') {
-      let initItem = selectedReference;
-      if (initItem.length === 1) return _getJSONItem(initItem[0]);
-    }
-    return [];
-  }
-
-  function _save() {
-    if (selectedItem) {
-      const v = (selectedItem.value == '' || selectedItem.value == null) ? '' : JSON.stringify(selectedItem.value);
-      document.getElementById(srcRef).value = v;
-      setIsValid(Validation.isValid(
-        req,
-        srcRef,
-        'SingleReferenceEditor'
-      ))
-    }
-  }
-
-  function _getItemOptions(itemsVar) {
-    let optionsListVar = [];
-    let stateItems = items;
-    if (itemsVar) {
-      stateItems = stateItems.concat(itemsVar);
-    }
-    optionsListVar = stateItems.map(item => _getJSONItem(item));
-    setItems(stateItems)
-    setOptionsList(optionsListVar)
-    return optionsList;
-  }
-
-  function _getJSONItem(item) {
-    return {value: item.id, label: _itemName(item)};
-  }
-
-  function _itemName(item) {
-    if ((!selectedFilter
-      || item[selectedFilter.value] === null
-      || item[selectedFilter.value].length === 0)
-    ) {
+  const getItemName = (item) => {
+    if (!selectedFilter || !item[selectedFilter.value]) {
       return striptags(item.default_display_name);
     }
-    return striptags(item.default_display_name) + ' - ' + item[selectedFilter.value];
+    return `${striptags(item.default_display_name)} - ${item[selectedFilter.value]}`;
   }
 
+  const getJSONItem = (item) => ({
+    value: item.id,
+    label: getItemName(item)
+  });
+
+  const filterOptions = useMemo(() =>
+    fields
+      .filter(field => field.human_readable)
+      .map(field => ({value: field.slug, label: field.name})),
+    [fields]
+  );
+
+  // Initialize selected item
   useEffect(() => {
-    let optionsList = _getItemOptions();
-    if (typeof selectedItem !== 'undefined' && selectedItem !== null) {
-      const currentItem = optionsList.find(item => item.value === selectedItem.value);
-      setSelectedItem(currentItem);
-    } else {
-      setSelectedItem([]);
+    if (selectedReference?.length === 1) {
+      setSelectedItem(getJSONItem(selectedReference[0]));
     }
-  }, [selectedFilter])
+  }, [selectedReference]);
 
-  function _selectFilter(filter) {
-    setSelectedFilter(filter)
-  }
+  // Update selected item when filter changes
+  useEffect(() => {
+    if (selectedItem && selectedReference?.length === 1) {
+      setSelectedItem(getJSONItem(selectedReference[0]));
+    }
+  }, [selectedFilter]);
 
-  function _getFilterOptions() {
-    let optionsListVar = [];
-    optionsListVar = fields.filter(field => (field.human_readable));
-    optionsListVar = optionsListVar.map(field =>
-      _getJSONFilter(field)
-    );
+  // Save to DOM
+  useEffect(() => {
+    const domElement = document.getElementById(srcRef);
+    if (domElement) {
+      const value = selectedItem?.value ? JSON.stringify(selectedItem.value) : '';
+      domElement.value = value;
+      setIsValid(Validation.isValid(req, srcRef, 'SingleReferenceEditor'));
+    }
+  }, [selectedItem, req, srcRef]);
 
-    return optionsListVar;
-  }
+  const handleSelectItem = (item, event) => {
+    if (!event || event.action !== "pop-value" || !req) {
+      setSelectedItem(item || null);
+    }
+  };
 
-  function _getJSONFilter(field) {
-    return {value: field.slug, label: field.name};
-  }
+  const handleSelectFilter = (filter) => {
+    setSelectedFilter(filter);
+  };
 
-  async function _loadOptions(search, loadedOptions, {page}) {
-    // Avoid useless API calls if there are less than 25 loaded items and
-    // the user searches by filtering options with JS
+  const loadOptions = async (search, loadedOptions, {page}) => {
     if (itemsProps.length < 25) {
-      let regexExp = new RegExp(search, 'i')
-      let optionsListVar = _getItemOptions();
-      let itemsVar = optionsListVar.filter(function (item) {
-        return item.label !== null && item.label.match(regexExp) !== null && item.label.match(regexExp).length > 0
-      });
-
-      if (search.length === 0) {
-        if (optionsListVar === items && selectedFilter === null) {
-          itemsVar = [];
-        } else {
-          itemsVar = itemsProps.map(item => _getJSONItem(item));
-        }
-      }
+      const regex = new RegExp(search, 'i');
+      const options = itemsProps
+        .map(item => getJSONItem(item))
+        .filter(item => !search || (item.label && regex.test(item.label)));
 
       return {
-        options: itemsVar,
+        options,
         hasMore: false,
-        additional: {
-          page: page,
-        },
+        additional: { page }
       };
     }
 
-    if (items.length === 25) {
-      let hasMore;
-      let newOptions;
+    if (itemsProps.length === 25) {
       const response = await fetch(`${itemsUrl}?search=${search}&page=${page}`);
-      const responseJSON = await response.json();
-      newOptions = responseJSON.items.map(item => _getJSONItem(item));
-      hasMore = responseJSON.hasMore;
+      const data = await response.json();
 
       return {
-        options: newOptions,
-        hasMore: hasMore,
-        additional: {
-          page: page + 1,
-        },
+        options: data.items.map(item => getJSONItem(item)),
+        hasMore: data.hasMore,
+        additional: { page: page + 1 }
       };
     }
 
-    return {
-      options: [],
-      hasMore: false,
-      additional: {
-        page: page,
-      },
-    };
-  }
+    return { options: [], hasMore: false, additional: { page } };
+  };
 
   return (
     <div className="input-group single-reference-container"
          style={Validation.getStyle(req, srcRef, 'SingleReferenceEditor')}
     >
       <AsyncPaginate
-        cacheUniq={JSON.stringify(optionsList)} // used to update the options loaded on page load
+        key={selectedFilter?.value || 'no-filter'} // Force re-render when filter changes
         id={editorId}
         className="single-reference flex-fill"
         debounceTimeout={800}
@@ -193,15 +120,12 @@ const SingleReferenceEditor = (props) => {
         isMulti={false}
         isSearchable={true}
         loadingMessage={() => loadingMessage}
-        loadOptions={_loadOptions}
-        onChange={_selectItem}
-        options={optionsList}
+        loadOptions={loadOptions}
+        onChange={handleSelectItem}
         placeholder={searchPlaceholder}
         noOptionsMessage={noOptionsMessage}
         value={selectedItem}
-        additional={{
-          page: 1,
-        }}
+        additional={{ page: 1 }}
       />
       <div className="input-group-addon">
         <ReactSelect
@@ -210,8 +134,8 @@ const SingleReferenceEditor = (props) => {
           isSearchable={false}
           isClearable={true}
           value={selectedFilter}
-          onChange={_selectFilter}
-          options={_getFilterOptions()}
+          onChange={handleSelectFilter}
+          options={filterOptions}
           placeholder={filterPlaceholder}
           noOptionsMessage={noOptionsMessage}
           styles={filterDropdownStyle}

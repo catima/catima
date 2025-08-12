@@ -1,11 +1,10 @@
-import React, {useState, useEffect, useRef} from 'react';
-import axios from 'axios';
+import React, { useState, useEffect, useMemo, useCallback, useRef } from 'react';
 import ReactSelect from 'react-select';
 import striptags from 'striptags';
 import LoadingDots from '../../StyleControl/components/LoadingDots';
-import Validation from "../modules/validation";
+import Validation from '../modules/validation';
 import Translations from '../../Translations/components/Translations';
-import {loadingDotsStyle, filterDropdownStyle} from '../modules/styles';
+import { loadingDotsStyle, filterDropdownStyle } from '../modules/styles';
 
 const WAIT_INTERVAL = 1000;
 
@@ -21,360 +20,188 @@ const MultiReferenceEditor = (props) => {
     filterPlaceholder,
     noOptionsMessage,
     items: itemsProps,
-  } = props
+  } = props;
 
-  const [items, setItems] = useState(itemsProps)
-  const [page, setPage] = useState(1)
-  const [loadMore, setLoadMore] = useState(true)
-  const [isFetching, setIsFetching] = useState(false)
-  const [isSearching, setIsSearching] = useState(false)
-  const [selectedItems, setSelectedItems] = useState(selectedReferences.map((item) => item.id))
-  const [selectedItemsToRender, setSelectedItemsToRender] = useState(selectedReferences)
-  const [availableRefsSelectedFilter, setAvailableRefsSelectedFilter] = useState(null)
-  const [selectedRefsSelectedFilter, setSelectedRefsSelectedFilter] = useState(null)
-  const [filterAvailableInputValue, setFilterAvailableInputValue] = useState('')
-  const [isHover, setIsHover] = useState(false)
-  const [filterSelectedInputValue, setFilterSelectedInputValue] = useState('')
-  const [isValid, setIsValid] = useState(Validation.isValid(
-    req,
-    srcRef,
-    'MultiReferenceEditor'
-  ))
+  // State management
+  const [availableItems, setAvailableItems] = useState(itemsProps);
+  const [selectedItems, setSelectedItems] = useState(selectedReferences);
+  const [highlightedAvailable, setHighlightedAvailable] = useState(new Set());
+  const [highlightedSelected, setHighlightedSelected] = useState(new Set());
+  const [availableFilter, setAvailableFilter] = useState(null);
+  const [selectedFilter, setSelectedFilter] = useState(null);
+  const [availableSearch, setAvailableSearch] = useState('');
+  const [selectedSearch, setSelectedSearch] = useState('');
+  const [loading, setLoading] = useState({ fetching: false, searching: false });
+  const [pagination, setPagination] = useState({ page: 1, hasMore: true });
 
-  const timer = useRef(null)
-
+  const searchTimer = useRef(null);
   const editorId = `${srcRef}-editor`;
-  const availableRefsFilterId = `${srcRef}-available-filters`;
-  const selectedRefsFilterId = `${srcRef}-selected-filters`;
 
-  const loadMoreButtonStyle = {
-    textAlign: "center",
-    color: isHover ? "#004e90" : "#337ab7",
-    cursor: "pointer",
-    height: 40,
-    paddingTop: 10,
-    paddingBottom: 10
-  };
+  // Memoized filter options
+  const filterOptions = useMemo(() =>
+    fields
+      .filter(field => field.human_readable)
+      .map(field => ({ value: field.slug, label: field.name })),
+    [fields]
+  );
 
-  const handleMouseEnter = () => {
-    setIsHover(true);
-  };
-  const handleMouseLeave = () => {
-    setIsHover(false);
-  };
-
-  useEffect(() => {
-    if (items.length < 25) {
-      setLoadMore(false)
+  // Get item display name with filter
+  const getItemName = useCallback((item, filter) => {
+    const baseName = striptags(item.default_display_name);
+    if (!filter || !item[filter.value]) {
+      return baseName;
     }
-  }, [items])
+    return `${baseName} - ${item[filter.value]}`;
+  }, []);
 
-  useEffect(() => {
-    _save()
-  }, [selectedItemsToRender, selectedItems])
+  // Filter items based on search and availability
+  const filteredAvailableItems = useMemo(() => {
+    const selectedIds = new Set(selectedItems.map(item => item.id));
+    return availableItems.filter(item => {
+      if (selectedIds.has(item.id) || !item.default_display_name) return false;
 
-  function _highlightItem(e) {
-    e.target.classList.toggle('highlighted');
-    updateButtonStatus();
-  }
+      if (!availableSearch) return true;
 
-  function _selectItems() {
-    const highItems = highlightedItems('availableReferences');
-    let previouslySelectedItemsToRender = selectedItemsToRender;
-    let newSelectedItems = [];
-    setSelectedItemsToRender([]);
-    highItems.forEach((item) => {
-      let filteredItems = items.filter(it => it.id === item)
-      if (filteredItems.length > 0) {
-        newSelectedItems.push(filteredItems[0]);
-      }
+      const itemName = getItemName(item, availableFilter).toLowerCase();
+      return itemName.includes(availableSearch.toLowerCase());
     });
-    newSelectedItems = previouslySelectedItemsToRender.concat(newSelectedItems);
-    setSelectedItems(selectedItems.concat(highItems))
-    setSelectedItemsToRender(newSelectedItems)
-  }
+  }, [availableItems, selectedItems, availableSearch, availableFilter, getItemName]);
 
-  function _unselectItems() {
-    const highItems = highlightedItems('selectedReferences');
-    let selectedItemsToRemove = [];
-    highItems.forEach((item) => {
-      let filteredItems = selectedItemsToRender.filter(it => it.id === item)
-      if (filteredItems.length > 0) {
-        selectedItemsToRemove.push(filteredItems[0]);
-      }
+  const filteredSelectedItems = useMemo(() => {
+    if (!selectedSearch) return selectedItems;
+
+    return selectedItems.filter(item => {
+      const itemName = getItemName(item, selectedFilter).toLowerCase();
+      return itemName.includes(selectedSearch.toLowerCase());
     });
-    setSelectedItemsToRender(selectedItemsToRender.filter(itm =>
-      selectedItemsToRemove.indexOf(itm) === -1
-    ))
-    setSelectedItems(selectedItems.filter(itm =>
-      highItems.indexOf(itm) === -1
-    ))
-  }
+  }, [selectedItems, selectedSearch, selectedFilter, getItemName]);
 
-  const _fetchItems = async (search, pageArg) => {
-    if (!isFetching && loadMore) {
-      // Avoid useless API calls if there are less than 25 loaded items and the user searches
-      if (items.length < 25 && search.length > 0) {
-        let regexExp = new RegExp(search, 'i')
-        setItems(
-          items.filter(function (item) {
-            return item.name !== null && item.name.match(regexExp) !== null && item.name.match(regexExp).length > 0
-          })
-        )
-
-        return {
-          options: this.getItemOptions(items),
-          hasMore: false,
-          additional: {
-            page: pageArg,
-          },
-        };
-      }
-
-      let config = {
-        retry: 3,
-        retryDelay: 1000,
-      };
-
-      setIsFetching(true)
-
-      if (filterAvailableInputValue === null) {
-        setFilterAvailableInputValue('');
-      }
-
-      let currentPage = page + 1;
-      let currentItems = items;
-      let itemsUrlVar = `${itemsUrl}?search=${filterAvailableInputValue}&page=${currentPage}`
-      selectedItems.forEach((itemId) => {
-        itemsUrlVar = itemsUrlVar + `&except[]=${itemId}`
-      });
-      await axios.get(itemsUrlVar, config)
-        .then(res => {
-          setItems(currentItems.concat(res.data.items))
-          setLoadMore(res.data.items.length === 25)
-          setIsFetching(false)
-          setPage(currentPage)
-        });
+  // Save to DOM and validate
+  useEffect(() => {
+    const domElement = document.getElementById(srcRef);
+    if (domElement) {
+      const value = JSON.stringify(selectedItems.map(item => item.id.toString()));
+      domElement.value = value;
     }
-  }
+  }, [selectedItems, srcRef]);
 
-  function _save() {
-    updateButtonStatus();
-    const v = JSON.stringify(
-      selectedItems.map(v =>
-        v.toString()
-      )
-    );
-    document.getElementById(srcRef).value = v;
+  // Fetch items from API
+  const fetchItems = useCallback(async (search = '', page = 1, append = false) => {
+    if (loading.fetching || (!pagination.hasMore && append)) return;
 
-    setIsValid(Validation.isValid(
-        req,
-        srcRef,
-        'MultiReferenceEditor'
-      )
-    )
-  }
-
-  function _availableRefsItemName(item) {
-    if ((availableRefsSelectedFilter === null
-      || item[availableRefsSelectedFilter.value] === null
-      || typeof item[availableRefsSelectedFilter.value] === 'undefined'
-      || item[availableRefsSelectedFilter.value].length === 0)
-    ) {
-      return striptags(item.default_display_name);
+    // Local filtering for small datasets
+    if (itemsProps.length < 25 && search) {
+      const regex = new RegExp(search, 'i');
+      const filtered = itemsProps.filter(item =>
+        item.default_display_name && regex.test(item.default_display_name)
+      );
+      setAvailableItems(filtered);
+      return;
     }
-    return striptags(item.default_display_name) + ' - ' + item[availableRefsSelectedFilter.value];
-  }
 
-  function _selectedRefsItemName(item) {
-    if ((selectedRefsSelectedFilter === null
-      || item[selectedRefsSelectedFilter.value] === null
-      || typeof item[selectedRefsSelectedFilter.value] === 'undefined'
-      || item[selectedRefsSelectedFilter.value].length === 0)
-    ) {
-      return striptags(item.default_display_name);
+    setLoading(prev => ({ ...prev, fetching: true }));
+
+    try {
+      const selectedIds = selectedItems.map(item => item.id);
+      const exceptParams = selectedIds.map(id => `except[]=${id}`).join('&');
+      const url = `${itemsUrl}?search=${search}&page=${page}&${exceptParams}`;
+
+      const response = await fetch(url);
+      const data = await response.json();
+
+      setAvailableItems(prev => append ? [...prev, ...data.items] : data.items);
+      setPagination({ page, hasMore: data.items.length === 25 });
+    } catch (error) {
+      console.error('Failed to fetch items:', error);
+    } finally {
+      setLoading(prev => ({ ...prev, fetching: false }));
     }
-    return striptags(item.default_display_name) + ' - ' + item[selectedRefsSelectedFilter.value];
-  }
+  }, [loading.fetching, pagination.hasMore, itemsProps, itemsUrl, selectedItems]);
 
-  function _selectButtonId(status) {
-    return `${editorId}-${status}`;
-  }
+  // Debounced search
+  const handleAvailableSearch = useCallback((e) => {
+    const searchTerm = e.target.value;
+    setAvailableSearch(searchTerm);
+    setLoading(prev => ({ ...prev, searching: true }));
 
-  function _availableRefsSelectFilter(filter) {
-    setAvailableRefsSelectedFilter(filter);
-  }
-
-  function _selectedRefsSelectFilter(filter) {
-    setSelectedRefsSelectedFilter(filter);
-  }
-
-  function _getFilterOptions() {
-    let optionsList = [];
-    optionsList = fields.filter(field => field.human_readable);
-
-    optionsList = optionsList.map(field =>
-      _getJSONFilter(field)
-    );
-    return optionsList;
-  }
-
-  function _getJSONFilter(field) {
-    return {value: field.slug, label: field.name};
-  }
-
-  const _filterAvailableReferences = async (e) => {
-    clearTimeout(timer.current);
-
-    let searchTerm = e.target.value;
-    if (searchTerm !== filterAvailableInputValue) {
-      setLoadMore(true);
-    }
-    setFilterAvailableInputValue(searchTerm)
-    setIsSearching(true)
-
-    timer.current = setTimeout(() => {
-      if (!isFetching) {
-        let config = {
-          retry: 3,
-          retryDelay: 1000,
-        };
-
-        if (filterAvailableInputValue === null) {
-          setFilterAvailableInputValue('');
-        }
-
-        let itemsUrlVar = `${itemsUrl}?search=${searchTerm}&page=1`
-        selectedItems.forEach((itemId) => {
-          itemsUrlVar = itemsUrlVar + `&except[]=${itemId}`
-        });
-
-        axios.get(itemsUrlVar, config)
-          .then(res => {
-            setItems(res.data.items)
-            setIsSearching(false)
-            // Reset pagination on search value change
-            setPage(1);
-          });
-      }
+    clearTimeout(searchTimer.current);
+    searchTimer.current = setTimeout(() => {
+      fetchItems(searchTerm, 1, false);
+      setLoading(prev => ({ ...prev, searching: false }));
     }, WAIT_INTERVAL);
-  }
+  }, [fetchItems]);
 
-  function _filterSelectedReferences(e) {
-    setFilterSelectedInputValue(e.target.value);
-  }
-
-  function highlightedItems(className) {
-    return Array.prototype.map.call(
-      document.querySelectorAll(`#${editorId} .${className} .item.highlighted`),
-      itm =>
-        parseInt(itm.id.split('-')[1])
-    );
-  }
-
-  function isLoadMoreLabelDisplayed() {
-    return loadMore && !isFetching && !isSearching;
-  }
-
-  function updateButtonStatus() {
-    if (highlightedItems('availableReferences').length > 0) {
-      document.querySelector(`#${editorId} .referenceControls .btn-success`).removeAttribute('disabled');
-      document.querySelector(`#${editorId} .referenceControls .btn-success`).classList.remove('disabled');
-    } else {
-      document.querySelector(`#${editorId} .referenceControls .btn-success`).setAttribute('disabled', 'disabled');
-      document.querySelector(`#${editorId} .referenceControls .btn-success`).classList.add('disabled');
-    }
-    if (highlightedItems('selectedReferences').length > 0) {
-      document.querySelector(`#${editorId} .referenceControls .btn-danger`).removeAttribute('disabled');
-      document.querySelector(`#${editorId} .referenceControls .btn-danger`).classList.remove('disabled');
-    } else {
-      document.querySelector(`#${editorId} .referenceControls .btn-danger`).setAttribute('disabled', 'disabled');
-      document.querySelector(`#${editorId} .referenceControls .btn-danger`).classList.add('disabled');
-    }
-  }
-
-  function renderAvailableItemDiv(item, selectedItemsArg) {
-    if (item.default_display_name === null) {
-      return null;
-    }
-
-    const itemDivId = `${srcId}-${item.id}`;
-    if (selectedItemsArg === false && selectedItems.indexOf(item.id) > -1) return null;
-    if (selectedItemsArg === true && selectedItems.indexOf(item.id) === -1) return null;
-
-    // Filtering the unselected items ItemList
-    if (selectedItemsArg === false && filterAvailableInputValue !== '' && availableRefsSelectedFilter !== null) {
-      let isInString = -1;
-        if (item[availableRefsSelectedFilter.value] !== null && item[availableRefsSelectedFilter.value].length !== 0) {
-          let searchString = item.default_display_name.toLowerCase() + ' - ' + JSON.stringify(item[availableRefsSelectedFilter.value]).toLowerCase();
-          isInString = searchString.indexOf(filterAvailableInputValue.toLowerCase());
-        } else {
-          isInString = item.default_display_name.toLowerCase().indexOf(filterAvailableInputValue.toLowerCase());
-        }
-      if (isInString === -1) return null;
-    }
-
-    return (
-      <div id={itemDivId} key={itemDivId} className="item" onClick={_highlightItem}>
-        {_availableRefsItemName(item)}
-      </div>
-    );
-  }
-
-  function renderSelectedItemDiv(item) {
-    const itemDivId = `${srcId}-${item.id}`;
-
-    // Filtering the selected items ItemList
-    if (filterSelectedInputValue !== '') {
-      let isInString = -1;
-      if (selectedRefsSelectedFilter !== null &&
-          item[selectedRefsSelectedFilter.value] !== null &&
-          item[selectedRefsSelectedFilter.value].length !== 0
-      ) {
-        let searchString = item.default_display_name.toLowerCase() + ' - ' + JSON.stringify(item[selectedRefsSelectedFilter.value]).toLowerCase();
-        isInString = searchString.indexOf(filterSelectedInputValue.toLowerCase());
+  // Item selection handlers
+  const toggleItemHighlight = useCallback((itemId, isAvailable) => {
+    const setHighlighted = isAvailable ? setHighlightedAvailable : setHighlightedSelected;
+    setHighlighted(prev => {
+      const newSet = new Set(prev);
+      if (newSet.has(itemId)) {
+        newSet.delete(itemId);
       } else {
-        isInString = item.default_display_name.toLowerCase().indexOf(filterSelectedInputValue.toLowerCase());
+        newSet.add(itemId);
       }
-      if (isInString === -1) return null;
-    }
+      return newSet;
+    });
+  }, []);
 
-    return (
-      <div id={itemDivId} key={itemDivId} className="item" onClick={_highlightItem}>
-        {_selectedRefsItemName(item)}
-      </div>
-    );
-  }
+  const selectItems = useCallback(() => {
+    const itemsToAdd = availableItems.filter(item => highlightedAvailable.has(item.id));
+    setSelectedItems(prev => [...prev, ...itemsToAdd]);
+    setHighlightedAvailable(new Set());
+  }, [availableItems, highlightedAvailable]);
+
+  const unselectItems = useCallback(() => {
+    setSelectedItems(prev => prev.filter(item => !highlightedSelected.has(item.id)));
+    setHighlightedSelected(new Set());
+  }, [highlightedSelected]);
+
+  const loadMore = useCallback(() => {
+    fetchItems(availableSearch, pagination.page + 1, true);
+  }, [fetchItems, availableSearch, pagination.page]);
+
+  // Item rendering
+  const renderItem = useCallback((item, isHighlighted, onClick, filter) => (
+    <div
+      key={`${srcId}-${item.id}`}
+      className={`item ${isHighlighted ? 'highlighted' : ''}`}
+      onClick={() => onClick(item.id)}
+    >
+      {getItemName(item, filter)}
+    </div>
+  ), [srcId, getItemName]);
+
+  const canSelectItems = highlightedAvailable.size > 0;
+  const canUnselectItems = highlightedSelected.size > 0;
+  const showLoadMore = pagination.hasMore && !loading.fetching && !loading.searching;
 
   return (
-    <div className="multiple-reference-container"
-         style={Validation.getStyle(req, srcRef, 'MultiReferenceEditor')}
+    <div
+      className="multiple-reference-container"
+      style={Validation.getStyle(req, srcRef, 'MultiReferenceEditor')}
     >
       <div id={editorId} className="wrapper">
+        {/* Available References */}
         <div className="availableReferences">
           <div className="input-group">
-
             <input
               className="form-control"
               type="text"
-              value={filterAvailableInputValue}
-              onChange={_filterAvailableReferences}
-              placeholder={searchPlaceholder}/>
-
-            {isSearching ? (
-              <div className="input-group-addon" style={loadingDotsStyle}>
-                <LoadingDots/>
-              </div>) : ('')}
-
+              value={availableSearch}
+              onChange={handleAvailableSearch}
+              placeholder={searchPlaceholder}
+            />
+            <div style={loadingDotsStyle}>
+              {loading.searching && <LoadingDots />}
+            </div>
             <div className="input-group-addon">
               <ReactSelect
-                id={availableRefsFilterId}
                 className="multiple-reference-filter"
                 isSearchable={false}
                 isClearable={true}
-                value={availableRefsSelectedFilter}
-                onChange={_availableRefsSelectFilter}
-                options={_getFilterOptions()}
+                value={availableFilter}
+                onChange={setAvailableFilter}
+                options={filterOptions}
                 placeholder={filterPlaceholder}
                 noOptionsMessage={noOptionsMessage}
                 styles={filterDropdownStyle}
@@ -382,42 +209,66 @@ const MultiReferenceEditor = (props) => {
             </div>
           </div>
           <div>
-            {items.map(item =>
-              renderAvailableItemDiv(item, false)
+            {filteredAvailableItems.map(item =>
+              renderItem(
+                item,
+                highlightedAvailable.has(item.id),
+                (id) => toggleItemHighlight(id, true),
+                availableFilter
+              )
             )}
-            {isLoadMoreLabelDisplayed() &&
-                <div className="load-more"
-                     onClick={_fetchItems}
-                     style={loadMoreButtonStyle}
-                     onMouseEnter={handleMouseEnter}
-                     onMouseLeave={handleMouseLeave}>
-                  {Translations.messages['catalog_admin.fields.reference_editor.load_more']}
-                </div>
-            }
-            {isFetching && <LoadingDots/>}
+            {showLoadMore && (
+              <div className="load-more" onClick={loadMore} style={{
+                textAlign: "center",
+                color: "#337ab7",
+                cursor: "pointer",
+                height: 40,
+                paddingTop: 10,
+                paddingBottom: 10
+              }}>
+                {Translations.messages['catalog_admin.fields.reference_editor.load_more']}
+              </div>
+            )}
+            {loading.fetching && <LoadingDots />}
           </div>
         </div>
+
+        {/* Control Buttons */}
         <div className="referenceControls">
-          <div id={_selectButtonId('select')} className="btn btn-success" onClick={_selectItems} disabled>
+          <button
+            className={`btn btn-success ${!canSelectItems ? 'disabled' : ''}`}
+            onClick={selectItems}
+            disabled={!canSelectItems}
+          >
             <i className="fa fa-arrow-right"></i>
-          </div>
-          <div id={_selectButtonId('unselect')} className="btn btn-danger" onClick={_unselectItems} disabled>
+          </button>
+          <button
+            className={`btn btn-danger ${!canUnselectItems ? 'disabled' : ''}`}
+            onClick={unselectItems}
+            disabled={!canUnselectItems}
+          >
             <i className="fa fa-arrow-left"></i>
-          </div>
+          </button>
         </div>
+
+        {/* Selected References */}
         <div className="selectedReferences">
           <div className="input-group">
-            <input className="form-control" type="text" value={filterSelectedInputValue}
-                   onChange={_filterSelectedReferences} placeholder={searchPlaceholder}/>
+            <input
+              className="form-control"
+              type="text"
+              value={selectedSearch}
+              onChange={(e) => setSelectedSearch(e.target.value)}
+              placeholder={searchPlaceholder}
+            />
             <div className="input-group-addon">
               <ReactSelect
-                id={selectedRefsFilterId}
                 className="multiple-reference-filter"
                 isSearchable={false}
                 isClearable={true}
-                value={selectedRefsSelectedFilter}
-                onChange={_selectedRefsSelectFilter}
-                options={_getFilterOptions()}
+                value={selectedFilter}
+                onChange={setSelectedFilter}
+                options={filterOptions}
                 placeholder={filterPlaceholder}
                 noOptionsMessage={noOptionsMessage}
                 styles={filterDropdownStyle}
@@ -425,14 +276,19 @@ const MultiReferenceEditor = (props) => {
             </div>
           </div>
           <div>
-            {selectedItemsToRender.map(item =>
-              renderSelectedItemDiv(item)
+            {filteredSelectedItems.map(item =>
+              renderItem(
+                item,
+                highlightedSelected.has(item.id),
+                (id) => toggleItemHighlight(id, false),
+                selectedFilter
+              )
             )}
           </div>
         </div>
       </div>
     </div>
   );
-}
+};
 
 export default MultiReferenceEditor;

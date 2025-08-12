@@ -3,8 +3,8 @@ require "active_support/core_ext/integer/time"
 Rails.application.configure do
   # Settings specified here will take precedence over those in config/application.rb.
 
-  # Verifies that versions and hashed value of the package contents in the project's package.json
-  config.shakapacker.check_yarn_integrity = true
+  # Verifies if the expected JS package manager is available
+  config.shakapacker.check_manager = true
 
   # In the development environment your application's code is reloaded any time
   # it changes. This slows down response time but is perfect for development
