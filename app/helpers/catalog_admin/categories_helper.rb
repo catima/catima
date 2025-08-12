@@ -4,7 +4,7 @@ module CatalogAdmin::CategoriesHelper
     active = params[:controller] =~ /categories|fields/ &&
              id == category.to_param
 
-    klass = "list-group-item"
+    klass = "list-group-item".dup
     klass << " active" if active
 
     link_to(

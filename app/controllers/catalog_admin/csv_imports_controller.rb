@@ -43,7 +43,7 @@ class CatalogAdmin::CSVImportsController < CatalogAdmin::BaseController
   end
 
   def import_created_message
-    message = "#{success_count} imported successfully."
+    message = "#{success_count} imported successfully.".dup
     message << " #{failure_count} skipped." if @csv_import.failures.any?
     message
   end
@@ -72,7 +72,7 @@ class CatalogAdmin::CSVImportsController < CatalogAdmin::BaseController
   end
 
   def success_count
-    message = view_context.number_with_delimiter(@csv_import.success_count)
+    message = view_context.number_with_delimiter(@csv_import.success_count).dup
 
     if @csv_import.success_count == 1
       message << " #{item_type.name}"

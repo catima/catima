@@ -25,7 +25,7 @@ class HomeController < ApplicationController
                        .not_deactivated
                        .where(:seo_indexable => true)
                        .pluck(:slug)
-    robots_txt = ""
+    robots_txt = "".dup
     if restricted_bots.any?
       restricted_bots_list = restricted_bots.map { |bot| "User-agent: #{bot}" }.join("\n")
       robots_txt << restricted_bots_list << "\nDisallow: /\n\n"

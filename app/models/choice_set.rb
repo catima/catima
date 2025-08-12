@@ -57,7 +57,7 @@ class ChoiceSet < ApplicationRecord
   def choice_prefixed_label(choice, format: :short, with_dates: false)
     label = (parent_choices(choice) + [choice]).map do |d|
       format == :long ? d.long_display_name : d.short_name
-    end.join(" / ")
+    end.join(" / ").dup
 
     label << " (#{ChoicePresenter.new(nil, choice).dates})" if with_dates
 

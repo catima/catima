@@ -43,7 +43,7 @@ class ExternalType
   private
 
   def get(*path)
-    full_url = url
+    full_url = url.dup
     full_url << "/" if path.present? && !url.ends_with?("/")
     full_url << path.join("/")
     client.get(full_url)

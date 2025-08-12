@@ -111,7 +111,7 @@ class Admin::CatalogsController < Admin::BaseController
   end
 
   def updated_message
-    message = "The “#{@catalog.name}” catalog has been "
+    message = "The “#{@catalog.name}” catalog has been ".dup
     if catalog_params.key?(:deactivated_at)
       message << (@catalog.not_deactivated? ? "reactivated." : "deactivated.")
     else
