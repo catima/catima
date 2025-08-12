@@ -117,7 +117,7 @@ jobs:
         id: upload-coverage-artifact
         uses: actions/upload-artifact@v4
         with:
-          name: coverage-report
+          name: ${{ matrix.ruby-versions }}-coverage-report
           include-hidden-files: true
           path: ${{ github.workspace }}/coverage
 
@@ -132,7 +132,7 @@ jobs:
       - name: Download artifact
         uses: actions/download-artifact@v4
         with:
-          name: coverage-report
+          name: ${{ matrix.ruby-versions }}-coverage-report
           path: coverage
 
       - name: Check minimum coverage
