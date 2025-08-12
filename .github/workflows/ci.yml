@@ -20,7 +20,7 @@ jobs:
         run: echo "ruby-versions=[\"3.2.2\", \"3.4.5\"]" >> $GITHUB_OUTPUT
 
   test:
-    name: RUBY${{ matrix.ruby-versions }}
+    name: Test-RUBY${{ matrix.ruby-versions }}
     runs-on: ubuntu-24.04
     needs: setup
     strategy:
