@@ -1,6 +1,11 @@
 name: ci
 on: [push, pull_request]
 permissions: read-all
+
+# Define the matrix once using YAML anchors
+x-ruby-matrix: &ruby-matrix
+  ruby-versions: [ '3.2.2', '3.4.5' ]
+
 env:
   CI: gha
   POSTGRES_USER: postgres
@@ -14,7 +19,7 @@ jobs:
     runs-on: ubuntu-24.04
     strategy:
       matrix:
-        ruby-versions: [ '3.2.2', '3.4.5' ]
+        <<: *ruby-matrix
         rubygems-version: [ '3.4.5' ]
         psql-version: [ '17' ]
         node-version: [ '22' ]
@@ -122,11 +127,14 @@ jobs:
           path: ${{ github.workspace }}/coverage
 
   coverage:
-    name: Coverage
+    name: Coverage-RUBY${{ matrix.ruby-versions }}
     runs-on: ubuntu-latest
     needs: test
     if: success()
     continue-on-error: false
+    strategy:
+      matrix:
+        <<: *ruby-matrix
 
     steps:
       - name: Download artifact
