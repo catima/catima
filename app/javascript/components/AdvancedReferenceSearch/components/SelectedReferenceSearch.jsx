@@ -1,11 +1,13 @@
-import React, {useState, useEffect} from "react";
+import React, {useState, useEffect, useMemo} from "react";
 import AsyncPaginate from 'react-select-async-paginate';
 import striptags from 'striptags';
 
 const SelectedReferenceSearch = (props) => {
   const {
+    fieldUuid,
+    selectedCondition,
+    itemId,
     multi,
-    inputName,
     req,
     updateSelectedItem,
     itemsUrl,
@@ -22,6 +24,11 @@ const SelectedReferenceSearch = (props) => {
   const [selectedItem, setSelectedItem] = useState([])
   const [hiddenInputValue, setHiddenInputValue] = useState([])
 
+  const buildInputNameWithCondition = useMemo(() => {
+      const currentCondition = selectedCondition || 'default';
+      return `advanced_search[criteria][${fieldUuid}][${itemId}][${currentCondition}]`;
+  }, [fieldUuid, selectedCondition, itemId]);
+
   useEffect(() => {
     if (itemsProps.length !== items.length) {
       setIsInitialized(true)
@@ -35,6 +42,7 @@ const SelectedReferenceSearch = (props) => {
     }
   }, [selectedItem])
 
+  // TODO REMOVE
   function _save() {
     if (multi) {
       //selectedItem is an array
@@ -44,13 +52,13 @@ const SelectedReferenceSearch = (props) => {
           idArray.push(item.value);
         });
         setHiddenInputValue(idArray);
-        document.getElementsByName(inputName)[0].value = hiddenInputValue;
+        document.getElementsByName(buildInputNameWithCondition)[0].value = hiddenInputValue;
       }
     } else {
       //selectedItem is a JSON
       if (selectedItem !== null && Object.keys(selectedItem).length !== 0) {
         setHiddenInputValue(selectedItem.value);
-        document.getElementsByName(inputName)[0].value = hiddenInputValue;
+        document.getElementsByName(buildInputNameWithCondition)[0].value = hiddenInputValue;
       }
     }
   }
@@ -131,7 +139,7 @@ const SelectedReferenceSearch = (props) => {
   return (
     <div>
       <AsyncPaginate
-        name={inputName}
+        name={buildInputNameWithCondition}
         delimiter=","
         className="basic-multi-select"
         classNamePrefix="select"

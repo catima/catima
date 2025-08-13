@@ -2,17 +2,17 @@
     <%= react_component('AdvancedReferenceSearch/components/ReferenceSearchContainer',
       {
         catalog: field.catalog.slug,
+        fieldUuid: field.uuid,
+        defaultValues: value,
         itemType: field.related_item_type.slug,
+        selectCondition: field.search_conditions_as_hash,
+        fieldConditionData: field.search_field_conditions_as_hash,
+
+        # Localization.
         locale: I18n.locale,
         searchPlaceholder: t('advanced_searches.fields.reference_search_field.item_type_placeholder'),
         choosePlaceholder: t('advanced_searches.fields.choice_set_search_field.select_placeholder'),
         filterPlaceholder: t('advanced_searches.fields.reference_search_field.field_placeholder'),
         noOptionsMessage: t("catalog_admin.items.reference_editor.no_options"),
-        inputName: "advanced_search[criteria][#{field.uuid}][0][exact]",
-        referenceFilterName: "advanced_search[criteria][#{field.uuid}][0][sort_field_uuid]",
-        selectConditionName: "advanced_search[criteria][#{field.uuid}][0][condition]",
-        selectCondition: field.search_conditions_as_hash,
-        fieldConditionName: "advanced_search[criteria][#{field.uuid}][0][field_condition]",
-        fieldConditionData: field.search_field_conditions_as_hash
       }) %>
 </div>

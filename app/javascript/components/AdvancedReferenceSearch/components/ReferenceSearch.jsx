@@ -6,8 +6,8 @@ import AsyncPaginate from 'react-select-async-paginate';
 
 const ReferenceSearch = (props) => {
   const {
+    fieldUuid,
     selectCondition: selectConditionProps,
-    inputName: inputNameProps,
     searchPlaceholder: searchPlaceholderProps,
     choosePlaceholder: choosePlaceholderProps,
     filterPlaceholder: filterPlaceholderProps,
@@ -19,10 +19,7 @@ const ReferenceSearch = (props) => {
     itemId,
     deleteComponent: deleteComponentProps,
     noOptionsMessage,
-    referenceFilterName,
-    fieldConditionName,
     fieldConditionData,
-    selectConditionName,
     componentList
   } = props
 
@@ -35,7 +32,6 @@ const ReferenceSearch = (props) => {
   const [selectedFilter, setSelectedFilter] = useState([])
   const [itemTypeSearch, setItemTypeSearch] = useState(false)
   const [selectCondition, setSelectCondition] = useState(selectConditionProps)
-  const [inputName, setInputName] = useState(inputNameProps.split("[exact]"))
   const [selectedCondition, setSelectedCondition] = useState('')
   const [selectedFieldCondition, setSelectedFieldCondition] = useState('')
   const [selectedItem, setSelectedItem] = useState([])
@@ -61,15 +57,6 @@ const ReferenceSearch = (props) => {
       `/react/${catalog}/${locale}/${itemType}?simple_fields=true&page=1`
     )
     setLoadingMessage(data.loading_message);
-  }
-
-  function _buildInputNameCondition(condition) {
-    if (inputName.length === 2) {
-      if (condition !== '') return inputName[0] + '[' + condition + ']' + inputName[1];
-      else return inputName[0] + '[default]' + inputName[1];
-    } else {
-      return inputNameProps;
-    }
   }
 
   function _updateSelectedItem(newVal) {
@@ -113,6 +100,7 @@ const ReferenceSearch = (props) => {
     if (typeof value !== 'undefined' && value === null) {
       setSelectedCondition('');
       setSelectCondition([]);
+      // TODO REMOVE remplacer par selectedFilter === null.
       setItemTypeSearch(false);
     } else {
       setItemTypeSearch(true);
@@ -217,6 +205,8 @@ const ReferenceSearch = (props) => {
     if (isLoading) return null;
     if (itemTypeSearch)
       return <ItemTypesReferenceSearch
+        fieldUuid={fieldUuid}
+        itemId={itemId}
         updateSelectCondition={_updateSelectCondition}
         searchPlaceholder={searchPlaceholder}
         choosePlaceholder={choosePlaceholder}
@@ -227,19 +217,20 @@ const ReferenceSearch = (props) => {
         selectedCondition={selectedCondition}
         selectCondition={selectCondition}
         itemType={itemType}
-        inputName={_buildInputNameCondition(selectedCondition)}
         req={req}
         catalog={catalog}
         locale={locale}/>
     else
       return <SelectedReferenceSearch
+        fieldUuid={fieldUuid}
+        selectedCondition={selectedCondition}
+        itemId={itemId}
         updateSelectedItem={_updateSelectedItem}
         searchPlaceholder={searchPlaceholder}
         loadingMessage={loadingMessage}
         noOptionsMessage={_getNoOptionsMessage()}
         items={items}
         fields={fields}
-        inputName={_buildInputNameCondition(selectedCondition)}
         req={req}
         itemsUrl={`/react/${catalog}/${locale}/${itemType}?simple_fields=true`}
         onFocus={_setFields}/>
@@ -258,7 +249,7 @@ const ReferenceSearch = (props) => {
       additional={{
         page: 1,
       }}
-      name={referenceFilterName}
+      name={`advanced_search[criteria][${fieldUuid}][${itemId}][sort_field_uuid]`}
       value={selectedFilter}
       onChange={_selectFilter}
       options={_getFilterOptions()}
@@ -269,7 +260,7 @@ const ReferenceSearch = (props) => {
 
   function renderFieldConditionElement() {
     return (
-      <select className="form-select filter-condition" name={fieldConditionName} value={selectedFieldCondition}
+      <select className="form-select filter-condition" name={`advanced_search[criteria][${fieldUuid}][${itemId}][field_condition]`} value={selectedFieldCondition}
               onChange={_selectFieldCondition}>
         {fieldConditionData.map((item) => {
           return <option key={item.key} value={item.key}>{item.value}</option>
@@ -280,7 +271,7 @@ const ReferenceSearch = (props) => {
 
   function renderSelectConditionElement() {
     return (
-      <select className="form-select filter-condition" name={selectConditionName} value={selectedCondition}
+      <select className="form-select filter-condition" name={`advanced_search[criteria][${fieldUuid}][${itemId}][condition]`} value={selectedCondition}
               onChange={_selectCondition} disabled={_isConditionDisabled()}>
         {selectCondition.map((item) => {
           return <option key={item.key} value={item.key}>{item.value}</option>

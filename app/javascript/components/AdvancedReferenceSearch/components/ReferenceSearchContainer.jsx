@@ -4,10 +4,6 @@ import ReferenceSearch from './ReferenceSearch';
 const ReferenceSearchContainer = (props) => {
   const {
     fieldUuid,
-    inputName: inputNameProps,
-    referenceFilterName: referenceFilterNameProps,
-    selectConditionName: selectConditionNameProps,
-    fieldConditionName: fieldConditionNameProps,
     catalog,
     itemType,
     locale,
@@ -20,27 +16,20 @@ const ReferenceSearchContainer = (props) => {
   } = props
 
   const [componentsList, setComponentsList] = useState([])
-  const [inputName, setInputName] = useState(inputNameProps.split("[0]"))
-  const [referenceFilterName, setReferenceFilterName] = useState(referenceFilterNameProps.split("[0]"))
-  const [selectConditionName, setSelectConditionName] = useState(selectConditionNameProps.split("[0]"))
-  const [fieldConditionName, setFieldConditionName] = useState(fieldConditionNameProps.split("[0]"))
 
   useEffect(() => {
     let computedComponentsList = componentsList;
     let id = 0;
     let item = {
+      fieldUuid,
       itemId: id,
       catalog: catalog,
       itemType: itemType,
       locale: locale,
-      inputName: _buildInputName(id),
-      referenceFilterName: _buildReferenceFilterName(id),
       searchPlaceholder: searchPlaceholder,
       choosePlaceholder: choosePlaceholder,
       filterPlaceholder: filterPlaceholder,
-      selectConditionName: _buildSelectConditionName(id),
       selectCondition: selectCondition,
-      fieldConditionName: _buildFieldConditionName(id),
       fieldConditionData: fieldConditionData,
       addComponent: _addComponent,
       deleteComponent: _deleteComponent,
@@ -53,18 +42,15 @@ const ReferenceSearchContainer = (props) => {
     let computedComponentsList = componentsList;
     let id = itemId + 1;
     let item = {
+      fieldUuid,
       itemId: id,
       catalog: catalog,
       itemType: itemType,
       locale: locale,
-      inputName: _buildInputName(id),
-      referenceFilterName: _buildReferenceFilterName(id),
       searchPlaceholder: searchPlaceholder,
       choosePlaceholder: choosePlaceholder,
       filterPlaceholder: filterPlaceholder,
-      selectConditionName: _buildSelectConditionName(id),
       selectCondition: selectCondition,
-      fieldConditionName: _buildFieldConditionName(id),
       fieldConditionData: fieldConditionData,
       addComponent: _addComponent,
       deleteComponent: _deleteComponent,
@@ -83,41 +69,10 @@ const ReferenceSearchContainer = (props) => {
     setComponentsList([...computedComponentsList]);
   }
 
-  function _buildInputName(id) {
-    if (inputName.length === 2) {
-      return inputName[0] + '[' + id + ']' + inputName[1];
-    } else {
-      return inputNameProps;
-    }
-  }
-
-  function _buildReferenceFilterName(id) {
-    if (referenceFilterName.length === 2) {
-      return referenceFilterName[0] + '[' + id + ']' + referenceFilterName[1];
-    } else {
-      return referenceFilterNameProps;
-    }
-  }
-
-  function _buildSelectConditionName(id) {
-    if (selectConditionName.length === 2) {
-      return selectConditionName[0] + '[' + id + ']' + selectConditionName[1];
-    } else {
-      return selectConditionNameProps;
-    }
-  }
-
-  function _buildFieldConditionName(id) {
-    if (fieldConditionName.length === 2) {
-      return fieldConditionName[0] + '[' + id + ']' + fieldConditionName[1];
-    } else {
-      return fieldConditionNameProps;
-    }
-  }
-
   function renderComponent(item, index, list) {
     if (Object.keys(item).length > 0) {
       return (<div key={item.itemId} className="component-search-row row"><ReferenceSearch
+        fieldUuid={fieldUuid}
         itemId={item.itemId}
         componentList={list}
         catalog={item.catalog}
