@@ -10,7 +10,6 @@ const ReferenceSearchContainer = (props) => {
     fieldConditionName: fieldConditionNameProps,
     catalog,
     itemType,
-    field,
     locale,
     searchPlaceholder,
     choosePlaceholder,
@@ -33,7 +32,6 @@ const ReferenceSearchContainer = (props) => {
       itemId: id,
       catalog: catalog,
       itemType: itemType,
-      field: field,
       locale: locale,
       inputName: _buildInputName(id),
       referenceFilterName: _buildReferenceFilterName(id),
@@ -58,7 +56,6 @@ const ReferenceSearchContainer = (props) => {
       itemId: id,
       catalog: catalog,
       itemType: itemType,
-      field: field,
       locale: locale,
       inputName: _buildInputName(id),
       referenceFilterName: _buildReferenceFilterName(id),
@@ -125,7 +122,6 @@ const ReferenceSearchContainer = (props) => {
         componentList={list}
         catalog={item.catalog}
         itemType={item.itemType}
-        field={item.field}
         locale={item.locale}
         inputName={item.inputName}
         referenceFilterName={item.referenceFilterName}
