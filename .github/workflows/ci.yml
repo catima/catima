@@ -131,6 +131,7 @@ jobs:
           name: ${{ matrix.ruby-versions }}-coverage-report
           include-hidden-files: true
           path: ${{ github.workspace }}/coverage
+          overwrite: true
 
   coverage:
     name: Coverage-RUBY${{ matrix.ruby-versions }}

@@ -98,3 +98,4 @@ jobs:
         with:
           name: swagger-documentation
           path: /home/runner/work/catima/catima/swagger/v3/swagger.yaml
+          overwrite: true

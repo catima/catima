@@ -103,5 +103,6 @@ jobs:
         id: upload-lighthouse-artifact
         uses: actions/upload-artifact@v4
         with:
-          name: lighthouse-report
+          name: ${{ matrix.ruby-versions }}-lighthouse-report
           path: ${{ github.workspace }}/lhci-reports
+          overwrite: true
