@@ -6,7 +6,6 @@ import AsyncPaginate from 'react-select-async-paginate';
 
 const ReferenceSearch = (props) => {
   const {
-    itemTypeSearch: itemTypeSearchProps,
     selectCondition: selectConditionProps,
     inputName: inputNameProps,
     searchPlaceholder: searchPlaceholderProps,
@@ -34,7 +33,7 @@ const ReferenceSearch = (props) => {
   const [fields, setFields] = useState([])
   const [isLoading, setIsLoading] = useState(false)
   const [selectedFilter, setSelectedFilter] = useState([])
-  const [itemTypeSearch, setItemTypeSearch] = useState(itemTypeSearchProps)
+  const [itemTypeSearch, setItemTypeSearch] = useState(false)
   const [selectCondition, setSelectCondition] = useState(selectConditionProps)
   const [inputName, setInputName] = useState(inputNameProps.split("[exact]"))
   const [selectedCondition, setSelectedCondition] = useState('')

@@ -15,7 +15,6 @@ const ReferenceSearchContainer = (props) => {
     searchPlaceholder,
     choosePlaceholder,
     filterPlaceholder,
-    itemTypeSearch,
     selectCondition,
     fieldConditionData,
     noOptionsMessage
@@ -42,7 +41,6 @@ const ReferenceSearchContainer = (props) => {
       searchPlaceholder: searchPlaceholder,
       choosePlaceholder: choosePlaceholder,
       filterPlaceholder: filterPlaceholder,
-      itemTypeSearch: itemTypeSearch,
       selectConditionName: _buildSelectConditionName(id),
       selectCondition: selectCondition,
       fieldConditionName: _buildFieldConditionName(id),
@@ -69,7 +67,6 @@ const ReferenceSearchContainer = (props) => {
       searchPlaceholder: searchPlaceholder,
       choosePlaceholder: choosePlaceholder,
       filterPlaceholder: filterPlaceholder,
-      itemTypeSearch: itemTypeSearch,
       selectConditionName: _buildSelectConditionName(id),
       selectCondition: selectCondition,
       fieldConditionName: _buildFieldConditionName(id),
@@ -138,7 +135,6 @@ const ReferenceSearchContainer = (props) => {
         searchPlaceholder={item.searchPlaceholder}
         choosePlaceholder={item.choosePlaceholder}
         filterPlaceholder={item.filterPlaceholder}
-        itemTypeSearch={item.itemTypeSearch}
         selectConditionName={item.selectConditionName}
         selectCondition={item.selectCondition}
         fieldConditionName={item.fieldConditionName}
