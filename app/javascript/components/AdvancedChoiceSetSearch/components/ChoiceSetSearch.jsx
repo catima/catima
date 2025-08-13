@@ -41,7 +41,6 @@ const ChoiceSetSearch = (props) => {
     canRemoveComponent,
   } = props
 
-  // revoir les valeurs par defaut de ces states
   const [selectedCondition, setSelectedCondition] = useState('')
   const [selectCondition, setSelectCondition] = useState([])
   const [selectedFieldCondition, setSelectedFieldCondition] = useState(defaultValues?.field_condition || '')
