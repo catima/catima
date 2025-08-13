@@ -5,7 +5,6 @@ const ReferenceSearchContainer = (props) => {
   const {
     inputName: inputNameProps,
     referenceFilterName: referenceFilterNameProps,
-    srcRef: srcRefProps,
     selectConditionName: selectConditionNameProps,
     fieldConditionName: fieldConditionNameProps,
     catalog,
@@ -25,7 +24,6 @@ const ReferenceSearchContainer = (props) => {
   const [componentsList, setComponentsList] = useState([])
   const [inputName, setInputName] = useState(inputNameProps.split("[0]"))
   const [referenceFilterName, setReferenceFilterName] = useState(referenceFilterNameProps.split("[0]"))
-  const [srcRef, setSrcRef] = useState(srcRefProps.split("_0_"))
   const [selectConditionName, setSelectConditionName] = useState(selectConditionNameProps.split("[0]"))
   const [fieldConditionName, setFieldConditionName] = useState(fieldConditionNameProps.split("[0]"))
 
@@ -44,7 +42,6 @@ const ReferenceSearchContainer = (props) => {
       searchPlaceholder: searchPlaceholder,
       choosePlaceholder: choosePlaceholder,
       filterPlaceholder: filterPlaceholder,
-      srcRef: _buildSrcRef(id),
       itemTypeSearch: itemTypeSearch,
       selectConditionName: _buildSelectConditionName(id),
       selectCondition: selectCondition,
@@ -72,7 +69,6 @@ const ReferenceSearchContainer = (props) => {
       searchPlaceholder: searchPlaceholder,
       choosePlaceholder: choosePlaceholder,
       filterPlaceholder: filterPlaceholder,
-      srcRef: _buildSrcRef(id),
       itemTypeSearch: itemTypeSearch,
       selectConditionName: _buildSelectConditionName(id),
       selectCondition: selectCondition,
@@ -111,14 +107,6 @@ const ReferenceSearchContainer = (props) => {
     }
   }
 
-  function _buildSrcRef(id) {
-    if (srcRef.length === 2) {
-      return srcRef[0] + '_' + id + '_' + srcRef[1];
-    } else {
-      return srcRefProps;
-    }
-  }
-
   function _buildSelectConditionName(id) {
     if (selectConditionName.length === 2) {
       return selectConditionName[0] + '[' + id + ']' + selectConditionName[1];
@@ -150,7 +138,6 @@ const ReferenceSearchContainer = (props) => {
         searchPlaceholder={item.searchPlaceholder}
         choosePlaceholder={item.choosePlaceholder}
         filterPlaceholder={item.filterPlaceholder}
-        srcRef={item.srcRef}
         itemTypeSearch={item.itemTypeSearch}
         selectConditionName={item.selectConditionName}
         selectCondition={item.selectCondition}

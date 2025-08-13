@@ -10,8 +10,6 @@ const ItemTypesReferenceSearch = (props) => {
     inputName: inputNameProps,
     selectCondition: selectConditionProps,
     selectedFilter: selectedFilterProps,
-    srcId,
-    srcRef,
     req,
     field,
     catalog,
@@ -36,9 +34,6 @@ const ItemTypesReferenceSearch = (props) => {
   const [selectedItem, setSelectedItem] = useState([])
   const [selectCondition, setSelectCondition] = useState(selectConditionProps)
   const [hiddenInputValue, setHiddenInputValue] = useState([])
-  const [referenceSearchId, setReferenceSearchId] = useState(`${srcId}-search`)
-
-  const referenceSearchRef = useRef(`${srcRef}-search`)
 
   useEffect(() => {
     _getDataFromServer();
@@ -190,7 +185,6 @@ const ItemTypesReferenceSearch = (props) => {
     if (isLoading) return null;
     if (inputType === 'Field::DateTime') {
       return <DateTimeSearch
-        id={referenceSearchId}
         selectCondition={[]}
         parentSelectedCondition={selectedCondition}
         startDateInputName={startDateInputName}
@@ -203,18 +197,17 @@ const ItemTypesReferenceSearch = (props) => {
         isRange={false}
         format={_getDateTimeFormatOption()}
         locale={locale}
-        srcId={srcId}
         onChange={_selectItem}
       />
     } else if (inputType === 'Field::Decimal') {
-      return <input id={referenceSearchId} ref={referenceSearchRef} name={inputName} onChange={_selectItem}
+      return <input name={inputName} onChange={_selectItem}
                     type="number" className="form-control" step="any"/>
     } else if (inputType === 'Field::Int') {
-      return <input id={referenceSearchId} ref={referenceSearchRef} name={inputName} onChange={_selectItem}
+      return <input name={inputName} onChange={_selectItem}
                     type="number" className="form-control"/>
     } else if (inputType === 'Field::Boolean') {
       return (
-        <select id={referenceSearchId} ref={referenceSearchRef} name={inputName} onChange={_selectItem}
+        <select name={inputName} onChange={_selectItem}
                 className="form-select">
           {inputData.map((item) => {
             return <option key={item.key} value={item.key}>{item.value}</option>
@@ -225,7 +218,6 @@ const ItemTypesReferenceSearch = (props) => {
     } else if (inputType === 'Field::ChoiceSet') {
       return (
         <ReactSelect
-          id={referenceSearchId}
           name={inputName}
           isSearchable={true}
           isClearable={true}
@@ -238,7 +230,7 @@ const ItemTypesReferenceSearch = (props) => {
         />
       );
     } else {
-      return <input id={referenceSearchId} ref={referenceSearchRef} name={inputName} onChange={_selectItem} type="text"
+      return <input name={inputName} onChange={_selectItem} type="text"
                     className="form-control"/>
     }
   }

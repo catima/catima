@@ -4,7 +4,6 @@ import striptags from 'striptags';
 
 const SelectedReferenceSearch = (props) => {
   const {
-    srcRef,
     multi,
     inputName,
     req,
@@ -22,7 +21,6 @@ const SelectedReferenceSearch = (props) => {
   const [optionsList, setOptionsList] = useState([])
   const [selectedItem, setSelectedItem] = useState([])
   const [hiddenInputValue, setHiddenInputValue] = useState([])
-  const [referenceSearchId, setReferenceSearchId] = useState(`${srcRef}-editor`)
 
   useEffect(() => {
     if (itemsProps.length !== items.length) {
@@ -133,7 +131,6 @@ const SelectedReferenceSearch = (props) => {
   return (
     <div>
       <AsyncPaginate
-        id={referenceSearchId}
         name={inputName}
         delimiter=","
         className="basic-multi-select"

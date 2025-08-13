@@ -20,8 +20,6 @@ const ReferenceSearch = (props) => {
     itemId,
     deleteComponent: deleteComponentProps,
     noOptionsMessage,
-    srcRef,
-    srcId,
     referenceFilterName,
     fieldConditionName,
     fieldConditionData,
@@ -231,8 +229,6 @@ const ReferenceSearch = (props) => {
         selectCondition={selectCondition}
         itemType={itemType}
         inputName={_buildInputNameCondition(selectedCondition)}
-        srcRef={srcRef}
-        srcId={srcId}
         req={req}
         catalog={catalog}
         locale={locale}/>
@@ -245,8 +241,6 @@ const ReferenceSearch = (props) => {
         items={items}
         fields={fields}
         inputName={_buildInputNameCondition(selectedCondition)}
-        srcRef={srcRef}
-        srcId={srcId}
         req={req}
         itemsUrl={`/react/${catalog}/${locale}/${itemType}?simple_fields=true`}
         onFocus={_setFields}/>
