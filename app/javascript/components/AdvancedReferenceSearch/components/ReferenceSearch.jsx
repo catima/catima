@@ -1,8 +1,14 @@
-import React, {useEffect, useState} from "react";
+import React, {useEffect, useState, useCallback} from "react";
 import axios from 'axios';
 import SelectedReferenceSearch from './SelectedReferenceSearch';
 import ItemTypesReferenceSearch from './ItemTypesReferenceSearch';
 import AsyncPaginate from 'react-select-async-paginate';
+
+// Default configuration for HTTP requests.
+const HTTP_CONFIG = {
+  retry: 3,
+  retryDelay: 1000,
+};
 
 const ReferenceSearch = (props) => {
   const {
@@ -38,6 +44,13 @@ const ReferenceSearch = (props) => {
   const [searchPlaceholder, setSearchPlaceholder] = useState(searchPlaceholderProps)
   const [choosePlaceholder, setChoosePlaceholder] = useState(choosePlaceholderProps)
   const [filterPlaceholder, setFilterPlaceholder] = useState(filterPlaceholderProps)
+  const [referenceData, setReferenceData] = useState({
+    inputData: null,
+    inputType: 'Field::Text',
+    dateFormat: '',
+    localizedDateTimeData: [],
+    isLoading: false
+  });
 
   useEffect(() => {
     _fetchLoadingMessage()
@@ -51,6 +64,45 @@ const ReferenceSearch = (props) => {
       setSelectedCondition(selectCondition[0].key)
     }
   }, [selectCondition])
+
+  useEffect(() => {
+    if (selectedFilter?.value) {
+      fetchReferenceData(selectedFilter);
+    }
+  }, [selectedFilter])
+
+  const fetchReferenceData = useCallback(async (filter) => {
+    if (!filter || !filter.value) {
+      return;
+    }
+
+    setReferenceData(prev => ({ ...prev, isLoading: true }));
+
+    try {
+      const url = `/react/${catalog}/${locale}/${itemType}/${filter.value}`;
+      const response = await axios.get(url, HTTP_CONFIG);
+      const { data } = response;
+
+      const formatOption = data.inputOptions?.find(option => option && 'format' in option);
+      const localizedOption = data.inputOptions?.find(option => option && 'localizedDateTimeData' in option);
+
+      setReferenceData({
+        inputData: data.inputData || [],
+        inputType: data.inputType || 'Field::Text',
+        dateFormat: formatOption ? formatOption.format : '',
+        localizedDateTimeData: localizedOption ? localizedOption.localizedDateTimeData : [],
+        isLoading: false
+      });
+
+      if (data.selectCondition?.length > 0) {
+        _updateSelectCondition(data.selectCondition);
+      }
+
+    } catch (error) {
+      console.error('Erreur lors de la récupération des données:', error);
+      setReferenceData(prev => ({ ...prev, isLoading: false }));
+    }
+  }, [catalog, locale, itemType]);
 
   async function _fetchLoadingMessage() {
     let {data} = await axios.get(
@@ -100,8 +152,15 @@ const ReferenceSearch = (props) => {
     if (typeof value !== 'undefined' && value === null) {
       setSelectedCondition('');
       setSelectCondition([]);
-      // TODO REMOVE remplacer par selectedFilter === null.
+      // TODO REMVOE REMPLACER PAR SELECTEDFILTER === NULL
       setItemTypeSearch(false);
+      setReferenceData({
+        inputData: null,
+        inputType: 'Field::Text',
+        dateFormat: '',
+        localizedDateTimeData: [],
+        isLoading: false
+      });
     } else {
       setItemTypeSearch(true);
     }
@@ -207,19 +266,12 @@ const ReferenceSearch = (props) => {
       return <ItemTypesReferenceSearch
         fieldUuid={fieldUuid}
         itemId={itemId}
-        updateSelectCondition={_updateSelectCondition}
-        searchPlaceholder={searchPlaceholder}
+        selectedCondition={selectedCondition}
         choosePlaceholder={choosePlaceholder}
         noOptionsMessage={_getNoOptionsMessage()}
-        items={items}
-        fields={fields}
-        selectedFilter={selectedFilter}
-        selectedCondition={selectedCondition}
-        selectCondition={selectCondition}
-        itemType={itemType}
-        req={req}
-        catalog={catalog}
-        locale={locale}/>
+        locale={locale}
+        referenceData={referenceData}
+      />
     else
       return <SelectedReferenceSearch
         fieldUuid={fieldUuid}
