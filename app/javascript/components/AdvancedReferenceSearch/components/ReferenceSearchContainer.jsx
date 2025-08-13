@@ -13,7 +13,6 @@ const ReferenceSearchContainer = (props) => {
     itemType,
     field,
     locale,
-    multiple,
     searchPlaceholder,
     choosePlaceholder,
     filterPlaceholder,
@@ -42,7 +41,6 @@ const ReferenceSearchContainer = (props) => {
       locale: locale,
       inputName: _buildInputName(id),
       referenceFilterName: _buildReferenceFilterName(id),
-      multiple: multiple,
       searchPlaceholder: searchPlaceholder,
       choosePlaceholder: choosePlaceholder,
       filterPlaceholder: filterPlaceholder,
@@ -71,7 +69,6 @@ const ReferenceSearchContainer = (props) => {
       locale: locale,
       inputName: _buildInputName(id),
       referenceFilterName: _buildReferenceFilterName(id),
-      multiple: multiple,
       searchPlaceholder: searchPlaceholder,
       choosePlaceholder: choosePlaceholder,
       filterPlaceholder: filterPlaceholder,
@@ -150,7 +147,6 @@ const ReferenceSearchContainer = (props) => {
         locale={item.locale}
         inputName={item.inputName}
         referenceFilterName={item.referenceFilterName}
-        multiple={multiple}
         searchPlaceholder={item.searchPlaceholder}
         choosePlaceholder={item.choosePlaceholder}
         filterPlaceholder={item.filterPlaceholder}

@@ -11,7 +11,6 @@ const SelectedReferenceSearch = (props) => {
     updateSelectedItem,
     itemsUrl,
     onFocus,
-    multiple,
     loadingMessage,
     searchPlaceholder,
     noOptionsMessage,
@@ -137,7 +136,6 @@ const SelectedReferenceSearch = (props) => {
         id={referenceSearchId}
         name={inputName}
         delimiter=","
-        isMulti={multiple}
         className="basic-multi-select"
         classNamePrefix="select"
         debounceTimeout={800}

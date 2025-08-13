@@ -22,7 +22,6 @@ const ReferenceSearch = (props) => {
     noOptionsMessage,
     srcRef,
     srcId,
-    multiple,
     referenceFilterName,
     fieldConditionName,
     fieldConditionData,
@@ -245,7 +244,6 @@ const ReferenceSearch = (props) => {
         noOptionsMessage={_getNoOptionsMessage()}
         items={items}
         fields={fields}
-        multiple={multiple}
         inputName={_buildInputNameCondition(selectedCondition)}
         srcRef={srcRef}
         srcId={srcId}
