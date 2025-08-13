@@ -3,12 +3,12 @@ import ReferenceSearch from './ReferenceSearch';
 
 const ReferenceSearchContainer = (props) => {
   const {
+    fieldUuid,
     inputName: inputNameProps,
     referenceFilterName: referenceFilterNameProps,
     selectConditionName: selectConditionNameProps,
     fieldConditionName: fieldConditionNameProps,
     catalog,
-    parentItemType,
     itemType,
     field,
     locale,
@@ -32,7 +32,6 @@ const ReferenceSearchContainer = (props) => {
     let item = {
       itemId: id,
       catalog: catalog,
-      parentItemType: parentItemType,
       itemType: itemType,
       field: field,
       locale: locale,
@@ -58,7 +57,6 @@ const ReferenceSearchContainer = (props) => {
     let item = {
       itemId: id,
       catalog: catalog,
-      parentItemType: parentItemType,
       itemType: itemType,
       field: field,
       locale: locale,
@@ -126,7 +124,6 @@ const ReferenceSearchContainer = (props) => {
         itemId={item.itemId}
         componentList={list}
         catalog={item.catalog}
-        parentItemType={item.parentItemType}
         itemType={item.itemType}
         field={item.field}
         locale={item.locale}
