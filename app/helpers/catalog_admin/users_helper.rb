@@ -1,7 +1,7 @@
 module CatalogAdmin::UsersHelper
   def setup_catalog_users_nav_link
     active = (params[:controller] == "catalog_admin/users") || (params[:controller] == "catalog_admin/groups")
-    klass = "list-group-item list-group-item-action"
+    klass = "list-group-item list-group-item-action".dup
     klass << " active" if active
 
     link_to(t("users_and_groups"), catalog_admin_users_path, :class => klass)

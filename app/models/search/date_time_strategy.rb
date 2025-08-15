@@ -152,7 +152,7 @@ class Search::DateTimeStrategy < Search::BaseStrategy
   end
 
   def date_remove_utc(date)
-    utc_date = "#{date_time_component(date, 'Y')}-#{date_time_component(date, 'M')}-#{date_time_component(date, 'D')}"
+    utc_date = "#{date_time_component(date, 'Y')}-#{date_time_component(date, 'M')}-#{date_time_component(date, 'D')}".dup
     utc_date << " #{date_time_component(date, 'h')}:#{date_time_component(date, 'm')}:#{date_time_component(date, 's')}"
 
     # date.strftime("%Y-%m-%d %H:%M:%S")

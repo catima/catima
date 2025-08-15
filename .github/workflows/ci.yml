@@ -9,12 +9,23 @@ env:
   RAILS_ENV: test
 
 jobs:
+  setup:
+    name: Setup Matrix
+    runs-on: ubuntu-latest
+    outputs:
+      ruby-versions: ${{ steps.set-matrix.outputs.ruby-versions }}
+    steps:
+      - name: Set matrix
+        id: set-matrix
+        run: echo "ruby-versions=[\"3.2.2\", \"3.4.5\"]" >> $GITHUB_OUTPUT
+
   test:
-    name: RUBY${{ matrix.ruby-versions }}
+    name: Test-RUBY${{ matrix.ruby-versions }}
     runs-on: ubuntu-24.04
+    needs: setup
     strategy:
       matrix:
-        ruby-versions: [ '3.2.2' ]
+        ruby-versions: ${{ fromJSON(needs.setup.outputs.ruby-versions) }}
         rubygems-version: [ '3.4.5' ]
         psql-version: [ '17' ]
         node-version: [ '22' ]
@@ -117,22 +128,26 @@ jobs:
         id: upload-coverage-artifact
         uses: actions/upload-artifact@v4
         with:
-          name: coverage-report
+          name: ${{ matrix.ruby-versions }}-coverage-report
           include-hidden-files: true
           path: ${{ github.workspace }}/coverage
+          overwrite: true
 
   coverage:
-    name: Coverage
+    name: Coverage-RUBY${{ matrix.ruby-versions }}
     runs-on: ubuntu-latest
-    needs: test
+    needs: [setup, test]
     if: success()
     continue-on-error: false
+    strategy:
+      matrix:
+        ruby-versions: ${{ fromJSON(needs.setup.outputs.ruby-versions) }}
 
     steps:
       - name: Download artifact
         uses: actions/download-artifact@v4
         with:
-          name: coverage-report
+          name: ${{ matrix.ruby-versions }}-coverage-report
           path: coverage
 
       - name: Check minimum coverage

@@ -4,7 +4,7 @@ module CatalogAdmin::ItemTypesHelper
     active = params[:controller] =~ /item_types|fields/ &&
              slug == item_type.slug
 
-    klass = "list-group-item list-group-item-action"
+    klass = "list-group-item list-group-item-action".dup
     klass << " active" if active
 
     link_to(
@@ -19,7 +19,7 @@ module CatalogAdmin::ItemTypesHelper
     active = params[:controller] == "catalog_admin/items" &&
              slug == item_type.slug
 
-    klass = "list-group-item list-group-item-action"
+    klass = "list-group-item list-group-item-action".dup
     klass << " active" if active
 
     label = [h(item_type.name_plural)]

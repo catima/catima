@@ -171,7 +171,7 @@ class Dump::SQLDump < Dump
   end
 
   def dump_create_multiple_reference_table(item_type)
-    tables = ""
+    tables = "".dup
     item_type.all_fields.select { |f| f.multiple? && f.is_a?(Field::Reference) }.each do |field|
       columns = "`#{item_type.sql_slug}` #{convert_app_type_to_sql_type(nil)},"
       column_name = "#{field.sql_slug}_#{field.related_item_type.sql_slug}"
@@ -185,7 +185,7 @@ class Dump::SQLDump < Dump
   end
 
   def dump_create_multiple_choiceset_table(item_type)
-    tables = ""
+    tables = "".dup
     item_type.fields.select { |f| f.multiple? && f.is_a?(Field::ChoiceSet) }.each do |field|
       columns = "`#{item_type.sql_slug}` #{convert_app_type_to_sql_type(nil)}, "
       columns << "`#{field.sql_slug}` #{convert_app_type_to_sql_type(nil)}"
@@ -198,7 +198,7 @@ class Dump::SQLDump < Dump
   end
 
   def dump_create_choice_sets_table(choice_set)
-    columns = ""
+    columns = "".dup
 
     Choice.sql_columns.each do |col_name, col|
       columns << "`#{col_name}` #{convert_active_storage_type_to_sql_type(col.type)} #{'NOT NULL' unless col.null},"
@@ -209,7 +209,7 @@ class Dump::SQLDump < Dump
   end
 
   def dump_create_categories_table(category)
-    columns = ""
+    columns = "".dup
 
     Category.columns_hash.each do |col_name, col|
       next unless %w[id created_at updated_at].include?(col_name)
@@ -227,7 +227,7 @@ class Dump::SQLDump < Dump
   end
 
   def dump_create_multiple_category_reference_table(category)
-    tables = ""
+    tables = "".dup
     category.fields.select { |f| f.multiple? && f.is_a?(Field::Reference) }.each do |field|
       one_referenced_item = Item.where("data->>'#{field.uuid}' IS NOT NULL").first
       next if one_referenced_item.nil?
@@ -244,7 +244,7 @@ class Dump::SQLDump < Dump
   end
 
   def dump_create_multiple_category_choiceset_table(category)
-    tables = ""
+    tables = "".dup
     category.fields.select { |f| f.multiple? && f.is_a?(Field::ChoiceSet) }.each do |field|
       one_referenced_item = Item.where("data->>'#{field.uuid}' IS NOT NULL").first
       next if one_referenced_item.nil?
@@ -260,7 +260,7 @@ class Dump::SQLDump < Dump
   end
 
   def concat_item_data(item)
-    values = ""
+    values = "".dup
 
     values << "#{item.id},"
     values << "#{convert_active_storage_value_to_sql_value(:datetime, item.created_at)},"
@@ -280,7 +280,7 @@ class Dump::SQLDump < Dump
   def dump_mulitple_field_reference_item_data(item)
     return "" unless item.item_type.not_deleted?
 
-    inserts = ""
+    inserts = "".dup
 
     fields = item.item_type.all_fields.select { |field| field.multiple? && field.is_a?(Field::Reference) }
     fields.each do |field|
@@ -302,7 +302,7 @@ class Dump::SQLDump < Dump
   end
 
   def dump_mulitple_field_choiceset_item_data(item)
-    inserts = ""
+    inserts = "".dup
 
     fields = item.item_type.all_fields.select { |field| field.multiple? && field.is_a?(Field::ChoiceSet) }
     fields.each do |field|
@@ -325,13 +325,13 @@ class Dump::SQLDump < Dump
   end
 
   def dump_choices_data(cat)
-    inserts = ""
+    inserts = "".dup
     cat.choice_sets.not_deleted.each do |choice_set|
-      choice_set_inserts = ""
+      choice_set_inserts = "".dup
       choice_set.choices.each do |choice|
         columns = Choice.sql_columns.map { |c_name, _c| "`#{c_name}`" }.join(',')
 
-        values = ""
+        values = "".dup
         Choice.sql_columns.each do |column_name, column|
           value = convert_active_storage_value_to_sql_value(column.type, choice.public_send(column_name))
           values << "#{value}#{', ' unless column_name == Choice.columns_hash.keys.last}"
@@ -347,7 +347,7 @@ class Dump::SQLDump < Dump
   end
 
   def dump_fields_data(cat)
-    inserts = ""
+    inserts = "".dup
     cat.items.find_each do |item|
       next unless item.item_type.not_deleted?
 
@@ -367,7 +367,7 @@ class Dump::SQLDump < Dump
 
   # rubocop:disable Metrics/PerceivedComplexity, Metrics/AbcSize, Metrics/CyclomaticComplexity, Metrics/MethodLength
   def dump_categories_data(cat)
-    inserts = ""
+    inserts = "".dup
     categories_processed_by_item = {}
     cat.items.find_each do |item|
       cat.categories.each do |category|
@@ -635,7 +635,7 @@ class Dump::SQLDump < Dump
   end
 
   def common_sql_columns
-    columns = ""
+    columns = "".dup
 
     COMMON_SQL_COLUMNS.each do |column_name, column_type|
       columns << "`#{column_name}` #{column_type} NOT NULL,"
