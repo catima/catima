@@ -8,7 +8,6 @@ const SelectedReferenceSearch = (props) => {
     selectedCondition,
     itemId,
     multi,
-    req,
     updateSelectedItem,
     itemsUrl,
     onFocus,
@@ -64,7 +63,7 @@ const SelectedReferenceSearch = (props) => {
   }
 
   function _selectItem(item, event) {
-    if (typeof event === 'undefined' || event.action !== "pop-value" || !req) {
+    if (typeof event === 'undefined' || event.action !== "pop-value") {
       if (typeof item !== 'undefined') {
         setSelectedItem(item)
       } else {

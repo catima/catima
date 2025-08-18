@@ -13,17 +13,16 @@ const HTTP_CONFIG = {
 const ReferenceSearch = (props) => {
   const {
     fieldUuid,
-    selectCondition: selectConditionProps,
+    itemId,
+    catalog,
+    itemType,
+    locale,
     searchPlaceholder: searchPlaceholderProps,
     choosePlaceholder: choosePlaceholderProps,
     filterPlaceholder: filterPlaceholderProps,
-    catalog,
-    locale,
-    itemType,
-    req,
-    itemId,
-    noOptionsMessage,
+    selectCondition: selectConditionProps,
     fieldConditionData,
+    noOptionsMessage,
     addComponent,
     deleteComponent,
     canAddComponent,
@@ -135,7 +134,7 @@ const ReferenceSearch = (props) => {
   }
 
   function _selectCondition(event) {
-    if (typeof event === 'undefined' || event.action !== "pop-value" || !req) {
+    if (typeof event === 'undefined' || event.action !== "pop-value") {
       if (typeof event !== 'undefined') {
         setSelectedCondition(event.target.value);
       } else {
@@ -240,7 +239,7 @@ const ReferenceSearch = (props) => {
   }
 
   function _selectFieldCondition(event) {
-    if (typeof event === 'undefined' || event.action !== "pop-value" || !this.props.req) {
+    if (typeof event === 'undefined' || event.action !== "pop-value") {
       if (typeof event !== 'undefined') {
         setSelectedFieldCondition(event.target.value);
       } else {
@@ -272,7 +271,6 @@ const ReferenceSearch = (props) => {
         noOptionsMessage={noOptionsMessage}
         items={items}
         fields={fields}
-        req={req}
         itemsUrl={`/react/${catalog}/${locale}/${itemType}?simple_fields=true`}
         onFocus={_setFields}/>
   }
