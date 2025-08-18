@@ -21,12 +21,13 @@ const ReferenceSearch = (props) => {
     locale,
     itemType,
     req,
-    addComponent: addComponentProps,
     itemId,
-    deleteComponent: deleteComponentProps,
     noOptionsMessage,
     fieldConditionData,
-    componentList
+    addComponent,
+    deleteComponent,
+    canAddComponent,
+    canRemoveComponent,
   } = props
 
   const [loadingMessage, setLoadingMessage] = useState("")
@@ -152,7 +153,7 @@ const ReferenceSearch = (props) => {
     if (typeof value !== 'undefined' && value === null) {
       setSelectedCondition('');
       setSelectCondition([]);
-      // TODO REMVOE REMPLACER PAR SELECTEDFILTER === NULL
+      // TODO REMOVE REMPLACER PAR SELECTEDFILTER === NULL
       setItemTypeSearch(false);
       setReferenceData({
         inputData: null,
@@ -238,18 +239,6 @@ const ReferenceSearch = (props) => {
     return {value: field.uuid, label: field.name};
   }
 
-  function _addComponent() {
-    addComponentProps(itemId);
-  }
-
-  function _deleteComponent() {
-    deleteComponentProps(itemId);
-  }
-
-  function _getNoOptionsMessage() {
-    return () => noOptionsMessage;
-  }
-
   function _selectFieldCondition(event) {
     if (typeof event === 'undefined' || event.action !== "pop-value" || !this.props.req) {
       if (typeof event !== 'undefined') {
@@ -268,7 +257,7 @@ const ReferenceSearch = (props) => {
         itemId={itemId}
         selectedCondition={selectedCondition}
         choosePlaceholder={choosePlaceholder}
-        noOptionsMessage={_getNoOptionsMessage()}
+        noOptionsMessage={noOptionsMessage}
         locale={locale}
         referenceData={referenceData}
       />
@@ -280,7 +269,7 @@ const ReferenceSearch = (props) => {
         updateSelectedItem={_updateSelectedItem}
         searchPlaceholder={searchPlaceholder}
         loadingMessage={loadingMessage}
-        noOptionsMessage={_getNoOptionsMessage()}
+        noOptionsMessage={noOptionsMessage}
         items={items}
         fields={fields}
         req={req}
@@ -306,7 +295,7 @@ const ReferenceSearch = (props) => {
       onChange={_selectFilter}
       options={_getFilterOptions()}
       placeholder={filterPlaceholder}
-      noOptionsMessage={_getNoOptionsMessage()}
+      noOptionsMessage={noOptionsMessage}
     />
   }
 
@@ -349,26 +338,24 @@ const ReferenceSearch = (props) => {
                 <div className="col-lg-5">{renderFilter()}</div>
               </div>
             </div>
-            {(itemId === componentList[0].itemId && componentList.length === 1) &&
-            <div className="col-lg-1 icon-container">
-              <a type="button" onClick={_addComponent}><i className="fa fa-plus"></i></a>
-            </div>
-            }
-            {(((itemId !== componentList[0].itemId) && (itemId !== componentList[componentList.length - 1].itemId)) || (itemId === componentList[0].itemId && componentList.length > 1)) &&
-            <div className="col-lg-1 icon-container">
-              <a type="button" onClick={_deleteComponent}><i className="fa fa-trash"></i></a>
-            </div>
-            }
-            {((itemId === componentList[componentList.length - 1].itemId) && (itemId !== componentList[0].itemId)) &&
             <div className="col-lg-1">
               <div className="row">
-                <div className="col-lg-12"><a type="button" onClick={_addComponent}><i className="fa fa-plus"></i></a>
-                </div>
-                <div className="col-lg-12"><a type="button" onClick={_deleteComponent}>
-                  <i className="fa fa-trash"></i></a></div>
+                  {canAddComponent &&
+                  <div className="col-lg-12">
+                      <a type="button" onClick={addComponent}>
+                      <i className="fa fa-plus"></i>
+                      </a>
+                  </div>
+                  }
+                  {canRemoveComponent &&
+                  <div className="col-lg-12">
+                      <a type="button" onClick={deleteComponent}>
+                      <i className="fa fa-trash"></i>
+                      </a>
+                  </div>
+                  }
               </div>
             </div>
-            }
           </div>
         </div>
       </div>
