@@ -42,7 +42,7 @@ module Item::Values
 
   def number_of_items_with_value(field)
     conn = ActiveRecord::Base.connection.raw_connection
-    sql = "SELECT COUNT(*) FROM items WHERE data->>'#{field.uuid}' = $1 AND item_type_id = $2"
+    sql = "SELECT COUNT(*) FROM items WHERE data->>'#{field.uuid}' = $1 AND item_type_id = $2".dup
     sql_data = [data[field.uuid], item_type_id]
     if id
       sql << " AND id <> $3"

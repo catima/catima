@@ -147,7 +147,7 @@ class ItemList::AdvancedSearchResult < ItemList
   def or_relations(strategies, original_scope)
     return original_scope unless strategies.count.positive?
 
-    rel = ""
+    rel = "".dup
     strategies.map do |relation|
       select_name = relation.to_sql.include?("parent_items") ? "parent_items" : "items"
       rel << " " << relation.unscope(:select).unscope(:order).select("#{select_name}.id").to_sql

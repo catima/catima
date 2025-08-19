@@ -1,7 +1,7 @@
 module CatalogAdmin::ExportsHelper
   def setup_catalog_exports_nav_link
     active = (params[:controller] == "catalog_admin/exports")
-    klass = "list-group-item  list-group-item-action"
+    klass = "list-group-item  list-group-item-action".dup
     klass << " active" if active
     link_to(t("export").pluralize, catalog_admin_exports_path, :class => klass)
   end

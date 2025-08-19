@@ -10,11 +10,11 @@ env:
 
 jobs:
   test:
-    name: RUBY${{ matrix.ruby-versions }}
+    name: Test-RUBY${{ matrix.ruby-versions }}
     runs-on: ubuntu-24.04
     strategy:
       matrix:
-        ruby-versions: [ '3.2.2' ]
+        ruby-versions: [ '3.2.2', '3.4.5' ]
         rubygems-version: [ '3.4.5' ]
         psql-version: [ '17' ]
         node-version: [ '22' ]
@@ -98,3 +98,4 @@ jobs:
         with:
           name: swagger-documentation
           path: /home/runner/work/catima/catima/swagger/v3/swagger.yaml
+          overwrite: true

@@ -1,7 +1,7 @@
 module CatalogAdmin::ChoiceSetsHelper
   def setup_catalog_choices_nav_link
     active = (params[:controller] == "catalog_admin/choice_sets")
-    klass = "list-group-item list-group-item-action"
+    klass = "list-group-item list-group-item-action".dup
     klass << " active" if active
 
     link_to(t("choices"), catalog_admin_choice_sets_path, :class => klass)
