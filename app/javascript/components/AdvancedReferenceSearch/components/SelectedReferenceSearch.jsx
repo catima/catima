@@ -7,71 +7,21 @@ const SelectedReferenceSearch = (props) => {
     fieldUuid,
     selectedCondition,
     itemId,
-    multi,
-    updateSelectedItem,
     itemsUrl,
-    onFocus,
     loadingMessage,
     searchPlaceholder,
     noOptionsMessage,
-    items: itemsProps
   } = props
 
   const [isInitialized, setIsInitialized] = useState(false)
   const [items, setItems] = useState([])
   const [optionsList, setOptionsList] = useState([])
   const [selectedItem, setSelectedItem] = useState([])
-  const [hiddenInputValue, setHiddenInputValue] = useState([])
 
   const buildInputNameWithCondition = useMemo(() => {
       const currentCondition = selectedCondition || 'default';
       return `advanced_search[criteria][${fieldUuid}][${itemId}][${currentCondition}]`;
   }, [fieldUuid, selectedCondition, itemId]);
-
-  useEffect(() => {
-    if (itemsProps.length !== items.length) {
-      setIsInitialized(true)
-      setItems(itemsProps)
-    }
-  }, [itemsProps])
-
-  useEffect(() => {
-    if (selectedItem != []) {
-      _save()
-    }
-  }, [selectedItem])
-
-  // TODO REMOVE
-  function _save() {
-    if (multi) {
-      //selectedItem is an array
-      if (selectedItem !== null && selectedItem.length !== 0) {
-        let idArray = [];
-        selectedItem.forEach((item) => {
-          idArray.push(item.value);
-        });
-        setHiddenInputValue(idArray);
-        document.getElementsByName(buildInputNameWithCondition)[0].value = hiddenInputValue;
-      }
-    } else {
-      //selectedItem is a JSON
-      if (selectedItem !== null && Object.keys(selectedItem).length !== 0) {
-        setHiddenInputValue(selectedItem.value);
-        document.getElementsByName(buildInputNameWithCondition)[0].value = hiddenInputValue;
-      }
-    }
-  }
-
-  function _selectItem(item, event) {
-    if (typeof event === 'undefined' || event.action !== "pop-value") {
-      if (typeof item !== 'undefined') {
-        setSelectedItem(item)
-      } else {
-        setSelectedItem([])
-      }
-      updateSelectedItem(item);
-    }
-  }
 
   function _getItemOptions(itemsArg) {
     let itemVar = (typeof itemsArg === 'undefined') ? items : itemsArg
@@ -81,6 +31,7 @@ const SelectedReferenceSearch = (props) => {
         _getJSONItem(item)
       );
     }
+    console.log(optionsList);
     return optionsList;
   }
 
@@ -123,7 +74,6 @@ const SelectedReferenceSearch = (props) => {
     if (!isInitialized) {
       setIsInitialized(search.length === 0)
       setOptionsList(responseJSON.items.map(item => _getJSONItem(item)))
-      onFocus(responseJSON.fields);
     }
 
     return {
@@ -143,13 +93,13 @@ const SelectedReferenceSearch = (props) => {
         className="basic-multi-select"
         classNamePrefix="select"
         debounceTimeout={800}
-        loadingMessage={() => loadingMessage}
+        loadingMessage={loadingMessage}
         placeholder={searchPlaceholder}
         noOptionsMessage={noOptionsMessage}
         value={selectedItem}
         options={_getItemOptions()}
         loadOptions={_loadOptions}
-        onChange={_selectItem}
+        onChange={(item) => setSelectedItem(item || [])}
         additional={{
           page: 1,
         }}

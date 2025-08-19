@@ -25,7 +25,6 @@ const ChoiceSetSearch = (props) => {
     fieldUuid,
     itemId,
     choiceSet,
-    itemDefaultKey,
     catalog,
     searchPlaceholder,
     filterPlaceholder,
@@ -155,7 +154,7 @@ const ChoiceSetSearch = (props) => {
     if (isFirstLoadOptionsRef.current) {
       isFirstLoadOptionsRef.current = false;
 
-      const _selectedItem = options.find(item => item.value == itemDefaultKey);
+      const _selectedItem = options.find(item => item.value == defaultValues[defaultValues.condition || "default"]);
       if (_selectedItem) {
         selectItem(_selectedItem);
         setSelectCondition([]);
@@ -216,7 +215,7 @@ const ChoiceSetSearch = (props) => {
     return (
       <div>
         <AsyncPaginate
-          defaultOptions={!!itemDefaultKey}
+          defaultOptions={!!defaultValues[defaultValues.condition || "default"]}
           name={buildInputNameWithCondition}
           className={"basic-multi-select"}
           delimiter=","

@@ -27,10 +27,10 @@ const ItemTypesReferenceSearch = (props) => {
     choosePlaceholder,
     noOptionsMessage,
     locale,
-    referenceData,
+    fieldData,
   } = props;
 
-  const { inputData, inputType, dateFormat, localizedDateTimeData, isLoading } = referenceData || {
+  const { inputData, inputType, dateFormat, localizedDateTimeData, isLoading } = fieldData || {
     inputData: null,
     inputType: FIELD_TYPES.TEXT,
     dateFormat: '',

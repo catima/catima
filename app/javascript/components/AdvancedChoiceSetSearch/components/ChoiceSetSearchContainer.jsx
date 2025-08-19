@@ -33,7 +33,6 @@ const ChoiceSetSearchContainer = (props) => {
       fieldUuid,
       itemId,
       choiceSet,
-      itemDefaultKey: defaultValues[defaultValues.condition || "default"],
       catalog,
       searchPlaceholder,
       filterPlaceholder,
