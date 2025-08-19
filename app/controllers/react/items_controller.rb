@@ -28,7 +28,7 @@ class React::ItemsController < React::BaseController
     # Default item will be added in addition to the paginated items (so the
     # results length will be pagination length + 1)
     default_item = item_type.items.where(id: params[:default]) if params[:default].present?
-    all_items = default_item.to_a + items.to_a
+    all_items = (default_item.to_a + items.to_a).uniq(&:id)
 
     render(json:
              {
