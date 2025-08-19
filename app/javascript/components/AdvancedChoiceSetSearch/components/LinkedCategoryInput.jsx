@@ -39,6 +39,11 @@ const LinkedCategoryInput = (props) => {
     isLoading: false
   };
 
+  const buildInputNameWithCondition = useMemo(() => {
+      const currentCondition = selectedCondition || 'default';
+      return `advanced_search[criteria][${fieldUuid}][${itemId}][category_criteria][${currentCondition}]`;
+  }, [fieldUuid, selectedCondition, itemId]);
+
   const choiceSetOptions = useMemo(() => {
     if (!inputData) return [];
     return inputData.map(option => ({
@@ -60,7 +65,7 @@ const LinkedCategoryInput = (props) => {
   );
   const renderTextInput = (type = "text", step = null) => (
     <input
-      name={`advanced_search[criteria][${fieldUuid}][${itemId}][category_criteria][${selectedCondition || 'default'}]`}
+      name={buildInputNameWithCondition}
       type={type}
       className="form-control"
       step={step}
@@ -70,7 +75,7 @@ const LinkedCategoryInput = (props) => {
 
   const renderBooleanSelect = () => (
     <select
-      name={`advanced_search[criteria][${fieldUuid}][${itemId}][category_criteria][${selectedCondition || 'default'}]`}
+      name={buildInputNameWithCondition}
       className="form-select"
       defaultValue={defaultValue?.category_criteria?.[selectedCondition]}
     >

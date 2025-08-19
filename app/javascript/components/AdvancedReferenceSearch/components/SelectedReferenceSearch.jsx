@@ -1,104 +1,85 @@
-import React, {useState, useEffect, useMemo} from "react";
+import React, {useState, useRef, useMemo} from "react";
 import AsyncPaginate from 'react-select-async-paginate';
 import striptags from 'striptags';
 
 const SelectedReferenceSearch = (props) => {
   const {
     fieldUuid,
+    defaultValues,
     selectedCondition,
     itemId,
     itemsUrl,
     loadingMessage,
     searchPlaceholder,
     noOptionsMessage,
-  } = props
+  } = props;
 
-  const [isInitialized, setIsInitialized] = useState(false)
-  const [items, setItems] = useState([])
-  const [optionsList, setOptionsList] = useState([])
   const [selectedItem, setSelectedItem] = useState([])
+
+  const isFirstLoadOptionsRef = useRef(true);
 
   const buildInputNameWithCondition = useMemo(() => {
       const currentCondition = selectedCondition || 'default';
       return `advanced_search[criteria][${fieldUuid}][${itemId}][${currentCondition}]`;
   }, [fieldUuid, selectedCondition, itemId]);
 
-  function _getItemOptions(itemsArg) {
-    let itemVar = (typeof itemsArg === 'undefined') ? items : itemsArg
-    let optionsList = [];
-    if (typeof itemVar !== 'undefined') {
-      optionsList = itemVar.map(item =>
-        _getJSONItem(item)
-      );
-    }
-    console.log(optionsList);
-    return optionsList;
-  }
-
   function _itemName(item) {
     return striptags(item.default_display_name);
   }
 
-  function _getJSONItem(item) {
-    return {value: item.id, label: _itemName(item)};
-  }
-
-  async function _loadOptions(search, loadedOptions, {page}) {
-    if (optionsList.length < 25 && isInitialized) {
-      if (search.length > 0) {
-        let regexExp = new RegExp(search, 'i')
-        let items = optionsList.filter(function (item) {
-          return item.label !== null && item.label.match(regexExp) !== null && item.label.match(regexExp).length > 0
-        });
-        return {
-          options: items,
-          hasMore: false,
-          additional: {
-            page: page,
-          },
-        };
-      }
-
-      return {
-        options: _getItemOptions(),
-        hasMore: items.length === 25,
-        additional: {
-          page: page,
-        },
-      };
+  async function loadOptions(search, loadedOptions, {page}) {
+    // TODO FAIRE CA POUR TOUS LES AUTRES COMPOSANTS QUI LOAD DES OPTIONS
+    let url = itemsUrl;
+    if (isFirstLoadOptionsRef.current && defaultValues?.["default"]) {
+      url += `&default=${defaultValues["default"]}&page=${page}`;
+    } else {
+      url += `&search=${search}&page=${page}`;
     }
 
-    const response = await fetch(`${itemsUrl}&search=${search}&page=${page}`);
+    const response = await fetch(url);
     const responseJSON = await response.json();
 
-    if (!isInitialized) {
-      setIsInitialized(search.length === 0)
-      setOptionsList(responseJSON.items.map(item => _getJSONItem(item)))
+    const options = responseJSON.items.map(item => ({
+      value: item.id,
+      label: _itemName(item),
+    }));
+
+    // The first time we load the options, we want to select the default item
+    // if specified.
+    if (isFirstLoadOptionsRef.current) {
+      isFirstLoadOptionsRef.current = false;
+
+      const _selectedItem = options.find(item => item.value == defaultValues["default"]);
+      if (_selectedItem) {
+        setSelectedItem([_selectedItem]);
+      }
     }
 
     return {
-      options: _getItemOptions(responseJSON.items),
+      options: options,
       hasMore: responseJSON.hasMore,
       additional: {
         page: page + 1,
       },
     };
   }
+  console.log(defaultValues);
 
   return (
     <div>
       <AsyncPaginate
+        defaultOptions={!!defaultValues["default"]}
         name={buildInputNameWithCondition}
         delimiter=","
         className="basic-multi-select"
         classNamePrefix="select"
         debounceTimeout={800}
+        isClearable={true}
         loadingMessage={loadingMessage}
         placeholder={searchPlaceholder}
         noOptionsMessage={noOptionsMessage}
         value={selectedItem}
-        options={_getItemOptions()}
-        loadOptions={_loadOptions}
+        loadOptions={loadOptions}
         onChange={(item) => setSelectedItem(item || [])}
         additional={{
           page: 1,

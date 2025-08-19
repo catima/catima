@@ -28,6 +28,7 @@ const ItemTypesReferenceSearch = (props) => {
     noOptionsMessage,
     locale,
     fieldData,
+    defaultValues,
   } = props;
 
   const { inputData, inputType, dateFormat, localizedDateTimeData, isLoading } = fieldData || {
@@ -59,6 +60,7 @@ const ItemTypesReferenceSearch = (props) => {
       format={dateFormat}
       locale={locale}
       localizedDateTimeData={localizedDateTimeData}
+      defaultValues={defaultValues}
     />
   );
 
@@ -68,6 +70,7 @@ const ItemTypesReferenceSearch = (props) => {
       type={type}
       className="form-control"
       step={step}
+      defaultValue={defaultValues[defaultValues.condition || "default"]}
     />
   );
 
@@ -75,6 +78,7 @@ const ItemTypesReferenceSearch = (props) => {
     <select
       name={buildInputNameWithCondition}
       className="form-select"
+      defaultValue={defaultValues[defaultValues.condition || "default"]}
     >
       {inputData?.map((item) => (
         <option key={item.key} value={item.key}>
@@ -84,8 +88,12 @@ const ItemTypesReferenceSearch = (props) => {
     </select>
   );
 
-  const renderChoiceSetSelect = () => (
-    <ReactSelect
+  const renderChoiceSetSelect = () => {
+    const defaultOption = choiceSetOptions.find(
+      option => option.value == defaultValues[defaultValues.condition || "default"]
+    );
+
+    return (<ReactSelect
       name={buildInputNameWithCondition}
       isSearchable={true}
       isClearable={true}
@@ -94,8 +102,9 @@ const ItemTypesReferenceSearch = (props) => {
       classNamePrefix="select"
       placeholder={choosePlaceholder}
       noOptionsMessage={noOptionsMessage}
-    />
-  );
+      defaultValue={defaultOption}
+    />);
+  };
 
   // Fonction principale de rendu des inputs
   const renderInput = () => {

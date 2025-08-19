@@ -20,10 +20,16 @@ const ReferenceSearchContainer = (props) => {
   const [componentsList, setComponentsList] = useState([])
 
   useEffect(() => {
-    addComponent(0);
+    if (defaultValues && Object.values(defaultValues).length > 0) {
+      Object.values(defaultValues).forEach((defaultValue, index) => {
+        addComponent(index, defaultValue);
+      });
+    } else {
+      addComponent(0);
+    }
   }, [])
 
-  function addComponent(itemId) {
+  function addComponent(itemId, defaultValues = {}) {
     const newItem = {
       fieldUuid,
       itemId,

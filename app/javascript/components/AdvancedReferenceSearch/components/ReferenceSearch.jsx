@@ -1,4 +1,4 @@
-import React, { useState, useCallback } from "react";
+import React, { useState, useCallback, useRef } from "react";
 import axios from 'axios';
 import SelectedReferenceSearch from './SelectedReferenceSearch';
 import ItemTypesReferenceSearch from './ItemTypesReferenceSearch';
@@ -14,6 +14,7 @@ const ReferenceSearch = (props) => {
   const {
     fieldUuid,
     itemId,
+    defaultValues,
     catalog,
     itemType,
     locale,
@@ -42,7 +43,9 @@ const ReferenceSearch = (props) => {
     isLoading: false
   });
 
-  const fetchFieldData = useCallback(async (field) => {
+  const isFirstLoadOptionsRef = useRef(true);
+
+  const fetchFieldData = useCallback(async (field, defaultCondition = '') => {
     if (!field || !field.value) {
       return;
     }
@@ -66,8 +69,6 @@ const ReferenceSearch = (props) => {
       });
 
       if (data.selectCondition?.length > 0) {
-        // TODO passer defaultCondition depuis le parent
-        const defaultCondition = null; // TODO remove
         const existsInNewVal = data.selectCondition.find(item => item.key === defaultCondition);
         setSelectedCondition(existsInNewVal ? defaultCondition : data.selectCondition[0].key);
         setSelectCondition(data.selectCondition);
@@ -79,7 +80,7 @@ const ReferenceSearch = (props) => {
     }
   }, [catalog, locale, itemType]);
 
-  function handleSelectFields(selectedField) {
+  function handleSelectFieldChange(selectedField, defaultCondition = '') {
     if (!selectedField) {
       setSelectedField(null);
       setSelectedCondition('');
@@ -93,7 +94,7 @@ const ReferenceSearch = (props) => {
       });
     } else {
       setSelectedField(selectedField);
-      fetchFieldData(selectedField);
+      fetchFieldData(selectedField, defaultCondition);
     }
   }
 
@@ -101,13 +102,24 @@ const ReferenceSearch = (props) => {
     // This endpoint return all fields and *paginated* items related to the itemType
     // We only need the fields, we set a pagination of 1 to avoid fetching all items
     const res = await axios.get(`/react/${catalog}/${locale}/${itemType}?simple_fields=true&page=1`);
-
-    let options = res.data.fields.filter(
+    const options = res.data.fields.filter(
       field => field.displayable_to_user
     ).map(field => ({
       value: field.uuid,
       label: field.name
     }));
+
+    // The first time we load the options, we want to select the default item
+    // if specified.
+    if (isFirstLoadOptionsRef.current) {
+      isFirstLoadOptionsRef.current = false;
+
+      const _selectedField = options.find(item => item.value == defaultValues?.sort_field_uuid);
+      if (_selectedField) {
+        handleSelectFieldChange(_selectedField, defaultValues?.condition || '');
+        setSelectedFieldCondition(defaultValues?.field_condition || '');
+      }
+    }
 
     return {
       options,
@@ -126,12 +138,14 @@ const ReferenceSearch = (props) => {
           noOptionsMessage={noOptionsMessage}
           locale={locale}
           fieldData={fieldData}
+          defaultValues={defaultValues}
         />
       );
     } else {
       return (
         <SelectedReferenceSearch
           fieldUuid={fieldUuid}
+          defaultValues={defaultValues}
           selectedCondition={selectedCondition}
           itemId={itemId}
           searchPlaceholder={searchPlaceholder}
@@ -146,6 +160,7 @@ const ReferenceSearch = (props) => {
   function renderSelectFields() {
     return (
       <AsyncPaginate
+        defaultOptions={!!defaultValues["sort_field_uuid"]}
         className="single-reference-filter"
         delimiter=","
         loadOptions={loadFields}
@@ -155,7 +170,7 @@ const ReferenceSearch = (props) => {
         loadingMessage={loadingMessage}
         name={`advanced_search[criteria][${fieldUuid}][${itemId}][sort_field_uuid]`}
         value={selectedField}
-        onChange={handleSelectFields}
+        onChange={handleSelectFieldChange}
         placeholder={filterPlaceholder}
         noOptionsMessage={noOptionsMessage}
       />
