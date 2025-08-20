@@ -61,6 +61,7 @@ const LinkedCategoryInput = (props) => {
       defaultValues={defaultValue}
       locale={locale}
       localizedDateTimeData={localizedDateTimeData}
+      isCategory={true}
     />
   );
   const renderTextInput = (type = "text", step = null) => (

@@ -18,13 +18,14 @@ const DateTimeSearch = (props) => {
     defaultValues,
     locale,
     localizedDateTimeData,
+    isCategory = false,
   } = props;
 
   // Extract default values from props
   const selectConditionDefault = defaultValues?.condition;
   const fieldConditionDefault = defaultValues?.field_condition;
 
-  const defaultDates = itemId !== null ? defaultValues?.['category_criteria'] : defaultValues;
+  const defaultDates = isCategory ? defaultValues?.['category_criteria'] : defaultValues;
   const defaultStart = defaultDates?.['start']?.[defaultValues?.condition || 'exact'];
   const defaultEnd = defaultDates?.['end']?.[defaultValues?.condition || 'exact'];
 
@@ -35,19 +36,15 @@ const DateTimeSearch = (props) => {
   const _itemId = itemId !== null ? `-${itemId}` : '';
   const dateTimeCollapseId = `advanced_search_criteria_${fieldUuid}_id-collapse${_itemId}`;
 
-  const startDateInputName = useMemo(() => {
-    const currentCondition = selectedCondition || 'exact';
-    const _itemId = itemId !== null ? `[${itemId}][category_criteria]` : '';
+  const getDateInputName = useCallback((type) => {
+      const currentCondition = selectedCondition || 'exact';
+      const _itemId = itemId !== null ? `[${itemId}]` : '';
+      const _categorySuffix = isCategory ? '[category_criteria]' : '';
+      return `advanced_search[criteria][${fieldUuid}]${_itemId}${_categorySuffix}[${type}][${currentCondition}]`;
+  }, [fieldUuid, selectedCondition, itemId, isCategory]);
 
-    return `advanced_search[criteria][${fieldUuid}]${_itemId}[start][${currentCondition}]`;
-  }, [fieldUuid, selectedCondition]);
-
-  const endDateInputName = useMemo(() => {
-    const currentCondition = selectedCondition || 'exact';
-    const _itemId = itemId !== null ? `[${itemId}][category_criteria]` : '';
-
-    return `advanced_search[criteria][${fieldUuid}]${_itemId}[end][${currentCondition}]`;
-  }, [fieldUuid, selectedCondition]);
+  const startDateInputName = useMemo(() => getDateInputName('start'), [getDateInputName]);
+  const endDateInputName = useMemo(() => getDateInputName('end'), [getDateInputName]);
 
   // Refs for datepicker components
   const datepickerRefStart = useRef();
