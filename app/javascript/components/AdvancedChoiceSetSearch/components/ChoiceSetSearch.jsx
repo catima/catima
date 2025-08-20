@@ -141,7 +141,16 @@ const ChoiceSetSearch = (props) => {
       };
     }
 
-    const res = await axios.get(`${choiceSet.fetchUrl}&search=${search}&page=${page}`)
+    const defaultSelectedItem = defaultValues?.[defaultValues.condition || "default"];
+
+    let url = `${choiceSet.fetchUrl}&page=${page}`;
+    if (isFirstLoadOptionsRef.current && defaultSelectedItem) {
+      url += `&default=${defaultSelectedItem}`;
+    } else {
+      url += `&search=${search}`;
+    }
+
+    const res = await axios.get(url);
     const options = res.data.choices.map(choice => ({
       value: choice.key,
       label: choice.label,
@@ -154,7 +163,7 @@ const ChoiceSetSearch = (props) => {
     if (isFirstLoadOptionsRef.current) {
       isFirstLoadOptionsRef.current = false;
 
-      const _selectedItem = options.find(item => item.value == defaultValues[defaultValues.condition || "default"]);
+      const _selectedItem = options.find(item => item.value == defaultSelectedItem);
       if (_selectedItem) {
         selectItem(_selectedItem);
         setSelectCondition([]);

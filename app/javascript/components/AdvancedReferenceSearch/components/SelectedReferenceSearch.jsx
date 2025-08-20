@@ -28,7 +28,6 @@ const SelectedReferenceSearch = (props) => {
   }
 
   async function loadOptions(search, loadedOptions, {page}) {
-    // TODO FAIRE CA POUR TOUS LES AUTRES COMPOSANTS QUI LOAD DES OPTIONS
     let url = itemsUrl;
     if (isFirstLoadOptionsRef.current && defaultValues?.["default"]) {
       url += `&default=${defaultValues["default"]}&page=${page}`;

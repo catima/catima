@@ -69,6 +69,11 @@ class React::FieldsController < React::BaseController
 
     choices = choices.page(params[:page]) if params[:page].present?
 
+    # Default item will be added in addition to the paginated items (so the
+    # results length will be pagination length + 1)
+    default_choice = choices.where(id: params[:default]) if params[:default].present?
+    all_choices = (default_choice.to_a + choices.to_a).uniq(&:id)
+
     render(
       json:
         {
@@ -77,7 +82,7 @@ class React::FieldsController < React::BaseController
           search_placeholder: t("catalog_admin.items.reference_editor.reference_editor_search"),
           filter_placeholder: t("catalog_admin.items.reference_editor.reference_editor_filter", locale: params[:locale]),
           loading_message: t("loading", locale: params[:locale]),
-          choices: filter_category_fields(choices.map { |choice| field.formated_choice(choice) }),
+          choices: filter_category_fields(all_choices.map { |choice| field.formated_choice(choice) }),
           hasMore: params[:page].present? && params[:page].to_i < choices.total_pages
         }
     )
