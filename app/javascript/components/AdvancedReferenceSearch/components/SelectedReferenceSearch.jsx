@@ -23,16 +23,12 @@ const SelectedReferenceSearch = (props) => {
       return `advanced_search[criteria][${fieldUuid}][${itemId}][${currentCondition}]`;
   }, [fieldUuid, selectedCondition, itemId]);
 
-  function _itemName(item) {
-    return striptags(item.default_display_name);
-  }
-
   async function loadOptions(search, loadedOptions, {page}) {
-    let url = itemsUrl;
+    let url = `${itemsUrl}&page=${page}`;
     if (isFirstLoadOptionsRef.current && defaultValues?.["default"]) {
-      url += `&default=${defaultValues["default"]}&page=${page}`;
+      url += `&default=${defaultValues["default"]}`;
     } else {
-      url += `&search=${search}&page=${page}`;
+      url += `&search=${search}`;
     }
 
     const response = await fetch(url);
@@ -40,7 +36,7 @@ const SelectedReferenceSearch = (props) => {
 
     const options = responseJSON.items.map(item => ({
       value: item.id,
-      label: _itemName(item),
+      label: striptags(item.default_display_name),
     }));
 
     // The first time we load the options, we want to select the default item
@@ -62,7 +58,6 @@ const SelectedReferenceSearch = (props) => {
       },
     };
   }
-  console.log(defaultValues);
 
   return (
     <div>
