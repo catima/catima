@@ -2,6 +2,7 @@
   <% choice_sets = ChoiceSet.where(id: field.choice_set_ids) %>
   <%= react_component('AdvancedComplexDatationSearch/components/AdvancedComplexDatationSearch',
                       {
+                        fieldUuid: field.uuid,
                         catalog: field.catalog.slug,
                         itemType: field.item_type,
                         startLabel: t(".start_date"),
@@ -23,7 +24,7 @@
                         fieldConditionData: field.search_field_conditions_as_hash,
                         allowDateTimeBC: (field.allowed_formats.include?('date_time') && field.allow_date_time_bc == '1') || (field.allowed_formats.include?('datation_choice') && ChoiceSet.where(id: field.choice_set_ids).any?(&:allow_bc)),
                         label: t(".any"),
-                        items: filter_category_fields(field.search_data_as_hash),
+                        choiceSet: filter_category_fields(field.search_data_as_hash),
                         categoryInputName: "advanced_search[criteria][#{field.uuid}][0][category_field]",
                         linkedCategoryInputName: "advanced_search[criteria][#{field.uuid}][0][category_criteria]",
                         childChoicesActivatedInputName: "advanced_search[criteria][#{field.uuid}][0][child_choices_activated]",
@@ -33,8 +34,6 @@
                         searchPlaceholder: t('advanced_searches.fields.choice_set_search_field.select_placeholder'),
                         filterPlaceholder: t('advanced_searches.fields.choice_set_search_field.filter_placeholder'),
                         inputName: "advanced_search[criteria][#{field.uuid}][0][exact]",
-                        choiceSelectConditionName: "advanced_search[criteria][#{field.uuid}][0][condition]",
-                        choiceSelectCondition: [{:value => 'default', :key => "default"}],
                         multiple: true,
                         choiceFieldConditionName: "advanced_search[criteria][#{field.uuid}][0][field_condition]",
                         choiceFieldConditionData: field.search_field_conditions_as_hash

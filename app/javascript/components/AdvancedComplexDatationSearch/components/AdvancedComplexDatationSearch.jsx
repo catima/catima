@@ -5,6 +5,7 @@ import Translations from '../../Translations/components/Translations';
 
 const AdvancedComplexDatationSearch = (props) => {
   const {
+    fieldUuid,
     locale,
     srcId,
     srcRef,
@@ -31,13 +32,12 @@ const AdvancedComplexDatationSearch = (props) => {
     catalog,
     itemType,
     label,
-    items,
+    choiceSet,
     childChoicesActivatedPlaceholder,
     childChoicesActivatedYesLabel,
     childChoicesActivatedNoLabel,
     searchPlaceholder,
     filterPlaceholder,
-    choiceSelectCondition,
     multiple,
     choiceFieldConditionData
   } = props;
@@ -47,6 +47,7 @@ const AdvancedComplexDatationSearch = (props) => {
   return (
     <div>
       <DateTimeSearch
+        fieldUuid={fieldUuid}
         startDateInputName={startDateInputName}
         endDateInputName={endDateInputName}
         disableInputByCondition={disableInputByCondition}
@@ -65,10 +66,10 @@ const AdvancedComplexDatationSearch = (props) => {
         excludeCondition={selectedExcludeCondition}
       />
       <ChoiceSetSearchContainer
+        fieldUuid={fieldUuid}
         inputName={inputName}
         srcId={srcId}
         srcRef={srcRef}
-        selectConditionName={choiceSelectConditionName}
         fieldConditionName={choiceFieldConditionName}
         categoryInputName={categoryInputName}
         childChoicesActivatedInputName={childChoicesActivatedInputName}
@@ -76,14 +77,13 @@ const AdvancedComplexDatationSearch = (props) => {
         catalog={catalog}
         itemType={itemType}
         label={label}
-        items={items}
+        choiceSet={choiceSet}
         childChoicesActivatedPlaceholder={childChoicesActivatedPlaceholder}
         childChoicesActivatedYesLabel={childChoicesActivatedYesLabel}
         childChoicesActivatedNoLabel={childChoicesActivatedNoLabel}
         locale={locale}
         searchPlaceholder={searchPlaceholder}
         filterPlaceholder={filterPlaceholder}
-        selectCondition={choiceSelectCondition}
         multiple={multiple}
         fieldConditionData={choiceFieldConditionData}
         excludeCondition={selectedExcludeCondition}
