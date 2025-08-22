@@ -3,6 +3,7 @@ import axios from 'axios';
 import SelectedReferenceSearch from './SelectedReferenceSearch';
 import ItemTypesReferenceSearch from './ItemTypesReferenceSearch';
 import AsyncPaginate from 'react-select-async-paginate';
+import Translations from '../../Translations/components/Translations';
 
 // Default configuration for HTTP requests.
 const HTTP_CONFIG = {
@@ -18,13 +19,8 @@ const ReferenceSearch = (props) => {
     catalog,
     itemType,
     locale,
-    searchPlaceholder,
-    choosePlaceholder,
-    filterPlaceholder,
     selectCondition: selectConditionProps,
     fieldConditionData,
-    loadingMessage,
-    noOptionsMessage,
     addComponent,
     deleteComponent,
     canAddComponent,
@@ -134,8 +130,6 @@ const ReferenceSearch = (props) => {
           fieldUuid={fieldUuid}
           itemId={itemId}
           selectedCondition={selectedCondition}
-          choosePlaceholder={choosePlaceholder}
-          noOptionsMessage={noOptionsMessage}
           locale={locale}
           fieldData={fieldData}
           defaultValues={defaultValues}
@@ -148,9 +142,6 @@ const ReferenceSearch = (props) => {
           defaultValues={defaultValues}
           selectedCondition={selectedCondition}
           itemId={itemId}
-          searchPlaceholder={searchPlaceholder}
-          loadingMessage={loadingMessage}
-          noOptionsMessage={noOptionsMessage}
           itemsUrl={`/react/${catalog}/${locale}/${itemType}?simple_fields=true`}
         />
       );
@@ -167,12 +158,12 @@ const ReferenceSearch = (props) => {
         debounceTimeout={800}
         isSearchable={false}
         isClearable={true}
-        loadingMessage={loadingMessage}
+        loadingMessage={() => Translations.messages['loading']}
         name={`advanced_search[criteria][${fieldUuid}][${itemId}][sort_field_uuid]`}
         value={selectedField}
         onChange={handleSelectFieldChange}
-        placeholder={filterPlaceholder}
-        noOptionsMessage={noOptionsMessage}
+        placeholder={Translations.messages['advanced_searches.fields.reference_search_field.field_placeholder']}
+        noOptionsMessage={() => Translations.messages['catalog_admin.items.reference_editor.no_options']}
       />
     );
   }

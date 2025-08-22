@@ -2,6 +2,7 @@ import React, { useMemo } from 'react';
 import ReactSelect from 'react-select';
 import 'moment';
 import DateTimeSearch from '../../AdvancedDateTimeSearch/components/DateTimeSearch';
+import Translations from '../../Translations/components/Translations';
 
 // Constants for field types.
 const FIELD_TYPES = {
@@ -24,8 +25,6 @@ const ItemTypesReferenceSearch = (props) => {
     fieldUuid,
     itemId,
     selectedCondition,
-    choosePlaceholder,
-    noOptionsMessage,
     locale,
     fieldData,
     defaultValues,
@@ -100,8 +99,8 @@ const ItemTypesReferenceSearch = (props) => {
       options={choiceSetOptions}
       className="basic-select"
       classNamePrefix="select"
-      placeholder={choosePlaceholder}
-      noOptionsMessage={noOptionsMessage}
+      placeholder={Translations.messages['advanced_searches.fields.choice_set_search_field.select_placeholder']}
+      noOptionsMessage={() => Translations.messages['catalog_admin.items.reference_editor.no_options']}
       defaultValue={defaultOption}
     />);
   };

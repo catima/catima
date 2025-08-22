@@ -10,11 +10,6 @@ const ReferenceSearchContainer = (props) => {
     selectCondition,
     fieldConditionData,
     locale,
-    searchPlaceholder,
-    choosePlaceholder,
-    filterPlaceholder,
-    loadingMessage,
-    noOptionsMessage,
   } = props;
 
   const [componentsList, setComponentsList] = useState([])
@@ -54,13 +49,8 @@ const ReferenceSearchContainer = (props) => {
             catalog={catalog}
             itemType={itemType}
             locale={locale}
-            searchPlaceholder={searchPlaceholder}
-            choosePlaceholder={choosePlaceholder}
-            filterPlaceholder={filterPlaceholder}
             selectCondition={selectCondition}
             fieldConditionData={fieldConditionData}
-            loadingMessage={() => loadingMessage}
-            noOptionsMessage={() => noOptionsMessage}
             addComponent={item.addComponent}
             deleteComponent={item.deleteComponent}
             canAddComponent={index === componentsList.length - 1}

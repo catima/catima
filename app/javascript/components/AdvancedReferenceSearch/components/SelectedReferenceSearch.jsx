@@ -1,6 +1,7 @@
 import React, {useState, useRef, useMemo} from "react";
 import AsyncPaginate from 'react-select-async-paginate';
 import striptags from 'striptags';
+import Translations from '../../Translations/components/Translations';
 
 const SelectedReferenceSearch = (props) => {
   const {
@@ -9,9 +10,6 @@ const SelectedReferenceSearch = (props) => {
     selectedCondition,
     itemId,
     itemsUrl,
-    loadingMessage,
-    searchPlaceholder,
-    noOptionsMessage,
   } = props;
 
   const [selectedItem, setSelectedItem] = useState([])
@@ -69,9 +67,9 @@ const SelectedReferenceSearch = (props) => {
         classNamePrefix="select"
         debounceTimeout={800}
         isClearable={true}
-        loadingMessage={loadingMessage}
-        placeholder={searchPlaceholder}
-        noOptionsMessage={noOptionsMessage}
+        loadingMessage={() => Translations.messages['loading']}
+        placeholder={Translations.messages['advanced_searches.fields.reference_search_field.item_type_placeholder']}
+        noOptionsMessage={() => Translations.messages['catalog_admin.items.reference_editor.no_options']}
         value={selectedItem}
         loadOptions={loadOptions}
         onChange={(item) => setSelectedItem(item || [])}
