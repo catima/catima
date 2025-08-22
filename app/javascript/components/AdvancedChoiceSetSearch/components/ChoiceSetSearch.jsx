@@ -26,25 +26,20 @@ const ChoiceSetSearch = (props) => {
     itemId,
     choiceSet,
     catalog,
-    searchPlaceholder,
-    filterPlaceholder,
     fieldConditionData,
     defaultValues,
     locale,
-    childChoicesActivatedPlaceholder,
-    childChoicesActivatedYesLabel,
-    childChoicesActivatedNoLabel,
     addComponent,
     deleteComponent,
     canAddComponent,
     canRemoveComponent,
   } = props
 
-  const [selectedCondition, setSelectedCondition] = useState('')
-  const [selectCondition, setSelectCondition] = useState([])
-  const [selectedFieldCondition, setSelectedFieldCondition] = useState(defaultValues?.field_condition || '')
-  const [selectedCategory, setSelectedCategory] = useState(null)
-  const [selectedItem, setSelectedItem] = useState([])
+  const [selectedCondition, setSelectedCondition] = useState('');
+  const [selectCondition, setSelectCondition] = useState([]);
+  const [selectedFieldCondition, setSelectedFieldCondition] = useState(defaultValues?.field_condition || '');
+  const [selectedCategory, setSelectedCategory] = useState(null);
+  const [selectedItem, setSelectedItem] = useState([]);
   const [linkedCategoryData, setLinkedCategoryData] = useState({
     inputData: null,
     inputType: 'Field::Text',
@@ -233,8 +228,8 @@ const ChoiceSetSearch = (props) => {
           isSearchable={true}
           isClearable={true}
           isMulti={false}
-          loadingMessage={() => searchPlaceholder}
-          searchingMessage={() => searchPlaceholder}
+          loadingMessage={() => Translations.messages['advanced_searches.fields.choice_set_search_field.select_placeholder']}
+          searchingMessage={() => Translations.messages['advanced_searches.fields.choice_set_search_field.select_placeholder']}
           placeholder={Translations.messages['select_placeholder']}
           noOptionsMessage={() => Translations.messages['no_options']}
           additional={{
@@ -257,7 +252,7 @@ const ChoiceSetSearch = (props) => {
         className="basic-multi-select"
         onChange={handleSelectCategoryChange}
         classNamePrefix="select"
-        placeholder={filterPlaceholder}
+        placeholder={Translations.messages['advanced_searches.fields.choice_set_search_field.filter_placeholder']}
         isClearable={true}
         value={selectedCategory}
       />
@@ -266,8 +261,8 @@ const ChoiceSetSearch = (props) => {
 
   function renderChildChoicesElement() {
     const childChoices = [
-      { value: true, label: childChoicesActivatedYesLabel },
-      { value: false, label: childChoicesActivatedNoLabel },
+      { value: true, label: Translations.messages['advanced_searches.fields.choice_set_search_field.child_choices_activated_yes'] },
+      { value: false, label: Translations.messages['advanced_searches.fields.choice_set_search_field.child_choices_activated_no'] },
     ];
     const isChildChoicesActivated = defaultValues["child_choices_activated"] && defaultValues["child_choices_activated"] === "true";
 
@@ -279,7 +274,7 @@ const ChoiceSetSearch = (props) => {
       <ReactSelect name={`advanced_search[criteria][${fieldUuid}][${itemId}][child_choices_activated]`}
         options={childChoices}
         classNamePrefix="select"
-        placeholder={childChoicesActivatedPlaceholder}
+        placeholder={Translations.messages['advanced_searches.fields.choice_set_search_field.child_choices_activated_placeholder']}
         defaultValue={defaultValue}
       />
     );
@@ -293,7 +288,6 @@ const ChoiceSetSearch = (props) => {
           itemId={itemId}
           locale={locale}
           selectedCondition={selectedCondition}
-          searchPlaceholder={searchPlaceholder}
           defaultValue={defaultValues}
           linkedCategoryData={linkedCategoryData}
         />

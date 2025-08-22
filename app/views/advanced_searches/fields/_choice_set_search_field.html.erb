@@ -14,19 +14,11 @@
                             choice_set_id: field.choice_set_id
                           ),
                         }),
-
                       fieldUuid: field.uuid,
                       fieldConditionData: field.search_field_conditions_as_hash,
                       defaultValues: value,
-
-                      # Localization.
                       locale: I18n.locale,
                       localizedDateTimeData: t('date'),
-                      childChoicesActivatedPlaceholder: t('advanced_searches.fields.choice_set_search_field.child_choices_activated_placeholder'),
-                      childChoicesActivatedYesLabel: t('advanced_searches.fields.choice_set_search_field.child_choices_activated_yes'),
-                      childChoicesActivatedNoLabel: t('advanced_searches.fields.choice_set_search_field.child_choices_activated_no'),
-                      searchPlaceholder: t('advanced_searches.fields.choice_set_search_field.select_placeholder'),
-                      filterPlaceholder: t('advanced_searches.fields.choice_set_search_field.filter_placeholder'),
                     })
   %>
 </div>

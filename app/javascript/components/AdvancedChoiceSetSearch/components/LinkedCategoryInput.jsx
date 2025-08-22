@@ -3,6 +3,7 @@ import ReactSelect from 'react-select';
 import 'moment';
 
 import DateTimeSearch from '../../AdvancedDateTimeSearch/components/DateTimeSearch';
+import Translations from '../../Translations/components/Translations';
 
 // Constants for field types.
 const FIELD_TYPES = {
@@ -26,7 +27,6 @@ const LinkedCategoryInput = (props) => {
     itemId,
     locale,
     selectedCondition,
-    searchPlaceholder,
     defaultValue,
     linkedCategoryData,
   } = props;
@@ -101,7 +101,7 @@ const LinkedCategoryInput = (props) => {
         options={choiceSetOptions}
         className="basic-select"
         classNamePrefix="select"
-        placeholder={searchPlaceholder}
+        placeholder={Translations.messages['advanced_searches.fields.choice_set_search_field.select_placeholder']}
         defaultValue={defaultOption}
       />
     );
