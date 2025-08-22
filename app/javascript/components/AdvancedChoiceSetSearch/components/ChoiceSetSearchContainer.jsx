@@ -30,18 +30,8 @@ const ChoiceSetSearchContainer = (props) => {
 
   const addComponent = (itemId, defaultValues = {}) => {
     const newItem = {
-      fieldUuid,
       itemId,
-      choiceSet,
-      catalog,
-      searchPlaceholder,
-      filterPlaceholder,
-      fieldConditionData,
       defaultValues,
-      locale,
-      childChoicesActivatedPlaceholder,
-      childChoicesActivatedYesLabel,
-      childChoicesActivatedNoLabel,
       addComponent: () => addComponent(itemId + 1),
       deleteComponent: () => deleteComponent(itemId),
     };
@@ -57,7 +47,20 @@ const ChoiceSetSearchContainer = (props) => {
       {componentsList.map((item, index) =>
         <div key={item.itemId} className="component-search-row row">
           <ChoiceSetSearch
-            {...item}
+            fieldUuid={fieldUuid}
+            itemId={item.itemId}
+            choiceSet={choiceSet}
+            catalog={catalog}
+            searchPlaceholder={searchPlaceholder}
+            filterPlaceholder={filterPlaceholder}
+            fieldConditionData={fieldConditionData}
+            defaultValues={item.defaultValues}
+            locale={locale}
+            childChoicesActivatedPlaceholder={childChoicesActivatedPlaceholder}
+            childChoicesActivatedYesLabel={childChoicesActivatedYesLabel}
+            childChoicesActivatedNoLabel={childChoicesActivatedNoLabel}
+            addComponent={item.addComponent}
+            deleteComponent={item.deleteComponent}
             canAddComponent={index === componentsList.length - 1}
             canRemoveComponent={componentsList.length > 1}
           />

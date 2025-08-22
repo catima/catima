@@ -15,7 +15,7 @@ const ReferenceSearchContainer = (props) => {
     filterPlaceholder,
     loadingMessage,
     noOptionsMessage,
-  } = props
+  } = props;
 
   const [componentsList, setComponentsList] = useState([])
 
@@ -29,28 +29,17 @@ const ReferenceSearchContainer = (props) => {
     }
   }, [])
 
-  function addComponent(itemId, defaultValues = {}) {
+  const addComponent = (itemId, defaultValues = {}) => {
     const newItem = {
-      fieldUuid,
       itemId,
       defaultValues,
-      catalog,
-      itemType,
-      locale,
-      searchPlaceholder,
-      choosePlaceholder,
-      filterPlaceholder,
-      selectCondition,
-      fieldConditionData,
-      loadingMessage: () => loadingMessage,
-      noOptionsMessage: () => noOptionsMessage,
       addComponent: () => addComponent(itemId + 1),
       deleteComponent: () => deleteComponent(itemId),
     };
     setComponentsList((prev) => [...prev, newItem]);
   }
 
-  function deleteComponent(itemId) {
+  const deleteComponent = (itemId) => {
     setComponentsList((prev) => prev.filter((item) => item.itemId !== itemId));
   }
 
@@ -59,7 +48,21 @@ const ReferenceSearchContainer = (props) => {
       {componentsList.map((item, index) =>
         <div key={item.itemId} className="component-search-row row">
           <ReferenceSearch
-            {...item}
+            fieldUuid={fieldUuid}
+            itemId={item.itemId}
+            defaultValues={item.defaultValues}
+            catalog={catalog}
+            itemType={itemType}
+            locale={locale}
+            searchPlaceholder={searchPlaceholder}
+            choosePlaceholder={choosePlaceholder}
+            filterPlaceholder={filterPlaceholder}
+            selectCondition={selectCondition}
+            fieldConditionData={fieldConditionData}
+            loadingMessage={() => loadingMessage}
+            noOptionsMessage={() => noOptionsMessage}
+            addComponent={item.addComponent}
+            deleteComponent={item.deleteComponent}
             canAddComponent={index === componentsList.length - 1}
             canRemoveComponent={componentsList.length > 1}
           />
