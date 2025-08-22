@@ -31,13 +31,7 @@ const AdvancedComplexDatationSearch = (props) => {
     linkedCategoryInputName,
     catalog,
     itemType,
-    label,
     choiceSet,
-    childChoicesActivatedPlaceholder,
-    childChoicesActivatedYesLabel,
-    childChoicesActivatedNoLabel,
-    searchPlaceholder,
-    filterPlaceholder,
     multiple,
     choiceFieldConditionData
   } = props;
@@ -76,14 +70,8 @@ const AdvancedComplexDatationSearch = (props) => {
         linkedCategoryInputName={linkedCategoryInputName}
         catalog={catalog}
         itemType={itemType}
-        label={label}
         choiceSet={choiceSet}
-        childChoicesActivatedPlaceholder={childChoicesActivatedPlaceholder}
-        childChoicesActivatedYesLabel={childChoicesActivatedYesLabel}
-        childChoicesActivatedNoLabel={childChoicesActivatedNoLabel}
         locale={locale}
-        searchPlaceholder={searchPlaceholder}
-        filterPlaceholder={filterPlaceholder}
         multiple={multiple}
         fieldConditionData={choiceFieldConditionData}
         excludeCondition={selectedExcludeCondition}

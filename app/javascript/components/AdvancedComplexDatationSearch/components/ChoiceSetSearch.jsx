@@ -1,17 +1,14 @@
 import React, { useState, useMemo } from 'react';
 import ReactSelect from 'react-select';
+import Translations from '../../Translations/components/Translations';
 
 const ChoiceSetSearch = (props) => {
   const {
     fieldUuid,
     itemId,
     choiceSet,
-    searchPlaceholder,
     fieldConditionData,
     defaultValues,
-    childChoicesActivatedPlaceholder,
-    childChoicesActivatedYesLabel,
-    childChoicesActivatedNoLabel,
     addComponent,
     deleteComponent,
     canAddComponent,
@@ -55,7 +52,7 @@ const ChoiceSetSearch = (props) => {
           className="basic-multi-select"
           onChange={item => setSelectedItem(item)}
           classNamePrefix="select"
-          placeholder={searchPlaceholder}
+          placeholder={Translations.messages['advanced_searches.fields.choice_set_search_field.select_placeholder']}
           isClearable={true}
           value={selectedItem}
         />
@@ -65,8 +62,8 @@ const ChoiceSetSearch = (props) => {
 
   function renderChildChoicesElement() {
     const childChoices = [
-      { value: true, label: childChoicesActivatedYesLabel },
-      { value: false, label: childChoicesActivatedNoLabel },
+      { value: true, label: Translations.messages['advanced_searches.fields.choice_set_search_field.child_choices_activated_yes'] },
+      { value: false, label: Translations.messages['advanced_searches.fields.choice_set_search_field.child_choices_activated_no'] },
     ];
     const isChildChoicesActivated = defaultValues["child_choices_activated"] && defaultValues["child_choices_activated"] === "true";
 
@@ -78,7 +75,7 @@ const ChoiceSetSearch = (props) => {
       <ReactSelect name={`advanced_search[criteria][${fieldUuid}][${itemId}][child_choices_activated]`}
         options={childChoices}
         classNamePrefix="select"
-        placeholder={childChoicesActivatedPlaceholder}
+        placeholder={Translations.messages['advanced_searches.fields.choice_set_search_field.child_choices_activated_placeholder']}
         defaultValue={defaultValue}
       />
     );

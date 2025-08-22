@@ -4,6 +4,7 @@ import axios from 'axios';
 import 'moment';
 
 import DateTimeSearch from '../../AdvancedDateTimeSearch/components/DateTimeSearch';
+import Translations from '../../Translations/components/Translations';
 
 const LinkedCategoryInput = (props) => {
   const {
@@ -14,7 +15,6 @@ const LinkedCategoryInput = (props) => {
     locale,
     updateSelectCondition,
     itemType,
-    searchPlaceholder,
     selectedCategory: selectedCategoryProps
   } = props
 
@@ -246,7 +246,7 @@ const LinkedCategoryInput = (props) => {
           className="basic-select"
           onChange={_selectItem}
           classNamePrefix="select"
-          placeholder={searchPlaceholder}
+          placeholder={Translations.messages['advanced_searches.fields.choice_set_search_field.select_placeholder']}
         />
       );
     } else {

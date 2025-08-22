@@ -5,10 +5,6 @@ const ChoiceSetSearchContainer = (props) => {
   const {
     fieldUuid,
     choiceSet,
-    childChoicesActivatedPlaceholder,
-    childChoicesActivatedYesLabel,
-    childChoicesActivatedNoLabel,
-    searchPlaceholder,
     fieldConditionData,
     defaultValues,
     excludeCondition,
@@ -49,12 +45,8 @@ const ChoiceSetSearchContainer = (props) => {
             fieldUuid={fieldUuid}
             itemId={item.itemId}
             choiceSet={choiceSet}
-            searchPlaceholder={searchPlaceholder}
             fieldConditionData={fieldConditionData}
             defaultValues={item.defaultValues}
-            childChoicesActivatedPlaceholder={childChoicesActivatedPlaceholder}
-            childChoicesActivatedYesLabel={childChoicesActivatedYesLabel}
-            childChoicesActivatedNoLabel={childChoicesActivatedNoLabel}
             addComponent={item.addComponent}
             deleteComponent={item.deleteComponent}
             excludeCondition={excludeCondition}

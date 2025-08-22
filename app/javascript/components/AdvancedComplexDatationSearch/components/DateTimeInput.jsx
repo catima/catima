@@ -23,7 +23,7 @@ const DateTimeInput = forwardRef((props, ref) => {
     item,
     addComponent,
     deleteComponent
-  } = props
+  } = props;
 
   const {topRef, datepickerRef} = ref
   const selectRef = useRef()
