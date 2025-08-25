@@ -18,7 +18,6 @@ const DateTimeSearchComponent = (props) => {
     selectCondition,
     selectConditionName,
     inputStart,
-    localizedDateTimeData,
     locale,
     format,
     fieldConditionName,
@@ -204,7 +203,7 @@ const DateTimeSearchComponent = (props) => {
                          inputName={startDateInputName} ref={{
             topRef: dateTimeSearchRef1,
             datepickerRef: datepickerRef1
-          }} localizedDateTimeData={localizedDateTimeData} disabled={disabled} isRange={isRange} datepicker={true}
+          }} disabled={disabled} isRange={isRange} datepicker={true}
                          locale={locale} format={format} allowBC={allowDateTimeBC} list={list} item={item}
                          addComponent={addComponent} deleteComponent={deleteComponent}/>
           {isRange &&
@@ -239,7 +238,7 @@ const DateTimeSearchComponent = (props) => {
               <div className="collapse" id={dateTimeCollapseId}>
                 <div className="col-lg-12">
                   <DateTimeInput input={inputEnd} inputId={dateTimeSearchId} inputSuffixId="end_date"
-                                 inputName={endDateInputName} localizedDateTimeData={localizedDateTimeData}
+                                 inputName={endDateInputName}
                                  disabled={disabled} isRange={isRange} ref={{
                     topRef: dateTimeSearchRef2,
                     datepickerRef: datepickerRef2
@@ -276,7 +275,6 @@ const DateTimeSearch = (props) => {
     selectCondition,
     selectConditionName,
     inputStart,
-    localizedDateTimeData,
     locale,
     format,
     fieldConditionName,
@@ -332,7 +330,6 @@ const DateTimeSearch = (props) => {
         selectCondition={selectCondition}
         selectConditionName={selectConditionName}
         inputStart={inputStart}
-        localizedDateTimeData={localizedDateTimeData}
         locale={locale}
         format={format}
         fieldConditionName={fieldConditionName}

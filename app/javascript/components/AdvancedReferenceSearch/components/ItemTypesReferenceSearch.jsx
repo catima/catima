@@ -30,11 +30,10 @@ const ItemTypesReferenceSearch = (props) => {
     defaultValues,
   } = props;
 
-  const { inputData, inputType, dateFormat, localizedDateTimeData, isLoading } = fieldData || {
+  const { inputData, inputType, dateFormat, isLoading } = fieldData || {
     inputData: null,
     inputType: FIELD_TYPES.TEXT,
     dateFormat: '',
-    localizedDateTimeData: [],
     isLoading: false
   };
 
@@ -58,7 +57,6 @@ const ItemTypesReferenceSearch = (props) => {
       parentSelectedCondition={selectedCondition}
       format={dateFormat}
       locale={locale}
-      localizedDateTimeData={localizedDateTimeData}
       defaultValues={defaultValues}
     />
   );

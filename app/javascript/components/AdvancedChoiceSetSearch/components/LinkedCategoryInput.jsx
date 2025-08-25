@@ -31,11 +31,10 @@ const LinkedCategoryInput = (props) => {
     linkedCategoryData,
   } = props;
 
-  const { inputData, inputType, dateFormat, localizedDateTimeData, isLoading } = linkedCategoryData || {
+  const { inputData, inputType, dateFormat, isLoading } = linkedCategoryData || {
     inputData: null,
     inputType: FIELD_TYPES.TEXT,
     dateFormat: '',
-    localizedDateTimeData: [],
     isLoading: false
   };
 
@@ -60,7 +59,6 @@ const LinkedCategoryInput = (props) => {
       format={dateFormat}
       defaultValues={defaultValue}
       locale={locale}
-      localizedDateTimeData={localizedDateTimeData}
       isCategory={true}
     />
   );

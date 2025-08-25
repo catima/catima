@@ -35,7 +35,6 @@ const ReferenceSearch = (props) => {
     inputData: null,
     inputType: 'Field::Text',
     dateFormat: '',
-    localizedDateTimeData: [],
     isLoading: false
   });
 
@@ -54,13 +53,11 @@ const ReferenceSearch = (props) => {
       const { data } = response;
 
       const formatOption = data.inputOptions?.find(option => option && 'format' in option);
-      const localizedOption = data.inputOptions?.find(option => option && 'localizedDateTimeData' in option);
 
       setFieldData({
         inputData: data.inputData || [],
         inputType: data.inputType || 'Field::Text',
         dateFormat: formatOption ? formatOption.format : '',
-        localizedDateTimeData: localizedOption ? localizedOption.localizedDateTimeData : [],
         isLoading: false
       });
 
@@ -85,7 +82,6 @@ const ReferenceSearch = (props) => {
         inputData: null,
         inputType: 'Field::Text',
         dateFormat: '',
-        localizedDateTimeData: [],
         isLoading: false
       });
     } else {

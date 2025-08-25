@@ -1,6 +1,7 @@
 import 'es6-shim';
 import React, { useState, useEffect, useRef, useMemo, forwardRef, useCallback } from 'react';
 import { Namespace, TempusDominus } from '@eonasdan/tempus-dominus';
+import Translations from "../../Translations/components/Translations";
 
 const DateTimeInput = forwardRef((props, datepickerRef) => {
   const {
@@ -11,7 +12,6 @@ const DateTimeInput = forwardRef((props, datepickerRef) => {
     minDate,
     maxDate,
     disabled = false,
-    localizedDateTimeData = {},
     format = '',
     locale,
   } = props;
@@ -206,7 +206,7 @@ const DateTimeInput = forwardRef((props, datepickerRef) => {
 
   return (
     <div id={`${inputId}_${inputSuffixId}`}>
-      {parts && localizedDateTimeData.month_names && (
+      {parts && (
         <div className="dateTimeInput rails-bootstrap-forms-datetime-select">
           <div>
             {format.includes('D') ? (
@@ -234,19 +234,10 @@ const DateTimeInput = forwardRef((props, datepickerRef) => {
                 onChange={onChangeMonth}
                 readOnly={disabled}
               >
-                {localizedDateTimeData.month_names.map((month, index) => {
-                  let label = month;
-                  if (label !== null && typeof label === 'string') {
-                    label = label.charAt(0).toUpperCase() + label.slice(1);
-                  }
-                  // index 0 is the blank value
-                  const val = index === 0 ? '' : index;
-                  return (
-                    <option key={index} value={val}>
-                      {label}
-                    </option>
-                  );
-                })}
+                <option key={0} value=''></option>
+                {Translations.month_names.map((month, index) => (
+                  <option key={index + 1} value={index + 1}>{month}</option>
+                ))}
               </select>
             ) : null}
 

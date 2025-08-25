@@ -27,7 +27,6 @@ const LinkedCategoryInput = (props) => {
   const [inputType, setInputType] = useState('Field::Text')
   const [inputData, setInputData] = useState(null)
   const [inputOptions, setInputOptions] = useState(null)
-  const [localizedDateTimeData, setLocalizedDateTimeData] = useState([])
   const [selectedFilter, setSelectedFilter] = useState({})
   const [selectedItem, setSelectedItem] = useState([])
   const [selectCondition, setSelectCondition] = useState([])
@@ -126,7 +125,6 @@ const LinkedCategoryInput = (props) => {
         _buildDateTimeInputNames(res.data.inputType, inputName, selectedCondition);
         setInputOptions(res.data.inputOptions);
         _updateDateTimeFormatOption(res.data.inputOptions);
-        _updateLocalizedDateTimeData(res.data.inputOptions);
         setInputType(res.data.inputType);
         setIsLoading(false);
       });
@@ -165,13 +163,6 @@ const LinkedCategoryInput = (props) => {
     }
   }
 
-  function _updateLocalizedDateTimeData(options) {
-    let option = _searchInArray(options, 'localizedDateTimeData');
-    if (option !== false) {
-      setLocalizedDateTimeData(option.localizedDateTimeData);
-    }
-  }
-
   function _searchInArray(array, key) {
     if (array !== null) {
       for (let i = 0; i < array.length; i++) {
@@ -204,7 +195,6 @@ const LinkedCategoryInput = (props) => {
         disableInputByCondition={selectedConditionProps}
         startDateInputName={startDateInputName}
         endDateInputName={endDateInputName}
-        localizedDateTimeData={localizedDateTimeData}
         catalog={catalog}
         itemType={itemType}
         inputStart='input1'

@@ -4,13 +4,12 @@ import React, {useState, useEffect, useRef, forwardRef} from 'react';
 import $ from 'jquery';
 import {Namespace, TempusDominus} from '@eonasdan/tempus-dominus';
 import Translations from "../../Translations/components/Translations";
-
+// TODO utiliser DateTimeInput et DateTimeSearch de AdvancedDateTimeSearch
 const DateTimeInput = forwardRef((props, ref) => {
   const {
     disabled: disabledProps,
     isRange: isRangeProps,
     input,
-    localizedDateTimeData: localizedDateTimeDataProps,
     format,
     datepicker,
     locale,
@@ -35,7 +34,6 @@ const DateTimeInput = forwardRef((props, ref) => {
   const [disabled, setDisabled] = useState(disabledProps)
   const [isRange, setIsRange] = useState(isRangeProps)
   const [selectedDate, setSelectedDate] = useState('')
-  const [localizedDateTimeData, setLocalizedDateTimeData] = useState([])
   const [date, setDate] = useState(getData())
   const [granularity, setGranularity] = useState(getFieldOptions().format)
   const [styleMarginRight, setStyleMarginRight] = useState('')
@@ -61,7 +59,6 @@ const DateTimeInput = forwardRef((props, ref) => {
   useEffect(() => {
     if (!datepickerRef.current) {
       _initDatePicker();
-      setLocalizedDateTimeData(localizedDateTimeDataProps);
       if (document.querySelector(input) !== null) {
         setIsRequired(document.querySelector(input).getAttribute('data-field-required') == 'true')
       }
@@ -298,7 +295,7 @@ const DateTimeInput = forwardRef((props, ref) => {
 
   return (
       <div id={inputId + '_' + inputSuffixId} ref={topRef}>
-        {state && localizedDateTimeData.month_names && (
+        {state && (
             <div className="dateTimeInput rails-bootstrap-forms-datetime-select">
               <div className="d-flex">
                 {allowBC == '1' ? (
@@ -318,20 +315,19 @@ const DateTimeInput = forwardRef((props, ref) => {
                 ) : null
                 }
                 {fmt.includes('M') ? (
-                    <select id={inputId + '_' + inputSuffixId + '_month'} style={errorStl} name={inputName + '[M]'}
-                            className={_getSelectClassNames()} value={state.M} onChange={_handleChangeMonth}
-                            ref={selectRef}>
-                      {localizedDateTimeData.month_names.map((month, index) => {
-                            if (month !== null) {
-                              month = month.charAt(0).toUpperCase() + month.slice(1);
-                            }
-                            if (index === 0) {
-                              index = ''
-                            }
-
-                            return <option key={index} value={index}>{month}</option>
-                          }
-                      )}
+                    <select
+                      id={inputId + '_' + inputSuffixId + '_month'}
+                      style={errorStl}
+                      name={inputName + '[M]'}
+                      className={_getSelectClassNames()}
+                      value={state.M}
+                      onChange={_handleChangeMonth}
+                      ref={selectRef}
+                    >
+                      <option key='' value=''></option>
+                      {Translations.month_names.map((month, index) => (
+                        <option key={index + 1} value={index + 1}>{month}</option>
+                      ))}
                     </select>
                 ) : null
                 }

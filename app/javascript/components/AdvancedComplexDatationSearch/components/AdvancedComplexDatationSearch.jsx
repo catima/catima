@@ -17,7 +17,6 @@ const AdvancedComplexDatationSearch = (props) => {
     selectExcludeConditions,
     selectExcludeConditionName,
     inputStart,
-    localizedDateTimeData,
     format,
     fieldConditionName,
     fieldConditionData,
@@ -50,7 +49,6 @@ const AdvancedComplexDatationSearch = (props) => {
         selectCondition={selectCondition}
         selectConditionName={selectConditionName}
         inputStart={inputStart}
-        localizedDateTimeData={localizedDateTimeData}
         locale={locale}
         format={format}
         fieldConditionName={fieldConditionName}

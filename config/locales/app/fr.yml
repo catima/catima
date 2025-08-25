@@ -1097,3 +1097,17 @@ fr:
     create:
       success: "Votre suggestion a été envoyée"
       error: "Impossible de soumettre votre suggestion : %{errors}"
+
+  month_names:
+    january: "Janvier"
+    february: "Février"
+    march: "Mars"
+    april: "Avril"
+    may: "Mai"
+    june: "Juin"
+    july: "Juillet"
+    august: "Août"
+    september: "Septembre"
+    october: "Octobre"
+    november: "Novembre"
+    december: "Décembre"

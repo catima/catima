@@ -17,7 +17,6 @@ const DateTimeSearch = (props) => {
     format,
     defaultValues,
     locale,
-    localizedDateTimeData,
     isCategory = false,
   } = props;
 
@@ -122,7 +121,6 @@ const DateTimeSearch = (props) => {
           minDate={isStart ? undefined : defaultStart}
           maxDate={isStart ? defaultEnd : undefined}
           disabled={disabled}
-          localizedDateTimeData={localizedDateTimeData}
           format={format}
           locale={locale}
           ref={isStart ? datepickerRefStart : datepickerRefEnd}
@@ -131,7 +129,7 @@ const DateTimeSearch = (props) => {
     );
   }, [
     startDateInputName, endDateInputName, datepickerRefStart, datepickerRefEnd,
-    localizedDateTimeData, disabled, locale, format, defaultStart, defaultEnd
+    disabled, locale, format, defaultStart, defaultEnd
   ]);
 
   const renderFieldConditionElement = useCallback(() => {
