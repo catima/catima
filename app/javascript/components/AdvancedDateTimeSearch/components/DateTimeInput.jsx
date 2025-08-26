@@ -204,100 +204,90 @@ const DateTimeInput = forwardRef((props, datepickerRef) => {
 
   const selectClassName = disabled ? 'form-control disabled' : 'form-control';
 
+  const renderInputField = (fieldKey, config) => {
+    if (!format.includes(fieldKey)) return null;
+
+    return (
+      <input
+        id={`${inputId}_${inputSuffixId}_${config.idSuffix}`}
+        name={`${inputName}[${fieldKey}]`}
+        style={errorStyle}
+        type="number"
+        min={config.min}
+        max={config.max}
+        className={config.className}
+        value={parts[fieldKey] ?? ''}
+        onChange={config.onChange}
+        readOnly={disabled}
+      />
+    );
+  };
+
+  const renderMonthSelect = () => {
+    if (!format.includes('M')) return null;
+
+    return (
+      <select
+        id={`${inputId}_${inputSuffixId}_month`}
+        style={errorStyle}
+        name={`${inputName}[M]`}
+        className={selectClassName}
+        value={parts.M ?? ''}
+        onChange={onChangeMonth}
+        readOnly={disabled}
+      >
+        <option key={0} value=''></option>
+        {Translations.month_names.map((month, index) => (
+          <option key={index + 1} value={index + 1}>{month}</option>
+        ))}
+      </select>
+    );
+  };
+
   return (
     <div id={`${inputId}_${inputSuffixId}`}>
       {parts && (
         <div className="dateTimeInput rails-bootstrap-forms-datetime-select">
           <div>
-            {format.includes('D') ? (
-              <input
-                id={`${inputId}_${inputSuffixId}_day`}
-                name={`${inputName}[D]`}
-                style={errorStyle}
-                type="number"
-                min="0"
-                max="31"
-                className="input-2 form-control"
-                value={parts.D ?? ''}
-                onChange={onChangeDay}
-                readOnly={disabled}
-              />
-            ) : null}
+            {renderInputField('D', {
+              idSuffix: 'day',
+              min: '0',
+              max: '31',
+              className: 'input-2 form-control',
+              onChange: onChangeDay
+            })}
 
-            {format.includes('M') ? (
-              <select
-                id={`${inputId}_${inputSuffixId}_month`}
-                style={errorStyle}
-                name={`${inputName}[M]`}
-                className={selectClassName}
-                value={parts.M ?? ''}
-                onChange={onChangeMonth}
-                readOnly={disabled}
-              >
-                <option key={0} value=''></option>
-                {Translations.month_names.map((month, index) => (
-                  <option key={index + 1} value={index + 1}>{month}</option>
-                ))}
-              </select>
-            ) : null}
+            {renderMonthSelect()}
 
-            {format.includes('Y') ? (
-              <input
-                id={`${inputId}_${inputSuffixId}_year`}
-                name={`${inputName}[Y]`}
-                style={errorStyle}
-                type="number"
-                className={'input-4 form-control'}
-                value={parts.Y ?? ''}
-                onChange={onChangeYear}
-                readOnly={disabled}
-              />
-            ) : null}
+            {renderInputField('Y', {
+              idSuffix: 'year',
+              className: 'input-4 form-control',
+              onChange: onChangeYear
+            })}
 
-            {format.includes('h') ? (
-              <input
-                id={`${inputId}_${inputSuffixId}_hour`}
-                name={`${inputName}[h]`}
-                style={errorStyle}
-                min="0"
-                max="23"
-                type="number"
-                className="input-2 form-control"
-                value={parts.h ?? ''}
-                onChange={onChangeHours}
-                readOnly={disabled}
-              />
-            ) : null}
+            {renderInputField('h', {
+              idSuffix: 'hour',
+              min: '0',
+              max: '23',
+              className: 'input-2 form-control',
+              onChange: onChangeHours
+            })}
 
-            {format.includes('m') ? (
-              <input
-                id={`${inputId}_${inputSuffixId}_minute`}
-                name={`${inputName}[m]`}
-                style={errorStyle}
-                min="0"
-                max="59"
-                type="number"
-                className="input-2 form-control"
-                value={parts.m ?? ''}
-                onChange={onChangeMinutes}
-                readOnly={disabled}
-              />
-            ) : null}
+            {renderInputField('m', {
+              idSuffix: 'minute',
+              min: '0',
+              max: '59',
+              className: 'input-2 form-control',
+              onChange: onChangeMinutes
+            })}
 
-            {format.includes('s') ? (
-              <input
-                id={`${inputId}_${inputSuffixId}_second`}
-                name={`${inputName}[s]`}
-                style={errorStyle}
-                min="0"
-                max="59"
-                type="number"
-                className="input-2 form-control"
-                value={parts.s ?? ''}
-                onChange={onChangeSeconds}
-                readOnly={disabled}
-              />
-            ) : null}
+            {renderInputField('s', {
+              idSuffix: 'second',
+              min: '0',
+              max: '59',
+              className: 'input-2 form-control',
+              onChange: onChangeSeconds
+            })}
 
             <div className="calendar-button-container d-inline-flex flex-wrap">
               <div
