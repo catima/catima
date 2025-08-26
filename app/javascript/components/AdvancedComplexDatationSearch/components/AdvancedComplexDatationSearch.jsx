@@ -1,5 +1,5 @@
 import React, { useState } from 'react';
-import DateTimeSearch from './DateTimeSearch';
+import DateTimeSearchContainer from './DateTimeSearch';
 import ChoiceSetSearchContainer from './ChoiceSetSearchContainer';
 import Translations from '../../Translations/components/Translations';
 
@@ -7,72 +7,36 @@ const AdvancedComplexDatationSearch = (props) => {
   const {
     fieldUuid,
     locale,
-    srcId,
-    srcRef,
-    startDateInputName,
-    endDateInputName,
-    disableInputByCondition,
     selectCondition,
-    selectConditionName,
     selectExcludeConditions,
-    selectExcludeConditionName,
-    inputStart,
     format,
-    fieldConditionName,
     fieldConditionData,
-    inputEnd,
     allowDateTimeBC,
-    inputName,
-    choiceSelectConditionName,
-    choiceFieldConditionName,
-    categoryInputName,
-    childChoicesActivatedInputName,
-    linkedCategoryInputName,
-    catalog,
-    itemType,
     choiceSet,
-    multiple,
-    choiceFieldConditionData
+    choiceFieldConditionData,
+    defaultValues,
   } = props;
 
   const [selectedExcludeCondition, setSelectedExcludeCondition] = useState('');
 
   return (
     <div>
-      <DateTimeSearch
+      <DateTimeSearchContainer
         fieldUuid={fieldUuid}
-        startDateInputName={startDateInputName}
-        endDateInputName={endDateInputName}
-        disableInputByCondition={disableInputByCondition}
-        srcId={srcId}
-        srcRef={srcRef}
         selectCondition={selectCondition}
-        selectConditionName={selectConditionName}
-        inputStart={inputStart}
-        locale={locale}
-        format={format}
-        fieldConditionName={fieldConditionName}
         fieldConditionData={fieldConditionData}
-        inputEnd={inputEnd}
+        format={format}
+        locale={locale}
         allowDateTimeBC={allowDateTimeBC}
         excludeCondition={selectedExcludeCondition}
+        defaultValues={defaultValues}
       />
       <ChoiceSetSearchContainer
         fieldUuid={fieldUuid}
-        inputName={inputName}
-        srcId={srcId}
-        srcRef={srcRef}
-        fieldConditionName={choiceFieldConditionName}
-        categoryInputName={categoryInputName}
-        childChoicesActivatedInputName={childChoicesActivatedInputName}
-        linkedCategoryInputName={linkedCategoryInputName}
-        catalog={catalog}
-        itemType={itemType}
         choiceSet={choiceSet}
-        locale={locale}
-        multiple={multiple}
         fieldConditionData={choiceFieldConditionData}
         excludeCondition={selectedExcludeCondition}
+        defaultValues={defaultValues}
       />
       <div className="row">
         <div className="col-lg-2">
@@ -84,7 +48,7 @@ const AdvancedComplexDatationSearch = (props) => {
           <div>
             <select
               className="form-select filter-condition"
-              name={selectExcludeConditionName}
+              name={`advanced_search[criteria][${fieldUuid}][exclude_condition]`}
               value={selectedExcludeCondition}
               onChange={e => setSelectedExcludeCondition(e.target.value || '')}
             >
