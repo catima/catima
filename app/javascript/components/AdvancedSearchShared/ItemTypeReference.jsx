@@ -1,11 +1,11 @@
 import React, { useMemo } from 'react';
 import ReactSelect from 'react-select';
 import 'moment';
-import DateTimeSearch from '../../AdvancedDateTimeSearch/components/DateTimeSearch';
-import Translations from '../../Translations/components/Translations';
+import DateTimeSearch from '../AdvancedDateTimeSearch/components/DateTimeSearch';
+import Translations from '../Translations/components/Translations';
 
 // Constants for field types.
-const FIELD_TYPES = {
+export const FIELD_TYPES = {
   TEXT: 'Field::Text',
   EMAIL: 'Field::Email',
   INT: 'Field::Int',
@@ -17,30 +17,34 @@ const FIELD_TYPES = {
 };
 
 /**
- * ItemTypesReferenceSearch Component - Handles dynamic inputs based on selected filters.
- * Displays different input types depending on the selected field type.
+ * ItemTypeReference - Unified component for related item type
  */
-const ItemTypesReferenceSearch = (props) => {
+const ItemTypeReference = (props) => {
   const {
     fieldUuid,
     itemId,
     selectedCondition,
     locale,
-    fieldData,
     defaultValues,
+    fetchedData,
+    isFromCategory = false
   } = props;
 
-  const { inputData, inputType, dateFormat, isLoading } = fieldData || {
+  const data = fetchedData || {
     inputData: null,
     inputType: FIELD_TYPES.TEXT,
     dateFormat: '',
     isLoading: false
   };
 
+  const { inputData, inputType, dateFormat, isLoading } = data;
+
   const buildInputNameWithCondition = useMemo(() => {
     const currentCondition = selectedCondition || 'default';
-    return `advanced_search[criteria][${fieldUuid}][${itemId}][${currentCondition}]`;
-  }, [fieldUuid, selectedCondition, itemId]);
+    const categoryCriteria = isFromCategory ? '[category_criteria]' : '';
+
+    return `advanced_search[criteria][${fieldUuid}][${itemId}]${categoryCriteria}[${currentCondition}]`;
+  }, [fieldUuid, selectedCondition, itemId, isFromCategory]);
 
   const choiceSetOptions = useMemo(() => {
     if (!inputData) return [];
@@ -50,6 +54,14 @@ const ItemTypesReferenceSearch = (props) => {
     }));
   }, [inputData]);
 
+  const currentDefaultValue = useMemo(() => {
+    if (isFromCategory) {
+        return defaultValues?.category_criteria?.[defaultValues?.condition || "default"];
+    }
+    return defaultValues?.[defaultValues?.condition || "default"];
+  }, [isFromCategory, defaultValues, defaultValues]);
+
+  // Rendu des différents types d'input
   const renderDateTimeInput = () => (
     <DateTimeSearch
       fieldUuid={fieldUuid}
@@ -58,6 +70,7 @@ const ItemTypesReferenceSearch = (props) => {
       format={dateFormat}
       locale={locale}
       defaultValues={defaultValues}
+      isFromCategory={isFromCategory}
     />
   );
 
@@ -67,7 +80,7 @@ const ItemTypesReferenceSearch = (props) => {
       type={type}
       className="form-control"
       step={step}
-      defaultValue={defaultValues[defaultValues.condition || "default"]}
+      defaultValue={currentDefaultValue}
     />
   );
 
@@ -75,7 +88,7 @@ const ItemTypesReferenceSearch = (props) => {
     <select
       name={buildInputNameWithCondition}
       className="form-select"
-      defaultValue={defaultValues[defaultValues.condition || "default"]}
+      defaultValue={currentDefaultValue}
     >
       {inputData?.map((item) => (
         <option key={item.key} value={item.key}>
@@ -87,20 +100,29 @@ const ItemTypesReferenceSearch = (props) => {
 
   const renderChoiceSetSelect = () => {
     const defaultOption = choiceSetOptions.find(
-      option => option.value == defaultValues[defaultValues.condition || "default"]
+      option => option.value == (isFromCategory ?
+        defaultValues?.category_criteria?.default :
+        currentDefaultValue
+      )
     );
 
-    return (<ReactSelect
-      name={buildInputNameWithCondition}
-      isSearchable={true}
-      isClearable={true}
-      options={choiceSetOptions}
-      className="basic-select"
-      classNamePrefix="select"
-      placeholder={Translations.messages['advanced_searches.fields.choice_set_search_field.select_placeholder']}
-      noOptionsMessage={() => Translations.messages['catalog_admin.items.reference_editor.no_options']}
-      defaultValue={defaultOption}
-    />);
+    const inputName = isFromCategory ?
+      `advanced_search[criteria][${fieldUuid}][${itemId}][category_criteria][default]` :
+      buildInputNameWithCondition;
+
+    return (
+      <ReactSelect
+        name={inputName}
+        isSearchable={true}
+        isClearable={true}
+        options={choiceSetOptions}
+        className="basic-select"
+        classNamePrefix="select"
+        placeholder={Translations.messages['advanced_searches.fields.choice_set_search_field.select_placeholder']}
+        noOptionsMessage={() => Translations.messages['catalog_admin.items.reference_editor.no_options']}
+        defaultValue={defaultOption}
+      />
+    );
   };
 
   // Fonction principale de rendu des inputs
@@ -127,6 +149,6 @@ const ItemTypesReferenceSearch = (props) => {
       {renderInput()}
     </div>
   );
-}
+};
 
-export default ItemTypesReferenceSearch;
+export default ItemTypeReference;

@@ -8,7 +8,7 @@ const DateTimeInput = forwardRef((props, datepickerRef) => {
     inputId,
     inputSuffixId,
     inputName,
-    defaultValue,
+    defaultValues,
     minDate,
     maxDate,
     disabled = false,
@@ -42,20 +42,20 @@ const DateTimeInput = forwardRef((props, datepickerRef) => {
 
   const EMPTY_PARTS = useMemo(() => ({ Y: '', M: '', D: '', h: '', m: '', s: '' }), []);
 
-  // Compute initial parts from defaultValue and current format
+  // Compute initial parts from defaultValues and current format
   const initialParts = useMemo(() => {
-    const base = defaultValue || EMPTY_PARTS;
+    const base = defaultValues || EMPTY_PARTS;
     const allowed = new Set(format.split(''));
     const obj = {};
     Object.keys(EMPTY_PARTS).forEach((k) => {
       obj[k] = allowed.has(k) ? base[k] ?? '' : null; // null = key not in current format
     });
     return obj;
-  }, [defaultValue, format, EMPTY_PARTS]);
+  }, [defaultValues, format, EMPTY_PARTS]);
 
   const [parts, setParts] = useState(initialParts);
 
-  // Keep parts in sync when format or defaultValue changes
+  // Keep parts in sync when format or defaultValues changes
   useEffect(() => {
     setParts(initialParts);
   }, [initialParts]);
@@ -91,7 +91,7 @@ const DateTimeInput = forwardRef((props, datepickerRef) => {
 
     const dp = new TempusDominus(datepickerContainerRef.current, {
       localization: { locale },
-      defaultDate: partsToDate(defaultValue),
+      defaultDate: partsToDate(defaultValues),
       restrictions: {
         minDate: partsToDate(minDate),
         maxDate: partsToDate(maxDate),
@@ -135,7 +135,7 @@ const DateTimeInput = forwardRef((props, datepickerRef) => {
       datepickerRef.current = null;
     };
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [format, locale, partsToDate, defaultValue, minDate, maxDate]);
+  }, [format, locale, partsToDate, defaultValues, minDate, maxDate]);
 
   // Clear when switching to disabled and some field is empty
   const prevDisabledRef = useRef(disabled);

@@ -1,6 +1,6 @@
 import React, { useState, useMemo, useRef, useCallback } from 'react';
 import ReactSelect from 'react-select';
-import LinkedCategoryInput from './LinkedCategoryInput';
+import ItemTypeReference from '../../AdvancedSearchShared/ItemTypeReference';
 import AsyncPaginate from 'react-select-async-paginate';
 import axios from "axios";
 import Translations from "../../Translations/components/Translations";
@@ -279,13 +279,14 @@ const ChoiceSetSearch = (props) => {
   function renderLinkedCategoryElement() {
     return (
       <div>
-        <LinkedCategoryInput
+        <ItemTypeReference
           fieldUuid={fieldUuid}
           itemId={itemId}
           locale={locale}
           selectedCondition={selectedCondition}
-          defaultValue={defaultValues}
-          linkedCategoryData={linkedCategoryData}
+          defaultValues={defaultValues}
+          fetchedData={linkedCategoryData}
+          isFromCategory={true}
         />
       </div>
     );

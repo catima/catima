@@ -1,5 +1,5 @@
 import React, { useState, useRef } from 'react';
-import AdvancedContainerSearch from '../../AdvancedContainerSearch/AdvancedContainerSearch';
+import AdvancedContainerSearch from '../../AdvancedSearchShared/AdvancedContainerSearch';
 import ChoiceSetSearch from './ChoiceSetSearch';
 import Translations from '../../Translations/components/Translations';
 import DateTimeSearch from '../../AdvancedDateTimeSearch/components/DateTimeSearch';

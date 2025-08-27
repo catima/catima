@@ -17,8 +17,8 @@ const SelectedReferenceSearch = (props) => {
   const isFirstLoadOptionsRef = useRef(true);
 
   const buildInputNameWithCondition = useMemo(() => {
-      const currentCondition = selectedCondition || 'default';
-      return `advanced_search[criteria][${fieldUuid}][${itemId}][${currentCondition}]`;
+    const currentCondition = selectedCondition || 'default';
+    return `advanced_search[criteria][${fieldUuid}][${itemId}][${currentCondition}]`;
   }, [fieldUuid, selectedCondition, itemId]);
 
   async function loadOptions(search, loadedOptions, {page}) {

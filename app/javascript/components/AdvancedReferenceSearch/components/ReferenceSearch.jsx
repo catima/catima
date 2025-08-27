@@ -1,7 +1,7 @@
 import React, { useState, useCallback, useRef } from "react";
 import axios from 'axios';
 import SelectedReferenceSearch from './SelectedReferenceSearch';
-import ItemTypesReferenceSearch from './ItemTypesReferenceSearch';
+import ItemTypeReference from '../../AdvancedSearchShared/ItemTypeReference';
 import AsyncPaginate from 'react-select-async-paginate';
 import Translations from '../../Translations/components/Translations';
 
@@ -122,12 +122,12 @@ const ReferenceSearch = (props) => {
   function renderSearch() {
     if (selectedField) {
       return (
-        <ItemTypesReferenceSearch
+        <ItemTypeReference
           fieldUuid={fieldUuid}
           itemId={itemId}
           selectedCondition={selectedCondition}
           locale={locale}
-          fieldData={fieldData}
+          fetchedData={fieldData}
           defaultValues={defaultValues}
         />
       );

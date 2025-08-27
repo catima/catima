@@ -17,7 +17,7 @@ const DateTimeSearch = (props) => {
     format,
     defaultValues,
     locale,
-    isCategory = false,
+    isFromCategory = false,
     allowDateTimeBC = false,
     excludeCondition = null,
     addComponent = null,
@@ -30,7 +30,7 @@ const DateTimeSearch = (props) => {
   const selectConditionDefault = defaultValues?.condition;
   const fieldConditionDefault = defaultValues?.field_condition;
 
-  const defaultDates = isCategory ? defaultValues?.['category_criteria'] : defaultValues;
+  const defaultDates = isFromCategory ? defaultValues?.['category_criteria'] : defaultValues;
   const defaultStart = defaultDates?.['start']?.[defaultValues?.condition || 'exact'];
   const defaultEnd = defaultDates?.['end']?.[defaultValues?.condition || 'exact'];
 
@@ -44,9 +44,9 @@ const DateTimeSearch = (props) => {
   const getDateInputName = useCallback((type) => {
       const currentCondition = selectedCondition || 'exact';
       const _itemId = itemId !== null ? `[${itemId}]` : '';
-      const _categorySuffix = isCategory ? '[category_criteria]' : '';
+      const _categorySuffix = isFromCategory ? '[category_criteria]' : '';
       return `advanced_search[criteria][${fieldUuid}]${_itemId}${_categorySuffix}[${type}][${currentCondition}]`;
-  }, [fieldUuid, selectedCondition, itemId, isCategory]);
+  }, [fieldUuid, selectedCondition, itemId, isFromCategory]);
 
   const startDateInputName = useMemo(() => getDateInputName('start'), [getDateInputName]);
   const endDateInputName = useMemo(() => getDateInputName('end'), [getDateInputName]);
@@ -123,7 +123,7 @@ const DateTimeSearch = (props) => {
           inputId={`advanced_search_criteria_${fieldUuid}_id-datetime${_itemId}`}
           inputSuffixId={`${type}_date`}
           inputName={isStart ? startDateInputName : endDateInputName}
-          defaultValue={isStart ? defaultStart : defaultEnd}
+          defaultValues={isStart ? defaultStart : defaultEnd}
           minDate={isStart ? undefined : defaultStart}
           maxDate={isStart ? defaultEnd : undefined}
           disabled={disabled}
