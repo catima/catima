@@ -2,6 +2,7 @@ import React, { useState, useMemo } from 'react';
 import ReactSelect from 'react-select';
 import Translations from '../../Translations/components/Translations';
 import ChildChoicesElement from '../../AdvancedSearchShared/ChildChoicesElement';
+import ComponentActionButtons from '../../AdvancedSearchShared/ComponentActionButtons';
 
 const ChoiceSetSearch = (props) => {
   const {
@@ -85,24 +86,12 @@ const ChoiceSetSearch = (props) => {
             {renderChildChoicesElement()}
           </div>
         }
-        <div className="col-lg-1">
-          <div className="row">
-            {canAddComponent &&
-              <div className="col-lg-12">
-                <a type="button" onClick={addComponent}>
-                  <i className="fa fa-plus"></i>
-                </a>
-              </div>
-            }
-            {canRemoveComponent &&
-              <div className="col-lg-12">
-                <a type="button" onClick={deleteComponent}>
-                  <i className="fa fa-trash"></i>
-                </a>
-              </div>
-            }
-          </div>
-        </div>
+        <ComponentActionButtons
+          addComponent={addComponent}
+          deleteComponent={deleteComponent}
+          canAddComponent={canAddComponent}
+          canRemoveComponent={canRemoveComponent}
+        />
         {!selectedItem?.has_childrens && (
           <div className="col-lg-3">
             {renderConditionElement()}

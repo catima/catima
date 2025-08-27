@@ -2,6 +2,7 @@ import React, { useState, useEffect, useRef, useMemo, useCallback } from 'react'
 import DateTimeInput from './DateTimeInput';
 import $ from 'jquery';
 import { Namespace } from '@eonasdan/tempus-dominus';
+import ComponentActionButtons from '../../AdvancedSearchShared/ComponentActionButtons';
 
 /**
  * DateTimeSearch Component - Handles date/time range selection with conditions.
@@ -205,26 +206,13 @@ const DateTimeSearch = (props) => {
         </div>
       </div>
 
-      {hasActionButtons && (
-        <div className="col-lg-1">
-          <div className="row">
-            {canAddComponent && (
-              <div className="col-lg-12">
-                <a type="button" onClick={addComponent}>
-                  <i className="fa fa-plus"></i>
-                </a>
-              </div>
-            )}
-            {canRemoveComponent && (
-              <div className="col-lg-12">
-                <a type="button" onClick={deleteComponent}>
-                  <i className="fa fa-trash"></i>
-                </a>
-              </div>
-            )}
-          </div>
-        </div>
-      )}
+      <ComponentActionButtons
+        addComponent={addComponent}
+        deleteComponent={deleteComponent}
+        canAddComponent={canAddComponent}
+        canRemoveComponent={canRemoveComponent}
+        className={hasActionButtons ? "col-lg-1" : undefined}
+      />
 
       {renderSelectConditionElement()}
 

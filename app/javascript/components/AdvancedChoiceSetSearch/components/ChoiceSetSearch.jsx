@@ -5,6 +5,7 @@ import AsyncPaginate from 'react-select-async-paginate';
 import axios from "axios";
 import Translations from "../../Translations/components/Translations";
 import ChildChoicesElement from '../../AdvancedSearchShared/ChildChoicesElement';
+import ComponentActionButtons from '../../AdvancedSearchShared/ComponentActionButtons';
 
 // Default configuration for HTTP requests.
 const HTTP_CONFIG = {
@@ -301,24 +302,12 @@ const ChoiceSetSearch = (props) => {
             {renderCategoryElement(categoryOptions)}
           </div>
         }
-        <div className="col-lg-1">
-          <div className="row">
-            {canAddComponent &&
-              <div className="col-lg-12">
-                <a type="button" onClick={addComponent}>
-                  <i className="fa fa-plus"></i>
-                </a>
-              </div>
-            }
-            {canRemoveComponent &&
-              <div className="col-lg-12">
-                <a type="button" onClick={deleteComponent}>
-                  <i className="fa fa-trash"></i>
-                </a>
-              </div>
-            }
-          </div>
-        </div>
+        <ComponentActionButtons
+          addComponent={addComponent}
+          deleteComponent={deleteComponent}
+          canAddComponent={canAddComponent}
+          canRemoveComponent={canRemoveComponent}
+        />
         {!(selectedItem?.has_childrens && categoryOptions.length > 0) &&
           <div className="col-lg-3">
             {renderConditionElement()}
