@@ -1,8 +1,8 @@
 import React, { useState, useRef } from 'react';
-import AdvancedContainerSearch from '../../AdvancedSearchShared/AdvancedContainerSearch';
-import ChoiceSetSearch from './ChoiceSetSearch';
+import Container from './Container';
+import ChoiceSet from './partials/ComplexDatationChoiceSet';
 import Translations from '../../Translations/components/Translations';
-import DateTimeSearch from '../../AdvancedDateTimeSearch/components/DateTimeSearch';
+import DateTime from './DateTime';
 
 const ExcludeConditionSelectElement = ({ fieldUuid, selectedExcludeCondition, setSelectedExcludeCondition, selectExcludeConditions }) => (
   <div className="row">
@@ -32,7 +32,7 @@ const ExcludeConditionSelectElement = ({ fieldUuid, selectedExcludeCondition, se
   </div>
 );
 
-const AdvancedComplexDatationSearch = (props) => {
+const ComplexDatation = (props) => {
   const {
     fieldUuid,
     locale,
@@ -57,10 +57,10 @@ const AdvancedComplexDatationSearch = (props) => {
 
   return (
     <div>
-      <AdvancedContainerSearch
+      <Container
         fieldUuid={fieldUuid}
         defaultValues={defaultValues}
-        childComponent={DateTimeSearch}
+        childComponent={DateTime}
         childProps={{
           selectCondition,
           fieldConditionData,
@@ -71,10 +71,10 @@ const AdvancedComplexDatationSearch = (props) => {
         }}
         getNextId={getNextId}
       />
-      <AdvancedContainerSearch
+      <Container
         fieldUuid={fieldUuid}
         defaultValues={defaultValues}
-        childComponent={ChoiceSetSearch}
+        childComponent={ChoiceSet}
         childProps={{
           choiceSet,
           fieldConditionData: choiceFieldConditionData,
@@ -92,4 +92,4 @@ const AdvancedComplexDatationSearch = (props) => {
   );
 };
 
-export default AdvancedComplexDatationSearch
+export default ComplexDatation;

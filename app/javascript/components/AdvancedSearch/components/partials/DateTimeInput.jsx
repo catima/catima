@@ -1,7 +1,7 @@
 import 'es6-shim';
 import React, { useState, useEffect, useRef, useMemo, forwardRef } from 'react';
 import { Namespace, TempusDominus } from '@eonasdan/tempus-dominus';
-import Translations from "../../Translations/components/Translations";
+import Translations from "../../../Translations/components/Translations";
 
 const InputFieldElement = ({ fieldKey, config, parts, inputName, inputId, inputSuffixId, errorStyle, disabled }) => {
   if (!config.format.includes(fieldKey)) return null;

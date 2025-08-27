@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
 import ReactSelect from 'react-select';
-import Translations from '../../Translations/components/Translations';
-import ChildChoicesElement from '../../AdvancedSearchShared/ChildChoicesElement';
-import ActionButtons from '../../AdvancedSearchShared/ActionButtons';
+import Translations from '../../../Translations/components/Translations';
+import ChildChoicesElement from './ChildChoicesElement';
+import ActionButtons from './ActionButtons';
 
 const DisabledConditionSelectElement = () => (
   <select className="form-select filter-condition" disabled={true}></select>
@@ -47,7 +47,7 @@ const ChildChoicesContainerElement = ({ fieldUuid, itemId, defaultValues }) => (
   />
 );
 
-const ChoiceSetSearch = (props) => {
+const ChoiceSet = (props) => {
   const {
     fieldUuid,
     itemId,
@@ -120,4 +120,4 @@ const ChoiceSetSearch = (props) => {
   );
 }
 
-export default ChoiceSetSearch;
+export default ChoiceSet;

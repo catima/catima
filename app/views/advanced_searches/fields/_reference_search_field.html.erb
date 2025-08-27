@@ -1,9 +1,9 @@
 <div class="search-container col-lg-12">
-    <%= react_component('AdvancedSearchShared/AdvancedContainerSearch',
+    <%= react_component('AdvancedSearch/components/Container',
       {
         fieldUuid: field.uuid,
         defaultValues: value,
-        childComponent: 'AdvancedReferenceSearch/components/ReferenceSearch',
+        childComponent: 'AdvancedSearch/components/Reference',
         childProps: {
           catalog: field.catalog.slug,
           itemType: field.related_item_type.slug,

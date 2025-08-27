@@ -1,10 +1,10 @@
 import React, { useState, useRef } from "react";
 import axios from 'axios';
-import SelectedReferenceSearch from './SelectedReferenceSearch';
-import ItemTypeReference from '../../AdvancedSearchShared/ItemTypeReference';
+import SelectedReference from './partials/SelectedReference';
+import ItemTypeReference from './partials/ItemTypeReference';
 import AsyncPaginate from 'react-select-async-paginate';
 import Translations from '../../Translations/components/Translations';
-import ActionButtons from '../../AdvancedSearchShared/ActionButtons';
+import ActionButtons from './partials/ActionButtons';
 
 // Default configuration for HTTP requests.
 const HTTP_CONFIG = {
@@ -26,7 +26,7 @@ const SearchElement = ({ selectedField, fieldUuid, itemId, selectedCondition, lo
     );
   } else {
     return (
-      <SelectedReferenceSearch
+      <SelectedReference
         fieldUuid={fieldUuid}
         defaultValues={defaultValues}
         selectedCondition={selectedCondition}
@@ -82,7 +82,7 @@ const ConditionSelectElement = ({ selectCondition, selectedCondition, setSelecte
   </select>
 );
 
-const ReferenceSearch = (props) => {
+const Reference = (props) => {
   const {
     fieldUuid,
     itemId,
@@ -256,4 +256,4 @@ const ReferenceSearch = (props) => {
   );
 };
 
-export default ReferenceSearch;
+export default Reference;

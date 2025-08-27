@@ -1,8 +1,8 @@
 import React, { useMemo } from 'react';
 import ReactSelect from 'react-select';
 import 'moment';
-import DateTimeSearch from '../AdvancedDateTimeSearch/components/DateTimeSearch';
-import Translations from '../Translations/components/Translations';
+import DateTime from '../DateTime';
+import Translations from '../../../Translations/components/Translations';
 
 // Constants for field types.
 export const FIELD_TYPES = {
@@ -17,7 +17,7 @@ export const FIELD_TYPES = {
 };
 
 const DateTimeInputElement = ({ fieldUuid, itemId, selectedCondition, dateFormat, locale, defaultValues, isFromCategory }) => (
-  <DateTimeSearch
+  <DateTime
     fieldUuid={fieldUuid}
     itemId={itemId}
     parentSelectedCondition={selectedCondition}

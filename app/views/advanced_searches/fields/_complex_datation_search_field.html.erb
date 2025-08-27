@@ -1,6 +1,6 @@
 <div class="search-container col-lg-12">
   <% choice_sets = ChoiceSet.where(id: field.choice_set_ids) %>
-  <%= react_component('AdvancedComplexDatationSearch/components/AdvancedComplexDatationSearch',
+  <%= react_component('AdvancedSearch/components/ComplexDatation',
                       {
                         fieldUuid: field.uuid,
                         locale: I18n.locale,

@@ -1,11 +1,11 @@
 import React, { useState, useMemo, useRef } from 'react';
 import ReactSelect from 'react-select';
-import ItemTypeReference from '../../AdvancedSearchShared/ItemTypeReference';
+import ItemTypeReference from './partials/ItemTypeReference';
 import AsyncPaginate from 'react-select-async-paginate';
 import axios from "axios";
 import Translations from "../../Translations/components/Translations";
-import ChildChoicesElement from '../../AdvancedSearchShared/ChildChoicesElement';
-import ActionButtons from '../../AdvancedSearchShared/ActionButtons';
+import ChildChoicesElement from './partials/ChildChoicesElement';
+import ActionButtons from './partials/ActionButtons';
 
 // Default configuration for HTTP requests.
 const HTTP_CONFIG = {
@@ -110,7 +110,7 @@ const LinkedCategoryElement = ({ fieldUuid, itemId, locale, selectedCondition, d
   </div>
 );
 
-const ChoiceSetSearch = (props) => {
+const ChoiceSet = (props) => {
   const {
     fieldUuid,
     itemId,
@@ -362,4 +362,4 @@ const ChoiceSetSearch = (props) => {
   );
 }
 
-export default ChoiceSetSearch;
+export default ChoiceSet;

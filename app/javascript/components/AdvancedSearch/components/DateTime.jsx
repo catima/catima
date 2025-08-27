@@ -1,8 +1,8 @@
 import React, { useState, useEffect, useRef, useMemo } from 'react';
-import DateTimeInput from './DateTimeInput';
+import DateTimeInput from './partials/DateTimeInput';
 import $ from 'jquery';
 import { Namespace } from '@eonasdan/tempus-dominus';
-import ActionButtons from '../../AdvancedSearchShared/ActionButtons';
+import ActionButtons from './partials/ActionButtons';
 
 const DateTimeInputElement = ({ type, itemId, fieldUuid, startDateInputName, endDateInputName, datepickerRefStart, datepickerRefEnd, disabled, locale, format, defaultStart, defaultEnd, allowDateTimeBC }) => {
   const isStart = type === 'start';
@@ -74,10 +74,10 @@ const ConditionSelectElement = ({ selectCondition, selectedCondition, handleSele
 };
 
 /**
- * DateTimeSearch Component - Handles date/time range selection with conditions.
+ * DateTime Component - Handles date/time range selection with conditions.
  * Supports single dates, date ranges, and various filtering conditions.
  */
-const DateTimeSearch = (props) => {
+const DateTime = (props) => {
   const {
     fieldUuid,
     itemId = null,
@@ -262,4 +262,4 @@ const DateTimeSearch = (props) => {
   );
 };
 
-export default DateTimeSearch;
+export default DateTime;

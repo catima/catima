@@ -1,17 +1,15 @@
-import React, { useState, useEffect, useRef } from 'react';
-
-// Import all possible child components that can be used (needed when used in ERB views)
-import ChoiceSetSearchAdvanced from '../AdvancedChoiceSetSearch/components/ChoiceSetSearch';
-import DateTimeSearch from '../AdvancedDateTimeSearch/components/DateTimeSearch';
-import ReferenceSearch from '../AdvancedReferenceSearch/components/ReferenceSearch';
-import ChoiceSetSearchComplex from '../AdvancedComplexDatationSearch/components/ChoiceSetSearch';
+import React, { useEffect, useState, useRef } from 'react';
+import ChoiceSet from './ChoiceSet';
+import DateTime from './DateTime';
+import Reference from './Reference';
+import ChoiceSetSearchComplex from './partials/ComplexDatationChoiceSet';
 
 // Component resolver for string paths from ERB views
 const componentMap = {
-  'AdvancedChoiceSetSearch/components/ChoiceSetSearch': ChoiceSetSearchAdvanced,
-  'AdvancedDateTimeSearch/components/DateTimeSearch': DateTimeSearch,
-  'AdvancedReferenceSearch/components/ReferenceSearch': ReferenceSearch,
-  'AdvancedComplexDatationSearch/components/ChoiceSetSearch': ChoiceSetSearchComplex,
+  'AdvancedSearch/components/ChoiceSet': ChoiceSet,
+  'AdvancedSearch/components/DateTime': DateTime,
+  'AdvancedSearch/components/Reference': Reference,
+  'AdvancedSearch/components/ComplexDatationChoiceSet': ChoiceSetSearchComplex,
 };
 
 const resolveComponent = (childComponent) => {
@@ -32,7 +30,7 @@ const resolveComponent = (childComponent) => {
   return childComponent;
 };
 
-const AdvancedContainerSearch = (props) => {
+const Container = (props) => {
   const {
     fieldUuid,
     defaultValues,
@@ -99,4 +97,4 @@ const AdvancedContainerSearch = (props) => {
   );
 };
 
-export default AdvancedContainerSearch;
+export default Container;

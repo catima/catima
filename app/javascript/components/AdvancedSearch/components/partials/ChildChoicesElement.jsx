@@ -1,6 +1,6 @@
 import React from 'react';
 import ReactSelect from 'react-select';
-import Translations from '../Translations/components/Translations';
+import Translations from '../../../Translations/components/Translations';
 
 const ChildChoicesElement = ({ fieldUuid, itemId, defaultValues }) => {
   const childChoices = [
