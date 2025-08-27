@@ -2,7 +2,7 @@ import React, { useState, useEffect, useRef, useMemo, useCallback } from 'react'
 import DateTimeInput from './DateTimeInput';
 import $ from 'jquery';
 import { Namespace } from '@eonasdan/tempus-dominus';
-import ComponentActionButtons from '../../AdvancedSearchShared/ComponentActionButtons';
+import ActionButtons from '../../AdvancedSearchShared/ActionButtons';
 
 /**
  * DateTimeSearch Component - Handles date/time range selection with conditions.
@@ -206,7 +206,7 @@ const DateTimeSearch = (props) => {
         </div>
       </div>
 
-      <ComponentActionButtons
+      <ActionButtons
         addComponent={addComponent}
         deleteComponent={deleteComponent}
         canAddComponent={canAddComponent}

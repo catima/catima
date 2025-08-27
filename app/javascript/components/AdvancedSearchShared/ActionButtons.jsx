@@ -3,7 +3,7 @@ import React from 'react';
 /**
  * Component for add and delete buttons in advanced search interfaces.
  */
-const ComponentActionButtons = ({
+const ActionButtons = ({
   addComponent,
   deleteComponent,
   canAddComponent = false,
@@ -36,4 +36,4 @@ const ComponentActionButtons = ({
   );
 };
 
-export default ComponentActionButtons;
+export default ActionButtons;

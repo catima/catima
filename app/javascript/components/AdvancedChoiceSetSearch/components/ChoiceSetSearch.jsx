@@ -5,7 +5,7 @@ import AsyncPaginate from 'react-select-async-paginate';
 import axios from "axios";
 import Translations from "../../Translations/components/Translations";
 import ChildChoicesElement from '../../AdvancedSearchShared/ChildChoicesElement';
-import ComponentActionButtons from '../../AdvancedSearchShared/ComponentActionButtons';
+import ActionButtons from '../../AdvancedSearchShared/ActionButtons';
 
 // Default configuration for HTTP requests.
 const HTTP_CONFIG = {
@@ -302,7 +302,7 @@ const ChoiceSetSearch = (props) => {
             {renderCategoryElement(categoryOptions)}
           </div>
         }
-        <ComponentActionButtons
+        <ActionButtons
           addComponent={addComponent}
           deleteComponent={deleteComponent}
           canAddComponent={canAddComponent}

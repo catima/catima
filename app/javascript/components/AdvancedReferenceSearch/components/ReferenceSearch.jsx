@@ -4,7 +4,7 @@ import SelectedReferenceSearch from './SelectedReferenceSearch';
 import ItemTypeReference from '../../AdvancedSearchShared/ItemTypeReference';
 import AsyncPaginate from 'react-select-async-paginate';
 import Translations from '../../Translations/components/Translations';
-import ComponentActionButtons from '../../AdvancedSearchShared/ComponentActionButtons';
+import ActionButtons from '../../AdvancedSearchShared/ActionButtons';
 
 // Default configuration for HTTP requests.
 const HTTP_CONFIG = {
@@ -212,7 +212,7 @@ const ReferenceSearch = (props) => {
                 <div className="col-lg-5">{renderSelectFields()}</div>
               </div>
             </div>
-            <ComponentActionButtons
+            <ActionButtons
               addComponent={addComponent}
               deleteComponent={deleteComponent}
               canAddComponent={canAddComponent}

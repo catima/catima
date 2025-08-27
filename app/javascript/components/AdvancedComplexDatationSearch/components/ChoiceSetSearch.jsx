@@ -2,7 +2,7 @@ import React, { useState, useMemo } from 'react';
 import ReactSelect from 'react-select';
 import Translations from '../../Translations/components/Translations';
 import ChildChoicesElement from '../../AdvancedSearchShared/ChildChoicesElement';
-import ComponentActionButtons from '../../AdvancedSearchShared/ComponentActionButtons';
+import ActionButtons from '../../AdvancedSearchShared/ActionButtons';
 
 const ChoiceSetSearch = (props) => {
   const {
@@ -86,7 +86,7 @@ const ChoiceSetSearch = (props) => {
             {renderChildChoicesElement()}
           </div>
         }
-        <ComponentActionButtons
+        <ActionButtons
           addComponent={addComponent}
           deleteComponent={deleteComponent}
           canAddComponent={canAddComponent}
