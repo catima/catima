@@ -269,7 +269,7 @@ const DateTimeInput = forwardRef((props, datepickerRef) => {
     <div id={`${inputId}_${inputSuffixId}`}>
       {parts && (
         <div className="dateTimeInput rails-bootstrap-forms-datetime-select">
-          <div class="d-inline-flex flex-nowrap">
+          <div className="d-inline-flex flex-nowrap">
               {renderInputField('D', {
                 idSuffix: 'day',
                 min: '0',
@@ -289,7 +289,7 @@ const DateTimeInput = forwardRef((props, datepickerRef) => {
 
               {renderBC()}
           </div>
-          <div class="d-inline-flex flex-nowrap">
+          <div className="d-inline-flex flex-nowrap">
             {renderInputField('h', {
               idSuffix: 'hour',
               min: '0',
