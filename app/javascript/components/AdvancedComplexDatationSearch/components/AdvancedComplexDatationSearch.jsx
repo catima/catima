@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useRef } from 'react';
 import ChoiceSetSearchContainer from './ChoiceSetSearchContainer';
 import Translations from '../../Translations/components/Translations';
 import DateTimeSearchContainer from '../../AdvancedDateTimeSearch/components/DateTimeSearchContainer';
@@ -19,6 +19,13 @@ const AdvancedComplexDatationSearch = (props) => {
 
   const [selectedExcludeCondition, setSelectedExcludeCondition] = useState('');
 
+  // Centralized ID management
+  const nextIdRef = useRef(0);
+
+  const getNextId = () => {
+    return nextIdRef.current++;
+  };
+
   return (
     <div>
       <DateTimeSearchContainer
@@ -30,6 +37,7 @@ const AdvancedComplexDatationSearch = (props) => {
         allowDateTimeBC={allowDateTimeBC}
         excludeCondition={selectedExcludeCondition}
         defaultValues={defaultValues}
+        getNextId={getNextId}
       />
       <ChoiceSetSearchContainer
         fieldUuid={fieldUuid}
@@ -37,6 +45,7 @@ const AdvancedComplexDatationSearch = (props) => {
         fieldConditionData={choiceFieldConditionData}
         excludeCondition={selectedExcludeCondition}
         defaultValues={defaultValues}
+        getNextId={getNextId}
       />
       <div className="row">
         <div className="col-lg-2">

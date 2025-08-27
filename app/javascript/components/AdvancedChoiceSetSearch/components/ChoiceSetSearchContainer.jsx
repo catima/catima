@@ -1,4 +1,4 @@
-import React, { useState, useEffect, useMemo } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import ChoiceSetSearch from './ChoiceSetSearch';
 
 const ChoiceSetSearchContainer = (props) => {
@@ -13,22 +13,28 @@ const ChoiceSetSearchContainer = (props) => {
 
   const [componentsList, setComponentsList] = useState([]);
 
+  let getNextId;
+  if (!props.getNextId) {
+    const nextIdRef = useRef(0);
+    getNextId = () => nextIdRef.current++;
+  } else {
+    getNextId = props.getNextId;
+  }
+
   useEffect(() => {
     if (defaultValues && Object.values(defaultValues).length > 0) {
-      Object.values(defaultValues).forEach((defaultValue, index) => {
-        addComponent(index, defaultValue);
+      Object.values(defaultValues).forEach((defaultValue) => {
+        addComponent(defaultValue);
       });
     } else {
-      addComponent(0);
+      addComponent();
     }
   }, []);
 
-  const addComponent = (itemId, defaultValues = {}) => {
+  const addComponent = (defaultValues = {}) => {
     const newItem = {
-      itemId,
+      itemId: getNextId(),
       defaultValues,
-      addComponent: () => addComponent(itemId + 1),
-      deleteComponent: () => deleteComponent(itemId),
     };
     setComponentsList((prev) => [...prev, newItem]);
   };
@@ -39,23 +45,28 @@ const ChoiceSetSearchContainer = (props) => {
 
   return (
     <div>
-      {componentsList.map((item, index) =>
-        <div key={item.itemId} className="component-search-row row">
-          <ChoiceSetSearch
-            fieldUuid={fieldUuid}
-            itemId={item.itemId}
-            choiceSet={choiceSet}
-            catalog={catalog}
-            fieldConditionData={fieldConditionData}
-            defaultValues={item.defaultValues}
-            locale={locale}
-            addComponent={item.addComponent}
-            deleteComponent={item.deleteComponent}
-            canAddComponent={index === componentsList.length - 1}
-            canRemoveComponent={componentsList.length > 1}
-          />
-        </div>
-      )}
+      {componentsList.map((item, index) => {
+        const isLastItem = index === componentsList.length - 1;
+        const canRemove = componentsList.length > 1;
+
+        return (
+          <div key={item.itemId} className="component-search-row row">
+            <ChoiceSetSearch
+              fieldUuid={fieldUuid}
+              itemId={item.itemId}
+              choiceSet={choiceSet}
+              catalog={catalog}
+              fieldConditionData={fieldConditionData}
+              defaultValues={item.defaultValues}
+              locale={locale}
+              addComponent={() => addComponent()}
+              deleteComponent={() => deleteComponent(item.itemId)}
+              canAddComponent={isLastItem}
+              canRemoveComponent={canRemove}
+            />
+          </div>
+        );
+      })}
     </div>
   );
 };
