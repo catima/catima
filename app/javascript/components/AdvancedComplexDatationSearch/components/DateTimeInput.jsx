@@ -18,7 +18,7 @@ const DateTimeInput = forwardRef((props, datepickerRef) => {
   } = props;
 
   const datepickerContainerRef = useRef();
-  console.log(format);
+
   // Supported combined formats
   const TYPES = useMemo(
     () => [
@@ -246,11 +246,10 @@ const DateTimeInput = forwardRef((props, datepickerRef) => {
   };
 
   const renderBC = () => {
-    // TODO allowBC = 1 ? voir pourquoi c'est pas un bool.
     if (!allowBC) return null;
 
     return (
-      <div className="form-check d-inline-block me-4">
+      <div className="form-check d-inline-block mx-2">
           <label
             className="form-check-label"
             htmlFor={`${inputId}_bcCheck`}>
@@ -270,26 +269,27 @@ const DateTimeInput = forwardRef((props, datepickerRef) => {
     <div id={`${inputId}_${inputSuffixId}`}>
       {parts && (
         <div className="dateTimeInput rails-bootstrap-forms-datetime-select">
-          <div>
-            {renderBC()}
+          <div class="d-inline-flex flex-nowrap">
+              {renderInputField('D', {
+                idSuffix: 'day',
+                min: '0',
+                max: '31',
+                className: 'input-2 form-control',
+                onChange: onChangeDay
+              })}
 
-            {renderInputField('D', {
-              idSuffix: 'day',
-              min: '0',
-              max: '31',
-              className: 'input-2 form-control',
-              onChange: onChangeDay
-            })}
+              {renderMonthSelect()}
 
-            {renderMonthSelect()}
+              {renderInputField('Y', {
+                idSuffix: 'year',
+                min: allowBC ? '0' : null,
+                className: 'input-4 form-control',
+                onChange: onChangeYear
+              })}
 
-            {renderInputField('Y', {
-              idSuffix: 'year',
-              min: allowBC ? '0' : null, // TODO tester le null dans la valeur min.
-              className: 'input-4 form-control',
-              onChange: onChangeYear
-            })}
-
+              {renderBC()}
+          </div>
+          <div class="d-inline-flex flex-nowrap">
             {renderInputField('h', {
               idSuffix: 'hour',
               min: '0',
