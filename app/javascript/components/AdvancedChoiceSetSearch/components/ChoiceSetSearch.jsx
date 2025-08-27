@@ -4,6 +4,7 @@ import ItemTypeReference from '../../AdvancedSearchShared/ItemTypeReference';
 import AsyncPaginate from 'react-select-async-paginate';
 import axios from "axios";
 import Translations from "../../Translations/components/Translations";
+import ChildChoicesElement from '../../AdvancedSearchShared/ChildChoicesElement';
 
 // Default configuration for HTTP requests.
 const HTTP_CONFIG = {
@@ -256,22 +257,11 @@ const ChoiceSetSearch = (props) => {
   }
 
   function renderChildChoicesElement() {
-    const childChoices = [
-      { value: true, label: Translations.messages['advanced_searches.fields.choice_set_search_field.child_choices_activated_yes'] },
-      { value: false, label: Translations.messages['advanced_searches.fields.choice_set_search_field.child_choices_activated_no'] },
-    ];
-    const isChildChoicesActivated = defaultValues["child_choices_activated"] && defaultValues["child_choices_activated"] === "true";
-
-    const defaultValue = childChoices.find(
-      (item) => item.value === isChildChoicesActivated,
-    );
-
     return (
-      <ReactSelect name={`advanced_search[criteria][${fieldUuid}][${itemId}][child_choices_activated]`}
-        options={childChoices}
-        classNamePrefix="select"
-        placeholder={Translations.messages['advanced_searches.fields.choice_set_search_field.child_choices_activated_placeholder']}
-        defaultValue={defaultValue}
+      <ChildChoicesElement
+        fieldUuid={fieldUuid}
+        itemId={itemId}
+        defaultValues={defaultValues}
       />
     );
   }
