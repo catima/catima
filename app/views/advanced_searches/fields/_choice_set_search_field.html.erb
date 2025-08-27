@@ -1,23 +1,26 @@
 <div class="search-container col-lg-12">
   <%=
-    react_component('AdvancedChoiceSetSearch/components/ChoiceSetSearchContainer',
+    react_component('AdvancedContainerSearch/AdvancedContainerSearch',
                     {
-                      catalog: field.catalog.slug,
-                      choiceSet: field.choice_set.attributes.merge(
-                        {
-                          multiple: field.multiple?,
-                          fetchUrl: react_choices_for_choice_set_url(
-                            field.catalog.slug,
-                            locale: I18n.locale,
-                            item_type_slug: field.item_type.slug,
-                            field_uuid: field.uuid,
-                            choice_set_id: field.choice_set_id
-                          ),
-                        }),
                       fieldUuid: field.uuid,
-                      fieldConditionData: field.search_field_conditions_as_hash,
                       defaultValues: value,
-                      locale: I18n.locale,
+                      childComponent: 'AdvancedChoiceSetSearch/components/ChoiceSetSearch',
+                      childProps: {
+                        catalog: field.catalog.slug,
+                        choiceSet: field.choice_set.attributes.merge(
+                          {
+                            multiple: field.multiple?,
+                            fetchUrl: react_choices_for_choice_set_url(
+                              field.catalog.slug,
+                              locale: I18n.locale,
+                              item_type_slug: field.item_type.slug,
+                              field_uuid: field.uuid,
+                              choice_set_id: field.choice_set_id
+                            ),
+                          }),
+                        fieldConditionData: field.search_field_conditions_as_hash,
+                        locale: I18n.locale,
+                      }
                     })
   %>
 </div>

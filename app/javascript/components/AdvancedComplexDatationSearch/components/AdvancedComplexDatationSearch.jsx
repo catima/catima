@@ -1,7 +1,8 @@
 import React, { useState, useRef } from 'react';
-import ChoiceSetSearchContainer from './ChoiceSetSearchContainer';
+import AdvancedContainerSearch from '../../AdvancedContainerSearch/AdvancedContainerSearch';
+import ChoiceSetSearch from './ChoiceSetSearch';
 import Translations from '../../Translations/components/Translations';
-import DateTimeSearchContainer from '../../AdvancedDateTimeSearch/components/DateTimeSearchContainer';
+import DateTimeSearch from '../../AdvancedDateTimeSearch/components/DateTimeSearch';
 
 const AdvancedComplexDatationSearch = (props) => {
   const {
@@ -28,23 +29,29 @@ const AdvancedComplexDatationSearch = (props) => {
 
   return (
     <div>
-      <DateTimeSearchContainer
+      <AdvancedContainerSearch
         fieldUuid={fieldUuid}
-        selectCondition={selectCondition}
-        fieldConditionData={fieldConditionData}
-        format={format}
-        locale={locale}
-        allowDateTimeBC={allowDateTimeBC}
-        excludeCondition={selectedExcludeCondition}
         defaultValues={defaultValues}
+        childComponent={DateTimeSearch}
+        childProps={{
+          selectCondition,
+          fieldConditionData,
+          locale,
+          format,
+          allowDateTimeBC,
+          excludeCondition: selectedExcludeCondition,
+        }}
         getNextId={getNextId}
       />
-      <ChoiceSetSearchContainer
+      <AdvancedContainerSearch
         fieldUuid={fieldUuid}
-        choiceSet={choiceSet}
-        fieldConditionData={choiceFieldConditionData}
-        excludeCondition={selectedExcludeCondition}
         defaultValues={defaultValues}
+        childComponent={ChoiceSetSearch}
+        childProps={{
+          choiceSet,
+          fieldConditionData: choiceFieldConditionData,
+          excludeCondition: selectedExcludeCondition,
+        }}
         getNextId={getNextId}
       />
       <div className="row">

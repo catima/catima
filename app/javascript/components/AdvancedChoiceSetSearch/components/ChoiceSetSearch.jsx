@@ -334,6 +334,7 @@ const ChoiceSetSearch = (props) => {
           </div>
         }
       </div>
+      {/* TODO faire du flex, retirer ces col-lg partout, supprimer les deux renderconditionelement. */}
       <div className="row">
         {(selectedItem?.has_childrens && categoryOptions.length > 0) &&
           <div className="col-lg-3" style={{ marginTop: '10px' }}>

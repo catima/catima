@@ -41,7 +41,7 @@ exact_1_1_300:
               "field_condition": "and",
               "start": { "exact": { "D": "1", "M": "1", "Y": "300" } },
               "end": { "exact": { "D": "", "M": "", "Y": "" } } },
-          "999": { "field_condition": "and", "default": "" } }
+          "1": { "field_condition": "and", "default": "" } }
     }
 
 exact_1_1_300_bc:
@@ -56,7 +56,7 @@ exact_1_1_300_bc:
               "field_condition": "and",
               "start": { "exact": { "BC": "true","D": "1", "M": "1", "Y": "300" } },
               "end": { "exact": { "BC": "true","D": "", "M": "", "Y": "" } } },
-          "999": { "field_condition": "and", "default": "" } }
+          "1": { "field_condition": "and", "default": "" } }
     }
 
 before_1_1_300:
@@ -71,7 +71,7 @@ before_1_1_300:
               "field_condition": "and",
               "start": { "before": { "D": "1", "M": "1", "Y": "300" } },
               "end": { "before": { "D": "", "M": "", "Y": "" } } },
-          "999": { "field_condition": "and", "default": "" } }
+          "1": { "field_condition": "and", "default": "" } }
     }
 
 before_1_1_300_choices_excluded:
@@ -87,7 +87,7 @@ before_1_1_300_choices_excluded:
               "start": { "before": { "D": "1", "M": "1", "Y": "300" } },
               "end": { "before": { "D": "", "M": "", "Y": "" } },
               "exclude_condition": "datation_choice"},
-          "999": { "field_condition": "and", "default": "" } }
+          "1": { "field_condition": "and", "default": "" } }
     }
 
 before_1_1_300_datation_excluded:
@@ -103,7 +103,7 @@ before_1_1_300_datation_excluded:
               "start": { "before": { "D": "1", "M": "1", "Y": "300" } },
               "end": { "before": { "D": "", "M": "", "Y": "" } },
               "exclude_condition": "datation"},
-          "999": { "field_condition": "and", "default": "" } }
+          "1": { "field_condition": "and", "default": "" } }
     }
 
 before_1_1_300_bc:
@@ -118,7 +118,7 @@ before_1_1_300_bc:
               "field_condition": "and",
               "start": { "before": { "BC": "true","D": "1", "M": "1", "Y": "300" } },
               "end": { "before": { "BC": "true","D": "", "M": "", "Y": "" } } },
-          "999": { "field_condition": "and", "default": "" } }
+          "1": { "field_condition": "and", "default": "" } }
     }
 
 after_1_1_300:
@@ -133,7 +133,7 @@ after_1_1_300:
               "field_condition": "and",
               "start": { "after": { "D": "1", "M": "1", "Y": "300" } },
               "end": { "after": { "D": "", "M": "", "Y": "" } } },
-          "999": { "field_condition": "and", "default": "" } }
+          "1": { "field_condition": "and", "default": "" } }
     }
 
 after_1_1_300_choices_excluded:
@@ -149,7 +149,7 @@ after_1_1_300_choices_excluded:
               "start": { "after": { "D": "1", "M": "1", "Y": "300" } },
               "end": { "after": { "D": "", "M": "", "Y": "" } },
               "exclude_condition": "datation_choice"},
-          "999": { "field_condition": "and", "default": "" } }
+          "1": { "field_condition": "and", "default": "" } }
     }
 
 after_1_1_300_datation_excluded:
@@ -165,7 +165,7 @@ after_1_1_300_datation_excluded:
               "start": { "after": { "D": "1", "M": "1", "Y": "300" } },
               "end": { "after": { "D": "", "M": "", "Y": "" } },
               "exclude_condition": "datation"},
-          "999": { "field_condition": "and", "default": "" } }
+          "1": { "field_condition": "and", "default": "" } }
     }
 
 after_1_1_300_bc:
@@ -180,7 +180,7 @@ after_1_1_300_bc:
               "field_condition": "and",
               "start": { "after": { "BC": "true","D": "1", "M": "1", "Y": "300" } },
               "end": { "after": { "BC": "true","D": "", "M": "", "Y": "" } } },
-          "999": { "field_condition": "and", "default": "" } }
+          "1": { "field_condition": "and", "default": "" } }
     }
 
 between_1_1_300_31_1_300:
@@ -195,7 +195,7 @@ between_1_1_300_31_1_300:
               "field_condition": "and",
               "start": { "between": { "D": "1", "M": "1", "Y": "300" } },
               "end": { "between": { "D": "31", "M": "1", "Y": "300" } } },
-          "999": { "field_condition": "and", "default": "" } }
+          "1": { "field_condition": "and", "default": "" } }
     }
 
 between_1_1_300_bc_31_1_300_bc:
@@ -210,7 +210,7 @@ between_1_1_300_bc_31_1_300_bc:
               "field_condition": "and",
               "start": { "between": { "BC": "true", "D": "1", "M": "1", "Y": "300" } },
               "end": { "between": { "BC": "true", "D": "31", "M": "1", "Y": "300" } } },
-          "999": { "field_condition": "and", "default": "" } }
+          "1": { "field_condition": "and", "default": "" } }
     }
 
 between_1_1_300_bc_31_1_300:
@@ -225,7 +225,7 @@ between_1_1_300_bc_31_1_300:
               "field_condition": "and",
               "start": { "between": { "BC": "true", "D": "1", "M": "1", "Y": "300" } },
               "end": { "between": { "D": "31", "M": "1", "Y": "300" } } },
-          "999": { "field_condition": "and", "default": "" } }
+          "1": { "field_condition": "and", "default": "" } }
     }
 
 with_a_choice:
@@ -240,7 +240,7 @@ with_a_choice:
               "field_condition": "and",
               "start": { "exact": { "D": "", "M": "", "Y": "" } },
               "end": { "exact": { "D": "", "M": "", "Y": "" } } },
-          "999": { "field_condition": "and", "default": "<%= ActiveRecord::FixtureSet.identify(:datation_1_january_300) %>" } }
+          "1": { "field_condition": "and", "default": "<%= ActiveRecord::FixtureSet.identify(:datation_1_january_300) %>" } }
     }
 
 with_a_choice_with_childrens:
@@ -255,7 +255,7 @@ with_a_choice_with_childrens:
               "field_condition": "and",
               "start": { "exact": { "D": "", "M": "", "Y": "" } },
               "end": { "exact": { "D": "", "M": "", "Y": "" } } },
-          "999": { "field_condition": "and", "default": "<%= ActiveRecord::FixtureSet.identify(:datation_100_500) %>", child_choices_activated: "true" } }
+          "1": { "field_condition": "and", "default": "<%= ActiveRecord::FixtureSet.identify(:datation_100_500) %>", child_choices_activated: "true" } }
     }
 
 with_a_choice_with_childrens_choices_excluded:
@@ -270,7 +270,7 @@ with_a_choice_with_childrens_choices_excluded:
               "field_condition": "and",
               "start": { "exact": { "D": "", "M": "", "Y": "" } },
               "end": { "exact": { "D": "", "M": "", "Y": "" } } },
-          "999": { "field_condition": "and", "default": "<%= ActiveRecord::FixtureSet.identify(:datation_100_500) %>", child_choices_activated: "true", "exclude_condition": "datation_choice" } }
+          "1": { "field_condition": "and", "default": "<%= ActiveRecord::FixtureSet.identify(:datation_100_500) %>", child_choices_activated: "true", "exclude_condition": "datation_choice" } }
     }
 
 with_a_choice_with_childrens_datation_excluded:
@@ -285,5 +285,5 @@ with_a_choice_with_childrens_datation_excluded:
               "field_condition": "and",
               "start": { "exact": { "D": "", "M": "", "Y": "" } },
               "end": { "exact": { "D": "", "M": "", "Y": "" } } },
-          "999": { "field_condition": "and", "default": "<%= ActiveRecord::FixtureSet.identify(:datation_100_500) %>", child_choices_activated: "true", "exclude_condition": "datation" } }
+          "1": { "field_condition": "and", "default": "<%= ActiveRecord::FixtureSet.identify(:datation_100_500) %>", child_choices_activated: "true", "exclude_condition": "datation" } }
     }

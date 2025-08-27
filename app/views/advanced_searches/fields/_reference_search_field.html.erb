@@ -1,12 +1,15 @@
 <div class="search-container col-lg-12">
-    <%= react_component('AdvancedReferenceSearch/components/ReferenceSearchContainer',
+    <%= react_component('AdvancedContainerSearch/AdvancedContainerSearch',
       {
-        catalog: field.catalog.slug,
         fieldUuid: field.uuid,
         defaultValues: value,
-        itemType: field.related_item_type.slug,
-        selectCondition: field.search_conditions_as_hash,
-        fieldConditionData: field.search_field_conditions_as_hash,
-        locale: I18n.locale,
+        childComponent: 'AdvancedReferenceSearch/components/ReferenceSearch',
+        childProps: {
+          catalog: field.catalog.slug,
+          itemType: field.related_item_type.slug,
+          locale: I18n.locale,
+          selectCondition: field.search_conditions_as_hash,
+          fieldConditionData: field.search_field_conditions_as_hash,
+        }
       }) %>
 </div>
