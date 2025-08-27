@@ -1,4 +1,4 @@
-import React, { useState, useMemo } from 'react';
+import React, { useState } from 'react';
 import ReactSelect from 'react-select';
 import Translations from '../../Translations/components/Translations';
 import ChildChoicesElement from '../../AdvancedSearchShared/ChildChoicesElement';

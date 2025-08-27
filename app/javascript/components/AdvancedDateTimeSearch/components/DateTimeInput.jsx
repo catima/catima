@@ -221,7 +221,7 @@ const DateTimeInput = forwardRef((props, datepickerRef) => {
       datepickerRef.current = null;
     };
     // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, [format, locale, partsToDate, defaultValues, minDate, maxDate]);
+  }, [format, locale, defaultValues, minDate, maxDate]);
 
   // Clear when switching to disabled and some field is empty
   const prevDisabledRef = useRef(disabled);
