@@ -1,7 +1,93 @@
 import 'es6-shim';
-import React, { useState, useEffect, useRef, useMemo, forwardRef, useCallback } from 'react';
+import React, { useState, useEffect, useRef, useMemo, forwardRef } from 'react';
 import { Namespace, TempusDominus } from '@eonasdan/tempus-dominus';
 import Translations from "../../Translations/components/Translations";
+
+const InputFieldElement = ({ fieldKey, config, parts, inputName, inputId, inputSuffixId, errorStyle, disabled }) => {
+  if (!config.format.includes(fieldKey)) return null;
+
+  return (
+    <input
+      id={`${inputId}_${inputSuffixId}_${config.idSuffix}`}
+      name={`${inputName}[${fieldKey}]`}
+      style={errorStyle}
+      type="number"
+      min={config.min}
+      max={config.max}
+      className={config.className}
+      value={parts[fieldKey] ?? ''}
+      onChange={config.onChange}
+      readOnly={disabled}
+    />
+  );
+};
+
+const MonthSelectElement = ({ format, inputId, inputSuffixId, errorStyle, inputName, parts, onChangeMonth, disabled }) => {
+  if (!format.includes('M')) return null;
+
+  const selectClassName = disabled ? 'form-control disabled' : 'form-control';
+
+  return (
+    <select
+      id={`${inputId}_${inputSuffixId}_month`}
+      style={errorStyle}
+      name={`${inputName}[M]`}
+      className={selectClassName}
+      value={parts.M ?? ''}
+      onChange={onChangeMonth}
+      readOnly={disabled}
+    >
+      <option key={0} value=''></option>
+      {Translations.month_names.map((month, index) => (
+        <option key={index + 1} value={index + 1}>{month}</option>
+      ))}
+    </select>
+  );
+};
+
+const BCCheckboxElement = ({ allowBC, inputId, inputName }) => {
+  if (!allowBC) return null;
+
+  return (
+    <div className="form-check d-inline-block mx-2">
+      <label
+        className="form-check-label"
+        htmlFor={`${inputId}_bcCheck`}>
+        {Translations.messages['catalog_admin.fields.complex_datation_option_inputs.BC']}
+      </label>
+      <input
+        id={`${inputId}_bcCheck`}
+        type="checkbox"
+        name={`${inputName}[BC]`}
+        className="form-check-input"
+      />
+    </div>
+  );
+};
+
+const CalendarButtonElement = ({ inputId, inputSuffixId, datepickerContainerRef, clearAll }) => (
+  <div className="calendar-button-container d-inline-flex flex-wrap">
+    <div
+      id={`datetimepicker-${inputId}`}
+      ref={datepickerContainerRef}
+      data-td-target-input="nearest"
+      data-td-target-toggle="nearest"
+    >
+      <input data-td-target={`#datetimepicker-${inputId}`} className="d-none" type="text" />
+      <a
+        id={`${inputId}_calendar_icon_${inputSuffixId}`}
+        data-td-target={`#datetimepicker-${inputId}`}
+        type="button"
+        data-td-toggle="datetimepicker"
+      >
+        <i className="fa fa-calendar"></i>
+      </a>
+    </div>
+    <a onClick={clearAll} type="button">
+      <i className="fa fa-times"></i>
+    </a>
+  </div>
+);
 
 const DateTimeInput = forwardRef((props, datepickerRef) => {
   const {
@@ -61,7 +147,7 @@ const DateTimeInput = forwardRef((props, datepickerRef) => {
   }, [initialParts]);
 
   // Helper function to convert parts to Date object
-  const partsToDate = useCallback((parts) => {
+  const partsToDate = (parts) => {
     if (!parts || !Object.values(parts).some(val => val !== '')) {
       return undefined;
     }
@@ -74,7 +160,7 @@ const DateTimeInput = forwardRef((props, datepickerRef) => {
     const seconds = parts.s || 0;
 
     return new Date(year, month, day, hours, minutes, seconds);
-  }, []);
+  };
 
   // Init Tempus Dominus datepicker once
   useEffect(() => {
@@ -165,17 +251,17 @@ const DateTimeInput = forwardRef((props, datepickerRef) => {
     }));
   }
 
-  function clearAll() {
+  const clearAll = () => {
     datepickerRef.current?.clear?.();
     setParts((p) => ({ ...p, Y: '', M: '', D: '', h: '', m: '', s: '' }));
-  }
+  };
 
-  function updatePart(key, val, { min = null, max = null } = {}) {
+  const updatePart = (key, val, { min = null, max = null } = {}) => {
     let v = parseInt(val, 10);
     if (isNaN(v)) v = '';
     if (v !== '' && ((min != null && v < min) || (max != null && v > max))) return;
     setParts((prev) => ({ ...prev, [key]: v }));
-  }
+  };
 
   const onChangeDay = (e) => updatePart('D', e.target.value, { min: 1, max: 31 });
   const onChangeMonth = (e) => updatePart('M', e.target.value, { min: 1, max: 12 });
@@ -203,138 +289,124 @@ const DateTimeInput = forwardRef((props, datepickerRef) => {
   const errorStyle = isValid ? {} : { border: '2px solid #f00' };
   const errorMsg = isValid ? '' : 'Invalid value';
 
-  const selectClassName = disabled ? 'form-control disabled' : 'form-control';
-
-  const renderInputField = (fieldKey, config) => {
-    if (!format.includes(fieldKey)) return null;
-
-    return (
-      <input
-        id={`${inputId}_${inputSuffixId}_${config.idSuffix}`}
-        name={`${inputName}[${fieldKey}]`}
-        style={errorStyle}
-        type="number"
-        min={config.min}
-        max={config.max}
-        className={config.className}
-        value={parts[fieldKey] ?? ''}
-        onChange={config.onChange}
-        readOnly={disabled}
-      />
-    );
-  };
-
-  const renderMonthSelect = () => {
-    if (!format.includes('M')) return null;
-
-    return (
-      <select
-        id={`${inputId}_${inputSuffixId}_month`}
-        style={errorStyle}
-        name={`${inputName}[M]`}
-        className={selectClassName}
-        value={parts.M ?? ''}
-        onChange={onChangeMonth}
-        readOnly={disabled}
-      >
-        <option key={0} value=''></option>
-        {Translations.month_names.map((month, index) => (
-          <option key={index + 1} value={index + 1}>{month}</option>
-        ))}
-      </select>
-    );
-  };
-
-  const renderBC = () => {
-    if (!allowBC) return null;
-
-    return (
-      <div className="form-check d-inline-block mx-2">
-          <label
-            className="form-check-label"
-            htmlFor={`${inputId}_bcCheck`}>
-              {Translations.messages['catalog_admin.fields.complex_datation_option_inputs.BC']}
-          </label>
-          <input
-            id={`${inputId}_bcCheck`}
-            type="checkbox"
-            name={`${inputName}[BC]`}
-            className="form-check-input"
-          />
-      </div>
-    );
-  }
-
   return (
     <div id={`${inputId}_${inputSuffixId}`}>
       {parts && (
         <div className="dateTimeInput rails-bootstrap-forms-datetime-select">
           <div className="d-inline-flex flex-nowrap">
-              {renderInputField('D', {
+            <InputFieldElement
+              fieldKey="D"
+              config={{
+                format,
                 idSuffix: 'day',
                 min: '0',
                 max: '31',
                 className: 'input-2 form-control',
                 onChange: onChangeDay
-              })}
+              }}
+              parts={parts}
+              inputName={inputName}
+              inputId={inputId}
+              inputSuffixId={inputSuffixId}
+              errorStyle={errorStyle}
+              disabled={disabled}
+            />
 
-              {renderMonthSelect()}
+            <MonthSelectElement
+              format={format}
+              inputId={inputId}
+              inputSuffixId={inputSuffixId}
+              errorStyle={errorStyle}
+              inputName={inputName}
+              parts={parts}
+              onChangeMonth={onChangeMonth}
+              disabled={disabled}
+            />
 
-              {renderInputField('Y', {
+            <InputFieldElement
+              fieldKey="Y"
+              config={{
+                format,
                 idSuffix: 'year',
                 min: allowBC ? '0' : null,
                 className: 'input-4 form-control',
                 onChange: onChangeYear
-              })}
+              }}
+              parts={parts}
+              inputName={inputName}
+              inputId={inputId}
+              inputSuffixId={inputSuffixId}
+              errorStyle={errorStyle}
+              disabled={disabled}
+            />
 
-              {renderBC()}
+            <BCCheckboxElement
+              allowBC={allowBC}
+              inputId={inputId}
+              inputName={inputName}
+            />
           </div>
           <div className="d-inline-flex flex-nowrap">
-            {renderInputField('h', {
-              idSuffix: 'hour',
-              min: '0',
-              max: '23',
-              className: 'input-2 form-control',
-              onChange: onChangeHours
-            })}
+            <InputFieldElement
+              fieldKey="h"
+              config={{
+                format,
+                idSuffix: 'hour',
+                min: '0',
+                max: '23',
+                className: 'input-2 form-control',
+                onChange: onChangeHours
+              }}
+              parts={parts}
+              inputName={inputName}
+              inputId={inputId}
+              inputSuffixId={inputSuffixId}
+              errorStyle={errorStyle}
+              disabled={disabled}
+            />
 
-            {renderInputField('m', {
-              idSuffix: 'minute',
-              min: '0',
-              max: '59',
-              className: 'input-2 form-control',
-              onChange: onChangeMinutes
-            })}
+            <InputFieldElement
+              fieldKey="m"
+              config={{
+                format,
+                idSuffix: 'minute',
+                min: '0',
+                max: '59',
+                className: 'input-2 form-control',
+                onChange: onChangeMinutes
+              }}
+              parts={parts}
+              inputName={inputName}
+              inputId={inputId}
+              inputSuffixId={inputSuffixId}
+              errorStyle={errorStyle}
+              disabled={disabled}
+            />
 
-            {renderInputField('s', {
-              idSuffix: 'second',
-              min: '0',
-              max: '59',
-              className: 'input-2 form-control',
-              onChange: onChangeSeconds
-            })}
+            <InputFieldElement
+              fieldKey="s"
+              config={{
+                format,
+                idSuffix: 'second',
+                min: '0',
+                max: '59',
+                className: 'input-2 form-control',
+                onChange: onChangeSeconds
+              }}
+              parts={parts}
+              inputName={inputName}
+              inputId={inputId}
+              inputSuffixId={inputSuffixId}
+              errorStyle={errorStyle}
+              disabled={disabled}
+            />
 
-            <div className="calendar-button-container d-inline-flex flex-wrap">
-              <div
-                id={`datetimepicker-${inputId}`}
-                ref={datepickerContainerRef}
-                data-td-target-input="nearest"
-                data-td-target-toggle="nearest"
-              >
-                <input data-td-target={`#datetimepicker-${inputId}`} className="d-none" type="text" />
-                <a
-                  id={`${inputId}_calendar_icon_${inputSuffixId}`}
-                  data-td-target={`#datetimepicker-${inputId}`}
-                  type="button"
-                  data-td-toggle="datetimepicker"
-                >
-                  <i className="fa fa-calendar"></i>
-                </a>
-              </div>
-              <a onClick={clearAll} type="button">
-                <i className="fa fa-times"></i>
-              </a>
-            </div>
+            <CalendarButtonElement
+              inputId={inputId}
+              inputSuffixId={inputSuffixId}
+              datepickerContainerRef={datepickerContainerRef}
+              clearAll={clearAll}
+            />
           </div>
         </div>
       )}

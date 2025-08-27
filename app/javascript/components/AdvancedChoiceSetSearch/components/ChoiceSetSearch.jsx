@@ -1,4 +1,4 @@
-import React, { useState, useMemo, useRef, useCallback } from 'react';
+import React, { useState, useMemo, useRef } from 'react';
 import ReactSelect from 'react-select';
 import ItemTypeReference from '../../AdvancedSearchShared/ItemTypeReference';
 import AsyncPaginate from 'react-select-async-paginate';
@@ -21,6 +21,94 @@ const getCategoryOptions = (itemData, locale) => {
     choiceSetId: item.field_set_id,
   })) || [];
 };
+
+const ConditionSelectElement = ({ selectCondition, selectedCondition, setSelectedCondition, fieldUuid, itemId, selectedCategory }) => (
+  <select
+    className="form-select filter-condition"
+    name={`advanced_search[criteria][${fieldUuid}][${itemId}][condition]`}
+    value={selectedCondition}
+    onChange={e => setSelectedCondition(e.target.value || '')}
+    disabled={!selectedCategory}
+  >
+    {selectCondition.map((item) => (
+      <option key={item.key} value={item.key}>{item.value}</option>
+    ))}
+  </select>
+);
+
+const FieldConditionSelectElement = ({ fieldConditionData, selectedFieldCondition, setSelectedFieldCondition, fieldUuid, itemId }) => (
+  <select
+    className="form-select filter-condition"
+    name={`advanced_search[criteria][${fieldUuid}][${itemId}][field_condition]`}
+    value={selectedFieldCondition}
+    onChange={e => setSelectedFieldCondition(e.target.value || '')}
+  >
+    {fieldConditionData.map((item) => {
+      return <option key={item.key} value={item.key}>{item.value}</option>
+    })}
+  </select>
+);
+
+const ChoiceSetSelectElement = ({ buildInputNameWithCondition, defaultValues, choiceSet, loadOptions, selectItem, selectedItem }) => (
+  <div>
+    <AsyncPaginate
+      defaultOptions={!!defaultValues[defaultValues.condition || "default"]}
+      name={buildInputNameWithCondition}
+      className={"basic-multi-select"}
+      delimiter=","
+      loadOptions={loadOptions}
+      debounceTimeout={800}
+      isSearchable={true}
+      isClearable={true}
+      isMulti={false}
+      loadingMessage={() => Translations.messages['advanced_searches.fields.choice_set_search_field.select_placeholder']}
+      searchingMessage={() => Translations.messages['advanced_searches.fields.choice_set_search_field.select_placeholder']}
+      placeholder={Translations.messages['select_placeholder']}
+      noOptionsMessage={() => Translations.messages['no_options']}
+      additional={{
+        page: 1,
+      }}
+      styles={{ menuPortal: base => ({ ...base, zIndex: 9999 }) }}
+      onChange={selectItem}
+      value={selectedItem}
+    />
+  </div>
+);
+
+const CategorySelectElement = ({ categoryOptions, handleSelectCategoryChange, selectedCategory, fieldUuid, itemId }) => (
+  <ReactSelect
+    name={`advanced_search[criteria][${fieldUuid}][${itemId}][category_field]`}
+    options={categoryOptions}
+    className="basic-multi-select"
+    onChange={handleSelectCategoryChange}
+    classNamePrefix="select"
+    placeholder={Translations.messages['advanced_searches.fields.choice_set_search_field.filter_placeholder']}
+    isClearable={true}
+    value={selectedCategory}
+  />
+);
+
+const ChildChoicesContainerElement = ({ fieldUuid, itemId, defaultValues }) => (
+  <ChildChoicesElement
+    fieldUuid={fieldUuid}
+    itemId={itemId}
+    defaultValues={defaultValues}
+  />
+);
+
+const LinkedCategoryElement = ({ fieldUuid, itemId, locale, selectedCondition, defaultValues, linkedCategoryData }) => (
+  <div>
+    <ItemTypeReference
+      fieldUuid={fieldUuid}
+      itemId={itemId}
+      locale={locale}
+      selectedCondition={selectedCondition}
+      defaultValues={defaultValues}
+      fetchedData={linkedCategoryData}
+      isFromCategory={true}
+    />
+  </div>
+);
 
 const ChoiceSetSearch = (props) => {
   const {
@@ -60,7 +148,7 @@ const ChoiceSetSearch = (props) => {
     return getCategoryOptions(selectedItem?.data, locale);
   }, [selectedItem?.data, locale]);
 
-  const clearCategory = useCallback(() => {
+  const clearCategory = () => {
     setSelectedCategory(null);
     setSelectedCondition('');
     setSelectCondition([]);
@@ -70,9 +158,9 @@ const ChoiceSetSearch = (props) => {
       dateFormat: '',
       isLoading: false
     });
-  }, []);
+  };
 
-  const fetchLinkedCategoryData = useCallback(async (category, defaultCondition = '') => {
+  const fetchLinkedCategoryData = async (category, defaultCondition = '') => {
     if (!category || !category.choiceSetId || !category.value) {
       return;
     }
@@ -103,25 +191,25 @@ const ChoiceSetSearch = (props) => {
       console.error('Erreur lors de la récupération des données:', error);
       setLinkedCategoryData(prev => ({ ...prev, isLoading: false }));
     }
-  }, [catalog, locale]);
+  };
 
-  function selectItem(item) {
+  const selectItem = (item) => {
     if (!item || item.data.length === 0) {
-        clearCategory();
+      clearCategory();
     }
     setSelectedItem(item || []);
-  }
+  };
 
-  function handleSelectCategoryChange(category) {
+  const handleSelectCategoryChange = (category) => {
     if (!category) {
-        clearCategory();
+      clearCategory();
     } else {
-        setSelectedCategory(category);
-        fetchLinkedCategoryData(category);
+      setSelectedCategory(category);
+      fetchLinkedCategoryData(category);
     }
-  }
+  };
 
-  async function loadOptions(search, loadedOptions, { page }) {
+  const loadOptions = async (search, loadedOptions, { page }) => {
     // If the selected ChoiceSet is not active (deactivated
     // or deleted), then return an empty list of options.
     if (choiceSet.deactivated_at || choiceSet.deleted_at) {
@@ -180,126 +268,48 @@ const ChoiceSetSearch = (props) => {
         page: page + 1,
       },
     };
-  }
-
-  function renderConditionElement() {
-    return (
-      <select
-        className="form-select filter-condition"
-        name={`advanced_search[criteria][${fieldUuid}][${itemId}][condition]`}
-        value={selectedCondition}
-        onChange={e => setSelectedCondition(e.target.value || '')}
-        disabled={!selectedCategory}
-      >
-      {selectCondition.map((item) => (
-        <option key={item.key} value={item.key}>{item.value}</option>
-      ))}
-      </select>
-    );
-  }
-
-  function renderFieldConditionElement() {
-    return (
-      <select
-        className="form-select filter-condition"
-        name={`advanced_search[criteria][${fieldUuid}][${itemId}][field_condition]`}
-        value={selectedFieldCondition}
-        onChange={e => setSelectedFieldCondition(e.target.value || '')}
-      >
-        {fieldConditionData.map((item) => {
-          return <option key={item.key} value={item.key}>{item.value}</option>
-        })}
-      </select>
-    );
-  }
-
-  function renderChoiceSetElement() {
-    return (
-      <div>
-        <AsyncPaginate
-          defaultOptions={!!defaultValues[defaultValues.condition || "default"]}
-          name={buildInputNameWithCondition}
-          className={"basic-multi-select"}
-          delimiter=","
-          loadOptions={loadOptions}
-          debounceTimeout={800}
-          isSearchable={true}
-          isClearable={true}
-          isMulti={false}
-          loadingMessage={() => Translations.messages['advanced_searches.fields.choice_set_search_field.select_placeholder']}
-          searchingMessage={() => Translations.messages['advanced_searches.fields.choice_set_search_field.select_placeholder']}
-          placeholder={Translations.messages['select_placeholder']}
-          noOptionsMessage={() => Translations.messages['no_options']}
-          additional={{
-            page: 1,
-          }}
-          styles={{ menuPortal: base => ({ ...base, zIndex: 9999 }) }}
-          onChange={selectItem}
-          value={selectedItem}
-        />
-      </div>
-    );
-  }
-
-  function renderCategoryElement(categoryOptions) {
-
-    return (
-      <ReactSelect
-        name={`advanced_search[criteria][${fieldUuid}][${itemId}][category_field]`}
-        options={categoryOptions}
-        className="basic-multi-select"
-        onChange={handleSelectCategoryChange}
-        classNamePrefix="select"
-        placeholder={Translations.messages['advanced_searches.fields.choice_set_search_field.filter_placeholder']}
-        isClearable={true}
-        value={selectedCategory}
-      />
-    );
-  }
-
-  function renderChildChoicesElement() {
-    return (
-      <ChildChoicesElement
-        fieldUuid={fieldUuid}
-        itemId={itemId}
-        defaultValues={defaultValues}
-      />
-    );
-  }
-
-  function renderLinkedCategoryElement() {
-    return (
-      <div>
-        <ItemTypeReference
-          fieldUuid={fieldUuid}
-          itemId={itemId}
-          locale={locale}
-          selectedCondition={selectedCondition}
-          defaultValues={defaultValues}
-          fetchedData={linkedCategoryData}
-          isFromCategory={true}
-        />
-      </div>
-    );
-  }
+  };
 
   return (
     <div className="col-lg-12 choiceset-search-container choiceSetInput">
       <div className="row">
         <div className="col-lg-2">
-          {renderFieldConditionElement()}
+          <FieldConditionSelectElement
+            fieldConditionData={fieldConditionData}
+            selectedFieldCondition={selectedFieldCondition}
+            setSelectedFieldCondition={setSelectedFieldCondition}
+            fieldUuid={fieldUuid}
+            itemId={itemId}
+          />
         </div>
         <div className={categoryOptions.length > 0 || selectedItem?.has_childrens ? 'col-lg-3' : 'col-lg-6'}>
-          {renderChoiceSetElement()}
+          <ChoiceSetSelectElement
+            buildInputNameWithCondition={buildInputNameWithCondition}
+            defaultValues={defaultValues}
+            choiceSet={choiceSet}
+            loadOptions={loadOptions}
+            selectItem={selectItem}
+            selectedItem={selectedItem}
+          />
         </div>
         {(selectedItem?.has_childrens) &&
           <div className="col-lg-3">
-            {renderChildChoicesElement()}
+            <ChildChoicesContainerElement
+              fieldUuid={fieldUuid}
+              itemId={itemId}
+              defaultValues={defaultValues}
+            />
           </div>
         }
         {(categoryOptions.length > 0) &&
           <div className="col-lg-3">
-            {renderCategoryElement(categoryOptions)}
+            <CategorySelectElement
+              categoryOptions={categoryOptions}
+              handleSelectCategoryChange={handleSelectCategoryChange}
+              selectedCategory={selectedCategory}
+              fieldUuid={fieldUuid}
+              itemId={itemId}
+            />
           </div>
         }
         <ActionButtons
@@ -310,7 +320,14 @@ const ChoiceSetSearch = (props) => {
         />
         {!(selectedItem?.has_childrens && categoryOptions.length > 0) &&
           <div className="col-lg-3">
-            {renderConditionElement()}
+            <ConditionSelectElement
+              selectCondition={selectCondition}
+              selectedCondition={selectedCondition}
+              setSelectedCondition={setSelectedCondition}
+              fieldUuid={fieldUuid}
+              itemId={itemId}
+              selectedCategory={selectedCategory}
+            />
           </div>
         }
       </div>
@@ -318,12 +335,26 @@ const ChoiceSetSearch = (props) => {
       <div className="row">
         {(selectedItem?.has_childrens && categoryOptions.length > 0) &&
           <div className="col-lg-3" style={{ marginTop: '10px' }}>
-            {renderConditionElement()}
+            <ConditionSelectElement
+              selectCondition={selectCondition}
+              selectedCondition={selectedCondition}
+              setSelectedCondition={setSelectedCondition}
+              fieldUuid={fieldUuid}
+              itemId={itemId}
+              selectedCategory={selectedCategory}
+            />
           </div>
         }
         {selectedCategory &&
           <div className="col-lg-offset-2 col-lg-6">
-            {renderLinkedCategoryElement()}
+            <LinkedCategoryElement
+              fieldUuid={fieldUuid}
+              itemId={itemId}
+              locale={locale}
+              selectedCondition={selectedCondition}
+              defaultValues={defaultValues}
+              linkedCategoryData={linkedCategoryData}
+            />
           </div>
         }
       </div>

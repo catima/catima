@@ -1,8 +1,77 @@
-import React, { useState, useEffect, useRef, useMemo, useCallback } from 'react';
+import React, { useState, useEffect, useRef, useMemo } from 'react';
 import DateTimeInput from './DateTimeInput';
 import $ from 'jquery';
 import { Namespace } from '@eonasdan/tempus-dominus';
 import ActionButtons from '../../AdvancedSearchShared/ActionButtons';
+
+const DateTimeInputElement = ({ type, itemId, fieldUuid, startDateInputName, endDateInputName, datepickerRefStart, datepickerRefEnd, disabled, locale, format, defaultStart, defaultEnd, allowDateTimeBC }) => {
+  const isStart = type === 'start';
+  const _itemId = itemId !== null ? `-${itemId}` : '';
+
+  return (
+    <div className="col-lg-12">
+      <DateTimeInput
+        inputId={`advanced_search_criteria_${fieldUuid}_id-datetime${_itemId}`}
+        inputSuffixId={`${type}_date`}
+        inputName={isStart ? startDateInputName : endDateInputName}
+        defaultValues={isStart ? defaultStart : defaultEnd}
+        minDate={isStart ? undefined : defaultStart}
+        maxDate={isStart ? defaultEnd : undefined}
+        disabled={disabled}
+        allowBC={allowDateTimeBC}
+        format={format}
+        locale={locale}
+        ref={isStart ? datepickerRefStart : datepickerRefEnd}
+      />
+    </div>
+  );
+};
+
+const FieldConditionSelectElement = ({ fieldConditionData, selectedFieldCondition, setSelectedFieldCondition, fieldUuid, itemId }) => {
+  if (!fieldConditionData) return null;
+
+  const _itemId = itemId !== null ? `[${itemId}]` : '';
+
+  return (
+    <div className="col-lg-2">
+      <select
+        className="form-select filter-condition"
+        name={`advanced_search[criteria][${fieldUuid}]${_itemId}[field_condition]`}
+        value={selectedFieldCondition}
+        onChange={(e) => setSelectedFieldCondition(e.target.value)}
+      >
+        {fieldConditionData.map((item) => (
+          <option key={item.key} value={item.key}>
+            {item.value}
+          </option>
+        ))}
+      </select>
+    </div>
+  );
+};
+
+const ConditionSelectElement = ({ selectCondition, selectedCondition, handleSelectCondition, fieldUuid, itemId }) => {
+  if (!selectCondition?.length) return null;
+
+  const _itemId = itemId !== null ? `[${itemId}]` : '';
+
+  return (
+    <div className="col-lg-3">
+      <select
+        className="form-select filter-condition"
+        name={`advanced_search[criteria][${fieldUuid}]${_itemId}[condition]`}
+        value={selectedCondition}
+        onChange={(e) => handleSelectCondition(e.target.value)}
+      >
+        {selectCondition.map((item) => (
+          <option key={item.key} value={item.key}>
+            {item.value}
+          </option>
+        ))}
+      </select>
+    </div>
+  );
+};
 
 /**
  * DateTimeSearch Component - Handles date/time range selection with conditions.
@@ -42,12 +111,12 @@ const DateTimeSearch = (props) => {
   const _itemId = itemId !== null ? `-${itemId}` : '';
   const dateTimeCollapseId = `advanced_search_criteria_${fieldUuid}_id-collapse${_itemId}`;
 
-  const getDateInputName = useCallback((type) => {
-      const currentCondition = selectedCondition || 'exact';
-      const _itemId = itemId !== null ? `[${itemId}]` : '';
-      const _categorySuffix = isFromCategory ? '[category_criteria]' : '';
-      return `advanced_search[criteria][${fieldUuid}]${_itemId}${_categorySuffix}[${type}][${currentCondition}]`;
-  }, [fieldUuid, selectedCondition, itemId, isFromCategory]);
+  const getDateInputName = (type) => {
+    const currentCondition = selectedCondition || 'exact';
+    const _itemId = itemId !== null ? `[${itemId}]` : '';
+    const _categorySuffix = isFromCategory ? '[category_criteria]' : '';
+    return `advanced_search[criteria][${fieldUuid}]${_itemId}${_categorySuffix}[${type}][${currentCondition}]`;
+  };
 
   const startDateInputName = useMemo(() => getDateInputName('start'), [getDateInputName]);
   const endDateInputName = useMemo(() => getDateInputName('end'), [getDateInputName]);
@@ -57,23 +126,23 @@ const DateTimeSearch = (props) => {
   const datepickerRefEnd = useRef();
 
   // Helper functions
-  const updateDatepickerEndRestriction = useCallback((event) => {
+  const updateDatepickerEndRestriction = (event) => {
     if (datepickerRefEnd.current) {
       datepickerRefEnd.current.updateOptions({
         restrictions: { minDate: event.date }
       });
     }
-  }, []);
+  };
 
-  const updateDatepickerStartRestriction = useCallback((event) => {
+  const updateDatepickerStartRestriction = (event) => {
     if (datepickerRefStart.current) {
       datepickerRefStart.current.updateOptions({
         restrictions: { maxDate: event.date }
       });
     }
-  }, []);
+  };
 
-  const handleSelectCondition = useCallback((newCondition) => {
+  const handleSelectCondition = (newCondition) => {
     setSelectedCondition(newCondition || '');
     const condition = newCondition || 'exact';
 
@@ -98,93 +167,19 @@ const DateTimeSearch = (props) => {
 
       datepickerRefEnd?.current?.clear();
     }
-  }, [dateTimeCollapseId]);
+  };
 
-  // Effects
   useEffect(() => {
     if (selectCondition?.length > 0) {
       handleSelectCondition(selectConditionDefault || selectCondition[0].key);
     }
-  }, [selectCondition, selectConditionDefault, handleSelectCondition]);
+  }, [selectCondition, selectConditionDefault]);
 
   useEffect(() => {
     if (parentSelectedCondition) {
       handleSelectCondition(parentSelectedCondition);
     }
-  }, [parentSelectedCondition, handleSelectCondition]);
-
-  // Render functions
-  const renderDateTimeInput = useCallback((type) => {
-    const isStart = type === 'start';
-    const _itemId = itemId !== null ? `-${itemId}` : '';
-
-    return (
-      <div className="col-lg-12">
-        <DateTimeInput
-          inputId={`advanced_search_criteria_${fieldUuid}_id-datetime${_itemId}`}
-          inputSuffixId={`${type}_date`}
-          inputName={isStart ? startDateInputName : endDateInputName}
-          defaultValues={isStart ? defaultStart : defaultEnd}
-          minDate={isStart ? undefined : defaultStart}
-          maxDate={isStart ? defaultEnd : undefined}
-          disabled={disabled}
-          allowBC={allowDateTimeBC}
-          format={format}
-          locale={locale}
-          ref={isStart ? datepickerRefStart : datepickerRefEnd}
-        />
-      </div>
-    );
-  }, [
-    startDateInputName, endDateInputName, datepickerRefStart, datepickerRefEnd,
-    disabled, locale, format, defaultStart, defaultEnd
-  ]);
-
-  const renderFieldConditionElement = useCallback(() => {
-    if (!fieldConditionData) return null;
-
-    const _itemId = itemId !== null ? `[${itemId}]` : '';
-
-    return (
-      <div className="col-lg-2">
-        <select
-          className="form-select filter-condition"
-          name={`advanced_search[criteria][${fieldUuid}]${_itemId}[field_condition]`}
-          value={selectedFieldCondition}
-          onChange={(e) => setSelectedFieldCondition(e.target.value)}
-        >
-          {fieldConditionData.map((item) => (
-            <option key={item.key} value={item.key}>
-              {item.value}
-            </option>
-          ))}
-        </select>
-      </div>
-    );
-  }, [fieldConditionData, selectedFieldCondition]);
-
-  const renderSelectConditionElement = useCallback(() => {
-    if (!selectCondition?.length) return null;
-
-    const _itemId = itemId !== null ? `[${itemId}]` : '';
-
-    return (
-      <div className="col-lg-3">
-        <select
-          className="form-select filter-condition"
-          name={`advanced_search[criteria][${fieldUuid}]${_itemId}[condition]`}
-          value={selectedCondition}
-          onChange={(e) => handleSelectCondition(e.target.value)}
-        >
-          {selectCondition.map((item) => (
-            <option key={item.key} value={item.key}>
-              {item.value}
-            </option>
-          ))}
-        </select>
-      </div>
-    );
-  }, [selectCondition, selectedCondition, handleSelectCondition]);
+  }, [parentSelectedCondition]);
 
   // Main render
   const hasSelectCondition = selectCondition.length > 0;
@@ -196,13 +191,47 @@ const DateTimeSearch = (props) => {
 
   return (
     <div className="datetime-search-container row">
-      {renderFieldConditionElement()}
+      <FieldConditionSelectElement
+        fieldConditionData={fieldConditionData}
+        selectedFieldCondition={selectedFieldCondition}
+        setSelectedFieldCondition={setSelectedFieldCondition}
+        fieldUuid={fieldUuid}
+        itemId={itemId}
+      />
 
       <div className={columnClass}>
-        {renderDateTimeInput('start')}
+        <DateTimeInputElement
+          type="start"
+          itemId={itemId}
+          fieldUuid={fieldUuid}
+          startDateInputName={startDateInputName}
+          endDateInputName={endDateInputName}
+          datepickerRefStart={datepickerRefStart}
+          datepickerRefEnd={datepickerRefEnd}
+          disabled={disabled}
+          locale={locale}
+          format={format}
+          defaultStart={defaultStart}
+          defaultEnd={defaultEnd}
+          allowDateTimeBC={allowDateTimeBC}
+        />
 
         <div className="collapse" id={dateTimeCollapseId}>
-          {renderDateTimeInput('end')}
+          <DateTimeInputElement
+            type="end"
+            itemId={itemId}
+            fieldUuid={fieldUuid}
+            startDateInputName={startDateInputName}
+            endDateInputName={endDateInputName}
+            datepickerRefStart={datepickerRefStart}
+            datepickerRefEnd={datepickerRefEnd}
+            disabled={disabled}
+            locale={locale}
+            format={format}
+            defaultStart={defaultStart}
+            defaultEnd={defaultEnd}
+            allowDateTimeBC={allowDateTimeBC}
+          />
         </div>
       </div>
 
@@ -214,7 +243,13 @@ const DateTimeSearch = (props) => {
         className={hasActionButtons ? "col-lg-1" : undefined}
       />
 
-      {renderSelectConditionElement()}
+      <ConditionSelectElement
+        selectCondition={selectCondition}
+        selectedCondition={selectedCondition}
+        handleSelectCondition={handleSelectCondition}
+        fieldUuid={fieldUuid}
+        itemId={itemId}
+      />
 
       {excludeCondition && (
         <input

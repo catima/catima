@@ -4,6 +4,34 @@ import ChoiceSetSearch from './ChoiceSetSearch';
 import Translations from '../../Translations/components/Translations';
 import DateTimeSearch from '../../AdvancedDateTimeSearch/components/DateTimeSearch';
 
+const ExcludeConditionSelectElement = ({ fieldUuid, selectedExcludeCondition, setSelectedExcludeCondition, selectExcludeConditions }) => (
+  <div className="row">
+    <div className="col-lg-2">
+      <div>
+        {Translations.messages['advanced_searches.fields.complex_datation_search_field.exclude']}
+      </div>
+    </div>
+    <div className="col-lg-6">
+      <div>
+        <select
+          className="form-select filter-condition"
+          name={`advanced_search[criteria][${fieldUuid}][exclude_condition]`}
+          value={selectedExcludeCondition}
+          onChange={e => setSelectedExcludeCondition(e.target.value || '')}
+        >
+          {selectExcludeConditions.map((item) => {
+            return (
+              <option key={item.key} value={item.key}>
+                {item.value}
+              </option>
+            );
+          })}
+        </select>
+      </div>
+    </div>
+  </div>
+);
+
 const AdvancedComplexDatationSearch = (props) => {
   const {
     fieldUuid,
@@ -54,31 +82,12 @@ const AdvancedComplexDatationSearch = (props) => {
         }}
         getNextId={getNextId}
       />
-      <div className="row">
-        <div className="col-lg-2">
-          <div>
-            {Translations.messages['advanced_searches.fields.complex_datation_search_field.exclude']}
-          </div>
-        </div>
-        <div className="col-lg-6">
-          <div>
-            <select
-              className="form-select filter-condition"
-              name={`advanced_search[criteria][${fieldUuid}][exclude_condition]`}
-              value={selectedExcludeCondition}
-              onChange={e => setSelectedExcludeCondition(e.target.value || '')}
-            >
-              {selectExcludeConditions.map((item) => {
-                return (
-                  <option key={item.key} value={item.key}>
-                    {item.value}
-                  </option>
-                );
-              })}
-            </select>
-          </div>
-        </div>
-      </div>
+      <ExcludeConditionSelectElement
+        fieldUuid={fieldUuid}
+        selectedExcludeCondition={selectedExcludeCondition}
+        setSelectedExcludeCondition={setSelectedExcludeCondition}
+        selectExcludeConditions={selectExcludeConditions}
+      />
     </div>
   );
 };

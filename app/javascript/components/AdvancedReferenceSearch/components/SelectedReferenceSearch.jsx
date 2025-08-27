@@ -21,7 +21,7 @@ const SelectedReferenceSearch = (props) => {
     return `advanced_search[criteria][${fieldUuid}][${itemId}][${currentCondition}]`;
   }, [fieldUuid, selectedCondition, itemId]);
 
-  async function loadOptions(search, loadedOptions, {page}) {
+  const loadOptions = async (search, loadedOptions, {page}) => {
     let url = `${itemsUrl}&page=${page}`;
     if (isFirstLoadOptionsRef.current && defaultValues?.["default"]) {
       url += `&default=${defaultValues["default"]}`;
@@ -55,7 +55,7 @@ const SelectedReferenceSearch = (props) => {
         page: page + 1,
       },
     };
-  }
+  };
 
   return (
     <div>
@@ -79,6 +79,6 @@ const SelectedReferenceSearch = (props) => {
       />
     </div>
   );
-}
+};
 
 export default SelectedReferenceSearch;

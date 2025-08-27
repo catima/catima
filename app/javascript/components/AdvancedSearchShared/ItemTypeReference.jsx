@@ -16,6 +16,73 @@ export const FIELD_TYPES = {
   DATE_TIME: 'Field::DateTime'
 };
 
+const DateTimeInputElement = ({ fieldUuid, itemId, selectedCondition, dateFormat, locale, defaultValues, isFromCategory }) => (
+  <DateTimeSearch
+    fieldUuid={fieldUuid}
+    itemId={itemId}
+    parentSelectedCondition={selectedCondition}
+    format={dateFormat}
+    locale={locale}
+    defaultValues={defaultValues}
+    isFromCategory={isFromCategory}
+  />
+);
+
+const TextInputElement = ({ buildInputNameWithCondition, currentDefaultValue, type = "text", step = null }) => (
+  <input
+    name={buildInputNameWithCondition}
+    type={type}
+    className="form-control"
+    step={step}
+    defaultValue={currentDefaultValue}
+  />
+);
+
+const BooleanSelectElement = ({ buildInputNameWithCondition, currentDefaultValue, inputData }) => (
+  <select
+    name={buildInputNameWithCondition}
+    className="form-select"
+    defaultValue={currentDefaultValue}
+  >
+    {inputData?.map((item) => (
+      <option key={item.key} value={item.key}>
+        {item.value}
+      </option>
+    ))}
+  </select>
+);
+
+const ChoiceSetSelectElement = ({ choiceSetOptions, isFromCategory, defaultValues, currentDefaultValue, fieldUuid, itemId, buildInputNameWithCondition }) => {
+  const defaultOption = choiceSetOptions.find(
+    option => option.value == (isFromCategory ?
+      defaultValues?.category_criteria?.default :
+      currentDefaultValue
+    )
+  );
+
+  const inputName = isFromCategory ?
+    `advanced_search[criteria][${fieldUuid}][${itemId}][category_criteria][default]` :
+    buildInputNameWithCondition;
+
+  return (
+    <ReactSelect
+      name={inputName}
+      isSearchable={true}
+      isClearable={true}
+      options={choiceSetOptions}
+      className="basic-select"
+      classNamePrefix="select"
+      placeholder={Translations.messages['advanced_searches.fields.choice_set_search_field.select_placeholder']}
+      noOptionsMessage={() => Translations.messages['catalog_admin.items.reference_editor.no_options']}
+      defaultValue={defaultOption}
+    />
+  );
+};
+
+const LoaderElement = () => (
+  <div className="loader"></div>
+);
+
 /**
  * ItemTypeReference - Unified component for related item type
  */
@@ -61,91 +128,85 @@ const ItemTypeReference = (props) => {
     return defaultValues?.[defaultValues?.condition || "default"];
   }, [isFromCategory, defaultValues, defaultValues]);
 
-  // Rendu des différents types d'input
-  const renderDateTimeInput = () => (
-    <DateTimeSearch
-      fieldUuid={fieldUuid}
-      itemId={itemId}
-      parentSelectedCondition={selectedCondition}
-      format={dateFormat}
-      locale={locale}
-      defaultValues={defaultValues}
-      isFromCategory={isFromCategory}
-    />
-  );
-
-  const renderTextInput = (type = "text", step = null) => (
-    <input
-      name={buildInputNameWithCondition}
-      type={type}
-      className="form-control"
-      step={step}
-      defaultValue={currentDefaultValue}
-    />
-  );
-
-  const renderBooleanSelect = () => (
-    <select
-      name={buildInputNameWithCondition}
-      className="form-select"
-      defaultValue={currentDefaultValue}
-    >
-      {inputData?.map((item) => (
-        <option key={item.key} value={item.key}>
-          {item.value}
-        </option>
-      ))}
-    </select>
-  );
-
-  const renderChoiceSetSelect = () => {
-    const defaultOption = choiceSetOptions.find(
-      option => option.value == (isFromCategory ?
-        defaultValues?.category_criteria?.default :
-        currentDefaultValue
-      )
-    );
-
-    const inputName = isFromCategory ?
-      `advanced_search[criteria][${fieldUuid}][${itemId}][category_criteria][default]` :
-      buildInputNameWithCondition;
-
-    return (
-      <ReactSelect
-        name={inputName}
-        isSearchable={true}
-        isClearable={true}
-        options={choiceSetOptions}
-        className="basic-select"
-        classNamePrefix="select"
-        placeholder={Translations.messages['advanced_searches.fields.choice_set_search_field.select_placeholder']}
-        noOptionsMessage={() => Translations.messages['catalog_admin.items.reference_editor.no_options']}
-        defaultValue={defaultOption}
-      />
-    );
-  };
-
   // Fonction principale de rendu des inputs
   const renderInput = () => {
     if (isLoading) return null;
 
     const inputTypeRenderers = {
-      [FIELD_TYPES.DATE_TIME]: renderDateTimeInput,
-      [FIELD_TYPES.EMAIL]: () => renderTextInput("text"),
-      [FIELD_TYPES.INT]: () => renderTextInput("number"),
-      [FIELD_TYPES.DECIMAL]: () => renderTextInput("number", "any"),
-      [FIELD_TYPES.URL]: () => renderTextInput("url"),
-      [FIELD_TYPES.BOOLEAN]: renderBooleanSelect,
-      [FIELD_TYPES.CHOICE_SET]: renderChoiceSetSelect,
+      [FIELD_TYPES.DATE_TIME]: () => (
+        <DateTimeInputElement
+          fieldUuid={fieldUuid}
+          itemId={itemId}
+          selectedCondition={selectedCondition}
+          dateFormat={dateFormat}
+          locale={locale}
+          defaultValues={defaultValues}
+          isFromCategory={isFromCategory}
+        />
+      ),
+      [FIELD_TYPES.EMAIL]: () => (
+        <TextInputElement
+          buildInputNameWithCondition={buildInputNameWithCondition}
+          currentDefaultValue={currentDefaultValue}
+          type="text"
+        />
+      ),
+      [FIELD_TYPES.INT]: () => (
+        <TextInputElement
+          buildInputNameWithCondition={buildInputNameWithCondition}
+          currentDefaultValue={currentDefaultValue}
+          type="number"
+        />
+      ),
+      [FIELD_TYPES.DECIMAL]: () => (
+        <TextInputElement
+          buildInputNameWithCondition={buildInputNameWithCondition}
+          currentDefaultValue={currentDefaultValue}
+          type="number"
+          step="any"
+        />
+      ),
+      [FIELD_TYPES.URL]: () => (
+        <TextInputElement
+          buildInputNameWithCondition={buildInputNameWithCondition}
+          currentDefaultValue={currentDefaultValue}
+          type="url"
+        />
+      ),
+      [FIELD_TYPES.BOOLEAN]: () => (
+        <BooleanSelectElement
+          buildInputNameWithCondition={buildInputNameWithCondition}
+          currentDefaultValue={currentDefaultValue}
+          inputData={inputData}
+        />
+      ),
+      [FIELD_TYPES.CHOICE_SET]: () => (
+        <ChoiceSetSelectElement
+          choiceSetOptions={choiceSetOptions}
+          isFromCategory={isFromCategory}
+          defaultValues={defaultValues}
+          currentDefaultValue={currentDefaultValue}
+          fieldUuid={fieldUuid}
+          itemId={itemId}
+          buildInputNameWithCondition={buildInputNameWithCondition}
+        />
+      ),
     };
 
-    const renderer = inputTypeRenderers[inputType] || (() => renderTextInput("text"));
+    const renderer = inputTypeRenderers[inputType] || (() => (
+      <TextInputElement
+        buildInputNameWithCondition={buildInputNameWithCondition}
+        currentDefaultValue={currentDefaultValue}
+        type="text"
+      />
+    ));
+
     return renderer();
   };
 
   return (
     <div className="single-reference-container">
-      {isLoading && <div className="loader"></div>}
+      {isLoading && <LoaderElement />}
       {renderInput()}
     </div>
   );
