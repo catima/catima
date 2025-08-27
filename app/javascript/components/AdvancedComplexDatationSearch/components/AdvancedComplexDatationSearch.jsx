@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import ChoiceSetSearchContainer from './ChoiceSetSearchContainer';
 import Translations from '../../Translations/components/Translations';
-import { DateTimeSearchContainer } from '../../AdvancedDateTimeSearch/components/DateTimeSearch';
+import DateTimeSearchContainer from '../../AdvancedDateTimeSearch/components/DateTimeSearchContainer';
 
 const AdvancedComplexDatationSearch = (props) => {
   const {
