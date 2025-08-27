@@ -18,6 +18,12 @@ const DateTimeSearch = (props) => {
     defaultValues,
     locale,
     isCategory = false,
+    allowDateTimeBC = false,
+    excludeCondition = null,
+    addComponent = null,
+    deleteComponent = null,
+    canAddComponent = false,
+    canRemoveComponent = false,
   } = props;
 
   // Extract default values from props
@@ -121,6 +127,7 @@ const DateTimeSearch = (props) => {
           minDate={isStart ? undefined : defaultStart}
           maxDate={isStart ? defaultEnd : undefined}
           disabled={disabled}
+          allowBC={allowDateTimeBC}
           format={format}
           locale={locale}
           ref={isStart ? datepickerRefStart : datepickerRefEnd}
@@ -179,11 +186,18 @@ const DateTimeSearch = (props) => {
   }, [selectCondition, selectedCondition, handleSelectCondition]);
 
   // Main render
+  const hasSelectCondition = selectCondition.length > 0;
+  const hasActionButtons = canAddComponent || canRemoveComponent;
+
+  const columnClass = hasSelectCondition
+    ? (hasActionButtons ? 'col-lg-6' : 'col-lg-7')
+    : (hasActionButtons ? 'col-lg-11' : 'col-lg-12');
+
   return (
     <div className="datetime-search-container row">
       {renderFieldConditionElement()}
 
-      <div className={selectCondition.length > 0 ? 'col-lg-7' : 'col-lg-12'}>
+      <div className={columnClass}>
         {renderDateTimeInput('start')}
 
         <div className="collapse" id={dateTimeCollapseId}>
@@ -191,9 +205,108 @@ const DateTimeSearch = (props) => {
         </div>
       </div>
 
+      {hasActionButtons && (
+        <div className="col-lg-1">
+          <div className="row">
+            {canAddComponent && (
+              <div className="col-lg-12">
+                <a type="button" onClick={addComponent}>
+                  <i className="fa fa-plus"></i>
+                </a>
+              </div>
+            )}
+            {canRemoveComponent && (
+              <div className="col-lg-12">
+                <a type="button" onClick={deleteComponent}>
+                  <i className="fa fa-trash"></i>
+                </a>
+              </div>
+            )}
+          </div>
+        </div>
+      )}
+
       {renderSelectConditionElement()}
+
+      {excludeCondition && (
+        <input
+          type="hidden"
+          name={`advanced_search[criteria][${fieldUuid}][${itemId}][exclude_condition]`}
+          value={excludeCondition}
+        />
+      )}
     </div>
   );
 };
+
+// TODO FACTORIZE WITH OTHER CONTAINER.
+const DateTimeSearchContainer = (props) => {
+  const {
+    fieldUuid,
+    selectCondition,
+    fieldConditionData,
+    format,
+    locale,
+    allowDateTimeBC,
+    excludeCondition,
+    defaultValues,
+  } = props;
+
+  const [componentsList, setComponentsList] = useState([]);
+
+  useEffect(() => {
+    console.log(componentsList);
+  }, [componentsList]);
+
+  useEffect(() => {
+    if (defaultValues && Object.values(defaultValues).length > 0) {
+      Object.values(defaultValues).forEach((defaultValue, index) => {
+        addComponent(index, defaultValue);
+      });
+    } else {
+      addComponent(0);
+    }
+  }, []);
+
+  const addComponent = (itemId, defaultValues = {}) => {
+    const newItem = {
+      itemId,
+      defaultValues,
+      addComponent: () => addComponent(itemId + 1),
+      deleteComponent: () => deleteComponent(itemId),
+    };
+    setComponentsList((prev) => [...prev, newItem]);
+  };
+
+  const deleteComponent = (itemId) => {
+    setComponentsList((prev) => prev.filter((item) => item.itemId !== itemId));
+  };
+
+  return (
+    <div>
+      {componentsList.map((item, index) =>
+        <div key={item.itemId} className="component-search-row row">
+          <DateTimeSearch
+            fieldUuid={fieldUuid}
+            itemId={item.itemId}
+            selectCondition={selectCondition}
+            fieldConditionData={fieldConditionData}
+            defaultValues={item.defaultValues}
+            locale={locale}
+            format={format}
+            allowDateTimeBC={allowDateTimeBC}
+            excludeCondition={excludeCondition}
+            addComponent={item.addComponent}
+            deleteComponent={item.deleteComponent}
+            canAddComponent={index === componentsList.length - 1}
+            canRemoveComponent={componentsList.length > 1}
+          />
+        </div>
+      )}
+    </div>
+  );
+};
+
+export { DateTimeSearch, DateTimeSearchContainer };
 
 export default DateTimeSearch;
