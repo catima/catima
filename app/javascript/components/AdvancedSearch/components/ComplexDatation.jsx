@@ -46,7 +46,26 @@ const ComplexDatation = (props) => {
     defaultValues,
   } = props;
 
-  const [selectedExcludeCondition, setSelectedExcludeCondition] = useState('');
+  const dateTimeDefaultValues = {};
+  const choiceSetDefaultValues = {};
+  let defaultExcludeCondition = '';
+
+  if (defaultValues) {
+    Object.keys(defaultValues).forEach(key => {
+      const value = defaultValues[key];
+      if (value?.start !== undefined) {
+        dateTimeDefaultValues[key] = value;
+      }
+      if (value?.default !== undefined) {
+        choiceSetDefaultValues[key] = value;
+      }
+      if (value?.exclude_condition !== undefined && defaultExcludeCondition === '') {
+        defaultExcludeCondition = value.exclude_condition;
+      }
+    });
+  }
+
+  const [selectedExcludeCondition, setSelectedExcludeCondition] = useState(defaultExcludeCondition);
 
   // Centralized ID management
   const nextIdRef = useRef(0);
@@ -59,7 +78,7 @@ const ComplexDatation = (props) => {
     <div>
       <Container
         fieldUuid={fieldUuid}
-        defaultValues={defaultValues}
+        defaultValues={dateTimeDefaultValues}
         childComponent={DateTime}
         childProps={{
           selectCondition,
@@ -73,7 +92,7 @@ const ComplexDatation = (props) => {
       />
       <Container
         fieldUuid={fieldUuid}
-        defaultValues={defaultValues}
+        defaultValues={choiceSetDefaultValues}
         childComponent={ChoiceSet}
         childProps={{
           choiceSet,

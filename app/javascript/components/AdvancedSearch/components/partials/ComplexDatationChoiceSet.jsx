@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import ReactSelect from 'react-select';
 import Translations from '../../../Translations/components/Translations';
 import ChildChoicesElement from './ChildChoicesElement';
@@ -20,15 +20,11 @@ const FieldConditionSelectElement = ({ fieldConditionData, defaultValues, fieldU
   </select>
 );
 
-const ChoiceSetSelectElement = ({ choiceSet, setSelectedItem, selectedItem, fieldUuid, itemId }) => (
+const ChoiceSetSelectElement = ({ options, setSelectedItem, selectedItem, fieldUuid, itemId }) => (
   <div>
     <ReactSelect
       name={`advanced_search[criteria][${fieldUuid}][${itemId}][default]`}
-      options={choiceSet.map(item => ({
-        value: item.key,
-        label: item.label,
-        has_childrens: item.has_childrens,
-      }))}
+      options={options}
       className="basic-multi-select"
       onChange={item => setSelectedItem(item)}
       classNamePrefix="select"
@@ -61,7 +57,17 @@ const ChoiceSet = (props) => {
     excludeCondition,
   } = props;
 
-  const [selectedItem, setSelectedItem] = useState([])
+  const options = choiceSet.map(item => ({
+    value: item.key,
+    label: item.label,
+    has_childrens: item.has_childrens,
+  }));
+
+  const defaultOption = options.find(
+    option => parseInt(option.value, 10) === parseInt(defaultValues?.default, 10)
+  );
+
+  const [selectedItem, setSelectedItem] = useState(defaultOption);
 
   return (
     <div className="col-lg-12 choiceset-search-container choiceSetInput">
@@ -76,7 +82,7 @@ const ChoiceSet = (props) => {
         </div>
         <div className={selectedItem?.has_childrens ? 'col-lg-3' : 'col-lg-6'}>
           <ChoiceSetSelectElement
-            choiceSet={choiceSet}
+            options={options}
             setSelectedItem={setSelectedItem}
             selectedItem={selectedItem}
             fieldUuid={fieldUuid}
