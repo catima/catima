@@ -66,7 +66,7 @@ const BCCheckboxElement = ({ allowBC, inputId, inputName }) => {
 };
 
 const CalendarButtonElement = ({ inputId, inputSuffixId, datepickerContainerRef, clearAll }) => (
-  <div className="calendar-button-container d-inline-flex flex-wrap">
+  <div className="calendar-button-container d-inline-flex flex-nowrap">
     <div
       id={`datetimepicker-${inputId}`}
       ref={datepickerContainerRef}
@@ -292,8 +292,8 @@ const DateTimeInput = forwardRef((props, datepickerRef) => {
   return (
     <div id={`${inputId}_${inputSuffixId}`}>
       {parts && (
-        <div className="dateTimeInput rails-bootstrap-forms-datetime-select">
-          <div className="d-inline-flex flex-nowrap">
+        <div className="dateTimeInput d-inline-flex flex-wrap gap-1">
+          <div className="d-inline-flex flex-nowrap gap-1">
             <InputFieldElement
               fieldKey="D"
               config={{
@@ -346,7 +346,7 @@ const DateTimeInput = forwardRef((props, datepickerRef) => {
               inputName={inputName}
             />
           </div>
-          <div className="d-inline-flex flex-nowrap">
+          <div className="d-inline-flex flex-nowrap gap-1">
             <InputFieldElement
               fieldKey="h"
               config={{

@@ -17,15 +17,15 @@ export const FIELD_TYPES = {
 };
 
 const DateTimeInputElement = ({ fieldUuid, itemId, selectedCondition, dateFormat, locale, defaultValues, isFromCategory }) => (
-  <DateTime
-    fieldUuid={fieldUuid}
-    itemId={itemId}
-    parentSelectedCondition={selectedCondition}
-    format={dateFormat}
-    locale={locale}
-    defaultValues={defaultValues}
-    isFromCategory={isFromCategory}
-  />
+    <DateTime
+      fieldUuid={fieldUuid}
+      itemId={itemId}
+      parentSelectedCondition={selectedCondition}
+      format={dateFormat}
+      locale={locale}
+      defaultValues={defaultValues}
+      isFromCategory={isFromCategory}
+    />
 );
 
 const TextInputElement = ({ buildInputNameWithCondition, currentDefaultValue, type = "text", step = null }) => (
@@ -205,7 +205,7 @@ const ItemTypeReference = (props) => {
   };
 
   return (
-    <div className="single-reference-container">
+    <div>
       {isLoading && <LoaderElement />}
       {renderInput()}
     </div>

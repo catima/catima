@@ -79,7 +79,7 @@ const Container = (props) => {
         const canRemove = componentsList.length > 1;
 
         return (
-          <div key={item.itemId} className="component-search-row row">
+          <div key={item.itemId} className="row mb-2">
             <ChildComponent
               fieldUuid={fieldUuid}
               itemId={item.itemId}

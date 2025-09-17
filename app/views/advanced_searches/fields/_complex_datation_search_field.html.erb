@@ -1,16 +1,21 @@
 <div class="search-container col-lg-12">
   <% choice_sets = ChoiceSet.where(id: field.choice_set_ids) %>
-  <%= react_component('AdvancedSearch/components/ComplexDatation',
-                      {
-                        fieldUuid: field.uuid,
-                        locale: I18n.locale,
-                        format: field.format,
-                        selectCondition: field.search_conditions_as_hash(I18n.locale),
-                        selectExcludeConditions: field.search_exclude_conditions_as_hash(I18n.locale),
-                        fieldConditionData: field.search_field_conditions_as_hash,
-                        allowDateTimeBC: (field.allowed_formats.include?('date_time') && field.allow_date_time_bc == '1') || (field.allowed_formats.include?('datation_choice') && ChoiceSet.where(id: field.choice_set_ids).any?(&:allow_bc)),
-                        choiceSet: filter_category_fields(field.search_data_as_hash),
-                        choiceFieldConditionData: field.search_field_conditions_as_hash,
-                        defaultValues: value,
-                      }) %>
+  <%= react_component(
+    'AdvancedSearch/components/ComplexDatation',
+    {
+      fieldUuid: field.uuid,
+      locale: I18n.locale,
+      format: field.format,
+      selectCondition: field.search_conditions_as_hash(I18n.locale),
+      selectExcludeConditions: field.search_exclude_conditions_as_hash(I18n.locale),
+      fieldConditionData: field.search_field_conditions_as_hash,
+      allowDateTimeBC: (field.allowed_formats.include?('date_time') && field.allow_date_time_bc == '1') || (field.allowed_formats.include?('datation_choice') && ChoiceSet.where(id: field.choice_set_ids).any?(&:allow_bc)),
+      choiceSet: filter_category_fields(field.search_data_as_hash),
+      choiceFieldConditionData: field.search_field_conditions_as_hash,
+      defaultValues: value,
+    },
+    {
+      class: "mb-3"
+    }
+  ) %>
 </div>

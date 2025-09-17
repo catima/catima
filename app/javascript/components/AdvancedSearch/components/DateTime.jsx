@@ -9,21 +9,19 @@ const DateTimeInputElement = ({ type, itemId, fieldUuid, startDateInputName, end
   const _itemId = itemId !== null ? `-${itemId}` : '';
 
   return (
-    <div className="col-lg-12">
-      <DateTimeInput
-        inputId={`advanced_search_criteria_${fieldUuid}_id-datetime${_itemId}`}
-        inputSuffixId={`${type}_date`}
-        inputName={isStart ? startDateInputName : endDateInputName}
-        defaultValues={isStart ? defaultStart : defaultEnd}
-        minDate={isStart ? undefined : defaultStart}
-        maxDate={isStart ? defaultEnd : undefined}
-        disabled={disabled}
-        allowBC={allowDateTimeBC}
-        format={format}
-        locale={locale}
-        ref={isStart ? datepickerRefStart : datepickerRefEnd}
-      />
-    </div>
+    <DateTimeInput
+      inputId={`advanced_search_criteria_${fieldUuid}_id-datetime${_itemId}`}
+      inputSuffixId={`${type}_date`}
+      inputName={isStart ? startDateInputName : endDateInputName}
+      defaultValues={isStart ? defaultStart : defaultEnd}
+      minDate={isStart ? undefined : defaultStart}
+      maxDate={isStart ? defaultEnd : undefined}
+      disabled={disabled}
+      allowBC={allowDateTimeBC}
+      format={format}
+      locale={locale}
+      ref={isStart ? datepickerRefStart : datepickerRefEnd}
+    />
   );
 };
 
@@ -190,7 +188,7 @@ const DateTime = (props) => {
     : (hasActionButtons ? 'col-lg-11' : 'col-lg-12');
 
   return (
-    <div className="datetime-search-container row">
+    <React.Fragment>
       <FieldConditionSelectElement
         fieldConditionData={fieldConditionData}
         selectedFieldCondition={selectedFieldCondition}
@@ -240,7 +238,6 @@ const DateTime = (props) => {
         deleteComponent={deleteComponent}
         canAddComponent={canAddComponent}
         canRemoveComponent={canRemoveComponent}
-        className={hasActionButtons ? "col-lg-1" : undefined}
       />
 
       <ConditionSelectElement
@@ -258,7 +255,7 @@ const DateTime = (props) => {
           value={excludeCondition}
         />
       )}
-    </div>
+    </React.Fragment>
   );
 };
 

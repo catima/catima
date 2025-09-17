@@ -282,7 +282,7 @@ const ChoiceSet = (props) => {
             itemId={itemId}
           />
         </div>
-        <div className={categoryOptions.length > 0 || selectedItem?.has_childrens ? 'col-lg-3' : 'col-lg-6'}>
+        <div className={selectedItem?.has_childrens ? 'col-lg-3' : 'col-lg-6'}>
           <ChoiceSetSelectElement
             buildInputNameWithCondition={buildInputNameWithCondition}
             defaultValues={defaultValues}
@@ -301,8 +301,26 @@ const ChoiceSet = (props) => {
             />
           </div>
         }
+        <ActionButtons
+          addComponent={addComponent}
+          deleteComponent={deleteComponent}
+          canAddComponent={canAddComponent}
+          canRemoveComponent={canRemoveComponent}
+        />
+        <div className="col-lg-3">
+          <ConditionSelectElement
+            selectCondition={selectCondition}
+            selectedCondition={selectedCondition}
+            setSelectedCondition={setSelectedCondition}
+            fieldUuid={fieldUuid}
+            itemId={itemId}
+            selectedCategory={selectedCategory}
+          />
+        </div>
+      </div>
+      <div className="row mt-2">
         {(categoryOptions.length > 0) &&
-          <div className="col-lg-3">
+          <div className="col-lg-3 offset-lg-2">
             <CategorySelectElement
               categoryOptions={categoryOptions}
               handleSelectCategoryChange={handleSelectCategoryChange}
@@ -312,41 +330,8 @@ const ChoiceSet = (props) => {
             />
           </div>
         }
-        <ActionButtons
-          addComponent={addComponent}
-          deleteComponent={deleteComponent}
-          canAddComponent={canAddComponent}
-          canRemoveComponent={canRemoveComponent}
-        />
-        {!(selectedItem?.has_childrens && categoryOptions.length > 0) &&
-          <div className="col-lg-3">
-            <ConditionSelectElement
-              selectCondition={selectCondition}
-              selectedCondition={selectedCondition}
-              setSelectedCondition={setSelectedCondition}
-              fieldUuid={fieldUuid}
-              itemId={itemId}
-              selectedCategory={selectedCategory}
-            />
-          </div>
-        }
-      </div>
-      {/* TODO faire du flex, retirer ces col-lg partout, supprimer les deux renderconditionelement. */}
-      <div className="row">
-        {(selectedItem?.has_childrens && categoryOptions.length > 0) &&
-          <div className="col-lg-3" style={{ marginTop: '10px' }}>
-            <ConditionSelectElement
-              selectCondition={selectCondition}
-              selectedCondition={selectedCondition}
-              setSelectedCondition={setSelectedCondition}
-              fieldUuid={fieldUuid}
-              itemId={itemId}
-              selectedCategory={selectedCategory}
-            />
-          </div>
-        }
         {selectedCategory &&
-          <div className="col-lg-offset-2 col-lg-6">
+          <div className="col-lg-4">
             <LinkedCategoryElement
               fieldUuid={fieldUuid}
               itemId={itemId}

@@ -4,10 +4,6 @@ import Translations from '../../../Translations/components/Translations';
 import ChildChoicesElement from './ChildChoicesElement';
 import ActionButtons from './ActionButtons';
 
-const DisabledConditionSelectElement = () => (
-  <select className="form-select filter-condition" disabled={true}></select>
-);
-
 const FieldConditionSelectElement = ({ fieldConditionData, defaultValues, fieldUuid, itemId }) => (
   <select
     className="form-select filter-condition"
@@ -104,18 +100,6 @@ const ChoiceSet = (props) => {
           canAddComponent={canAddComponent}
           canRemoveComponent={canRemoveComponent}
         />
-        {!selectedItem?.has_childrens && (
-          <div className="col-lg-3">
-            <DisabledConditionSelectElement />
-          </div>
-        )}
-      </div>
-      <div className="row">
-        {selectedItem?.has_childrens && (
-          <div className="col-lg-3" style={{ marginTop: '10px' }}>
-            <DisabledConditionSelectElement />
-          </div>
-        )}
       </div>
       <input
         type="hidden"

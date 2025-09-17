@@ -201,47 +201,40 @@ const Reference = (props) => {
           itemId={itemId}
         />
       </div>
-      <div className="col-lg-7">
-        <div className="container">
-          <div className="reference-search-container row">
-            <div className="col-lg-11 reference-input-container">
-              <div className="row">
-                <div className="col-lg-7">
-                  <SearchElement
-                    selectedField={selectedField}
-                    fieldUuid={fieldUuid}
-                    itemId={itemId}
-                    selectedCondition={selectedCondition}
-                    locale={locale}
-                    fieldData={fieldData}
-                    defaultValues={defaultValues}
-                    itemsUrl={`/react/${catalog}/${locale}/${itemType}?simple_fields=true`}
-                    catalog={catalog}
-                    itemType={itemType}
-                  />
-                </div>
-                <div className="col-lg-5">
-                  <FieldSelectElement
-                    defaultValues={defaultValues}
-                    loadFields={loadFields}
-                    selectedField={selectedField}
-                    handleSelectFieldChange={handleSelectFieldChange}
-                    fieldUuid={fieldUuid}
-                    itemId={itemId}
-                  />
-                </div>
-              </div>
-            </div>
-            <ActionButtons
-              addComponent={addComponent}
-              deleteComponent={deleteComponent}
-              canAddComponent={canAddComponent}
-              canRemoveComponent={canRemoveComponent}
+      <div className="col-lg-6">
+        <div className="reference-search-container row">
+          <div className="col-lg-7">
+            <SearchElement
+              selectedField={selectedField}
+              fieldUuid={fieldUuid}
+              itemId={itemId}
+              selectedCondition={selectedCondition}
+              locale={locale}
+              fieldData={fieldData}
+              defaultValues={defaultValues}
+              itemsUrl={`/react/${catalog}/${locale}/${itemType}?simple_fields=true`}
+              catalog={catalog}
+              itemType={itemType}
+            />
+          </div>
+          <div className="col-lg-5">
+            <FieldSelectElement
+              defaultValues={defaultValues}
+              loadFields={loadFields}
+              selectedField={selectedField}
+              handleSelectFieldChange={handleSelectFieldChange}
+              fieldUuid={fieldUuid}
+              itemId={itemId}
             />
           </div>
         </div>
       </div>
-
+      <ActionButtons
+        addComponent={addComponent}
+        deleteComponent={deleteComponent}
+        canAddComponent={canAddComponent}
+        canRemoveComponent={canRemoveComponent}
+      />
       <div className="col-lg-3 condition-input-container">
         <ConditionSelectElement
           selectCondition={selectCondition}

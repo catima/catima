@@ -1,6 +1,6 @@
 <div class="search-container col-lg-12">
     <%= react_component('AdvancedSearch/components/DateTime',
-      {
+    {
         fieldUuid: field.uuid,
         inputStart: json_hidden_field_id(f, field),
         inputEnd: json_hidden_field_id(f, field),
@@ -9,5 +9,8 @@
         format: field.format,
         defaultValues: value,
         locale: I18n.locale,
-      }) %>
+    },
+    {
+        class: "row mb-3"
+    }) %>
 </div>

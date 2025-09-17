@@ -1,5 +1,6 @@
 <div class="search-container col-lg-12">
-    <%= react_component('AdvancedSearch/components/Container',
+    <%= react_component(
+      'AdvancedSearch/components/Container',
       {
         fieldUuid: field.uuid,
         defaultValues: value,
@@ -11,5 +12,9 @@
           selectCondition: field.search_conditions_as_hash,
           fieldConditionData: field.search_field_conditions_as_hash,
         }
-      }) %>
+      },
+      {
+        class: "mb-3"
+      }
+    ) %>
 </div>
