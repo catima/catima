@@ -2,15 +2,16 @@
 #
 # Table name: advanced_searches
 #
-#  catalog_id   :integer
-#  created_at   :datetime         not null
-#  creator_id   :integer
-#  criteria     :json
-#  id           :integer          not null, primary key
-#  item_type_id :integer
-#  locale       :string           default("en"), not null
-#  updated_at   :datetime         not null
-#  uuid         :string
+#  catalog_id                       :integer
+#  created_at                       :datetime         not null
+#  creator_id                       :integer
+#  criteria                         :json
+#  id                               :integer          not null, primary key
+#  item_type_id                     :integer
+#  locale                           :string           default("en"), not null
+#  updated_at                       :datetime         not null
+#  uuid                             :string
+#  advanced_search_configuration_id :bigint
 #
 
 # Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html

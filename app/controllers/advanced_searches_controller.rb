@@ -2,15 +2,16 @@
 #
 # Table name: advanced_searches
 #
-#  catalog_id   :integer
-#  created_at   :datetime         not null
-#  creator_id   :integer
-#  criteria     :json
-#  id           :integer          not null, primary key
-#  item_type_id :integer
-#  locale       :string           default("en"), not null
-#  updated_at   :datetime         not null
-#  uuid         :string
+#  catalog_id                       :integer
+#  created_at                       :datetime         not null
+#  creator_id                       :integer
+#  criteria                         :json
+#  id                               :integer          not null, primary key
+#  item_type_id                     :integer
+#  locale                           :string           default("en"), not null
+#  updated_at                       :datetime         not null
+#  uuid                             :string
+#  advanced_search_configuration_id :bigint
 #
 
 class AdvancedSearchesController < ApplicationController
@@ -28,10 +29,9 @@ class AdvancedSearchesController < ApplicationController
 
   def new
     @advance_search_confs = @catalog.advanced_search_configurations.with_active_item_type
+    find_advanced_search
     build_advanced_search
-    find_advanced_search_configuration
 
-    @advanced_search_data = AdvancedSearch.find_by(:uuid => params[:uuid])
     if @advanced_search_config.present?
       @item_types = @advanced_search_config.item_types
       @fields = @advanced_search_config.field_set
@@ -54,6 +54,8 @@ class AdvancedSearchesController < ApplicationController
 
       @fields = @advanced_search.fields
 
+      params[:item_type] = @saved_search.item_type.slug if @saved_search.present? && @saved_search.item_type.present?
+
       redirect_to :action => :new, :item_type => @item_types.first if params[:item_type].blank?
     end
   end
@@ -66,7 +68,6 @@ class AdvancedSearchesController < ApplicationController
         f.js do
           params[:uuid] = @advanced_search.uuid
           find_advanced_search
-          find_advanced_search_configuration
           @advanced_search_results = ItemList::AdvancedSearchResult.new(
             :model => @saved_search,
             :page => params[:page]
@@ -91,11 +92,16 @@ class AdvancedSearchesController < ApplicationController
   private
 
   def build_advanced_search
-    type = catalog.item_types.where(:slug => params[:item_type]).first
+    find_advanced_search_configuration
+
+    type = catalog.item_types.where(:slug => params[:item_type]).first if params[:item_type].present?
+
+    type = @saved_search.item_type if @saved_search.present? && @saved_search.item_type.present?
 
     @advanced_search = scope.new do |model|
       model.item_type = type || catalog.item_types.sorted.first
       model.creator = current_user if current_user.authenticated?
+      model.advanced_search_configuration = @advanced_search_config if @advanced_search_config.present?
     end
   end
 
@@ -109,6 +115,11 @@ class AdvancedSearchesController < ApplicationController
   end
 
   def find_advanced_search_configuration
+    find_advanced_search
+
+    @advanced_search_config = @saved_search.advanced_search_configuration if @saved_search.present?
+    return unless @advanced_search_config.nil?
+
     @advanced_search_config = AdvancedSearchConfiguration.find_by(id: params[:advanced_search_conf])
   end
 

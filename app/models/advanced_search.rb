@@ -2,15 +2,16 @@
 #
 # Table name: advanced_searches
 #
-#  catalog_id   :integer
-#  created_at   :datetime         not null
-#  creator_id   :integer
-#  criteria     :json
-#  id           :integer          not null, primary key
-#  item_type_id :integer
-#  locale       :string           default("en"), not null
-#  updated_at   :datetime         not null
-#  uuid         :string
+#  catalog_id                       :integer
+#  created_at                       :datetime         not null
+#  creator_id                       :integer
+#  criteria                         :json
+#  id                               :integer          not null, primary key
+#  item_type_id                     :integer
+#  locale                           :string           default("en"), not null
+#  updated_at                       :datetime         not null
+#  uuid                             :string
+#  advanced_search_configuration_id :bigint
 #
 
 # NOTE: This is the ActiveRecord model for storing advanced search criteria.
@@ -30,6 +31,7 @@ class AdvancedSearch < ApplicationRecord
     optional: true
   )
   belongs_to :item_type, -> { not_deleted }
+  belongs_to :advanced_search_configuration, optional: true
 
   has_one :search, :as => :related_search, dependent: :destroy
 
