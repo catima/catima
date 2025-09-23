@@ -1,7 +1,7 @@
 <%= bootstrap_form_for(@advanced_search, :remote => @advanced_search_config&.search_type_map?) do |f| %>
-  <%= hidden_field_tag(:item_type, params[:item_type].presence || @advanced_search_config&.item_type&.slug) %>
+  <%= hidden_field_tag(:item_type, @item_type_slug || @advanced_search_config&.item_type&.slug) %>
 
-  <% if params[:item_type].present? || @advanced_search_config.present? %>
+  <% if @item_type_slug.present? || @advanced_search_config.present? %>
     <div class="row">
       <div class="col-lg-12">
         <h3><%= t("advanced_searches.new.item_type_search",  item_type: @advanced_search_config.present? ? @advanced_search_config.item_type.name : @advanced_search.item_type.name) %></h3>
@@ -16,7 +16,7 @@
 
   <table class="table">
     <tbody>
-      <% if params[:item_type].present? || @advanced_search_config.present? %>
+      <% if @item_type_slug.present? || @advanced_search_config.present? %>
         <% displayable_fields(@fields).each_with_index do |field, i| %>
           <%= render_advanced_search_field(f, field, i, @saved_search && @saved_search[:criteria][field.uuid]) do |content| %>
             <tr>
@@ -34,13 +34,13 @@
       <% end %>
     </tbody>
   </table>
-  <%= hidden_field_tag(:advanced_search_conf, params[:advanced_search_conf]) %>
+  <%= hidden_field_tag(:advanced_search_conf, @advanced_search_config&.id) %>
   <%= f.primary(t("advanced_searches.new.submit")) %>
   <%= link_to(
         t("advanced_searches.new.start_over"),
         {
-          :item_type => params[:item_type],
-          :advanced_search_conf => params[:advanced_search_conf],
+          :item_type => @item_type_slug,
+          :advanced_search_conf => @advanced_search_config&.id,
         },
         :class => "btn btn-text") %>
 <% end %>

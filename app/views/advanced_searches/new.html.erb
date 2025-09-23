@@ -2,10 +2,10 @@
 
 <ul class="nav nav-tabs">
   <li id="default_search_type" class="nav-item dropdown">
-    <a href="#" data-bs-toggle="dropdown" class="dropdown-toggle nav-link <%= "active" if current_page?(new_advanced_search_path) && params[:advanced_search_conf].blank? %>"><%= t(".default_search") %></a>
+    <a href="#" data-bs-toggle="dropdown" class="dropdown-toggle nav-link <%= "active" if current_page?(new_advanced_search_path) && @advanced_search_config.nil? %>"><%= t(".default_search") %></a>
     <div class="dropdown-menu">
       <% @item_types.each do |item_type| %>
-        <a class="dropdown-item <%= "active" if (item_type.slug == params[:item_type]) %>" href="<%= url_for(:item_type => item_type.slug) %>"><%= item_type.name %></a>
+        <a class="dropdown-item <%= "active" if (item_type.slug == @item_type_slug) %>" href="<%= url_for(:item_type => item_type.slug) %>"><%= item_type.name %></a>
       <% end %>
     </div>
   </li>
