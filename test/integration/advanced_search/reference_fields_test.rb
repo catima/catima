@@ -15,8 +15,8 @@ class AdvancedSearch::ReferenceFieldTest < ActionDispatch::IntegrationTest
       click_on("Author")
     end
 
-    within("#advanced_search_criteria_one_author_collaborator_uuid_0_exact-editor") do
-      find(".css-1wa3eu0-placeholder").click # Click on the filter input
+    within("[data-field-uuid='one_author_collaborator_uuid']") do
+      find(".css-1wa3eu0-placeholder", :match => :first).click # Click on the filter input
       sleep(2)
 
       within(".select__menu-list") do # Within the filter list
@@ -41,14 +41,13 @@ class AdvancedSearch::ReferenceFieldTest < ActionDispatch::IntegrationTest
     end
 
     select("or", :from => "advanced_search[criteria][one_author_collaborator_uuid][0][field_condition]")
-    within(".reference-search-container", match: :first) do
-      within("#advanced_search_criteria_one_author_collaborator_uuid_0_exact-editor") do
-        find(".css-1wa3eu0-placeholder").click # Click on the filter input
-        sleep(2)
 
-        within(".select__menu-list") do # Within the filter list
-          find('.select__option', text: "Very Old", match: :first).click
-        end
+    within("[data-field-uuid='one_author_collaborator_uuid']") do
+      find(".css-1wa3eu0-placeholder", :match => :first).click # Click on the filter input
+      sleep(2)
+
+      within(".select__menu-list") do # Within the filter list
+        find('.select__option', text: "Very Old", match: :first).click
       end
 
       find(".fa.fa-plus").click
@@ -56,14 +55,12 @@ class AdvancedSearch::ReferenceFieldTest < ActionDispatch::IntegrationTest
 
     select("or", :from => "advanced_search[criteria][one_author_collaborator_uuid][1][field_condition]")
 
-    within all(".reference-search-container")[1] do
-      within("#advanced_search_criteria_one_author_collaborator_uuid_1_exact-editor") do
-        find(".css-1wa3eu0-placeholder").click # Click on the filter input
-        sleep(2)
+    within all("[data-field-uuid='one_author_collaborator_uuid']")[1] do
+      find(".css-1wa3eu0-placeholder", :match => :first).click # Click on the filter input
+      sleep(2)
 
-        within(".select__menu-list") do # Within the filter list
-          find('.select__option', text: "Very Young", match: :first).click
-        end
+      within(".select__menu-list") do # Within the filter list
+        find('.select__option', text: "Very Young", match: :first).click
       end
     end
 
@@ -115,22 +112,21 @@ class AdvancedSearch::ReferenceFieldTest < ActionDispatch::IntegrationTest
       click_on("Author")
     end
     # First multiple input reference
-    within("#advanced_search_criteria_one_author_other_collaborators_uuid_0_exact-editor") do
-      find(".css-1wa3eu0-placeholder").click # Click on the filter input
+    within("[data-field-uuid='one_author_collaborator_uuid']") do
+      find(".css-1wa3eu0-placeholder", :match => :first).click # Click on the filter input
       sleep(2)
+
       within(".select__menu-list") do # Within the filter list
-        find('.select__option', text: "Very Old", match: :first, visible: false).click
+        find('.select__option', text: "Very Old", match: :first).click
       end
     end
 
-    within all(".reference-search-container")[1] do
-      within("#advanced_search_criteria_one_author_other_collaborators_uuid_0_exact-editor") do
-        find(".select__control").click # Click on the filter input
-        sleep(2)
+    within("[data-field-uuid='one_author_other_collaborators_uuid']") do
+      find(".css-1wa3eu0-placeholder", :match => :first).click # Click on the filter input
+      sleep(2)
 
-        within(".select__menu-list") do # Within the filter list
-          find('.select__option', text: "Stephen King", match: :first).click
-        end
+      within(".select__menu-list") do # Within the filter list
+        find('.select__option', text: "Stephen King", match: :first).click
       end
 
       find(".fa.fa-plus").click
@@ -138,8 +134,9 @@ class AdvancedSearch::ReferenceFieldTest < ActionDispatch::IntegrationTest
 
     # Second multiple input reference
     select("exclude", :from => "advanced_search[criteria][one_author_other_collaborators_uuid][1][field_condition]")
-    within("#advanced_search_criteria_one_author_other_collaborators_uuid_1_exact-editor") do
-      find(".css-1wa3eu0-placeholder").click # Click on the filter input
+
+    within all("[data-field-uuid='one_author_other_collaborators_uuid']")[1] do
+      find(".css-1wa3eu0-placeholder", :match => :first).click # Click on the filter input
       sleep(2)
 
       within(".select__menu-list") do # Within the filter list
@@ -220,20 +217,18 @@ class AdvancedSearch::ReferenceFieldTest < ActionDispatch::IntegrationTest
       click_on("Author")
     end
 
-    within("#advanced_search_criteria_one_author_other_collaborators_uuid_0_exact-editor") do
-      find(".css-1wa3eu0-placeholder").click # Click on the filter input
+    within("[data-field-uuid='one_author_other_collaborators_uuid']") do
+      find(".css-1wa3eu0-placeholder", :match => :first).click # Click on the filter input
       sleep(2)
 
       within(".select__menu-list") do # Within the filter list
-        find('.select__option', text: "Very Old", match: :first, visible: false).click
+        find('.select__option', text: "Very Old", match: :first).click
       end
-    end
 
-    within all(".reference-search-container")[1] do
       find(".fa.fa-plus").click
     end
 
-    within all(".reference-search-container")[2] do
+    within all("[data-field-uuid='one_author_other_collaborators_uuid']")[1] do
       find(".single-reference-filter").click # Click on the filter input
       sleep(2)
 

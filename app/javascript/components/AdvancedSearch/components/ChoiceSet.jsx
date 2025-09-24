@@ -320,7 +320,7 @@ const ChoiceSet = (props) => {
       </div>
       <div className="row mt-2">
         {(categoryOptions.length > 0) &&
-          <div className="col-lg-3 offset-lg-2">
+          <div className="col-lg-3 offset-lg-2" data-type="choice-set-category">
             <CategorySelectElement
               categoryOptions={categoryOptions}
               handleSelectCategoryChange={handleSelectCategoryChange}
