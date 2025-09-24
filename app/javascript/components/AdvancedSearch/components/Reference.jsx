@@ -101,7 +101,7 @@ const Reference = (props) => {
   const [selectedField, setSelectedField] = useState(null);
   const [selectCondition, setSelectCondition] = useState(selectConditionProps);
   const [selectedCondition, setSelectedCondition] = useState('');
-  const [selectedFieldCondition, setSelectedFieldCondition] = useState('');
+  const [selectedFieldCondition, setSelectedFieldCondition] = useState(defaultValues?.field_condition || '');
   const [fieldData, setFieldData] = useState({
     inputData: null,
     inputType: 'Field::Text',
