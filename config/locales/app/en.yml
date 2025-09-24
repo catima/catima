@@ -187,6 +187,7 @@ en:
         other: "%{count_delimited} advanced search results"
       searches_add: Save search
       searches_remove: Remove from saved searches
+      back: Back to advanced search
     text_search_field:
       all_words: all words
       exact: exact expression

@@ -100,6 +100,7 @@ de:
         other: "%{count_delimited} Resultate der erweiterten Suche"
       searches_add: Zu gespeicherten Suchanfragen hinzufügen
       searches_remove: Aus gespeicherten Suchanfragen entfernen
+      back: Zurück zur erweiterten Suche
     text_search_field:
       all_words: alle Wörter
       exact: genauer Ausdruck

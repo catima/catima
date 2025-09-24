@@ -20,4 +20,9 @@
   <% end %>
 <% end %>
 
+<%= link_to(
+      t(".back"),
+      new_advanced_search_path(:uuid => @saved_search.uuid),
+      :class => "btn btn-link p-0") %>
+
 <%= render :partial => "advanced_searches/list", :locals => { :search_results => @advanced_search_results, :saved_result => @saved_search } %>

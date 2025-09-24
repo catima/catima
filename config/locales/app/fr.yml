@@ -188,6 +188,7 @@ fr:
         other: "%{count_delimited} résultats de recherche avancée"
       searches_add: Sauvegarder la recherche
       searches_remove: Supprimer des recherches sauvegardées
+      back: Revenir à la recherche avancée
     text_search_field:
       all_words: tous les mots
       exact: expression exacte
