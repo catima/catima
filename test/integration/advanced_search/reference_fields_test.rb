@@ -31,47 +31,6 @@ class AdvancedSearch::ReferenceFieldTest < ActionDispatch::IntegrationTest
     refute(page.has_selector?('h4', text: 'Very Young'))
   end
 
-  test "search for authors by multiple single tag reference field" do
-    visit("/one/en")
-    click_on("Advanced")
-
-    find("#default_search_type").click
-    within("#default_search_type") do
-      click_on("Author")
-    end
-
-    within(".reference-search-container", match: :first) do
-      within("#advanced_search_criteria_one_author_collaborator_uuid_0_exact-editor") do
-        find(".css-1wa3eu0-placeholder").click # Click on the filter input
-        sleep(2)
-
-        within(".select__menu-list") do # Within the filter list
-          find('.select__option', text: "Very Old", match: :first).click
-        end
-      end
-
-      find(".fa.fa-plus").click
-    end
-
-    select("or", :from => "advanced_search[criteria][one_author_collaborator_uuid][1][field_condition]")
-
-    within all(".reference-search-container")[1] do
-      within("#advanced_search_criteria_one_author_collaborator_uuid_1_exact-editor") do
-        find(".css-1wa3eu0-placeholder").click # Click on the filter input
-        sleep(2)
-
-        within(".select__menu-list") do # Within the filter list
-          find('.select__option', text: "Very Young", match: :first).click
-        end
-      end
-    end
-
-    click_on("Search")
-
-    assert(page.has_selector?('h4', text: 'Stephen King'))
-    assert(page.has_selector?('h4', text: 'Very Old'))
-  end
-
   test "search for authors by multiple single tag reference field with or selector" do
     visit("/one/en")
     click_on("Advanced")
