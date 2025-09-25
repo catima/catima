@@ -58,6 +58,7 @@ const BCCheckboxElement = ({ allowBC, inputId, inputName }) => {
       <input
         id={`${inputId}_bcCheck`}
         type="checkbox"
+        value={true}
         name={`${inputName}[BC]`}
         className="form-check-input"
       />
