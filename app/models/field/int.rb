@@ -65,6 +65,10 @@ class Field::Int < Field
     ]
   end
 
+  def search_condition_key(value)
+    (value || {}).keys.find { |k| %w[exact less_than less_than_or_equal_to greater_than greater_than_or_equal_to].include?(k) }
+  end
+
   def search_conditions_as_hash(locale)
     [
       {

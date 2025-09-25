@@ -1,39 +1,30 @@
 <div class="search-container col-lg-12">
   <%=
-    react_component('AdvancedChoiceSetSearch/components/ChoiceSetSearchContainer',
-                    {
-                      catalog: field.catalog.slug,
-                      itemType: field.item_type.slug,
-                      label: t(".any"),
-                      choiceSet: field.choice_set.attributes.merge(
-                        {
-                          multiple: field.multiple?,
-                          fetchUrl: react_choices_for_choice_set_url(
-                            field.catalog.slug,
-                            locale: I18n.locale,
-                            item_type_slug: field.item_type.slug,
-                            field_uuid: field.uuid,
-                            choice_set_id: field.choice_set_id
-                          ),
-                        }),
-                      categoryInputName: "advanced_search[criteria][#{field.uuid}][0][category_field]",
-                      linkedCategoryInputName: "advanced_search[criteria][#{field.uuid}][0][category_criteria]",
-                      childChoicesActivatedInputName: "advanced_search[criteria][#{field.uuid}][0][child_choices_activated]",
-                      locale: I18n.locale,
-                      localizedDateTimeData: t('date'),
-                      childChoicesActivatedPlaceholder: t('advanced_searches.fields.choice_set_search_field.child_choices_activated_placeholder'),
-                      childChoicesActivatedYesLabel: t('advanced_searches.fields.choice_set_search_field.child_choices_activated_yes'),
-                      childChoicesActivatedNoLabel: t('advanced_searches.fields.choice_set_search_field.child_choices_activated_no'),
-                      searchPlaceholder: t('advanced_searches.fields.choice_set_search_field.select_placeholder'),
-                      filterPlaceholder: t('advanced_searches.fields.choice_set_search_field.filter_placeholder'),
-                      srcId: "advanced_search_criteria_#{field.uuid}_0_id",
-                      srcRef: "advanced_search_criteria_#{field.uuid}_0_exact",
-                      inputName: "advanced_search[criteria][#{field.uuid}][0][exact]",
-                      selectConditionName: "advanced_search[criteria][#{field.uuid}][0][condition]",
-                      selectCondition: field.search_conditions_as_hash(I18n.locale),
-                      multiple: true,
-                      fieldConditionName: "advanced_search[criteria][#{field.uuid}][0][field_condition]",
-                      fieldConditionData: field.search_field_conditions_as_hash
-                    })
+    react_component(
+      'AdvancedSearch/components/Container',
+      {
+        fieldUuid: field.uuid,
+        defaultValues: value,
+        childComponent: 'AdvancedSearch/components/ChoiceSet',
+        childProps: {
+          catalog: field.catalog.slug,
+          choiceSet: field.choice_set.attributes.merge({
+            multiple: field.multiple?,
+            fetchUrl: react_choices_for_choice_set_url(
+                field.catalog.slug,
+                locale: I18n.locale,
+                item_type_slug: field.item_type.slug,
+                field_uuid: field.uuid,
+                choice_set_id: field.choice_set_id
+            ),
+          }),
+          fieldConditionData: field.search_field_conditions_as_hash,
+          locale: I18n.locale,
+        }
+      },
+      {
+        class: "mb-3"
+      }
+    )
   %>
 </div>

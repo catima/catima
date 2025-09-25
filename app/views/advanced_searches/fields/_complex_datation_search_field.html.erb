@@ -1,42 +1,21 @@
 <div class="search-container col-lg-12">
   <% choice_sets = ChoiceSet.where(id: field.choice_set_ids) %>
-  <%= react_component('AdvancedComplexDatationSearch/components/AdvancedComplexDatationSearch',
-                      {
-                        catalog: field.catalog.slug,
-                        itemType: field.item_type,
-                        startLabel: t(".start_date"),
-                        endLabel: t(".end_date"),
-                        locale: I18n.locale,
-                        localizedDateTimeData: t('date'),
-                        srcId: "advanced_search_criteria_#{field.uuid}_id",
-                        srcRef: "advanced_search_criteria_#{field.uuid}_exact",
-                        startDateInputName: "advanced_search[criteria][#{field.uuid}][start][exact]",
-                        endDateInputName: "advanced_search[criteria][#{field.uuid}][end][exact]",
-                        format: field.format,
-                        inputStart: json_hidden_field_id(f, field),
-                        inputEnd: json_hidden_field_id(f, field),
-                        selectConditionName: "advanced_search[criteria][#{field.uuid}][condition]",
-                        selectCondition: field.search_conditions_as_hash(I18n.locale),
-                        selectExcludeConditionName: "advanced_search[criteria][#{field.uuid}][exclude_condition]",
-                        selectExcludeConditions: field.search_exclude_conditions_as_hash(I18n.locale),
-                        fieldConditionName: "advanced_search[criteria][#{field.uuid}][field_condition]",
-                        fieldConditionData: field.search_field_conditions_as_hash,
-                        allowDateTimeBC: (field.allowed_formats.include?('date_time') && field.allow_date_time_bc == '1') || (field.allowed_formats.include?('datation_choice') && ChoiceSet.where(id: field.choice_set_ids).any?(&:allow_bc)),
-                        label: t(".any"),
-                        items: filter_category_fields(field.search_data_as_hash),
-                        categoryInputName: "advanced_search[criteria][#{field.uuid}][0][category_field]",
-                        linkedCategoryInputName: "advanced_search[criteria][#{field.uuid}][0][category_criteria]",
-                        childChoicesActivatedInputName: "advanced_search[criteria][#{field.uuid}][0][child_choices_activated]",
-                        childChoicesActivatedPlaceholder: t('advanced_searches.fields.choice_set_search_field.child_choices_activated_placeholder'),
-                        childChoicesActivatedYesLabel: t('advanced_searches.fields.choice_set_search_field.child_choices_activated_yes'),
-                        childChoicesActivatedNoLabel: t('advanced_searches.fields.choice_set_search_field.child_choices_activated_no'),
-                        searchPlaceholder: t('advanced_searches.fields.choice_set_search_field.select_placeholder'),
-                        filterPlaceholder: t('advanced_searches.fields.choice_set_search_field.filter_placeholder'),
-                        inputName: "advanced_search[criteria][#{field.uuid}][0][exact]",
-                        choiceSelectConditionName: "advanced_search[criteria][#{field.uuid}][0][condition]",
-                        choiceSelectCondition: [{:value => 'default', :key => "default"}],
-                        multiple: true,
-                        choiceFieldConditionName: "advanced_search[criteria][#{field.uuid}][0][field_condition]",
-                        choiceFieldConditionData: field.search_field_conditions_as_hash
-                      }) %>
+  <%= react_component(
+    'AdvancedSearch/components/ComplexDatation',
+    {
+      fieldUuid: field.uuid,
+      locale: I18n.locale,
+      format: field.format,
+      selectCondition: field.search_conditions_as_hash(I18n.locale),
+      selectExcludeConditions: field.search_exclude_conditions_as_hash(I18n.locale),
+      fieldConditionData: field.search_field_conditions_as_hash,
+      allowDateTimeBC: (field.allowed_formats.include?('date_time') && field.allow_date_time_bc == '1') || (field.allowed_formats.include?('datation_choice') && ChoiceSet.where(id: field.choice_set_ids).any?(&:allow_bc)),
+      choiceSet: filter_category_fields(field.search_data_as_hash),
+      choiceFieldConditionData: field.search_field_conditions_as_hash,
+      defaultValues: value,
+    },
+    {
+      class: "mb-3"
+    }
+  ) %>
 </div>

@@ -100,6 +100,7 @@ it:
         other: "%{count_delimited} advanced search results"
       searches_add: Salve la ricercha
       searches_remove: Rimuovi dalle ricerche salvate
+      back: Torna alla ricerca avanzata
     text_search_field:
       all_words: tutte le parole
       exact: espressione esatta
@@ -678,3 +679,17 @@ it:
     create:
       success: "Il tuo suggerimento è stato inviato"
       error: "Impossibile inviare il tuo suggerimento: %{errors}"
+
+  month_names:
+    january: Gennaio
+    february: Febbraio
+    march: Marzo
+    april: Aprile
+    may: Maggio
+    june: Giugno
+    july: Luglio
+    august: Agosto
+    september: Settembre
+    october: Ottobre
+    november: Novembre
+    december: Dicembre

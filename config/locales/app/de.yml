@@ -100,6 +100,7 @@ de:
         other: "%{count_delimited} Resultate der erweiterten Suche"
       searches_add: Zu gespeicherten Suchanfragen hinzufügen
       searches_remove: Aus gespeicherten Suchanfragen entfernen
+      back: Zurück zur erweiterten Suche
     text_search_field:
       all_words: alle Wörter
       exact: genauer Ausdruck
@@ -865,3 +866,17 @@ de:
     create:
       success: "Ihr Vorschlag wurde abgeschickt"
       error: "Kann Ihren Vorschlag nicht einreichen: %{errors}"
+
+  month_names:
+    january: Januar
+    february: Februar
+    march: März
+    april: April
+    may: Mai
+    june: Juni
+    july: Juli
+    august: August
+    september: September
+    october: Oktober
+    november: November
+    december: Dezember

@@ -41,6 +41,8 @@ class AdvancedSearchConfiguration < ApplicationRecord
   )
   belongs_to :item_type, -> { not_deleted }, :inverse_of => false
 
+  has_many :advanced_searches, dependent: :nullify
+
   store_translations :title
 
   validates_presence_of :catalog
@@ -58,7 +60,7 @@ class AdvancedSearchConfiguration < ApplicationRecord
 
   def field_set
     field_set = []
-    sorted_fields.each do |field_uuid, _|
+    sorted_fields.each_key do |field_uuid|
       field = Field.find_by(:uuid => field_uuid)
       if field.nil?
         # If the field is not available anymore,

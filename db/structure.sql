@@ -97,7 +97,8 @@ CREATE TABLE public.advanced_searches (
     criteria json,
     created_at timestamp without time zone NOT NULL,
     updated_at timestamp without time zone NOT NULL,
-    locale character varying DEFAULT 'en'::character varying NOT NULL
+    locale character varying DEFAULT 'en'::character varying NOT NULL,
+    advanced_search_configuration_id bigint
 );
 
 
@@ -1643,6 +1644,13 @@ CREATE INDEX index_advanced_search_configurations_on_slug ON public.advanced_sea
 
 
 --
+-- Name: index_advanced_searches_on_advanced_search_configuration_id; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX index_advanced_searches_on_advanced_search_configuration_id ON public.advanced_searches USING btree (advanced_search_configuration_id);
+
+
+--
 -- Name: index_advanced_searches_on_catalog_id; Type: INDEX; Schema: public; Owner: -
 --
 
@@ -2453,6 +2461,14 @@ ALTER TABLE ONLY public.favorites
 
 
 --
+-- Name: advanced_searches fk_rails_de7b495edf; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.advanced_searches
+    ADD CONSTRAINT fk_rails_de7b495edf FOREIGN KEY (advanced_search_configuration_id) REFERENCES public.advanced_search_configurations(id);
+
+
+--
 -- Name: simple_searches fk_rails_e02a867d5d; Type: FK CONSTRAINT; Schema: public; Owner: -
 --
 
@@ -2515,6 +2531,7 @@ ALTER TABLE ONLY public.choice_sets
 SET search_path TO "$user", public;
 
 INSERT INTO "schema_migrations" (version) VALUES
+('20250917093341'),
 ('20250626134644'),
 ('20250514073222'),
 ('20250513123625'),

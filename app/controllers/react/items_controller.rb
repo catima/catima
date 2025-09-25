@@ -1,5 +1,6 @@
 class React::ItemsController < React::BaseController
   include ControlsItemSorting
+
   before_action :catalog_request_clearance
 
   InvalidItemType = Class.new(RuntimeError)
@@ -19,11 +20,15 @@ class React::ItemsController < React::BaseController
 
     fields = params[:simple_fields].blank? ? item_type.fields : item_type.simple_fields
 
-    # Here we add to the current order another order in case some items have exactly the same primary_text_field value
     items = apply_sort(item_type.items).order(:id)
     items = apply_search(items)
     items = apply_except(items)
     items = apply_pagination(items)
+
+    # Default item will be added in addition to the paginated items (so the
+    # results length will be pagination length + 1)
+    default_item = item_type.items.where(id: params[:default]) if params[:default].present?
+    all_items = (default_item.to_a + items.to_a).uniq(&:id)
 
     render(json:
              {
@@ -33,7 +38,7 @@ class React::ItemsController < React::BaseController
                filter_placeholder: t("catalog_admin.items.reference_editor.reference_editor_filter", locale: params[:locale]),
                loading_message: t("loading", locale: params[:locale]),
                fields: fields.map { |fld| field_json_attributes(fld) },
-               items: items.map { |itm| itm.describe([:default_display_name], [:requires_review, :uuid], true) },
+               items: all_items.map { |itm| itm.describe([:default_display_name], [:requires_review, :uuid], true) },
                hasMore: params[:page].present? && params[:page].to_i < items.total_pages
              })
   end

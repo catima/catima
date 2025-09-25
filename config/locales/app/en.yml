@@ -187,6 +187,7 @@ en:
         other: "%{count_delimited} advanced search results"
       searches_add: Save search
       searches_remove: Remove from saved searches
+      back: Back to advanced search
     text_search_field:
       all_words: all words
       exact: exact expression
@@ -1097,3 +1098,17 @@ en:
     create:
       success: "Your suggestion has been sent"
       error: "Unable to submit your suggestion: %{errors}"
+
+  month_names:
+    january: January
+    february: February
+    march: March
+    april: April
+    may: May
+    june: June
+    july: July
+    august: August
+    september: September
+    october: October
+    november: November
+    december: December

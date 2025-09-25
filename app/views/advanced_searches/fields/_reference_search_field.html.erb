@@ -1,23 +1,20 @@
 <div class="search-container col-lg-12">
-    <%= react_component('AdvancedReferenceSearch/components/ReferenceSearchContainer',
+    <%= react_component(
+      'AdvancedSearch/components/Container',
       {
-        catalog: field.catalog.slug,
-        parentItemType: field.field_set.slug,
-        itemType: field.related_item_type.slug,
-        field: field.slug,
-        locale: I18n.locale,
-        multiple: false,
-        searchPlaceholder: t('advanced_searches.fields.reference_search_field.item_type_placeholder'),
-        choosePlaceholder: t('advanced_searches.fields.choice_set_search_field.select_placeholder'),
-        filterPlaceholder: t('advanced_searches.fields.reference_search_field.field_placeholder'),
-        noOptionsMessage: t("catalog_admin.items.reference_editor.no_options"),
-        inputName: "advanced_search[criteria][#{field.uuid}][0][exact]",
-        referenceFilterName: "advanced_search[criteria][#{field.uuid}][0][sort_field_uuid]",
-        srcRef: "advanced_search_criteria_#{field.uuid}_0_exact",
-        itemTypeSearch: false,
-        selectConditionName: "advanced_search[criteria][#{field.uuid}][0][condition]",
-        selectCondition: field.search_conditions_as_hash,
-        fieldConditionName: "advanced_search[criteria][#{field.uuid}][0][field_condition]",
-        fieldConditionData: field.search_field_conditions_as_hash
-      }) %>
+        fieldUuid: field.uuid,
+        defaultValues: value,
+        childComponent: 'AdvancedSearch/components/Reference',
+        childProps: {
+          catalog: field.catalog.slug,
+          itemType: field.related_item_type.slug,
+          locale: I18n.locale,
+          selectCondition: field.search_conditions_as_hash,
+          fieldConditionData: field.search_field_conditions_as_hash,
+        }
+      },
+      {
+        class: "mb-3"
+      }
+    ) %>
 </div>

@@ -1,13 +1,13 @@
 <div class="col-lg-2">
-  <%= render_and_or_exclude_select(f) %>
+  <%= render_and_or_exclude_select(f, value&.dig("field_condition")) %>
 </div>
 <div class="col-lg-7">
-  <%= f.number_field("exact", :hide_label => true) %>
+  <%= f.number_field("exact", :hide_label => true, :value => value&.dig(field.search_condition_key(value))) %>
   <%= f.hidden_field("__filter__", :hide_label => true, :class => 'template', :disabled => true) %>
 </div>
 <div class="col-lg-3">
   <%= f.select("condition", field.search_conditions_as_options,
-    { :hide_label => true },
+    { :hide_label => true, :selected => field.search_condition_key(value) },
     { :class => "filter-condition" }
   ) %>
 </div>

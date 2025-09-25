@@ -188,6 +188,7 @@ fr:
         other: "%{count_delimited} résultats de recherche avancée"
       searches_add: Sauvegarder la recherche
       searches_remove: Supprimer des recherches sauvegardées
+      back: Revenir à la recherche avancée
     text_search_field:
       all_words: tous les mots
       exact: expression exacte
@@ -1097,3 +1098,17 @@ fr:
     create:
       success: "Votre suggestion a été envoyée"
       error: "Impossible de soumettre votre suggestion : %{errors}"
+
+  month_names:
+    january: "Janvier"
+    february: "Février"
+    march: "Mars"
+    april: "Avril"
+    may: "Mai"
+    june: "Juin"
+    july: "Juillet"
+    august: "Août"
+    september: "Septembre"
+    october: "Octobre"
+    november: "Novembre"
+    december: "Décembre"
