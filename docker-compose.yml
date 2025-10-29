@@ -6,7 +6,7 @@ name: catima
 
 services:
   catima-app:
-    image: unillett/catima:latest-app
+    image: unillett/catima:app-latest
     build:
       context: ./
       dockerfile: ./docker/Dockerfile
@@ -34,7 +34,7 @@ services:
       start_period: 10m
     container_name: catima-app
   catima-worker:
-    image: unillett/catima:latest-worker
+    image: unillett/catima:worker-latest
     build:
       context: ./
       dockerfile: ./docker/Dockerfile
