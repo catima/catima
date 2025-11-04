@@ -2,27 +2,29 @@
   <%= t(".title",
         :count => @advanced_search_results.total_count,
         :count_delimited => number_with_delimiter(@advanced_search_results.total_count)) %>
+<% end %>
+
+<div class="mb-3 d-flex gap-2">
+  <%= link_to(
+        fa_icon("arrow-left", :text => t(".back")),
+        new_advanced_search_path(:uuid => @saved_search.uuid),
+        :class => "btn btn-secondary") %>
 
   <% if search_exists_for_user?(@saved_search) %>
     <%= link_to(
             fa_icon("bookmark", :text => t(".searches_remove")),
             search_path(I18n.locale, @saved_search.search),
-            :class => "btn btn-outline-secondary btn-xs",
+            :class => "btn btn-outline-secondary",
             method: :delete
         ) %>
   <% else %>
     <%= link_to(
             fa_icon("bookmark-o", :text => t(".searches_add")),
             searches_path(I18n.locale, related_search_uuid: @saved_search.uuid),
-            :class => "btn btn-outline-secondary btn-xs",
+            :class => "btn btn-outline-secondary",
             method: :post
         ) %>
   <% end %>
-<% end %>
-
-<%= link_to(
-      t(".back"),
-      new_advanced_search_path(:uuid => @saved_search.uuid),
-      :class => "btn btn-link p-0") %>
+</div>
 
 <%= render :partial => "advanced_searches/list", :locals => { :search_results => @advanced_search_results, :saved_result => @saved_search } %>

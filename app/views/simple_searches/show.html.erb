@@ -10,24 +10,26 @@
         :query => @simple_search_results&.query,
         :count => @simple_search_results&.total_count.presence || 0,
         :count_delimited => number_with_delimiter(@simple_search_results&.total_count)) %>
-
-  <% if search_exists_for_user?(@saved_search) %>
-    <%= link_to(
-            fa_icon("bookmark", :text => t(".searches_remove")),
-            search_path(I18n.locale, @saved_search.search),
-            :class => "btn btn-outline-secondary btn-xs",
-            method: :delete
-        ) %>
-  <% else %>
-    <%= link_to(
-            fa_icon("bookmark-o", :text => t(".searches_add")),
-            searches_path(I18n.locale, related_search_uuid: @saved_search.uuid),
-            :class => "btn btn-outline-secondary btn-xs",
-            method: :post
-        ) %>
-  <% end %>
 <% end %>
 
 <% if @simple_search_results.present? %>
+  <div class="mb-3">
+    <% if search_exists_for_user?(@saved_search) %>
+      <%= link_to(
+              fa_icon("bookmark", :text => t(".searches_remove")),
+              search_path(I18n.locale, @saved_search.search),
+              :class => "btn btn-outline-secondary",
+              method: :delete
+          ) %>
+    <% else %>
+      <%= link_to(
+              fa_icon("bookmark-o", :text => t(".searches_add")),
+              searches_path(I18n.locale, related_search_uuid: @saved_search.uuid),
+              :class => "btn btn-outline-secondary",
+              method: :post
+          ) %>
+    <% end %>
+  </div>
+
   <%= render :partial => "simple_searches/list", :locals => { :search_results => @simple_search_results, :search_result => @saved_search } %>
 <% end %>
