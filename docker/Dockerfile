@@ -1,4 +1,4 @@
-FROM ruby:3.2.2-slim-bookworm AS base
+FROM ruby:3.4-slim-trixie AS base
 
 ENV DOCKER_RUNNING=true
 ENV COREPACK_ENABLE_AUTO_PIN=0
@@ -15,6 +15,7 @@ RUN apt-get update && \
     build-essential \
     libgmp-dev \
     libpq-dev \
+    libyaml-dev \
     curl \
     imagemagick \
     git \
