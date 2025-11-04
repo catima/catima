@@ -86,7 +86,8 @@ class ItemsTest < ActionDispatch::IntegrationTest
 
   test "view items belonging to a choice" do
     apply_vehicle_styles
-    visit("/search/en/vehicles?style=en-Sedan")
+    sedan_choice = choices(:search_sedan)
+    visit("/search/en/vehicles?style=#{sedan_choice.id}")
 
     assert(page.has_content?("Accord"))
     assert(page.has_content?("Prius"))
@@ -111,7 +112,8 @@ class ItemsTest < ActionDispatch::IntegrationTest
 
   test "allows navigation from one browsed item to another" do
     apply_vehicle_styles
-    visit("/search/en/vehicles?style=en-Sedan")
+    sedan_choice = choices(:search_sedan)
+    visit("/search/en/vehicles?style=#{sedan_choice.id}")
 
     click_on("Accord")
     within("h1") { assert(page.has_content?("Accord")) }
