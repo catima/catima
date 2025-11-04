@@ -25,7 +25,7 @@ class ItemList::FilterTest < ActiveSupport::TestCase
     browse = ItemList::Filter.new(
       :item_type => language_field.item_type,
       :field => language_field,
-      :value => "en-Eng"
+      :value => choices(:one_english).id.to_s
     )
     results = browse.items
 

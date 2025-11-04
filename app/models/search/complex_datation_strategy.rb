@@ -78,18 +78,18 @@ class Search::ComplexDatationStrategy < Search::BaseStrategy
     choice = choice_from_slug(choice_slug)
     return scope.none if choice.nil?
 
-    search(scope, { default: choice.id.to_s, exclude_condition: 'datation' })
+    search(scope, { default: choice.id.to_s })
   end
 
   private
 
   def choice_from_slug(slug)
-    _id, name = slug.split("-", 2)
-
-    return if name.blank?
+    # Accept either ID alone or "ID-name" format for backwards compatibility
+    id = slug.to_s.split("-", 2).first
+    return if id.blank?
 
     choice_sets = ChoiceSet.where(id: field.choice_set_ids)
-    Choice.where(choice_set_id: choice_sets.pluck(:id)).find(_id)
+    Choice.where(choice_set_id: choice_sets.pluck(:id)).find_by(id: id)
   end
 
   def search_dates(scope, start_date_time, end_date_time, field_condition, negate, is_choice)

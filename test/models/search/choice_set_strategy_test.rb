@@ -36,14 +36,29 @@ class Search::ChoiceSetStrategyTest < ActiveSupport::TestCase
     assert_includes(results.to_a, author)
   end
 
-  test "items can be browsed by choice" do
+  test "items can be browsed by choice using ID" do
     author = author_with_english_choice
     author.save!
 
     language_field = fields(:one_author_language)
     strategy = Search::ChoiceSetStrategy.new(language_field, :en)
 
-    results = strategy.browse(Item, "en-Eng")
+    # Use choice ID directly
+    results = strategy.browse(Item, choices(:one_english).id.to_s)
+
+    assert_equal(1, results.count)
+    assert_includes(results.to_a, author)
+  end
+
+  test "items can be browsed by choice using legacy format" do
+    author = author_with_english_choice
+    author.save!
+
+    language_field = fields(:one_author_language)
+    strategy = Search::ChoiceSetStrategy.new(language_field, :en)
+
+    # Legacy format: "ID-name" for backwards compatibility
+    results = strategy.browse(Item, "#{choices(:one_english).id}-Eng")
 
     assert_equal(1, results.count)
     assert_includes(results.to_a, author)

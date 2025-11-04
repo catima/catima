@@ -48,7 +48,7 @@ class Field::ComplexDatationPresenter < FieldPresenter
     return if choices.empty?
 
     links_and_prefixed_names = choices.map do |choice|
-      value_slug = [choice.id, choice.short_name].join("-")
+      value_slug = choice.id.to_s
 
       html_options = {
         'data-toggle': "tooltip",

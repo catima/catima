@@ -16,7 +16,7 @@ class Field::ChoiceSetPresenter < FieldPresenter
     return if choices.empty?
 
     links_and_prefixed_names = choices.map do |choice|
-      value_slug = [I18n.locale, choice.short_name].join("-")
+      value_slug = choice.id.to_s
       [
         browse_similar_items_link(
           choice.long_display_name, item, field, value_slug
