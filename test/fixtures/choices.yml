@@ -184,3 +184,31 @@ datation_100_BC_500:
   short_name_translations: { "short_name_en": "Datation 100 - 500" }
   from_date: "{\"Y\":100,\"M\":1,\"D\":1,\"h\":null,\"m\":null,\"s\":null,\"BC\": true}"
   to_date: "{\"Y\":500,\"M\":12,\"D\":31,\"h\":null,\"m\":null,\"s\":null,\"BC\": false}"
+
+nested_car_color_red:
+  catalog: nested
+  choice_set: nested_car_colors
+  long_name_translations: { "long_name_en": "Red" }
+  short_name_translations: { "short_name_en": "Red" }
+
+nested_car_color_blue:
+  catalog: nested
+  choice_set: nested_car_colors
+  long_name_translations: { "long_name_en": "Blue" }
+  short_name_translations: { "short_name_en": "Blue" }
+
+nested_car_year_2020:
+  catalog: nested
+  choice_set: nested_car_datation
+  long_name_translations: { "long_name_en": "2020" }
+  short_name_translations: { "short_name_en": "2020" }
+  from_date: "{\"Y\":2020,\"M\":null,\"D\":null,\"h\":null,\"m\":null,\"s\":null}"
+  to_date: "{\"Y\":2020,\"M\":null,\"D\":null,\"h\":null,\"m\":null,\"s\":null}"
+
+nested_car_year_2021:
+  catalog: nested
+  choice_set: nested_car_datation
+  long_name_translations: { "long_name_en": "2021" }
+  short_name_translations: { "short_name_en": "2021" }
+  from_date: "{\"Y\":2021,\"M\":null,\"D\":null,\"h\":null,\"m\":null,\"s\":null}"
+  to_date: "{\"Y\":2021,\"M\":null,\"D\":null,\"h\":null,\"m\":null,\"s\":null}"

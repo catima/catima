@@ -42,6 +42,63 @@ class ItemList::FilterTest < ActiveSupport::TestCase
     refute_includes(results, items(:reviewed_book_end_of_watch))
   end
 
+  test "finds items by category choice set field" do
+    # Test that filtering by a ChoiceSet field inside a category works
+    vehicle_type = item_types(:nested_vehicle)
+    color_field = vehicle_type.all_fields.find { |f| f.slug == 'color' }
+    red_choice = choices(:nested_car_color_red)
+
+    browse = ItemList::Filter.new(
+      :item_type => vehicle_type,
+      :field => color_field,
+      :value => red_choice.id.to_s
+    )
+    results = browse.items
+
+    assert_equal(2, results.count)
+    assert_includes(results.to_a, items(:nested_vehicle_red_car))
+    assert_includes(results.to_a, items(:nested_vehicle_another_red_car))
+    refute_includes(results.to_a, items(:nested_vehicle_blue_car))
+    refute_includes(results.to_a, items(:nested_vehicle_bicycle))
+  end
+
+  test "finds items by category complex datation field" do
+    # Test that filtering by a ComplexDatation field inside a category works
+    vehicle_type = item_types(:nested_vehicle)
+    manufacture_date_field = vehicle_type.all_fields.find { |f| f.slug == 'manufacture-date' }
+    year_2020 = choices(:nested_car_year_2020)
+
+    browse = ItemList::Filter.new(
+      :item_type => vehicle_type,
+      :field => manufacture_date_field,
+      :value => year_2020.id.to_s
+    )
+    results = browse.items
+
+    assert_equal(2, results.count)
+    assert_includes(results.to_a, items(:nested_vehicle_red_car))
+    assert_includes(results.to_a, items(:nested_vehicle_another_red_car))
+    refute_includes(results.to_a, items(:nested_vehicle_blue_car))
+    refute_includes(results.to_a, items(:nested_vehicle_bicycle))
+  end
+
+  test "strategy matches by uuid not object identity" do
+    # Test that the strategy lookup works even when field instances differ
+    vehicle_type = item_types(:nested_vehicle)
+    color_field = vehicle_type.all_fields.find { |f| f.slug == 'color' }
+    red_choice = choices(:nested_car_color_red)
+
+    browse = ItemList::Filter.new(
+      :item_type => vehicle_type,
+      :field => color_field,
+      :value => red_choice.id.to_s
+    )
+
+    # The strategy should be found even though all_fields creates new field instances
+    assert_not_nil(browse.send(:strategy))
+    assert_equal(color_field.uuid, browse.send(:strategy).field.uuid)
+  end
+
   private
 
   def author_with_english_choice

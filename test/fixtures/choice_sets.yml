@@ -57,3 +57,17 @@ datation:
   choice_set_type: "datation"
   format: "YMD"
   allow_bc: '1'
+
+nested_car_colors:
+  uuid: nested_car_colors_uuid
+  catalog: nested
+  name: Car Colors
+  choice_set_type: "default"
+
+nested_car_datation:
+  uuid: nested_car_datation_uuid
+  catalog: nested
+  name: Car Manufacture Date
+  choice_set_type: "datation"
+  format: "Y"
+  allow_bc: '0'

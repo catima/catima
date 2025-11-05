@@ -77,7 +77,7 @@ class ItemsController < ApplicationController
   end
 
   def browse_field
-    @browse_field ||= item_type.fields.find do |field|
+    @browse_field ||= item_type.all_fields.find do |field|
       params[field.slug].present?
     end
   end

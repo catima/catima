@@ -527,3 +527,61 @@ complex_datation_date_between_1_1_300_bc_31_1_300:
               "from": { "D": 1, "M": 1, "Y": 300, "h": , "m": , "s": , "BC": true },
               "selected_format": "date_time" }
   }
+
+nested_vehicle_red_car:
+  catalog: nested
+  item_type: nested_vehicle
+  review_status: "approved"
+  data: {
+    "nested_vehicle_name_uuid": "Red Toyota",
+    "nested_vehicle_type_uuid": ["<%= ActiveRecord::FixtureSet.identify(:nested_car).to_s %>"],
+    "nested_car_cupholders_uuid": 4,
+    "nested_car_color_uuid": ["<%= ActiveRecord::FixtureSet.identify(:nested_car_color_red).to_s %>"],
+    "nested_car_manufacture_date_uuid": {
+      "selected_choices": {
+        "value": ["<%= ActiveRecord::FixtureSet.identify(:nested_car_year_2020).to_s %>"]
+      }
+    }
+  }
+
+nested_vehicle_blue_car:
+  catalog: nested
+  item_type: nested_vehicle
+  review_status: "approved"
+  data: {
+    "nested_vehicle_name_uuid": "Blue Honda",
+    "nested_vehicle_type_uuid": ["<%= ActiveRecord::FixtureSet.identify(:nested_car).to_s %>"],
+    "nested_car_cupholders_uuid": 2,
+    "nested_car_color_uuid": ["<%= ActiveRecord::FixtureSet.identify(:nested_car_color_blue).to_s %>"],
+    "nested_car_manufacture_date_uuid": {
+      "selected_choices": {
+        "value": ["<%= ActiveRecord::FixtureSet.identify(:nested_car_year_2021).to_s %>"]
+      }
+    }
+  }
+
+nested_vehicle_another_red_car:
+  catalog: nested
+  item_type: nested_vehicle
+  review_status: "approved"
+  data: {
+    "nested_vehicle_name_uuid": "Red Mazda",
+    "nested_vehicle_type_uuid": ["<%= ActiveRecord::FixtureSet.identify(:nested_car).to_s %>"],
+    "nested_car_cupholders_uuid": 3,
+    "nested_car_color_uuid": ["<%= ActiveRecord::FixtureSet.identify(:nested_car_color_red).to_s %>"],
+    "nested_car_manufacture_date_uuid": {
+      "selected_choices": {
+        "value": ["<%= ActiveRecord::FixtureSet.identify(:nested_car_year_2020).to_s %>"]
+      }
+    }
+  }
+
+nested_vehicle_bicycle:
+  catalog: nested
+  item_type: nested_vehicle
+  review_status: "approved"
+  data: {
+    "nested_vehicle_name_uuid": "Mountain Bike",
+    "nested_vehicle_type_uuid": ["<%= ActiveRecord::FixtureSet.identify(:nested_bicycle).to_s %>"],
+    "nested_bicycle_speeds_uuid": 21
+  }
