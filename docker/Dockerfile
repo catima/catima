@@ -54,35 +54,31 @@ RUN gem update --system $RUBYGEMS_VERSION
 # Install specific version of Bundler
 RUN gem install bundler:$BUNDLER_VERSION --no-document --conservative
 
-FROM base AS dependencies
+FROM base AS dependencies-development
 
 # Copy the Gemfile and Gemfile.lock, and run Bundler
 COPY Gemfile Gemfile.lock /var/www/catima/
 RUN bundle install
 
-# Copy package.json and yarn.lock for npm dependencies
+# Copy package.json and yarn.lock, then install js dependencies
 COPY package.json yarn.lock /var/www/catima/
-RUN yarn install --frozen-lockfile
+RUN yarn install --frozen-lockfile --production=false && yarn cache clean
 
 FROM base AS dependencies-production
 
-# Copy the Gemfile and Gemfile.lock
+# Copy the Gemfile and Gemfile.lock, and run Bundler
 COPY Gemfile Gemfile.lock /var/www/catima/
-
-# Install only production gems
 RUN bundle config set --local without 'development test' && \
-    bundle install --jobs 4 --retry 3
+    bundle install
 
-# Copy package.json and yarn.lock
+# Copy package.json and yarn.lock, then install js dependencies
 COPY package.json yarn.lock /var/www/catima/
-
-# Install npm packages with production flag
-RUN yarn install --frozen-lockfile --production=false
+RUN yarn install --frozen-lockfile --production=true && yarn cache clean
 
 # =============================================================================
 # DEVELOPMENT TARGETS
 # =============================================================================
-FROM dependencies AS app-dev
+FROM dependencies-development AS app-dev
 
 # Replace default crontab
 ADD ./docker/config/crontab /etc/crontab
@@ -100,7 +96,7 @@ RUN chmod +x /usr/local/bin/entrypoint.sh
 ENTRYPOINT [ "entrypoint.sh" ]
 CMD ["/usr/bin/supervisord", "-c", "/etc/supervisor/conf.d/supervisord.conf"]
 
-FROM dependencies AS worker-dev
+FROM dependencies-development AS worker-dev
 
 # Copy supervisor configuration file
 #
@@ -143,7 +139,7 @@ ENV NODE_ENV=production
 ENTRYPOINT [ "entrypoint.sh" ]
 CMD ["/usr/bin/supervisord", "-c", "/etc/supervisor/conf.d/supervisord.conf"]
 
-FROM dependencies AS worker-staging
+FROM dependencies-production AS worker-staging
 
 # Copy application code
 COPY . /var/www/catima/
