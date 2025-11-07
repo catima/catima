@@ -1,0 +1,54 @@
+# The following configuration is used for development in conjunction with the
+# main docker-compose.yml. Please follow the instructions in the README.md
+# file to deploy the application.
+
+services:
+  catima-app:
+    image: unillett/catima:app-dev-latest
+    build:
+      context: ./
+      dockerfile: ./docker/Dockerfile
+      target: app-dev
+    ports:
+      - "127.0.0.1:8383:3000"
+    expose:
+      - "4000"
+    volumes:
+      - ./:/var/www/catima
+
+  catima-worker:
+    image: unillett/catima:worker-dev-latest
+    build:
+      context: ./
+      dockerfile: ./docker/Dockerfile
+      target: worker-dev
+    volumes:
+      - ./:/var/www/catima
+
+  catima-mailhog:
+    image: mailhog/mailhog:latest
+    expose:
+      - "1025"
+    ports:
+      - "127.0.0.1:8028:8025"
+    networks:
+      - catima-net
+    container_name: catima-mailhog
+
+  catima-selenium:
+    # TODO: use latest image tag as soon as the chrome issue is fixed
+    # https://github.com/teamcapybara/capybara/issues/2800#issuecomment-2731100953
+    image: selenium/standalone-chromium:133.0
+    shm_size: "2gb"
+    ports:
+      - "127.0.0.1:4444:4444"
+      - "127.0.0.1:5900:5900"
+    networks:
+      - catima-net
+    healthcheck:
+      test: /opt/bin/check-grid.sh --host 0.0.0.0 --port 4444
+      interval: 20s
+      timeout: 5s
+      retries: 5
+      start_period: 10s
+    container_name: catima-selenium

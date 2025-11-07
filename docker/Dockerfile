@@ -54,11 +54,35 @@ RUN gem update --system $RUBYGEMS_VERSION
 # Install specific version of Bundler
 RUN gem install bundler:$BUNDLER_VERSION --no-document --conservative
 
+FROM base AS dependencies
+
 # Copy the Gemfile and Gemfile.lock, and run Bundler
 COPY Gemfile Gemfile.lock /var/www/catima/
 RUN bundle install
 
-FROM base AS app-dev
+# Copy package.json and yarn.lock for npm dependencies
+COPY package.json yarn.lock /var/www/catima/
+RUN yarn install --frozen-lockfile
+
+FROM base AS dependencies-production
+
+# Copy the Gemfile and Gemfile.lock
+COPY Gemfile Gemfile.lock /var/www/catima/
+
+# Install only production gems
+RUN bundle config set --local without 'development test' && \
+    bundle install --jobs 4 --retry 3
+
+# Copy package.json and yarn.lock
+COPY package.json yarn.lock /var/www/catima/
+
+# Install npm packages with production flag
+RUN yarn install --frozen-lockfile --production=false
+
+# =============================================================================
+# DEVELOPMENT TARGETS
+# =============================================================================
+FROM dependencies AS app-dev
 
 # Replace default crontab
 ADD ./docker/config/crontab /etc/crontab
@@ -76,7 +100,7 @@ RUN chmod +x /usr/local/bin/entrypoint.sh
 ENTRYPOINT [ "entrypoint.sh" ]
 CMD ["/usr/bin/supervisord", "-c", "/etc/supervisor/conf.d/supervisord.conf"]
 
-FROM base AS worker-dev
+FROM dependencies AS worker-dev
 
 # Copy supervisor configuration file
 #
@@ -88,5 +112,117 @@ COPY ./docker/config/supervisord-worker-dev.conf /etc/supervisor/conf.d/supervis
 # Add the entrypoint script used in development
 COPY ./docker/config/entrypoint-worker-dev.sh /usr/local/bin/entrypoint.sh
 RUN chmod +x /usr/local/bin/entrypoint.sh
+ENTRYPOINT [ "entrypoint.sh" ]
+CMD ["/usr/bin/supervisord", "-c", "/etc/supervisor/conf.d/supervisord.conf"]
+
+# =============================================================================
+# STAGING TARGETS
+# =============================================================================
+FROM dependencies-production AS app-staging
+
+# Copy application code
+COPY . /var/www/catima/
+
+# Precompile assets
+RUN SECRET_KEY_BASE=dummy RAILS_ENV=staging bundle exec rails assets:precompile
+
+# Replace default crontab
+ADD ./docker/config/crontab /etc/crontab
+
+# Copy supervisor configuration file
+COPY ./docker/config/supervisord-app-staging.conf /etc/supervisor/conf.d/supervisord.conf
+
+# Add the entrypoint script
+COPY ./docker/config/entrypoint-app-staging.sh /usr/local/bin/entrypoint.sh
+RUN chmod +x /usr/local/bin/entrypoint.sh
+
+# Set staging environment
+ENV RAILS_ENV=staging
+ENV NODE_ENV=production
+
+ENTRYPOINT [ "entrypoint.sh" ]
+CMD ["/usr/bin/supervisord", "-c", "/etc/supervisor/conf.d/supervisord.conf"]
+
+FROM dependencies AS worker-staging
+
+# Copy application code
+COPY . /var/www/catima/
+
+# Copy supervisor configuration file
+COPY ./docker/config/supervisord-worker-staging.conf /etc/supervisor/conf.d/supervisord.conf
+
+# Add the entrypoint script
+COPY ./docker/config/entrypoint-worker-staging.sh /usr/local/bin/entrypoint.sh
+RUN chmod +x /usr/local/bin/entrypoint.sh
+
+# Set staging environment
+ENV RAILS_ENV=staging
+ENV NODE_ENV=production
+
+ENTRYPOINT [ "entrypoint.sh" ]
+CMD ["/usr/bin/supervisord", "-c", "/etc/supervisor/conf.d/supervisord.conf"]
+
+# =============================================================================
+# PRODUCTION TARGETS
+# =============================================================================
+FROM dependencies-production AS app-production
+
+# Copy application code
+COPY . /var/www/catima/
+
+# Precompile assets
+RUN SECRET_KEY_BASE=dummy RAILS_ENV=production bundle exec rails assets:precompile
+
+# Remove unnecessary files to reduce image size
+RUN rm -rf node_modules/*/test \
+    node_modules/*/tests \
+    node_modules/*/.github \
+    tmp/cache \
+    spec \
+    test \
+    coverage
+
+# Replace default crontab
+ADD ./docker/config/crontab /etc/crontab
+
+# Copy supervisor configuration file
+COPY ./docker/config/supervisord-app-production.conf /etc/supervisor/conf.d/supervisord.conf
+
+# Add the entrypoint script
+COPY ./docker/config/entrypoint-app-production.sh /usr/local/bin/entrypoint.sh
+RUN chmod +x /usr/local/bin/entrypoint.sh
+
+# Set production environment
+ENV RAILS_ENV=production
+ENV NODE_ENV=production
+
+ENTRYPOINT [ "entrypoint.sh" ]
+CMD ["/usr/bin/supervisord", "-c", "/etc/supervisor/conf.d/supervisord.conf"]
+
+FROM dependencies-production AS worker-production
+
+# Copy application code
+COPY . /var/www/catima/
+
+# Remove unnecessary files to reduce image size
+RUN rm -rf node_modules/*/test \
+    node_modules/*/tests \
+    node_modules/*/.github \
+    tmp/cache \
+    spec \
+    test \
+    coverage
+
+# Copy supervisor configuration file
+COPY ./docker/config/supervisord-worker-production.conf /etc/supervisor/conf.d/supervisord.conf
+
+# Add the entrypoint script
+COPY ./docker/config/entrypoint-worker-production.sh /usr/local/bin/entrypoint.sh
+RUN chmod +x /usr/local/bin/entrypoint.sh
+
+# Set production environment
+ENV RAILS_ENV=production
+ENV NODE_ENV=production
+
 ENTRYPOINT [ "entrypoint.sh" ]
 CMD ["/usr/bin/supervisord", "-c", "/etc/supervisor/conf.d/supervisord.conf"]

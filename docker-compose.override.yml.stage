@@ -1,0 +1,65 @@
+# The following configuration is used for staging in conjunction with the
+# main docker-compose.yml. Please follow the instructions in the README.md
+# file to deploy the application.
+
+services:
+  catima-app:
+    image: unillett/catima:app-stage-latest
+    build:
+      context: ./
+      dockerfile: ./docker/Dockerfile
+      target: app-staging
+    ports:
+      - "80:3000"
+    volumes:
+      - upload-data:/var/www/catima/public/upload
+      - thumbs-data:/var/www/catima/public/thumbs
+      - log-data:/var/www/catima/log
+      - exports-data:/var/www/catima/exports
+    restart: unless-stopped
+    deploy:
+      mode: global
+      resources:
+        limits:
+          memory: 1000M
+
+  catima-worker:
+    image: unillett/catima:worker-stage-latest
+    build:
+      context: ./
+      dockerfile: ./docker/Dockerfile
+      target: worker-staging
+    volumes:
+      - upload-data:/var/www/catima/public/upload
+      - thumbs-data:/var/www/catima/public/thumbs
+      - log-data:/var/www/catima/log
+      - exports-data:/var/www/catima/exports
+    restart: unless-stopped
+    deploy:
+      mode: global
+      resources:
+        limits:
+          memory: 1000M
+
+  catima-postgres:
+    restart: unless-stopped
+    deploy:
+      mode: global
+      resources:
+        limits:
+          memory: 1000M
+
+  catima-redis:
+    restart: unless-stopped
+    deploy:
+      mode: global
+      resources:
+        limits:
+          memory: 500M
+
+volumes:
+  # TODO: persist specific files from config/
+  upload-data:
+  thumbs-data:
+  log-data:
+  exports-data:

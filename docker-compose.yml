@@ -6,24 +6,8 @@ name: catima
 
 services:
   catima-app:
-    image: unillett/catima:app-latest
-    build:
-      context: ./
-      dockerfile: ./docker/Dockerfile
-      target: app-dev
     env_file:
       - ./docker/.env
-    ports:
-      - "8383:3000"
-    expose:
-      - "4000"
-    depends_on:
-      catima-postgres:
-        condition: service_healthy
-      catima-redis:
-        condition: service_healthy
-    volumes:
-      - ./:/var/www/catima
     networks:
       - catima-net
     healthcheck:
@@ -32,15 +16,18 @@ services:
       timeout: 5s
       retries: 5
       start_period: 10m
+    depends_on:
+      catima-postgres:
+        condition: service_healthy
+      catima-redis:
+        condition: service_healthy
     container_name: catima-app
+
   catima-worker:
-    image: unillett/catima:worker-latest
-    build:
-      context: ./
-      dockerfile: ./docker/Dockerfile
-      target: worker-dev
     env_file:
       - ./docker/.env
+    networks:
+      - catima-net
     depends_on:
       catima-postgres:
         condition: service_healthy
@@ -48,22 +35,19 @@ services:
         condition: service_healthy
       catima-app:
         condition: service_healthy
-    volumes_from:
-      - catima-app
-    networks:
-      - catima-net
     container_name: catima-worker
+
   catima-postgres:
     image: imresamu/postgis:17-3.5
-    env_file:
-      - ./docker/.env
     ports:
       - "127.0.0.1:5410:5432"
+    env_file:
+      - ./docker/.env
+    networks:
+      - catima-net
     volumes:
       - postgres-data:/var/lib/postgresql/data
       - ./docker/config/init.sql:/docker-entrypoint-initdb.d/init.sql
-    networks:
-      - catima-net
     healthcheck:
       test: pg_isready -U docker -h 127.0.0.1
       interval: 5s
@@ -71,17 +55,18 @@ services:
       retries: 5
       start_period: 30s
     container_name: catima-postgres
+
   catima-redis:
     image: redis:8.0-alpine
     env_file:
       - ./docker/.env
-    expose:
-      - "6379"
+    networks:
+      - catima-net
     command: redis-server
     volumes:
       - redis-data:/data
-    networks:
-      - catima-net
+    expose:
+      - "6379"
     healthcheck:
       test: redis-cli ping
       interval: 5s
@@ -89,32 +74,6 @@ services:
       retries: 5
       start_period: 30s
     container_name: catima-redis
-  catima-mailhog:
-    image: mailhog/mailhog:latest
-    expose:
-      - "1025"
-    ports:
-      - "127.0.0.1:8028:8025"
-    networks:
-      - catima-net
-    container_name: catima-mailhog
-  catima-selenium:
-    # TODO: use latest image tag as soon as the chrome issue is fixed
-    # https://github.com/teamcapybara/capybara/issues/2800#issuecomment-2731100953
-    image: selenium/standalone-chromium:133.0
-    shm_size: "2gb"
-    ports:
-      - "127.0.0.1:4444:4444"
-      - "127.0.0.1:5900:5900"
-    networks:
-      - catima-net
-    healthcheck:
-      test: /opt/bin/check-grid.sh --host 0.0.0.0 --port 4444
-      interval: 20s
-      timeout: 5s
-      retries: 5
-      start_period: 10s
-    container_name: catima-selenium
 
 volumes:
   redis-data:
