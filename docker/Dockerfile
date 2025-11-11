@@ -14,6 +14,7 @@ RUN apt-get update && \
     libgmp-dev \
     libpq-dev \
     libyaml-dev \
+    procps \
     curl \
     imagemagick \
     git \
