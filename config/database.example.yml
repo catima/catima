@@ -25,20 +25,27 @@ development:
   min_messages: WARNING
   pool: 5
 
-  # The above config should "just work" on Mac with PostgreSQL
-  # installed via Homebrew. If it doesn't work for you, try the
-  # UNIX domain socket or TCP socket methods as shown here:
+staging:
+  adapter: postgresql
+  encoding: unicode
+  database: <%= ENV.fetch('POSTGRES_DB', 'catima_staging') %>
+  host: <%= ENV.fetch('POSTGRES_HOST',  'localhost') %>
+  username: <%= ENV.fetch('POSTGRES_USER', nil) %>
+  password: <%= ENV.fetch('POSTGRES_PASSWORD', nil) %>
+  port: <%= ENV.fetch('POSTGRES_PORT', 5432) %>
+  min_messages: WARNING
+  pool: 5
 
-  # Connect via domain socket in /tmp (some installs use /var/run/postgresql)
-  # host: /tmp
-  # username: <%= ENV["USER"] %>
-  # password:
-
-  # Connect on a TCP socket.
-  # host: localhost
-  # port: 5432
-  # username: my_postgres_user
-  # password: my_postgres_password
+production:
+  adapter: postgresql
+  encoding: unicode
+  database: <%= ENV.fetch('POSTGRES_DB', 'catima_production') %>
+  host: <%= ENV.fetch('POSTGRES_HOST',  'localhost') %>
+  username: <%= ENV.fetch('POSTGRES_USER', nil) %>
+  password: <%= ENV.fetch('POSTGRES_PASSWORD', nil) %>
+  port: <%= ENV.fetch('POSTGRES_PORT', 5432) %>
+  min_messages: WARNING
+  pool: 5
 
 # Warning: The database defined as "test" will be erased and
 # re-generated from your development database when you run "rake".

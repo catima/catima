@@ -136,8 +136,13 @@ USER catima
 # Copy application code with proper ownership
 COPY --chown=catima:catima . /var/www/catima/
 
+# Create database.yml from example for asset precompilation
+RUN cp config/database.example.yml config/database.yml
+
 # Precompile assets
-RUN SECRET_KEY_BASE=dummy RAILS_ENV=staging bundle exec rails assets:precompile
+RUN SECRET_KEY_BASE=dummy \
+    RAILS_ENV=staging \
+    bundle exec rails assets:precompile
 
 # Set staging environment
 ENV RAILS_ENV=staging
@@ -186,8 +191,13 @@ USER catima
 # Copy application code with proper ownership
 COPY --chown=catima:catima . /var/www/catima/
 
+# Create database.yml from example for asset precompilation
+RUN cp config/database.example.yml config/database.yml
+
 # Precompile assets
-RUN SECRET_KEY_BASE=dummy RAILS_ENV=production bundle exec rails assets:precompile
+RUN SECRET_KEY_BASE=dummy \
+    RAILS_ENV=production \
+    bundle exec rails assets:precompile
 
 # Set production environment
 ENV RAILS_ENV=production
