@@ -6,8 +6,6 @@ ENV COREPACK_ENABLE_AUTO_PIN=0
 ENV PSQL_CLIENT_VERSION=17
 ENV NODE_VERSION=22
 ENV YARN_VERSION=1.22
-ENV RUBYGEMS_VERSION=3.4.5
-ENV BUNDLER_VERSION=2.4.5
 
 # Update repositories & add needed packages
 RUN apt-get update && \
@@ -25,13 +23,17 @@ RUN apt-get update && \
     lsb-release \
     ca-certificates \
     gnupg \
-    wget
+    wget && \
+    apt-get clean && \
+    rm -rf /var/lib/apt/lists/*
 
 # Install specific version of Postgresql Client
 RUN wget --quiet -O - https://www.postgresql.org/media/keys/ACCC4CF8.asc | gpg --dearmor -o /usr/share/keyrings/postgresql-archive-keyring.gpg && \
     echo "deb [signed-by=/usr/share/keyrings/postgresql-archive-keyring.gpg] http://apt.postgresql.org/pub/repos/apt/ `lsb_release -cs`-pgdg main" | tee /etc/apt/sources.list.d/pgdg.list && \
     apt-get update && \
-    apt-get install -y --no-install-recommends postgresql-client-$PSQL_CLIENT_VERSION
+    apt-get install -y --no-install-recommends postgresql-client-$PSQL_CLIENT_VERSION && \
+    apt-get clean && \
+    rm -rf /var/lib/apt/lists/*
 
 # Install specific version of Node & Yarn
 RUN mkdir -p /etc/apt/keyrings; \
@@ -41,18 +43,20 @@ RUN mkdir -p /etc/apt/keyrings; \
     | tee /etc/apt/sources.list.d/nodesource.list; \
     apt-get update; \
     apt-get install -y --no-install-recommends nodejs && \
+    apt-get clean && \
+    rm -rf /var/lib/apt/lists/* && \
     corepack enable && \
     corepack prepare yarn@$YARN_VERSION --activate && \
     yarn --version
 
+# Define user and group to run the application
+RUN groupadd -g 1000 catima && \
+    useradd -u 1000 -g catima -m -s /bin/bash catima
+
 # Create and set the working directory
+RUN mkdir -p /var/www/catima && \
+    chown -R catima:catima /var/www/catima
 WORKDIR /var/www/catima
-
-# Install specific version of RubyGems
-RUN gem update --system $RUBYGEMS_VERSION
-
-# Install specific version of Bundler
-RUN gem install bundler:$BUNDLER_VERSION --no-document --conservative
 
 FROM base AS dependencies-development
 
@@ -62,7 +66,7 @@ RUN bundle install
 
 # Copy package.json and yarn.lock, then install js dependencies
 COPY package.json yarn.lock /var/www/catima/
-RUN yarn install --frozen-lockfile --production=false && yarn cache clean
+RUN yarn install --frozen-lockfile --production=false
 
 FROM base AS dependencies-production
 
@@ -73,7 +77,7 @@ RUN bundle config set --local without 'development test' && \
 
 # Copy package.json and yarn.lock, then install js dependencies
 COPY package.json yarn.lock /var/www/catima/
-RUN yarn install --frozen-lockfile --production=true && yarn cache clean
+RUN yarn install --frozen-lockfile --production=true
 
 # =============================================================================
 # DEVELOPMENT TARGETS
@@ -81,7 +85,7 @@ RUN yarn install --frozen-lockfile --production=true && yarn cache clean
 FROM dependencies-development AS app-dev
 
 # Replace default crontab
-ADD ./docker/config/crontab /etc/crontab
+COPY ./docker/config/crontab /etc/crontab
 
 # Copy supervisor configuration file
 #
@@ -116,21 +120,23 @@ CMD ["/usr/bin/supervisord", "-c", "/etc/supervisor/conf.d/supervisord.conf"]
 # =============================================================================
 FROM dependencies-production AS app-staging
 
-# Copy application code
-COPY . /var/www/catima/
+# Copy system files as root (crontab, supervisor config, entrypoint)
+COPY ./docker/config/crontab /etc/crontab
+COPY ./docker/config/supervisord-app-staging.conf /etc/supervisor/conf.d/supervisord.conf
+COPY ./docker/config/entrypoint-app-staging.sh /usr/local/bin/entrypoint.sh
+RUN chmod +x /usr/local/bin/entrypoint.sh
+
+# Copy unicorn configuration
+COPY ./docker/config/unicorn.rb /var/www/catima/config/unicorn.rb
+
+# Switch to catima user
+USER catima
+
+# Copy application code with proper ownership
+COPY --chown=catima:catima . /var/www/catima/
 
 # Precompile assets
 RUN SECRET_KEY_BASE=dummy RAILS_ENV=staging bundle exec rails assets:precompile
-
-# Replace default crontab
-ADD ./docker/config/crontab /etc/crontab
-
-# Copy supervisor configuration file
-COPY ./docker/config/supervisord-app-staging.conf /etc/supervisor/conf.d/supervisord.conf
-
-# Add the entrypoint script
-COPY ./docker/config/entrypoint-app-staging.sh /usr/local/bin/entrypoint.sh
-RUN chmod +x /usr/local/bin/entrypoint.sh
 
 # Set staging environment
 ENV RAILS_ENV=staging
@@ -141,15 +147,16 @@ CMD ["/usr/bin/supervisord", "-c", "/etc/supervisor/conf.d/supervisord.conf"]
 
 FROM dependencies-production AS worker-staging
 
-# Copy application code
-COPY . /var/www/catima/
-
-# Copy supervisor configuration file
+# Copy system files as root (supervisor config, entrypoint)
 COPY ./docker/config/supervisord-worker-staging.conf /etc/supervisor/conf.d/supervisord.conf
-
-# Add the entrypoint script
 COPY ./docker/config/entrypoint-worker-staging.sh /usr/local/bin/entrypoint.sh
 RUN chmod +x /usr/local/bin/entrypoint.sh
+
+# Switch to catima user
+USER catima
+
+# Copy application code with proper ownership
+COPY --chown=catima:catima . /var/www/catima/
 
 # Set staging environment
 ENV RAILS_ENV=staging
@@ -163,30 +170,23 @@ CMD ["/usr/bin/supervisord", "-c", "/etc/supervisor/conf.d/supervisord.conf"]
 # =============================================================================
 FROM dependencies-production AS app-production
 
-# Copy application code
-COPY . /var/www/catima/
+# Copy system files as root (crontab, supervisor config, entrypoint)
+COPY ./docker/config/crontab /etc/crontab
+COPY ./docker/config/supervisord-app-production.conf /etc/supervisor/conf.d/supervisord.conf
+COPY ./docker/config/entrypoint-app-production.sh /usr/local/bin/entrypoint.sh
+RUN chmod +x /usr/local/bin/entrypoint.sh
+
+# Copy unicorn configuration
+COPY ./docker/config/unicorn.rb /var/www/catima/config/unicorn.rb
+
+# Switch to catima user
+USER catima
+
+# Copy application code with proper ownership
+COPY --chown=catima:catima . /var/www/catima/
 
 # Precompile assets
 RUN SECRET_KEY_BASE=dummy RAILS_ENV=production bundle exec rails assets:precompile
-
-# Remove unnecessary files to reduce image size
-RUN rm -rf node_modules/*/test \
-    node_modules/*/tests \
-    node_modules/*/.github \
-    tmp/cache \
-    spec \
-    test \
-    coverage
-
-# Replace default crontab
-ADD ./docker/config/crontab /etc/crontab
-
-# Copy supervisor configuration file
-COPY ./docker/config/supervisord-app-production.conf /etc/supervisor/conf.d/supervisord.conf
-
-# Add the entrypoint script
-COPY ./docker/config/entrypoint-app-production.sh /usr/local/bin/entrypoint.sh
-RUN chmod +x /usr/local/bin/entrypoint.sh
 
 # Set production environment
 ENV RAILS_ENV=production
@@ -197,24 +197,16 @@ CMD ["/usr/bin/supervisord", "-c", "/etc/supervisor/conf.d/supervisord.conf"]
 
 FROM dependencies-production AS worker-production
 
-# Copy application code
-COPY . /var/www/catima/
-
-# Remove unnecessary files to reduce image size
-RUN rm -rf node_modules/*/test \
-    node_modules/*/tests \
-    node_modules/*/.github \
-    tmp/cache \
-    spec \
-    test \
-    coverage
-
-# Copy supervisor configuration file
+# Copy system files as root (supervisor config, entrypoint)
 COPY ./docker/config/supervisord-worker-production.conf /etc/supervisor/conf.d/supervisord.conf
-
-# Add the entrypoint script
 COPY ./docker/config/entrypoint-worker-production.sh /usr/local/bin/entrypoint.sh
 RUN chmod +x /usr/local/bin/entrypoint.sh
+
+# Switch to catima user
+USER catima
+
+# Copy application code with proper ownership
+COPY --chown=catima:catima . /var/www/catima/
 
 # Set production environment
 ENV RAILS_ENV=production
