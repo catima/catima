@@ -168,6 +168,9 @@ USER catima
 # Copy application code with proper ownership
 COPY --chown=catima:catima . /var/www/catima/
 
+# Create database.yml from example for sidekiq
+RUN cp config/database.example.yml.stage config/database.yml
+
 # Set staging environment
 ENV RAILS_ENV=staging
 ENV NODE_ENV=production
@@ -226,6 +229,9 @@ USER catima
 
 # Copy application code with proper ownership
 COPY --chown=catima:catima . /var/www/catima/
+
+# Create database.yml from example for sidekiq
+RUN cp config/database.example.yml.prod config/database.yml
 
 # Set production environment
 ENV RAILS_ENV=production
