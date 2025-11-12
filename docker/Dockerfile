@@ -6,6 +6,7 @@ ENV COREPACK_ENABLE_AUTO_PIN=0
 ENV PSQL_CLIENT_VERSION=17
 ENV NODE_VERSION=22
 ENV YARN_VERSION=1.22
+ENV SUPERCRONIC_VERSION=v0.2.39
 
 # Update repositories & add needed packages
 RUN apt-get update && \
@@ -20,13 +21,19 @@ RUN apt-get update && \
     git \
     unzip \
     supervisor \
-    cron \
     lsb-release \
     ca-certificates \
     gnupg \
     wget && \
     apt-get clean && \
     rm -rf /var/lib/apt/lists/*
+
+# Install supercronic
+RUN ARCH=$(dpkg --print-architecture) && \
+    SUPERCRONIC_URL="https://github.com/aptible/supercronic/releases/download/${SUPERCRONIC_VERSION}/supercronic-linux-${ARCH}" && \
+    curl -fsSL "${SUPERCRONIC_URL}" -o /usr/local/bin/supercronic && \
+    chmod +x /usr/local/bin/supercronic && \
+    supercronic -version
 
 # Install specific version of Postgresql Client
 RUN wget --quiet -O - https://www.postgresql.org/media/keys/ACCC4CF8.asc | gpg --dearmor -o /usr/share/keyrings/postgresql-archive-keyring.gpg && \
@@ -85,8 +92,8 @@ RUN yarn install --frozen-lockfile --production=true
 # =============================================================================
 FROM dependencies-development AS app-dev
 
-# Replace default crontab
-COPY ./docker/config/crontab /etc/crontab
+# Copy crontab for supercronic
+COPY --chown=catima:catima ./docker/config/catima-crontab /var/www/catima/config/crontab
 
 # Copy supervisor configuration file
 #
@@ -121,8 +128,7 @@ CMD ["/usr/bin/supervisord", "-c", "/etc/supervisor/conf.d/supervisord.conf"]
 # =============================================================================
 FROM dependencies-production AS app-staging
 
-# Copy system files as root (crontab, supervisor config, entrypoint)
-COPY ./docker/config/crontab /etc/crontab
+# Copy supervisor configuration and entrypoint
 COPY ./docker/config/supervisord-app-staging.conf /etc/supervisor/conf.d/supervisord.conf
 COPY ./docker/config/entrypoint-app-staging.sh /usr/local/bin/entrypoint.sh
 RUN chmod +x /usr/local/bin/entrypoint.sh
@@ -132,6 +138,9 @@ COPY ./docker/config/unicorn.rb /var/www/catima/config/unicorn.rb
 
 # Switch to catima user
 USER catima
+
+# Copy crontab for supercronic
+COPY --chown=catima:catima ./docker/config/catima-crontab /var/www/catima/config/crontab
 
 # Copy application code with proper ownership
 COPY --chown=catima:catima . /var/www/catima/
@@ -157,7 +166,7 @@ CMD ["/usr/bin/supervisord", "-c", "/etc/supervisor/conf.d/supervisord.conf"]
 
 FROM dependencies-production AS worker-staging
 
-# Copy system files as root (supervisor config, entrypoint)
+# Copy supervisor configuration and entrypoint
 COPY ./docker/config/supervisord-worker-staging.conf /etc/supervisor/conf.d/supervisord.conf
 COPY ./docker/config/entrypoint-worker-staging.sh /usr/local/bin/entrypoint.sh
 RUN chmod +x /usr/local/bin/entrypoint.sh
@@ -183,8 +192,7 @@ CMD ["/usr/bin/supervisord", "-c", "/etc/supervisor/conf.d/supervisord.conf"]
 # =============================================================================
 FROM dependencies-production AS app-production
 
-# Copy system files as root (crontab, supervisor config, entrypoint)
-COPY ./docker/config/crontab /etc/crontab
+# Copy supervisor configuration and entrypoint
 COPY ./docker/config/supervisord-app-production.conf /etc/supervisor/conf.d/supervisord.conf
 COPY ./docker/config/entrypoint-app-production.sh /usr/local/bin/entrypoint.sh
 RUN chmod +x /usr/local/bin/entrypoint.sh
@@ -194,6 +202,9 @@ COPY ./docker/config/unicorn.rb /var/www/catima/config/unicorn.rb
 
 # Switch to catima user
 USER catima
+
+# Copy crontab for supercronic
+COPY --chown=catima:catima ./docker/config/catima-crontab /var/www/catima/config/crontab
 
 # Copy application code with proper ownership
 COPY --chown=catima:catima . /var/www/catima/
