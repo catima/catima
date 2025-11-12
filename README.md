@@ -25,49 +25,19 @@ This README describes the purpose of this repository and how to set up a develop
 * End-user documentation is in [catima/userdoc](https://github.com/catima/userdoc)
 * Development documentation is in [catima/devdoc](https://github.com/catima/devdoc)
 
-## Getting started locally
-
-### Prerequisites
-
-This project requires:
-
-* Ruby 3.2.2, preferably managed using [rbenv](http://rbenv.org/)
-* PostgreSQL 17 must be installed and accepting connections
-* Node 22.x (`brew install nvm`, ...)
-* [Redis](https://redis.io/) must be installed and running on localhost with the default port
-* Imagemagick must be installed (`brew install imagemagick`, `sudo apt install imagemagick`, ...)
-* Sodium must be installed (`brew install libsodium`, ...)
-* Chrome (for testing with Selenium)
-
-### bin/setup
-
-Run the `bin/setup` script. This script will:
-
-* Check you have the required Ruby version
-* Install ruby gems using Bundler
-* Install js dependencies using Yarn
-* Create local copies of `.env`, `database.yml`, `domains.yml`, `geo_layers.yml` and `restricted_robots.yml`
-* Create, migrate, and seed the database
-
-### Run it!
-
-1. Install NPM packages using `yarn install`
-2. Install [foreman](https://github.com/ddollar/foreman) with `gem install foreman`
-3. Run `foreman start -f Procfile.dev` to start the Rails app.
-
-## Getting started with docker
+## Development with Docker
 
 ### Prerequisites
 
 A working [Docker](https://docs.docker.com/engine/install/) installation is mandatory.
 
-### Docker environment file
+### Environment file
 
 Please make sure to copy & rename the **example.env** file to **.env**.
 
-``cp docker/example.env docker/.env``
+``cp example.env .env``
 
-You can replace the values if needed, but the default ones should work.
+You can replace the values if needed, but the default ones should work for development.
 
 ### Edit hosts file
 
@@ -93,7 +63,7 @@ If you want to remove a volume (e.g. to start with a fresh database), you can us
 
 ### Frontend
 
-To access the main application please use the following link.
+To access the main application, please use the following link.
 
 [http://catima.lan:8383](http://catima.lan:8383)
 

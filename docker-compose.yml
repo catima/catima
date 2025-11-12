@@ -7,7 +7,7 @@ name: catima
 services:
   catima-app:
     env_file:
-      - ./docker/.env
+      - ./.env
     networks:
       - catima-net
     healthcheck:
@@ -25,7 +25,7 @@ services:
 
   catima-worker:
     env_file:
-      - ./docker/.env
+      - ./.env
     networks:
       - catima-net
     depends_on:
@@ -42,7 +42,7 @@ services:
     ports:
       - "127.0.0.1:5410:5432"
     env_file:
-      - ./docker/.env
+      - ./.env
     networks:
       - catima-net
     volumes:
@@ -59,7 +59,7 @@ services:
   catima-redis:
     image: redis:8.0-alpine
     env_file:
-      - ./docker/.env
+      - ./.env
     networks:
       - catima-net
     command: redis-server

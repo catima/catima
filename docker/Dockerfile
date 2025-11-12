@@ -137,7 +137,7 @@ USER catima
 COPY --chown=catima:catima . /var/www/catima/
 
 # Create database.yml from example for asset precompilation
-RUN cp config/database.example.yml config/database.yml
+RUN cp config/database.example.yml.stage config/database.yml
 
 # Precompile assets & generate locale files
 RUN SECRET_KEY_BASE=dummy RAILS_ENV=staging bundle exec rake locales:generate && \
@@ -196,7 +196,7 @@ USER catima
 COPY --chown=catima:catima . /var/www/catima/
 
 # Create database.yml from example for asset precompilation
-RUN cp config/database.example.yml config/database.yml
+RUN cp config/database.example.yml.prod config/database.yml
 
 # Precompile assets & generate locale files
 RUN SECRET_KEY_BASE=dummy RAILS_ENV=production bundle exec rake locales:generate && \
