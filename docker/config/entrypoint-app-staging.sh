@@ -31,6 +31,9 @@ check_vars_exist \
   POSTGRES_PASSWORD \
   POSTGRES_PORT
 
+# ensure tmp directory exists for supervisor socket
+mkdir -p /var/www/catima/tmp/pids
+
 # prevent "server is already running" errors
 rm -f /var/www/catima/tmp/pids/server.pid
 
