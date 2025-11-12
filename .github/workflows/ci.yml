@@ -6,6 +6,7 @@ env:
   POSTGRES_USER: postgres
   POSTGRES_PASSWORD: postgres
   POSTGRES_DB: postgres
+  POSTGRES_HOST: localhost
   RAILS_ENV: test
 
 jobs:
@@ -34,6 +35,7 @@ jobs:
       postgres:
         image: postgres:${{ matrix.psql-version }}
         env:
+          POSTGRES_HOST: ${{ env.POSTGRES_HOST }}
           POSTGRES_USER: ${{ env.POSTGRES_USER }}
           POSTGRES_PASSWORD: ${{ env.POSTGRES_PASSWORD }}
           POSTGRES_DB: ${{ env.POSTGRES_DB }}
