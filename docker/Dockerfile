@@ -23,8 +23,7 @@ RUN apt-get update && \
     supervisor \
     lsb-release \
     ca-certificates \
-    gnupg \
-    wget && \
+    gnupg && \
     apt-get clean && \
     rm -rf /var/lib/apt/lists/*
 
@@ -36,7 +35,7 @@ RUN ARCH=$(dpkg --print-architecture) && \
     supercronic -version
 
 # Install specific version of Postgresql Client
-RUN wget --quiet -O - https://www.postgresql.org/media/keys/ACCC4CF8.asc | gpg --dearmor -o /usr/share/keyrings/postgresql-archive-keyring.gpg && \
+RUN curl -fsSL https://www.postgresql.org/media/keys/ACCC4CF8.asc | gpg --dearmor -o /usr/share/keyrings/postgresql-archive-keyring.gpg && \
     echo "deb [signed-by=/usr/share/keyrings/postgresql-archive-keyring.gpg] http://apt.postgresql.org/pub/repos/apt/ `lsb_release -cs`-pgdg main" | tee /etc/apt/sources.list.d/pgdg.list && \
     apt-get update && \
     apt-get install -y --no-install-recommends postgresql-client-$PSQL_CLIENT_VERSION && \
@@ -74,7 +73,8 @@ RUN bundle install
 
 # Copy package.json and yarn.lock, then install js dependencies
 COPY package.json yarn.lock /var/www/catima/
-RUN yarn install --frozen-lockfile --production=false
+RUN yarn install --frozen-lockfile --production=false && \
+    yarn cache clean
 
 FROM base AS dependencies-production
 
@@ -85,7 +85,8 @@ RUN bundle config set --local without 'development test' && \
 
 # Copy package.json and yarn.lock, then install js dependencies
 COPY package.json yarn.lock /var/www/catima/
-RUN yarn install --frozen-lockfile --production=true
+RUN yarn install --frozen-lockfile --production=true && \
+    yarn cache clean
 
 # =============================================================================
 # DEVELOPMENT TARGETS
