@@ -10,7 +10,7 @@ README.md
 docker-compose*.yml
 .dockerignore
 
-# Development files
+# Environment files
 .env
 docker/.env
 
@@ -32,22 +32,30 @@ config/database.yml
 config/domains.yml
 config/geo_layers.yml
 config/restricted_robots.yml
-public/robots.txt
-
-# Logs
-*.log
-log/
 
 # Node modules
 node_modules/
 
-# Compiled assets and uploaded files
-public/packs/
-public/packs-test/
-public/assets/
-public/system/
-public/thumbs/
+# Asset files
+public/packs/*
+public/packs-test/*
+public/assets/*
+public/system/*
+public/thumbs/*
 public/upload/*
+public/robots.txt
+app/assets/i18n/*
+exports/*
+
+# Logs
+*.log
+log/*
+
+# Custom catalogs
+catalogs/*
+
+# Swagger generated file
+/swagger/v3/*
 
 # Temporary files
 tmp/

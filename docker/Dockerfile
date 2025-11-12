@@ -18,7 +18,7 @@ RUN apt-get update && \
     curl \
     imagemagick \
     git \
-    zip \
+    unzip \
     supervisor \
     cron \
     lsb-release \
@@ -139,10 +139,14 @@ COPY --chown=catima:catima . /var/www/catima/
 # Create database.yml from example for asset precompilation
 RUN cp config/database.example.yml config/database.yml
 
-# Precompile assets
-RUN SECRET_KEY_BASE=dummy \
-    RAILS_ENV=staging \
-    bundle exec rails assets:precompile
+# Precompile assets & generate locale files
+RUN SECRET_KEY_BASE=dummy RAILS_ENV=staging bundle exec rake locales:generate && \
+    SECRET_KEY_BASE=dummy RAILS_ENV=staging bundle exec rails assets:precompile
+
+# Download and extract Swagger documentation
+RUN curl -L https://nightly.link/catima/catima/workflows/api/development/swagger-documentation.zip -o tmp/swagger.zip && \
+    unzip tmp/swagger.zip -d swagger/v3/ && \
+    rm tmp/swagger.zip
 
 # Set staging environment
 ENV RAILS_ENV=staging
@@ -194,10 +198,14 @@ COPY --chown=catima:catima . /var/www/catima/
 # Create database.yml from example for asset precompilation
 RUN cp config/database.example.yml config/database.yml
 
-# Precompile assets
-RUN SECRET_KEY_BASE=dummy \
-    RAILS_ENV=production \
-    bundle exec rails assets:precompile
+# Precompile assets & generate locale files
+RUN SECRET_KEY_BASE=dummy RAILS_ENV=production bundle exec rake locales:generate && \
+    SECRET_KEY_BASE=dummy RAILS_ENV=production bundle exec rails assets:precompile
+
+# Download and extract Swagger documentation
+RUN curl -L https://nightly.link/catima/catima/workflows/api/master/swagger-documentation.zip -o tmp/swagger.zip && \
+    unzip tmp/swagger.zip -d swagger/v3/ && \
+    rm tmp/swagger.zip
 
 # Set production environment
 ENV RAILS_ENV=production
