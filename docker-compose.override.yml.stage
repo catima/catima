@@ -11,12 +11,15 @@ services:
       dockerfile: ./docker/Dockerfile
       target: app-staging
     ports:
-      - "80:3000"
+      - "127.0.0.1:80:3000"
     volumes:
       - upload-data:/var/www/catima/public/upload
       - thumbs-data:/var/www/catima/public/thumbs
       - log-data:/var/www/catima/log
       - exports-data:/var/www/catima/exports
+      - ./config/domains.yml:/var/www/catima/config/domains.yml:ro
+      - ./config/geo_layers.yml:/var/www/catima/config/geo_layers.yml:ro
+      - ./config/restricted_robots.yml:/var/www/catima/config/restricted_robots.yml:ro
     restart: unless-stopped
     deploy:
       mode: global
@@ -35,6 +38,9 @@ services:
       - thumbs-data:/var/www/catima/public/thumbs
       - log-data:/var/www/catima/log
       - exports-data:/var/www/catima/exports
+      - ./config/domains.yml:/var/www/catima/config/domains.yml:ro
+      - ./config/geo_layers.yml:/var/www/catima/config/geo_layers.yml:ro
+      - ./config/restricted_robots.yml:/var/www/catima/config/restricted_robots.yml:ro
     restart: unless-stopped
     deploy:
       mode: global
@@ -59,7 +65,6 @@ services:
           memory: 500M
 
 volumes:
-  # TODO: persist specific files from config/
   upload-data:
   thumbs-data:
   log-data:

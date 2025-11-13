@@ -27,10 +27,10 @@ services:
 
   catima-mailhog:
     image: mailhog/mailhog:latest
-    expose:
-      - "1025"
     ports:
       - "127.0.0.1:8028:8025"
+    expose:
+      - "1025"
     networks:
       - catima-net
     container_name: catima-mailhog

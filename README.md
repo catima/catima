@@ -31,13 +31,19 @@ This README describes the purpose of this repository and how to set up a develop
 
 A working [Docker](https://docs.docker.com/engine/install/) installation is mandatory.
 
-### Environment file
+### Environment files
 
 Please make sure to copy & rename the **example.env** file to **.env**.
 
 ``cp example.env .env``
 
-You can replace the values if needed, but the default ones should work for development.
+You can replace the values if needed, but the default ones should work for local development.
+
+Please also make sure to copy & rename the docker-compose.override.yml.dev file to docker-compose.override.yml.
+
+``cp docker-compose.override.yml.dev docker-compose.override.yml``
+
+You can replace the values if needed, but the default ones should work for local development.
 
 ### Edit hosts file
 
