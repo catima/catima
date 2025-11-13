@@ -27,7 +27,7 @@ RUN apt-get update && \
     apt-get clean && \
     rm -rf /var/lib/apt/lists/*
 
-# Install supercronic
+# Install specific version of Supercronic
 RUN ARCH=$(dpkg --print-architecture) && \
     SUPERCRONIC_URL="https://github.com/aptible/supercronic/releases/download/${SUPERCRONIC_VERSION}/supercronic-linux-${ARCH}" && \
     curl -fsSL "${SUPERCRONIC_URL}" -o /usr/local/bin/supercronic && \
