@@ -1,12 +1,12 @@
 FROM ruby:3.4-slim-trixie AS base
 
-ENV DOCKER_RUNNING=true
 ENV COREPACK_ENABLE_AUTO_PIN=0
 
 ENV PSQL_CLIENT_VERSION=17
 ENV NODE_VERSION=22
 ENV YARN_VERSION=1.22
 ENV SUPERCRONIC_VERSION=v0.2.39
+ENV NGINX_VERSION=1.28.0
 
 # Update repositories & add needed packages
 RUN apt-get update && \
@@ -18,7 +18,6 @@ RUN apt-get update && \
     procps \
     curl \
     imagemagick \
-    git \
     unzip \
     supervisor \
     lsb-release \
@@ -27,7 +26,7 @@ RUN apt-get update && \
     apt-get clean && \
     rm -rf /var/lib/apt/lists/*
 
-# Install specific version of Supercronic
+# Install specific version of Supercronic (cron replacement for non-root users)
 RUN ARCH=$(dpkg --print-architecture) && \
     SUPERCRONIC_URL="https://github.com/aptible/supercronic/releases/download/${SUPERCRONIC_VERSION}/supercronic-linux-${ARCH}" && \
     curl -fsSL "${SUPERCRONIC_URL}" -o /usr/local/bin/supercronic && \
@@ -40,7 +39,8 @@ RUN curl -fsSL https://www.postgresql.org/media/keys/ACCC4CF8.asc | gpg --dearmo
     apt-get update && \
     apt-get install -y --no-install-recommends postgresql-client-$PSQL_CLIENT_VERSION && \
     apt-get clean && \
-    rm -rf /var/lib/apt/lists/*
+    rm -rf /var/lib/apt/lists/* && \
+    psql --version
 
 # Install specific version of Node & Yarn
 RUN mkdir -p /etc/apt/keyrings; \
@@ -93,8 +93,15 @@ RUN yarn install --frozen-lockfile --production=true && \
 # =============================================================================
 FROM dependencies-development AS app-dev
 
+# Update repositories & add needed packages for development
+RUN apt-get update && \
+    apt-get install -y --no-install-recommends \
+    git \
+    apt-get clean && \
+    rm -rf /var/lib/apt/lists/*
+
 # Copy crontab for supercronic
-COPY --chown=catima:catima ./docker/config/catima-crontab /var/www/catima/config/crontab
+COPY --chown=catima:catima ./docker/config/crontab-catima /var/www/catima/config/crontab
 
 # Copy supervisor configuration file
 #
@@ -129,10 +136,27 @@ CMD ["/usr/bin/supervisord", "-c", "/etc/supervisor/conf.d/supervisord.conf"]
 # =============================================================================
 FROM dependencies-production AS app-staging
 
+# Install specific version of Nginx
+RUN curl -fsSL https://nginx.org/keys/nginx_signing.key | gpg --dearmor -o /usr/share/keyrings/nginx-archive-keyring.gpg && \
+    echo "deb [signed-by=/usr/share/keyrings/nginx-archive-keyring.gpg] http://nginx.org/packages/debian `lsb_release -cs` nginx" | tee /etc/apt/sources.list.d/nginx.list && \
+    apt-get update && \
+    apt-get install -y --no-install-recommends nginx=${NGINX_VERSION}-1~`lsb_release -cs` && \
+    apt-get clean && \
+    rm -rf /var/lib/apt/lists/* && \
+    mkdir -p /var/log/nginx /var/cache/nginx /var/run/nginx /etc/nginx/sites-available /etc/nginx/sites-enabled && \
+    chown -R catima:catima /var/log/nginx /var/cache/nginx /var/run/nginx && \
+    chmod -R 755 /var/log/nginx /var/cache/nginx /var/run/nginx && \
+    nginx -v
+
 # Copy supervisor configuration and entrypoint
 COPY ./docker/config/supervisord-app-staging.conf /etc/supervisor/conf.d/supervisord.conf
 COPY ./docker/config/entrypoint-app-staging.sh /usr/local/bin/entrypoint.sh
 RUN chmod +x /usr/local/bin/entrypoint.sh
+
+# Copy nginx configurations
+COPY ./docker/config/nginx.conf /var/www/catima/config/nginx.conf
+COPY ./docker/config/nginx-catima.conf /etc/nginx/sites-available/default
+RUN ln -sf /etc/nginx/sites-available/default /etc/nginx/sites-enabled/default
 
 # Copy unicorn configuration
 COPY ./docker/config/unicorn.rb /var/www/catima/config/unicorn.rb
@@ -141,7 +165,7 @@ COPY ./docker/config/unicorn.rb /var/www/catima/config/unicorn.rb
 USER catima
 
 # Copy crontab for supercronic
-COPY --chown=catima:catima ./docker/config/catima-crontab /var/www/catima/config/crontab
+COPY --chown=catima:catima ./docker/config/crontab-catima /var/www/catima/config/crontab
 
 # Copy application code with proper ownership
 COPY --chown=catima:catima . /var/www/catima/
@@ -193,10 +217,26 @@ CMD ["/usr/bin/supervisord", "-c", "/etc/supervisor/conf.d/supervisord.conf"]
 # =============================================================================
 FROM dependencies-production AS app-production
 
+# Install specific version of Nginx
+RUN curl -fsSL https://nginx.org/keys/nginx_signing.key | gpg --dearmor -o /usr/share/keyrings/nginx-archive-keyring.gpg && \
+    echo "deb [signed-by=/usr/share/keyrings/nginx-archive-keyring.gpg] http://nginx.org/packages/debian `lsb_release -cs` nginx" | tee /etc/apt/sources.list.d/nginx.list && \
+    apt-get update && \
+    apt-get install -y --no-install-recommends nginx=${NGINX_VERSION}-1~`lsb_release -cs` && \
+    apt-get clean && \
+    rm -rf /var/lib/apt/lists/* && \
+    mkdir -p /var/log/nginx /var/cache/nginx /var/run/nginx /etc/nginx/sites-available /etc/nginx/sites-enabled && \
+    chown -R catima:catima /var/log/nginx /var/cache/nginx /var/run/nginx && \
+    chmod -R 755 /var/log/nginx /var/cache/nginx /var/run/nginx
+
 # Copy supervisor configuration and entrypoint
 COPY ./docker/config/supervisord-app-production.conf /etc/supervisor/conf.d/supervisord.conf
 COPY ./docker/config/entrypoint-app-production.sh /usr/local/bin/entrypoint.sh
 RUN chmod +x /usr/local/bin/entrypoint.sh
+
+# Copy nginx configurations
+COPY ./docker/config/nginx.conf /var/www/catima/config/nginx.conf
+COPY ./docker/config/nginx-catima.conf /etc/nginx/sites-available/default
+RUN ln -sf /etc/nginx/sites-available/default /etc/nginx/sites-enabled/default
 
 # Copy unicorn configuration
 COPY ./docker/config/unicorn.rb /var/www/catima/config/unicorn.rb
@@ -205,7 +245,7 @@ COPY ./docker/config/unicorn.rb /var/www/catima/config/unicorn.rb
 USER catima
 
 # Copy crontab for supercronic
-COPY --chown=catima:catima ./docker/config/catima-crontab /var/www/catima/config/crontab
+COPY --chown=catima:catima ./docker/config/crontab-catima /var/www/catima/config/crontab
 
 # Copy application code with proper ownership
 COPY --chown=catima:catima . /var/www/catima/

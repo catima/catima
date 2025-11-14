@@ -3,7 +3,6 @@
 # file to deploy the application.
 
 services:
-  #TODO: add nginx container
   catima-app:
     image: unillett/catima:app-stage-latest
     build:
@@ -11,7 +10,7 @@ services:
       dockerfile: ./docker/Dockerfile
       target: app-staging
     ports:
-      - "127.0.0.1:80:3000"
+      - "127.0.0.1:8989:80"
     volumes:
       - upload-data:/var/www/catima/public/upload
       - thumbs-data:/var/www/catima/public/thumbs

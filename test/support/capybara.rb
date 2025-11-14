@@ -3,15 +3,11 @@ require "capybara/rails"
 
 Capybara.server_port = 3000
 
-if ENV['DOCKER_RUNNING'].present?
-  Capybara.javascript_driver = :remote_chrome
-  Capybara.configure do |config|
-    config.server = :puma, { Silent: true }
-    config.server_host = "catima-app"
-    config.server_port = 4000
-  end
-else
-  Capybara.javascript_driver = :chrome
+Capybara.javascript_driver = :remote_chrome
+Capybara.configure do |config|
+  config.server = :puma, { Silent: true }
+  config.server_host = "catima-app"
+  config.server_port = 4000
 end
 
 def driver_params
@@ -19,14 +15,6 @@ def driver_params
   options.add_argument('disable-gpu')
   options.add_argument('headless') unless ENV['HEADLESS'] == '0'
   { options: options }
-end
-
-Capybara.register_driver :chrome do |app|
-  Capybara::Selenium::Driver.new(
-    app,
-    browser: :chrome,
-    **driver_params
-  )
 end
 
 Capybara.register_driver :remote_chrome do |app|
