@@ -17,6 +17,7 @@ RUN apt-get update && \
     libyaml-dev \
     procps \
     curl \
+    git \
     imagemagick \
     unzip \
     supervisor \
@@ -92,13 +93,6 @@ RUN yarn install --frozen-lockfile --production=true && \
 # DEVELOPMENT TARGETS
 # =============================================================================
 FROM dependencies-development AS app-dev
-
-# Update repositories & add needed packages for development
-RUN apt-get update && \
-    apt-get install -y --no-install-recommends \
-    git \
-    apt-get clean && \
-    rm -rf /var/lib/apt/lists/*
 
 # Copy crontab for supercronic
 COPY --chown=catima:catima ./docker/config/crontab-catima /var/www/catima/config/crontab
