@@ -31,14 +31,17 @@ check_vars_exist \
   POSTGRES_PASSWORD \
   POSTGRES_PORT
 
-# ensure tmp directory exists for supervisor socket
+# Ensure tmp directory exists for supervisor socket
 mkdir -p /var/www/catima/tmp/pids
 
-# prevent "server is already running" errors
-rm -f /var/www/catima/tmp/pids/server.pid
+# Prevent "server is already running" errors
+rm -f /var/www/catima/tmp/pids/unicorn.pid
 
-# run database migrations
+# Run database migrations
 bundle exec rake db:migrate
 
-# run commands from dockerfile
+# Ensure a configuration exists
+bundle exec rails runner "Configuration.first_or_create!" || true
+
+# Run commands from dockerfile
 "${@}"

@@ -2,8 +2,8 @@
 
 set -e
 
-# install latest ruby dependencies
+# Install latest ruby dependencies
 bundle install
 
-# run commands from dockerfile
+# Run commands from dockerfile
 "${@}"
