@@ -9,7 +9,6 @@ class ItemList::Filter < ItemList
 
   attr_reader :item_type, :field, :value, :sort_type, :sort_field, :sort
 
-  delegate :fields, :to => :item_type
   delegate :locale, :to => I18n
 
   def initialize(item_type:, field: nil, value: nil, page: nil, per: nil, sort_type: nil, sort_field: false, sort: 'ASC')
@@ -79,6 +78,10 @@ class ItemList::Filter < ItemList
   end
 
   def strategy
-    strategies.find { |s| s.field == field }
+    strategies.find { |s| s.field.uuid == field&.uuid }
+  end
+
+  def fields
+    item_type.all_fields
   end
 end

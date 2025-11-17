@@ -41,7 +41,12 @@ class ItemsController < ApplicationController
       :value => browse_value,
       :page => params[:page]
     )
-    @item = find_item unless params[:datation]
+
+    # Only set @item for Reference/Xref fields (where the value is an item ID)
+    # For ChoiceSet/ComplexDatation fields, the value is a choice ID, not an item ID
+    return unless browse_field.is_a?(Field::Reference) || browse_field.is_a?(Field::Xref)
+
+    @item = find_item
   end
 
   def show
@@ -72,7 +77,7 @@ class ItemsController < ApplicationController
   end
 
   def browse_field
-    @browse_field ||= item_type.fields.find do |field|
+    @browse_field ||= item_type.all_fields.find do |field|
       params[field.slug].present?
     end
   end

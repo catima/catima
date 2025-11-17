@@ -61,6 +61,26 @@ nested_car_cupholders:
   field_set: nested_car (Category)
   uuid: nested_car_cupholders_uuid
 
+nested_car_color:
+  type: "Field::ChoiceSet"
+  editor_component: ChoiceSetInput
+  name_translations: { "name_en": "Color" }
+  name_plural_translations: { "name_plural_en": "Colors" }
+  slug: color
+  field_set: nested_car (Category)
+  uuid: nested_car_color_uuid
+  choice_set_id: <%= ActiveRecord::FixtureSet.identify(:nested_car_colors) %>
+
+nested_car_manufacture_date:
+  type: "Field::ComplexDatation"
+  editor_component: ComplexDatationInput
+  name_translations: { "name_en": "Manufacture Date" }
+  name_plural_translations: { "name_plural_en": "Manufacture Dates" }
+  slug: manufacture-date
+  field_set: nested_car (Category)
+  uuid: nested_car_manufacture_date_uuid
+  options: { "format": "Y", "allow_date_time_bc": "0", "allowed_formats": [ "datation_choice" ], "choice_set_ids": [ "<%= ActiveRecord::FixtureSet.identify(:nested_car_datation) %>" ] }
+
 nested_bicycle_speeds:
   type: "Field::Int"
   name_translations: { "name_en": "Number of speeds" }

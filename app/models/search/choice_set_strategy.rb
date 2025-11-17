@@ -61,10 +61,11 @@ class Search::ChoiceSetStrategy < Search::BaseStrategy
   private
 
   def choice_from_slug(slug)
-    locale, name = slug.split("-", 2)
-    return if name.blank?
+    # Accept either ID alone or "ID-name" format for backwards compatibility
+    id = slug.to_s.split("-", 2).first
+    return if id.blank?
 
-    field.choices.short_named(name, locale).first
+    field.choices.find_by(id: id)
   end
 
   def register_second_condition(criteria, condition)

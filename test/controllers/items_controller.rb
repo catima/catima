@@ -46,4 +46,36 @@ class ItemsControllerTest < ActionDispatch::IntegrationTest
     assert_response :success
     assert_includes @response.body, "alt=\"One author picture\""
   end
+
+  def test_browse_field_finds_category_choice_set_field
+    # Test that browsing by a ChoiceSet field inside a category works
+    red_choice = choices(:nested_car_color_red)
+    vehicle_type = item_types(:nested_vehicle)
+
+    # Browse by the car color field (which is inside the nested_car category)
+    get "/#{vehicle_type.catalog.slug}/en/#{vehicle_type.slug}?color=#{red_choice.id}"
+    assert_response :success
+
+    # Should show only red cars
+    assert_includes @response.body, "Red Toyota"
+    assert_includes @response.body, "Red Mazda"
+    assert_not_includes @response.body, "Blue Honda"
+    assert_not_includes @response.body, "Mountain Bike"
+  end
+
+  def test_browse_field_finds_category_complex_datation_field
+    # Test that browsing by a ComplexDatation field inside a category works
+    year_2020 = choices(:nested_car_year_2020)
+    vehicle_type = item_types(:nested_vehicle)
+
+    # Browse by the manufacture date field (which is inside the nested_car category)
+    get "/#{vehicle_type.catalog.slug}/en/#{vehicle_type.slug}?manufacture-date=#{year_2020.id}"
+    assert_response :success
+
+    # Should show only 2020 cars
+    assert_includes @response.body, "Red Toyota"
+    assert_includes @response.body, "Red Mazda"
+    assert_not_includes @response.body, "Blue Honda"
+    assert_not_includes @response.body, "Mountain Bike"
+  end
 end

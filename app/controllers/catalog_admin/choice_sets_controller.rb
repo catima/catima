@@ -87,7 +87,8 @@ class CatalogAdmin::ChoiceSetsController < CatalogAdmin::BaseController
   end
 
   def new_import
-    authorize(ChoiceSet)
+    build_choice_set
+    authorize(@choice_set)
   end
 
   def import_choice_set
