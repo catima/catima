@@ -7,6 +7,7 @@ ENV NODE_VERSION=22
 ENV YARN_VERSION=1.22
 ENV SUPERCRONIC_VERSION=v0.2.39
 ENV NGINX_VERSION=1.28.0
+ENV BUNDLER_VERSION=2.4.5
 
 # Update repositories & add needed packages
 RUN apt-get update && \
@@ -56,6 +57,10 @@ RUN mkdir -p /etc/apt/keyrings; \
     corepack enable && \
     corepack prepare yarn@$YARN_VERSION --activate && \
     yarn --version
+
+# Install specific version of Bundler
+RUN gem install bundler -v $BUNDLER_VERSION && \
+    bundler --version
 
 # Define user and group to run the application
 RUN groupadd -g 1000 catima && \
