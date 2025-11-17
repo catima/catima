@@ -72,12 +72,24 @@ FROM base AS dependencies-development
 COPY Gemfile Gemfile.lock /var/www/catima/
 RUN bundle install
 
-# Copy package.json and yarn.lock, then install js dependencies
-COPY package.json yarn.lock /var/www/catima/
-RUN yarn install --frozen-lockfile --production=false && \
-    yarn cache clean
-
 FROM base AS dependencies-production
+
+# Install specific version of Nginx
+RUN curl -fsSL https://nginx.org/keys/nginx_signing.key | gpg --dearmor -o /usr/share/keyrings/nginx-archive-keyring.gpg && \
+    echo "deb [signed-by=/usr/share/keyrings/nginx-archive-keyring.gpg] http://nginx.org/packages/debian `lsb_release -cs` nginx" | tee /etc/apt/sources.list.d/nginx.list && \
+    apt-get update && \
+    apt-get install -y --no-install-recommends nginx=${NGINX_VERSION}-1~`lsb_release -cs` && \
+    apt-get clean && \
+    rm -rf /var/lib/apt/lists/* && \
+    mkdir -p /var/log/nginx /var/cache/nginx /var/run/nginx /etc/nginx/sites-available /etc/nginx/sites-enabled && \
+    chown -R catima:catima /var/log/nginx /var/cache/nginx /var/run/nginx && \
+    chmod -R 755 /var/log/nginx /var/cache/nginx /var/run/nginx && \
+    nginx -v
+
+# Copy nginx configurations
+COPY ./docker/config/nginx.conf /var/www/catima/config/nginx.conf
+COPY ./docker/config/nginx-catima.conf /etc/nginx/sites-available/default
+RUN ln -sf /etc/nginx/sites-available/default /etc/nginx/sites-enabled/default
 
 # Copy the Gemfile and Gemfile.lock, and run Bundler
 COPY Gemfile Gemfile.lock /var/www/catima/
@@ -88,6 +100,13 @@ RUN bundle config set --local without 'development test' && \
 COPY package.json yarn.lock /var/www/catima/
 RUN yarn install --frozen-lockfile --production=true && \
     yarn cache clean
+
+# Clone custom catalogs from the catima/catalogs repository (only root folders)
+RUN mkdir -p /var/www/catima/catalogs && \
+    git clone --depth 1 https://github.com/catima/catalogs.git /tmp/catalogs && \
+    find /tmp/catalogs -mindepth 1 -maxdepth 1 -type d ! -name '.*' -exec cp -r {} /var/www/catima/catalogs/ \; && \
+    rm -rf /tmp/catalogs && \
+    chown -R catima:catima /var/www/catima/catalogs
 
 # =============================================================================
 # DEVELOPMENT TARGETS
@@ -130,27 +149,10 @@ CMD ["/usr/bin/supervisord", "-c", "/etc/supervisor/conf.d/supervisord.conf"]
 # =============================================================================
 FROM dependencies-production AS app-staging
 
-# Install specific version of Nginx
-RUN curl -fsSL https://nginx.org/keys/nginx_signing.key | gpg --dearmor -o /usr/share/keyrings/nginx-archive-keyring.gpg && \
-    echo "deb [signed-by=/usr/share/keyrings/nginx-archive-keyring.gpg] http://nginx.org/packages/debian `lsb_release -cs` nginx" | tee /etc/apt/sources.list.d/nginx.list && \
-    apt-get update && \
-    apt-get install -y --no-install-recommends nginx=${NGINX_VERSION}-1~`lsb_release -cs` && \
-    apt-get clean && \
-    rm -rf /var/lib/apt/lists/* && \
-    mkdir -p /var/log/nginx /var/cache/nginx /var/run/nginx /etc/nginx/sites-available /etc/nginx/sites-enabled && \
-    chown -R catima:catima /var/log/nginx /var/cache/nginx /var/run/nginx && \
-    chmod -R 755 /var/log/nginx /var/cache/nginx /var/run/nginx && \
-    nginx -v
-
 # Copy supervisor configuration and entrypoint
 COPY ./docker/config/supervisord-app-staging.conf /etc/supervisor/conf.d/supervisord.conf
 COPY ./docker/config/entrypoint-app-staging.sh /usr/local/bin/entrypoint.sh
 RUN chmod +x /usr/local/bin/entrypoint.sh
-
-# Copy nginx configurations
-COPY ./docker/config/nginx.conf /var/www/catima/config/nginx.conf
-COPY ./docker/config/nginx-catima.conf /etc/nginx/sites-available/default
-RUN ln -sf /etc/nginx/sites-available/default /etc/nginx/sites-enabled/default
 
 # Copy unicorn configuration
 COPY ./docker/config/unicorn.rb /var/www/catima/config/unicorn.rb
@@ -211,26 +213,10 @@ CMD ["/usr/bin/supervisord", "-c", "/etc/supervisor/conf.d/supervisord.conf"]
 # =============================================================================
 FROM dependencies-production AS app-production
 
-# Install specific version of Nginx
-RUN curl -fsSL https://nginx.org/keys/nginx_signing.key | gpg --dearmor -o /usr/share/keyrings/nginx-archive-keyring.gpg && \
-    echo "deb [signed-by=/usr/share/keyrings/nginx-archive-keyring.gpg] http://nginx.org/packages/debian `lsb_release -cs` nginx" | tee /etc/apt/sources.list.d/nginx.list && \
-    apt-get update && \
-    apt-get install -y --no-install-recommends nginx=${NGINX_VERSION}-1~`lsb_release -cs` && \
-    apt-get clean && \
-    rm -rf /var/lib/apt/lists/* && \
-    mkdir -p /var/log/nginx /var/cache/nginx /var/run/nginx /etc/nginx/sites-available /etc/nginx/sites-enabled && \
-    chown -R catima:catima /var/log/nginx /var/cache/nginx /var/run/nginx && \
-    chmod -R 755 /var/log/nginx /var/cache/nginx /var/run/nginx
-
 # Copy supervisor configuration and entrypoint
 COPY ./docker/config/supervisord-app-production.conf /etc/supervisor/conf.d/supervisord.conf
 COPY ./docker/config/entrypoint-app-production.sh /usr/local/bin/entrypoint.sh
 RUN chmod +x /usr/local/bin/entrypoint.sh
-
-# Copy nginx configurations
-COPY ./docker/config/nginx.conf /var/www/catima/config/nginx.conf
-COPY ./docker/config/nginx-catima.conf /etc/nginx/sites-available/default
-RUN ln -sf /etc/nginx/sites-available/default /etc/nginx/sites-enabled/default
 
 # Copy unicorn configuration
 COPY ./docker/config/unicorn.rb /var/www/catima/config/unicorn.rb
