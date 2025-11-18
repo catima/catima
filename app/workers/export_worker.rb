@@ -7,18 +7,20 @@ class ExportWorker
     dir = Rails.env.development? ? Rails.root.join('tmp', 'exports', Dir.mktmpdir(SecureRandom.hex)) : Dir.mktmpdir(SecureRandom.hex)
     export = find_export(export_id)
 
-    case export.category
-    when "catima"
-      catima_export(export, dir)
-    when "sql"
-      sql_export(export, dir)
-    when "csv"
-      csv_export(export, dir, locale)
-    else
-      export.update(status: "error")
+    begin
+      case export.category
+      when "catima"
+        catima_export(export, dir)
+      when "sql"
+        sql_export(export, dir)
+      when "csv"
+        csv_export(export, dir, locale)
+      else
+        export.update(status: "error")
+      end
+    ensure
+      FileUtils.rm_rf dir
     end
-
-    FileUtils.remove_entry dir
   end
 
   private
@@ -90,6 +92,10 @@ class ExportWorker
     return unless export.status.eql? "ready"
 
     ExportMailer.send_message(export).deliver_now
+  rescue Net::SMTPError, SocketError, Errno::ECONNREFUSED => e
+    # Log the error but don't fail the job if email cannot be sent
+    Rails.logger.error "[ERROR] Failed to send export email: #{e.message}"
+    Rails.logger.info "Export #{export.id} is ready but email notification failed"
   end
 
   # Zip the input directory recursively

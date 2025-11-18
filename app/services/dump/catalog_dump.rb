@@ -36,7 +36,7 @@ class Dump::CatalogDump < Dump
 
   def dump_structure(cat, dir)
     struct_dir = File.join(dir, 'structure')
-    Dir.mkdir struct_dir
+    FileUtils.mkdir_p struct_dir
 
     # Dump the catalog information
     Rails.logger.info "Dumping catalog information for catalog #{cat.id}..."
@@ -64,7 +64,7 @@ class Dump::CatalogDump < Dump
 
   def dump_item_types_structure(cat, struct_dir)
     item_type_dir = File.join(struct_dir, 'item-types')
-    Dir.mkdir item_type_dir
+    FileUtils.mkdir_p item_type_dir
     cat.item_types.each do |it|
       dump_item_type_structure(it, item_type_dir)
     end
@@ -93,7 +93,7 @@ class Dump::CatalogDump < Dump
 
   def dump_data(cat, dir)
     data_dir = File.join(dir, 'data')
-    Dir.mkdir data_dir
+    FileUtils.mkdir_p data_dir
     cat.item_types.each { |it| dump_items(it, data_dir) }
   end
 
@@ -106,7 +106,7 @@ class Dump::CatalogDump < Dump
 
   def dump_pages(cat, dir)
     pages_dir = File.join(dir, 'pages')
-    Dir.mkdir pages_dir
+    FileUtils.mkdir_p pages_dir
     cat.pages.each { |p| dump_page(p, pages_dir) }
   end
 
