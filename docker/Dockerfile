@@ -106,7 +106,7 @@ COPY package.json yarn.lock /var/www/catima/
 RUN yarn install --frozen-lockfile --production=true && \
     yarn cache clean
 
-# Clone custom catalogs from the catima/catalogs repository (only root folders)
+# Clone custom catalogs from the catima/catalogs repository
 RUN mkdir -p /var/www/catima/catalogs && \
     git clone --depth 1 https://github.com/catima/catalogs.git /tmp/catalogs && \
     find /tmp/catalogs -mindepth 1 -maxdepth 1 -type d ! -name '.*' -exec cp -r {} /var/www/catima/catalogs/ \; && \

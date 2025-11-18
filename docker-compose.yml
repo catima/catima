@@ -47,9 +47,8 @@ services:
       - catima-net
     volumes:
       - postgres-data:/var/lib/postgresql/data
-      - ./docker/config/init.sql:/docker-entrypoint-initdb.d/init.sql
     healthcheck:
-      test: pg_isready -U docker -h 127.0.0.1
+      test: pg_isready -U ${POSTGRES_USER} -d ${POSTGRES_DB} -h 127.0.0.1
       interval: 5s
       timeout: 5s
       retries: 5
