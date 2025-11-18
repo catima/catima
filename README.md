@@ -95,7 +95,41 @@ Or to get the messages in JSON format.
 
 ## Deployment with Docker
 
-TODO!
+### Environment files
+
+Please make sure to copy & rename the **example.env** file to **.env**.
+
+``cp example.env .env``
+
+You should replace the values since the default ones are not ready for production.
+
+Please also make sure to copy & rename the docker-compose.override.yml.prod file to docker-compose.override.yml.
+
+``cp docker-compose.override.yml.prod docker-compose.override.yml``
+
+You can replace the values if needed, but the default ones should work for production.
+
+### Config files
+
+Please make sure to copy & rename the following config files.
+
+```bash
+cp config/domains.example.yml config/domains.yml
+cp config/geo_layers.example.yml config/geo_layers.yml
+cp config/restricted_robots.example.yml config/restricted_robots.yml
+```
+
+You can replace the values, add more values or keep the default ones. If you make changes while the app is already running, please make sure to restart the container.
+
+### Installation & configuration
+
+Build & run all the containers for this project.
+
+`docker compose up -d`
+
+### Reverse proxy
+
+Use a reverse proxy configuration to map the url to port `8989`.
 
 ## Docker images
 
