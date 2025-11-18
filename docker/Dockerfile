@@ -118,9 +118,6 @@ RUN mkdir -p /var/www/catima/catalogs && \
 # =============================================================================
 FROM dependencies-development AS app-dev
 
-# Copy crontab for supercronic
-COPY --chown=catima:catima ./docker/config/crontab-catima /var/www/catima/config/crontab
-
 # Copy supervisor configuration file
 #
 # docker exec <container-id> supervisorctl status
