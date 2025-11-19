@@ -14,6 +14,7 @@ services:
     volumes:
       - upload-data:/var/www/catima/public/upload
       - thumbs-data:/var/www/catima/public/thumbs
+      - refile-data:/var/www/catima/public/system/refile
       - log-data:/var/www/catima/log
       - exports-data:/var/www/catima/exports
       - ./config/domains.yml:/var/www/catima/config/domains.yml:ro
@@ -35,6 +36,7 @@ services:
     volumes:
       - upload-data:/var/www/catima/public/upload
       - thumbs-data:/var/www/catima/public/thumbs
+      - refile-data:/var/www/catima/public/system/refile
       - log-data:/var/www/catima/log
       - exports-data:/var/www/catima/exports
       - ./config/domains.yml:/var/www/catima/config/domains.yml:ro
@@ -66,5 +68,6 @@ services:
 volumes:
   upload-data:
   thumbs-data:
+  refile-data:
   log-data:
   exports-data:
