@@ -178,7 +178,7 @@ RUN SECRET_KEY_BASE=dummy RAILS_ENV=staging bundle exec rake locales:generate &&
 
 # Remove node_modules, then reinstall only Mammoth with its dependencies
 USER root
-RUN rm -rf node_modules package.json package-lock.json && \
+RUN rm -rf node_modules package.json yarn.lock && \
     yarn cache clean && \
     npm install --production --no-optional \
       https://github.com/catima/mammoth.js/archive/${MAMMOTH_VERSION}.tar.gz
@@ -250,7 +250,7 @@ RUN SECRET_KEY_BASE=dummy RAILS_ENV=production bundle exec rake locales:generate
 
 # Remove node_modules, then reinstall only Mammoth with its dependencies
 USER root
-RUN rm -rf node_modules package.json package-lock.json && \
+RUN rm -rf node_modules package.json yarn.lock && \
     yarn cache clean && \
     npm install --production --no-optional \
       https://github.com/catima/mammoth.js/archive/${MAMMOTH_VERSION}.tar.gz

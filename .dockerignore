@@ -7,25 +7,28 @@
 README.md
 
 # Docker files
-docker-compose*.yml
+docker-compose*.yml*
 .dockerignore
+supervisord.log
+supervisord.pid
 
 # Environment files
 .env
 docker/.env
 
-# IDE and system files
+# IDE & system files
 .vscode
 .idea
 .DS_Store
 Thumbs.db
 
-# Test files and coverage
+# Test & development files
 test/
 spec/
 coverage/
 .rspec
 .simplecov
+Procfile.dev
 
 # Config files
 config/database.yml
