@@ -14,7 +14,7 @@ supervisord.pid
 
 # Environment files
 .env
-docker/.env
+example.env
 
 # IDE & system files
 .vscode
