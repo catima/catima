@@ -8,6 +8,7 @@ ENV YARN_VERSION=1.22
 ENV SUPERCRONIC_VERSION=v0.2.39
 ENV NGINX_VERSION=1.28.0
 ENV BUNDLER_VERSION=2.4.5
+ENV MAMMOTH_VERSION=90d5016
 
 # Update repositories & add needed packages
 RUN apt-get update && \
@@ -175,6 +176,14 @@ RUN cp config/database.example.yml.stage config/database.yml
 RUN SECRET_KEY_BASE=dummy RAILS_ENV=staging bundle exec rake locales:generate && \
     SECRET_KEY_BASE=dummy RAILS_ENV=staging bundle exec rails assets:precompile
 
+# Remove node_modules, then reinstall only Mammoth with its dependencies
+USER root
+RUN rm -rf node_modules package.json package-lock.json && \
+    yarn cache clean && \
+    npm install --production --no-optional \
+      https://github.com/catima/mammoth.js/archive/${MAMMOTH_VERSION}.tar.gz
+USER catima
+
 # Download and extract Swagger documentation
 RUN curl -L https://nightly.link/catima/catima/workflows/api/development/swagger-documentation.zip -o tmp/swagger.zip && \
     unzip tmp/swagger.zip -d swagger/v3/ && \
@@ -238,6 +247,14 @@ RUN cp config/database.example.yml.prod config/database.yml
 # Precompile assets & generate locale files
 RUN SECRET_KEY_BASE=dummy RAILS_ENV=production bundle exec rake locales:generate && \
     SECRET_KEY_BASE=dummy RAILS_ENV=production bundle exec rails assets:precompile
+
+# Remove node_modules, then reinstall only Mammoth with its dependencies
+USER root
+RUN rm -rf node_modules package.json package-lock.json && \
+    yarn cache clean && \
+    npm install --production --no-optional \
+      https://github.com/catima/mammoth.js/archive/${MAMMOTH_VERSION}.tar.gz
+USER catima
 
 # Download and extract Swagger documentation
 RUN curl -L https://nightly.link/catima/catima/workflows/api/master/swagger-documentation.zip -o tmp/swagger.zip && \
