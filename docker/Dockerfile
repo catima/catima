@@ -8,7 +8,6 @@ ENV YARN_VERSION=1.22
 ENV SUPERCRONIC_VERSION=v0.2.39
 ENV NGINX_VERSION=1.28.0
 ENV BUNDLER_VERSION=2.4.5
-ENV MAMMOTH_VERSION=90d5016
 
 # Update repositories & add needed packages
 RUN apt-get update && \
@@ -177,11 +176,12 @@ RUN SECRET_KEY_BASE=dummy RAILS_ENV=staging bundle exec rake locales:generate &&
     SECRET_KEY_BASE=dummy RAILS_ENV=staging bundle exec rails assets:precompile
 
 # Remove node_modules, then reinstall only Mammoth with its dependencies
+# Extract mammoth URL from package.json before cleanup
 USER root
-RUN rm -rf node_modules package.json yarn.lock && \
+RUN MAMMOTH_URL=$(node -pe "require('./package.json').dependencies.mammoth") && \
+    rm -rf node_modules package.json yarn.lock && \
     yarn cache clean && \
-    npm install --production --no-optional \
-      https://github.com/catima/mammoth.js/archive/${MAMMOTH_VERSION}.tar.gz
+    npm install --production --no-optional "$MAMMOTH_URL"
 USER catima
 
 # Download and extract Swagger documentation
@@ -249,11 +249,12 @@ RUN SECRET_KEY_BASE=dummy RAILS_ENV=production bundle exec rake locales:generate
     SECRET_KEY_BASE=dummy RAILS_ENV=production bundle exec rails assets:precompile
 
 # Remove node_modules, then reinstall only Mammoth with its dependencies
+# Extract mammoth URL from package.json before cleanup
 USER root
-RUN rm -rf node_modules package.json yarn.lock && \
+RUN MAMMOTH_URL=$(node -pe "require('./package.json').dependencies.mammoth") && \
+    rm -rf node_modules package.json yarn.lock && \
     yarn cache clean && \
-    npm install --production --no-optional \
-      https://github.com/catima/mammoth.js/archive/${MAMMOTH_VERSION}.tar.gz
+    npm install --production --no-optional "$MAMMOTH_URL"
 USER catima
 
 # Download and extract Swagger documentation
