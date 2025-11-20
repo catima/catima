@@ -212,6 +212,15 @@ COPY --chown=catima:catima . /var/www/catima/
 # Create database.yml from example for sidekiq
 RUN cp config/database.example.yml.stage config/database.yml
 
+# Remove node_modules, then reinstall only Mammoth with its dependencies
+# Extract mammoth URL from package.json before cleanup
+USER root
+RUN MAMMOTH_URL=$(node -pe "require('./package.json').dependencies.mammoth") && \
+    rm -rf node_modules package.json yarn.lock && \
+    yarn cache clean && \
+    npm install --production --no-optional "$MAMMOTH_URL"
+USER catima
+
 # Set staging environment
 ENV RAILS_ENV=staging
 ENV NODE_ENV=production
@@ -284,6 +293,15 @@ COPY --chown=catima:catima . /var/www/catima/
 
 # Create database.yml from example for sidekiq
 RUN cp config/database.example.yml.prod config/database.yml
+
+# Remove node_modules, then reinstall only Mammoth with its dependencies
+# Extract mammoth URL from package.json before cleanup
+USER root
+RUN MAMMOTH_URL=$(node -pe "require('./package.json').dependencies.mammoth") && \
+    rm -rf node_modules package.json yarn.lock && \
+    yarn cache clean && \
+    npm install --production --no-optional "$MAMMOTH_URL"
+USER catima
 
 # Set production environment
 ENV RAILS_ENV=production
