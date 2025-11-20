@@ -5,7 +5,7 @@ ENV COREPACK_ENABLE_AUTO_PIN=0
 ENV PSQL_CLIENT_VERSION=18
 ENV NODE_VERSION=22
 ENV YARN_VERSION=1.22
-ENV SUPERCRONIC_VERSION=v0.2.39
+ENV SUPERCRONIC_VERSION=0.2.39
 ENV NGINX_VERSION=1.28.0
 ENV BUNDLER_VERSION=2.4.5
 
@@ -30,7 +30,7 @@ RUN apt-get update && \
 
 # Install specific version of Supercronic (cron replacement for non-root users)
 RUN ARCH=$(dpkg --print-architecture) && \
-    SUPERCRONIC_URL="https://github.com/aptible/supercronic/releases/download/${SUPERCRONIC_VERSION}/supercronic-linux-${ARCH}" && \
+    SUPERCRONIC_URL="https://github.com/aptible/supercronic/releases/download/v${SUPERCRONIC_VERSION}/supercronic-linux-${ARCH}" && \
     curl -fsSL "${SUPERCRONIC_URL}" -o /usr/local/bin/supercronic && \
     chmod +x /usr/local/bin/supercronic && \
     supercronic -version
