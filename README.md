@@ -133,7 +133,14 @@ Use a reverse proxy configuration to map the url to port `8989`.
 
 ## Docker images
 
-TODO!
+GitHub Actions workflows generate Docker image tags based on these events:
+- Push to `development`: `{service}-dev-latest`, `{service}-stage-latest`, `{service}-stage-<sha>-<timestamp>` (immutable)
+- Push to `master`: `{service}-latest`
+- Push a git tag: `{service}-vX.Y.Z` (immutable)
+
+Weekly cron jobs:
+- Create an updated staging image: `{service}-stage-<sha>-<timestamp>` (immutable)
+- Create an updated production candidate: `{service}-vX.Y.Z-<sha>-<timestamp>` (immutable)
 
 # Error tracker
 
