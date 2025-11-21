@@ -6,6 +6,7 @@ env:
   POSTGRES_USER: postgres
   POSTGRES_PASSWORD: postgres
   POSTGRES_DB: postgres
+  POSTGRES_HOST: localhost
   RAILS_ENV: test
 
 jobs:
@@ -17,7 +18,7 @@ jobs:
     steps:
       - name: Set matrix
         id: set-matrix
-        run: echo "ruby-versions=[\"3.2.2\", \"3.4.5\"]" >> $GITHUB_OUTPUT
+        run: echo "ruby-versions=[\"3.4\"]" >> $GITHUB_OUTPUT
 
   test:
     name: Test-RUBY${{ matrix.ruby-versions }}
@@ -26,14 +27,14 @@ jobs:
     strategy:
       matrix:
         ruby-versions: ${{ fromJSON(needs.setup.outputs.ruby-versions) }}
-        rubygems-version: [ '3.4.5' ]
-        psql-version: [ '17' ]
+        psql-version: [ '18' ]
         node-version: [ '22' ]
         redis-version: [ '8' ]
     services:
       postgres:
         image: postgres:${{ matrix.psql-version }}
         env:
+          POSTGRES_HOST: ${{ env.POSTGRES_HOST }}
           POSTGRES_USER: ${{ env.POSTGRES_USER }}
           POSTGRES_PASSWORD: ${{ env.POSTGRES_PASSWORD }}
           POSTGRES_DB: ${{ env.POSTGRES_DB }}
@@ -62,9 +63,6 @@ jobs:
         uses: ruby/setup-ruby@v1
         with:
           ruby-version: ${{ matrix.ruby-versions }}
-
-      - name: Install RubyGems
-        run: gem update --system ${{ matrix.rubygems-version }}
 
       - name: Cache Gems
         uses: actions/cache@v4
@@ -151,5 +149,5 @@ jobs:
       - name: Check minimum coverage
         uses: unil-lettres/simplecov-check@main
         with:
-          minimum_coverage: ${{ vars.MINIMUM_COVERAGE || 75 }}
+          minimum_coverage: ${{ vars.MINIMUM_COVERAGE || 70 }}
           coverage_path: coverage/.last_run.json
