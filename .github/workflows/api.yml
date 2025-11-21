@@ -15,9 +15,8 @@ jobs:
     runs-on: ubuntu-24.04
     strategy:
       matrix:
-        ruby-versions: [ '3.4.5' ]
-        rubygems-version: [ '3.4.5' ]
-        psql-version: [ '17' ]
+        ruby-versions: [ '3.4' ]
+        psql-version: [ '18' ]
         node-version: [ '22' ]
         redis-version: [ '8' ]
     services:
@@ -53,9 +52,6 @@ jobs:
         uses: ruby/setup-ruby@v1
         with:
           ruby-version: ${{ matrix.ruby-versions }}
-
-      - name: Install RubyGems
-        run: gem update --system ${{ matrix.rubygems-version }}
 
       - name: Cache Gems
         uses: actions/cache@v4
