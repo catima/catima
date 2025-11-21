@@ -11,12 +11,18 @@
 # its new offset can be obtained by calling `offset_actual`.
 #
 class ItemList::Navigation
-  attr_reader :results, :current, :offset
+  attr_reader :current, :offset
 
   def initialize(results:, current:, offset:)
     @results = results
     @current = current
     @offset = offset
+  end
+
+  # Provide a results wrapper that responds to total_count
+  # for compatibility with views that expect paginated collections
+  def results
+    @results_wrapper ||= ResultsWrapper.new(@results)
   end
 
   def next
@@ -61,5 +67,25 @@ class ItemList::Navigation
                        else
                          window.index(current)
                        end
+  end
+
+  # Wrapper class to provide total_count for unpaginated relations
+  class ResultsWrapper
+    def initialize(relation)
+      @relation = relation
+    end
+
+    def total_count
+      @total_count ||= @relation.count
+    end
+
+    # Delegate all other methods to the underlying relation
+    def method_missing(method, *args, &block)
+      @relation.send(method, *args, &block)
+    end
+
+    def respond_to_missing?(method, include_private = false)
+      @relation.respond_to?(method, include_private) || super
+    end
   end
 end
