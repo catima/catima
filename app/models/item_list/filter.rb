@@ -22,19 +22,14 @@ class ItemList::Filter < ItemList
   end
 
   def unpaginaged_items
-    scope = item_type.public_sorted_items
-    return scope if strategy.nil?
-
-    strategy.browse(scope, value)
+    scope = strategy.nil? ? item_type.public_items : strategy.browse(item_type.public_items, value)
+    scope = apply_sorting(scope)
+    # Add secondary sort by ID for deterministic ordering, matching the primary sort direction
+    scope.order(id: sort&.upcase == 'DESC' ? :desc : :asc)
   end
 
   def items
-    super
-
-    field_to_sort_by = sort_field || item_type.field_for_select
-    return sort_unpaginated_items(field_to_sort_by) if field_to_sort_by
-
-    unpaginated_list_items
+    super # unpaginaged_items now has correct sorting, just apply pagination
   end
 
   def to_param
@@ -43,37 +38,34 @@ class ItemList::Filter < ItemList
     [field&.slug, value].join("_")
   end
 
+  def items_for_navigation
+    @items_for_navigation ||= unpaginaged_items.includes(:item_type, :item_type => :fields)
+  end
+
   private
 
-  def sort_unpaginated_items(field)
-    if container_sort?
-      container_sort(field)
-    else
-      unpaginated_list_items
-        .sorted_by_field(field, direction: sort)
-    end
+  def apply_sorting(scope)
+    field_to_sort_by = sort_field || item_type.field_for_select
+    return scope.sorted_by_field(item_type.primary_field) if field_to_sort_by.nil? && item_type.primary_field
+    return scope unless field_to_sort_by
+
+    container_sort? ? apply_container_sort(scope, field_to_sort_by) : scope.sorted_by_field(field_to_sort_by, direction: sort)
   end
 
   def container_sort?
-    return false unless Container::Sort.type(sort_type)
-
-    true
+    Container::Sort.type(sort_type).present?
   end
 
-  def container_sort(field)
+  def apply_container_sort(scope, field)
     case Container::Sort.type(sort_type)
     when Container::Sort::FIELD
-      unpaginated_list_items
-        .sorted_by_field(field, direction: sort)
+      scope.sorted_by_field(field, direction: sort)
     when Container::Sort::CREATED_AT
-      unpaginated_list_items
-        .sorted_by_created_at(direction: sort)
+      scope.sorted_by_created_at(direction: sort)
     when Container::Sort::UPDATED_AT
-      unpaginated_list_items
-        .sorted_by_updated_at(direction: sort)
+      scope.sorted_by_updated_at(direction: sort)
     else
-      unpaginated_list_items
-        .sorted_by_field(field, direction: sort)
+      scope.sorted_by_field(field, direction: sort)
     end
   end
 
