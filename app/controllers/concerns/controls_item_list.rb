@@ -49,7 +49,10 @@ module ControlsItemList
     return if item_type.blank?
 
     @search ||= ItemList::Filter.new(
-      :item_type => item_type
+      :item_type => item_type,
+      :sort_type => params[:sort_type],
+      :sort_field => params[:sort_field_id] ? Field.find_by(id: params[:sort_field_id]) : false,
+      :sort => params[:sort] || 'ASC'
     )
   end
 end

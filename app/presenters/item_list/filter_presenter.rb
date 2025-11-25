@@ -14,4 +14,13 @@ class ItemList::FilterPresenter < ItemListPresenter
   def context_param
     :browse
   end
+
+  def context_params
+    params = super
+    # Preserve sort parameters for navigation
+    params[:sort_type] = list.sort_type if list.sort_type.present?
+    params[:sort_field_id] = list.sort_field.id if list.sort_field.present? && list.sort_field.respond_to?(:id)
+    params[:sort] = list.sort if list.sort != 'ASC' # Only include if not default
+    params
+  end
 end

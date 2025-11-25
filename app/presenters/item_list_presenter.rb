@@ -77,7 +77,7 @@ class ItemListPresenter
     return nil if offset.blank?
 
     @nav ||= ItemList::Navigation.new(
-      :results => list.items,
+      :results => list.items_for_navigation,
       :offset => offset,
       :current => item
     )
