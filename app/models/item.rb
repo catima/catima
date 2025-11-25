@@ -92,7 +92,7 @@ class Item < ApplicationRecord
 
     return unless field.type == Field::TYPES['choice']
 
-    joins("LEFT JOIN choices choices_#{field.uuid} ON choices_#{field.uuid}.id::text = items.data->>'#{field.uuid}' ")
+    joins("LEFT JOIN choices choices_#{field.uuid} ON choices_#{field.uuid}.id::text = items.data->'#{field.uuid}'->>0")
       .reorder(
         Arel.sql(sql.map { |s| s.gsub('choices', "choices_#{field.uuid}") }.join(", "))
       )
