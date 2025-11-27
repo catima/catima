@@ -3,8 +3,8 @@ set -e
 
 # Ensure there is a local .env file
 if [ ! -f ".env" ]; then
-  cp .env.example .env
-  echo "No .env file detected! The .env.example file has been copied to .env."
+  cp example.env .env
+  echo "No .env file detected! The example.env file has been copied to .env."
 fi
 
 # Prevent "server is already running" errors

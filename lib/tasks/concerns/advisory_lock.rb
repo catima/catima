@@ -1,5 +1,7 @@
 # frozen_string_literal: true
 
+require 'zlib'
+
 module AdvisoryLock
   # Execute a block with an advisory lock to prevent concurrent execution
   # across multiple application instances
@@ -12,6 +14,7 @@ module AdvisoryLock
     # Generate a consistent lock key from the lock name
     # PostgreSQL advisory locks use bigint, so we need a number
     lock_key = Zlib.crc32(lock_name)
+    quoted_key = ActiveRecord::Base.connection.quote(lock_key)
 
     acquired = false
 
@@ -20,13 +23,13 @@ module AdvisoryLock
       if timeout.zero?
         # Non-blocking: try to get lock immediately
         acquired = ActiveRecord::Base.connection.execute(
-          "SELECT pg_try_advisory_lock(#{lock_key})"
+          "SELECT pg_try_advisory_lock(#{quoted_key})"
         ).first['pg_try_advisory_lock']
       else
         # Blocking with timeout
         Timeout.timeout(timeout) do
           ActiveRecord::Base.connection.execute(
-            "SELECT pg_advisory_lock(#{lock_key})"
+            "SELECT pg_advisory_lock(#{quoted_key})"
           )
           acquired = true
         end
@@ -47,7 +50,7 @@ module AdvisoryLock
       if acquired
         # Release the lock
         ActiveRecord::Base.connection.execute(
-          "SELECT pg_advisory_unlock(#{lock_key})"
+          "SELECT pg_advisory_unlock(#{quoted_key})"
         )
         Rails.logger.info("Advisory lock released: #{lock_name} (key: #{lock_key})")
       end

@@ -4,7 +4,7 @@ class ExportWorker
   include Sidekiq::Worker
 
   def perform(export_id, locale)
-    dir = Rails.env.development? ? Rails.root.join('tmp', 'exports', Dir.mktmpdir(SecureRandom.hex)) : Dir.mktmpdir(SecureRandom.hex)
+    dir = create_temp_directory
     export = find_export(export_id)
 
     begin
@@ -86,6 +86,16 @@ class ExportWorker
 
   def find_export(id)
     Export.find_by(id: id)
+  end
+
+  def create_temp_directory
+    if Rails.env.development?
+      base_dir = Rails.root.join('tmp', 'exports')
+      FileUtils.mkdir_p(base_dir)
+      Dir.mktmpdir(SecureRandom.hex, base_dir)
+    else
+      Dir.mktmpdir(SecureRandom.hex)
+    end
   end
 
   def send_mail(export)
