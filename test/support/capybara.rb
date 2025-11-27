@@ -3,15 +3,15 @@ require "capybara/rails"
 
 Capybara.server_port = 3000
 
-if ENV['DOCKER_RUNNING'].present?
+if ENV['CI'].present?
+  Capybara.javascript_driver = :chrome
+else
   Capybara.javascript_driver = :remote_chrome
   Capybara.configure do |config|
     config.server = :puma, { Silent: true }
     config.server_host = "catima-app"
     config.server_port = 4000
   end
-else
-  Capybara.javascript_driver = :chrome
 end
 
 def driver_params
