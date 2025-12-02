@@ -113,6 +113,10 @@ RUN mkdir -p /var/www/catima/catalogs && \
     rm -rf /tmp/catalogs && \
     chown -R catima:catima /var/www/catima/catalogs
 
+# Copy Kubernetes poststart script
+COPY docker/config/k8s-poststart.sh /var/www/catima/k8s-poststart.sh
+RUN chmod +x /var/www/catima/k8s-poststart.sh
+
 # =============================================================================
 # DEVELOPMENT TARGETS
 # =============================================================================
@@ -189,6 +193,9 @@ RUN curl -L https://nightly.link/catima/catima/workflows/api/development/swagger
     unzip tmp/swagger.zip -d swagger/v3/ && \
     rm tmp/swagger.zip
 
+# Remove docker directory
+RUN rm -rf docker
+
 # Set staging environment
 ENV RAILS_ENV=staging
 ENV NODE_ENV=production
@@ -220,6 +227,9 @@ RUN MAMMOTH_URL=$(node -pe "require('./package.json').dependencies.mammoth") && 
     yarn cache clean && \
     npm install --production --no-optional "$MAMMOTH_URL"
 USER catima
+
+# Remove docker directory
+RUN rm -rf docker
 
 # Set staging environment
 ENV RAILS_ENV=staging
@@ -271,6 +281,9 @@ RUN curl -L https://nightly.link/catima/catima/workflows/api/master/swagger-docu
     unzip tmp/swagger.zip -d swagger/v3/ && \
     rm tmp/swagger.zip
 
+# Remove docker directory
+RUN rm -rf docker
+
 # Set production environment
 ENV RAILS_ENV=production
 ENV NODE_ENV=production
@@ -302,6 +315,9 @@ RUN MAMMOTH_URL=$(node -pe "require('./package.json').dependencies.mammoth") && 
     yarn cache clean && \
     npm install --production --no-optional "$MAMMOTH_URL"
 USER catima
+
+# Remove docker directory
+RUN rm -rf docker
 
 # Set production environment
 ENV RAILS_ENV=production
