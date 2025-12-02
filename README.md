@@ -148,4 +148,4 @@ Weekly cron jobs:
 
 # Helm
 
-TODO!
+The Helm charts for this project are available at [https://github.com/unil-lettres/k8s](https://github.com/unil-lettres/k8s), in the ``catima`` directory.
