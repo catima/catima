@@ -24,7 +24,7 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v5
         with:
-          ref: development
+          ref: add-stage-prod-docker-config
 
       - name: Build image
         uses: unil-lettres/actions/docker-build@main
@@ -47,7 +47,7 @@ jobs:
     steps:
       - uses: actions/checkout@v5
         with:
-          ref: development
+          ref: add-stage-prod-docker-config
 
       - name: Merge service
         id: merge
@@ -68,7 +68,7 @@ jobs:
     steps:
       - uses: actions/checkout@v5
         with:
-          ref: development
+          ref: add-stage-prod-docker-config
 
       - name: Merge service
         id: merge
@@ -88,7 +88,7 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v5
         with:
-          ref: development
+          ref: add-stage-prod-docker-config
 
       - name: Update image
         uses: unil-lettres/actions/commit-version@main
@@ -110,7 +110,7 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v5
         with:
-          ref: development
+          ref: add-stage-prod-docker-config
 
       - name: Update description
         uses: peter-evans/dockerhub-description@v4
