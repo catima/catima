@@ -5,6 +5,7 @@ on:
   push:
     branches:
       - "development"
+      - "add-stage-prod-docker-config"
 permissions: read-all
 
 jobs:
