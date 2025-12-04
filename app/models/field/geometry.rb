@@ -38,8 +38,8 @@ class Field::Geometry < Field
     "medium" => (ENV['ZOOM_LEVEL_MEDIUM'].presence || 10).to_i,
     "close" => (ENV['ZOOM_LEVEL_CLOSE'].presence || 15).to_i
   }.freeze
-  POLYGON_COLOR = ENV.fetch('POLYGON_COLOR', "#9336af").freeze
-  POLYLINE_COLOR = ENV.fetch('POLYLINE_COLOR', "#000000").freeze
+  POLYGON_COLOR = (ENV['POLYGON_COLOR'].presence || "#9336af").freeze
+  POLYLINE_COLOR = (ENV['POLYLINE_COLOR'].presence || "#000000").freeze
 
   store_accessor :options, :bounds, :layers, :zoom, :polygon, :polyline
 
