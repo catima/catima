@@ -24,9 +24,9 @@
 
 def auth_providers
   providers = []
-  providers.push :facebook if ENV['AUTH_FACEBOOK_APP_ID']
-  providers.push :github if ENV['AUTH_GITHUB_APP_ID']
-  providers.push :shibboleth if ENV['AUTH_SHIB_APP_ID']
+  providers.push :facebook if ENV['AUTH_FACEBOOK_APP_ID'].presence
+  providers.push :github if ENV['AUTH_GITHUB_APP_ID'].presence
+  providers.push :shibboleth if ENV['AUTH_SHIB_APP_ID'].presence
   providers
 end
 
