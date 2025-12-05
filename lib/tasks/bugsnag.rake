@@ -4,7 +4,7 @@ require 'json'
 
 namespace :bugsnag do
   desc "Notify Bugsnag of a new deploy"
-  task :deploy do
+  task deploy: [:environment] do
     api_key     = ENV['BUGSNAG_API_KEY']     || raise("BUGSNAG_API_KEY is required")
     app_version = ENV['BUGSNAG_APP_VERSION'] || ENV['APP_VERSION'] || "unknown"
 
