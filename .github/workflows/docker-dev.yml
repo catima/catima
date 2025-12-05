@@ -1,9 +1,8 @@
-name: docker
+name: docker-dev
 on:
   push:
     branches:
       - "development"
-      - "master"
 permissions: read-all
 
 jobs:
@@ -13,20 +12,22 @@ jobs:
     strategy:
       matrix:
         include:
-          - { service: app, target: app-dev, arch: linux/amd64, os: ubuntu-latest }
-          - { service: app, target: app-dev, arch: linux/arm64, os: ubuntu-24.04-arm }
-          - { service: worker, target: worker-dev, arch: linux/amd64, os: ubuntu-latest }
-          - { service: worker, target: worker-dev, arch: linux/arm64, os: ubuntu-24.04-arm }
+          - { service: app, arch: linux/amd64, os: ubuntu-latest }
+          - { service: app, arch: linux/arm64, os: ubuntu-24.04-arm }
+          - { service: worker, arch: linux/amd64, os: ubuntu-latest }
+          - { service: worker, arch: linux/arm64, os: ubuntu-24.04-arm }
 
     steps:
       - name: Checkout
         uses: actions/checkout@v5
+        with:
+          ref: development
 
       - name: Build image
         uses: unil-lettres/actions/docker-build@main
         with:
           dockerfile: ./docker/Dockerfile
-          target: ${{ matrix.target }}
+          target: ${{ matrix.service }}-dev
           platform: ${{ matrix.arch }}
           image_repository: ${{ vars.DOCKERHUB_REPOSITORY }}
           name_prefix: ${{ matrix.service }}
@@ -44,6 +45,8 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v5
+        with:
+          ref: development
 
       - name: Download digests
         uses: actions/download-artifact@v4
@@ -56,7 +59,7 @@ jobs:
         uses: unil-lettres/actions/docker-merge@main
         with:
           image_repository: ${{ vars.DOCKERHUB_REPOSITORY }}
-          tag: ${{ matrix.service }}-latest
+          tag: ${{ matrix.service }}-dev-latest
           dockerhub_username: ${{ secrets.DOCKERHUB_USERNAME }}
           dockerhub_token: ${{ secrets.DOCKERHUB_TOKEN }}
 
@@ -69,6 +72,8 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v5
+        with:
+          ref: development
 
       - name: Update description
         uses: peter-evans/dockerhub-description@v4

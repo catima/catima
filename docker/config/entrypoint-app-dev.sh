@@ -1,15 +1,20 @@
-#!/bin/sh
-
+#!/bin/bash
 set -e
 
-# prevent "server is already running" errors
+# Ensure there is a local .env file
+if [ ! -f ".env" ]; then
+  cp example.env .env
+  echo "No .env file detected! The example.env file has been copied to .env."
+fi
+
+# Prevent "server is already running" errors
 rm -f /var/www/catima/tmp/pids/server.pid
 
-# run the catima setup script
+# Run the catima setup script
 bin/setup
 
-# generate API doc
+# Generate API doc
 rails swag:run
 
-# run commands from dockerfile
+# Run commands from dockerfile
 "${@}"
