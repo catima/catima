@@ -24,9 +24,18 @@ RUN apt-get update && \
     supervisor \
     lsb-release \
     ca-certificates \
-    gnupg && \
+    gnupg \
+    libjemalloc2 && \
     apt-get clean && \
     rm -rf /var/lib/apt/lists/*
+
+# Configure jemalloc for better memory management
+RUN JEMALLOC_PATH=$(find /usr/lib -name libjemalloc.so.2 -print -quit) && \
+    echo "Found jemalloc at: ${JEMALLOC_PATH}" && \
+    ln -s "${JEMALLOC_PATH}" /usr/local/lib/libjemalloc.so.2 && \
+    echo "export LD_PRELOAD=/usr/local/lib/libjemalloc.so.2" >> /etc/profile.d/jemalloc.sh && \
+    chmod +x /etc/profile.d/jemalloc.sh
+ENV LD_PRELOAD=/usr/local/lib/libjemalloc.so.2
 
 # Install specific version of Supercronic (cron replacement for non-root users)
 RUN ARCH=$(dpkg --print-architecture) && \
