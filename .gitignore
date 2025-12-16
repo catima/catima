@@ -39,8 +39,7 @@ docker-compose.override.yml
 # Ignore refile uploads
 /public/system/
 
-# Ignore catalog-specific overrides
-/catalogs/
+# Ignore uploads and thumbnails
 /public/upload/
 /public/thumbs/
 

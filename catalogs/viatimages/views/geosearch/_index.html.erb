@@ -1,0 +1,51 @@
+<div id="mapsearchregions">
+  <div class="geosearch-filters">
+    <% @features_select.each do |element| %>
+      <select class="sel_mapsearch" id="<%= element[:name] %>" name="<%= element[:name] %>" onchange="location = this.value;">
+        <option value="<%= @base_feature_path %>"><%= t(element[:label]) %></option>
+        <% element[:items].each do |item| %>
+          <option value="<%= @base_feature_path + item.id.to_s %>" <%= params[:feature] == item.id.to_s ? 'selected' : '' %>>
+              <%=
+                item.data[@geo_feature_primary_field.uuid]['_translations'] ?
+                  item.data[@geo_feature_primary_field.uuid]['_translations'][I18n.locale.to_s] : item.id
+              %>
+          </option>
+        <% end %>
+      </select>
+    <% end %>
+    <br>
+
+    <select id="sel_ouvrage_map" name="sel_ouvrage" onchange="location = this.value;">
+      <option value="<%= @base_corpus_path %>"><%= t('.viat-geosearch-book') %></option>
+      <%# TODO: missing data (prepend "personne associée" to corpus title) %>
+      <% @corpuses.each do | corpus | %>
+        <option value="<%= @base_corpus_path + corpus.id.to_s %>" <%= params[:corpus] == corpus.id.to_s ? 'selected' : '' %>>
+          <%= corpus.get_value("titre").truncate(70) %>
+        </option>
+      <% end %>
+    </select>
+  </div>
+</div>
+
+<div id="map-wrapper">
+  <% if @container %>
+    <%= react_component('GeoViewer/components/GeoViewer', {
+      features: @geojson.present? ? @geojson.to_json : @container.geojson.to_json,
+      layers: @container.geo_layers,
+      mapHeight: @container.map_height,
+      catalog: @catalog.slug,
+      locale: I18n.locale
+    }) %>
+  <% end %>
+</div>
+
+<div id="map-outer">
+  <div class="warning-icon">
+    <%= image_tag("attention-13px.gif", alt: "Attention") %>
+  </div>
+
+  <p>
+    <%= t('.viat-geosearch-warning_html') %>
+  </p>
+  <hr id="map-outer-border">
+</div>

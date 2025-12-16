@@ -1,0 +1,9 @@
+<% if catalog.logo %>
+  <%= attachment_image_tag(catalog, :logo, :limit, 200, 100) %>
+<% end %>
+<a href="https://www.unil.ch"; target="_blank">
+  <%= image_tag("unil-logo.svg", alt: "Logo UNIL", :class => "footer-logo") %>
+</a>
+<a href="https://www.snf.ch"; target="_blank">
+  <%= image_tag("fns-logo.svg", alt: "Logo FNS", :class => "footer-logo") %>
+</a>

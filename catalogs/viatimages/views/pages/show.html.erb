@@ -1,0 +1,21 @@
+<% content_for :top_content do %>
+  <% if @page.slug == 'geosearch' %>
+      <%= render("geosearch/header") %>
+  <% else %>
+    <div class="top-content-type-generic">
+      <%= render("shared/searchlinks") %>
+    </div>
+  <% end %>
+<% end %>
+
+<div id="main-content">
+  <div id="main-wrapper">
+    <div id="main">
+      <% if @page.slug == 'geosearch' %>
+        <%= render("geosearch/index") %>
+      <% else %>
+        <%= render partial:'content', locals: {page: @page} %>
+      <% end %>
+    </div>
+  </div>
+</div>

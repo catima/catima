@@ -1,0 +1,92 @@
+---
+en:
+  catalogs:
+    show:
+      viat-search-btn: 'Find'
+      viat-standard-search-placeholder: 'Example: travellers mountains'
+      viat-select-domain: 'Select a domain'
+      viat-select-corpus: 'Select a corpus'
+      viat-by-domain: '...or by domain'
+      viat-by-corpus: '...or by corpus'
+  shared:
+    footer:
+      viat-admin: 'Admin'
+      viat-images: 'Images'
+      viat-corpus: 'Corpus'
+      viat-help: 'Help'
+      viat-contacts: 'Contacts'
+      viat-legal: 'Legal notes'
+    user_menu:
+      viat_my_account: 'My account'
+      viat_my_images: 'My images'
+    search:
+      standard_search:
+        viat-search-standard: 'Standard search'
+      geo_search:
+        viat-search-geo: 'Geo-search'
+      advanced_search:
+        viat-search-advanced: 'Advanced search'
+  simple_searches:
+    show:
+      viat-search-results-message_html: "<b>%{count_delimited}</b> images containing <b>«%{query}»</b>"
+      viat-no-search-criteria: 'No search criteria has been entered'
+  geosearch:
+    header:
+      viat-search-btn: Search
+    index:
+      viat-geosearch-regions: '-- Regions --'
+      viat-geosearch-cities: '-- Cities --'
+      viat-geosearch-valleys: '-- Valleys --'
+      viat-geosearch-mountain-ranges: '-- Mountain ranges --'
+      viat-geosearch-passes: '-- Passes --'
+      viat-geosearch-mountains: '-- Mountains --'
+      viat-geosearch-lakes: '-- Lakes --'
+      viat-geosearch-rivers: '-- Rivers --'
+      viat-geosearch-waterfalls: '-- Waterfalls --'
+      viat-geosearch-glaciers: '-- Glaciers --'
+      viat-geosearch-book: 'Select a book'
+      viat-geosearch-warning_html: "The exact geolocation of all images can not be certified<br>The images that have not been geolocated do not appear in this search modality"
+  advanced_searches:
+      show:
+        viat-no-results: "No result for the moment"
+        viat-search-results-message_html: "<b>%{count_delimited}</b> result(s)"
+  items:
+      index:
+        images-for-book: "images for the book"
+        images-for-domain: "images for the domain"
+      item_list_nav:
+        back: "Back to the search results"
+        viat-images: "Image %{current} of %{total}"
+      type:
+        corpus:
+          viat-catalog-record: "Library catalogue record"
+          viat-online-book-collection: "Online book or collection"
+          viat-consult: "Consult"
+          viat-description: "Description"
+          viat-edition-date: "Publishing date"
+          viat-title-images_html: "<b>%{images_count}</b> images for the book: <b>«%{corpus_title}»</b>"
+          viat-view-more: "View more"
+        image:
+          viat-illustrators: "Illustrators"
+          viat-original-source: "Original source"
+          viat-characteristics: "Characteristics"
+          viat-dimensions: "Dimensions"
+          viat-comments: "Comments"
+          viat-researcher-comments: "Researcher comment"
+          viat-index-desc: "Indexing/description"
+          viat-permanent-url: "Permanent URL"
+          viat-details: "Details"
+          viat-map: "Map"
+          viat-map-type: "Type of map"
+          viat-legend: "Legend"
+          viat-author-texts: "Author texts"
+          viat-download-pdf: "Download as PDF"
+          viat-document: "Document"
+        other:
+          viat-search-results-message_html: "<b>%{count_delimited}</b> %{type} containing <b>«%{query}»</b>"
+          viat-view-more: "View more"
+        shared:
+          associated_person:
+            viat-person-reference: "Reference"
+            viat-person-biography: "Biography"
+            viat-no-biography: "The biography is currently not yet available."

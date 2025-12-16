@@ -1,0 +1,84 @@
+#top-content {
+  width: 1024px;
+  margin-top: 15px;
+  text-align: left;
+  clear: both;
+  overflow: hidden;
+}
+
+#top-content .top-content-type-home {
+  background-image: image-url(viatimages-bg-img);
+  height: 630px;
+}
+
+#top-content .top-content-type-generic {
+  background-image: image-url(bg-img-smaller);
+  height: 178px;
+}
+
+#top-content .top-content-type-item {
+  background-image: image-url(bg-img-small);
+  height: 248px;
+}
+
+#top-content-menu {
+  float: left;
+  width: 1024px;
+}
+
+#top-content .head {
+  position: relative;
+  float: left;
+  margin: 16px 0 0 34px;
+  font-size: 36px;
+  text-decoration: none;
+}
+
+#top-content .head a,
+#top-content #searchlinks a,
+#searchlinks-home a {
+  text-decoration: none;
+  color: #f00;
+}
+
+#top-content .head a:hover,
+#top-content #searchlinks a:hover,
+#searchlinks-home a:hover {
+  text-decoration: none;
+  color: #aa0000;
+}
+
+#lang_selection {
+  color: #2e2e2a;
+  position: relative;
+  float: right;
+  margin: 14px 16px 0 0;
+}
+
+#lang_selection a {
+  color: #000;
+}
+
+#lang_selection a:hover {
+  text-decoration: underline;
+}
+
+#lang_selection .disabled {
+  font-weight: bold;
+  pointer-events: none;
+  cursor: default;
+}
+
+#lang_selection span {
+  margin-left: 3px;
+}
+
+#lang_selection {
+  #user-menu {
+    display: inline-block;
+
+    li a:focus {
+      background: none;
+    }
+  }
+}

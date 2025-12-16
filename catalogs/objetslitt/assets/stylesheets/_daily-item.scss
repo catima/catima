@@ -1,0 +1,65 @@
+.daily-item {
+  padding: 1em;
+  border: 1px solid rgb(221, 221, 221);
+  border-radius: 5px;
+  overflow: hidden;
+  margin-bottom: 2em;
+  display: flex;
+
+  .daily-item-cover {
+    margin: -1em 1.5em -1em -1em;
+    max-width: 33%;
+
+    .daily-item-cover-image {
+      max-width: 100%;
+      height: 100%;
+      object-fit: cover;
+    }
+  }
+
+  .daily-item-content {
+    h2 {
+      margin-top: 0;
+    }
+
+    .daily-item-title {
+      margin-top: 0;
+    }
+
+    .daily-item-description {
+      color: rgb(63, 63, 63);
+    }
+
+    .daily-item-link {
+      margin-top: 1em;
+    }
+  }
+}
+
+/* Mobile layout
+ * Aligning with bootstrap breakpoints
+ * see https://getbootstrap.com/docs/5.0/layout/breakpoints/
+ */
+@media (max-width: 767.98px) {
+  // Make the cover image and content display as a column
+  .daily-item {
+    flex-direction: column;
+
+    .daily-item-cover {
+      max-width: none;
+      margin: -1em -1em 1em -1em;
+
+      .daily-item-cover-image {
+        height: 200px;
+        width: 100%;
+      }
+    }
+  }
+}
+
+@media (min-width: 991.98px) {
+  .daily-item {
+    margin-left: 4em;
+    margin-right: 4em;
+  }
+}

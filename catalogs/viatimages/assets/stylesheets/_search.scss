@@ -1,0 +1,213 @@
+.simple-search {
+  width: 100px;
+}
+
+.advanced-search-content {
+  padding-top: 50px !important;
+}
+
+.advanced-search-buttons {
+  display: flex;
+  justify-content: flex-end;
+
+  input[type="submit"],
+  .reset-search {
+    width: 145px;
+  }
+
+  .reset-search {
+    margin-right: 5px;
+  }
+}
+
+.bookmark-links {
+  float: right;
+}
+
+#advanced-search-tabs {
+  justify-content: center;
+
+  li {
+    border: 1px solid #dee2e6;
+    flex-grow: 0;
+    flex-basis: fit-content;
+    cursor: pointer;
+    margin-right: 7px;
+
+    a {
+      padding-left: 20px;
+      padding-right: 20px;
+    }
+  }
+}
+
+#advanched-search-form-wrapper {
+  padding-bottom: 50px;
+
+  table tbody tr {
+    border-style: hidden;
+  }
+}
+
+#searchlinks {
+  text-align: center;
+  font-size: 16px;
+  float: left;
+  width: 1024px;
+  margin-top: 70px;
+}
+
+#searchlinks .searchlinks-icon,
+#searchlinks-home .searchlinks-icon{
+  display: inline;
+  padding: 0 20px 0 0;
+}
+
+#searchlinks-home {
+  text-align: center;
+  width: 455px;
+  margin-top: 14px;
+  font-size: 16px;
+  color: #f00;
+}
+
+#searchbox {
+  position: absolute;
+  left: 285px;
+  top: 145px;
+}
+
+#searchbox input.txtSearch {
+  width: 350px !important;
+  border: 1px solid #f00;
+  margin-right: 5px;
+  height: 31px;
+  padding: 7px;
+  border-radius: 0px;
+}
+
+#searchbox input.txtSearch:hover {
+  border-color: #aa0000;
+}
+
+#sel_domain_court, #sel_corpus {
+  width: 460px;
+}
+
+#searchdomain {
+  position: absolute;
+  top: 123px;
+  font-size: 16px;
+  color: #fff;
+}
+
+#searchcorpus {
+  position: absolute;
+  top: 212px;
+  font-size: 16px;
+  color: #fff;
+}
+
+#searchdomain #searchdomain-dropdown,
+#searchcorpus #searchcorpus-dropdown {
+  margin-top: 10px;
+}
+
+#tagcloud {
+  position: absolute;
+  top: 330px;
+  width: 450px;
+  text-align: center;
+}
+
+#tagcloud .tag a {
+  color: #fff;
+  text-decoration: none;
+}
+
+#tagcloud a:hover,
+#tagcloud .tag a:focus {
+  color: #ddd;
+}
+
+#tagcloud span {
+  margin: 0 10px 0 10px;
+}
+
+#tagcloud .largest {
+  font-size: 22px;
+}
+
+#tagcloud .large {
+  font-size: 19px;
+}
+
+#tagcloud .medium {
+  font-size: 16px;
+}
+
+#tagcloud .small {
+  font-size: 13px;
+}
+
+#mapsearchregions {
+  position: absolute;
+  left: 35px;
+  top: 268px;
+  font-size: 16px;
+  color: #fff;
+  line-height: 36px;
+
+  .geosearch-filters {
+    margin-top: 10px;
+  }
+}
+.sel_mapsearch {
+  width: 225px;
+  margin-right: 15px;
+}
+#sel_ouvrage_map {
+  width: 470px;
+}
+#map-wrapper {
+  margin-top: -200px;
+  padding-left: 7px;
+  padding-right: 7px;
+  background-color: #171a1899;
+  font-family: 'Avenir Light', sans-serif;
+
+  div.geoViewer {
+    padding-top: 7px;
+    padding-bottom: 7px;
+  }
+}
+#map {
+  height: 100%;
+  flex: auto;
+}
+#map-outer {
+  margin-top: 10px;
+
+  .warning-icon {
+    float: left;
+  }
+
+  p {
+    color: #2e2e2a;
+    margin-left: 22px;
+  }
+}
+#infobox {
+  flex: inherit;
+  height: 100%;
+  background-color: #fff;
+  width: 0;
+  transition: width 0.5s;
+  padding: 0;
+  overflow: auto;
+}
+#infobox p {
+  line-height: 1.4;
+  font-size: 11pt;
+  font-weight: 400;
+}

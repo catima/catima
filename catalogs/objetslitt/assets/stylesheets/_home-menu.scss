@@ -1,0 +1,114 @@
+.home-menu-container {
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+
+  margin-top: 5em;
+  margin-bottom: 5em;
+
+  .home-menu-item {
+    width: calc(25% - 1em);
+    position: relative;
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+
+    /* When an item is moused over, make the banner cover the image and
+     * make the overlay less translucent. */
+    :hover {
+      .home-menu-item-title {
+        height: 100%;
+        background: radial-gradient(circle, rgba(255, 255, 255, 0.9), rgba(255, 255, 255, 0.5));
+        background-color: rgba(255, 255, 255, 0.9);
+      }
+    }
+
+    .home-menu-image {
+      max-width: 100%;
+    }
+
+    .home-menu-item-title {
+      background: radial-gradient(circle, rgba(255, 255, 255, 0.7), rgba(255, 255, 255, 0.5));
+      position: relative;
+
+      height: 50%;
+      width: 100%;
+      box-sizing: border-box;
+
+      /* center text vertically and horizontally */
+      display: flex;
+      justify-content: center;
+      align-items: center;
+
+      color: rgb(56, 56, 56);
+      font-size: 16px;
+      text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
+      font-weight: 400;
+      letter-spacing: -0.5px;
+
+      position: absolute;
+      bottom: 0;
+      transition-duration: 0.4s;
+    }
+  }
+}
+
+/* Mobile layout
+ * Aligning with bootstrap breakpoints
+ * see https://getbootstrap.com/docs/5.0/layout/breakpoints/
+ */
+@media (max-width: 767.98px) {
+  /* Make the cards menu collapse into one column on mobile */
+  .home-menu-container {
+    flex-direction: column;
+    margin-top: 1em;
+    margin-bottom: 1em;
+
+    .home-menu-item {
+      width: 100%;
+      margin-bottom: 2em;
+
+      .home-menu-image {
+        width: 100%;
+      }
+
+      .home-menu-item-title {
+        font-size: 24px;
+      }
+    }
+  }
+}
+
+@media (min-width: 768px) {
+  .home-menu-container {
+    flex-wrap: wrap;
+    justify-content: space-between;
+
+    .home-menu-item {
+      width: calc(50% - 0.5em);
+      margin-bottom: 1em;
+
+      .home-menu-image {
+        width: 100%;
+      }
+
+      .home-menu-item-title {
+        font-size: 24px;
+      }
+    }
+  }
+}
+
+@media (min-width: 992px) {
+  .home-menu-container {
+    margin-left: 4em;
+    margin-right: 4em;
+
+    .home-menu-item {
+      width: calc(50% - 1em);
+      margin-bottom: 2em;
+
+      .home-menu-item-title {
+        font-size: 32px;
+      }
+    }
+  }
+}

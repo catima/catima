@@ -1,0 +1,49 @@
+<% if strip_tags(field_value(person, person.item_type.find_field('nom'))).present? %>
+  <a href="#" data-bs-toggle="modal" data-bs-target="#associatedPersonModal<%= index %>">
+    <%= field_value(person, person.item_type.find_field('nom')) %>
+  </a>
+<% end %>
+<% if strip_tags(field_value(person, person.item_type.find_field('date-naissance-mort'))).present? %>
+  (<%= field_value(person, person.item_type.find_field('date-naissance-mort')) %>),
+<% end %>
+<% if strip_tags(field_value(person, person.item_type.find_field('fonction'))).present? %>
+  <div id="associatedPersonFunction">
+    <%= field_value(person, person.item_type.find_field('fonction')) %>
+  </div>
+<% end %>
+
+<div class="modal fade" id="associatedPersonModal<%= index %>" tabindex="-1" aria-labelledby="associatedPersonModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h3 class="modal-title" id="associatedPersonModalLabel">
+          <% if strip_tags(field_value(person, person.item_type.find_field('nom'))).present? %>
+            <%= field_value(person, person.item_type.find_field('nom')) %>
+          <% end %>
+          <% if strip_tags(field_value(person, person.item_type.find_field('date-naissance-mort'))).present? %>
+            (<%= field_value(person, person.item_type.find_field('date-naissance-mort')) %>)
+          <% end %>
+        </h3>
+        <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+      </div>
+      <div class="modal-body" id="modalData">
+        <% if strip_tags(field_value(person, person.item_type.find_field('reference'))).present? %>
+          <%= t(".viat-person-reference") %>: <%= field_value(person, person.item_type.find_field('reference')) %>
+          <br><br>
+        <% end %>
+        <% if strip_tags(field_value(person, person.item_type.find_field('biographie'))).present? %>
+          <div style="font-size: 15px; font-weight: bold;"><%= t(".viat-person-biography") %></div>
+          <br>
+          <%= field_value(person, person.item_type.find_field('biographie')) %>
+        <% else %>
+          <em><%= t(".viat-no-biography") %></em>
+          <br>
+        <% end %>
+        <% if strip_tags(field_value(person, person.item_type.find_field('remarque'))).present? %>
+          <br>
+          <%= field_value(person, person.item_type.find_field('remarque')) %>
+        <% end %>
+      </div>
+    </div>
+  </div>
+</div>

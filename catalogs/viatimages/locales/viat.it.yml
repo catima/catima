@@ -1,0 +1,92 @@
+---
+it:
+  catalogs:
+    show:
+      viat-search-btn: 'Ricerca'
+      viat-standard-search-placeholder: 'Esempio: viaggiatori montagne'
+      viat-select-domain: 'Scegli un tema'
+      viat-select-corpus: 'Scegli un corpus'
+      viat-by-domain: '...o per aree tematiche'
+      viat-by-corpus: '...o per corpus'
+  shared:
+    footer:
+      viat-admin: 'Admin'
+      viat-images: 'Immagini'
+      viat-corpus: 'Corpus'
+      viat-help: 'Aiuto'
+      viat-contacts: 'Contatti'
+      viat-legal: 'Menzioni legali'
+    user_menu:
+      viat_my_account: 'Il mio conto'
+      viat_my_images: 'Le mie immagini'
+    search:
+      standard_search:
+        viat-search-standard: 'Ricerca standard'
+      geo_search:
+        viat-search-geo: 'Ricerca geografica'
+      advanced_search:
+        viat-search-advanced: 'Ricerca avanzata'
+  simple_searches:
+    show:
+      viat-search-results-message_html: "<b>%{count_delimited}</b> immagini contenenti <b>«%{query}»</b>"
+      viat-no-search-criteria: "Nessun criterio di ricerca è stato inserito"
+  geosearch:
+    header:
+      viat-search-btn: Ricerca
+    index:
+      viat-geosearch-regions: '-- Regioni --'
+      viat-geosearch-cities: '-- Città --'
+      viat-geosearch-valleys: '-- Valli --'
+      viat-geosearch-mountain-ranges: '-- Catene montuose --'
+      viat-geosearch-passes: '-- Passi --'
+      viat-geosearch-mountains: '-- Montagne --'
+      viat-geosearch-lakes: '-- Laghi --'
+      viat-geosearch-rivers: "-- Corsi d'acqua --"
+      viat-geosearch-waterfalls: '-- Cascate --'
+      viat-geosearch-glaciers: '-- Ghiacciai --'
+      viat-geosearch-book: 'Scegli un libro'
+      viat-geosearch-warning_html: "La precisione della geolocalizzazione non è garantita per tutte le immagini<br>Le immagini non geolocalizzate non appaiono in questa modalità di ricerca"
+  advanced_searches:
+    show:
+      viat-no-results: "Nessun risultato per il momento"
+      viat-search-results-message_html: "<b>%{count_delimited}</b> risultati"
+  items:
+      index:
+        images-for-book: "immagini per il libro"
+        images-for-domain: "immagini per l'area"
+      item_list_nav:
+        back: "Torna ai risultati di ricerca"
+        viat-images: "Immagine %{current} di %{total}"
+      type:
+        corpus:
+          viat-catalog-record: "Scheda catalogo biblioteca"
+          viat-online-book-collection: "Libro o collezione online"
+          viat-consult: "Consulta"
+          viat-description: "Descrizione"
+          viat-edition-date: "Data d'edizione"
+          viat-title-images_html: "<b>%{images_count}</b> immagini per il libro: <b>«%{corpus_title}»</b>"
+          viat-view-more: "Vedi di più"
+        image:
+          viat-illustrators: "Illustratori"
+          viat-original-source: "Libro"
+          viat-characteristics: "Caratteristiche"
+          viat-dimensions: "Dimensioni"
+          viat-comments: "Osservazioni"
+          viat-researcher-comments: "Note del ricercatore"
+          viat-index-desc: "Indicizzazione/descrizione"
+          viat-permanent-url: "URL permanente"
+          viat-details: "Dettagli"
+          viat-map: "Carta"
+          viat-map-type: "Tipo di carta"
+          viat-legend: "Legenda"
+          viat-author-texts: "Testi dell'autore"
+          viat-download-pdf: "Scarica il PDF"
+          viat-document: "Documento"
+        other:
+          viat-search-results-message_html: "<b>%{count_delimited}</b> %{type} contenenti <b>«%{query}»</b>"
+          viat-view-more: "Vedi di più"
+        shared:
+          associated_person:
+            viat-person-reference: "Referenza"
+            viat-person-biography: "Biografia"
+            viat-no-biography: "La biografia non è al momento ancora disponibile"

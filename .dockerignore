@@ -54,11 +54,11 @@ exports/*
 *.log
 log/*
 
-# Custom catalogs
-catalogs/*
+# Test catalog
+catalogs/custom-with-dash/
 
 # Swagger generated file
-/swagger/v3/*
+swagger/v3/*
 
 # Temporary files
 tmp/

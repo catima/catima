@@ -1,0 +1,56 @@
+<%-# Even it is bad practice to add logic in the view -%>
+<%-# it is a temporary solution until controller override is available -%>
+
+<% @item_type_id = 141 %>
+<% @title_field_slug = 'titres' %>
+
+<% @fields = Array.new %>
+<% @item.applicable_fields.each do |field| %>
+  <% if !strip_tags(field_value(@item, field)).blank? %>
+    <% @fields.push(field) %>
+    <% if field.slug == @title_field_slug %>
+      <% @title = strip_tags(field_value(@item, field)) %>
+    <% end %>
+  <% end %>
+<% end %>
+
+<%= @item.item_type_id == @item_type_id ?
+       provide(:title, @title) :
+       provide(:title, item_display_name(@item))
+%>
+
+<table class="table item-table">
+  <tbody>
+    <% @fields.each do |field| %>
+      <% if @item.item_type_id == @item_type_id %>
+        <% case field
+             when @fields.first %><% @position = 'first' %>
+          <% when @fields.last %><% @position = 'last' %>
+          <% else %><% @position = 'middle' %>
+        <% end %>
+        <% @add_Class = "class=#{@position}" %>
+      <% end %>
+
+      <tr <%= @add_Class %>>
+        <th><%= field.label %></th>
+        <td class="<%= field.type %>"><%= field_value(@item, field) %>
+        </td>
+      </tr>
+    <% end %>
+  </tbody>
+</table>
+
+<% fields_and_item_references(@item) do |field, browse| %>
+  <h3><%= field.item_type.name_plural %></h3>
+  <%= render_item_list(browse) %>
+  <% if browse.more? %>
+    <%= link_to(items_path(
+          :item_type_slug => browse.item_type,
+          browse.field.slug => browse.value
+        )) do %>
+      <%# TODO: i18n %>
+      View more
+      (<%= pluralize(browse.total_count, "item") %>)
+    <% end %>
+  <% end %>
+<% end %>

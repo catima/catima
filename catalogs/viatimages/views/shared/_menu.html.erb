@@ -1,0 +1,9 @@
+<div id="top-content-menu">
+  <div class="head" id="headfnrs">
+    <a href="/<%= @catalog.slug %>">Viatimages</a>
+  </div>
+  <div id="lang_selection">
+    <%= render("shared/locale_menu") if params[:locale] %>
+    <%= render("shared/user_menu") %>
+  </div>
+</div>

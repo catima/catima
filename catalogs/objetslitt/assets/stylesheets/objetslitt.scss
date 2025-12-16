@@ -1,0 +1,15 @@
+@import "daily-item";
+@import "home-menu";
+@import "search-bar";
+
+.footer-logo {
+  height: 58px;
+  margin-left: 1em;
+}
+
+/* page featured image */
+.banner-img {
+  width: 100%;
+  max-height: 300px;
+  object-fit: cover;
+}

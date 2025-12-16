@@ -1,0 +1,106 @@
+body {
+  background-color: #444;
+  font-family: 'Avenir Medium', Arial, Verdana, sans-serif;
+  font-size: 13px;
+  line-height: inherit;
+}
+
+b {
+  font-family: 'Avenir Black', sans-serif;
+  font-weight: bold;
+}
+
+.hidden {
+  display: none;
+}
+
+.separator {
+  border-bottom: 1px solid #dddddd;
+  margin: 20px 0 35px 0;
+  padding-bottom: 25px;
+}
+
+#menu-separator {
+  padding: 0 5px;
+}
+
+#wrapper {
+  width: 1024px;
+  margin-left: auto;
+  margin-right: auto;
+  margin-top: 0;
+  position: relative;
+}
+
+#main-content {
+  background-color: #fff;
+}
+
+#main-wrapper {
+  margin: 0 35px 0 35px;
+  padding-bottom: 50px;
+}
+
+#main {
+  border-top: 2px solid #ff0000;
+  padding-top: 20px;
+}
+
+form > .form-group {
+  margin-top: 0px;
+}
+
+.images-wrapper {
+  border-top: 1px solid #dddddd;
+  margin: 20px 0 0 0;
+  padding-top: 25px;
+}
+
+.images-wrapper .images {
+  margin-left: auto;
+  margin-right: auto;
+}
+
+input.btn,
+a.btn {
+  height: 31px;
+  background-color: #FF0000;
+  border: 1px solid #FF0000;
+  color: #fff;
+  font-size: 13px;
+  border-radius: 0px;
+}
+
+input.btn:hover,
+a.btn:hover,
+input.btn:focus,
+a.btn:focus {
+  background-color: #CC0000;
+  border: 1px solid #CC0000;
+  color: #fff;
+}
+
+select {
+  height: 29px;
+  background-color: #ccc;
+  border: 1px solid #ccc;
+  background-image: image-url(dropdown-bg-arrow);
+  background-repeat: no-repeat;
+  background-position: right;
+  line-height: 26px;
+  padding: 1px 7px;
+  overflow: hidden;
+  -webkit-appearance: button;
+  -webkit-border-radius: 0px;
+  color: black;
+  font-size: 13px;
+  -moz-appearance: none;
+}
+
+option {
+  font-weight: normal;
+  display: block;
+  white-space: pre;
+  min-height: 1.2em;
+  padding: 0px 2px 1px;
+}

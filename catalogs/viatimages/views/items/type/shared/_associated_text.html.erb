@@ -1,0 +1,10 @@
+<% if field_value(text, text.item_type.find_field('titre-texte-auteur')).present? %>
+  <%= field_value(text, text.item_type.find_field('titre-texte-auteur')) %>
+<% end %>
+<% if field_value(text, text.item_type.find_field('emplacement-ouvrage')).present? %>
+  <% if field_value(text, text.item_type.find_field('titre-texte-auteur')).present? %>
+    (<%= field_value(text, text.item_type.find_field('emplacement-ouvrage')) %>)
+  <% else %>
+    <%= field_value(text, text.item_type.find_field('emplacement-ouvrage')) %>
+  <% end %>
+<% end %>

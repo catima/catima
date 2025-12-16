@@ -1,0 +1,73 @@
+<% content_for :top_content do %>
+  <div class="top-content-type-home">
+    <div id="searchbox">
+      <!-- Standard search -->
+      <%= bootstrap_form_tag(
+              :url => { :controller => "simple_searches", :action => "new" },
+              :method => "GET",
+              :layout => :inline ) do |f| %>
+
+        <%= hidden_field_tag(:type, "images") %>
+        <%= f.search_field(
+                :q,
+                :value => params[:q],
+                :label => "Search",
+                :hide_label => true,
+                :autofocus => false,
+                :class => "txtSearch",
+                :placeholder => t(".viat-standard-search-placeholder")
+            ) %>
+
+        <%= f.submit(t(".viat-search-btn"), :class => 'btn simple-search') %>
+      <% end %>
+
+      <div id="searchlinks-home">
+        <%= render("shared/search/geo_search") %>
+        <%= render("shared/search/advanced_search") %>
+      </div>
+
+      <div id="searchdomain">
+        <span><%= t(".viat-by-domain") %></span>
+        <div id="searchdomain-dropdown">
+          <select id="sel_domain_court" name="sel_domain_court" onchange="location = this.value;">
+            <option value="" selected="selected"><%= t(".viat-select-domain") %></option>
+            <% if @domain_choice_set_items %>
+              <% @domain_choice_set_items.each do | domain, data | %>
+                <option value="<%= data[:link] %>">
+                  <%= domain.short_name.truncate(70) + ' (' + data[:count].to_s + ')' %>
+                </option>
+              <% end %>
+            <% end %>
+          </select>
+        </div>
+      </div>
+
+      <div id="searchcorpus">
+        <span><%= t(".viat-by-corpus") %></span>
+        <div id="searchcorpus-dropdown">
+          <select id="sel_corpus" name="sel_corpus" onchange="location = this.value;">
+            <option value="/<%= @catalog.slug %>/<%= params[:locale] %>" selected="selected"><%= t(".viat-select-corpus") %></option>
+            <% if @corpus_type_items %>
+              <%# TODO: missing data (prepend "personne associée" to corpus title) %>
+              <% @corpus_type_items.each do | corpus, data | %>
+                <option value="<%= data[:link] %>">
+                  <%= corpus.get_value("titre").truncate(70) + ' (' + data[:count].to_s + ')' %>
+                </option>
+              <% end %>
+            <% end %>
+          </select>
+        </div>
+      </div>
+
+      <div id="tagcloud">
+        <% if @keywords %>
+          <% @keywords.each do |keyword| %>
+            <span class="tag <%= keyword['size'] %>">
+              <%= link_to keyword['name'], "#{@keywords_base_url}/#{keyword['id']}-#{keyword['name']}" %>
+            </span>
+          <% end %>
+        <% end %>
+      </div>
+    </div>
+  </div>
+<% end %>

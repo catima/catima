@@ -1,0 +1,23 @@
+#searchbox form {
+  display: flex;
+  justify-content: center;
+  margin-top: 2em;
+  margin-bottom: 2em;
+  font-size: 1.5em;
+
+  .form-group {
+    width: 40vw;
+    margin-right: 0.5em;
+  }
+
+  .search-bar {
+    width: 100%;
+  }
+}
+
+@media (max-width: 767.98px) {
+  #searchbox .form-group {
+    width: 100%;
+    flex-grow: 100;
+  }
+}

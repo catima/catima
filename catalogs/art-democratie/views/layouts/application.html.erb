@@ -1,0 +1,24 @@
+<%# The "application" layout is the default layout for public-facing views. %>
+<% provide(:extra_css) do %>
+  <%= render("shared/catalog_css") if catalog_scoped? %>
+<% end %>
+
+<% content_for :head do -%>
+  <%= stylesheet_link_tag("art-democratie", :media => "all") %>
+<% end -%>
+
+<%= render("shared/navbar") if catalog_scoped? %>
+
+<div class="container">
+
+  <%= render("shared/flash") %>
+  <%= yield(:extra_nav) %>
+  <%= render("shared/page_header") %>
+
+  <%= yield %>
+
+  <%= render("shared/footer") %>
+
+</div>
+
+<% parent_layout "base" %>

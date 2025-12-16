@@ -1,0 +1,177 @@
+#image-item-top-content td,
+#image-item-tabs-content td {
+  vertical-align: top;
+}
+#image-item-tabs-content td {
+  width: 446px;
+  padding-right: 18px;
+}
+#image-item-tabs-content table {
+  width: 946px;
+  padding-right: 18px;
+}
+#image-content {
+  margin: -40px auto 0 auto;
+  min-width: 422px;
+  text-align: center;
+}
+#imgToolbar {
+  margin-bottom: 10px;
+}
+#imgActions {
+  margin-bottom: 10px;
+}
+.img-enlarge {
+  display: none;
+}
+#image-column{
+  width: 453px;
+  padding-right: 30px;
+}
+#image-column span, #image-column a:focus {
+  color: #73746a;
+  text-decoration: none;
+}
+#description-column {
+  width: 453px;
+  padding-left: 25px;
+}
+#description-wrapper {
+  text-align: left;
+}
+#description-titre {
+  margin-bottom: 40px;
+}
+#titreDetail, #titreDetailTrad {
+  font-size: 21px;
+}
+#titreDetailTrad {
+  display: none;
+}
+#titreLabel {
+  color: #ff0000;
+  margin-bottom: 5px;
+}
+#titreLabel span {
+  color: #dddddd;
+}
+#titreLabel a.inactive {
+  color: #ff0000;
+  text-decoration: none;
+}
+#titreLabel a.active {
+  color: #8a1c20;
+  text-decoration: none;
+  cursor: default;
+}
+#titreLabel a {
+  text-decoration: none;
+}
+#info-wrapper {
+  margin-top: 150px;
+  text-align: left;
+  width: 100%;
+}
+#info-content span {
+  color: #73746a;
+}
+.imageViewer {
+  max-width: 400px;
+  min-width: 250px;
+}
+#details-top .info,
+#image-item-tabs-content .info {
+  margin-top: 15px;
+}
+#details-top .info span,
+#image-item-tabs-content .info span{
+  color: #73746a;
+}
+#caracteristiques, #remarques, #texteImage {
+  overflow: hidden;
+  display: none;
+}
+#caracteristiques table {
+  width: 100%
+}
+#caracteristiques table td {
+  width: 50%;
+  padding-right: 5px;
+}
+.info-toggle-img {
+  margin-top: -4px;
+  margin-left: 3px;
+}
+#caracteristiquesLabel:focus, #remarquesLabel:focus, #pdfLink a:focus {
+  text-decoration: none;
+}
+
+#image-tabs {
+  margin-top: 35px;
+  justify-content: center;
+}
+#image-tabs li {
+  border: 1px solid #dee2e6;
+  flex-grow: 0;
+  cursor: pointer;
+  margin-right: 7px;
+}
+#image-tabs li a {
+  width: 150px;
+}
+
+#carte-content {
+  margin-top: 10px;
+}
+.mots-cles {
+  color: #fff;
+}
+.mots-cles a {
+  background-color: #ffffff;
+  line-height: 27px;
+  padding: 2px 6px;
+  border: 1px solid #cccccc;
+  -moz-border-radius: 10px;
+  border-radius: 10px;
+}
+#chercheurWrapper {
+  margin-bottom: 100px;
+}
+#chercheur {
+  float: right;
+  margin-right: 25px;
+  text-align: right;
+  margin-top: 20px;
+}
+#inlinepdf-wrapper {
+  margin-top: 35px;
+}
+#emplacementOuvrage {
+  padding-left: 30px;
+}
+#textesAuteurs {
+  margin-bottom: 5px;
+  margin-top: 20px;
+  line-height: 30px;
+}
+#pdfLink {
+  float: right;
+}
+#inlinePdfFrame{
+  width: 100%;
+  height: 500px;
+}
+#sel_texte_associe {
+  background-color: white !important;
+  width: 501px !important;
+}
+
+#associatedPersonFunction {
+  display: inline-block;
+
+  a {
+    pointer-events: none;
+    cursor: default;
+    color: black;
+  }
+}

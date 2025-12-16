@@ -115,13 +115,6 @@ COPY package.json yarn.lock /var/www/catima/
 RUN yarn install --frozen-lockfile --production=true && \
     yarn cache clean
 
-# Clone custom catalogs from the catima/catalogs repository
-RUN mkdir -p /var/www/catima/catalogs && \
-    git clone --depth 1 https://github.com/catima/catalogs.git /tmp/catalogs && \
-    find /tmp/catalogs -mindepth 1 -maxdepth 1 -type d ! -name '.*' -exec cp -r {} /var/www/catima/catalogs/ \; && \
-    rm -rf /tmp/catalogs && \
-    chown -R catima:catima /var/www/catima/catalogs
-
 # Copy Kubernetes poststart script
 COPY docker/config/k8s-poststart.sh /var/www/catima/k8s-poststart.sh
 RUN chmod +x /var/www/catima/k8s-poststart.sh

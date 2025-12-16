@@ -1,0 +1,92 @@
+---
+de:
+  catalogs:
+    show:
+      viat-search-btn: 'Suchen'
+      viat-standard-search-placeholder: 'Beispiel: Reisende Berge'
+      viat-select-domain: 'Bereich auswählen'
+      viat-select-corpus: 'Korpus auswählen'
+      viat-by-domain: '...oder nach Bereich'
+      viat-by-corpus: '...oder nach Korpus'
+  shared:
+    footer:
+      viat-admin: 'Admin'
+      viat-images: 'Bilder'
+      viat-corpus: 'Korpusse'
+      viat-help: 'Hilfe'
+      viat-contacts: 'Kontakt'
+      viat-legal: 'Rechtliches'
+    user_menu:
+      viat_my_account: 'Mein Konto'
+      viat_my_images: 'Meine Bilder'
+    search:
+      standard_search:
+        viat-search-standard: 'Standard-Suche'
+      geo_search:
+        viat-search-geo: 'Geo-Suche'
+      advanced_search:
+        viat-search-advanced: 'Erweiterte Suche'
+  simple_searches:
+    show:
+      viat-search-results-message_html: "<b>%{count_delimited}</b> Bilder mit <b>«%{query}»</b>"
+      viat-no-search-criteria: "Es wurden keine Suchkriterien eingegeben"
+  geosearch:
+    header:
+      viat-search-btn: Suchen
+    index:
+      viat-geosearch-regions: '-- Regionen --'
+      viat-geosearch-cities: '-- Städte --'
+      viat-geosearch-valleys: '-- Täler --'
+      viat-geosearch-mountain-ranges: '-- Bergketten --'
+      viat-geosearch-passes: '-- Pässe --'
+      viat-geosearch-mountains: '-- Berge --'
+      viat-geosearch-lakes: '-- Seen --'
+      viat-geosearch-rivers: "-- Wasserläufe --"
+      viat-geosearch-waterfalls: '-- Wasserfälle --'
+      viat-geosearch-glaciers: '-- Gletscher --'
+      viat-geosearch-book: 'Werk auswählen'
+      viat-geosearch-warning_html: "Die genaue Lokalisierung von allen Bildern kann nicht garantiert werden<br>Bilder ohne Lokalisierung erscheinen nicht in diesem Suchmodus"
+  advanced_searches:
+      show:
+        viat-no-results: "Zur Zeit kein Resultat"
+        viat-search-results-message_html: "<b>%{count_delimited}</b> Resultat(e)"
+  items:
+      index:
+        images-for-book: "Bilder für das Werk"
+        images-for-domain: "Bilder für die Domäne"
+      item_list_nav:
+        back: "Zurück zu den Suchergebnissen"
+        viat-images: "Bild %{current} von %{total}"
+      type:
+        corpus:
+          viat-catalog-record: "Bibliothekskatalogeintrag"
+          viat-online-book-collection: "Online-Buch / Sammlung"
+          viat-consult: "Konsultieren"
+          viat-description: "Beschreibung"
+          viat-edition-date: "Datum der Auflage"
+          viat-title-images_html: "<b>%{images_count}</b> Bilder für das Werk: <b>«%{corpus_title}»</b>"
+          viat-view-more: "Mehr sehen"
+        image:
+          viat-illustrators: "Illustratoren"
+          viat-original-source: "Herkunftsbuch"
+          viat-characteristics: "Merkmale"
+          viat-dimensions: "Dimensionen"
+          viat-comments: "Bemerkungen"
+          viat-researcher-comments: "Anmerkung des Forschers"
+          viat-index-desc: "Indexierung/bildbeschreibung"
+          viat-permanent-url: "Permanente URL"
+          viat-details: "Details"
+          viat-map: "Karte"
+          viat-map-type: "Kartentyp"
+          viat-legend: "Legende"
+          viat-author-texts: "Autorentexte"
+          viat-download-pdf: "Als PDF herunterladen"
+          viat-document: "Dokument"
+        other:
+          viat-search-results-message_html: "<b>%{count_delimited}</b> %{type} mit <b>«%{query}»</b>"
+          viat-view-more: "Mehr sehen"
+        shared:
+          associated_person:
+            viat-person-reference: "Referenz"
+            viat-person-biography: "Biografie"
+            viat-no-biography: "Die Biographie ist im Moment noch nicht verfügbar."

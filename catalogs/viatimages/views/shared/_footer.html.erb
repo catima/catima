@@ -1,0 +1,55 @@
+<div id="footer-wrapper">
+  <div id="logo-banner">
+    <a href="https://www.unil.ch/viaticalpes" target="_blank">
+      <%= image_tag("viaticalpes.jpg", alt: "Viaticalpes") %>
+    </a>
+    <div id="logos-biblios">
+      <a href="https://www.bcu-lausanne.ch/" target="_blank">
+        <%= image_tag("bcu.png", alt: "BCU") %>
+      </a>
+      <a href="https://www.mediatheque.ch" target="_blank">
+        <%= image_tag("media-vs.png", alt: "Médiathèque Valais") %>
+      </a>
+      <a href="https://www.nb.admin.ch" target="_blank">
+        <%= image_tag("bn.png", alt: "Bibliothèque Nationale Suisse") %>
+      </a>
+      <a href="https://www.ville-ge.ch/bge" target="_blank">
+        <%= image_tag("bge.png", alt: "BGE", class: "large") %>
+      </a>
+      <a href="https://www.unine.ch/bibliotheque" target="_blank">
+        <%= image_tag("bne.png", alt: "BNE") %>
+      </a>
+      <a href="https://www.burgerbib.ch" target="_blank">
+        <%= image_tag("bibe.png", alt: "Burgerbiliothek Bern") %>
+      </a>
+    </div>
+  </div>
+  <div id="footer">
+    <div class="navbar navbar-static-top navbar-expand-md" role="navigation">
+      <div class="navbar-collapse collapse justify-content-center">
+        <ul class="nav navbar-nav">
+          <% catalog.menu_items.where(parent_id:nil).sorted.each do |menu_item| %>
+            <% submenus = menu_item.submenus.load %>
+            <li class="nav-item <%= "dropdown" if submenus.count > 0 %>">
+              <a href="<%= menu_item.get_url %>" class="<%= "dropdown-toggle " if submenus.count > 0 %> nav-link <%= "active" if menu_item_active?(menu_item, submenus: submenus) %>" <% if submenus.count > 0 %> data-bs-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false" <% end %> >
+                <%= menu_item.title %>
+                <% if submenus.count > 0 %><% end %>
+              </a>
+              <% if submenus.count > 0 %>
+                <div class="dropdown-menu">
+                  <% submenus.each do |sub_menu| %>
+                    <% if sub_menu.title == '---' %>
+                      <div role="separator" class="dropdown-divider"></div>
+                    <% else %>
+                      <a class="dropdown-item <%= "active" if menu_item_active?(sub_menu) %>" href="<%= sub_menu.get_url %>"><%= sub_menu.title %></a>
+                    <% end %>
+                  <% end %>
+                </div>
+              <% end %>
+            </li>
+          <% end %>
+        </ul>
+      </div>
+    </div>
+  </div>
+</div>
