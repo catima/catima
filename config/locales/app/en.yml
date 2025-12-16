@@ -1063,6 +1063,7 @@ en:
       my_groups: My groups
       join: Join the group
       group_identifier: Group identifier
+      help: "To join a group, please enter the group's unique ID below. If the group is public, you will automatically become a member."
     list_memberships:
       no_memberships_warning: You are not member in any group yet.
       delete_confirm: "Are you sure you want to leave group “%{group}”?"
