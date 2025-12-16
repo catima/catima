@@ -644,6 +644,7 @@ it:
       my_groups: I miei gruppi
       join: Unisciti al gruppo
       group_identifier: Identificazione del gruppo
+      help: "Per entrare a far parte di un gruppo, inserisci l'ID univoco del gruppo qui sotto. Se il gruppo è pubblico, diventerai automaticamente membro."
     list_memberships:
       no_memberships_warning: Non sei ancora membro di nessun gruppo.
       delete_confirm: "Sei sicuro di voler lasciare il gruppo “%{group}”?"

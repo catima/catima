@@ -831,6 +831,7 @@ de:
       my_groups: Meine Gruppen
       join: Der Gruppe beitreten
       group_identifier: Gruppenkennung
+      help: "Um einer Gruppe beizutreten, geben Sie bitte unten die eindeutige ID der Gruppe ein. Wenn es sich um eine öffentliche Gruppe handelt, werden Sie automatisch Mitglied."
     list_memberships:
       no_memberships_warning: Du bist noch kein Mitglied in einer Gruppe.
       delete_confirm: "Sind Sie sicher, dass Sie die Gruppe “%{group}” verlassen wollen?"

@@ -1063,6 +1063,7 @@ fr:
       my_groups: Mes groupes
       join: Rejoindre le groupe
       group_identifier: Identifiant du groupe
+      help: "Pour rejoindre un groupe, veuillez entrer l'identifiant unique du groupe ci-dessous. Si le groupe est public, vous en deviendrez automatiquement membre."
     list_memberships:
       no_memberships_warning: Vous n'êtes pas encore membre d'un groupe.
       delete_confirm: "Êtes-vous sûr de vouloir quitter le groupe “%{group}”?"
