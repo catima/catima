@@ -19,7 +19,7 @@ $(document).ready(function() {
   
   $("a#caracteristiquesLabel").click(function(e) {
     e.preventDefault()
-    d = $('#caracteristiques').css('display');
+    var d = $('#caracteristiques').css('display');
     if (d === 'none') {
       document.getElementById('arrowCaracteristiquesExpand').classList.add('hidden')
       document.getElementById('arrowCaracteristiquesCollapse').classList.remove('hidden')
@@ -32,7 +32,7 @@ $(document).ready(function() {
 
   $("a#remarquesLabel").click(function(e) {
     e.preventDefault()
-    d = $('#remarques').css('display');
+    var d = $('#remarques').css('display');
     if (d === 'none') {
       document.getElementById('arrowRemarquesExpand').classList.add('hidden')
       document.getElementById('arrowRemarquesCollapse').classList.remove('hidden')
@@ -44,7 +44,7 @@ $(document).ready(function() {
   });
 
   $("a#texteImageLabel").click(function() {
-    d = $('#texteImage').css('display');
+    var d = $('#texteImage').css('display');
     if (d === 'none') {
         $('#arrowtexteImage').attr('src', '/assets/arrow-collapse.gif');
     } else {
