@@ -70,21 +70,37 @@
       </div>
     </div>
   </div>
-<% end %>
-<script>
-  document.addEventListener('DOMContentLoaded', function() {
-    function safeNav(selectId) {
-      var sel = document.getElementById(selectId);
-      if (!sel) return;
-      sel.addEventListener('change', function() {
-        var url = this.value;
-        // Only allow HTTP(S) URLs or relative URLs
-        if (/^(\/|https?:\/\/)/.test(url)) {
-          window.location = url;
+
+  <script>
+    (function() {
+      console.log('Script executing immediately');
+
+      function safeNav(selectId) {
+        var sel = document.getElementById(selectId);
+        console.log('Looking for element:', selectId, 'Found:', sel);
+        if (!sel) {
+          console.log('Element not found:', selectId);
+          return;
         }
-      });
-    }
-    safeNav('sel_domain_court');
-    safeNav('sel_corpus');
-  });
-</script>
+
+        sel.addEventListener('change', function() {
+          console.log('Change event triggered for:', selectId);
+          var url = this.value;
+          console.log('URL value:', url);
+
+          // Only allow HTTP(S) URLs or relative URLs
+          if (/^(\/|https?:\/\/)/.test(url)) {
+            console.log('Valid URL, redirecting to:', url);
+            window.location = url;
+          } else {
+            console.log('Invalid URL format:', url);
+          }
+        });
+        console.log('Event listener attached to:', selectId);
+      }
+
+      safeNav('sel_domain_court');
+      safeNav('sel_corpus');
+    })();
+  </script>
+<% end %>
