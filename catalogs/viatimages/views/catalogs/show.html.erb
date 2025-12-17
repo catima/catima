@@ -29,7 +29,7 @@
       <div id="searchdomain">
         <span><%= t(".viat-by-domain") %></span>
         <div id="searchdomain-dropdown">
-          <select id="sel_domain_court" name="sel_domain_court" onchange="location = this.value;">
+          <select id="sel_domain_court" name="sel_domain_court">
             <option value="" selected="selected"><%= t(".viat-select-domain") %></option>
             <% if @domain_choice_set_items %>
               <% @domain_choice_set_items.each do | domain, data | %>
@@ -45,7 +45,7 @@
       <div id="searchcorpus">
         <span><%= t(".viat-by-corpus") %></span>
         <div id="searchcorpus-dropdown">
-          <select id="sel_corpus" name="sel_corpus" onchange="location = this.value;">
+          <select id="sel_corpus" name="sel_corpus">
             <option value="/<%= @catalog.slug %>/<%= params[:locale] %>" selected="selected"><%= t(".viat-select-corpus") %></option>
             <% if @corpus_type_items %>
               <%# TODO: missing data (prepend "personne associée" to corpus title) %>
@@ -71,3 +71,20 @@
     </div>
   </div>
 <% end %>
+<script>
+  (function() {
+    function safeNav(selectId) {
+      var sel = document.getElementById(selectId);
+      if (!sel) return;
+      sel.addEventListener('change', function() {
+        var url = this.value;
+        // Only allow HTTP(S) URLs or relative URLs
+        if (/^(\/|https?:\/\/)/.test(url)) {
+          window.location = url;
+        }
+      });
+    }
+    safeNav('sel_domain_court');
+    safeNav('sel_corpus');
+  })();
+</script>
