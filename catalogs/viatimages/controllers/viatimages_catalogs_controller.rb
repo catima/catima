@@ -50,7 +50,7 @@ class ViatimagesCatalogsController < CatalogsController
     corpus_type_items = {}
     corpus_items.each do |corpus|
       corpus_type_items[corpus] = {
-        link: [I18n.locale, "images?corpus=#{corpus.id}"].join("/"),
+        link: "/#{[I18n.locale, "images?corpus=#{corpus.id}"].join("/")}",
         count: corpus_counts[corpus.id.to_s] || 0
       }
     end
@@ -84,7 +84,7 @@ class ViatimagesCatalogsController < CatalogsController
     domain_choice_set_items = {}
     domain_choices.each do |domain|
       domain_choice_set_items[domain] = {
-        link: [I18n.locale, "images?domaine=#{domain.id}"].join("/"),
+        link: "/#{[I18n.locale, "images?domaine=#{domain.id}"].join("/")}",
         count: domain_counts[domain.id] || 0
       }
     end
