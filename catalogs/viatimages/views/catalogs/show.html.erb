@@ -101,7 +101,6 @@
           if (!key) return;
 
           // Only navigate to pre-approved URLs from server-side mapping
-          // This prevents injection of arbitrary or attacker-controlled URLs
           if (urlMapping.hasOwnProperty(key)) {
             var url = urlMapping[key];
             // Additional validation: ensure URL is relative or HTTPS
