@@ -88,11 +88,29 @@ new MutationObserver(function(mutations) {
         var $this = $(this);
         // Check if the added element has the class 'ReactModalPortal'
         if ($this.hasClass('ReactModalPortal')) {
-          // Add the image legend to the lightbox
-          var content = $('#imageLegendEtablissment').length ? '© ' + $('#imageLegendEtablissment').text() + '. ' : '';
-          content += $('#imageLegendDroits').length ? $('#imageLegendDroits').text() : '';
-          var html = content.length ? '<div class=\"ril-caption ril__caption\"><div class=\"ril-caption-content ril__captionContent\">' + content + '</div></div>' : '';
-          $(".ril-toolbar").after(html);
+          // Add the image legend to the lightbox using safe DOM methods
+          var contentParts = [];
+
+          if ($('#imageLegendEtablissment').length) {
+            contentParts.push('© ' + $('#imageLegendEtablissment').text() + '.');
+          }
+
+          if ($('#imageLegendDroits').length) {
+            contentParts.push($('#imageLegendDroits').text());
+          }
+
+          if (contentParts.length > 0) {
+            // Create DOM elements safely using jQuery methods
+            var $caption = $('<div></div>')
+              .addClass('ril-caption ril__caption');
+
+            var $captionContent = $('<div></div>')
+              .addClass('ril-caption-content ril__captionContent')
+              .text(contentParts.join(' ')); // .text() safely escapes HTML entities
+
+            $caption.append($captionContent);
+            $(".ril-toolbar").after($caption);
+          }
         }
       });
     }
