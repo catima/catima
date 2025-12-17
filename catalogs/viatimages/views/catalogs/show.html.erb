@@ -79,9 +79,11 @@
 
         sel.addEventListener('change', function() {
           var url = this.value;
-          // Only allow HTTP(S) URLs or relative URLs
-          if (/^(\/|https?:\/\/)/.test(url)) {
-            window.location = url;
+          if (!url) return;
+
+          // Only allow HTTP(S) URLs or relative URLs starting with /
+          if (/^(https?:\/\/|\/[^\/])/.test(url)) {
+            window.location.href = url;
           }
         });
       }
