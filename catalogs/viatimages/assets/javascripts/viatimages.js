@@ -46,9 +46,9 @@ $(document).ready(function() {
   $("a#texteImageLabel").click(function() {
     var d = $('#texteImage').css('display');
     if (d === 'none') {
-        $('#arrowtexteImage').attr('src', '/assets/arrow-collapse.gif');
+        $('#arrowtexteImage').text('▲');
     } else {
-        $('#arrowtexteImage').attr('src', '/assets/arrow-expand.gif');
+        $('#arrowtexteImage').text('▼');
     }
     $('#texteImage').animate({height: 'toggle'});
   });

@@ -40,7 +40,7 @@
               <% if @texte_dans_image && strip_tags(field_value(@item, @texte_dans_image)).present? %>
                 <div class="info">
                   <a id ="texteImageLabel" href="#">
-                    <span><%= @texte_dans_image.label %></span><%= image_tag("arrow-expand.gif", :id => "arrowtexteImage", :class => "info-toggle-img") %>
+                    <span><%= @texte_dans_image.label %></span><span id="arrowtexteImage" class="info-toggle-arrow">▼</span>
                   </a>
                 </div>
                 <div id="texteImage">
@@ -126,8 +126,8 @@
             <div class="info">
               <a id="caracteristiquesLabel" href="#">
                 <span><%= t(".viat-characteristics") %></span>
-                <%= image_tag("arrow-expand.gif", :id => "arrowCaracteristiquesExpand", :class => "info-toggle-img") %>
-                <%= image_tag("arrow-collapse.gif", :id => "arrowCaracteristiquesCollapse", :class => "info-toggle-img hidden") %>
+                <span id="arrowCaracteristiquesExpand" class="info-toggle-arrow">▼</span>
+                <span id="arrowCaracteristiquesCollapse" class="info-toggle-arrow hidden">▲</span>
               </a>
             </div>
             <div id="caracteristiques">
@@ -204,8 +204,8 @@
               <div class="info">
                 <a id ="remarquesLabel" href="#">
                   <span><%= t(".viat-comments") %></span>
-                  <%= image_tag("arrow-expand.gif", :id => "arrowRemarquesExpand", :class => "info-toggle-img") %>
-                  <%= image_tag("arrow-collapse.gif", :id => "arrowRemarquesCollapse", :class => "info-toggle-img hidden") %>
+                  <span id="arrowRemarquesExpand" class="info-toggle-arrow">▼</span>
+                  <span id="arrowRemarquesCollapse" class="info-toggle-arrow hidden">▲</span>
                 </a>
               </div>
               <div id="remarques">
