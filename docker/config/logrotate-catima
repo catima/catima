@@ -1,0 +1,10 @@
+/var/www/catima/log/*.log {
+  su catima catima
+  daily
+  missingok
+  rotate 7
+  compress
+  delaycompress
+  notifempty
+  copytruncate
+}

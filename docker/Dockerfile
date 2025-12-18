@@ -25,6 +25,7 @@ RUN apt-get update && \
     lsb-release \
     ca-certificates \
     gnupg \
+    logrotate \
     libjemalloc2 && \
     apt-get clean && \
     rm -rf /var/lib/apt/lists/*
@@ -79,6 +80,10 @@ RUN groupadd -g 1000 catima && \
 RUN mkdir -p /var/www/catima && \
     chown -R catima:catima /var/www/catima
 WORKDIR /var/www/catima
+
+# Configure logrotate for application logs
+COPY ./docker/config/logrotate-catima /etc/logrotate.d/catima
+RUN chmod 0644 /etc/logrotate.d/catima
 
 FROM base AS dependencies-development
 
