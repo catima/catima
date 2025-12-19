@@ -5,8 +5,8 @@
 SHELL=/bin/bash
 PATH=/usr/local/bundle/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin
 
-# Remove expired exports every Sunday at 05:13
-13 5 * * 0 cd /var/www/catima && bundle exec rake export:remove_expired
+# Remove expired exports every Sunday at 00:30
+30 0 * * 0 cd /var/www/catima && bundle exec rake export:remove_expired
 
 # Remove expired stats daily at 01:00
 0 1 * * * cd /var/www/catima && bundle exec rake stats:remove_expired
