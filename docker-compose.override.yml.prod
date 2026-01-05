@@ -25,7 +25,7 @@ services:
       mode: global
       resources:
         limits:
-          memory: 1000M
+          memory: 2000M
 
   catima-worker:
     image: unillett/catima:worker-prod-latest
@@ -47,7 +47,7 @@ services:
       mode: global
       resources:
         limits:
-          memory: 1000M
+          memory: 6000M
 
   catima-postgres:
     restart: unless-stopped
@@ -55,7 +55,7 @@ services:
       mode: global
       resources:
         limits:
-          memory: 1000M
+          memory: 2000M
 
   catima-redis:
     restart: unless-stopped
