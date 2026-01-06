@@ -55,7 +55,7 @@ services:
       mode: global
       resources:
         limits:
-          memory: 2000M
+          memory: 1000M
 
   catima-redis:
     restart: unless-stopped
