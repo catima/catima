@@ -126,6 +126,13 @@ RUN yarn install --frozen-lockfile --production=true && \
 COPY docker/config/k8s-poststart.sh /var/www/catima/k8s-poststart.sh
 RUN chmod +x /var/www/catima/k8s-poststart.sh
 
+# Copy Unicorn workers script
+COPY docker/config/unicorn_workers.sh /var/www/catima/unicorn_workers.sh
+RUN chmod +x /var/www/catima/unicorn_workers.sh
+
+# Copy unicorn configuration
+COPY ./docker/config/unicorn.rb /var/www/catima/config/unicorn.rb
+
 # =============================================================================
 # DEVELOPMENT TARGETS
 # =============================================================================
@@ -168,9 +175,6 @@ FROM dependencies-production AS app-staging
 COPY ./docker/config/supervisord-app-staging.conf /etc/supervisor/conf.d/supervisord.conf
 COPY ./docker/config/entrypoint-app-staging.sh /usr/local/bin/entrypoint.sh
 RUN chmod +x /usr/local/bin/entrypoint.sh
-
-# Copy unicorn configuration
-COPY ./docker/config/unicorn.rb /var/www/catima/config/unicorn.rb
 
 # Switch to catima user
 USER catima
@@ -256,9 +260,6 @@ FROM dependencies-production AS app-production
 COPY ./docker/config/supervisord-app-production.conf /etc/supervisor/conf.d/supervisord.conf
 COPY ./docker/config/entrypoint-app-production.sh /usr/local/bin/entrypoint.sh
 RUN chmod +x /usr/local/bin/entrypoint.sh
-
-# Copy unicorn configuration
-COPY ./docker/config/unicorn.rb /var/www/catima/config/unicorn.rb
 
 # Switch to catima user
 USER catima

@@ -1,6 +1,11 @@
+# Set UNICORN_WORKERS environment variable
+# This script sets the number of Unicorn workers
+# based on the memory available to the Docker container.
+system("sh unicorn_workers.sh")
+
 # Use at least one worker per core if you're on a dedicated server,
 # more will usually help for _short_ waits on databases/caches.
-# For Docker, use environment variable or default to 2
+# For Docker/K8s, use environment variable or default to 2.
 worker_processes Integer(ENV.fetch("UNICORN_WORKERS", 2))
 
 # Working directory for the Rails application
