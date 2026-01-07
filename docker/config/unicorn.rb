@@ -1,7 +1,10 @@
 # Set UNICORN_WORKERS environment variable
 # This script sets the number of Unicorn workers
 # based on the memory available to the Docker container.
-system("sh unicorn_workers.sh")
+unless ENV['UNICORN_WORKERS']
+  workers_count = `sh unicorn_workers.sh`.strip
+  ENV['UNICORN_WORKERS'] = workers_count unless workers_count.empty?
+end
 
 # Use at least one worker per core if you're on a dedicated server,
 # more will usually help for _short_ waits on databases/caches.

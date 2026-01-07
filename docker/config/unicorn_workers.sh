@@ -15,8 +15,8 @@ fi
 
 # Set a default value if the memory is unlimited or not available
 if [ "$LIMIT_BYTES" = "max" ] || [ "$LIMIT_BYTES" -gt 9000000000000000000 ]; then
-  export UNICORN_WORKERS=${UNICORN_WORKERS:-2}
-  return
+  echo "${UNICORN_WORKERS:-2}"
+  exit 0
 fi
 
 LIMIT_MB=$((LIMIT_BYTES / 1024 / 1024))
@@ -25,4 +25,4 @@ AVAILABLE_MB=$((LIMIT_MB - RESERVED_MB))
 WORKERS=$((AVAILABLE_MB / WORKER_MB))
 [ "$WORKERS" -lt 1 ] && WORKERS=1
 
-export UNICORN_WORKERS=$WORKERS
+echo "$WORKERS"
