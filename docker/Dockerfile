@@ -126,11 +126,8 @@ RUN yarn install --frozen-lockfile --production=true && \
 COPY docker/config/k8s-poststart.sh /var/www/catima/k8s-poststart.sh
 RUN chmod +x /var/www/catima/k8s-poststart.sh
 
-# Copy Unicorn workers script
-COPY docker/config/unicorn_workers.sh /var/www/catima/unicorn_workers.sh
-RUN chmod +x /var/www/catima/unicorn_workers.sh
-
-# Copy unicorn configuration
+# Copy unicorn configuration and workers calculator
+COPY ./docker/config/unicorn_workers.rb /var/www/catima/config/unicorn_workers.rb
 COPY ./docker/config/unicorn.rb /var/www/catima/config/unicorn.rb
 
 # =============================================================================
