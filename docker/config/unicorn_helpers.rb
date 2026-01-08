@@ -1,19 +1,26 @@
 # frozen_string_literal: true
 
 # Calculate the number of Unicorn workers based on available memory
-module UnicornWorkers
+module UnicornHelpers
   module_function
 
-  def calculate
-    worker_mb = ENV["UNICORN_WORKER_MB"].present? ? Integer(ENV["UNICORN_WORKER_MB"]) : 300
-    reserved_mb = ENV["UNICORN_RESERVED_MB"].present? ? Integer(ENV["UNICORN_RESERVED_MB"]) : 400
+  # Fetch ENV variable with proper handling of empty strings
+  def fetch_env(key, default)
+    value = ENV[key]
+    (value.nil? || value.strip.empty?) ? default : value
+  end
+
+  def calculate_workers
+    worker_mb = Integer(fetch_env('UNICORN_WORKER_MB', '300'))
+    reserved_mb = Integer(fetch_env('UNICORN_RESERVED_MB', '400'))
 
     # Detect cgroup version and read memory limit
     limit_bytes = read_memory_limit
 
     # Set a default value if the memory is unlimited or not available
+    # Using 2^63 - 1 which is the actual MAX_INT64 value used by cgroups for "unlimited"
     if limit_bytes == 'max' || limit_bytes.to_i >= (2**63 - 1)
-      return ENV["UNICORN_WORKERS"].present? ? Integer(ENV["UNICORN_WORKERS"]) : 2
+      return Integer(fetch_env('UNICORN_WORKERS', '2'))
     end
 
     limit_mb = limit_bytes.to_i / 1024 / 1024

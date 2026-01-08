@@ -1,15 +1,16 @@
 # Load the workers calculator
-require_relative 'unicorn_workers'
+require_relative 'unicorn_helpers'
 
 # Set UNICORN_WORKERS environment variable if not already set
-unless ENV['UNICORN_WORKERS'].present?
-  ENV['UNICORN_WORKERS'] = UnicornWorkers.calculate.to_s
+workers_env = UnicornHelpers.fetch_env('UNICORN_WORKERS', nil)
+unless workers_env
+  ENV['UNICORN_WORKERS'] = UnicornHelpers.calculate_workers.to_s
 end
 
 # Use at least one worker per core if you're on a dedicated server,
 # more will usually help for _short_ waits on databases/caches.
 # For Docker/K8s, use environment variable or default to 2.
-worker_processes ENV["UNICORN_WORKERS"].present? ? Integer(ENV["UNICORN_WORKERS"]) : 2
+worker_processes Integer(UnicornHelpers.fetch_env("UNICORN_WORKERS", "2"))
 
 # Working directory for the Rails application
 working_directory "/var/www/catima"
@@ -19,7 +20,7 @@ working_directory "/var/www/catima"
 listen "0.0.0.0:3000", :tcp_nopush => true, :backlog => 64
 
 # Timeout for killing workers (in seconds)
-timeout ENV["UNICORN_TIMEOUT"].present? ? Integer(ENV["UNICORN_TIMEOUT"]) : 60
+timeout Integer(UnicornHelpers.fetch_env("UNICORN_TIMEOUT", "60"))
 
 # PID file location
 pid "/var/www/catima/tmp/pids/unicorn.pid"
