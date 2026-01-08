@@ -5,15 +5,15 @@ module UnicornWorkers
   module_function
 
   def calculate
-    worker_mb = Integer(ENV.fetch('UNICORN_WORKER_MB', 300))
-    reserved_mb = Integer(ENV.fetch('UNICORN_RESERVED_MB', 400))
+    worker_mb = ENV["UNICORN_WORKER_MB"].present? ? Integer(ENV["UNICORN_WORKER_MB"]) : 300
+    reserved_mb = ENV["UNICORN_RESERVED_MB"].present? ? Integer(ENV["UNICORN_RESERVED_MB"]) : 400
 
     # Detect cgroup version and read memory limit
     limit_bytes = read_memory_limit
 
     # Set a default value if the memory is unlimited or not available
     if limit_bytes == 'max' || limit_bytes.to_i >= (2**63 - 1)
-      return Integer(ENV.fetch('UNICORN_WORKERS', 2))
+      return ENV["UNICORN_WORKERS"].present? ? Integer(ENV["UNICORN_WORKERS"]) : 2
     end
 
     limit_mb = limit_bytes.to_i / 1024 / 1024
