@@ -1,15 +1,17 @@
 # frozen_string_literal: true
 
-# Calculate the number of Unicorn workers based on available memory
+# Helper methods for Unicorn configuration
 module UnicornHelpers
   module_function
 
   # Fetch ENV variable with proper handling of empty strings
+  # since we cannot use .present? in this context
   def fetch_env(key, default)
     value = ENV[key]
     (value.nil? || value.strip.empty?) ? default : value
   end
 
+  # Calculate the number of Unicorn workers based on available memory
   def calculate_workers
     worker_mb = Integer(fetch_env('UNICORN_WORKER_MB', '300'))
     reserved_mb = Integer(fetch_env('UNICORN_RESERVED_MB', '400'))
@@ -30,6 +32,7 @@ module UnicornHelpers
     workers < 1 ? 1 : workers
   end
 
+  # Read memory limit from cgroup files
   def read_memory_limit
     if File.exist?('/sys/fs/cgroup/memory.max')
       File.read('/sys/fs/cgroup/memory.max').strip
