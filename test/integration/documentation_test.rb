@@ -11,7 +11,7 @@ class DocumentationTest < ActionDispatch::IntegrationTest
     end
 
     assert(page.has_content?("Documentation"))
-
+    assert(page.has_content?("FAQ"))
     assert(page.has_content?("Catalog visitor"))
     assert(page.has_content?("Catalog user"))
     assert(page.has_content?("Catalog editor"))
@@ -26,7 +26,7 @@ class DocumentationTest < ActionDispatch::IntegrationTest
     end
 
     assert(page.has_content?("Documentation"))
-
+    assert(page.has_content?("FAQ"))
     assert(page.has_content?("Catalog visitor"))
     assert(page.has_content?("Catalog user"))
     assert(page.has_content?("Catalog editor"))
@@ -41,7 +41,7 @@ class DocumentationTest < ActionDispatch::IntegrationTest
     end
 
     assert(page.has_content?("Documentation"))
-
+    refute(page.has_content?("FAQ"))
     assert(page.has_content?("Catalog visitor"))
     assert(page.has_content?("Catalog user"))
     refute(page.has_content?("Catalog editor"))
@@ -56,7 +56,7 @@ class DocumentationTest < ActionDispatch::IntegrationTest
     end
 
     assert(page.has_content?("Documentation"))
-
+    refute(page.has_content?("FAQ"))
     assert(page.has_content?("Catalog visitor"))
     assert(page.has_content?("Catalog user"))
     refute(page.has_content?("Catalog editor"))
@@ -69,7 +69,7 @@ class DocumentationTest < ActionDispatch::IntegrationTest
     end
 
     assert(page.has_content?("Documentation"))
-
+    refute(page.has_content?("FAQ"))
     assert(page.has_content?("Catalog visitor"))
     refute(page.has_content?("Catalog user"))
     refute(page.has_content?("Catalog editor"))

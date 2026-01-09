@@ -5,43 +5,45 @@
 
   <br>
 
-  <div>
-    <h2>
-      <%= t("documentation.index.faq.title") %>
-    </h2>
+  <% if current_user.catalog_role_at_least?(@catalog, 'editor') %>
+    <div>
+      <h2>
+        <%= t("documentation.index.faq.title") %>
+      </h2>
 
-    <a href="<%= documentation_url("faqcatima.html") %>#<%= t("documentation.index.faq.add_data_anchor") %>"
-       target="_blank"
-       class="btn btn-primary btn-lg mb-1"
-       role="button"
-       aria-pressed="true">
-      <%= t("documentation.index.faq.add_data") %>
-    </a>
+      <a href="<%= documentation_url("faqcatima.html") %>#<%= t("documentation.index.faq.add_data_anchor") %>"
+         target="_blank"
+         class="btn btn-primary btn-lg mb-1"
+         role="button"
+         aria-pressed="true">
+        <%= t("documentation.index.faq.add_data") %>
+      </a>
 
-    <a href="<%= documentation_url("faqcatima.html") %>#<%= t("documentation.index.faq.view_data_anchor") %>"
-       target="_blank"
-       class="btn btn-primary btn-lg mb-1"
-       role="button"
-       aria-pressed="true">
-      <%= t("documentation.index.faq.view_data") %>
-    </a>
+      <a href="<%= documentation_url("faqcatima.html") %>#<%= t("documentation.index.faq.view_data_anchor") %>"
+         target="_blank"
+         class="btn btn-primary btn-lg mb-1"
+         role="button"
+         aria-pressed="true">
+        <%= t("documentation.index.faq.view_data") %>
+      </a>
 
-    <a href="<%= documentation_url("faqcatima.html") %>#<%= t("documentation.index.faq.access_anchor") %>"
-       target="_blank"
-       class="btn btn-primary btn-lg mb-1"
-       role="button"
-       aria-pressed="true">
-      <%= t("documentation.index.faq.access") %>
-    </a>
+      <a href="<%= documentation_url("faqcatima.html") %>#<%= t("documentation.index.faq.access_anchor") %>"
+         target="_blank"
+         class="btn btn-primary btn-lg mb-1"
+         role="button"
+         aria-pressed="true">
+        <%= t("documentation.index.faq.access") %>
+      </a>
 
-    <a href="<%= documentation_url("faqcatima.html") %>#<%= t("documentation.index.faq.workflow_anchor") %>"
-       target="_blank"
-       class="btn btn-primary btn-lg mb-1"
-       role="button"
-       aria-pressed="true">
-      <%= t("documentation.index.faq.workflow") %>
-    </a>
-  </div>
+      <a href="<%= documentation_url("faqcatima.html") %>#<%= t("documentation.index.faq.workflow_anchor") %>"
+         target="_blank"
+         class="btn btn-primary btn-lg mb-1"
+         role="button"
+         aria-pressed="true">
+        <%= t("documentation.index.faq.workflow") %>
+      </a>
+    </div>
+  <% end %>
 
   <div>
     <h2>
