@@ -31,6 +31,11 @@ class Admin::DashboardController < Admin::BaseController
     @scope = stats_scope
     @from = 3.months
     @top = 5
+
+    # Prepare data to avoid N+1 queries in the view
+    @stats_all = prepare_stats_data(nil)
+    @stats_admin = prepare_stats_data('catalog_admin')
+    @stats_front = prepare_stats_data('catalog_front')
   end
 
   def download_stats
@@ -43,6 +48,37 @@ class Admin::DashboardController < Admin::BaseController
   end
 
   private
+
+  def prepare_stats_data(scope_filter)
+    # Retrieve top catalogs
+    top_catalogs = Ahoy::Event.top(@top, @from, scope_filter)
+    catalog_names = top_catalogs.map(&:first)
+
+    return [] if catalog_names.empty?
+
+    # Retrieve all data with a single optimized query
+    from_date = @from.ago
+    query = Ahoy::Event.select("name, DATE_TRUNC('week', time) as week, COUNT(*) as count")
+                       .where(name: catalog_names)
+                       .where("time > ?", from_date)
+
+    query = query.where('properties @> ?', { scope: scope_filter }.to_json) if scope_filter
+
+    grouped_data = query.group("name, week").order("week")
+
+    # Organize data by catalog
+    data_by_catalog = grouped_data.each_with_object(Hash.new { |h, k| h[k] = {} }) do |row, hash|
+      hash[row.name][row.week] = row.count
+    end
+
+    # Format for line_chart
+    catalog_names.map do |catalog_name|
+      {
+        name: catalog_name,
+        data: data_by_catalog[catalog_name] || {}
+      }
+    end
+  end
 
   def build_stats_export(from=Ahoy::Event.validity.ago)
     require 'csv'
