@@ -19,6 +19,7 @@ RUN apt-get update && \
     procps \
     curl \
     git \
+    vim \
     imagemagick \
     unzip \
     supervisor \
@@ -37,8 +38,8 @@ RUN JEMALLOC_PATH=$(find /usr/lib -name libjemalloc.so.2 -print -quit) && \
     echo "export LD_PRELOAD=/usr/local/lib/libjemalloc.so.2" >> /etc/profile.d/jemalloc.sh && \
     chmod +x /etc/profile.d/jemalloc.sh
 ENV LD_PRELOAD=/usr/local/lib/libjemalloc.so.2
-# Configure jemalloc for aggressive memory release and reduced fragmentation
-ENV MALLOC_CONF="background_thread:true,dirty_decay_ms:1000,muzzy_decay_ms:1000,narenas:2"
+# Configuration optimized for multi-core environments (Docker/K8s)
+ENV MALLOC_CONF="background_thread:true,dirty_decay_ms:5000,muzzy_decay_ms:5000,narenas:4"
 
 # Install specific version of Supercronic (cron replacement for non-root users)
 RUN ARCH=$(dpkg --print-architecture) && \
