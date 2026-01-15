@@ -40,8 +40,6 @@ module PumaHelpers
     [optimal_workers, max_workers_by_memory].min
   end
 
-  private
-
   # Calculate total threads based on CPU limit and application I/O profile
   # Rails apps are typically I/O-bound (DB, cache, API calls)
   # Can handle more threads than CPU cores due to waiting time
@@ -94,8 +92,6 @@ module PumaHelpers
     # Cap at reasonable maximum (too many workers = overhead)
     [max_workers, 8].min
   end
-
-  public
 
   # Read memory limit from cgroup files
   # Returns 'max' if unlimited or unable to determine
