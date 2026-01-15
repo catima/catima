@@ -37,4 +37,4 @@ test:
   password: <%= ENV.fetch('POSTGRES_PASSWORD', nil) %>
   port: <%= ENV.fetch('POSTGRES_PORT', 5432) %>
   min_messages: WARNING
-  pool: 5
+  pool: 10

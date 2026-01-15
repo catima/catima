@@ -69,7 +69,7 @@ end
 
 group :production, :staging, :development do
   platforms :ruby do
-    gem "unicorn", "~> 6.1"
+    gem "puma", "~> 6.4"
   end
 end
 

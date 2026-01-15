@@ -126,9 +126,9 @@ RUN yarn install --frozen-lockfile --production=true && \
 COPY docker/config/k8s-poststart.sh /var/www/catima/k8s-poststart.sh
 RUN chmod +x /var/www/catima/k8s-poststart.sh
 
-# Copy unicorn configuration and helpers
-COPY ./docker/config/unicorn_helpers.rb /var/www/catima/config/unicorn_helpers.rb
-COPY ./docker/config/unicorn.rb /var/www/catima/config/unicorn.rb
+# Copy puma configuration and helpers
+COPY ./docker/config/puma_helpers.rb /var/www/catima/config/puma_helpers.rb
+COPY ./docker/config/puma.rb /var/www/catima/config/puma.rb
 
 # =============================================================================
 # DEVELOPMENT TARGETS

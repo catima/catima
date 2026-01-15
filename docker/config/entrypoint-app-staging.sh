@@ -35,7 +35,8 @@ check_vars_exist \
 mkdir -p /var/www/catima/tmp/pids
 
 # Prevent "server is already running" errors
-rm -f /var/www/catima/tmp/pids/unicorn.pid
+rm -f /var/www/catima/tmp/pids/puma.pid
+rm -f /var/www/catima/tmp/pids/puma.state
 
 # Run database migrations
 bundle exec rake db:migrate
