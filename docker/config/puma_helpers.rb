@@ -72,11 +72,8 @@ module PumaHelpers
     end
 
     # Memory configuration for Puma
-    # Master process: Rails app loaded once (~200-300MB)
-    # Each worker: incremental memory for worker-specific data (~100-200MB)
-    # System reserved: for OS, cache, other processes
-    master_mb = Integer(fetch_env('PUMA_MASTER_MB', '250'))
-    worker_increment_mb = Integer(fetch_env('PUMA_WORKER_MB', '150'))
+    master_mb = Integer(fetch_env('PUMA_MASTER_MB', '200'))
+    worker_increment_mb = Integer(fetch_env('PUMA_WORKER_MB', '360'))
     reserved_mb = Integer(fetch_env('PUMA_RESERVED_MB', '400'))
 
     # Calculate available memory for workers
