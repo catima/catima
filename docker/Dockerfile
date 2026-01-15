@@ -126,10 +126,6 @@ RUN yarn install --frozen-lockfile --production=true && \
 COPY docker/config/k8s-poststart.sh /var/www/catima/k8s-poststart.sh
 RUN chmod +x /var/www/catima/k8s-poststart.sh
 
-# Copy puma configuration and helpers
-COPY ./docker/config/puma_helpers.rb /var/www/catima/config/puma_helpers.rb
-COPY ./docker/config/puma.rb /var/www/catima/config/puma.rb
-
 # =============================================================================
 # DEVELOPMENT TARGETS
 # =============================================================================
@@ -137,9 +133,9 @@ FROM dependencies-development AS app-dev
 
 # Copy supervisor configuration file
 #
-# docker exec <container-id> supervisorctl status
-# docker exec <container-id> supervisorctl tail -f <service>
-# docker exec <container-id> supervisorctl restart <service>
+# supervisorctl -c /etc/supervisor/conf.d/supervisord.conf status
+# supervisorctl -c /etc/supervisor/conf.d/supervisord.conf tail -f <service>
+# supervisorctl -c /etc/supervisor/conf.d/supervisord.conf restart <service>
 COPY ./docker/config/supervisord-app-dev.conf /etc/supervisor/conf.d/supervisord.conf
 
 # Add the entrypoint script used in development
@@ -152,9 +148,9 @@ FROM dependencies-development AS worker-dev
 
 # Copy supervisor configuration file
 #
-# docker exec <container-id> supervisorctl status
-# docker exec <container-id> supervisorctl tail -f <service>
-# docker exec <container-id> supervisorctl restart <service>
+# supervisorctl -c /etc/supervisor/conf.d/supervisord.conf status
+# supervisorctl -c /etc/supervisor/conf.d/supervisord.conf tail -f <service>
+# supervisorctl -c /etc/supervisor/conf.d/supervisord.conf restart <service>
 COPY ./docker/config/supervisord-worker-dev.conf /etc/supervisor/conf.d/supervisord.conf
 
 # Add the entrypoint script used in development
@@ -181,6 +177,10 @@ COPY --chown=catima:catima ./docker/config/crontab-catima /var/www/catima/config
 
 # Copy application code with proper ownership
 COPY --chown=catima:catima . /var/www/catima/
+
+# Copy puma configuration and helpers
+COPY --chown=catima:catima ./docker/config/puma_helpers.rb /var/www/catima/config/puma_helpers.rb
+COPY --chown=catima:catima ./docker/config/puma.rb /var/www/catima/config/puma.rb
 
 # Create database.yml from example for asset precompilation
 RUN cp config/database.example.yml.stage config/database.yml
@@ -266,6 +266,10 @@ COPY --chown=catima:catima ./docker/config/crontab-catima /var/www/catima/config
 
 # Copy application code with proper ownership
 COPY --chown=catima:catima . /var/www/catima/
+
+# Copy puma configuration and helpers
+COPY --chown=catima:catima ./docker/config/puma_helpers.rb /var/www/catima/config/puma_helpers.rb
+COPY --chown=catima:catima ./docker/config/puma.rb /var/www/catima/config/puma.rb
 
 # Create database.yml from example for asset precompilation
 RUN cp config/database.example.yml.prod config/database.yml
