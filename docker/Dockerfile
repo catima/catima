@@ -38,7 +38,6 @@ RUN JEMALLOC_PATH=$(find /usr/lib -name libjemalloc.so.2 -print -quit) && \
     echo "export LD_PRELOAD=/usr/local/lib/libjemalloc.so.2" >> /etc/profile.d/jemalloc.sh && \
     chmod +x /etc/profile.d/jemalloc.sh
 ENV LD_PRELOAD=/usr/local/lib/libjemalloc.so.2
-# Configuration optimized for multi-core environments (Docker/K8s)
 ENV MALLOC_CONF="background_thread:true,dirty_decay_ms:5000,muzzy_decay_ms:5000,narenas:4"
 
 # Install specific version of Supercronic (cron replacement for non-root users)
