@@ -118,7 +118,7 @@ module PumaHelpers
 
       # Calculate number of CPUs: quota / period
       # Example: "200000 100000" = 200ms / 100ms = 2 CPUs
-      return (quota.to_f / period).ceil if period.to_i > 0
+      return (quota.to_f / period.to_i).ceil if period.to_i > 0
     end
 
     # Try cgroup v1 (separate quota and period files)
