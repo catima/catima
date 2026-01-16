@@ -13,15 +13,6 @@ module PumaHelpers
 
   # Calculate the number of Puma workers based on available memory AND CPU
   # Takes into account Puma's multi-threaded nature
-  #
-  # Puma model: N workers × M threads = total capacity
-  # Memory model: master process + (N workers × incremental memory)
-  #
-  # Strategy:
-  # 1. Calculate optimal thread count based on CPU and I/O-bound factor
-  # 2. Calculate max workers based on available memory
-  # 3. Derive workers = min(threads_total / threads_per_worker, max_workers_by_memory)
-  # 4. Ensure minimum of 2 workers for redundancy
   def calculate_workers
     threads_per_worker = Integer(fetch_env('RAILS_MAX_THREADS', '5'))
 
@@ -34,7 +25,8 @@ module PumaHelpers
 
     # Calculate optimal workers from thread count
     # Minimum of 2 workers for redundancy (unless memory constrained)
-    optimal_workers = [total_threads / threads_per_worker, 2].max
+    # Use ceil to round up and better utilize available CPUs
+    optimal_workers = [total_threads.fdiv(threads_per_worker).ceil, 2].max
 
     # Return minimum between optimal and memory-constrained
     [optimal_workers, max_workers_by_memory].min
@@ -87,7 +79,8 @@ module PumaHelpers
     max_workers = available_mb / worker_increment_mb
 
     # Cap at reasonable maximum (too many workers = overhead)
-    [max_workers, 8].min
+    max_limit = Integer(fetch_env('PUMA_MAX_WORKERS', '16'))
+    [max_workers, max_limit].min
   end
 
   # Read memory limit from cgroup files
