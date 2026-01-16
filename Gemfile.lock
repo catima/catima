@@ -279,7 +279,6 @@ GEM
       activerecord
       kaminari-core (= 1.2.2)
     kaminari-core (1.2.2)
-    kgio (2.11.4)
     language_server-protocol (3.17.0.5)
     launchy (3.1.1)
       addressable (~> 2.8)
@@ -407,7 +406,7 @@ GEM
       date
       stringio
     public_suffix (7.0.2)
-    puma (6.6.1)
+    puma (7.1.0)
       nio4r (~> 2.0)
     pundit (2.5.0)
       activesupport (>= 3.0.0)
@@ -457,7 +456,6 @@ GEM
       tsort (>= 0.2)
       zeitwerk (~> 2.6)
     rainbow (3.1.1)
-    raindrops (0.20.1)
     rake (13.3.1)
     ranked-model (0.4.11)
       activerecord (>= 5.2)
@@ -624,9 +622,6 @@ GEM
     unicode-display_width (3.1.4)
       unicode-emoji (~> 4.0, >= 4.0.4)
     unicode-emoji (4.0.4)
-    unicorn (6.1.0)
-      kgio (~> 2.6)
-      raindrops (~> 0.7)
     uri (1.1.1)
     useragent (0.16.11)
     vcr (6.3.1)
@@ -715,7 +710,7 @@ DEPENDENCIES
   pg_search (~> 2.3)
   pgcli-rails (~> 0.5)
   pry (~> 0.13)
-  puma (~> 6.4)
+  puma (~> 7.1)
   pundit (~> 2.1)
   rails (~> 8.1)
   rails-assets-autosize (~> 4.0)!
@@ -750,7 +745,6 @@ DEPENDENCIES
   terminal-notifier (~> 2.0)
   terminal-notifier-guard (~> 1.7)
   tzinfo-data
-  unicorn (~> 6.1)
   vcr (~> 6.0)
   webmock (~> 3.10)
   zaru (~> 1.0)

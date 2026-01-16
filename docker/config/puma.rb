@@ -54,12 +54,12 @@ before_fork do
 end
 
 # Reconnect database after forking workers
-on_worker_boot do
+before_worker_boot do
   ActiveRecord::Base.establish_connection if defined?(ActiveRecord)
 end
 
 # Graceful shutdown
-on_worker_shutdown do
+before_worker_shutdown do
   ActiveRecord::Base.connection.disconnect! if defined?(ActiveRecord)
 end
 

@@ -67,9 +67,9 @@ source "https://rails-assets.org" do
   gem "rails-assets-mousetrap", "~> 1.6"
 end
 
-group :production, :staging, :development do
+group :production, :staging, :development, :test do
   platforms :ruby do
-    gem "puma", "~> 6.4"
+    gem "puma", "~> 7.1"
   end
 end
 
@@ -110,7 +110,6 @@ group :test do
   gem "launchy", "~> 3.1"
   gem "minitest-reporters", "~> 1.6"
   gem "mocha", "~> 2.1"
-  gem "puma", "~> 6.4"
   gem "pry", "~> 0.13"
   gem "shoulda-context", "~> 2.0"
   gem "shoulda-matchers", "~> 6.5"
