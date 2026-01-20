@@ -43,8 +43,8 @@ class CatalogAdmin::CSVImportsController < CatalogAdmin::BaseController
   end
 
   def import_created_message
-    message = "#{success_count} imported successfully.".dup
-    message << " #{failure_count} skipped." if @csv_import.failures.any?
+    message = "#{success_count} #{I18n.t('catalog_admin.csv_imports.create.imported_successfully')}".dup
+    message << " #{failure_count} #{I18n.t('catalog_admin.csv_imports.create.skipped')}." if @csv_import.failures.any?
     message
   end
 
@@ -82,7 +82,7 @@ class CatalogAdmin::CSVImportsController < CatalogAdmin::BaseController
       end
     end
 
-    messages << "... and #{nb_messages_not_displayed} more" if nb_messages_not_displayed > 0
+    messages << "... #{I18n.t('catalog_admin.csv_imports.create.and')} #{nb_messages_not_displayed} #{I18n.t('catalog_admin.csv_imports.create.more')}" if nb_messages_not_displayed > 0
     messages
   end
 

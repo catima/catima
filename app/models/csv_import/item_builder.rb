@@ -141,8 +141,12 @@ class CSVImport::ItemBuilder
     processor.warnings.each do |warning_data|
       case warning_data[:type]
       when :ambiguous_choice
-        message = "multiple choices found with name '#{warning_data[:choice_name]}' " \
-                  "(#{warning_data[:count]} matches), using first match (ID: #{warning_data[:selected_choice_id]})"
+        message = I18n.t(
+          'catalog_admin.csv_imports.create.multiple_choices_found',
+          choice_name: warning_data[:choice_name],
+          count: warning_data[:count],
+          selected_choice_id: warning_data[:selected_choice_id]
+        )
 
         @warnings << CSVImport::Warning.new(row, column, message, warning_data)
       end

@@ -169,19 +169,7 @@ class CSVImport::ChoiceSetValueProcessor
   end
 
   def add_ambiguous_choice_warning(short_name, matching_choices)
-    choice_details = matching_choices.map do |choice|
-      parent_info = if choice.parent_id
-                      parent_name = begin
-                        choice.parent.short_name
-                      rescue StandardError
-                        'unknown'
-                      end
-                      " (child of #{parent_name})"
-                    else
-                      " (top-level)"
-                    end
-      "ID: #{choice.id}#{parent_info}"
-    end
+    choice_details = matching_choices.map { |choice| "id: #{choice.id}" }
 
     @warnings << {
       type: :ambiguous_choice,
