@@ -48,6 +48,75 @@ class CSVImport::ItemBuilderTest < ActiveSupport::TestCase
     assert_equal({ "name" => ["can't be blank"] }, failure.column_errors)
   end
 
+  test "assign_row_values with choice set field - single choice" do
+    item = item_types(:one_author).items.build
+
+    row = {
+      "name" => "Test Author",
+      "language-single" => "Eng"
+    }
+    column_fields = {
+      "name" => fields_with_locale(:one_author_name),
+      "language-single" => fields_with_locale(:one_language_field)
+    }
+
+    builder = CSVImport::ItemBuilder.new(row, column_fields, item)
+    builder.assign_row_values
+
+    item = item.behaving_as_type
+    assert_equal("Test Author", item.one_author_name_uuid)
+    assert_equal(choices(:one_english).id, item.one_language_field_uuid)
+    assert(builder.valid?)
+  end
+
+  test "assign_row_values with choice set field - multiple choices" do
+    item = item_types(:one_author).items.build
+
+    row = {
+      "name" => "Test Author",
+      "languages-multiple" => "Eng|Spanish"
+    }
+    column_fields = {
+      "name" => fields_with_locale(:one_author_name),
+      "languages-multiple" => fields_with_locale(:one_multiple_language_field)
+    }
+
+    builder = CSVImport::ItemBuilder.new(row, column_fields, item)
+    builder.assign_row_values
+
+    item = item.behaving_as_type
+    assert_equal("Test Author", item.one_author_name_uuid)
+    assert_equal(
+      [choices(:one_english).id, choices(:one_spanish).id],
+      item.one_multiple_language_field_uuid
+    )
+    assert(builder.valid?)
+  end
+
+  test "assign_row_values with choice set field - creates new choice" do
+    item = item_types(:one_author).items.build
+
+    row = {
+      "name" => "Test Author",
+      "language-single" => "Italian"
+    }
+    column_fields = {
+      "name" => fields_with_locale(:one_author_name),
+      "language-single" => fields_with_locale(:one_language_field)
+    }
+
+    builder = CSVImport::ItemBuilder.new(row, column_fields, item)
+
+    assert_difference "Choice.count", 1 do
+      builder.assign_row_values
+    end
+
+    item = item.behaving_as_type
+    new_choice = Choice.order(:created_at).last
+    assert_equal("Italian", new_choice.short_name_en)
+    assert_equal(new_choice.id, item.one_language_field_uuid)
+  end
+
   private
 
   def fields_with_locale(fixture_name, locale=I18n.locale)

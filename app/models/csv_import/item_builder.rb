@@ -25,22 +25,45 @@
 # are not applied.
 #
 class CSVImport::ItemBuilder
-  attr_reader :row, :column_fields, :item, :failure
+  attr_reader :row, :column_fields, :item, :failure, :warnings
 
   def initialize(row, column_fields, item)
     @row = row
     @column_fields = column_fields
     @item = item.behaving_as_type
+    @warnings = []
   end
 
   # For each column in the row, find the matching Field (if any) and assign the
   # value of that column to the Item for that Field.
   def assign_row_values
-    row.each do |column, value|
-      field = column_fields[column]
-      next if field.nil?
+    # Group columns by field to handle choice set fields with multiple locales
+    grouped_columns = group_columns_by_field
 
-      item.public_send("#{field.attribute_name}=", value)
+    grouped_columns.each do |field, columns_with_locales|
+      # For choice set fields with multiple locale columns, process all locales together
+      if field.is_a?(Field::ChoiceSet) && columns_with_locales.size > 1
+        process_multilingual_choice_set_field(field, columns_with_locales)
+      else
+        # For other fields or single-column choice sets, process each column separately
+        columns_with_locales.each do |column, field_with_locale|
+          value = row[column]
+
+          # For choice set fields, process the value to convert choice names to IDs
+          if field_with_locale.is_a?(Field::ChoiceSet)
+            processor = CSVImport::ChoiceSetValueProcessor.new(
+              field_with_locale.field,
+              field_with_locale.locale
+            )
+            value = processor.process(value)
+
+            # Collect any warnings from the processor
+            collect_processor_warnings(column, processor)
+          end
+
+          item.public_send("#{field_with_locale.attribute_name}=", value)
+        end
+      end
     end
   end
 
@@ -73,10 +96,63 @@ class CSVImport::ItemBuilder
 
   private
 
+  # Group columns by their underlying field
+  def group_columns_by_field
+    grouped = {}
+    column_fields.each do |column, field_with_locale|
+      next if field_with_locale.nil?
+
+      field = field_with_locale.field
+      grouped[field] ||= {}
+      grouped[field][column] = field_with_locale
+    end
+    grouped
+  end
+
+  # Process choice set fields that have multiple locale columns in the CSV
+  # (e.g., "language (en)" and "language (fr)")
+  # Creates/finds a single choice with all provided translations
+  def process_multilingual_choice_set_field(field, columns_with_locales)
+    # Collect all locale values from the CSV row
+    locale_values = {}
+    columns_with_locales.each do |column, field_with_locale|
+      value = row[column]
+      next if value.blank?
+
+      locale_values[field_with_locale.locale] = value
+    end
+
+    return if locale_values.empty?
+
+    # Use the processor to create/find choices with all translations
+    processor = CSVImport::ChoiceSetValueProcessor.new(field, nil)
+    choice_ids = processor.process_i18n(locale_values)
+
+    # Collect warnings from all processed columns
+    columns_with_locales.each_key do |column|
+      collect_processor_warnings(column, processor)
+    end
+
+    # Assign the choice ID(s) to the item using the field's UUID directly
+    item.public_send("#{field.uuid}=", choice_ids)
+  end
+
+  def collect_processor_warnings(column, processor)
+    processor.warnings.each do |warning_data|
+      case warning_data[:type]
+      when :ambiguous_choice
+        message = "multiple choices found with name '#{warning_data[:choice_name]}' " \
+                  "(#{warning_data[:count]} matches), using first match (ID: #{warning_data[:selected_choice_id]})"
+
+        @warnings << CSVImport::Warning.new(row, column, message, warning_data)
+      end
+    end
+  end
+
   def collect_column_errors
-    Hash[column_fields.map do |column, field|
+    column_fields.to_h do |column, field|
       errors = field ? item.errors[field.attribute_name] : []
       [column, errors]
-    end]
+    end
   end
 end

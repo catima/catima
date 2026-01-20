@@ -1,7 +1,7 @@
 class CatalogAdmin::CSVImportsController < CatalogAdmin::BaseController
   layout "catalog_admin/data/form"
 
-  MAX_VALIDATION_ERRORS_DISPLAYED = 10
+  MAX_VALIDATION_ERRORS_DISPLAYED = 20
 
   def new
     build_csv_import
@@ -52,6 +52,7 @@ class CatalogAdmin::CSVImportsController < CatalogAdmin::BaseController
     messages = []
     nb_messages_not_displayed = 0
 
+    # Add failure messages
     @csv_import.failures.each do |failure|
       failure.column_errors.each do |column_name, errors|
         next if errors.empty?
@@ -62,13 +63,26 @@ class CatalogAdmin::CSVImportsController < CatalogAdmin::BaseController
           next
         end
 
-        # Displayed like this: <Column>: <Row value> => <Errors list>
-        messages << "#{column_name}: #{failure.row[column_name]} => #{errors.join(', ')}"
+        # Displayed like this: ❌ <Column>: <Row value> => <Errors list>
+        messages << "❌ #{column_name}: #{failure.row[column_name]} => #{errors.join(', ')}"
+      end
+    end
+
+    # Add warning messages
+    unless @csv_import.warnings.empty?
+      @csv_import.warnings.each do |warning|
+        # Keep only the n first warnings to avoid overflowing cookie size.
+        if messages.length == MAX_VALIDATION_ERRORS_DISPLAYED
+          nb_messages_not_displayed += 1
+          next
+        end
+
+        # Displayed like this: ⚠️ <Column>: <Warning message>
+        messages << "⚠️ #{warning}"
       end
     end
 
     messages << "... and #{nb_messages_not_displayed} more" if nb_messages_not_displayed > 0
-    messages
   end
 
   def success_count
@@ -92,6 +106,6 @@ class CatalogAdmin::CSVImportsController < CatalogAdmin::BaseController
   end
 
   def csv_import_params
-    params.require(:csv_import).permit(:file, :file_encoding)
+    params.expect(csv_import: [:file, :file_encoding])
   end
 end

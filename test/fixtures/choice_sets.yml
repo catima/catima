@@ -44,6 +44,12 @@ multilingual_languages:
   name: Languages
   choice_set_type: "default"
 
+multilingual_tags:
+  uuid: multilingual_tags_uuid
+  catalog: multilingual
+  name: Tags
+  choice_set_type: "default"
+
 search_car_styles:
   uuid: search_car_styles_uuid
   catalog: search

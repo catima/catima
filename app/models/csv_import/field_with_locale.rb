@@ -1,13 +1,15 @@
 # A column in a CSV file represents values for a particular Field. But for an
 # i18n Field, it also represents the values for a certain language. So we can
 # think of a column's identity as a Field + Locale combination. This class
-# decorates Field to add a `locale` property in to encapsulate that concept.
+# wraps a Field to add a `locale` property to encapsulate that concept.
 #
-class CSVImport::FieldWithLocale < SimpleDelegator
-  attr_accessor :locale
+class CSVImport::FieldWithLocale
+  attr_reader :field, :locale
+
+  delegate :uuid, :slug, :i18n?, :multiple?, :choice_set, :catalog, to: :field
 
   def initialize(field, locale)
-    super(field)
+    @field = field
     @locale = locale
   end
 
@@ -17,4 +19,8 @@ class CSVImport::FieldWithLocale < SimpleDelegator
   def attribute_name
     i18n? ? "#{uuid}_#{locale}" : uuid
   end
+
+  # Delegate type checking to the underlying field
+  delegate :is_a?, to: :field
+  delegate :kind_of?, to: :field
 end

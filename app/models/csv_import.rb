@@ -39,7 +39,7 @@ class CSVImport < ActiveType::Object
   attribute :file_size, :integer
   attribute :file_encoding, :text
 
-  attr_reader :failures, :success_count
+  attr_reader :failures, :success_count, :warnings
 
   attachment :file, :extension => "csv"
 
@@ -73,6 +73,7 @@ class CSVImport < ActiveType::Object
   def initialize(*)
     super
     @failures = []
+    @warnings = []
     @success_count = 0
   end
 
@@ -138,6 +139,9 @@ class CSVImport < ActiveType::Object
   end
 
   def validate_and_save_item(builder)
+    # Collect warnings regardless of validation status
+    @warnings.concat(builder.warnings)
+
     if builder.valid?
       builder.save!
       self.success_count += 1
