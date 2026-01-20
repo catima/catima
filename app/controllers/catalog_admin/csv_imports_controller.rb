@@ -83,6 +83,7 @@ class CatalogAdmin::CSVImportsController < CatalogAdmin::BaseController
     end
 
     messages << "... and #{nb_messages_not_displayed} more" if nb_messages_not_displayed > 0
+    messages
   end
 
   def success_count

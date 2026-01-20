@@ -21,7 +21,8 @@ class CatalogAdmin::ItemsSortTest < ActionDispatch::IntegrationTest
 
     visit("/one/en/admin/authors")
     click_on('Sorted by Name')
-    click_on('Born')
+    # Wait for the dropdown to be visible before clicking
+    find('a', text: 'Born', visible: true).click
 
     assert_match("Stephen King", find(:xpath, "//table/tbody/tr[1]/td[1]").text)
     assert_equal("Very Old", find(:xpath, "//table/tbody/tr[2]/td[1]").text)
