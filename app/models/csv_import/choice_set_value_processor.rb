@@ -46,6 +46,9 @@ class CSVImport::ChoiceSetValueProcessor
   def process_i18n(locale_values)
     return nil if locale_values.empty?
 
+    # Normalize locale keys to symbols for consistency
+    locale_values = normalize_locale_keys(locale_values)
+
     # For each locale, parse the choice names
     # We need to align them across locales (assume same order/count)
     parsed_by_locale = {}
@@ -204,8 +207,7 @@ class CSVImport::ChoiceSetValueProcessor
     end
 
     # Calculate position (last position + 1)
-    last_position = choice_set.choices.where(parent_id: nil).maximum(:position) || 0
-    choice.position = last_position + 1
+    choice.position = next_position
 
     choice.save!
     choice
@@ -224,17 +226,26 @@ class CSVImport::ChoiceSetValueProcessor
     fallback_name = names_by_locale.values.first.to_s.force_encoding('UTF-8')
     catalog.valid_locales.each do |valid_locale|
       locale_sym = valid_locale.to_sym
-      name = names_by_locale[locale_sym] || names_by_locale[locale_sym.to_s] || fallback_name
+      name = names_by_locale[locale_sym] || fallback_name
       # Ensure the name is UTF-8 encoded
       name = name.to_s.force_encoding('UTF-8')
       choice.public_send("short_name_#{locale_sym}=", name)
     end
 
     # Calculate position (last position + 1)
-    last_position = choice_set.choices.where(parent_id: nil).maximum(:position) || 0
-    choice.position = last_position + 1
+    choice.position = next_position
 
     choice.save!
     choice
+  end
+
+  # Calculate the next available position for a top-level choice
+  def next_position
+    (choice_set.choices.where(parent_id: nil).maximum(:position) || 0) + 1
+  end
+
+  # Normalize locale keys to symbols for consistency
+  def normalize_locale_keys(locale_values)
+    locale_values.transform_keys(&:to_sym)
   end
 end
