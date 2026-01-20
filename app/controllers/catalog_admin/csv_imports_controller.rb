@@ -1,7 +1,7 @@
 class CatalogAdmin::CSVImportsController < CatalogAdmin::BaseController
   layout "catalog_admin/data/form"
 
-  MAX_VALIDATION_ERRORS_DISPLAYED = 20
+  MAX_VALIDATION_ERRORS_DISPLAYED = 10
 
   def new
     build_csv_import

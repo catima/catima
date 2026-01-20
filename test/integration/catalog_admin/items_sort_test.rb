@@ -6,9 +6,7 @@ class CatalogAdmin::ItemsSortTest < ActionDispatch::IntegrationTest
   test "the authors are sort by age" do
     log_in_as("one-admin@example.com", "password")
 
-    visit("/one/en/admin/authors")
-    click_on('Sorted by Name')
-    click_on('Age')
+    visit("/one/en/admin/authors?sort=age")
 
     assert_equal("Very Young", find(:xpath, "//table/tbody/tr[1]/td[1]").text)
     assert_equal("Young apprentice", find(:xpath, "//table/tbody/tr[2]/td[1]").text)
@@ -19,10 +17,7 @@ class CatalogAdmin::ItemsSortTest < ActionDispatch::IntegrationTest
   test "the authors are sort by born" do
     log_in_as("one-admin@example.com", "password")
 
-    visit("/one/en/admin/authors")
-    click_on('Sorted by Name')
-    # Wait for the dropdown to be visible before clicking
-    find('a', text: 'Born', visible: true).click
+    visit("/one/en/admin/authors?sort=born")
 
     assert_match("Stephen King", find(:xpath, "//table/tbody/tr[1]/td[1]").text)
     assert_equal("Very Old", find(:xpath, "//table/tbody/tr[2]/td[1]").text)
