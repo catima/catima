@@ -219,8 +219,89 @@ class CSVImportTest < ActiveSupport::TestCase
     assert_equal("fonctionnalité", feature_choice.short_name_fr)
     assert_includes(tags, feature_choice.id)
 
-    # Verify 2 new choices were created
+    # Verify new choices were created
     assert_equal(initial_choice_count + 2, Choice.count)
+  end
+
+  test "save! with reference fields - single reference" do
+    # Create reference items
+    ref_author = item_types(:one_author).items.create!(
+      :catalog => catalogs(:one),
+      :creator => users(:one_admin),
+      :data => { "one_author_name_uuid" => "Referenced Author" }
+    )
+
+    import = build_csv_import(
+      :file => csv_file_with_single_reference(ref_author.id),
+      :file_encoding => CSVImport::OPTION_DETECT_ENCODING
+    )
+
+    import.save!
+
+    assert_equal(1, import.success_count)
+    assert_equal(0, import.failures.count)
+
+    item = Item.order(:id => "DESC").first.behaving_as_type
+    assert_equal("Author One", item.one_author_name_uuid)
+    assert_equal(ref_author.id, item.one_author_collaborator_uuid)
+  end
+
+  test "save! with reference fields - multiple references" do
+    # Create reference items
+    ref_author1 = item_types(:one_author).items.create!(
+      :catalog => catalogs(:one),
+      :creator => users(:one_admin),
+      :data => { "one_author_name_uuid" => "Collaborator 1" }
+    )
+    ref_author2 = item_types(:one_author).items.create!(
+      :catalog => catalogs(:one),
+      :creator => users(:one_admin),
+      :data => { "one_author_name_uuid" => "Collaborator 2" }
+    )
+
+    import = build_csv_import(
+      :file => csv_file_with_multiple_references(ref_author1.id, ref_author2.id),
+      :file_encoding => CSVImport::OPTION_DETECT_ENCODING
+    )
+
+    import.save!
+
+    assert_equal(1, import.success_count)
+    assert_equal(0, import.failures.count)
+
+    item = Item.order(:id => "DESC").first.behaving_as_type
+    assert_equal("Author One", item.one_author_name_uuid)
+    assert_equal([ref_author1.id, ref_author2.id], item.one_author_other_collaborators_uuid)
+  end
+
+  test "save! with reference fields - invalid ID causes failure" do
+    import = build_csv_import(
+      :file => csv_file_with_invalid_reference,
+      :file_encoding => CSVImport::OPTION_DETECT_ENCODING
+    )
+
+    import.save!
+
+    assert_equal(0, import.success_count)
+    assert_equal(1, import.failures.count)
+
+    failure = import.failures.first
+    assert_match(/is not a valid ID/, failure.column_errors["collaborator"].join)
+  end
+
+  test "save! with reference fields - non-existent item causes failure" do
+    import = build_csv_import(
+      :file => csv_file_with_nonexistent_reference,
+      :file_encoding => CSVImport::OPTION_DETECT_ENCODING
+    )
+
+    import.save!
+
+    assert_equal(0, import.success_count)
+    assert_equal(1, import.failures.count)
+
+    failure = import.failures.first
+    assert_match(/Item #999999 does not exist/, failure.column_errors["collaborator"].join)
   end
 
   private
@@ -288,6 +369,34 @@ class CSVImportTest < ActiveSupport::TestCase
     csv_file_with_data <<~CSV
       name (fr),tag (en),tag (fr)
       Auteur Un,new|feature,nouveau|fonctionnalité
+    CSV
+  end
+
+  def csv_file_with_single_reference(ref_id)
+    csv_file_with_data <<~CSV
+      name,collaborator
+      Author One,#{ref_id}
+    CSV
+  end
+
+  def csv_file_with_multiple_references(ref_id1, ref_id2)
+    csv_file_with_data <<~CSV
+      name,other-collaborator
+      Author One,#{ref_id1}|#{ref_id2}
+    CSV
+  end
+
+  def csv_file_with_invalid_reference
+    csv_file_with_data <<~CSV
+      name,collaborator
+      Author One,invalid_id
+    CSV
+  end
+
+  def csv_file_with_nonexistent_reference
+    csv_file_with_data <<~CSV
+      name,collaborator
+      Author One,999999
     CSV
   end
 end

@@ -690,7 +690,7 @@ en:
         file: File
         file_encoding: File encoding
         detect_option: "Automatically detect"
-        help: "The CSV column name should exactly match the slug of the desired field. Currently only \"Text\", \"Integer\", \"Decimal\", \"Email\", \"URL\" and \"Choice set\" fields are eligible. Other Field types will be ignored."
+        help: "The CSV column name should exactly match the slug of the desired field. Currently only \"Text\", \"Integer\", \"Decimal\", \"Email\", \"URL\", \"Choice set\" and \"Reference\" fields are eligible. Other Field types will be ignored."
       create:
         error: The content of the file can't be parsed
         file_not_csv: does not appear to be in CSV format
@@ -701,7 +701,9 @@ en:
         skipped: skipped
         and: and
         more: more
-        multiple_choices_found: "multiple choices found with name '%{choice_name}' (%{count} matches), using first match (ID: %{selected_choice_id})"
+        multiple_choices_found: "multiple choices found with name '%{choice_name}' (%{count} matches), using first match (#%{selected_choice_id})"
+        invalid_reference_id: "'%{id}' is not a valid ID (integer required)"
+        reference_item_not_found: "Item #%{id} does not exist in \"%{item_type}\""
 
     dashboard:
       data:

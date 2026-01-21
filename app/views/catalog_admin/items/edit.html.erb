@@ -1,4 +1,6 @@
-<% provide(:title, t('.edit_item', item: default_display_name(@item))) %>
+<% provide(:title) do %>
+  <%= t('.edit_item', item: default_display_name(@item)) %>
+<% end %>
 
 <% provide(:actions) do %>
   <% if referer_with_same_item_type?(@item) %>
@@ -16,6 +18,12 @@
           item_path(:item_type_slug => @item.item_type.slug, :id => @item),
           :target => '_blank') if params['action'] == 'edit' %>
   </span>
+
+  <% if @item.persisted? %>
+    <span class="badge text-bg-secondary ms-1">
+      #<%= @item.id %>
+    </span>
+  <% end %>
 <% end %>
 
 <div id="item-form">

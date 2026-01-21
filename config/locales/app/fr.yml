@@ -687,7 +687,7 @@ fr:
         file: Fichier
         file_encoding: Encodage du fichier
         detect_option: "Détecter automatiquement"
-        help: "Le nom de la colonne CSV doit correspondre exactement au slug du champ souhaité. Actuellement, seuls les champs de type \"Texte\", \"Nombre entier\", \"Décimal\", \"Email\", \"URL\" et \"Ensemble de choix\" sont éligibles. Les autres types de champs seront ignorés."
+        help: "Le nom de la colonne CSV doit correspondre exactement au slug du champ souhaité. Actuellement, seuls les champs de type \"Texte\", \"Nombre entier\", \"Décimal\", \"Email\", \"URL\", \"Ensemble de choix\" et \"Référence\" sont éligibles. Les autres types de champs seront ignorés."
       create:
         error: Le contenu du fichier ne peut pas être parsé
         file_not_csv: ne semble pas être au format CSV
@@ -698,7 +698,9 @@ fr:
         skipped: ignoré(s)
         and: et
         more: de plus
-        multiple_choices_found: "plusieurs choix trouvés avec le nom '%{choice_name}' (%{count} correspondances), utilisation de la première correspondance (ID: %{selected_choice_id})"
+        multiple_choices_found: "plusieurs choix trouvés avec le nom '%{choice_name}' (%{count} correspondances), utilisation de la première correspondance (#%{selected_choice_id})"
+        invalid_reference_id: "'%{id}' n'est pas un ID valide (entier requis)"
+        reference_item_not_found: "La fiche #%{id} n'existe pas dans \"%{item_type}\""
 
     dashboard:
       data:

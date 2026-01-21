@@ -32,6 +32,7 @@ class CSVImport::ItemBuilder
     @column_fields = column_fields
     @item = item.behaving_as_type
     @warnings = []
+    @reference_errors = {}
   end
 
   # For each column in the row, find the matching Field (if any) and assign the
@@ -59,6 +60,13 @@ class CSVImport::ItemBuilder
 
             # Collect any warnings from the processor
             collect_processor_warnings(column, processor)
+          # For reference fields, process the value to convert IDs to valid references
+          elsif field_with_locale.is_a?(Field::Reference)
+            processor = CSVImport::ReferenceValueProcessor.new(field_with_locale.field)
+            value = processor.process(value)
+
+            # Collect any errors from the processor
+            collect_processor_errors(column, processor, field_with_locale)
           end
 
           item.public_send("#{field_with_locale.attribute_name}=", value)
@@ -78,6 +86,12 @@ class CSVImport::ItemBuilder
     @failure = nil
 
     item.validate
+
+    # Add reference errors
+    @reference_errors.each do |attribute_name, errors|
+      errors.each { |error| item.errors.add(attribute_name, error) }
+    end
+
     column_errors = collect_column_errors
 
     if column_errors.values.flatten.any?
@@ -151,6 +165,13 @@ class CSVImport::ItemBuilder
         @warnings << CSVImport::Warning.new(row, column, message, warning_data)
       end
     end
+  end
+
+  def collect_processor_errors(_column, processor, field_with_locale)
+    # Store reference errors to be added after validation
+    attribute_name = field_with_locale.attribute_name
+    @reference_errors[attribute_name] ||= []
+    @reference_errors[attribute_name].concat(processor.errors)
   end
 
   def collect_column_errors
