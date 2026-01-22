@@ -1,8 +1,6 @@
 class CatalogAdmin::CSVImportsController < CatalogAdmin::BaseController
   layout "catalog_admin/data/form"
 
-  MAX_VALIDATION_ERRORS_DISPLAYED = 10
-
   def new
     build_csv_import
     authorize(@csv_import)
@@ -50,39 +48,29 @@ class CatalogAdmin::CSVImportsController < CatalogAdmin::BaseController
 
   def import_created_message_details
     messages = []
-    nb_messages_not_displayed = 0
 
     # Add failure messages
     @csv_import.failures.each do |failure|
       failure.column_errors.each do |column_name, errors|
         next if errors.empty?
 
-        # Keep only the n first errors to avoid overflowing cookie size.
-        if messages.length == MAX_VALIDATION_ERRORS_DISPLAYED
-          nb_messages_not_displayed += 1
-          next
-        end
-
-        # Displayed like this: ❌ <Column>: <Row value> => <Errors list>
-        messages << "❌ #{column_name}: #{failure.row[column_name]} => #{errors.join(', ')}"
+        # Displayed like this: [Line X] <Column>: <Row value> => <Errors list>
+        line_info = failure.line_number ? "[##{failure.line_number}] " : ""
+        icon_html = view_context.content_tag(:i, '', class: 'fa fa-times-circle text-danger')
+        messages << (icon_html + " #{line_info}#{column_name}: #{failure.row[column_name]} => #{errors.join(', ')}")
       end
     end
 
     # Add warning messages
     unless @csv_import.warnings.empty?
       @csv_import.warnings.each do |warning|
-        # Keep only the n first warnings to avoid overflowing cookie size.
-        if messages.length == MAX_VALIDATION_ERRORS_DISPLAYED
-          nb_messages_not_displayed += 1
-          next
-        end
-
-        # Displayed like this: ⚠️ <Column>: <Warning message>
-        messages << "⚠️ #{warning}"
+        # Displayed like this: [Line X] <Column>: <Warning message>
+        line_info = warning.line_number ? "[##{warning.line_number}] " : ""
+        icon_html = view_context.content_tag(:i, '', class: 'fa fa-exclamation-triangle text-warning')
+        messages << (icon_html + " #{line_info}#{warning}")
       end
     end
 
-    messages << "... #{I18n.t('catalog_admin.csv_imports.create.and')} #{nb_messages_not_displayed} #{I18n.t('catalog_admin.csv_imports.create.more')}" if nb_messages_not_displayed > 0
     messages
   end
 

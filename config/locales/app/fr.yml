@@ -698,7 +698,7 @@ fr:
         skipped: ignoré(s)
         and: et
         more: de plus
-        multiple_choices_found: "plusieurs choix trouvés avec le nom '%{choice_name}' (%{count} correspondances), utilisation de la première correspondance (#%{selected_choice_id})"
+        multiple_choices_found: "plusieurs choix trouvés avec le nom '%{choice_name}' (%{count} correspondances), utilisation de la première correspondance (ID %{selected_choice_id})"
         invalid_reference_id: "'%{id}' n'est pas un ID valide (entier requis)"
         reference_item_not_found: "La fiche #%{id} n'existe pas dans \"%{item_type}\""
 

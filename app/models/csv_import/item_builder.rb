@@ -25,14 +25,15 @@
 # are not applied.
 #
 class CSVImport::ItemBuilder
-  attr_reader :row, :column_fields, :item, :failure, :warnings
+  attr_reader :row, :column_fields, :item, :failure, :warnings, :line_number
 
-  def initialize(row, column_fields, item)
+  def initialize(row, column_fields, item, line_number=nil)
     @row = row
     @column_fields = column_fields
     @item = item.behaving_as_type
     @warnings = []
     @reference_errors = {}
+    @line_number = line_number
   end
 
   # For each column in the row, find the matching Field (if any) and assign the
@@ -95,7 +96,7 @@ class CSVImport::ItemBuilder
     column_errors = collect_column_errors
 
     if column_errors.values.flatten.any?
-      @failure = CSVImport::Failure.new(row, column_errors)
+      @failure = CSVImport::Failure.new(row, column_errors, line_number)
     end
 
     ! @failure
@@ -162,7 +163,7 @@ class CSVImport::ItemBuilder
           selected_choice_id: warning_data[:selected_choice_id]
         )
 
-        @warnings << CSVImport::Warning.new(row, column, message, warning_data)
+        @warnings << CSVImport::Warning.new(row, column, message, warning_data, line_number)
       end
     end
   end

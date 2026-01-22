@@ -3,13 +3,14 @@
 # to potential issues or ambiguities.
 #
 class CSVImport::Warning
-  attr_reader :row, :column, :message, :details
+  attr_reader :row, :column, :message, :details, :line_number
 
-  def initialize(row, column, message, details={})
+  def initialize(row, column, message, details={}, line_number=nil)
     @row = row
     @column = column
     @message = message
     @details = details
+    @line_number = line_number
   end
 
   def to_s

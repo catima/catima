@@ -129,8 +129,10 @@ class CSVImport < ActiveType::Object
 
   def process_import
     Item.transaction do
-      rows.each do |row|
-        builder = CSVImport::ItemBuilder.new(row, column_fields, build_item)
+      rows.each_with_index do |row, index|
+        # Line number is index + 1 (since index is 0-based) + 1 (to account for header row)
+        line_number = index + 2
+        builder = CSVImport::ItemBuilder.new(row, column_fields, build_item, line_number)
         builder.assign_row_values
         validate_and_save_item(builder)
       end
