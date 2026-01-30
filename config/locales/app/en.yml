@@ -704,6 +704,7 @@ en:
         multiple_choices_found: "multiple choices found with name '%{choice_name}' (%{count} matches), using first match (ID %{selected_choice_id})"
         invalid_reference_id: "'%{id}' is not a valid ID (integer required)"
         reference_item_not_found: "Item #%{id} does not exist in \"%{item_type}\""
+        line_info: "[csv line #%{line_number}]"
 
     dashboard:
       data:

@@ -55,7 +55,7 @@ class CatalogAdmin::CSVImportsController < CatalogAdmin::BaseController
         next if errors.empty?
 
         # Displayed like this: [Line X] <Column>: <Row value> => <Errors list>
-        line_info = failure.line_number ? "[##{failure.line_number}] " : ""
+        line_info = failure.line_number ? "#{I18n.t('catalog_admin.csv_imports.create.line_info', line_number: failure.line_number)} " : ""
         icon_html = view_context.content_tag(:i, '', class: 'fa fa-times-circle text-danger')
         messages << (icon_html + " #{line_info}#{column_name}: #{failure.row[column_name]} => #{errors.join(', ')}")
       end
@@ -65,7 +65,7 @@ class CatalogAdmin::CSVImportsController < CatalogAdmin::BaseController
     unless @csv_import.warnings.empty?
       @csv_import.warnings.each do |warning|
         # Displayed like this: [Line X] <Column>: <Warning message>
-        line_info = warning.line_number ? "[##{warning.line_number}] " : ""
+        line_info = warning.line_number ? "#{I18n.t('catalog_admin.csv_imports.create.line_info', line_number: warning.line_number)} " : ""
         icon_html = view_context.content_tag(:i, '', class: 'fa fa-exclamation-triangle text-warning')
         messages << (icon_html + " #{line_info}#{warning}")
       end

@@ -701,6 +701,7 @@ fr:
         multiple_choices_found: "plusieurs choix trouvés avec le nom '%{choice_name}' (%{count} correspondances), utilisation de la première correspondance (ID %{selected_choice_id})"
         invalid_reference_id: "'%{id}' n'est pas un ID valide (entier requis)"
         reference_item_not_found: "La fiche #%{id} n'existe pas dans \"%{item_type}\""
+        line_info: "[ligne csv #%{line_number}]"
 
     dashboard:
       data:

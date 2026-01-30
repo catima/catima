@@ -1,4 +1,13 @@
 <% provide(:title, t(".edit_choice")) %>
+
+<% provide(:actions) do %>
+  <% if @choice.persisted? %>
+    <span class="badge text-bg-secondary ms-1">
+      #<%= @choice.id %>
+    </span>
+  <% end %>
+<% end %>
+
 <div class="card-body ">
   <%= bootstrap_form_for(
         @choice,
