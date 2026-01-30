@@ -17,8 +17,8 @@
 # Any columns that cannot be mapped are ignored. These ignored columns can be
 # obtained by calling `unrecognized_columns`.
 #
-# CURRENTLY ONLY TEXT, INT, DECIMAL, EMAIL, AND URL FIELDS ARE ELIGIBLE FOR
-# MAPPING. Other Field types (reference, xref, choice set, etc.) are ignored.
+# CURRENTLY ONLY TEXT, INT, DECIMAL, EMAIL, URL, CHOICE SET, AND REFERENCE FIELDS ARE
+# ELIGIBLE FOR MAPPING. Other Field types are ignored.
 #
 class CSVImport::FieldMapper
   attr_reader :fields, :columns, :default_locale
@@ -67,8 +67,10 @@ class CSVImport::FieldMapper
   end
 
   def eligible_type?(field)
+    return false if field.nil?
+
     [
-      Field::Text, Field::Email, Field::Int, Field::Decimal, Field::URL
+      Field::Text, Field::Email, Field::Int, Field::Decimal, Field::URL, Field::ChoiceSet, Field::Reference
     ].any? do |t|
       field.is_a?(t)
     end

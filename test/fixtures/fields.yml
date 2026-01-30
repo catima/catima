@@ -232,6 +232,54 @@ one_author_other_languages:
   required: false
   multiple: true
 
+one_language_field:
+  type: "Field::ChoiceSet"
+  editor_component: ChoiceSetInput
+  name_translations: { "name_en": "Language" }
+  name_plural_translations: { "name_plural_en": "Languages" }
+  slug: language-single
+  field_set: one_author (ItemType)
+  uuid: one_language_field_uuid
+  choice_set: one_languages
+  multiple: false
+  i18n: false
+
+one_multiple_language_field:
+  type: "Field::ChoiceSet"
+  editor_component: ChoiceSetInput
+  name_translations: { "name_en": "Languages Multiple" }
+  name_plural_translations: { "name_plural_en": "Languages Multiple" }
+  slug: languages-multiple
+  field_set: one_author (ItemType)
+  uuid: one_multiple_language_field_uuid
+  choice_set: one_languages
+  multiple: true
+  i18n: false
+
+multilingual_i18n_language_field:
+  type: "Field::ChoiceSet"
+  editor_component: ChoiceSetInput
+  name_translations: { "name_en": "Language i18n", "name_fr": "Langue i18n" }
+  name_plural_translations: { "name_plural_en": "Languages i18n", "name_plural_fr": "Langues i18n" }
+  slug: language-i18n
+  field_set: multilingual_author (ItemType)
+  uuid: multilingual_i18n_language_field_uuid
+  choice_set: multilingual_languages
+  multiple: false
+  i18n: true
+
+multilingual_i18n_tag_field:
+  type: "Field::ChoiceSet"
+  editor_component: ChoiceSetInput
+  name_translations: { "name_en": "Tag i18n", "name_fr": "Tag i18n" }
+  name_plural_translations: { "name_plural_en": "Tags i18n", "name_plural_fr": "Tags i18n" }
+  slug: tag
+  field_set: multilingual_author (ItemType)
+  uuid: multilingual_i18n_tag_field_uuid
+  choice_set: multilingual_tags
+  multiple: true
+  i18n: true
+
 one_author_language_origin:
   type: "Field::Text"
   name_translations: { "name_en": "Language origin" }
@@ -460,6 +508,7 @@ multilingual_author_name:
   slug: name
   field_set: multilingual_author (ItemType)
   primary: true
+  i18n: true
   uuid: multilingual_author_name_uuid
   name_translations: { "name_en": "Name", "name_fr": "Nom" }
   name_plural_translations: { "name_plural_en": "Names", "name_plural_fr": "Noms" }
