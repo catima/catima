@@ -36,7 +36,7 @@ class CSVImport::ReferenceValueProcessorTest < ActiveSupport::TestCase
     processor = CSVImport::ReferenceValueProcessor.new(field)
     result = processor.process("#{ref_author1.id}|#{ref_author2.id}")
 
-    assert_equal([ref_author1.id, ref_author2.id], result)
+    assert_equal([ref_author1.id.to_s, ref_author2.id.to_s], result)
     assert_empty(processor.errors)
   end
 
@@ -85,7 +85,7 @@ class CSVImport::ReferenceValueProcessorTest < ActiveSupport::TestCase
     result = processor.process("#{ref_author.id}|999999|invalid")
 
     # Only the valid ID should be returned
-    assert_equal([ref_author.id], result)
+    assert_equal([ref_author.id.to_s], result)
     assert_equal(2, processor.errors.size)
   end
 
@@ -108,7 +108,7 @@ class CSVImport::ReferenceValueProcessorTest < ActiveSupport::TestCase
     # Test with empty value between pipes
     result = processor.process("#{ref_author1.id}||#{ref_author2.id}")
 
-    assert_equal([ref_author1.id, ref_author2.id], result)
+    assert_equal([ref_author1.id.to_s, ref_author2.id.to_s], result)
     assert_empty(processor.errors)
   end
 end

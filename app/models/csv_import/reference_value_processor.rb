@@ -19,8 +19,10 @@ class CSVImport::ReferenceValueProcessor
   end
 
   # Processes a CSV value (string) and returns the appropriate value for
-  # assignment to an item. For single reference fields, returns a single item ID.
-  # For multiple reference fields, returns an array of item IDs.
+  # assignment to an item.
+  #
+  # For single reference fields: returns an integer ID
+  # For multiple reference fields: returns an array of string IDs
   #
   # Validates that IDs are integers and that referenced items exist.
   #
@@ -33,7 +35,7 @@ class CSVImport::ReferenceValueProcessor
     valid_ids = validate_and_filter_ids(ids)
     return nil if valid_ids.empty?
 
-    field.multiple? ? valid_ids : valid_ids.first
+    field.multiple? ? valid_ids : valid_ids.first.to_i
   end
 
   private
@@ -67,7 +69,7 @@ class CSVImport::ReferenceValueProcessor
         next
       end
 
-      valid_ids << id
+      valid_ids << id.to_s
     end
 
     valid_ids

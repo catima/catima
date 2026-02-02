@@ -7,7 +7,7 @@ class CSVImport::ChoiceSetValueProcessorTest < ActiveSupport::TestCase
 
     result = processor.process("Eng")
 
-    assert_equal choices(:one_english).id, result
+    assert_equal [choices(:one_english).id.to_s], result
   end
 
   test "process single choice - new choice" do
@@ -17,8 +17,9 @@ class CSVImport::ChoiceSetValueProcessorTest < ActiveSupport::TestCase
     assert_difference "Choice.count", 1 do
       result = processor.process("Italian")
       assert_not_nil result
+      assert_equal 1, result.length
 
-      choice = Choice.find(result)
+      choice = Choice.find(result.first)
       assert_equal "Italian", choice.short_name_en
       assert_equal choice_sets(:one_languages), choice.choice_set
       assert_nil choice.parent_id
@@ -33,7 +34,7 @@ class CSVImport::ChoiceSetValueProcessorTest < ActiveSupport::TestCase
       result = processor.process("Eng|German")
 
       assert_equal 2, result.length
-      assert_includes result, choices(:one_english).id
+      assert_includes result, choices(:one_english).id.to_s
 
       german_choice = Choice.find(result.last)
       assert_equal "German", german_choice.short_name_en
@@ -47,8 +48,8 @@ class CSVImport::ChoiceSetValueProcessorTest < ActiveSupport::TestCase
     result = processor.process("Eng|Eng (UK)")
 
     assert_equal 2, result.length
-    assert_includes result, choices(:one_english).id
-    assert_includes result, choices(:one_english_uk).id
+    assert_includes result, choices(:one_english).id.to_s
+    assert_includes result, choices(:one_english_uk).id.to_s
   end
 
   test "process blank value returns nil" do
@@ -65,7 +66,7 @@ class CSVImport::ChoiceSetValueProcessorTest < ActiveSupport::TestCase
 
     result = processor.process("  Italian  ")
 
-    choice = Choice.find(result)
+    choice = Choice.find(result.first)
     assert_equal "Italian", choice.short_name_en
   end
 
@@ -76,8 +77,7 @@ class CSVImport::ChoiceSetValueProcessorTest < ActiveSupport::TestCase
     # Even though multiple values are provided, only first is used for single field
     result = processor.process("Eng|Spanish")
 
-    assert_equal choices(:one_english).id, result
-    refute result.is_a?(Array)
+    assert_equal [choices(:one_english).id.to_s], result
   end
 
   test "process ignores empty values in pipe-separated list" do
@@ -88,8 +88,8 @@ class CSVImport::ChoiceSetValueProcessorTest < ActiveSupport::TestCase
 
     # Should only create/find non-empty values
     assert_equal 2, result.length
-    assert_includes result, choices(:one_english).id
-    assert_includes result, choices(:one_spanish).id
+    assert_includes result, choices(:one_english).id.to_s
+    assert_includes result, choices(:one_spanish).id.to_s
   end
 
   test "process finds hierarchical choices with parent" do
@@ -99,7 +99,7 @@ class CSVImport::ChoiceSetValueProcessorTest < ActiveSupport::TestCase
     # one_english_uk has one_english as parent (hierarchical choice)
     result = processor.process("Eng (UK)")
 
-    assert_equal choices(:one_english_uk).id, result
+    assert_equal [choices(:one_english_uk).id.to_s], result
     assert_not_nil choices(:one_english_uk).parent_id
     assert_equal choices(:one_english).id, choices(:one_english_uk).parent_id
   end
@@ -127,7 +127,7 @@ class CSVImport::ChoiceSetValueProcessorTest < ActiveSupport::TestCase
       result = processor.process("Duplicate")
 
       # Should use the first match
-      assert_equal choice1.id, result
+      assert_equal [choice1.id.to_s], result
 
       # Should generate a warning
       assert_equal 1, processor.warnings.size
@@ -150,7 +150,7 @@ class CSVImport::ChoiceSetValueProcessorTest < ActiveSupport::TestCase
     assert_difference "Choice.count", 1 do
       result = processor_fr.process("Allemand")
 
-      choice = Choice.find(result)
+      choice = Choice.find(result.first)
       # All valid locales should have the same value as fallback
       assert_equal "Allemand", choice.short_name_fr
       assert_equal "Allemand", choice.short_name_en
@@ -178,7 +178,7 @@ class CSVImport::ChoiceSetValueProcessorTest < ActiveSupport::TestCase
 
     assert_no_difference "Choice.count" do
       result = processor_fr.process("Portugais")
-      assert_equal french_choice.id, result
+      assert_equal [french_choice.id.to_s], result
     end
   end
 
@@ -198,11 +198,11 @@ class CSVImport::ChoiceSetValueProcessorTest < ActiveSupport::TestCase
     # Test finding with English
     processor_en = CSVImport::ChoiceSetValueProcessor.new(field, :en)
     result_en = processor_en.process("German")
-    assert_equal multilang_choice.id, result_en
+    assert_equal [multilang_choice.id.to_s], result_en
 
     # Test finding with French
     processor_fr = CSVImport::ChoiceSetValueProcessor.new(field, :fr)
     result_fr = processor_fr.process("Allemand")
-    assert_equal multilang_choice.id, result_fr
+    assert_equal [multilang_choice.id.to_s], result_fr
   end
 end

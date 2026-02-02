@@ -88,9 +88,9 @@ class CSVImportTest < ActiveSupport::TestCase
 
     # Third item - existing single choice and multiple choices
     assert_equal("Author Three", items.first.one_author_name_uuid)
-    assert_equal(choices(:one_english).id, items.first.one_language_field_uuid)
+    assert_equal([choices(:one_english).id.to_s], items.first.data["one_language_field_uuid"])
     assert_equal(
-      [choices(:one_english).id, choices(:one_spanish).id],
+      [choices(:one_english).id.to_s, choices(:one_spanish).id.to_s],
       items.first.one_multiple_language_field_uuid
     )
 
@@ -100,9 +100,9 @@ class CSVImportTest < ActiveSupport::TestCase
                         .short_named("Italian", :en)
                         .first
     assert_not_nil(new_italian)
-    assert_equal(new_italian.id, items.second.one_language_field_uuid)
+    assert_equal([new_italian.id.to_s], items.second.data["one_language_field_uuid"])
     assert_equal(
-      [choices(:one_english).id, new_italian.id],
+      [choices(:one_english).id.to_s, new_italian.id.to_s],
       items.second.one_multiple_language_field_uuid
     )
 
@@ -112,14 +112,14 @@ class CSVImportTest < ActiveSupport::TestCase
                        .short_named("German", :en)
                        .first
     assert_not_nil(new_german)
-    assert_equal(new_german.id, items.third.one_language_field_uuid)
+    assert_equal([new_german.id.to_s], items.third.data["one_language_field_uuid"])
 
     new_portuguese = Choice.where(catalog: catalogs(:one))
                            .short_named("Portuguese", :en)
                            .first
     assert_not_nil(new_portuguese)
-    assert_includes(items.third.one_multiple_language_field_uuid, new_german.id)
-    assert_includes(items.third.one_multiple_language_field_uuid, new_portuguese.id)
+    assert_includes(items.third.one_multiple_language_field_uuid, new_german.id.to_s)
+    assert_includes(items.third.one_multiple_language_field_uuid, new_portuguese.id.to_s)
 
     # Verify new choices were created
     assert_equal(initial_choice_count + 3, Choice.count)
@@ -152,7 +152,7 @@ class CSVImportTest < ActiveSupport::TestCase
     assert_not_nil(french_choice)
     assert_equal("French", french_choice.short_name_en)
     assert_equal("Français", french_choice.short_name_fr)
-    assert_equal(french_choice.id, items.first.multilingual_i18n_language_field_uuid)
+    assert_equal(french_choice.id.to_s, items.first.multilingual_i18n_language_field_uuid)
 
     # Second item - German only in English (French will use fallback)
     assert_equal("Auteur Deux", items.second.multilingual_author_name_uuid_fr)
@@ -160,7 +160,7 @@ class CSVImportTest < ActiveSupport::TestCase
                           .short_named("German", :en)
                           .first
     assert_not_nil(german_choice)
-    assert_equal(german_choice.id, items.second.multilingual_i18n_language_field_uuid)
+    assert_equal(german_choice.id.to_s, items.second.multilingual_i18n_language_field_uuid)
 
     # First item - Portugais only in French (English will use fallback)
     assert_equal("Auteur Un", items.third.multilingual_author_name_uuid_fr)
@@ -168,7 +168,7 @@ class CSVImportTest < ActiveSupport::TestCase
                              .short_named("Portugais", :fr)
                              .first
     assert_not_nil(portugais_choice)
-    assert_equal(portugais_choice.id, items.third.multilingual_i18n_language_field_uuid)
+    assert_equal([portugais_choice.id.to_s], items.third.data["multilingual_i18n_language_field_uuid"])
 
     # Verify new choices were created (3 new choices)
     assert_equal(initial_choice_count + 3, Choice.count)
@@ -208,7 +208,7 @@ class CSVImportTest < ActiveSupport::TestCase
     assert_not_nil(new_choice)
     assert_equal("new", new_choice.short_name_en)
     assert_equal("nouveau", new_choice.short_name_fr)
-    assert_includes(tags, new_choice.id)
+    assert_includes(tags, new_choice.id.to_s)
 
     # Verify "feature" choice has both translations
     feature_choice = Choice.where(catalog: catalogs(:multilingual))
@@ -217,7 +217,7 @@ class CSVImportTest < ActiveSupport::TestCase
     assert_not_nil(feature_choice)
     assert_equal("feature", feature_choice.short_name_en)
     assert_equal("fonctionnalité", feature_choice.short_name_fr)
-    assert_includes(tags, feature_choice.id)
+    assert_includes(tags, feature_choice.id.to_s)
 
     # Verify new choices were created
     assert_equal(initial_choice_count + 2, Choice.count)
@@ -243,7 +243,7 @@ class CSVImportTest < ActiveSupport::TestCase
 
     item = Item.order(:id => "DESC").first.behaving_as_type
     assert_equal("Author One", item.one_author_name_uuid)
-    assert_equal(ref_author.id, item.one_author_collaborator_uuid)
+    assert_equal(ref_author.id, item.data["one_author_collaborator_uuid"])
   end
 
   test "save! with reference fields - multiple references" do
@@ -271,7 +271,7 @@ class CSVImportTest < ActiveSupport::TestCase
 
     item = Item.order(:id => "DESC").first.behaving_as_type
     assert_equal("Author One", item.one_author_name_uuid)
-    assert_equal([ref_author1.id, ref_author2.id], item.one_author_other_collaborators_uuid)
+    assert_equal([ref_author1.id.to_s, ref_author2.id.to_s], item.one_author_other_collaborators_uuid)
   end
 
   test "save! with reference fields - invalid ID causes failure" do

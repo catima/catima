@@ -33,9 +33,7 @@ class CSVImport::ChoiceSetValueProcessor
     return nil if csv_value.blank?
 
     choice_names = parse_choice_names(csv_value)
-    choice_ids = choice_names.map { |name| find_or_create_choice(name).id }
-
-    field.multiple? ? choice_ids : choice_ids.first
+    choice_names.map { |name| find_or_create_choice(name).id.to_s }
   end
 
   # Processes i18n choice set fields where we have multiple locale values
@@ -72,10 +70,10 @@ class CSVImport::ChoiceSetValueProcessor
       next if names_by_locale.empty?
 
       choice = find_or_create_choice_i18n(names_by_locale)
-      choice_ids << choice.id
+      choice_ids << choice.id.to_s
     end
 
-    field.multiple? ? choice_ids : choice_ids.first
+    choice_ids.empty? ? nil : choice_ids
   end
 
   private
