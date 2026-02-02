@@ -65,7 +65,7 @@ class CSVImport::ItemBuilderTest < ActiveSupport::TestCase
 
     item = item.behaving_as_type
     assert_equal("Test Author", item.one_author_name_uuid)
-    assert_equal(choices(:one_english).id, item.one_language_field_uuid)
+    assert_equal(choices(:one_english).id.to_s, item.one_language_field_uuid)
     assert(builder.valid?)
   end
 
@@ -87,7 +87,7 @@ class CSVImport::ItemBuilderTest < ActiveSupport::TestCase
     item = item.behaving_as_type
     assert_equal("Test Author", item.one_author_name_uuid)
     assert_equal(
-      [choices(:one_english).id, choices(:one_spanish).id],
+      [choices(:one_english).id.to_s, choices(:one_spanish).id.to_s],
       item.one_multiple_language_field_uuid
     )
     assert(builder.valid?)
@@ -114,7 +114,7 @@ class CSVImport::ItemBuilderTest < ActiveSupport::TestCase
     item = item.behaving_as_type
     new_choice = Choice.order(:created_at).last
     assert_equal("Italian", new_choice.short_name_en)
-    assert_equal(new_choice.id, item.one_language_field_uuid)
+    assert_equal(new_choice.id.to_s, item.one_language_field_uuid)
   end
 
   test "assign_row_values with reference field - single reference" do
