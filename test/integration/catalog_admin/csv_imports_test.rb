@@ -16,10 +16,12 @@ class CatalogAdmin::ItemsTest < ActionDispatch::IntegrationTest
     # Should import the first three lines of the CSV:
     assert(page.has_content?("3 Authors imported"))
     # Should skip the two last lines of the CSV:
-    # - Name missing for Jeff
-    # - Decimal fields (rank) cannot contain commas or brackets for Albert
+    # - Name missing for Jeff (line 5)
+    # - Decimal fields (rank) cannot contain commas or brackets for Albert (line 6)
     assert(page.has_content?("2 skipped"))
+    assert(page.has_content?("#5"))
     assert(page.has_content?("name: => can't be blank"))
+    assert(page.has_content?("#6"))
     assert(page.has_content?("rank: 15,7 => is not a number"))
   end
 

@@ -90,7 +90,10 @@ class CatalogAdmin::ItemsTest < ActionDispatch::IntegrationTest
     click_on("Authors")
     click_on("New Author")
 
-    fill_in("Name", :with => "Test Author")
+    fill_in("item[multilingual_author_name_uuid_de]", :with => "Test Autor")
+    fill_in("item[multilingual_author_name_uuid_en]", :with => "Test Author")
+    fill_in("item[multilingual_author_name_uuid_fr]", :with => "Test Auteur")
+    fill_in("item[multilingual_author_name_uuid_it]", :with => "Test Autore")
     fill_in("item[multilingual_author_bio_uuid_de]", :with => "German")
     fill_in("item[multilingual_author_bio_uuid_en]", :with => "English")
     fill_in("item[multilingual_author_bio_uuid_fr]", :with => "French")

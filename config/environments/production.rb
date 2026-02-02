@@ -78,8 +78,19 @@ Rails.application.configure do
   # want to log everything, set the level to "debug".
   config.log_level = ENV.fetch("RAILS_LOG_LEVEL", "info")
 
-  # Use a different cache store in production.
-  # config.cache_store = :mem_cache_store
+  # Use Redis for cache store (sessions, caching, etc.)
+  config.cache_store = :redis_cache_store, {
+    url: "redis://#{ENV.fetch('REDIS_HOST', 'localhost')}:#{ENV.fetch('REDIS_PORT', '6379')}/#{ENV.fetch('REDIS_SESSION_DB', '1')}",
+    namespace: 'catima_cache',
+    expires_in: 90.minutes,
+    connect_timeout: 30,
+    read_timeout: 1,
+    write_timeout: 1,
+    reconnect_attempts: 1,
+    error_handler: lambda { |_method:, _returning:, exception:|
+      Rails.logger.error("Redis cache error: #{exception.class} - #{exception.message}")
+    }
+  }
 
   # Use a real queuing backend for Active Job (and separate queues per environment).
   # config.active_job.queue_adapter = :resque
