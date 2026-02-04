@@ -36,7 +36,6 @@ class Message < ApplicationRecord
     order(Arel.sql("CASE severity WHEN 'danger' THEN 1 WHEN 'warning' THEN 2 ELSE 3 END, created_at DESC"))
   }
 
-  # Instance methods
   def active?
     return false unless active
 
