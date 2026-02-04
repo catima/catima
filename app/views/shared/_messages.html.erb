@@ -1,20 +1,18 @@
-<% cache(messages_cache_key(context, catalog)) do %>
-  <% messages = current_messages(context, catalog) %>
-  <% if messages.any? %>
-    <% messages.each do |message| %>
-      <div class="alert alert-<%= message.severity %> alert-dismissible fade show mb-2"
-           role="alert"
-           data-controller="message-dismissal"
-           data-message-dismissal-id-value="<%= message.id %>">
-        <div class="message-content">
-          <%= message.rendered_text %>
-        </div>
-        <button type="button"
-                class="btn-close"
-                data-action="click->message-dismissal#dismiss"
-                aria-label="Close">
-        </button>
+<% messages = current_messages(context, catalog) %>
+<% if messages.any? %>
+  <% messages.each do |message| %>
+    <div class="alert alert-<%= message.severity %> alert-dismissible fade show mb-2"
+         role="alert"
+         data-controller="message-dismissal"
+         data-message-dismissal-id-value="<%= message.id %>">
+      <div class="message-content">
+        <%= message.rendered_text %>
       </div>
-    <% end %>
+      <button type="button"
+              class="btn-close"
+              data-action="click->message-dismissal#dismiss"
+              aria-label="Close">
+      </button>
+    </div>
   <% end %>
 <% end %>

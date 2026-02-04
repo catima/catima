@@ -47,7 +47,7 @@ class Message < ApplicationRecord
   end
 
   def rendered_text
-    markdown_renderer.render(text).html_safe # rubocop:disable Rails/OutputSafety
+    markdown_renderer.render(text).html_safe # Safe because we filter HTML in the renderer
   end
 
   private

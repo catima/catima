@@ -29,8 +29,4 @@ module ApplicationHelper
            .by_severity_and_date
            .reject { |msg| dismissed_ids.include?(msg.id) }
   end
-
-  def messages_cache_key(context, catalog)
-    ['platform-messages', context, catalog&.id, Message.maximum(:updated_at)]
-  end
 end
