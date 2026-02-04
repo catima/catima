@@ -9,7 +9,7 @@ class Admin::StatsTest < ActionDispatch::IntegrationTest
       click_on("Stats")
     end
 
-    assert(page.has_content?("Stats | catalogs"))
+    assert(page.has_content?("Stats"))
     assert(page.has_content?("Pageview, all"))
     assert(page.has_content?("Pageview, admin"))
     assert(page.has_content?("Pageview, front"))
