@@ -66,34 +66,44 @@ class MessageTest < ActiveSupport::TestCase
     assert_empty message.errors[:ends_at]
   end
 
-  test "active? returns true when active and no dates" do
+  test "active? returns true when active attribute is true" do
     message = Message.new(text: "Test", active: true)
     assert message.active?
   end
 
-  test "active? returns false when not active" do
+  test "active? returns false when active attribute is false" do
     message = Message.new(text: "Test", active: false)
     refute message.active?
   end
 
-  test "active? returns false when start date is in future" do
+  test "currently_active? returns true when active and no dates" do
+    message = Message.new(text: "Test", active: true)
+    assert message.currently_active?
+  end
+
+  test "currently_active? returns false when not active" do
+    message = Message.new(text: "Test", active: false)
+    refute message.currently_active?
+  end
+
+  test "currently_active? returns false when start date is in future" do
     message = Message.new(text: "Test", active: true, starts_at: 1.day.from_now)
-    refute message.active?
+    refute message.currently_active?
   end
 
-  test "active? returns false when end date is in past" do
+  test "currently_active? returns false when end date is in past" do
     message = Message.new(text: "Test", active: true, ends_at: 1.day.ago)
-    refute message.active?
+    refute message.currently_active?
   end
 
-  test "active? returns true when within date range" do
+  test "currently_active? returns true when within date range" do
     message = Message.new(
       text: "Test",
       active: true,
       starts_at: 1.day.ago,
       ends_at: 1.day.from_now
     )
-    assert message.active?
+    assert message.currently_active?
   end
 
   test "active scope includes active messages with no dates" do

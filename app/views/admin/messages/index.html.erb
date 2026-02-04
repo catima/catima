@@ -34,7 +34,7 @@
             <tr>
               <td><%= truncate(message.text, length: 60) %></td>
               <td>
-                <% if message.active? %>
+                <% if message.currently_active? %>
                   <span class="badge bg-success">Active</span>
                 <% else %>
                   <span class="badge bg-secondary">Inactive</span>
