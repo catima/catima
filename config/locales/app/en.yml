@@ -1121,3 +1121,10 @@ en:
     october: October
     november: November
     december: December
+
+  admin:
+    messages:
+      created: "Message was successfully created."
+      updated: "Message was successfully updated."
+      deleted: "Message was successfully deleted."
+

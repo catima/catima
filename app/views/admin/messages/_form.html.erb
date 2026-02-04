@@ -1,0 +1,83 @@
+<%= form_with model: [:admin, @message], local: true do |f| %>
+  <% if @message.errors.any? %>
+    <div class="alert alert-danger">
+      <h4><%= pluralize(@message.errors.count, "error") %> prohibited this message from being saved:</h4>
+      <ul>
+        <% @message.errors.full_messages.each do |message| %>
+          <li><%= message %></li>
+        <% end %>
+      </ul>
+    </div>
+  <% end %>
+
+  <div class="form-group mb-3">
+    <%= f.label :text, "Message content", class: "form-label" %>
+    <%= f.text_area :text, rows: 6, class: "form-control",
+        placeholder: "Enter a message to display to users" %>
+    <small class="form-text text-muted">
+      Markdown is supported, you can use it to add formatting, links, etc.
+    </small>
+  </div>
+
+  <div class="form-group mb-3">
+    <%= f.label :severity, "Severity level", class: "form-label" %>
+    <%= f.select :severity,
+        options_for_select([
+          ['Info (blue)', 'info'],
+          ['Warning (yellow)', 'warning'],
+          ['Danger (red)', 'danger']
+        ], @message.severity),
+        {},
+        class: "form-control form-select" %>
+  </div>
+
+  <div class="form-group mb-3">
+    <%= f.label :scope, "Visibility scope", class: "form-label" %>
+    <%= f.select :scope,
+        options_for_select([
+          ['Admin views only', 'admin'],
+          ['Public views only', 'public'],
+          ['All views (admin + public)', 'all']
+        ], @message.scope),
+        {},
+        class: "form-control form-select" %>
+  </div>
+
+  <div class="form-group mb-3">
+    <%= f.label :catalog_id, "Target catalog", class: "form-label" %>
+    <%= select2_collection_select(f, :catalog_id, @catalogs, :id, :name,
+        { include_blank: 'All catalogs (global message)', class: 'w-100' }) %>
+    <small class="form-text text-muted">
+      Leave blank to display on all catalogs, or select a specific catalog.
+    </small>
+  </div>
+
+  <div class="form-group mb-3">
+    <%= f.label :starts_at, "Start date (optional)", class: "form-label" %>
+    <%= f.datetime_local_field :starts_at, class: "form-control" %>
+    <small class="form-text text-muted">
+      Leave blank to show immediately when active.
+    </small>
+  </div>
+
+  <div class="form-group mb-3">
+    <%= f.label :ends_at, "End date (optional)", class: "form-label" %>
+    <%= f.datetime_local_field :ends_at, class: "form-control" %>
+    <small class="form-text text-muted">
+      Leave blank for no end date (shows until manually deactivated).
+    </small>
+  </div>
+
+  <div class="form-group mb-3 form-check">
+    <%= f.check_box :active, class: "form-check-input" %>
+    <%= f.label :active, "Message is currently active", class: "form-check-label" %>
+  </div>
+
+  <hr>
+
+  <div class="form-group">
+    <%= f.submit (@message.new_record? ? "Create message" : "Update message"),
+        class: "btn btn-primary" %>
+    <%= link_to "Cancel", admin_messages_path, class: "btn btn-secondary" %>
+  </div>
+<% end %>

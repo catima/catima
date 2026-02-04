@@ -1121,3 +1121,10 @@ fr:
     october: "Octobre"
     november: "Novembre"
     december: "Décembre"
+
+  admin:
+    messages:
+      created: "Le message a été créé avec succès."
+      updated: "Le message a été mis à jour avec succès."
+      deleted: "Le message a été supprimé avec succès."
+

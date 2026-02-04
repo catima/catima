@@ -1,0 +1,89 @@
+# == Schema Information
+#
+# Table name: messages
+#
+#  id         :integer          not null, primary key
+#  text       :text             not null
+#  severity   :string           default("info"), not null
+#  scope      :string           default("admin"), not null
+#  active     :boolean          default(FALSE), not null
+#  starts_at  :datetime
+#  ends_at    :datetime
+#  catalog_id :integer
+#  created_at :datetime         not null
+#  updated_at :datetime         not null
+#
+
+# Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html
+
+active_admin_message:
+  text: "Admin maintenance scheduled"
+  severity: info
+  scope: admin
+  active: true
+  starts_at: <%= 1.day.ago %>
+  ends_at: <%= 1.day.from_now %>
+
+active_public_message:
+  text: "New feature available!"
+  severity: info
+  scope: public
+  active: true
+
+active_all_message:
+  text: "**Important:** System update required"
+  severity: warning
+  scope: all
+  active: true
+
+inactive_message:
+  text: "This message is not active"
+  severity: info
+  scope: admin
+  active: false
+
+future_message:
+  text: "Future announcement"
+  severity: info
+  scope: admin
+  active: true
+  starts_at: <%= 2.days.from_now %>
+
+past_message:
+  text: "Past announcement"
+  severity: info
+  scope: admin
+  active: true
+  ends_at: <%= 2.days.ago %>
+
+danger_message:
+  text: "Critical system alert!"
+  severity: danger
+  scope: admin
+  active: true
+
+catalog_one_message:
+  text: "Message for catalog one only"
+  severity: info
+  scope: admin
+  active: true
+  catalog: one
+
+global_message:
+  text: "Global message for all catalogs"
+  severity: info
+  scope: admin
+  active: true
+
+markdown_message:
+  text: |
+    # Maintenance Notice
+
+    **Scheduled downtime** on _Saturday_
+
+    - Save your work
+    - Contact support if issues
+    - [Read more](https://example.com)
+  severity: warning
+  scope: admin
+  active: true

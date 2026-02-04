@@ -91,4 +91,26 @@ class CatalogTest < ActiveSupport::TestCase
     catalog.update(restricted: false, visible: true, data_only: true, seo_indexable: true)
     assert catalog.invalid?
   end
+
+  test "deleting catalog destroys associated messages" do
+    catalog = Catalog.create!(
+      name: "Test Catalog for Messages",
+      slug: "test-catalog-messages",
+      primary_language: "en"
+    )
+
+    message = Message.create!(
+      text: "Test message for catalog",
+      catalog: catalog,
+      severity: "info",
+      scope: "admin"
+    )
+
+    message_id = message.id
+    assert_equal catalog.id, message.catalog_id
+
+    catalog.destroy
+
+    assert_nil Message.find_by(id: message_id)
+  end
 end

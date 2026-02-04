@@ -60,6 +60,10 @@
   </div>
 </div>
 
+<div class="container-lg mt-3">
+  <%= render 'shared/messages', context: :admin, catalog: catalog %>
+</div>
+
 <div class="container">
   <%= render("shared/flash") %>
   <%= yield %>
