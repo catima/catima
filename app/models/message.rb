@@ -2,14 +2,14 @@
 #
 # Table name: messages
 #
-#  id         :integer          not null, primary key
+#  id         :bigint           not null, primary key
 #  text       :text             not null
 #  severity   :string           default("info"), not null
 #  scope      :string           default("admin"), not null
 #  active     :boolean          default(FALSE), not null
 #  starts_at  :datetime
 #  ends_at    :datetime
-#  catalog_id :integer
+#  catalog_id :bigint
 #  created_at :datetime         not null
 #  updated_at :datetime         not null
 #

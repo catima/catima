@@ -2251,7 +2251,7 @@ ALTER TABLE ONLY public.configurations
 --
 
 ALTER TABLE ONLY public.messages
-    ADD CONSTRAINT fk_rails_269d8d6a7f FOREIGN KEY (catalog_id) REFERENCES public.catalogs(id);
+    ADD CONSTRAINT fk_rails_269d8d6a7f FOREIGN KEY (catalog_id) REFERENCES public.catalogs(id) ON DELETE CASCADE;
 
 
 --
