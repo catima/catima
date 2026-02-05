@@ -22,11 +22,13 @@ module ApplicationHelper
   end
 
   def current_messages(context, catalog=nil)
-    dismissed_ids = session[:dismissed_messages] || []
-    Message.active
-           .for_catalog(catalog)
-           .send("for_#{context}")
-           .by_severity_and_date
-           .reject { |msg| dismissed_ids.include?(msg.id) }
+    dismissed_ids = Array(session[:dismissed_messages])
+    scope = Message.active
+                   .for_catalog(catalog)
+                   .send("for_#{context}")
+                   .by_severity_and_date
+    return scope if dismissed_ids.empty?
+
+    scope.where.not(id: dismissed_ids)
   end
 end
