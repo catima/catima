@@ -9,12 +9,12 @@ class Admin::MessagesController < Admin::BaseController
   def new
     authorize Message, :create?
     @message = Message.new(active: false, severity: 'info', scope: 'admin')
-    @catalogs = Catalog.sorted
+    @catalogs = Catalog.not_deactivated.sorted
   end
 
   def edit
     authorize @message, :update?
-    @catalogs = Catalog.sorted
+    @catalogs = Catalog.not_deactivated.sorted
   end
 
   def create
@@ -24,7 +24,7 @@ class Admin::MessagesController < Admin::BaseController
     if @message.save
       redirect_to admin_messages_path, notice: t('admin.messages.created')
     else
-      @catalogs = Catalog.sorted
+      @catalogs = Catalog.not_deactivated.sorted
       render :new
     end
   end
@@ -35,7 +35,7 @@ class Admin::MessagesController < Admin::BaseController
     if @message.update(message_params)
       redirect_to admin_messages_path, notice: t('admin.messages.updated')
     else
-      @catalogs = Catalog.sorted
+      @catalogs = Catalog.not_deactivated.sorted
       render :edit
     end
   end
