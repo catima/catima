@@ -1,0 +1,91 @@
+<% provide(:title, "CATIMA admin | Messages") %>
+
+<div class="card panel-default">
+  <div class="card-header">
+    <span class="pull-right">
+      <span class="me-3">
+        <%= link_to(admin_dashboard_path) do %>
+          <%= fa_icon(:"arrow-left", :text => "Catima admin dashboard") %>
+        <% end %>
+      </span>
+      <%= link_to(new_admin_message_path) do %>
+        <%= fa_icon(:"plus-square", text: "New message") %>
+      <% end %>
+    </span>
+    <%= t("admin.messages.title") %>
+  </div>
+
+  <div class="card-body">
+    <% if @messages.any? %>
+      <table class="table table-striped">
+        <thead>
+          <tr>
+            <th style="width: 30%;"><%= t("admin.messages.table.message") %></th>
+            <th><%= t("admin.messages.table.status") %></th>
+            <th class="d-none d-md-table-cell"><%= t("admin.messages.table.severity") %></th>
+            <th class="d-none d-md-table-cell"><%= t("admin.messages.table.scope") %></th>
+            <th><%= t("admin.messages.table.catalog") %></th>
+            <th class="d-none d-md-table-cell"><%= t("admin.messages.table.dates") %></th>
+            <th></th>
+          </tr>
+        </thead>
+        <tbody>
+          <% @messages.each do |message| %>
+            <tr>
+              <td><%= truncate(message.text, length: 60) %></td>
+              <td>
+                <% if message.currently_active? %>
+                  <span class="badge bg-success"><%= t("admin.messages.status.active") %></span>
+                <% else %>
+                  <span class="badge bg-secondary"><%= t("admin.messages.status.inactive") %></span>
+                <% end %>
+              </td>
+              <td class="d-none d-md-table-cell">
+                <span class="badge bg-<%= message.severity %>">
+                  <%= message.severity.capitalize %>
+                </span>
+              </td>
+              <td class="d-none d-md-table-cell">
+                <span class="badge bg-secondary">
+                  <%= message.scope.capitalize %>
+                </span>
+              </td>
+              <td><%= message.catalog&.name || "All catalogs" %></td>
+              <td class="d-none d-md-table-cell">
+                <% if message.starts_at || message.ends_at %>
+                  <%= l(message.starts_at, format: :short) if message.starts_at %>
+                  <% if message.starts_at && message.ends_at %>→<% end %>
+                  <%= l(message.ends_at, format: :short) if message.ends_at %>
+                <% else %>
+                  <em>Always</em>
+                <% end %>
+              </td>
+              <td class="text-end actions">
+                <% if policy(message).edit? %>
+                  <%= link_to(
+                        fa_icon(:pencil),
+                        edit_admin_message_path(message),
+                        class: "btn btn-xs btn-outline-secondary message-action-edit",
+                        "data-toggle" => "tooltip", "data-placement" => "top", "title" => t("edit")
+                      ) %>
+                <% end %>
+                <% if policy(message).destroy? %>
+                  <%= link_to(
+                        fa_icon(:trash),
+                        admin_message_path(message),
+                        method: :delete,
+                        data: { confirm: t("admin.messages.confirm_delete") },
+                        class: "btn btn-xs btn-outline-secondary message-action-delete",
+                        "data-toggle" => "tooltip", "data-placement" => "top", "title" => t("delete")
+                      ) %>
+                <% end %>
+              </td>
+            </tr>
+          <% end %>
+        </tbody>
+      </table>
+    <% else %>
+      <p class="text-muted"><%= t("admin.messages.no_messages") %></p>
+    <% end %>
+  </div>
+</div>

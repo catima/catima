@@ -5,6 +5,12 @@
 
 <%= render("shared/navbar") if catalog_scoped? || user_scoped? %>
 
+<% if catalog_scoped? %>
+  <div class="container-lg mt-3">
+    <%= render 'shared/messages', context: :public, catalog: catalog %>
+  </div>
+<% end %>
+
 <div class="container">
 
   <%= render("shared/flash") %>

@@ -20,4 +20,15 @@ module ApplicationHelper
   def partial_exists?(partial_path)
     lookup_context.find_all(partial_path, [], true).any?
   end
+
+  def current_messages(context, catalog=nil)
+    dismissed_ids = Array(session[:dismissed_messages])
+    scope = Message.active
+                   .for_catalog(catalog)
+                   .send("for_#{context}")
+                   .by_severity_and_date
+    return scope if dismissed_ids.empty?
+
+    scope.where.not(id: dismissed_ids)
+  end
 end

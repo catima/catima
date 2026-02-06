@@ -171,10 +171,15 @@ Rails.application.routes.draw do
     resources :template_storages, :except => :index
     resources :configurations, :only => :update
     resources :users, :except => :index
+    resources :messages, :except => [:show]
   end
 
   root "home#index"
   get "/robots.txt", to: "home#robots", :as => :robots
+
+  # ===========================================================================
+  # Messages dismissal
+  post '/messages/:id/dismiss', to: 'message_dismissals#create', as: :dismiss_message
 
   # ===========================================================================
   # Containers actions

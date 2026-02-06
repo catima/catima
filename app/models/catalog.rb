@@ -65,6 +65,7 @@ class Catalog < ApplicationRecord
   has_many :groups, dependent: :destroy
   has_many :advanced_search_configurations, dependent: :destroy
   has_many :suggestions, dependent: :destroy
+  has_many :messages, dependent: :destroy
 
   attachment :logo, type: :image
   attachment :navlogo, type: :image
