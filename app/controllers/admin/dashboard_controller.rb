@@ -1,4 +1,7 @@
 class Admin::DashboardController < Admin::BaseController
+  STATS_TOP = 5
+  STATS_FROM = 3.months
+
   def index
     if current_user.system_admin?
       authorize(Catalog, :index?)
@@ -29,13 +32,29 @@ class Admin::DashboardController < Admin::BaseController
     authorize(User, :index?)
 
     @scope = stats_scope
-    @from = 3.months
-    @top = 5
+    @top = STATS_TOP
+  end
 
-    # Prepare data to avoid N+1 queries in the view
-    @stats_all = prepare_stats_data(nil)
-    @stats_admin = prepare_stats_data('catalog_admin')
-    @stats_front = prepare_stats_data('catalog_front')
+  def stats_data
+    raise Pundit::NotAuthorizedError unless current_user.system_admin?
+
+    authorize(Catalog, :index?)
+    authorize(User, :index?)
+
+    chart_type = params[:chart_type]
+
+    stats_data = case chart_type
+                 when 'all'
+                   prepare_stats_data(nil)
+                 when 'admin'
+                   prepare_stats_data('catalog_admin')
+                 when 'front'
+                   prepare_stats_data('catalog_front')
+                 else
+                   []
+                 end
+
+    render json: { data: stats_data, top: STATS_TOP, chart_type: chart_type }
   end
 
   def download_stats
@@ -51,13 +70,13 @@ class Admin::DashboardController < Admin::BaseController
 
   def prepare_stats_data(scope_filter)
     # Retrieve top catalogs
-    top_catalogs = Ahoy::Event.top(@top, @from, scope_filter)
+    top_catalogs = Ahoy::Event.top(STATS_TOP, STATS_FROM, scope_filter)
     catalog_names = top_catalogs.map(&:first)
 
     return [] if catalog_names.empty?
 
     # Retrieve all data with a single optimized query
-    from_date = @from.ago
+    from_date = STATS_FROM.ago
     query = Ahoy::Event.select("name, DATE_TRUNC('week', time) as week, COUNT(*) as count")
                        .where(name: catalog_names)
                        .where("time > ?", from_date)
