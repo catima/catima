@@ -1,12 +1,40 @@
-<div class="stats-chart">
-  <h4>Pageview, all (top <%= @top %> catalogs)</h4>
-  <%= line_chart @stats_all, download: true %>
-</div>
-<div class="stats-chart">
-  <h4>Pageview, admin (top <%= @top %> catalogs)</h4>
-  <%= line_chart @stats_admin, download: true %>
-</div>
-<div class="stats-chart">
-  <h4>Pageview, front (top <%= @top %> catalogs)</h4>
-  <%= line_chart @stats_front, download: true %>
+<div data-controller="async-chart" data-async-chart-url-value="<%= admin_stats_data_path %>">
+  <div class="stats-chart"
+       data-async-chart-target="container"
+       data-chart-type="all"
+       data-scope="<%= @scope %>">
+    <h4>Pageview, all (top <%= @top %> catalogs)</h4>
+    <div class="chart-loading">
+      <div class="spinner-border text-primary" role="status">
+        <span class="sr-only">Loading...</span>
+      </div>
+      <p>Loading chart data...</p>
+    </div>
+  </div>
+
+  <div class="stats-chart"
+       data-async-chart-target="container"
+       data-chart-type="admin"
+       data-scope="<%= @scope %>">
+    <h4>Pageview, admin (top <%= @top %> catalogs)</h4>
+    <div class="chart-loading">
+      <div class="spinner-border text-primary" role="status">
+        <span class="sr-only">Loading...</span>
+      </div>
+      <p>Loading chart data...</p>
+    </div>
+  </div>
+
+  <div class="stats-chart"
+       data-async-chart-target="container"
+       data-chart-type="front"
+       data-scope="<%= @scope %>">
+    <h4>Pageview, front (top <%= @top %> catalogs)</h4>
+    <div class="chart-loading">
+      <div class="spinner-border text-primary" role="status">
+        <span class="sr-only">Loading...</span>
+      </div>
+      <p>Loading chart data...</p>
+    </div>
+  </div>
 </div>

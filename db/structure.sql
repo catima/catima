@@ -945,6 +945,43 @@ ALTER SEQUENCE public.menu_items_id_seq OWNED BY public.menu_items.id;
 
 
 --
+-- Name: messages; Type: TABLE; Schema: public; Owner: -
+--
+
+CREATE TABLE public.messages (
+    id bigint NOT NULL,
+    text text NOT NULL,
+    severity character varying DEFAULT 'info'::character varying NOT NULL,
+    scope character varying DEFAULT 'admin'::character varying NOT NULL,
+    active boolean DEFAULT false NOT NULL,
+    starts_at timestamp without time zone,
+    ends_at timestamp without time zone,
+    catalog_id bigint,
+    created_at timestamp(6) without time zone NOT NULL,
+    updated_at timestamp(6) without time zone NOT NULL
+);
+
+
+--
+-- Name: messages_id_seq; Type: SEQUENCE; Schema: public; Owner: -
+--
+
+CREATE SEQUENCE public.messages_id_seq
+    START WITH 1
+    INCREMENT BY 1
+    NO MINVALUE
+    NO MAXVALUE
+    CACHE 1;
+
+
+--
+-- Name: messages_id_seq; Type: SEQUENCE OWNED BY; Schema: public; Owner: -
+--
+
+ALTER SEQUENCE public.messages_id_seq OWNED BY public.messages.id;
+
+
+--
 -- Name: pages; Type: TABLE; Schema: public; Owner: -
 --
 
@@ -1341,6 +1378,13 @@ ALTER TABLE ONLY public.menu_items ALTER COLUMN id SET DEFAULT nextval('public.m
 
 
 --
+-- Name: messages id; Type: DEFAULT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.messages ALTER COLUMN id SET DEFAULT nextval('public.messages_id_seq'::regclass);
+
+
+--
 -- Name: pages id; Type: DEFAULT; Schema: public; Owner: -
 --
 
@@ -1572,6 +1616,14 @@ ALTER TABLE ONLY public.memberships
 
 ALTER TABLE ONLY public.menu_items
     ADD CONSTRAINT menu_items_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: messages messages_pkey; Type: CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.messages
+    ADD CONSTRAINT messages_pkey PRIMARY KEY (id);
 
 
 --
@@ -2043,6 +2095,20 @@ CREATE INDEX index_menu_items_on_parent_id ON public.menu_items USING btree (par
 
 
 --
+-- Name: index_messages_on_active_scope_catalog_dates; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX index_messages_on_active_scope_catalog_dates ON public.messages USING btree (active, scope, catalog_id, starts_at, ends_at);
+
+
+--
+-- Name: index_messages_on_catalog_id; Type: INDEX; Schema: public; Owner: -
+--
+
+CREATE INDEX index_messages_on_catalog_id ON public.messages USING btree (catalog_id);
+
+
+--
 -- Name: index_pages_on_catalog_id; Type: INDEX; Schema: public; Owner: -
 --
 
@@ -2178,6 +2244,14 @@ ALTER TABLE ONLY public.advanced_searches
 
 ALTER TABLE ONLY public.configurations
     ADD CONSTRAINT fk_rails_19ef1c4b26 FOREIGN KEY (default_catalog_id) REFERENCES public.catalogs(id);
+
+
+--
+-- Name: messages fk_rails_269d8d6a7f; Type: FK CONSTRAINT; Schema: public; Owner: -
+--
+
+ALTER TABLE ONLY public.messages
+    ADD CONSTRAINT fk_rails_269d8d6a7f FOREIGN KEY (catalog_id) REFERENCES public.catalogs(id) ON DELETE CASCADE;
 
 
 --
@@ -2531,6 +2605,7 @@ ALTER TABLE ONLY public.choice_sets
 SET search_path TO "$user", public;
 
 INSERT INTO "schema_migrations" (version) VALUES
+('20260202120000'),
 ('20250917093341'),
 ('20250626134644'),
 ('20250514073222'),

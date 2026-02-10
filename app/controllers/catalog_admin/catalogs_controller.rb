@@ -1,5 +1,6 @@
 class CatalogAdmin::CatalogsController < CatalogAdmin::BaseController
   layout "catalog_admin/setup"
+  STATS_FROM = 3.months
 
   def update
     find_catalog
@@ -24,7 +25,7 @@ class CatalogAdmin::CatalogsController < CatalogAdmin::BaseController
   def stats
     authorize(@catalog)
 
-    @from = 3.months
+    @from = STATS_FROM
   end
 
   private
@@ -38,18 +39,21 @@ class CatalogAdmin::CatalogsController < CatalogAdmin::BaseController
   end
 
   def catalog_params
-    params.require(:catalog).permit(
-      :name,
-      :description,
-      :requires_review,
-      :advertize,
-      :bounds,
-      :api_enabled,
-      :custom_root_page_id,
-      :visible,
-      :restricted,
-      :style,
-      :logo, :remove_logo, :navlogo, :remove_navlogo
+    params.expect(
+      catalog: %i[name
+                  description
+                  requires_review
+                  advertize
+                  bounds
+                  api_enabled
+                  custom_root_page_id
+                  visible
+                  restricted
+                  style
+                  logo
+                  remove_logo
+                  navlogo
+                  remove_navlogo]
     )
   end
 end

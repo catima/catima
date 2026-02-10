@@ -1121,3 +1121,22 @@ en:
     october: October
     november: November
     december: December
+
+  admin:
+    messages:
+      title: "Messages"
+      created: "Message was successfully created."
+      updated: "Message was successfully updated."
+      deleted: "Message was successfully deleted."
+      confirm_delete: "Are you sure you want to delete this message?"
+      no_messages: "No messages yet"
+      status:
+        active: "Active"
+        inactive: "Inactive"
+      table:
+        message: "Message"
+        status: "Status"
+        severity: "Severity"
+        scope: "Scope"
+        catalog: "Catalog"
+        dates: "Dates"

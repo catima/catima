@@ -161,6 +161,7 @@ Rails.application.routes.draw do
   namespace "admin" do
     get "/" => "dashboard#index", :as => :dashboard
     get "/stats" => "dashboard#stats"
+    get "/stats/data" => "dashboard#stats_data", :as => :stats_data
     get "/stats/download" => 'dashboard#download_stats'
     resources :catalogs, :param => :slug, :except => [:index] do
       get "duplicate_new", on: :member
@@ -171,10 +172,15 @@ Rails.application.routes.draw do
     resources :template_storages, :except => :index
     resources :configurations, :only => :update
     resources :users, :except => :index
+    resources :messages, :except => [:show]
   end
 
   root "home#index"
   get "/robots.txt", to: "home#robots", :as => :robots
+
+  # ===========================================================================
+  # Messages dismissal
+  post '/messages/:id/dismiss', to: 'message_dismissals#create', as: :dismiss_message
 
   # ===========================================================================
   # Containers actions

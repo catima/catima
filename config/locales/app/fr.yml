@@ -1121,3 +1121,22 @@ fr:
     october: "Octobre"
     november: "Novembre"
     december: "Décembre"
+
+  admin:
+    messages:
+      title: "Messages"
+      created: "Le message a été créé avec succès."
+      updated: "Le message a été mis à jour avec succès."
+      deleted: "Le message a été supprimé avec succès."
+      confirm_delete: "Êtes-vous sûr de vouloir supprimer ce message ?"
+      no_messages: "Aucun message pour le moment"
+      status:
+        active: "Actif"
+        inactive: "Inactif"
+      table:
+        message: "Message"
+        status: "Statut"
+        severity: "Sévérité"
+        scope: "Portée"
+        catalog: "Catalogue"
+        dates: "Dates"
