@@ -79,7 +79,7 @@ class Dump::CSVDump < Dump
     catalog.item_types.each do |item_type|
       msg("Dumping headers for items of ItemType #{item_type.slug}")
 
-      columns = item_type.fields.map(&:name)
+      columns = ["Catima ID"] + item_type.fields.map(&:name)
 
       if categories_fields[item_type.id].present?
         categories_fields[item_type.id].each do |field|
@@ -101,7 +101,7 @@ class Dump::CSVDump < Dump
         item_type.items.find_in_batches(:batch_size => 100) do |items|
           CSV.open(File.join(directory, "#{item_type.slug}.csv"), "a") do |csv|
             items.each do |item|
-              values = fields.map { |f| f.csv_value(item) }
+              values = [item.id] + fields.map { |f| f.csv_value(item) }
               csv << values.concat(categories_fields[item_type.id].map { |f| f.csv_value(item) })
             end
           end
