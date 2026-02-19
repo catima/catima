@@ -2,11 +2,15 @@
 #
 # Table name: configurations
 #
-#  created_at         :datetime         not null
-#  default_catalog_id :integer
 #  id                 :integer          not null, primary key
 #  root_mode          :string           default("listing"), not null
+#  created_at         :datetime         not null
 #  updated_at         :datetime         not null
+#  default_catalog_id :integer
+#
+# Foreign Keys
+#
+#  fk_rails_...  (default_catalog_id => catalogs.id)
 #
 
 class Configuration < ApplicationRecord

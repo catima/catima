@@ -2,22 +2,35 @@
 #
 # Table name: items
 #
-#  catalog_id     :integer
-#  created_at     :datetime         not null
-#  creator_id     :integer
-#  data           :jsonb
 #  id             :integer          not null, primary key
-#  item_type_id   :integer
+#  data           :jsonb
 #  review_status  :string           default("not-ready"), not null
-#  reviewer_id    :integer
 #  search_data_de :text
 #  search_data_en :text
 #  search_data_fr :text
 #  search_data_it :text
-#  updated_at     :datetime         not null
-#  updater_id     :integer
 #  uuid           :string
 #  views          :jsonb
+#  created_at     :datetime         not null
+#  updated_at     :datetime         not null
+#  catalog_id     :integer
+#  creator_id     :integer
+#  item_type_id   :integer
+#  reviewer_id    :integer
+#  updater_id     :integer
+#
+# Indexes
+#
+#  index_items_on_catalog_id           (catalog_id)
+#  index_items_on_creator_id           (creator_id)
+#  index_items_on_item_type_id         (item_type_id)
+#  index_items_on_reviewer_id          (reviewer_id)
+#  index_items_on_uuid_and_catalog_id  (uuid,catalog_id) UNIQUE
+#
+# Foreign Keys
+#
+#  fk_rails_...  (catalog_id => catalogs.id)
+#  fk_rails_...  (item_type_id => item_types.id)
 #
 
 class Item < ApplicationRecord

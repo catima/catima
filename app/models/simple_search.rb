@@ -2,14 +2,22 @@
 #
 # Table name: simple_searches
 #
-#  catalog_id :bigint(8)
-#  created_at :datetime         not null
-#  creator_id :integer
-#  id         :bigint(8)        not null, primary key
+#  id         :bigint           not null, primary key
 #  locale     :string           default("en"), not null
 #  query      :string
-#  updated_at :datetime         not null
 #  uuid       :string
+#  created_at :datetime         not null
+#  updated_at :datetime         not null
+#  catalog_id :bigint
+#  creator_id :integer
+#
+# Indexes
+#
+#  index_simple_searches_on_catalog_id  (catalog_id)
+#
+# Foreign Keys
+#
+#  fk_rails_...  (catalog_id => catalogs.id)
 #
 
 class SimpleSearch < ApplicationRecord

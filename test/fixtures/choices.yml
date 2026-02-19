@@ -2,17 +2,36 @@
 #
 # Table name: choices
 #
+#  id                      :integer          not null, primary key
+#  from_date               :string
+#  long_name_old           :text
+#  long_name_translations  :json
+#  position                :integer
+#  short_name_old          :string
+#  short_name_translations :json
+#  to_date                 :string
+#  uuid                    :string
+#  created_at              :datetime         not null
+#  updated_at              :datetime         not null
 #  catalog_id              :integer
 #  category_id             :integer
 #  choice_set_id           :integer
-#  created_at              :datetime         not null
-#  id                      :integer          not null, primary key
-#  long_name_old           :text
-#  long_name_translations  :json
-#  short_name_old          :string
-#  short_name_translations :json
-#  updated_at              :datetime         not null
-#  uuid                    :string
+#  parent_id               :bigint
+#
+# Indexes
+#
+#  index_choices_on_catalog_id              (catalog_id)
+#  index_choices_on_category_id             (category_id)
+#  index_choices_on_choice_set_id           (choice_set_id)
+#  index_choices_on_parent_id               (parent_id)
+#  index_choices_on_uuid_and_choice_set_id  (uuid,choice_set_id) UNIQUE
+#
+# Foreign Keys
+#
+#  fk_rails_...  (catalog_id => catalogs.id)
+#  fk_rails_...  (category_id => categories.id)
+#  fk_rails_...  (choice_set_id => choice_sets.id)
+#  fk_rails_...  (parent_id => choices.id)
 #
 
 # Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html

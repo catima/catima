@@ -2,19 +2,33 @@
 #
 # Table name: menu_items
 #
-#  catalog_id   :integer
-#  created_at   :datetime         not null
 #  id           :integer          not null, primary key
-#  item_type_id :integer
-#  page_id      :integer
-#  parent_id    :integer
 #  rank         :integer
 #  slug         :string
 #  title        :jsonb
 #  title_old    :string
-#  updated_at   :datetime         not null
 #  url          :jsonb
 #  url_old      :text
+#  created_at   :datetime         not null
+#  updated_at   :datetime         not null
+#  catalog_id   :integer
+#  item_type_id :integer
+#  page_id      :integer
+#  parent_id    :integer
+#
+# Indexes
+#
+#  index_menu_items_on_catalog_id    (catalog_id)
+#  index_menu_items_on_item_type_id  (item_type_id)
+#  index_menu_items_on_page_id       (page_id)
+#  index_menu_items_on_parent_id     (parent_id)
+#
+# Foreign Keys
+#
+#  fk_rails_...  (catalog_id => catalogs.id)
+#  fk_rails_...  (item_type_id => item_types.id)
+#  fk_rails_...  (page_id => pages.id)
+#  fk_rails_...  (parent_id => menu_items.id)
 #
 
 class MenuItem < ApplicationRecord

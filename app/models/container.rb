@@ -2,15 +2,27 @@
 #
 # Table name: containers
 #
-#  content    :jsonb
-#  created_at :datetime         not null
-#  id         :integer          not null, primary key
-#  locale     :string
-#  page_id    :integer
-#  row_order  :integer
-#  slug       :string
-#  type       :string
-#  updated_at :datetime         not null
+#  id            :integer          not null, primary key
+#  content       :jsonb
+#  field_format  :string
+#  locale        :string
+#  row_order     :integer
+#  slug          :string
+#  sort          :string
+#  type          :string
+#  created_at    :datetime         not null
+#  updated_at    :datetime         not null
+#  page_id       :integer
+#  sort_field_id :integer
+#
+# Indexes
+#
+#  index_containers_on_page_id  (page_id)
+#  index_containers_on_slug     (slug)
+#
+# Foreign Keys
+#
+#  fk_rails_...  (page_id => pages.id)
 #
 
 class Container < ApplicationRecord

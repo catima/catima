@@ -2,15 +2,23 @@
 #
 # Table name: item_views
 #
-#  created_at               :datetime         not null
+#  id                       :integer          not null, primary key
 #  default_for_display_name :boolean          default(FALSE)
 #  default_for_item_view    :boolean
 #  default_for_list_view    :boolean
-#  id                       :integer          not null, primary key
-#  item_type_id             :integer
 #  name                     :string
 #  template                 :jsonb
+#  created_at               :datetime         not null
 #  updated_at               :datetime         not null
+#  item_type_id             :integer
+#
+# Indexes
+#
+#  index_item_views_on_item_type_id  (item_type_id)
+#
+# Foreign Keys
+#
+#  fk_rails_...  (item_type_id => item_types.id)
 #
 
 # rubocop:disable Rails/SkipsModelValidations

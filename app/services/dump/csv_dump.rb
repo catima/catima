@@ -1,7 +1,7 @@
 class Dump::CSVDump < Dump
   require "csv"
 
-  def dump(catalog, directory, locale, with_files)
+  def dump(catalog, directory, locale, with_files: true, with_catima_id: false, use_slugs: false)
     I18n.with_locale(locale) do
       cat = Catalog.find_by(slug: catalog)
       raise "ERROR. Catalog '#{catalog}' not found." if cat.nil?
@@ -19,9 +19,9 @@ class Dump::CSVDump < Dump
       # First loop to check if there are categories among choices
       categories_fields = build_csv_header(cat)
 
-      dump_headers(cat, categories_fields, directory)
+      dump_headers(cat, categories_fields, directory, with_catima_id: with_catima_id, use_slugs: use_slugs)
 
-      dump_data(cat, categories_fields, directory)
+      dump_data(cat, categories_fields, directory, with_catima_id: with_catima_id)
 
       dump_files(cat, directory) if with_files
     end
@@ -75,15 +75,16 @@ class Dump::CSVDump < Dump
     categories_fields
   end
 
-  def dump_headers(catalog, categories_fields, directory)
+  def dump_headers(catalog, categories_fields, directory, with_catima_id: false, use_slugs: false)
     catalog.item_types.each do |item_type|
       msg("Dumping headers for items of ItemType #{item_type.slug}")
 
-      columns = ["Catima ID"] + item_type.fields.map(&:name)
+      columns = use_slugs ? item_type.fields.map(&:slug) : item_type.fields.map(&:name)
+      columns.prepend("Catima ID") if with_catima_id
 
       if categories_fields[item_type.id].present?
         categories_fields[item_type.id].each do |field|
-          columns << "#{Category.find(field.category_id)&.name}_#{field.slug}"
+          columns << "#{Category.find(field.category_id).name}_#{field.slug}"
         end
       end
 
@@ -91,7 +92,7 @@ class Dump::CSVDump < Dump
     end
   end
 
-  def dump_data(catalog, categories_fields, directory)
+  def dump_data(catalog, categories_fields, directory, with_catima_id: false)
     ActiveRecord::Base.uncached do
       catalog.item_types.includes(:fields, :items).select(:id, :slug).reorder('').each do |item_type|
         msg("Dumping data for items of ItemType #{item_type.slug}")
@@ -101,7 +102,8 @@ class Dump::CSVDump < Dump
         item_type.items.find_in_batches(:batch_size => 100) do |items|
           CSV.open(File.join(directory, "#{item_type.slug}.csv"), "a") do |csv|
             items.each do |item|
-              values = [item.id] + fields.map { |f| f.csv_value(item) }
+              values = fields.map { |f| f.csv_value(item) }
+              values.prepend(item.id) if with_catima_id
               csv << values.concat(categories_fields[item_type.id].map { |f| f.csv_value(item) })
             end
           end

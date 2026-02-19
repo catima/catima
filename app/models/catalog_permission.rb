@@ -2,13 +2,23 @@
 #
 # Table name: catalog_permissions
 #
-#  catalog_id :integer
-#  created_at :datetime         not null
-#  group_id   :integer
 #  id         :integer          not null, primary key
 #  role       :string
+#  created_at :datetime         not null
 #  updated_at :datetime         not null
+#  catalog_id :integer
+#  group_id   :integer
 #  user_id    :integer
+#
+# Indexes
+#
+#  index_catalog_permissions_on_catalog_id  (catalog_id)
+#  index_catalog_permissions_on_user_id     (user_id)
+#
+# Foreign Keys
+#
+#  fk_rails_...  (catalog_id => catalogs.id)
+#  fk_rails_...  (user_id => users.id)
 #
 
 class CatalogPermission < ApplicationRecord

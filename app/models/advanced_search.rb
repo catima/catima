@@ -2,16 +2,28 @@
 #
 # Table name: advanced_searches
 #
-#  catalog_id                       :integer
-#  created_at                       :datetime         not null
-#  creator_id                       :integer
-#  criteria                         :json
 #  id                               :integer          not null, primary key
-#  item_type_id                     :integer
+#  criteria                         :json
 #  locale                           :string           default("en"), not null
-#  updated_at                       :datetime         not null
 #  uuid                             :string
+#  created_at                       :datetime         not null
+#  updated_at                       :datetime         not null
 #  advanced_search_configuration_id :bigint
+#  catalog_id                       :integer
+#  creator_id                       :integer
+#  item_type_id                     :integer
+#
+# Indexes
+#
+#  index_advanced_searches_on_advanced_search_configuration_id  (advanced_search_configuration_id)
+#  index_advanced_searches_on_catalog_id                        (catalog_id)
+#  index_advanced_searches_on_item_type_id                      (item_type_id)
+#
+# Foreign Keys
+#
+#  fk_rails_...  (advanced_search_configuration_id => advanced_search_configurations.id)
+#  fk_rails_...  (catalog_id => catalogs.id)
+#  fk_rails_...  (item_type_id => item_types.id)
 #
 
 # NOTE: This is the ActiveRecord model for storing advanced search criteria.

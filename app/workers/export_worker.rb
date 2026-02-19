@@ -72,7 +72,9 @@ class ExportWorker
         export.catalog.slug,
         File.join(dir, 'csv'),
         locale,
-        export.with_files
+        with_files: export.with_files,
+        with_catima_id: export.with_catima_id,
+        use_slugs: export.use_slugs
       )
       zip(dir, export.pathname)
     rescue StandardError => e

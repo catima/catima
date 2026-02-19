@@ -465,6 +465,15 @@ it:
         format: "Formato"
         status: "Stato"
         validity: "Validità"
+      new:
+        new_export: "Nuova esportazione %{category}"
+        with_files: "Aggiungi file"
+        with_files_help: "Vuoi aggiungere all'esportazione i file collegati alle schede (immagini, documenti)? Se sono molti, l'esportazione potrebbe richiedere più tempo."
+        with_catima_id: "Includi ID Catima"
+        with_catima_id_help: "Aggiunge una colonna con l'ID Catima interno per ogni scheda."
+        use_slugs: "Usa gli slug dei campi come intestazioni di colonna"
+        use_slugs_help: "Usa lo slug tecnico di ogni campo come intestazione di colonna invece del nome visualizzato."
+        create: "Crea esportazione"
 
     advanced_search_configurations:
       index:

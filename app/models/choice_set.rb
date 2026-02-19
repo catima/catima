@@ -2,14 +2,27 @@
 #
 # Table name: choice_sets
 #
-#  catalog_id     :integer
-#  created_at     :datetime         not null
-#  deleted_at :datetime
-#  id             :integer          not null, primary key
-#  name           :string
-#  slug           :string
-#  updated_at     :datetime         not null
-#  uuid           :string
+#  id              :integer          not null, primary key
+#  allow_bc        :boolean          default(FALSE)
+#  choice_set_type :integer          default("default")
+#  deactivated_at  :datetime
+#  deleted_at      :datetime
+#  format          :string
+#  name            :string
+#  slug            :string
+#  uuid            :string
+#  created_at      :datetime         not null
+#  updated_at      :datetime         not null
+#  catalog_id      :integer
+#
+# Indexes
+#
+#  index_choice_sets_on_catalog_id           (catalog_id)
+#  index_choice_sets_on_uuid_and_catalog_id  (uuid,catalog_id) UNIQUE
+#
+# Foreign Keys
+#
+#  fk_rails_...  (catalog_id => catalogs.id)
 #
 
 class ChoiceSet < ApplicationRecord

@@ -605,7 +605,9 @@ CREATE TABLE public.exports (
     status character varying,
     created_at timestamp without time zone NOT NULL,
     updated_at timestamp without time zone NOT NULL,
-    with_files boolean DEFAULT true NOT NULL
+    with_files boolean DEFAULT true NOT NULL,
+    with_catima_id boolean DEFAULT false NOT NULL,
+    use_slugs boolean DEFAULT false NOT NULL
 );
 
 
@@ -2605,6 +2607,7 @@ ALTER TABLE ONLY public.choice_sets
 SET search_path TO "$user", public;
 
 INSERT INTO "schema_migrations" (version) VALUES
+('20260219100000'),
 ('20260202120000'),
 ('20250917093341'),
 ('20250626134644'),

@@ -26,4 +26,10 @@ class ExportTest < ActiveSupport::TestCase
     refute(export.validity?)
     refute(export.file?)
   end
+
+  test "csv options default to false" do
+    export = exports(:one_csv)
+    refute(export.with_catima_id)
+    refute(export.use_slugs)
+  end
 end
