@@ -3,21 +3,36 @@
 <div class="card-body">
   <%= bootstrap_form_for([:catalog_admin, @export]) do |f| %>
     <div class="pb-2">
-      <div>
-        <%= t('.with_files_help') %>
-      </div>
-
       <%= f.text_field(:category, :class => 'hide', :value => @export.category, :hide_label => true) %>
       <%= f.text_field(:status, :class => 'hide', :value => "processing", :hide_label => true) %>
 
-      <%= f.form_group(
-        :with_files
-      ) do %>
+      <%= f.form_group(:with_files) do %>
         <%= f.check_box(
               :with_files,
               :label => t('.with_files')
             )
         %>
+        <small class="form-text text-muted"><%= t('.with_files_help') %></small>
+      <% end %>
+
+      <% if @export.category == "csv" %>
+        <%= f.form_group(:with_catima_id) do %>
+          <%= f.check_box(
+                :with_catima_id,
+                :label => t('.with_catima_id')
+              )
+          %>
+          <small class="form-text text-muted"><%= t('.with_catima_id_help') %></small>
+        <% end %>
+
+        <%= f.form_group(:use_slugs) do %>
+          <%= f.check_box(
+                :use_slugs,
+                :label => t('.use_slugs')
+              )
+          %>
+          <small class="form-text text-muted"><%= t('.use_slugs_help') %></small>
+        <% end %>
       <% end %>
     </div>
 

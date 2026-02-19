@@ -532,6 +532,15 @@ de:
         format: "Format"
         status: "Status"
         validity: "Gültigkeit"
+      new:
+        new_export: "Neuer %{category}-Export"
+        with_files: "Dateien hinzufügen"
+        with_files_help: "Möchten Sie die mit den Einträgen verknüpften Dateien (Bilder, Dokumente) in Ihren Export aufnehmen? Bei vielen Dateien kann der Export länger dauern."
+        with_catima_id: "Catima-ID einbeziehen"
+        with_catima_id_help: "Fügt eine Spalte mit der internen Catima-ID für jeden Eintrag hinzu."
+        use_slugs: "Feld-Slugs als Spaltenköpfe verwenden"
+        use_slugs_help: "Verwendet den technischen Slug jedes Feldes als Spaltenkopf statt des Anzeigenamens."
+        create: "Export erstellen"
 
     advanced_search_configurations:
       index:

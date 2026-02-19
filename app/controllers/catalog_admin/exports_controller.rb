@@ -38,8 +38,8 @@ class CatalogAdmin::ExportsController < CatalogAdmin::BaseController
   private
 
   def export_params
-    params.require(:export).permit(
-      :category, :status, :with_files
+    params.expect(
+      export: [:category, :status, :with_files, :with_catima_id, :use_slugs]
     )
   end
 

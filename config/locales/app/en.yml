@@ -725,6 +725,10 @@ en:
         new_export: "New %{category} export"
         with_files: "Add files"
         with_files_help: "Do you want to add the files related to the items (images, documents) to your export ? If you have a lot of them, the export could take longer to become available."
+        with_catima_id: "Include Catima ID"
+        with_catima_id_help: "Add a column with the internal Catima ID for each item."
+        use_slugs: "Use field slugs as column headers"
+        use_slugs_help: "Use the technical slug of each field as the column header instead of its display name."
         create: "Create export"
 
     advanced_search_configurations:
