@@ -2,16 +2,27 @@
 #
 # Table name: groups
 #
+#  id          :bigint           not null, primary key
 #  active      :boolean
-#  catalog_id  :bigint(8)
-#  created_at  :datetime         not null
 #  description :string
-#  id          :bigint(8)        not null, primary key
 #  identifier  :string
 #  name        :string
-#  owner_id    :bigint(8)        not null
 #  public      :boolean
+#  created_at  :datetime         not null
 #  updated_at  :datetime         not null
+#  catalog_id  :bigint
+#  owner_id    :bigint           not null
+#
+# Indexes
+#
+#  index_groups_on_catalog_id           (catalog_id)
+#  index_groups_on_name_and_catalog_id  (name,catalog_id) UNIQUE
+#  index_groups_on_owner_id             (owner_id)
+#
+# Foreign Keys
+#
+#  fk_rails_...  (catalog_id => catalogs.id)
+#  fk_rails_...  (owner_id => users.id)
 #
 
 # Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html

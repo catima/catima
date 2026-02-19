@@ -2,13 +2,26 @@
 #
 # Table name: exports
 #
-#  catalog_id :integer
-#  category   :string
-#  created_at :datetime         not null
-#  id         :integer          not null, primary key
-#  status     :string
-#  updated_at :datetime         not null
-#  user_id    :integer
+#  id             :integer          not null, primary key
+#  category       :string
+#  status         :string
+#  use_slugs      :boolean          default(FALSE), not null
+#  with_files     :boolean          default(TRUE), not null
+#  created_at     :datetime         not null
+#  updated_at     :datetime         not null
+#  catalog_id     :integer
+#  user_id        :integer
+#  with_catima_id :boolean          default(FALSE), not null
+#
+# Indexes
+#
+#  index_exports_on_catalog_id  (catalog_id)
+#  index_exports_on_user_id     (user_id)
+#
+# Foreign Keys
+#
+#  fk_rails_...  (catalog_id => catalogs.id)
+#  fk_rails_...  (user_id => users.id)
 #
 
 class Export < ApplicationRecord

@@ -2,34 +2,48 @@
 #
 # Table name: fields
 #
-#  category_item_type_id    :integer
-#  choice_set_id            :integer
+#  id                       :integer          not null, primary key
 #  comment                  :text
-#  created_at               :datetime         not null
 #  default_value            :text
 #  display_component        :string
 #  display_in_list          :boolean          default(TRUE), not null
 #  display_in_public_list   :boolean          default(TRUE), not null
 #  editor_component         :string
-#  field_set_id             :integer
 #  field_set_type           :string
 #  i18n                     :boolean          default(FALSE), not null
-#  id                       :integer          not null, primary key
 #  multiple                 :boolean          default(FALSE), not null
 #  name_plural_translations :json
 #  name_translations        :json
 #  options                  :json
 #  ordered                  :boolean          default(FALSE), not null
 #  primary                  :boolean          default(FALSE), not null
-#  related_item_type_id     :integer
 #  required                 :boolean          default(FALSE), not null
 #  restricted               :boolean          default(FALSE), not null
 #  row_order                :integer
 #  slug                     :string
 #  type                     :string
 #  unique                   :boolean          default(FALSE), not null
-#  updated_at               :datetime         not null
 #  uuid                     :string
+#  created_at               :datetime         not null
+#  updated_at               :datetime         not null
+#  category_item_type_id    :integer
+#  choice_set_id            :integer
+#  field_set_id             :integer
+#  related_item_type_id     :integer
+#
+# Indexes
+#
+#  index_fields_on_category_item_type_id  (category_item_type_id)
+#  index_fields_on_choice_set_id          (choice_set_id)
+#  index_fields_on_field_set_id           (field_set_id)
+#  index_fields_on_field_set_id_and_slug  (field_set_id,slug) UNIQUE
+#  index_fields_on_related_item_type_id   (related_item_type_id)
+#
+# Foreign Keys
+#
+#  fk_rails_...  (category_item_type_id => item_types.id)
+#  fk_rails_...  (choice_set_id => choice_sets.id)
+#  fk_rails_...  (related_item_type_id => item_types.id)
 #
 
 # Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html

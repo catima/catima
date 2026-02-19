@@ -2,18 +2,29 @@
 #
 # Table name: advanced_search_configurations
 #
-#  catalog_id         :bigint(8)
-#  created_at         :datetime         not null
-#  creator_id         :integer
+#  id                 :bigint           not null, primary key
 #  description        :jsonb
 #  fields             :jsonb
-#  id                 :bigint(8)        not null, primary key
-#  item_type_id       :bigint(8)
 #  options            :jsonb
 #  search_type        :string           default("default")
 #  slug               :string
 #  title_translations :jsonb
+#  created_at         :datetime         not null
 #  updated_at         :datetime         not null
+#  catalog_id         :bigint
+#  creator_id         :integer
+#  item_type_id       :bigint
+#
+# Indexes
+#
+#  index_advanced_search_configurations_on_catalog_id    (catalog_id)
+#  index_advanced_search_configurations_on_item_type_id  (item_type_id)
+#  index_advanced_search_configurations_on_slug          (slug)
+#
+# Foreign Keys
+#
+#  fk_rails_...  (catalog_id => catalogs.id)
+#  fk_rails_...  (item_type_id => item_types.id)
 #
 
 # NOTE: This is the ActiveRecord model for storing advanced search configurations created by an admin

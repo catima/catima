@@ -2,17 +2,29 @@
 #
 # Table name: pages
 #
-#  catalog_id  :integer
-#  created_at  :datetime         not null
-#  creator_id  :integer
 #  id          :integer          not null, primary key
 #  locale_old  :string
-#  reviewer_id :integer
 #  slug        :string
 #  status      :string
 #  title       :jsonb
 #  title_old   :text
+#  created_at  :datetime         not null
 #  updated_at  :datetime         not null
+#  catalog_id  :integer
+#  creator_id  :integer
+#  reviewer_id :integer
+#
+# Indexes
+#
+#  index_pages_on_catalog_id   (catalog_id)
+#  index_pages_on_creator_id   (creator_id)
+#  index_pages_on_reviewer_id  (reviewer_id)
+#
+# Foreign Keys
+#
+#  fk_rails_...  (catalog_id => catalogs.id)
+#  fk_rails_...  (creator_id => users.id)
+#  fk_rails_...  (reviewer_id => users.id)
 #
 
 # Read about fixtures at http://api.rubyonrails.org/classes/ActiveRecord/FixtureSet.html

@@ -2,12 +2,22 @@
 #
 # Table name: memberships
 #
-#  created_at :datetime         not null
-#  group_id   :bigint(8)
-#  id         :bigint(8)        not null, primary key
+#  id         :bigint           not null, primary key
 #  status     :string
+#  created_at :datetime         not null
 #  updated_at :datetime         not null
-#  user_id    :bigint(8)
+#  group_id   :bigint
+#  user_id    :bigint
+#
+# Indexes
+#
+#  index_memberships_on_group_id  (group_id)
+#  index_memberships_on_user_id   (user_id)
+#
+# Foreign Keys
+#
+#  fk_rails_...  (group_id => groups.id)
+#  fk_rails_...  (user_id => users.id)
 #
 
 class Membership < ApplicationRecord

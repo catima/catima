@@ -2,13 +2,22 @@
 #
 # Table name: categories
 #
-#  catalog_id     :integer
-#  created_at     :datetime         not null
+#  id         :integer          not null, primary key
 #  deleted_at :datetime
-#  id             :integer          not null, primary key
-#  name           :string
-#  updated_at     :datetime         not null
-#  uuid           :string
+#  name       :string
+#  uuid       :string
+#  created_at :datetime         not null
+#  updated_at :datetime         not null
+#  catalog_id :integer
+#
+# Indexes
+#
+#  index_categories_on_catalog_id           (catalog_id)
+#  index_categories_on_uuid_and_catalog_id  (uuid,catalog_id) UNIQUE
+#
+# Foreign Keys
+#
+#  fk_rails_...  (catalog_id => catalogs.id)
 #
 
 class Category < ApplicationRecord

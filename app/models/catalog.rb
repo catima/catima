@@ -2,23 +2,37 @@
 #
 # Table name: catalogs
 #
-#  advertize           :boolean
-#  created_at          :datetime         not null
-#  custom_root_page_id :integer
-#  deactivated_at      :datetime
-#  id                  :integer          not null, primary key
-#  logo_id             :string
-#  name                :string
-#  navlogo_id          :string
-#  other_languages     :json
-#  primary_language    :string           default("en"), not null
-#  requires_review     :boolean          default(FALSE), not null
-#  restricted          :boolean          default(FALSE), not null
-#  seo_indexable       :boolean          default(FALSE), not null
-#  slug                :string
-#  style               :jsonb
-#  updated_at          :datetime         not null
-#  visible             :boolean          default(TRUE), not null
+#  id                    :integer          not null, primary key
+#  advertize             :boolean
+#  api_enabled           :boolean          default(FALSE)
+#  comments              :text
+#  data_only             :boolean          default(FALSE)
+#  deactivated_at        :datetime
+#  description           :jsonb
+#  name                  :string
+#  other_languages       :json
+#  primary_language      :string           default("en"), not null
+#  requires_review       :boolean          default(FALSE), not null
+#  restricted            :boolean          default(FALSE), not null
+#  seo_indexable         :boolean          default(FALSE), not null
+#  slug                  :string
+#  style                 :jsonb
+#  throttle_max_requests :integer          default(5)
+#  throttle_time_window  :integer          default(1)
+#  visible               :boolean          default(TRUE), not null
+#  created_at            :datetime         not null
+#  updated_at            :datetime         not null
+#  custom_root_page_id   :integer
+#  logo_id               :string
+#  navlogo_id            :string
+#
+# Indexes
+#
+#  index_catalogs_on_slug  (slug) UNIQUE
+#
+# Foreign Keys
+#
+#  fk_rails_...  (custom_root_page_id => pages.id)
 #
 
 class Catalog < ApplicationRecord

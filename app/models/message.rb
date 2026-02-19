@@ -3,15 +3,24 @@
 # Table name: messages
 #
 #  id         :bigint           not null, primary key
-#  text       :text             not null
-#  severity   :string           default("info"), not null
-#  scope      :string           default("admin"), not null
 #  active     :boolean          default(FALSE), not null
-#  starts_at  :datetime
 #  ends_at    :datetime
-#  catalog_id :bigint
+#  scope      :string           default("admin"), not null
+#  severity   :string           default("info"), not null
+#  starts_at  :datetime
+#  text       :text             not null
 #  created_at :datetime         not null
 #  updated_at :datetime         not null
+#  catalog_id :bigint
+#
+# Indexes
+#
+#  index_messages_on_active_scope_catalog_dates  (active,scope,catalog_id,starts_at,ends_at)
+#  index_messages_on_catalog_id                  (catalog_id)
+#
+# Foreign Keys
+#
+#  fk_rails_...  (catalog_id => catalogs.id)
 #
 
 class Message < ApplicationRecord

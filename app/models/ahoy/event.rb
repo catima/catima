@@ -2,12 +2,19 @@
 #
 # Table name: ahoy_events
 #
-#  id         :bigint(8)        not null, primary key
+#  id         :bigint           not null, primary key
 #  name       :string
 #  properties :jsonb
 #  time       :datetime
-#  user_id    :bigint(8)
-#  visit_id   :bigint(8)
+#  user_id    :bigint
+#  visit_id   :bigint
+#
+# Indexes
+#
+#  index_ahoy_events_on_name_and_time              (name,time)
+#  index_ahoy_events_on_properties_jsonb_path_ops  (properties) USING gin
+#  index_ahoy_events_on_user_id                    (user_id)
+#  index_ahoy_events_on_visit_id                   (visit_id)
 #
 
 class Ahoy::Event < ApplicationRecord

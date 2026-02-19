@@ -2,16 +2,28 @@
 #
 # Table name: item_types
 #
-#  catalog_id               :integer
-#  created_at               :datetime         not null
-#  deleted_at           :datetime
-#  display_emtpy_fields     :boolean          default(TRUE), not null
-#  id                       :integer          not null, primary key
-#  name_plural_translations :json
-#  name_translations        :json
-#  seo_indexable            :boolean          default(TRUE), not null
-#  slug                     :string
-#  updated_at               :datetime         not null
+#  id                          :integer          not null, primary key
+#  allow_anonymous_suggestions :boolean          default(FALSE)
+#  deleted_at                  :datetime
+#  display_emtpy_fields        :boolean          default(TRUE), not null
+#  name_plural_translations    :json
+#  name_translations           :json
+#  seo_indexable               :boolean          default(TRUE), not null
+#  slug                        :string
+#  suggestion_email            :string
+#  suggestions_activated       :boolean          default(FALSE)
+#  created_at                  :datetime         not null
+#  updated_at                  :datetime         not null
+#  catalog_id                  :integer
+#
+# Indexes
+#
+#  index_item_types_on_catalog_id           (catalog_id)
+#  index_item_types_on_catalog_id_and_slug  (catalog_id,slug) UNIQUE
+#
+# Foreign Keys
+#
+#  fk_rails_...  (catalog_id => catalogs.id)
 #
 
 require_dependency 'field/choice_set'

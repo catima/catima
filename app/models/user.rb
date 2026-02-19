@@ -2,13 +2,13 @@
 #
 # Table name: users
 #
-#  created_at             :datetime         not null
+#  id                     :integer          not null, primary key
 #  current_sign_in_at     :datetime
 #  current_sign_in_ip     :inet
+#  deleted_at             :datetime
 #  email                  :string           default(""), not null
 #  encrypted_password     :string           default(""), not null
-#  id                     :integer          not null, primary key
-#  invited_by_id          :integer
+#  jti                    :string           not null
 #  last_sign_in_at        :datetime
 #  last_sign_in_ip        :inet
 #  primary_language       :string           default("en"), not null
@@ -19,7 +19,19 @@
 #  sign_in_count          :integer          default(0), not null
 #  system_admin           :boolean          default(FALSE), not null
 #  uid                    :string
+#  created_at             :datetime         not null
 #  updated_at             :datetime         not null
+#  invited_by_id          :integer
+#
+# Indexes
+#
+#  index_users_on_email                 (email) UNIQUE WHERE (deleted_at IS NULL)
+#  index_users_on_jti                   (jti) UNIQUE
+#  index_users_on_reset_password_token  (reset_password_token) UNIQUE
+#
+# Foreign Keys
+#
+#  fk_rails_...  (invited_by_id => users.id)
 #
 
 def auth_providers
