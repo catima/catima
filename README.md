@@ -18,56 +18,32 @@ For some applications, CATIMA can be a replacement for databases such as FileMak
 
 ## Documentation
 
-CATIMA is a Rails 8 app.
+CATIMA is a Rails 8.1 app.
 
 This README describes the purpose of this repository and how to set up a development environment. Other sources of documentation are as follows:
 
 * End-user documentation is in [catima/userdoc](https://github.com/catima/userdoc)
 * Development documentation is in [catima/devdoc](https://github.com/catima/devdoc)
 
-## Getting started locally
-
-### Prerequisites
-
-This project requires:
-
-* Ruby 3.2.2, preferably managed using [rbenv](http://rbenv.org/)
-* PostgreSQL 17 must be installed and accepting connections
-* Node 22.x (`brew install nvm`, ...)
-* [Redis](https://redis.io/) must be installed and running on localhost with the default port
-* Imagemagick must be installed (`brew install imagemagick`, `sudo apt install imagemagick`, ...)
-* Sodium must be installed (`brew install libsodium`, ...)
-* Chrome (for testing with Selenium)
-
-### bin/setup
-
-Run the `bin/setup` script. This script will:
-
-* Check you have the required Ruby version
-* Install ruby gems using Bundler
-* Install js dependencies using Yarn
-* Create local copies of `.env`, `database.yml`, `domains.yml`, `geo_layers.yml` and `restricted_robots.yml`
-* Create, migrate, and seed the database
-
-### Run it!
-
-1. Install NPM packages using `yarn install`
-2. Install [foreman](https://github.com/ddollar/foreman) with `gem install foreman`
-3. Run `foreman start -f Procfile.dev` to start the Rails app.
-
-## Getting started with docker
+## Development with Docker
 
 ### Prerequisites
 
 A working [Docker](https://docs.docker.com/engine/install/) installation is mandatory.
 
-### Docker environment file
+### Environment files
 
 Please make sure to copy & rename the **example.env** file to **.env**.
 
-``cp docker/example.env docker/.env``
+``cp example.env .env``
 
-You can replace the values if needed, but the default ones should work.
+You can replace the values if needed, but the default ones should work for local development.
+
+Please also make sure to copy & rename the docker-compose.override.yml.dev file to docker-compose.override.yml.
+
+``cp docker-compose.override.yml.dev docker-compose.override.yml``
+
+You can replace the values if needed, but the default ones should work for local development.
 
 ### Edit hosts file
 
@@ -93,7 +69,7 @@ If you want to remove a volume (e.g. to start with a fresh database), you can us
 
 ### Frontend
 
-To access the main application please use the following link.
+To access the main application, please use the following link.
 
 [http://catima.lan:8383](http://catima.lan:8383)
 
@@ -111,15 +87,65 @@ Or to get the messages in JSON format.
 
 ## Tests & API specs
 
-### Local
-* To run the full suite, run `rails test`
-* To run a single test, specify the line with `rails test path/to/file:line_number`
-* To view the integration tests running in the browser prepend `HEADLESS=0` to the commands above
-* To run API requests specs and generate API doc `rails swag:run`. The API doc is not versioned and should be added to the project during deployment
-
-### Docker
 * To run the full suite, run `docker exec -it -e NO_COVERAGE=1 catima-app bin/rails test`
 * To run a single test, specify the line with `docker exec -it -e NO_COVERAGE=1 catima-app bin/rails test path/to/file:line_number`
 * To run without coverage (improve performances), add `-e NO_COVERAGE=1` to `docker exec` args
 * To view the integration tests running in the browser, add `-e HEADLESS=0` to `docker exec` args, then connect to the VNC server [vnc://catima.lan:5900](vnc://catima.lan:5900) with "secret" as password. Or go to [http://catima.lan:4444](http://catima.lan:4444), click on Sessions, you should see a line corresponding to the running tests and a camera icon next to it, click on it to open a VNC viewer
 * To run API requests specs and generate API doc `docker exec -it catima-app rails swag:run`. The API doc is not versioned and should be added to the project during deployment
+
+## Deployment with Docker
+
+### Environment files
+
+Please make sure to copy & rename the **example.env** file to **.env**.
+
+``cp example.env .env``
+
+You should replace the values since the default ones are not ready for production.
+
+Please also make sure to copy & rename the docker-compose.override.yml.prod file to docker-compose.override.yml.
+
+``cp docker-compose.override.yml.prod docker-compose.override.yml``
+
+You can replace the values if needed, but the default ones should work for production.
+
+### Config files
+
+Please make sure to copy & rename the following config files.
+
+```bash
+cp config/domains.example.yml config/domains.yml
+cp config/geo_layers.example.yml config/geo_layers.yml
+cp config/restricted_robots.example.yml config/restricted_robots.yml
+```
+
+You can replace the values, add more values or keep the default ones. If you make changes while the app is already running, please make sure to restart the container.
+
+### Installation & configuration
+
+Build & run all the containers for this project.
+
+`docker compose up -d`
+
+### Reverse proxy
+
+Use a reverse proxy configuration to map the url to port `8989`.
+
+## Docker images
+
+GitHub Actions workflows generate Docker image tags based on these events:
+- Push to `development`: `{service}-dev-latest`, `{service}-stage-latest`, `{service}-stage-<sha>-<timestamp>` (immutable)
+- Push to `master`: `{service}-latest`
+- Push a git tag: `{service}-vX.Y.Z` (immutable)
+
+Weekly cron jobs:
+- Create an updated staging image: `{service}-stage-<sha>-<timestamp>` (immutable)
+- Create an updated production candidate: `{service}-vX.Y.Z-<sha>-<timestamp>` (immutable)
+
+# Error tracker
+
+[https://www.bugsnag.com](https://www.bugsnag.com)
+
+# Helm
+
+The Helm charts for this project are available at [https://github.com/unil-lettres/k8s](https://github.com/unil-lettres/k8s), in the ``catima`` directory.

@@ -3,15 +3,15 @@ require "capybara/rails"
 
 Capybara.server_port = 3000
 
-if ENV['DOCKER_RUNNING'].present?
+if ENV['CI'].present?
+  Capybara.javascript_driver = :chrome
+else
   Capybara.javascript_driver = :remote_chrome
   Capybara.configure do |config|
     config.server = :puma, { Silent: true }
     config.server_host = "catima-app"
     config.server_port = 4000
   end
-else
-  Capybara.javascript_driver = :chrome
 end
 
 def driver_params
@@ -57,13 +57,14 @@ class ActionDispatch::IntegrationTest
 end
 
 # Monkey patch so that AR shares a single DB connection among all threads.
-# This ensures data consistency between the test thread and poltergeist thread.
+# This ensures transactional tests work correctly with Capybara
+# Use ConnectionPool::Wrapper to prevent deadlocks
 class ActiveRecord::Base
   mattr_accessor :shared_connection
   @@shared_connection = nil
 
   def self.connection
-    @@shared_connection || ConnectionPool::Wrapper.new(:size => 1) { retrieve_connection }
+    @@shared_connection || ConnectionPool::Wrapper.new(size: 1) { retrieve_connection }
   end
 end
 ActiveRecord::Base.shared_connection = ActiveRecord::Base.connection

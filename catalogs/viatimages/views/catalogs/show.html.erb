@@ -1,0 +1,118 @@
+<% content_for :top_content do %>
+  <div class="top-content-type-home">
+    <div id="searchbox">
+      <!-- Standard search -->
+      <%= bootstrap_form_tag(
+              :url => { :controller => "simple_searches", :action => "new" },
+              :method => "GET",
+              :layout => :inline ) do |f| %>
+
+        <%= hidden_field_tag(:type, "images") %>
+        <%= f.search_field(
+                :q,
+                :value => params[:q],
+                :label => "Search",
+                :hide_label => true,
+                :autofocus => false,
+                :class => "txtSearch",
+                :placeholder => t(".viat-standard-search-placeholder")
+            ) %>
+
+        <%= f.submit(t(".viat-search-btn"), :class => 'btn simple-search') %>
+      <% end %>
+
+      <div id="searchlinks-home">
+        <%= render("shared/search/geo_search") %>
+        <%= render("shared/search/advanced_search") %>
+      </div>
+
+      <div id="searchdomain">
+        <span><%= t(".viat-by-domain") %></span>
+        <div id="searchdomain-dropdown">
+          <select id="sel_domain_court" name="sel_domain_court">
+            <option value="" selected="selected"><%= t(".viat-select-domain") %></option>
+            <% if @domain_choice_set_items %>
+              <% @domain_choice_set_items.each do | domain, data | %>
+                <option value="domain_<%= domain.id %>">
+                  <%= domain.short_name.truncate(70) + ' (' + data[:count].to_s + ')' %>
+                </option>
+              <% end %>
+            <% end %>
+          </select>
+        </div>
+      </div>
+
+      <div id="searchcorpus">
+        <span><%= t(".viat-by-corpus") %></span>
+        <div id="searchcorpus-dropdown">
+          <select id="sel_corpus" name="sel_corpus">
+            <option value="corpus_home" selected="selected"><%= t(".viat-select-corpus") %></option>
+            <% if @corpus_type_items %>
+              <% @corpus_type_items.each do | corpus, data | %>
+                <option value="corpus_<%= corpus.id %>">
+                  <%= corpus.get_value("titre").truncate(70) + ' (' + data[:count].to_s + ')' %>
+                </option>
+              <% end %>
+            <% end %>
+          </select>
+        </div>
+      </div>
+
+      <div id="tagcloud">
+        <% if @keywords %>
+          <% @keywords.each do |keyword| %>
+            <span class="tag <%= keyword['size'] %>">
+              <%= link_to keyword['name'], "#{@keywords_base_url}/#{keyword['id']}-#{keyword['name']}" %>
+            </span>
+          <% end %>
+        <% end %>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    // Only pre-approved, application-generated URLs are allowed
+    var urlMapping = {
+      // Corpus home option
+      'corpus_home': '<%= j "/#{@catalog.slug}/#{params[:locale]}" %>',
+
+      // Domain options
+      <% if @domain_choice_set_items %>
+        <% @domain_choice_set_items.each do | domain, data | %>
+          'domain_<%= domain.id %>': '<%= j data[:link] %>',
+        <% end %>
+      <% end %>
+
+      // Corpus options
+      <% if @corpus_type_items %>
+        <% @corpus_type_items.each do | corpus, data | %>
+          'corpus_<%= corpus.id %>': '<%= j data[:link] %>',
+        <% end %>
+      <% end %>
+    };
+
+    (function() {
+      function safeNav(selectId) {
+        var sel = document.getElementById(selectId);
+        if (!sel) return;
+
+        sel.addEventListener('change', function() {
+          var key = this.value;
+          if (!key) return;
+
+          // Only navigate to pre-approved URLs from server-side mapping
+          if (urlMapping.hasOwnProperty(key)) {
+            var url = urlMapping[key];
+            // Additional validation: ensure URL is relative or HTTPS
+            if (/^(\/|https:\/\/)/.test(url)) {
+              window.location.href = url;
+            }
+          }
+        });
+      }
+
+      safeNav('sel_domain_court');
+      safeNav('sel_corpus');
+    })();
+  </script>
+<% end %>

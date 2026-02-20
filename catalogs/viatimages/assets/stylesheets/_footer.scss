@@ -1,0 +1,77 @@
+#footer-wrapper {
+  height: 135px;
+  background-color: #fefffe;
+  margin-bottom: 15px;
+}
+
+#logo-banner {
+  margin-left: 30px;
+  margin-right: 30px;
+  border-bottom: 1px solid #b3b3b3;
+}
+
+#logos-biblios {
+  display: inline;
+  margin-left: 12px;
+}
+
+#logos-biblios img {
+  margin: 0 0 15px 12px;
+  vertical-align: bottom !important;
+  height: 70px;
+  width: auto;
+}
+
+#logos-biblios img.large {
+  width: 120px;
+  height: auto;
+  padding-bottom: 20px;
+}
+
+#logos-biblios a, a:hover {
+  text-decoration: none;
+}
+
+#footer {
+  .navbar {
+    --bs-navbar-padding-y: 0.2rem;
+  }
+
+  @media (max-width: 992px) {
+    .navbar-expand-md {
+      flex-flow: row nowrap;
+      justify-content: flex-start;
+    }
+
+    .navbar-expand-md .navbar-nav {
+      flex-direction: row;
+    }
+
+    .navbar-expand-md .navbar-collapse {
+      display: flex!important;
+    }
+
+    .navbar-expand-md .navbar-toggler {
+      display: none;
+    }
+  }
+}
+
+#footer a {
+  text-decoration: none;
+  color: #000;
+  padding-left: 14px;
+  padding-right: 14px;
+}
+
+#footer a:hover {
+  text-decoration: underline;
+}
+
+#footer .dropdown {
+  display: inline;
+}
+
+#footer li.inline {
+  display: inline;
+}

@@ -6,6 +6,7 @@ env:
   POSTGRES_USER: postgres
   POSTGRES_PASSWORD: postgres
   POSTGRES_DB: postgres
+  POSTGRES_HOST: localhost
   RAILS_ENV: test
 
 jobs:
@@ -14,15 +15,15 @@ jobs:
     runs-on: ubuntu-24.04
     strategy:
       matrix:
-        ruby-versions: [ '3.2.2', '3.4.5' ]
-        rubygems-version: [ '3.4.5' ]
-        psql-version: [ '17' ]
+        ruby-versions: [ '3.4' ]
+        psql-version: [ '18' ]
         node-version: [ '22' ]
         redis-version: [ '8' ]
     services:
       postgres:
         image: postgres:${{ matrix.psql-version }}
         env:
+          POSTGRES_HOST: ${{ env.POSTGRES_HOST }}
           POSTGRES_USER: ${{ env.POSTGRES_USER }}
           POSTGRES_PASSWORD: ${{ env.POSTGRES_PASSWORD }}
           POSTGRES_DB: ${{ env.POSTGRES_DB }}
@@ -51,9 +52,6 @@ jobs:
         uses: ruby/setup-ruby@v1
         with:
           ruby-version: ${{ matrix.ruby-versions }}
-
-      - name: Install RubyGems
-        run: gem update --system ${{ matrix.rubygems-version }}
 
       - name: Cache Gems
         uses: actions/cache@v4

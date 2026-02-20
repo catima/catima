@@ -1,0 +1,46 @@
+<%-# Even it is bad practice to add logic in the view -%>
+<%-# it is a temporary solution until controller override is available -%>
+<%-# or the option to choose the list sorting is implemented -%>
+
+<% @item_type_id = 141 %>
+<% @title_field_slug = 'titres' %>
+<% @number_field_slug = 'numeros' %>
+<% @author_field_slug = 'auteur' %>
+
+<% item_list.items.each_with_index do |item, i| %>
+  <% item.fields.each do |field| %>
+    <% case field.slug
+         when @title_field_slug %><% @title = strip_tags(field_value(item, field)) %>
+      <% when @number_field_slug %><% @number = field_value(item, field) %>
+      <% when @author_field_slug %><% @auteurs = strip_tags(field_value(item, field)) %>
+    <% end %>
+  <% end %>
+
+  <div class="media">
+    <% if item_has_thumbnail?(item) %>
+      <div class="pull-left">
+        <%= item_list_link(item_list, item, i) do %>
+          <%= item_thumbnail(item, :class => "media-object") %>
+        <% end %>
+      </div>
+    <% end %>
+    <div class="media-body">
+      <% if item.item_type.default_list_view.nil? == true %>
+        <h4 class="media-heading">
+          <%= item.item_type_id == @item_type_id ?
+                  item_list_link(item_list, item, i, @title) :
+                  item_list_link(item_list, item, i, item_display_name(item))
+          %>
+        </h4>
+        <% if item.item_type_id == @item_type_id %>
+          <% if !@number.blank? %><b>Numéro:</b> <%= @number %><% end %>
+          <% if !@auteurs.blank? %>; <b>Auteur(s) et signataire(s):</b> <%= @auteurs %><% end %>
+        <% else %>
+          <%= item_summary(item) %>
+        <% end %>
+      <% else %>
+        <%= item_list_view(item) %>
+      <% end %>
+    </div>
+  </div>
+<% end %>

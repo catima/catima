@@ -1,0 +1,611 @@
+<div class="mainWrapper">
+  <div class="main">
+    <div id="map"></div>
+    <div id="sidepane">
+      <div id="search">
+        <input type="text" placeholder="VOTRE RECHERCHE..." />
+        <button><img src="https://cdn.swisscarto.ch/icons/svg/search.svg" /></button>
+      </div>
+      <div id="searchDropdown" class="hidden">
+        <% @keywords.each do |kw| %>
+          <div onclick="M.handleKeywordClick(<%= kw[0] %>)" id="kw-<%= kw[0] %>"><%= kw[1] %></div>
+        <% end %>
+      </div>
+
+      <div id="imglist">
+        <% @cartes.each do | carte | %>
+          <div class="imgitem" id="imgitem-<%= carte['id'] %>" data-id="<%= carte['id'] %>" onclick="M.selectItem(<%= carte['id'] %>)">
+            <div class="img">
+              <% if carte['img_path'] %>
+                <img src="/thumbs/rhone/85x85/fill/0,0,100,100/<%= carte['img_path'].split('/')[2,4].join('/') %>" alt="<%= carte['title'] %>" />
+              <% else %>
+              <img src="data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAAFUAAABBCAYAAACgsujXAAAABHNCSVQICAgIfAhkiAAAAAlwSFlzAAAOxAAADsQBlSsOGwAAABl0RVh0U29mdHdhcmUAd3d3Lmlua3NjYXBlLm9yZ5vuPBoAAAK1SURBVHic7dlba+pAFIbhbxKbSGOJikIRSgtt6X/v7xG8UwSxKTYi1kNjTGZfFaoTa927y1nZrOdyVFi8JJOD6vn5WUP8Ksf2AP8jiUpAohKQqAQkKgGJSkCiEpCoBCQqAYlKQKISkKgEJCoBiUpAohKo2B7gJ1zXhVIKeZ4jz3Pb4xzFKqrjOLi8vMTV1RWCIEC1WoXneTvfybIM6/Ua7+/viOMYm83G0rSHsYlar9dxd3cHx/l+R3JdF7VaDbVaDdfX14jjGKPRiNURzGZP1VofDbpPKYVWq4XHx8eTf0uJzSRpmv71b4MgwM3NzS9O82/YnP6fUbXWWCwWmM1mWK1WSNMUWmt4nocwDNFqtVCpmGM3m028vLyw2GPZRN1utxiPx4jjuPCoTdMUy+USb29veHp6wsXFxc7nSimEYYjJZHKukQ9ic/prrRFF0dFtYLPZ4PX1tfAz3/cpRjsZm6inWK/XhetKqTNPUqyUUfdP/U8fHx9nnqRYKaM2Gg1jLc9zzGYzC9OYShe10WggDENj/dAFzoZSRQ2CALe3t8Z6kiQYj8cWJipWmqi+7+Ph4cF4csqyDP1+H1mWWZrMVIqojuPg/v4eruvurGutMRgMDt4N2FKKqJ1OB9Vq1VgfDoeYz+cWJvoe+6i+76PdbhvrURRhOp1amOg49lGbzaZxU79cLlldmPaxj1p0+xRFkYVJfo591P3n+e12y3If/Yp1VMdxjCv+56tAzti8+iuitUa32zXWuGMflcNL51Oxjup5XuH96WKxYPVH3z7WUcMwLPzvqdfrsXuK+or1haqsJCoBiUpAohJgfaGaz+fo9/vGOvfbLNZRkyRBkiS2xziZnP4EJCoBiUpAohKQqAQkKgGJSkCiEpCoBCQqAYlKQKISkKgEJCoBiUpAohKQqAQkKoE/zlrcvs3OqqkAAAAASUVORK5CYII=" alt="Image manquante" />
+              <% end %>
+            </div>
+            <div class="desc">
+              <p class="title"><%= carte['title'] %></p>
+              <p><%= carte['date'] %></p>
+              <p><a href="/rhone/fr/cartes/<%= carte['id'] %>" class="details">Détails...</a></p>
+            </div>
+          </div>
+        <% end %>
+        <div id="no-item-found" class="hidden">
+          Aucune carte ancienne trouvée
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+<textarea id="cartes_json" style="display: none;">
+  <%= @cartes_json %>
+</textarea>
+
+<textarea id="keywords_json" style="display: none;">
+  <%= @keywords_json %>
+</textarea>
+
+<script type="text/javascript">
+  // Add the search class to the body to hide the overflow-y
+  document.body.classList.add('search')
+
+  function wordRange (str, start, end) {
+    return str.trim().split(' ').slice(start, end).join(' ')
+  }
+
+  const timeline = {
+    urlPeriodes: '/api/v2/rhone/fr/periode-temporelle',
+    data: null,
+    selection: null,
+
+    init: function () {
+      fetch(this.urlPeriodes)
+        .then(response => response.json())
+        .then(data => {
+          this.data = data
+          this.setup()
+          this.render()
+        })
+    },
+
+    setup: function () {
+      d3.select('.timeline')
+        .append('svg')
+        .attr('width', '100%')
+        .attr('height', '120px')
+    },
+
+    render: function () {
+      const w = document.querySelector('.timeline svg').getBoundingClientRect().width
+      const n = this.data.items.length
+
+      d3.select('.timeline svg')
+        .selectAll('text.period.l1')
+        .data(this.data.items)
+        .join('text')
+        .attr('class', 'period l1')
+        .attr('x', (d, i) => w / (n + 1) * (i + 1))
+        .attr('y', 20)
+        .text(d => w > 950 ? '' : wordRange(d.periode, 0, d.periode.split(' ').length / 2))
+        .style('fill', d => {
+          if (!this.selection) return '#fff';
+          return this.selection === d.id ? '#fff' : '#ffffffaa'
+        })
+
+      d3.select('.timeline svg')
+        .selectAll('text.period.l2')
+        .data(this.data.items)
+        .join('text')
+        .attr('class', 'period l2')
+        .attr('x', (d, i) => w / (n + 1) * (i + 1))
+        .attr('y', 35)
+        .text(d => w > 950 ? d.periode : wordRange(d.periode, d.periode.split(' ').length / 2, 4))
+        .style('fill', d => {
+          if (!this.selection) return '#fff';
+          return this.selection === d.id ? '#fff' : '#ffffffaa'
+        })
+
+      d3.select('.timeline svg')
+        .selectAll('text.desc.l1')
+        .data(this.data.items)
+        .join('text')
+        .attr('class', 'desc l1')
+        .attr('x', (d, i) => w / (n + 1) * (i + 1))
+        .attr('y', 90)
+        .text(d => wordRange(d.desc, 0, 2))
+        .style('fill', d => {
+          if (!this.selection) return '#fff';
+          return this.selection === d.id ? '#fff' : '#ffffffaa'
+        })
+
+      d3.select('.timeline svg')
+        .selectAll('text.desc.l2')
+        .data(this.data.items)
+        .join('text')
+        .attr('class', 'desc l2')
+        .attr('x', (d, i) => w / (n + 1) * (i + 1))
+        .attr('y', 105)
+        .text(d => wordRange(d.desc, 2, 4))
+        .style('fill', d => {
+          if (!this.selection) return '#fff';
+          return this.selection === d.id ? '#fff' : '#ffffffaa'
+        })
+
+      d3.select('.timeline svg')
+        .selectAll('line')
+        .data([{ id: this.data.items[0].id }, ...this.data.items])
+        .join('line')
+        .attr('x1', (d, i) => w / (n + 1) * i)
+        .attr('y1', 60)
+        .attr('x2', (d, i) => w / (n + 1) * (i + 1) - (i == 0 || i == this.data.items.length ? 0 : 17))
+        .attr('y2', 60)
+        .style('stroke', d => {
+          if (!this.selection) return '#fff';
+          return this.selection === d.id ? '#f00' : '#ffffff66'
+        })
+
+      d3.select('.timeline svg')
+        .selectAll('circle')
+        .data(this.data.items)
+        .join('circle')
+        .attr('cy', 60)
+        .attr('r', 10)
+        .attr('fill', d => {
+          if (!this.selection) return '#fff';
+          return this.selection === d.id ? '#d6012d' : '#ffffffaa'
+        })
+        .attr('stroke', 'none')
+        .attr('cx', (d, i) => w / (n + 1) * (i + 1))
+
+      // Draw transparent background rects used for the interactivity
+      d3.select('.timeline svg')
+        .selectAll('rect')
+        .data(this.data.items)
+        .join('rect')
+        .attr('x', (d, i) => w / (n + 1) * (i + 0.5))
+        .attr('y', 0)
+        .attr('width', w / (n + 1))
+        .attr('height', 120)
+        .attr('data-item-id', d => d.id)
+        .on('click', (e, d) => {
+          e.stopPropagation()
+          this.selection = this.selection === d.id ? null : d.id
+          this.render()
+          M.render()
+        })
+
+      d3.select('.timeline svg')
+        .on('click', () => {
+          this.selection = null
+          this.render()
+          M.render()
+        })
+    }
+  }
+
+  timeline.init()
+
+  window.addEventListener('resize', function () {
+    // Redraw the timeline when the window changes the size.
+    // This works perfectly well with the elegance of a tank.
+    timeline.render()
+  })
+
+</script>
+
+<script>
+const M = {
+  simulation: {
+    running: false,
+  },
+  selection: null,
+  matchedKeywords: []
+}
+
+const map = L.map("map", {
+  crs: L.CRS.EPSG2056,
+  center: [46.173, 7.225],
+  minZoom: 15,
+  zoom: 17.5,
+  zoomSnap: 0.1,
+  zoomDelta: 0.1,
+  maxBounds: [[45.807, 6.506], [46.806, 8.982]],
+  zoomAnimation: true,
+})
+
+M.map = map
+
+M.layers = {
+  gris: L.tileLayer.swiss({ layer: 'ch.swisstopo.pixelkarte-grau', maxNativeZoom: 28 }),
+  col:  L.tileLayer.swiss(),
+  img:  L.tileLayer.swiss({ layer: 'ch.swisstopo.swissimage', maxNativeZoom: 28 }),
+}
+
+M.layers.gris.setOpacity(0.7)
+M.layers.gris.addTo(M.map)
+
+L.control.layers(
+  {
+    "Carte couleurs": M.layers.col,
+    "Carte noir/blanc": M.layers.gris,
+    "Photos aériennes": M.layers.img,
+  },
+  {},
+  {
+    position: 'bottomleft'
+  }
+).addTo(M.map);
+
+
+
+M.data = JSON.parse(document.getElementById('cartes_json').value)
+M.selData = M.data
+
+M.keywords = JSON.parse(document.getElementById('keywords_json').value)
+
+
+M.bbox = {
+  xmin: d3.min(M.data, d => d.lng) - 1,
+  xmax: d3.max(M.data, d => d.lng) + 1,
+  ymin: d3.min(M.data, d => d.lat) - 1,
+  ymax: d3.max(M.data, d => d.lat) + 1,
+}
+
+// The markers are in a SVG created with D3.
+
+// Add SVG element to Leaflet's overlay pane.
+M.svg = d3.select(M.map.getPanes().overlayPane)
+  .append('svg')
+  .style('position', 'relative')
+
+// Add a group into which we will render the markers.
+M.markerOverlay = M.svg.append('g')
+
+// Define the projection function
+function proj (lng, lat) {
+  return (lng && lat) ? map.latLngToLayerPoint(new L.LatLng(lat, lng)) : {x: null, y: null}
+}
+
+// Compute the projected coordinates for all marker in order to have valid
+// starting points for the animation.
+M.setup = function () {
+  this.data.forEach(d => {
+    d.pt = proj(d.lng, d.lat)
+    d.ox = d.x = d.pt.x
+    d.oy = d.y = d.pt.y
+    d.periods = JSON.parse(d.periods || '[]').map(v => +v)
+    d.keywords = JSON.parse(d.mots_cles_ids || '[]').map(d => +d)
+
+    // Build the search string
+    d.search = this.sanitizeSearchString(`${d.title} ${d.date}`)
+  })
+
+  // By default we select all data
+  this.selData = this.data
+}
+
+
+M.render = function() {
+  // Calculate the SVG bbox
+  const bbox = {
+    sw: proj(this.bbox.xmin, this.bbox.ymin),
+    ne: proj(this.bbox.xmax, this.bbox.ymax)
+  }
+
+  this.svg
+    .attr('width', bbox.ne.x - bbox.sw.x)
+    .attr('height', bbox.sw.y - bbox.ne.y)
+    .style('left', `${bbox.sw.x}px`)
+    .style('top', `${bbox.ne.y}px`)
+
+  this.markerOverlay.attr('transform', `translate(${-bbox.sw.x}, ${-bbox.ne.y})`)
+
+  // Apply the filters
+  this.applyFilters()
+
+  // Project all items
+  this.selData.forEach(d => {
+    d.pt = proj(d.lng, d.lat)
+    d.ox = d.pt.x
+    d.oy = d.pt.y
+  })
+
+  this.renderMarkers(true)
+  this.updateList()
+}
+
+
+M.renderMarkers = function(runSimulation) {
+  this.markerOverlay
+    .selectAll('circle')
+    .data(M.selData)
+    .join('circle')
+    .attr('class', d => (d.lat && d.lng) ? M.markerClass(d) : 'hidden')
+    .attr('data-id', d => d.id)
+    .attr('id', d => `marker-${d.id}`)
+    .attr('r', 10)
+    .on('click', e => {
+      this.selectItem(parseInt(e.target.getAttribute('data-id')))
+      e.stopPropagation()
+    })
+
+  if (runSimulation) this.runOverlaySimulation()
+}
+
+
+M.markerClass = function(d) {
+  if (M.selection && M.selection == d.id) return 'selected marker'
+  if (M.selection && M.selection !== d.id) return 'inactive marker'
+  return 'marker'
+}
+
+// Marker simulation (to prevent overlap)
+
+M.runOverlaySimulation = function () {
+  // Stop an existing simulation
+  if (this.simulation.running) {
+    this.simulation.instance.stop()
+    this.simulation.running = false
+  }
+
+  // Create the simulation
+  this.simulation.instance = d3.forceSimulation(this.selData)
+    .force('x', d3.forceX(d => d.ox))
+    .force('y', d3.forceY(d => d.oy))
+    .force('collide', d3.forceCollide(12))
+    .on('tick', M.overlaySimulationTick)
+
+  this.simulation.running = true
+}
+
+M.overlaySimulationTick = function () {
+  M.markerOverlay
+    .selectAll('circle')
+    .attr('cx', d => {
+      d.x = d.x ? d.x + d.vx : d.ox + d.vx
+      return d.x
+    })
+    .attr('cy', d => {
+      d.y = d.y ? d.y + d.vy : d.oy + d.vy
+      return d.y
+    })
+}
+
+
+M.selectItem = function (itemId) {
+  this.unselectItems()
+  this.selection = itemId
+  document.getElementById(`imgitem-${itemId}`).classList.add('selected')
+  this.scrollToSelection()
+  this.renderMarkers()
+}
+
+M.unselectItems = function () {
+  this.selection = null
+  document.querySelectorAll('.imgitem').forEach(el => el.classList.remove('selected'))
+  this.renderMarkers()
+}
+
+/**
+ * Makes sure the selected item is visible on the screen.
+ */
+M.scrollToSelection = function () {
+  if (this.selection === null) return
+  this.scrollToElement(
+    document.getElementById(`imgitem-${this.selection}`),
+    document.getElementById('imglist')
+  )
+}
+
+M.scrollToElement = function (el, parent) {
+  const elementRect = el.getBoundingClientRect()
+  const parentRect = parent.getBoundingClientRect()
+
+  // The current scroll position of the parent
+  const scrollTop = parent.scrollTop
+
+  // Distance between the top of the parent to the element
+  const offsetTop = elementRect.top - parentRect.top + scrollTop
+
+  // Height of the parent and the element
+  const parentHeight = parentRect.height
+  const elementHeight = elementRect.height
+
+  // Check if the element is already fully visible inside
+  if (offsetTop >= scrollTop && scrollTop + parentHeight >= offsetTop + elementHeight) {
+    return
+  }
+
+  // Check if the element is partially visible
+  if (offsetTop < scrollTop && offsetTop + elementHeight > scrollTop) {
+    // Element is partially visible at the top of the list.
+    // Scroll it down by the difference plus a small margin.
+    this.scrollElementSmoothlyTo(parent, offsetTop - 10)
+    return
+  }
+  if (offsetTop < scrollTop + parentHeight && offsetTop > scrollTop) {
+    // Element is partially visible at the bottom of the list.
+    // Scroll up by the difference plus a small margin.
+    this.scrollElementSmoothlyTo(parent, offsetTop + elementHeight + 10 - parentHeight)
+    return
+  }
+
+  // Check if the element is hidden on top
+  if (offsetTop < scrollTop) {
+    this.scrollElementSmoothlyTo(parent, offsetTop - 50, 500)
+    return
+  }
+
+  // The element is hidden at the bottom.
+  // There is no need for a condition as we already have covered all other cases.
+  this.scrollElementSmoothlyTo(parent, offsetTop + elementHeight + 50 - parentHeight, 500)
+}
+
+M.scrollElementSmoothlyTo = function(el, newScrollTop, duration) {
+  const currentScrollTop = el.scrollTop
+  d3.transition()
+    .duration(duration || 250)
+    .tween("scroll", () => {
+      const i = d3.interpolateNumber(currentScrollTop, newScrollTop);
+      return t => el.scrollTop = i(t)
+    })
+}
+
+
+M.applyFilters = function () {
+  // By default we select all data
+  this.selData = this.data
+
+  // Filter by timeline
+  if (timeline.selection !== null) {
+    this.selData = this.selData.filter(d => d.periods.indexOf(timeline.selection) > -1)
+  }
+
+  // Filter by location
+  const env = this.map.getBounds()
+  this.selData = this.selData.filter(d => d.lat && d.lng ? env.contains([d.lat, d.lng]) : false)
+
+  // Filter by free search
+  const pattern = this.sanitizeSearchString(
+    document.querySelector('#search input').value
+  )
+
+  if (pattern.length > 0) {
+    const fullTextSearch = new FuzzySearch(this.selData, ['search'], {
+      caseSensitive: false,
+    })
+    const fullTextResult = fullTextSearch.search(pattern)
+
+    // Keyword search
+    this.matchedKeywords = this.keywordSearch(pattern, this.selData)
+    const keywordIds = this.matchedKeywords.map(function (kw) {
+      return kw.id
+    })
+    const keywordIdsObj = {}
+    keywordIds.forEach(kwid => keywordIdsObj[kwid] = true)
+
+    const keywordSearchResult = this.selData.filter(d => {
+      for (let i = 0; i < d.keywords.length; i++) {
+        if (keywordIdsObj[d.keywords[i]] === true) return true
+      }
+      return false
+    })
+
+    // Combine the full text and keyword search results
+    this.selData = this.selData.filter(d => {
+      return (fullTextResult.indexOf(d) > -1 || keywordSearchResult.indexOf(d) > -1)
+    })
+  } else {
+    this.matchedKeywords = []
+  }
+
+  if (this.previousPattern !== pattern) {
+    this.keywordDropdown()
+  }
+  this.previousPattern = pattern
+
+}
+
+
+M.sanitizeSearchString = function (s) {
+  return s.toLowerCase()
+    .replace(/[ÀÁÂÃÄÅ]/g,"a")
+    .replace(/[àáâãäå]/g,"a")
+    .replace(/[ÈÉÊË]/g,"e")
+    .replace(/[ìíîï]/g, 'i')
+    .replace(/[òóôö]/g, 'o')
+    .replace(/[ùúûü]/g, 'u')
+    .replace(/[œ]/g, 'oe')
+    .replace(/[^a-z0-9]/g,' ')
+}
+
+M.keywordSearch = function (pattern, data) {
+  const kwSearch = new FuzzySearch(
+    this.keywords.map(function (kw) {
+      return { id: kw[0], txt: kw[1], parent: kw[2] }
+    }),
+    ['txt'],
+    { caseSensitive: false }
+  )
+  return kwSearch.search(pattern)
+}
+
+M.updateList = function () {
+  const itemList = this.selData.map(d => d.id)
+
+  document.querySelectorAll('.imgitem').forEach(el => {
+    const itemId = parseInt(el.getAttribute('data-id'))
+    if (itemList.indexOf(itemId) > -1) {
+      el.classList.remove('hidden')
+    } else {
+      el.classList.add('hidden')
+    }
+  })
+
+  if (itemList.length === 0) {
+    document.getElementById('no-item-found').classList.remove('hidden')
+  } else {
+    document.getElementById('no-item-found').classList.add('hidden')
+  }
+}
+
+M.keywordDropdown = function () {
+  if (this.matchedKeywords.length === 0) {
+    this.hideDropdown()
+    return
+  }
+
+  // Hide all keywords in the search dropdown
+  document.querySelectorAll('#searchDropdown div').forEach(el => {
+    el.classList.add('hidden')
+  })
+
+  // Display the matched keywords
+  this.matchedKeywords.forEach(kw => {
+    document.getElementById(`kw-${kw.id}`).classList.remove('hidden')
+  })
+
+  // Show the search dropdown
+  document.getElementById('searchDropdown').classList.remove('hidden')
+}
+
+M.findKeywordById = function (keywordId) {
+  for (let i = 0; i < this.keywords.length; i++) {
+    if (this.keywords[i][0] === keywordId) return this.keywords[i][1]
+  }
+  return null
+}
+
+M.handleKeywordClick = function (keywordId) {
+  const kw = M.findKeywordById(+keywordId)
+  if (kw === null) console.warn(`Keyword not found (${keywordId})`)
+  document.querySelector('#search input').value = kw
+  M.render()
+}
+
+M.hideDropdown = function () {
+  document.getElementById('searchDropdown').classList.add('hidden')
+}
+
+M.map.on('zoomend', M.render.bind(M))
+M.map.on('moveend', M.render.bind(M))
+M.map.on('click', M.unselectItems.bind(M))
+
+d3.select('#search input').on('keyup', M.render.bind(M))
+d3.select('#search button').on('change', M.render.bind(M))
+
+document.addEventListener('keyup', function (evt) {
+  if (evt.key === 'Escape') {
+    M.hideDropdown()
+  }
+})
+
+document.addEventListener('click', function (evt) {
+  if (evt.target.tagName === 'INPUT') return
+  M.hideDropdown()
+})
+
+M.setup()
+M.render()
+
+</script>

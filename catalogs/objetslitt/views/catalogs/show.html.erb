@@ -1,0 +1,48 @@
+<% content_for :title do -%>
+  <h1>Littérature et culture matérielle (1830-2020)</h1>
+<% end %>
+
+<div class="home-menu-container">
+  <div class="home-menu-item">
+    <a href="/objetslitt/fr/projet" class="home-menu-item-link">
+      <div>
+        <%= image_tag("chariot.jpg", alt: "Le projet LCM", :class => "home-menu-image") %>
+      </div>
+      <div class="home-menu-item-title">
+        Le projet LCM
+      </div>
+    </a>
+  </div>
+  <div class="home-menu-item">
+    <a href="/objetslitt/fr/livre" class="home-menu-item-link">
+      <div>
+        <%= image_tag("livre.jpg", alt: "Le livre", :class => "home-menu-image") %>
+      </div>
+      <div class="home-menu-item-title">
+        Le livre
+      </div>
+    </a>
+  </div>
+  <div class="home-menu-item">
+      <a href="/objetslitt/fr/donnees" class="home-menu-item-link">
+        <div>
+          <%= image_tag("ballon.jpg", alt: "La base de données", :class => "home-menu-image") %>
+        </div>
+        <div class="home-menu-item-title">
+          La base de données
+        </div>
+      </a>
+  </div>
+  <div class="home-menu-item">
+      <a href="/objetslitt/fr/equipe" class="home-menu-item-link">
+        <div>
+          <%= image_tag("mannequin.jpg", alt: "L'équipe", :class => "home-menu-image") %>
+        </div>
+        <div class="home-menu-item-title">
+          L’équipe
+        </div>
+      </a>
+  </div>
+</div>
+
+<%= render partial: "shared/daily_item" %>

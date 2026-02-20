@@ -1,0 +1,28 @@
+#top-content .items-nav {
+  padding-top: 200px;
+  width: 960px;
+  margin-left: auto;
+  margin-right: auto;
+}
+
+#top-content .items-nav span,
+#top-content .items-nav a,
+#top-content .items-nav div {
+  color: white;
+}
+
+#top-content .nav-left {
+  float: left;
+}
+
+#top-content .nav-right {
+  float: right;
+}
+
+#top-content .nav-center {
+  text-align: center;
+}
+
+#top-content #lang_selection span.disabled {
+  font-family: 'Avenir Black', sans-serif;
+}

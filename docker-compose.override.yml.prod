@@ -1,0 +1,73 @@
+# The following configuration is used for production in conjunction with the
+# main docker-compose.yml. Please follow the instructions in the README.md
+# file to deploy the application.
+
+services:
+  catima-app:
+    image: unillett/catima:app-prod-latest
+    build:
+      context: ./
+      dockerfile: ./docker/Dockerfile
+      target: app-production
+    ports:
+      - "127.0.0.1:8989:80"
+    volumes:
+      - upload-data:/var/www/catima/public/upload
+      - thumbs-data:/var/www/catima/public/thumbs
+      - refile-data:/var/www/catima/public/system/refile
+      - log-data:/var/www/catima/log
+      - exports-data:/var/www/catima/exports
+      - ./config/domains.yml:/var/www/catima/config/domains.yml:ro
+      - ./config/geo_layers.yml:/var/www/catima/config/geo_layers.yml:ro
+      - ./config/restricted_robots.yml:/var/www/catima/config/restricted_robots.yml:ro
+    restart: unless-stopped
+    deploy:
+      mode: global
+      resources:
+        limits:
+          memory: 2000M
+
+  catima-worker:
+    image: unillett/catima:worker-prod-latest
+    build:
+      context: ./
+      dockerfile: ./docker/Dockerfile
+      target: worker-production
+    volumes:
+      - upload-data:/var/www/catima/public/upload
+      - thumbs-data:/var/www/catima/public/thumbs
+      - refile-data:/var/www/catima/public/system/refile
+      - log-data:/var/www/catima/log
+      - exports-data:/var/www/catima/exports
+      - ./config/domains.yml:/var/www/catima/config/domains.yml:ro
+      - ./config/geo_layers.yml:/var/www/catima/config/geo_layers.yml:ro
+      - ./config/restricted_robots.yml:/var/www/catima/config/restricted_robots.yml:ro
+    restart: unless-stopped
+    deploy:
+      mode: global
+      resources:
+        limits:
+          memory: 6000M
+
+  catima-postgres:
+    restart: unless-stopped
+    deploy:
+      mode: global
+      resources:
+        limits:
+          memory: 1000M
+
+  catima-redis:
+    restart: unless-stopped
+    deploy:
+      mode: global
+      resources:
+        limits:
+          memory: 500M
+
+volumes:
+  upload-data:
+  thumbs-data:
+  refile-data:
+  log-data:
+  exports-data:

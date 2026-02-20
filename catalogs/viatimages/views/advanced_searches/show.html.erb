@@ -1,0 +1,48 @@
+<% content_for :title do %>
+  <%= t(".viat-search-results-message_html",
+        :count_delimited => number_with_delimiter(@advanced_search_results.total_count)) %>
+<% end %>
+
+<% content_for :top_content do %>
+  <div class="top-content-type-generic">
+    <%= render("shared/searchlinks") %>
+  </div>
+<% end %>
+
+<div id="main-content">
+  <div id="main-wrapper">
+    <div id="main">
+      <div class="list-title">
+        <% if @advanced_search_results.total_count == 0 %>
+          <%= t(".viat-no-results") %>
+        <% else %>
+          <%= t(".viat-search-results-message_html",
+                :count_delimited => number_with_delimiter(@advanced_search_results.total_count)) %>
+        <% end %>
+
+        <div class="bookmark-links">
+          <% if search_exists_for_user?(@saved_search) %>
+            <%= link_to(
+                  fa_icon("bookmark", :text => t(".searches_remove")),
+                  search_path(I18n.locale, @saved_search.search),
+                  method: :delete
+                ) %>
+          <% else %>
+            <%= link_to(
+                  fa_icon("bookmark-o", :text => t(".searches_add")),
+                  searches_path(I18n.locale, related_search_uuid: @saved_search.uuid),
+                  method: :post
+                ) %>
+          <% end %>
+        </div>
+      </div>
+
+      <div class="images-wrapper">
+        <div class="images">
+          <%= render_item_list(@advanced_search_results) %>
+          <%= paginate(@advanced_search_results.items) %>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

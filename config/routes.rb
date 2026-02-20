@@ -153,7 +153,7 @@ Rails.application.routes.draw do
     resources :memberships, only: %i(index create destroy), path: '_groups'
   end
 
-  devise_for :users, only: :omniauth_callbacks, controllers: { omniauth_callbacks: 'users/omniauth_callbacks' }
+  devise_for :users, only: :omniauth_callbacks, controllers: { omniauth_callbacks: 'users/omniauth_callbacks' } if auth_providers.any?
 
   # ===========================================================================
   # System administration

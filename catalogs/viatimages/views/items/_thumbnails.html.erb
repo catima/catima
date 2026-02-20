@@ -1,0 +1,21 @@
+<div class="row">
+  <% item_list.items.each_with_index do |item, i| %>
+    <% i += 1 %>
+    <div class="col-md-3 col-xs-6">
+      <div class="thumbnail">
+        <%= item_list_link(item_list, item, i ) do %>
+          <%= item_thumbnail(item, :style => :medium) %>
+        <% end %>
+        <div class="caption">
+          <%= item_list_link(item_list, item, i, truncate(item_display_name(item), :length => 50)) %>
+        </div>
+      </div>
+    </div>
+
+    <% if i.modulo(4).zero? %>
+      </div>
+      <div class="row">
+    <% end %>
+
+  <% end %>
+</div>

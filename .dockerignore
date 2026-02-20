@@ -1,0 +1,70 @@
+# Git files
+.git
+.gitignore
+.github
+
+# Documentation
+README.md
+
+# Docker files
+docker-compose*.yml*
+.dockerignore
+supervisord.log
+supervisord.pid
+
+# Environment files
+.env
+example.env
+
+# IDE & system files
+.vscode
+.idea
+.DS_Store
+Thumbs.db
+
+# Test & development files
+test/
+spec/
+coverage/
+.rspec
+.simplecov
+Procfile.dev
+
+# Config files
+config/database.yml
+config/domains.yml
+config/geo_layers.yml
+config/restricted_robots.yml
+
+# Node modules
+node_modules/
+
+# Asset files
+public/packs/*
+public/packs-test/*
+public/assets/*
+public/system/*
+public/thumbs/*
+public/upload/*
+public/robots.txt
+app/assets/i18n/*
+exports/*
+
+# Logs
+*.log
+log/*
+
+# Test catalog
+catalogs/custom-with-dash/
+
+# Swagger generated file
+swagger/v3/*
+
+# Temporary files
+tmp/
+.cache/
+.sass-cache/
+
+# Security
+*.pem
+*.key

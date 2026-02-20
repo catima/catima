@@ -2,6 +2,7 @@
 docker/.env
 supervisord.log
 supervisord.pid
+docker-compose.override.yml
 
 # Ignore bundler config.
 /.bundle
@@ -10,9 +11,6 @@ supervisord.pid
 /log/*.log
 /log/*.log.*
 /tmp
-
-# Ignore private notes
-/_notes
 
 # Ignore test reports
 /brakeman-output.*
@@ -41,8 +39,7 @@ supervisord.pid
 # Ignore refile uploads
 /public/system/
 
-# Ignore catalog-specific overrides
-/catalogs/
+# Ignore uploads and thumbnails
 /public/upload/
 /public/thumbs/
 
@@ -57,9 +54,6 @@ spec/examples.txt
 !/exports/1_one.test
 !/exports/2_two.test
 
-# Ignore RubyMine files
-.idea
-
 # Ignore Windows files
 dump.rdb
 
@@ -68,6 +62,7 @@ dump.rdb
 !/swagger/v3/.keep
 
 # Ignore IDE config
+.idea
 .editorconfig
 
 # Ignore byebug history
