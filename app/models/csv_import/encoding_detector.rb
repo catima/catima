@@ -78,20 +78,21 @@ class CSVImport::EncodingDetector
     bom_result = detect_by_bom(raw)
     return bom_result if bom_result
 
-    # --- Step 2: Pure ASCII content -------------------------------------------
+    # --- Step 2: UTF-16LE detection without BOM --------------------------------
+    # Must run BEFORE pure_ascii? and valid_utf8? because UTF-16LE ASCII-only
+    # text contains only null bytes (0x00) and ASCII bytes, all of which are
+    # <= 0x7F — causing pure_ascii? to return true and masking the real encoding.
+    utf16le_result = detect_utf16le_without_bom(raw)
+    return utf16le_result if utf16le_result
+
+    # --- Step 3: Pure ASCII content -------------------------------------------
     # If all bytes are in the 0x00-0x7F range, the file is pure ASCII,
     # which is a strict subset of UTF-8 (and all other supported encodings).
     return { encoding: "UTF-8", confidence: 1.0, has_bom: false } if pure_ascii?(raw)
 
-    # --- Step 3: Strict UTF-8 validation --------------------------------------
+    # --- Step 4: Strict UTF-8 validation --------------------------------------
     # Ruby can validate whether a byte sequence is a legal UTF-8 string.
     return { encoding: "UTF-8", confidence: 0.99, has_bom: false } if valid_utf8?(raw)
-
-    # --- Step 4: UTF-16LE detection without BOM --------------------------------
-    # In UTF-16LE, common ASCII characters occupy 2 bytes: [value, 0x00].
-    # This creates a detectable statistical pattern: many zeros at odd byte positions.
-    utf16le_result = detect_utf16le_without_bom(raw)
-    return utf16le_result if utf16le_result
 
     # --- Step 5: macRoman vs Windows-1252 disambiguation ---------------------
     # At this point we know the file contains bytes >= 0x80 (non-ASCII)
@@ -137,6 +138,8 @@ class CSVImport::EncodingDetector
   # This translates to: at odd positions (index 1, 3, 5, …) there are many
   # zeros, while at even positions (index 0, 2, 4, …) there are the actual
   # non-null values.
+  # NOTE: This check runs before valid_utf8? because UTF-16LE ASCII-only text
+  # produces null-interleaved bytes that happen to be valid UTF-8.
   def detect_utf16le_without_bom(raw)
     sample = raw[0, [raw.bytesize, 2048].min]
     total_pairs = sample.bytesize / 2
