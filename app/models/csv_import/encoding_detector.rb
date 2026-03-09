@@ -12,9 +12,6 @@
 #   - Windows-1252 (CP1252, default encoding of Excel on Windows)
 #   - macRoman     (Mac OS Roman, default encoding of Excel/Numbers on Mac)
 class CSVImport::EncodingDetector
-  # Supported encodings
-  SUPPORTED_ENCODINGS = %w[UTF-8 macRoman Windows-1252 UTF-16LE].freeze
-
   # BOM (Byte Order Mark) — file start markers
   UTF8_BOM = "\xEF\xBB\xBF".b.freeze # EF BB BF
   UTF16LE_BOM = "\xFF\xFE".b.freeze # FF FE
