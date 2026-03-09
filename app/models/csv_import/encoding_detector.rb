@@ -19,6 +19,9 @@ class CSVImport::EncodingDetector
   UTF8_BOM = "\xEF\xBB\xBF".b.freeze # EF BB BF
   UTF16LE_BOM = "\xFF\xFE".b.freeze # FF FE
 
+  # Maximum number of bytes sampled for Latin encoding disambiguation.
+  LATIN_SAMPLE_SIZE = 65_536 # 64 KB
+
   # Bytes that are **undefined** in Windows-1252 but valid in macRoman.
   # If these bytes appear in the file, it is a strong signal for macRoman
   # since no correct software should produce these bytes in CP1252.
@@ -178,28 +181,18 @@ class CSVImport::EncodingDetector
   #     in macRoman → presence = strong macRoman signal.
   #   - Some CP1252 bytes correspond to Windows typographic characters
   #     (smart quotes, dashes, € sign) → CP1252 signal.
+  #
+  # A single pass on a sample avoids allocating an intermediate array.
   def disambiguate_latin_encodings(raw)
-    high_bytes = raw.bytes.select { |b| b >= 0x80 }
-    return { encoding: "UTF-8", confidence: 1.0, has_bom: false } if high_bytes.empty?
-
-    macroman_score, cp1252_score = latin_encoding_scores(high_bytes)
-
-    if macroman_score > cp1252_score
-      { encoding: "macRoman", confidence: 0.75, has_bom: false }
-    elsif cp1252_score > 0
-      { encoding: "Windows-1252", confidence: 0.70, has_bom: false }
-    else
-      # No distinctive signal: default to Windows-1252
-      # (far more widespread than macRoman for current CSV files)
-      { encoding: "Windows-1252", confidence: 0.50, has_bom: false }
-    end
-  end
-
-  def latin_encoding_scores(high_bytes)
+    sample = raw[0, [raw.bytesize, LATIN_SAMPLE_SIZE].min]
     macroman_score = 0
     cp1252_score = 0
+    high_byte_count = 0
 
-    high_bytes.each do |b|
+    sample.each_byte do |b|
+      next if b < 0x80
+
+      high_byte_count += 1
       if CP1252_UNDEFINED_BYTES.include?(b)
         # These bytes CANNOT appear in a real Windows-1252 file;
         # their presence is a very strong signal for macRoman.
@@ -217,6 +210,16 @@ class CSVImport::EncodingDetector
       # they cannot help distinguish them.
     end
 
-    [macroman_score, cp1252_score]
+    return { encoding: "UTF-8", confidence: 1.0, has_bom: false } if high_byte_count.zero?
+
+    if macroman_score > cp1252_score
+      { encoding: "macRoman", confidence: 0.75, has_bom: false }
+    elsif cp1252_score > 0
+      { encoding: "Windows-1252", confidence: 0.70, has_bom: false }
+    else
+      # No distinctive signal: default to Windows-1252
+      # (far more widespread than macRoman for current CSV files)
+      { encoding: "Windows-1252", confidence: 0.50, has_bom: false }
+    end
   end
 end
