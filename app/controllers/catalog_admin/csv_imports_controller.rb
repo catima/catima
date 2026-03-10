@@ -36,7 +36,7 @@ class CatalogAdmin::CSVImportsController < CatalogAdmin::BaseController
     @csv_import = CSVImport.new(params) do |import|
       import.creator = current_user
       import.item_type = item_type
-      import.file_encoding = "detect"
+      import.file_encoding = "detect" if params.nil?
     end
   end
 
