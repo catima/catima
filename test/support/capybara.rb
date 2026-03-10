@@ -1,23 +1,29 @@
 # Capybara + Selenium Chrome allow JS testing via headless webkit
 require "capybara/rails"
 
-Capybara.server_port = 3000
+Capybara.server = :puma, { Silent: true, Threads: "1:1" }
 
 if ENV['DOCKER_RUNNING'].present?
   Capybara.javascript_driver = :remote_chrome
   Capybara.configure do |config|
-    config.server = :puma, { Silent: true }
     config.server_host = "catima-app"
     config.server_port = 4000
   end
 else
   Capybara.javascript_driver = :chrome
+  Capybara.server_port = 3000
 end
 
 def driver_params
   options = Selenium::WebDriver::Chrome::Options.new
-  options.add_argument('disable-gpu')
-  options.add_argument('headless') unless ENV['HEADLESS'] == '0'
+  options.add_argument('--disable-gpu')
+  options.add_argument('--no-sandbox')
+  options.add_argument('--window-size=1920,1200')
+  options.add_argument('--disable-smooth-scrolling')
+  options.add_argument('--disable-popup-blocking')
+  options.add_argument('--no-first-run')
+  options.add_argument('--disable-dev-shm-usage')
+  options.add_argument('--headless=new') unless ENV['HEADLESS'] == '0'
   { options: options }
 end
 
@@ -42,9 +48,11 @@ class ActionDispatch::IntegrationTest
   # Make the Capybara DSL available in all integration tests
   include Capybara::DSL
 
+  self.use_transactional_tests = true
+
   setup do
     Capybara.use_default_driver
-    Capybara.current_session.driver.browser.clear_cookies
+    Capybara.reset_sessions!
   end
 
   def use_javascript_capybara_driver
@@ -55,15 +63,3 @@ class ActionDispatch::IntegrationTest
     browser.manage.delete_all_cookies
   end
 end
-
-# Monkey patch so that AR shares a single DB connection among all threads.
-# This ensures data consistency between the test thread and poltergeist thread.
-class ActiveRecord::Base
-  mattr_accessor :shared_connection
-  @@shared_connection = nil
-
-  def self.connection
-    @@shared_connection || ConnectionPool::Wrapper.new(:size => 1) { retrieve_connection }
-  end
-end
-ActiveRecord::Base.shared_connection = ActiveRecord::Base.connection
