@@ -6,10 +6,7 @@ class CatalogAdmin::PagesTest < ActionDispatch::IntegrationTest
 
   test "create a page" do
     log_in_as("one-admin@example.com", "password")
-    visit("/one/en/admin")
-    find('a.nav-link', text: 'Setup', exact_text: true).click
-    click_on("Pages")
-    click_on("New page")
+    visit("/one/en/admin/_pages/new")
 
     fill_in("Slug", :with => "hello")
     find('div.translatedTextField input[data-locale=en]').base.send_keys('Hello, World...')
@@ -30,10 +27,7 @@ class CatalogAdmin::PagesTest < ActionDispatch::IntegrationTest
 
   test "cannot create a page with existing item type slug" do
     log_in_as("one-admin@example.com", "password")
-    visit("/one/en/admin")
-    find('a.nav-link', text: 'Setup', exact_text: true).click
-    click_on("Pages")
-    click_on("New page")
+    visit("/one/en/admin/_pages/new")
 
     fill_in("Slug", :with => "books")
     find('div.translatedTextField input[data-locale=en]').base.send_keys('Existing slug...')
@@ -47,10 +41,7 @@ class CatalogAdmin::PagesTest < ActionDispatch::IntegrationTest
 
   test "create pages for two languages" do
     log_in_as("multilingual-admin@example.com", "password")
-    visit("/multilingual/en/admin")
-    find('a.nav-link', text: 'Setup', exact_text: true).click
-    click_on("Pages")
-    click_on("New page")
+    visit("/multilingual/en/admin/_pages/new")
 
     fill_in("Slug", :with => "hello")
     find('div.translatedTextField input[data-locale=en]').base.send_keys('Hello')
@@ -79,9 +70,8 @@ class CatalogAdmin::PagesTest < ActionDispatch::IntegrationTest
 
   test "delete a page" do
     log_in_as("one-admin@example.com", "password")
-    visit("/one/en/admin")
-    find('a.nav-link', text: 'Setup', exact_text: true).click
-    click_on("Pages")
+    visit("/one/en/admin/_pages")
+
     assert_difference("Page.count", -1) do
       page.accept_alert(:wait => 2) do
         first("a.page-action-delete").click
@@ -92,9 +82,7 @@ class CatalogAdmin::PagesTest < ActionDispatch::IntegrationTest
 
   test "delete a page with menu item" do
     log_in_as("one-admin@example.com", "password")
-    visit("/one/en/admin")
-    find('a.nav-link', text: 'Setup', exact_text: true).click
-    click_on("Pages")
+    visit("/one/en/admin/_pages")
 
     while page.has_content?('Delete') do
       page.accept_alert(:wait => 2) do
@@ -102,7 +90,7 @@ class CatalogAdmin::PagesTest < ActionDispatch::IntegrationTest
       end
     end
 
-    click_on("New page")
+    visit("/one/en/admin/_pages/new")
     fill_in("Slug", :with => "hello")
     find('div.translatedTextField input[data-locale=en]').base.send_keys('Hello')
     click_on("Create page")
