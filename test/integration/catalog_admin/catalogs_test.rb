@@ -16,7 +16,7 @@ class CatalogAdmin::CatalogsTest < ActionDispatch::IntegrationTest
 
     click_on("Save style")
     assert_equal(
-      JSON.parse(catalogs(:one).style),
+      JSON.parse(catalogs(:one).reload.style),
       {
         "main-title" => {
           "fontSize" => "14pt",

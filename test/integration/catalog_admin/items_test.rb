@@ -8,7 +8,7 @@ class CatalogAdmin::ItemsTest < ActionDispatch::IntegrationTest
   test "create an item" do
     log_in_as("one-editor@example.com", "password")
     visit("/one/en/admin")
-    click_on("Data")
+    find('a.nav-link', text: 'Data', exact_text: true).click
     click_on("Authors")
     click_on("New Author")
 
@@ -86,7 +86,7 @@ class CatalogAdmin::ItemsTest < ActionDispatch::IntegrationTest
   test "create a multilingual item" do
     log_in_as("multilingual-editor@example.com", "password")
     visit("/multilingual/en/admin")
-    click_on("Data")
+    find('a.nav-link', text: 'Data', exact_text: true).click
     click_on("Authors")
     click_on("New Author")
 
@@ -118,7 +118,7 @@ class CatalogAdmin::ItemsTest < ActionDispatch::IntegrationTest
   test "edit an item" do
     log_in_as("one-admin@example.com", "password")
     visit("/one/en/admin")
-    click_on("Data")
+    find('a.nav-link', text: 'Data', exact_text: true).click
     click_on("Authors")
     first("a.item-action-edit").click
 
@@ -157,7 +157,7 @@ class CatalogAdmin::ItemsTest < ActionDispatch::IntegrationTest
   test "delete an item" do
     log_in_as("one-admin@example.com", "password")
     visit("/one/en/admin")
-    click_on("Data")
+    find('a.nav-link', text: 'Data', exact_text: true).click
     click_on("Authors")
 
     assert_difference("Item.count", -1) do
@@ -171,7 +171,7 @@ class CatalogAdmin::ItemsTest < ActionDispatch::IntegrationTest
   test "duplicate an item" do
     log_in_as("one-admin@example.com", "password")
     visit("/one/en/admin")
-    click_on("Data")
+    find('a.nav-link', text: 'Data', exact_text: true).click
     click_on("Authors")
 
     assert_difference("Item.count", +1) do
@@ -193,7 +193,7 @@ class CatalogAdmin::ItemsTest < ActionDispatch::IntegrationTest
       click_on("Create item type")
     end
 
-    click_on('Data')
+    find('a.nav-link', text: 'Data', exact_text: true).click
     click_on('Computers')
     assert(page.has_content?('This item type does not have any fields.'))
   end

@@ -6,7 +6,7 @@ class CatalogAdmin::ContainersTest < ActionDispatch::IntegrationTest
   test "create a container" do
     log_in_as("one-admin@example.com", "password")
     visit("/one/en/admin")
-    click_on("Setup")
+    find('a.nav-link', text: 'Setup', exact_text: true).click
     click_on('Pages')
     click_on('New page')
 

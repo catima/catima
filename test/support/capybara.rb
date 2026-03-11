@@ -19,6 +19,7 @@ def driver_params
   options.add_argument('--disable-gpu')
   options.add_argument('--no-sandbox')
   options.add_argument('--window-size=1920,1200')
+  options.add_argument('--force-device-scale-factor=1')
   options.add_argument('--disable-smooth-scrolling')
   options.add_argument('--disable-popup-blocking')
   options.add_argument('--no-first-run')
@@ -49,6 +50,7 @@ class ActionDispatch::IntegrationTest
   include Capybara::DSL
 
   self.use_transactional_tests = true
+  self.lock_threads = false
 
   setup do
     Capybara.use_default_driver
