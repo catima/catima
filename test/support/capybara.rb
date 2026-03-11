@@ -50,7 +50,6 @@ class ActionDispatch::IntegrationTest
   include Capybara::DSL
 
   self.use_transactional_tests = true
-  self.lock_threads = false
 
   setup do
     Capybara.use_default_driver
