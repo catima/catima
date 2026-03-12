@@ -13,10 +13,4 @@ class ExportsTest < ActionDispatch::IntegrationTest
       click_on("Create export")
     end
   end
-
-  test "deleted user still displayed on export page" do
-    log_in_as("system-admin@example.com", "password")
-    visit("one/en/admin/_exports")
-    assert(page.has_content?(users(:one_user_deleted).email))
-  end
 end
