@@ -93,7 +93,7 @@ class CSVImport::EncodingDetectorTest < ActiveSupport::TestCase
   # ---------------------------------------------------------------------------
 
   test "strip_bom removes UTF-8 BOM" do
-    str = "\xEF\xBB\xBFhello".force_encoding("UTF-8")
+    str = "\xEF\xBB\xBFhello".dup.force_encoding("UTF-8")
     assert_equal("hello", CSVImport::EncodingDetector.strip_bom(str))
   end
 
