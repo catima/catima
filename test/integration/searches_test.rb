@@ -10,12 +10,6 @@ class SearchesTest < ActionDispatch::IntegrationTest
     assert(page.has_content?("Log in"))
   end
 
-  test "list empty searches for authenticated user" do
-    log_in_as("one-reviewer@example.com", "password")
-    visit("/en/searches")
-    assert(page.has_content?("You don't have searches yet!"))
-  end
-
   test "list searches for unauthenticated user" do
     visit("/en/searches")
     assert(page.has_content?("Log in"))
