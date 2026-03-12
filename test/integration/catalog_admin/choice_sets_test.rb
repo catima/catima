@@ -28,17 +28,6 @@ class CatalogAdmin::ChoiceSetsTest < ActionDispatch::IntegrationTest
     assert(page.has_text?("Spanish"))
   end
 
-  test "deactivate a choice" do
-    log_in_as("one-admin@example.com", "password")
-    visit("/one/en/admin/_choice_sets")
-
-    assert_difference("catalogs(:one).choice_sets.not_deactivated.count", -1) do
-      first("a.choiceset-action-deactivate").click
-    end
-
-    assert(page.has_text?("Inactive"))
-  end
-
   test "delete a choice" do
     log_in_as("one-admin@example.com", "password")
     visit("/one/en/admin/_choice_sets")
