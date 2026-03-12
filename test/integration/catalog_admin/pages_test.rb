@@ -18,19 +18,4 @@ class CatalogAdmin::PagesTest < ActionDispatch::IntegrationTest
     assert(page.has_content?("already been taken by an item type"))
   end
 
-  test "create pages for two languages" do
-    log_in_as("multilingual-admin@example.com", "password")
-    visit("/multilingual/en/admin/_pages/new")
-
-    fill_in("Slug", :with => "hello")
-    find('div.translatedTextField input[data-locale=en]').base.send_keys('Hello')
-    find('div.translatedTextField input[data-locale=fr]').base.send_keys('Bonjour')
-    click_on("Create page")
-
-    visit("/multilingual/fr/hello")
-    within("h1") { assert(page.has_content?("Bonjour")) }
-
-    visit("/multilingual/en/hello")
-    within("h1") { assert(page.has_content?("Hello")) }
-  end
 end

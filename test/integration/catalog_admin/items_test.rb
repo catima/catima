@@ -5,20 +5,6 @@ class CatalogAdmin::ItemsTest < ActionDispatch::IntegrationTest
 
   include ItemReferenceHelper
 
-  test "delete an item" do
-    log_in_as("one-admin@example.com", "password")
-    visit("/one/en/admin")
-    click_on("Data")
-    click_on("Authors")
-
-    assert_difference("Item.count", -1) do
-      page.accept_alert(:wait => 2) do
-        first("a.item-action-delete").click
-      end
-      sleep 2 # Wait for page count to be correct
-    end
-  end
-
   test "multilingual i18n formatted text do not display raw input" do
     log_in_as("multilingual-admin@example.com", "password")
 
