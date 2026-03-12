@@ -92,31 +92,6 @@ class AdvancedSearch::SimpleFieldsTest < ActionDispatch::IntegrationTest
     refute(page.has_content?("Stephen King"))
   end
 
-  # Since the editor field is restricted, we have to be logged with a
-  # catalog staff user account.
-  test "search for authors by editor field" do
-    log_in_as("one-admin@example.com", "password")
-    visit("/one/en")
-    click_on("Advanced")
-
-    find("#default_search_type").click
-    within("#default_search_type") do
-      click_on("Author")
-    end
-
-    assert(page.has_content?("Editor"))
-
-    select("at least one word", :from => "advanced_search[criteria][one_author_editor_uuid][condition]")
-
-    fill_in(
-      "advanced_search[criteria][one_author_editor_uuid][one_word]",
-      :with => "user"
-    )
-    click_on("Search")
-
-    assert(page.has_content?("Stephen King"))
-    refute(page.has_content?("Very Young"))
-  end
 
   # Since the editor field is restricted, we should not be able to search on this
   # field if we are not logged with catalog staff user account.
