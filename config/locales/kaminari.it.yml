@@ -1,10 +1,10 @@
 it:
   views:
     pagination:
-      first: "&laquo; Primo"
-      last: "Ultimo &raquo;"
-      previous: "&lsaquo; Precedente"
-      next: "Prossimo &rsaquo;"
+      first: "&laquo;"
+      last: "&raquo;"
+      previous: "&lsaquo;"
+      next: "&rsaquo;"
       truncate: "&hellip;"
   helpers:
     page_entries_info:
