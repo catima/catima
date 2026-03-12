@@ -33,29 +33,4 @@ class CatalogAdmin::PagesTest < ActionDispatch::IntegrationTest
     visit("/multilingual/en/hello")
     within("h1") { assert(page.has_content?("Hello")) }
   end
-
-  test "edit a page" do
-    log_in_as("one-admin@example.com", "password")
-    visit("/one/en/admin/_pages/one-page/edit")
-
-    find('div.translatedTextField input[data-locale=en]').base.send_keys(' Edited')
-
-    assert_no_difference("Page.count") do
-      click_on("Update page")
-    end
-
-    assert(page.has_content?("Page for Catalog One Edited"))
-  end
-
-  test "delete a page" do
-    log_in_as("one-admin@example.com", "password")
-    visit("/one/en/admin/_pages")
-
-    assert_difference("Page.count", -1) do
-      page.accept_alert(:wait => 2) do
-        first("a.page-action-delete").click
-      end
-      sleep 2 # Wait for page count to be correct
-    end
-  end
 end

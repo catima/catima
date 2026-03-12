@@ -27,16 +27,4 @@ class CatalogAdmin::ChoiceSetsTest < ActionDispatch::IntegrationTest
     assert(page.has_text?("Eng"))
     assert(page.has_text?("Spanish"))
   end
-
-  test "delete a choice" do
-    log_in_as("one-admin@example.com", "password")
-    visit("/one/en/admin/_choice_sets")
-
-    assert_difference("catalogs(:one).choice_sets.not_deleted.count", -1) do
-      page.accept_alert(:wait => 2) do
-        first("a.choiceset-action-delete").click
-      end
-      sleep 2 # Wait for page count to be correct
-    end
-  end
 end

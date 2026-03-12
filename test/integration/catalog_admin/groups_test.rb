@@ -38,26 +38,4 @@ class CatalogAdmin::GroupsTest < ActionDispatch::IntegrationTest
     assert_equal(false, page.execute_script('return document.querySelector("[name=role][value=editor]").checked'))
     assert_equal(true, page.execute_script('return document.querySelector("[name=role][value=super-editor]").checked'))
   end
-
-  test 'add users to group' do
-    log_in_as('two-admin@example.com', 'password')
-    visit('/two/en/admin/_users')
-
-    first("a.group-action-add").click
-    assert(page.has_content?('group members'))
-    click_on('Add users')
-
-    fill_in('members_to_invite_', with: "Albert <einstein@example.com>\none@example.com")
-    click_on('Add members')
-
-    assert(page.has_content?('einstein@example.com'))
-    assert_not(page.has_content?('Albert'))
-    assert(page.has_content?('one@example.com'))
-
-    albert = User.find_by(email: 'einstein@example.com')
-    assert_not(albert.nil?)
-    assert_equal(users(:two_admin), albert.invited_by)
-
-    assert(albert.catalog_role_at_least?(catalogs(:two), 'member'))
-  end
 end

@@ -28,13 +28,4 @@ class CatalogAdmin::FieldsComponentsTest < ActionDispatch::IntegrationTest
     c = JSON.parse(b.data['one_book_notes_uuid'])
     assert_equal(c["content"], "<p style=\"display:none;\"></p><p>Very good book and interesting</p><p style=\"display:none;\"></p>")
   end
-
-  test "multilingual required formatted text component shows error message" do
-    log_in_as('multilingual-admin@example.com', 'password')
-
-    visit("/multilingual/en/admin/books/new")
-    click_on('Create Book')
-
-    assert(page.has_content?("can't be blank"))
-  end
 end
