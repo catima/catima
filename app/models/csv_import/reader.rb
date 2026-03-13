@@ -18,8 +18,14 @@ class CSVImport::Reader
     if specified_encoding
       contents.force_encoding(specified_encoding)
     else
-      guess_and_force_encoding
+      detect_and_force_encoding
     end
+
+    # If the file is UTF-16LE, we need to convert it to UTF-8 for CSV parsing.
+    @contents = contents.encode("UTF-8") if contents.encoding == Encoding::UTF_16LE
+
+    # Strip the BOM if present, since it can interfere with CSV parsing.
+    @contents = CSVImport::EncodingDetector.strip_bom(@contents)
   end
 
   # Parses the CSV file into an Array of rows. Each row is a Hash-like object
@@ -30,24 +36,10 @@ class CSVImport::Reader
 
   private
 
-  def guess_and_force_encoding
-    encodings = [contents.encoding, *possible_encodings].uniq
-
-    found = encodings.find do |enc|
-      contents.force_encoding(enc)
-      begin
-        %w(“ ” ‘ ’ … – —).any? { |c| contents.include?(c.encode(enc)) }
-      rescue Encoding::UndefinedConversionError
-        false
-      end
-    end
-
-    contents.force_encoding(encodings.first) unless found
-  end
-
-  def possible_encodings
-    CSVImport::ENCODINGS.map do |enc|
-      Encoding.find(enc)
-    end
+  def detect_and_force_encoding
+    result = CSVImport::EncodingDetector.detect_from_string(contents)
+    encoding = result[:encoding]
+    encoding = CSVImport::ENCODINGS.first if encoding == "unknown"
+    contents.force_encoding(encoding)
   end
 end
