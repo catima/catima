@@ -10,7 +10,7 @@
 // Read Sprockets README (https://github.com/rails/sprockets#sprockets-directives) for details
 // about supported directives.
 //
-//= require autosize
+//= require autosize/dist/autosize
 //= require cocoon
 //= require refile
 //= require_tree ./application

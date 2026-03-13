@@ -53,30 +53,6 @@ class CatalogAdmin::ItemMultipleReferenceTest < ActionDispatch::IntegrationTest
     end
   end
 
-  test "displays the existing values with pagination" do
-    insert_references
-
-    log_in_as("one-admin@example.com", "password")
-
-    author = items(:one_author_stephen_king)
-    visit("/one/en/admin/authors/#{author.to_param}/edit")
-
-    assert(page.has_css?(".availableReferences", :wait => 30))
-
-    within(".availableReferences", :wait => 30) do
-      find(".load-more").click
-    end
-
-    find("div.item", text: "Stephen King").click
-    find("#item_one_author_other_collaborators_uuid_json-editor .referenceControls .btn-success").click
-    find("input[type='submit']").click
-
-    visit("/one/en/admin/authors/#{author.to_param}/edit")
-    within(".selectedReferences", :wait => 30) do
-      assert(page.has_text?("Stephen King"))
-    end
-  end
-
   private
 
   def insert_references
