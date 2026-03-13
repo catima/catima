@@ -128,7 +128,7 @@ class ViatimagesPagesController < PagesController
       "(data->>'#{images_geo_features_field.uuid}')::jsonb @> ?", "[\"#{item_id}\"]"
     ).pluck(:id)
 
-    return [] unless geo_images_ids.present?
+    return [] if geo_images_ids.blank?
 
     geojson(images_item_type, images_geo_field, geo_images_ids)
   end
@@ -147,7 +147,7 @@ class ViatimagesPagesController < PagesController
       "(data->>'#{corpus_field.uuid}')::jsonb = ?", item_id
     ).pluck(:id)
 
-    return [] unless corpus_images_ids.present?
+    return [] if corpus_images_ids.blank?
 
     geojson(images_item_type, images_geo_field, corpus_images_ids)
   end

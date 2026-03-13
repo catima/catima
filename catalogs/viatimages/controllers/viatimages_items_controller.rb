@@ -67,7 +67,7 @@ class ViatimagesItemsController < ItemsController
   def show
     super
 
-    return unless @item.present?
+    return if @item.blank?
     # To show a corpus we rather show the list of images where the corpus
     # details are rendered at the top of the image list.
     return redirect_to items_path(item_type_slug: "images", corpus: @item.id) if @item_type.slug == "corpus"

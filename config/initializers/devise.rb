@@ -240,16 +240,16 @@ Devise.setup do |config|
   if ENV['AUTH_GITHUB_APP_ID'].presence
     Rails.application.config.middleware.use OmniAuth::Builder do
       provider :github,
-               ENV['AUTH_GITHUB_APP_ID'],
-               ENV['AUTH_GITHUB_APP_SECRET'],
+               ENV.fetch('AUTH_GITHUB_APP_ID', nil),
+               ENV.fetch('AUTH_GITHUB_APP_SECRET', nil),
                scope: "user:email"
     end
   end
   if ENV['AUTH_FACEBOOK_APP_ID'].presence
     Rails.application.config.middleware.use OmniAuth::Builder do
       provider :facebook,
-               ENV['AUTH_FACEBOOK_APP_ID'],
-               ENV['AUTH_FACEBOOK_APP_SECRET'],
+               ENV.fetch('AUTH_FACEBOOK_APP_ID', nil),
+               ENV.fetch('AUTH_FACEBOOK_APP_SECRET', nil),
                scope: "email",
                info_fields: 'email'
     end
@@ -257,8 +257,8 @@ Devise.setup do |config|
   if ENV['AUTH_SHIB_APP_ID'].presence
     Rails.application.config.middleware.use OmniAuth::Builder do
       provider :shibboleth,
-               shib_session_id_field: ENV['AUTH_SHIB_SESSION_ID'],
-               shib_application_id_field: ENV['AUTH_SHIB_APP_ID'],
+               shib_session_id_field: ENV.fetch('AUTH_SHIB_SESSION_ID', nil),
+               shib_application_id_field: ENV.fetch('AUTH_SHIB_APP_ID', nil),
                uid_field: 'eppn',
                info_fields: { email: 'mail' }
     end

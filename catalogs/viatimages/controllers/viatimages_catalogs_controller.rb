@@ -50,7 +50,7 @@ class ViatimagesCatalogsController < CatalogsController
     corpus_type_items = {}
     corpus_items.each do |corpus|
       corpus_type_items[corpus] = {
-        link: "/#{[@catalog.slug, I18n.locale, "images?corpus=#{corpus.id}"].join("/")}",
+        link: "/#{[@catalog.slug, I18n.locale, "images?corpus=#{corpus.id}"].join('/')}",
         count: corpus_counts[corpus.id.to_s] || 0
       }
     end
@@ -76,7 +76,7 @@ class ViatimagesCatalogsController < CatalogsController
       WHERE item_type_id = #{image_type.id}
         AND data->>'#{domain_field.uuid}' IS NOT NULL
       GROUP BY domain_id
-    ").to_a.each_with_object({}) { |row, hash| hash[row['id']] = row['count'] }
+    ").to_a.to_h { |row| [row['id'], row['count']] }
 
     # Get all domain choices at once
     domain_choices = Choice.where(choice_set_id: domain_choice_set.id).sorted
@@ -84,7 +84,7 @@ class ViatimagesCatalogsController < CatalogsController
     domain_choice_set_items = {}
     domain_choices.each do |domain|
       domain_choice_set_items[domain] = {
-        link: "/#{[@catalog.slug, I18n.locale, "images?domaine=#{domain.id}"].join("/")}",
+        link: "/#{[@catalog.slug, I18n.locale, "images?domaine=#{domain.id}"].join('/')}",
         count: domain_counts[domain.id] || 0
       }
     end
