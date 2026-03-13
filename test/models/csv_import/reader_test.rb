@@ -86,7 +86,7 @@ class CSVImport::ReaderTest < ActiveSupport::TestCase
     reader = CSVImport::Reader.new(file)
     assert_equal("Windows-1252", reader.encoding.to_s)
     assert_equal(1, reader.rows.count)
-    assert_equal("caf\xE9".force_encoding("Windows-1252"), reader.rows[0]["name"])
+    assert_equal("caf\xE9".dup.force_encoding("Windows-1252"), reader.rows[0]["name"])
   end
 
   # ---------------------------------------------------------------------------
@@ -100,7 +100,7 @@ class CSVImport::ReaderTest < ActiveSupport::TestCase
     reader = CSVImport::Reader.new(file)
     assert_equal("macRoman", reader.encoding.to_s)
     assert_equal(1, reader.rows.count)
-    assert_equal("\x81test".force_encoding("macRoman"), reader.rows[0]["name"])
+    assert_equal("\x81test".dup.force_encoding("macRoman"), reader.rows[0]["name"])
   end
 
   # ---------------------------------------------------------------------------

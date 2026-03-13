@@ -62,11 +62,6 @@ gem 'redis', "~> 5.0"
 gem "rspec-rails", "~> 8.0"
 gem "net-http", "~> 0.4" # Avoid already initialized constant Net::ProtocRetryError
 
-source "https://rails-assets.org" do
-  gem "rails-assets-autosize", "~> 4.0"
-  gem "rails-assets-mousetrap", "~> 1.6"
-end
-
 group :production, :staging, :development, :test do
   platforms :ruby do
     gem "puma", "~> 7.1"

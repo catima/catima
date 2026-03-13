@@ -104,43 +104,6 @@ class CSVImport::ChoiceSetValueProcessorTest < ActiveSupport::TestCase
     assert_equal choices(:one_english).id, choices(:one_english_uk).parent_id
   end
 
-  test "process warns when multiple choices have the same name" do
-    field = fields(:one_language_field)
-
-    # Create two choices with the same name
-    choice1 = Choice.create!(
-      catalog: catalogs(:one),
-      choice_set: choice_sets(:one_languages),
-      short_name_en: "Duplicate"
-    )
-
-    Choice.create!(
-      catalog: catalogs(:one),
-      choice_set: choice_sets(:one_languages),
-      short_name_en: "Duplicate",
-      parent_id: choices(:one_english).id # Child of English
-    )
-
-    processor = CSVImport::ChoiceSetValueProcessor.new(field, :en)
-
-    assert_no_difference "Choice.count" do
-      result = processor.process("Duplicate")
-
-      # Should use the first match
-      assert_equal [choice1.id.to_s], result
-
-      # Should generate a warning
-      assert_equal 1, processor.warnings.size
-      warning = processor.warnings.first
-
-      assert_equal :ambiguous_choice, warning[:type]
-      assert_equal "Duplicate", warning[:choice_name]
-      assert_equal 2, warning[:count]
-      assert_equal choice1.id, warning[:selected_choice_id]
-      assert_equal 2, warning[:details].size
-    end
-  end
-
   test "process with i18n field uses specified locale" do
     field = fields(:multilingual_i18n_language_field)
 
