@@ -7,7 +7,7 @@ module PumaHelpers
   # Fetch ENV variable with proper handling of empty strings
   # since we cannot use .present? in this context
   def fetch_env(key, default)
-    value = ENV.fetch(key, nil)
+    value = ENV[key]
     value.nil? || value.strip.empty? ? default : value
   end
 
