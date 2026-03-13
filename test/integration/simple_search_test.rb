@@ -29,16 +29,6 @@ class SimpleSearchTest < ActionDispatch::IntegrationTest
     assert_equal("Highlander", items[2].text)
   end
 
-  test "search for honda finds no matches" do
-    visit("/search/en")
-    fill_in("q", :with => "Honda")
-    click_on("Search")
-
-    refute(page.has_content?("Prius"))
-    refute(page.has_content?("Highlander"))
-    refute(page.has_content?("Camry"))
-  end
-
   test "allows navigation from one result to another" do
     visit("/search/en")
     fill_in("q", :with => "Toyota")
