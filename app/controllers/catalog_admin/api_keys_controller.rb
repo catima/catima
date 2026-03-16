@@ -3,7 +3,9 @@ class CatalogAdmin::APIKeysController < CatalogAdmin::BaseController
   before_action :find_api_key, only: [:update, :destroy]
 
   def create
-    @api_key = @catalog.api_keys.create(api_key_params)
+    @api_key = @catalog.api_keys.build(api_key_params)
+    authorize(@api_key)
+    @api_key.save
     redirect_to(catalog_admin_api_path, notice: I18n.t("api_keys.create.success"))
   end
 
@@ -26,8 +28,8 @@ class CatalogAdmin::APIKeysController < CatalogAdmin::BaseController
   end
 
   def api_key_params
-    params.require(:api_key).permit(
-      :label
+    params.expect(
+      api_key: [:label]
     )
   end
 end

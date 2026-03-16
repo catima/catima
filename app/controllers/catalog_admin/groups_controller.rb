@@ -2,6 +2,7 @@ class CatalogAdmin::GroupsController < CatalogAdmin::BaseController
   layout "catalog_admin/setup"
 
   def index
+    authorize catalog.groups.build
   end
 
   def show
@@ -11,6 +12,7 @@ class CatalogAdmin::GroupsController < CatalogAdmin::BaseController
 
   def new
     build_group
+    authorize @group
   end
 
   def edit
@@ -20,6 +22,7 @@ class CatalogAdmin::GroupsController < CatalogAdmin::BaseController
 
   def create
     build_group
+    authorize @group
     if @group.update(group_params)
       redirect_to after_create_path, notice: created_message
     else
@@ -58,7 +61,7 @@ class CatalogAdmin::GroupsController < CatalogAdmin::BaseController
   end
 
   def find_group
-    @group = Group.find_by(id: params[:id], catalog: catalog)
+    @group = Group.where(id: params[:id], catalog: catalog).first!
   end
 
   def update_group

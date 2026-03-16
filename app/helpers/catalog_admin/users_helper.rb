@@ -16,7 +16,7 @@ module CatalogAdmin::UsersHelper
     options.delete("reviewer") unless catalog.requires_review?
 
     options.find do |each|
-      user.catalog_role_at_least?(catalog, each, including_groups)
+      user.catalog_role_at_least?(catalog, each, all: including_groups)
     end
   end
 

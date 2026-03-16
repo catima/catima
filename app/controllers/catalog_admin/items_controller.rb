@@ -66,7 +66,9 @@ class CatalogAdmin::ItemsController < CatalogAdmin::BaseController
     authorize(@item)
     uploaded_file = params[:files]
     uploaded_file = uploaded_file[0]
-    fld_id = params[:field]
+    fld_id = params[:field].to_s.gsub(/[^a-zA-Z0-9_-]/, '')
+    raise ActionController::BadRequest, "Invalid field parameter" if fld_id.blank?
+
     upload_dir = File.join('upload', params[:catalog_slug], fld_id)
     upload_path = File.join('public', upload_dir)
     FileUtils.mkdir_p(upload_path)
@@ -129,10 +131,10 @@ class CatalogAdmin::ItemsController < CatalogAdmin::BaseController
   end
 
   def item_params
-    params.require(:item).permit(
-      :submit_for_review,
-      *@item.data_store_permitted_attributes,
-      *@item.fields.flat_map(&:custom_item_permitted_attributes)
+    params.expect(
+      item: [:submit_for_review,
+             *@item.data_store_permitted_attributes,
+             *@item.fields.flat_map(&:custom_item_permitted_attributes)]
     )
   end
 
