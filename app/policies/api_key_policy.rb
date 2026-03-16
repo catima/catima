@@ -14,6 +14,7 @@ class APIKeyPolicy
     user.system_admin? || user.catalog_role_at_least?(api_key.catalog, "admin")
   end
 
+  alias_method :create?, :user_is_catalog_admin?
   alias_method :update?, :user_is_catalog_admin?
   alias_method :destroy?, :user_is_catalog_admin?
 end

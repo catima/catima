@@ -73,28 +73,28 @@ class Admin::CatalogsController < Admin::BaseController
   end
 
   def catalog_cloner_params
-    params.require(:catalog_cloner).permit(:slug)
+    params.expect(catalog_cloner: [:slug])
   end
 
   def catalog_params
-    params.require(:catalog).permit(
-      :name,
-      :description,
-      :comments,
-      :slug,
-      :primary_language,
-      :requires_review,
-      :advertize,
-      :api_enabled,
-      :throttle_time_window,
-      :throttle_max_requests,
-      :visible,
-      :data_only,
-      :restricted,
-      :custom_root_page_id,
-      :deactivated_at,
-      :seo_indexable,
-      :other_languages => []
+    params.expect(
+      catalog: [:name,
+                :description,
+                :comments,
+                :slug,
+                :primary_language,
+                :requires_review,
+                :advertize,
+                :api_enabled,
+                :throttle_time_window,
+                :throttle_max_requests,
+                :visible,
+                :data_only,
+                :restricted,
+                :custom_root_page_id,
+                :deactivated_at,
+                :seo_indexable,
+                { :other_languages => [] }]
     )
   end
 
