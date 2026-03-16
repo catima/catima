@@ -85,7 +85,13 @@ class React::ItemsController < React::BaseController
   def apply_except(items)
     return items if params[:except].blank?
 
-    items.where("id NOT IN (#{params[:except].join(', ')})")
+    except_ids = Array(params[:except])
+                 .map(&:to_s)
+                 .grep(/\A\d+\z/)
+                 .map(&:to_i)
+    return items if except_ids.empty?
+
+    items.where.not(id: except_ids)
   end
 
   def apply_pagination(items)

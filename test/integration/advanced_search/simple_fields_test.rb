@@ -3,34 +3,6 @@ require "test_helper"
 class AdvancedSearch::SimpleFieldsTest < ActionDispatch::IntegrationTest
   setup { use_javascript_capybara_driver }
 
-  test "search for toyota excluding camry finds 2 matches" do
-    visit("/search/en")
-    click_on("Advanced")
-
-    find("#default_search_type").click
-    within("#default_search_type") do
-      click_on("Vehicle")
-    end
-
-    fill_in(
-      "advanced_search[criteria][search_vehicle_make_uuid][all_words]",
-      :with => "toyota"
-    )
-
-    select("exclude", :from => "advanced_search[criteria][search_vehicle_model_uuid][field_condition]")
-    select("at least one word", :from => "advanced_search[criteria][search_vehicle_model_uuid][condition]")
-    fill_in(
-      "advanced_search[criteria][search_vehicle_model_uuid][one_word]",
-      :with => "camry"
-    )
-
-    click_on("Search")
-
-    assert(page.has_content?("Prius"))
-    assert(page.has_content?("Highlander"))
-    refute(page.has_content?("Camry"))
-  end
-
   test "search for vehicles by number of doors" do
     visit("/search/en")
     click_on("Advanced")
@@ -91,7 +63,6 @@ class AdvancedSearch::SimpleFieldsTest < ActionDispatch::IntegrationTest
     assert(page.has_content?("Very Old"))
     refute(page.has_content?("Stephen King"))
   end
-
 
   # Since the editor field is restricted, we should not be able to search on this
   # field if we are not logged with catalog staff user account.

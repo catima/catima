@@ -56,6 +56,11 @@ class API::V3::Catalog::ItemType::ItemsController < API::V3::Catalog::ItemType::
   def apply_except(items)
     return items if params[:except].blank?
 
-    items.where("id NOT IN (#{params[:except].join(', ')})")
+    except_ids = Array(params[:except])
+                 .select { |value| value.to_s.match?(/\A\d+\z/) }
+                 .map(&:to_i)
+    return items if except_ids.empty?
+
+    items.where.not(id: except_ids)
   end
 end

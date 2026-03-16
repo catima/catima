@@ -17,12 +17,12 @@ module User::Roles
     perm_per_catalog.values
   end
 
-  def catalog_role_at_least?(catalog, role_requirement, all=true)
+  def catalog_role_at_least?(catalog, role_requirement, all: true)
     # Authenticated users are always considered at least "user" level.
     return true if role_requirement == "user"
     return true if system_admin
 
-    perm = (all == true ? all_catalog_permissions : catalog_permissions).to_a.find { |p| p.catalog_id == catalog.id }
+    perm = (all ? all_catalog_permissions : catalog_permissions).to_a.find { |p| p.catalog_id == catalog.id }
     perm&.role_at_least?(role_requirement)
   end
 
