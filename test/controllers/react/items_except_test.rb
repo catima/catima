@@ -28,6 +28,15 @@ class React::ItemsExceptTest < ActionDispatch::IntegrationTest
     assert_includes     ids, @empty_author.id
   end
 
+  test "excludes a single item when its id is passed as scalar except param" do
+    get BASE_URL, params: { except: @stephen_king.id }, as: :json
+
+    assert_response :success
+    ids = json_item_ids
+    assert_not_includes ids, @stephen_king.id
+    assert_includes     ids, @empty_author.id
+  end
+
   test "excludes multiple items when several ids are passed in except[]" do
     get BASE_URL, params: { except: [@stephen_king.id, @empty_author.id] }, as: :json
 

@@ -5,13 +5,13 @@ class CatalogAdmin::APIKeysController < CatalogAdmin::BaseController
   def create
     @api_key = @catalog.api_keys.build(api_key_params)
     authorize(@api_key)
-    @api_key.save
+    @api_key.save!
     redirect_to(catalog_admin_api_path, notice: I18n.t("api_keys.create.success"))
   end
 
   def update
     authorize(@api_key)
-    @api_key.update(api_key_params)
+    @api_key.update!(api_key_params)
     redirect_to(catalog_admin_api_path, notice: I18n.t("api_keys.update.success"))
   end
 

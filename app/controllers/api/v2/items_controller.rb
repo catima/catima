@@ -1,5 +1,6 @@
 class API::V2::ItemsController < API::ApplicationController
   include ControlsItemSorting
+
   before_action :catalog_request_clearance
 
   InvalidItemType = Class.new(RuntimeError)
@@ -62,7 +63,14 @@ class API::V2::ItemsController < API::ApplicationController
   def apply_except(items)
     return items if params[:except].blank?
 
-    items.where.not(id: params[:except].map(&:to_i))
+    except_ids = Array(params[:except]).filter_map do |value|
+      Integer(value.to_s, 10)
+    rescue ArgumentError, TypeError
+      nil
+    end
+    return items if except_ids.empty?
+
+    items.where.not(id: except_ids)
   end
 
   def apply_pagination(items)
