@@ -11,7 +11,7 @@ class Users::RegistrationsController < Devise::RegistrationsController
     if resource.provider.blank?
       resource.update_with_password(params)
     else
-      resource.update_without_password(params)
+      resource.update(params.except(:password, :password_confirmation, :current_password))
     end
   end
 end
