@@ -47,7 +47,7 @@ class User < ApplicationRecord
   devise :database_authenticatable, :registerable,
          :recoverable, :rememberable, :trackable, :validatable
 
-  devise :omniauthable, omniauth_providers: auth_providers if auth_providers.count > 0
+  devise :omniauthable, omniauth_providers: auth_providers if auth_providers.any?
 
   include User::Roles
   include AvailableLocales
@@ -193,8 +193,8 @@ class User < ApplicationRecord
   end
 
   # Devise + ActiveJob integration
-  def send_devise_notification(notification, *args)
-    devise_mailer.send(notification, self, *args).deliver_later
+  def send_devise_notification(notification, *args, **kwargs)
+    devise_mailer.send(notification, self, *args, **kwargs).deliver_later
   end
 
   def self.from_omniauth(auth)

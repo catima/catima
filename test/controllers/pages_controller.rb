@@ -1,7 +1,7 @@
 require 'test_helper'
 
-class PagesControllerTest < ActionController::TestCase
-  include Devise::Test::ControllerHelpers
+class PagesControllerTest < ActionDispatch::IntegrationTest
+  include Devise::Test::IntegrationHelpers
 
   def setup
     @page = pages(:line_one)
@@ -10,7 +10,7 @@ class PagesControllerTest < ActionController::TestCase
   end
 
   def test_show_line
-    get(:show, params: { catalog_slug: @page.catalog.slug, locale: 'en', slug: @page.slug })
+    get "/#{@page.catalog.slug}/en/#{@page.slug}"
     assert_response :success
   end
 end

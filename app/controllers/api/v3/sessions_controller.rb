@@ -52,7 +52,7 @@ class API::V3::SessionsController < Devise::SessionsController
     request.env['warden-jwt_auth.token']
   end
 
-  def respond_to_on_destroy
+  def respond_to_on_destroy(**_)
     # We actually need to hardcode this as Rails default responder doesn't
     # support returning empty response on GET request
     respond_to do |format|
