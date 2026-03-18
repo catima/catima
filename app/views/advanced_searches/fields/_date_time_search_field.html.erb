@@ -5,10 +5,11 @@
         inputStart: json_hidden_field_id(f, field),
         inputEnd: json_hidden_field_id(f, field),
         selectCondition: field.search_conditions_as_hash(I18n.locale),
-        fieldConditionData: field.search_field_conditions_as_hash,
+        fieldConditionData: (i > 0 ? field.search_field_conditions_as_hash : nil),
         format: field.format,
         defaultValues: value,
         locale: I18n.locale,
+        showEmptyFieldCondition: true,
     },
     {
         class: "row mb-3"

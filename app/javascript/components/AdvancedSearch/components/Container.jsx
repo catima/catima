@@ -37,6 +37,7 @@ const Container = (props) => {
     childComponent,
     childProps,
     getNextId: externalGetNextId,
+    isGloballyFirst = false,
   } = props;
 
   const [componentsList, setComponentsList] = useState([]);
@@ -77,6 +78,8 @@ const Container = (props) => {
       {componentsList.map((item, index) => {
         const isLastItem = index === componentsList.length - 1;
         const canRemove = componentsList.length > 1;
+        const isFirstItem = index === 0;
+        const shouldHideFieldCondition = isFirstItem && isGloballyFirst;
 
         return (
           <div key={item.itemId} className="row mb-2" data-field-uuid={fieldUuid}>
@@ -89,6 +92,8 @@ const Container = (props) => {
               canAddComponent={isLastItem}
               canRemoveComponent={canRemove}
               {...childProps}
+              fieldConditionData={shouldHideFieldCondition ? null : childProps.fieldConditionData}
+              showEmptyFieldCondition={shouldHideFieldCondition}
             />
           </div>
         );

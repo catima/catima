@@ -1,6 +1,10 @@
-<div class="col-lg-2">
-  <%= render_and_or_exclude_select(f, value&.dig("field_condition")) %>
-</div>
+<% if i > 0 %>
+  <div class="col-lg-2">
+    <%= render_and_or_exclude_select(f, value&.dig("field_condition")) %>
+  </div>
+<% else %>
+  <div class="col-lg-2"></div>
+<% end %>
 <div class="col-lg-7">
   <%= f.number_field("exact", :hide_label => true, :step => 'any', :value => value&.dig(field.search_condition_key(value))) %>
   <%= f.hidden_field("__filter__", :hide_label => true, :class => 'template', :disabled => true) %>

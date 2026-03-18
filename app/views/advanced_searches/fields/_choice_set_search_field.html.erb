@@ -6,6 +6,7 @@
         fieldUuid: field.uuid,
         defaultValues: value,
         childComponent: 'AdvancedSearch/components/ChoiceSet',
+        isGloballyFirst: (i == 0),
         childProps: {
           catalog: field.catalog.slug,
           choiceSet: field.choice_set.attributes.merge({

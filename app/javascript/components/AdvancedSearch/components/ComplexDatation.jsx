@@ -44,6 +44,7 @@ const ComplexDatation = (props) => {
     choiceSet,
     choiceFieldConditionData,
     defaultValues,
+    isGloballyFirst = false,
   } = props;
 
   const dateTimeDefaultValues = {};
@@ -89,6 +90,7 @@ const ComplexDatation = (props) => {
           excludeCondition: selectedExcludeCondition,
         }}
         getNextId={getNextId}
+        isGloballyFirst={isGloballyFirst}
       />
       <Container
         fieldUuid={fieldUuid}

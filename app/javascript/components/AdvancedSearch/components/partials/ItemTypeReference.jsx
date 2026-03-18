@@ -128,7 +128,6 @@ const ItemTypeReference = (props) => {
     return defaultValues?.[defaultValues?.condition || "default"];
   }, [isFromCategory, defaultValues, defaultValues]);
 
-  // Fonction principale de rendu des inputs
   const renderInput = () => {
     if (isLoading) return null;
 

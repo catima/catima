@@ -1,6 +1,10 @@
-<div class="col-lg-2">
-  <%= render_and_or_exclude_select(f, value&.dig("field_condition")) %>
-</div>
+<% if i > 0 %>
+  <div class="col-lg-2">
+    <%= render_and_or_exclude_select(f, value&.dig("field_condition")) %>
+  </div>
+<% else %>
+  <div class="col-lg-2"></div>
+<% end %>
 <div class="col-lg-7">
   <%= f.collection_select(
           :exact,

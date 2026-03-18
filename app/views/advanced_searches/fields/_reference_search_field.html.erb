@@ -5,6 +5,7 @@
         fieldUuid: field.uuid,
         defaultValues: value,
         childComponent: 'AdvancedSearch/components/Reference',
+        isGloballyFirst: (i == 0),
         childProps: {
           catalog: field.catalog.slug,
           itemType: field.related_item_type.slug,

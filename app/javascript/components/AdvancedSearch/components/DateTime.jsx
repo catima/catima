@@ -25,8 +25,11 @@ const DateTimeInputElement = ({ type, itemId, fieldUuid, startDateInputName, end
   );
 };
 
-const FieldConditionSelectElement = ({ fieldConditionData, selectedFieldCondition, setSelectedFieldCondition, fieldUuid, itemId }) => {
-  if (!fieldConditionData) return null;
+const FieldConditionSelectElement = ({ fieldConditionData, selectedFieldCondition, setSelectedFieldCondition, fieldUuid, itemId, showEmptyFieldCondition }) => {
+  if (!fieldConditionData) {
+    if (showEmptyFieldCondition) return (<div className="col-lg-2"></div>);
+    return null;
+  }
 
   const _itemId = itemId !== null ? `[${itemId}]` : '';
 
@@ -92,6 +95,7 @@ const DateTime = (props) => {
     deleteComponent = null,
     canAddComponent = false,
     canRemoveComponent = false,
+    showEmptyFieldCondition = false,
   } = props;
 
   // Extract default values from props
@@ -195,6 +199,7 @@ const DateTime = (props) => {
         setSelectedFieldCondition={setSelectedFieldCondition}
         fieldUuid={fieldUuid}
         itemId={itemId}
+        showEmptyFieldCondition={showEmptyFieldCondition}
       />
 
       <div className={columnClass}>

@@ -36,18 +36,22 @@ const ConditionSelectElement = ({ selectCondition, selectedCondition, setSelecte
   </select>
 );
 
-const FieldConditionSelectElement = ({ fieldConditionData, selectedFieldCondition, setSelectedFieldCondition, fieldUuid, itemId }) => (
-  <select
-    className="form-select filter-condition"
-    name={`advanced_search[criteria][${fieldUuid}][${itemId}][field_condition]`}
-    value={selectedFieldCondition}
-    onChange={e => setSelectedFieldCondition(e.target.value || '')}
-  >
-    {fieldConditionData.map((item) => {
-      return <option key={item.key} value={item.key}>{item.value}</option>
-    })}
-  </select>
-);
+const FieldConditionSelectElement = ({ fieldConditionData, selectedFieldCondition, setSelectedFieldCondition, fieldUuid, itemId }) => {
+  if (!fieldConditionData) return null;
+
+  return (
+    <select
+      className="form-select filter-condition"
+      name={`advanced_search[criteria][${fieldUuid}][${itemId}][field_condition]`}
+      value={selectedFieldCondition}
+      onChange={e => setSelectedFieldCondition(e.target.value || '')}
+    >
+      {fieldConditionData.map((item) => {
+        return <option key={item.key} value={item.key}>{item.value}</option>
+      })}
+    </select>
+  );
+};
 
 const ChoiceSetSelectElement = ({ buildInputNameWithCondition, defaultValues, choiceSet, loadOptions, selectItem, selectedItem }) => (
   <div>

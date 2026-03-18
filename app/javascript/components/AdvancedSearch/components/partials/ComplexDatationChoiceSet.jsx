@@ -4,17 +4,21 @@ import Translations from '../../../Translations/components/Translations';
 import ChildChoicesElement from './ChildChoicesElement';
 import ActionButtons from './ActionButtons';
 
-const FieldConditionSelectElement = ({ fieldConditionData, defaultValues, fieldUuid, itemId }) => (
-  <select
-    className="form-select filter-condition"
-    name={`advanced_search[criteria][${fieldUuid}][${itemId}][field_condition]`}
-    defaultValue={defaultValues?.field_condition || ''}
-  >
-    {fieldConditionData.map((item) => {
-      return <option key={item.key} value={item.key}>{item.value}</option>
-    })}
-  </select>
-);
+const FieldConditionSelectElement = ({ fieldConditionData, defaultValues, fieldUuid, itemId }) => {
+  if (!fieldConditionData) return null;
+
+  return (
+    <select
+      className="form-select filter-condition"
+      name={`advanced_search[criteria][${fieldUuid}][${itemId}][field_condition]`}
+      defaultValue={defaultValues?.field_condition || ''}
+    >
+      {fieldConditionData.map((item) => {
+        return <option key={item.key} value={item.key}>{item.value}</option>
+      })}
+    </select>
+  );
+};
 
 const ChoiceSetSelectElement = ({ options, setSelectedItem, selectedItem, fieldUuid, itemId }) => (
   <div>
