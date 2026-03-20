@@ -96,6 +96,10 @@ class Field::Decimal < Field
     "DOUBLE"
   end
 
+  def sort_type
+    :numeric
+  end
+
   private
 
   def build_validators

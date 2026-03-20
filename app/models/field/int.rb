@@ -98,6 +98,10 @@ class Field::Int < Field
     "INT"
   end
 
+  def sort_type
+    :numeric
+  end
+
   private
 
   def build_validators

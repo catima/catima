@@ -72,17 +72,36 @@ class Field::Reference < Field
     false
   end
 
+  def groupable?
+    return false if multiple?
+
+    eff = effective_sort_field
+    # Avoid multiple levels of indirection
+    return false if eff.nil? || !eff.effective_sort_field.equal?(eff)
+
+    eff.groupable?
+  end
+
   def sortable?
     return false if multiple?
 
-    return false if related_item_type.field_for_select.nil?
+    eff = effective_sort_field
+    # Avoid multiple levels of indirection
+    return false if eff.nil? || !eff.effective_sort_field.equal?(eff)
 
-    # Avoid multiple levels of reference
-    return false if related_item_type.field_for_select.is_a?(Field::Reference)
+    eff.sortable?
+  end
 
-    return false unless related_item_type&.field_for_select&.sortable?
+  def effective_sort_field
+    related_item_type&.field_for_select
+  end
 
-    true
+  def effective_sort_item(item)
+    selected_references(item).first
+  end
+
+  def sort_type
+    effective_sort_field&.sort_type || :alpha
   end
 
   def describe

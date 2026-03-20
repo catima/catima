@@ -213,6 +213,21 @@ class Field < ApplicationRecord
     human_readable?
   end
 
+  # Returns the field to use for sorting and grouping.
+  def effective_sort_field
+    self
+  end
+
+  # Returns the item to read the sort value from.
+  def effective_sort_item(item)
+    item
+  end
+
+  # Returns the sort type: :date, :numeric, or :alpha (default).
+  def sort_type
+    :alpha
+  end
+
   # Whether or not this field is filterable. Can be used in addition to the human_readable?
   # method.
   #

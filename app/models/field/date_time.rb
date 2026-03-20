@@ -35,6 +35,10 @@
 class Field::DateTime < Field
   FORMATS = %w(Y M h YM MD hm YMD hms MDh YMDh MDhm YMDhm MDhms YMDhms).freeze
 
+  def sort_type
+    :date
+  end
+
   store_accessor :options, :format
   after_initialize :set_default_format
   validates_inclusion_of :format, :in => FORMATS
