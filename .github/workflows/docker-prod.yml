@@ -1,7 +1,8 @@
 name: docker-prod
 on:
   schedule:
-    - cron: '0 1 * * 1'  # Every Monday at 1am
+    - cron: '0 1 * * 1' # Every Monday at 1am
+      timezone: "Europe/Zurich"
   push:
     branches:
       - "master"
