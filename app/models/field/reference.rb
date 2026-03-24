@@ -92,6 +92,11 @@ class Field::Reference < Field
     eff.sortable?
   end
 
+  def sort_label
+    eff = effective_sort_field
+    eff ? "#{name} (#{eff.name})" : name
+  end
+
   def effective_sort_field
     related_item_type&.field_for_select
   end

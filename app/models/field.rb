@@ -213,6 +213,11 @@ class Field < ApplicationRecord
     human_readable?
   end
 
+  # Returns the label to display for this field in sort menus.
+  def sort_label
+    name
+  end
+
   # Returns the field to use for sorting and grouping.
   def effective_sort_field
     self

@@ -55,7 +55,7 @@ module CatalogAdmin::ContainersHelper
   def groupable_fields(item_type)
     return [] unless item_type
 
-    item_type.fields.select(&:groupable?).map { |f| [f.name, f.id] }
+    item_type.fields.select(&:groupable?).map { |f| [f.sort_label, f.id] }
   end
 
   def sort_field_select(form, options={})
