@@ -206,7 +206,7 @@ class Field < ApplicationRecord
   # Default depends on the human_readable method result, cannot be multiple, and subclasses can
   # override.
   #
-  # Mainly used for the sort field of the ItemType container.
+  # Mainly used for the sort field of the ItemType container and the sort in item type view admin data.
   def sortable?
     return false if multiple?
 
