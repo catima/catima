@@ -44,8 +44,8 @@ class Field::Decimal < Field
     %i(maximum minimum)
   end
 
-  def order_items_by(direction: 'ASC', nulls_order: 'LAST')
-    "NULLIF(items.data->>'#{uuid}', '')::float #{direction} NULLS #{nulls_order}"
+  def order_items_by(direction: 'ASC', nulls_order: 'LAST', table: 'items')
+    "NULLIF(#{table}.data->>'#{uuid}', '')::float #{direction} NULLS #{nulls_order}"
   end
 
   # Useful for the advanced search

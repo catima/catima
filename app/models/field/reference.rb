@@ -143,10 +143,11 @@ class Field::Reference < Field
     end
   end
 
-  def order_items_by(direction: 'ASC', nulls_order: 'LAST')
-    return unless related_item_type.field_for_select.sortable?
+  def order_items_by(direction: 'ASC', nulls_order: 'LAST', table: 'items')
+    eff = effective_sort_field
+    return unless eff&.sortable?
 
-    "(ref_items.data->>'#{related_item_type.field_for_select.uuid}') #{direction} NULLS #{nulls_order}"
+    eff.order_items_by(direction: direction, nulls_order: nulls_order, table: 'ref_items')
   end
 
   def allows_unique?
