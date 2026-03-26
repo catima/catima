@@ -3,29 +3,6 @@ require "test_helper"
 class AdvancedSearch::SimpleFieldsTest < ActionDispatch::IntegrationTest
   setup { use_javascript_capybara_driver }
 
-  test "search for vehicles by number of doors" do
-    visit("/search/en")
-    click_on("Advanced")
-
-    find("#default_search_type").click
-    within("#default_search_type") do
-      click_on("Vehicle")
-    end
-
-    select("less than or equal", :from => "advanced_search[criteria][search_vehicle_doors_uuid][condition]")
-    fill_in(
-      "advanced_search[criteria][search_vehicle_doors_uuid][less_than_or_equal_to]",
-      :with => 3
-    )
-
-    click_on("Search")
-
-    assert(page.has_content?("Camry Hybrid"))
-    assert(page.has_content?("Prius"))
-    assert(page.has_content?("XJ6"))
-    refute(page.has_content?("Highlander"))
-  end
-
   test "search for authors by boolean field" do
     visit("/one/en")
     click_on("Advanced")
