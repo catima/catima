@@ -218,6 +218,11 @@ class Field < ApplicationRecord
     name
   end
 
+  # Returns a SQL JOIN clause needed to sort by this field, or nil if none needed.
+  def join_for_sort
+    nil
+  end
+
   # Returns the field to use for sorting and grouping.
   def effective_sort_field
     self

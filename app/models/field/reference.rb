@@ -97,6 +97,10 @@ class Field::Reference < Field
     eff ? "#{name} (#{eff.name})" : name
   end
 
+  def join_for_sort
+    "LEFT JOIN items ref_items ON ref_items.id::text = items.data->>'#{uuid}'"
+  end
+
   def effective_sort_field
     related_item_type&.field_for_select
   end
