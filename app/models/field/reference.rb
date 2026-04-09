@@ -95,10 +95,11 @@ class Field::Reference < Field
     eff ? "#{name} (#{eff.name})" : name
   end
 
-  def join_for_sort(table: 'items') # rubocop:disable Lint/UnusedMethodArgument
-    own_join = "LEFT JOIN items ref_items ON ref_items.id::text = items.data->>'#{uuid}'"
+  def join_for_sort(table: 'items')
+    alias_name = "sort_ref_item_#{uuid}"
+    own_join = "LEFT JOIN items #{alias_name} ON #{alias_name}.id::text = #{table}.data->>'#{uuid}'"
     eff = effective_sort_field
-    eff_join = eff&.join_for_sort(table: 'ref_items')
+    eff_join = eff&.join_for_sort(table: alias_name)
     eff_join.present? ? [own_join, eff_join] : own_join
   end
 
@@ -148,11 +149,11 @@ class Field::Reference < Field
     end
   end
 
-  def order_items_by(direction: 'ASC', nulls_order: 'LAST', table: 'items')
+  def order_items_by(direction: 'ASC', nulls_order: 'LAST', table: 'items') # rubocop:disable Lint/UnusedMethodArgument
     eff = effective_sort_field
     return unless eff&.sortable?
 
-    eff.order_items_by(direction: direction, nulls_order: nulls_order, table: 'ref_items')
+    eff.order_items_by(direction: direction, nulls_order: nulls_order, table: "sort_ref_item_#{uuid}")
   end
 
   def allows_unique?

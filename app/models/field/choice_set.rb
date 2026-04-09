@@ -132,12 +132,12 @@ class Field::ChoiceSet < Field
     end
   end
 
-  def order_items_by(direction: 'ASC', nulls_order: 'LAST', table: 'items')
-    "(choices_#{uuid}.short_name_translations->>'short_name_#{I18n.locale}') #{direction} NULLS #{nulls_order}" unless choices.nil?
+  def order_items_by(direction: 'ASC', nulls_order: 'LAST', table: 'items') # rubocop:disable Lint/UnusedMethodArgument
+    "(sort_choices_#{uuid}.short_name_translations->>'short_name_#{I18n.locale}') #{direction} NULLS #{nulls_order}" unless choices.nil?
   end
 
   def join_for_sort(table: 'items')
-    "LEFT JOIN choices choices_#{uuid} ON choices_#{uuid}.id::text = #{table}.data->'#{uuid}'->>0"
+    "LEFT JOIN choices sort_choices_#{uuid} ON sort_choices_#{uuid}.id::text = #{table}.data->'#{uuid}'->>0"
   end
 
   def allows_unique?
