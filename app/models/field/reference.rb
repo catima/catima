@@ -76,8 +76,7 @@ class Field::Reference < Field
     return false if multiple?
 
     eff = effective_sort_field
-    # Avoid multiple levels of indirection
-    return false if eff.nil? || !eff.effective_sort_field.equal?(eff)
+    return false if eff.nil? || eff.is_a?(Field::Reference)
 
     eff.groupable?
   end
@@ -86,8 +85,7 @@ class Field::Reference < Field
     return false if multiple?
 
     eff = effective_sort_field
-    # Avoid multiple levels of indirection
-    return false if eff.nil? || !eff.effective_sort_field.equal?(eff)
+    return false if eff.nil? || eff.is_a?(Field::Reference)
 
     eff.sortable?
   end
