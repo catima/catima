@@ -136,8 +136,8 @@ class Field::ChoiceSet < Field
     "(choices_#{uuid}.short_name_translations->>'short_name_#{I18n.locale}') #{direction} NULLS #{nulls_order}" unless choices.nil?
   end
 
-  def join_for_sort
-    "LEFT JOIN choices choices_#{uuid} ON choices_#{uuid}.id::text = items.data->'#{uuid}'->>0"
+  def join_for_sort(table: 'items')
+    "LEFT JOIN choices choices_#{uuid} ON choices_#{uuid}.id::text = #{table}.data->'#{uuid}'->>0"
   end
 
   def allows_unique?

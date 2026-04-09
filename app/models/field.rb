@@ -219,7 +219,9 @@ class Field < ApplicationRecord
   end
 
   # Returns a SQL JOIN clause needed to sort by this field, or nil if none needed.
-  def join_for_sort
+  # The table parameter allows specifying a different source table (used when
+  # joining through a reference field).
+  def join_for_sort(table: 'items') # rubocop:disable Lint/UnusedMethodArgument
     nil
   end
 

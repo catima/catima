@@ -97,8 +97,11 @@ class Field::Reference < Field
     eff ? "#{name} (#{eff.name})" : name
   end
 
-  def join_for_sort
-    "LEFT JOIN items ref_items ON ref_items.id::text = items.data->>'#{uuid}'"
+  def join_for_sort(table: 'items') # rubocop:disable Lint/UnusedMethodArgument
+    own_join = "LEFT JOIN items ref_items ON ref_items.id::text = items.data->>'#{uuid}'"
+    eff = effective_sort_field
+    eff_join = eff&.join_for_sort(table: 'ref_items')
+    eff_join.present? ? [own_join, eff_join] : own_join
   end
 
   def effective_sort_field
