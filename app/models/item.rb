@@ -94,7 +94,7 @@ class Item < ApplicationRecord
     scope = scope.joins(field.join_for_sort) if field.join_for_sort.present?
 
     sql = field.order_items_by(direction: direction, nulls_order: nulls_order)
-    sql ? scope.reorder(Arel.sql(sql)) : scope
+    scope.reorder(Arel.sql(sql))
   end
 
   def self.sorted_by_created_at(direction: "ASC")
