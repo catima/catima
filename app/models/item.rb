@@ -87,6 +87,9 @@ class Item < ApplicationRecord
 
     return unscope(:order) if field.nil?
 
+    # Fallback on generic sort by string value if not sortable.
+    return reorder(Arel.sql("items.data->>'#{field.uuid}' #{direction} NULLS #{nulls_order}")) unless field.sortable?
+
     scope = self
     scope = scope.joins(field.join_for_sort) if field.join_for_sort.present?
 
