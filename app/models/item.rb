@@ -85,7 +85,7 @@ class Item < ApplicationRecord
   def self.sorted_by_field(field, direction: "ASC", nulls_order: 'LAST')
     direction = ItemList::Sort.ascending unless ItemList::Sort.included?(direction)
 
-    return reorder(Arel.sql("")) if field.nil?
+    return unscope(:order) if field.nil?
 
     scope = self
     scope = scope.joins(field.join_for_sort) if field.join_for_sort.present?
