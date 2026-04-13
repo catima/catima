@@ -42,41 +42,39 @@ class ItemList
   end
 
   def items
-    @items ||= begin
-      i_t = item_type
-      return unpaginated_list_items if i_t.nil?
-
-      i_t ||= (catalog.presence || @selected_catalog).item_types.first
-      return unpaginated_list_items if item_type.field_for_select.nil?
-
-      unpaginated_list_items.order(Arel.sql("items.data->>'#{i_t.field_for_select.uuid}'"))
-    end.load
+    @items ||= apply_sort(paginated_items).load
   end
 
-  def unpaginated_list_items
-    @unpaginated_list_items ||= unpaginaged_items.includes(:item_type)
-                                                 .includes(:item_type => :fields)
-                                                 .page(page)
-                                                 .per(per)
+  def paginated_items
+    @paginated_items ||= unpaginaged_items.includes(:item_type)
+                                          .includes(:item_type => :fields)
+                                          .page(page)
+                                          .per(per)
   end
 
   def item_type
-    @item_type ||= unpaginated_list_items.first&.item_type
+    @item_type ||= paginated_items.first&.item_type
   end
 
   # Returns the full unpaginated query with sorting applied.
   # This is used for navigation to allow traversing across page boundaries.
   def items_for_navigation
-    @items_for_navigation ||= begin
-      i_t = item_type
-      return unpaginaged_items if i_t.nil?
-
-      i_t ||= (catalog.presence || @selected_catalog).item_types.first
-      return unpaginaged_items if item_type.field_for_select.nil?
-
+    @items_for_navigation ||= apply_sort(
       unpaginaged_items.includes(:item_type, :item_type => :fields)
-                       .order(Arel.sql("items.data->>'#{i_t.field_for_select.uuid}'"))
-                       .order(:id) # Secondary sort for deterministic ordering
-    end
+    )
+  end
+
+  private
+
+  def apply_default_sort?
+    true
+  end
+
+  def apply_sort(scope)
+    return scope unless apply_default_sort?
+
+    field = item_type&.field_for_select
+    sorted = field.nil? ? scope : scope.sorted_by_field(field)
+    sorted.order(:id)
   end
 end

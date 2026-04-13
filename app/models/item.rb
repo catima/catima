@@ -84,31 +84,17 @@ class Item < ApplicationRecord
 
   def self.sorted_by_field(field, direction: "ASC", nulls_order: 'LAST')
     direction = ItemList::Sort.ascending unless ItemList::Sort.included?(direction)
-    sql = []
-    sql << field.order_items_by(direction: direction, nulls_order: nulls_order) unless field.nil?
 
-    if field.nil? ||
-       (field.type != Field::TYPES['reference'] && field.type != Field::TYPES['choice'])
-      return reorder(Arel.sql(sql.join(", ")))
-    end
+    return unscope(:order) if field.nil?
 
-    sorted_by_ref_or_choice(sql, field)
-  end
+    # Fallback on generic sort by string value if not sortable.
+    return reorder(Arel.sql("items.data->>'#{field.uuid}' #{direction} NULLS #{nulls_order}")) unless field.sortable?
 
-  def self.sorted_by_ref_or_choice(sql, field)
-    if field.type == Field::TYPES['reference']
-      return joins("LEFT JOIN items ref_items ON ref_items.id::text = items.data->>'#{field.uuid}'")
-             .reorder(
-               Arel.sql(sql.join(", "))
-             )
-    end
+    scope = self
+    scope = scope.joins(field.join_for_sort) if field.join_for_sort.present?
 
-    return unless field.type == Field::TYPES['choice']
-
-    joins("LEFT JOIN choices choices_#{field.uuid} ON choices_#{field.uuid}.id::text = items.data->'#{field.uuid}'->>0")
-      .reorder(
-        Arel.sql(sql.map { |s| s.gsub('choices', "choices_#{field.uuid}") }.join(", "))
-      )
+    sql = field.order_items_by(direction: direction, nulls_order: nulls_order)
+    scope.reorder(Arel.sql(sql))
   end
 
   def self.sorted_by_created_at(direction: "ASC")

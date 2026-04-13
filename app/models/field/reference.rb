@@ -72,17 +72,47 @@ class Field::Reference < Field
     false
   end
 
+  def groupable?
+    return false if multiple?
+
+    eff = effective_sort_field
+    return false if eff.nil? || eff.is_a?(Field::Reference)
+
+    eff.groupable?
+  end
+
   def sortable?
     return false if multiple?
 
-    return false if related_item_type.field_for_select.nil?
+    eff = effective_sort_field
+    return false if eff.nil? || eff.is_a?(Field::Reference)
 
-    # Avoid multiple levels of reference
-    return false if related_item_type.field_for_select.is_a?(Field::Reference)
+    eff.sortable?
+  end
 
-    return false unless related_item_type&.field_for_select&.sortable?
+  def sort_label
+    eff = effective_sort_field
+    eff ? "#{name} (#{eff.name})" : name
+  end
 
-    true
+  def join_for_sort(table: 'items')
+    eff = effective_sort_field
+    alias_name = "sort_ref_item_#{uuid}"
+    own_join = "LEFT JOIN items #{alias_name} ON #{alias_name}.id::text = #{table}.data->>'#{uuid}'"
+    eff_join = eff.join_for_sort(table: alias_name)
+    eff_join.present? ? [own_join, eff_join] : own_join
+  end
+
+  def effective_sort_field
+    related_item_type&.field_for_select
+  end
+
+  def effective_sort_item(item)
+    selected_references(item).first
+  end
+
+  def sort_type
+    effective_sort_field&.sort_type || :alpha
   end
 
   def describe
@@ -97,12 +127,12 @@ class Field::Reference < Field
     {uuid => (i.id unless i.nil?)}
   end
 
-  def value_for_item(it)
-    multiple? ? selected_references(it) : selected_references(it).first
+  def value_for_item(item)
+    multiple? ? selected_references(item) : selected_references(item).first
   end
 
-  def value_or_id_for_item(it)
-    refs = selected_references(it)
+  def value_or_id_for_item(item)
+    refs = selected_references(item)
     if multiple?
       refs.map(&:uuid)
     else
@@ -110,8 +140,8 @@ class Field::Reference < Field
     end
   end
 
-  def field_value_for_item(it)
-    refs = value_for_item(it)
+  def field_value_for_item(item)
+    refs = value_for_item(item)
     if multiple?
       refs.map(&:default_display_name).join(', ')
     else
@@ -119,10 +149,8 @@ class Field::Reference < Field
     end
   end
 
-  def order_items_by(direction: 'ASC', nulls_order: 'LAST')
-    return unless related_item_type.field_for_select.sortable?
-
-    "(ref_items.data->>'#{related_item_type.field_for_select.uuid}') #{direction} NULLS #{nulls_order}"
+  def order_items_by(direction: 'ASC', nulls_order: 'LAST', table: 'items') # rubocop:disable Lint/UnusedMethodArgument
+    effective_sort_field.order_items_by(direction: direction, nulls_order: nulls_order, table: "sort_ref_item_#{uuid}")
   end
 
   def allows_unique?

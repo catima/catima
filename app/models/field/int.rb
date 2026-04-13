@@ -46,8 +46,8 @@ class Field::Int < Field
     %i(maximum minimum auto_increment)
   end
 
-  def order_items_by(direction: 'ASC', nulls_order: 'LAST')
-    "NULLIF(items.data->>'#{uuid}', '')::BIGINT #{direction} NULLS #{nulls_order}"
+  def order_items_by(direction: 'ASC', nulls_order: 'LAST', table: 'items')
+    "NULLIF(#{table}.data->>'#{uuid}', '')::BIGINT #{direction} NULLS #{nulls_order}"
   end
 
   def auto_increment?
@@ -96,6 +96,10 @@ class Field::Int < Field
 
   def sql_type
     "INT"
+  end
+
+  def sort_type
+    :numeric
   end
 
   private

@@ -110,17 +110,23 @@ module ItemsHelper
     html_title = tag.h4(item_list_link(list, item, nil, item_display_name(item)), class: "mt-0 mb-1")
     html_thumbnail = tag.div(item_list_link(list, item, nil) { item_thumbnail(item, :class => "media-object") }, class: "pull-left me-3") if item_has_thumbnail?(item)
 
+    effective_field = sort_field.effective_sort_field
+    effective_item = sort_field.effective_sort_item(item)
+    group_title = field_value(effective_item, effective_field) if effective_item && effective_field
+
     item.attributes.merge(
       title: html_title,
       thumbnail: html_thumbnail,
       summary: item_summary(item),
       primary_field_value: field_value(item, item.item_type.field_for_select),
-      sort_field_value: sort_field_value(sort_field, item),
-      group_title: sort_field.is_a?(Field::DateTime) ? Field::DateTimePresenter.new(nil, item, sort_field).value(format: sort_field.format) : field_value(item, sort_field)
+      sort_field_value: sort_field_value(effective_field, effective_item),
+      group_title: group_title || ''
     )
   end
 
   def sort_field_value(sort_field, item)
+    return '' if item.nil? || sort_field.nil?
+
     case sort_field
     when Field::DateTime
       sort_field.raw_value(item) || {}
@@ -134,10 +140,11 @@ module ItemsHelper
   end
 
   def group_items_for_line(items, sort_field:)
-    return group_item_by_date_time_field(items, sort_field) if sort_field.is_a?(Field::DateTime)
-    return { items: group_item_numerically(items) } if sort_field.is_a?(Field::Int)
-
-    { items: group_item_alphabetically(items) }
+    case sort_field&.sort_type
+    when :date    then group_item_by_date_time_field(items, sort_field.effective_sort_field)
+    when :numeric then { items: group_item_numerically(items) }
+    else               { items: group_item_alphabetically(items) }
+    end
   end
 
   def group_item_numerically(items)

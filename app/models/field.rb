@@ -206,11 +206,38 @@ class Field < ApplicationRecord
   # Default depends on the human_readable method result, cannot be multiple, and subclasses can
   # override.
   #
-  # Mainly used for the sort field of the ItemType container.
+  # Mainly used for the sort field of the ItemType container and the sort in item type view admin data.
   def sortable?
     return false if multiple?
 
     human_readable?
+  end
+
+  # Returns the label to display for this field in sort menus.
+  def sort_label
+    name
+  end
+
+  # Returns a SQL JOIN clause needed to sort by this field, or nil if none needed.
+  # The table parameter allows specifying a different source table (used when
+  # joining through a reference field).
+  def join_for_sort(table: 'items') # rubocop:disable Lint/UnusedMethodArgument
+    nil
+  end
+
+  # Returns the field to use for sorting and grouping.
+  def effective_sort_field
+    self
+  end
+
+  # Returns the item to read the sort value from.
+  def effective_sort_item(item)
+    item
+  end
+
+  # Returns the sort type: :date, :numeric, or :alpha (default).
+  def sort_type
+    :alpha
   end
 
   # Whether or not this field is filterable. Can be used in addition to the human_readable?
@@ -358,8 +385,8 @@ class Field < ApplicationRecord
   end
 
   # Returns the order by for items with a sort by a field
-  def order_items_by(direction: 'ASC', nulls_order: 'LAST')
-    "NULLIF(items.data->>'#{uuid}', '') #{direction} NULLS #{nulls_order}"
+  def order_items_by(direction: 'ASC', nulls_order: 'LAST', table: 'items')
+    "NULLIF(#{table}.data->>'#{uuid}', '') #{direction} NULLS #{nulls_order}"
   end
 
   def order_items_by_primary_field
