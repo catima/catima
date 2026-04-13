@@ -38,7 +38,7 @@ gem "pg", "~> 1.2"
 gem "pg_search", "~> 2.3"
 gem "pgcli-rails", "~> 0.5"
 gem "pundit", "~> 2.1"
-gem "rails", '~> 8.0.0'
+gem "rails", '~> 8.0'
 gem "ranked-model", "~> 0.4"
 gem 'react-rails', "~> 3.2.1"
 gem "recaptcha", "~> 5.6"

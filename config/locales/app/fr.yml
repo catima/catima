@@ -917,7 +917,7 @@ fr:
       review:
         approved: Cette fiche de type «%{item_type}» est validée et visible pour le public.
         rejected: Cette fiche de type «%{item_type}» a été rejetée. Vous pouvez la resoumettre pour validation en cochant la case ci-dessous.
-        pending: Cette fiche de type «%{item_type}» attend la validation. Elle sera visible pour le publique une fois un validateur l'a approuvé.
+        pending: Cette fiche de type «%{item_type}» est en attente de validation. Elle sera visible pour le public une fois approuvée.
         approval_help: Cochez cette case pour soumettre cette fiche de type %{item_type} pour validation. Toutes les fiches de type %{item_type} doivent être approuvées avant d'être visibles pour le public sur le site du catalogue %{catalog}.
         ready_for_review: "Prêt pour la validation"
       sort_menu:
