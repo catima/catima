@@ -35,6 +35,10 @@
 class Field::DateTime < Field
   FORMATS = %w(Y M h YM MD hm YMD hms MDh YMDh MDhm YMDhm MDhms YMDhms).freeze
 
+  def sort_type
+    :date
+  end
+
   store_accessor :options, :format
   after_initialize :set_default_format
   validates_inclusion_of :format, :in => FORMATS
@@ -124,14 +128,14 @@ class Field::DateTime < Field
     field_value(it, self)
   end
 
-  def order_items_by(direction: 'ASC', nulls_order: 'LAST')
-    "NULLIF(items.data->'#{uuid}'->>'#{format[0]}', '')::bigint #{direction} NULLS #{nulls_order},
-    (COALESCE(NULLIF(items.data->'#{uuid}'->>'Y', '')::bigint, 0) * 60 * 60 * 24 * (365 / 12) * 12 ) +
-    (COALESCE(NULLIF(items.data->'#{uuid}'->>'M', '')::bigint, 0) * 60 * 60 * 24 * (365 / 12) ) +
-    (COALESCE(NULLIF(items.data->'#{uuid}'->>'D', '')::bigint, 0) * 60 * 60 * 24 ) +
-    (COALESCE(NULLIF(items.data->'#{uuid}'->>'h', '')::bigint, 0) * 60 * 60 ) +
-    (COALESCE(NULLIF(items.data->'#{uuid}'->>'m', '')::bigint, 0) * 60 ) +
-    (COALESCE(NULLIF(items.data->'#{uuid}'->>'s', '')::bigint, 0) ) #{direction}"
+  def order_items_by(direction: 'ASC', nulls_order: 'LAST', table: 'items')
+    "NULLIF(#{table}.data->'#{uuid}'->>'#{format[0]}', '')::bigint #{direction} NULLS #{nulls_order},
+    (COALESCE(NULLIF(#{table}.data->'#{uuid}'->>'Y', '')::bigint, 0) * 60 * 60 * 24 * (365 / 12) * 12 ) +
+    (COALESCE(NULLIF(#{table}.data->'#{uuid}'->>'M', '')::bigint, 0) * 60 * 60 * 24 * (365 / 12) ) +
+    (COALESCE(NULLIF(#{table}.data->'#{uuid}'->>'D', '')::bigint, 0) * 60 * 60 * 24 ) +
+    (COALESCE(NULLIF(#{table}.data->'#{uuid}'->>'h', '')::bigint, 0) * 60 * 60 ) +
+    (COALESCE(NULLIF(#{table}.data->'#{uuid}'->>'m', '')::bigint, 0) * 60 ) +
+    (COALESCE(NULLIF(#{table}.data->'#{uuid}'->>'s', '')::bigint, 0) ) #{direction}"
   end
 
   def search_conditions_as_hash(locale)

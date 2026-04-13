@@ -99,6 +99,50 @@ class ItemList::FilterTest < ActiveSupport::TestCase
     assert_equal(color_field.uuid, browse.send(:strategy).field.uuid)
   end
 
+  test "sorts search_vehicle items by int field (doors) ascending — numeric not lexicographic" do
+    doors_field = fields(:search_vehicle_doors)
+    browse = ItemList::Filter.new(
+      :item_type => item_types(:search_vehicle),
+      :sort_field => doors_field,
+      :sort => "ASC"
+    )
+    results = browse.items.to_a
+
+    # Motorcycle (0 doors) must be first; bus (11 doors) must be last.
+    assert_equal items(:search_vehicle_motorcycle), results.first
+    assert_equal items(:search_vehicle_bus),        results.last
+
+    # In lexicographic order "11" < "3", so bus would be second — that must NOT happen.
+    refute_equal items(:search_vehicle_bus), results[1]
+  end
+
+  test "sorts search_vehicle items by int field (doors) descending" do
+    doors_field = fields(:search_vehicle_doors)
+    browse = ItemList::Filter.new(
+      :item_type => item_types(:search_vehicle),
+      :sort_field => doors_field,
+      :sort => "DESC"
+    )
+    results = browse.items.to_a
+
+    # Numerically largest (11) first, numerically smallest (0) last.
+    assert_equal items(:search_vehicle_bus),        results.first
+    assert_equal items(:search_vehicle_motorcycle), results.last
+  end
+
+  test "items_for_navigation returns full unpaginated list regardless of per-page limit" do
+    browse = ItemList::Filter.new(
+      :item_type => item_types(:search_vehicle),
+      :per => 2
+    )
+    # With per=2, the paginated .items result is capped at 2.
+    assert_equal 2, browse.items.to_a.size
+
+    # items_for_navigation must include every public vehicle (7: 6 original + bus).
+    total_vehicles = item_types(:search_vehicle).public_items.count
+    assert_equal total_vehicles, browse.items_for_navigation.to_a.size
+  end
+
   private
 
   def author_with_english_choice

@@ -130,8 +130,8 @@ class Field::Text < Field
     formatted? ? sql_escape_formatted(raw_value(item)) : escape_single_quotes(value.to_s)
   end
 
-  def order_items_by(direction: 'ASC', nulls_order: 'LAST')
-    json_request = i18n? ? "items.data->'#{uuid}'->'_translations'->>'#{I18n.locale}'" : "items.data->>'#{uuid}'"
+  def order_items_by(direction: 'ASC', nulls_order: 'LAST', table: 'items')
+    json_request = i18n? ? "#{table}.data->'#{uuid}'->'_translations'->>'#{I18n.locale}'" : "#{table}.data->>'#{uuid}'"
 
     "LOWER(NULLIF(#{json_request}, '')) #{direction} NULLS #{nulls_order}"
   end

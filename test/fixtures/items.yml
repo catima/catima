@@ -361,6 +361,18 @@ search_vehicle_motorcycle:
     "search_vehicle_doors_uuid": 0
   }
 
+search_vehicle_bus:
+  creator: system_admin_invited_by_one
+  updater: system_admin_invited_by_one
+  catalog: search
+  item_type: search_vehicle
+  data: {
+    "search_vehicle_make_uuid": "Mercedes",
+    "search_vehicle_model_uuid": "Sprinter",
+    "search_vehicle_style_uuid": "<%= ActiveRecord::FixtureSet.identify(:search_sedan) %>",
+    "search_vehicle_doors_uuid": 11
+  }
+
 complex_datation_choice_1_1_300:
   catalog: complex_datation
   item_type: complex_datation

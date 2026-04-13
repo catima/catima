@@ -93,13 +93,6 @@ class ItemType < ApplicationRecord
     @all_public_list_view_fields ||= all_fields.select(&:display_in_public_list)
   end
 
-  # Same as all_list_view_fields, but limited human_readable?.
-  def sortable_list_view_fields
-    return @sortable_list_view_fields if defined? @sortable_list_view_fields
-
-    @sortable_list_view_fields ||= all_list_view_fields.select(&:human_readable?)
-  end
-
   def primary_field
     return @primary_field if defined? @primary_field
 

@@ -28,18 +28,14 @@ class ItemList::Filter < ItemList
     scope.order(id: sort&.upcase == 'DESC' ? :desc : :asc)
   end
 
-  def items
-    super # unpaginaged_items now has correct sorting, just apply pagination
+  def apply_default_sort?
+    false
   end
 
   def to_param
     return nil if strategy.nil?
 
     [field&.slug, value].join("_")
-  end
-
-  def items_for_navigation
-    @items_for_navigation ||= unpaginaged_items.includes(:item_type, :item_type => :fields)
   end
 
   private

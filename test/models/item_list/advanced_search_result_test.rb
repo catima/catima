@@ -2,7 +2,7 @@
 
 require "test_helper"
 
-class ItemList::AdvancedSearchResultTest < ActiveSupport::TestCase
+class ItemList::AdvancedSearchResultTest < ActiveSupport::TestCase # rubocop:disable Metrics/ClassLength
   test "search multiple fields" do
     criteria = {
       "search_vehicle_make_uuid" => {
@@ -224,6 +224,94 @@ class ItemList::AdvancedSearchResultTest < ActiveSupport::TestCase
       search.items.map { |i| i.data["complex_datation_name"] },
       response_array
     )
+  end
+
+  test "filters items by decimal field criteria (rank less than 2.0)" do
+    criteria = {
+      "one_author_rank_uuid" => {
+        "field_condition" => "and",
+        "less_than" => "2.0"
+      }
+    }
+    model = AdvancedSearch.new(
+      :catalog => catalogs(:one),
+      :item_type => item_types(:one_author),
+      :criteria => criteria
+    )
+    search = ItemList::AdvancedSearchResult.new(model: model)
+    results = search.items.to_a
+
+    assert_includes(results, items(:one_author_stephen_king)) # rank=1.88891 < 2.0
+    assert_includes(results, items(:one_author_very_first))   # rank=0.425 < 2.0
+    refute_includes(results, items(:one_author_very_old))     # rank=2.12, not < 2.0
+    refute_includes(results, items(:one_author_very_last))    # rank=100.552, not < 2.0
+    refute_includes(results, items(:one_author_very_young))   # no rank set
+  end
+
+  test "filters items by reference field criteria (collaborator equals item id)" do
+    target = items(:one_author_very_young)
+    criteria = {
+      "one_author_collaborator_uuid" => {
+        "field_condition" => "and",
+        "default" => target.id.to_s
+      }
+    }
+    model = AdvancedSearch.new(
+      :catalog => catalogs(:one),
+      :item_type => item_types(:one_author),
+      :criteria => criteria
+    )
+    search = ItemList::AdvancedSearchResult.new(model: model)
+    results = search.items.to_a
+
+    # very_old's collaborator is very_young → included
+    assert_includes(results, items(:one_author_very_old))
+    # stephen_king's collaborator is very_old, not very_young → excluded
+    refute_includes(results, items(:one_author_stephen_king))
+  end
+
+  test "filters items by date field criteria (born exact date)" do
+    criteria = {
+      "one_author_born_uuid" => {
+        "field_condition" => "and",
+        "condition" => "exact",
+        "start" => { "exact" => { "Y" => "1947", "M" => "9", "D" => "21" } },
+        "end" => { "exact" => { "D" => "", "M" => "", "Y" => "" } }
+      }
+    }
+    model = AdvancedSearch.new(
+      :catalog => catalogs(:one),
+      :item_type => item_types(:one_author),
+      :criteria => criteria
+    )
+    search = ItemList::AdvancedSearchResult.new(model: model)
+    results = search.items.to_a
+
+    # stephen_king born Y:1947 M:9 D:21 → matches exactly
+    assert_includes(results, items(:one_author_stephen_king))
+    # very_old born Y:1947 M:11 D:11 → month differs → excluded
+    refute_includes(results, items(:one_author_very_old))
+    # items with no born field → excluded by append_where_date_is_set
+    refute_includes(results, items(:one_author_very_young))
+  end
+
+  test "results are sorted alphabetically by primary field after filtering" do
+    criteria = {
+      "one_author_rank_uuid" => {
+        "field_condition" => "and",
+        "greater_than" => "0"
+      }
+    }
+    model = AdvancedSearch.new(
+      :catalog => catalogs(:one),
+      :item_type => item_types(:one_author),
+      :criteria => criteria
+    )
+    search = ItemList::AdvancedSearchResult.new(model: model)
+    names = search.items.to_a.map { |i| i.data["one_author_name_uuid"] }.compact
+
+    refute_empty names
+    assert_equal names, names.sort
   end
 end
 # rubocop:enable Layout/LineLength
