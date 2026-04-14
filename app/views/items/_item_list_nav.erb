@@ -2,13 +2,13 @@
   <% if nav.previous %>
     <%= item_list_link(item_list, nav.previous, nav.previous_offset) do %>
       <%= fa_icon(:"chevron-left") %>
-      <%= item_display_name(nav.previous).truncate(30) %>
+      <%= strip_tags(item_display_name(nav.previous)).truncate(30) %>
     <% end %>
   <% end %>
   &nbsp;&nbsp;&nbsp;
   <% if nav.next %>
     <%= item_list_link(item_list, nav.next, nav.next_offset) do %>
-      <%= item_display_name(nav.next).truncate(30) %>
+      <%= strip_tags(item_display_name(nav.next)).truncate(30) %>
       <%= fa_icon(:"chevron-right") %>
     <% end %>
   <% end %>
