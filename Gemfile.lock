@@ -204,7 +204,7 @@ GEM
       concurrent-ruby (~> 1.0)
       logger
       zeitwerk (~> 2.6)
-    erb (6.0.2)
+    erb (6.0.4)
     erubi (1.13.1)
     execjs (2.10.0)
     faker (3.5.2)
