@@ -3,7 +3,7 @@
 #
 # Issue: In Rails 8.1, ActiveRecord::ConnectionAdapters::NullPool is missing
 # the with_pool_transaction_isolation_level method, which causes transactions
-# to fail in tests with: NoMethodError: undefined method 'with_pool_transaction_isolation_level'
+# to fail with: NoMethodError: undefined method 'with_pool_transaction_isolation_level'
 #
 # This patch adds the missing method to NullPool. Since NullPool doesn't actually
 # manage real database connections, we simply execute the provided block.
