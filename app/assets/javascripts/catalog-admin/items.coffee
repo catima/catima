@@ -160,14 +160,26 @@ display_upload_button = ($file_field)->
 fileupload_add_for = ($field, $data)->
   # Validate if file is acceptable for field. If yes, submit.
   f = $data.files[0]
-  if file_valid_for($field, f)
+  if !is_size_allowed($field, f.size)
+    t_too_big = $('#localization').data('file-too-big')
+    fileupload_error($field, "#{t_too_big}: #{f.name}")
+  else if is_duplicate_file($field, f)
+    t_duplicate = $('#localization').data('file-duplicate')
+    fileupload_error($field, "#{t_duplicate}: #{f.name}")
+  else if file_valid_for($field, f)
     $data.submit()
     insert_new_file(f, $field)
     display_upload_button($field)
   else
     t_not_valid = $('#localization').data('file-not-valid')
-    fileupload_error($field, "#{t_not_valid}: #{$data.files[0].name}")
+    fileupload_error($field, "#{t_not_valid}: #{f.name}")
   check_filerequired($field)
+
+is_duplicate_file = ($field, $file)->
+  for existing_file in files_for($field)
+    if file_hash(existing_file) == file_hash($file)
+      return true
+  return false
 
 file_valid_for = ($field, $file)->
   return false if !is_size_allowed($field, $file.size)
@@ -175,10 +187,7 @@ file_valid_for = ($field, $file)->
   ext = extension_for($file.name)
   return false if typeof(ext) == 'undefined'
 
-  for existing_file in files_for($field)
-    if file_hash(existing_file) == file_hash($file)
-      console.log('A file with the same name and size already exists: ', $file.name)
-      return false
+  return false if is_duplicate_file($field, $file)
 
   allowed_exts = allowed_extensions($field)
   return allowed_exts.length == 0 or allowed_exts.indexOf(ext.toLowerCase()) > -1 ? true : false
@@ -284,7 +293,7 @@ fileupload_error = ($field, $msg)->
   msg_box = """<div id="#{$field}_alert" class="alert alert-danger" role="alert">#{$msg}</div>"""
   $control.prepend(msg_box)
   run = () -> dismiss_error($field)
-  setTimeout(run, 3000)
+  setTimeout(run, 5000)
 
 dismiss_error = ($field)->
   $('#'+$field+'_alert').remove()

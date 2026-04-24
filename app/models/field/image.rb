@@ -49,7 +49,7 @@ class Field::Image < Field::File
   end
 
   def custom_field_permitted_attributes
-    %i(legend)
+    %i(legend types)
   end
 
   # Max upload image size (in MB). Default is 15MB.

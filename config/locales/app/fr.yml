@@ -109,6 +109,8 @@ fr:
         image_add_legend: "Ajouter une légende ici"
         file_required: "Un fichier est requis pour ce champ"
         file_not_valid: "Le fichier n'est pas valide pour ce champ"
+        file_too_big: "Le fichier est trop volumineux pour ce champ"
+        file_duplicate: "Vous ne pouvez pas ajouter deux fois le même fichier"
   validations:
     container:
       item_list:
