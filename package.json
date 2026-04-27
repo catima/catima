@@ -48,7 +48,7 @@
     "moment-timezone": "^0.5.35",
     "mousetrap": "^1.6.5",
     "pnp-webpack-plugin": "^1.7.0",
-    "postcss": "^8.4.31",
+    "postcss": "^8.5.10",
     "postcss-flexbugs-fixes": "^5.0.2",
     "postcss-import": "^15.1.0",
     "postcss-loader": "^7.3.3",
