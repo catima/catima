@@ -857,6 +857,7 @@ fr:
         save_note: Sauver
         import_docx: Importer un DOCX
         import_error_not_supported: Erreur lors de l'importation du fichier Word. Seuls les fichiers DOCX sont supportés.
+        import_error_result_too_large: Le contenu importé est trop volumineux.
         import_error: Erreur lors de l'importation du fichier Word.
         help_formatted_text_title: Restrictions du texte formaté
         help_formatterd_text_content: Uniquement disponible si l'option "champ primaire" est désactivée

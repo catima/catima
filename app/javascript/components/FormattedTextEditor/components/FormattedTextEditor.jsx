@@ -70,6 +70,7 @@ const FormattedTextEditor = (props) => {
   const [noteText, setNoteText] = useState('')
   const [noteDialogDisplay, setNoteDialogDisplay] = useState('none')
   const [mainEditorDisplay, setMainEditorDisplay] = useState('block')
+  const [importError, setImportError] = useState(null)
   const [footnoteRenderer, setFootnoteRenderer] = useState()
   const [endnoteRenderer, setEndnoteRenderer] = useState()
   const [editor, setEditor] = useState()
@@ -260,6 +261,10 @@ const FormattedTextEditor = (props) => {
     if (el.files.length == 0) return;
     const f = el.files[0];
 
+    // Maximum size of the converted HTML content to avoid Rack error (BYTESIZE_LIMIT).
+    // It can be modified with the RACK_QUERY_PARSER_BYTESIZE_LIMIT environment variable.
+    const MAX_IMPORT_HTML_BYTES = 1500 * 1024;
+
     const data = new FormData();
     data.append('docx', f);
 
@@ -268,14 +273,19 @@ const FormattedTextEditor = (props) => {
         el.value = "";
         let html = response.data.html;
         if (html.length < 1) {
-          alert(Translations.messages['catalog_admin.fields.text_option_inputs.import_error_not_supported']);
+          setImportError(Translations.messages['catalog_admin.fields.text_option_inputs.import_error_not_supported']);
           return;
         }
+        if (html.length > MAX_IMPORT_HTML_BYTES) {
+          setImportError(Translations.messages['catalog_admin.fields.text_option_inputs.import_error_result_too_large']);
+          return;
+        }
+        setImportError(null);
         const range = editor.getSelection();
         editor.clipboard.dangerouslyPasteHTML(range.index, html);
       })
       .catch(function (err) {
-        alert(Translations.messages['catalog_admin.fields.text_option_inputs.import_error'])
+        setImportError(Translations.messages['catalog_admin.fields.text_option_inputs.import_error']);
       })
   }
 
@@ -326,6 +336,12 @@ const FormattedTextEditor = (props) => {
       <div className="formattedTextEditor" id={uid + '-editor'}>
         <input id={uid + '-fileInput'} accept="application/vnd.openxmlformats-officedocument.wordprocessingml.document"
                type="file" onChange={_docxUpload} className="hide"/>
+        {importError && (
+          <div className="alert alert-danger alert-dismissible" role="alert">
+            {importError}
+            <button type="button" className="btn-close" aria-label="Close" onClick={() => setImportError(null)}></button>
+          </div>
+        )}
         <div id={uid + '-noteEditor'} className="noteEditor" style={{'display': noteDialogDisplay}}>
           <label>{noteLabel}</label><br/>
           <div id={uid + '-noteEditorInstance'}></div>
