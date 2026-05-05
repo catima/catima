@@ -459,6 +459,14 @@ it:
         seo-indexable-help: "Se controllato, questo tipo di oggetto sarà indicizzato dai motori di ricerca."
         seo-indexable-input: "Consente l'indicizzazione da parte dei motori di ricerca"
 
+    csv_imports:
+      new:
+        import_from_csv: "Importa %{item_types} da CSV"
+        import: Importa
+        file: File
+      create:
+        file_duplicate_column_mappings: "contiene errori strutturali (nomi di colonne duplicati)"
+
     exports:
       index:
         new_export: "Nuova esportazione (scegli il formato)"

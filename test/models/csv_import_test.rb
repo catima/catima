@@ -31,6 +31,15 @@ class CSVImportTest < ActiveSupport::TestCase
     refute_empty(import.errors[:file])
   end
 
+  test "validates file with duplicate column mappings" do
+    import = build_csv_import(
+      :file => csv_file_with_duplicate_columns,
+      :file_encoding => CSVImport::OPTION_DETECT_ENCODING
+    )
+    refute(import.valid?)
+    refute_empty(import.errors[:file])
+  end
+
   test "validates good encoding chosen" do
     import = build_csv_import(
       :file => csv_file_windows1252,
@@ -344,6 +353,13 @@ class CSVImportTest < ActiveSupport::TestCase
     csv_file_with_data <<~CSV
       ignore1,ignore2
       value,value
+    CSV
+  end
+
+  def csv_file_with_duplicate_columns
+    csv_file_with_data <<~CSV
+      name,Name,nickname
+      Matthew,Matt,Matt
     CSV
   end
 

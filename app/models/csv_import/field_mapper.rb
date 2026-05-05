@@ -47,9 +47,22 @@ class CSVImport::FieldMapper
     column_fields.select { |_, f| f.nil? }.map(&:first)
   end
 
+  # A Hash of attribute_name to an Array of column names that all resolve to
+  # the same field+locale combination. Only groups with more than one column
+  # are returned (i.e. duplicates).
+  def duplicate_mapped_columns
+    columns
+      .filter_map { |col| (f = field_for_column(col)) && [col, f] }
+      .group_by { |_, f| f.attribute_name }
+      .select { |_, pairs| pairs.size > 1 }
+      .transform_values { |pairs| pairs.map(&:first) }
+  end
+
   private
 
   def field_for_column(column)
+    return nil if column.nil? || column.strip.empty?
+
     column, locale = parse_localized_column(column)
     column_as_slug = column.strip.downcase.gsub(/[^a-z0-9]+/, "-")
     field_with_slug(column_as_slug, locale || default_locale)

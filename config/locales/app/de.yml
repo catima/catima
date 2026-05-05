@@ -519,6 +519,8 @@ de:
         import_from_csv: "Import %{item_types} from CSV"
         import: Import
         file: File
+      create:
+        file_duplicate_column_mappings: "enthält Strukturfehler (doppelte Spaltennamen)"
 
     dashboard:
       data:
