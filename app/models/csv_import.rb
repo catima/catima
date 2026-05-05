@@ -47,7 +47,7 @@ class CSVImport < ActiveType::Object
   delegate :primary_language, :to => :catalog
   delegate :encoding, :rows, :to => :reader
   delegate :column_fields, :mapped_fields, :unrecognized_columns,
-           :to => :field_mapper
+           :duplicate_mapped_columns, :to => :field_mapper
 
   validates_presence_of :creator
   validates_presence_of :item_type
@@ -57,6 +57,7 @@ class CSVImport < ActiveType::Object
   validate :file_must_not_be_malformed
   validate :file_must_have_at_least_one_row, :if => :file_is_csv?
   validate :at_least_one_column_must_be_mapped, :if => :file_is_csv?
+  validate :no_duplicate_column_mappings, :if => :file_is_csv?
 
   before_save :process_import
 
@@ -124,6 +125,15 @@ class CSVImport < ActiveType::Object
     errors.add(
       :file,
       I18n.t("catalog_admin.csv_imports.create.file_no_column_names_recognized")
+    )
+  end
+
+  def no_duplicate_column_mappings
+    return if duplicate_mapped_columns.empty?
+
+    errors.add(
+      :file,
+      I18n.t("catalog_admin.csv_imports.create.file_duplicate_column_mappings")
     )
   end
 

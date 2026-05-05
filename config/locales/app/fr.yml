@@ -695,6 +695,7 @@ fr:
         file_not_csv: ne semble pas être au format CSV
         file_must_have_at_least_one_row: doit avoir au moins une ligne de données
         file_no_column_names_recognized: aucune colonne n'est identifiable
+        file_duplicate_column_mappings: "contient des erreurs structurelles (noms de colonnes à double)"
         encoding_not_supported: encodage non supporté
         imported_successfully: importé(s) avec succès
         skipped: ignoré(s)

@@ -31,6 +31,53 @@ class CSVImport::FieldMapperTest < ActiveSupport::TestCase
     assert_equal(%w(wut make), mapper.unrecognized_columns)
   end
 
+  test "field_for_column with nil column returns nil" do
+    nil_mapper = CSVImport::FieldMapper.new(
+      item_types(:one_author).all_fields,
+      [nil, "name"],
+      :en
+    )
+    assert_nil(nil_mapper.column_fields[nil])
+    assert_not_nil(nil_mapper.column_fields["name"])
+  end
+
+  test "field_for_column with empty column returns nil" do
+    empty_mapper = CSVImport::FieldMapper.new(
+      item_types(:one_author).all_fields,
+      ["", "name"],
+      :en
+    )
+    assert_nil(empty_mapper.column_fields[""])
+    assert_not_nil(empty_mapper.column_fields["name"])
+  end
+
+  test "duplicate_mapped_columns detects columns resolving to the same field (different case)" do
+    dup_mapper = CSVImport::FieldMapper.new(
+      item_types(:one_author).all_fields,
+      %w(name Name),
+      :en
+    )
+    duplicates = dup_mapper.duplicate_mapped_columns
+    assert_equal(1, duplicates.size)
+    assert_includes(duplicates.values.first, "name")
+    assert_includes(duplicates.values.first, "Name")
+  end
+
+  test "duplicate_mapped_columns detects columns resolving to the same field (same case)" do
+    dup_mapper = CSVImport::FieldMapper.new(
+      item_types(:one_author).all_fields,
+      %w(name name),
+      :en
+    )
+    duplicates = dup_mapper.duplicate_mapped_columns
+    assert_equal(1, duplicates.size)
+    assert_equal(%w(name name), duplicates.values.first)
+  end
+
+  test "duplicate_mapped_columns returns empty hash when no duplicates" do
+    assert_empty(mapper.duplicate_mapped_columns)
+  end
+
   test "column_fields with i18n" do
     column_fields = i18n_mapper.column_fields
     assert_equal(["bio", "bio (en)"], column_fields.keys)
