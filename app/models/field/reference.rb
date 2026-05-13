@@ -140,10 +140,10 @@ class Field::Reference < Field
     end
   end
 
-  def field_value_for_item(item)
+  def field_value_for_item(item, separator: ',')
     refs = value_for_item(item)
     if multiple?
-      refs.map(&:default_display_name).join(', ')
+      refs.map(&:default_display_name).join("#{separator} ")
     else
       refs.nil? ? '' : refs.default_display_name
     end
@@ -164,7 +164,7 @@ class Field::Reference < Field
   def csv_value(item, _user=nil)
     return '' if related_item_type.is_a?(Category)
 
-    field_value_for_item(item)
+    field_value_for_item(item, separator: ';')
   end
 
   def sql_type
