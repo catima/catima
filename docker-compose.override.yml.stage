@@ -15,6 +15,7 @@ services:
       - upload-data:/var/www/catima/public/upload
       - thumbs-data:/var/www/catima/public/thumbs
       - refile-data:/var/www/catima/public/system/refile
+      - refile-tmp:/var/www/catima/tmp/refile
       - log-data:/var/www/catima/log
       - exports-data:/var/www/catima/exports
       - ./config/domains.yml:/var/www/catima/config/domains.yml:ro
@@ -35,13 +36,8 @@ services:
       target: worker-staging
     volumes:
       - upload-data:/var/www/catima/public/upload
-      - thumbs-data:/var/www/catima/public/thumbs
-      - refile-data:/var/www/catima/public/system/refile
       - log-data:/var/www/catima/log
       - exports-data:/var/www/catima/exports
-      - ./config/domains.yml:/var/www/catima/config/domains.yml:ro
-      - ./config/geo_layers.yml:/var/www/catima/config/geo_layers.yml:ro
-      - ./config/restricted_robots.yml:/var/www/catima/config/restricted_robots.yml:ro
     restart: unless-stopped
     deploy:
       mode: global
