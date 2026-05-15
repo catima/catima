@@ -48,7 +48,7 @@ RUN mkdir -p /etc/apt/keyrings; \
 WORKDIR /var/www/catima
 
 # Install specific version of RubyGems
-RUN gem update --system $RUBYGEMS_VERSION
+RUN gem update --system $RUBYGEMS_VERSION && gem cleanup
 
 # Install specific version of Bundler
 RUN gem install bundler:$BUNDLER_VERSION --no-document --conservative
