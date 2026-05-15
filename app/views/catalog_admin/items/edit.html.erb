@@ -12,12 +12,21 @@
     </span> |
   <% end %>
 
-  <span>
-    <%= link_to(
-          t('.view-item'),
-          item_path(:item_type_slug => @item.item_type.slug, :id => @item),
-          :target => '_blank') if params['action'] == 'edit' %>
-  </span>
+  <% if params['action'] == 'edit' %>
+    <span>
+      <% if !catalog.requires_review? || @item.review.approved? %>
+        <%= link_to(
+              t('.view-item'),
+              item_path(:item_type_slug => @item.item_type.slug, :id => @item),
+              :target => '_blank') %>
+      <% else %>
+        <%= tag.span(
+              t('.view-item'),
+              class: "text-muted",
+              title: t("presenters.field.reference.pending_review")) %>
+      <% end %>
+    </span>
+  <% end %>
 
   <% if @item.persisted? %>
     <span class="badge text-bg-secondary ms-1">
