@@ -72,6 +72,7 @@ RUN mkdir -p /etc/apt/keyrings; \
 
 # Install specific version of Bundler
 RUN gem install bundler -v $BUNDLER_VERSION && \
+    gem cleanup && \
     bundler --version
 
 # Define user and group to run the application
