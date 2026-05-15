@@ -61,6 +61,8 @@ gem "rswag", "~> 2.17"
 gem 'redis', "~> 5.0"
 gem "rspec-rails", "~> 8.0"
 gem "net-http", "~> 0.4" # Avoid already initialized constant Net::ProtocRetryError
+gem "benchmark"
+gem "ostruct"
 
 group :production, :staging, :development, :test do
   platforms :ruby do
