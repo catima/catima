@@ -30,6 +30,8 @@ it:
         item_type: Tipo di record
   presenters:
     field:
+      reference:
+        pending_review: "Questo elemento è in attesa di revisione e non è ancora approvato"
       file:
         add_file: Add file
         add_files: Add files

@@ -99,6 +99,8 @@ en:
               zero_byte_detected: is empty
   presenters:
     field:
+      reference:
+        pending_review: "This item is pending review and not yet approved"
       file:
         add_file: Add file
         add_files: Add files

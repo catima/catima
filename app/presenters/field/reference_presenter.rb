@@ -54,14 +54,22 @@ class Field::ReferencePresenter < FieldPresenter
     return if refs.empty?
 
     refs.map do |ref|
-      link_to(
-        item_display_name(ref),
-        Rails.application.routes.url_helpers.item_path(
-          :catalog_slug => ref.catalog,
-          :item_type_slug => ref.item_type,
-          :locale => I18n.locale,
-          :id => ref
-        ))
+      if ref.catalog.requires_review? && ref.review_status != "approved"
+        tag.span(
+          item_display_name(ref),
+          class: "text-muted",
+          title: t("presenters.field.reference.pending_review")
+        )
+      else
+        link_to(
+          item_display_name(ref),
+          Rails.application.routes.url_helpers.item_path(
+            :catalog_slug => ref.catalog,
+            :item_type_slug => ref.item_type,
+            :locale => I18n.locale,
+            :id => ref
+          ))
+      end
     end.join(", ").html_safe
   end
 end

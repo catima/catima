@@ -36,4 +36,34 @@ class Field::ReferencePresenterTest < ActionView::TestCase
       presenter.value
     )
   end
+
+  test "#value renders a link when referenced item is approved in a reviewed catalog" do
+    item = items(:reviewed_book_referencing_approved)
+    related_field = Field.find ActiveRecord::FixtureSet.identify('reviewed_book_related_book')
+    result = Field::ReferencePresenter.new(self, item, related_field).value
+
+    assert_includes result, "<a href="
+    assert_includes result, items(:reviewed_book_finders_keepers_approved).id.to_s
+    assert_not_includes result, "text-muted"
+  end
+
+  test "#value renders a grayed-out non-clickable span when referenced item is pending in a reviewed catalog" do
+    item = items(:reviewed_book_referencing_pending)
+    related_field = Field.find ActiveRecord::FixtureSet.identify('reviewed_book_related_book')
+    result = Field::ReferencePresenter.new(self, item, related_field).value
+
+    assert_not_includes result, "<a href="
+    assert_includes result, '<span class="text-muted"'
+    assert_includes result, "Harry Potter (book)"
+  end
+
+  test "#value renders a grayed-out non-clickable span when referenced item is not-ready in a reviewed catalog" do
+    item = items(:reviewed_book_referencing_not_ready)
+    related_field = Field.find ActiveRecord::FixtureSet.identify('reviewed_book_related_book')
+    result = Field::ReferencePresenter.new(self, item, related_field).value
+
+    assert_not_includes result, "<a href="
+    assert_includes result, '<span class="text-muted"'
+    assert_includes result, "End of Watch (book)"
+  end
 end

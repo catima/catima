@@ -30,6 +30,8 @@ de:
         item_type: Satzart
   presenters:
     field:
+      reference:
+        pending_review: "Dieses Element wartet auf Überprüfung und ist noch nicht genehmigt"
       file:
         add_file: Add file
         add_files: Add files

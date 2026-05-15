@@ -289,6 +289,39 @@ reviewed_book_harry_potter_pending:
   review_status: ready
   data: { "reviewed_book_title_uuid": "Harry Potter (book)" }
 
+reviewed_book_referencing_approved:
+  catalog: reviewed
+  creator: reviewed_editor
+  updater: reviewed_editor
+  item_type: reviewed_book
+  review_status: approved
+  data: {
+    "reviewed_book_title_uuid": "Book referencing approved",
+    "reviewed_book_related_book_uuid": "<%= ActiveRecord::FixtureSet.identify(:reviewed_book_finders_keepers_approved) %>"
+  }
+
+reviewed_book_referencing_pending:
+  catalog: reviewed
+  creator: reviewed_editor
+  updater: reviewed_editor
+  item_type: reviewed_book
+  review_status: approved
+  data: {
+    "reviewed_book_title_uuid": "Book referencing pending",
+    "reviewed_book_related_book_uuid": "<%= ActiveRecord::FixtureSet.identify(:reviewed_book_harry_potter_pending) %>"
+  }
+
+reviewed_book_referencing_not_ready:
+  catalog: reviewed
+  creator: reviewed_editor
+  updater: reviewed_editor
+  item_type: reviewed_book
+  review_status: approved
+  data: {
+    "reviewed_book_title_uuid": "Book referencing not-ready",
+    "reviewed_book_related_book_uuid": "<%= ActiveRecord::FixtureSet.identify(:reviewed_book_end_of_watch) %>"
+  }
+
 search_vehicle_honda_accord:
   creator: system_admin_invited_by_one
   updater: system_admin_invited_by_one
