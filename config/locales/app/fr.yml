@@ -101,6 +101,8 @@ fr:
               zero_byte_detected: est vide
   presenters:
     field:
+      reference:
+        pending_review: "Cet élément est en attente de validation et n'est pas encore approuvé"
       file:
         add_file: Ajouter un fichier
         add_files: Ajouter des fichiers

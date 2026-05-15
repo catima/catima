@@ -569,6 +569,16 @@ reviewed_book_title:
   field_set: reviewed_book (ItemType)
   uuid: reviewed_book_title_uuid
 
+reviewed_book_related_book:
+  type: "Field::Reference"
+  name_translations: { "name_en": "Related Book" }
+  name_plural_translations: { "name_plural_en": "Related Books" }
+  slug: related-book
+  field_set: reviewed_book (ItemType)
+  related_item_type: reviewed_book
+  uuid: reviewed_book_related_book_uuid
+  required: false
+
 search_vehicle_make:
   type: "Field::Text"
   slug: make
