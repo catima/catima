@@ -6,7 +6,6 @@ on:
   push:
     branches:
       - "development"
-      - "add-stage-prod-docker-config"
 permissions: read-all
 
 jobs:
@@ -25,7 +24,7 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v5
         with:
-          ref: add-stage-prod-docker-config
+          ref: development
 
       - name: Build image
         uses: unil-lettres/actions/docker-build@main
@@ -48,7 +47,7 @@ jobs:
     steps:
       - uses: actions/checkout@v5
         with:
-          ref: add-stage-prod-docker-config
+          ref: development
 
       - name: Merge service
         id: merge
@@ -69,7 +68,7 @@ jobs:
     steps:
       - uses: actions/checkout@v5
         with:
-          ref: add-stage-prod-docker-config
+          ref: development
 
       - name: Merge service
         id: merge
@@ -89,7 +88,7 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v5
         with:
-          ref: add-stage-prod-docker-config
+          ref: development
 
       - name: Update image
         uses: unil-lettres/actions/commit-version@main
@@ -111,7 +110,7 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v5
         with:
-          ref: add-stage-prod-docker-config
+          ref: development
 
       - name: Update description
         uses: peter-evans/dockerhub-description@v5
