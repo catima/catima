@@ -3,7 +3,8 @@
 {
     "name": "Catima devcontainer",
     "dockerComposeFile": [
-        "../docker-compose.yml"
+        "../docker-compose.yml",
+        "../docker-compose.override.yml.dev"
     ],
     "service": "catima-app",
     "workspaceFolder": "/workspaces/catima",
@@ -15,8 +16,7 @@
     },
     // forward ports for the main application (8383), and mailhog (8028)
     "forwardPorts": [8383, 8028],
-    "initializeCommand": "cp ./docker/example.env ./docker/.env && /bin/bash .devcontainer/env-setup.sh ./docker/.env",
-    "postCreateCommand": "/bin/bash .devcontainer/env-setup.sh ./.env",
+    "initializeCommand": "cp ./example.env ./.env && /bin/bash .devcontainer/env-setup.sh ./.env",
     "customizations": {
         "vscode": {
             "extensions": [

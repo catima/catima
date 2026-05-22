@@ -1,0 +1,5 @@
+<% provide(:title, page.title) %>
+<% page.containers.where(locale: I18n.locale).sorted.each do |c| %>
+  <% if c.slug %><a name="<%= c.slug %>"></a><% end %>
+  <%= container_html(c) %>
+<% end %>

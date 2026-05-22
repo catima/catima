@@ -13,18 +13,23 @@ Rails.application.config.assets.paths << Rails.root.join('node_modules')
 # folder are already added.
 # Rails.application.config.assets.precompile += %w( admin.js admin.css )
 
-# The code below requires an existing database to set up catalog specific assets
-# This is not granted in every case, so we recover from an ActiveRecord::NoDatabaseError
-# by simply ignoring catalog specific assets
+# The code below sets up catalog specific assets without requiring database access
+# It simply checks for existing catalog directories in the file system
 Rails.application.config.to_prepare do
-  Catalog.overrides.each do |slug|
-    # Add catalog specific assets to the load path
-    base_path = Rails.root.join('catalogs', slug, 'assets')
-    Rails.application.config.assets.paths += %w(images stylesheets javascripts).map { |asset| base_path.join(asset) }
+  catalogs_path = Rails.root.join('catalogs')
+  if Dir.exist?(catalogs_path)
+    catalog_slugs = Dir.entries(catalogs_path).select do |entry|
+      # Filter out special directories and only include actual directories
+      entry != '.' && entry != '..' && File.directory?(File.join(catalogs_path, entry))
+    end
 
-    # Add catalog-specific assets
-    Rails.application.config.assets.precompile += %W[#{slug}.css #{slug}.js]
+    catalog_slugs.each do |slug|
+      # Add catalog specific assets to the load path
+      base_path = Rails.root.join('catalogs', slug, 'assets')
+      Rails.application.config.assets.paths += %w(images stylesheets javascripts).map { |asset| base_path.join(asset) }
+
+      # Add catalog-specific assets
+      Rails.application.config.assets.precompile += %W[#{slug}.css #{slug}.js]
+    end
   end
-rescue ActiveRecord::NoDatabaseError, ActiveRecord::StatementInvalid, ActiveRecord::PendingMigrationError
-  false
 end

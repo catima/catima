@@ -1,0 +1,50 @@
+<div id="advanched-search-form-wrapper">
+  <%= bootstrap_form_for(@advanced_search, :remote => @advanced_search_config&.search_type_map?) do |f| %>
+    <%= hidden_field_tag(:item_type, params[:item_type].presence || @advanced_search_config&.item_type&.slug) %>
+
+    <% if params[:item_type].present? || @advanced_search_config.present? %>
+      <div class="row">
+        <% if displayable_fields(@fields).count.zero? %>
+          <div class="col-lg-12">
+            <%= t("advanced_searches.new.no_field_in_advance_search_configuration") %>
+          </div>
+        <% end %>
+      </div>
+    <% end %>
+
+    <table class="table">
+      <tbody>
+      <% if params[:item_type].present? || @advanced_search_config.present? %>
+        <% displayable_fields(@fields).each_with_index do |field, i| %>
+          <%= render_advanced_search_field(f, field, i) do |content| %>
+            <tr>
+              <th style="width: 20%;">
+                <%= field.name %>
+              </th>
+              <td>
+                <div class="row">
+                  <%= content %>
+                </div>
+              </td>
+            </tr>
+          <% end %>
+        <% end %>
+      <% end %>
+      </tbody>
+    </table>
+    <%= hidden_field_tag(:advanced_search_conf, params[:advanced_search_conf]) %>
+    <div class="row">
+      <div class="advanced-search-buttons">
+        <%= link_to(
+              t("advanced_searches.new.start_over"),
+              {
+                :item_type => params[:item_type],
+                :advanced_search_conf => params[:advanced_search_conf],
+              },
+              :class => "btn btn-text reset-search") %>
+        <%= f.primary(t("catalogs.show.viat-search-btn")) %>
+      </div>
+    </div>
+    <hr>
+  <% end %>
+</div>

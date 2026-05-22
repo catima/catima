@@ -1,0 +1,21 @@
+<% if @daily_item_data %>
+  <div class="daily-item">
+    <% if @daily_item_data[:cover] %>
+      <div class="daily-item-cover">
+        <img src="<%= @daily_item_data[:cover] %>" class="daily-item-cover-image">
+      </div>
+    <% end %>
+
+    <div class="daily-item-content">
+      <h2>Objet du jour</h2>
+      <h3 class="daily-item-title"><%= @daily_item_data[:name] %></h3>
+      <div>
+        <a href="<%= @daily_item_data[:url] %>">
+          <button class="daily-item-link btn btn-secondary">
+            Voir la fiche
+          </button>
+        </a>
+      </div>
+    </div>
+  </div>
+<% end %>

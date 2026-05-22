@@ -57,15 +57,13 @@ Rails.application.configure do
   # Ensure mailer works in local development
   config.action_mailer.delivery_method = :letter_opener
 
-  # Ensure mailer works in docker development
-  if ENV['DOCKER_RUNNING'].present?
-    config.action_mailer.delivery_method = :smtp
-    config.action_mailer.perform_deliveries = true
-    config.action_mailer.smtp_settings = {
-      address: ENV.fetch('MAIL_SMTP_ADDRESS', 'catima-mailhog'),
-      port: ENV.fetch('MAIL_SMTP_PORT', '1025')
-    }
-  end
+  # Ensure mailer works in docker
+  config.action_mailer.delivery_method = :smtp
+  config.action_mailer.perform_deliveries = true
+  config.action_mailer.smtp_settings = {
+    address: ENV.fetch('MAIL_SMTP_ADDRESS', 'catima-mailhog'),
+    port: ENV.fetch('MAIL_SMTP_PORT', '1025')
+  }
 
   config.action_mailer.raise_delivery_errors = true
 

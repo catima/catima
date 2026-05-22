@@ -1,0 +1,28 @@
+<% provide(:title, item_type.name_plural) %>
+
+<% content_for :top_content do %>
+  <div class="top-content-type-generic">
+    <%= render("shared/searchlinks") %>
+  </div>
+<% end %>
+
+<div id="main-content">
+  <div id="main-wrapper">
+    <div id="main">
+      <% if @corpus.present? %>
+        <%= render("items/type/corpus") %>
+      <% end %>
+
+      <% if @domain.present? %>
+        <div class="separator">
+          <span class="list-title">
+            <b><%= @browse.total_count %></b> <%= t(".images-for-domain") %>
+          </span>
+        </div>
+      <% end %>
+
+      <%= render_item_list(@browse) %>
+      <%= paginate(@browse.items) %>
+    </div>
+  </div>
+</div>

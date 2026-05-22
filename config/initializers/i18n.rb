@@ -2,14 +2,19 @@
 Rails.application.config.i18n.load_path += Dir[Rails.root.join('config', 'locales', 'app', '*.{rb,yml}').to_s]
 
 # Add catalog specific translations from catalogs/:catalog_slug/locales/*.yml
-# This requires the database to exist. If it does not exist, we recover without
-# adding catalog specific translations.
+# This checks the file system directly without requiring database access
 Rails.application.config.to_prepare do
-  Catalog.overrides.each do |slug|
-    Rails.application.config.i18n.load_path += Dir[Rails.root.join('catalogs', slug, 'locales', '*.yml').to_s]
+  catalogs_path = Rails.root.join('catalogs')
+  if Dir.exist?(catalogs_path)
+    catalog_slugs = Dir.entries(catalogs_path).select do |entry|
+      # Filter out special directories and only include actual directories
+      entry != '.' && entry != '..' && File.directory?(File.join(catalogs_path, entry))
+    end
+
+    catalog_slugs.each do |slug|
+      Rails.application.config.i18n.load_path += Dir[Rails.root.join('catalogs', slug, 'locales', '*.yml').to_s]
+    end
   end
-rescue ActiveRecord::NoDatabaseError, ActiveRecord::StatementInvalid, ActiveRecord::PendingMigrationError
-  false
 end
 
 Rails.application.config.i18n.default_locale = :en

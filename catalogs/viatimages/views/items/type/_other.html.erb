@@ -1,0 +1,26 @@
+<% provide(:title, item_display_name(@item)) %>
+
+<%= render_item_list_nav(item_list, @item) if item_list %>
+
+<% fields_and_item_references(@item) do |field, browse| %>
+  <div class="separator">
+    <span class="list-title">
+      <%= t(".viat-search-results-message_html",
+            :query => @item.default_display_name.capitalize,
+            :type => field.item_type.name_plural.downcase,
+            :count_delimited => browse.total_count) %>
+    </span>
+  </div>
+
+  <%= render_item_list(browse) %>
+  <% if browse.more? %>
+    <%= link_to(items_path(
+          :item_type_slug => browse.item_type,
+          browse.field.slug => browse.value
+        )) do %>
+      <div class="mt-2">
+        <%= t(".viat-view-more") %>...
+      </div>
+    <% end %>
+  <% end %>
+<% end %>

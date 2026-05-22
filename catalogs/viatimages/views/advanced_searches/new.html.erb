@@ -1,0 +1,40 @@
+<% provide(:title, t(".title")) %>
+
+<% content_for :top_content do %>
+  <div class="top-content-type-generic">
+    <%= render("shared/searchlinks") %>
+  </div>
+<% end %>
+
+<div id="main-content">
+  <div id="main-wrapper">
+    <div id="main" class="advanced-search-content">
+      <ul class="nav nav-tabs nav-justified" id="advanced-search-tabs">
+        <% @advance_search_confs.each do |search_config| %>
+          <%= tag.li(
+            :role => "presentation",
+            :class => "nav-item") do %>
+            <%= link_to(
+                  search_config.title,
+                  {:advanced_search_conf => search_config.id},
+                  class: ["nav-link", ("active" if search_config.id == @advanced_search_config&.id)]
+                ) %>
+          <% end %>
+        <% end %>
+      </ul>
+
+      <% if @advanced_search_config.present? && @advanced_search_config.description %>
+        <div class="row">
+          <div class="col-lg-12 description m-3"><%= @advanced_search_config.description %>
+          </div>
+        </div>
+      <% end %>
+
+      <%= render :partial => "form" %>
+
+      <% if @advanced_search_config&.search_type_map? %>
+        <%= render :partial => "map", :locals => {:results => @search} %>
+      <% end %>
+    </div>
+  </div>
+</div>

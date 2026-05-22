@@ -1,0 +1,5 @@
+<% if @search_conf_param %>
+  <div class="searchlinks-icon">
+    <a href="<%= new_advanced_search_path %>?<%= @search_conf_param %>"><%= image_tag("red-triangle.gif") %> <%= t(".viat-search-advanced") %></a>
+  </div>
+<% end %>

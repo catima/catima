@@ -1,0 +1,24 @@
+<% content_for :top_content do %>
+  <% if @item_type.slug == "images" %>
+    <div class="top-content-type-item">
+      <%= render("shared/searchlinks") %>
+      <div class="items-nav"><%= render_item_list_nav(item_list, @item) if item_list %></div>
+    </div>
+  <% else %>
+    <div class="top-content-type-generic">
+      <%= render("shared/searchlinks") %>
+    </div>
+  <% end %>
+<% end %>
+
+<div id="main-content">
+  <div id="main-wrapper">
+    <div id="main">
+      <% if @item_type.slug == "images" %>
+        <%= render("items/type/image") %>
+      <% else %>
+        <%= render("items/type/other") %>
+      <% end %>
+    </div>
+  </div>
+</div>

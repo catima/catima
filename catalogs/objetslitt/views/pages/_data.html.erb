@@ -1,0 +1,105 @@
+<%# Override for the page "La base de données" %>
+<% provide(:title, @page.title) %>
+
+<a name="bandeau"></a>
+<p>
+  <%= image_tag("maneki-neko-1200x700.jpg", alt: "Maneki Neko", :class => "banner-img") %>
+</p>
+
+<%# Hardcoded special menu only for the "La base de données" page %>
+<div class="navbar navbar-light navbar-expand navbar-db">
+  <div class="navbar-collapse collapse show">
+    <ul class="nav navbar-nav mr-auto">
+      <li class="nav-item dropdown">
+        <a href="" class="dropdown-toggle nav-link" role="button" aria-haspopup="true" aria-expanded="false" data-bs-toggle="dropdown">
+          Textes
+        </a>
+        <div class="dropdown-menu">
+          <a class="dropdown-item" href="/objetslitt/fr/touslestextes">Tous les textes</a>
+          <div role="separator" class="dropdown-divider"></div>
+          <a class="dropdown-item" href="/objetslitt/fr/textessiecles">Textes par siècle</a>
+          <div role="separator" class="dropdown-divider"></div>
+          <a class="dropdown-item" href="/objetslitt/fr/textepargenre">Textes par genre</a>
+          <div role="separator" class="dropdown-divider"></div>
+          <a class="dropdown-item" href="/objetslitt/fr/textcrit">Textes critiques</a>
+        </div>
+      </li>
+
+      <li class="nav-item dropdown">
+        <a href="" class="dropdown-toggle nav-link" role="button" aria-haspopup="true" aria-expanded="false" data-bs-toggle="dropdown">
+          Objets
+        </a>
+        <div class="dropdown-menu">
+          <a class="dropdown-item" href="/objetslitt/fr/listeobjets">Objets en vrac</a>
+          <div role="separator" class="dropdown-divider"></div>
+          <a class="dropdown-item" href="/objetslitt/fr/categobjet">Objets par fonction</a>
+          <div role="separator" class="dropdown-divider"></div>
+          <a class="dropdown-item" href="/objetslitt/fr/objetsparfonction">Objets par fonction textuelle</a>
+          <div role="separator" class="dropdown-divider"></div>
+          <a class="dropdown-item" href="/objetslitt/fr/systemobjetpage">Systèmes d'objets</a>
+        </div>
+      </li>
+
+      <li class="nav-item dropdown">
+        <a href="" class="dropdown-toggle nav-link" role="button" aria-haspopup="true" aria-expanded="false" data-bs-toggle="dropdown">
+          Auteurs
+        </a>
+        <div class="dropdown-menu">
+          <a class="dropdown-item" href="/objetslitt/fr/auteur">Tous les auteurs</a>
+        </div>
+      </li>
+    </ul>
+  </div>
+</div>
+
+<div id="searchbox">
+  <%# Standard search %>
+  <%= bootstrap_form_tag(
+    :url => { :controller => "simple_searches", :action => "new" },
+    :method => "GET",
+    :layout => :inline ) do |f| %>
+
+    <%= hidden_field_tag(:type, "textes") %>
+    <%= f.search_field(
+      :q,
+      :value => params[:q],
+      :label => "Recherche",
+      :hide_label => true,
+      :autofocus => false,
+      :style => "width: 36em",
+      :class => "search-bar",
+      :placeholder => "Recherche"
+    ) %>
+  
+    <%= f.submit("Chercher", :class => 'btn btn-primary') %>
+
+    <button class="btn">
+        <a href="/objetslitt/fr/search/advanced/new?item_type=textes">Avancé</a>
+    </button>
+  <% end %>
+</div>
+
+<a name="texte-presentation"></a>
+<p>À partir des années 1830, sous l'effet des grandes mutations socio-économiques du capitalisme naissant et de l'éclosion de ce qu'on appellera plus tard la société de consommation, le rapport à la culture matérielle se trouve profondément bouleversé. Les objets déferlent alors sur le monde ... et dans la littérature.</p>
+<br>
+<b>Une littérature riche d'objets</b>
+<p>Si le mouvement réaliste marque les débuts de cette entrée triomphale des "choses" dans les textes, leur omniprésence ne s'est pas démentie depuis. Littérature des XIXe, XXe ou XXIe siècles ; roman, récit, poésie ou théâtre ; fantastique, policier, science-fiction ou encore récit documentaire : tous les genres, tous les courants, toutes les esthétiques intègrent, parfois pour mieux l'interroger, cette matérialité qui s'impose. De la petite cuillère à l'album photo, de la voiture à la cuisine aménagée, les objets occupent l'espace et s'y déploient selon des modalités diverses, opérant à plusieurs niveaux : objet isolé ou faisant système, réel ou fantasmé, de nécessité ou de luxe, à fonction actancielle ou mémorielle, etc.</p>
+<br>
+<b>Fonctionnement de la base de données</b>
+<p>Forte de ces constats, cette base de données vise à 1) établir un <b>corpus sélectif de textes de 1830 à nos jours</b>, dans lesquels les objets occupent une fonction déterminante ; 2) déterminer les <b>fonctions</b> et les <b>modes d'existence</b> de ces objets dans les textes à travers des <b>analyses détaillées</b>.</p>
+<p>Pour ce faire, la base de données invite à explorer les <b>plus de 300 textes</b> recensés et analysés selon des axes différents :</p>
+<ol>
+  <li><a href="/objetslitt/fr/auteur">Par auteur / autrice</a> : tous les textes d'un même auteur / d'une même autrice</li>
+  <li><a href="/objetslitt/fr/textessiecles">Par siècle</a> : tous les textes du XIXe, XXe ou XXIe siècle</li>
+  <li><a href="/objetslitt/fr/touslestextes">Par titre</a> : tous les textes par ordre alphabétique</li>
+  <li><a href="/objetslitt/fr/textepargenre">Par genre</a> : tous les textes appartenant à un même genre</li>
+  <li><a href="/objetslitt/fr/listeobjets">Par objet</a> : tous les objets singuliers listés dans la base de données</li>
+  <li><a href="/objetslitt/fr/categobjet">Par catégorie</a> : tous les objets du même type (par ex. vêtements, machines industrielles, etc.)</li>
+  <li><a href="/objetslitt/fr/objetsparfonction">Par fonction textuelle</a> : tous les objets remplissant la même fonction (par ex. fonction esthétique, sociologique ou mémorielle)</li>
+  <li><a href="/objetslitt/fr/systemobjetpage">Par système d'objets</a> : tous les groupes d'objets distincts fonctionnant en système cohérent (par ex. une collection, une boutique, un intérieur)</li>
+</ol>
+<p>Par ailleurs, la <a href="/objetslitt/fr/search/advanced/new?advanced_search_conf=55">recherche avancée</a> permet de croiser les axes de recherche, de façon à sérier davantage les résultats.</p>
+
+<br>
+
+<%= render partial: "shared/daily_item" %>

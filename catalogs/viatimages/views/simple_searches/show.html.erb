@@ -1,0 +1,60 @@
+<% provide(:top_content) do %>
+  <div class="top-content-type-generic">
+    <%= render("shared/searchlinks") %>
+  </div>
+<% end %>
+
+<div id="main-content">
+  <div id="main-wrapper">
+    <div id="main">
+      <div class="list-title">
+        <% if @simple_search_results.query.empty? %>
+          <%= t(".viat-no-search-criteria") %>
+        <% end %>
+
+        <div class="bookmark-links">
+          <% if search_exists_for_user?(@saved_search) %>
+            <%= link_to(
+                  fa_icon("bookmark", :text => t(".searches_remove")),
+                  search_path(I18n.locale, @saved_search.search),
+                  method: :delete
+                ) %>
+          <% else %>
+            <%= link_to(
+                  fa_icon("bookmark-o", :text => t(".searches_add")),
+                  searches_path(I18n.locale, related_search_uuid: @saved_search.uuid),
+                  method: :post
+                ) %>
+          <% end %>
+        </div>
+      </div>
+
+      <div class="images-wrapper" style="border-top: none;">
+        <% if @simple_search_results.item_counts_by_type.many? %>
+          <ul class="nav nav-tabs mb-3">
+            <% @simple_search_results.item_counts_by_type.sort_by { |type, _| type.slug == "images" ? 0 : 1 }.each do |type, count| %>
+              <% if type && (type.slug == "images" || type.slug == "corpus") %>
+                <%= tag.li(
+                  :role => "presentation",
+                  :class => "nav-item") do %>
+                  <%= link_to({type: type.slug, q: @simple_search_results.query}, class: ["nav-link", ("active" if @simple_search_results.active?(type))]) do %>
+                    <%= type.name_plural %>
+                    <% unless @catalog.requires_review %>
+                      <span class="badge rounded-pill text-bg-secondary ms-2">
+                        <%= number_with_delimiter(count) %>
+                      </span>
+                    <% end %>
+                  <% end %>
+                <% end %>
+              <% end %>
+            <% end %>
+          </ul>
+        <% end %>
+        <div class="images">
+          <%= render_item_list(@simple_search_results) %>
+          <%= paginate(@simple_search_results.items) %>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>

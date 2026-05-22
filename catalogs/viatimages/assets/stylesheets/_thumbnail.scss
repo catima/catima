@@ -1,0 +1,23 @@
+.thumbnail {
+  background-color: #f6f6f6;
+}
+
+.thumbnail:hover {
+  border-color: #aaaaaa;
+}
+
+.thumbnail .caption {
+  text-align: center;
+}
+
+.thumbnail .caption a {
+  color: black;
+}
+
+.thumbnail .caption a:hover {
+  text-decoration: underline;
+}
+
+.thumbnail .caption a:focus {
+  text-decoration: none;
+}

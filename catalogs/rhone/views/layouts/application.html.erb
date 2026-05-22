@@ -1,0 +1,90 @@
+<% content_for :title do %>
+  <title>Plateforme Rhône</title>
+<% end %>
+
+<% content_for :head do %>
+  <script src="https://d3js.org/d3.v6.min.js"></script>
+  <%= stylesheet_link_tag("rhone", :media => "all") %>
+  <%= javascript_include_tag("rhone") %>
+  <script src="https://unpkg.com/leaflet-tilelayer-swiss@2.2.1/dist/Leaflet.TileLayer.Swiss.umd.js"
+    integrity="sha384-euGDvW95PJJoBC7xefx6xWF1eZt1Y2HskqSURUUZgd+ND6QEVSt9VKPdzl82hDQq"
+    crossorigin></script>
+  <script src="https://cdn.jsdelivr.net/npm/fuzzy-search@3.2.1/dist/FuzzySearch.min.js"></script>
+<% end %>
+
+<header>
+  <nav>
+    <a class="brand" href="https://www.plateforme-rhone.ch/">
+      <img src="https://www.plateforme-rhone.ch/template/image/logo.gif" alt="Plateforme Rhône" %>
+    </a>
+    <ol>
+      <li><a href="/rhone/fr">Cartes anciennes</a></li>
+      <li><a href="/rhone/fr/institutions-conservation">Institutions de conservation</a></li>
+    </ol>
+    <div class="hamburger" style="text-align: right; margin: auto 20px auto auto;">
+      <svg id="menu" xmlns='http://www.w3.org/2000/svg'
+        width="30" height="30" viewBox="0 0 30 30">
+        <line x1="0" y1="7" x2="30" y2="7" />
+        <line x1="0" y1="15" x2="30" y2="15" />
+        <line x1="0" y1="23" x2="30" y2="23" />
+      </svg>
+      <svg id="cross" class="hidden" xmlns='http://www.w3.org/2000/svg'
+        width="30" height="30" viewBox="0 0 30 30">
+        <line x1="4" y1="4" x2="26" y2="26" />
+        <line x1="4" y1="26" x2="26" y2="4" />
+      </svg>
+    </div>
+    <div class="menu">
+      <div><a href="/rhone/fr">Cartes anciennes</a></div>
+      <div><a href="/rhone/fr/institutions-conservation">Institutions de conservation</a></div>
+    </div>
+  </nav>
+
+  <div class="jumbo-wrapper">
+    <div class="logo-banner <% if @cartes %>small<% end %>"></div>
+    <div class="jumbo"></div>
+    <% if @cartes %>
+      <div class="timeline"></div>
+    <% end %>
+  </div>
+</header>
+
+<% if @cartes %>
+  <%= yield %>
+<% else %>
+  <div class="content">
+    <%= yield %>
+  </div>
+<% end %>
+
+
+<script>
+  d3.select('.hamburger')
+    .on('click', _ => {
+      if (document.querySelector('.hamburger #menu').classList.contains('hidden')) {
+        hideMenu()
+      } else {
+        showMenu()
+      }
+    })
+
+  function showMenu () {
+    d3.select('nav .menu')
+      .transition()
+      .style('height', '94px')
+
+    document.querySelector('.hamburger #menu').classList.add('hidden')
+    document.querySelector('.hamburger #cross').classList.remove('hidden')
+  }
+
+  function hideMenu () {
+    d3.select('nav .menu')
+      .transition()
+      .style('height', '0px')
+
+    document.querySelector('.hamburger #menu').classList.remove('hidden')
+    document.querySelector('.hamburger #cross').classList.add('hidden')
+  }
+</script>
+
+<% parent_layout "base" %>

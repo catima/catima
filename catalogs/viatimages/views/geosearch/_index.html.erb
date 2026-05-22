@@ -1,0 +1,97 @@
+<div id="mapsearchregions">
+  <div class="geosearch-filters">
+    <% @features_select.each do |element| %>
+      <select class="sel_mapsearch" id="<%= element[:name] %>" name="<%= element[:name] %>">
+        <option value="feature_<%= element[:name] %>_home"><%= t(element[:label]) %></option>
+        <% element[:items].each do |item| %>
+          <option value="feature_<%= element[:name] %>_<%= item.id %>" <%= params[:feature] == item.id.to_s ? 'selected' : '' %>>
+              <%=
+                item.data[@geo_feature_primary_field.uuid]['_translations'] ?
+                  item.data[@geo_feature_primary_field.uuid]['_translations'][I18n.locale.to_s] : item.id
+              %>
+          </option>
+        <% end %>
+      </select>
+    <% end %>
+    <br>
+
+    <select id="sel_ouvrage_map" name="sel_ouvrage">
+      <option value="corpus_map_home"><%= t('.viat-geosearch-book') %></option>
+      <% @corpuses.each do | corpus | %>
+        <option value="corpus_map_<%= corpus.id %>" <%= params[:corpus] == corpus.id.to_s ? 'selected' : '' %>>
+          <%= corpus.get_value("titre").truncate(70) %>
+        </option>
+      <% end %>
+    </select>
+  </div>
+</div>
+
+<div id="map-wrapper">
+  <% if @container %>
+    <%= react_component('GeoViewer/components/GeoViewer', {
+      features: @geojson.present? ? @geojson.to_json : @container.geojson.to_json,
+      layers: @container.geo_layers,
+      mapHeight: @container.map_height,
+      catalog: @catalog.slug,
+      locale: I18n.locale
+    }) %>
+  <% end %>
+</div>
+
+<div id="map-outer">
+  <div class="warning-icon">
+    <%= image_tag("attention-13px.gif", alt: "Attention") %>
+  </div>
+
+  <p>
+    <%= t('.viat-geosearch-warning_html') %>
+  </p>
+  <hr id="map-outer-border">
+</div>
+
+<script>
+  // Only pre-approved, application-generated URLs are allowed
+  var geoUrlMapping = {
+    // Corpus home option
+    'corpus_map_home': '<%= j @base_corpus_path %>',
+
+    // Corpus options
+    <% @corpuses.each do |corpus| %>
+      'corpus_map_<%= corpus.id %>': '<%= j(@base_corpus_path + corpus.id.to_s) %>',
+    <% end %>
+
+    // Feature options
+    <% @features_select.each do |element| %>
+      'feature_<%= element[:name] %>_home': '<%= j @base_feature_path %>',
+      <% element[:items].each do |item| %>
+        'feature_<%= element[:name] %>_<%= item.id %>': '<%= j(@base_feature_path + item.id.to_s) %>',
+      <% end %>
+    <% end %>
+  };
+
+  (function() {
+    function safeGeoNav(selector) {
+      var selects = document.querySelectorAll(selector);
+      if (!selects.length) return;
+
+      selects.forEach(function(sel) {
+        sel.addEventListener('change', function() {
+          var key = this.value;
+          if (!key) return;
+
+          // Only navigate to pre-approved URLs from server-side mapping
+          if (geoUrlMapping.hasOwnProperty(key)) {
+            var url = geoUrlMapping[key];
+            // Additional validation: ensure URL is relative or HTTPS
+            if (/^(\/|https:\/\/)/.test(url)) {
+              window.location.href = url;
+            }
+          }
+        });
+      });
+    }
+
+    safeGeoNav('.sel_mapsearch');
+    safeGeoNav('#sel_ouvrage_map');
+  })();
+</script>

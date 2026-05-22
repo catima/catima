@@ -14,7 +14,7 @@ class Dump
 
   def dump_files(cat, dir)
     files_dir = File.join(dir, 'files')
-    Dir.mkdir files_dir
+    FileUtils.mkdir_p files_dir
     FileUtils.cp_r(
       Dir.glob(File.join(Rails.public_path, 'upload', cat.slug, '*')),
       files_dir

@@ -1,0 +1,45 @@
+.ui-tabs ul li a {
+  width: 150px;
+}
+.ui-tabs ul li {
+  display: inline-block !important;
+  float: none !important;
+}
+
+.nav-tabs a.nav-link,
+.nav-tabs a.nav-link:hover,
+.nav-tabs a.nav-link:focus,
+.nav-tabs a.active,
+.nav-tabs a.active:hover,
+.nav-tabs a.active:focus {
+  background-color: #fff;
+  border-radius: 0px;
+}
+
+.nav-tabs a.active {
+  color: red !important;
+  border: 1px solid #aaaaaa !important;
+  border-bottom-color: transparent !important;
+}
+
+.nav-tabs a.nav-link {
+  color: #8a1c20;
+  border: 1px solid #ddd;
+  border-bottom-color: transparent !important;
+}
+
+.nav-tabs a.nav-link:hover {
+  color: black;
+  border: 1px solid #aaaaaa;
+  border-bottom-color: transparent !important;
+}
+
+.ui-btns {
+  height: 50px;
+}
+
+.nav-btns {
+  float: right;
+  margin-right: 20px;
+  margin-top: 20px;
+}

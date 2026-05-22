@@ -1,0 +1,13 @@
+<li class="nav-item help">
+  <%= link_to(doc_path, html_options = {class: "nav-link"}) do
+    fa_icon("question-circle")
+  end %>
+
+  <%# Catalog-specific mailto in the navbar %>
+    <li class="nav-item help">
+      <a href="mailto:lcm@unil.ch" class="nav-link" target="_blank">
+        <%= fa_icon("envelope") %>
+      </a>
+    </li>
+    <%# End catalog-specific mailto %>
+</li>

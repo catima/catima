@@ -1,0 +1,27 @@
+<div class="top-content-type-home">
+  <div id="searchbox">
+    <!-- Standard search -->
+    <%= bootstrap_form_tag(
+            :url => { :controller => "simple_searches", :action => "new" },
+            :method => "GET",
+            :layout => :inline ) do |f| %>
+
+      <%= hidden_field_tag(:type, "images") %>
+      <%= f.search_field(
+              :q,
+              :value => params[:q],
+              :label => "Search",
+              :hide_label => true,
+              :autofocus => false,
+              :class => "txtSearch"
+          ) %>
+
+      <%= f.submit(t(".viat-search-btn"), :class => 'btn simple-search') %>
+    <% end %>
+
+    <div id="searchlinks-home">
+      <%= render("shared/search/standard_search") %>
+      <%= render("shared/search/advanced_search") %>
+    </div>
+  </div>
+</div>

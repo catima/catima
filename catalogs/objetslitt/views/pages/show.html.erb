@@ -1,0 +1,16 @@
+<% provide(:extra_nav) do %>
+  <% if policy(@page).edit? %>
+    <div style="float:right;">
+      <%= link_to(edit_catalog_admin_page_path) do %>
+        <%= fa_icon(:pencil, :text => "Edit this page") %>
+      <% end %>
+    </div>
+  <% end %>
+<% end %>
+
+<%# Override specifically the page with the slug "donnees" %>
+<% if @slug == "donnees" %>
+  <%= render partial:'data' %>
+<% else %>
+  <%= render partial:'content' %>
+<% end %>

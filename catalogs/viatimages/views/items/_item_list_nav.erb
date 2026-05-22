@@ -1,0 +1,26 @@
+<span class="nav-left">
+  <%= link_to(
+          fa_icon(:"chevron-circle-left", :text => t(".back")),
+          item_list_path
+      ) %>
+</span>
+
+<span class="nav-right">
+  <% if nav.previous %>
+    <%= item_list_link(item_list, nav.previous, nav.offset-1) do %>
+      <%= fa_icon(:"chevron-left") %>
+    <% end %>
+  <% end %>
+  <%= t(".viat-images",
+        :current => nav.offset,
+        :total => number_with_delimiter(nav.results.total_count)) %>
+  <% if nav.next %>
+    <%= item_list_link(item_list, nav.next, nav.offset+1) do %>
+      <%= fa_icon(:"chevron-right") %>
+    <% end %>
+  <% end %>
+</span>
+
+<% if !params[:q].blank? %>
+  <div class="nav-center">Recherche pour: "<%= params[:q].truncate(70) %>"</div>
+<% end %>

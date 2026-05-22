@@ -4,21 +4,23 @@ class ExportWorker
   include Sidekiq::Worker
 
   def perform(export_id, locale)
-    dir = Rails.env.development? ? Rails.root.join('tmp', 'exports', Dir.mktmpdir(SecureRandom.hex)) : Dir.mktmpdir(SecureRandom.hex)
+    dir = create_temp_directory
     export = find_export(export_id)
 
-    case export.category
-    when "catima"
-      catima_export(export, dir)
-    when "sql"
-      sql_export(export, dir)
-    when "csv"
-      csv_export(export, dir, locale)
-    else
-      export.update(status: "error")
+    begin
+      case export.category
+      when "catima"
+        catima_export(export, dir)
+      when "sql"
+        sql_export(export, dir)
+      when "csv"
+        csv_export(export, dir, locale)
+      else
+        export.update(status: "error")
+      end
+    ensure
+      FileUtils.rm_rf dir
     end
-
-    FileUtils.remove_entry dir
   end
 
   private
@@ -88,10 +90,24 @@ class ExportWorker
     Export.find_by(id: id)
   end
 
+  def create_temp_directory
+    if Rails.env.development?
+      base_dir = Rails.root.join('tmp', 'exports')
+      FileUtils.mkdir_p(base_dir)
+      Dir.mktmpdir(SecureRandom.hex, base_dir)
+    else
+      Dir.mktmpdir(SecureRandom.hex)
+    end
+  end
+
   def send_mail(export)
     return unless export.status.eql? "ready"
 
     ExportMailer.send_message(export).deliver_now
+  rescue Net::SMTPError, SocketError, Errno::ECONNREFUSED => e
+    # Log the error but don't fail the job if email cannot be sent
+    Rails.logger.error "[ERROR] Failed to send export email: #{e.message}"
+    Rails.logger.info "Export #{export.id} is ready but email notification failed"
   end
 
   # Zip the input directory recursively

@@ -1,0 +1,40 @@
+<span class="menu-separator">|</span>
+<ul class="nav navbar-nav" id="user-menu">
+  <% if current_user.authenticated? %>
+  <li class="dropdown nav-item">
+    <a href="#" class="dropdown-toggle  nav-link" data-bs-toggle="dropdown">
+      <%= fa_icon(:user) %>
+      <%= current_user.email.truncate(30) %>
+    </a>
+
+    <ul class="dropdown-menu dropdown-menu-end">
+      <%= link_to(
+            t("shared.navbar.user_menu.my_profile"),
+            edit_user_registration_path(:locale => I18n.locale),
+            target: "_blank",
+            class: "dropdown-item") %>
+      <%= link_to(
+            t(".viat_my_images"),
+            favorites_path(:locale => I18n.locale, 'catalog' => @catalog.id),
+            target: "_blank",
+            class: "dropdown-item") %>
+      <%= link_to(
+            t("shared.navbar.user_menu.my_searches"),
+            searches_path(:locale => I18n.locale, 'catalog' => @catalog.id),
+            target: "_blank",
+            class: "dropdown-item") %>
+      <%= link_to(
+            t("shared.navbar.user_menu.log_out"),
+            destroy_user_session_path(:locale => I18n.locale),
+            :method => "delete",
+            class: "dropdown-item") %>
+    </ul>
+  </li>
+  <% else %>
+    <li class="nav-item">
+      <%= link_to(
+            t(".viat_my_account"),
+            new_user_session_path(:locale => I18n.locale), class: "nav-link") %>
+    </li>
+  <% end %>
+</ul>

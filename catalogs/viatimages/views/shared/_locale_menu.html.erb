@@ -1,0 +1,7 @@
+<% if locale_language_choices.many? %>
+  <% locale_language_choices.each do |locale, language, current| %>
+    <%= content_tag(:span, :class => ("disabled" if current_locale_language == locale_language(locale))) do %>
+      <%= link_to('/viatimages/' + locale) do %><%= language %><% end %>
+    <% end %>
+  <% end %>
+<% end %>
