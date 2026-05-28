@@ -46,8 +46,7 @@ class ItemList
   end
 
   def paginated_items
-    @paginated_items ||= unpaginaged_items.includes(:item_type)
-                                          .includes(:item_type => :fields)
+    @paginated_items ||= unpaginaged_items.includes(:item_type => [:fields, :item_views])
                                           .page(page)
                                           .per(per)
   end
@@ -60,7 +59,7 @@ class ItemList
   # This is used for navigation to allow traversing across page boundaries.
   def items_for_navigation
     @items_for_navigation ||= apply_sort(
-      unpaginaged_items.includes(:item_type, :item_type => :fields)
+      unpaginaged_items.includes(:item_type => [:fields, :item_views])
     )
   end
 
