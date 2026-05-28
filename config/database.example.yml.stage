@@ -24,3 +24,9 @@ staging:
   port: <%= ENV.fetch('POSTGRES_PORT', 5432) %>
   min_messages: WARNING
   pool: 10
+  keepalives: 1
+  keepalives_idle: 60
+  keepalives_interval: 10
+  keepalives_count: 3
+  idle_timeout: 600
+  reaping_frequency: 120
