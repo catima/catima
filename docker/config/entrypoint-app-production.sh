@@ -45,4 +45,4 @@ bundle exec rake db:migrate
 bundle exec rails runner "Configuration.first_or_create!" || true
 
 # Run commands from dockerfile
-"${@}"
+exec "${@}"

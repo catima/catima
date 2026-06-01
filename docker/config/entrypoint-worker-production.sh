@@ -6,4 +6,4 @@ set -e
 mkdir -p /var/www/catima/tmp
 
 # Run commands from dockerfile
-"${@}"
+exec "${@}"
