@@ -16,7 +16,6 @@ services:
       - thumbs-data:/var/www/catima/public/thumbs
       - refile-data:/var/www/catima/public/system/refile
       - refile-tmp:/var/www/catima/tmp/refile
-      - log-data:/var/www/catima/log
       - exports-data:/var/www/catima/exports
       - ./config/domains.yml:/var/www/catima/config/domains.yml:ro
       - ./config/geo_layers.yml:/var/www/catima/config/geo_layers.yml:ro
@@ -36,7 +35,6 @@ services:
       target: worker-production
     volumes:
       - upload-data:/var/www/catima/public/upload
-      - log-data:/var/www/catima/log
       - exports-data:/var/www/catima/exports
     restart: unless-stopped
     deploy:
@@ -65,5 +63,4 @@ volumes:
   upload-data:
   thumbs-data:
   refile-data:
-  log-data:
   exports-data:
