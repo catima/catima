@@ -6,4 +6,4 @@ set -e
 bundle install
 
 # Run commands from dockerfile
-"${@}"
+exec "${@}"

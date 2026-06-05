@@ -17,4 +17,4 @@ bin/setup
 rails swag:run
 
 # Run commands from dockerfile
-"${@}"
+exec "${@}"
