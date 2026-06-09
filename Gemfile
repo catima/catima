@@ -66,7 +66,7 @@ gem "ostruct"
 
 group :production, :staging, :development, :test do
   platforms :ruby do
-    gem "puma", "~> 7.1"
+    gem "puma", "~> 7.2"
   end
 end
 
