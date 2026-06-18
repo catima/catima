@@ -786,7 +786,7 @@ fr:
         display_component: React component
         display_component_help: Choose a React JS component that will be used for display on the public site.
         single_choice: "Une seule valeur – optionnel"
-        single_required_choice: "Une seule valeur – requis"
+        single_required_choice: "Une seule valeur – obligatoire"
         multiple_choice: "Plusieurs valeurs – optionnel"
         multiple_required_choice: "Plusieurs valeurs – au moins une"
       geometry_option_inputs:
@@ -844,7 +844,7 @@ fr:
       table:
         name: 'Nom'
         type: 'Type'
-        required: 'Exigé?'
+        required: 'Obligatoire?'
         list_view: "En édition?"
         public_list_view: 'En consultation?'
       text_option_inputs:

@@ -527,13 +527,13 @@ it:
         include_in_list_view: "Include this field in edition list view (Data)"
         include_in_public_list_view: "Include this field in site list view"
         single_choice: "Single value – optional"
-        single_required_choice: "Single value – required"
+        single_required_choice: "Single value – mandatory"
         multiple_choice: "Multiple values – optional"
         multiple_required_choice: "Multiple values – at least one"
       table:
         name: 'Name'
         type: 'Type'
-        required: 'Required?'
+        required: 'Mandatory?'
         list_view: 'Edition mode?'
         public_list_view: 'Public mode?'
       editor_option_inputs:
