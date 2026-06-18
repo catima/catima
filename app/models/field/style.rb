@@ -3,7 +3,7 @@
 module Field::Style
   CHOICES = {
     "single" => "Single value – optional",
-    "single-required" => "Single value – required",
+    "single-required" => "Single value – mandatory",
     "multiple" => "Multiple values – optional",
     "multiple-required" => "Multiple values – at least one"
     # TODO: uncomment once ordering behavior is supported
