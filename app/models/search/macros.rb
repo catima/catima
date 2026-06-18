@@ -37,6 +37,12 @@ module Search::Macros
         :against => "search_data_#{I18n.locale}",
         :using => {
           :tsearch => {
+            # prefix: true enables partial word matching (e.g., "cat" matches "cattle").
+            # Note: This appends ":*" to the stemmed query.
+            # For example, searching for "flies" (which stems to "fli") becomes "fli:*".
+            # This can cause unexpected matches with other stemmed words starting with the same prefix,
+            # such as "flight" (which stems to "flight", matching "fli:*").
+            # Setting prefix: false would require exact matches of the stemmed words.
             :prefix => true,
             :dictionary => PG_DICTIONARIES.fetch(I18n.locale.to_s, "simple")
           }
