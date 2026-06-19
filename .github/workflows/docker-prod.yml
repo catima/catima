@@ -18,12 +18,12 @@ jobs:
       matrix:
         include:
           - { service: app, arch: linux/amd64, os: ubuntu-latest }
-          - { service: app, arch: linux/arm64, os: ubuntu-24.04-arm }
+          - { service: app, arch: linux/arm64, os: ubuntu-26.04-arm }
           - { service: worker, arch: linux/amd64, os: ubuntu-latest }
-          - { service: worker, arch: linux/arm64, os: ubuntu-24.04-arm }
+          - { service: worker, arch: linux/arm64, os: ubuntu-26.04-arm }
 
     steps:
-      - uses: actions/checkout@v5
+      - uses: actions/checkout@v7
         with:
           ref: master
 
@@ -46,7 +46,7 @@ jobs:
       tag: ${{ steps.merge.outputs.tag }}
 
     steps:
-      - uses: actions/checkout@v5
+      - uses: actions/checkout@v7
         with:
           ref: master
 
@@ -67,7 +67,7 @@ jobs:
       tag: ${{ steps.merge.outputs.tag }}
 
     steps:
-      - uses: actions/checkout@v5
+      - uses: actions/checkout@v7
         with:
           ref: master
 
@@ -87,7 +87,7 @@ jobs:
     needs: [merge-app, merge-worker]
 
     steps:
-      - uses: actions/checkout@v5
+      - uses: actions/checkout@v7
         with:
           ref: master
 
@@ -109,7 +109,7 @@ jobs:
 
     steps:
       - name: Checkout
-        uses: actions/checkout@v5
+        uses: actions/checkout@v7
         with:
           ref: master
 
