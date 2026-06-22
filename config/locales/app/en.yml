@@ -943,7 +943,7 @@ en:
         pending_suggestions: You have pending suggestions for this item
       filter_menu:
         filter_status: "Filter by %{status}"
-        not_ready: Not Ready
+        not_ready: Draft
         ready: Pending review
         rejected: Rejected
         approved: Approved

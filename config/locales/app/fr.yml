@@ -942,7 +942,7 @@ fr:
         pending_suggestions: Vous avez des suggestions en attente pour cette fiche
       filter_menu:
         filter_status: "Filtré par %{status}"
-        not_ready: Pas prêt
+        not_ready: Brouillon
         ready: Attente de validation
         rejected: Rejeté
         approved: Validé

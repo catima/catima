@@ -409,7 +409,7 @@ it:
         view-item: Consultare l’oggetto
       filter_menu:
         filter_status: "Filter by %{status}"
-        not_ready: Not Ready
+        not_ready: Draft
         ready: Pending review
         rejected: Rejected
         approved: Approved

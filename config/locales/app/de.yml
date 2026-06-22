@@ -730,7 +730,7 @@ de:
         status: Status
       filter_menu:
         filter_status: "Filter by %{status}"
-        not_ready: Not Ready
+        not_ready: Draft
         ready: Review
         rejected: Rejected
         approved: Approved

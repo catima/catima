@@ -4,7 +4,7 @@
 #
 class Review
   STATUSES = {
-    "not-ready" => { :text => "draft", :color => "default" },
+    "not-ready" => { :text => "draft", :color => "secondary" },
     "ready" => { :text => "review", :color => "info" },
     "rejected" => { :text => "rejected", :color => "warning" },
     "approved" => { :text => "approved", :color => "success" }
