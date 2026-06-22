@@ -1,0 +1,12 @@
+<span class="dropdown">
+  <button class="btn btn-xs btn-link dropdown-toggle" type="button" id="choose-filter-dropdown" data-bs-toggle="dropdown" aria-haspopup="true" aria-expanded="true">
+    <%= t('.filter_status', status: t(".#{params[:status].try(:underscore) || 'review'}")) %>
+  </button>
+  <div class="dropdown-menu" aria-labelledby="choose-filter-dropdown">
+    <% [nil, *Review.status_options].each do |status| %>
+      <%= link_to(request.query_parameters.except(:page).merge(status: status), class: "dropdown-item") do %>
+        <%= prepend_icon_if(params[:status].to_s == status.to_s, :check, t(".#{status.try(:underscore) || 'all'}")) %>
+      <% end %>
+    <% end %>
+  </div>
+</span>

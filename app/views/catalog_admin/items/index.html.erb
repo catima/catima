@@ -21,6 +21,7 @@
 <% if @item_type.fields.count > 0 %>
 
   <% provide(:actions) do %>
+    <%= render("filter_menu") if catalog.requires_review? %>
     <%= render("sort_menu") if sort_field_choices.any? %>
     <div class="btn-group">
       <%= link_to(
