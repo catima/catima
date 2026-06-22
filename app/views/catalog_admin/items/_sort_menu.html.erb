@@ -4,7 +4,7 @@
   </button>
   <div class="dropdown-menu" aria-labelledby="choose-sort-dropdown">
     <% sort_field_choices.each do |field| %>
-      <%= link_to({params: param_for_sort(field).merge(:q => params[:q])}, class: "dropdown-item") do %>
+      <%= link_to({params: request.query_parameters.except(:page).merge(param_for_sort(field))}, class: "dropdown-item") do %>
         <%= prepend_icon_if(field == current_sort_field, :check, field.sort_label) %>
       <% end %>
     <% end %>

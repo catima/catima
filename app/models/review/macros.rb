@@ -15,7 +15,7 @@ module Review::Macros
       optional: true
     )
     validates_inclusion_of :review_status,
-                           :in => %w(not-ready ready rejected approved)
+                           :in => Review::STATUS_OPTIONS
     before_save :handle_submit_for_review
   end
 

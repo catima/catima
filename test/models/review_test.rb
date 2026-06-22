@@ -1,6 +1,15 @@
 require "test_helper"
 
 class ReviewTest < ActiveSupport::TestCase
+  test "STATUSES defines texts and colors for statuses" do
+    assert_equal "draft", Review::STATUSES["not-ready"][:text]
+    assert_equal "default", Review::STATUSES["not-ready"][:color]
+  end
+
+  test "status_options returns the array of valid statuses" do
+    assert_equal %w(not-ready ready rejected approved), Review.status_options
+  end
+
   test ".public_items_in_catalog" do
     items = catalogs(:reviewed).public_items.to_a
     assert_includes(items, items(:reviewed_book_finders_keepers_approved))

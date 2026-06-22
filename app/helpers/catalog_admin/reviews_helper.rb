@@ -1,14 +1,7 @@
 module CatalogAdmin::ReviewsHelper
-  STATUSES = {
-    "not-ready" => %w(draft default),
-    "ready" => %w(review info),
-    "approved" => %w(approved success),
-    "rejected" => %w(rejected warning)
-  }.freeze
-
   def review_status_label(item)
-    text, klass = STATUSES[item.review_status]
-    tag.span(t(text), :class => "badge text-bg-#{klass}")
+    status = Review::STATUSES[item.review_status]
+    tag.span(t(status[:text]), :class => "badge text-bg-#{status[:color]}")
   end
 
   def render_items_approval(item)

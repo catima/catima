@@ -407,6 +407,14 @@ it:
       edit:
         back: "Back"
         view-item: Consultare l’oggetto
+      filter_menu:
+        filter_status: "Filter by %{status}"
+        not_ready: Not Ready
+        ready: Pending review
+        rejected: Rejected
+        approved: Approved
+        all: All
+        review: Review
       reference_editor:
         reference_editor_filter: "Filtro..."
         reference_editor_search: "Ricerca per..."

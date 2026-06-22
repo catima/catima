@@ -1,6 +1,7 @@
 # rubocop:disable Metrics/ClassLength
 class CatalogAdmin::ItemsController < CatalogAdmin::BaseController
   include ControlsItemSorting
+
   before_action :find_item_type
   layout "catalog_admin/data/form"
 
@@ -115,7 +116,11 @@ class CatalogAdmin::ItemsController < CatalogAdmin::BaseController
   end
 
   def item_scope
-    catalog.items_of_type(@item_type)
+    params[:status] = nil unless Review::STATUS_OPTIONS.include?(params[:status])
+
+    scope = catalog.items_of_type(@item_type)
+    scope = scope.where(review_status: params[:status]) if params[:status].present?
+    scope
   end
 
   def find_item

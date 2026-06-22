@@ -940,6 +940,14 @@ fr:
         import_csv: "Importer depuis un fichier CSV"
         status: Statut
         pending_suggestions: Vous avez des suggestions en attente pour cette fiche
+      filter_menu:
+        filter_status: "Filtré par %{status}"
+        not_ready: Pas prêt
+        ready: Attente de validation
+        rejected: Rejeté
+        approved: Validé
+        all: Tout
+        review: Validation
       new:
         new_item: Nouvelle fiche de type %{item_type}
         create_item: Créer fiche de type %{item_type}

@@ -5,7 +5,7 @@ class Review::MacrosTest < ActiveSupport::TestCase
 
   should \
     validate_inclusion_of(:review_status)
-      .in_array(%w(not-ready ready rejected approved))
+      .in_array(Review::STATUS_OPTIONS)
 
   should_not allow_value(nil).for(:review_status)
 

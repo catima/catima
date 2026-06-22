@@ -3,12 +3,25 @@
 # could also coordinate email notifications, etc.
 #
 class Review
+  STATUSES = {
+    "not-ready" => { :text => "draft", :color => "default" },
+    "ready" => { :text => "review", :color => "info" },
+    "rejected" => { :text => "rejected", :color => "warning" },
+    "approved" => { :text => "approved", :color => "success" }
+  }.freeze
+
+  STATUS_OPTIONS = STATUSES.keys.freeze
+
   attr_reader :item
 
   delegate :review_status, :review_status=, :reviewer=, :to => :item
 
   def self.public_items_in_catalog(catalog)
     catalog.items.where(:review_status => "approved")
+  end
+
+  def self.status_options
+    STATUS_OPTIONS
   end
 
   def initialize(item)
