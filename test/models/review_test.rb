@@ -3,7 +3,13 @@ require "test_helper"
 class ReviewTest < ActiveSupport::TestCase
   test "STATUSES defines texts and colors for statuses" do
     assert_equal "draft", Review::STATUSES["not-ready"][:text]
-    assert_equal "default", Review::STATUSES["not-ready"][:color]
+    assert_equal "secondary", Review::STATUSES["not-ready"][:color]
+    assert_equal "review", Review::STATUSES["ready"][:text]
+    assert_equal "info", Review::STATUSES["ready"][:color]
+    assert_equal "rejected", Review::STATUSES["rejected"][:text]
+    assert_equal "warning", Review::STATUSES["rejected"][:color]
+    assert_equal "approved", Review::STATUSES["approved"][:text]
+    assert_equal "success", Review::STATUSES["approved"][:color]
   end
 
   test "status_options returns the array of valid statuses" do
