@@ -5,7 +5,7 @@
           edit_catalog_admin_item_path(
             model.catalog, I18n.locale,
             model.item_type, model,
-            :page => params['page']
+            params.permit(:page, :sort, :status)
           ),
           class: "btn btn-xs btn-outline-secondary item-action-edit",
           "data-toggle" => "tooltip", "data-placement" => "top", "title" => t("edit")
