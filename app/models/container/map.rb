@@ -125,7 +125,7 @@ class Container::Map < Container
     review_condition = catalog.requires_review ? "AND review_status = 'approved'" : ""
 
     sql =
-      <<-SQL.squish
+      <<~SQL.squish
         SELECT jsonb_build_object('features', CASE WHEN (array_agg(feat) IS NOT NULL) THEN array_to_json(array_agg(feat)) ELSE '[]' END) AS geojson
         FROM (
           SELECT jsonb_build_object('geometry', jsonb_array_elements(feats)->'geometry', 'properties', jsonb_build_object('id', id, 'polygon_color', '#{field.polygon_color}', 'polyline_color', '#{field.polyline_color}'), 'type', 'Feature') AS feat
