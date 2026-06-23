@@ -729,7 +729,7 @@ de:
         import_csv: "Import from CSV"
         status: Status
       filter_menu:
-        filter_status: "Filter by %{status}"
+        filter_status: "Filter by: %{status}"
         not_ready: Draft
         ready: Review
         rejected: Rejected
