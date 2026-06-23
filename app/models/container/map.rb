@@ -16,12 +16,18 @@
 class Container::Map < Container
   DEFAULT_MAP_HEIGHT = 400
 
-  store_accessor :content, :item_type, :layers, :height, :geofields
+  store_accessor :content, :item_type, :layers, :height, :geofields, :zoom
 
   validate :item_type_validation, :geofields_validation
 
+  validates_numericality_of :zoom,
+                            :only_integer => true,
+                            :greater_than_or_equal_to => Field::Geometry::ZOOM_LEVEL['distant'],
+                            :less_than_or_equal_to => Field::Geometry::ZOOM_LEVEL['close'],
+                            :allow_blank => true
+
   def custom_container_permitted_attributes
-    %i(item_type layers height geofields)
+    %i(item_type layers height geofields zoom)
   end
 
   def geojson
@@ -53,6 +59,10 @@ class Container::Map < Container
 
   def map_height
     height.present? ? height.to_i : DEFAULT_MAP_HEIGHT
+  end
+
+  def zoom_level
+    zoom.presence ? zoom.to_i : Field::Geometry::ZOOM_LEVEL['medium']
   end
 
   def geo_layers
