@@ -7,7 +7,11 @@
     <span>
       <%= link_to(
             t('.back'),
-            catalog_admin_items_path(page: params['page'])
+            catalog_admin_items_path(
+              page: params['page'],
+              sort: params['sort'],
+              status: params['status']
+            )
           ) %>
     </span> |
   <% end %>
