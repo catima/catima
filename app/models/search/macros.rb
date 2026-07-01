@@ -15,7 +15,7 @@ module Search::Macros
 
   included do
     # Define a `simple_search` scope that searches the current locale.
-    pg_search_scope :simple_search, ->(query, options={}) { simple_search_config(query, prefix: options[:prefix] == true) }
+    pg_search_scope :simple_search, ->(query, options={}) { simple_search_config(query, prefix: options.fetch(:prefix, true)) }
 
     # Update the `search_data_#{locale}` columns whenever Item is saved
     before_save :assign_search_data
@@ -31,7 +31,7 @@ module Search::Macros
 
     private
 
-    def simple_search_config(query, prefix: false)
+    def simple_search_config(query, prefix: true)
       {
         :query => query,
         :against => "search_data_#{I18n.locale}",
