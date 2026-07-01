@@ -10,7 +10,8 @@ class SimpleSearchesController < ApplicationController
       :query => @saved_search.query,
       :page => params[:page],
       :item_type_slug => params[:type],
-      :search_uuid => @saved_search.uuid
+      :search_uuid => @saved_search.uuid,
+      :prefix => @saved_search.prefix
     )
   end
 
@@ -57,7 +58,7 @@ class SimpleSearchesController < ApplicationController
   end
 
   def simple_search_params
-    params.permit(:q)
+    params.permit(:q, :prefix)
   end
 
   def scope

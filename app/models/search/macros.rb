@@ -14,8 +14,8 @@ module Search::Macros
   include PgSearch::Model
 
   included do
-    # Define a `simple_search` scope that searches the current locale
-    pg_search_scope :simple_search, ->(query) { simple_search_config(query) }
+    # Define a `simple_search` scope that searches the current locale.
+    pg_search_scope :simple_search, ->(query, options={}) { simple_search_config(query, prefix: options[:prefix] == true) }
 
     # Update the `search_data_#{locale}` columns whenever Item is saved
     before_save :assign_search_data
@@ -31,7 +31,7 @@ module Search::Macros
 
     private
 
-    def simple_search_config(query)
+    def simple_search_config(query, prefix: false)
       {
         :query => query,
         :against => "search_data_#{I18n.locale}",
@@ -43,7 +43,7 @@ module Search::Macros
             # This can cause unexpected matches with other stemmed words starting with the same prefix,
             # such as "flight" (which stems to "flight", matching "fli:*").
             # Setting prefix: false would require exact matches of the stemmed words.
-            :prefix => true,
+            :prefix => prefix,
             :dictionary => PG_DICTIONARIES.fetch(I18n.locale.to_s, "simple")
           }
         }

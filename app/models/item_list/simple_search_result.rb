@@ -1,12 +1,13 @@
 class ItemList::SimpleSearchResult < ItemList
-  attr_reader :query, :item_type_slug
+  attr_reader :query, :item_type_slug, :prefix
 
   # rubocop:disable Metrics/ParameterLists
-  def initialize(catalog:, query:, search_uuid:, item_type_slug:nil, page:nil, per:nil)
+  def initialize(catalog:, query:, search_uuid:, item_type_slug:nil, page:nil, per:nil, prefix:true)
     super(catalog, page, per)
     @query = query
     @item_type_slug = item_type_slug
     @search_uuid = search_uuid
+    @prefix = prefix
   end
   # rubocop:enable Metrics/ParameterLists
 
@@ -48,7 +49,7 @@ class ItemList::SimpleSearchResult < ItemList
   def relation
     return Item.none if query.blank?
 
-    catalog.items.simple_search(query)
+    catalog.items.simple_search(query, { prefix: prefix })
   end
 
   def sorted_item_types

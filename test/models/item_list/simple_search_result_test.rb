@@ -39,7 +39,8 @@ class ItemList::SimpleSearchResultTest < ActiveSupport::TestCase
     ItemList::SimpleSearchResult.new(
       :catalog => catalog,
       :query => search.related_search.query,
-      :search_uuid => search.uuid
+      :search_uuid => search.uuid,
+      :prefix => search.related_search.prefix
     )
   end
 end

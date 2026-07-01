@@ -286,9 +286,14 @@ de:
         my_groups: Meine Gruppen
   simple_searches:
     form:
-      advanced: "Erweitert"
+      advanced: "Erweiterte Suche"
       submit: "Suchen"
       placeholder: Suche in %{item_type}
+      default_placeholder: "Einfache Suche"
+      search_mode: "Suchmodus"
+      mode_broad: "Breit"
+      mode_strict: "Präzise"
+      mode_tooltip: "<b>Breit:</b> Findet auch Wörter, die mit denselben Buchstaben beginnen (z.B. 'suchen' findet auch 'Suche' oder 'süchtig'). Mehr Ergebnisse, aber manche sind weniger relevant. <b>Präzise:</b> Findet nur das gesuchte Wort und seine grammatikalischen Varianten (z.B. 'suchen' findet 'Suche' oder 'gesucht', aber nicht 'süchtig')."
     show:
       title:
         zero: "Kein Resultat gefunden für “%{query}”"

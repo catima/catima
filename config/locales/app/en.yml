@@ -385,9 +385,14 @@ en:
         my_groups: My groups
   simple_searches:
     form:
-      advanced: "Advanced"
+      advanced: "Advanced Search"
       submit: "Search"
       placeholder: Search in %{item_type}
+      default_placeholder: "Simple search"
+      search_mode: "Search Mode"
+      mode_broad: "Broad"
+      mode_strict: "Strict"
+      mode_tooltip: "<b>Broad:</b> Also finds words starting with the same letters (e.g., 'cats' matches 'catalog' or 'category'). More results, but some may be less relevant. <b>Strict:</b> Finds only the word and its grammatical variations (e.g., 'cats' matches 'cat' or 'catty', but not 'catalog')."
     show:
       title:
         zero: "Nothing found for “%{query}”"

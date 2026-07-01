@@ -4,6 +4,7 @@
 #
 #  id         :bigint           not null, primary key
 #  locale     :string           default("en"), not null
+#  prefix     :boolean          default(TRUE), not null
 #  query      :string
 #  uuid       :string
 #  created_at :datetime         not null
