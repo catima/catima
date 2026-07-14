@@ -25,17 +25,17 @@
           <div class="btn-group btn-group-sm border rounded-pill bg-white p-1 shadow-sm" role="group">
             <%= radio_button_tag(:prefix, "true",
                   @saved_search.nil? || @saved_search.prefix,
-                  :id => "modeStartsWith",
+                  :id => "modeBroad",
                   :class => "btn-check") %>
-            <label class="btn btn-sm btn-light rounded-pill px-3 fw-medium text-secondary text-nowrap me-1" for="modeStartsWith">
+            <label class="btn btn-sm btn-light rounded-pill px-3 fw-medium text-secondary text-nowrap me-1" for="modeBroad">
               <%= t('.mode_broad') %>
             </label>
 
             <%= radio_button_tag(:prefix, "false",
                   @saved_search.present? && !@saved_search.prefix,
-                  :id => "modeWholeWords",
+                  :id => "modeStrict",
                   :class => "btn-check") %>
-            <label class="btn btn-sm btn-light rounded-pill px-3 fw-medium text-secondary text-nowrap" for="modeWholeWords">
+            <label class="btn btn-sm btn-light rounded-pill px-3 fw-medium text-secondary text-nowrap" for="modeStrict">
               <%= t('.mode_strict') %>
             </label>
           </div>
