@@ -159,6 +159,7 @@ GEM
       xpath (~> 3.2)
     case_transform (0.2)
       activesupport
+    cgi (0.5.2)
     chartkick (5.2.0)
     childprocess (5.1.0)
       logger (~> 1.5)
@@ -555,7 +556,8 @@ GEM
       sprockets (> 3.0)
       sprockets-rails
       tilt
-    secure_headers (7.1.0)
+    secure_headers (7.3.0)
+      cgi (>= 0.1)
     securerandom (0.4.1)
     select2-rails (4.0.13)
     selenium-webdriver (4.34.0)
@@ -733,7 +735,7 @@ DEPENDENCIES
   ruby-progressbar (~> 1.10)
   rubyzip (~> 2.4)
   sassc-rails (~> 2.1)
-  secure_headers (~> 7.1)
+  secure_headers (~> 7.3)
   select2-rails (~> 4.0)
   selenium-webdriver (~> 4.15)
   shakapacker (~> 8.3)
