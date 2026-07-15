@@ -293,7 +293,7 @@ de:
       search_mode: "Suchmodus"
       mode_broad: "Breit"
       mode_strict: "Präzise"
-      mode_tooltip: "<b>Breit:</b> Findet auch Wörter, die mit denselben Buchstaben beginnen (z.B. 'suchen' findet auch 'Suche' oder 'süchtig'). Mehr Ergebnisse, aber manche sind weniger relevant. <b>Präzise:</b> Findet nur das gesuchte Wort und seine grammatikalischen Varianten (z.B. 'suchen' findet 'Suche' oder 'gesucht', aber nicht 'süchtig')."
+      mode_tooltip: "<b>Breit:</b> Findet auch Wörter, die mit denselben Buchstaben beginnen (z.B. 'suchen' findet auch 'süchtig' oder 'sucht'). Mehr Ergebnisse, aber manche sind weniger relevant. <b>Präzise:</b> Findet nur das gesuchte Wort und seine grammatikalischen Varianten (z.B. 'suchen' findet nur 'Suche', aber nicht 'süchtig' oder 'sucht')."
     show:
       title:
         zero: "Kein Resultat gefunden für “%{query}”"

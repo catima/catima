@@ -4,7 +4,7 @@
           {:controller => controller, :action => action, :uuid => ''},
           :method => "POST") do %>
 
-      <div class="input-group input-group-lg shadow-sm mb-3 simple-search-input-group">
+      <div class="input-group input-group-lg mb-3 simple-search-input-group">
         <span class="input-group-text bg-white text-muted border-end-0">
           <%= fa_icon("search") %>
         </span>
@@ -22,7 +22,7 @@
         <div class="d-flex align-items-center gap-2">
           <span class="small text-muted fw-medium d-none d-md-inline text-nowrap"><%= t('.search_mode') %></span>
 
-          <div class="btn-group btn-group-sm border rounded-pill bg-white p-1 shadow-sm" role="group">
+          <div class="btn-group btn-group-sm border rounded-pill bg-white p-1" role="group">
             <%= radio_button_tag(:prefix, "true",
                   @saved_search.nil? || @saved_search.prefix,
                   :id => "modeBroad",
@@ -54,7 +54,7 @@
         <% if display_advanced_search %>
           <%= link_to(
                 new_advanced_search_path,
-                :class => "text-decoration-none fw-semibold link-primary d-flex align-items-center gap-1") do %>
+                :class => "text-decoration-none fw-semibold d-flex align-items-center gap-1") do %>
             <%= t(".advanced") %> <%= fa_icon("chevron-right") %>
           <% end %>
         <% end %>

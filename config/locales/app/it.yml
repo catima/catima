@@ -294,7 +294,7 @@ it:
       search_mode: "Modalità di ricerca"
       mode_broad: "Ampia"
       mode_strict: "Precisa"
-      mode_tooltip: "<b>Ampia:</b> Trova anche le parole che iniziano con le stesse lettere (es. 'correre' trova anche 'corrente' o 'corrosione'). Più risultati, ma alcuni potrebbero essere meno pertinenti. <b>Precisa:</b> Trova solo la parola cercata e le sue varianti grammaticali (es. 'correre' trova 'corre' o 'corso', ma non 'corrente')."
+      mode_tooltip: "<b>Ampia:</b> Trova anche le parole che iniziano con le stesse lettere (es. 'correre' trova anche 'corrente' o 'corrosione'). Più risultati, ma alcuni potrebbero essere meno pertinenti. <b>Precisa:</b> Trova solo la parola cercata e le sue varianti grammaticali (es. 'correre' trova 'corro' o 'corriamo', ma non 'corrente')."
     show:
       title:
         zero: "Non abbiamo trovato nulla per “%{query}”"

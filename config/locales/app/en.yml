@@ -392,7 +392,7 @@ en:
       search_mode: "Search Mode"
       mode_broad: "Broad"
       mode_strict: "Strict"
-      mode_tooltip: "<b>Broad:</b> Also finds words starting with the same letters (e.g., 'cats' matches 'catalog' or 'category'). More results, but some may be less relevant. <b>Strict:</b> Finds only the word and its grammatical variations (e.g., 'cats' matches 'cat' or 'catty', but not 'catalog')."
+      mode_tooltip: "<b>Broad:</b> Also finds words starting with the same letters (e.g., 'catalog' matches 'catalogs', but also 'catapult' or 'catastrophe'). More results, but some may be less relevant. <b>Strict:</b> Finds only the word and its grammatical variations (e.g., 'catalog' matches 'catalogs' or 'cataloging', but not 'catapult')."
     show:
       title:
         zero: "Nothing found for “%{query}”"
