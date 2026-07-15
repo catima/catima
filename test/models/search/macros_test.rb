@@ -39,4 +39,28 @@ class Search::MacrosTest < ActiveSupport::TestCase
     results = catalogs(:two).items.simple_search("king")
     refute_includes(results, items(:one_author_stephen_king))
   end
+
+  test "simple_search defaults to prefix matching" do
+    Item.reindex
+    results = catalogs(:one).items.simple_search("kin")
+    assert_includes(results, items(:one_author_stephen_king))
+  end
+
+  test "simple_search with prefix: true matches partial words" do
+    Item.reindex
+    results = catalogs(:one).items.simple_search("kin", :prefix => true)
+    assert_includes(results, items(:one_author_stephen_king))
+  end
+
+  test "simple_search with prefix: false requires an exact stem match" do
+    Item.reindex
+    results = catalogs(:one).items.simple_search("kin", :prefix => false)
+    refute_includes(results, items(:one_author_stephen_king))
+  end
+
+  test "simple_search with prefix: false still matches the full word" do
+    Item.reindex
+    results = catalogs(:one).items.simple_search("king", :prefix => false)
+    assert_includes(results, items(:one_author_stephen_king))
+  end
 end

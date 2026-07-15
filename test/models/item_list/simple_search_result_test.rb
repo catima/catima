@@ -33,6 +33,25 @@ class ItemList::SimpleSearchResultTest < ActiveSupport::TestCase
     assert_includes(results, items(:one_author_stephen_king))
   end
 
+  test "defaults to prefix matching when not specified" do
+    simple = ItemList::SimpleSearchResult.new(
+      :catalog => catalogs(:one),
+      :query => "kin",
+      :search_uuid => "no-uuid"
+    )
+    assert_includes(simple.items.to_a, items(:one_author_stephen_king))
+  end
+
+  test "matches partial words when prefix is true" do
+    simple = simple_search(catalogs(:one), searches(:partial_broad))
+    assert_includes(simple.items.to_a, items(:one_author_stephen_king))
+  end
+
+  test "requires an exact stem match when prefix is false" do
+    simple = simple_search(catalogs(:one), searches(:partial_strict))
+    refute_includes(simple.items.to_a, items(:one_author_stephen_king))
+  end
+
   private
 
   def simple_search(catalog, search)
