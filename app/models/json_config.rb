@@ -41,7 +41,7 @@ class JsonConfig
   end
 
   def load(name)
-    JSON.parse(File.read(find_file(name)))
+    JSON.parse(File.read(find_file(name)), allow_comments: true)
   end
 
   private
