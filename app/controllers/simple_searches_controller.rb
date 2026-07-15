@@ -42,7 +42,7 @@ class SimpleSearchesController < ApplicationController
 
   def track
     # Log event only for the show action to avoid duplicates
-    track_event("catalog_front") if params.expect(:action).eql? 'show'
+    track_event("catalog_front") if action_name.eql? 'show'
   end
 
   private

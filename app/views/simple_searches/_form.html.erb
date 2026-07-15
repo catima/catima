@@ -44,7 +44,7 @@
                 data-bs-toggle="popover"
                 data-bs-trigger="hover focus"
                 data-bs-placement="top"
-                data-bs-content="<%= t('.mode_tooltip') %>"
+                data-bs-content="<%= ActionController::Base.helpers.sanitize(t('.mode_tooltip'), :tags => %w[b]) %>"
                 tabindex="0"
                 style="cursor: pointer;">
             <%= fa_icon("info-circle") %>
