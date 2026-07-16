@@ -10,4 +10,9 @@
 .formatted-text-input {
   margin-top: -15px;
   margin-bottom: 15px;
+
+  // Adjust Quill editor paragraph spacing to match public view
+  .ql-editor p {
+    margin-bottom: 1rem;
+  }
 }
