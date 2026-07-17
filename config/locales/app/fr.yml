@@ -387,9 +387,9 @@ fr:
       placeholder: Chercher dans %{item_type}
       default_placeholder: "Recherche simple"
       search_mode: "Mode de recherche"
-      mode_broad: "Large"
-      mode_strict: "Précis"
-      mode_tooltip: "<b>Large :</b> Trouve aussi les mots commençant par les mêmes lettres (ex. « gare » trouve aussi « garage » ou « garçon »). Plus de résultats, mais parfois moins pertinents. <b>Précis :</b> Trouve uniquement le mot recherché et ses variantes grammaticales (ex. « gare » trouve « garer » ou « gares », mais pas « garage »)."
+      mode_broad: "Élargi"
+      mode_strict: "Restreint"
+      mode_tooltip: "<b>Élargi:</b> Recherche les mots commençant par les mêmes lettres (ex. « gares » trouve « <u>gar</u>age » mais aussi « <u>gar</u>çon », <u>gar</u>der, etc...). Plus de résultats, pas toujours pertinents. <b>Restreint:</b> Trouve le mot recherché et quelques variantes basiques (ex. « gares » trouve « garer » ou « gare », mais pas « garage »)."
     show:
       title:
         zero: "Rien trouvé pour “%{query}”"

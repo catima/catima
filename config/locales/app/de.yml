@@ -291,9 +291,9 @@ de:
       placeholder: Suche in %{item_type}
       default_placeholder: "Einfache Suche"
       search_mode: "Suchmodus"
-      mode_broad: "Breit"
-      mode_strict: "Präzise"
-      mode_tooltip: "<b>Breit:</b> Findet auch Wörter, die mit denselben Buchstaben beginnen (z.B. 'suchen' findet auch 'süchtig' oder 'sucht'). Mehr Ergebnisse, aber manche sind weniger relevant. <b>Präzise:</b> Findet nur das gesuchte Wort und seine grammatikalischen Varianten (z.B. 'suchen' findet nur 'Suche', aber nicht 'süchtig' oder 'sucht')."
+      mode_broad: "Erweitert"
+      mode_strict: "Eingeschränkt"
+      mode_tooltip: "<b>Erweitert:</b> Findet auch Wörter, die mit denselben Buchstaben beginnen (z.B. 'suchen' findet '<u>such</u>st', '<u>such</u>t' aber auch '<u>süch</u>tig' oder '<u>Such</u>').  Mehr Ergebnisse, die jedoch manchmal weniger relevant sind. <b>Eingeschränkt:</b> Findet das gesuchte Wort und einige Varianten (z.B. 'suchen' findet nur 'suchst' und 'Such', aber nicht 'süchtig' oder 'sucht')."
     show:
       title:
         zero: "Kein Resultat gefunden für “%{query}”"
