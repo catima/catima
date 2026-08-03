@@ -1,28 +1,67 @@
-<%= bootstrap_form_tag(
-      :url => {:controller => controller, :action => action, :uuid => ''},
-      :method => "POST",
-      :layout => :inline,
-      :html => {:class => "justify-content-center my-4"}) do |f| %>
+<div class="row justify-content-center my-4">
+  <div class="col-12 col-md-8 col-lg-7 col-xl-6">
+    <%= form_tag(
+          {:controller => controller, :action => action, :uuid => ''},
+          :method => "POST") do %>
 
-  <div class="mx-0 px-0">
-    <%= f.search_field(
-          :q,
-          :value => @saved_search&.query,
-          :label => t('simple_searches.form.submit'),
-          :placeholder => @item_type.present? ? t('.placeholder', :item_type => @item_type.name_plural) : t('.submit'),
-          :hide_label => true,
-          :autofocus => true,
-          :style => "width: 25em",
-          append: (link_to(fa_icon("times"), request.path.remove('search', ''), class: "btn btn-outline-secondary") if params[:q].present?)
-        ) %>
+      <div class="input-group input-group-lg mb-3 simple-search-input-group">
+        <span class="input-group-text bg-white text-muted border-end-0">
+          <%= fa_icon("search") %>
+        </span>
+        <%= text_field_tag(
+              :q,
+              @saved_search&.query,
+              :class => "form-control border-start-0 ps-1 shadow-none",
+              :placeholder => @item_type.present? ? t('.placeholder', :item_type => @item_type.name_plural) : t('.default_placeholder'),
+              :autofocus => true
+            ) %>
+        <% if params[:q].present? %>
+          <%= link_to(fa_icon("times"), request.path.remove('search', ''), :class => "btn btn-outline-secondary") %>
+        <% end %>
+        <%= submit_tag(t(".submit"), :class => "btn btn-primary px-4") %>
+      </div>
+
+      <div class="d-flex flex-wrap justify-content-between align-items-center gap-2 px-1">
+        <% if display_advanced_search %>
+          <div class="d-flex align-items-center gap-2">
+            <span class="small text-muted fw-medium d-none d-md-inline text-nowrap"><%= t('.search_mode') %></span>
+
+            <div class="btn-group btn-group-sm border rounded-pill bg-white p-1" role="group">
+              <%= radio_button_tag(:prefix, "true",
+                    @saved_search.nil? || @saved_search.prefix,
+                    :id => "modeBroad",
+                    :class => "btn-check") %>
+              <label class="btn btn-sm btn-light rounded-pill px-3 fw-medium text-secondary text-nowrap me-1" for="modeBroad">
+                <%= t('.mode_broad') %>
+              </label>
+
+              <%= radio_button_tag(:prefix, "false",
+                    @saved_search.present? && !@saved_search.prefix,
+                    :id => "modeStrict",
+                    :class => "btn-check") %>
+              <label class="btn btn-sm btn-light rounded-pill px-3 fw-medium text-secondary text-nowrap" for="modeStrict">
+                <%= t('.mode_strict') %>
+              </label>
+            </div>
+
+            <span class="text-muted"
+                  data-bs-toggle="popover"
+                  data-bs-trigger="hover focus"
+                  data-bs-placement="top"
+                  data-bs-content="<%= ActionController::Base.helpers.sanitize(t('.mode_tooltip'), :tags => %w[b u]) %>"
+                  tabindex="0"
+                  style="cursor: pointer;">
+              <%= fa_icon("info-circle") %>
+            </span>
+          </div>
+
+          <%= link_to(
+                new_advanced_search_path,
+                :class => "text-decoration-none fw-semibold d-flex align-items-center gap-1") do %>
+            <%= t(".advanced") %> <%= fa_icon("chevron-right") %>
+          <% end %>
+        <% end %>
+      </div>
+    <% end %>
   </div>
-
-  <%= f.submit(t(".submit"), class: 'btn btn-outline-secondary mx-0') %>
-
-  <% if display_advanced_search %>
-    <%= link_to(
-          t(".advanced"),
-          new_advanced_search_path,
-          :class => "btn btn-link") %>
-  <% end %>
-<% end %>
+</div>

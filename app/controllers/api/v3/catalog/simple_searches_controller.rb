@@ -11,7 +11,8 @@ class API::V3::Catalog::SimpleSearchesController < API::V3::Catalog::BaseControl
       :query => @simple_search.query,
       :page => params[:page],
       :item_type_slug => params[:item_type_slug],
-      :search_uuid => @simple_search.uuid
+      :search_uuid => @simple_search.uuid,
+      :prefix => @simple_search.prefix
     )
   end
 
@@ -26,7 +27,8 @@ class API::V3::Catalog::SimpleSearchesController < API::V3::Catalog::BaseControl
         :query => @simple_search.query,
         :page => params[:page],
         :item_type_slug => params[:item_type_slug],
-        :search_uuid => @simple_search.uuid
+        :search_uuid => @simple_search.uuid,
+        :prefix => @simple_search.prefix
       )
       render("api/v3/catalog/simple_searches/show")
     else
@@ -52,7 +54,7 @@ class API::V3::Catalog::SimpleSearchesController < API::V3::Catalog::BaseControl
   end
 
   def simple_search_params
-    params.permit(:q)
+    params.permit(:q, :prefix)
   end
 
   def scope

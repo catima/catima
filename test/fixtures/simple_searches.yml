@@ -4,6 +4,7 @@
 #
 #  id         :bigint           not null, primary key
 #  locale     :string           default("en"), not null
+#  prefix     :boolean          default(TRUE), not null
 #  query      :string
 #  uuid       :string
 #  created_at :datetime         not null
@@ -28,6 +29,7 @@
 #
 book:
   query: "ste"
+  prefix: true
   catalog: one
   creator: one_admin
   uuid: unique-book-search-uuid
@@ -43,3 +45,17 @@ blank:
   catalog: one
   creator: one_admin
   uuid: unique-blank-search-uuid
+
+partial_broad:
+  query: "kin"
+  prefix: true
+  catalog: one
+  creator: one_admin
+  uuid: unique-partial-broad-search-uuid
+
+partial_strict:
+  query: "kin"
+  prefix: false
+  catalog: one
+  creator: one_admin
+  uuid: unique-partial-strict-search-uuid

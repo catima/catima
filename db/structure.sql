@@ -1076,7 +1076,8 @@ CREATE TABLE public.simple_searches (
     query character varying,
     locale character varying DEFAULT 'en'::character varying NOT NULL,
     created_at timestamp without time zone NOT NULL,
-    updated_at timestamp without time zone NOT NULL
+    updated_at timestamp without time zone NOT NULL,
+    prefix boolean DEFAULT true NOT NULL
 );
 
 
@@ -2607,6 +2608,7 @@ ALTER TABLE ONLY public.choice_sets
 SET search_path TO "$user", public;
 
 INSERT INTO "schema_migrations" (version) VALUES
+('20260701073100'),
 ('20260219100000'),
 ('20260202120000'),
 ('20250917093341'),

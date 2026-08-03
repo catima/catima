@@ -287,9 +287,14 @@ it:
         my_groups: I miei gruppi
   simple_searches:
     form:
-      advanced: "Avanzata"
+      advanced: "Ricerca avanzata"
       submit: "Ricerca"
       placeholder: Ricerca in %{item_type}
+      default_placeholder: "Ricerca semplice"
+      search_mode: "Modalità di ricerca"
+      mode_broad: "Ampio"
+      mode_strict: "Ridotto"
+      mode_tooltip: "<b>Ampio:</b> Trova anche le parole che iniziano con le stesse lettere (es. 'creare' trova '<u>cre</u>o', '<u>cre</u>ata', '<u>cre</u>azione' ma anche '<u>cre</u>ma', o '<u>cre</u>pa'). Più risultati, ma alcuni potrebbero essere meno pertinenti. <b>Ridotto:</b> Trova solo la parola cercata e alcune varianti (es. 'creare' trova 'creo', 'creata', ma non 'creazione' o 'crema')."
     show:
       title:
         zero: "Non abbiamo trovato nulla per “%{query}”"

@@ -40,3 +40,13 @@ blank:
   related_search: blank (SimpleSearch)
   user: one_admin
   name: blank search
+
+partial_broad:
+  related_search: partial_broad (SimpleSearch)
+  user: one_admin
+  name: partial broad search
+
+partial_strict:
+  related_search: partial_strict (SimpleSearch)
+  user: one_admin
+  name: partial strict search

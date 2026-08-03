@@ -286,9 +286,14 @@ de:
         my_groups: Meine Gruppen
   simple_searches:
     form:
-      advanced: "Erweitert"
+      advanced: "Erweiterte Suche"
       submit: "Suchen"
       placeholder: Suche in %{item_type}
+      default_placeholder: "Einfache Suche"
+      search_mode: "Suchmodus"
+      mode_broad: "Erweitert"
+      mode_strict: "Eingeschränkt"
+      mode_tooltip: "<b>Erweitert:</b> Findet auch Wörter, die mit denselben Buchstaben beginnen (z.B. 'suchen' findet '<u>such</u>st', '<u>such</u>t' aber auch '<u>süch</u>tig' oder '<u>Such</u>').  Mehr Ergebnisse, die jedoch manchmal weniger relevant sind. <b>Eingeschränkt:</b> Findet das gesuchte Wort und einige Varianten (z.B. 'suchen' findet nur 'suchst' und 'Such', aber nicht 'süchtig' oder 'sucht')."
     show:
       title:
         zero: "Kein Resultat gefunden für “%{query}”"
