@@ -15,7 +15,7 @@
               :placeholder => @item_type.present? ? t('.placeholder', :item_type => @item_type.name_plural) : t('.default_placeholder'),
               :autofocus => true
             ) %>
-        <% if params[:q].present? %>
+        <% if controller == "items" && params[:q].present? %>
           <%= link_to(fa_icon("times"), request.path.remove('search', ''), :class => "btn btn-outline-secondary") %>
         <% end %>
         <%= submit_tag(t(".submit"), :class => "btn btn-primary px-4") %>
