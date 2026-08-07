@@ -13,15 +13,18 @@ icons['import_docx'] = Translations.messages['catalog_admin.fields.text_option_i
 
 import "../modules/footnote";
 import "../modules/endnote";
+import "../modules/linebreak";
 import "../modules/tableup";
 import Noties from "../modules/noties";
 
 import axios from 'axios';
 
+const Delta = Quill.import('delta');
+
 // Function to return closest element based on a selector.
 // If self attribute is true, search is also applied to the element itself
 function closest(el, selector, self = false) {
-  var matchesFn;
+  let matchesFn;
   ['matches', 'webkitMatchesSelector', 'mozMatchesSelector', 'msMatchesSelector', 'oMatchesSelector'].some(function (fn) {
     if (typeof document.body[fn] == 'function') {
       matchesFn = fn;
@@ -30,7 +33,7 @@ function closest(el, selector, self = false) {
     return false;
   })
   if (self && el[matchesFn](selector)) return el;
-  var parent;
+  let parent;
   while (el) {
     parent = el.parentElement;
     if (parent && parent[matchesFn](selector)) {
@@ -79,7 +82,7 @@ const FormattedTextEditor = (props) => {
 
   useEffect(() => {
     if (document.querySelector(`#${uid}`)) {
-      setEditor(new Quill(`#${uid}`, {
+      const quill = new Quill(`#${uid}`, {
         modules: {
           clipboard: true,
           toolbar: toolbarOptions,
@@ -97,7 +100,51 @@ const FormattedTextEditor = (props) => {
           },
         },
         theme: 'snow'
-      }))
+      });
+
+      const handleLineBreak = (event) => {
+        if (event.key !== 'Enter' || !event.shiftKey) return;
+
+        // Stop form submission, native insertion, and Quill's Enter handler.
+        event.preventDefault();
+        event.stopImmediatePropagation();
+
+        const range = quill.getSelection();
+        if (!range) return;
+
+        // Update Quill's model and DOM through one Delta operation.
+        quill.updateContents(
+          new Delta()
+            .retain(range.index)
+            .delete(range.length)
+            .insert({lineBreak: true}),
+          Quill.sources.USER
+        );
+
+        // Add a second break at a line boundary to provide a caret position.
+        const [lineBreak] = quill.getLeaf(range.index + 1);
+        if (lineBreak && !lineBreak.next) {
+          quill.updateContents(
+            new Delta()
+              .retain(range.index + 1)
+              .insert({lineBreak: true}),
+            Quill.sources.USER
+          );
+        }
+
+        quill.setSelection(range.index + 1, 0, Quill.sources.SILENT);
+        quill.focus();
+      };
+
+      // Run before Quill's own keydown listener.
+      quill.root.addEventListener('keydown', handleLineBreak, true);
+      setEditor(quill);
+
+      return () => {
+        // Remove the listener when the editor component is unmounted.
+        quill.root.removeEventListener('keydown', handleLineBreak, true);
+        quill.disable();
+      };
     }
   }, [])
 
@@ -182,7 +229,7 @@ const FormattedTextEditor = (props) => {
     })
 
     setHandleFootnote(() => () => {
-      var range = editor.getSelection();
+      const range = editor.getSelection();
       prompt(range)
       if (range) {
         let value = prompt(Translations.messages['catalog_admin.fields.text_option_inputs.enter_footnote']);
@@ -192,7 +239,7 @@ const FormattedTextEditor = (props) => {
     })
 
     setHandleEndnote(() => () => {
-      var range = editor.getSelection();
+      const range = editor.getSelection();
       prompt(range)
       if (range) {
         let value = prompt(Translations.messages['catalog_admin.fields.text_option_inputs.enter_endnote']);
@@ -225,7 +272,7 @@ const FormattedTextEditor = (props) => {
         format: 'html',
         doc: editor.getContents(),
         content: '<p style="display:none;"></p>' +
-            _prepareHtmlForSaving(editor.root.innerHTML) +
+            _prepareHtmlForSaving(editor.getSemanticHTML()) +
             '<p style="display:none;"></p>'
       });
     } else {

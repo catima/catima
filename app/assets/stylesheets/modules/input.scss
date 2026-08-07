@@ -12,7 +12,13 @@
   margin-bottom: 15px;
 
   // Adjust Quill editor paragraph spacing to match public view
-  .ql-editor p {
-    margin-bottom: 1rem;
+  .ql-editor {
+    p {
+      margin-bottom: 1rem;
+    }
+
+    .ql-table p {
+      margin-bottom: 0;
+    }
   }
 }
