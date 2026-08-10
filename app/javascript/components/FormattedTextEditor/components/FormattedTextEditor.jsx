@@ -272,7 +272,7 @@ const FormattedTextEditor = (props) => {
         format: 'html',
         doc: editor.getContents(),
         content: '<p style="display:none;"></p>' +
-            _prepareHtmlForSaving(editor.getSemanticHTML()) +
+            _prepareHtmlForSaving(editor.root.innerHTML) +
             '<p style="display:none;"></p>'
       });
     } else {
