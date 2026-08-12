@@ -74,13 +74,8 @@ class CatalogAdmin::ItemsController < CatalogAdmin::BaseController
     upload_path = File.join('public', upload_dir)
     FileUtils.mkdir_p(upload_path)
     timestamp = Time.current.to_fs(:number)
-    local_fname = "#{timestamp}_" + format_filename(uploaded_file.original_filename)
-    file_path = File.join(upload_dir, local_fname)
-    Rails.public_path.join(file_path).binwrite(uploaded_file.read)
-    processed_file = {
-      :name => uploaded_file.original_filename, :path => file_path,
-      :type => uploaded_file.content_type, :size => uploaded_file.size
-    }
+    field = @item_type.all_fields.find { |candidate| candidate.uuid == params[:field].to_s }
+    processed_file = process_uploaded_file(uploaded_file, field, upload_dir, timestamp)
     render :json => {
       :status => 'ok', :processed_file => processed_file,
       :catalog => params[:catalog_slug],
@@ -143,6 +138,53 @@ class CatalogAdmin::ItemsController < CatalogAdmin::BaseController
     )
   end
 
+  # The upload endpoint is shared by file and image fields, but their storage
+  # rules are intentionally kept separate.
+  def process_uploaded_file(uploaded_file, field, upload_dir, timestamp)
+    if field.is_a?(Field::Image)
+      process_image_upload(uploaded_file, upload_dir, timestamp)
+    else
+      process_file_upload(uploaded_file, upload_dir, timestamp)
+    end
+  end
+
+  # Generic file fields always preserve the uploaded file as-is.
+  def process_file_upload(uploaded_file, upload_dir, timestamp)
+    original_filename = format_filename(uploaded_file.original_filename)
+    file_path = File.join(upload_dir, "#{timestamp}_#{original_filename}")
+    destination = Rails.public_path.join(file_path)
+    destination.binwrite(uploaded_file.read)
+
+    processed_file_metadata(uploaded_file, file_path, destination)
+  end
+
+  # Image fields convert formats that browsers cannot display to JPEG.
+  def process_image_upload(uploaded_file, upload_dir, timestamp)
+    return process_file_upload(uploaded_file, upload_dir, timestamp) unless browser_incompatible_image?(uploaded_file)
+
+    original_filename = format_filename(uploaded_file.original_filename)
+    file_path = File.join(upload_dir, "#{timestamp}_#{jpeg_filename(original_filename)}")
+    destination = Rails.public_path.join(file_path)
+    ImageTools.convert_to_jpeg(uploaded_file.tempfile.path, destination)
+
+    processed_file_metadata(
+      uploaded_file,
+      file_path,
+      destination,
+      :name => jpeg_filename(uploaded_file.original_filename),
+      :type => 'image/jpeg'
+    )
+  end
+
+  def processed_file_metadata(uploaded_file, file_path, destination, options={})
+    {
+      :name => options.fetch(:name, uploaded_file.original_filename),
+      :path => file_path,
+      :type => options.fetch(:type, uploaded_file.content_type),
+      :size => destination.size
+    }
+  end
+
   def after_create_path
     case params[:commit]
     when I18n.t('add_another') then { :action => "new" }
@@ -160,6 +202,15 @@ class CatalogAdmin::ItemsController < CatalogAdmin::BaseController
     ext = File.extname(fname)
     basename = fname.slice(0, fname.length - ext.length)
     basename.gsub(/[^0-9_\-a-zA-Z]/, '') + ext
+  end
+
+  def browser_incompatible_image?(uploaded_file)
+    uploaded_file.content_type.to_s.in?(%w[image/heic image/heif image/tiff image/x-tiff]) ||
+      File.extname(uploaded_file.original_filename).downcase.in?(%w[.heic .heif .tif .tiff])
+  end
+
+  def jpeg_filename(fname)
+    "#{File.basename(fname, File.extname(fname))}.jpg"
   end
 
   def build_simple_search

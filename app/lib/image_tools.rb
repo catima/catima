@@ -25,4 +25,12 @@ module ImageTools
     i.quality 75
     i.write dest
   end
+
+  def convert_to_jpeg(src, dest)
+    return nil unless File.file?(src)
+
+    image = Image.open(src)
+    image.format "jpg"
+    image.write dest
+  end
 end
