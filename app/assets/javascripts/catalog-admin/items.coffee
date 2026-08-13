@@ -58,9 +58,9 @@ file_presenter = ($file_field, $file, $new=false, $uploading=false)->
   return if $uploading then file_presenter_upload_inprogress($file) else file_presenter_upload_finished($file_field, $file)
 
 file_presenter_upload_finished = ($file_field, $file)->
-  # Only image fields may display thumbnails; generic file fields always use the file icon.
+  # Only image fields may display thumbnails, file fields always use the file icon.
   $is_image_field = $("#fileupload_#{$file_field}").attr('data-field-type') == 'Field::Image'
-  # Also check the MIME type so an image field does not render non-image files as thumbnails.
+  # Check the MIME type so an image field does not render non-image files as thumbnails.
   $is_img = $is_image_field and ($file.type.substr(0,5) == 'image')
   $file_icon = if $is_img then "#{icon_for($file, 50)}" else '<i class="fa fa-file"></i>'
   $html = """
