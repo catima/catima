@@ -87,7 +87,7 @@ class Field::Image < Field::File
   def set_default_types
     return if persisted? || types.present?
 
-    self.types = "jpg, jpeg, png, gif"
+    self.types = "jpg, jpeg, png, gif, heic, heif, tif, tiff"
   end
 
   def add_image_hash(images, image, item)

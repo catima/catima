@@ -58,7 +58,10 @@ file_presenter = ($file_field, $file, $new=false, $uploading=false)->
   return if $uploading then file_presenter_upload_inprogress($file) else file_presenter_upload_finished($file_field, $file)
 
 file_presenter_upload_finished = ($file_field, $file)->
-  $is_img = ($file.type.substr(0,5) == 'image')
+  # Only image fields may display thumbnails, file fields always use the file icon.
+  $is_image_field = $("#fileupload_#{$file_field}").attr('data-field-type') == 'Field::Image'
+  # Check the MIME type so an image field does not render non-image files as thumbnails.
+  $is_img = $is_image_field and ($file.type.substr(0,5) == 'image')
   $file_icon = if $is_img then "#{icon_for($file, 50)}" else '<i class="fa fa-file"></i>'
   $html = """
     <tr data-file="#{file_hash($file)}">
@@ -129,7 +132,7 @@ activate_jquery_fileupload = ($file_field)->
     dropZone: null,
     formData: { authenticity_token: auth_token(), field: $file_field },
     add: (e, data)-> fileupload_add_for($file_field, data),
-    done: (e, data)-> fileupload_done_for($file_field, data.result),
+    done: (e, data)-> fileupload_done_for($file_field, data.files[0], data.result),
     error: (err)-> fileupload_error_for($file_field, err),
     progress: (e, data)-> fileupload_progress($file_field, data),
     progressall: (e, data)-> fileupload_progressall(data)
@@ -195,10 +198,15 @@ file_valid_for = ($field, $file)->
 extension_for = ($filename)->
   return /(?:\.([^.]+))?$/.exec($filename)[1]
 
-fileupload_done_for = ($field, $result)->
+fileupload_done_for = ($field, $uploaded_file, $result)->
   modified_file_fields.push($field)
   control = $("#fileupload_#{$field}")
-  file_id = file_hash($result.processed_file)
+
+  # Use the original browser file to find the temporary upload row.
+  # Its name and size may differ from the processed file after conversion.
+  file_id = file_hash($uploaded_file)
+
+  # Use the server-processed file for the final display and stored field value.
   new_presenter = file_presenter_upload_finished($field, $result.processed_file)
   control.find("tr[data-file='#{file_id}']").replaceWith(new_presenter)
   activate_delete_file_buttons_for $field

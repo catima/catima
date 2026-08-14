@@ -111,6 +111,16 @@ Rails.application.configure do
   # Raises helpful error messages.
   config.assets.raise_runtime_errors = true
 
+  # Keep the Sprockets cache outside the host bind mount on local Docker setups.
+  # This avoids permission issues on some host OSs.
+  config.assets.configure do |env|
+    env.cache = Sprockets::Cache::FileStore.new(
+      ENV.fetch("SPROCKETS_CACHE_PATH", "/tmp/catima-sprockets-cache"),
+      config.assets.cache_limit,
+      env.logger
+    )
+  end
+
   # Raises error for missing translations
   # config.action_view.raise_on_missing_translations = true
 

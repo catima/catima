@@ -25,4 +25,18 @@ module ImageTools
     i.quality 75
     i.write dest
   end
+
+  def convert_to_jpeg(src, dest)
+    return false unless File.file?(src)
+
+    begin
+      image = Image.open(src)
+      image.format "jpg"
+      image.write dest
+      true
+    rescue MiniMagick::Error, SystemCallError => e
+      Rails.logger.warn("Image conversion to JPEG failed: #{e.message}")
+      false
+    end
+  end
 end
