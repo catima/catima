@@ -27,10 +27,16 @@ module ImageTools
   end
 
   def convert_to_jpeg(src, dest)
-    return nil unless File.file?(src)
+    return false unless File.file?(src)
 
-    image = Image.open(src)
-    image.format "jpg"
-    image.write dest
+    begin
+      image = Image.open(src)
+      image.format "jpg"
+      image.write dest
+      true
+    rescue MiniMagick::Error, SystemCallError => e
+      Rails.logger.warn("Image conversion to JPEG failed: #{e.message}")
+      false
+    end
   end
 end

@@ -74,7 +74,9 @@ class CatalogAdmin::ItemsController < CatalogAdmin::BaseController
     upload_path = File.join('public', upload_dir)
     FileUtils.mkdir_p(upload_path)
     timestamp = Time.current.to_fs(:number)
-    field = @item_type.all_fields.find { |candidate| candidate.uuid == params[:field].to_s }
+    field = @item_type.all_fields.find { |candidate| candidate.uuid == fld_id }
+    raise ActionController::BadRequest, "Unknown field parameter" if field.nil?
+
     processed_file = process_uploaded_file(uploaded_file, field, upload_dir, timestamp)
     render :json => {
       :status => 'ok', :processed_file => processed_file,
@@ -165,7 +167,8 @@ class CatalogAdmin::ItemsController < CatalogAdmin::BaseController
     original_filename = format_filename(uploaded_file.original_filename)
     file_path = File.join(upload_dir, "#{timestamp}_#{jpeg_filename(original_filename)}")
     destination = Rails.public_path.join(file_path)
-    ImageTools.convert_to_jpeg(uploaded_file.tempfile.path, destination)
+    converted = ImageTools.convert_to_jpeg(uploaded_file.tempfile.path, destination)
+    raise ActionController::BadRequest, "Image could not be converted to JPEG" unless converted
 
     processed_file_metadata(
       uploaded_file,

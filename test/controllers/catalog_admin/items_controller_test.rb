@@ -56,6 +56,27 @@ class CatalogAdmin::ItemsControllerTest < ActiveSupport::TestCase
     assert_equal "JPEG", image_format(stored_file)
   end
 
+  test "detects HEIC and HEIF files as browser-incompatible images" do
+    controller = CatalogAdmin::ItemsController.new
+    uploaded_file = Struct.new(:content_type, :original_filename)
+
+    [
+      uploaded_file.new("image/heic", "photo.heic"),
+      uploaded_file.new("image/heif", "photo.heif"),
+      uploaded_file.new("application/octet-stream", "photo.heic"),
+      uploaded_file.new("application/octet-stream", "photo.heif")
+    ].each do |file|
+      detected = controller.send(:browser_incompatible_image?, file)
+      message = "Expected #{file.original_filename} (#{file.content_type}) to be detected"
+      assert detected, message
+    end
+
+    refute controller.send(
+      :browser_incompatible_image?,
+      uploaded_file.new("image/jpeg", "photo.jpg")
+    )
+  end
+
   private
 
   def with_public_path
