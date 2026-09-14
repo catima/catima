@@ -14,4 +14,13 @@ class CatalogAdmin::ContainersControllerTest < ActionDispatch::IntegrationTest
                                          catalog_slug: @container.page.catalog.slug, locale: 'en')
     assert_response :success
   end
+
+  def test_edit_html_uses_multipart_form
+    container = containers(:one)
+
+    get edit_catalog_admin_container_url(container,
+                                         catalog_slug: container.page.catalog.slug, locale: 'en')
+
+    assert_select "form[enctype='multipart/form-data']"
+  end
 end

@@ -28,6 +28,12 @@ de:
         title: Titel
         description: Beschreibung
         item_type: Satzart
+    errors:
+      models:
+        container/html:
+          attributes:
+            html:
+              too_large: "The HTML content is too large, please reduce it"
   presenters:
     field:
       reference:

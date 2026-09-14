@@ -4,7 +4,8 @@
   <%= bootstrap_form_for(
       @container,
       :as => :container,
-      :url => { :action => :update }
+      :url => { :action => :update },
+      :html => { :multipart => true }
       ) do |f| %>
 
     <%= render("common_form_fields", :f => f) %>

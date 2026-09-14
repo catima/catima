@@ -76,6 +76,10 @@ fr:
         api_key: "Tokens d'authentications"
     errors:
       models:
+        container/html:
+          attributes:
+            html:
+              too_large: "Le contenu HTML est trop volumineux, veuillez le réduire"
         item:
           attributes:
             base:

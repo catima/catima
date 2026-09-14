@@ -74,6 +74,10 @@ en:
         api_key: "Authentication tokens"
     errors:
       models:
+        container/html:
+          attributes:
+            html:
+              too_large: "The HTML content is too large, please reduce it"
         item:
           attributes:
             base:

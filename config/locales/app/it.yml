@@ -28,6 +28,12 @@ it:
         title: Titolo
         description: Descrizione
         item_type: Tipo di record
+    errors:
+      models:
+        container/html:
+          attributes:
+            html:
+              too_large: "The HTML content is too large, please reduce it"
   presenters:
     field:
       reference:

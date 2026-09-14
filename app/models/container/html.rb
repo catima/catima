@@ -14,7 +14,10 @@
 #
 
 class Container::HTML < Container
+  MAX_HTML_BYTES = 4.megabytes
+
   store_accessor :content, :html
+  validate :html_size
 
   def custom_container_permitted_attributes
     %i(html)
@@ -22,5 +25,13 @@ class Container::HTML < Container
 
   def render_view(options={})
     content['html']
+  end
+
+  private
+
+  def html_size
+    return unless html.present? && html.bytesize > MAX_HTML_BYTES
+
+    errors.add(:html, :too_large)
   end
 end
