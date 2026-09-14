@@ -26,6 +26,30 @@ jobs:
         with:
           ref: development
 
+      - name: Download Swagger documentation
+        env:
+          GH_TOKEN: ${{ github.token }}
+        run: |
+          set -euo pipefail
+          run_id="$(gh run list \
+            --repo "$GITHUB_REPOSITORY" \
+            --workflow api.yml \
+            --branch development \
+            --status success \
+            --limit 1 \
+            --json databaseId \
+            --jq '.[0].databaseId')"
+          if [ -z "$run_id" ]; then
+            echo "::warning::No successful api.yml run found for the development branch; continuing without Swagger documentation"
+            exit 0
+          fi
+          echo "Downloading Swagger from API workflow run $run_id"
+          gh run download "$run_id" \
+            --repo "$GITHUB_REPOSITORY" \
+            --name swagger-documentation \
+            --dir swagger/v3
+          test -s swagger/v3/swagger.yaml
+
       - name: Build image
         uses: unil-lettres/actions/docker-build@main
         with:

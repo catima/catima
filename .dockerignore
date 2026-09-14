@@ -59,6 +59,7 @@ catalogs/custom-with-dash/
 
 # Swagger generated file
 swagger/v3/*
+!swagger/v3/swagger.yaml
 
 # Temporary files
 tmp/

@@ -20,7 +20,7 @@ jobs:
       matrix:
         ruby-versions: [ '3.4' ]
         psql-version: [ '18' ]
-        node-version: [ '22' ]
+        node-version: [ '24' ]
         redis-version: [ '8' ]
     services:
       postgres:

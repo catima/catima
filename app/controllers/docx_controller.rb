@@ -25,7 +25,9 @@ class DocxController < ApplicationController
       File.binwrite(infile, uploaded_file.read)
 
       # Run the conversion using mammoth
-      bin = Rails.root.join('node_modules', 'mammoth', 'bin', 'mammoth')
+      bundled_bin = Rails.root.join('bin', 'mammoth')
+      node_modules_bin = Rails.root.join('node_modules', 'mammoth', 'bin', 'mammoth')
+      bin = File.executable?(bundled_bin) ? bundled_bin : node_modules_bin
       `#{bin} #{infile} #{outfile}`
       html = File.read(outfile)
     end
