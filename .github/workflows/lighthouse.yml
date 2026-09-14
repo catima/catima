@@ -92,7 +92,7 @@ jobs:
 
       - name: run Lighthouse CI
         run: |
-          npm install -g @lhci/cli@0.14.x
+          npm install -g @lhci/cli@0.15.1
           lhci autorun
 
       - name: Upload lighthouse artifact
