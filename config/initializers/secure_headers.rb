@@ -8,9 +8,9 @@ SecureHeaders::Configuration.default do |config|
     }
   }
 
-  config.hsts = "max-age=#{1.week.to_i}"
+  config.hsts = "max-age=#{1.year.to_i}"
+  config.referrer_policy = "strict-origin-when-cross-origin"
   config.x_frame_options = "SAMEORIGIN"
-  config.x_xss_protection = "1; mode=block"
   config.x_content_type_options = "nosniff"
   config.x_download_options = 'noopen'
   config.x_permitted_cross_domain_policies = "none"
@@ -24,4 +24,3 @@ SecureHeaders::Configuration.default do |config|
     connect_src: Rails.env.development? ? %w('self' https: http://localhost:3035 ws://localhost:3035) : %w('self' https:)
   }
 end
-
