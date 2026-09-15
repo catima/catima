@@ -22,7 +22,7 @@ jobs:
         ruby-versions: [ '3.4' ]
         psql-version: [ '18' ]
         node-version: [ '24' ]
-        pnpm-version: [ '12' ]
+        pnpm-version: [ '12.4.1' ]
         redis-version: [ '8' ]
     services:
       postgres:

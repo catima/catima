@@ -29,7 +29,7 @@ jobs:
         ruby-versions: ${{ fromJSON(needs.setup.outputs.ruby-versions) }}
         psql-version: [ '18' ]
         node-version: [ '24' ]
-        pnpm-version: [ '12' ]
+        pnpm-version: [ '12.4.1' ]
         redis-version: [ '8' ]
     services:
       postgres:
