@@ -36,8 +36,9 @@ config/domains.yml
 config/geo_layers.yml
 config/restricted_robots.yml
 
-# Node modules
-node_modules/
+# JS dependencies
+/node_modules
+/.pnpm-store
 
 # Asset files
 public/packs/*
