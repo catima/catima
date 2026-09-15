@@ -6,7 +6,7 @@ ENV PSQL_CLIENT_VERSION=18
 ENV NODE_VERSION=22
 ENV PNPM_VERSION=12.4.1
 ENV SUPERCRONIC_VERSION=0.2.39
-ENV NGINX_VERSION=1.28.0
+ENV NGINX_VERSION=1.30.4
 ENV BUNDLER_VERSION=2.4.5
 
 # Install runtime-only packages
@@ -14,6 +14,7 @@ RUN apt-get update && \
     apt-get install -y --no-install-recommends \
     libgmp10 \
     libpq5 \
+    libvips42t64 \
     libyaml-0-2 \
     procps \
     curl \
