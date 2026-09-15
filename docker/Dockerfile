@@ -4,7 +4,7 @@ ENV COREPACK_ENABLE_AUTO_PIN=0
 
 ENV PSQL_CLIENT_VERSION=18
 ENV NODE_VERSION=22
-ENV YARN_VERSION=1.22
+ENV PNPM_VERSION=12.4.1
 ENV SUPERCRONIC_VERSION=0.2.39
 ENV NGINX_VERSION=1.28.0
 ENV BUNDLER_VERSION=2.4.5
@@ -96,10 +96,10 @@ RUN gem install bundler -v $BUNDLER_VERSION && \
     gem cleanup && \
     bundler --version
 
-# Install specific version of Yarn
+# Install specific version of pnpm
 RUN corepack enable && \
-    corepack prepare yarn@$YARN_VERSION --activate && \
-    yarn --version
+    corepack prepare pnpm@$PNPM_VERSION --activate && \
+    pnpm --version
 
 FROM build AS development-dependencies
 
@@ -116,10 +116,11 @@ RUN bundle config set --local without 'development test' && \
     bundle clean --force && \
     rm -rf /usr/local/bundle/cache
 
-# Copy package.json and yarn.lock, then install js dependencies
-COPY package.json yarn.lock /var/www/catima/
-RUN yarn install --frozen-lockfile --production=true && \
-    yarn cache clean
+# Copy package.json and pnpm lockfile, then install js dependencies
+COPY package.json pnpm-lock.yaml pnpm-workspace.yaml /var/www/catima/
+RUN pnpm install --frozen-lockfile --prod && \
+    pnpm store prune && \
+    chown -R catima:catima /var/www/catima/node_modules
 
 # Bundle the runtime-only Mammoth CLI for the application images
 RUN MAMMOTH_URL=$(node -pe "require('./package.json').dependencies.mammoth") && \
@@ -190,7 +191,7 @@ RUN cp config/database.example.yml.stage config/database.yml && \
 # Remove build-only files from the reusable runtime artifact
 USER root
 RUN mv /var/www/catima/node_modules /opt/catima-build-node-modules && \
-    rm -f /var/www/catima/package.json /var/www/catima/yarn.lock && \
+    rm -f /var/www/catima/package.json /var/www/catima/pnpm-lock.yaml /var/www/catima/pnpm-workspace.yaml && \
     rm -rf /var/www/catima/docker
 USER catima
 
@@ -211,7 +212,7 @@ RUN cp config/database.example.yml.prod config/database.yml && \
 # Remove build-only files from the reusable runtime artifact
 USER root
 RUN mv /var/www/catima/node_modules /opt/catima-build-node-modules && \
-    rm -f /var/www/catima/package.json /var/www/catima/yarn.lock && \
+    rm -f /var/www/catima/package.json /var/www/catima/pnpm-lock.yaml /var/www/catima/pnpm-workspace.yaml && \
     rm -rf /var/www/catima/docker
 USER catima
 

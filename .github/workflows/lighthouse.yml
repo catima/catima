@@ -22,6 +22,7 @@ jobs:
         ruby-versions: [ '3.4' ]
         psql-version: [ '18' ]
         node-version: [ '24' ]
+        pnpm-version: [ '12' ]
         redis-version: [ '8' ]
     services:
       postgres:
@@ -52,6 +53,13 @@ jobs:
         with:
           node-version: ${{ matrix.node-version }}
 
+      - name: Setup pnpm
+        uses: pnpm/setup@v2.1.0
+        with:
+          version: ${{ matrix.pnpm-version }}
+          install: false
+          cache: true
+
       - name: Setup Ruby
         uses: ruby/setup-ruby@v1
         with:
@@ -64,13 +72,6 @@ jobs:
           key: ${{ runner.os }}-gems-${{ hashFiles('**/Gemfile.lock') }}
           restore-keys: |
             ${{ runner.os }}-gems-
-
-      - name: Cache Yarn
-        uses: actions/cache@v5
-        with:
-          path: ~/.cache/yarn
-          key: ${{ runner.os }}-yarn-${{ hashFiles('**/yarn.lock') }}
-          restore-keys: ${{ runner.os }}-yarn-
 
       - name: Install PSQL client
         run: |
