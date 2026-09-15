@@ -63,4 +63,5 @@ volumes:
   upload-data:
   thumbs-data:
   refile-data:
+  refile-tmp:
   exports-data:
