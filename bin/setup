@@ -6,7 +6,7 @@ def setup(ci)
     test "ruby -v" => ruby_version unless ci
     run  "gem install bundler:2.4.5 --no-document --conservative"
     run  "bundle install" if File.exist?("Gemfile.lock")
-    run  "bin/pnpm install" if File.exist?("pnpm-lock.yaml")
+    run  "bin/pnpm install --frozen-lockfile" if File.exist?("pnpm-lock.yaml")
     run  "bundle exec overcommit --sign"
     run  "bundle exec overcommit --install"
     copy "example.env"
