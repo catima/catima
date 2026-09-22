@@ -38,7 +38,7 @@ jobs:
             --status success \
             --limit 1 \
             --json databaseId \
-            --jq '.[0].databaseId')"
+            --jq '.[0].databaseId // empty')"
           if [ -z "$run_id" ]; then
             echo "::warning::No successful api.yml run found for the development branch; continuing without Swagger documentation"
             exit 0
