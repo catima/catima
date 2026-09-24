@@ -377,8 +377,8 @@ importers:
         specifier: ^13.3.3
         version: 13.3.3(sass@1.104.1)(webpack@5.111.0)
       shakapacker:
-        specifier: 8.3.0
-        version: 8.3.0(@babel/core@7.29.7(supports-color@5.5.0))(@babel/plugin-transform-runtime@7.29.7(@babel/core@7.29.7(supports-color@5.5.0))(supports-color@5.5.0))(@babel/preset-env@7.29.7(@babel/core@7.29.7(supports-color@5.5.0))(supports-color@5.5.0))(@babel/runtime@7.29.7)(@types/babel__core@7.20.5)(@types/webpack@5.28.5(cssnano@6.1.2(postcss@8.5.28))(csso@5.0.5)(postcss@8.5.28)(svgo@3.3.5)(webpack-cli@4.10.0))(babel-loader@8.4.1(@babel/core@7.29.7(supports-color@5.5.0))(webpack@5.111.0))(compression-webpack-plugin@9.2.0(webpack@5.111.0))(terser-webpack-plugin@5.6.1(cssnano@6.1.2(postcss@8.5.28))(csso@5.0.5)(postcss@8.5.28)(webpack@5.111.0))(webpack-assets-manifest@5.2.1(webpack@5.111.0))(webpack-cli@4.10.0)(webpack-dev-server@5.2.6)(webpack-merge@5.10.0)(webpack@5.111.0)
+        specifier: 10.3.2
+        version: 10.3.2(@babel/core@7.29.7(supports-color@5.5.0))(@babel/plugin-transform-runtime@7.29.7(@babel/core@7.29.7(supports-color@5.5.0))(supports-color@5.5.0))(@babel/preset-env@7.29.7(@babel/core@7.29.7(supports-color@5.5.0))(supports-color@5.5.0))(@babel/runtime@7.29.7)(@types/babel__core@7.20.5)(@types/webpack@5.28.5(cssnano@6.1.2(postcss@8.5.28))(csso@5.0.5)(postcss@8.5.28)(svgo@3.3.5)(webpack-cli@4.10.0))(babel-loader@8.4.1(@babel/core@7.29.7(supports-color@5.5.0))(webpack@5.111.0))(compression-webpack-plugin@9.2.0(webpack@5.111.0))(css-loader@6.11.0(webpack@5.111.0))(mini-css-extract-plugin@2.10.2(webpack@5.111.0))(sass-loader@13.3.3(sass@1.104.1)(webpack@5.111.0))(sass@1.104.1)(terser-webpack-plugin@5.6.1(cssnano@6.1.2(postcss@8.5.28))(csso@5.0.5)(postcss@8.5.28)(webpack@5.111.0))(webpack-assets-manifest@5.2.1(webpack@5.111.0))(webpack-cli@4.10.0)(webpack-dev-server@5.2.6)(webpack@5.111.0)
       sortablejs:
         specifier: ^1.15.7
         version: 1.15.7
@@ -1995,6 +1995,10 @@ packages:
     engines: {'0': node >= 0.8.0}
     hasBin: true
 
+  ansi-regex@5.0.1:
+    resolution: {integrity: sha512-quJQXlTSUGL2LH9SUXo8VwsY4soanhgo6LNSm84E1LBcE8s3O0wpdiRzyR9z/ZZJMlMWv37qOOb9pdJlMUEKFQ==}
+    engines: {node: '>=8'}
+
   ansi-styles@4.3.0:
     resolution: {integrity: sha512-zbB9rCJAT1rbjiVDb2hqKFHNYLxgtk8NURxZ3IZwD3F6NtxbXZQCnnSi1Lkx+IDohdPlFp222wVALIheZJQSEg==}
     engines: {node: '>=8'}
@@ -2171,6 +2175,10 @@ packages:
 
   classnames@2.5.1:
     resolution: {integrity: sha512-saHYOzhIQs6wy2sVxTM6bUDsQO4F50V9RQ22qBpEdCW+I+/Wmke2HOl6lS6dTpdxVhb88/I6+Hs+438c3lfUow==}
+
+  cliui@8.0.1:
+    resolution: {integrity: sha512-BSeNnyus75C4//NQ9gQt1/csTXyo/8Sb+afLAkzAptFuMsod9HFokGNudZpi/oQV73hnVK+sR+5PVRMd+Dr7YQ==}
+    engines: {node: '>=12'}
 
   clone-deep@4.0.1:
     resolution: {integrity: sha512-neHB9xuzh/wk0dIHweyAXv2aPGZIVk3pLMe+/RNzINf17fe0OG96QroktYAUm7SM1PBnzTabaLboqqxDyMU+SQ==}
@@ -2508,6 +2516,9 @@ packages:
   electron-to-chromium@1.5.428:
     resolution: {integrity: sha512-1JxbaFJj1bRKurj1uY3l4xxpU9kOUAUjcIgApj0qu1Pao5GhoIWI8iL0BeMYJ2njig1hBx0A7eKD9VGjH9wlHw==}
 
+  emoji-regex@8.0.0:
+    resolution: {integrity: sha512-MSjYzcWNOA0ewAHpz0MxpYFvwg6yjy1NG3xteoqz644VCo/RPgnr1/GGt+ic3iJTzQ8Eu3TdM14SawnVUmGE6A==}
+
   emojis-list@3.0.0:
     resolution: {integrity: sha512-/kyM18EfinwXZbno9FyUGeFh87KC8HRQBQGildHZbEuRyWFOmv1U10o9BBp8XVZDVNNuQKyIGIu5ZYAAXJ0V2Q==}
     engines: {node: '>= 4'}
@@ -2687,6 +2698,10 @@ packages:
   geojson-rbush@3.2.0:
     resolution: {integrity: sha512-oVltQTXolxvsz1sZnutlSuLDEcQAKYC/uXt9zDzJJ6bu0W+baTI8LZBaTup5afzibEH4N3jlq2p+a152wlBJ7w==}
 
+  get-caller-file@2.0.5:
+    resolution: {integrity: sha512-DyFP3BM/3YHTQOCUL/w0OZHR0lpKeGrxotcHWcqNEdnltqFwXVfhEBQ94eIo34AfQpo0rGki4cyIiftY06h2Fg==}
+    engines: {node: 6.* || 8.* || >= 10.*}
+
   get-intrinsic@1.3.0:
     resolution: {integrity: sha512-9fSjSaos/fRIVIp+xSJlE6lfwhES7LNtKaCBIamHsjr2na1BiABJPo0mOjjz8GJDURarmCPGqaiVg5mfjb98CQ==}
     engines: {node: '>= 0.4'}
@@ -2858,6 +2873,10 @@ packages:
   is-extglob@2.1.1:
     resolution: {integrity: sha512-SbKbANkN603Vi4jEZv49LeVJMn4yGwsbzZworEoyEiutsN3nJYdbO36zfhGJ6QEDpOZIFkDtnq5JRxmvl3jsoQ==}
     engines: {node: '>=0.10.0'}
+
+  is-fullwidth-code-point@3.0.0:
+    resolution: {integrity: sha512-zymm5+u+sCsSWyD9qNaejV3DFvhCKclKdizYaJUuHA83RLjb7nSuGnddCHGv0hk+KY7BMAlsWeK4Ueg6EV6XQg==}
+    engines: {node: '>=8'}
 
   is-glob@4.0.3:
     resolution: {integrity: sha512-xelSayHH36ZgE7ZWhli7pW34hNbNl8Ojv5KVmkJD4hBdD3th8Tfk9vYasLM+mXWOZhFkgZfxhLSnrwRr4elSSg==}
@@ -3271,6 +3290,16 @@ packages:
   p-try@2.2.0:
     resolution: {integrity: sha512-R4nPAVTAU0B9D35/Gk3uJf/7XYbQcyohSKdvAxIRSNghFl4e71hVoGnBNQz9cWaXxO2I10KTC+3jMdvvoKw6dQ==}
     engines: {node: '>=6'}
+
+  pack-config-diff@0.1.0:
+    resolution: {integrity: sha512-gx60G4pnT4GFQ7WECdf7SCq9vdsvBhodLXXzwisy37/t0zkAZ3hMgLCdOGivudF1l0gcLZhIWVYreS89be15QA==}
+    engines: {node: '>=16'}
+    hasBin: true
+    peerDependencies:
+      ts-node: '>=10'
+    peerDependenciesMeta:
+      ts-node:
+        optional: true
 
   pako@1.0.11:
     resolution: {integrity: sha512-4hLB8Py4zZce5s4yd9XzopqwVv/yGNhV1Bl8NTmCq1763HeK2+EwVTv+leGeL13Dnh2wfbqowVPXCIO0z4taYw==}
@@ -3947,6 +3976,10 @@ packages:
     resolution: {integrity: sha512-NgRBy2Nx/bE+9F27nVHnqcN5HjyLmecqsqx2PJHu3/IEtADD4WuxuXIVExD5PoSDFVrl78dOonfcOe5O+5nbzQ==}
     hasBin: true
 
+  require-directory@2.1.1:
+    resolution: {integrity: sha512-fGxEI7+wsG9xrvdjsrlmL22OMTTiHRwAMroiEeMgq8gzoLC/PQr7RsRDSTLUg/bZAZtF+TVIkHc6/4RIKrui+Q==}
+    engines: {node: '>=0.10.0'}
+
   require-from-string@2.0.2:
     resolution: {integrity: sha512-Xf0nWe6RseziFMu+Ap9biiUbmplq6S9/p+7w7YXP/JBHhrUDDUhwa+vANyubuqfZWTveU//DYVGsDG7RKL/vEw==}
     engines: {node: '>=0.10.0'}
@@ -4079,28 +4112,92 @@ packages:
   setprototypeof@1.2.0:
     resolution: {integrity: sha512-E5LDX7Wrp85Kil5bhZv46j8jOeboKq5JMmYM3gVGdGH8xFpPWXUMsNrlODCrkoxMEeNi/XZIwuRvY4XNwYMJpw==}
 
-  shakapacker@8.3.0:
-    resolution: {integrity: sha512-eJsSSZDMbwmzVzM+Bn2QxAFhdLfcP5prUiDNPrQBGkFazCKjG4b6ZzpUg3rXQGt2l7SPLHQ8BA78QRvPBeBeFA==}
-    engines: {node: '>= 14', yarn: '>=1 <5'}
+  shakapacker@10.3.2:
+    resolution: {integrity: sha512-W4LV0MFS1c6ayODF/Ra4RM5xS3DljBc9XGLqz04WGSap97U5gJ7FjBTChPmoJ/7VDiTYmL1w+vh+D360e9qK7Q==}
+    engines: {node: ^20.19.0 || >=22.12.0, yarn: '>=1 <5'}
+    hasBin: true
     peerDependencies:
-      '@babel/core': ^7.17.9
-      '@babel/plugin-transform-runtime': ^7.17.0
-      '@babel/preset-env': ^7.16.11
-      '@babel/runtime': ^7.17.9
+      '@babel/core': ^7.17.9 || ^8.0.0
+      '@babel/plugin-transform-runtime': ^7.17.0 || ^8.0.0
+      '@babel/preset-env': ^7.16.11 || ^8.0.0
+      '@babel/runtime': ^7.17.9 || ^8.0.0
+      '@rspack/cli': ^2.0.0
+      '@rspack/core': ^2.0.0
+      '@rspack/dev-server': ^2.0.0
+      '@rspack/plugin-react-refresh': ^2.0.0
+      '@swc/core': ^1.3.0
       '@types/babel__core': ^7.0.0
       '@types/webpack': ^5.0.0
       babel-loader: ^8.2.4 || ^9.0.0 || ^10.0.0
-      compression-webpack-plugin: ^9.0.0 || ^10.0.0|| ^11.0.0
+      compression-webpack-plugin: ^9.0.0 || ^10.0.0 || ^11.0.0 || ^12.0.0
+      css-loader: ^6.8.1 || ^7.0.0
+      esbuild: '>=0.14.0 <1.0.0'
+      esbuild-loader: ^2.0.0 || ^3.0.0 || ^4.0.0
+      mini-css-extract-plugin: ^2.0.0
+      rspack-manifest-plugin: ^5.2.2
+      sass: ^1.50.0
+      sass-loader: ^13.0.0 || ^14.0.0 || ^15.0.0 || ^16.0.0 || ^17.0.0
+      swc-loader: ^0.1.15 || ^0.2.0
       terser-webpack-plugin: ^5.3.1
-      webpack: ^5.76.0
+      webpack: ^5.101.0
       webpack-assets-manifest: ^5.0.6 || ^6.0.0
-      webpack-cli: ^4.9.2 || ^5.0.0 || ^6.0.0
-      webpack-dev-server: ^4.9.0 || ^5.0.0
-      webpack-merge: ^5.8.0 || ^6.0.0
+      webpack-cli: ^4.9.2 || ^5.0.0 || ^6.0.0 || ^7.0.0
+      webpack-dev-server: ^5.2.2 || ^6.0.0
+      webpack-subresource-integrity: ^5.1.0
     peerDependenciesMeta:
+      '@babel/core':
+        optional: true
+      '@babel/plugin-transform-runtime':
+        optional: true
+      '@babel/preset-env':
+        optional: true
+      '@babel/runtime':
+        optional: true
+      '@rspack/cli':
+        optional: true
+      '@rspack/core':
+        optional: true
+      '@rspack/dev-server':
+        optional: true
+      '@rspack/plugin-react-refresh':
+        optional: true
+      '@swc/core':
+        optional: true
       '@types/babel__core':
         optional: true
       '@types/webpack':
+        optional: true
+      babel-loader:
+        optional: true
+      compression-webpack-plugin:
+        optional: true
+      css-loader:
+        optional: true
+      esbuild:
+        optional: true
+      esbuild-loader:
+        optional: true
+      mini-css-extract-plugin:
+        optional: true
+      rspack-manifest-plugin:
+        optional: true
+      sass:
+        optional: true
+      sass-loader:
+        optional: true
+      swc-loader:
+        optional: true
+      terser-webpack-plugin:
+        optional: true
+      webpack:
+        optional: true
+      webpack-assets-manifest:
+        optional: true
+      webpack-cli:
+        optional: true
+      webpack-dev-server:
+        optional: true
+      webpack-subresource-integrity:
         optional: true
 
   shallow-clone@3.0.1:
@@ -4190,11 +4287,19 @@ packages:
   stimulus@3.2.2:
     resolution: {integrity: sha512-sEGK0ofeMuW+B2oPLTigCqxl47P9vRfZxeqzY5Hk1u0QPWS8DZhW+VOEEyngtzdHM+MutXKGBT8BkUKoA0060Q==}
 
+  string-width@4.2.3:
+    resolution: {integrity: sha512-wKyQRQpjJ0sIp62ErSZdGsjMJWsap5oRNihHhu6G7JVO/9jIB6UyevL+tXuOqrng8j/cxKTWyWUwvSTriiZz/g==}
+    engines: {node: '>=8'}
+
   string_decoder@1.1.1:
     resolution: {integrity: sha512-n/ShnvDi6FHbbVfviro+WojiFzv+s8MPMHBczVePfUpDJLwoLT0ht1l4YwBCbi8pJAveEEdnkHyPyTP/mzRfwg==}
 
   string_decoder@1.3.0:
     resolution: {integrity: sha512-hkRX8U1WjJFd8LsDJ2yQ/wWWxaopEsABU1XfkM8A+j0+85JAGppt16cr1Whg6KIbb4okU6Mql6BOj+uup/wKeA==}
+
+  strip-ansi@6.0.1:
+    resolution: {integrity: sha512-Y38VPSHcqkFrCpFnQ9vuSXmquuv5oXOKpGeT6aGrr3o3Gc9AlVa6JBfUSOCnbxGGZF+/0ooI7KrPuUSztUdU5A==}
+    engines: {node: '>=8'}
 
   striptags@3.2.0:
     resolution: {integrity: sha512-g45ZOGzHDMe2bdYMdIvdAfCQkCTDMGBazSw1ypMowwGIee7ZQ5dU0rBJ8Jqgl+jAKIv4dbeE1jscZq9wid1Tkw==}
@@ -4500,6 +4605,10 @@ packages:
   wildcard@2.0.1:
     resolution: {integrity: sha512-CC1bOL87PIWSBhDcTrdeLo6eGT7mCFtrg0uIJtqJUFyK+eJnzl8A1niH56uu7KMa5XFrtiV+AQuHO3n7DsHnLQ==}
 
+  wrap-ansi@7.0.0:
+    resolution: {integrity: sha512-YVGIj2kamLSTxw6NsZjoBxfSwsn0ycdesmc4p+Q21c5zPuZ1pl+NfxVdxPtdHvmNVOQ6XSYG4AUtyt/Fi7D16Q==}
+    engines: {node: '>=10'}
+
   ws@8.21.3:
     resolution: {integrity: sha512-201TZ/kPWxoPr/OKWjquZR1SWKXcvxdH+e1xrx89b3YbmzLMFCLfnaG1HFIgWzJOEWZ7MvpK++odZufgYR50Rw==}
     engines: {node: '>=10.0.0'}
@@ -4520,12 +4629,24 @@ packages:
     resolution: {integrity: sha512-eKRAFz04jghooy8muekqzo8uCSVNeyRedbuJrp0fovbLIi7wlsYtdUn3vBAAPq2Y3/0xMz2WMEUQ8yhVVO9Stw==}
     engines: {node: '>=4.0'}
 
+  y18n@5.0.8:
+    resolution: {integrity: sha512-0pfFzegeDWJHJIAmTLRP2DwHjdF5s7jo9tuztdQxAhINCdvS+3nGINqPd00AphqJR/0LhANUS6/+7SCb98YOfA==}
+    engines: {node: '>=10'}
+
   yallist@3.1.1:
     resolution: {integrity: sha512-a4UGQaWPH59mOXUYnAG2ewncQS4i4F43Tv3JoAM+s2VDAmS9NsK8GpDMLrCHPksFT7h3K6TOoUNn2pb7RoXx4g==}
 
   yaml@1.10.3:
     resolution: {integrity: sha512-vIYeF1u3CjlhAFekPPAk2h/Kv4T3mAkMox5OymRiJQB0spDP10LHvt+K7G9Ny6NuuMAb25/6n1qyUjAcGNf/AA==}
     engines: {node: '>= 6'}
+
+  yargs-parser@21.1.1:
+    resolution: {integrity: sha512-tVpsJW7DdjecAiFpbIB1e3qxIQsE6NoPc5/eTdrbbIC4h0LVsWhnoa3g+m2HclBIujHzsxZ4VJVA+GUuc2/LBw==}
+    engines: {node: '>=12'}
+
+  yargs@17.7.3:
+    resolution: {integrity: sha512-GZtjxm/J/4TSxuL3FNYjCmLktBTnIw/rVmKSIyKeYAZpmJB2ig9VauCC5xsa82GNKVKDAqpOn3KVzNt0zmrU0g==}
+    engines: {node: '>=12'}
 
 snapshots:
 
@@ -6468,6 +6589,8 @@ snapshots:
 
   ansi-html@0.0.9: {}
 
+  ansi-regex@5.0.1: {}
+
   ansi-styles@4.3.0:
     dependencies:
       color-convert: 2.0.1
@@ -6686,6 +6809,12 @@ snapshots:
   ci-info@3.9.0: {}
 
   classnames@2.5.1: {}
+
+  cliui@8.0.1:
+    dependencies:
+      string-width: 4.2.3
+      strip-ansi: 6.0.1
+      wrap-ansi: 7.0.0
 
   clone-deep@4.0.1:
     dependencies:
@@ -7021,6 +7150,8 @@ snapshots:
 
   electron-to-chromium@1.5.428: {}
 
+  emoji-regex@8.0.0: {}
+
   emojis-list@3.0.0: {}
 
   encodeurl@2.0.0: {}
@@ -7205,6 +7336,8 @@ snapshots:
       '@types/geojson': 7946.0.8
       rbush: 3.0.1
 
+  get-caller-file@2.0.5: {}
+
   get-intrinsic@1.3.0:
     dependencies:
       call-bind-apply-helpers: 1.0.2
@@ -7381,6 +7514,8 @@ snapshots:
   is-docker@3.0.0: {}
 
   is-extglob@2.1.1: {}
+
+  is-fullwidth-code-point@3.0.0: {}
 
   is-glob@4.0.3:
     dependencies:
@@ -7712,6 +7847,10 @@ snapshots:
       retry: 0.13.1
 
   p-try@2.2.0: {}
+
+  pack-config-diff@0.1.0:
+    dependencies:
+      js-yaml: 4.3.2
 
   pako@1.0.11: {}
 
@@ -8471,6 +8610,8 @@ snapshots:
     dependencies:
       jsesc: 3.1.0
 
+  require-directory@2.1.1: {}
+
   require-from-string@2.0.2: {}
 
   requires-port@1.0.0: {}
@@ -8617,25 +8758,33 @@ snapshots:
 
   setprototypeof@1.2.0: {}
 
-  shakapacker@8.3.0(@babel/core@7.29.7(supports-color@5.5.0))(@babel/plugin-transform-runtime@7.29.7(@babel/core@7.29.7(supports-color@5.5.0))(supports-color@5.5.0))(@babel/preset-env@7.29.7(@babel/core@7.29.7(supports-color@5.5.0))(supports-color@5.5.0))(@babel/runtime@7.29.7)(@types/babel__core@7.20.5)(@types/webpack@5.28.5(cssnano@6.1.2(postcss@8.5.28))(csso@5.0.5)(postcss@8.5.28)(svgo@3.3.5)(webpack-cli@4.10.0))(babel-loader@8.4.1(@babel/core@7.29.7(supports-color@5.5.0))(webpack@5.111.0))(compression-webpack-plugin@9.2.0(webpack@5.111.0))(terser-webpack-plugin@5.6.1(cssnano@6.1.2(postcss@8.5.28))(csso@5.0.5)(postcss@8.5.28)(webpack@5.111.0))(webpack-assets-manifest@5.2.1(webpack@5.111.0))(webpack-cli@4.10.0)(webpack-dev-server@5.2.6)(webpack-merge@5.10.0)(webpack@5.111.0):
+  shakapacker@10.3.2(@babel/core@7.29.7(supports-color@5.5.0))(@babel/plugin-transform-runtime@7.29.7(@babel/core@7.29.7(supports-color@5.5.0))(supports-color@5.5.0))(@babel/preset-env@7.29.7(@babel/core@7.29.7(supports-color@5.5.0))(supports-color@5.5.0))(@babel/runtime@7.29.7)(@types/babel__core@7.20.5)(@types/webpack@5.28.5(cssnano@6.1.2(postcss@8.5.28))(csso@5.0.5)(postcss@8.5.28)(svgo@3.3.5)(webpack-cli@4.10.0))(babel-loader@8.4.1(@babel/core@7.29.7(supports-color@5.5.0))(webpack@5.111.0))(compression-webpack-plugin@9.2.0(webpack@5.111.0))(css-loader@6.11.0(webpack@5.111.0))(mini-css-extract-plugin@2.10.2(webpack@5.111.0))(sass-loader@13.3.3(sass@1.104.1)(webpack@5.111.0))(sass@1.104.1)(terser-webpack-plugin@5.6.1(cssnano@6.1.2(postcss@8.5.28))(csso@5.0.5)(postcss@8.5.28)(webpack@5.111.0))(webpack-assets-manifest@5.2.1(webpack@5.111.0))(webpack-cli@4.10.0)(webpack-dev-server@5.2.6)(webpack@5.111.0):
     dependencies:
+      js-yaml: 4.3.2
+      pack-config-diff: 0.1.0
+      path-complete-extname: 1.0.0
+      webpack-merge: 5.10.0
+      yargs: 17.7.3
+    optionalDependencies:
       '@babel/core': 7.29.7(supports-color@5.5.0)
       '@babel/plugin-transform-runtime': 7.29.7(@babel/core@7.29.7(supports-color@5.5.0))(supports-color@5.5.0)
       '@babel/preset-env': 7.29.7(@babel/core@7.29.7(supports-color@5.5.0))(supports-color@5.5.0)
       '@babel/runtime': 7.29.7
+      '@types/babel__core': 7.20.5
+      '@types/webpack': 5.28.5(cssnano@6.1.2(postcss@8.5.28))(csso@5.0.5)(postcss@8.5.28)(svgo@3.3.5)(webpack-cli@4.10.0)
       babel-loader: 8.4.1(@babel/core@7.29.7(supports-color@5.5.0))(webpack@5.111.0)
       compression-webpack-plugin: 9.2.0(webpack@5.111.0)
-      js-yaml: 4.3.2
-      path-complete-extname: 1.0.0
+      css-loader: 6.11.0(webpack@5.111.0)
+      mini-css-extract-plugin: 2.10.2(webpack@5.111.0)
+      sass: 1.104.1
+      sass-loader: 13.3.3(sass@1.104.1)(webpack@5.111.0)
       terser-webpack-plugin: 5.6.1(cssnano@6.1.2(postcss@8.5.28))(csso@5.0.5)(postcss@8.5.28)(webpack@5.111.0)
       webpack: 5.111.0(cssnano@6.1.2(postcss@8.5.28))(csso@5.0.5)(postcss@8.5.28)(svgo@3.3.5)(webpack-cli@4.10.0)
       webpack-assets-manifest: 5.2.1(webpack@5.111.0)
       webpack-cli: 4.10.0(webpack-dev-server@5.2.6)(webpack@5.111.0)
       webpack-dev-server: 5.2.6(debug@4.4.3(supports-color@5.5.0))(supports-color@5.5.0)(webpack-cli@4.10.0)(webpack@5.111.0)
-      webpack-merge: 5.10.0
-    optionalDependencies:
-      '@types/babel__core': 7.20.5
-      '@types/webpack': 5.28.5(cssnano@6.1.2(postcss@8.5.28))(csso@5.0.5)(postcss@8.5.28)(svgo@3.3.5)(webpack-cli@4.10.0)
+    transitivePeerDependencies:
+      - ts-node
 
   shallow-clone@3.0.1:
     dependencies:
@@ -8736,6 +8885,12 @@ snapshots:
       '@hotwired/stimulus': 3.2.2
       '@hotwired/stimulus-webpack-helpers': 1.0.1(@hotwired/stimulus@3.2.2)
 
+  string-width@4.2.3:
+    dependencies:
+      emoji-regex: 8.0.0
+      is-fullwidth-code-point: 3.0.0
+      strip-ansi: 6.0.1
+
   string_decoder@1.1.1:
     dependencies:
       safe-buffer: 5.1.2
@@ -8743,6 +8898,10 @@ snapshots:
   string_decoder@1.3.0:
     dependencies:
       safe-buffer: 5.2.1
+
+  strip-ansi@6.0.1:
+    dependencies:
+      ansi-regex: 5.0.1
 
   striptags@3.2.0: {}
 
@@ -9049,6 +9208,12 @@ snapshots:
 
   wildcard@2.0.1: {}
 
+  wrap-ansi@7.0.0:
+    dependencies:
+      ansi-styles: 4.3.0
+      string-width: 4.2.3
+      strip-ansi: 6.0.1
+
   ws@8.21.3: {}
 
   wsl-utils@0.1.0:
@@ -9057,6 +9222,20 @@ snapshots:
 
   xmlbuilder@8.2.2: {}
 
+  y18n@5.0.8: {}
+
   yallist@3.1.1: {}
 
   yaml@1.10.3: {}
+
+  yargs-parser@21.1.1: {}
+
+  yargs@17.7.3:
+    dependencies:
+      cliui: 8.0.1
+      escalade: 3.2.0
+      get-caller-file: 2.0.5
+      require-directory: 2.1.1
+      string-width: 4.2.3
+      y18n: 5.0.8
+      yargs-parser: 21.1.1

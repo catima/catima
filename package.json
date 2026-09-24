@@ -73,7 +73,7 @@
     "regenerator-runtime": "^0.13.11",
     "sass": "^1.104.1",
     "sass-loader": "^13.3.3",
-    "shakapacker": "8.3.0",
+    "shakapacker": "10.3.2",
     "sortablejs": "^1.15.7",
     "stimulus": "^3.2.2",
     "striptags": "^3.2.0",
