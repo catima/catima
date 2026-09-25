@@ -46,7 +46,7 @@ class CatalogAdmin::CategoriesController < CatalogAdmin::BaseController
   def destroy
     find_category
     authorize(@category)
-    @category.touch(:deleted_at)
+    @category.soft_delete!
     redirect_to({ :action => "index" }, :notice => deleted_message)
   end
 
