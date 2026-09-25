@@ -44,7 +44,12 @@ class Category < ApplicationRecord
     self.uuid ||= SecureRandom.uuid
   end
 
+  def soft_delete!
+    unset_category_in_choice_sets
+    touch(:deleted_at)
+  end
+
   def unset_category_in_choice_sets
-    Choice.where(category_id: id).find_each { |ch| ch.update(category_id: nil) }
+    Choice.where(category_id: id).update_all(category_id: nil)
   end
 end
