@@ -45,11 +45,13 @@ class Category < ApplicationRecord
   end
 
   def soft_delete!
-    unset_category_in_choice_sets
-    touch(:deleted_at)
+    Category.transaction do
+      unset_category_in_choice_sets
+      touch(:deleted_at)
+    end
   end
 
   def unset_category_in_choice_sets
-    Choice.where(category_id: id).update_all(category_id: nil)
+    Choice.where(category_id: id).update_all(category_id: nil, updated_at: Time.current)
   end
 end
