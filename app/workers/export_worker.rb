@@ -114,7 +114,7 @@ class ExportWorker
   def zip(input_dir, output_file)
     entries = Dir.entries(input_dir) - %w(. ..)
 
-    Zip::File.open(output_file, Zip::File::CREATE) do |zipfile|
+    Zip::File.open(output_file, create: true) do |zipfile|
       write_entries input_dir, entries, '', zipfile
     end
   end
