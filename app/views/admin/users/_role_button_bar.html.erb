@@ -1,6 +1,12 @@
 <div class="btn-group">
-  <% roles.each do |role, _active| %>
+  <% roles.each do |role, no_access| %>
     <%= f.radio_button_without_bootstrap(:role, role, autocomplete: "off", class: "btn-check") %>
-    <%= f.label :role, role.capitalize, value: role, class: "btn btn-outline-secondary btn-xs px-3" %>
+    <%= f.label(
+          :role,
+          catalog_role_label(role, no_access: no_access),
+          value: role,
+          class: ["btn", "btn-outline-secondary", "btn-xs", "px-3", no_access ? "role-no-access" : nil].compact.join(" "),
+          **catalog_role_tooltip_attributes(no_access)
+        ) %>
   <% end %>
 </div>

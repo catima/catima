@@ -113,4 +113,20 @@ class CatalogTest < ActiveSupport::TestCase
 
     assert_nil Message.find_by(id: message_id)
   end
+
+  test "#min_access_role" do
+    catalog = catalogs(:one)
+
+    catalog.update!(visible: true, restricted: false, seo_indexable: true)
+    assert_equal "user", catalog.min_access_role
+
+    catalog.update!(visible: true, restricted: true, seo_indexable: false)
+    assert_equal "member", catalog.min_access_role
+
+    catalog.update!(visible: false, restricted: false, seo_indexable: false)
+    assert_equal "editor", catalog.min_access_role
+
+    catalog.update!(visible: false, restricted: true, seo_indexable: false)
+    assert_equal "editor", catalog.min_access_role
+  end
 end
