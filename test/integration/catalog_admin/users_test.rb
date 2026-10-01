@@ -35,6 +35,19 @@ class CatalogAdmin::UsersTest < ActionDispatch::IntegrationTest
     assert(page.has_content?("has been saved"))
   end
 
+  test "clearly identifies roles that do not grant catalog access" do
+    catalogs(:one).update!(visible: false, seo_indexable: false)
+
+    log_in_as("one-admin@example.com", "password")
+    visit("/one/en/admin/_users")
+    first("a.user-action-edit").click
+
+    assert_selector(
+      "label.role-no-access[data-toggle='tooltip'][data-placement='top'][title='This role does not grant access to the catalog'] .role-no-access-icon"
+    )
+    assert(page.has_text?("User"))
+  end
+
   test "find a user" do
     log_in_as("one-admin@example.com", "password")
     visit("/one/en/admin/_users")

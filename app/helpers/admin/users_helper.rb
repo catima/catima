@@ -36,6 +36,8 @@ module Admin::UsersHelper
   end
 
   def render_users_role_button_bar(form, exclude:nil)
+    min_index = CatalogPermission::ROLE_OPTIONS.index(form.object.catalog.min_access_role)
+
     roles = CatalogPermission::ROLE_OPTIONS.each_with_object([]) do |r, roles|
       next if r == exclude
 
@@ -44,7 +46,8 @@ module Admin::UsersHelper
 
         form.object.role = "super-editor" if form.object.role == "reviewer"
       end
-      roles << [r, form.object.role == r ? "active" : ""]
+      no_access = CatalogPermission::ROLE_OPTIONS.index(r) < min_index
+      roles << [r, no_access]
     end
     render(
       :partial => "admin/users/role_button_bar",

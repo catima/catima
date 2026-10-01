@@ -609,6 +609,7 @@ it:
           help: Please select the saved search to be displayed.
 
     users:
+      no_access_role_tooltip: "Questo ruolo non consente l'accesso al catalogo"
       common_form_fields:
         preferred_language: "Admin screens are only available in English, but the user’s preferred language will be honored for login pages and for the catalogs themselves."
         user_role: "<b>Users</b> can view the public areas of the non-restricted catalogs.<br>"

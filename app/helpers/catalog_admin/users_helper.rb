@@ -45,7 +45,11 @@ module CatalogAdmin::UsersHelper
     options.delete('admin')
     options.delete('reviewer') unless catalog.requires_review?
 
+    min_index = CatalogPermission::ROLE_OPTIONS.index(catalog.min_access_role)
     group_permission = group.role_for_catalog(catalog)
-    options.map { |r| [r, r == group_permission] }
+    options.map do |r|
+      no_access = CatalogPermission::ROLE_OPTIONS.index(r) < min_index
+      [r, r == group_permission, no_access]
+    end
   end
 end

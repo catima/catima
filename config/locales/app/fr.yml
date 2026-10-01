@@ -975,6 +975,7 @@ fr:
         container_index: Conteneurs
 
     users:
+      no_access_role_tooltip: "Ce rôle ne donne pas accès au catalogue"
       common_form_fields:
         preferred_language: "Les écrans d'administration ne sont disponibles qu'en anglais, mais la langue préférée de l'utilisateur sera honorée pour les pages de connexion et pour les catalogues eux-mêmes."
         user_role: "<b>Users</b> peuvent afficher les zones publiques des catalogues non restreints.<br>"

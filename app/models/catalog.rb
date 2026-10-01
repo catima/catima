@@ -114,6 +114,13 @@ class Catalog < ApplicationRecord
     visible && !restricted
   end
 
+  # The lowest role that still grants access to this catalog.
+  def min_access_role
+    return "editor" unless visible?
+
+    restricted? ? "member" : "user"
+  end
+
   def public_items
     requires_review? ? Review.public_items_in_catalog(self) : items
   end

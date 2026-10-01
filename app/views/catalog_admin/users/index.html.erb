@@ -39,9 +39,16 @@
           <td>
             <%= form_for([catalog, grp], url: catalog_admin_group_path(id: grp.id), remote: true, authenticity_token: true) do |f| %>
               <div class="btn-group" data-group="<%= grp.id %>">
-                <% group_roles(grp, catalog).each do |role, active| %>
+                <% group_roles(grp, catalog).each do |role, active, no_access| %>
                   <%= radio_button_tag(:role, role, checked: active, id: "grp-role-#{grp.id}-#{role}", autocomplete: "off", class: "btn-check") %>
-                  <%= label_tag :role, role.capitalize, value: role, for: "grp-role-#{grp.id}-#{role}", class: ["lbl-#{role}", "btn btn-outline-secondary btn-xs px-3"] %>
+                  <%= label_tag(
+                        :role,
+                        catalog_role_label(role, no_access: no_access),
+                        value: role,
+                        for: "grp-role-#{grp.id}-#{role}",
+                        class: ["lbl-#{role}", "btn", "btn-outline-secondary", "btn-xs", "px-3", no_access ? "role-no-access" : nil].compact.join(" "),
+                        **catalog_role_tooltip_attributes(no_access)
+                      ) %>
                 <% end %>
               </div>
               <%= f.submit 'OK', class: 'd-none' %>
@@ -65,7 +72,7 @@
 
 <script>
   var group_roles_handler = function (e) {
-    var btn_group = e.target.parentElement;
+    var btn_group = e.currentTarget.parentElement;
     var group_id = btn_group.getAttribute('data-group');
     var submit_button = document.querySelector('#edit_group_' + group_id + ' input[type=submit]');
     window.setTimeout(function () {

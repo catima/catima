@@ -31,4 +31,26 @@ module ApplicationHelper
 
     scope.where.not(id: dismissed_ids)
   end
+
+  def catalog_role_label(role, no_access: false)
+    return role.capitalize unless no_access
+
+    safe_join(
+      [
+        fa_icon(:ban, class: "role-no-access-icon", aria: { hidden: true }),
+        role.capitalize,
+        tag.span(t("catalog_admin.users.no_access_role_tooltip"), class: "visually-hidden")
+      ],
+      " "
+    )
+  end
+
+  def catalog_role_tooltip_attributes(no_access)
+    return {} unless no_access
+
+    {
+      :data => { :toggle => "tooltip", :placement => "top" },
+      :title => t("catalog_admin.users.no_access_role_tooltip")
+    }
+  end
 end
