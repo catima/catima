@@ -22,7 +22,6 @@ services:
       - ./config/restricted_robots.yml:/var/www/catima/config/restricted_robots.yml:ro
     restart: unless-stopped
     deploy:
-      mode: global
       resources:
         limits:
           memory: 2000M
@@ -38,7 +37,6 @@ services:
       - exports-data:/var/www/catima/exports
     restart: unless-stopped
     deploy:
-      mode: global
       resources:
         limits:
           memory: 6000M
@@ -46,7 +44,6 @@ services:
   catima-postgres:
     restart: unless-stopped
     deploy:
-      mode: global
       resources:
         limits:
           memory: 1000M
@@ -54,7 +51,6 @@ services:
   catima-redis:
     restart: unless-stopped
     deploy:
-      mode: global
       resources:
         limits:
           memory: 500M
