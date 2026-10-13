@@ -2,6 +2,7 @@ import 'es6-shim';
 import PropTypes from "prop-types";
 import React, {useState, useEffect} from 'react';
 import ReactCrop from 'react-image-crop';
+import 'react-image-crop/dist/ReactCrop.css';
 import Translations from '../../Translations/components/Translations';
 
 const ThumbnailControl = (props) => {

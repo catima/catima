@@ -3,6 +3,8 @@ import React, {useState} from 'react';
 import Lightbox from 'yet-another-react-lightbox';
 import Captions from 'yet-another-react-lightbox/plugins/captions';
 import Zoom from 'yet-another-react-lightbox/plugins/zoom';
+import 'yet-another-react-lightbox/styles.css';
+import 'yet-another-react-lightbox/plugins/captions.css';
 
 const ImageViewer = (props) => {
   const {thumbnails, images, legends} = props;
