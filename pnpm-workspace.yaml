@@ -9,3 +9,13 @@ allowBuilds:
 # The minimum age of a release to be considered for dependency installation.
 # The value is in minutes (1440 minutes = 1 day).
 minimumReleaseAge: 1440
+
+# Single source of truth for the React version, shared by package.json and the overrides
+catalog:
+  react: ^19.3.0
+  react-dom: ^19.3.0
+
+# Force a single React copy (react_ujs@3 would otherwise resolve its own)
+overrides:
+  'react_ujs>react': 'catalog:'
+  'react_ujs>react-dom': 'catalog:'

@@ -1,5 +1,5 @@
 import React, {useState, useEffect, useMemo} from 'react';
-import AsyncPaginate from 'react-select-async-paginate';
+import { AsyncPaginate } from 'react-select-async-paginate';
 import striptags from 'striptags';
 import ReactSelect from 'react-select';
 import Validation from '../modules/validation';

@@ -1,7 +1,7 @@
 import React, { useState, useMemo, useRef } from 'react';
 import ReactSelect from 'react-select';
 import ItemTypeReference from './partials/ItemTypeReference';
-import AsyncPaginate from 'react-select-async-paginate';
+import { AsyncPaginate } from 'react-select-async-paginate';
 import axios from "axios";
 import Translations from "../../Translations/components/Translations";
 import ChildChoicesElement from './partials/ChildChoicesElement';

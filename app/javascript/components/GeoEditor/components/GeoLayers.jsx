@@ -1,7 +1,7 @@
 import 'es6-shim';
 import PropTypes from "prop-types";
 import React, {useEffect, useState} from 'react';
-import Creatable, { makeCreatableSelect } from 'react-select/creatable';
+import Creatable from 'react-select/creatable';
 
 const selectStyles = {menu: styles => ({...styles, zIndex: 2000})};
 

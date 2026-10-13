@@ -16,10 +16,9 @@ const ThumbnailControl = (props) => {
 
   const [src, setSrc] = useState(false)
   const [controlClass, setControlClass] = useState((!src || src.length === 0) ? 'hide' : 'show')
-  const [crop, setCrop] = useState((!src || src.length === 0) ? {x: 0, y: 0} : $.extend(src[0].crop || {x: 0, y: 0}, {aspect: 1}))
+  const [crop, setCrop] = useState(_toPercentCrop(src && src.length > 0 ? src[0].crop : null))
   const [modalClass, setModalClass] = useState('hide')
   const [img, setImg] = useState((!src || src.length === 0) ? '' : '/' + src[0].path)
-  const [state, setState] = useState()
   const [srcRef, setSrcRef] = useState(srcRefProps)
 
   useEffect(() => {
@@ -28,9 +27,15 @@ const ThumbnailControl = (props) => {
 
   useEffect(() => {
     setControlClass((!src || src.length === 0) ? 'hide' : 'show')
-    setCrop((!src || src.length === 0) ? {x: 0, y: 0} : $.extend(src[0].crop || {x: 0, y: 0}, {aspect: 1}))
+    setCrop(_toPercentCrop(src && src.length > 0 ? src[0].crop : null))
     setImg((!src || src.length === 0) ? '' : '/' + src[0].path)
   }, [src])
+
+  // Crops are stored and consumed server-side as percentages of the image
+  function _toPercentCrop(c) {
+    if (!c) return undefined;
+    return {unit: '%', x: c.x || 0, y: c.y || 0, width: c.width || 0, height: c.height || 0};
+  }
 
   function _loadSrc() {
     const d = document.getElementById(srcRef).innerText;
@@ -47,11 +52,10 @@ const ThumbnailControl = (props) => {
     document.getElementById(srcRef).innerText = s;
   }
 
-  function _onChange(crop) {
-    crop.aspect = 1;
-    setState({crop});
+  function _onChange(pixelCrop, percentCrop) {
+    setCrop(percentCrop);
     const src = _loadSrc();
-    src[0].crop = crop;
+    src[0].crop = {...percentCrop, aspect: 1};
     _saveSrc(src);
   }
 
@@ -73,10 +77,12 @@ const ThumbnailControl = (props) => {
       </span>
       <div className={modalClass}>
         <ReactCrop
-          {...state}
+          crop={crop}
+          aspect={1}
           onChange={_onChange}
-          src={img}
-        />
+        >
+          <img src={img || undefined} alt="" />
+        </ReactCrop>
       </div>
     </div>
   )

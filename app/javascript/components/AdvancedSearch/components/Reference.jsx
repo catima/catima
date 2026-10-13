@@ -2,7 +2,7 @@ import React, { useState, useRef } from "react";
 import axios from 'axios';
 import SelectedReference from './partials/SelectedReference';
 import ItemTypeReference from './partials/ItemTypeReference';
-import AsyncPaginate from 'react-select-async-paginate';
+import { AsyncPaginate } from 'react-select-async-paginate';
 import Translations from '../../Translations/components/Translations';
 import ActionButtons from './partials/ActionButtons';
 
