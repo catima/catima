@@ -55,6 +55,18 @@ class ActionDispatch::IntegrationTest
     Capybara.reset_sessions!
   end
 
+  # Leave the page (cancelling its pending XHR) and wait for the server to
+  # finish in-flight requests before the transactional teardown releases the
+  # shared DB connection; otherwise the server thread fails with
+  # "Cannot expire connection, it is not currently leased".
+  teardown do
+    if Capybara.current_driver == Capybara.javascript_driver
+      Capybara.current_session.visit("/robots.txt")
+      Capybara.current_session.server&.wait_for_pending_requests
+    end
+    Capybara.reset_sessions!
+  end
+
   def use_javascript_capybara_driver
     Capybara.current_driver = Capybara.javascript_driver
     browser = Capybara.current_session.driver.browser
