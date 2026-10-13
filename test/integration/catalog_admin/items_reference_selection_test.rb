@@ -75,13 +75,13 @@ class CatalogAdmin::ItemReferenceSelectionTest < ActionDispatch::IntegrationTest
     log_in_as("one-admin@example.com", "password")
     author = items(:one_author_stephen_king)
 
-    filters_and_associated_text.each do |_item_type, test_elements|
+    filters_and_associated_text.each_value do |test_elements|
       visit("/one/en/admin/authors/#{author.to_param}/edit")
 
       within("#item_one_author_collaborator_uuid_json-filters", :wait => 30) do
-        find(".css-1wa3eu0-placeholder").click # Click on the filter input
+        find(".select__control:has(.select__placeholder)").click # Click on the filter input
         sleep(2)
-        within(".css-11unzgr") do # Within the filter list
+        within(".select__menu-list") do # Within the filter list
           find('div', text: test_elements[:filter_name], match: :first, visible: false, :wait => 30).click
         end
       end
@@ -113,7 +113,7 @@ class CatalogAdmin::ItemReferenceSelectionTest < ActionDispatch::IntegrationTest
     find("#item_one_author_collaborator_uuid_json-editor", :wait => 30).click
     sleep(2)
 
-    assert(find('.css-11unzgr').has_css?('div', count: 8))
+    assert(find('.select__menu-list').has_css?('div', count: 8))
   end
 
   test "displays the items after a filter has been selected and deselected" do
@@ -126,7 +126,7 @@ class CatalogAdmin::ItemReferenceSelectionTest < ActionDispatch::IntegrationTest
     assert(find("#item_one_author_collaborator_uuid_json-editor", :wait => 30).has_text?("King", :count => 1))
 
     find("#item_one_author_collaborator_uuid_json-filters", :wait => 30).click
-    within(".css-11unzgr", :wait => 30) do # Within the filter list
+    within(".select__menu-list", :wait => 30) do # Within the filter list
       find('div', text: "Age", match: :first, visible: false, :wait => 30).click
     end
 

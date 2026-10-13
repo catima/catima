@@ -55,6 +55,7 @@ const ChoiceSetSelectElement = ({ buildInputNameWithCondition, defaultValues, ch
       defaultOptions={!!defaultValues[defaultValues.condition || "default"]}
       name={buildInputNameWithCondition}
       className={"basic-multi-select"}
+      classNamePrefix="select"
       delimiter=","
       loadOptions={loadOptions}
       debounceTimeout={800}

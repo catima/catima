@@ -250,6 +250,7 @@ const Line = (props) => {
         <ReactSelect
           id='asc-desc'
           name='asc-desc'
+          classNamePrefix="select"
           options={[
             {value: ASCENDING, label: Translations.messages['containers.item_list.asc']},
             {value: DESCENDING, label: Translations.messages['containers.item_list.desc']}

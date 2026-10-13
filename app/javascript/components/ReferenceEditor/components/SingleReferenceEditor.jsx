@@ -115,6 +115,7 @@ const SingleReferenceEditor = (props) => {
         key={selectedFilter?.value || 'no-filter'} // Force re-render when filter changes
         id={editorId}
         className="single-reference flex-fill"
+        classNamePrefix="select"
         debounceTimeout={800}
         isClearable={!req}
         isMulti={false}
@@ -131,6 +132,7 @@ const SingleReferenceEditor = (props) => {
         <ReactSelect
           id={filterId}
           className="single-reference-filter"
+          classNamePrefix="select"
           isSearchable={false}
           isClearable={true}
           value={selectedFilter}

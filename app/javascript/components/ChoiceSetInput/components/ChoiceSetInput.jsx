@@ -248,6 +248,7 @@ const RenderChoiceSetInput = (props) => {
                  style={Validation.getStyle(req, input)}>
               <AsyncPaginate
                   delimiter=","
+                  classNamePrefix="select"
                   loadOptions={_loadOptions}
                   debounceTimeout={800}
                   isSearchable={true}

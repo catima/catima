@@ -197,6 +197,7 @@ const MultiReferenceEditor = (props) => {
             <div className="input-group-addon">
               <ReactSelect
                 className="multiple-reference-filter"
+                classNamePrefix="select"
                 isSearchable={false}
                 isClearable={true}
                 value={availableFilter}
@@ -264,6 +265,7 @@ const MultiReferenceEditor = (props) => {
             <div className="input-group-addon">
               <ReactSelect
                 className="multiple-reference-filter"
+                classNamePrefix="select"
                 isSearchable={false}
                 isClearable={true}
                 value={selectedFilter}

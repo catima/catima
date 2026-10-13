@@ -41,6 +41,7 @@ const FieldSelectElement = ({ defaultValues, loadFields, selectedField, handleSe
   <AsyncPaginate
     defaultOptions={!!defaultValues["sort_field_uuid"]}
     className="single-reference-filter"
+    classNamePrefix="select"
     delimiter=","
     loadOptions={loadFields}
     debounceTimeout={800}

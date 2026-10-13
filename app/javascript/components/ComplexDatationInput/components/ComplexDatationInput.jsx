@@ -553,6 +553,7 @@ const RenderChoiceSetInput = (props) => {
           <div className="col-sm-8">
             <AsyncPaginate
                 className="datation-filter"
+                classNamePrefix="select"
                 delimiter=","
                 loadOptions={_loadOptions}
                 debounceTimeout={800}
