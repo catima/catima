@@ -79,7 +79,7 @@
     border: 0;
 }
 
-.referenceEditor .single-reference .select__indicator,
+.referenceEditor .single-reference .select__dropdown-indicator,
 .referenceEditor .single-reference-filter .select__indicator-separator,
 .referenceEditor .single-reference .select__indicator-separator {
     display: none;
