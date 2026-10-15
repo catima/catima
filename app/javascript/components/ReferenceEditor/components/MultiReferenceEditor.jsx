@@ -202,6 +202,8 @@ const MultiReferenceEditor = (props) => {
                 isClearable={true}
                 value={availableFilter}
                 onChange={setAvailableFilter}
+                menuShouldScrollIntoView={false}
+                menuPlacement="bottom"
                 options={filterOptions}
                 placeholder={filterPlaceholder}
                 noOptionsMessage={noOptionsMessage}
@@ -270,6 +272,8 @@ const MultiReferenceEditor = (props) => {
                 isClearable={true}
                 value={selectedFilter}
                 onChange={setSelectedFilter}
+                menuShouldScrollIntoView={false}
+                menuPlacement="bottom"
                 options={filterOptions}
                 placeholder={filterPlaceholder}
                 noOptionsMessage={noOptionsMessage}
