@@ -164,3 +164,8 @@
 .referenceEditor .multiple-reference-container .form-control:focus {
     box-shadow: none;
 }
+
+/* keep the focused input from painting over the adjacent filter select's border */
+.referenceEditor .multiple-reference-container .input-group .form-control:focus {
+    z-index: auto;
+}
