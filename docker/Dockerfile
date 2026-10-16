@@ -185,7 +185,8 @@ COPY --chown=catima:catima . /var/www/catima/
 
 # Create database.yml from example for asset precompilation
 # Precompile assets & generate locale files
-RUN cp config/database.example.yml.stage config/database.yml && \
+RUN mkdir -p app/assets/i18n && \
+    cp config/database.example.yml.stage config/database.yml && \
     SECRET_KEY_BASE=dummy RAILS_ENV=staging bundle exec rake locales:generate && \
     SECRET_KEY_BASE=dummy RAILS_ENV=staging bundle exec rails assets:precompile
 
@@ -206,7 +207,8 @@ COPY --chown=catima:catima . /var/www/catima/
 
 # Create database.yml from example for asset precompilation
 # Precompile assets & generate locale files
-RUN cp config/database.example.yml.prod config/database.yml && \
+RUN mkdir -p app/assets/i18n && \
+    cp config/database.example.yml.prod config/database.yml && \
     SECRET_KEY_BASE=dummy RAILS_ENV=production bundle exec rake locales:generate && \
     SECRET_KEY_BASE=dummy RAILS_ENV=production bundle exec rails assets:precompile
 

@@ -1,6 +1,7 @@
 # frozen_string_literal: true
 
 require "erb"
+require "fileutils"
 
 module Locales
   def self.configure
@@ -101,9 +102,15 @@ module Locales
     end
 
     def files_are_outdated
-      latest_yml = locale_files.map { |file| File.mtime(file) }.max
+      latest_source = (locale_files + generator_source_files)
+                      .map { |file| File.mtime(file) }.max
       earliest = exist_files.map { |file| File.mtime(file) }.min
-      latest_yml > earliest
+      latest_source > earliest
+    end
+
+    def generator_source_files
+      locales_dir = File.dirname(File.expand_path(__FILE__))
+      Dir[File.join(locales_dir, "*.rb")]
     end
 
     def file_names
@@ -150,6 +157,7 @@ module Locales
 
     def generate_file(template, path)
       result = ERB.new(template).result
+      FileUtils.mkdir_p(File.dirname(path))
       File.write(path, result)
     end
 
