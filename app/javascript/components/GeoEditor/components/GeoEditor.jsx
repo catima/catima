@@ -1,10 +1,9 @@
 import 'es6-shim';
 import PropTypes from 'prop-types';
-import React, {useState, useEffect, useRef} from 'react';
+import React, {useState, useEffect, useRef, useId} from 'react';
 import L from 'leaflet';
 import 'leaflet-draw';
 import drawLocales from 'leaflet-draw-locales'
-import {v4 as uuidv4} from 'uuid';
 import Validation from "../../GeoEditor/modules/validation";
 import BoundingBox from "../../GeoViewer/modules/boundingBox";
 import {
@@ -30,7 +29,7 @@ const GeoEditor = (props) => {
     required: requiredProps
   } = props
 
-  const editorId = uuidv4();
+  const editorId = useId();
 
   const [bounds, setBounds] = useState()
   const [layers, setLayers] = useState()

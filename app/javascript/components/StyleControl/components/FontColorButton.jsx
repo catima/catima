@@ -1,12 +1,5 @@
 import 'es6-shim';
-import React, {useEffect, useState} from 'react';
-
-function uuidv4() {
-  return 'xxxxxxxx-xxxx-4xxx-yxxx-xxxxxxxxxxxx'.replace(/[xy]/g, function (c) {
-    let r = Math.random() * 16 | 0, v = c == 'x' ? r : (r & 0x3 | 0x8);
-    return v.toString(16);
-  });
-}
+import React, {useEffect, useId, useState} from 'react';
 
 const FontColorButton = (props) => {
   const {
@@ -15,7 +8,7 @@ const FontColorButton = (props) => {
     value
   } = props
 
-  const [colorInputId, setColorInputId] = useState(uuidv4())
+  const colorInputId = useId()
   const [minicolor, setMinicolor] = useState()
   const [v, setV] = useState('')
 

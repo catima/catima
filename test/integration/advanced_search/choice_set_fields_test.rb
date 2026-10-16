@@ -13,10 +13,10 @@ class AdvancedSearch::ChoiceSetFieldTest < ActionDispatch::IntegrationTest
     end
 
     within("[data-field-uuid='search_vehicle_style_uuid']") do
-      find(".css-1wa3eu0-placeholder").click # Click on the filter input
+      find(".select__control:has(.select__placeholder)").click # Click on the filter input
       sleep(2)
 
-      within(".css-11unzgr") do # Within the filter list
+      within(".select__menu-list") do # Within the filter list
         find('div', text: 'Sedan', match: :first, visible: false).click
       end
     end
@@ -41,7 +41,7 @@ class AdvancedSearch::ChoiceSetFieldTest < ActionDispatch::IntegrationTest
   #    within("#advanced_search_criteria_one_author_other_languages_uuid_0_id") do
   #      find(".css-vj8t7z").click # Click on the filter input
   #
-  #      within(".css-11unzgr") do # Within the filter list
+  #      within(".select__menu-list") do # Within the filter list
   #        find('div', text: "Spanish", match: :first).click
   #      end
   #    end
@@ -54,7 +54,7 @@ class AdvancedSearch::ChoiceSetFieldTest < ActionDispatch::IntegrationTest
   #  within all(".choiceset-search-container")[2] do
   #    within("#advanced_search_criteria_one_author_other_languages_uuid_1_id") do
   #      find(".css-vj8t7z").click # Click on the filter input
-  #      within(".css-11unzgr") do # Within the filter list
+  #      within(".select__menu-list") do # Within the filter list
   #        find('div', text: "French", match: :first).click
   #      end
   #    end
@@ -76,18 +76,18 @@ class AdvancedSearch::ChoiceSetFieldTest < ActionDispatch::IntegrationTest
     end
 
     within("[data-field-uuid='one_author_category_uuid']") do
-      find(".css-1wa3eu0-placeholder").click # Click on the filter input
+      find(".select__control:has(.select__placeholder)").click # Click on the filter input
       sleep(2)
 
-      within(".css-11unzgr") do # Within the filter list
+      within(".select__menu-list") do # Within the filter list
         find('div', text: 'With category', match: :first, visible: false).click
       end
 
       within("[data-type='choice-set-category']") do
-        find(".css-1wa3eu0-placeholder").click # Click on the filter input
+        find(".select__control:has(.select__placeholder)").click # Click on the filter input
         sleep(2)
 
-        within(".css-11unzgr") do # Within the filter list
+        within(".select__menu-list") do # Within the filter list
           find('div', text: 'Language origin', match: :first, visible: false).click
         end
       end

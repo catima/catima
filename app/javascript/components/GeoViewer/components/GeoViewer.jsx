@@ -272,7 +272,7 @@ const GeoViewer = (props) => {
           zoomControl={ true }
           minZoom={ computedMapMinZoom }
           maxZoom={ computedMapMaxZoom }
-          whenCreated={ mapInstance => { setMapElement(mapInstance) } }>
+          ref={ setMapElement }>
         { (computedFeatures.length === 0) &&
         <div className="messageBox">
           <div className="message">

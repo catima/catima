@@ -2,7 +2,7 @@ import 'es6-shim';
 import PropTypes from 'prop-types';
 import React, {useState, useEffect} from 'react';
 import Translations from '../../Translations/components/Translations';
-import AsyncPaginate from 'react-select-async-paginate';
+import { AsyncPaginate } from 'react-select-async-paginate';
 import axios from "axios";
 import DateTimeInput from '../../DateTimeInput/components/DateTimeInput';
 
@@ -553,6 +553,7 @@ const RenderChoiceSetInput = (props) => {
           <div className="col-sm-8">
             <AsyncPaginate
                 className="datation-filter"
+                classNamePrefix="select"
                 delimiter=","
                 loadOptions={_loadOptions}
                 debounceTimeout={800}

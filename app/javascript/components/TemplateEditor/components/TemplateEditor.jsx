@@ -1,8 +1,7 @@
 import 'es6-shim';
 import PropTypes from "prop-types";
-import React, {useState, useEffect} from 'react';
+import React, {useState, useEffect, useId} from 'react';
 import Translations from '../../Translations/components/Translations';
-import {v4 as uuidv4} from 'uuid';
 
 const TemplateEditor = (props) => {
   const {
@@ -12,7 +11,7 @@ const TemplateEditor = (props) => {
     isCompact
   } = props
 
-  const uid = `summernote-${uuidv4()}`;
+  const uid = `summernote-${useId()}`;
   const [editor, setEditor] = useState(false);
   const [html, setHtml] = useState(false);
   let tools = [

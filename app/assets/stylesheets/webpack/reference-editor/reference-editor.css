@@ -62,15 +62,14 @@
   margin: 10px;
 }
 
-.referenceEditor .css1pahdxg-control, .reference-search-container .css1pahdxg-control,
+.referenceEditor .select__control--is-focused, .reference-search-container .select__control--is-focused,
 .referenceEditor .select__menu, .reference-search-container .select__menu,
 .single-reference-filter {
     text-align: left;
 }
 
-.select__menu.css-26l3qy-menu,
-.referenceEditor .css-26l3qy-menu,
-.reference-search-container .css-26l3qy-menu {
+.referenceEditor .select__menu,
+.reference-search-container .select__menu {
     z-index: 1001; /*  ensure menu over the map  */
 }
 
@@ -80,30 +79,29 @@
     border: 0;
 }
 
-.referenceEditor .single-reference .css-tlfecz-indicatorContainer,
-.referenceEditor .single-reference-filter .css-1okebmr-indicatorSeparator,
-.referenceEditor .single-reference .css-1okebmr-indicatorSeparator {
+.referenceEditor .single-reference-filter .select__indicator-separator,
+.referenceEditor .single-reference .select__indicator-separator {
     display: none;
 }
 
-.referenceEditor .single-reference-filter .css-yk16xz-control {
+.referenceEditor .single-reference-filter .select__control:not(.select__control--is-focused) {
     border-top-left-radius: 0;
     border-bottom-left-radius: 0;
     border-left: 1px solid #CCCCCC;
 }
 
-.referenceEditor .single-reference-filter .css1pahdxg-control {
+.referenceEditor .single-reference-filter .select__control--is-focused {
     border-top-left-radius: 0;
     border-bottom-left-radius: 0;
 }
 
-.referenceEditor .single-reference .css-yk16xz-control {
+.referenceEditor .single-reference .select__control:not(.select__control--is-focused) {
     border-right: none;
     border-top-right-radius: 0;
     border-bottom-right-radius: 0;
 }
 
-.referenceEditor .single-reference .css1pahdxg-control {
+.referenceEditor .single-reference .select__control--is-focused {
     border-top-right-radius: 0;
     border-bottom-right-radius: 0;
     border-color: #66afe9;
@@ -111,7 +109,7 @@
     box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075), 0 0 8px rgba(102, 175, 233, 0.6);
 }
 
-.referenceEditor .css-yk16xz-control:hover {
+.referenceEditor .select__control:not(.select__control--is-focused):hover {
     border-color: #CCCCCC;
 }
 
@@ -120,11 +118,11 @@
     border-radius: 0;
 }
 
-.referenceEditor .multiple-reference-container .css-yk16xz-control, .referenceEditor .multiple-reference-container .css1pahdxg-control {
+.referenceEditor .multiple-reference-container .select__control {
     margin-bottom: 20px;
 }
 
-.referenceEditor .multiple-reference-filter .css-yk16xz-control {
+.referenceEditor .multiple-reference-filter .select__control:not(.select__control--is-focused) {
     border-left: 1px solid #CCCCCC;
     border-top: none;
     border-right: none;
@@ -133,7 +131,7 @@
     margin: 0;
 }
 
-.referenceEditor .multiple-reference-filter .css1pahdxg-control {
+.referenceEditor .multiple-reference-filter .select__control--is-focused {
     border-left: 1px solid #CCCCCC;
     border-top: none;
     border-right: none;
@@ -143,7 +141,7 @@
     margin-bottom: 0;
 }
 
-.referenceEditor .multiple-reference-filter .css-1okebmr-indicatorSeparator {
+.referenceEditor .multiple-reference-filter .select__indicator-separator {
     display: none;
 }
 
@@ -165,4 +163,9 @@
 
 .referenceEditor .multiple-reference-container .form-control:focus {
     box-shadow: none;
+}
+
+/* keep the focused input from painting over the adjacent filter select's border */
+.referenceEditor .multiple-reference-container .input-group .form-control:focus {
+    z-index: auto;
 }

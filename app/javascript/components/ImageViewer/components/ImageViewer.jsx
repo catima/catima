@@ -1,12 +1,18 @@
 import 'es6-shim';
 import React, {useState} from 'react';
-import Lightbox from 'react-image-lightbox';
+import Lightbox from 'yet-another-react-lightbox';
+import Captions from 'yet-another-react-lightbox/plugins/captions';
+import Zoom from 'yet-another-react-lightbox/plugins/zoom';
+import 'yet-another-react-lightbox/styles.css';
+import 'yet-another-react-lightbox/plugins/captions.css';
 
 const ImageViewer = (props) => {
   const {thumbnails, images, legends} = props;
 
   const [isOpen, setIsOpen] = useState(false)
   const [idx, setIdx] = useState(0)
+
+  const slides = images.map((src, i) => ({src, description: legends[i]}))
 
   return (
     <div>
@@ -28,14 +34,14 @@ const ImageViewer = (props) => {
       ))}
       {isOpen &&
       <Lightbox
-        ariaHideApp={false}
-        mainSrc={images[idx]}
-        imageCaption={legends[idx]}
-        nextSrc={images.length === 1 ? null : images[(idx + 1) % images.length]}
-        prevSrc={images.length === 1 ? null : images[(idx + images.length - 1) % images.length]}
-        onCloseRequest={() => setIsOpen(false)}
-        onMovePrevRequest={() => setIdx((idx + images.length - 1) % images.length)}
-        onMoveNextRequest={() => setIdx((idx + 1) % images.length)}
+        open={isOpen}
+        index={idx}
+        slides={slides}
+        plugins={[Captions, Zoom]}
+        carousel={{finite: images.length <= 1}}
+        render={images.length <= 1 ? {buttonPrev: () => null, buttonNext: () => null} : {}}
+        close={() => setIsOpen(false)}
+        on={{view: ({index}) => setIdx(index)}}
       />
       }
     </div>

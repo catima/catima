@@ -1,4 +1,4 @@
-.choiceSetInput .css-26l3qy-menu {
+.choiceSetInput .select__menu {
     z-index: 1001; /*  ensure dropdown over the map  */
 }
 

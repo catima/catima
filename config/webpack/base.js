@@ -24,11 +24,4 @@ const options = {
   },
 };
 
-// TODO: Should be removed when upgrading to react 18
-const ignoreWarningsConfig = {
-  ignoreWarnings: [
-    /Module not found: Error: Can't resolve 'react-dom\/client'/,
-  ],
-};
-
-module.exports = merge({}, webpackConfig, options, ignoreWarningsConfig);
+module.exports = merge({}, webpackConfig, options);

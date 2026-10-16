@@ -2,7 +2,7 @@ import 'es6-shim';
 import PropTypes from 'prop-types';
 import React, {useState, useEffect} from 'react';
 import Translations from '../../Translations/components/Translations';
-import AsyncPaginate from 'react-select-async-paginate';
+import { AsyncPaginate } from 'react-select-async-paginate';
 import axios from "axios";
 import Validation from "../modules/validation"
 
@@ -248,6 +248,7 @@ const RenderChoiceSetInput = (props) => {
                  style={Validation.getStyle(req, input)}>
               <AsyncPaginate
                   delimiter=","
+                  classNamePrefix="select"
                   loadOptions={_loadOptions}
                   debounceTimeout={800}
                   isSearchable={true}

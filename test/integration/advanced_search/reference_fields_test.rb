@@ -16,7 +16,7 @@ class AdvancedSearch::ReferenceFieldTest < ActionDispatch::IntegrationTest
     end
 
     within("[data-field-uuid='one_author_collaborator_uuid']") do
-      find(".css-1wa3eu0-placeholder", :match => :first).click # Click on the filter input
+      find(".select__control:has(.select__placeholder)", :match => :first).click # Click on the filter input
       sleep(2)
 
       within(".select__menu-list") do # Within the filter list
@@ -43,7 +43,7 @@ class AdvancedSearch::ReferenceFieldTest < ActionDispatch::IntegrationTest
     select("or", :from => "advanced_search[criteria][one_author_collaborator_uuid][0][field_condition]")
 
     within("[data-field-uuid='one_author_collaborator_uuid']") do
-      find(".css-1wa3eu0-placeholder", :match => :first).click # Click on the filter input
+      find(".select__control:has(.select__placeholder)", :match => :first).click # Click on the filter input
       sleep(2)
 
       within(".select__menu-list") do # Within the filter list
@@ -56,7 +56,7 @@ class AdvancedSearch::ReferenceFieldTest < ActionDispatch::IntegrationTest
     select("or", :from => "advanced_search[criteria][one_author_collaborator_uuid][1][field_condition]")
 
     within all("[data-field-uuid='one_author_collaborator_uuid']")[1] do
-      find(".css-1wa3eu0-placeholder", :match => :first).click # Click on the filter input
+      find(".select__control:has(.select__placeholder)", :match => :first).click # Click on the filter input
       sleep(2)
 
       within(".select__menu-list") do # Within the filter list
@@ -83,7 +83,7 @@ class AdvancedSearch::ReferenceFieldTest < ActionDispatch::IntegrationTest
   #  within("#advanced_search_criteria_one_author_other_collaborators_uuid_0_exact-editor") do
   #    find(".css-vj8t7z").click # Click on the filter input
   #
-  #    within(".css-11unzgr") do # Within the filter list
+  #    within(".select__menu-list") do # Within the filter list
   #      find('div', text: "Very Old", match: :first).click
   #    end
   #  end
@@ -93,7 +93,7 @@ class AdvancedSearch::ReferenceFieldTest < ActionDispatch::IntegrationTest
   #  within("#advanced_search_criteria_one_author_other_collaborators_uuid_0_exact-editor") do
   #    find(".css-vj8t7z").click # Click on the filter input
   #
-  #    within(".css-11unzgr") do # Within the filter list
+  #    within(".select__menu-list") do # Within the filter list
   #      find('div', text: "Stephen King", match: :first).click
   #    end
   #  end
@@ -113,7 +113,7 @@ class AdvancedSearch::ReferenceFieldTest < ActionDispatch::IntegrationTest
     end
     # First multiple input reference
     within("[data-field-uuid='one_author_collaborator_uuid']") do
-      find(".css-1wa3eu0-placeholder", :match => :first).click # Click on the filter input
+      find(".select__control:has(.select__placeholder)", :match => :first).click # Click on the filter input
       sleep(2)
 
       within(".select__menu-list") do # Within the filter list
@@ -122,7 +122,7 @@ class AdvancedSearch::ReferenceFieldTest < ActionDispatch::IntegrationTest
     end
 
     within("[data-field-uuid='one_author_other_collaborators_uuid']") do
-      find(".css-1wa3eu0-placeholder", :match => :first).click # Click on the filter input
+      find(".select__control:has(.select__placeholder)", :match => :first).click # Click on the filter input
       sleep(2)
 
       within(".select__menu-list") do # Within the filter list
@@ -136,7 +136,7 @@ class AdvancedSearch::ReferenceFieldTest < ActionDispatch::IntegrationTest
     select("exclude", :from => "advanced_search[criteria][one_author_other_collaborators_uuid][1][field_condition]")
 
     within all("[data-field-uuid='one_author_other_collaborators_uuid']")[1] do
-      find(".css-1wa3eu0-placeholder", :match => :first).click # Click on the filter input
+      find(".select__control:has(.select__placeholder)", :match => :first).click # Click on the filter input
       sleep(2)
 
       within(".select__menu-list") do # Within the filter list
@@ -160,10 +160,10 @@ class AdvancedSearch::ReferenceFieldTest < ActionDispatch::IntegrationTest
     end
 
     within(".single-reference-filter", match: :first) do
-      find(".css-1wa3eu0-placeholder").click # Click on the filter input
+      find(".select__control:has(.select__placeholder)").click # Click on the filter input
       sleep(2)
 
-      within(".css-11unzgr") do # Within the filter list
+      within(".select__menu-list") do # Within the filter list
         find('div', text: "Email", match: :first, visible: false).click
       end
     end
@@ -190,10 +190,10 @@ class AdvancedSearch::ReferenceFieldTest < ActionDispatch::IntegrationTest
     end
 
     within all(".single-reference-filter")[1] do
-      find(".css-1wa3eu0-placeholder").click # Click on the filter input
+      find(".select__control:has(.select__placeholder)").click # Click on the filter input
       sleep(2)
 
-      within(".css-11unzgr") do # Within the filter list
+      within(".select__menu-list") do # Within the filter list
         find('div', text: "Most Active Month", match: :first, visible: false).click
       end
     end
@@ -218,7 +218,7 @@ class AdvancedSearch::ReferenceFieldTest < ActionDispatch::IntegrationTest
     end
 
     within("[data-field-uuid='one_author_other_collaborators_uuid']") do
-      find(".css-1wa3eu0-placeholder", :match => :first).click # Click on the filter input
+      find(".select__control:has(.select__placeholder)", :match => :first).click # Click on the filter input
       sleep(2)
 
       within(".select__menu-list") do # Within the filter list
@@ -232,8 +232,8 @@ class AdvancedSearch::ReferenceFieldTest < ActionDispatch::IntegrationTest
       find(".single-reference-filter").click # Click on the filter input
       sleep(2)
 
-      within(".css-11unzgr") do # Within the filter list
-        find('.css-1n7v3ny-option', text: "Name", :match => :first, visible: false).click
+      within(".select__menu-list") do # Within the filter list
+        find('.select__option', text: "Name", :match => :first, visible: false).click
       end
 
       fill_in(
@@ -269,7 +269,7 @@ class AdvancedSearch::ReferenceFieldTest < ActionDispatch::IntegrationTest
   #  end
   #
   #  within all(".reference-search-container", :wait => 30)[0] do
-  #    find(".select__input input", :wait => 30).set("old")
+  #    find(".select__input-container input", :wait => 30).set("old")
   #  end
   #
   #  find('.select__option--is-focused', text: "Very Old", match: :first).click
@@ -291,13 +291,13 @@ class AdvancedSearch::ReferenceFieldTest < ActionDispatch::IntegrationTest
     end
 
     within all(".reference-search-container")[0] do
-      find(".select__input input").set("i'm searching before the first loading")
+      find(".select__input-container input").set("i'm searching before the first loading")
     end
 
     assert(page.has_text?('No options'))
 
     within all(".reference-search-container")[0] do
-      find(".select__input input").set("")
+      find(".select__input-container input").set("")
     end
 
     refute(page.has_text?('No options'))

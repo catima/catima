@@ -1,5 +1,5 @@
 import React, {useState, useRef, useMemo} from "react";
-import AsyncPaginate from 'react-select-async-paginate';
+import { AsyncPaginate } from 'react-select-async-paginate';
 import striptags from 'striptags';
 import Translations from '../../../Translations/components/Translations';
 

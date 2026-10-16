@@ -1,4 +1,4 @@
-import React, {useEffect, useRef, useState, forwardRef} from 'react';
+import React, {useEffect, useRef, useState} from 'react';
 import Translations from '../../Translations/components/Translations';
 import PropTypes from "prop-types";
 import axios from 'axios';
@@ -53,8 +53,8 @@ const computeGroupTitle = (level, title, type, format) => {
   return title
 }
 
-const Items = forwardRef((props, ref) => {
-  const {items, currentEmptyCount} = props
+const Items = (props) => {
+  const {items, currentEmptyCount, ref} = props
   const {currentCount, emptyCount} = ref
 
   const renderItem = (item, index) => {
@@ -84,10 +84,10 @@ const Items = forwardRef((props, ref) => {
   }
 
   return renderItems(items)
-})
+}
 
-const ItemGroup = forwardRef((props, ref) => {
-  const {items, icons, k, title, level, type, format, withoutGroup, sort} = props
+const ItemGroup = (props) => {
+  const {items, icons, k, title, level, type, format, withoutGroup, sort, ref} = props
 
   const {currentCount, emptyCount} = ref
 
@@ -173,7 +173,7 @@ const ItemGroup = forwardRef((props, ref) => {
   return (
     recursiveRenderItems(items, k, title, level)
   )
-})
+}
 
 const Line = (props) => {
   const {
@@ -250,6 +250,7 @@ const Line = (props) => {
         <ReactSelect
           id='asc-desc'
           name='asc-desc'
+          classNamePrefix="select"
           options={[
             {value: ASCENDING, label: Translations.messages['containers.item_list.asc']},
             {value: DESCENDING, label: Translations.messages['containers.item_list.desc']}

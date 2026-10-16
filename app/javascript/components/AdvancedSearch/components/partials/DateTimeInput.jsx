@@ -1,5 +1,5 @@
 import 'es6-shim';
-import React, { useState, useEffect, useRef, useMemo, forwardRef } from 'react';
+import React, { useState, useEffect, useRef, useMemo } from 'react';
 import { Namespace, TempusDominus } from '@eonasdan/tempus-dominus';
 import Translations from "../../../Translations/components/Translations";
 
@@ -90,8 +90,9 @@ const CalendarButtonElement = ({ inputId, inputSuffixId, datepickerContainerRef,
   </div>
 );
 
-const DateTimeInput = forwardRef((props, datepickerRef) => {
+const DateTimeInput = (props) => {
   const {
+    ref: datepickerRef,
     inputId,
     inputSuffixId,
     inputName,
@@ -414,6 +415,6 @@ const DateTimeInput = forwardRef((props, datepickerRef) => {
       <span className="error helptext">{errorMsg}</span>
     </div>
   );
-});
+};
 
 export default DateTimeInput;

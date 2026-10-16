@@ -197,10 +197,13 @@ const MultiReferenceEditor = (props) => {
             <div className="input-group-addon">
               <ReactSelect
                 className="multiple-reference-filter"
+                classNamePrefix="select"
                 isSearchable={false}
                 isClearable={true}
                 value={availableFilter}
                 onChange={setAvailableFilter}
+                menuShouldScrollIntoView={false}
+                menuPlacement="bottom"
                 options={filterOptions}
                 placeholder={filterPlaceholder}
                 noOptionsMessage={noOptionsMessage}
@@ -264,10 +267,13 @@ const MultiReferenceEditor = (props) => {
             <div className="input-group-addon">
               <ReactSelect
                 className="multiple-reference-filter"
+                classNamePrefix="select"
                 isSearchable={false}
                 isClearable={true}
                 value={selectedFilter}
                 onChange={setSelectedFilter}
+                menuShouldScrollIntoView={false}
+                menuPlacement="bottom"
                 options={filterOptions}
                 placeholder={filterPlaceholder}
                 noOptionsMessage={noOptionsMessage}

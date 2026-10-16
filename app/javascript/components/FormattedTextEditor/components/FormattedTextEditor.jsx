@@ -1,7 +1,6 @@
 import 'es6-shim';
-import React, {useState, useEffect} from 'react';
+import React, {useState, useEffect, useId} from 'react';
 import Translations from '../../Translations/components/Translations';
-import {v4 as uuidv4} from 'uuid';
 
 import Quill from 'quill';
 import TableUp, { defaultCustomSelect, TableAlign, TableMenuSelect, TableResizeLine, TableResizeScale, TableSelection, TableVirtualScrollbar } from 'quill-table-up';
@@ -78,7 +77,7 @@ const FormattedTextEditor = (props) => {
   const [endnoteRenderer, setEndnoteRenderer] = useState()
   const [editor, setEditor] = useState()
   const [noteEditor, setNoteEditor] = useState()
-  const [uid, setUid] = useState(`quill-${uuidv4()}`)
+  const uid = `quill-${useId()}`
 
   useEffect(() => {
     if (document.querySelector(`#${uid}`)) {
