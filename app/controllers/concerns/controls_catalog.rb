@@ -88,6 +88,10 @@ module ControlsCatalog
   end
 
   def remember_current_page_for_login_logout
+    # API/XHR requests must not overwrite the stored location, otherwise
+    # users would be redirected to a JSON endpoint after login or logout.
+    return if request.xhr? || !request.format.html?
+
     store_location_for(:user, request.path)
   end
 
