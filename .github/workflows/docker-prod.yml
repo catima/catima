@@ -25,7 +25,7 @@ jobs:
     steps:
       - uses: actions/checkout@v7
         with:
-          ref: master
+          ref: ${{ github.event_name == 'schedule' && 'master' || github.sha }}
 
       - name: Download Swagger documentation
         env:
@@ -72,7 +72,7 @@ jobs:
     steps:
       - uses: actions/checkout@v7
         with:
-          ref: master
+          ref: ${{ github.event_name == 'schedule' && 'master' || github.sha }}
 
       - name: Merge service
         id: merge
@@ -93,7 +93,7 @@ jobs:
     steps:
       - uses: actions/checkout@v7
         with:
-          ref: master
+          ref: ${{ github.event_name == 'schedule' && 'master' || github.sha }}
 
       - name: Merge service
         id: merge
@@ -113,7 +113,7 @@ jobs:
     steps:
       - uses: actions/checkout@v7
         with:
-          ref: master
+          ref: ${{ github.event_name == 'schedule' && 'master' || github.sha }}
 
       - name: Update image
         uses: unil-lettres/actions/commit-version@main
@@ -135,7 +135,7 @@ jobs:
       - name: Checkout
         uses: actions/checkout@v7
         with:
-          ref: master
+          ref: ${{ github.event_name == 'schedule' && 'master' || github.sha }}
 
       - name: Update description
         uses: peter-evans/dockerhub-description@v5
