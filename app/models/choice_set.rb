@@ -29,6 +29,7 @@ class ChoiceSet < ApplicationRecord
   include HasDeactivation
   include HasDeletion
   include Clone
+  include Loggable
 
   enum :choice_set_type, { default: 0, datation: 1 }
   FORMATS = %w(Y M h YM MD hm YMD hms MDh YMDh MDhm YMDhm MDhms YMDhms).freeze
@@ -65,6 +66,10 @@ class ChoiceSet < ApplicationRecord
 
   def assign_uuid
     self.uuid ||= SecureRandom.uuid
+  end
+
+  def log_name
+    name
   end
 
   def choice_prefixed_label(choice, format: :short, with_dates: false)

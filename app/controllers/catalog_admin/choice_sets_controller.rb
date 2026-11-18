@@ -19,7 +19,7 @@ class CatalogAdmin::ChoiceSetsController < CatalogAdmin::BaseController
   def create
     build_choice_set
     authorize(@choice_set)
-    if @choice_set.update(choice_set_params)
+    if @choice_set.update_and_log(choice_set_params, author: current_user, catalog: catalog)
       if request.xhr?
         render json: { choice_set: @choice_set }
       else
@@ -37,7 +37,7 @@ class CatalogAdmin::ChoiceSetsController < CatalogAdmin::BaseController
   def update
     find_choice_set
     authorize(@choice_set)
-    if @choice_set.update(choice_set_params.except(:choice_set_type, :format))
+    if @choice_set.update_and_log(choice_set_params.except(:choice_set_type, :format), author: current_user, catalog: catalog)
       redirect_to(catalog_admin_choice_sets_path, :notice => updated_message)
     else
       render("edit")
@@ -47,8 +47,11 @@ class CatalogAdmin::ChoiceSetsController < CatalogAdmin::BaseController
   def destroy
     find_choice_set
     authorize(@choice_set)
-    @choice_set.touch(:deleted_at)
-    redirect_to(catalog_admin_choice_sets_path, notice: deleted_message)
+    if @choice_set.soft_destroy_and_log(author: current_user, catalog: catalog)
+      redirect_to(catalog_admin_choice_sets_path, notice: deleted_message)
+    else
+      redirect_to(catalog_admin_choice_sets_path, alert: @choice_set.errors.full_messages.to_sentence)
+    end
   end
 
   def export

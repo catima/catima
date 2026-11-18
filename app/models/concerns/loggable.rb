@@ -51,6 +51,33 @@ module Loggable
     destroy_and_log(author: author, catalog: catalog, additional_logs: additional_logs) || raise(ActiveRecord::RecordInvalid, self)
   end
 
+  # Logs an UPDATE made outside of the record itself (e.g. to its children).
+  def log_update(author:, catalog:, additional_logs:)
+    self.additional_logs = additional_logs
+    create_log(author, catalog, "UPDATE") if relevant_changes.any?
+    self
+  end
+
+  # Logs the deletion of a record that was destroyed along with another one.
+  def log_delete(author:, catalog:)
+    create_log(author, catalog, "DELETE")
+    self
+  end
+
+  # For models with a deleted_at column (see HasDeletion): marks the record as
+  # deleted and logs it as a DELETE rather than an UPDATE.
+  def soft_destroy_and_log(author:, catalog:, additional_logs: nil)
+    self.deleted_at = Time.current
+    return unless save
+
+    self.additional_logs = additional_logs
+    log_delete(author: author, catalog: catalog)
+  end
+
+  def soft_destroy_and_log!(author:, catalog:, additional_logs: nil)
+    soft_destroy_and_log(author: author, catalog: catalog, additional_logs: additional_logs) || raise(ActiveRecord::RecordInvalid, self)
+  end
+
   private
 
   def relevant_changes
