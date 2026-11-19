@@ -104,15 +104,4 @@ class CatalogAdmin::ChoiceLoggingTest < ActionDispatch::IntegrationTest
     assert_equal "DELETE", last_log.action
     refute @choice_set.reload.not_deleted?
   end
-
-  test "deleting an item type logs a DELETE" do
-    item_type = item_types(:two_author)
-
-    assert_difference("EntryLog.where(action: 'DELETE', subject_type: 'ItemType').count", 1) do
-      page.driver.submit(:delete, catalog_admin_item_type_path(@catalog, "en", item_type), {})
-    end
-
-    assert_equal item_type, last_log.subject
-    refute item_type.reload.deleted_at.nil?
-  end
 end

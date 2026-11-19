@@ -107,4 +107,21 @@ class CatalogAdmin::ItemTypesTest < ActionDispatch::IntegrationTest
       click_on("Create item type")
     end
   end
+
+  test "deleting an item type logs a DELETE" do
+    item_type = item_types(:two_author)
+
+    log_in_as("two-admin@example.com", "password")
+    visit("/two/en/admin")
+    click_on("Author")
+    click_on("Edit item type")
+
+    assert_difference("EntryLog.where(action: 'DELETE', subject_type: 'ItemType').count", 1) do
+      click_on("Delete this item type")
+    end
+
+    last_log = EntryLog.order(:id).last
+    assert_equal item_type, last_log.subject
+    refute item_type.reload.deleted_at.nil?
+  end
 end

@@ -165,21 +165,6 @@ class ChoiceLoggingTest < ActiveSupport::TestCase
     end
   end
 
-  test "soft deleting an item type logs a DELETE with the new slug" do
-    item_type = item_types(:two_author)
-    old_slug = item_type.slug
-    item_type.slug = "#{old_slug}-deleted"
-
-    assert_difference("EntryLog.count", 1) do
-      item_type.soft_destroy_and_log!(author: @author, catalog: @catalog)
-    end
-
-    assert_equal item_type, last_log.subject
-    assert_equal "DELETE", last_log.action
-    assert last_log.record_changes.key?("deleted_at")
-    assert_equal ["#{old_slug}-deleted"], last_log.record_changes["slug"].last(1)
-  end
-
   test "log_update logs moved choices once, as an UPDATE of the choice set" do
     moves = { "English (#1)" => { "position" => [2, 1] } }
 

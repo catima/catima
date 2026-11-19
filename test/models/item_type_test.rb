@@ -47,4 +47,20 @@ class ItemTypeTest < ActiveSupport::TestCase
     assert_includes(fields, fields(:nested_car_manufacture_date))
     assert_includes(fields, fields(:nested_bicycle_speeds))
   end
+
+  test "soft deleting an item type logs a DELETE with the new slug" do
+    item_type = item_types(:two_author)
+    old_slug = item_type.slug
+    item_type.slug = "#{old_slug}-deleted"
+
+    assert_difference("EntryLog.count", 1) do
+      item_type.soft_destroy_and_log!(author: users(:two_admin), catalog: catalogs(:two))
+    end
+
+    last_log = EntryLog.order(:id).last
+    assert_equal item_type, last_log.subject
+    assert_equal "DELETE", last_log.action
+    assert last_log.record_changes.key?("deleted_at")
+    assert_equal ["#{old_slug}-deleted"], last_log.record_changes["slug"].last(1)
+  end
 end
