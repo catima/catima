@@ -29,6 +29,7 @@ class ChoiceSet < ApplicationRecord
   include HasDeactivation
   include HasDeletion
   include Clone
+  include Loggable
 
   enum :choice_set_type, { default: 0, datation: 1 }
   FORMATS = %w(Y M h YM MD hm YMD hms MDh YMDh MDhm YMDhm MDhms YMDhms).freeze
@@ -44,10 +45,6 @@ class ChoiceSet < ApplicationRecord
   belongs_to :catalog
   has_many :choices, ->(set) { where(:catalog_id => set.catalog_id).order(:position) }, :dependent => :delete_all
   has_many :fields, :dependent => :destroy
-
-  accepts_nested_attributes_for :choices,
-                                :reject_if => :all_blank,
-                                :allow_destroy => true
 
   validates_presence_of :catalog
   validates_presence_of :name
@@ -65,6 +62,10 @@ class ChoiceSet < ApplicationRecord
 
   def assign_uuid
     self.uuid ||= SecureRandom.uuid
+  end
+
+  def log_name
+    name
   end
 
   def choice_prefixed_label(choice, format: :short, with_dates: false)

@@ -31,7 +31,7 @@ export default class extends Controller {
               children_ids: sortable.toArray()
             }
           ));
-          axios.post(this.data.get("updateUrl"), {positions: params})
+          axios.post(this.data.get("updateUrl"), {positions: params, moved_id: e.item.dataset.sortableChoicesId})
         }
       });
       this.sortables.push(sortable);

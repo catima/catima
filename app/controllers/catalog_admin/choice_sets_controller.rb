@@ -19,7 +19,7 @@ class CatalogAdmin::ChoiceSetsController < CatalogAdmin::BaseController
   def create
     build_choice_set
     authorize(@choice_set)
-    if @choice_set.update(choice_set_params)
+    if @choice_set.update_and_log(choice_set_params, author: current_user, catalog: catalog)
       if request.xhr?
         render json: { choice_set: @choice_set }
       else
@@ -37,7 +37,7 @@ class CatalogAdmin::ChoiceSetsController < CatalogAdmin::BaseController
   def update
     find_choice_set
     authorize(@choice_set)
-    if @choice_set.update(choice_set_params.except(:choice_set_type, :format))
+    if @choice_set.update_and_log(choice_set_params.except(:choice_set_type, :format), author: current_user, catalog: catalog)
       redirect_to(catalog_admin_choice_sets_path, :notice => updated_message)
     else
       render("edit")
@@ -47,8 +47,11 @@ class CatalogAdmin::ChoiceSetsController < CatalogAdmin::BaseController
   def destroy
     find_choice_set
     authorize(@choice_set)
-    @choice_set.touch(:deleted_at)
-    redirect_to(catalog_admin_choice_sets_path, notice: deleted_message)
+    if @choice_set.soft_destroy_and_log(author: current_user, catalog: catalog)
+      redirect_to(catalog_admin_choice_sets_path, notice: deleted_message)
+    else
+      redirect_to(catalog_admin_choice_sets_path, alert: @choice_set.errors.full_messages.to_sentence)
+    end
   end
 
   def export
@@ -168,14 +171,7 @@ class CatalogAdmin::ChoiceSetsController < CatalogAdmin::BaseController
       :choice_set_type,
       :format,
       :deactivated_at,
-      :allow_bc,
-      :choices_attributes => %i[
-        id _destroy
-        category_id
-        short_name_de short_name_en short_name_fr short_name_it
-        long_name_de long_name_en long_name_fr long_name_it
-        from_date to_date
-      ])
+      :allow_bc)
   end
 
   def created_message

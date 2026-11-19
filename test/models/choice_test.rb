@@ -62,4 +62,42 @@ class ChoiceTest < ActiveSupport::TestCase
 
     refute(ch_invalid.valid?)
   end
+
+  def create_choices(set, names, parent: nil)
+    names.each_with_index.map do |name, index|
+      Choice.create!(choice_set: set, catalog: set.catalog, parent: parent, short_name_en: name, position: index + 1)
+    end
+  end
+
+  def count_choice_updates
+    updates = 0
+    counter = ActiveSupport::Notifications.subscribe("sql.active_record") do |*, payload|
+      updates += 1 if payload[:sql].start_with?('UPDATE "choices"')
+    end
+    yield
+    updates
+  ensure
+    ActiveSupport::Notifications.unsubscribe(counter)
+  end
+
+  test "destroying a choice renumbers its siblings" do
+    set = ChoiceSet.create!(catalog: catalogs(:two), name: "Renumbering")
+    first, middle, last = create_choices(set, %w(First Middle Last))
+
+    middle.destroy
+
+    assert_equal [first.id, last.id], set.choices.where(parent_id: nil).ordered.pluck(:id)
+    assert_equal [1, 2], set.choices.where(parent_id: nil).ordered.pluck(:position)
+  end
+
+  test "destroying a choice with children does not renumber the children one by one" do
+    set = ChoiceSet.create!(catalog: catalogs(:two), name: "Cascade")
+    parent = create_choices(set, %w(Parent)).first
+    children = create_choices(set, %w(A B C D E), parent: parent)
+
+    updates = count_choice_updates { Choice.find(parent.id).destroy }
+
+    assert_equal 0, updates
+    assert_empty Choice.where(id: [parent.id, *children.map(&:id)])
+  end
 end

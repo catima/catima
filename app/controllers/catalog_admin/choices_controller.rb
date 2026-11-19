@@ -15,7 +15,7 @@ class CatalogAdmin::ChoicesController < CatalogAdmin::BaseController
   def create
     @choice = Choice.new(choice_params.merge(choice_set_id: @choice_set.id))
     @choice.catalog_id = @choice_set.catalog_id
-    if @choice.save_with_position(params[:choice][:position])
+    if @choice.save_with_position(params[:choice][:position], author: current_user, catalog: catalog)
       if request.xhr?
         render json: {
           catalog: @choice_set.catalog.id, choice_set: @choice_set.id,
@@ -45,7 +45,7 @@ class CatalogAdmin::ChoicesController < CatalogAdmin::BaseController
   end
 
   def update
-    if @choice.update(choice_params)
+    if @choice.update_and_log(choice_params, author: current_user, catalog: catalog)
       redirect_to(edit_catalog_admin_choice_set_path(@choice_set.catalog, I18n.locale, @choice_set), :notice => updated_message)
     else
       render("edit")
@@ -53,20 +53,32 @@ class CatalogAdmin::ChoicesController < CatalogAdmin::BaseController
   end
 
   def destroy
-    @choice.destroy
+    @choice.destroy_and_log(author: current_user, catalog: catalog)
     redirect_to(edit_catalog_admin_choice_set_path(@choice_set.catalog, I18n.locale, @choice_set), :notice => destroyed_message)
   end
 
   def update_positions
-    params[:positions].each do |data|
-      parent = data[:parent_id].present? ? @choice_set.choices.find(data[:parent_id]) : nil
-      data[:children_ids].each.with_index do |id, i|
-        @choice_set.choices.find(id).update!(position: i + 1, parent: parent)
+    moved = nil
+    Choice.transaction do
+      params[:positions].each do |data|
+        parent = data[:parent_id].present? ? @choice_set.choices.find(data[:parent_id]) : nil
+        data[:children_ids].each.with_index do |id, i|
+          choice = @choice_set.choices.find(id)
+          choice.update!(position: i + 1, parent: parent)
+          moved = choice if choice.id.to_s == params[:moved_id].to_s
+        end
       end
+      # Only the dragged choice is logged
+      log_moved(moved) if moved
     end
   end
 
   private
+
+  def log_moved(choice)
+    moves = { "#{choice.log_name} (##{choice.id})" => choice.saved_changes.slice("position", "parent_id") }
+    @choice_set.log_update(author: current_user, catalog: catalog, additional_logs: { "choices_moved" => moves })
+  end
 
   def build_choice
     @choice = @choice_set.choices.new(catalog_id: @choice_set.catalog_id)

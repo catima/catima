@@ -37,6 +37,7 @@
 class Choice < ApplicationRecord
   include HasTranslations
   include Clone
+  include Loggable
 
   belongs_to :catalog
   belongs_to :category, optional: true
@@ -57,7 +58,7 @@ class Choice < ApplicationRecord
   validate :validate_category_used
 
   before_create :assign_uuid
-  after_destroy :reorder_on_destroy
+  after_destroy :reorder_on_destroy, unless: :destroyed_by_association
 
   %w(de en fr it).each do |locale|
     define_method("long_display_name_#{locale}") do
@@ -88,6 +89,10 @@ class Choice < ApplicationRecord
     self.uuid ||= SecureRandom.uuid
   end
 
+  def log_name
+    short_name
+  end
+
   def filterable_category_fields
     fields = []
 
@@ -114,26 +119,32 @@ class Choice < ApplicationRecord
     columns
   end
 
-  def save_with_position(position)
+  def descendants
+    childrens.flat_map { |child| [child] + child.descendants }
+  end
+
+  # Overrides Loggable#destroy_and_log to log the deletion of
+  # all descendants as well.
+  def destroy_and_log(author:, catalog:, additional_logs: nil)
     Choice.transaction do
-      parent = parent_id.present? ? choice_set.choices.find(parent_id) : nil
+      removed = descendants
+      super&.tap do
+        removed.each { |choice| choice.log_delete(author: author, catalog: catalog) }
+      end
+    end
+  end
+
+  def save_with_position(position, author:, catalog:)
+    Choice.transaction do
+      siblings = parent_id.present? ? choice_set.choices.find(parent_id).childrens : choice_set.choices.where(parent_id: nil)
       case position
       when 'first'
         self.position = 1
-        if parent
-          parent.childrens.ordered.each_with_index do |choice, index|
-            choice.update!(position: index + 2)
-          end
-        else
-          choice_set.choices.where(parent_id: nil).ordered.each_with_index do |choice, index|
-            choice.update!(position: index + 2)
-          end
-        end
+        siblings.ordered.each_with_index { |choice, index| choice.update!(position: index + 2) }
       when 'last'
-        last_position = parent ? parent.childrens.count + 1 : choice_set.choices.where(parent_id: nil).count + 1
-        self.position = last_position
+        self.position = siblings.count + 1
       end
-      save
+      save_and_log(author: author, catalog: catalog) || raise(ActiveRecord::Rollback)
     end
   end
 

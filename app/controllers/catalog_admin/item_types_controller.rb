@@ -38,7 +38,8 @@ class CatalogAdmin::ItemTypesController < CatalogAdmin::BaseController
     find_item_type
     authorize(@item_type)
     # change item type slug to enable user creating a new one with the same slug
-    @item_type.update!(:deleted_at => Time.current, :slug => "#{@item_type.slug}-#{SecureRandom.uuid}")
+    @item_type.slug = "#{@item_type.slug}-#{SecureRandom.uuid}"
+    @item_type.soft_destroy_and_log!(author: current_user, catalog: @catalog)
     redirect_to(catalog_admin_setup_path(catalog, I18n.locale), :notice => deleted_message)
   end
 
