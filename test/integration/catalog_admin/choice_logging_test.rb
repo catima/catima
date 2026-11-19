@@ -65,34 +65,94 @@ class CatalogAdmin::ChoiceLoggingTest < ActionDispatch::IntegrationTest
     assert_equal users(:two_admin).id, last_log.author_id
   end
 
-  def reorder_children_of_english(*children)
-    positions = [{ parent_id: choices(:two_english).id, children_ids: children.map(&:id) }]
-    page.driver.post(update_positions_catalog_admin_choice_set_choices_path(@catalog, "en", @choice_set), positions: positions)
+  # Posts the children of "English" in the given order, as the drag and drop
+  # does, with the choice that was dragged.
+  def reorder_children_of_english(*children, moved: nil)
+    params = { positions: [{ parent_id: choices(:two_english).id, children_ids: children.map(&:id) }] }
+    params[:moved_id] = moved.id if moved
+    page.driver.post(update_positions_catalog_admin_choice_set_choices_path(@catalog, "en", @choice_set), params)
   end
 
-  test "reordering choices logs a single entry on the choice set" do
+  def english_children_in_order(*children)
+    children.each_with_index { |child, index| child.update!(position: index + 1) }
+  end
+
+  test "reordering choices logs the dragged choice on the choice set" do
     uk = choices(:two_english_uk)
     us = choices(:two_english_us)
+    english_children_in_order(uk, us)
 
     assert_difference("EntryLog.count", 1) do
-      reorder_children_of_english(us, uk)
+      reorder_children_of_english(us, uk, moved: us)
     end
 
     assert_equal @choice_set, last_log.subject
     assert_equal "UPDATE", last_log.action
-    assert_equal 2, last_log.record_changes["choices_moved"].size
+    assert_equal({ "#{us.short_name} (##{us.id})" => { "position" => [2, 1] } }, last_log.record_changes["choices_moved"])
     assert_equal 1, us.reload.position
     assert_equal 2, uk.reload.position
   end
 
-  test "reordering choices into the same order does not log again" do
+  test "swapping two choices logs the one that was dragged" do
     uk = choices(:two_english_uk)
     us = choices(:two_english_us)
-    reorder_children_of_english(us, uk)
+    english_children_in_order(uk, us)
+
+    reorder_children_of_english(us, uk, moved: uk)
+
+    assert_equal({ "#{uk.short_name} (##{uk.id})" => { "position" => [1, 2] } }, last_log.record_changes["choices_moved"])
+  end
+
+  test "dropping a choice where it was does not log" do
+    uk = choices(:two_english_uk)
+    us = choices(:two_english_us)
+    english_children_in_order(uk, us)
+
+    assert_no_difference("EntryLog.count") do
+      reorder_children_of_english(uk, us, moved: uk)
+    end
+  end
+
+  test "moving a choice under another parent logs its new parent" do
+    english = choices(:two_english)
+    uk = choices(:two_english_uk)
+    us = choices(:two_english_us)
+    positions = [
+      { parent_id: us.id, children_ids: [uk.id] },
+      { parent_id: english.id, children_ids: [us.id] }
+    ]
+
+    assert_difference("EntryLog.count", 1) do
+      page.driver.post(
+        update_positions_catalog_admin_choice_set_choices_path(@catalog, "en", @choice_set),
+        positions: positions, moved_id: uk.id
+      )
+    end
+
+    assert_equal [english.id, us.id], last_log.record_changes["choices_moved"]["#{uk.short_name} (##{uk.id})"]["parent_id"]
+    assert_equal us.id, uk.reload.parent_id
+  end
+
+  test "a dragged choice that is not in the request is not logged" do
+    uk = choices(:two_english_uk)
+    us = choices(:two_english_us)
+    english_children_in_order(uk, us)
+
+    assert_no_difference("EntryLog.count") do
+      reorder_children_of_english(us, uk, moved: choices(:two_english))
+    end
+  end
+
+  test "reordering choices without saying which was dragged still saves the order" do
+    uk = choices(:two_english_uk)
+    us = choices(:two_english_us)
+    english_children_in_order(uk, us)
 
     assert_no_difference("EntryLog.count") do
       reorder_children_of_english(us, uk)
     end
+
+    assert_equal 1, us.reload.position
   end
 
   test "deleting a choice set logs a DELETE and soft deletes it" do

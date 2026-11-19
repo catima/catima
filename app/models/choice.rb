@@ -58,7 +58,7 @@ class Choice < ApplicationRecord
   validate :validate_category_used
 
   before_create :assign_uuid
-  after_destroy :reorder_on_destroy
+  after_destroy :reorder_on_destroy, unless: :destroyed_by_association
 
   %w(de en fr it).each do |locale|
     define_method("long_display_name_#{locale}") do

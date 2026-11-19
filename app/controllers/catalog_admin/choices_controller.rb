@@ -58,22 +58,27 @@ class CatalogAdmin::ChoicesController < CatalogAdmin::BaseController
   end
 
   def update_positions
-    moves = {}
+    moved = nil
     Choice.transaction do
       params[:positions].each do |data|
         parent = data[:parent_id].present? ? @choice_set.choices.find(data[:parent_id]) : nil
         data[:children_ids].each.with_index do |id, i|
           choice = @choice_set.choices.find(id)
           choice.update!(position: i + 1, parent: parent)
-          changes = choice.saved_changes.slice("position", "parent_id")
-          moves["#{choice.short_name} (##{choice.id})"] = changes if changes.any?
+          moved = choice if choice.id.to_s == params[:moved_id].to_s
         end
       end
-      @choice_set.log_update(author: current_user, catalog: catalog, additional_logs: { "choices_moved" => moves })
+      # Only the dragged choice is logged
+      log_moved(moved) if moved
     end
   end
 
   private
+
+  def log_moved(choice)
+    moves = { "#{choice.log_name} (##{choice.id})" => choice.saved_changes.slice("position", "parent_id") }
+    @choice_set.log_update(author: current_user, catalog: catalog, additional_logs: { "choices_moved" => moves })
+  end
 
   def build_choice
     @choice = @choice_set.choices.new(catalog_id: @choice_set.catalog_id)
