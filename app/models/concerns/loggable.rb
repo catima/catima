@@ -19,11 +19,13 @@ module Loggable
 
   def save_and_log(author:, catalog:, additional_logs: nil)
     action = new_record? ? "CREATE" : "UPDATE"
-    return unless save
-
-    self.additional_logs = additional_logs
-    create_log(author, catalog, action) if relevant_changes.any?
-    self
+    self.class.transaction do
+      if save
+        self.additional_logs = additional_logs
+        create_log(author, catalog, action) if relevant_changes.any?
+        self
+      end
+    end
   end
 
   def save_and_log!(author:, catalog:, additional_logs: nil)
@@ -40,11 +42,13 @@ module Loggable
   end
 
   def destroy_and_log(author:, catalog:, additional_logs: nil)
-    return unless destroy
-
-    self.additional_logs = additional_logs
-    create_log(author, catalog, "DELETE")
-    self
+    self.class.transaction do
+      if destroy
+        self.additional_logs = additional_logs
+        create_log(author, catalog, "DELETE")
+        self
+      end
+    end
   end
 
   def destroy_and_log!(author:, catalog:, additional_logs: nil)
@@ -67,11 +71,13 @@ module Loggable
   # For models with a deleted_at column (see HasDeletion): marks the record as
   # deleted and logs it as a DELETE rather than an UPDATE.
   def soft_destroy_and_log(author:, catalog:, additional_logs: nil)
-    self.deleted_at = Time.current
-    return unless save
-
-    self.additional_logs = additional_logs
-    log_delete(author: author, catalog: catalog)
+    self.class.transaction do
+      self.deleted_at = Time.current
+      if save
+        self.additional_logs = additional_logs
+        log_delete(author: author, catalog: catalog)
+      end
+    end
   end
 
   def soft_destroy_and_log!(author:, catalog:, additional_logs: nil)
