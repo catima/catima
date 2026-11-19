@@ -144,7 +144,7 @@ class Choice < ApplicationRecord
       when 'last'
         self.position = siblings.count + 1
       end
-      save_and_log(author: author, catalog: catalog)
+      save_and_log(author: author, catalog: catalog) || raise(ActiveRecord::Rollback)
     end
   end
 

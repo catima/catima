@@ -77,6 +77,19 @@ class ChoiceLoggingTest < ActiveSupport::TestCase
     assert_equal choices(:two_english).childrens.count, choice.position
   end
 
+  test "a failed save_with_position rolls back the sibling shifts" do
+    english = choices(:two_english)
+    english.update!(position: 1)
+    choice = Choice.new(choice_set: @choice_set, catalog: @catalog, short_name_en: "German")
+    choice.define_singleton_method(:save) { |*| false }
+
+    assert_no_difference("EntryLog.count") do
+      refute choice.save_with_position("first", author: @author, catalog: @catalog)
+    end
+
+    assert_equal 1, english.reload.position
+  end
+
   test "destroying a choice logs a DELETE" do
     choice = choices(:two_english_uk)
 
