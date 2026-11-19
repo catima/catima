@@ -171,14 +171,7 @@ class CatalogAdmin::ChoiceSetsController < CatalogAdmin::BaseController
       :choice_set_type,
       :format,
       :deactivated_at,
-      :allow_bc,
-      :choices_attributes => %i[
-        id _destroy
-        category_id
-        short_name_de short_name_en short_name_fr short_name_it
-        long_name_de long_name_en long_name_fr long_name_it
-        from_date to_date
-      ])
+      :allow_bc)
   end
 
   def created_message

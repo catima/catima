@@ -46,10 +46,6 @@ class ChoiceSet < ApplicationRecord
   has_many :choices, ->(set) { where(:catalog_id => set.catalog_id).order(:position) }, :dependent => :delete_all
   has_many :fields, :dependent => :destroy
 
-  accepts_nested_attributes_for :choices,
-                                :reject_if => :all_blank,
-                                :allow_destroy => true
-
   validates_presence_of :catalog
   validates_presence_of :name
   validate :format_present_if_datation
